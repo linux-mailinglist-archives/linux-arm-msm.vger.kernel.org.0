@@ -2,328 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4AAE42FDF3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 00:16:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C26C942FE05
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 00:18:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238739AbhJOWSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 18:18:54 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:51096 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234582AbhJOWSy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 18:18:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634336207; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=jxUmdC8gbXSzYcXhva+BMdfRB94QKC3IUsGhsZsNxXA=;
- b=D0er5oVSJnvY+221jbg6k0agZItRVTsgqUXzY38HDWhOb351d4UkjOv4aV/3dnyutAlBXi5d
- KP9ChOVDsNlWhbbxCwtG5JBV7sdsDpjrQSS6xnBrJ/ITOUa9DIN4l1T5ZSm6ETvNV6eIaR6/
- 3JD5PUr9HwzLy6L1I6mrYmxjkPw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6169fdce03355859c82980a0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Oct 2021 22:16:46
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B590BC43619; Fri, 15 Oct 2021 22:16:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18D92C4338F;
-        Fri, 15 Oct 2021 22:16:45 +0000 (UTC)
+        id S238945AbhJOWTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 18:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238926AbhJOWTd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 18:19:33 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3B88C061762
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 15:17:26 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id r1-20020a4a9641000000b002b6b55007bfso3454217ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 15:17:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=AVnP9kT2llz88Wp4v0MXGtk3g84ufRBvjbktN4qlzww=;
+        b=BDfkHE65vuq0gO2kkkdX4+YmtrSGfkjC3peQ5lzDm7D2naQ06kVkwxvs0weU58kQxd
+         vzV6Cb2p1BpDN9hcFBCazFNkg8ndWOlCdGLyrIzPqe29/3mbH0OUHfI3YXe5GO5JkePh
+         +G7vebojCIdqZrX9x4lBMyZ81WrIGVQ4/Y33w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=AVnP9kT2llz88Wp4v0MXGtk3g84ufRBvjbktN4qlzww=;
+        b=YZsrE7N+o9B+Ap7emxw8yU9nbLFfgVKuQ9OCa+L6nLd9gIc8/o7+xf5XD1UZSZ+7Uj
+         6kN/kO+GOjpk33ekKapxDZK09wTor9L7ri6gTF7bWkyp2Nt2g2KNkcmb6i+wBSOEAgPp
+         sOkQstaPwQ7yZtGocXrUkHNfBlBydYSdZGTTXdQLrt/3lyyKtv5KCmE6IGMM8ofzQwlv
+         Oh4Ac677cjrqK+1oqJp4bOEwlbLNVsOt3/ma+dWH+IYhBHFu61IA4tvC9V1NjPBB+edy
+         jxCni/doz12DcifGXdbLm6xQbLVTB5+4wQKjhgEdC27lQ1Mltvn9dbuk7LtfzTbV2ODa
+         l7rQ==
+X-Gm-Message-State: AOAM532TDsqVyqUKys28FI5palwf6rrMTt0ng1CoXW3nasoKuFSHtE7k
+        5FxdLaN3k2V8tJ+qa4gBjhlatfQnrB9T9BR/qElugOmAIic=
+X-Google-Smtp-Source: ABdhPJy13Q6wozbGar0qzjihVe+DqGljwC0YLYE/UrohRr6eMRjLf6Wt9ww3bAH4k9laFeWpErh1bmn4nj4LqLoQYFg=
+X-Received: by 2002:a4a:c808:: with SMTP id s8mr2592875ooq.8.1634336246241;
+ Fri, 15 Oct 2021 15:17:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 15 Oct 2021 17:17:25 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 15 Oct 2021 15:16:44 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 1/2] drm/msm/hdmi: use bulk regulator API
-In-Reply-To: <20211015001100.4193241-1-dmitry.baryshkov@linaro.org>
-References: <20211015001100.4193241-1-dmitry.baryshkov@linaro.org>
-Message-ID: <b4ad0b7f370964da16c282c5fe99d7fd@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20211005033732.2284447-1-bjorn.andersson@linaro.org>
+References: <20211005033732.2284447-1-bjorn.andersson@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 15 Oct 2021 17:17:25 -0500
+Message-ID: <CAE-0n51x2w-GhUbY_dbH74Eom3orOHHT7dT_CG3j0WR8fpoxsw@mail.gmail.com>
+Subject: Re: [PATCH v3] soc: qcom: rpmhpd: Make power_on actually enable the domain
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-14 17:10, Dmitry Baryshkov wrote:
-> Switch to using bulk regulator API instead of hand coding loops.
-> 
-Nice cleanup!
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+Quoting Bjorn Andersson (2021-10-04 20:37:32)
+> The general expectation is that powering on a power-domain should make
+> the power domain deliver some power, and if a specific performance state
+> is needed further requests has to be made.
+>
+> But in contrast with other power-domain implementations (e.g. rpmpd) the
+> RPMh does not have an interface to enable the power, so the driver has
+> to vote for a particular corner (performance level) in rpmh_power_on().
+>
+> But the corner is never initialized, so a typical request to simply
+> enable the power domain would not actually turn on the hardware. Further
+> more, when no more clients vote for a performance state (i.e. the
+> aggregated vote is 0) the power domain would be turned off.
+>
+> Fix both of these issues by always voting for a corner with non-zero
+> value, when the power domain is enabled.
+>
+> The tracking of the lowest non-zero corner is performed to handle the
+> corner case if there's ever a domain with a non-zero lowest corner, in
+> which case both rpmh_power_on() and rpmh_rpmhpd_set_performance_state()
+> would be allowed to use this lowest corner.
+>
+> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  drivers/gpu/drm/msm/hdmi/hdmi.c           | 34 +++++++----------------
->  drivers/gpu/drm/msm/hdmi/hdmi.h           |  6 ++--
->  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c    | 20 ++++---------
->  drivers/gpu/drm/msm/hdmi/hdmi_connector.c | 24 ++++++----------
->  drivers/gpu/drm/msm/hdmi/hdmi_phy.c       | 33 ++++++++--------------
->  5 files changed, 40 insertions(+), 77 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c 
-> b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> index 737453b6e596..db17a000d968 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> @@ -154,19 +154,13 @@ static struct hdmi *msm_hdmi_init(struct
-> platform_device *pdev)
->  		ret = -ENOMEM;
->  		goto fail;
->  	}
-> -	for (i = 0; i < config->hpd_reg_cnt; i++) {
-> -		struct regulator *reg;
-> -
-> -		reg = devm_regulator_get(&pdev->dev,
-> -				config->hpd_reg_names[i]);
-> -		if (IS_ERR(reg)) {
-> -			ret = PTR_ERR(reg);
-> -			DRM_DEV_ERROR(&pdev->dev, "failed to get hpd regulator: %s (%d)\n",
-> -					config->hpd_reg_names[i], ret);
-> -			goto fail;
-> -		}
-> +	for (i = 0; i < config->hpd_reg_cnt; i++)
-> +		hdmi->hpd_regs[i].supply = config->hpd_reg_names[i];
-> 
-> -		hdmi->hpd_regs[i] = reg;
-> +	ret = devm_regulator_bulk_get(&pdev->dev, config->hpd_reg_cnt,
-> hdmi->hpd_regs);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(&pdev->dev, "failed to get hpd regulator: %d\n", ret);
-> +		goto fail;
->  	}
-> 
->  	hdmi->pwr_regs = devm_kcalloc(&pdev->dev,
-> @@ -177,19 +171,11 @@ static struct hdmi *msm_hdmi_init(struct
-> platform_device *pdev)
->  		ret = -ENOMEM;
->  		goto fail;
->  	}
-> -	for (i = 0; i < config->pwr_reg_cnt; i++) {
-> -		struct regulator *reg;
-> 
-> -		reg = devm_regulator_get(&pdev->dev,
-> -				config->pwr_reg_names[i]);
-> -		if (IS_ERR(reg)) {
-> -			ret = PTR_ERR(reg);
-> -			DRM_DEV_ERROR(&pdev->dev, "failed to get pwr regulator: %s (%d)\n",
-> -					config->pwr_reg_names[i], ret);
-> -			goto fail;
-> -		}
-> -
-> -		hdmi->pwr_regs[i] = reg;
-> +	ret = devm_regulator_bulk_get(&pdev->dev, config->pwr_reg_cnt,
-> hdmi->pwr_regs);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(&pdev->dev, "failed to get pwr regulator: %d\n", ret);
-> +		goto fail;
->  	}
-> 
->  	hdmi->hpd_clks = devm_kcalloc(&pdev->dev,
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h 
-> b/drivers/gpu/drm/msm/hdmi/hdmi.h
-> index d0b84f0abee1..82261078c6b1 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
-> @@ -56,8 +56,8 @@ struct hdmi {
->  	void __iomem *qfprom_mmio;
->  	phys_addr_t mmio_phy_addr;
-> 
-> -	struct regulator **hpd_regs;
-> -	struct regulator **pwr_regs;
-> +	struct regulator_bulk_data *hpd_regs;
-> +	struct regulator_bulk_data *pwr_regs;
->  	struct clk **hpd_clks;
->  	struct clk **pwr_clks;
-> 
-> @@ -163,7 +163,7 @@ struct hdmi_phy {
->  	void __iomem *mmio;
->  	struct hdmi_phy_cfg *cfg;
->  	const struct hdmi_phy_funcs *funcs;
-> -	struct regulator **regs;
-> +	struct regulator_bulk_data *regs;
->  	struct clk **clks;
->  };
-> 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> index 6e380db9287b..f04eb4a70f0d 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> @@ -28,13 +28,9 @@ static void msm_hdmi_power_on(struct drm_bridge 
-> *bridge)
-> 
->  	pm_runtime_get_sync(&hdmi->pdev->dev);
-> 
-> -	for (i = 0; i < config->pwr_reg_cnt; i++) {
-> -		ret = regulator_enable(hdmi->pwr_regs[i]);
-> -		if (ret) {
-> -			DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %s 
-> (%d)\n",
-> -					config->pwr_reg_names[i], ret);
-> -		}
-> -	}
-> +	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
-> +	if (ret)
-> +		DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %d\n", 
-> ret);
-> 
->  	if (config->pwr_clk_cnt > 0) {
->  		DBG("pixclock: %lu", hdmi->pixclock);
-> @@ -70,13 +66,9 @@ static void power_off(struct drm_bridge *bridge)
->  	for (i = 0; i < config->pwr_clk_cnt; i++)
->  		clk_disable_unprepare(hdmi->pwr_clks[i]);
-> 
-> -	for (i = 0; i < config->pwr_reg_cnt; i++) {
-> -		ret = regulator_disable(hdmi->pwr_regs[i]);
-> -		if (ret) {
-> -			DRM_DEV_ERROR(dev->dev, "failed to disable pwr regulator: %s 
-> (%d)\n",
-> -					config->pwr_reg_names[i], ret);
-> -		}
-> -	}
-> +	ret = regulator_bulk_disable(config->pwr_reg_cnt, hdmi->pwr_regs);
-> +	if (ret)
-> +		DRM_DEV_ERROR(dev->dev, "failed to disable pwr regulator: %d\n", 
-> ret);
-> 
->  	pm_runtime_put_autosuspend(&hdmi->pdev->dev);
->  }
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> index 58707a1f3878..a7f729cdec7b 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> @@ -146,16 +146,13 @@ int msm_hdmi_hpd_enable(struct drm_connector 
-> *connector)
->  	const struct hdmi_platform_config *config = hdmi->config;
->  	struct device *dev = &hdmi->pdev->dev;
->  	uint32_t hpd_ctrl;
-> -	int i, ret;
-> +	int ret;
->  	unsigned long flags;
-> 
-> -	for (i = 0; i < config->hpd_reg_cnt; i++) {
-> -		ret = regulator_enable(hdmi->hpd_regs[i]);
-> -		if (ret) {
-> -			DRM_DEV_ERROR(dev, "failed to enable hpd regulator: %s (%d)\n",
-> -					config->hpd_reg_names[i], ret);
-> -			goto fail;
-> -		}
-> +	ret = regulator_bulk_enable(config->hpd_reg_cnt, hdmi->hpd_regs);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(dev, "failed to enable hpd regulators: %d\n", ret);
-> +		goto fail;
->  	}
-> 
->  	ret = pinctrl_pm_select_default_state(dev);
-> @@ -207,7 +204,7 @@ static void hdp_disable(struct hdmi_connector
-> *hdmi_connector)
->  	struct hdmi *hdmi = hdmi_connector->hdmi;
->  	const struct hdmi_platform_config *config = hdmi->config;
->  	struct device *dev = &hdmi->pdev->dev;
-> -	int i, ret = 0;
-> +	int ret;
-> 
->  	/* Disable HPD interrupt */
->  	hdmi_write(hdmi, REG_HDMI_HPD_INT_CTRL, 0);
-> @@ -225,12 +222,9 @@ static void hdp_disable(struct hdmi_connector
-> *hdmi_connector)
->  	if (ret)
->  		dev_warn(dev, "pinctrl state chg failed: %d\n", ret);
-> 
-> -	for (i = 0; i < config->hpd_reg_cnt; i++) {
-> -		ret = regulator_disable(hdmi->hpd_regs[i]);
-> -		if (ret)
-> -			dev_warn(dev, "failed to disable hpd regulator: %s (%d)\n",
-> -					config->hpd_reg_names[i], ret);
-> -	}
-> +	ret = regulator_bulk_disable(config->hpd_reg_cnt, hdmi->hpd_regs);
-> +	if (ret)
-> +		dev_warn(dev, "failed to disable hpd regulator: %d\n", ret);
->  }
-> 
->  static void
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> index 8a38d4b95102..16b0e8836d27 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> @@ -23,22 +23,15 @@ static int msm_hdmi_phy_resource_init(struct 
-> hdmi_phy *phy)
->  	if (!phy->clks)
->  		return -ENOMEM;
-> 
-> -	for (i = 0; i < cfg->num_regs; i++) {
-> -		struct regulator *reg;
-> -
-> -		reg = devm_regulator_get(dev, cfg->reg_names[i]);
-> -		if (IS_ERR(reg)) {
-> -			ret = PTR_ERR(reg);
-> -			if (ret != -EPROBE_DEFER) {
-> -				DRM_DEV_ERROR(dev,
-> -					      "failed to get phy regulator: %s (%d)\n",
-> -					      cfg->reg_names[i], ret);
-> -			}
-> +	for (i = 0; i < cfg->num_regs; i++)
-> +		phy->regs[i].supply = cfg->reg_names[i];
-> 
-> -			return ret;
-> -		}
-> +	ret = devm_regulator_bulk_get(dev, cfg->num_regs, phy->regs);
-> +	if (ret) {
-> +		if (ret != -EPROBE_DEFER)
-> +			DRM_DEV_ERROR(dev, "failed to get phy regulators: %d\n", ret);
-> 
-> -		phy->regs[i] = reg;
-> +		return ret;
->  	}
-> 
->  	for (i = 0; i < cfg->num_clks; i++) {
-> @@ -66,11 +59,10 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy 
-> *phy)
-> 
->  	pm_runtime_get_sync(dev);
-> 
-> -	for (i = 0; i < cfg->num_regs; i++) {
-> -		ret = regulator_enable(phy->regs[i]);
-> -		if (ret)
-> -			DRM_DEV_ERROR(dev, "failed to enable regulator: %s (%d)\n",
-> -				cfg->reg_names[i], ret);
-> +	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
-> +		return ret;
->  	}
-> 
->  	for (i = 0; i < cfg->num_clks; i++) {
-> @@ -92,8 +84,7 @@ void msm_hdmi_phy_resource_disable(struct hdmi_phy 
-> *phy)
->  	for (i = cfg->num_clks - 1; i >= 0; i--)
->  		clk_disable_unprepare(phy->clks[i]);
-> 
-> -	for (i = cfg->num_regs - 1; i >= 0; i--)
-> -		regulator_disable(phy->regs[i]);
-> +	regulator_bulk_disable(cfg->num_regs, phy->regs);
-> 
->  	pm_runtime_put_sync(dev);
->  }
+
+Looks ok to me.
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
