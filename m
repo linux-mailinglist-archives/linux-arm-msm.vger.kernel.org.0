@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CEED42F082
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 14:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C91B42F079
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 14:21:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238751AbhJOMXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 08:23:33 -0400
-Received: from ip-16.mailobj.net ([213.182.54.16]:45760 "EHLO msg-6.mailo.com"
+        id S238749AbhJOMXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 08:23:22 -0400
+Received: from ip-8.mailobj.net ([213.182.54.8]:43740 "EHLO msg-3.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238731AbhJOMXd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 08:23:33 -0400
+        id S238748AbhJOMXW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 08:23:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634297913; bh=rwTF5+9x+ye/AXjZbx/MNNkZB6C1fknU5OsMIO6dc6Y=;
+        t=1634297913; bh=zROZ5t1FiQl6m7iqtJ/AW4sPBpIU6ZAMfQADZLWZ7+g=;
         h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
          References:MIME-Version:Content-Transfer-Encoding;
-        b=oHUsGLHtfbeb2lGALHUBGTI30IfYZng4BA0Pgb1nYlc5NLFRFPJL4VRH0qcInrwTI
-         R4DZHDfHREoHHNDkyBsu5TeqvmL0ayJDQJ3wPsWF50RTeirVtXu37PdhLm4a2/OnPr
-         g7j8v/OFiCk72bexXhWRezta3jl2h05vLpb4G+qU=
+        b=WqLqSD3kuPiZR92onkkfakBivfCLi24VmanHOvDQMxSFB0CKO26yo8d303L13OUqm
+         8w3YoBYBChfP0Q1wHL6nFemEWQ42rKvtpWcXAAmX4JX0P0RnI2YkjpgVEj1Wz40dBK
+         3ZYMIPX1+DhUjT9W/OTebYpfuh0mS9a3q1mEMUnY=
 Received: by b-3.in.mailobj.net [192.168.90.13] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Fri, 15 Oct 2021 13:38:30 +0200 (CEST)
-X-EA-Auth: MAlTL+AUq+EWJ84udQHBcLVV0XXC0LRrWCTFfpav7VipNI+ImD8muRM/+7Gm3INHfKmO5lgjsSbOiH9QnieqiSo5u25ul0uL
+        Fri, 15 Oct 2021 13:38:32 +0200 (CEST)
+X-EA-Auth: RnI/jvREmrkuPQGsBmzlIch1CX9MOuV5EW0Uey6UCXOxVz6uSVtWljP+Wb5sDpGVvNDHCCkX9JR+/ehhUml4/JiOrFUKRz42
 From:   Claudio Suarez <cssk@net-c.es>
 To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
@@ -48,9 +48,9 @@ To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Robert Foss <robert.foss@linaro.org>,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
 Cc:     Claudio Suarez <cssk@net-c.es>
-Subject: [PATCH 10/15] drm/sti: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Fri, 15 Oct 2021 13:37:08 +0200
-Message-Id: <20211015113713.630119-11-cssk@net-c.es>
+Subject: [PATCH 11/15] drm/zte: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
+Date:   Fri, 15 Oct 2021 13:37:09 +0200
+Message-Id: <20211015113713.630119-12-cssk@net-c.es>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211015113713.630119-1-cssk@net-c.es>
 References: <20211015113713.630119-1-cssk@net-c.es>
@@ -67,34 +67,25 @@ drm_display_info.is_hdmi
 
 Signed-off-by: Claudio Suarez <cssk@net-c.es>
 ---
- drivers/gpu/drm/sti/sti_hdmi.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/zte/zx_hdmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-index f3ace11209dd..3f8b04a1407e 100644
---- a/drivers/gpu/drm/sti/sti_hdmi.c
-+++ b/drivers/gpu/drm/sti/sti_hdmi.c
-@@ -984,14 +984,16 @@ static int sti_hdmi_connector_get_modes(struct drm_connector *connector)
+diff --git a/drivers/gpu/drm/zte/zx_hdmi.c b/drivers/gpu/drm/zte/zx_hdmi.c
+index cd79ca0a92a9..7df682d90723 100644
+--- a/drivers/gpu/drm/zte/zx_hdmi.c
++++ b/drivers/gpu/drm/zte/zx_hdmi.c
+@@ -265,9 +265,9 @@ static int zx_hdmi_connector_get_modes(struct drm_connector *connector)
  	if (!edid)
- 		goto fail;
+ 		return 0;
  
--	hdmi->hdmi_monitor = drm_detect_hdmi_monitor(edid);
--	DRM_DEBUG_KMS("%s : %dx%d cm\n",
--		      (hdmi->hdmi_monitor ? "hdmi monitor" : "dvi monitor"),
--		      edid->width_cm, edid->height_cm);
- 	cec_notifier_set_phys_addr_from_edid(hdmi->notifier, edid);
- 
- 	count = drm_add_edid_modes(connector, edid);
-+
-+	/* This updates connector->display_info */
+-	hdmi->sink_is_hdmi = drm_detect_hdmi_monitor(edid);
+-	hdmi->sink_has_audio = drm_detect_monitor_audio(edid);
  	drm_connector_update_edid_property(connector, edid);
-+	hdmi->hdmi_monitor = connector->display_info.is_hdmi;
-+	DRM_DEBUG_KMS("%s : %dx%d cm\n",
-+		      (hdmi->hdmi_monitor ? "hdmi monitor" : "dvi monitor"),
-+		      edid->width_cm, edid->height_cm);
- 
++	hdmi->sink_is_hdmi = connector->display_info.is_hdmi;
++	hdmi->sink_has_audio = drm_detect_monitor_audio(edid);
+ 	ret = drm_add_edid_modes(connector, edid);
  	kfree(edid);
- 	return count;
+ 
 -- 
 2.33.0
 
