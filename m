@@ -2,117 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A4C042E51B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:15:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC9F842E52E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:20:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231645AbhJOASC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 20:18:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59944 "EHLO
+        id S233996AbhJOAWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 20:22:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231315AbhJOASC (ORCPT
+        with ESMTP id S229720AbhJOAWm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 20:18:02 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F5B1C061760
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:15:56 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id 77so7080956qkh.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:15:56 -0700 (PDT)
+        Thu, 14 Oct 2021 20:22:42 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42413C061755
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:20:36 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id x27so33851586lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s7GfeS32gI4T5cRoYk29Fyp1Z52NUILY3Xlxh32Z6xs=;
-        b=EZeGtuFzkH8pfPvPiQ9aZxa8E/yfOmG4ICvTAnAZeKbvawjJOAS6han9FQ2hOOXPcQ
-         STHK0u/5AWk+ypYEHZa2BLpEDrWdlEselqXq7vawwTBK9Cz380aliYdgo7znLsMub4Ng
-         t7I1o8INVNl1ytvtaMvaHhGfC9nKEzDTc8ONKlbJia6je4sD82sjkJYswVr3l2sWBvhL
-         gRzBD7/21TROm+5b73pcrPokuNabaNTIKDvhjmirKejQQVjrUgnrjCLN3zfIuPQMJvuO
-         kjBh4TwwzfuGIHJdAGaY8wDwpr9t+QhaT/67Ok9t1V0bkvYAcB/V6i0bSyaA1giiyb3C
-         bmug==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=4vhitf+OB83J8FxwqIn9yUkbnWD0KiX07u4IYQ5OV/U=;
+        b=xUmU3e+AN56evNuz4VZTGL6egGEFJoSWXOq7mTf/QievLJEK9IDj0ug7WLkMKBCo6q
+         mtUUeoN0jb2sXlQSrwQ+HlKUPLFLWKvgmFVZ1WBurZl1DfIABIhb1BRQ0Hc1l9ut7En/
+         ptulesDYXCV9NO+f71elALiwFgDS1Hk1Zozcdk9yp0JoVdMWiXi3ly+KsfUTxEV5x8LC
+         9hMR5z+Wguj5h/SNjuvZmB9lM99hLG7ycHmHGfFgZJ1sOpNqM6Mna8Asx06sxnmI090U
+         StG18anaC9n72pkBJNjEcAUUMnLtBuF2N73K2aEEiW8LfDDPZhalnKuhAq9UfNu2+e8T
+         i8wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s7GfeS32gI4T5cRoYk29Fyp1Z52NUILY3Xlxh32Z6xs=;
-        b=GDNKa0rpzj7m3739Fq7HmrdUSp4qB/2UIP3lV4b71saBvtP7Dmnje8rXCh7cQrArMl
-         IRcd9yDum6wyocmNSeZwsCm5Mx3nKSfZf7dHNjPfCKxWbosET1ElBfXZ1R1OLmwIowgr
-         u/ok95jgSpcvp1PgYFHMtzN9q5zPxbiaIF4rSkN56b4gBKOf1yBDOUzvyZhx2PmP9aO0
-         qK9t1d1Zt9dkjmKYUCna4O+dXh+wokHnZ1cCDdlIWJuQUx1On5C5oKcsHh24GidM7Nzo
-         f92MTNRCl3JDIaOFeIRpChANIk6kBibIU6scNBzQGCF0mj9Hm2Gx/x1a1Drxr6Sw821p
-         k8WA==
-X-Gm-Message-State: AOAM531mPXbDnPh/gQk/eRbUFcWlCZBmPcZ0ENryOfykn+5Xz5Q1Q45P
-        7R7dfpuqEzlb357XSfYk19ge8Era4i8ha159ec3H5g==
-X-Google-Smtp-Source: ABdhPJy04v77K/HBfyt6r1eUBHzQbcFSDZXxVl24akkIgkNKxr+9V8PP31Kr16nzAYOFxrxe56KwiPOPsHmYaOhUMLM=
-X-Received: by 2002:a37:4658:: with SMTP id t85mr7370061qka.195.1634256955634;
- Thu, 14 Oct 2021 17:15:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210829154757.784699-1-dmitry.baryshkov@linaro.org>
- <20210829154757.784699-8-dmitry.baryshkov@linaro.org> <YV8WsQb9H7+CaLjP@ripper>
- <4614587c-b87a-4375-cb6a-6af6f5462c6b@linaro.org> <163415465484.936110.9292145029740247591@swboyd.mtv.corp.google.com>
- <070b1b25-3718-5f3a-869b-a3954fdcc7c5@linaro.org> <163425629248.1688384.14367506222343416862@swboyd.mtv.corp.google.com>
-In-Reply-To: <163425629248.1688384.14367506222343416862@swboyd.mtv.corp.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 15 Oct 2021 03:15:39 +0300
-Message-ID: <CAA8EJpo4SCSPMVstxO_eTGHVNCEkhguJDcfE4=6Y3YSDQ+SeOw@mail.gmail.com>
-Subject: Re: [PATCH v7 7/8] clk: qcom: dispcc-sm8250: stop using mmcx regulator
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=4vhitf+OB83J8FxwqIn9yUkbnWD0KiX07u4IYQ5OV/U=;
+        b=jUayQC64gtzEvEeR0b2e75vv5LoT8gM0P9S7TjXzVRHHxAHavCkH3YmOmVfJW32t9p
+         R9TzvX82TYtwICnfJ5QdvnyxypgQaUSR66mehtHSFBXA2D1bTxTjoJGYN9BIcwyQ1cWt
+         PpgMQ0DLe4LeKgQaDLGGMy3n0WHbICfmCun8/7F7rlIgQPUFuaGKVvo4I8uiM9NKXxdR
+         oSc9xiNVMOsiVbX9fsdWDLFGBLKxL/+AIqkpabKtmGiZZ4wK8xWWylmzn3cxNQI9MlsU
+         Fk9dWlHMVpbo2M4kBSEb/pCAU67PdHmb3RdtaviRwNqMweJC1p9X+PmpNOcsZYIgCFYW
+         uX+A==
+X-Gm-Message-State: AOAM532GSDkIUdbnZ1S20aaUtDyvFaAFr1xOOoClV9qFAnSyr8MrmIvi
+        WpxJfWkS943eWpIjWyUDNXNZcw==
+X-Google-Smtp-Source: ABdhPJx6x0dTEEVnYH4yVgOyMjDIvJKuYHi4fB7VV7o/4PmA1vJvYO0ins5SRxNn566R4asXHr2pOg==
+X-Received: by 2002:a2e:7204:: with SMTP id n4mr10014059ljc.430.1634257234634;
+        Thu, 14 Oct 2021 17:20:34 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id s14sm355304lfe.14.2021.10.14.17.20.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Oct 2021 17:20:34 -0700 (PDT)
+Subject: Re: [PATCH v3 2/4] thermal/drivers/qcom/spmi-adc-tm5: Add support for
+ HC variant
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211005032531.2251928-1-bjorn.andersson@linaro.org>
+ <20211005032531.2251928-3-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <7142a85a-9bd6-015c-89c6-e7bbac5af534@linaro.org>
+Date:   Fri, 15 Oct 2021 03:20:33 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20211005032531.2251928-3-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Oct 2021 at 03:04, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Dmitry Baryshkov (2021-10-14 02:53:41)
-> > On 13/10/2021 22:50, Stephen Boyd wrote:
-> > > Quoting Dmitry Baryshkov (2021-10-07 09:16:13)
-> > >> On 07/10/2021 18:48, Bjorn Andersson wrote:
-> > >>> On Sun 29 Aug 08:47 PDT 2021, Dmitry Baryshkov wrote:
-> > >>>
-> > >>>> Now as the common qcom clock controller code has been taught about power
-> > >>>> domains, stop mentioning mmcx supply as a way to power up the clock
-> > >>>> controller's gdsc.
-> > >>>>
-> > >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >>>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > >>>
-> > >>> Once we merge these, I expect that the boards will start crashing if
-> > >>> the kernel is booted using an existing DTB?
-> > >>>
-> > >>> Is it okay to just merge the first 6 patches in the series now and
-> > >>> postpone these two until we've had the dts change sitting for a while?
-> > >>
-> > >> Sure it is.
-> > >>
-> > >
-> > > What's the merge strategy? It goes through arm-soc?
-> >
-> > I think this should go through the clk tree. There is little chance of
-> > conflicts.
-> >
->
-> The other thing that concerns me is that we don't have backwards
-> compat code. If things are going to start crashing that's not very nice.
-> Is there some way to make it work with old and new DTB for one release
-> so that we don't have to worry about this problem?
+On 05/10/2021 06:25, Bjorn Andersson wrote:
+> The variant of the ADC Thermal Monitor block found in e.g. PM8998 is
+> "HC", add support for this variant to the ADC TM5 driver in order to
+> support using VADC channels as thermal_zones on SDM845 et al.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I have to admit that I did not check that, but without the patch 7 the
-dispcc and videocc would be compatible with the old DTB. The 'supply =
-"mmcx"' would ensure that it is used if it is defined.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+> 
+> Changes since v2:
+> - Dropped conditional return ret right before unconditionatl return ret;
+> 
+>   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 41 +++++++++++++++++++++++-
+>   1 file changed, 40 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> index 8494cc04aa21..824671cf494a 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> @@ -82,6 +82,7 @@ struct adc_tm5_data {
+>   	const u32	full_scale_code_volt;
+>   	unsigned int	*decimation;
+>   	unsigned int	*hw_settle;
+> +	bool		is_hc;
+>   };
+>   
+>   enum adc_tm5_cal_method {
+> @@ -146,6 +147,14 @@ static const struct adc_tm5_data adc_tm5_data_pmic = {
+>   					 64000, 128000 },
+>   };
+>   
+> +static const struct adc_tm5_data adc_tm_hc_data_pmic = {
+> +	.full_scale_code_volt = 0x70e4,
+> +	.decimation = (unsigned int []) { 256, 512, 1024 },
+> +	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
+> +					 1000, 2000, 4000, 6000, 8000, 10000 },
+> +	.is_hc = true,
+> +};
+> +
+>   static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
+>   {
+>   	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
+> @@ -375,6 +384,29 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
+>   	return 0;
+>   }
+>   
+> +static int adc_tm_hc_init(struct adc_tm5_chip *chip)
+> +{
+> +	unsigned int i;
+> +	u8 buf[2];
+> +	int ret;
+> +
+> +	for (i = 0; i < chip->nchannels; i++) {
+> +		if (chip->channels[i].channel >= ADC_TM5_NUM_CHANNELS) {
+> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
+> +			return -EINVAL;
+> +		}
+> +	}
+> +
+> +	buf[0] = chip->decimation;
+> +	buf[1] = chip->avg_samples | ADC_TM5_FAST_AVG_EN;
+> +
+> +	ret = adc_tm5_write(chip, ADC_TM5_ADC_DIG_PARAM, buf, sizeof(buf));
+> +	if (ret)
+> +		dev_err(chip->dev, "block write failed: %d\n", ret);
+> +
+> +	return ret;
+> +}
+> +
+>   static int adc_tm5_init(struct adc_tm5_chip *chip)
+>   {
+>   	u8 buf[4], channels_available;
+> @@ -591,7 +623,10 @@ static int adc_tm5_probe(struct platform_device *pdev)
+>   		return ret;
+>   	}
+>   
+> -	ret = adc_tm5_init(adc_tm);
+> +	if (adc_tm->data->is_hc)
+> +		ret = adc_tm_hc_init(adc_tm);
+> +	else
+> +		ret = adc_tm5_init(adc_tm);
+>   	if (ret) {
+>   		dev_err(dev, "adc-tm init failed\n");
+>   		return ret;
+> @@ -612,6 +647,10 @@ static const struct of_device_id adc_tm5_match_table[] = {
+>   		.compatible = "qcom,spmi-adc-tm5",
+>   		.data = &adc_tm5_data_pmic,
+>   	},
+> +	{
+> +		.compatible = "qcom,spmi-adc-tm-hc",
+> +		.data = &adc_tm_hc_data_pmic,
+> +	},
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(of, adc_tm5_match_table);
+> 
+
 
 -- 
 With best wishes
