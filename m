@@ -2,77 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D04D542E601
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 03:18:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66B3842E620
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 03:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232956AbhJOBUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 21:20:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50342 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232333AbhJOBTN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 21:19:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6E6A161139;
-        Fri, 15 Oct 2021 01:17:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634260627;
-        bh=bAWHi6JZRMIq6ROtBTobOiX1JOs6XZZyOTQ1hGwZsI4=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=rMHf5+AmOcx89LPhXhJz3DYawKjebLQ+Co/j9AfJWfZb3ZgGebCo5cV0d1z6fh4YT
-         9EK3R0MhZX8w1TablFvPoAQBjC5JojJQY/P+4vw4w+MGohgx8O8ZlaX+3nquMnq/VC
-         f1wcI5A+ZKpvJoHTzWHe5phc9fdqQ6HxqxjHTbDq5zb06w3Eu+0SIrkvrdUKi4xbiM
-         +chXEHc6MOwnz+r9tPbGcJ9HHZX+TNqQkmQBU06NHwYhQAgpEmdP+06ohau1na7cUJ
-         4nIDuFWjh0SdvFy6cA6oDqHP8OhedanPb2U2KpdDnab+d/q8nAkr3y3ensQxr/GlEw
-         zKyeMVwFBIZyw==
-Content-Type: text/plain; charset="utf-8"
+        id S232102AbhJOBaF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 21:30:05 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30303 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231871AbhJOBaF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Oct 2021 21:30:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634261280; x=1665797280;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=/8ELnxm3qwPuqI4ajB9klaDzyOwohX5IHI+2TL0f6Ng=;
+  b=e4SvXk4o5cglvEADYl2RCuS9TsMPsw0JmribBqxUbcmZVoK88pwUYnXB
+   2MH6XAU4BQQw7Yh0bJB1Wh51vDNOJiGDDk5xuQOk+bhiRHIwEGLgtR5Gk
+   08fST4/GbQa/rvRHYwvIOSGkQcKDD/na7TTIOF5RfFi52Zdx1Rl8TEtpK
+   w=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 14 Oct 2021 18:27:59 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2021 18:27:59 -0700
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Thu, 14 Oct 2021
+ 18:27:57 -0700
+Subject: Re: [RESEND PATCH v1 1/9] spmi: pmic-arb: add a print in cleanup_irq
+To:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1631860384-26608-2-git-send-email-quic_fenglinw@quicinc.com>
+ <163406078422.936959.12726677103787301939@swboyd.mtv.corp.google.com>
+ <6c91a6ad-0ff2-a431-138a-2ec83f2bfa74@quicinc.com>
+ <163415372158.936959.16897606198271075227@swboyd.mtv.corp.google.com>
+ <e94d4b54-316e-220e-aaec-f60311c37745@quicinc.com>
+ <163426014715.936959.6136985763712059359@swboyd.mtv.corp.google.com>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+Message-ID: <83fa65c8-3442-ee26-22ed-e26b013cca14@quicinc.com>
+Date:   Fri, 15 Oct 2021 09:27:55 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <23918853-ed37-f11f-9e1e-5f302910e320@quicinc.com>
-References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com> <1631860384-26608-9-git-send-email-quic_fenglinw@quicinc.com> <163406051353.936959.12718174954614897750@swboyd.mtv.corp.google.com> <3bf1fbf3-e741-ef08-a4e4-b348b877d02a@quicinc.com> <163415390922.936959.12352892206436080955@swboyd.mtv.corp.google.com> <23918853-ed37-f11f-9e1e-5f302910e320@quicinc.com>
-Subject: Re: [RESEND PATCH v1 8/9] spmi: pmic-arb: make interrupt support optional
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Thu, 14 Oct 2021 18:17:05 -0700
-Message-ID: <163426062521.936959.3490351816619205076@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <163426014715.936959.6136985763712059359@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Fenglin Wu (2021-10-13 20:20:57)
->=20
-> On 10/14/2021 3:38 AM, Stephen Boyd wrote:
-> > Quoting Fenglin Wu (2021-10-13 01:36:54)
-> >> On 10/13/2021 1:41 AM, Stephen Boyd wrote:
-> >>> Quoting Fenglin Wu (2021-09-16 23:33:03)
-> >>>> From: David Collins <collinsd@codeaurora.org>
-> >>>>
-> >>>> Make the support of PMIC peripheral interrupts optional for
-> >>>> spmi-pmic-arb devices.  This is useful in situations where
-> >>>> SPMI address mapping is required without the need for IRQ
-> >>>> support.
-> >>>>
-> >>>> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> >>>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> >>>> ---
-> >>>>    drivers/spmi/spmi-pmic-arb.c | 45 +++++++++++++++++++++++++++----=
--------------
-> >>> Is there a binding update? Can the binding be converted to YAML as we=
-ll?
-> >> This change doesn't add/update any dtsi properties but just checking i=
-f an
-> >> existing property is present to decide if IRQ support is required, so =
-no
-> >> binding change is needed.
-> > The property is now optional in the binding. Please update the binding.
-> Right, thanks for pointing it out. I forgot that part.
-> I will update the binding. How about only update the interrupt properties=
- as
-> optional in this series then I can come up with following patch to convert
-> the binding to YAML format?
 
-Sure. The benefit of converting it to YAML is that we can use the
-checker to quickly validate the binding vs. having to read the whole
-thing to understand that it's correct. Converting an existing binding to
-YAML shouldn't be that hard.
+On 10/15/2021 9:09 AM, Stephen Boyd wrote:
+> Quoting Fenglin Wu (2021-10-13 19:26:55)
+>> On 10/14/2021 3:35 AM, Stephen Boyd wrote:
+>>> Quoting Fenglin Wu (2021-10-12 21:15:42)
+>>>> On 10/13/2021 1:46 AM, Stephen Boyd wrote:
+>>>>> Quoting Fenglin Wu (2021-09-16 23:32:56)
+>>>>>> From: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+>>>>>>
+>>>>>> The cleanup_irq() was meant to clear and mask interrupts that were
+>>>>>> left enabled in the hardware but there was no interrupt handler
+>>>>>> registered for it. Add an error print when it gets invoked.
+>>>>> Why? Don't we get the genirq spurious irq message in this scenario?
+>>>> Thanks for reviewing the change.
+>>>>
+>>>> No, there is no existing message printed out in this special case ( IRQ
+>>>> fired for not registered interrupt).
+>>> Ah I see so the irq doesn't have a flow handler? Shouldn't you call
+>>> handle_bad_irq() in this case so we get a irq descriptor print?
+>> In such case, the irq number is not valid and there won't be a valid
+>> irq_desc, hence it's not possible to call handle_bad_irq() here.
+> I mean handle_bad_irq() on the irqdesc for the spmi pmic arb chained
+> irq. Because things are not good with the chained irq.
+Okay, how about this, Update periph_interrupt() function with a return
+value, and return -EINVAL once an invalid IRQ is detected. In
+pmic_arb_chained_irq(), call handle_bad_irq() if periph_interrupt()
+returned -EINVAL.
