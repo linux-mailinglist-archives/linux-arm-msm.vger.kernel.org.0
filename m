@@ -2,99 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE3842FBAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 21:04:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BA4742FBF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 21:24:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242337AbhJOTGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 15:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35348 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238374AbhJOTGf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 15:06:35 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04D1C061765
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 12:04:28 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id s64so24962376yba.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 12:04:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bgY2omHnre5+OPH/CJvDp8gAqE7sB0quUsr7gMFbHSg=;
-        b=UUqrHd2Q604474wG7qEa98/EjkxA5vCNm01glKJRUM7mycR7JXIgQ/W69Y7+Xa9e6J
-         9MADq90IGUCvBnDx6D4S7iuQFOIPsvz9DM6GLExmtqBgboTwxx7ifgmMGbI231VPzxSj
-         /vSwLBIeBr59GFNYBHTLJLf4ojSZyWehpzs8E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bgY2omHnre5+OPH/CJvDp8gAqE7sB0quUsr7gMFbHSg=;
-        b=HchXY7I9rJoTwVYCfdOkOBvvZxPjTH3fWxAVXVmUjvYV52CC8DbbnXK6pgKFGoeG0U
-         KS2rkEOyKwztZ9DWoBjQSvdjBsehWp7cTcYUMLulatL1luYBP6lE3vUEr8dbRWeYePCJ
-         x9Twdfhqucmwt4MOnwd4ROOOHRS0Pg5deQ54IXoOvukTTTsi4gQjJjyNPnI8PWPNn9AS
-         Kq66xAXIl0Z9rhVh0mneyKZUhRtXsSCfftOftBOgJas8dUPrlfjd3sOZksumyDmnRdGU
-         0Ax7M0PYCMtlBWM/up/TMvalBQW0ZCIpeCrbzadG37ExM+5bLxsF+ydo+dK8iO4Z2pW1
-         k8Zg==
-X-Gm-Message-State: AOAM5335812ts4vXv8+RsBpgJeyxFlsq5njVScXkNc4HLl4CkE94Y9k1
-        gLTbN6Ouq+gvDkFpRMhI5OHr1UXSAvJuBPUE4vw4ug==
-X-Google-Smtp-Source: ABdhPJz2ne2UsI4ZgxozIXcbqoVsbchRM4hvYQ2yQYBZBs9eA/D+MfJ1zJ/9hsDKbaZruStaxaTRoSNhgUrqXTFQwv0=
-X-Received: by 2002:a25:7c07:: with SMTP id x7mr14980388ybc.217.1634324668227;
- Fri, 15 Oct 2021 12:04:28 -0700 (PDT)
+        id S238335AbhJOT00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 15:26:26 -0400
+Received: from ip-16.mailobj.net ([213.182.54.16]:53378 "EHLO msg-6.mailo.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242695AbhJOT0Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 15:26:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
+        t=1634325849; bh=LHI6ADKUuEjRgd/13zbEVoP8yqLJTf3ZSPQveWR4Xeg=;
+        h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
+         MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To;
+        b=UJkcX3Tm6RHULPirG9jbEdfFYGGJ66I9KBQKuzi98ISfle+pBczUkzMcwmIzRVLdT
+         MAh0MVlf/AYndTRFTFK655yY2Mgf5bP1nrEWc/pBXWK9J27FJZxPow/BYvc+lLN2ir
+         EtHptpAEuwYVBB73L+5SXGwDanjW0SDVYPlyj5SQ=
+Received: by b-3.in.mailobj.net [192.168.90.13] with ESMTP
+        via ip-206.mailobj.net [213.182.55.206]
+        Fri, 15 Oct 2021 21:24:09 +0200 (CEST)
+X-EA-Auth: U6CSUQYVFt3UVX/XYpcq7X1KrM+JbBDIgrc/Xwcsszd8MPNiA5z5prKhMOKAhZFdLHqNfioDKmq9YtwQVNP17+FoeAaZQdMb
+Date:   Fri, 15 Oct 2021 21:24:06 +0200
+From:   Claudio Suarez <cssk@net-c.es>
+To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
+        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
+Subject: Re: [PATCH 01/15] gpu/drm: make drm_add_edid_modes() consistent when
+ updating connector->display_info
+Message-ID: <YWnVVoCipTXxx8NW@gineta.localdomain>
+References: <20211015113713.630119-1-cssk@net-c.es>
+ <20211015113713.630119-2-cssk@net-c.es>
+ <YWluAX6LA2DupE+E@intel.com>
 MIME-Version: 1.0
-References: <20211008113839.v3.1.Ibada67e75d2982157e64164f1d11715d46cdc42c@changeid>
- <20211008113839.v3.2.I187502fa747bc01a1c624ccf20d985fdffe9c320@changeid> <CAD=FV=XsTb00Ax=AgrpAYurruiwZOVKZrYkphFfLLueSAio=rg@mail.gmail.com>
-In-Reply-To: <CAD=FV=XsTb00Ax=AgrpAYurruiwZOVKZrYkphFfLLueSAio=rg@mail.gmail.com>
-From:   Philip Chen <philipchen@chromium.org>
-Date:   Fri, 15 Oct 2021 12:04:17 -0700
-Message-ID: <CA+cxXhnhZ7kaDav1ykhM65ha5khCAEqvyymY8dCsRWLqnf0Lnw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: sc7180: Support Parade ps8640 edp bridge
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YWluAX6LA2DupE+E@intel.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-Could you please take a look at this patch series?
-
-On Fri, Oct 8, 2021 at 4:15 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Fri, Oct 8, 2021 at 11:39 AM Philip Chen <philipchen@chromium.org> wrote:
-> >
-> > Add a dts fragment file to support the sc7180 boards with the second
-> > source edp bridge, Parade ps8640.
-> >
-> > Signed-off-by: Philip Chen <philipchen@chromium.org>
+On Fri, Oct 15, 2021 at 03:03:13PM +0300, Ville Syrjälä wrote:
+> On Fri, Oct 15, 2021 at 01:36:59PM +0200, Claudio Suarez wrote:
+> > According to the documentation, drm_add_edid_modes
+> > "... Also fills out the &drm_display_info structure and ELD in @connector
+> > with any information which can be derived from the edid."
+> > 
+> > drm_add_edid_modes accepts a struct edid *edid parameter which may have a
+> > value or may be null. When it is not null, connector->display_info and
+> > connector->eld are updated according to the edid. When edid=NULL, only
+> > connector->eld is reset. Reset connector->display_info to be consistent
+> > and accurate.
+> > 
+> > Signed-off-by: Claudio Suarez <cssk@net-c.es>
 > > ---
-> >
-> > Changes in v3:
-> > - Set gpio32 active high
-> > - Rename edp-bridge to bridge to align with ti-sn65 dts
-> > - Remove the unused label 'aux_bus'
-> >
-> > Changes in v2:
-> > - Add the definition of edp_brij_i2c and some other properties to
-> >   ps8640 dts, making it match ti-sn65dsi86 dts better
-> >
-> >  .../qcom/sc7180-trogdor-parade-ps8640.dtsi    | 109 ++++++++++++++++++
-> >  1 file changed, 109 insertions(+)
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->
-> I think these two are good to go as long as Bjorn doesn't mind having
-> this dtsi file in the tree with no users yet. It looks nearly certain
-> that some trogdor devices will ship with it.
->
-> -Doug
+> >  drivers/gpu/drm/drm_edid.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+> > index 6325877c5fd6..6cbe09b2357c 100644
+> > --- a/drivers/gpu/drm/drm_edid.c
+> > +++ b/drivers/gpu/drm/drm_edid.c
+> > @@ -5358,10 +5358,12 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
+> >  
+> >  	if (edid == NULL) {
+> >  		clear_eld(connector);
+> > +		drm_reset_display_info(connector);
+> >  		return 0;
+> >  	}
+> >  	if (!drm_edid_is_valid(edid)) {
+> >  		clear_eld(connector);
+> > +		drm_reset_display_info(connector);
+> 
+> Looks easier if you pull both of those out from these branches and
+> just call them unconditionally at the start.
+
+After looking at the full code, I am not sure. This is the code:
+==================
+int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
+{
+        int num_modes = 0;
+        u32 quirks;
+
+        if (edid == NULL) {
+                clear_eld(connector);
+                drm_reset_display_info(connector); <--- added by me
+                return 0;
+        }
+        if (!drm_edid_is_valid(edid)) {
+                clear_eld(connector);
+                drm_reset_display_info(connector); <--- added by me
+                drm_warn(connector->dev, "%s: EDID invalid.\n",
+                         connector->name);
+                return 0;
+        }
+
+        drm_edid_to_eld(connector, edid);
+
+        quirks = drm_add_display_info(connector, edid);
+	etc...
+=================
+
+If we move those out of these branches and edid != NULL, we are executing an
+unnecessary clear_eld(connector) and an unnecessary drm_reset_display_info(connector)
+because the fields will be set in the next drm_edid_to_eld(connector, edid) and
+drm_add_display_info(connector, edid)
+
+Do we want this ?
+
+BR
+Claudio Suarez
+
+
+
