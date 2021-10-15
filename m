@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9378742F0A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 14:22:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B344A42F09B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 14:22:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238769AbhJOMYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 08:24:40 -0400
-Received: from ip-8.mailobj.net ([213.182.54.8]:43848 "EHLO msg-3.mailo.com"
+        id S238761AbhJOMYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 08:24:12 -0400
+Received: from msg-2.mailo.com ([213.182.54.12]:55258 "EHLO msg-2.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238730AbhJOMYk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 08:24:40 -0400
+        id S238730AbhJOMYL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 08:24:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634297854; bh=EXkDekAufK6goeabnufaLKQbzyG9y1fY1+pkrXICOg0=;
+        t=1634297876; bh=DVLmFijYSHc7jEHQ//GsjmH4g2DO/qzBqldU3aij94s=;
         h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
          References:MIME-Version:Content-Transfer-Encoding;
-        b=trR0cCwk0E7f5AYxYGlukPi8aiLA98MSOI+OGdYzeIw76VbqbliTgTpjqiyHxrUs3
-         tqW7FqTmOHNRialIWvv0YmRcQAGqoMelAiphnp11q/U2l+AT6kmovenU+4c1ZgbGZJ
-         cYL5fIrLlIJ+UcT91uy/qFbz6KOCdnDqbKZG+660=
-Received: by b-5.in.mailobj.net [192.168.90.15] with ESMTP
+        b=glH7KeLXKuq/CPjGR5DTtE62AczVc/abB/vxVhIZ1BeV2Vrf5RKfa6rSoJ9dEDL5D
+         H/eJdIR7L8k/w4HhHT/j3kzWspUz0invX/v6sw3NQZlWP3utFRnsCbWhxBiuiVuxrQ
+         5TKVUVYKiEPoNEGXlts+wJ5hVf72L/nvnXLuJAZc=
+Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Fri, 15 Oct 2021 13:37:34 +0200 (CEST)
-X-EA-Auth: FzfiRJoiBG/O1+TXf0H4ryZjXiL4Gihdpt7BFp6efST2EUumb9WCzcoiWHxfb1quhALH7eZIXa1z+3IqSJ0MB43ddQyGVYfM
+        Fri, 15 Oct 2021 13:37:56 +0200 (CEST)
+X-EA-Auth: bMDXeVoZb/Mstb19izi23xlNGkSVj8utTuF+Cy91Q/hUFeUHxLMp0CC+gpWKEdzucOXrmwCbro+eRnN+xHmGe63SD9vXpA0N
 From:   Claudio Suarez <cssk@net-c.es>
 To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
@@ -48,9 +48,9 @@ To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Robert Foss <robert.foss@linaro.org>,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
 Cc:     Claudio Suarez <cssk@net-c.es>
-Subject: [PATCH 03/15] drm/vc4: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Fri, 15 Oct 2021 13:37:01 +0200
-Message-Id: <20211015113713.630119-4-cssk@net-c.es>
+Subject: [PATCH 04/15] drm/radeon: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
+Date:   Fri, 15 Oct 2021 13:37:02 +0200
+Message-Id: <20211015113713.630119-5-cssk@net-c.es>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211015113713.630119-1-cssk@net-c.es>
 References: <20211015113713.630119-1-cssk@net-c.es>
@@ -61,42 +61,200 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Once EDID is parsed, the monitor HDMI support information is available
-through drm_display_info.is_hdmi. Use this value instead of calling
-drm_detect_hdmi_monitor() to avoid a second parse.
+through drm_display_info.is_hdmi. Retriving the same information is less
+efficient. Change to drm_display_info.is_hdmi
 
 This is a TODO task in Documentation/gpu/todo.rst
 
+Also, correct an inacurracy or bug in
+radeon_connector_get_edid()/radeon_connector_free_edid(). Two variables
+have EDID data:
+- struct radeon_connector.edid
+- struct drm_connector.edid_blob_ptr
+The second is updated by calling drm_connector_update_edid_property() or
+drm_get_edid() - which internally calls drm_connector_update_edid_property().
+drm_display_info.is_hdmi is updated when this function is called.
+radeon_connector_get_edid() calls drm_get_edid() to update
+drm_connector.edid_blob_ptr/drm_display_info only in some cases. Change it
+to be always up to date, so drm_display_info is always correct.
+As counterpart, reset these values in radeon_connector_free_edid().
+
+This second change is necessary for the previous one to work properly.
+
 Signed-off-by: Claudio Suarez <cssk@net-c.es>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/radeon/atombios_encoders.c |  6 +++---
+ drivers/gpu/drm/radeon/radeon_connectors.c | 20 ++++++++++++++------
+ drivers/gpu/drm/radeon/radeon_display.c    |  2 +-
+ drivers/gpu/drm/radeon/radeon_encoders.c   |  4 ++--
+ drivers/gpu/drm/radeon/radeon_mode.h       |  1 +
+ 5 files changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index b4b4653fe301..d531e4c501eb 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -182,7 +182,8 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
- 
- 			if (edid) {
- 				cec_s_phys_addr_from_edid(vc4_hdmi->cec_adap, edid);
--				vc4_hdmi->encoder.hdmi_monitor = drm_detect_hdmi_monitor(edid);
-+				vc4_hdmi->encoder.hdmi_monitor =
-+						connector->display_info.is_hdmi;
- 				kfree(edid);
+diff --git a/drivers/gpu/drm/radeon/atombios_encoders.c b/drivers/gpu/drm/radeon/atombios_encoders.c
+index 0fce73b9a646..29a140732f71 100644
+--- a/drivers/gpu/drm/radeon/atombios_encoders.c
++++ b/drivers/gpu/drm/radeon/atombios_encoders.c
+@@ -713,7 +713,7 @@ atombios_get_encoder_mode(struct drm_encoder *encoder)
+ 			if (radeon_connector->use_digital &&
+ 			    (radeon_connector->audio == RADEON_AUDIO_ENABLE))
+ 				return ATOM_ENCODER_MODE_HDMI;
+-			else if (drm_detect_hdmi_monitor(radeon_connector_edid(connector)) &&
++			else if (radeon_connector_is_hdmi_monitor(connector) &&
+ 				 (radeon_connector->audio == RADEON_AUDIO_AUTO))
+ 				return ATOM_ENCODER_MODE_HDMI;
+ 			else if (radeon_connector->use_digital)
+@@ -732,7 +732,7 @@ atombios_get_encoder_mode(struct drm_encoder *encoder)
+ 		if (radeon_audio != 0) {
+ 			if (radeon_connector->audio == RADEON_AUDIO_ENABLE)
+ 				return ATOM_ENCODER_MODE_HDMI;
+-			else if (drm_detect_hdmi_monitor(radeon_connector_edid(connector)) &&
++			else if (radeon_connector_is_hdmi_monitor(connector) &&
+ 				 (radeon_connector->audio == RADEON_AUDIO_AUTO))
+ 				return ATOM_ENCODER_MODE_HDMI;
+ 			else
+@@ -756,7 +756,7 @@ atombios_get_encoder_mode(struct drm_encoder *encoder)
+ 		} else if (radeon_audio != 0) {
+ 			if (radeon_connector->audio == RADEON_AUDIO_ENABLE)
+ 				return ATOM_ENCODER_MODE_HDMI;
+-			else if (drm_detect_hdmi_monitor(radeon_connector_edid(connector)) &&
++			else if (radeon_connector_is_hdmi_monitor(connector) &&
+ 				 (radeon_connector->audio == RADEON_AUDIO_AUTO))
+ 				return ATOM_ENCODER_MODE_HDMI;
+ 			else
+diff --git a/drivers/gpu/drm/radeon/radeon_connectors.c b/drivers/gpu/drm/radeon/radeon_connectors.c
+index 607ad5620bd9..0200f094467c 100644
+--- a/drivers/gpu/drm/radeon/radeon_connectors.c
++++ b/drivers/gpu/drm/radeon/radeon_connectors.c
+@@ -130,7 +130,7 @@ int radeon_get_monitor_bpc(struct drm_connector *connector)
+ 	case DRM_MODE_CONNECTOR_DVII:
+ 	case DRM_MODE_CONNECTOR_HDMIB:
+ 		if (radeon_connector->use_digital) {
+-			if (drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++			if (radeon_connector_is_hdmi_monitor(connector)) {
+ 				if (connector->display_info.bpc)
+ 					bpc = connector->display_info.bpc;
  			}
+@@ -138,7 +138,7 @@ int radeon_get_monitor_bpc(struct drm_connector *connector)
+ 		break;
+ 	case DRM_MODE_CONNECTOR_DVID:
+ 	case DRM_MODE_CONNECTOR_HDMIA:
+-		if (drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++		if (radeon_connector_is_hdmi_monitor(connector)) {
+ 			if (connector->display_info.bpc)
+ 				bpc = connector->display_info.bpc;
  		}
-@@ -212,10 +213,9 @@ static int vc4_hdmi_connector_get_modes(struct drm_connector *connector)
- 	if (!edid)
- 		return -ENODEV;
+@@ -147,7 +147,7 @@ int radeon_get_monitor_bpc(struct drm_connector *connector)
+ 		dig_connector = radeon_connector->con_priv;
+ 		if ((dig_connector->dp_sink_type == CONNECTOR_OBJECT_ID_DISPLAYPORT) ||
+ 		    (dig_connector->dp_sink_type == CONNECTOR_OBJECT_ID_eDP) ||
+-		    drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++		    radeon_connector_is_hdmi_monitor(connector)) {
+ 			if (connector->display_info.bpc)
+ 				bpc = connector->display_info.bpc;
+ 		}
+@@ -171,7 +171,7 @@ int radeon_get_monitor_bpc(struct drm_connector *connector)
+ 		break;
+ 	}
  
--	vc4_encoder->hdmi_monitor = drm_detect_hdmi_monitor(edid);
--
- 	drm_connector_update_edid_property(connector, edid);
- 	ret = drm_add_edid_modes(connector, edid);
-+	vc4_encoder->hdmi_monitor = connector->display_info.is_hdmi;
- 	kfree(edid);
+-	if (drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++	if (radeon_connector_is_hdmi_monitor(connector)) {
+ 		/* hdmi deep color only implemented on DCE4+ */
+ 		if ((bpc > 8) && !ASIC_IS_DCE4(rdev)) {
+ 			DRM_DEBUG("%s: HDMI deep color %d bpc unsupported. Using 8 bpc.\n",
+@@ -348,6 +348,8 @@ static void radeon_connector_get_edid(struct drm_connector *connector)
+ 			/* some servers provide a hardcoded edid in rom for KVMs */
+ 			radeon_connector->edid = radeon_bios_get_hardcoded_edid(rdev);
+ 		}
++		if (radeon_connector->edid)
++			drm_connector_update_edid_property(connector, radeon_connector->edid);
+ 	}
+ }
  
- 	if (vc4_hdmi->disable_4kp60) {
+@@ -358,6 +360,7 @@ static void radeon_connector_free_edid(struct drm_connector *connector)
+ 	if (radeon_connector->edid) {
+ 		kfree(radeon_connector->edid);
+ 		radeon_connector->edid = NULL;
++		drm_connector_update_edid_property(connector, NULL);
+ 	}
+ }
+ 
+@@ -1496,7 +1499,7 @@ static enum drm_mode_status radeon_dvi_mode_valid(struct drm_connector *connecto
+ 		    (radeon_connector->connector_object_id == CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D) ||
+ 		    (radeon_connector->connector_object_id == CONNECTOR_OBJECT_ID_HDMI_TYPE_B))
+ 			return MODE_OK;
+-		else if (ASIC_IS_DCE6(rdev) && drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++		else if (ASIC_IS_DCE6(rdev) && radeon_connector_is_hdmi_monitor(connector)) {
+ 			/* HDMI 1.3+ supports max clock of 340 Mhz */
+ 			if (mode->clock > 340000)
+ 				return MODE_CLOCK_HIGH;
+@@ -1649,6 +1652,11 @@ bool radeon_connector_is_dp12_capable(struct drm_connector *connector)
+ 	return false;
+ }
+ 
++bool radeon_connector_is_hdmi_monitor(struct drm_connector *connector)
++{
++	return connector->display_info.is_hdmi;
++}
++
+ static enum drm_connector_status
+ radeon_dp_detect(struct drm_connector *connector, bool force)
+ {
+@@ -1804,7 +1812,7 @@ static enum drm_mode_status radeon_dp_mode_valid(struct drm_connector *connector
+ 		    (radeon_dig_connector->dp_sink_type == CONNECTOR_OBJECT_ID_eDP)) {
+ 			return radeon_dp_mode_valid_helper(connector, mode);
+ 		} else {
+-			if (ASIC_IS_DCE6(rdev) && drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++			if (ASIC_IS_DCE6(rdev) && radeon_connector_is_hdmi_monitor(connector)) {
+ 				/* HDMI 1.3+ supports max clock of 340 Mhz */
+ 				if (mode->clock > 340000)
+ 					return MODE_CLOCK_HIGH;
+diff --git a/drivers/gpu/drm/radeon/radeon_display.c b/drivers/gpu/drm/radeon/radeon_display.c
+index 573154268d43..0d1f79156ab2 100644
+--- a/drivers/gpu/drm/radeon/radeon_display.c
++++ b/drivers/gpu/drm/radeon/radeon_display.c
+@@ -1720,7 +1720,7 @@ bool radeon_crtc_scaling_mode_fixup(struct drm_crtc *crtc,
+ 			    (!(mode->flags & DRM_MODE_FLAG_INTERLACE)) &&
+ 			    ((radeon_encoder->underscan_type == UNDERSCAN_ON) ||
+ 			     ((radeon_encoder->underscan_type == UNDERSCAN_AUTO) &&
+-			      drm_detect_hdmi_monitor(radeon_connector_edid(connector)) &&
++			      radeon_connector_is_hdmi_monitor(connector) &&
+ 			      is_hdtv_mode(mode)))) {
+ 				if (radeon_encoder->underscan_hborder != 0)
+ 					radeon_crtc->h_border = radeon_encoder->underscan_hborder;
+diff --git a/drivers/gpu/drm/radeon/radeon_encoders.c b/drivers/gpu/drm/radeon/radeon_encoders.c
+index 46549d5179ee..8f65fa744f48 100644
+--- a/drivers/gpu/drm/radeon/radeon_encoders.c
++++ b/drivers/gpu/drm/radeon/radeon_encoders.c
+@@ -383,7 +383,7 @@ bool radeon_dig_monitor_is_duallink(struct drm_encoder *encoder,
+ 	case DRM_MODE_CONNECTOR_HDMIB:
+ 		if (radeon_connector->use_digital) {
+ 			/* HDMI 1.3 supports up to 340 Mhz over single link */
+-			if (ASIC_IS_DCE6(rdev) && drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++			if (ASIC_IS_DCE6(rdev) && radeon_connector_is_hdmi_monitor(connector)) {
+ 				if (pixel_clock > 340000)
+ 					return true;
+ 				else
+@@ -408,7 +408,7 @@ bool radeon_dig_monitor_is_duallink(struct drm_encoder *encoder,
+ 			return false;
+ 		else {
+ 			/* HDMI 1.3 supports up to 340 Mhz over single link */
+-			if (ASIC_IS_DCE6(rdev) && drm_detect_hdmi_monitor(radeon_connector_edid(connector))) {
++			if (ASIC_IS_DCE6(rdev) && radeon_connector_is_hdmi_monitor(connector)) {
+ 				if (pixel_clock > 340000)
+ 					return true;
+ 				else
+diff --git a/drivers/gpu/drm/radeon/radeon_mode.h b/drivers/gpu/drm/radeon/radeon_mode.h
+index fe16f140a6b4..e591179d5e5d 100644
+--- a/drivers/gpu/drm/radeon/radeon_mode.h
++++ b/drivers/gpu/drm/radeon/radeon_mode.h
+@@ -739,6 +739,7 @@ extern bool radeon_dig_monitor_is_duallink(struct drm_encoder *encoder,
+ extern u16 radeon_encoder_get_dp_bridge_encoder_id(struct drm_encoder *encoder);
+ extern u16 radeon_connector_encoder_get_dp_bridge_encoder_id(struct drm_connector *connector);
+ extern bool radeon_connector_is_dp12_capable(struct drm_connector *connector);
++bool radeon_connector_is_hdmi_monitor(struct drm_connector *connector);
+ extern int radeon_get_monitor_bpc(struct drm_connector *connector);
+ 
+ extern struct edid *radeon_connector_edid(struct drm_connector *connector);
 -- 
 2.33.0
 
