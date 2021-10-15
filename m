@@ -2,262 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC41D42E57A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:51:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF84442E57F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231373AbhJOAxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 20:53:51 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:50057 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229693AbhJOAxu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 20:53:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634259105; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=X/n96l6/6gzU38IsmnzyVmbcy6Kb1syRDS8t9lY4vOM=; b=PczANRNMdMGQaFzpfEm0ikiGeKhdDo012OUWG82Y31TftAtrFNg6WMaIGOCWcyEQzaT7vgbQ
- B1imwIBXqxNzbw13aAgDjDGSepvuG5te1o6RJqmn6yrV4cwHf0ofUMPgtjxvtp7gnpAKfo7i
- 3gkedDVL3EhAQ1LIEd0S3ZdOTqU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6168d07cf3e5b80f1f344bec (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 15 Oct 2021 00:51:08
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1C93CC43616; Fri, 15 Oct 2021 00:51:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62B76C4338F;
-        Fri, 15 Oct 2021 00:51:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 62B76C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Date:   Thu, 14 Oct 2021 17:51:01 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc:     Wesley Cheng <wcheng@codeaurora.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] usb: dwc3: gadget: Skip resizing EP's TX FIFO if already
- resized
-Message-ID: <20211015005101.GA16586@jackp-linux.qualcomm.com>
-References: <20210909083120.15350-1-jackp@codeaurora.org>
- <6a4bb7a9-2c63-5e1e-f4fc-a5bbc7aaa168@synopsys.com>
- <db0664a9-575f-1c6a-2efc-ec8372e2f1d4@codeaurora.org>
- <6538dd76-5dea-1e31-9459-657898be6d8f@synopsys.com>
- <926df659-7e31-9504-9752-a206f1eb8eaf@codeaurora.org>
- <56339fa2-e476-0f5b-9625-7016294e6be7@synopsys.com>
+        id S231779AbhJOA4O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 20:56:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40116 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232013AbhJOA4N (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Oct 2021 20:56:13 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6AF1C061753
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:54:07 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id y15so34557504lfk.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EzSOlg8FhBLL7uosP6twAnna/CbUWSXhwXOgPejU6Eg=;
+        b=iOff/qLNaQaDTpK3SPHPKs03aW8yJPxrKCsraiu1ky0jgf80c06HghJc9MdmIc6ENi
+         9kab7G0dIJlDCqT42N0AWfh93mdc0HFWeiRL/TQW/n6CLYve6/b7abRy7uDvnq1JqVOX
+         0I5b4XiQOj6uGo2goLRp3e/MknUfxel157f/0poNxb/JMVA6kZrO9RXZF6EuM1z7XKTz
+         7ThIgZ1ZJaW/zyXlYocwDamntUtgQs1qV4wFUUXNDh7Mo6teLw0UC5PMBHh4MckvmP+u
+         S/VrCURIMEUuRH23Pp0mNFRVUg2QCf4C5CuP28whyVaHFi1PhI64T3QXGY3cLtRMsAvE
+         732w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EzSOlg8FhBLL7uosP6twAnna/CbUWSXhwXOgPejU6Eg=;
+        b=uUTIQRxen3rueKU4iizLPb4EJmDKDfbgux9DGpnY7YHJpw/0fmElV4WpPPgXCBrTwI
+         RA6kWVcUEMuxBhRhAqdL73kRRAFVRfv7cs5fhRmajrRrdIa3mQlL8WClo/CN0GXwcM1/
+         QmIQLRnNocGwj6Fc4qdM7pi9vG66vY4TA4eWm17nXfrx64KPZq3RY8ARfkVtBPhYBRLV
+         ZAIYZpT0hFl4otZY/e0c+KWNCOcPLAfDMM9cRrwZ7gL0rdQwnK316dwd1AupALlWHK9p
+         JCxd3mjtL8Yoe8+gYFOtrDpiY1gjUdvaiiMJw5XgB2hf/Hatrle2Zyad3pA8T/Ty7v0L
+         mpDQ==
+X-Gm-Message-State: AOAM531pVaaeUqj7m4dbC7WbxkLk6STI/h27Vc70Q7ZRAPcqhHmGSOW6
+        ootilVP1bPcgJe/E4mLPpyLZRrYhOGcS/A==
+X-Google-Smtp-Source: ABdhPJz9Q3V063lFfUwUVefDHnSyQ4R/kEJ1zqwcEvYH+kpBozpZYS8IYWmFYKIm/lov9wG72nHIgA==
+X-Received: by 2002:a2e:b17c:: with SMTP id a28mr9361641ljm.398.1634259246036;
+        Thu, 14 Oct 2021 17:54:06 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d14sm387721lfb.210.2021.10.14.17.54.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Oct 2021 17:54:05 -0700 (PDT)
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm prima/pronto drivers
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20211008192840.3593362-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <69309ba8-56f5-e62b-a370-cac8605d0220@linaro.org>
+Date:   Fri, 15 Oct 2021 03:54:02 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <56339fa2-e476-0f5b-9625-7016294e6be7@synopsys.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20211008192840.3593362-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 08, 2021 at 12:07:20AM +0000, Thinh Nguyen wrote:
-> Wesley Cheng wrote:
-> > 
-> > 
-> > On 9/10/2021 8:08 PM, Thinh Nguyen wrote:
-> >> Wesley Cheng wrote:
-> >>>
-> >>>
-> >>> On 9/9/2021 6:15 PM, Thinh Nguyen wrote:
-> >>>> Jack Pham wrote:
-> >>>>> Some functions may dynamically enable and disable their endpoints
-> >>>>> regularly throughout their operation, particularly when Set Interface
-> >>>>> is employed to switch between Alternate Settings.  For instance the
-> >>>>> UAC2 function has its respective endpoints for playback & capture
-> >>>>> associated with AltSetting 1, in which case those endpoints would not
-> >>>>> get enabled until the host activates the AltSetting.  And they
-> >>>>> conversely become disabled when the interfaces' AltSetting 0 is
-> >>>>> chosen.
-> >>>>>
-> >>>>> With the DWC3 FIFO resizing algorithm recently added, every
-> >>>>> usb_ep_enable() call results in a call to resize that EP's TXFIFO,
-> >>>>> but if the same endpoint is enabled again and again, this incorrectly
-> >>>>> leads to FIFO RAM allocation exhaustion as the mechanism did not
-> >>>>> account for the possibility that endpoints can be re-enabled many
-> >>>>> times.
-> >>>>>
-> >>>>> Example log splat:
-> >>>>>
-> >>>>> 	dwc3 a600000.dwc3: Fifosize(3717) > RAM size(3462) ep3in depth:217973127
-> >>>>> 	configfs-gadget gadget: u_audio_start_capture:521 Error!
-> >>>>> 	dwc3 a600000.dwc3: request 000000000be13e18 was not queued to ep3in
-> >>>>>
-> >>>>> This is easily fixed by bailing out of dwc3_gadget_resize_tx_fifos()
-> >>>>> if an endpoint is already resized, avoiding the calculation error
-> >>>>> resulting from accumulating the EP's FIFO depth repeatedly.
-> >>>>>
-> >>>>> Fixes: 9f607a309fbe9 ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
-> >>>>> Signed-off-by: Jack Pham <jackp@codeaurora.org>
-> >>>>> ---
-> >>>>>  drivers/usb/dwc3/gadget.c | 4 ++++
-> >>>>>  1 file changed, 4 insertions(+)
-> >>>>>
-> >>>>> diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-> >>>>> index 804b50548163..c647c76d7361 100644
-> >>>>> --- a/drivers/usb/dwc3/gadget.c
-> >>>>> +++ b/drivers/usb/dwc3/gadget.c
-> >>>>> @@ -747,6 +747,10 @@ static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
-> >>>>>  	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
-> >>>>>  		return 0;
-> >>>>>  
-> >>>>> +	/* bail if already resized */
-> >>>>> +	if (dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1)))
-> >>>>> +		return 0;
-> >>>>> +
-> >>>>>  	ram1_depth = DWC3_RAM1_DEPTH(dwc->hwparams.hwparams7);
-> >>>>>  
-> >>>>>  	if ((dep->endpoint.maxburst > 1 &&
-> >>>>>
-> >>>
-> >>> Hi Thinh,
-> >>>
-> >>>>
-> >>>> This seems like a workaround more than a fix. As previously pointed out,
-> >>>> there will be problems when there are multiple alternate setting
-> >>>> interface [2]. If we're doing this way, are we properly allocating the
-> >>>> fifo size for the alternate setting that requires the most fifo size and
-> >>>> not just the first alt-setting 0? Also different alt-setting can have
-> >>>
-> >>> Each alt interface will call usb_ep_autoconfig() which should be
-> >>> assigned different endpoint numbers.  This would mean that if alt intf#0
-> >>> gets selected, and EP is enabled, then we will resize the TXFIFO and map
-> >>> that FIFO to the physical EP.  Then when/if the host requests the other
-> >>> alt intf#1, and that calls EP enable, then the logic will then attempt
-> >>> to resize based on the parameters, and again map that FIFO to the
-> >>> physical EP. (since we call autoconfig on all interfaces, they should be
-> >>> assigned different endpoints)
-> > 
-> > Hi Thinh,
-> > 
-> >>
-> >> That's not true. Different alt-settings of an interface can share
-> >> endpoint numbers. This is often the case for UASP driver where
-> >> alt-setting 0 is for BOT protocol and alt-setting 1 is UASP. When we
-> >> switch alt-setting, we disable the current endpoints and enable the
-> >> old/new ones.
-> >>
-> > 
-> > Thanks for pointing that use case out.  Maybe we can consider seeing if
-> > we can walk through all alternate interfaces for a particular function,
-> > and resize for the largest setting?  That might be a possible
-> > improvement made to the check_config() function.  Let me start makign
-> > the changes for this and verifying it.
-> > 
+On 08/10/2021 22:28, Bjorn Andersson wrote:
+> The Qualcomm prima/pronto drivers consists of a remoteproc driver boot
+> the combined WiFi and Bluetooth firmware on the related co-processor, a
+> control driver to load calibration and settings firmware, the wcn36xx
+> WiFi driver and the SMD based Bluetooth driver.
 > 
-> Thanks!
+> Enable these in the defconfig to provide Bluetooth and WiFi on devices
+> such as the Qualcomm Dragonboard 410c.
 > 
-> Currently the gadget configures early and informs the gadget driver of
-> how many endpoints are available, which doesn't leave much room for the
-> gadget to do optimization/reconfiguration.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   arch/arm64/configs/defconfig | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> If there's an option for the composite layer to inform the controller
-> driver of the entire configuration, then we can take advantage of more
-> dwc3 controller capability/flexibility (not just resizing txfifo).
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 39a448e9edd3..c39c96f14208 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -201,6 +201,7 @@ CONFIG_BT_HCIUART=m
+>   CONFIG_BT_HCIUART_LL=y
+>   CONFIG_BT_HCIUART_BCM=y
+>   CONFIG_BT_HCIUART_QCA=y
+> +CONFIG_BT_QCOMSMD=m
+>   CONFIG_CFG80211=m
+>   CONFIG_MAC80211=m
+>   CONFIG_MAC80211_LEDS=y
+> @@ -380,6 +381,7 @@ CONFIG_USB_NET_MCS7830=m
+>   CONFIG_ATH10K=m
+>   CONFIG_ATH10K_PCI=m
+>   CONFIG_ATH10K_SNOC=m
+> +CONFIG_WCN36XX=m
+>   CONFIG_BRCMFMAC=m
+>   CONFIG_MWIFIEX=m
+>   CONFIG_MWIFIEX_PCIE=m
+> @@ -1020,6 +1022,8 @@ CONFIG_REMOTEPROC=y
+>   CONFIG_QCOM_Q6V5_MSS=m
+>   CONFIG_QCOM_Q6V5_PAS=m
+>   CONFIG_QCOM_SYSMON=m
+> +CONFIG_QCOM_WCNSS_PIL=m
+> +CONFIG_RPMSG_CHAR=m
+>   CONFIG_RPMSG_QCOM_GLINK_RPM=y
+>   CONFIG_RPMSG_QCOM_GLINK_SMEM=m
+>   CONFIG_RPMSG_QCOM_SMD=y
+> @@ -1043,6 +1047,7 @@ CONFIG_QCOM_SMD_RPM=y
+>   CONFIG_QCOM_SMP2P=y
+>   CONFIG_QCOM_SMSM=y
+>   CONFIG_QCOM_SOCINFO=m
+> +CONFIG_QCOM_WCNSS_CTRL=m
+>   CONFIG_QCOM_APR=m
+>   CONFIG_ARCH_R8A774A1=y
+>   CONFIG_ARCH_R8A774B1=y
 > 
-> >>>
-> >>> I agree that there is currently a limitation because we are going to
-> >>> reserve at minimum 1 FIFO for BOTH alt interfaces, even though there is
-> >>> only 1 interface active at a time.  The missing logic that we might be
-> >>> missing is seeing how we can re-purpose the FIFO that is being disabled.
-> >>>  However, I think Jack's fix here would be applicable to the improvement
-> >>> in logic to re-use/re-assign FIFO space allocated by disabled EPs also.
-> >>>
-> >>
-> >> Improvement is always great. I just hope we don't just stop where we are
-> >> now. Since you're working on this feature at the moment, it would be
-> >> good to also resolve some of the outstanding issues as Jack's fix seems
-> >> to be incomplete.
-> >>
-> > 
-> > If we implement the improvement mentioned above, I think Jack's fix will
-> > be applicable there as well.  If we resize for the largest alternate
-> > interface, then there would be no reason for us to resize again.
-> > 
-> As long as you have the above as part of your roadmap, I don't mind
-> Jack's fix for now.
 
-Thanks for your input as always Thinh.  Does the patch still look ok in
-its current state?  Last time I had responded to Felipe that I would try
-to entertain adding an explicit flag to keep track of whether an EP had
-been resized yet or not.  When trying to implement this as another
-DWC3_EP_* bit for dep->flags we'd then need to retain this flag across
-ep_disable/enable calls, so it looks a tiny bit cumbersome because
-dep->flags isn't neatly 0 anymore :-P.
 
-So ep_disable() would need to look something like this:
-
- static int __dwc3_gadget_ep_disable(struct dwc3_ep *dep)
- {
- ...
-	dep->stream_capable = false;
-	dep->type = 0;
--	dep->flags = 0;
-+	dep->flags &= DWC3_EP_TXFIFO_RESIZED;
-
-	return 0;
- }
-
-The flag would be initially set in dwc3_gadget_resize_tx_fifos() and
-also would need to be checked there as well to avoid re-resizing.  It
-would then get cleared in dwc3_gadget_clear_tx_fifos().
-
-Is this still preferable to the current patch with just the single
-register read?
-
-> Depends on your implementation, Jack's fix may not
-> be applicable. Regardless, ultimately it's up to Felipe. :)
-
-Felipe, what do you think?  Wesley is already working on improving the
-scheme to better handle endpoints that get activated only when switching
-AltSettings.  But I'd still like to get my patch in as an incremental
-fix though since it does take care of an existing issue with disabling
-and re-enabling endpoints within the same Configuration & AltSetting.
-
-Thanks,
-Jack
-
-> 
-> >>>> different endpoints, the logic handling this may not be simple.
-> >>>>
-> >>>> There are a few review comments for Wesley. Hopefully they get resolved
-> >>>> eventually.
-> >>>
-> >>> As mentioned above, there is a lot of considerations we need to make
-> >>> when looking at the amount of combinations that can be done for a USB
-> >>> configuration.  We obviously want to see if we can find a way to
-> >>> re-allocate FIFO space, but it gets complicated if we run into a
-> >>> "fragmented" situation where the RAM associated to the EP being
-> >>> re-allocated is in between 2 that are active.
-> >>>
-> >>
-> >> I'd like to have this feature added, and it would be great if it can
-> >> overcome some of the current limitations. At the moment, if this feature
-> >> is enabled, it may improve some applications, but it may also cause
-> >> regression for some. As I noted, the fix may not be simple, but I hope
-> >> this feature can work for various applications and not just a limited few.
-> >>
-> > 
-> > Agreed, there are some use cases that we may not consider in our
-> > platform, so I appreciate the input.
-> > 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+With best wishes
+Dmitry
