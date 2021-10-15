@@ -2,56 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 130B142E8E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 08:21:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97A7A42E929
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 08:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231152AbhJOGXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 02:23:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36850 "EHLO mail.kernel.org"
+        id S235408AbhJOGla (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 02:41:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56990 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233933AbhJOGXX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 02:23:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 214B66115C;
-        Fri, 15 Oct 2021 06:21:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634278876;
-        bh=qRv9HnO/WCy+tSs0T6xdlIGgrvA9/hMUgHOZT0yHbvs=;
+        id S229716AbhJOGla (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 02:41:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B89B861184;
+        Fri, 15 Oct 2021 06:39:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1634279964;
+        bh=eHMP1L5p7U9JjkTgxLAgLmWgChOZElqg0ECTI25pFiM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BKEcA7eCPrDA3hWs3kBxE9ri/0VkVTWhbj9slM7phL4UIAB+yhghPsEvWTOEHlGhl
-         X+qxL2lxmeOJB4PZfg2O75wmvki/06jO9GQYzNbwjzJwFOd198U7L+DkPyEtGOWL47
-         JGS2QPfQLe9ycMSTe8aKg/AezeK/4kN32kyByHcQNbu35Gj0q8iC8hI1yqsPwc9cn2
-         dZYaIa7Y074fhe9LfiV8ujpva5whxk2rrFfTWUy1SP+38DZEDS0PXejs62ubJfMCQB
-         zkivBiZ5ixa62MYlkIX5pWktxxHUX50D45/8Wi9sgWrFAFjuUtWm3/PjcDOnu3d6zZ
-         x3mkTJGhv6ajA==
-Date:   Fri, 15 Oct 2021 11:51:00 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm prima/pronto drivers
-Message-ID: <YWkdzAMTuim5kCx3@matsya>
-References: <20211008192840.3593362-1-bjorn.andersson@linaro.org>
+        b=vH5xyVPI7ANQGLw7FNvgZFKqHpopiBvQMnPds7bxMgnbwjA8XxmviHtF/zfnjwhNU
+         G+6HLYm08gIDuOVCObdDG0AXRoBnmlvhxa2cYdTI/5DF97VTndUoIbYg+t2Ivojhxv
+         cDly48omx4tvWBlX4moZM+FA+Sex7vXvTIsISXTU=
+Date:   Fri, 15 Oct 2021 08:39:20 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Peter Chen <peter.chen@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@st.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Lionel Debieve <lionel.debieve@st.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin =?iso-8859-1?Q?J=FCcker?= <martin.juecker@gmail.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier Moysan <olivier.moysan@st.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
+Message-ID: <YWkiGGBKOVokBye9@kroah.com>
+References: <20210813195228.2003500-1-mka@chromium.org>
+ <YUoRq1RrOIoiBJ5+@google.com>
+ <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211008192840.3593362-1-bjorn.andersson@linaro.org>
+In-Reply-To: <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08-10-21, 12:28, Bjorn Andersson wrote:
-> The Qualcomm prima/pronto drivers consists of a remoteproc driver boot
-> the combined WiFi and Bluetooth firmware on the related co-processor, a
-> control driver to load calibration and settings firmware, the wcn36xx
-> WiFi driver and the SMD based Bluetooth driver.
+On Thu, Oct 14, 2021 at 02:38:55PM -0700, Doug Anderson wrote:
+> Hi,
 > 
-> Enable these in the defconfig to provide Bluetooth and WiFi on devices
-> such as the Qualcomm Dragonboard 410c.
+> On Tue, Sep 21, 2021 at 10:09 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > Hi Greg,
+> >
+> > are there any actions pending or can this land in usb-testing?
+> >
+> > I confirmed that this series can be rebased on top of v5.15-rc2
+> > without conflicts.
+> 
+> I'm quite interested to know what the next action items are, too. This
+> is one of the very few patches we have for trogdor (excluding MIPI
+> camera, which is a long story) that we're carrying downstream, so I'm
+> keenly interested in making sure it's unblocked (if, indeed, it's
+> blocked on anything).
+> 
+> If folks feel that this needs more review eyes before landing again
+> then I'll try to find some time in the next week or two. If it's just
+> waiting for the merge window to open/close so it can have maximal bake
+> time, that's cool too. Please yell if there's something that I can do
+> to help, though! :-)
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+I would love more review-eyes on this please.
 
--- 
-~Vinod
+It's in my queue to review, I just need to spend the time on it, sorry
+for the delay.
+
+greg k-h
