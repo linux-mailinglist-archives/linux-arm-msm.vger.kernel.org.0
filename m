@@ -2,129 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDAF742FAEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 20:25:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66DE142FB5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 20:45:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242444AbhJOS1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 14:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbhJOS1J (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 14:27:09 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A3EC061570
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 11:25:03 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id bi9so9262572qkb.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 11:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VuezPB0Kp+8kHQA7Wm3i0oiOLoiUrP9cyKbJStrIERY=;
-        b=IVpo3HDaZMp7KHMTuXPZHd0U/A6GToJW+zUIihY3lndppKm3Hl7+KKHTZ/ld17lOeo
-         gZ0xcZoEvpcg3GqqbVhGNRLGpyWwEEXUEXOMTiC+4EUBOjeCpzp8HjqOuylx1300szsf
-         2P/s4oK7puQONzcwRo3zUGN+KqiAvx9j5oM7iHoj3HvOE3oqr6E7d4xgq765mCRVptu+
-         9rN6gXzNJfW/Gm2M9/OWpFcbRgskkFeVuTATRSHR08B3+bKp3tOWy0cTpil1gkLrI+AA
-         EfkGg5RL3k6isZI4soTQT8WyQcpEmbncmjW4KMMXbCDBSsSQojsFjiTfZdJv4ZQ9jzS9
-         +ypQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VuezPB0Kp+8kHQA7Wm3i0oiOLoiUrP9cyKbJStrIERY=;
-        b=Q7bTRGoGk/dcF1vIrHO/mjbuLwBnV7rYUItRbM4ckvEgQsXzBQ0e3XAJX8CH6eMZ9a
-         EeNddmJdxJ2ZcL2H+g8D4a7JJW3xRdbYy3UYvKWev94bumJweN3gJb4sOSmdZssMiMyz
-         HdBNDt4FzNbcRC/OOTiqnS3RYCL1+umVvjoFvaAOIYPKlcWCkIYgwPgiS39f08Jk15ll
-         zH06i9D52q2Af8zufvmTyS/jJ4PBzuQUbjVS9M3XogHik8Favvb7bnvaIGrwFMCCv9Pl
-         ZrETf1GPn6+Ea+nTyUW13a8EQOjeAUvE2HhqUk9eu19DBaDFemD/gCOP68WkPdl/NKgc
-         MSxg==
-X-Gm-Message-State: AOAM533W0xLJa5egp0labcXe0JrcvrsPbPMmH91MJKs3Kh4ErG6tNNBP
-        UcVl0UrTwMgqNl/OOQl+Aqr7d+FQqRG+iWWRbAqLBg==
-X-Google-Smtp-Source: ABdhPJy8eNYT/b5aHU32daC4hukb65DAURzwczXTD5i8pfp8xM2Wdva75qdOi9M+duUayeYhsXaxTyQk1ZgKTK2bWgU=
-X-Received: by 2002:a37:9a83:: with SMTP id c125mr11044211qke.186.1634322302244;
- Fri, 15 Oct 2021 11:25:02 -0700 (PDT)
+        id S241448AbhJOSrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 14:47:07 -0400
+Received: from msg-1.mailo.com ([213.182.54.11]:49424 "EHLO msg-1.mailo.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241405AbhJOSrG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 14:47:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
+        t=1634323490; bh=GH6/gUCiShU+F5SqmxsR4+La/OM2Q/v8Xu77xbZRtEI=;
+        h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
+         MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To;
+        b=iS4Bu/dr4YsBsd4N3foSlzvu2+8B1KjImGHH0E7aCxLtA8G3qywnAvJtd24Fi/vQe
+         gQWmJ7Dzs4IfVYLYObWC1Xc4gS8atxgQO6O2HEIOGUFHuwIS5iXfkeuEUx4usSreLp
+         Qd/7etR7d+27siL13nnD/vntfKFtUGTvbHaB5anE=
+Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
+        via ip-206.mailobj.net [213.182.55.206]
+        Fri, 15 Oct 2021 20:44:50 +0200 (CEST)
+X-EA-Auth: T0JFquBunFvgzGD4hDlMVaBd6t9O7J/bYpv2pxbJaZ0EDxqUCUY8D5LdZVbpM/ygJIFdRwSik6v8XCP0wRcT3NhVaxr9JWRH
+Date:   Fri, 15 Oct 2021 20:44:47 +0200
+From:   Claudio Suarez <cssk@net-c.es>
+To:     Jani Nikula <jani.nikula@linux.intel.com>
+Cc:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
+        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
+        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
+Subject: Re: [Intel-gfx] [PATCH 15/15] drm/i915: replace
+ drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
+Message-ID: <YWnMH/V1wRrAyYR9@gineta.localdomain>
+References: <20211015113713.630119-1-cssk@net-c.es>
+ <20211015113713.630119-16-cssk@net-c.es>
+ <87a6jav4n3.fsf@intel.com>
+ <YWl7D9Qnt/Ysk2JI@intel.com>
+ <874k9iuxit.fsf@intel.com>
 MIME-Version: 1.0
-References: <20211001123115.GE2283@kili> <144b8ba5-82db-fc90-1d0f-5a8e2ce45c90@codeaurora.org>
-In-Reply-To: <144b8ba5-82db-fc90-1d0f-5a8e2ce45c90@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 15 Oct 2021 21:24:51 +0300
-Message-ID: <CAA8EJpoDfWRT48J=G5-VQcHC6Zg8D-0VujjnjQyvHD0PQ=SoKQ@mail.gmail.com>
-Subject: Re: [bug report] drm/msm: dsi: Handle dual-channel for 6G as well
-To:     Jessica Zhang <jesszhan@codeaurora.org>
-Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874k9iuxit.fsf@intel.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 15 Oct 2021 at 04:43, Jessica Zhang <jesszhan@codeaurora.org> wrote:
->
-> Hey Dan,
->
-> On 10/1/2021 5:31 AM, Dan Carpenter wrote:
-> > Hello Sean Paul,
+On Fri, Oct 15, 2021 at 06:18:34PM +0300, Jani Nikula wrote:
+> On Fri, 15 Oct 2021, Ville Syrjälä <ville.syrjala@linux.intel.com> wrote:
+> > On Fri, Oct 15, 2021 at 03:44:48PM +0300, Jani Nikula wrote:
+> >> On Fri, 15 Oct 2021, Claudio Suarez <cssk@net-c.es> wrote:
+> >> > Once EDID is parsed, the monitor HDMI support information is available
+> >> > through drm_display_info.is_hdmi. Retriving the same information with
+> >> > drm_detect_hdmi_monitor() is less efficient. Change to
+> >> > drm_display_info.is_hdmi where possible.
+> >> >
+> >> > This is a TODO task in Documentation/gpu/todo.rst
+> >> >
+> >> > Signed-off-by: Claudio Suarez <cssk@net-c.es>
+> >> > ---
+> >> >  drivers/gpu/drm/i915/display/intel_connector.c | 5 +++++
+> >> >  drivers/gpu/drm/i915/display/intel_connector.h | 1 +
+> >> >  drivers/gpu/drm/i915/display/intel_hdmi.c      | 2 +-
+> >> >  drivers/gpu/drm/i915/display/intel_sdvo.c      | 3 ++-
+> >> >  4 files changed, 9 insertions(+), 2 deletions(-)
+> >> >
+> >> > diff --git a/drivers/gpu/drm/i915/display/intel_connector.c b/drivers/gpu/drm/i915/display/intel_connector.c
+> >> > index 9bed1ccecea0..3346b55df6e1 100644
+> >> > --- a/drivers/gpu/drm/i915/display/intel_connector.c
+> >> > +++ b/drivers/gpu/drm/i915/display/intel_connector.c
+> >> > @@ -213,6 +213,11 @@ int intel_ddc_get_modes(struct drm_connector *connector,
+> >> >  	return ret;
+> >> >  }
+> >> >  
+> >> > +bool intel_connector_is_hdmi_monitor(struct drm_connector *connector)
+> >> > +{
+> >> > +	return connector->display_info.is_hdmi;
+> >> > +}
+> >> > +
+> >> 
+> >> A helper like this belongs in drm, not i915. Seems useful in other
+> >> drivers too.
 > >
-> > The patch a6bcddbc2ee1: "drm/msm: dsi: Handle dual-channel for 6G as
-> > well" from Jul 25, 2018, leads to the following
-> > Smatch static checker warning:
-> >
-> >       drivers/gpu/drm/msm/dsi/dsi_host.c:729 dsi_calc_clk_rate_6g()
-> >       warn: wrong type for 'msm_host->esc_clk_rate' (should be 'ulong')
-> >
-> > drivers/gpu/drm/msm/dsi/dsi_host.c
-> >      721 int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >      722 {
-> >      723         if (!msm_host->mode) {
-> >      724                 pr_err("%s: mode not set\n", __func__);
-> >      725                 return -EINVAL;
-> >      726         }
-> >      727
-> >      728         dsi_calc_pclk(msm_host, is_bonded_dsi);
-> > --> 729         msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
-> >                  ^^^^^^^^^^^^^^^^^^^^^^
-> > I don't know why Smatch is suddenly warning about ancient msm code, but
-> > clock rates should be unsigned long.  (I don't remember why).
-> >
-> >      730         return 0;
-> >      731 }
->
-> I'm unable to recreate the warning with Smatch. After running
-> build_kernel_data.sh, I ran `<path to smatch>/smatch_scripts/kchecker
-> drivers/gpu/drm/msm/dsi/dsi_host.c` and got the following output:
->
-> CHECK scripts/mod/empty.c
-> CALL scripts/checksyscalls.sh
-> CALL scripts/atomic/check-atomics.sh
-> CHECK arch/arm64/kernel/vdso/vgettimeofday.c
-> CC drivers/gpu/drm/msm/dsi/dsi_host.o
-> CHECK drivers/gpu/drm/msm/dsi/dsi_host.c
-> drivers/gpu/drm/msm/dsi/dsi_host.c:2380 msm_dsi_host_power_on() warn:
-> missing error code 'ret'
->
-> Is there a specific .config you're using (that's not the default
-> mainline defconfig)? If so, can you please share it?
+> > Not sure it's actually helpful for i915. We end up having to root around
+> > in the display_info in a lot of places anyway. So a helper for single
+> > boolean seems a bit out of place perhaps.
+> 
+> *shrug*
+> 
+> Maybe it's just my frustration at the lack of interfaces and poking
+> around in the depths of nested structs and pointer chasing that's coming
+> through. You just need to change so many things if you want to later
+> refactor where "is hdmi" comes from and is stored.
+> 
+> Anyway, if a helper is being added like in this series, I think it
+> should be one helper in drm, not redundant copies in multiple
+> drivers. Or we should not have the helper(s) at all. One or the other,
+> not the worst of both worlds.
 
-Are you running your checks with ARM32 or ARM64 in mind?
-Note, esc_clk_rate is u32, while clk_get_rate()'s returns unsigned long.
-It would make sense to change all three clocks rates in msm_dsi_host
-struct (and several places where they are used) to unsigned long.
+Thank you all for your comments :)
+The big work here was to figure out which drm_detect_hdmi_monitor() can be
+replaced. Changing a helper isn't a problem.
+I'll send a new patch in a few hours.
 
->
-> Thanks,
->
-> Jessica Zhang
->
-> > regards,
-> > dan carpenter
+BR
+Claudio Suarez.
 
 
 
--- 
-With best wishes
-Dmitry
