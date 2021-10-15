@@ -2,73 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC9F842E52E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:20:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8303C42E541
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:26:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233996AbhJOAWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 20:22:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60994 "EHLO
+        id S234600AbhJOA2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 20:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbhJOAWm (ORCPT
+        with ESMTP id S234592AbhJOA2J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 20:22:42 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42413C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:20:36 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id x27so33851586lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:20:36 -0700 (PDT)
+        Thu, 14 Oct 2021 20:28:09 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A51CC061570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:26:03 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id x27so33895798lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 17:26:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4vhitf+OB83J8FxwqIn9yUkbnWD0KiX07u4IYQ5OV/U=;
-        b=xUmU3e+AN56evNuz4VZTGL6egGEFJoSWXOq7mTf/QievLJEK9IDj0ug7WLkMKBCo6q
-         mtUUeoN0jb2sXlQSrwQ+HlKUPLFLWKvgmFVZ1WBurZl1DfIABIhb1BRQ0Hc1l9ut7En/
-         ptulesDYXCV9NO+f71elALiwFgDS1Hk1Zozcdk9yp0JoVdMWiXi3ly+KsfUTxEV5x8LC
-         9hMR5z+Wguj5h/SNjuvZmB9lM99hLG7ycHmHGfFgZJ1sOpNqM6Mna8Asx06sxnmI090U
-         StG18anaC9n72pkBJNjEcAUUMnLtBuF2N73K2aEEiW8LfDDPZhalnKuhAq9UfNu2+e8T
-         i8wg==
+        bh=gAakFVCdlu4BwUnr1HsiBStLYgFMjKgM2HCJV6khvVI=;
+        b=KqrFJqTAAd10gLKTVHbzWujEhl0n1HYn0E+xVy66B9zm1FNUxx8QtX5yZVfLeeODxs
+         TYuPsYapJNCClxzEXoVd2HvUwe/BQa07J/w+ePK17SSbJQXNzoX4Zri8wYr9KTf82caF
+         iH7sJpZRdliFvfgO2ualjYGlVrWZTKdGa09dTq3gOozlXNwDalk6SknK8K0j0TE78GRD
+         hoFF/VtosBG2t8NSZhhlDJ12ZDgS2Rmh2cb00OIpkxvm7hXT3y9qfQUhiIcdrj0W8K2X
+         F9oFDrm2aJQBk3gTmmc5a3T7XgWTZYV4zw14o4TXGuBhh3oGIPpOAvTOlyjwaB8dhoje
+         6QhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=4vhitf+OB83J8FxwqIn9yUkbnWD0KiX07u4IYQ5OV/U=;
-        b=jUayQC64gtzEvEeR0b2e75vv5LoT8gM0P9S7TjXzVRHHxAHavCkH3YmOmVfJW32t9p
-         R9TzvX82TYtwICnfJ5QdvnyxypgQaUSR66mehtHSFBXA2D1bTxTjoJGYN9BIcwyQ1cWt
-         PpgMQ0DLe4LeKgQaDLGGMy3n0WHbICfmCun8/7F7rlIgQPUFuaGKVvo4I8uiM9NKXxdR
-         oSc9xiNVMOsiVbX9fsdWDLFGBLKxL/+AIqkpabKtmGiZZ4wK8xWWylmzn3cxNQI9MlsU
-         Fk9dWlHMVpbo2M4kBSEb/pCAU67PdHmb3RdtaviRwNqMweJC1p9X+PmpNOcsZYIgCFYW
-         uX+A==
-X-Gm-Message-State: AOAM532GSDkIUdbnZ1S20aaUtDyvFaAFr1xOOoClV9qFAnSyr8MrmIvi
-        WpxJfWkS943eWpIjWyUDNXNZcw==
-X-Google-Smtp-Source: ABdhPJx6x0dTEEVnYH4yVgOyMjDIvJKuYHi4fB7VV7o/4PmA1vJvYO0ins5SRxNn566R4asXHr2pOg==
-X-Received: by 2002:a2e:7204:: with SMTP id n4mr10014059ljc.430.1634257234634;
-        Thu, 14 Oct 2021 17:20:34 -0700 (PDT)
+        bh=gAakFVCdlu4BwUnr1HsiBStLYgFMjKgM2HCJV6khvVI=;
+        b=EgevPavP0W8oVLV610Xud7tuJhXEspAzqtzxGikMr8nmseyTrH/VNUKlLTpaAGf/mD
+         v2qMDrXDLOB4a+HYCrVwgvwd9Z0vPixLf9Ec8wLisibceF2xxnjW7JB6gL2oeSoUFxek
+         qW/ikou3aOVBa1vX0KGpRirZdURLmcYGU8Wkz396ctC3jfulTYz1q97hBKHk007yzx3H
+         mdDtLdafT3op1XXFLI9pinXmOk8ULU5oXYkUXIsESx4HLcEA5gnkSavSrwpyqs5xy4v9
+         PsjcQDrRYE/VjvzsHYNiTc3uXwsKfqBk2saE0mWvEXmEg4I0FXcJxZxkpYFO+pnhagGN
+         7p6A==
+X-Gm-Message-State: AOAM531cdhhTeBteyUcuSYYCjUIZyVt7kjlhG71oevlrR0Ai8ddo3ufl
+        d9bAcHKRF0uXJR3RwZSh/+U8tA==
+X-Google-Smtp-Source: ABdhPJw9BcxSBn4If2tX2xf6UOr7GhCJzVW2y/ue10VwQ8YI92czy1tR/ihi61fsOSqbJQZNBCi/ng==
+X-Received: by 2002:ac2:4ecd:: with SMTP id p13mr7883899lfr.237.1634257561771;
+        Thu, 14 Oct 2021 17:26:01 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s14sm355304lfe.14.2021.10.14.17.20.33
+        by smtp.gmail.com with ESMTPSA id e12sm396760ljp.30.2021.10.14.17.26.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Oct 2021 17:20:34 -0700 (PDT)
-Subject: Re: [PATCH v3 2/4] thermal/drivers/qcom/spmi-adc-tm5: Add support for
- HC variant
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211005032531.2251928-1-bjorn.andersson@linaro.org>
- <20211005032531.2251928-3-bjorn.andersson@linaro.org>
+        Thu, 14 Oct 2021 17:26:01 -0700 (PDT)
+Subject: Re: [PATCH] drm: msm: fix building without CONFIG_COMMON_CLK
+To:     Arnd Bergmann <arnd@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Alex Elder <elder@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Rajeev Nandan <rajeevny@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20211013144308.2248978-1-arnd@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <7142a85a-9bd6-015c-89c6-e7bbac5af534@linaro.org>
-Date:   Fri, 15 Oct 2021 03:20:33 +0300
+Message-ID: <e88d5a3f-2c46-f891-c505-87e20bf714e9@linaro.org>
+Date:   Fri, 15 Oct 2021 03:26:00 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20211005032531.2251928-3-bjorn.andersson@linaro.org>
+In-Reply-To: <20211013144308.2248978-1-arnd@kernel.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -76,103 +78,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/10/2021 06:25, Bjorn Andersson wrote:
-> The variant of the ADC Thermal Monitor block found in e.g. PM8998 is
-> "HC", add support for this variant to the ADC TM5 driver in order to
-> support using VADC channels as thermal_zones on SDM845 et al.
+On 13/10/2021 17:42, Arnd Bergmann wrote:
+> From: Arnd Bergmann <arnd@arndb.de>
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> When CONFIG_COMMON_CLOCK is disabled, the 8996 specific
+> phy code is left out, which results in a link failure:
+> 
+> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined reference to `msm_hdmi_phy_8996_cfg'
+> 
+> This was only exposed after it became possible to build
+> test the driver without the clock interfaces.
+> 
+> Make COMMON_CLK a hard dependency for compile testing,
+> and simplify it a little based on that.
+> 
+> Fixes: b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
+> Reported-by: Randy Dunlap <rdunlap@infradead.org>
+> Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
+This drops dependency on CONFIG_OF. While ARM64 selects OF, pure ARM 
+does not.
+
+With that fixed:
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
+>   drivers/gpu/drm/msm/Kconfig  | 2 +-
+>   drivers/gpu/drm/msm/Makefile | 6 +++---
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> Changes since v2:
-> - Dropped conditional return ret right before unconditionatl return ret;
-> 
->   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 41 +++++++++++++++++++++++-
->   1 file changed, 40 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index 8494cc04aa21..824671cf494a 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -82,6 +82,7 @@ struct adc_tm5_data {
->   	const u32	full_scale_code_volt;
->   	unsigned int	*decimation;
->   	unsigned int	*hw_settle;
-> +	bool		is_hc;
->   };
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index f5107b6ded7b..cb204912e0f4 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -4,8 +4,8 @@ config DRM_MSM
+>   	tristate "MSM DRM"
+>   	depends on DRM
+>   	depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+> +	depends on COMMON_CLK
+>   	depends on IOMMU_SUPPORT
+> -	depends on (OF && COMMON_CLK) || COMPILE_TEST
+>   	depends on QCOM_OCMEM || QCOM_OCMEM=n
+>   	depends on QCOM_LLCC || QCOM_LLCC=n
+>   	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 904535eda0c4..bbee22b54b0c 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -23,8 +23,10 @@ msm-y := \
+>   	hdmi/hdmi_i2c.o \
+>   	hdmi/hdmi_phy.o \
+>   	hdmi/hdmi_phy_8960.o \
+> +	hdmi/hdmi_phy_8996.o \
+>   	hdmi/hdmi_phy_8x60.o \
+>   	hdmi/hdmi_phy_8x74.o \
+> +	hdmi/hdmi_pll_8960.o \
+>   	edp/edp.o \
+>   	edp/edp_aux.o \
+>   	edp/edp_bridge.o \
+> @@ -37,6 +39,7 @@ msm-y := \
+>   	disp/mdp4/mdp4_dtv_encoder.o \
+>   	disp/mdp4/mdp4_lcdc_encoder.o \
+>   	disp/mdp4/mdp4_lvds_connector.o \
+> +	disp/mdp4/mdp4_lvds_pll.o \
+>   	disp/mdp4/mdp4_irq.o \
+>   	disp/mdp4/mdp4_kms.o \
+>   	disp/mdp4/mdp4_plane.o \
+> @@ -117,9 +120,6 @@ msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
+>   	dp/dp_audio.o
 >   
->   enum adc_tm5_cal_method {
-> @@ -146,6 +147,14 @@ static const struct adc_tm5_data adc_tm5_data_pmic = {
->   					 64000, 128000 },
->   };
+>   msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
+> -msm-$(CONFIG_COMMON_CLK) += disp/mdp4/mdp4_lvds_pll.o
+> -msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_pll_8960.o
+> -msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_phy_8996.o
 >   
-> +static const struct adc_tm5_data adc_tm_hc_data_pmic = {
-> +	.full_scale_code_volt = 0x70e4,
-> +	.decimation = (unsigned int []) { 256, 512, 1024 },
-> +	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
-> +					 1000, 2000, 4000, 6000, 8000, 10000 },
-> +	.is_hc = true,
-> +};
-> +
->   static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
->   {
->   	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
-> @@ -375,6 +384,29 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
->   	return 0;
->   }
+>   msm-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
 >   
-> +static int adc_tm_hc_init(struct adc_tm5_chip *chip)
-> +{
-> +	unsigned int i;
-> +	u8 buf[2];
-> +	int ret;
-> +
-> +	for (i = 0; i < chip->nchannels; i++) {
-> +		if (chip->channels[i].channel >= ADC_TM5_NUM_CHANNELS) {
-> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
-> +			return -EINVAL;
-> +		}
-> +	}
-> +
-> +	buf[0] = chip->decimation;
-> +	buf[1] = chip->avg_samples | ADC_TM5_FAST_AVG_EN;
-> +
-> +	ret = adc_tm5_write(chip, ADC_TM5_ADC_DIG_PARAM, buf, sizeof(buf));
-> +	if (ret)
-> +		dev_err(chip->dev, "block write failed: %d\n", ret);
-> +
-> +	return ret;
-> +}
-> +
->   static int adc_tm5_init(struct adc_tm5_chip *chip)
->   {
->   	u8 buf[4], channels_available;
-> @@ -591,7 +623,10 @@ static int adc_tm5_probe(struct platform_device *pdev)
->   		return ret;
->   	}
->   
-> -	ret = adc_tm5_init(adc_tm);
-> +	if (adc_tm->data->is_hc)
-> +		ret = adc_tm_hc_init(adc_tm);
-> +	else
-> +		ret = adc_tm5_init(adc_tm);
->   	if (ret) {
->   		dev_err(dev, "adc-tm init failed\n");
->   		return ret;
-> @@ -612,6 +647,10 @@ static const struct of_device_id adc_tm5_match_table[] = {
->   		.compatible = "qcom,spmi-adc-tm5",
->   		.data = &adc_tm5_data_pmic,
->   	},
-> +	{
-> +		.compatible = "qcom,spmi-adc-tm-hc",
-> +		.data = &adc_tm_hc_data_pmic,
-> +	},
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, adc_tm5_match_table);
 > 
 
 
