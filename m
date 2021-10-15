@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A006242E4F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:01:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32BDB42E501
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 02:04:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234535AbhJOAEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 20:04:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59960 "EHLO mail.kernel.org"
+        id S233311AbhJOAHA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 20:07:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33212 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234521AbhJOAEC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 20:04:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DB5B3601FA;
-        Fri, 15 Oct 2021 00:01:56 +0000 (UTC)
+        id S231305AbhJOAG7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Oct 2021 20:06:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A48A9610FF;
+        Fri, 15 Oct 2021 00:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634256117;
-        bh=DaQPSl2wogcEKfQYg0cqX/7olwg80m3cW1DGsTWwlkU=;
+        s=k20201202; t=1634256293;
+        bh=NTVvnYfTX40BVmMw3eQJlMEhFmoZ5nVsXELnf4BFFgA=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=KJMTaLLOD2lKZBlE6svvM5iL3VrAo1kVHp2PCnYkV2oUAQzaf4Zptbel8C95pvYTJ
-         FUrcqhbVzFpXYH/J+U8iHeDDMre+5I8iDtZVhuoezOwzCaJQSOD1m2BAyM0On4eJ2L
-         9E/4mHCsvU+2++1lkqYX1XShm82UQzm8AkTJYxoHNEtpITy2itz4Wt5tHXy5KO3iwB
-         yG2J24aaHShM77oFbBacjosWV4+oV9Wp/Sf7qEbFH9zRGogN7vEYVupJ/D54tRL7KC
-         9RMYnYG13Ymdf13UVvKBfbqjxkJYzm2kaoi5WiAB7L/FiIlNzHpQNPQPTKUmyYyjA7
-         MZ0K3aT85OlvQ==
+        b=DsAeDVKe1VC12UutWfTT+11iBF4eP4oVbA6UWDfVBS7c8yC14lmqVHdM9X3BcJeyS
+         20od6YlUcHPYFh2een03d8UYfQheZT8gHLI+GbMO8ybzzAmwpneZdrqnLozuxEAiqN
+         oCIAs15dXXY5eShS+/j5amqUmwodm80LdadV96Bk8ZMYyz+gE5e8CTnfuPn0HbK3Oy
+         ZvX8zXIdGnQS57v0Xc12MI3bj7+Fl/7J2CppYpSb7aA4wu07H0Sq/mcc0n7cIyao4M
+         g0xACX8TWE4rmyLMhMeJWyJm09WwMehqejLftaaPc8PwhtoTGyYTBrG6rh2s2cRaqS
+         frRs8AhUVwnWA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
@@ -42,8 +42,8 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-kernel@vger.kernel.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 14 Oct 2021 17:01:55 -0700
-Message-ID: <163425611555.1688384.11653527408173081635@swboyd.mtv.corp.google.com>
+Date:   Thu, 14 Oct 2021 17:04:52 -0700
+Message-ID: <163425629248.1688384.14367506222343416862@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,8 @@ ower
 > I think this should go through the clk tree. There is little chance of=20
 > conflicts.
 >=20
->=20
 
-Ok. So I take the first 6 through clk tree and then we wait for the last
-two?
+The other thing that concerns me is that we don't have backwards
+compat code. If things are going to start crashing that's not very nice.
+Is there some way to make it work with old and new DTB for one release
+so that we don't have to worry about this problem?
