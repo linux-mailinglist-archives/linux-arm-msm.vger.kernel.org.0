@@ -2,166 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F4F542F616
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 16:46:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9076D42F62F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 16:47:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240802AbhJOOsh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 10:48:37 -0400
-Received: from foss.arm.com ([217.140.110.172]:44124 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240857AbhJOOsY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 10:48:24 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 90E7C1515;
-        Fri, 15 Oct 2021 07:46:17 -0700 (PDT)
-Received: from e123648.arm.com (unknown [10.57.23.184])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 9973C3F66F;
-        Fri, 15 Oct 2021 07:46:14 -0700 (PDT)
-From:   Lukasz Luba <lukasz.luba@arm.com>
-To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, lukasz.luba@arm.com,
-        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
-        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org
-Subject: [PATCH v2 5/5] arch_topology: Remove unused topology_set_thermal_pressure() and related
-Date:   Fri, 15 Oct 2021 15:45:50 +0100
-Message-Id: <20211015144550.23719-6-lukasz.luba@arm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211015144550.23719-1-lukasz.luba@arm.com>
-References: <20211015144550.23719-1-lukasz.luba@arm.com>
+        id S240826AbhJOOt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 10:49:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240848AbhJOOty (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 15 Oct 2021 10:49:54 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927BCC061772
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 07:47:47 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 62-20020a9d0a44000000b00552a6f8b804so12545370otg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 07:47:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=++7yTK3eP5/FAO2Z0iSkv+MDdc9B89z1wkbeU182Ikg=;
+        b=XbPtXBIpqXS+4GqKUpLKnV/TL+EYThYjN2Cv59T7YtpgcFk7nvnfhURMU1P6igmu5n
+         Lg6HiV8Ul7ZsJoL8tsChafYC1KPwjh4CPHQgWqUcfMMZ4I3THsL0kRAW1fwdw41G/UMm
+         ZVGxLF4qC7/KEI2KjTsNcGz9Qm1iMwIbxEpbuMmI2Hog8TvbIEUEZV8qstnjyh6Z7zvO
+         XeJ7b3qWz84ZOkiZyQ9qPacf+Ggxhub1DzfDOtcRRGB9HhmYgu62GN1axwEtZGVAHxdz
+         rlUJvUyO/cT1FsdwGLG7YybpFRdZpNhoqntShLvILJcFWXJkmTLcsU6+wX9GRW87RiWb
+         MzZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=++7yTK3eP5/FAO2Z0iSkv+MDdc9B89z1wkbeU182Ikg=;
+        b=d9TOAR9ImLYdilYq5NmEh4HICwRBhjFm3KRQer5OBoCORh85oat0shlpbZoLKzCuAb
+         WTcBiqhPAWwZH1KMQRV2oHUDTEF8YL6Qd8P8LzWFhP8OV61Q6za9mUtxqZjGfnSy+GOY
+         eSCEqpUTBl2BYnVJHudtjAttDDD8RHtuKznobAVuQ6bImtQsgkoNNg9dyGI4aOp4BFn4
+         obbMMmotERqYSBnurSePN9ZjznPeLqs7KFr0Zq3CF6MqEflxQ2Am2/pydD4tz4YScMNQ
+         ODwuCUPeuGsdmt2lOvX13HcrTfc21v1HRk0tvlYEHswew2p7b3dez1Dkl/VFVEEvQNdE
+         Kg+Q==
+X-Gm-Message-State: AOAM5305eeK+SJXDsWSqVnHdIKYMgKlbfiOWKWM9U1/paCe3ZHbyVbEu
+        lE57zzEzd1Pl8jvNUJGfXVjKDQ==
+X-Google-Smtp-Source: ABdhPJyGAZ75fYt5dPrlwAFKkMmfgKxwkXWHpeKEeQM39FmqX5zKruHfjOM0yMa3O+bAFrGIsmDFBg==
+X-Received: by 2002:a05:6830:214c:: with SMTP id r12mr8343587otd.200.1634309266857;
+        Fri, 15 Oct 2021 07:47:46 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id bf3sm1193006oib.34.2021.10.15.07.47.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Oct 2021 07:47:46 -0700 (PDT)
+Date:   Fri, 15 Oct 2021 09:47:44 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Deepak Kumar Singh <deesin@codeaurora.org>
+Cc:     clew@codeaurora.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konstantin Dorfman <kdorfman@codeaurora.org>
+Subject: Re: [PATCH V1 1/6] rpmsg: glink: fix destroy channel endpoint logic
+Message-ID: <YWmUkD0ABryJEsU8@builder.lan>
+References: <1596086296-28529-1-git-send-email-deesin@codeaurora.org>
+ <1596086296-28529-2-git-send-email-deesin@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1596086296-28529-2-git-send-email-deesin@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need of this function (and related) since code has been
-converted to use the new arch_thermal_pressure_update() API. The old
-code can be removed.
+On Thu 30 Jul 00:18 CDT 2020, Deepak Kumar Singh wrote:
 
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
----
- arch/arm/include/asm/topology.h   |  1 -
- arch/arm64/include/asm/topology.h |  1 -
- drivers/base/arch_topology.c      | 17 +++++------------
- include/linux/arch_topology.h     |  3 ---
- include/linux/sched/topology.h    |  7 -------
- init/Kconfig                      |  2 +-
- 6 files changed, 6 insertions(+), 25 deletions(-)
+> From: Konstantin Dorfman <kdorfman@codeaurora.org>
+> 
+> When rpmsg client driver destroys last channel endpoint, remove rpmsg
+> device is triggered. In both cases (destroy endpoint and remove device)
+> a glink close command sent to the remote peer.
+> 
+> This change, when for removing rpmsg device endpoint already destroyed
+> will avoid sending second glink close command.
+> 
 
-diff --git a/arch/arm/include/asm/topology.h b/arch/arm/include/asm/topology.h
-index aee6c456c085..5e51fdcfcbd4 100644
---- a/arch/arm/include/asm/topology.h
-+++ b/arch/arm/include/asm/topology.h
-@@ -23,7 +23,6 @@
- 
- /* Replace task scheduler's default thermal pressure API */
- #define arch_scale_thermal_pressure topology_get_thermal_pressure
--#define arch_set_thermal_pressure   topology_set_thermal_pressure
- #define arch_thermal_pressure_update	topology_thermal_pressure_update
- 
- #else
-diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
-index c997015402bc..92cd1288906f 100644
---- a/arch/arm64/include/asm/topology.h
-+++ b/arch/arm64/include/asm/topology.h
-@@ -32,7 +32,6 @@ void update_freq_counters_refs(void);
- 
- /* Replace task scheduler's default thermal pressure API */
- #define arch_scale_thermal_pressure topology_get_thermal_pressure
--#define arch_set_thermal_pressure   topology_set_thermal_pressure
- #define arch_thermal_pressure_update	topology_thermal_pressure_update
- 
- #include <asm-generic/topology.h>
-diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
-index 1fa28b5afdb2..fa5ba3c7416c 100644
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -159,16 +159,6 @@ void topology_set_cpu_scale(unsigned int cpu, unsigned long capacity)
- 
- DEFINE_PER_CPU(unsigned long, thermal_pressure);
- 
--void topology_set_thermal_pressure(const struct cpumask *cpus,
--			       unsigned long th_pressure)
--{
--	int cpu;
--
--	for_each_cpu(cpu, cpus)
--		WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
--}
--EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
--
- /**
-  * topology_thermal_pressure_update() - Update thermal pressure for CPUs
-  * @cpus	: The related CPUs for which capacity has been reduced
-@@ -184,7 +174,7 @@ EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
- void topology_thermal_pressure_update(const struct cpumask *cpus,
- 				      unsigned long capped_freq)
- {
--	unsigned long max_capacity, capacity;
-+	unsigned long max_capacity, capacity, th_pressure;
- 	int cpu;
- 
- 	if (!cpus)
-@@ -199,7 +189,10 @@ void topology_thermal_pressure_update(const struct cpumask *cpus,
- 	capacity = mult_frac(capped_freq, max_capacity,
- 			     per_cpu(freq_factor, cpu));
- 
--	arch_set_thermal_pressure(cpus, max_capacity - capacity);
-+	th_pressure = max_capacity - capacity;
-+
-+	for_each_cpu(cpu, cpus)
-+		WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
- }
- EXPORT_SYMBOL_GPL(topology_thermal_pressure_update);
- 
-diff --git a/include/linux/arch_topology.h b/include/linux/arch_topology.h
-index 9e183621a59b..9b95e5b29ee9 100644
---- a/include/linux/arch_topology.h
-+++ b/include/linux/arch_topology.h
-@@ -56,9 +56,6 @@ static inline unsigned long topology_get_thermal_pressure(int cpu)
- 	return per_cpu(thermal_pressure, cpu);
- }
- 
--void topology_set_thermal_pressure(const struct cpumask *cpus,
--				   unsigned long th_pressure);
--
- void topology_thermal_pressure_update(const struct cpumask *cpus,
- 				      unsigned long capped_freq);
- 
-diff --git a/include/linux/sched/topology.h b/include/linux/sched/topology.h
-index 990d14814427..f31da5454baa 100644
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -259,13 +259,6 @@ unsigned long arch_scale_thermal_pressure(int cpu)
- }
- #endif
- 
--#ifndef arch_set_thermal_pressure
--static __always_inline
--void arch_set_thermal_pressure(const struct cpumask *cpus,
--			       unsigned long th_pressure)
--{ }
--#endif
--
- #ifndef arch_thermal_pressure_update
- static __always_inline
- void arch_thermal_pressure_update(const struct cpumask *cpus,
-diff --git a/init/Kconfig b/init/Kconfig
-index f494e405c156..334c302e588f 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -559,7 +559,7 @@ config SCHED_THERMAL_PRESSURE
- 	  i.e. put less load on throttled CPUs than on non/less throttled ones.
- 
- 	  This requires the architecture to implement
--	  arch_set_thermal_pressure() and arch_scale_thermal_pressure().
-+	  arch_thermal_pressure_update() and arch_scale_thermal_pressure().
- 
- config BSD_PROCESS_ACCT
- 	bool "BSD Process Accounting"
--- 
-2.17.1
+Should it really be considered valid to rpmsg_destroy_ept() the
+rpmsg_device's primary endpoint?
 
+Do you have a use case where this makes sense?
+
+
+Also, I think this has a potential to hide a problems of clients doing a
+"double free" on the ept.
+
+Regards,
+Bjorn
+
+> Signed-off-by: Konstantin Dorfman <kdorfman@codeaurora.org>
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+> ---
+>  drivers/rpmsg/qcom_glink_native.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 1995f5b..2668c66 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -1210,6 +1210,10 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+>  	unsigned long flags;
+>  
+>  	spin_lock_irqsave(&channel->recv_lock, flags);
+> +	if (!channel->ept.cb) {
+> +		spin_unlock_irqrestore(&channel->recv_lock, flags);
+> +		return;
+> +	}
+>  	channel->ept.cb = NULL;
+>  	spin_unlock_irqrestore(&channel->recv_lock, flags);
+>  
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
