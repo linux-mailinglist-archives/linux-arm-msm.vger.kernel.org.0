@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EF7542FA21
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 19:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1C2542FA27
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 Oct 2021 19:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242471AbhJORZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 15 Oct 2021 13:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40120 "EHLO
+        id S242229AbhJORZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 15 Oct 2021 13:25:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242403AbhJORZF (ORCPT
+        with ESMTP id S237704AbhJORZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 15 Oct 2021 13:25:05 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0247BC0617A3
+        Fri, 15 Oct 2021 13:25:23 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6F30C0617A7
         for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 10:22:27 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id b5-20020a4ac285000000b0029038344c3dso3209027ooq.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 10:22:26 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id s18-20020a0568301e1200b0054e77a16651so2861382otr.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 10:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NOr8pzngnOoluN8IhzRaL7unu/DMCmI7YndPBtKqBTM=;
-        b=D7R/4vjLFk1GBToGO5KeCXyoAMsv2IBOINkrPoKX8f8kNamVnhmzlxSfv553uYgVAE
-         L7CrBrHeZhIgJVj0Mc9QX1bZuZZDcWaLjMcBjuv9azRFJUu6MNU9j0W1Kzx2gLSzvmkU
-         mWdp560Q1hT1+wjutMRJodCUGF+vJTmTfhMxN3WK6wT4I9t9aj1SWUxJRLclbUajPSfA
-         YFU5JhkEnk37zKkytIWpK8sy7bWP0ceUm4fzPktEAvIiskzGypNViFa8z/9NQTlYxu0y
-         wkzTUrgUHmqRLnjG5aRHaoa231ZIeQUVFPIj0mBdxZao2aeAvUVSTQPdPTy/KDthH86X
-         MZIg==
+        bh=A0CDMNUR71HgJrfftNYsg7DS8YRU3P+LQw0A9OhNuZs=;
+        b=IDeibCWYKS2wzrbcIBkdMG5zJGKQuRj29PykyntI58zXM71JoxQftHI1AZAAnf3BXy
+         I0SCVC6vz9Y0qUmiwa1pNwzmd/dmN3/r5HMm46AQsAf15Odg6AJZ2gLf5bkHeWTPUFas
+         aSNYr4W9ys6LOM7gT8prX/PW51+kR0OD3Lr+vuzK1yaBYS4kxmShJyNQ/IVWbwNMrC0W
+         zNpUNB+jczTbV9MQTH10vKYPk3jDA/smePzfD+8ah0LtP6MrMny05XwsqvRi3PwKkYf1
+         MpG+QgvbSrIs/NFmKwwnG4f/Bq7djrGT9tCVCdqCtfRmaAiBvDUYOln1gqqF9HYV7Az/
+         kL1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NOr8pzngnOoluN8IhzRaL7unu/DMCmI7YndPBtKqBTM=;
-        b=SUFff3ZPW3hI2XFAqUVtTpV16+gh4QLQljdc1Zn3gBcEEwOZWNhzR2pO0b2oWwHsTk
-         jh9OnIDYHHzXXInOTeCbVq9LBw9DGRDyxYylPNAO3V4X62gobWqILBew85jiafN8K6p3
-         XCPkgY7ydggqqwXFT2XgVd/OKM9sZgPrkoegSdMeGnutDxTX4u/D7cA+9ESdpX+A7jFm
-         ht/1nQvAsI2saZtcnGhr/7lAWBuwuqbbfUL2QX2Eizlyfdq26ZvW7A726oYhEi9KlnyG
-         qHMmtAfWR32ci5TrWBK6j42wfWGSgoYhf1SYm6VyOatH/cJgHxKm0PqSllqLbwTI6I5Z
-         nu1w==
-X-Gm-Message-State: AOAM533liuSW99+j+vtlFpf4aI6IMaxdhqdzqlwPSdIlMxnssYCq8ffq
-        ZpqBnFtnNNbXs9i0HOXmMXwkMg==
-X-Google-Smtp-Source: ABdhPJwcx7VJeNUGF9c9OCtjA5yIDqNjQsjb5nUor4DYv0rMjxyybnDOOhFlxlxPCi/XIY+jzr8U/A==
-X-Received: by 2002:a4a:395c:: with SMTP id x28mr9871171oog.98.1634318546333;
-        Fri, 15 Oct 2021 10:22:26 -0700 (PDT)
+        bh=A0CDMNUR71HgJrfftNYsg7DS8YRU3P+LQw0A9OhNuZs=;
+        b=YPCqz67/P4gkEJAJj+6oRHtOuzvTL2AX/N2hhglNdIHtLL1skw2mSEgcwl+GYPt7FZ
+         SNXyJk8FPdfvFTcbTHbmF3XLDDqvwz9pacUHmUqMLTPEvkyFwg2bHyOIAA99JUcD0ykS
+         Vn6DnZ34Uao3nGYvByrbiTORvW3tTf/ERKl4Vcg1zz/ARShjBsyEIm+h9ZYqh+E4bhAv
+         +zpuAZCzSx+dDNzFs0mgp10zKMvImVsgRp1KEk9yN3mJ0Sa5MtbN/EDPzRadA1qhqQOq
+         2VXxLu5Q0IcAK4PoBn52PDVT4BnNAwnmxFmXNNn8gZz6RoUQftXGzXoie0nbUKAT1nAd
+         BcIA==
+X-Gm-Message-State: AOAM530VgP8IdtiDQ2nv818aTyvoOuiZ/xlbGmClnJJpzw9K10rYV1xc
+        CNKuKTwOAkTiqXpQvNzYiPHbmYZ5A7eZ4w==
+X-Google-Smtp-Source: ABdhPJyxGxk94GNy6Cdjjf1KxdLld/ChJk7x+JXmp3sy1iARjLV2yxM35xjFreDcjAaHeyvJJ0PMgg==
+X-Received: by 2002:a05:6830:925:: with SMTP id v37mr6993097ott.381.1634318547224;
+        Fri, 15 Oct 2021 10:22:27 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s206sm1289635oia.33.2021.10.15.10.22.25
+        by smtp.gmail.com with ESMTPSA id s206sm1289635oia.33.2021.10.15.10.22.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 10:22:25 -0700 (PDT)
+        Fri, 15 Oct 2021 10:22:26 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     clew@codeaurora.org, Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     mathieu.poirier@linaro.org, linux-remoteproc@vger.kernel.org,
-        Arun Kumar Neelakantam <aneela@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH V1 4/6] rpmsg: glink: Remove the rpmsg dev in close_ack
-Date:   Fri, 15 Oct 2021 12:22:16 -0500
-Message-Id: <163431847250.251657.12795071740054090512.b4-ty@linaro.org>
+Cc:     mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: (subset) [PATCH V1 5/6] rpmsg: glink: Remove channel decouple from rpdev release
+Date:   Fri, 15 Oct 2021 12:22:17 -0500
+Message-Id: <163431847250.251657.4770402105504317.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <1596086296-28529-5-git-send-email-deesin@codeaurora.org>
-References: <1596086296-28529-1-git-send-email-deesin@codeaurora.org> <1596086296-28529-5-git-send-email-deesin@codeaurora.org>
+In-Reply-To: <1596086296-28529-6-git-send-email-deesin@codeaurora.org>
+References: <1596086296-28529-1-git-send-email-deesin@codeaurora.org> <1596086296-28529-6-git-send-email-deesin@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -66,21 +65,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Jul 2020 10:48:14 +0530, Deepak Kumar Singh wrote:
-> From: Arun Kumar Neelakantam <aneela@codeaurora.org>
+On Thu, 30 Jul 2020 10:48:15 +0530, Deepak Kumar Singh wrote:
+> From: Chris Lew <clew@codeaurora.org>
 > 
-> Un-register and register of rpmsg driver is sending invalid open_ack
-> on closed channel.
+> If a channel is being rapidly restarting and the kobj release worker
+> is busy, there is a chance the the rpdev_release function will run
+> after the channel struct itself has been released.
 > 
-> To avoid sending invalid open_ack case unregister the rpmsg device
-> after receiving the local_close_ack from remote side.
+> There should not be a need to decouple the channel from rpdev in the
+> rpdev release since that should only happen from the close commands.
 > 
 > [...]
 
 Applied, thanks!
 
-[4/6] rpmsg: glink: Remove the rpmsg dev in close_ack
-      commit: c7c182d4447e172f87e37d6c04879b94b8635b37
+[5/6] rpmsg: glink: Remove channel decouple from rpdev release
+      commit: 343ba27b6f9d473ec3e602cc648300eb03a7fa05
 
 Best regards,
 -- 
