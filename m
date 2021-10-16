@@ -2,70 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4016430201
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 12:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9688A430273
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 13:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240056AbhJPK03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 06:26:29 -0400
-Received: from smtprelay0029.hostedemail.com ([216.40.44.29]:36398 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S235031AbhJPK02 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 06:26:28 -0400
-Received: from omf19.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay02.hostedemail.com (Postfix) with ESMTP id 0B04439BA7;
-        Sat, 16 Oct 2021 10:24:20 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf19.hostedemail.com (Postfix) with ESMTPA id 9523220D764;
-        Sat, 16 Oct 2021 10:24:18 +0000 (UTC)
-Message-ID: <6ddc01b24b1c72f7e92174a037043b5cfffa3431.camel@perches.com>
-Subject: Re: [PATCH 3/3] bus: mhi: replace snprintf in show functions with
- sysfs_emit
-From:   Joe Perches <joe@perches.com>
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Date:   Sat, 16 Oct 2021 03:24:17 -0700
-In-Reply-To: <YWqBTj4slHq7HexS@kroah.com>
-References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
-         <20211016065734.28802-4-manivannan.sadhasivam@linaro.org>
-         <YWqBTj4slHq7HexS@kroah.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.40.4-1 
+        id S234297AbhJPLfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 07:35:52 -0400
+Received: from honk.sigxcpu.org ([24.134.29.49]:50430 "EHLO honk.sigxcpu.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234872AbhJPLfu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 07:35:50 -0400
+X-Greylist: delayed 553 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Oct 2021 07:35:50 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by honk.sigxcpu.org (Postfix) with ESMTP id 8B1DCFB03;
+        Sat, 16 Oct 2021 13:24:25 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at honk.sigxcpu.org
+Received: from honk.sigxcpu.org ([127.0.0.1])
+        by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id QhldK_UIkFkN; Sat, 16 Oct 2021 13:24:24 +0200 (CEST)
+Date:   Sat, 16 Oct 2021 13:24:22 +0200
+From:   Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
+To:     Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Cc:     linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Martin Kepplinger <martink@posteo.de>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lucas Stach <dev@lynxeye.de>, Angus Ainslie <angus@akkea.ca>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Johan Jonker <jbx6244@gmail.com>,
+        Eddie Cai <eddie.cai.linux@gmail.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Brian Norris <briannorris@chromium.org>,
+        Dan Johansen <strit@manjaro.org>,
+        Simon South <simon@simonsouth.net>,
+        Matthias Brugger <mbrugger@suse.com>
+Subject: Re: [PATCH 2/4] arm64: dts: freescale: add 'chassis-type' property
+Message-ID: <YWq2ZvHSFq6obOgV@qwark.sigxcpu.org>
+References: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
+ <20211016102025.23346-3-arnaud.ferraris@collabora.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.38
-X-Stat-Signature: 91sxoiniyzum7wdgd7kangjd88gejuj5
-X-Rspamd-Server: rspamout05
-X-Rspamd-Queue-Id: 9523220D764
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX18mqnsmvmciBIb4oKRgjUfrWQOVP9NORno=
-X-HE-Tag: 1634379858-169333
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211016102025.23346-3-arnaud.ferraris@collabora.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 2021-10-16 at 09:37 +0200, Greg KH wrote:
-> On Sat, Oct 16, 2021 at 12:27:34PM +0530, Manivannan Sadhasivam wrote:
-> > From: Qing Wang <wangqing@vivo.com>
-> > coccicheck complains about the use of snprintf() in sysfs show functions.
-[]
-> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-[]
-> > @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
-> >  	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> >  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> >  
-> > -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> > +	return sysfs_emit(buf, "Serial Number: %u\n",
-> >  			mhi_cntrl->serial_number);
+Hi,
+On Sat, Oct 16, 2021 at 12:20:23PM +0200, Arnaud Ferraris wrote:
+> A new 'chassis-type' root node property has recently been approved for
+> the device-tree specification, in order to provide a simple way for
+> userspace to detect the device form factor and adjust their behavior
+> accordingly.
 > 
-> The text "Serial Number: " should not be in here, right?  It's obvious
-> this is a serial number, that's what the documentation and file name
-> says.  Userspace should not have to parse sysfs files.
+> This patch fills in this property for end-user devices (such as laptops,
+> smartphones and tablets) based on NXP ARM64 processors.
+> 
+> Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+> ---
+>  arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi    | 1 +
+>  arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts | 1 +
+>  2 files changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> index 3f7524400a63..4523f21bb5ac 100644
+> --- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> +++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> @@ -14,6 +14,7 @@
+>  / {
+>  	model = "Purism Librem 5";
+>  	compatible = "purism,librem5", "fsl,imx8mq";
+> +	chassis-type = "handset";
+>  
+>  	backlight_dsi: backlight-dsi {
+>  		compatible = "led-backlight";
+> diff --git a/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts b/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
+> index 4f2db6197b39..fa721a13de20 100644
+> --- a/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
+> +++ b/arch/arm64/boot/dts/freescale/imx8mq-mnt-reform2.dts
+> @@ -12,6 +12,7 @@
+>  / {
+>  	model = "MNT Reform 2";
+>  	compatible = "mntre,reform2", "boundary,imx8mq-nitrogen8m-som", "fsl,imx8mq";
+> +	chassis-type = "laptop";
+>  
+>  	pcie1_refclk: clock-pcie1-refclk {
+>  		compatible = "fixed-clock";
 
-sysfs is ABI right?  Parsing or not, it's what's already there.
+Reviewed-by: Guido Günther <agx@sigxcpu.org>
 
-
+> -- 
+> 2.33.0
+> 
