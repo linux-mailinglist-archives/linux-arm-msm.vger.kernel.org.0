@@ -2,125 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B85744301E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 12:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4016430201
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 12:24:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244113AbhJPKWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 06:22:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38628 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244094AbhJPKWr (ORCPT
+        id S240056AbhJPK03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 06:26:29 -0400
+Received: from smtprelay0029.hostedemail.com ([216.40.44.29]:36398 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S235031AbhJPK02 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 06:22:47 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BB2C061570;
-        Sat, 16 Oct 2021 03:20:40 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: aferraris)
-        with ESMTPSA id CE78F1F44DC5
-From:   Arnaud Ferraris <arnaud.ferraris@collabora.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, Martin Kepplinger <martink@posteo.de>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lucas Stach <dev@lynxeye.de>, Angus Ainslie <angus@akkea.ca>,
-        Guido Gunther <agx@sigxcpu.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Johan Jonker <jbx6244@gmail.com>,
-        Eddie Cai <eddie.cai.linux@gmail.com>,
-        Shunqian Zheng <zhengsq@rock-chips.com>,
-        Brian Norris <briannorris@chromium.org>,
-        Dan Johansen <strit@manjaro.org>,
-        Simon South <simon@simonsouth.net>,
-        Matthias Brugger <mbrugger@suse.com>,
-        Arnaud Ferraris <arnaud.ferraris@collabora.com>
-Subject: [PATCH 4/4] arm64: dts: rockchip: add 'chassis-type' property
-Date:   Sat, 16 Oct 2021 12:20:25 +0200
-Message-Id: <20211016102025.23346-5-arnaud.ferraris@collabora.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
-References: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
+        Sat, 16 Oct 2021 06:26:28 -0400
+Received: from omf19.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay02.hostedemail.com (Postfix) with ESMTP id 0B04439BA7;
+        Sat, 16 Oct 2021 10:24:20 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf19.hostedemail.com (Postfix) with ESMTPA id 9523220D764;
+        Sat, 16 Oct 2021 10:24:18 +0000 (UTC)
+Message-ID: <6ddc01b24b1c72f7e92174a037043b5cfffa3431.camel@perches.com>
+Subject: Re: [PATCH 3/3] bus: mhi: replace snprintf in show functions with
+ sysfs_emit
+From:   Joe Perches <joe@perches.com>
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+Date:   Sat, 16 Oct 2021 03:24:17 -0700
+In-Reply-To: <YWqBTj4slHq7HexS@kroah.com>
+References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
+         <20211016065734.28802-4-manivannan.sadhasivam@linaro.org>
+         <YWqBTj4slHq7HexS@kroah.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.40.4-1 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.38
+X-Stat-Signature: 91sxoiniyzum7wdgd7kangjd88gejuj5
+X-Rspamd-Server: rspamout05
+X-Rspamd-Queue-Id: 9523220D764
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX18mqnsmvmciBIb4oKRgjUfrWQOVP9NORno=
+X-HE-Tag: 1634379858-169333
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A new 'chassis-type' root node property has recently been approved for
-the device-tree specification, in order to provide a simple way for
-userspace to detect the device form factor and adjust their behavior
-accordingly.
+On Sat, 2021-10-16 at 09:37 +0200, Greg KH wrote:
+> On Sat, Oct 16, 2021 at 12:27:34PM +0530, Manivannan Sadhasivam wrote:
+> > From: Qing Wang <wangqing@vivo.com>
+> > coccicheck complains about the use of snprintf() in sysfs show functions.
+[]
+> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+[]
+> > @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
+> >  	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> >  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> >  
+> > -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
+> > +	return sysfs_emit(buf, "Serial Number: %u\n",
+> >  			mhi_cntrl->serial_number);
+> 
+> The text "Serial Number: " should not be in here, right?  It's obvious
+> this is a serial number, that's what the documentation and file name
+> says.  Userspace should not have to parse sysfs files.
 
-This patch fills in this property for end-user devices (such as laptops,
-smartphones and tablets) based on Rockchip ARM64 processors.
+sysfs is ABI right?  Parsing or not, it's what's already there.
 
-Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
----
- arch/arm64/boot/dts/rockchip/rk3399-gru-bob.dts      | 1 +
- arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dts    | 1 +
- arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet.dtsi | 1 +
- arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 +
- 4 files changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-bob.dts b/arch/arm64/boot/dts/rockchip/rk3399-gru-bob.dts
-index e6c1c94c8d69..31ebb4e5fd33 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-bob.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-bob.dts
-@@ -16,6 +16,7 @@ / {
- 		     "google,bob-rev7", "google,bob-rev6",
- 		     "google,bob-rev5", "google,bob-rev4",
- 		     "google,bob", "google,gru", "rockchip,rk3399";
-+	chassis-type = "convertible";
- 
- 	edp_panel: edp-panel {
- 		compatible = "boe,nv101wxmn51";
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dts b/arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dts
-index 2bbef9fcbe27..6863689df06f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dts
-@@ -24,6 +24,7 @@ / {
- 		     "google,kevin-rev9", "google,kevin-rev8",
- 		     "google,kevin-rev7", "google,kevin-rev6",
- 		     "google,kevin", "google,gru", "rockchip,rk3399";
-+	chassis-type = "convertible";
- 
- 	/* Power tree */
- 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet.dtsi
-index 61afb5f0f15b..355c61fb7b42 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet.dtsi
-@@ -8,6 +8,7 @@
- #include "rk3399-gru.dtsi"
- 
- /{
-+	chassis-type = "tablet";
- 	/* Power tree */
- 
- 	/* ppvar_sys children, sorted by name */
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-index dae8c252bc2b..c2f021a1a18f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -17,6 +17,7 @@
- / {
- 	model = "Pine64 Pinebook Pro";
- 	compatible = "pine64,pinebook-pro", "rockchip,rk3399";
-+	chassis-type = "laptop";
- 
- 	aliases {
- 		mmc0 = &sdio0;
--- 
-2.33.0
