@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7544430489
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:18:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BB234304B0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:18:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240877AbhJPTUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 15:20:09 -0400
-Received: from ip-16.mailobj.net ([213.182.54.16]:43430 "EHLO msg-6.mailo.com"
+        id S240919AbhJPTUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 15:20:47 -0400
+Received: from msg-1.mailo.com ([213.182.54.11]:53752 "EHLO msg-1.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232336AbhJPTUJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 15:20:09 -0400
+        id S240944AbhJPTUp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 15:20:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634409811; bh=elbQ/Rfa9XPzohbQeT5mZjhN0nLEuIl5gnGjqEs1gGI=;
+        t=1634409817; bh=ZmCRcmXfOn4brch3sFsuOuXp9yHp219e3PYR0mVapZM=;
         h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
          References:MIME-Version:Content-Transfer-Encoding;
-        b=Wv4KWakJEEi1FpcwiMHapHmS4+IOWMOiT/Dv0KkNgEsnxvUUei8U5pkKFi8AIy+jz
-         py5WIpMH+LhY5KB4nh4yAfgdKQF5BtqsBqqtB0qu/xsZKfjKPDZk322guiW2gvWncE
-         mq3ndwuwBjF4Y7Qcul6iFq9eT3O8aRchrjQK2xjg=
+        b=rljxmyj0IrzWjJEZhtHkuZ5kKfyDeKlD2uPtd0sZ5b8xYuXy8yFNMSY/sTJFdIciy
+         cTJ4G5MWFK7WsnC/M+h+OE4jDJn4o60mSnKW5stzmme9KeLcYpvtJeUEc3jYjLJJFU
+         nE6iF+Zlu+eDNaM/eM2d5hgF8uPwvXCSYczoFeq8=
 Received: by b-2.in.mailobj.net [192.168.90.12] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 20:43:12 +0200 (CEST)
-X-EA-Auth: vkwKJpPXa2OLsI9IwSACtfiCMsxGY2D0/cYhho0HTQjGA3DEQz5kh6h9sL3wD0XRs4JskABokd/8VqmRRUz9s0z2Jkoo49fK
+        Sat, 16 Oct 2021 20:43:34 +0200 (CEST)
+X-EA-Auth: IbIiNW/0NCb1fjsuAO9oo//00h6X9/vtgHnLMRK0Dh+QuhMgo9s3GIoWiwDVwcp8NHt0WzykDFkyFO31LEaRnzjiuVzewoCp
 From:   Claudio Suarez <cssk@net-c.es>
 To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
@@ -46,9 +46,9 @@ To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
         ville.syrjala@linux.intel.com
 Cc:     Claudio Suarez <cssk@net-c.es>
-Subject: [PATCH v2 07/13] drm/msm: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Sat, 16 Oct 2021 20:42:20 +0200
-Message-Id: <20211016184226.3862-8-cssk@net-c.es>
+Subject: [PATCH v2 08/13] drm/sun4i: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
+Date:   Sat, 16 Oct 2021 20:42:21 +0200
+Message-Id: <20211016184226.3862-9-cssk@net-c.es>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211016184226.3862-1-cssk@net-c.es>
 References: <20211016184226.3862-1-cssk@net-c.es>
@@ -65,23 +65,27 @@ drm_display_info.is_hdmi
 
 Signed-off-by: Claudio Suarez <cssk@net-c.es>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_connector.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-index 58707a1f3878..07585092f919 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-@@ -364,8 +364,8 @@ static int msm_hdmi_connector_get_modes(struct drm_connector *connector)
+diff --git a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+index 2f2c9f0a1071..f57bedbbeeb8 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
++++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+@@ -215,11 +215,11 @@ static int sun4i_hdmi_get_modes(struct drm_connector *connector)
+ 	if (!edid)
+ 		return 0;
  
- 	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl);
+-	hdmi->hdmi_monitor = drm_detect_hdmi_monitor(edid);
++	drm_connector_update_edid_property(connector, edid);
++	hdmi->hdmi_monitor = connector->display_info.is_hdmi;
+ 	DRM_DEBUG_DRIVER("Monitor is %s monitor\n",
+ 			 hdmi->hdmi_monitor ? "an HDMI" : "a DVI");
  
--	hdmi->hdmi_mode = drm_detect_hdmi_monitor(edid);
- 	drm_connector_update_edid_property(connector, edid);
-+	hdmi->hdmi_mode = connector->display_info.is_hdmi;
- 
- 	if (edid) {
- 		ret = drm_add_edid_modes(connector, edid);
+-	drm_connector_update_edid_property(connector, edid);
+ 	cec_s_phys_addr_from_edid(hdmi->cec_adap, edid);
+ 	ret = drm_add_edid_modes(connector, edid);
+ 	kfree(edid);
 -- 
 2.33.0
 
