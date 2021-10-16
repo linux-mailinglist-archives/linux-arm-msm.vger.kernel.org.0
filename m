@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 412B143048B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:18:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7544430489
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:18:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240880AbhJPTUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 15:20:11 -0400
-Received: from msg-2.mailo.com ([213.182.54.12]:51938 "EHLO msg-2.mailo.com"
+        id S240877AbhJPTUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 15:20:09 -0400
+Received: from ip-16.mailobj.net ([213.182.54.16]:43430 "EHLO msg-6.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232336AbhJPTUK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 15:20:10 -0400
+        id S232336AbhJPTUJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 15:20:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634409811; bh=QBcYM19WYIft9nyGf96kprXPvyWbRp1gWatVdt76c0U=;
+        t=1634409811; bh=elbQ/Rfa9XPzohbQeT5mZjhN0nLEuIl5gnGjqEs1gGI=;
         h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
          References:MIME-Version:Content-Transfer-Encoding;
-        b=ECnlWbHnAgiUWqXOSju4aaUSxeUtaOntQqVO+Bbn8vXn7Fz7N3jT/v7uL1lJWWKJD
-         llWVZHcu/6x/ACeFMqGUxhJVd+elPn7h0rCXGxzLxQ5CqyRQt6M1Lb/93qd8zILozc
-         +d9DInWf2ZeZhq0QooyukafTOTB1Acf/JSuOEInw=
+        b=Wv4KWakJEEi1FpcwiMHapHmS4+IOWMOiT/Dv0KkNgEsnxvUUei8U5pkKFi8AIy+jz
+         py5WIpMH+LhY5KB4nh4yAfgdKQF5BtqsBqqtB0qu/xsZKfjKPDZk322guiW2gvWncE
+         mq3ndwuwBjF4Y7Qcul6iFq9eT3O8aRchrjQK2xjg=
 Received: by b-2.in.mailobj.net [192.168.90.12] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 20:43:09 +0200 (CEST)
-X-EA-Auth: EktwRpM9BYZ8qPTcr7FYisYWT/gaUG7pDHJf4hUEERNEPKglscAdivacLMtKzTOWon2weDNkueStZgZ/Nhod4Jc+aVZj3+jh
+        Sat, 16 Oct 2021 20:43:12 +0200 (CEST)
+X-EA-Auth: vkwKJpPXa2OLsI9IwSACtfiCMsxGY2D0/cYhho0HTQjGA3DEQz5kh6h9sL3wD0XRs4JskABokd/8VqmRRUz9s0z2Jkoo49fK
 From:   Claudio Suarez <cssk@net-c.es>
 To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
@@ -46,9 +46,9 @@ To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
         ville.syrjala@linux.intel.com
 Cc:     Claudio Suarez <cssk@net-c.es>
-Subject: [PATCH v2 06/13] drm/exynos: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Sat, 16 Oct 2021 20:42:19 +0200
-Message-Id: <20211016184226.3862-7-cssk@net-c.es>
+Subject: [PATCH v2 07/13] drm/msm: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
+Date:   Sat, 16 Oct 2021 20:42:20 +0200
+Message-Id: <20211016184226.3862-8-cssk@net-c.es>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211016184226.3862-1-cssk@net-c.es>
 References: <20211016184226.3862-1-cssk@net-c.es>
@@ -65,30 +65,23 @@ drm_display_info.is_hdmi
 
 Signed-off-by: Claudio Suarez <cssk@net-c.es>
 ---
- drivers/gpu/drm/exynos/exynos_hdmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_connector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
-index 7655142a4651..a563d6386abe 100644
---- a/drivers/gpu/drm/exynos/exynos_hdmi.c
-+++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
-@@ -893,12 +893,14 @@ static int hdmi_get_modes(struct drm_connector *connector)
- 	if (!edid)
- 		return -ENODEV;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+index 58707a1f3878..07585092f919 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+@@ -364,8 +364,8 @@ static int msm_hdmi_connector_get_modes(struct drm_connector *connector)
  
--	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
-+	/* This updates connector->display_info */
-+	drm_connector_update_edid_property(connector, edid);
-+
-+	hdata->dvi_mode = !connector->display_info.is_hdmi;
- 	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
- 			  (hdata->dvi_mode ? "dvi monitor" : "hdmi monitor"),
- 			  edid->width_cm, edid->height_cm);
+ 	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl);
  
--	drm_connector_update_edid_property(connector, edid);
- 	cec_notifier_set_phys_addr_from_edid(hdata->notifier, edid);
+-	hdmi->hdmi_mode = drm_detect_hdmi_monitor(edid);
+ 	drm_connector_update_edid_property(connector, edid);
++	hdmi->hdmi_mode = connector->display_info.is_hdmi;
  
- 	ret = drm_add_edid_modes(connector, edid);
+ 	if (edid) {
+ 		ret = drm_add_edid_modes(connector, edid);
 -- 
 2.33.0
 
