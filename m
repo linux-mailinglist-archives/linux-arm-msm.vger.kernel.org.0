@@ -2,199 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D43EE430590
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 01:09:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0DA43059B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 01:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241102AbhJPXLp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 19:11:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36486 "EHLO
+        id S229884AbhJPXWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 19:22:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241095AbhJPXLo (ORCPT
+        with ESMTP id S241143AbhJPXV5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 19:11:44 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E91C061768
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 16:09:36 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id q129so18892286oib.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 16:09:36 -0700 (PDT)
+        Sat, 16 Oct 2021 19:21:57 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97620C06176D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 16:19:40 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id l16-20020a9d6a90000000b0054e7ab56f27so958948otq.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 16:19:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XIUuxz/3xR9ZWSjRj8mW7HoeuGTklmNICX1U7YnsKBs=;
-        b=eSSfyrfBbl1evd4GA7Pa+K4mPIg5doOQ6t94haIHujWkhVuBWMu2tgi6Fv0mZ8OklN
-         2sAfoPKO3ySaVkRxWwf3Mp/DqBSNRfOsiKBw72l7gwzsw8rFuxc+NNjLXjsU001IBnsI
-         LUtkgSdZ94bYRfhAooM2APfEuQ59WF+rXpNhL5r21DOa19ks0hn1+M5kgL7kVQQPbz0M
-         JSRvs4Nl3Xj/oaKePwGZUrDT2I+Cz/wxvS3yXYfSwMr9aj+DvmGQAVLb2ApjOyVTIH7T
-         wpfSz2GODBwYHUfg7NysbEPg64g2+1UwDPTxN9WMoBkn0HEL6Puyk12ihVGtwrJDJ3VO
-         CfTw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FkP4lqvH6ZOJT/fX9WTaeVqu3z8mUf6wLhul8KmE4w0=;
+        b=vD9EOlTSpylZht/VGRfDs5EMGozH3jPEpImOoRhKP5/9TwZJFttyZQ2wmgMQSMKJkR
+         IYVcZQ7ZJ6auJ6l/Aa8stcncMYx6dNcWGO6ANMy7G7lKbapCA2bAUAIHseuCKUke7yMN
+         T5QPn2PW5L+ZQ28hspIUZ3nFnOfMw+640Qbvb7P2H+PUK8/U2eMMWlsv61s7c6vssyR+
+         rSx4KBgqv3xkFl2heF9JsYyVT2Yil/e9DmgsbRskuRWZRxgnkwTGwPJVppdBUtXPWcXe
+         pnfO/EfogSnw4pGrMy3u3crgTBSSY656wdLtknbiDXW3owJ/jJKEJtkXW5XMcK9unr9S
+         mfAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XIUuxz/3xR9ZWSjRj8mW7HoeuGTklmNICX1U7YnsKBs=;
-        b=LQR88Xe52ZYJ0gmm/oTbx1A4pKK4/eQ1zvIW8pQ8NSYOQN8llFNjvUuvbPTK7FE6vN
-         EZnv24QN7RAUG4Or/BuXGTy2QCy3VcQatIXqZb2peAAURjCcLrc15PNvEZbeSTX0nMHi
-         QDmv7Bp242xPOhuj/8BNhcGpv7QafhYK3dPuYbhAitLMUhyOdmmK+lXjEM3J3B/9r+Ab
-         I9mjI3I3SGln1kUpuShV3diPL03fNQbqjliE/y6FWhZx0f5t31E35a9NNizPiGUtVen3
-         O21RwbB5SoTFNaO0/mVRAdZuh7eANcGy0RcqvPjT+BDI0kYvOGGOnxQ7LHtZFc0uqBjP
-         2d/g==
-X-Gm-Message-State: AOAM531pCv85iOSbGSHCVgyrtMBvR5tymZe0mAgquIporFPef7d4L1Jg
-        mFJOmaar3kZgZQ5HRICs06I2GQ==
-X-Google-Smtp-Source: ABdhPJxikg0PiixiDyXxda+GjtGQkG9GOCEnoswQ0EfU9If6Rmt8XfLX1iZeZPdh3OOToOAAtCkU2A==
-X-Received: by 2002:a05:6808:1243:: with SMTP id o3mr14368224oiv.99.1634425775199;
-        Sat, 16 Oct 2021 16:09:35 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id 38sm2098178oti.13.2021.10.16.16.09.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FkP4lqvH6ZOJT/fX9WTaeVqu3z8mUf6wLhul8KmE4w0=;
+        b=Z2p1J0asTSWRHGoNG7Ehw8O4rKG2vnT2KfvqifW+VJUDGdbV9bL6wcQq/EWp+f5KOI
+         5vqRvPbt8SujEzb9UcmQCOaizceGeV2lcQ7ZgvX0EmnZFXeB7eIxza0Hy8Hu57Q5KTZo
+         wX2gdMcIiFXeBK1h0dj8ZuSfBrG/nym/cgdg/0bKXALHg/kuq3cz12J0mEf6xCkUzlzn
+         fpLVxCoUjeZFosxRfwe9keH6l0kSl0u0/tK8thLzTXNRi+n6CM4C2NtV14IgWi3Pdfcl
+         VEcB1xDUaWp6a9emSQneWfpV9DEMLKXH07619SzFGrPzA2nCw+WrmqKYu3HO/e1SuLjt
+         HkKA==
+X-Gm-Message-State: AOAM530U7/7glc0a8c0GRozr+EKoVeyWbcTdlBuUSmavvELNjAZcA8Ez
+        5Q6zj+rz9MbDRO5INgWSOh+JGg==
+X-Google-Smtp-Source: ABdhPJx7dvI/TRBqyslSRyo6qlBeJ/yPa6weJz1/rB3rtJ+fUFVYJ7Nzy1AXN/wII8aeWu24ugjkZg==
+X-Received: by 2002:a05:6830:442c:: with SMTP id q44mr5450606otv.154.1634426379977;
+        Sat, 16 Oct 2021 16:19:39 -0700 (PDT)
+Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id l8sm1430287otv.8.2021.10.16.16.19.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Oct 2021 16:09:34 -0700 (PDT)
-Date:   Sat, 16 Oct 2021 18:09:32 -0500
+        Sat, 16 Oct 2021 16:19:39 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+To:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, linux-phy@lists.infradead.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v2 2/2] phy: qcom: Introduce new eDP PHY driver
-Message-ID: <YWtbrAlV9x3rLTsQ@builder.lan>
-References: <20211015221312.1699043-1-bjorn.andersson@linaro.org>
- <20211015221312.1699043-2-bjorn.andersson@linaro.org>
- <CAA8EJpqGbiy_d1_RUoPiT0Jz0CgC5WaekkuJFXyzU7z7rkZChw@mail.gmail.com>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abhinavk@codeaurora.org, Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH v3 1/2] dt-bindings: phy: Introduce Qualcomm eDP/DP PHY binding
+Date:   Sat, 16 Oct 2021 16:21:27 -0700
+Message-Id: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqGbiy_d1_RUoPiT0Jz0CgC5WaekkuJFXyzU7z7rkZChw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 16 Oct 11:36 CDT 2021, Dmitry Baryshkov wrote:
+Introduce a binding for the eDP/DP PHY hardware block found in several
+different Qualcomm platforms.
 
-> On Sat, 16 Oct 2021 at 01:11, Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-[..]
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-[..]
-> > +#define QSERDES_COM_SSC_EN_CENTER               0x0010
-> > +#define QSERDES_COM_SSC_ADJ_PER1                0x0014
-> > +#define QSERDES_COM_SSC_PER1                    0x001c
-> > +#define QSERDES_COM_SSC_PER2                    0x0020
-> > +#define QSERDES_COM_SSC_STEP_SIZE1_MODE0        0x0024
-> > +#define QSERDES_COM_SSC_STEP_SIZE2_MODE0        0x0028
-> 
-> I think we might want to use register definitions from phy-qcom-qmp.h,
-> so that it would be obvious, which generations are handled by the
-> driver.
-> 
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
-I reviewed the all the registers and concluded that the QSERDES is V4,
-so I included phy-qcom-qmp.h and used the SERDES_V4 defines instead.
+Changes since v2:
+- None
 
-The registers found in the PHY and LANE_TX blocks are specific to this
-PHY, so I'm keeping these here.
+ .../devicetree/bindings/phy/qcom,edp-phy.yaml | 69 +++++++++++++++++++
+ 1 file changed, 69 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
 
-[..]
-> > +/*
-> > + * Display Port PLL driver block diagram for branch clocks
-> 
-> Embedded DisplayPort
-> 
+diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+new file mode 100644
+index 000000000000..c258e4f7e332
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+@@ -0,0 +1,69 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm DP/eDP PHY
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description:
++  The Qualcomm DP/eDP PHY is found in a number of Qualcomm platform and
++  provides the physical interface for DisplayPort and Embedded Display Port.
++
++properties:
++  compatible:
++    enum:
++      - qcom,sc8180x-dp-phy
++      - qcom,sc8180x-edp-phy
++
++  reg:
++    items:
++      - description: PHY base register block
++      - description: tx0 register block
++      - description: tx1 register block
++      - description: PLL register block
++
++  clocks:
++    maxItems: 2
++
++  clock-names:
++    items:
++      - const: aux
++      - const: cfg_ahb
++
++  "#clock-cells":
++    const: 1
++
++  "#phy-cells":
++    const: 0
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - "#clock-cells"
++  - "#phy-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    phy@aec2a00 {
++      compatible = "qcom,sc8180x-edp-phy";
++      reg = <0x0aec2a00 0x1c0>,
++            <0x0aec2200 0xa0>,
++            <0x0aec2600 0xa0>,
++            <0x0aec2000 0x19c>;
++
++      clocks = <&dispcc 0>, <&dispcc 1>;
++      clock-names = "aux", "cfg_ahb";
++
++      #clock-cells = <1>;
++      #phy-cells = <0>;
++    };
++...
+-- 
+2.29.2
 
-Sounds good, I also updated the drawing below where suitable.
-
-> > + *
-> > + *              +------------------------------+
-> > + *              |         DP_VCO_CLK           |
-> > + *              |                              |
-> > + *              |    +-------------------+     |
-> > + *              |    |   (DP PLL/VCO)    |     |
-> > + *              |    +---------+---------+     |
-> > + *              |              v               |
-> > + *              |   +----------+-----------+   |
-[..]
-> > +static struct clk_hw *
-> > +qcom_edp_dp_clks_hw_get(struct of_phandle_args *clkspec, void *data)
-> > +{
-> > +       unsigned int idx = clkspec->args[0];
-> > +       struct qcom_edp *edp = data;
-> > +
-> > +       if (idx >= 2) {
-> > +               pr_err("%s: invalid index %u\n", __func__, idx);
-> > +               return ERR_PTR(-EINVAL);
-> > +       }
-> > +
-> > +       if (idx == 0)
-> > +               return &edp->dp_link_hw;
-> > +
-> > +       return &edp->dp_pixel_hw;
-> > +}
-> 
-> You might want to use of_clk_hw_onecell_get() instead of the special function.
-> 
-
-Yeah, that looks slightly cleaner.
-
-> > +
-> > +static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
-> > +{
-> > +       struct clk_init_data init = { };
-> > +       int ret;
-> > +
-> > +       init.ops = &qcom_edp_dp_link_clk_ops;
-> > +       init.name = "edp_phy_pll_link_clk";
-> > +       edp->dp_link_hw.init = &init;
-> > +       ret = devm_clk_hw_register(edp->dev, &edp->dp_link_hw);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       init.ops = &qcom_edp_dp_pixel_clk_ops;
-> > +       init.name = "edp_phy_pll_vco_div_clk";
-> > +       edp->dp_pixel_hw.init = &init;
-> > +       ret = devm_clk_hw_register(edp->dev, &edp->dp_pixel_hw);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       return devm_of_clk_add_hw_provider(edp->dev, qcom_edp_dp_clks_hw_get, edp);
-> > +}
-[..]
-> > +static struct platform_driver qcom_edp_phy_driver = {
-> > +       .probe          = qcom_edp_phy_probe,
-> > +       .driver = {
-> > +               .name   = "qcom-edp-phy",
-> > +               .of_match_table = qcom_edp_phy_match_table,
-> > +       },
-> > +};
-> > +
-> > +module_platform_driver(qcom_edp_phy_driver);
-> > +
-> > +MODULE_DESCRIPTION("Qualcomm eDP PHY driver");
-> 
-> Should we mention that it's a eDP QMP PHY driver in contrast to the
-> old eDP from 8x74/8x84?
-> 
-
-Sure.
-
-> Also MODULE_AUTHOR seems to be missing.
-> 
-
-Okay, I can add one of those.
-
-Thanks,
-Bjorn
-
-> > +MODULE_LICENSE("GPL v2");
-> > --
-> > 2.29.2
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
