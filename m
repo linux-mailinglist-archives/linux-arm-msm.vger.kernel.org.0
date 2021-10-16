@@ -2,104 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B604B4304A2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:18:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF2343046D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 21:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240908AbhJPTUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 15:20:34 -0400
-Received: from ip-16.mailobj.net ([213.182.54.16]:43482 "EHLO msg-6.mailo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232336AbhJPTUe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 15:20:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634409871; bh=1/OydcnVwUBndNkWR/YOnashKy6VPirsEbA4L+EOJZ4=;
-        h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-         References:MIME-Version:Content-Transfer-Encoding;
-        b=B+raApksCV4XRqSp/CLYivelmjavkNwNTYU3glC0Wkh/vSU/vSsj1/9suEmuxRRNT
-         gAyLMUD8ZKXgVUVE8NYDSHJ9eFo5ZxRyZmI2zQEc2G+5NiCQYeA7rzLA2pjNhxwetc
-         PxLfzkekLTPDpFCscTAhBTojzRJaLFUIrzG6d5hE=
-Received: by b-6.in.mailobj.net [192.168.90.16] with ESMTP
-        via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 20:44:05 +0200 (CEST)
-X-EA-Auth: H/qsRidbIT3KyEA1EBIFm5A01FGasDKWzj1hSWYlxZfFW7bFlONyivG9ZdF8Eyke822OO7m3noOUPyoxCYBst0C4EfHo4iWT
-From:   Claudio Suarez <cssk@net-c.es>
-To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
-        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
-        ville.syrjala@linux.intel.com
-Cc:     Claudio Suarez <cssk@net-c.es>
-Subject: [PATCH v2 13/13] drm/i915: replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Sat, 16 Oct 2021 20:42:26 +0200
-Message-Id: <20211016184226.3862-14-cssk@net-c.es>
+        id S240852AbhJPTIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 15:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40302 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240771AbhJPTIS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 15:08:18 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACE2FC061765
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 12:06:09 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id q16so397727ljg.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 12:06:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H45YVwe40DetvUNJ0d00LEpnQjv13osUh2nlrM3WI0s=;
+        b=bygnBbU04JpUtmGqiZ+1CqT5prU8vLIS8/qu1G6ju88fcSEe7/tf3A3LI5WdxFnSsY
+         Zywj82eL2GUmhWKfNMtReyUunR+UtdcgpSkAj8HlOc88R3aV+4wEJa9TcmifoBKtHSdg
+         t9xbgDK9R3AleJcB+gna4a1GGE9sTop6MglxRn8ylLvApesRQ3eeWnbZ06xJfH3T/57J
+         c8Pdq7ifC4p2Sbn1+FPtKIrFFk+vL0C9WjbYD8OjMuEMjsM4C/V0Kea3iQ3r2I9tApRD
+         df6bslbqBqp8dWRX3SMokjUf2+8rQCZKSvVPDkHZgXWSce3J4dVTn8CBum0s8GPCbq9K
+         xDaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H45YVwe40DetvUNJ0d00LEpnQjv13osUh2nlrM3WI0s=;
+        b=rFJ3lXOpQGr0OqInjgOgpxhsp0sSq7anCVdRtZduCiert+jx2WSdFA9vCNV8sbQOer
+         roeExMoxU0l5EGx45BEbAbEI6KFIvzMPgiZ/K/FNUR63bwGi+krQ4TFfVYucMFdBom8V
+         0FiZAL0oVjC1yWYU1UA6rxKyczt7UDrZLN2QszcBQ333DLwUp0wJ01D5Hkj7Yi+Jnul1
+         3ecRWixNnILiUSt+fj0cysrNsQlDLmFy1oIfCP7IPTMXPUdfAU568xQLNtEHiUfgL3Kl
+         YX8Q+N+16G0EzzsOPfF6I8EGXIf8YGBntOKhSMUI5HTBFcvKuShaX5E+occTU3kdlS+D
+         hz8w==
+X-Gm-Message-State: AOAM5338jezFF6B6TS6XNUk4lgBXrTLlNXA/m9tFZSX08yRpue+s7LWx
+        9o5ZT1Dm25HZ27lNborrmkHHnGtjQyNiTA==
+X-Google-Smtp-Source: ABdhPJzNYtuuldHYl+wf77D8Hex9jlDmlEiIE2m4/nKkq06QSH/Z/Isu+mNlkuFlxT3qGER2PU//aQ==
+X-Received: by 2002:a05:651c:200e:: with SMTP id s14mr21225583ljo.397.1634411168012;
+        Sat, 16 Oct 2021 12:06:08 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d20sm1009853ljg.20.2021.10.16.12.06.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Oct 2021 12:06:07 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] soc: qcom: socinfo: add two missing PMIC IDs
+Date:   Sat, 16 Oct 2021 22:06:07 +0300
+Message-Id: <20211016190607.49866-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211016184226.3862-1-cssk@net-c.es>
-References: <20211016184226.3862-1-cssk@net-c.es>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Once EDID is parsed, the monitor HDMI support information is available
-through drm_display_info.is_hdmi. Retriving the same information with
-drm_detect_hdmi_monitor() is less efficient. Change to
-drm_display_info.is_hdmi where possible.
+Add IDs for PMK8001 and PMI8996. They also fall in the list of
+'duplicated' IDs, where the same index was used for multiple chips.
 
-This is a TODO task in Documentation/gpu/todo.rst
-
-Signed-off-by: Claudio Suarez <cssk@net-c.es>
+Fixes: 7fda2b0bfbd9 ("soc: qcom: socinfo: import PMIC IDs from pmic-spmi")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdmi.c | 2 +-
- drivers/gpu/drm/i915/display/intel_sdvo.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/socinfo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_hdmi.c b/drivers/gpu/drm/i915/display/intel_hdmi.c
-index b04685bb6439..008e5b0ba408 100644
---- a/drivers/gpu/drm/i915/display/intel_hdmi.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
-@@ -2355,7 +2355,7 @@ intel_hdmi_set_edid(struct drm_connector *connector)
- 	to_intel_connector(connector)->detect_edid = edid;
- 	if (edid && edid->input & DRM_EDID_INPUT_DIGITAL) {
- 		intel_hdmi->has_audio = drm_detect_monitor_audio(edid);
--		intel_hdmi->has_hdmi_sink = drm_detect_hdmi_monitor(edid);
-+		intel_hdmi->has_hdmi_sink = connector->display_info.is_hdmi;
- 
- 		connected = true;
- 	}
-diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-index 6cb27599ea03..b4065e4df644 100644
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -2060,8 +2060,9 @@ intel_sdvo_tmds_sink_detect(struct drm_connector *connector)
- 		if (edid->input & DRM_EDID_INPUT_DIGITAL) {
- 			status = connector_status_connected;
- 			if (intel_sdvo_connector->is_hdmi) {
--				intel_sdvo->has_hdmi_monitor = drm_detect_hdmi_monitor(edid);
- 				intel_sdvo->has_hdmi_audio = drm_detect_monitor_audio(edid);
-+				intel_sdvo->has_hdmi_monitor =
-+							    connector->display_info.is_hdmi;
- 			}
- 		} else
- 			status = connector_status_disconnected;
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 9faf48302f4b..458a4c5d85c3 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -87,8 +87,8 @@ static const char *const pmic_models[] = {
+ 	[15] = "PM8901",
+ 	[16] = "PM8950/PM8027",
+ 	[17] = "PMI8950/ISL9519",
+-	[18] = "PM8921",
+-	[19] = "PM8018",
++	[18] = "PMK8001/PM8921",
++	[19] = "PMI8996/PM8018",
+ 	[20] = "PM8998/PM8015",
+ 	[21] = "PMI8998/PM8014",
+ 	[22] = "PM8821",
 -- 
 2.33.0
-
 
