@@ -2,107 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C05E74300B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 08:57:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D6444300B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 08:58:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236519AbhJPHAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 03:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50768 "EHLO
+        id S237715AbhJPHAH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 03:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234473AbhJPHAA (ORCPT
+        with ESMTP id S236837AbhJPHAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 03:00:00 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A62C061570
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 23:57:53 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id c4so3598117pgv.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 23:57:53 -0700 (PDT)
+        Sat, 16 Oct 2021 03:00:04 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0E03C061762
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 23:57:56 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d9so3089898pfl.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 Oct 2021 23:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Yo4Wqb6VoTR0Zqbgv4qNbxaNAKZMu5PTucXP4Fkz5Xw=;
-        b=wiCWwrstEMOa3ky455f7bzsx96QVi6p+Sxiq2WJJp4DnqG0sYM7q3/ZFz5/2nOXRAY
-         139PNuKWpqNrkk0kie2xsWImiszGYp+QSWgwLINbWdbrNAczDd5gQ6bstpMC2pp5Axzd
-         kJFTBTWY/fn6r96zFMeyJhyUR/BZLMOF2HDvul24hE5T9UBXhGfcD/v1imYT0wGAjh5v
-         M/i8GyPZ1cNGSj2toAHidia8W2yfsFylHGNsrdwq35E5qNNTatFB05hVQLpakTGS+hRT
-         I7Ll5fqPGvheWbsHIqB18wltDjdjis2WFj6oNHy31/hWG358e+aE96JifGJ++EIflkON
-         KItw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=A2eL6Am/QXcfEf6wpEEXp2eqrb76XKvsxOHtLunB81E=;
+        b=zoOpjybTvuwHtP4eb6cvosjEosqpSYWs5m9cP/9HS3A5UmQuEUqHIRSvYdvDmzD7eJ
+         YnkVNam2jD6lLXbLZ9/UAGQ8JI4pCu+kUybzSBu70usSBZ9koN6bTcl3HdEsRhpzCYTL
+         S4MTJCAshw8yl3ggdIdu9HZUFdgdPjijBpE3rKwFVMvYwjtEIcvjlqVop/tz5dptJ8aM
+         8CQA9t6Y05qL1B35bGGeRHp1A8AQJXE4Kns96qRmRUgsGfBxDpDUgsuZnbYjdcf6AW/X
+         ZyX+DMfKz0uGO/T1SVVlwjjtSrXjKJbl+vnzyvByCVo0M+mBMY5Hqrx3uCBZ0qqtcojJ
+         d+hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Yo4Wqb6VoTR0Zqbgv4qNbxaNAKZMu5PTucXP4Fkz5Xw=;
-        b=k9OINZ7Aj1XCr3C48PgF3V7KCqhz6QHXh7922Y9dAnJ2NF38GRAhISAvvarHVT5DNs
-         ALwru4MUQhpdLePf1+vlrk19cfhljIdwOUfCCxGtGaxHJZ9IVn6BVqe0D75Flb4PasWX
-         wMWveitW0IeAu2gq1kMpMxfbvvpfI0atYpVNq0et9eLhMoksPJuVh8xGB0B88298I813
-         hiPOfP8Mz9OSohhCVWH9tjd26xRW1bJhgfZT5tw0wScV6qINohIsnLysHLYsKCDA8BUc
-         6NTgxyL/A0+3IJiwQlxIj7XS0CbSW66I/0dec923qR/7elU9OPIIBIsTMn9ihDprzn1g
-         KtuA==
-X-Gm-Message-State: AOAM533ag/bHcfC66ywHG5VaZua2fTzD/Zq/+Gaxx/pTIf8sg/1DlcCH
-        GWxpjFJhYis2V6/ttOuUYT/k
-X-Google-Smtp-Source: ABdhPJwF6CIMG/7f/lK6ddQqBMRLsEU5RdJkeWvzgnlwhyyqyrgkvog5VeZ1p2Of/iKPVLAex10l5g==
-X-Received: by 2002:a05:6a00:1354:b0:44c:eb65:8570 with SMTP id k20-20020a056a00135400b0044ceb658570mr16208917pfu.34.1634367472448;
-        Fri, 15 Oct 2021 23:57:52 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=A2eL6Am/QXcfEf6wpEEXp2eqrb76XKvsxOHtLunB81E=;
+        b=2zsc8g8F6kvlZ08Nl6gdnDt4S2dmq9Jjx+YVePrFtIrCalrhg7LXTwrvfD5wEI27wq
+         cUuSz/tZ0Z7u332WpcAHxCXN5r82d3NrzbTIhkq9phcSV+V3dRJqM4Y4r+N6DhYP4jDf
+         frQZxrLADIjfKBbJNLmfx8Bz2z3sjG+5s+zvaip0UaozKMV3ZvVRoM35DrjxeKjY1GFb
+         pqq9ZXwKkI8fDmxKXI5BOr3q+ZcbTPm8cEV3wduaEXBB/90mG+59RKaSJ/5+4JCn5cxg
+         9SeBwfDyKftWoOKVMoZ5LrS4UMSOS4W1ibn6FumHKWZaJraUqs66yET2rPYbO0WS0+BP
+         GlSw==
+X-Gm-Message-State: AOAM532yeS+FJPjQjnqPEUhKhxtwQ1YiA7LKPhhPexCCyFUlqRZKIRl+
+        5cQ4cd7RnWhO0TqkFN9x5SXZ
+X-Google-Smtp-Source: ABdhPJygVbcWzrbpQlhdx7t70Ze9/6w7BrhXWkiL0BV04AdsCQILo2Sqq49ZybtPZpCaYiEisTZolw==
+X-Received: by 2002:aa7:93d2:0:b0:44d:4a13:5267 with SMTP id y18-20020aa793d2000000b0044d4a135267mr16086049pff.52.1634367476342;
+        Fri, 15 Oct 2021 23:57:56 -0700 (PDT)
 Received: from localhost.localdomain ([117.202.185.237])
-        by smtp.gmail.com with ESMTPSA id a17sm7024253pfd.54.2021.10.15.23.57.48
+        by smtp.gmail.com with ESMTPSA id a17sm7024253pfd.54.2021.10.15.23.57.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Oct 2021 23:57:51 -0700 (PDT)
+        Fri, 15 Oct 2021 23:57:55 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 0/3] MHI patches for v5.16
-Date:   Sat, 16 Oct 2021 12:27:31 +0530
-Message-Id: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/3] MAINTAINERS: Update the entry for MHI bus
+Date:   Sat, 16 Oct 2021 12:27:32 +0530
+Message-Id: <20211016065734.28802-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
+References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+Since Hemant is not carrying out any maintainership duties let's make
+him as a dedicated reviewer. Also add the new mailing lists dedicated
+for MHI in subspace mailing list server.
 
-Here is the small series of MHI patches for v5.16 with summary below:
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-1. MHI got a dedicated mailing list in subspace server. Hence, updated the
-MAINTAINERS entry adding it as the primary list.
-
-2. A leftover patch from 5.15 PR that adds a dedicated flag to the MHI client
-transfer APIs for inbound buffer allocation by the MHI stack. This is required
-for some downlink channels like QRTR that depends on pre-allocated buffers.
-Since the patch modifies the MHI client drivers under "net/", Ack has been
-collected from the netdev maintainer.
-
-3. Fixed up the coccicheck warning by using sysfs_emit instead of snprintf.
-
-Please consider merging!
-
-Thanks,
-Mani
-
-Loic Poulain (1):
-  bus: mhi: Add inbound buffers allocation flag
-
-Manivannan Sadhasivam (1):
-  MAINTAINERS: Update the entry for MHI bus
-
-Qing Wang (1):
-  bus: mhi: replace snprintf in show functions with sysfs_emit
-
- MAINTAINERS                      | 3 ++-
- drivers/bus/mhi/core/init.c      | 2 +-
- drivers/bus/mhi/core/internal.h  | 2 +-
- drivers/bus/mhi/core/main.c      | 9 ++++++---
- drivers/net/mhi_net.c            | 2 +-
- drivers/net/wwan/mhi_wwan_ctrl.c | 2 +-
- include/linux/mhi.h              | 7 ++++++-
- net/qrtr/mhi.c                   | 2 +-
- 8 files changed, 19 insertions(+), 10 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eeb4c70b3d5b..8ae357d746c1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -12191,7 +12191,8 @@ F:	arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
+ 
+ MHI BUS
+ M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+-M:	Hemant Kumar <hemantk@codeaurora.org>
++R:	Hemant Kumar <hemantk@codeaurora.org>
++L:	mhi@lists.linux.dev
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
 -- 
 2.25.1
 
