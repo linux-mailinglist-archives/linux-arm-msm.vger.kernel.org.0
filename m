@@ -2,82 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A2A01430310
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 16:36:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4388A43031A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 16:51:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235364AbhJPOiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 10:38:24 -0400
-Received: from mail-oi1-f170.google.com ([209.85.167.170]:45676 "EHLO
-        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234477AbhJPOiX (ORCPT
+        id S236453AbhJPOxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 10:53:09 -0400
+Received: from mail-4325.protonmail.ch ([185.70.43.25]:40959 "EHLO
+        mail-4325.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235150AbhJPOxJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 10:38:23 -0400
-Received: by mail-oi1-f170.google.com with SMTP id z126so17532076oiz.12;
-        Sat, 16 Oct 2021 07:36:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pUN/soe8xSqu2oYqVJjty1O05ssnZDWQhxdQWf+Tt2E=;
-        b=pfA2GSHD6vtH0et05GGMKETNljOjcONa42sII7Ta5PIqciIOuJO8dN3QrrBvRK4sq6
-         aKG+5zg44ePAJkUGt5v79SVRSs/wHUlVWiZqtJA8HwQJ1fm6ZEYh68y9/yQtTFX9JnMr
-         d6MZvl8B0kxyoQhd9s2Ev/ziMGT1u9JChTPkWt/OOj1RMbPjt4XitQqw1zd2xXeHD9DF
-         sx4wXIvqykcYJy2dmafh6sv4Sc2r5r3iqtWsjYWxgZFSKaCqus/2lRi+FOYO8qrjCE23
-         MF+cykGQDKTwwdzU8Sltf+ZZ+tipJSvBNZGA0q1J7GzJextOxtPbsHHKXV7g0E+o0Cn1
-         KB9w==
-X-Gm-Message-State: AOAM533yTVP44dN8rXMVIHCOSmTp4GKf7iOYE65srVyh68B1oVtUwJ/+
-        FIvESJuoVXcz8A5n2vmUYCIaaAIsJg==
-X-Google-Smtp-Source: ABdhPJwinL1aGnefiRLjvQIakN5SSu385KEOtMYIcvNVMSg3tHZlJwHzZ9/E1yzoAiD+m/OwbGu++w==
-X-Received: by 2002:aca:6082:: with SMTP id u124mr18564654oib.153.1634394975117;
-        Sat, 16 Oct 2021 07:36:15 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id d10sm1576926ooj.24.2021.10.16.07.36.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Oct 2021 07:36:14 -0700 (PDT)
-Received: (nullmailer pid 3906826 invoked by uid 1000);
-        Sat, 16 Oct 2021 14:36:13 -0000
-Date:   Sat, 16 Oct 2021 09:36:13 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Pavel Machek <pavel@ucw.cz>,
-        Lee Jones <lee.jones@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-leds@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v10 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-Message-ID: <YWrjXSAvJimq1UcZ@robh.at.kernel.org>
-References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+        Sat, 16 Oct 2021 10:53:09 -0400
+Date:   Sat, 16 Oct 2021 14:50:54 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1634395859;
+        bh=R3/CWC+oQyHLNJ8Mqz/kp0RXJtD7NTUkw0e4eKR5loA=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=S/3JdJgGa1H1gmxU2faAPy6ZJdotBfNnj5Nh1hghcVZ78AWMsv7JuiW3e9tnnXc/s
+         ZfNTQfXpOzzDdQXbLsVcgYOjIX6yan9IOdxu1L/ox9aGNAnjqnPrTWg03UusmkLj04
+         k4N8pqcUAqD9fAiCN2+ub5BskSt4mmdUN8xIydrc=
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8996: Add MSM8996 Pro support
+Message-ID: <ZVR21R.X63CT137R99A3@protonmail.com>
+In-Reply-To: <a8114098-f700-974b-e17e-54f5baebec46@somainline.org>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com> <20211014083016.137441-8-y.oudjana@protonmail.com> <a8114098-f700-974b-e17e-54f5baebec46@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 09 Oct 2021 21:39:11 -0700, Bjorn Andersson wrote:
-> This adds the binding document describing the three hardware blocks
-> related to the Light Pulse Generator found in a wide range of Qualcomm
-> PMICs.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v9:
-> - "led" child of "multi-led" now needed a patternProperties
-> - use generic "led-controller" and "pwm-controller" in example
-> 
->  .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
->  1 file changed, 173 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+On Fri, Oct 15 2021 at 23:01:54 +0400, Konrad Dybcio=20
+<konrad.dybcio@somainline.org> wrote:
+>=20
+> On 14.10.2021 10:32, Yassine Oudjana wrote:
+>>  Add a new DTSI for MSM8996 Pro (MSM8996SG) with msm-id and CPU/GPU=20
+>> OPPs.
+>>  CBF OPPs and CPR parameters will be added to it as well once=20
+>> support for
+>>  CBF scaling and CPR is introduced.
+>>=20
+>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>  ---
+>>   arch/arm64/boot/dts/qcom/msm8996.dtsi    |  82 +++----
+>>   arch/arm64/boot/dts/qcom/msm8996pro.dtsi | 281=20
+>> +++++++++++++++++++++++
+>>   2 files changed, 322 insertions(+), 41 deletions(-)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/msm8996pro.dtsi
+>>=20
+>>  diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi=20
+>> b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>  index 94a846c3f1ee..5b2600a4fb2a 100644
+>>  --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>  +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>  @@ -142,82 +142,82 @@ cluster0_opp: opp_table0 {
+>>   =09=09/* Nominal fmax for now */
+>>   =09=09opp-307200000 {
+>>   =09=09=09opp-hz =3D /bits/ 64 <307200000>;
+>>  -=09=09=09opp-supported-hw =3D <0x77>;
+>>  +=09=09=09opp-supported-hw =3D <0x7>;
+>=20
+> You didn't describe what's the reason for changing this everywhere.
+>=20
+> If it's been always broken, perhaps make it a separate commit=20
+> describing
+>=20
+> the issue.
+>=20
+>=20
+> Konrad
+>=20
+
+Before removing reading msm-id in qcom_cpufreq_nvmem, bits 0-2 (0x07)=20
+were MSM8996 speed bins, while bits 4-6 (0x70) were MSM8996 Pro speed=20
+bins. Now, only bits 0-2 are used for either one, so basically I moved=20
+bits 4-6 into msm8996pro.dtsi after shifting them right to become bits=20
+0-2.
+
+I'll put this in a separate patch and describe the change.
+
+=09Yassine
+
+
+
