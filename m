@@ -2,138 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B14543032D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 17:09:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8C84430332
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 17:13:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237212AbhJPPME (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 11:12:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237170AbhJPPME (ORCPT
+        id S236663AbhJPPPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 11:15:15 -0400
+Received: from smtprelay0103.hostedemail.com ([216.40.44.103]:54282 "EHLO
+        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S235703AbhJPPPO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 11:12:04 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F4EFC061765
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 08:09:56 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id l7so11353540qkk.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 08:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ic2B3qAcwXa3Bb0xn0FSuPPQc9LYrHNTOr5kbu049Qc=;
-        b=ZYHCANlUN15by7s7UXXFcFKlreoz0ZiVqI4I2ONz0twA5CNDE/GG6zJ9No+7FvohpD
-         lJszz43Nr/keKxSC8UdoOSQKsxNowDAS0GMhuleCRrIQPRjtSPiPhBmxg0d/uRwrCBcR
-         GGxVwxP/nF4V1cdqTpixvCyHN0ejejeH6q4gWm0fW2GT6NUwkmdm+Kbwl4YLtRWcIKHc
-         ubJuHiLbFjxsg22t+pJWnGtXeRrsQFKRnp7Reu04QuRZD1z3eCnaaMoNixxyCHyRCZUz
-         m22l5BcpZv6MzNTfTxHIH+/t6QwwKBFEaiCAoZwlJdLbjOGToKRddNJos8F//crpmc+E
-         bQUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ic2B3qAcwXa3Bb0xn0FSuPPQc9LYrHNTOr5kbu049Qc=;
-        b=w/P+a5T/LWaic8fwrH/Ook5++yGh1KXGr+7zJhF1T6jJhWbrOfNgqeBfij/GQSkaDD
-         1J/+j53HPDVBAVT7H0kYon3ZHyPOXMhRbJmkDbj87aj/QkpmbRH8rm9XdKJ4BeKRKtv8
-         4Taf8oe1TQ6G1+C4iTd1OuNqOuxXg86lGwiv6uJTgRWUfHYKerS3MIZVDbOesHqsq/PN
-         auR/RhxXN+u1rv7eUQpAWAx3xmb6ppcHx++FJOizgaZdJdMSyjiY7t4L/pEUxBgLErNE
-         GkQBcpuPKeTBcTU5w+D0w4vgQTz9FwBv5ngOPVH2GUd3JYWdCmou9OEAkLQBT+N/zKpo
-         2U8w==
-X-Gm-Message-State: AOAM531YYUvz6y+WrGaFPJIcCurh/pgKQtpnZOgkRY6XpaRI35zHQvw6
-        HnsbIAo1FZvfqhXXrvNjz/QQj5teABNWei0hHh4/LA==
-X-Google-Smtp-Source: ABdhPJxV8nVMmu9V10uCeG5Lw0KNhKIjiUhuuUIkqH4ZK83pIFkcbD6pd7PLhPz4YWBYcjHdUOXP70Pnq+vCC5VHtOA=
-X-Received: by 2002:ae9:d842:: with SMTP id u63mr15066970qkf.44.1634396995049;
- Sat, 16 Oct 2021 08:09:55 -0700 (PDT)
+        Sat, 16 Oct 2021 11:15:14 -0400
+Received: from omf14.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
+        by smtprelay01.hostedemail.com (Postfix) with ESMTP id E02D01018D5AF;
+        Sat, 16 Oct 2021 15:13:05 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf14.hostedemail.com (Postfix) with ESMTPA id 2F15D268E46;
+        Sat, 16 Oct 2021 15:13:04 +0000 (UTC)
+Message-ID: <400d3fe720e336d5dba6e9b95c75baadf22a6a58.camel@perches.com>
+Subject: Re: [PATCH 3/3] bus: mhi: replace snprintf in show functions with
+ sysfs_emit
+From:   Joe Perches <joe@perches.com>
+To:     Greg KH <gregkh@linuxfoundation.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+Date:   Sat, 16 Oct 2021 08:13:03 -0700
+In-Reply-To: <YWrqmiT1pC+SbecM@kroah.com>
+References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
+         <20211016065734.28802-4-manivannan.sadhasivam@linaro.org>
+         <YWqBTj4slHq7HexS@kroah.com>
+         <6ddc01b24b1c72f7e92174a037043b5cfffa3431.camel@perches.com>
+         <YWrqmiT1pC+SbecM@kroah.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.40.4-1 
 MIME-Version: 1.0
-References: <20211014083016.137441-1-y.oudjana@protonmail.com>
- <20211014083016.137441-8-y.oudjana@protonmail.com> <a8114098-f700-974b-e17e-54f5baebec46@somainline.org>
- <ZVR21R.X63CT137R99A3@protonmail.com>
-In-Reply-To: <ZVR21R.X63CT137R99A3@protonmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 16 Oct 2021 18:09:43 +0300
-Message-ID: <CAA8EJppVVzOmfwqMb==-xcoHGmQrZqD6+2T_+TFtD8tjUC_zNQ@mail.gmail.com>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8996: Add MSM8996 Pro support
-To:     Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.89
+X-Stat-Signature: 9uhebz6odwgnyap79pzfzw94x7mhn8a1
+X-Rspamd-Server: rspamout05
+X-Rspamd-Queue-Id: 2F15D268E46
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/lF+a3yNodCoxdxWj3to9HFbSG6J4S2Fs=
+X-HE-Tag: 1634397184-28310
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Oct 2021 at 17:51, Yassine Oudjana <y.oudjana@protonmail.com> wrote:
->
->
-> On Fri, Oct 15 2021 at 23:01:54 +0400, Konrad Dybcio
-> <konrad.dybcio@somainline.org> wrote:
-> >
-> > On 14.10.2021 10:32, Yassine Oudjana wrote:
-> >>  Add a new DTSI for MSM8996 Pro (MSM8996SG) with msm-id and CPU/GPU
-> >> OPPs.
-> >>  CBF OPPs and CPR parameters will be added to it as well once
-> >> support for
-> >>  CBF scaling and CPR is introduced.
-> >>
-> >>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> >>  ---
-> >>   arch/arm64/boot/dts/qcom/msm8996.dtsi    |  82 +++----
-> >>   arch/arm64/boot/dts/qcom/msm8996pro.dtsi | 281
-> >> +++++++++++++++++++++++
-> >>   2 files changed, 322 insertions(+), 41 deletions(-)
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/msm8996pro.dtsi
-> >>
-> >>  diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >> b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>  index 94a846c3f1ee..5b2600a4fb2a 100644
-> >>  --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>  +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>  @@ -142,82 +142,82 @@ cluster0_opp: opp_table0 {
-> >>              /* Nominal fmax for now */
-> >>              opp-307200000 {
-> >>                      opp-hz = /bits/ 64 <307200000>;
-> >>  -                   opp-supported-hw = <0x77>;
-> >>  +                   opp-supported-hw = <0x7>;
-> >
-> > You didn't describe what's the reason for changing this everywhere.
-> >
-> > If it's been always broken, perhaps make it a separate commit
-> > describing
-> >
-> > the issue.
-> >
-> >
-> > Konrad
-> >
->
-> Before removing reading msm-id in qcom_cpufreq_nvmem, bits 0-2 (0x07)
-> were MSM8996 speed bins, while bits 4-6 (0x70) were MSM8996 Pro speed
-> bins. Now, only bits 0-2 are used for either one, so basically I moved
-> bits 4-6 into msm8996pro.dtsi after shifting them right to become bits
-> 0-2.
->
-> I'll put this in a separate patch and describe the change.
+On Sat, 2021-10-16 at 17:07 +0200, Greg KH wrote:
+> On Sat, Oct 16, 2021 at 03:24:17AM -0700, Joe Perches wrote:
+> > On Sat, 2021-10-16 at 09:37 +0200, Greg KH wrote:
+> > > On Sat, Oct 16, 2021 at 12:27:34PM +0530, Manivannan Sadhasivam wrote:
+> > > > From: Qing Wang <wangqing@vivo.com>
+> > > > coccicheck complains about the use of snprintf() in sysfs show functions.
+> > []
+> > > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> > []
+> > > > @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
+> > > >  	struct mhi_device *mhi_dev = to_mhi_device(dev);
+> > > >  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
+> > > >  
+> > > > -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
+> > > > +	return sysfs_emit(buf, "Serial Number: %u\n",
+> > > >  			mhi_cntrl->serial_number);
+> > > 
+> > > The text "Serial Number: " should not be in here, right?  It's obvious
+> > > this is a serial number, that's what the documentation and file name
+> > > says.  Userspace should not have to parse sysfs files.
+> > 
+> > sysfs is ABI right?  Parsing or not, it's what's already there.
+> 
+> If no tools rely on this, and we can change it, we should at least try.
+> 
+> We can not change ABI if something breaks.  If nothing relies on it,
+> then it is fine to do so.
 
-Could you please describe in the commit message why is it changed?
-IOW, what prompted you to split 8996SG support from main msm8996.dtsi?
+That's a quite bad way to think of an ABI.
 
--- 
-With best wishes
-Dmitry
+All that does is tempt fate as you don't know if something already
+uses it until someone complains and by that time something else may
+be written to depend on the new behavior.
+
+
