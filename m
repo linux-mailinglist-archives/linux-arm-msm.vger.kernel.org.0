@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F189430122
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 10:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E55443015B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 10:58:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239867AbhJPI11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 04:27:27 -0400
-Received: from ip-15.mailobj.net ([213.182.54.15]:59748 "EHLO msg-4.mailo.com"
+        id S239862AbhJPJAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 05:00:32 -0400
+Received: from msg-1.mailo.com ([213.182.54.11]:46332 "EHLO msg-1.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239443AbhJPI1Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 04:27:25 -0400
+        id S236048AbhJPJAb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 05:00:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634372706; bh=yZzgPykl4Bs+bjn8VyGJS4/uveNfNvHA1+ZdWhCtElE=;
+        t=1634374693; bh=9IL8gtMx9v+2OPAAge0RErzrh08ys/P7bdTcb4UTPyc=;
         h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
          MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To;
-        b=wWMsPosvxYC0hUTuNskQtjaK4A0OSCkYJLfNsRREaPprBWK5/hFofHtPAM+pf+mFw
-         A8v6EwrivfPxjx2zz5g7sjcn2k6+1RMH1RIDAtESrMwq18LSo8OpckCitXvzPsCyeF
-         7Lyg0wwMrnehjqaNydEV5nmunSRisHnMLDQjhizo=
+        b=MoYnQZ5L6Ax0/fqJMIwGZCAaXd+RW/7hsqN7Ru2uyoWj8IQKyGyQt87jaZGxhKhF+
+         RctnOXYKQjlXfB+3BNI9Dje/aQ7GoBOvzDDIAWxFg8zcvim3fw5K1HxLeVx6jfxIbN
+         RIizUInJ4bkCf1hQdJdE2jWovuRx5ozpyfFHXVEs=
 Received: by b-2.in.mailobj.net [192.168.90.12] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 10:25:06 +0200 (CEST)
-X-EA-Auth: NRS5ipq4PdTt+JAH6bHxz4H2hBw4isFILYBvQU7UNrUFLZTxbjQJHTD8I+F5D0UsnPjvvuhUpwJExaACHSHoV/oeR/31d9wx
-Date:   Sat, 16 Oct 2021 10:25:03 +0200
+        Sat, 16 Oct 2021 10:58:13 +0200 (CEST)
+X-EA-Auth: A5rfGmpIBDyFxLfMHpfhudehUSSxmDiQm2TxkL/eXbGqty570ZAWa8gGp3kSB+GyiaCfMVhAZa4NwN7QqTApIj+sGlxqqx7d
+Date:   Sat, 16 Oct 2021 10:58:10 +0200
 From:   Claudio Suarez <cssk@net-c.es>
 To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
 Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
@@ -48,123 +48,128 @@ Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
 Subject: Re: [Freedreno] [PATCH 01/15] gpu/drm: make drm_add_edid_modes()
  consistent when updating connector->display_info
-Message-ID: <YWqMX+EOjk++HPOe@gineta.localdomain>
+Message-ID: <YWqUIiUmVoGg+dl+@gineta.localdomain>
 References: <20211015113713.630119-1-cssk@net-c.es>
  <20211015113713.630119-2-cssk@net-c.es>
  <YWluAX6LA2DupE+E@intel.com>
  <YWnVVoCipTXxx8NW@gineta.localdomain>
  <YWnXierh4TSXpDMc@intel.com>
+ <YWqMX+EOjk++HPOe@gineta.localdomain>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YWnXierh4TSXpDMc@intel.com>
+In-Reply-To: <YWqMX+EOjk++HPOe@gineta.localdomain>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 15, 2021 at 10:33:29PM +0300, Ville Syrjälä wrote:
-> On Fri, Oct 15, 2021 at 09:24:06PM +0200, Claudio Suarez wrote:
-> > On Fri, Oct 15, 2021 at 03:03:13PM +0300, Ville Syrjälä wrote:
-> > > On Fri, Oct 15, 2021 at 01:36:59PM +0200, Claudio Suarez wrote:
-> > > > According to the documentation, drm_add_edid_modes
-> > > > "... Also fills out the &drm_display_info structure and ELD in @connector
-> > > > with any information which can be derived from the edid."
+On Sat, Oct 16, 2021 at 10:25:03AM +0200, Claudio Suarez wrote:
+> On Fri, Oct 15, 2021 at 10:33:29PM +0300, Ville Syrjälä wrote:
+> > On Fri, Oct 15, 2021 at 09:24:06PM +0200, Claudio Suarez wrote:
+> > > On Fri, Oct 15, 2021 at 03:03:13PM +0300, Ville Syrjälä wrote:
+> > > > On Fri, Oct 15, 2021 at 01:36:59PM +0200, Claudio Suarez wrote:
+> > > > > According to the documentation, drm_add_edid_modes
+> > > > > "... Also fills out the &drm_display_info structure and ELD in @connector
+> > > > > with any information which can be derived from the edid."
+> > > > > 
+> > > > > drm_add_edid_modes accepts a struct edid *edid parameter which may have a
+> > > > > value or may be null. When it is not null, connector->display_info and
+> > > > > connector->eld are updated according to the edid. When edid=NULL, only
+> > > > > connector->eld is reset. Reset connector->display_info to be consistent
+> > > > > and accurate.
+> > > > > 
+> > > > > Signed-off-by: Claudio Suarez <cssk@net-c.es>
+> > > > > ---
+> > > > >  drivers/gpu/drm/drm_edid.c | 2 ++
+> > > > >  1 file changed, 2 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+> > > > > index 6325877c5fd6..6cbe09b2357c 100644
+> > > > > --- a/drivers/gpu/drm/drm_edid.c
+> > > > > +++ b/drivers/gpu/drm/drm_edid.c
+> > > > > @@ -5358,10 +5358,12 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
+> > > > >  
+> > > > >  	if (edid == NULL) {
+> > > > >  		clear_eld(connector);
+> > > > > +		drm_reset_display_info(connector);
+> > > > >  		return 0;
+> > > > >  	}
+> > > > >  	if (!drm_edid_is_valid(edid)) {
+> > > > >  		clear_eld(connector);
+> > > > > +		drm_reset_display_info(connector);
 > > > > 
-> > > > drm_add_edid_modes accepts a struct edid *edid parameter which may have a
-> > > > value or may be null. When it is not null, connector->display_info and
-> > > > connector->eld are updated according to the edid. When edid=NULL, only
-> > > > connector->eld is reset. Reset connector->display_info to be consistent
-> > > > and accurate.
-> > > > 
-> > > > Signed-off-by: Claudio Suarez <cssk@net-c.es>
-> > > > ---
-> > > >  drivers/gpu/drm/drm_edid.c | 2 ++
-> > > >  1 file changed, 2 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> > > > index 6325877c5fd6..6cbe09b2357c 100644
-> > > > --- a/drivers/gpu/drm/drm_edid.c
-> > > > +++ b/drivers/gpu/drm/drm_edid.c
-> > > > @@ -5358,10 +5358,12 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
-> > > >  
-> > > >  	if (edid == NULL) {
-> > > >  		clear_eld(connector);
-> > > > +		drm_reset_display_info(connector);
-> > > >  		return 0;
-> > > >  	}
-> > > >  	if (!drm_edid_is_valid(edid)) {
-> > > >  		clear_eld(connector);
-> > > > +		drm_reset_display_info(connector);
+> > > > Looks easier if you pull both of those out from these branches and
+> > > > just call them unconditionally at the start.
 > > > 
-> > > Looks easier if you pull both of those out from these branches and
-> > > just call them unconditionally at the start.
+> > > After looking at the full code, I am not sure. This is the code:
+> > > ==================
+> > > int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
+> > > {
+> > >         int num_modes = 0;
+> > >         u32 quirks;
+> > > 
+> > >         if (edid == NULL) {
+> > >                 clear_eld(connector);
+> > >                 drm_reset_display_info(connector); <--- added by me
+> > >                 return 0;
+> > >         }
+> > >         if (!drm_edid_is_valid(edid)) {
+> > >                 clear_eld(connector);
+> > >                 drm_reset_display_info(connector); <--- added by me
+> > >                 drm_warn(connector->dev, "%s: EDID invalid.\n",
+> > >                          connector->name);
+> > >                 return 0;
+> > >         }
+> > > 
+> > >         drm_edid_to_eld(connector, edid);
+> > > 
+> > >         quirks = drm_add_display_info(connector, edid);
+> > > 	etc...
+> > > =================
+> > > 
+> > > If we move those out of these branches and edid != NULL, we are executing an
+> > > unnecessary clear_eld(connector) and an unnecessary drm_reset_display_info(connector)
+> > > because the fields will be set in the next drm_edid_to_eld(connector, edid) and
+> > > drm_add_display_info(connector, edid)
+> > > 
+> > > Do we want this ?
 > > 
-> > After looking at the full code, I am not sure. This is the code:
-> > ==================
-> > int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
-> > {
-> >         int num_modes = 0;
-> >         u32 quirks;
+> > Seems fine by me. And maybe we could nuke the second
+> > drm_reset_display_info() from deeper inside drm_add_display_info()?
+> > Not sure if drm_add_display_info() still has to be able to operate
+> > standalone or not.
 > > 
-> >         if (edid == NULL) {
-> >                 clear_eld(connector);
-> >                 drm_reset_display_info(connector); <--- added by me
-> >                 return 0;
-> >         }
-> >         if (!drm_edid_is_valid(edid)) {
-> >                 clear_eld(connector);
-> >                 drm_reset_display_info(connector); <--- added by me
-> >                 drm_warn(connector->dev, "%s: EDID invalid.\n",
-> >                          connector->name);
-> >                 return 0;
-> >         }
-> > 
-> >         drm_edid_to_eld(connector, edid);
-> > 
-> >         quirks = drm_add_display_info(connector, edid);
-> > 	etc...
-> > =================
-> > 
-> > If we move those out of these branches and edid != NULL, we are executing an
-> > unnecessary clear_eld(connector) and an unnecessary drm_reset_display_info(connector)
-> > because the fields will be set in the next drm_edid_to_eld(connector, edid) and
-> > drm_add_display_info(connector, edid)
-> > 
-> > Do we want this ?
+> > Hmm. Another option is to just move all these NULL/invalid edid
+> > checks into drm_edid_to_eld() and drm_add_display_info().
 > 
-> Seems fine by me. And maybe we could nuke the second
-> drm_reset_display_info() from deeper inside drm_add_display_info()?
-> Not sure if drm_add_display_info() still has to be able to operate
-> standalone or not.
+> I was thinking about this. We can use a boolean variable:
+> ===============
+>         bool edid_is_invalid;
 > 
-> Hmm. Another option is to just move all these NULL/invalid edid
-> checks into drm_edid_to_eld() and drm_add_display_info().
+>         edid_is_invalid = !drm_edid_is_valid(edid);
+> 
+>         if (edid == NULL || edid_is_invalid) {
+>                 clear_eld(connector);
+>                 drm_reset_display_info(connector);
+>                 if (edid_is_invalid)
+>                          drm_warn(connector->dev, "%s: EDID invalid.\n",
+>                                   connector->name);
+>                 return 0;
+>         }
+> 
+>         drm_edid_to_eld(connector, edid);
+> ...
+> ===============
+> Internally, drm_edid_is_valid() handles NULL pointers properly.
+> It is a quite elegant solution with a small change in the original
+> design, and it improves this part in the way you pointed out.
 
-I was thinking about this. We can use a boolean variable:
-===============
-        bool edid_is_invalid;
-
-	edid_is_invalid = !drm_edid_is_valid(edid);
-
-        if (edid == NULL || edid_is_invalid) {
-                clear_eld(connector);
-                drm_reset_display_info(connector);
-                if (edid_is_invalid)
-                         drm_warn(connector->dev, "%s: EDID invalid.\n",
-                                  connector->name);
-                return 0;
-        }
-
-        drm_edid_to_eld(connector, edid);
-...
-===============
-Internally, drm_edid_is_valid() handles NULL pointers properly.
-It is a quite elegant solution with a small change in the original
-design, and it improves this part in the way you pointed out.
+I'll send a patch with this idea and we can talk about the new code.
+Thanks!
 
 Best regards,
-Claudio Suarez
+Claudio Suarez.
 
 
 
