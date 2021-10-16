@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E55443015B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 10:58:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B61B4301BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 12:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239862AbhJPJAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 05:00:32 -0400
-Received: from msg-1.mailo.com ([213.182.54.11]:46332 "EHLO msg-1.mailo.com"
+        id S243976AbhJPKSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 06:18:09 -0400
+Received: from ip-15.mailobj.net ([213.182.54.15]:39542 "EHLO msg-4.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236048AbhJPJAb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 05:00:31 -0400
+        id S235335AbhJPKSI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 06:18:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634374693; bh=9IL8gtMx9v+2OPAAge0RErzrh08ys/P7bdTcb4UTPyc=;
+        t=1634379354; bh=zqWX1gJTKZ5q18uqa5c3Zf7qkP/A+CGNlGSRL6MHo7E=;
         h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
-         MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To;
-        b=MoYnQZ5L6Ax0/fqJMIwGZCAaXd+RW/7hsqN7Ru2uyoWj8IQKyGyQt87jaZGxhKhF+
-         RctnOXYKQjlXfB+3BNI9Dje/aQ7GoBOvzDDIAWxFg8zcvim3fw5K1HxLeVx6jfxIbN
-         RIizUInJ4bkCf1hQdJdE2jWovuRx5ozpyfFHXVEs=
-Received: by b-2.in.mailobj.net [192.168.90.12] with ESMTP
+         MIME-Version:Content-Type:In-Reply-To;
+        b=sMf3huKcgBE4f9Qx46mnqxxW0kG/4lohTFqKS0NtZxNeWRKEMyEaEtphj4CMJ+lgy
+         /yujIldahtXxN2v73vppnv9iR+b7D3zue7w+NHiEgHvg8SjPPoR/slscBcmeAG2zbg
+         QcfsijBw/h/KFQfk1ZZF+RMG9rE7rwfK3oj+PkBY=
+Received: by b-3.in.mailobj.net [192.168.90.13] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 10:58:13 +0200 (CEST)
-X-EA-Auth: A5rfGmpIBDyFxLfMHpfhudehUSSxmDiQm2TxkL/eXbGqty570ZAWa8gGp3kSB+GyiaCfMVhAZa4NwN7QqTApIj+sGlxqqx7d
-Date:   Sat, 16 Oct 2021 10:58:10 +0200
+        Sat, 16 Oct 2021 12:15:54 +0200 (CEST)
+X-EA-Auth: yKCNRkwyeIQN4zIZhVP/t5GZ4LXBCXpTe707pgk8CcqdT5Z8+L4zajcnVM6jjzg+UKc0YJNBMB/9WGFbSHtL4/w+9RPySOhn
+Date:   Sat, 16 Oct 2021 12:15:51 +0200
 From:   Claudio Suarez <cssk@net-c.es>
-To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Harry Wentland <harry.wentland@amd.com>
 Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
         David Airlie <airlied@linux.ie>,
@@ -46,130 +46,60 @@ Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
         Robert Foss <robert.foss@linaro.org>,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 01/15] gpu/drm: make drm_add_edid_modes()
- consistent when updating connector->display_info
-Message-ID: <YWqUIiUmVoGg+dl+@gineta.localdomain>
+Subject: Re: [PATCH 02/15] drm/amdgpu: use drm_* functions instead of
+ duplicated code in amdgpu driver
+Message-ID: <YWqmVwGQvosagb0s@gineta.localdomain>
 References: <20211015113713.630119-1-cssk@net-c.es>
- <20211015113713.630119-2-cssk@net-c.es>
- <YWluAX6LA2DupE+E@intel.com>
- <YWnVVoCipTXxx8NW@gineta.localdomain>
- <YWnXierh4TSXpDMc@intel.com>
- <YWqMX+EOjk++HPOe@gineta.localdomain>
+ <20211015113713.630119-3-cssk@net-c.es>
+ <62a3ee8d-9439-9275-4e71-876b865b9a7d@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YWqMX+EOjk++HPOe@gineta.localdomain>
+In-Reply-To: <62a3ee8d-9439-9275-4e71-876b865b9a7d@amd.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 16, 2021 at 10:25:03AM +0200, Claudio Suarez wrote:
-> On Fri, Oct 15, 2021 at 10:33:29PM +0300, Ville Syrjälä wrote:
-> > On Fri, Oct 15, 2021 at 09:24:06PM +0200, Claudio Suarez wrote:
-> > > On Fri, Oct 15, 2021 at 03:03:13PM +0300, Ville Syrjälä wrote:
-> > > > On Fri, Oct 15, 2021 at 01:36:59PM +0200, Claudio Suarez wrote:
-> > > > > According to the documentation, drm_add_edid_modes
-> > > > > "... Also fills out the &drm_display_info structure and ELD in @connector
-> > > > > with any information which can be derived from the edid."
-> > > > > 
-> > > > > drm_add_edid_modes accepts a struct edid *edid parameter which may have a
-> > > > > value or may be null. When it is not null, connector->display_info and
-> > > > > connector->eld are updated according to the edid. When edid=NULL, only
-> > > > > connector->eld is reset. Reset connector->display_info to be consistent
-> > > > > and accurate.
-> > > > > 
-> > > > > Signed-off-by: Claudio Suarez <cssk@net-c.es>
-> > > > > ---
-> > > > >  drivers/gpu/drm/drm_edid.c | 2 ++
-> > > > >  1 file changed, 2 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> > > > > index 6325877c5fd6..6cbe09b2357c 100644
-> > > > > --- a/drivers/gpu/drm/drm_edid.c
-> > > > > +++ b/drivers/gpu/drm/drm_edid.c
-> > > > > @@ -5358,10 +5358,12 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
-> > > > >  
-> > > > >  	if (edid == NULL) {
-> > > > >  		clear_eld(connector);
-> > > > > +		drm_reset_display_info(connector);
-> > > > >  		return 0;
-> > > > >  	}
-> > > > >  	if (!drm_edid_is_valid(edid)) {
-> > > > >  		clear_eld(connector);
-> > > > > +		drm_reset_display_info(connector);
-> > > > 
-> > > > Looks easier if you pull both of those out from these branches and
-> > > > just call them unconditionally at the start.
-> > > 
-> > > After looking at the full code, I am not sure. This is the code:
-> > > ==================
-> > > int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
-> > > {
-> > >         int num_modes = 0;
-> > >         u32 quirks;
-> > > 
-> > >         if (edid == NULL) {
-> > >                 clear_eld(connector);
-> > >                 drm_reset_display_info(connector); <--- added by me
-> > >                 return 0;
-> > >         }
-> > >         if (!drm_edid_is_valid(edid)) {
-> > >                 clear_eld(connector);
-> > >                 drm_reset_display_info(connector); <--- added by me
-> > >                 drm_warn(connector->dev, "%s: EDID invalid.\n",
-> > >                          connector->name);
-> > >                 return 0;
-> > >         }
-> > > 
-> > >         drm_edid_to_eld(connector, edid);
-> > > 
-> > >         quirks = drm_add_display_info(connector, edid);
-> > > 	etc...
-> > > =================
-> > > 
-> > > If we move those out of these branches and edid != NULL, we are executing an
-> > > unnecessary clear_eld(connector) and an unnecessary drm_reset_display_info(connector)
-> > > because the fields will be set in the next drm_edid_to_eld(connector, edid) and
-> > > drm_add_display_info(connector, edid)
-> > > 
-> > > Do we want this ?
+On Fri, Oct 15, 2021 at 11:14:54AM -0400, Harry Wentland wrote:
+> 
+> 
+> On 2021-10-15 07:37, Claudio Suarez wrote:
+> > a) Once EDID is parsed, the monitor HDMI support information is available
+> > through drm_display_info.is_hdmi. The amdgpu driver still calls
+> > drm_detect_hdmi_monitor() to retrieve the same information, which
+> > is less efficient. Change to drm_display_info.is_hdmi
 > > 
-> > Seems fine by me. And maybe we could nuke the second
-> > drm_reset_display_info() from deeper inside drm_add_display_info()?
-> > Not sure if drm_add_display_info() still has to be able to operate
-> > standalone or not.
+> > This is a TODO task in Documentation/gpu/todo.rst
 > > 
-> > Hmm. Another option is to just move all these NULL/invalid edid
-> > checks into drm_edid_to_eld() and drm_add_display_info().
+> > b) drm_display_info is updated by drm_get_edid() or
+> > drm_connector_update_edid_property(). In the amdgpu driver it is almost
+> > always updated when the edid is read in amdgpu_connector_get_edid(),
+> > but not always.  Change amdgpu_connector_get_edid() and
+> > amdgpu_connector_free_edid() to keep drm_display_info updated. This allows a)
+> > to work properly.
+> > 
+> > c) Use drm_edid_get_monitor_name() instead of duplicating the code that
+> > parses the EDID in dm_helpers_parse_edid_caps()
+> > 
+> > Also, remove the unused "struct dc_context *ctx" parameter in
+> > dm_helpers_parse_edid_caps()
+> > 
 > 
-> I was thinking about this. We can use a boolean variable:
-> ===============
->         bool edid_is_invalid;
+> Thanks for this work.
 > 
->         edid_is_invalid = !drm_edid_is_valid(edid);
+> The fact that you listed three separate changes in this commit
+> is a clear indication that this patch should be three separate
+> patches instead. Separating the functional bits from the straight
+> refactor will help with bisection if this leads to a regression.
 > 
->         if (edid == NULL || edid_is_invalid) {
->                 clear_eld(connector);
->                 drm_reset_display_info(connector);
->                 if (edid_is_invalid)
->                          drm_warn(connector->dev, "%s: EDID invalid.\n",
->                                   connector->name);
->                 return 0;
->         }
-> 
->         drm_edid_to_eld(connector, edid);
-> ...
-> ===============
-> Internally, drm_edid_is_valid() handles NULL pointers properly.
-> It is a quite elegant solution with a small change in the original
-> design, and it improves this part in the way you pointed out.
+> All changes look reasonable to me, though. With this patch split
+> into three patches in the sequence (b), (c), then (a) this is
+> Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 
-I'll send a patch with this idea and we can talk about the new code.
-Thanks!
+Ok, thanks. I'll send three patches.
 
-Best regards,
-Claudio Suarez.
+BR
+Claudio Suarez
 
 
 
