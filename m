@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EBCF430449
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 20:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52200430447
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 20:42:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244577AbhJPSo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 14:44:59 -0400
-Received: from ip-16.mailobj.net ([213.182.54.16]:41646 "EHLO msg-6.mailo.com"
+        id S244574AbhJPSo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 14:44:58 -0400
+Received: from msg-1.mailo.com ([213.182.54.11]:51830 "EHLO msg-1.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244569AbhJPSo5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 14:44:57 -0400
+        id S240331AbhJPSo4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 16 Oct 2021 14:44:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634409758; bh=Y96/8Nke5u5v4emB7cdeFsHUTA4siYUGx7ZcSnrwbJc=;
-        h=X-EA-Auth:From:To:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-         Content-Transfer-Encoding;
-        b=uMQdpKjXPmL45QfDu3oipBmL3r96h2m9sLYnnz23pJ7RDlaaGtSpkOzHTgZgNzWWh
-         5vBpYJ1Eh/9Xo6LBL9x+PARWp+o4g9MSCkc5Z/T6AXBnrRNmvO+KKC/opsD+l+j2rY
-         8WnqdpHXXovGxW3BjdCLokoFHocYnxhfH767ElWE=
+        t=1634409760; bh=uuIT5sIGiM41ZxesdxWnWDZbyFiOv+uiIKfgEAa+79g=;
+        h=X-EA-Auth:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
+         References:MIME-Version:Content-Transfer-Encoding;
+        b=IPIoKFx0JxVdsmzJPgBTvp6QG6KTtYTPJ7FOH9QHT8JCko3JXW8wBt0Y9GQMPgmT/
+         FJiNf3KB1I56GHgZcgPxghVdtS98Hxxq0mv4+WyBq+oh3pabDHL5Vy8dxix4dtYa90
+         vsoFDglbVlDzDBoSw/bmcFcZ1L61FCkvKuHaXHd8=
 Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
         via ip-206.mailobj.net [213.182.55.206]
-        Sat, 16 Oct 2021 20:42:38 +0200 (CEST)
-X-EA-Auth: iJ48sRsSV5JqlxVWZLnB2p2jl3UkwY1uKYWmZBLCTlmQ+a1qcMCxa04E29WpMxMyFQYezQWpEpRzbhWGhePR9lhhiqNPwxDI
+        Sat, 16 Oct 2021 20:42:40 +0200 (CEST)
+X-EA-Auth: XgZ+C9JXLspqcHF7gvV4o69gypOR8PoGzuWho0tgdXFOzw77zQtKGq6mnlQ6WYFfnvD7kDmgRao0vHJ/+OHWE4uibMILq82P
 From:   Claudio Suarez <cssk@net-c.es>
 To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
@@ -45,72 +45,60 @@ To:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
         Robert Foss <robert.foss@linaro.org>,
         Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
         ville.syrjala@linux.intel.com
-Subject: [PATCH v2 00/13] replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-Date:   Sat, 16 Oct 2021 20:42:13 +0200
-Message-Id: <20211016184226.3862-1-cssk@net-c.es>
+Cc:     Claudio Suarez <cssk@net-c.es>
+Subject: [PATCH v2 01/13] gpu/drm: make drm_add_edid_modes() consistent when updating connector->display_info
+Date:   Sat, 16 Oct 2021 20:42:14 +0200
+Message-Id: <20211016184226.3862-2-cssk@net-c.es>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20211016184226.3862-1-cssk@net-c.es>
+References: <20211016184226.3862-1-cssk@net-c.es>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changelog:
-v2:
-- no helper function
-- A separate patch is made for amdgpu
-- zte patch is removed because that driver no longer exists
+According to the documentation, drm_add_edid_modes
+"... Also fills out the &drm_display_info structure and ELD in @connector
+with any information which can be derived from the edid."
 
-[Why]
-Copy&paste from Documentation/gpu/todo.rst 
-===
-Replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
----------------------------------------------------------------
+drm_add_edid_modes accepts a struct edid *edid parameter which may have a
+value or may be null. When it is not null, connector->display_info and
+connector->eld are updated according to the edid. When edid=NULL, only
+connector->eld is reset. Reset connector->display_info to be consistent
+and accurate.
 
-Once EDID is parsed, the monitor HDMI support information is available through
-drm_display_info.is_hdmi. Many drivers still call drm_detect_hdmi_monitor() to
-retrieve the same information, which is less efficient.
+Signed-off-by: Claudio Suarez <cssk@net-c.es>
+---
+ drivers/gpu/drm/drm_edid.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Audit each individual driver calling drm_detect_hdmi_monitor() and switch to
-drm_display_info.is_hdmi if applicable.
-=====
-
-[How]
-I did it in two steps:
-- check that drm_display_info has a correct value.
-- in that case, replace drm_detect_hdmi_monitor() with drm_display_info.is_hdmi
-
-Almost all occurrences of drm_detect_hdmi_monitor() could be changed. Some
-small inconsistencies have been solved.
-
-Stats:
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  2 +-
- drivers/gpu/drm/bridge/sii902x.c             |  2 +-
- drivers/gpu/drm/bridge/synopsys/dw-hdmi.c    |  2 +-
- drivers/gpu/drm/drm_edid.c                   | 11 +++++------
- drivers/gpu/drm/exynos/exynos_hdmi.c         |  6 ++++--
- drivers/gpu/drm/gma500/cdv_intel_hdmi.c      |  3 ++-
- drivers/gpu/drm/gma500/psb_intel_sdvo.c      |  6 ++++--
- drivers/gpu/drm/i915/display/intel_hdmi.c    |  2 +-
- drivers/gpu/drm/i915/display/intel_sdvo.c    |  3 ++-
- drivers/gpu/drm/msm/hdmi/hdmi_connector.c    |  2 +-
- drivers/gpu/drm/nouveau/dispnv50/disp.c      |  4 ++--
- drivers/gpu/drm/nouveau/dispnv50/head.c      |  8 +-------
- drivers/gpu/drm/radeon/atombios_encoders.c   |  6 +++---
- drivers/gpu/drm/radeon/radeon_connectors.c   | 15 +++++++++------
- drivers/gpu/drm/radeon/radeon_display.c      |  2 +-
- drivers/gpu/drm/radeon/radeon_encoders.c     |  4 ++--
- drivers/gpu/drm/rockchip/inno_hdmi.c         |  4 ++--
- drivers/gpu/drm/rockchip/rk3066_hdmi.c       |  2 +-
- drivers/gpu/drm/sti/sti_hdmi.c               | 10 ++++++----
- drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c       |  4 ++--
- drivers/gpu/drm/tegra/hdmi.c                 |  6 +-----
- drivers/gpu/drm/vc4/vc4_hdmi.c               |  6 +++---
- 22 files changed, 55 insertions(+), 55 deletions(-)
-
-Best regards.
-Claudio Suarez
-
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 6325877c5fd6..c643db17782c 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -5356,14 +5356,13 @@ int drm_add_edid_modes(struct drm_connector *connector, struct edid *edid)
+ 	int num_modes = 0;
+ 	u32 quirks;
+ 
+-	if (edid == NULL) {
+-		clear_eld(connector);
+-		return 0;
+-	}
+ 	if (!drm_edid_is_valid(edid)) {
++		/* edid == NULL or invalid here */
+ 		clear_eld(connector);
+-		drm_warn(connector->dev, "%s: EDID invalid.\n",
+-			 connector->name);
++		drm_reset_display_info(connector);
++		if (edid)
++			drm_warn(connector->dev, "%s: EDID invalid.\n",
++				 connector->name);
+ 		return 0;
+ 	}
+ 
+-- 
+2.33.0
 
 
 
