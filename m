@@ -2,136 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C7C9243034B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 17:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7BE3430392
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 18:09:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbhJPP3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 11:29:30 -0400
-Received: from mail-4319.protonmail.ch ([185.70.43.19]:39451 "EHLO
-        mail-4319.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233673AbhJPP3a (ORCPT
+        id S240467AbhJPQLL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 12:11:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58186 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236852AbhJPQLL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 11:29:30 -0400
-Date:   Sat, 16 Oct 2021 15:27:14 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1634398040;
-        bh=DYc9clhyibib5RDaqDGVg0SzvaEgBlI6AAPkEKA90D0=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=hl0/YorjN04SG3vuM79TDLXgHN/2mCjjcOF1TLYa8kLab7l8MlDQ7yyDhgEnAREn0
-         3Ggupv17TA//ECHhRYyjdIuujXtdZE2q30m4Gq4nH4xPfQiZpJO9KBfjVN70LW2pRe
-         OEGWWTMZOu2TJbrboryUOnrizWOgQM137QLlv/fY=
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        DRM DRIVER FOR MSM ADRENO GPU 
-        <linux-arm-msm@vger.kernel.org>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8996: Add MSM8996 Pro support
-Message-ID: <LIT21R.TYWT14SG9N1E2@protonmail.com>
-In-Reply-To: <CAA8EJppVVzOmfwqMb==-xcoHGmQrZqD6+2T_+TFtD8tjUC_zNQ@mail.gmail.com>
-References: <20211014083016.137441-1-y.oudjana@protonmail.com> <20211014083016.137441-8-y.oudjana@protonmail.com> <a8114098-f700-974b-e17e-54f5baebec46@somainline.org> <ZVR21R.X63CT137R99A3@protonmail.com> <CAA8EJppVVzOmfwqMb==-xcoHGmQrZqD6+2T_+TFtD8tjUC_zNQ@mail.gmail.com>
+        Sat, 16 Oct 2021 12:11:11 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF7EC061570
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 09:09:02 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id a140-20020a1c7f92000000b0030d8315b593so5588303wmd.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 09:09:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=YwrD7acOnOmUz8kuzOsdw05t0ErwSAGixf9d/VE1/Tg=;
+        b=zMcWvhGfKX1dbtPtzdAyYPn3nIZhS1uqiQ8m6NhzvTzDv/8odNazih8Jtp1DhIKBFl
+         SLu7C3cO67L7z6JfbKvHnMFNCMEr+CfRLzngfbV4s+b9j8WncaC7czFZMlPAr/VRNdKf
+         btl5Agc6fd7LEp7LRpfK1CzXPu9y62l7Y2PacqExVQKNchEEp8CqqbPyN1ruSk0FZ4ab
+         JhuY7rmhu00oK9EiDfEyu4MPMtxs4XyPmHirSImAfiowVfEE33/194wm71w/Pc/nzUSR
+         XB65/S3+Qm5XFJQfaNFFzeHutQWNeOs4WLLZ4vNP6qLSh6pm36JXy2HD3xhz64VWVawO
+         i/9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YwrD7acOnOmUz8kuzOsdw05t0ErwSAGixf9d/VE1/Tg=;
+        b=bRPqz9IApSvj74ALlWpc5Y1ZNYQxkdIZbKsUt7Uq7EUuqVbBgwGyiVTKwzRe59smE+
+         tdOfyPMQ8cEqMgePW7/2WvKak3ZUZ8egBvO6INyZH4CH0mGlPWRyLfX5zPGzVmsfeTFZ
+         4DuUMDi19roq6b4tkn/Ot6R8Zf32y4qOXyBoSCJJs5JE/7GG7ylKqUZ1iAxivTNoBTsV
+         cI40DmIsujfm86fMRSX+2ZNiO16d5FkIFx6Pn2eUo69m+AEl2xfuJzvLxiA1Dz1QIoFM
+         VUswV/GWiAW/ud+4Zf0Byw+f1xjCsnmxmwdshaUHj/kYEuXdsNImeM+bEY6+QHRsnJTZ
+         5D9A==
+X-Gm-Message-State: AOAM531KbUbSiX2qt0oJU/kg1LW2z14g2u0s+7uads4vWC0VszqKykfl
+        Z4B0ODwv08yvyIanEa6kkEtbfMFtEtjNiQ==
+X-Google-Smtp-Source: ABdhPJwi/rrSzXlVlH1Tk5NoyfM+ZKFQY/2OeC/C/rVDmiC2Txrtbl2kzlCG5czTNBYQ/5oBB2Cx+w==
+X-Received: by 2002:a05:600c:1c10:: with SMTP id j16mr19481180wms.28.1634400541218;
+        Sat, 16 Oct 2021 09:09:01 -0700 (PDT)
+Received: from [192.168.0.30] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id z1sm7731018wrt.94.2021.10.16.09.09.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 16 Oct 2021 09:09:00 -0700 (PDT)
+Message-ID: <0b15a2b6-1fd1-1e52-4896-e588272b25d3@linaro.org>
+Date:   Sat, 16 Oct 2021 17:08:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH 2/2] drm/msm/devfreq: Add 1ms delay before clamping freq
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org
+References: <20210927230455.1066297-1-robdclark@gmail.com>
+ <vFWu4k2fr7YZdUamZdttf2XTTm05kYAza_JI_jGvD28ZV19dUqZmoWkqsf3Bgw_kAbQj87uGiMS0F0O7wtXtEw==@protonmail.internalid>
+ <20210927230455.1066297-2-robdclark@gmail.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20210927230455.1066297-2-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sat, Oct 16 2021 at 19:09:43 +0400, Dmitry Baryshkov=20
-<dmitry.baryshkov@linaro.org> wrote:
-> On Sat, 16 Oct 2021 at 17:51, Yassine Oudjana=20
-> <y.oudjana@protonmail.com> wrote:
->>=20
->>=20
->>  On Fri, Oct 15 2021 at 23:01:54 +0400, Konrad Dybcio
->>  <konrad.dybcio@somainline.org> wrote:
->>  >
->>  > On 14.10.2021 10:32, Yassine Oudjana wrote:
->>  >>  Add a new DTSI for MSM8996 Pro (MSM8996SG) with msm-id and=20
->> CPU/GPU
->>  >> OPPs.
->>  >>  CBF OPPs and CPR parameters will be added to it as well once
->>  >> support for
->>  >>  CBF scaling and CPR is introduced.
->>  >>
->>  >>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>  >>  ---
->>  >>   arch/arm64/boot/dts/qcom/msm8996.dtsi    |  82 +++----
->>  >>   arch/arm64/boot/dts/qcom/msm8996pro.dtsi | 281
->>  >> +++++++++++++++++++++++
->>  >>   2 files changed, 322 insertions(+), 41 deletions(-)
->>  >>   create mode 100644 arch/arm64/boot/dts/qcom/msm8996pro.dtsi
->>  >>
->>  >>  diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>  >> b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>  >>  index 94a846c3f1ee..5b2600a4fb2a 100644
->>  >>  --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>  >>  +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
->>  >>  @@ -142,82 +142,82 @@ cluster0_opp: opp_table0 {
->>  >>              /* Nominal fmax for now */
->>  >>              opp-307200000 {
->>  >>                      opp-hz =3D /bits/ 64 <307200000>;
->>  >>  -                   opp-supported-hw =3D <0x77>;
->>  >>  +                   opp-supported-hw =3D <0x7>;
->>  >
->>  > You didn't describe what's the reason for changing this=20
->> everywhere.
->>  >
->>  > If it's been always broken, perhaps make it a separate commit
->>  > describing
->>  >
->>  > the issue.
->>  >
->>  >
->>  > Konrad
->>  >
->>=20
->>  Before removing reading msm-id in qcom_cpufreq_nvmem, bits 0-2=20
->> (0x07)
->>  were MSM8996 speed bins, while bits 4-6 (0x70) were MSM8996 Pro=20
->> speed
->>  bins. Now, only bits 0-2 are used for either one, so basically I=20
->> moved
->>  bits 4-6 into msm8996pro.dtsi after shifting them right to become=20
->> bits
->>  0-2.
->>=20
->>  I'll put this in a separate patch and describe the change.
->=20
-> Could you please describe in the commit message why is it changed?
-> IOW, what prompted you to split 8996SG support from main msm8996.dtsi?
->=20
-
-I will add that as well. For now it is described in the cover of this=20
-series[1].
-
-=09Yassine
-
+On 28/09/2021 00:04, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Add a short delay before clamping to idle frequency on active->idle
+> transition.  It takes ~0.5ms to increase the freq again on the next
+> idle->active transition, so this helps avoid extra freq transitions
+> on workloads that bounce between CPU and GPU.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+> Note that this sort of re-introduces the theoretical race solved
+> by [1].. but that should not be a problem with something along the
+> lines of [2].
+> 
+> [1] https://patchwork.freedesktop.org/patch/455910/?series=95111&rev=1
+> [2] https://patchwork.freedesktop.org/patch/455928/?series=95119&rev=1
+> 
+>   drivers/gpu/drm/msm/msm_gpu.h         |  7 +++++
+>   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 38 +++++++++++++++++++++------
+>   2 files changed, 37 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 32a859307e81..2fcb6c195865 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -120,6 +120,13 @@ struct msm_gpu_devfreq {
+>   	 * it is inactive.
+>   	 */
+>   	unsigned long idle_freq;
+> +
+> +	/**
+> +	 * idle_work:
+> +	 *
+> +	 * Used to delay clamping to idle freq on active->idle transition.
+> +	 */
+> +	struct msm_hrtimer_work idle_work;
+>   };
+> 
+>   struct msm_gpu {
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> index 15b64f35c0f6..36e1930ee26d 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> @@ -96,8 +96,12 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
+>   	.get_cur_freq = msm_devfreq_get_cur_freq,
+>   };
+> 
+> +static void msm_devfreq_idle_work(struct kthread_work *work);
+> +
+>   void msm_devfreq_init(struct msm_gpu *gpu)
+>   {
+> +	struct msm_gpu_devfreq *df = &gpu->devfreq;
+> +
+>   	/* We need target support to do devfreq */
+>   	if (!gpu->funcs->gpu_busy)
+>   		return;
+> @@ -113,25 +117,27 @@ void msm_devfreq_init(struct msm_gpu *gpu)
+>   	msm_devfreq_profile.freq_table = NULL;
+>   	msm_devfreq_profile.max_state = 0;
+> 
+> -	gpu->devfreq.devfreq = devm_devfreq_add_device(&gpu->pdev->dev,
+> +	df->devfreq = devm_devfreq_add_device(&gpu->pdev->dev,
+>   			&msm_devfreq_profile, DEVFREQ_GOV_SIMPLE_ONDEMAND,
+>   			NULL);
+> 
+> -	if (IS_ERR(gpu->devfreq.devfreq)) {
+> +	if (IS_ERR(df->devfreq)) {
+>   		DRM_DEV_ERROR(&gpu->pdev->dev, "Couldn't initialize GPU devfreq\n");
+> -		gpu->devfreq.devfreq = NULL;
+> +		df->devfreq = NULL;
+>   		return;
+>   	}
+> 
+> -	devfreq_suspend_device(gpu->devfreq.devfreq);
+> +	devfreq_suspend_device(df->devfreq);
+> 
+> -	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node,
+> -			gpu->devfreq.devfreq);
+> +	gpu->cooling = of_devfreq_cooling_register(gpu->pdev->dev.of_node, df->devfreq);
+>   	if (IS_ERR(gpu->cooling)) {
+>   		DRM_DEV_ERROR(&gpu->pdev->dev,
+>   				"Couldn't register GPU cooling device\n");
+>   		gpu->cooling = NULL;
+>   	}
+> +
+> +	msm_hrtimer_work_init(&df->idle_work, gpu->worker, msm_devfreq_idle_work,
+> +			      CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+>   }
+> 
+>   void msm_devfreq_cleanup(struct msm_gpu *gpu)
+> @@ -179,6 +185,11 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+>   	unsigned int idle_time;
+>   	unsigned long target_freq = df->idle_freq;
+> 
+> +	/*
+> +	 * Cancel any pending transition to idle frequency:
+> +	 */
+> +	hrtimer_cancel(&df->idle_work.timer);
+> +
+>   	/*
+>   	 * Hold devfreq lock to synchronize with get_dev_status()/
+>   	 * target() callbacks
+> @@ -209,9 +220,12 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+>   	mutex_unlock(&df->devfreq->lock);
+>   }
+> 
+> -void msm_devfreq_idle(struct msm_gpu *gpu)
+> +
+> +static void msm_devfreq_idle_work(struct kthread_work *work)
+>   {
+> -	struct msm_gpu_devfreq *df = &gpu->devfreq;
+> +	struct msm_gpu_devfreq *df = container_of(work,
+> +			struct msm_gpu_devfreq, idle_work.work);
+> +	struct msm_gpu *gpu = container_of(df, struct msm_gpu, devfreq);
+>   	unsigned long idle_freq, target_freq = 0;
+> 
+>   	/*
+> @@ -229,3 +243,11 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+> 
+>   	mutex_unlock(&df->devfreq->lock);
+>   }
+> +
+> +void msm_devfreq_idle(struct msm_gpu *gpu)
+> +{
+> +	struct msm_gpu_devfreq *df = &gpu->devfreq;
+> +
+> +	msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
+> +			       HRTIMER_MODE_ABS);
+> +}
 > --
-> With best wishes
-> Dmitry
->=20
+> 2.31.1
+> 
 
-[1]=20
-https://lore.kernel.org/linux-arm-msm/20211014083016.137441-1-y.oudjana@pro=
-tonmail.com/T/#m01711ca6f962760cc9283965c5a82f8455fbe06c
+Hi Rob,
 
+I tested this patch on the OnePlus 6, with it I'm still able to reproduce the crash introduced by
+("drm/msm: Devfreq tuning").
 
+Adjusting the delay from 1ms to 5ms seems to help, at least from some very basic testing.
 
+Perhaps the increased power reliability of the external power supply on dev boards is helping to mask the issue (hence 
+why it's harder to reproduce on db845c).
+
+-- 
+Kind Regards,
+Caleb (they/them)
