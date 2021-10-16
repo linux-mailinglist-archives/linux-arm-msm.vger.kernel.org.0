@@ -2,86 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8C84430332
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 17:13:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7AE843033D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 17:17:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236663AbhJPPPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 11:15:15 -0400
-Received: from smtprelay0103.hostedemail.com ([216.40.44.103]:54282 "EHLO
-        smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S235703AbhJPPPO (ORCPT
+        id S237438AbhJPPTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 11:19:18 -0400
+Received: from mail-4325.protonmail.ch ([185.70.43.25]:64441 "EHLO
+        mail-4325.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237124AbhJPPTR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 11:15:14 -0400
-Received: from omf14.hostedemail.com (clb03-v110.bra.tucows.net [216.40.38.60])
-        by smtprelay01.hostedemail.com (Postfix) with ESMTP id E02D01018D5AF;
-        Sat, 16 Oct 2021 15:13:05 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf14.hostedemail.com (Postfix) with ESMTPA id 2F15D268E46;
-        Sat, 16 Oct 2021 15:13:04 +0000 (UTC)
-Message-ID: <400d3fe720e336d5dba6e9b95c75baadf22a6a58.camel@perches.com>
-Subject: Re: [PATCH 3/3] bus: mhi: replace snprintf in show functions with
- sysfs_emit
-From:   Joe Perches <joe@perches.com>
-To:     Greg KH <gregkh@linuxfoundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Date:   Sat, 16 Oct 2021 08:13:03 -0700
-In-Reply-To: <YWrqmiT1pC+SbecM@kroah.com>
-References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
-         <20211016065734.28802-4-manivannan.sadhasivam@linaro.org>
-         <YWqBTj4slHq7HexS@kroah.com>
-         <6ddc01b24b1c72f7e92174a037043b5cfffa3431.camel@perches.com>
-         <YWrqmiT1pC+SbecM@kroah.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.40.4-1 
+        Sat, 16 Oct 2021 11:19:17 -0400
+Date:   Sat, 16 Oct 2021 15:16:55 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1634397426;
+        bh=eacSGFH4NZEHeF23GG6tUuURaKwWMyZu8ig2RqMX4cw=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=x7jTuEniTzvC0i8hRmaU1va1/dblZ9Xnn4Lwg8IgJKtzLVXE3DxM/rMOVe/EtXwTi
+         NW8GRTYojMpzKssQKAU92J8du9ba5InyONR1IlT0pZ0Dtokl0q8QNznI0jBKcxCVFq
+         4CG+tfL1U1Gd8P5DtdltSMj6Wtfa2eob+DB9Xocw=
+To:     Rob Herring <robh@kernel.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Nishanth Menon <nm@ti.com>, phone-devel@vger.kernel.org,
+        Viresh Kumar <vireshk@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-clk@vger.kernel.org, "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>, linux-pm@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH 1/8] dt-bindings: clk: qcom: msm8996-apcc: Add CBF
+Message-ID: <G3T21R.IC4JJ9W0GTB72@protonmail.com>
+In-Reply-To: <1634221864.186240.3295880.nullmailer@robh.at.kernel.org>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com> <20211014083016.137441-2-y.oudjana@protonmail.com> <1634221864.186240.3295880.nullmailer@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.89
-X-Stat-Signature: 9uhebz6odwgnyap79pzfzw94x7mhn8a1
-X-Rspamd-Server: rspamout05
-X-Rspamd-Queue-Id: 2F15D268E46
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX1/lF+a3yNodCoxdxWj3to9HFbSG6J4S2Fs=
-X-HE-Tag: 1634397184-28310
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 2021-10-16 at 17:07 +0200, Greg KH wrote:
-> On Sat, Oct 16, 2021 at 03:24:17AM -0700, Joe Perches wrote:
-> > On Sat, 2021-10-16 at 09:37 +0200, Greg KH wrote:
-> > > On Sat, Oct 16, 2021 at 12:27:34PM +0530, Manivannan Sadhasivam wrote:
-> > > > From: Qing Wang <wangqing@vivo.com>
-> > > > coccicheck complains about the use of snprintf() in sysfs show functions.
-> > []
-> > > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> > []
-> > > > @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
-> > > >  	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> > > >  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> > > >  
-> > > > -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> > > > +	return sysfs_emit(buf, "Serial Number: %u\n",
-> > > >  			mhi_cntrl->serial_number);
-> > > 
-> > > The text "Serial Number: " should not be in here, right?  It's obvious
-> > > this is a serial number, that's what the documentation and file name
-> > > says.  Userspace should not have to parse sysfs files.
-> > 
-> > sysfs is ABI right?  Parsing or not, it's what's already there.
-> 
-> If no tools rely on this, and we can change it, we should at least try.
-> 
-> We can not change ABI if something breaks.  If nothing relies on it,
-> then it is fine to do so.
 
-That's a quite bad way to think of an ABI.
+On Thu, Oct 14 2021 at 18:31:04 +0400, Rob Herring <robh@kernel.org>=20
+wrote:
+> On Thu, 14 Oct 2021 08:31:32 +0000, Yassine Oudjana wrote:
+>>  Add CBF clock and reg.
+>>=20
+>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>  ---
+>>   .../devicetree/bindings/clock/qcom,msm8996-apcc.yaml   | 10=20
+>> ++++++----
+>>   1 file changed, 6 insertions(+), 4 deletions(-)
+>>=20
+>=20
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
+>=20
+> Note that it is not yet a requirement to have 0 warnings for=20
+> dtbs_check.
+> This will change in the future.
+>=20
+> Full log is available here: https://patchwork.ozlabs.org/patch/1540828
+>=20
+>=20
+> clock-controller@6400000: clock-names:0: 'pwrcl_pll' was expected
+> =09arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+> =09arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>=20
+> clock-controller@6400000: clock-names: ['xo'] is too short
+> =09arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+> =09arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>=20
+> clock-controller@6400000: clocks: [[29]] is too short
+> =09arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+>=20
+> clock-controller@6400000: clocks: [[33]] is too short
+> =09arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+>=20
+> clock-controller@6400000: clocks: [[36]] is too short
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>=20
+> clock-controller@6400000: clocks: [[41]] is too short
+> =09arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+>=20
+> clock-controller@6400000: reg: [[104857600, 589824]] is too short
+> =09arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+> =09arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.ya=
+ml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+> =09arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>=20
 
-All that does is tempt fate as you don't know if something already
-uses it until someone complains and by that time something else may
-be written to depend on the new behavior.
+These are old warnings. I wasn't quite sure about those clocks, so I=20
+didn't attempt to fix them.
+
+=09Yassine
+
+
 
 
