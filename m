@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 665FB430047
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 06:40:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65EBC430049
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 Oct 2021 06:40:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239415AbhJPEmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 00:42:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42766 "EHLO mail.kernel.org"
+        id S240675AbhJPEmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 00:42:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42778 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240675AbhJPEmQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S240873AbhJPEmQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 16 Oct 2021 00:42:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 2B05F6124B;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 4E88B61222;
         Sat, 16 Oct 2021 04:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1634359209;
-        bh=PTHUqJdU7EgW3gx5r9kt61m91QR0YHA+l1poBoTKgss=;
+        bh=nZyzca8s1KX+o5n1l+oZ3DWxmvSQVqr8YABsGn4PTbA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=FpNeizkae7MlZrB4YbWqktUcN3h91fyRu9fabWKZSSYAJybIkU+pG9cW08bzWy67O
-         ALQQ4X7hEUF/6OqJyLj9wpY9W/NMlogKvvuPQO6IDh+BZ26QtFbvXGAl5+zj4Ujb4b
-         Ukhw4/oPucZgNxbrMAR5WfBq7KTctQzRgDbKDuAWjzlTDkAoWjpsT4IFEbIgx37UC6
-         U6MkQsyLGmQjlhlNf9BtIpJkgNEtMpjMU3yBYBE8SoZf8H50uOFLv6lnykAnzT9VCW
-         gp/M0srtlYDnLZTCTRB6FR9anN/erjiZS0brbilJx+DB+3mi1Xw1+302BhH7KZ5Fkk
-         ObgLWq8wwv5pw==
+        b=Dvgg+JcIRp4r+GqyLM/oFeK4QcdgpTPemXipo9Rlg52M1L1zlvVAN2oi9N3csx5xi
+         hFlirhdNhVws1JOHYEVTKj71thZvSJ9GIMDiSV/tyNv3JboMU8a5cNsRBHvQjxpS2V
+         bVj8RCMK2dvfPx6cLAZxDvEKRca7PL/D1Gpa7bF9Ca+aaCKE/Q8ORZaCAS5Yomsv/8
+         LJuW1ceL/jOJ6B8p46l+62MyET44QnsJKQmVGOj6H11xnLgYee45Ch0bUFhor9NWOZ
+         0k1dOMMzu/69BU7YG7ZsnYF4d/4yNz/2+OJxQph4rLmCQ+jHcRA7yZPwfiU4NkCNwk
+         37dtGbNwh0ytQ==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 15FCE60A90;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 3175460AA3;
         Sat, 16 Oct 2021 04:40:09 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: qcom: apq8016-sbc: Clarify firmware-names
+Subject: Re: [PATCH v3] soc: qcom: rpmhpd: Make power_on actually enable the
+ domain
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <163435920908.10607.14267898713520012444.git-patchwork-notify@kernel.org>
+Message-Id: <163435920919.10607.13376421537109409443.git-patchwork-notify@kernel.org>
 Date:   Sat, 16 Oct 2021 04:40:09 +0000
-References: <20210922195853.95574-1-stephan@gerhold.net>
-In-Reply-To: <20210922195853.95574-1-stephan@gerhold.net>
-To:     Stephan Gerhold <stephan@gerhold.net>
+References: <20211005033732.2284447-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20211005033732.2284447-1-bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -46,22 +47,20 @@ Hello:
 This patch was applied to qcom/linux.git (for-next)
 by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
-On Wed, 22 Sep 2021 21:58:53 +0200 you wrote:
-> Commit 0f6b380d580c ("arm64: dts: qcom: apq8016-sbc: Update modem and WiFi
-> firmware path") added "firmware-name"s to the APQ8016 SBC (DB410c) device
-> tree to separate the (test key)-signed firmware from other devices.
+On Mon,  4 Oct 2021 20:37:32 -0700 you wrote:
+> The general expectation is that powering on a power-domain should make
+> the power domain deliver some power, and if a specific performance state
+> is needed further requests has to be made.
 > 
-> However, the added names are a bit confusing. The "modem" firmware used by
-> DB410c is actually a simplified version for APQ8016 that lacks most of the
-> modem functionality (phone calls, SMS etc) that is available on MSM8916.
-> Placing it in "qcom/msm8916/modem.mbn" suggests that it supports all
-> functionality for MSM and not just the reduced functionality for APQ.
+> But in contrast with other power-domain implementations (e.g. rpmpd) the
+> RPMh does not have an interface to enable the power, so the driver has
+> to vote for a particular corner (performance level) in rpmh_power_on().
 > 
 > [...]
 
 Here is the summary with links:
-  - arm64: dts: qcom: apq8016-sbc: Clarify firmware-names
-    https://git.kernel.org/qcom/c/2533786f46d0
+  - [v3] soc: qcom: rpmhpd: Make power_on actually enable the domain
+    https://git.kernel.org/qcom/c/e3e56c050ab6
 
 You are awesome, thank you!
 --
