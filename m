@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 055E5430A13
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:31:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77A11430A17
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343985AbhJQPdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 11:33:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52410 "EHLO
+        id S1344000AbhJQPdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 11:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241982AbhJQPda (ORCPT
+        with ESMTP id S241982AbhJQPdb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 11:33:30 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17ECFC06161C
+        Sun, 17 Oct 2021 11:33:31 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9372C061768
         for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:21 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id g125so20906139oif.9
+Received: by mail-oi1-x22f.google.com with SMTP id n64so20954503oih.2
         for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LKMpvl1MAC7zrCa6TbMtjRul4um4QKy/ISSdbIagyUc=;
-        b=NMWktdDeJkZDlBUEtdIaDRzDp8fzBwBDGXgUL7mgEMmvX3IOJYjH+O56k8TKtV9lFR
-         dKN6Ts3pRxHJ/p3zCTzHkbNw7PzkyE0tiNH/WTyiA1ca3lUBEhfohxaucqODYggvwXdo
-         76QbBG2gVudJn5M9E87dhgUmDk6vGkg09EY/lphslLysetmpZYS5sMkmLdcctwxOdlw3
-         y3qn+7GGyTmi/qKOpXqg5k+d2oxk+cwmjLP6lBZldBswyDqDeMXjxiJD+3bRJFDXLWbQ
-         gnYh7AaQQYzqx/BesK2lwpU9in38BmBUjBqrjqaa6eZqioPkUCZYCXyUWOiPXLGqBQNU
-         t62A==
+        bh=X1BNeRRH+4pCFYNacV/SnSRJ6/WkMTg9riRV4NgpWaI=;
+        b=inBJGGXIeipJ60XqJEqfNPYwCvRqERJvdfzckXf/FQlU71wzj2xsmJCKM9jT7XzJ/2
+         BC9S7duklDKg5BtPmWacZJd0pbyzXWhjYFPwV+5XdqS8ZbWmSqmfYosZf63fwiB+OxMF
+         GzLqRQ0zFHW8s/kfc0bpv4ca4k4uTTtgD92PaWv5hJPyZy2iBCUxzQXO+XTUdzZzyscI
+         dVHv7mVozrZE4TxH9tU5IgepLQkIAVirLb+Q5GJz8va0OLNOfvIuZ4VlUnV8p2DEphXv
+         omswBq76lmR2CB+tZAtCRdRhlDXXNqz66pJdfAqsY9WrKiveeGckR6p1ZKAFC4KWHP/i
+         qmfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LKMpvl1MAC7zrCa6TbMtjRul4um4QKy/ISSdbIagyUc=;
-        b=QlDRX6//BS1LRTCAqYPz0G1836qhJ0TGnW8qgKehV1x/QmcynlulWuWoanZ9wgcx+j
-         qFFwe8xEAy7BvJYyl6QAkaOZXv1loA9jgF3RhHk0oiXs8frD8/S+zksiThvL88urGxCY
-         amGzpv+rKsRJUx06cYGWgY0qxa/bEr/RB9oLAc+R6mUQ4p8Q6oBeJy929xOBOWg6VleU
-         dBJ5iNruua7Wj3ZjCZBS8cFRAsanrDH23uvifcUTTtIlTto08Cza2rVFQDeyBwIhPR7U
-         4FRZNeOFeBTp7x3vxQLnyNXjmhrdKc1SAZEWVWL83SEnzg+zd0hR/rHq00D/tqKYSe0o
-         0vMw==
-X-Gm-Message-State: AOAM532kxxy5ixg+FPbUKw1SMoTymyVtM4r3xp8FPi7pQ+mCUCeKCsc+
-        DsPPN232+j772j2njGZ5j6OuxQ==
-X-Google-Smtp-Source: ABdhPJyvGYpmKMwk8RukGElbx/paPU4nRplPqwUcHrOh5bMrEgxja3tKe0gk/4by0hCaGj3exICEBg==
-X-Received: by 2002:aca:af85:: with SMTP id y127mr25293596oie.96.1634484680468;
-        Sun, 17 Oct 2021 08:31:20 -0700 (PDT)
+        bh=X1BNeRRH+4pCFYNacV/SnSRJ6/WkMTg9riRV4NgpWaI=;
+        b=SSn4NH9UKYIVtzST4Cv6x39x/gTLCQXombNZiWUjIcOCdZdzPtEVBai9YzruMJJ8OI
+         Nw+PAUlDXHxim+kbS4nrubaRJTUjBjGnk/swrfKrKUroKbSpEf+5OllJEdsnrbKNms1+
+         SszVoGy2WybMUjJnQnzUWz/DVUkwwn8gY+hpHb69TeS/Gake1l2a2UF1sha3QLRSAwfi
+         fsaEg6c5Rw1WB9ZpBSxAlys/Y3Wu4/aDRV8HMgcvBHT4Ks2Bh749h4u1ECRteOCEbQ8G
+         ldKxXlJsnCjgSHU6H8efNdtXbqBIJzXZXKLtBU12dh4iYS05QJJyAvKrAHd4QC4SImZ1
+         axdw==
+X-Gm-Message-State: AOAM530aCO3we04yaJO0C3zxYELMYhbGatXgQdIHb6FXM9iEU000ETh6
+        xa5kFnrSaOVtz+ySpQvb1kiYUg==
+X-Google-Smtp-Source: ABdhPJwNs6CeqlgS6OrYQ39EbXlETugWmu6Cbv6RgS/P1oLqmnnKTp0wpWhxbPZRXkjeOYXTmmJ9PQ==
+X-Received: by 2002:a05:6808:308e:: with SMTP id bl14mr8869305oib.92.1634484681347;
+        Sun, 17 Oct 2021 08:31:21 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id x6sm2565698otp.49.2021.10.17.08.31.19
+        by smtp.gmail.com with ESMTPSA id x6sm2565698otp.49.2021.10.17.08.31.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Oct 2021 08:31:20 -0700 (PDT)
+        Sun, 17 Oct 2021 08:31:21 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Arnd Bergmann <arnd@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Robin Gong <yibin.gong@nxp.com>
-Subject: Re: (subset) [PATCH] arm64: defconfig: Disable firmware sysfs fallback
-Date:   Sun, 17 Oct 2021 10:31:05 -0500
-Message-Id: <163448466184.410927.7791775948876356994.b4-ty@linaro.org>
+To:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>,
+        Chris Lew <clew@codeaurora.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH v2 0/4] dt-bindings: soc: smem: Make indirection optional
+Date:   Sun, 17 Oct 2021 10:31:06 -0500
+Message-Id: <163448466184.410927.8544390085953194195.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210930215300.60290-1-bjorn.andersson@linaro.org>
-References: <20210930215300.60290-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20210930182111.57353-1-bjorn.andersson@linaro.org>
+References: <20210930182111.57353-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -71,24 +69,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Sep 2021 14:53:00 -0700, Bjorn Andersson wrote:
-> Part of the enablement of SDMA on the IMX platforms, '7f4e4afa140c
-> ("arm64: defconfig: Enable SDMA on i.mx8mq/8mm")' also enabled
-> CONFIG_FW_LOADER_USER_HELPER_FALLBACK, to allow "firmware loaded by
-> udev".
+On Thu, 30 Sep 2021 11:21:07 -0700, Bjorn Andersson wrote:
+> In the modern Qualcomm platform there's no reason for having smem as a
+> separate node, so let's change this.
 > 
-> Unfortunately having the fallback enabled does, due to the 60 second
-> timeout, essentially requiring userspace to provide a firmware loader.
-> But systemd dropped the support for this interface back in 2014 and
-> because arm64 is the only architecture that has this enabled, there
-> doesn't seem to be any standard solution available.
+> Bjorn Andersson (4):
+>   dt-bindings: sram: Document qcom,rpm-msg-ram
+>   dt-bindings: soc: smem: Make indirection optional
+>   soc: qcom: smem: Support reserved-memory description
+>   arm64: dts: qcom: sdm845: Drop standalone smem node
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: defconfig: Disable firmware sysfs fallback
-      commit: 5c1c3e2a7693c5e47a7d93898ade1acaac2afb38
+[4/4] arm64: dts: qcom: sdm845: Drop standalone smem node
+      commit: 622adb84b3e7c48a888c3df26fbf28679ded660b
 
 Best regards,
 -- 
