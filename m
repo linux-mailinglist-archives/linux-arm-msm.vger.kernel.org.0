@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FC3430A24
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:31:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BDEB430A29
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344051AbhJQPdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 11:33:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
+        id S242306AbhJQPdp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 11:33:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344023AbhJQPdh (ORCPT
+        with ESMTP id S1344029AbhJQPdi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 11:33:37 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6CE8C061768
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:27 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id l24-20020a9d1c98000000b00552a5c6b23cso1057520ota.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:27 -0700 (PDT)
+        Sun, 17 Oct 2021 11:33:38 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DEDC06176C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:28 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id u5-20020a4ab5c5000000b002b6a2a05065so147294ooo.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pQ00AQK+701aUWuJr+rwOHhXq54cA2GmgXr18034DJE=;
-        b=X0zpHk7Bbr0FDxJ+ODMooyz2ejhlGii8inD7uYz+EZcyiK3cGhzI8v7epMsoCKNK0H
-         cv44CIc1BbAuAqezJ8ZEpRfc/D7XBVLQzrMqYlFFtr8Gs4VmKz31psrYIwfSO0mcVxKs
-         aVgemyHRCgsLwQy2BUFM+5cRujj7Py78NmjdZTU5ofkIU/OvbC/wydji9FYukwNdL1Bt
-         +nKBZSWFqiiuqSr+YBdieNKfpN01TVDEahyd675GfMgzfYItiuEdB/X1McVyBbIbhSm6
-         Y8xx6sIiWeMt0Up/shqilLbWQLjelEswlHzr/SLs0XabvolqahWBgPvONkrADu9eiqhV
-         /ddw==
+        bh=0RwjU+xMTKwnJSdI/ZvJQg7RwuWcVuJ6qT981afubY4=;
+        b=egX+4knf0mp/ETZTK2SirLB3Yfw0qsJSNehObIg6sfzDYPQbuoqNBGkHo/t8BvRkBH
+         BNmd7KPPih+yWo1dXRep1zuymIv4wibMQj+So/7GxZo6WIa8zeOxAckauTcDxlPVoWeY
+         xiMu5Q5xJqAmk9T8MQDkvadxZlMUep71BHIAt3RdPm6NYWW0CTQ3PwvvpGWZ30aZpziq
+         LSCCpp30OTH9wdYXXxx1EfKkBh08ux2Kqc+5v7WJbCMfFawiUXJlOIkhAzSXrAHMw9kM
+         UzoOv/qpPeK3706UZgD7KoaXUe8caBeqKNN9fcwwfJbluZkyNmlGn6AL1yEbGmx/QFuO
+         YZAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pQ00AQK+701aUWuJr+rwOHhXq54cA2GmgXr18034DJE=;
-        b=EAsY0Wb4BknkSihOU2YXRmQbFU1q9p2iNVf6pqo3lJCDMyvC19e70aHigExmtpXETL
-         631P+R6z5NjaYaLKOAJwqqDoCdud2HMekzYltd6j96/rzmE+o38FdiS6as3bgl84Auao
-         I2ErmItF3UJsOXTD7pz2CKaUN9IMUlyNogtGGDwdh01A0ULiGMYb5o2hcrochiypCdZR
-         tGJaW0wY8A8Bk7a0u7j+bd+jkfzLnyQhwa4rrYeazzwlUqEFExI81A5rI+H7tPaBzBiy
-         DVpV4c08yBx/UrfZ9ymXd8rDReNCWW7/yJbJ1lUsFLkLKm3GIS95P+0lJDLQGfhxj6l+
-         H6eQ==
-X-Gm-Message-State: AOAM532JuAV1+EHNAMZa3touR6H4Aveo/iQCXvQHudqH5LEY9zW1Xhxl
-        JrsBlFh7VPpEQ6DjL5X8VDKukg==
-X-Google-Smtp-Source: ABdhPJximA8XwRqH9+g7pzaJFxuIO7kvAN0cbME+cdDABM3Ad/OgWsLiN8rzz72YrOiPsp7jo+RQ+A==
-X-Received: by 2002:a9d:19c1:: with SMTP id k59mr17467658otk.348.1634484687195;
-        Sun, 17 Oct 2021 08:31:27 -0700 (PDT)
+        bh=0RwjU+xMTKwnJSdI/ZvJQg7RwuWcVuJ6qT981afubY4=;
+        b=ujoMN2NVw4i0+v7mvHl3TUsfrLDC9gSRDdu0aBTM1maAdHEU+urn69NlDCdQX4wBYJ
+         y/C9XNMGaVpGa9DILXxkV/vgGB2/PBCfB7AM2Q6XPSs8V9WT+mkYSx6C48iiTgcQAMuH
+         qW/gN+NlfA6SLWbZM1Vsu/TuAj/BAzkrKGFyIDG0MS0h3LS6Tv1idDU0vPOfv6G9FlMO
+         4B0TwBwog87CsIm1lvUNvx06/bEVPLDRRAULT29BTKcREmb7GjFig4+W7AxRQfOdOjYk
+         dXMZ/oNMvPFirfDsNrmNPv6gw1txtfmlOWb2W/r5x3SMXT3PbJIxKb+eMb7DVbj1xW//
+         U1cw==
+X-Gm-Message-State: AOAM531KhqGMyNZ3sS3rW9zCbWrx2x3Z0NJOTIdtBSK3h9pCEvsa6W8Y
+        Zs5ndPJ7mwrNeRxDzejeaNIGcA==
+X-Google-Smtp-Source: ABdhPJzHDaDBSR9eIppkqcxxm46japDYxXj9RAds0rnAM9bYXyGg9tFLS+fndIqSUyTv2Z3E+mxSGg==
+X-Received: by 2002:a4a:e9f0:: with SMTP id w16mr17707836ooc.3.1634484688160;
+        Sun, 17 Oct 2021 08:31:28 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id x6sm2565698otp.49.2021.10.17.08.31.26
+        by smtp.gmail.com with ESMTPSA id x6sm2565698otp.49.2021.10.17.08.31.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Oct 2021 08:31:26 -0700 (PDT)
+        Sun, 17 Oct 2021 08:31:27 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     mka@chromium.org, Maulik Shah <mkshah@codeaurora.org>,
-        swboyd@chromium.org, evgreen@chromium.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, agross@kernel.org, rnayak@codeaurora.org,
-        linux@roeck-us.net, lsrao@codeaurora.org
-Subject: Re: (subset) [PATCH v12 3/5] arm64: defconfig: Enable Sleep stats driver
-Date:   Sun, 17 Oct 2021 10:31:13 -0500
-Message-Id: <163448466185.410927.9470540718224302097.b4-ty@linaro.org>
+To:     Philip Chen <philipchen@chromium.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, dianders@chromium.org,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v3 1/2] arm64: dts: sc7180: Factor out ti-sn65dsi86 support
+Date:   Sun, 17 Oct 2021 10:31:14 -0500
+Message-Id: <163448466185.410927.18392226904278200617.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <1634107104-22197-4-git-send-email-mkshah@codeaurora.org>
-References: <1634107104-22197-1-git-send-email-mkshah@codeaurora.org> <1634107104-22197-4-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <20211008113839.v3.1.Ibada67e75d2982157e64164f1d11715d46cdc42c@changeid>
+References: <20211008113839.v3.1.Ibada67e75d2982157e64164f1d11715d46cdc42c@changeid>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -67,16 +67,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 13 Oct 2021 12:08:22 +0530, Maulik Shah wrote:
-> Enable Sleep stats driver. The driver gives statistics for various
-> low power modes on Qualcomm Technologies, Inc. (QTI) SoCs.
+On Fri, 8 Oct 2021 11:39:34 -0700, Philip Chen wrote:
+> Factor out ti-sn65dsi86 edp bridge as a separate dts fragment.
+> This helps us introduce the second source edp bridge later.
 > 
 > 
 
 Applied, thanks!
 
-[3/5] arm64: defconfig: Enable Sleep stats driver
-      commit: 551ed64388fd9a0a648eee81b534cd4765ff484a
+[1/2] arm64: dts: sc7180: Factor out ti-sn65dsi86 support
+      commit: 4537977a50e6257c6c19db925479298c19822667
+[2/2] arm64: dts: sc7180: Support Parade ps8640 edp bridge
+      commit: 0faf297c427372ad2a02dc28e6d1327825031882
 
 Best regards,
 -- 
