@@ -2,39 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84504430A44
+	by mail.lfdr.de (Postfix) with ESMTP id F16AD430A46
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:40:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234969AbhJQPmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 11:42:19 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58558 "EHLO mail.kernel.org"
+        id S238031AbhJQPmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 11:42:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58566 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238031AbhJQPmS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S238038AbhJQPmS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 17 Oct 2021 11:42:18 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id AB01E60FF2;
+Received: by mail.kernel.org (Postfix) with ESMTPS id B784260ED5;
         Sun, 17 Oct 2021 15:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1634485208;
-        bh=aR7nZxnQmg6DVAI40zP9Yy3HW3r+XaHr810Ng5TztHc=;
+        bh=YnElwHHcmtilUffaqiRT2FysXHBhBPd5PeAtaZ5QtQA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=gL0EtQykym847rQmXSUB5hpRUm01Akc5mjHwIFM/D/3sIktQ1P6+4DD6kkLdHlK4Q
-         2ieXPNxShgm70K1NvkQ+MN546gZH8MC5mPrVWqKaOEL4Uxv2mvtci/YS7mAH0cDBMn
-         6WdghVezh3ZgeeWoonSzsZd23uwmAFC2rBpLH9EVMwOtM++j/uHf5ZwAdYjUPoOH8R
-         a595mpWKwTwNFpx4UcDPGQprttvQGjlowN+sMYbX30Ly8TvxmmB3QO8idgiXKy8iYO
-         31Yd4ksJLpxEEn4eoMpqngu9A5Yz+vS8ucuNrigYzx3H4TyYPA+c1CcEmxOrcyKQ/U
-         gK9gYZSi1aqBg==
+        b=H5qPaqnnJMbwRsYUzvlWX014iwEubffsRTzdwch/QCN/giqF7fx9MH7sS+0YYAEjR
+         ip7Q9RmeW948WKSvxibxBr1FIh5J1tgHLFRHtZipwcLkeSHHatDRVGXjXWRhC9+tRW
+         Y6BdrOK1MqlCTqyuvgUyti+DEhEiQ1zeWxuktkRR6svTSSDlV7rIgNfwCp6hV6Gw+2
+         yiA4Crtfkc31uMeiJrH88ZbYvm14ZNtP5+Kr3wrh4Efmr0PIdBfw4dOY0gXYyTWlll
+         JF+MUfHTqhpgAzMBRfrsKDsN41X6q7W0MWhe5vlrTiibsZb8PsH9XSK4JgUpewC4kK
+         Sagw2+hvqCDrA==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 9A16060BC9;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id A277460BBF;
         Sun, 17 Oct 2021 15:40:08 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] soc: qcom: socinfo: add two missing PMIC IDs
+Subject: Re: [PATCH] ARM: dts: qcom-apq8064: stop using legacy clock names for
+ HDMI
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <163448520862.5048.597853118883905436.git-patchwork-notify@kernel.org>
+Message-Id: <163448520866.5048.8226821651080630101.git-patchwork-notify@kernel.org>
 Date:   Sun, 17 Oct 2021 15:40:08 +0000
-References: <20211016190607.49866-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211016190607.49866-1-dmitry.baryshkov@linaro.org>
+References: <20211014214221.4173287-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211014214221.4173287-1-dmitry.baryshkov@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
@@ -46,19 +47,18 @@ Hello:
 This patch was applied to qcom/linux.git (for-next)
 by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
-On Sat, 16 Oct 2021 22:06:07 +0300 you wrote:
-> Add IDs for PMK8001 and PMI8996. They also fall in the list of
-> 'duplicated' IDs, where the same index was used for multiple chips.
+On Fri, 15 Oct 2021 00:42:21 +0300 you wrote:
+> Stop using legacy clock names (with _clk suffix) for HDMI and HDMI PHY
+> device tree nodes.
 > 
-> Fixes: 7fda2b0bfbd9 ("soc: qcom: socinfo: import PMIC IDs from pmic-spmi")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/soc/qcom/socinfo.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  arch/arm/boot/dts/qcom-apq8064.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
 Here is the summary with links:
-  - soc: qcom: socinfo: add two missing PMIC IDs
-    https://git.kernel.org/qcom/c/2fae3ecc7040
+  - ARM: dts: qcom-apq8064: stop using legacy clock names for HDMI
+    https://git.kernel.org/qcom/c/03d4e43fc5be
 
 You are awesome, thank you!
 --
