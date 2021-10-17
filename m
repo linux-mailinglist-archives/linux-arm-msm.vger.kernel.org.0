@@ -2,186 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2972D430AD4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 18:40:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26A23430AE9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 18:53:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344251AbhJQQm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 12:42:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39624 "EHLO
+        id S1344283AbhJQQzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 12:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344249AbhJQQm0 (ORCPT
+        with ESMTP id S231154AbhJQQzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 12:42:26 -0400
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC7BC061765
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 09:40:16 -0700 (PDT)
-Received: by mail-oo1-xc30.google.com with SMTP id u5-20020a4ab5c5000000b002b6a2a05065so183945ooo.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 09:40:16 -0700 (PDT)
+        Sun, 17 Oct 2021 12:55:09 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E0FC06161C
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 09:53:00 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id n63so21152319oif.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 09:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=S+wD9XkgSed3YnQrWeHZSeNz6phpMb5NOVyWUp1LNR8=;
-        b=IqRj1TgGnkmpeqB32fjFM4JGdwwpjL3umO4j6FYp4tM0j2vnN1b+zcHFo+VVJ+Oumb
-         Q838SKAo/Waru9Dnnryg7vfLZRYGdlBn2T1y+3+FL18PbTNEfX5LyQNyfU6FINvLXxbY
-         YUkJozYh8elTnWdoGOBV3TkFzZLdPKkcQSfAbjv9nnD4Thwr+RYFbQcB/hHmGrIkLeTT
-         H+OoXpvF5iryEE47MjaSSHqcM+DKNmqkrRr+1JwbQWn0KHLm1+ai3gzktMZ1V9Y+0voN
-         qe8sTFRxqgrVfGhR0Jxl8N04zUOTi5ZKhTeEtS6WPXFo0+wPXc3zsTEs9mZTPEig46S0
-         15iA==
+        bh=BCRRRgh750mYqMV1NloRsMgiHGVQ8cIyieVAZnPnZr0=;
+        b=nQhIDjefY9neOb4AKbfK6pjiLSADl7FCGespC3wNcVaw6OsmECoNOYFCf0zpsiHOYw
+         1OeCbWcgCvd8UB2G5yDs+gEwz+FfIsUykz3PXo7WunIRgFACDnaO4B25hKXKvQC5yaJT
+         VmZIe8uU8QPunA/Q4yrUi7m5D0sJFp91aCMlN0QDCY5L3Ti87gxqU1hi/6EDbGCWWeet
+         sLE11rTUrSiGYYWfSXVWrvuYS0sV9f1+IAa8c5sOqgUvN7uv/wposLDVaI7EXespYNo2
+         Rpruba8nt8o1xnIg2AqG/O5q5ds452hrzqGkr+QQw53uqPJVxOLlaTjhTodr8K5xvWSm
+         AReg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=S+wD9XkgSed3YnQrWeHZSeNz6phpMb5NOVyWUp1LNR8=;
-        b=dukTeEG7c9RwkRAVgOCVscUko4e5HVuGQlsthXeIefBp/7v/rdXk69AR+K20Be7ERH
-         F2WSzlSsji46OxPey7lMSNfKwk0APIE6aEqld676Twdml6gP0va89hV1zBynwRucVuHj
-         WiHanWv4dAKBJPWJOkvDwRDviHi5tlpk/ZDpu6G8OTs4IZNJbpmRfyNXyBm3HPIv9KEH
-         wdtB/nh2G+X7vYdh6LvL7mYaJDfzUGZ3I5TxCVvFEtP1XOmhbQKwcDEfa7KQaVCTKzKz
-         T+hDuD5GAgOlg/qRyHaCuL+r7xOc37922WQdYbDAgANEy4eJgTbZjeAVuEy9x9BNJ7Tt
-         7F7Q==
-X-Gm-Message-State: AOAM532OwyhYjlSYpD91U7PbL5jWDhL1igPsk7x3TSjvxlDnxJQk1l/0
-        mGHj+1aHqSjjBKCS7nLUeBNb/g==
-X-Google-Smtp-Source: ABdhPJxV1Dyy+xIIE2S8LmCEwYcnn47VfSispukfh6RIemyyEc+rIhY/8swuUr7SZouT5A4LUkO+Cw==
-X-Received: by 2002:a4a:e1fd:: with SMTP id u29mr17911773ood.0.1634488815468;
-        Sun, 17 Oct 2021 09:40:15 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id t8sm2547964otc.74.2021.10.17.09.40.14
+        bh=BCRRRgh750mYqMV1NloRsMgiHGVQ8cIyieVAZnPnZr0=;
+        b=yoYmS7V2zHoIq8hYQEMQ/nSVXHpyZD49SKVrobmJN7MW0UOxT2LSGosPHljUdm4C3g
+         CmMxxh7cD9q8vj9bOqCNw9VioFAxwRLkK87FAunEm3s+vI1kZX+sHiojSAfVeGuJYFqe
+         Ahr4PGMZ0YQxqnzlJ2K60Y2TOMqFkbQ8YfuQ7Vma4LanvsnViUeFLjBdc6QqoEJO4+dq
+         uo8lmeorDdFraEuB+TED5w0+Jj4llo73qWajWwUvIskS7tgWObOFEvgEN9YRrIK96iJu
+         wwfUuxwurdgmY91bPRyWBljdzLtkga1Lm+s9qB6wikuf9vdftQTXjWQnFVSqJahsQZSh
+         EXjQ==
+X-Gm-Message-State: AOAM530RWHFRqARY+JXASW64l4KsNRTkSSH2jNkuZZh+QZkT0zUxP/HT
+        ytBwtFgM8XfLvnuRbwQbyfaBpQ==
+X-Google-Smtp-Source: ABdhPJxAy4s0tO4Ev9t3wc1zEhu1fbfqDhbnYLcQ9j27Ed7HX+1n1ZSpf0rtHr1NOFLbcoZPvlIslA==
+X-Received: by 2002:a05:6808:57:: with SMTP id v23mr16629909oic.172.1634489579423;
+        Sun, 17 Oct 2021 09:52:59 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id c9sm2495575otn.77.2021.10.17.09.52.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Oct 2021 09:40:14 -0700 (PDT)
-Date:   Sun, 17 Oct 2021 09:42:02 -0700
+        Sun, 17 Oct 2021 09:52:58 -0700 (PDT)
+Date:   Sun, 17 Oct 2021 11:52:57 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     abhinavk@codeaurora.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dp: Move debugfs files into
- subdirectory
-Message-ID: <YWxSWlRp+log+Trz@ripper>
-References: <20211015231702.1784254-1-bjorn.andersson@linaro.org>
- <f72263e0d4c118653fff8b1341dc487b@codeaurora.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 13/25] pinctrl: qcom: ssbi-mpp: hardcode IRQ counts
+Message-ID: <YWxU6SKYcPzXyaDI@builder.lan>
+References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
+ <20211008012524.481877-14-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f72263e0d4c118653fff8b1341dc487b@codeaurora.org>
+In-Reply-To: <20211008012524.481877-14-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 15 Oct 16:53 PDT 2021, abhinavk@codeaurora.org wrote:
+On Thu 07 Oct 20:25 CDT 2021, Dmitry Baryshkov wrote:
 
-> On 2021-10-15 16:17, Bjorn Andersson wrote:
-> > In the cleanup path of the MSM DP driver the DP driver's debugfs files
-> > are destroyed by invoking debugfs_remove_recursive() on debug->root,
-> > which during initialization has been set to minor->debugfs_root.
-> > 
-> > To allow cleaning up the DP driver's debugfs files either each dentry
-> > needs to be kept track of or the files needs to be put in a subdirectory
-> > which can be removed in one go.
-> > 
-> > By choosing to put the debugfs files in a subdirectory, based on the
-> > name of the associated connector this also solves the problem that these
-> > names would collide as support for multiple DP instances are introduced.
-> > 
-> > One alternative solution to the problem with colliding file names would
-> > have been to put keep track of the individual files and put them under
-> > the connector's debugfs directory. But while the drm_connector has been
-> > allocated, its associated debugfs directory has not been created at the
-> > time of initialization of the dp_debug.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> The probing of this driver calls platform_irq_count, which will
+> setup all of the IRQs that are configured in device tree. In
+> preparation for converting this driver to be a hierarchical IRQ
+> chip, hardcode the IRQ count based on the hardware type so that all
+> the IRQs are not configured immediately and are configured on an
+> as-needed basis later in the boot process.
 > 
-> I have been thinking about this problem ever since multi-DP has been posted
-> :)
-> Creating sub-directories seems right but at the moment it looks like IGT
-> which
-> uses these debugfs nodes doesnt check sub-directories:
+> This change will also allow for the removal of the interrupts property
+> later in this patch series once the hierarchical IRQ chip support is in.
 > 
-> https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/master/tools/msm_dp_compliance.c#L215
+> This patch also removes the generic qcom,ssbi-mpp OF match since we
+> don't know the number of pins. All of the existing upstream bindings
+> already include the more-specific binding.
 > 
-> It looks for the DP debugfs nodes under /sys/kernel/debug/dri/*/
-> 
-> We have to fix IGT too to be able to handle multi-DP cases. I will try to
-> come up
-> with a proposal to address this.
-> 
-> Till then, can we go with the other solution to keep track of the dentries?
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I'm afraid I don't see what you're proposing.
-
-Afaict we need one set of dp_test{type,active,data} per DP controller,
-so even doing this by keeping track of the dentries requires that we
-rename the files based on some identifier (id or connector name) - which
-will cause igt to break.
-
-As such, I think the practical path forward is that we merge the
-multi-DP series as currently proposed. This will not cause any issues on
-single-DP systems, but on multi-DP systems we will have warnings about
-duplicate debugfs entries in the kernel logs.
-
-Then you can figure out how to rework igt to deal with the multiple DP
-instances and update the dp_debug interface accordingly.
-
-
-Which also implies that we should hold this patch back. But if we go
-that path, I think we should fix dp_debug_deinit() so that it doesn't
-remove /sys/kernel/debug/dri/128 when the DP driver is unloaded.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> > ---
-> > 
-> > This depends on
-> > https://lore.kernel.org/linux-arm-msm/20211010030435.4000642-1-bjorn.andersson@linaro.org/
-> > reducing the connector from a double pointer.
-> > 
-> >  drivers/gpu/drm/msm/dp/dp_debug.c | 15 +++++++++------
-> >  1 file changed, 9 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c
-> > b/drivers/gpu/drm/msm/dp/dp_debug.c
-> > index da4323556ef3..67da4c69eca1 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-> > @@ -210,26 +210,29 @@ static const struct file_operations
-> > test_active_fops = {
-> >  static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor
-> > *minor)
-> >  {
-> >  	int rc = 0;
-> > +	char path[64];
-> >  	struct dp_debug_private *debug = container_of(dp_debug,
-> >  			struct dp_debug_private, dp_debug);
-> > 
-> > -	debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
-> > +	snprintf(path, sizeof(path), "msm_dp-%s", debug->connector->name);
-> > +
-> > +	debug->root = debugfs_create_dir(path, minor->debugfs_root);
-> > +
-> > +	debugfs_create_file("dp_debug", 0444, debug->root,
-> >  			debug, &dp_debug_fops);
-> > 
-> >  	debugfs_create_file("msm_dp_test_active", 0444,
-> > -			minor->debugfs_root,
-> > +			debug->root,
-> >  			debug, &test_active_fops);
-> > 
-> >  	debugfs_create_file("msm_dp_test_data", 0444,
-> > -			minor->debugfs_root,
-> > +			debug->root,
-> >  			debug, &dp_test_data_fops);
-> > 
-> >  	debugfs_create_file("msm_dp_test_type", 0444,
-> > -			minor->debugfs_root,
-> > +			debug->root,
-> >  			debug, &dp_test_type_fops);
-> > 
-> > -	debug->root = minor->debugfs_root;
-> > -
-> >  	return rc;
-> >  }
+> ---
+>  drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c | 22 ++++++++--------------
+>  1 file changed, 8 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
+> index 92e7f2602847..a90cada1d657 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
+> @@ -733,13 +733,12 @@ static int pm8xxx_pin_populate(struct pm8xxx_mpp *pctrl,
+>  }
+>  
+>  static const struct of_device_id pm8xxx_mpp_of_match[] = {
+> -	{ .compatible = "qcom,pm8018-mpp" },
+> -	{ .compatible = "qcom,pm8038-mpp" },
+> -	{ .compatible = "qcom,pm8058-mpp" },
+> -	{ .compatible = "qcom,pm8917-mpp" },
+> -	{ .compatible = "qcom,pm8821-mpp" },
+> -	{ .compatible = "qcom,pm8921-mpp" },
+> -	{ .compatible = "qcom,ssbi-mpp" },
+> +	{ .compatible = "qcom,pm8018-mpp", .data = (void *) 6 },
+> +	{ .compatible = "qcom,pm8038-mpp", .data = (void *) 6 },
+> +	{ .compatible = "qcom,pm8058-mpp", .data = (void *) 12 },
+> +	{ .compatible = "qcom,pm8821-mpp", .data = (void *) 4 },
+> +	{ .compatible = "qcom,pm8917-mpp", .data = (void *) 10 },
+> +	{ .compatible = "qcom,pm8921-mpp", .data = (void *) 12 },
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, pm8xxx_mpp_of_match);
+> @@ -750,19 +749,14 @@ static int pm8xxx_mpp_probe(struct platform_device *pdev)
+>  	struct pinctrl_pin_desc *pins;
+>  	struct pm8xxx_mpp *pctrl;
+>  	int ret;
+> -	int i, npins;
+> +	int i;
+>  
+>  	pctrl = devm_kzalloc(&pdev->dev, sizeof(*pctrl), GFP_KERNEL);
+>  	if (!pctrl)
+>  		return -ENOMEM;
+>  
+>  	pctrl->dev = &pdev->dev;
+> -	npins = platform_irq_count(pdev);
+> -	if (!npins)
+> -		return -EINVAL;
+> -	if (npins < 0)
+> -		return npins;
+> -	pctrl->npins = npins;
+> +	pctrl->npins = (uintptr_t) device_get_match_data(&pdev->dev);
+>  
+>  	pctrl->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+>  	if (!pctrl->regmap) {
+> -- 
+> 2.30.2
+> 
