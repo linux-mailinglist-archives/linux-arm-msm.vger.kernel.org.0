@@ -2,88 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38238430A33
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:31:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 544FC430A3E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 17:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344082AbhJQPdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 11:33:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52510 "EHLO
+        id S234748AbhJQPjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 11:39:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344079AbhJQPdm (ORCPT
+        with ESMTP id S231254AbhJQPjt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 11:33:42 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A857C061772
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:33 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id r4-20020a4aa2c4000000b002b6f374cac9so754354ool.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:31:33 -0700 (PDT)
+        Sun, 17 Oct 2021 11:39:49 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0C37C061765
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:37:39 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id l16-20020a9d6a90000000b0054e7ab56f27so2928187otq.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 08:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IIAVHwexbMKhrI7FMZ1CTcUKEaRKC2WFDIr4wjA9dyM=;
-        b=bQdY43ATH2AnaTJzC83o8Ib3eHA2zChAc6yOdTe6pdC+MVQ/Radhbs3cwOTVH/hYWI
-         RcmD4j9J5d1EWrdjM7bZ6AJbSurxmzaDnDwVasgTI3yWYjRpmOd6TsLJfp7KN3nlgWmZ
-         BEt9vrasPFdbZRHjsC1JAk8dv5Vj213Zfuc6BX81IWJ8uxuuk8IlnYs1SLoDOsgEZQ8y
-         6IA1KaH8HVf1GWpvNgSo2exBaAU+6Q5aQRcKVdPlCvxJ2yTf+xLKqh7eZjITD/3kda6h
-         fuhEfGOUByVq0cNHdPGAIFQBvwT/BdCNndH3XO3yNc1dfTbcCpcQkCuDtexjIYJa+lLD
-         gkTg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=rhJ3MYQxq7jBWrI9qP0fXJvJ7nX/eTAbsnjrRWMMFSk=;
+        b=GCtnrjiizXGVQMZOGAeOU0DNHpUUeMzYqWIJgqJFXZilHvYermpet4Oe9/jxnwO/iM
+         4AgFbFnGJgxGQrpM7uMVA7pcW3n1CuvoeMXHkG88JRLEceU/B3oYL/oW3AmFLDlz5prj
+         D8+xbpnJUEAFBp17G9Tkg5RfTvbgkAKzlbkg8HqpTiTY4UTUd6X80mzqa/TiqLo8AorA
+         h5Cy5X2Ud8IwTR4zH1E6bQdLrOJ9v0/ISUK+G+0RPz4lSiDa4hodJ8GhxshaqkOF7GS/
+         5t1GsAKrm78wm0P7jvhXir9dNQ1veHeLvZDcWzcNL1UobHtrRlKjdmymivH38WPtiRqB
+         wBZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IIAVHwexbMKhrI7FMZ1CTcUKEaRKC2WFDIr4wjA9dyM=;
-        b=M0bye/niiTw+1tGrn7D0765L6APNvOmQAUj4zTRy90alWu7OiO6QfEDpi7gW2gI3g+
-         67AZyFfxqnC+ahQu/W2sq0cqzNrRanDhvTrXIENQF08o0L0UUAcF7qLOvFkirDm8SAa8
-         eRkCe7AsmeuUjwbCKAgDH62nPzTE12yBgoNxuj0PoOoAfVhraNQui/ysGuur13hfpFh8
-         WZ2f2DDfmmvgMZJHT+T9cRIDAliDkMkMuElqIt6ik5ylWY2tW1exhsximZakWNWq+6t+
-         q2/aGg6Ms/r36SeWlPDYU4FMy6rVETExQE4Q9ZwasFFP9lRH2FrsmDFKkke/VN5rjnMQ
-         NcJQ==
-X-Gm-Message-State: AOAM533Sd7uacVYTdGicQFZa5PH9GAdNcyxfBPZ4A5G0wg3+znsXXlMx
-        utJTsduwQJv9UizZZWxnic0T+g==
-X-Google-Smtp-Source: ABdhPJworGe7fs6gl6skg45o+ZKw6EU9Ggscu/3Ure3gpGHUHFi0fean+cLXjYw8B0pOGryGOH6pHQ==
-X-Received: by 2002:a4a:d099:: with SMTP id i25mr17637290oor.86.1634484692561;
-        Sun, 17 Oct 2021 08:31:32 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rhJ3MYQxq7jBWrI9qP0fXJvJ7nX/eTAbsnjrRWMMFSk=;
+        b=WchVPt02GHrZpGro+xfg/rQ5cRHQ4R8xhcbCRBChxiDWfoBB2PpVsrA/kLBbpjmVqN
+         5oiW2cQYvtbJbHdXU+ZDkMy0sydJRJQttN3fnhqv7rnRC+J0zkkYLHFC1t08pK04oMxx
+         EP3tytT9417Ji4/2imS4YprrRv6H7zQbr5t5JeFGT1LUb05CaNgMHaO1FzOolcx/gXS7
+         ZEQeApvzkRgEdS5TpMwBWvzNLHUpPYOQJ2+jUv7yn7gLjyFWWry8kJ5Vr2FCqqegKy5u
+         A97OE2ncbZy73K76Tt4mMBkBh0KIyl2p3L87J5gKgkWTO0FBkeSYVom53+TAOruBNQbf
+         vh+A==
+X-Gm-Message-State: AOAM530gbFiKSXlABTw0UmT6aeI1xON4WnYjTmb5/klkzkG32S8JBPku
+        rBKkuDOvR0gktFcs7Fgo3WHF5Q==
+X-Google-Smtp-Source: ABdhPJwjycxtRcae2uuxEEliyOr1THEo6rI+dgHveXyCqMO2SaAU+kA94jDbKXV5kLu7kDuNKnwebw==
+X-Received: by 2002:a05:6830:95:: with SMTP id a21mr18534612oto.43.1634485059006;
+        Sun, 17 Oct 2021 08:37:39 -0700 (PDT)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id x6sm2565698otp.49.2021.10.17.08.31.31
+        by smtp.gmail.com with ESMTPSA id bp21sm2290370oib.31.2021.10.17.08.37.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Oct 2021 08:31:32 -0700 (PDT)
+        Sun, 17 Oct 2021 08:37:38 -0700 (PDT)
+Date:   Sun, 17 Oct 2021 10:37:36 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: apq8016-sbc: Clarify firmware-names
-Date:   Sun, 17 Oct 2021 10:31:18 -0500
-Message-Id: <163448466184.410927.17405938029703984127.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210922195853.95574-1-stephan@gerhold.net>
-References: <20210922195853.95574-1-stephan@gerhold.net>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Sean Paul <sean@poorly.run>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 7/7] drm/msm/dp: Add sc8180x DP controllers
+Message-ID: <YWxDQInQD8ZDa1IB@builder.lan>
+References: <20211016221843.2167329-1-bjorn.andersson@linaro.org>
+ <20211016221843.2167329-8-bjorn.andersson@linaro.org>
+ <CAE-0n53R79HOoBsuLXVkVhYotFam8k4mWZqWnaiJcqcr7w522w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n53R79HOoBsuLXVkVhYotFam8k4mWZqWnaiJcqcr7w522w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Sep 2021 21:58:53 +0200, Stephan Gerhold wrote:
-> Commit 0f6b380d580c ("arm64: dts: qcom: apq8016-sbc: Update modem and WiFi
-> firmware path") added "firmware-name"s to the APQ8016 SBC (DB410c) device
-> tree to separate the (test key)-signed firmware from other devices.
+On Sat 16 Oct 20:32 CDT 2021, Stephen Boyd wrote:
+
+> Quoting Bjorn Andersson (2021-10-16 15:18:43)
+> > The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
+> > DP driver.
+> >
+> > Link: https://lore.kernel.org/linux-arm-msm/20210725042436.3967173-7-bjorn.andersson@linaro.org/
 > 
-> However, the added names are a bit confusing. The "modem" firmware used by
-> DB410c is actually a simplified version for APQ8016 that lacks most of the
-> modem functionality (phone calls, SMS etc) that is available on MSM8916.
-> Placing it in "qcom/msm8916/modem.mbn" suggests that it supports all
-> functionality for MSM and not just the reduced functionality for APQ.
-> 
-> [...]
+> BTW, was the link intentional?
 
-Applied, thanks!
+No, I didn't intend for this Link to go upstream, just forgot to clean
+it out as I was sending out the patches.
 
-[1/1] arm64: dts: qcom: apq8016-sbc: Clarify firmware-names
-      commit: 2533786f46d074d67a4bca04c2d44d3825594415
+@Rob, @Dmitry, can you drop this as you apply the patch, or would you
+prefer a resend?
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+Thanks,
+Bjorn
