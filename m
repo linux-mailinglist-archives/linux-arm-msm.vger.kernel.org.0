@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF5BF4305DF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 03:31:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C5B34305E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 03:31:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234924AbhJQBdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 21:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38680 "EHLO
+        id S241199AbhJQBeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 16 Oct 2021 21:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234317AbhJQBdb (ORCPT
+        with ESMTP id S241141AbhJQBeD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 21:33:31 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BA8C061767
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:31:21 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id m67so19110357oif.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:31:21 -0700 (PDT)
+        Sat, 16 Oct 2021 21:34:03 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B3EC061767
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:31:54 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id x33-20020a9d37a4000000b0054733a85462so372358otb.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:31:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=FkZ8BDMTGchcGS1E2IMJTlJ/g3mJdDD78OtHNGJ/EEg=;
-        b=h9Pokhi4AVZI55uOa2jKdmsv1a9iMYO6Olt4WTnzPXHH1FearCdMb+CLrENVdDFx9F
-         r+dk3bWzipc0ifqGDMW8qvRcQGRlZU//OAQbH/kZbfAKAh25odMFAv6FZdL1fDv5ixBe
-         0qIlOENPlbW5mFiKP9X5w4oAif6j1ttN8V8Z0=
+        bh=Mf0Mwk4Nvj9HUEe3bQ6ZCswhorXqyTpELHryvN43LX0=;
+        b=ktf+x61/yH16k3GIVUn9Uco046qC1qV6GoQrHIzfWAt5dEvcyFOVtXj5zvIJHepK1u
+         Sg1WH8QkUmDWekxPMe/PsUq59SULVXtWX3eR5H0oM9F3SOGMRG0tLQi8L8GUt3MTWL+p
+         v67sCkR29toFeJxP+Xsq2HjrMpOz5ZQIWJ+0Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=FkZ8BDMTGchcGS1E2IMJTlJ/g3mJdDD78OtHNGJ/EEg=;
-        b=wfGELs+C3tAZwNJZVdVPTg9N75TFqcK7Ke/F4xUddJhTa4AoesgqTcDl+gVdA78WqN
-         xdvymT+JDs2YaWyrwwOo7+QH+87VVqV2Mtv4Yzm2qM6u+YqlgT6L/E+A23NOC1m5cstg
-         Nh6Nwt0m1M3nsPbM/hM+WSpZs3uG+iollT6e/NlFAghA45TkbCYSDr7ULdK9ckrF1wwR
-         EI/qpdUiFoNGNHfux27blvf5Fp1Q0Zl0xEzH2IliNewiUzDO06BEgUwyV2Ess8q1E3di
-         hWpqkPlRtBpKZCo5XEyQ/Qosxsxk2slUSdlZm3NT5eub9EKVV2AUjOWy5OLMbkjnBWJ9
-         eeJg==
-X-Gm-Message-State: AOAM532cUN03G6obPEoRXp4D1Y29Q3yg4sXGAqFOekY2N2PbtMYScoBl
-        qWCH8KsrEQ9TJxUaSUPbfHGvRpBEvfOaSN3u5Jo9og==
-X-Google-Smtp-Source: ABdhPJyugEUY5uN9Q+jCOvC6LoW1QUtqZ3z4ufKS9HicaDBtN79ngOQb5eAvAKrduNWR9bmcYtqK+pwYIsIhVnOfYlE=
-X-Received: by 2002:aca:3306:: with SMTP id z6mr23201636oiz.164.1634434280958;
- Sat, 16 Oct 2021 18:31:20 -0700 (PDT)
+        bh=Mf0Mwk4Nvj9HUEe3bQ6ZCswhorXqyTpELHryvN43LX0=;
+        b=qvlMzS3ZjlfB9VdXu4KA+edZT3mbeKuWm/UPrI9alqWGoGIgWbLq4c7WpZI532D3sm
+         NfgTJ9l6b0sRcwqxwVZjA2cdXlm85gBH3QCrvuc13EJgU0iMS3JSrqTbJ95vGwfYApjU
+         TgrKzAr3PAW80lcvnuoyaVHD/cW24fO1l2or/PgCsdq4WHQTLxl8q1zpviyuxlr5fD7h
+         tSIDR6v47k5GDeUqR6UR3oMcG9C0QhizDKnMCiqM65yFwpPRNL9SHfxrpf+TvUta55vO
+         X+lq5XDtaSWEhU+OhLI7CWG6XZeSPNkt1Due5PnTmMVIRJPf5c9WoPLj4llfd1eNy8iK
+         F6vg==
+X-Gm-Message-State: AOAM530B/Y7UQmOlmSXbvEmyawOI3PRBIkXmkx6fy9Z0D9JUG3Tw9CKj
+        iOTy295GbQtiFymdvLvoy/Dv1YMi+XkO1Ys+IepuoQ==
+X-Google-Smtp-Source: ABdhPJzzZYs3G7Cs5Kx0YRYBhZZYkqRuo62R0Tx74imA+M7M9wHiZ5oWBZcO2tUw6r5JwbttYUQ1DUTJaey7RPOEM34=
+X-Received: by 2002:a05:6830:1c2e:: with SMTP id f14mr14737706ote.159.1634434314051;
+ Sat, 16 Oct 2021 18:31:54 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 16 Oct 2021 20:31:20 -0500
+ HTTPREST; Sat, 16 Oct 2021 20:31:53 -0500
 MIME-Version: 1.0
-In-Reply-To: <20211016221843.2167329-6-bjorn.andersson@linaro.org>
-References: <20211016221843.2167329-1-bjorn.andersson@linaro.org> <20211016221843.2167329-6-bjorn.andersson@linaro.org>
+In-Reply-To: <20211016221843.2167329-8-bjorn.andersson@linaro.org>
+References: <20211016221843.2167329-1-bjorn.andersson@linaro.org> <20211016221843.2167329-8-bjorn.andersson@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Sat, 16 Oct 2021 20:31:20 -0500
-Message-ID: <CAE-0n51WqRgoY11x_y-LoNAwzaZZWDgWxU4z+bcfRRa7OfaAtw@mail.gmail.com>
-Subject: Re: [PATCH v5 5/7] drm/msm/dp: Support up to 3 DP controllers
+Date:   Sat, 16 Oct 2021 20:31:53 -0500
+Message-ID: <CAE-0n515j1xqZqQUky2eom_Jq9E7rHOHPastZ7Xp2zGbv0ypCQ@mail.gmail.com>
+Subject: Re: [PATCH v5 7/7] drm/msm/dp: Add sc8180x DP controllers
 To:     Abhinav Kumar <abhinavk@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -67,28 +67,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-10-16 15:18:41)
-> Based on the removal of the g_dp_display and the movement of the
-> priv->dp lookup into the DP code it's now possible to have multiple
-> DP instances.
+Quoting Bjorn Andersson (2021-10-16 15:18:43)
+> The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
+> DP driver.
 >
-> In line with the other controllers in the MSM driver, introduce a
-> per-compatible list of base addresses which is used to resolve the
-> "instance id" for the given DP controller. This instance id is used as
-> index in the priv->dp[] array.
->
-> Then extend the initialization code to initialize struct drm_encoder for
-> each of the registered priv->dp[] and update the logic for associating
-> each struct msm_dp with the struct dpu_encoder_virt.
->
-> A new enum is introduced to document the connection between the
-> instances referenced in the dpu_intf_cfg array and the controllers in
-> the DP driver and sc7180 is updated.
->
-> Lastly, bump the number of struct msm_dp instances carries by priv->dp
-> to 3, the currently known maximum number of controllers found in a
-> Qualcomm SoC.
->
+> Link: https://lore.kernel.org/linux-arm-msm/20210725042436.3967173-7-bjorn.andersson@linaro.org/
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
 
