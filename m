@@ -2,75 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A4CD4305E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 03:32:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 392F543069D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 06:28:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244769AbhJQBed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 16 Oct 2021 21:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38928 "EHLO
+        id S244801AbhJQEap (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 00:30:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241185AbhJQBec (ORCPT
+        with ESMTP id S233548AbhJQEao (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 16 Oct 2021 21:34:32 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C8EC061765
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:32:23 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id o204so19068541oih.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 16 Oct 2021 18:32:23 -0700 (PDT)
+        Sun, 17 Oct 2021 00:30:44 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52C1AC061765;
+        Sat, 16 Oct 2021 21:28:35 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id o133so11985569pfg.7;
+        Sat, 16 Oct 2021 21:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=2wy87Ngcu7gVRUKvzaxFI3AG8ttBjWS13MSfr80Tlnw=;
-        b=Yz2U+KS+8IlSi/BJ9Aa0q6OomQhz9T99n2XyNvmu8tLFnrxR7oWndK9jZGw2pvVYxd
-         zzfe0BKVkv0bWf/kocXFO8C7+cxvQq5UVc2fkF32ONIXJupUWROCG2whGlpy+K50kCXh
-         Rzjx6cBP7z48rwQlRDLo6WSsQYYRbhsSYdNp8=
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=skcWmsGhkUF1xH1dCjfxAdJy8Z1FOllaUJj4g1xQv/A=;
+        b=HBATO/U51x+CfN3FRY6C4J0uP/TyRUwp8ThA12jS1E/W+mveGbMmoS9Oj8CUS8aCJW
+         TCv0ClDRx8dvdvZt7dACTHvwORasqy76RUJCrSc/KVJI9xIRJPXRsD/b4sdKfqssy59o
+         7k2IuB3HJWyEDFEOHHItTiPl0LZr40bnO1dmcHvZXazE9BXuNTt+XE5brmfbU+uo/7qx
+         WEI5sz+KC5aX6Bt+ZiGUnHl9Fu90gWH0ZXJZnDHT8Lu9TFpE3owpMxCp2waYpc6j5GVg
+         gvNRooZmziPHhqMWM4EGoFAMDEO0eabZJdkRDLPqUFB3kUcktuvtwcSN/laokb6FeTPx
+         pnQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=2wy87Ngcu7gVRUKvzaxFI3AG8ttBjWS13MSfr80Tlnw=;
-        b=2AQAvO8+58wew/vEbwZOZUBx6kIm47YpVaexn/e2MDo+w1M4FbCis1pWr996SHLbvz
-         uvWJ8PEYj6z1NinCaQnFM3CwDwtm1CyCrYrwJQiUU6mhOOFIJ19gZo2Xndwyin/Q6rGe
-         7r1DMm1bHVLM27C/ezToyoNBlkoMTcKZFgc/FhO36/gYgX6MLmk0lQdYhoCpZvXxgUX/
-         R8NwCHqCKkmO17QOoAK1ieM4aaVkdkdhtosfGantDLHibp/FGBh3GHDdP2ORDQzd146S
-         Tk83BAl/d2qlaecIT8LF7G4ywyuHzLQ07rYIBCFhVGdjTqIRWTAfDG6qvR/iO2e7lxtS
-         2PFQ==
-X-Gm-Message-State: AOAM530ArWMdLgDGzC88/QHbOp3oXMVMO3oWqxpIOHogeT2PVe7GN/8u
-        TrMy1svB+lrl5yrAKakWp7E16gJ5URxp6Ejk9QyAhA==
-X-Google-Smtp-Source: ABdhPJy9TGOZNQrC0+Gt3LlttQmcsoNpL5AXVWWKf1RKVOfK+qDdiu0E74boUW3aoYhS7g527dvN6POC4ocGd8TjeKw=
-X-Received: by 2002:a05:6808:23c2:: with SMTP id bq2mr8370296oib.32.1634434342991;
- Sat, 16 Oct 2021 18:32:22 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 16 Oct 2021 20:32:22 -0500
-MIME-Version: 1.0
-In-Reply-To: <20211016221843.2167329-8-bjorn.andersson@linaro.org>
-References: <20211016221843.2167329-1-bjorn.andersson@linaro.org> <20211016221843.2167329-8-bjorn.andersson@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Sat, 16 Oct 2021 20:32:22 -0500
-Message-ID: <CAE-0n53R79HOoBsuLXVkVhYotFam8k4mWZqWnaiJcqcr7w522w@mail.gmail.com>
-Subject: Re: [PATCH v5 7/7] drm/msm/dp: Add sc8180x DP controllers
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=skcWmsGhkUF1xH1dCjfxAdJy8Z1FOllaUJj4g1xQv/A=;
+        b=MGeLpuvGYdgtdt/12rE1jZmwbVELQZNvYG3YKq2Z+e6jCPpD1X6Kx/tNC9yoVCq3tE
+         GYNEfC2sSYDwLGUMwNHDdWxADvA2ujRFDsQ3Y6VP/c6SrRjI8VrGEF2jW/JDy56zq8Sw
+         gCFXFPUwfwwhPGrkn6PiuLT8pvNC25Xxg8kYd9rGNPtTarelpQvogfLL/RjMwE+ZCdBi
+         LX64+K+W7+Mc7n2uCzZfBSGoWFv7iVB78rxQmwrYfHDenPAlQQc5IYHTx4SFtqfn0g9C
+         NJOVmotnW44qNruHj2btPP8RE81sid1//VEUDL+7aSb67BT61ZWEdG3EzvNoDaLZYZRi
+         v4AA==
+X-Gm-Message-State: AOAM533/wic3+6j2lwen5ysDhDA5wMQU/DNGL0TRayhCgH4F5JFiRKnS
+        eBM0bLeQJVOQ6ywx+Vmw6UY=
+X-Google-Smtp-Source: ABdhPJzjJxwe3IS6LFpW8ey83S4WRElk/D67yNB84IESVrkLwFVYVGzawiB4Iuu9L5MN6S2wqktJiQ==
+X-Received: by 2002:a05:6a00:2389:b0:44d:6d57:a38e with SMTP id f9-20020a056a00238900b0044d6d57a38emr21300745pfc.50.1634444914579;
+        Sat, 16 Oct 2021 21:28:34 -0700 (PDT)
+Received: from google.com ([2620:15c:202:201:e49a:151f:b7d7:af9a])
+        by smtp.gmail.com with ESMTPSA id o127sm9041327pfb.216.2021.10.16.21.28.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Oct 2021 21:28:33 -0700 (PDT)
+Date:   Sat, 16 Oct 2021 21:28:31 -0700
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Luca Weiss <luca@z3ntu.xyz>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Matteo Croce <mcroce@microsoft.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Petr Mladek <pmladek@suse.com>,
+        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v2 1/2] reboot: Export symbol 'reboot_mode'
+Message-ID: <YWumb+KpYVJVVdQE@google.com>
+References: <20210714095850.27185-1-shawn.guo@linaro.org>
+ <20210714095850.27185-2-shawn.guo@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210714095850.27185-2-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-10-16 15:18:43)
-> The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
-> DP driver.
->
-> Link: https://lore.kernel.org/linux-arm-msm/20210725042436.3967173-7-bjorn.andersson@linaro.org/
+On Wed, Jul 14, 2021 at 05:58:48PM +0800, Shawn Guo wrote:
+> Some drivers like Qualcomm pm8941-pwrkey need to access 'reboot_mode'
+> for triggering reboot between cold and warm mode.  Export the symbol, so
+> that drivers built as module can still access the symbol.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-BTW, was the link intentional?
+Applied, thank you.
+
+-- 
+Dmitry
