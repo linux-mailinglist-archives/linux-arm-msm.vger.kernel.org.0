@@ -2,84 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3809430702
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 09:07:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28FBC4307AB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 Oct 2021 12:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245021AbhJQHJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 03:09:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53410 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233513AbhJQHJg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 03:09:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 55AEC60F23;
-        Sun, 17 Oct 2021 07:07:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1634454446;
-        bh=uYrWYaNw+y04uyy1r1WLDgEiohtXcV0xRVaH9SH36H8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pd+b7WPWC6Eiej0nXxGyYVBEice/PLIcKYMLjtynosoywSbXMLRsWbl6HWNHiNwi2
-         NpLiqzPolVambyF+cY9V9DMKZKtDfwhS/s8ySxAOkou1wEQv8z/LbvqkZ/O5oYYVD7
-         255x+RRnHJIf84i4E9yRr6vOOoCN0tVbHaRbbQ+0=
-Date:   Sun, 17 Oct 2021 09:07:18 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH 2/3] bus: mhi: Add inbound buffers allocation flag
-Message-ID: <YWvLptVv4+sAWA6H@kroah.com>
-References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
- <20211016065734.28802-3-manivannan.sadhasivam@linaro.org>
- <YWqByX6rdfuA1h1F@kroah.com>
- <20211016163128.GC4048@thinkpad>
+        id S245234AbhJQKFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 06:05:49 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:58658
+        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234519AbhJQKFs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 17 Oct 2021 06:05:48 -0400
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 6518F40004
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 10:03:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1634465018;
+        bh=/w7rnLVxUNTURGieCGfqqQ4bUB62VIx19Vc4b3uH07U=;
+        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+         To:Cc:Content-Type;
+        b=Syw6PWxsIVg+9BACtbHhY5TDfantVSxI0kxK5HdqsqcaGMp7pF41vluGvmCvwlb65
+         5m8ARYmZCf1ed+3HMcwUzLkq3y5pDfH3qyxEJZHjonblt4LB7ZRQhpIRPISzW/6AnP
+         hJm2tG9cGfVqUZu9ZGcdtj0ly47Rx6xtZm4B9+2IVVQdvjMb7l1X8bqr5Wt+xqYNUx
+         pNvskuFcuQWVHtRONNK+zA/qgSopQ0G4m7/oc3EAOepruh7fkKs66R7ywbpfmCjIsL
+         5jHx9HrhCJAnbj/0h4IauikaMhErQwSIhjYuWGnrQuJUnoP6O60MYTgYaSl+qJTJE0
+         O2KCgEpHdbmwQ==
+Received: by mail-ed1-f71.google.com with SMTP id v9-20020a50d849000000b003db459aa3f5so11741788edj.15
+        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 03:03:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/w7rnLVxUNTURGieCGfqqQ4bUB62VIx19Vc4b3uH07U=;
+        b=mT14+iVrl470wc3Vd+36HOUyzM7BA3CYoXa93muSDR9yBNTg7YSvEi7KQjaHhqzrnA
+         9Skv9RWgo7EL5ahSOYMF/tVF4CyZr0Z5yd+t7Lmd+oJ3RnamQjNcg3zrWxUdNIjnaoqO
+         I9DsazJHphNqTVBwNdpEK7rqXErwRNNSpTNuaPGu9OgEiAxOuXMyLE2FJYARdtg2z2YZ
+         Q/rfBXusZS/ucDTwex+ef487CMKPt7ags134gDFnyLrHQgEPU2LQuYvqH97iAYH1b5j2
+         a6aZgsyJg36gH1D8cxEFNcXf2hNDXqUoqgfQSK+v1Y/ntGBRjGhSD2/BfDteE5LzVGot
+         EJWw==
+X-Gm-Message-State: AOAM530Y/H/skKyxAbeVH8wcYujPwZzMZ/Lp3aTIl1e5JCXDt7dCrpgL
+        A5pvUIfNqKoq8VxhkRTpp/maKXOu+TjQhJShazXxsaLh8P7lp+tJHNysklaVvBfgcA/V+1SGFj7
+        NzEJNUvOzOkCRjV5dsMtPRNDGwM8gRSeiTxp+QnimLJLi4n4a/OFa7qTC3lE=
+X-Received: by 2002:a17:906:919:: with SMTP id i25mr21077562ejd.171.1634465017856;
+        Sun, 17 Oct 2021 03:03:37 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxBD4IVI+3m1jDS1GLi//iCI68rTkdNzvWdP8PXY93uSfBu2PzfjILpnco+k3Rb/r6y11YH8kKxYU50YYZPaHc=
+X-Received: by 2002:a17:906:919:: with SMTP id i25mr21077516ejd.171.1634465017650;
+ Sun, 17 Oct 2021 03:03:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211016163128.GC4048@thinkpad>
+References: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
+In-Reply-To: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Date:   Sun, 17 Oct 2021 12:03:26 +0200
+Message-ID: <CA+Eumj5zqbk7Vn7dAvjNWXKK6pCNgu34-VZGudP=BmO0_+0Tgw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] arm64: dts: add 'chassis-type' property
+To:     Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Cc:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        devicetree@vger.kernel.org, Martin Kepplinger <martink@posteo.de>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Lucas Stach <dev@lynxeye.de>,
+        Angus Ainslie <angus@akkea.ca>,
+        Guido Gunther <agx@sigxcpu.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Johan Jonker <jbx6244@gmail.com>,
+        Eddie Cai <eddie.cai.linux@gmail.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Brian Norris <briannorris@chromium.org>,
+        Dan Johansen <strit@manjaro.org>,
+        Simon South <simon@simonsouth.net>,
+        Matthias Brugger <mbrugger@suse.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 16, 2021 at 10:01:28PM +0530, Manivannan Sadhasivam wrote:
-> On Sat, Oct 16, 2021 at 09:39:53AM +0200, Greg KH wrote:
-> > On Sat, Oct 16, 2021 at 12:27:33PM +0530, Manivannan Sadhasivam wrote:
-> > > From: Loic Poulain <loic.poulain@linaro.org>
-> > > 
-> > > Currently, the MHI controller driver defines which channels should
-> > > have their inbound buffers allocated and queued. But ideally, this is
-> > > something that should be decided by the MHI device driver instead,
-> > > which actually deals with that buffers.
-> > > 
-> > > Add a flag parameter to mhi_prepare_for_transfer allowing to specify
-> > > if buffers have to be allocated and queued by the MHI stack.
-> > 
-> > This is a horrible api.  Now one has to go and look up why "0" was added
-> > to a function as a parameter.
-> > 
-> > If you don't want to allocate the buffer, then make a function of that
-> > name and call that.  As you only have one "flag", don't try to make
-> > something generic here that is obviously not generic at all.
-> > 
-> 
-> This is the only API that can be used by the client drivers to pass the
-> configurations to the MHI stack. So we wanted to have a flags parameter that
-> could be extended in the future also.
+On Sat, 16 Oct 2021 at 12:20, Arnaud Ferraris
+<arnaud.ferraris@collabora.com> wrote:
+>
+> Hello,
+>
+> A new root node property named 'chassis-type' has recently been approved
+> added to the device tree specification[1]. This will allow userspace to
+> easily detect the device form factor on DT-based devices, and act
+> accordingly.
+>
+> This patchset fills in this property for existing ARM64 consumer
+> devices (laptops, phones, tablets...).
+>
+> [1] https://github.com/devicetree-org/devicetree-specification/blob/main/source/chapter3-devicenodes.rst#root-node
+>
 
-Worry about future issues then, in the future :)
+I'll add the same for Exynos, S3C and S5P. Do you know by any chance
+what is the meaning of "embedded"? How a development board should be
+classified?
 
-> Regarding "0", the default behaviour is to not pre allocate the buffer at all.
-> So it made less sense to add a separate flag or an API for that.
 
-But again, this is now hard to understand and if you run across a '0' in
-the call, you have to go and look it up, breaking your reading flow.
-
-Please just create a new function for this new option, and then have
-both of them call the common function with a boolean for this "allocate
-or not" type of thing.  We do this all the time in the kernel to make it
-easier to read and understand over time.
-
-thanks,
-
-greg k-h
+Best regards,
+Krzysztof
