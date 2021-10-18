@@ -2,292 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BB924312A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 11:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF62743130A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 11:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231305AbhJRJCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 05:02:37 -0400
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:51484 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S231213AbhJRJCh (ORCPT
+        id S231509AbhJRJRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 05:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231502AbhJRJRA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 05:02:37 -0400
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19I8F84Z025984;
-        Mon, 18 Oct 2021 11:00:14 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=dwaz2Mrk7ql+sMLF/c6xyXxsZ3Ss2e61GxZ8zsfU+rY=;
- b=fLL3yd35gXYzVlXNJJEqyMinmga+RIZy4aFAAi+WxTqCgzd+ukDXYuhnuy+B/C2eQJHr
- Wy+mRj0HWFYhaag7/6oCKmDNknlKj73sv4ilBt+NtreW0vPDVrCqHVpuKHJeDEhHTGhp
- 1fQZUZkYjtr/aboDu++jZyA8UwYVSEB9HGAQ2ExObFlJ3+Cmti5/aPpEu6A1lIzcTzSp
- GQ/FoF42C4QrXIp1VBNu5u99G9XXMFDteI+aUsFJ2VjqoSERCVbTZYtUfmobUo4gRTLe
- yJYzmPRhKZzmgVDJTZlN88npTCdODn8V3M4SY8UFy+DrGkugCobYwjnXNbw52Po05AyT UA== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 3brxk9aesm-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 18 Oct 2021 11:00:14 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id E8E4D10002A;
-        Mon, 18 Oct 2021 11:00:12 +0200 (CEST)
-Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id DE528215147;
-        Mon, 18 Oct 2021 11:00:12 +0200 (CEST)
-Received: from lmecxl0889.lme.st.com (10.75.127.46) by SFHDAG2NODE2.st.com
- (10.75.127.5) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Mon, 18 Oct
- 2021 11:00:12 +0200
-Subject: Re: [PATCH V1 1/3] rpmsg: core: Add signal API support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Deepak Kumar Singh <deesin@codeaurora.org>, <swboyd@chromium.org>,
-        <clew@codeaurora.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-References: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
- <1633015924-881-2-git-send-email-deesin@codeaurora.org>
- <20211011180245.GA3817586@p14s> <YWpcq2Uy9wM1voRH@yoga>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <7df52b45-be2f-62dc-dd4b-db77a42f9a7b@foss.st.com>
-Date:   Mon, 18 Oct 2021 11:00:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Mon, 18 Oct 2021 05:17:00 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05935C06176C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 02:14:43 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id y30so50462777edi.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 02:14:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ceQNvJVpTQBF4k/h+7ufOwqLM7sBgzlboZglEEvPiO8=;
+        b=yWU413fnIgKzOEJUbAVy7gNLP7IwjtQb29lMwpGBDlbay6ZORicjL80vnrD2elo0Lz
+         XYwPuyKHBCB2BZtrBT702H1pIGx8Ikg6BBPBDBq0qqZBI2y58R1p70Vg0ZqtXDfPvyQb
+         jvyK0iXyhWXMLngegdc69hOBDvLdPyzVmjKL70OqsxH2LdCMQ6xxy94EDvUzsY3BLZQm
+         LnRl+07WKD3zrXBU8OAdXS4BeCWojLn3xjjY9OEGZVuNZfnZ7aci5q58e6K+fxzc0tPq
+         CrdJl6BrAtciTbGPtKfk5YrdL6zvRKXTrqfTfAjQqwgS6zbm3PicQAPw0oQK4v12qXQ1
+         KOGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ceQNvJVpTQBF4k/h+7ufOwqLM7sBgzlboZglEEvPiO8=;
+        b=JcRjPo0e035bQGnVuetdIz9JJQZ0WHUvVrCxV7ahKYElz18GMkMk8UpF8t3vAv5Q+Y
+         KjYzTGdQIXQ18O/If9jg8k48iKvpDj0JlBrNNFCw7i/ivfdE2hBGbTUpoanItEa75ni0
+         k8XqHQstKclY+ez3zfjPYcbLxRo0aNsHehQXtSbuXkU7XjAUOHr6sbN3ydDCx7dktBGB
+         s+v1vTvDRCcwIfEREQ7wQzt1mbLlPnFrgOMoQCDAMY/Uvt+/ET+s5XFjm3N6hW1ZAeEk
+         LZeGXn2ULGTgtH8KOmhYhcAOFmLwuSJ+3J8Ud/rjQzh/ioSTaIgIAUKHEsr805rtx93Q
+         075w==
+X-Gm-Message-State: AOAM530kP3gkvfd1ff0akYLZQMemP2t8GzYqaU3QZjwEUpsSdwVAtT0t
+        v3ioxF3u7HYdicH27CGZpwXv6dA4C5aUVmpiIIfmqA==
+X-Google-Smtp-Source: ABdhPJzzrYRiNO1zSpdPsqEPMvNXMGCHZynp5iETLxg/WLrhRE83765HNEko0TTkzT5TOMeDSKZWIJFiVS8PX1ggzn4=
+X-Received: by 2002:a17:907:1c0c:: with SMTP id nc12mr27524587ejc.548.1634548475551;
+ Mon, 18 Oct 2021 02:14:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YWpcq2Uy9wM1voRH@yoga>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.46]
-X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG2NODE2.st.com
- (10.75.127.5)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-18_02,2021-10-14_02,2020-04-07_01
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+ <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
+ <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com>
+ <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
+ <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
+ <CAMZdPi8QXrjN6VYU1VrGeOBhvVSnxopioM7POEOcS5ywsSFDHQ@mail.gmail.com> <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
+In-Reply-To: <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Mon, 18 Oct 2021 11:14:24 +0200
+Message-ID: <CAAP7uc+5=GMGgz3MKfSWaAtes1WwCCx+6iYhb058ZUr0=A52cg@mail.gmail.com>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Thomas Perrot <thomas.perrot@bootlin.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Hey all,
 
-On 10/16/21 7:01 AM, Bjorn Andersson wrote:
-> On Mon 11 Oct 13:02 CDT 2021, Mathieu Poirier wrote:
-> 
->> Good day Deepak,
->>
->> On Thu, Sep 30, 2021 at 09:02:01PM +0530, Deepak Kumar Singh wrote:
->>> Some transports like Glink support the state notifications between
->>> clients using signals similar to serial protocol signals.
->>> Local glink client drivers can send and receive signals to glink
->>> clients running on remote processors.
->>>
->>> Add apis to support sending and receiving of signals by rpmsg clients.
->>>
->>> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
->>> ---
->>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
->>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
->>>  include/linux/rpmsg.h          | 15 +++++++++++++++
->>>  3 files changed, 38 insertions(+)
->>>
->>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->>> index 9151836..5cae50c 100644
->>> --- a/drivers/rpmsg/rpmsg_core.c
->>> +++ b/drivers/rpmsg/rpmsg_core.c
->>> @@ -327,6 +327,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>>  }
->>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->>>  
->>> +/**
->>> + * rpmsg_set_flow_control() - sets/clears searial flow control signals
->>> + * @ept:	the rpmsg endpoint
->>> + * @enable:	enable or disable serial flow control
->>> + *
->>> + * Returns 0 on success and an appropriate error value on failure.
->>> + */
->>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
->>> +{
->>> +	if (WARN_ON(!ept))
->>> +		return -EINVAL;
->>> +	if (!ept->ops->set_flow_control)
->>> +		return -ENXIO;
->>> +
->>> +	return ept->ops->set_flow_control(ept, enable);
->>> +}
->>> +EXPORT_SYMBOL(rpmsg_set_flow_control);
->>> +
->>
->> I'm looking at this patchset as the introduction of an out-of-bound
->> control interface.  But looking at the implementation of the GLINK's
->> set_flow_control() the data is sent in-band, making me perplexed about
->> introducing a new rpmsg_endpoint_ops for something that could be done
->> from user space.  Especially when user space is triggering the message
->> with an ioctl in patch 3.
->>
-> 
-> GLINK is built around one fifo per processor pair, similar to a
-> virtqueue. So the signal request is muxed in the same pipe as data
-> requests, but the signal goes alongside data request, not within them.
+> [    7.056113] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
+> [    7.063298] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+> 0x600000000-0x600000fff 64bit]
+> [    7.071846] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+> [    7.078671] mhi-pci-generic 0000:01:00.0: using shared MSI
 
-That would be the equivalent of 2 additional virtqueues in virtio RPmsg backend
-- two virtqueues for the stream,
-- two virtqueues for the control
-Right?
+In this specific setup we request 4 MSI vectors through
+pci_alloc_irq_vectors(), but only end up allocating a single one (i.e.
+mhi_cntrl->nr_irqs = 1). Could that be related to the problem somehow?
 
-> 
->> Moreover this interface is case specific and doesn't reflect the
->> generic nature found in ept->sig_cb.
->>
-> 
-> The previous proposal from Deepak was to essentially expose the normal
-> tty flags all the way down to the rpmsg driver. But I wasn't sure how
-> those various flags should be interpreted in the typical rpmsg driver.
-> 
-> I therefor asked Deepak to change it so the rpmsg api would contain a
-> single "pause incoming data"/"resume incoming data" - given that this is
-> a wish that we've seen in a number of discussions.
-> 
-> 
-> Unfortunately I don't have any good suggestion for how we could
-> implement this in the virtio backend at this time, but with the muxing
-> of all the different channels in the same virtqueue it would be good for
-> a driver to able to pause the inflow on a specific endpoint, to avoid
-> stalling other communication when a driver can't receive more messages.
+> [    8.100563] mhi mhi0: Requested to power ON
+> [    8.104971] mhi mhi0: Attempting power on with EE: PASS THROUGH,
+> state: SYS ERROR
+> [   10.979537] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
+> PASS THROUGH state: SYS ERROR
+> [   10.988331] mhi mhi0: System error detected
+> [   10.992553] mhi-pci-generic 0000:01:00.0: firmware crashed (7)
+> [   10.998399] mhi mhi0: Power on setup success
+> [   11.002710] mhi mhi0: Handling state transition: SYS ERROR
+> [   11.008198] mhi mhi0: Transitioning from PM state: Linkdown or
+> Error Fatal Detect to: SYS ERROR Process
+> [   11.017597] mhi-pci-generic 0000:01:00.0: firmware crashed (6)
+> [   11.023430] mhi mhi0: Failed to transition from PM state: Linkdown
+> or Error Fatal Detect to: SYS ERROR Process
+> [   11.033433] mhi mhi0: Exiting with PM state: Linkdown or Error
+> Fatal Detect, MHI state: RESET
+> [   11.041958] mhi mhi0: Handling state transition: PBL
+> [   11.046922] mhi mhi0: Device MHI is not in valid state
+> [   11.052060] mhi mhi0: Handling state transition: DISABLE
+> [   11.057370] mhi mhi0: Processing disable transition with PM state:
+> Linkdown or Error Fatal Detect
+> [   11.066243] mhi mhi0: Waiting for all pending event ring processing
+> to complete
+> [   11.073561] mhi mhi0: Waiting for all pending threads to complete
+> [   11.079653] mhi mhi0: Reset all active channels and remove MHI devices
+> [   11.086181] mhi mhi0: Resetting EV CTXT and CMD CTXT
+> [   11.091146] mhi mhi0: Exiting with PM state: DISABLE, MHI state: RESET
+> [   11.097734] mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+> [   11.104937] mhi-pci-generic: probe of 0000:01:00.0 failed with error -110
+>
 
-yes this feature is something that would improve the rpmsg protocol.this could
-also be interesting to pause some services on suspend.
-If I well remember we also spoke about QOS, with possibility to define allocated
-bandwidth per service.
-
-In proposed implementation the signaling is managed in RPMsg backend. This means
-that the backend has to be aware about the signaling defined in a service. In
-some other term the signaling is fixed by the backend, and this patchset would
-fix the signaling for all the backend, right?
-In this case shouldn't it be part of the rpmsg core?
-
-Then to be able to transfer signaling to the remote processor based on RPMsg
-protocol
-I suppose that the signaling has to be encapsulated in a RPMsg sent by an
-endpoint to a remote endpoint.
-
-How to do you keep compatibility with the legacy (no flow control)?
-
-What about associating a control endpoint with a channel?
-A channel could contain:
-- a default data ept (the exiting one)
-- a default control endpoint (the new one).
-
-We could extend the ns announcement mechanism to notify the control endpoint to
-a remote processor...
-
-Regards,
-Arnaud
-
-> 
-> Regards,
-> Bjorn
-> 
->>>  /*
->>>   * match a rpmsg channel with a channel info struct.
->>>   * this is used to make sure we're not creating rpmsg devices for channels
->>> @@ -514,6 +532,9 @@ static int rpmsg_dev_probe(struct device *dev)
->>>  
->>>  		rpdev->ept = ept;
->>>  		rpdev->src = ept->addr;
->>> +
->>> +		if (rpdrv->signals)
->>> +			ept->sig_cb = rpdrv->signals;
->>>  	}
->>>  
->>>  	err = rpdrv->probe(rpdev);
->>> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
->>> index a76c344..dcb2ec1 100644
->>> --- a/drivers/rpmsg/rpmsg_internal.h
->>> +++ b/drivers/rpmsg/rpmsg_internal.h
->>> @@ -53,6 +53,7 @@ struct rpmsg_device_ops {
->>>   * @trysendto:		see @rpmsg_trysendto(), optional
->>>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->>>   * @poll:		see @rpmsg_poll(), optional
->>> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
->>>   *
->>>   * Indirection table for the operations that a rpmsg backend should implement.
->>>   * In addition to @destroy_ept, the backend must at least implement @send and
->>> @@ -72,6 +73,7 @@ struct rpmsg_endpoint_ops {
->>>  			     void *data, int len);
->>>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->>>  			     poll_table *wait);
->>> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
->>>  };
->>>  
->>>  struct device *rpmsg_find_device(struct device *parent,
->>> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
->>> index d97dcd0..b805c70 100644
->>> --- a/include/linux/rpmsg.h
->>> +++ b/include/linux/rpmsg.h
->>> @@ -62,12 +62,14 @@ struct rpmsg_device {
->>>  };
->>>  
->>>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
->>> +typedef int (*rpmsg_rx_sig_t)(struct rpmsg_device *, void *, u32);
->>>  
->>>  /**
->>>   * struct rpmsg_endpoint - binds a local rpmsg address to its user
->>>   * @rpdev: rpmsg channel device
->>>   * @refcount: when this drops to zero, the ept is deallocated
->>>   * @cb: rx callback handler
->>> + * @sig_cb: rx serial signal handler
->>>   * @cb_lock: must be taken before accessing/changing @cb
->>>   * @addr: local rpmsg address
->>>   * @priv: private data for the driver's use
->>> @@ -90,6 +92,7 @@ struct rpmsg_endpoint {
->>>  	struct rpmsg_device *rpdev;
->>>  	struct kref refcount;
->>>  	rpmsg_rx_cb_t cb;
->>> +	rpmsg_rx_sig_t sig_cb;
->>>  	struct mutex cb_lock;
->>>  	u32 addr;
->>>  	void *priv;
->>> @@ -104,6 +107,7 @@ struct rpmsg_endpoint {
->>>   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
->>>   * @remove: invoked when the rpmsg channel is removed
->>>   * @callback: invoked when an inbound message is received on the channel
->>> + * @signals: invoked when a serial signal change is received on the channel
->>>   */
->>>  struct rpmsg_driver {
->>>  	struct device_driver drv;
->>> @@ -111,6 +115,7 @@ struct rpmsg_driver {
->>>  	int (*probe)(struct rpmsg_device *dev);
->>>  	void (*remove)(struct rpmsg_device *dev);
->>>  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
->>> +	int (*signals)(struct rpmsg_device *rpdev, void *priv, u32);
->>>  };
->>>  
->>>  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
->>> @@ -186,6 +191,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->>>  			poll_table *wait);
->>>  
->>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
->>> +
->>>  #else
->>>  
->>>  static inline int rpmsg_register_device(struct rpmsg_device *rpdev)
->>> @@ -296,6 +303,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
->>>  	return 0;
->>>  }
->>>  
->>> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
->>> +{
->>> +	/* This shouldn't be possible */
->>> +	WARN_ON(1);
->>> +
->>> +	return -ENXIO;
->>> +}
->>> +
->>>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->>>  
->>>  /* use a macro to avoid include chaining to get THIS_MODULE */
->>> -- 
->>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->>> a Linux Foundation Collaborative Project
->>>
+-- 
+Aleksander
+https://aleksander.es
