@@ -2,103 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BFDD4323F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 18:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C53B34323FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 18:41:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233150AbhJRQjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 12:39:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50450 "EHLO
+        id S233213AbhJRQnl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 12:43:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232251AbhJRQjU (ORCPT
+        with ESMTP id S232180AbhJRQnk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 12:39:20 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BEC9C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 09:37:09 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id y207so541102oia.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 09:37:09 -0700 (PDT)
+        Mon, 18 Oct 2021 12:43:40 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43B11C061745
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 09:41:29 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id m67so592519oif.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 09:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=L6u+YNaDZtPRetTG0ljC8h1IN8hHY7pl5qB7PDsL30o=;
-        b=ed337YS85d0zgIbx8R3ZOudNI2q2vZe5ZEi+nXjRB//GpH140g62ZCxH3yA+gYQDcu
-         +3HW503yW/iIs3XeM0BgozYPExQCXg40WY7IlzVACTQy1NU1V1JXUtSQoyjFXjcigaO/
-         fF7TPkeoaK9AeLVwip1GG04X0Jruvsus+vzfEHJOSVPr+sB3Qme/ESARF1j7v8LEmUct
-         XdZnjHmohmB+/bR7A9BBeo0bvdriNiXlTw2d6KshIwaZORiOvEX8WsAHXi+HKvSneFlQ
-         uYBNSlnH/ZqJHM+GomxPjXxq7LU3JaOz8sJI9+VPw4z5pdeDAyUOK98stuasOYtQvuHi
-         Zy+w==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=m/74ZeSghoGWz2Y5U8O6ZsL9J98hmrFFn2k+ASasuxI=;
+        b=V/Sg2umzcGxAR3kKFG3Fy5qzN2KDcjvbNbDPZVaGE9ltjEXcESslh7PJ2o2/ybmpNP
+         UFKEXP1js86ftmV1k/I7e/TrkYC6/wQSVyV+vk68P+lRlhHBXg7o+2ZGRYT/JZ6SJ9sC
+         Rzo6euFvfLpT+re3VFTWKSb+c74m/3JcGY6wipnJ1dHRejNOXrIUSd1GaebdANSi3Qb7
+         9Mcow/pJUlnMAbcheP/las1Om3h3m3i6zigpriw6Z/MENOdDrDyQkO9R7p7b9ZH8aNLU
+         qKXLUBvNx2XeEqdc9CfCezeBu8rx3mP4+VPFrBP9p2Bpw2JTmyJzSb4QNdb5VMtNxwoL
+         c/iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=L6u+YNaDZtPRetTG0ljC8h1IN8hHY7pl5qB7PDsL30o=;
-        b=FXM8ffJwfpvRBiD/jOUJ2n4PEDG7t+yRkZUj7yGsqyK7H2qbBTuDURorJmHhSpSn39
-         NETN848PMDnjd66gy057IELI7DO9aaF1L5aPvtY9BR5iDAJNdxhFBfhDGPFpBoiTNxl3
-         OxfjfwpNMKbpA27xnuFr2JVrJMlpCXZK4JLbsCsW3VGjIgCU7XaJhb6lSTtpWECP1o0S
-         LJyLTT2MM+wsOm8jm2Viq21WwslDPlTzkJDoNroJzgcsdouMxp6lP6m5b9mCkLRJkaFI
-         +4nc1mK3WR7+Bb9hSumlN9u0anCcWEHyAwK1Ea831z/SgEz9BmKRwgVJNJlZeqXM8R4v
-         2TwA==
-X-Gm-Message-State: AOAM532t+2nuF3FVRjt5ZtxoqXZvVh3K7P9guwEI/zXzOwNVihAMoDhd
-        Il8tJMX7vhZaB5Vvli2wENjCWw==
-X-Google-Smtp-Source: ABdhPJwKfsWSEtFUWuIBaOew7U6qb4+Pq5Sd13Sc0ld3Y5jH0TCFVDmEweLRBsfnmOmMmQfbASSzvA==
-X-Received: by 2002:aca:5b07:: with SMTP id p7mr692644oib.14.1634575028496;
-        Mon, 18 Oct 2021 09:37:08 -0700 (PDT)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id h2sm3113551otr.37.2021.10.18.09.37.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Oct 2021 09:37:08 -0700 (PDT)
-Message-ID: <5181cbf2-21bf-623b-9b63-6ecd25fdbcbe@kali.org>
-Date:   Mon, 18 Oct 2021 11:37:06 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=m/74ZeSghoGWz2Y5U8O6ZsL9J98hmrFFn2k+ASasuxI=;
+        b=48oRgVlugEIfxEr3VtlmRoXzJO5fEHXNIRpCtkr6tFOKGTk7e6RzZXr2XXNipzqO5h
+         VCrDbY2P+a/uNy/Nh2nXx2kip8a8iSj6I0YoIb40whsuqyWLaD1j9GZeXQSar18fiVOP
+         LOK1x3ZJkojEkVd1miISEIKPkq7csXEUZ4eaX9MCDWnt+pPivZxuC9n2tt6ujflA9T+k
+         tw+Fsi44CYVCFJB8c8fGaIab4xYkz5Fh/sOIxL8KEG5C0PhcIdulkSV4hP+a29Q7iW4T
+         GWPtHj0eXCT/vLuUKx8+vEKGiooZWz+Ebp6Xh4JIjOO2uIfGRg7gFXKlcrpbp9DvP3yF
+         TnmA==
+X-Gm-Message-State: AOAM532gq2wOQXAN8u+pSuzCywkrR2y8It4726gUwssAUL9m1SlIz2zC
+        0eyOZLnQf6y+lnseR4P7eyGuEXHgY8UppSmLQm6DGA==
+X-Google-Smtp-Source: ABdhPJyhI/boD/Dqt4cOu1o+91uOGjUh5J0lLqztunxb38ijIyGLzE0BAxzGggtm1QdOFWnWdOHyLHlnrRrD206Ea5U=
+X-Received: by 2002:aca:58d6:: with SMTP id m205mr737607oib.126.1634575288536;
+ Mon, 18 Oct 2021 09:41:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.0
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm LMH driver
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211017204036.2761122-1-bjorn.andersson@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20211017204036.2761122-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20211011141733.3999-1-stephan@gerhold.net> <20211011141733.3999-2-stephan@gerhold.net>
+ <CAH=2NtwH9kmZBMsOkZkwiuN2mpmOTiAVtw3zC2O4xNdCgG8P4w@mail.gmail.com> <YW1u5UlmrypFxp9C@gerhold.net>
+In-Reply-To: <YW1u5UlmrypFxp9C@gerhold.net>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Mon, 18 Oct 2021 22:11:17 +0530
+Message-ID: <CAH=2Ntz9BLKpQCPtUOtHp6HDS8R6AQf5XVDUNbdRvYSn=pn8Rg@mail.gmail.com>
+Subject: Re: [PATCH net-next v2 1/4] dt-bindings: dmaengine: bam_dma: Add
+ "powered remotely" mode
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
+        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 10/17/21 3:40 PM, Bjorn Andersson wrote:
-> With the introduction of LMH in '36c6581214c4 ("arm64: dts: qcom:
-> sdm845: Add support for LMh node")' the CPUfreq gained a reference for
-> the two interrupts from the LMh. This means that if the LMh driver isn't
-> enabled CPUfreq will not probe and there's no frequency scaling.
+On Mon, 18 Oct 2021 at 18:26, Stephan Gerhold <stephan@gerhold.net> wrote:
 >
-> Enable LMh to make CPUfreq functional again on SDM845.
+> On Mon, Oct 18, 2021 at 05:04:31PM +0530, Bhupesh Sharma wrote:
+> > On Mon, 11 Oct 2021 at 20:12, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > >
+> > > In some configurations, the BAM DMA controller is set up by a remote
+> > > processor and the local processor can simply start making use of it
+> > > without setting up the BAM. This is already supported using the
+> > > "qcom,controlled-remotely" property.
+> > >
+> > > However, for some reason another possible configuration is that the
+> > > remote processor is responsible for powering up the BAM, but we are
+> > > still responsible for initializing it (e.g. resetting it etc). Add
+> > > a "qcom,powered-remotely" property to describe that configuration.
+> > >
+> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > > ---
+> > > Changes since RFC:
+> > >   - Rename qcom,remote-power-collapse -> qcom,powered-remotely
+> > >     for consistency with "qcom,controlled-remotely"
+> > >
+> > > NOTE: This is *not* a compile-time requirement for the BAM-DMUX driver
+> > >       so this could also go through the dmaengine tree.
+> > >
+> > > Also note that there is an ongoing effort to convert these bindings
+> > > to DT schema but sadly there were not any updates for a while. :/
+> > > https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
+> >
+> > Seems you missed the latest series posted last week - [1]. Sorry I got
+> > a bit delayed posting it due to being caught up in other patches.
+> >
+> > Maybe you can rebase your patch on the same and use the YAML bindings
+> > for the qcom,bam_dma controller.
+> >
+> > [1]. https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/T/#t
+> >
 >
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   arch/arm64/configs/defconfig | 1 +
->   1 file changed, 1 insertion(+)
+> Ah, you're right sorry! Seems like you sent it two days after I sent the
+> v2 of this patch. Thanks a lot for continuing work on this! :)
 >
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 86224aa3a74b..0ae6cd2748d2 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -577,6 +577,7 @@ CONFIG_TEGRA_BPMP_THERMAL=m
->   CONFIG_TEGRA_SOCTHERM=m
->   CONFIG_QCOM_TSENS=y
->   CONFIG_QCOM_SPMI_TEMP_ALARM=m
-> +CONFIG_QCOM_LMH=m
->   CONFIG_UNIPHIER_THERMAL=y
->   CONFIG_WATCHDOG=y
->   CONFIG_SL28CPLD_WATCHDOG=m
+> Since I already sent v3 of this patch earlier, I think it is best if
+> I wait a bit first and see if Vinod has any comments or still wants to
+> take it for 5.16. Should be simple to rebase either of our patches on
+> the other one.
 
-Tested on the Lenovo Yoga C630
+Sure, let's wait for Vinod's comments.
 
-Tested-By: Steev Klimaszewski <steev@kali.org>
-
+Regards,
+Bhupesh
