@@ -2,173 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15004431193
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 09:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A162431277
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 10:50:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230477AbhJRHwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 03:52:11 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:30550 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230392AbhJRHwK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 03:52:10 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634543399; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=6HipczTezmULgaScktOZMpGhxT1DDNz2p3RjJWu6EVQ=;
- b=mrgUAHAUl0zqcgaxpvOqray1Cvjrj6lYljGWbuxHKSMmLN7VZVOBIy+pva/w3UwKIrUz0XwE
- hzKDuhANMB6dFrBWikKCWGsQNvhWaGSza8HgeL+F+7Pqf7ClxFgtMl9BYrXmR2AlHtYKclMi
- 2lbJincPPibDZmpnDoIkKbgYJxQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 616d271c0605239689401cac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Oct 2021 07:49:48
- GMT
-Sender: tjiang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A115BC4360C; Mon, 18 Oct 2021 07:49:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tjiang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9A66C4338F;
-        Mon, 18 Oct 2021 07:49:46 +0000 (UTC)
+        id S230416AbhJRIw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 04:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231143AbhJRIw4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Oct 2021 04:52:56 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A87BC061765
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 01:50:45 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id y1so10719138plk.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 01:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=snap.com; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GHXbJOIzZz0uyntt3d4Ji3zC10J5q8hg7NVP4sxB/3A=;
+        b=MVqbCJ+qrW56KrmzD8R3M8i0+7L6/2N9HTKwD91HZxA5ZhmPrhDQ4ai96QeQ+IRW32
+         o+oqncKGrt5MLW1D3wj4DKWYhG4sUmHQvCGBxzXnFByLzcS3GgFNV/BiZ3wQ4oPmrbx+
+         PsRParRjkty7v5/PtF2kORz2cTC0R9Ihq2yx4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GHXbJOIzZz0uyntt3d4Ji3zC10J5q8hg7NVP4sxB/3A=;
+        b=Hi2YRtDNpL3xbvY9xlB1cRwGk+ESOHFlNMxUL/gKGp5ZZ6AQanM7olK/pLpvTWUZOU
+         00Z166wJATMxOsArFefhh3i994LoB0aUbXPGguCQfzB8Y5FZwz8kppcKQWb8bY8o1wbp
+         q0mpkZGA726LslMlcKbKBCJBG9ap+ISu8rn3nvAEy+tn+bW47e09FYkKPFY/1JcUXz6J
+         4JA8j7jMt3TTASSvCQi9mwtSbgiTwQo8WWpT0YNt1ziZcdCzlqnQ6iu5lavQTDYV9Ku6
+         USOf0NP4i7uNi+HYt1dvAdNnNcxdzwz8o99ccOiwKIScCUZn8iqLOAOToOE3O3Pk9rl5
+         linw==
+X-Gm-Message-State: AOAM530qd1FpxwrszEBSjcvu5oa4lxV4l9/B+hrdaVlcCN3TWymbhFdz
+        gazxD254ern8UEdQyxa1icTlCK1SUc067w==
+X-Google-Smtp-Source: ABdhPJyEJNhOxcKqPfI321wH7F65Tf3VHQiW8+t4OacOLT+eCreb7CFUmmOFH0bBeykWbB5vh/pH/w==
+X-Received: by 2002:a17:90a:1950:: with SMTP id 16mr31113039pjh.126.1634547045267;
+        Mon, 18 Oct 2021 01:50:45 -0700 (PDT)
+Received: from localhost ([213.249.125.26])
+        by smtp.gmail.com with UTF8SMTPSA id r8sm12278901pgp.30.2021.10.18.01.50.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Oct 2021 01:50:44 -0700 (PDT)
+From:   Ola Jeppsson <ola@snap.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Ola Jeppsson <ola@snap.com>, Heinrich Fink <hfink@snap.com>,
+        Olivier Schonken <oschonken@snapchat.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8350: Add fastrpc nodes
+Date:   Mon, 18 Oct 2021 10:50:17 +0200
+Message-Id: <20211018085017.1549494-1-ola@snap.com>
+X-Mailer: git-send-email 2.32.0.380.geb27b338a3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 18 Oct 2021 15:49:46 +0800
-From:   tjiang@codeaurora.org
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: Re: [PATCH v2] Bluetooth: btusb: Add support for variant WCN6855 by
- using different nvm
-In-Reply-To: <81add00a4a038008e9f734c5f5e5b712@codeaurora.org>
-References: <81add00a4a038008e9f734c5f5e5b712@codeaurora.org>
-Message-ID: <03517c8d44e6c20d28b9c9f285d8f857@codeaurora.org>
-X-Sender: tjiang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-marcel:
-   sorry to disturb you , could you help review this patch ? thank you.
+Add fastrpc nodes for sDSP, cDSP, and aDSP.
 
-regards.
-tim
+Signed-off-by: Ola Jeppsson <ola@snap.com>
+Acked-by: Heinrich Fink <hfink@snap.com>
+Acked-by: Olivier Schonken <oschonken@snapchat.com>
+---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 118 +++++++++++++++++++++++++++
+ 1 file changed, 118 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index e91cd8a5e535..84660a945be7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1129,6 +1129,32 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 				label = "slpi";
+ 				qcom,remote-pid = <3>;
+ 
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "sdsp";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x0541 0x0>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x0542 0x0>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x0543 0x0>;
++						/* note: shared-cb = <4> in downstream */
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -1170,6 +1196,72 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 
+ 				label = "cdsp";
+ 				qcom,remote-pid = <5>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "cdsp";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@1 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <1>;
++						iommus = <&apps_smmu 0x2161 0x0400>,
++							 <&apps_smmu 0x1181 0x0420>;
++					};
++
++					compute-cb@2 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <2>;
++						iommus = <&apps_smmu 0x2162 0x0400>,
++							 <&apps_smmu 0x1182 0x0420>;
++					};
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x2163 0x0400>,
++							 <&apps_smmu 0x1183 0x0420>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x2164 0x0400>,
++							 <&apps_smmu 0x1184 0x0420>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x2165 0x0400>,
++							 <&apps_smmu 0x1185 0x0420>;
++					};
++
++					compute-cb@6 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <6>;
++						iommus = <&apps_smmu 0x2166 0x0400>,
++							 <&apps_smmu 0x1186 0x0420>;
++					};
++
++					compute-cb@7 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <7>;
++						iommus = <&apps_smmu 0x2167 0x0400>,
++							 <&apps_smmu 0x1187 0x0420>;
++					};
++
++					compute-cb@8 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <8>;
++						iommus = <&apps_smmu 0x2168 0x0400>,
++							 <&apps_smmu 0x1188 0x0420>;
++					};
++
++					/* note: secure cb9 in downstream */
++				};
+ 			};
+ 		};
+ 
+@@ -1402,6 +1494,32 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 
+ 				label = "lpass";
+ 				qcom,remote-pid = <2>;
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x1803 0x0>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x1804 0x0>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x1805 0x0>;
++					};
++				};
+ 			};
+ 		};
+ 	};
+-- 
+2.32.0.380.geb27b338a3
 
-On 2021-10-12 15:55, tjiang@codeaurora.org wrote:
-> the RF performance of wcn6855 soc chip from different foundries will be
-> difference, so we should use different nvm to configure them.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
->  drivers/bluetooth/btusb.c | 56 
-> +++++++++++++++++++++++++++++++++++------------
->  1 file changed, 42 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 75c83768c257..f352ff351b61 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3190,6 +3190,9 @@ static int btusb_set_bdaddr_wcn6855(struct 
-> hci_dev *hdev,
->  #define QCA_DFU_TIMEOUT		3000
->  #define QCA_FLAG_MULTI_NVM      0x80
-> 
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
->  struct qca_version {
->  	__le32	rom_version;
->  	__le32	patch_version;
-> @@ -3221,6 +3224,7 @@ static const struct qca_device_info
-> qca_devices_table[] = {
->  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
->  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
->  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
->  };
-> 
->  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 
-> request,
-> @@ -3375,6 +3379,43 @@ static int btusb_setup_qca_load_rampatch(struct
-> hci_dev *hdev,
->  	return err;
->  }
-> 
-> +static void btusb_generate_qca_nvm_name(char *fwname,
-> +					size_t max_size,
-> +					struct qca_version *ver)
-> +{
-> +	u32 rom_version = le32_to_cpu(ver->rom_version);
-> +	u16 flag = le16_to_cpu(ver->flag);
-> +
-> +	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +		u16 board_id = le16_to_cpu(ver->board_id);
-> +		u32 ram_version = le32_to_cpu(ver->ram_version);
-> +		const char *variant;
-> +
-> +		switch (ram_version) {
-> +		case WCN6855_2_0_RAM_VERSION_GF:
-> +		case WCN6855_2_1_RAM_VERSION_GF:
-> +			variant = "_gf";
-> +			break;
-> +		default:
-> +			variant = "";
-> +			break;
-> +		}
-> +
-> +		/* if boardid equal 0, use default nvm without suffix */
-> +		if (board_id == 0x0) {
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin",
-> +				rom_version, variant);
-> +		} else {
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin",
-> +				rom_version, variant, board_id);
-> +		}
-> +	} else {
-> +		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
-> +			rom_version);
-> +	}
-> +
-> +}
-> +
->  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
->  				    struct qca_version *ver,
->  				    const struct qca_device_info *info)
-> @@ -3383,20 +3424,7 @@ static int btusb_setup_qca_load_nvm(struct 
-> hci_dev *hdev,
->  	char fwname[64];
->  	int err;
-> 
-> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> -		/* if boardid equal 0, use default nvm without surfix */
-> -		if (le16_to_cpu(ver->board_id) == 0x0) {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -				 le32_to_cpu(ver->rom_version));
-> -		} else {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> -				le32_to_cpu(ver->rom_version),
-> -				le16_to_cpu(ver->board_id));
-> -		}
-> -	} else {
-> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -			 le32_to_cpu(ver->rom_version));
-> -	}
-> +	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
-> 
->  	err = request_firmware(&fw, fwname, &hdev->dev);
->  	if (err) {
