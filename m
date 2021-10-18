@@ -2,483 +2,451 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9086431F2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:15:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C021E431F42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:16:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232597AbhJRORa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 10:17:30 -0400
-Received: from mail-oi1-f169.google.com ([209.85.167.169]:41699 "EHLO
-        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232042AbhJROR0 (ORCPT
+        id S231920AbhJROSU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 10:18:20 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:21009 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233309AbhJROSO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 10:17:26 -0400
-Received: by mail-oi1-f169.google.com with SMTP id r64so1344040oih.8;
-        Mon, 18 Oct 2021 07:15:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ua0iRFPoYQJvns/PNH0V8FLbOTwAvkKWkQruqc5XXps=;
-        b=Nl4kcZoIrVI5rGl0EKPK28bJyc0OxplxlIJbEWwm3pRUoGSCD7+ktWuaVlTNqr1znN
-         k+Eq1coPq+jhkWoqsf1kxjIS4GuaHD5By+tuaE06mavGJabphlBzrpm4bYvuoVBECYWy
-         u9KgaNU5lJ2iIb9dbxwJJzFkq19CGFEVKfyb72uCOj406d2h1LAWqUhIsSeMqlvIO3qW
-         z3DXzxVwTtnhVJ3RsquWy+nyunhfCZ7ya/OpBXvMXbA3Sp5TaGU03ZZKlwh4bWPuqg+r
-         WByx4aUOHeWE4rhEn0KlGJ0ahI08ACa6cwijaHkAQ7RcGIFoYviuNHkGrR6oeoZby8SR
-         097Q==
-X-Gm-Message-State: AOAM531GwmcU6N41nD+d9pJsU0gCQq4UB05i6MM/uwVjENBwvpwMWTnE
-        v5NmjVUD6GlDV8ChGHF21w==
-X-Google-Smtp-Source: ABdhPJyTOeKPmy2kcFcT3QpV5RN/rq1X8SUGD5Yj1DFHwSjLhp7SbPTjkvmPFo1IgJgDyixBC2YxQg==
-X-Received: by 2002:aca:783:: with SMTP id 125mr15953oih.29.1634566514475;
-        Mon, 18 Oct 2021 07:15:14 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w18sm2021335ott.29.2021.10.18.07.15.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 07:15:13 -0700 (PDT)
-Received: (nullmailer pid 2296740 invoked by uid 1000);
-        Mon, 18 Oct 2021 14:15:12 -0000
-Date:   Mon, 18 Oct 2021 09:15:12 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Vivien Didelot <vivien.didelot@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Matthew Hagan <mnhagan88@gmail.com>
-Subject: Re: [net-next PATCH v7 16/16] dt-bindings: net: dsa: qca8k: convert
- to YAML schema
-Message-ID: <YW2BcC2izFM6HjG5@robh.at.kernel.org>
-References: <20211013223921.4380-1-ansuelsmth@gmail.com>
- <20211013223921.4380-17-ansuelsmth@gmail.com>
+        Mon, 18 Oct 2021 10:18:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634566563; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=edn+ht/kj02iC7/qCMRlKNpqNrQ3hyYyCP0V95+hZBQ=; b=b9RIrsD0GtSdnwhfs6kozIdZ93HfYHkePo7gLXjlyGpu9TvxuZ/doPNMfnj9zoVm56B1gyoT
+ RjZbhMAocVF6WOS39AiXNHVuH1CpmdUzFR6haSAgurlg3bVX6J0fB4pv4Uywq+f4f1IT7Gi5
+ KO5+oZiVoOv6X3/w3RmN+2HEUJU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 616d81908ea00a941f588926 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Oct 2021 14:15:44
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 251C1C4479A; Mon, 18 Oct 2021 14:15:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.202.137] (unknown [106.213.135.3])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DE0FC43618;
+        Mon, 18 Oct 2021 14:15:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9DE0FC43618
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v12 2/5] soc: qcom: Add Sleep stats driver
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        dianders@chromium.org, linux@roeck-us.net, rnayak@codeaurora.org,
+        lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+References: <1634107104-22197-1-git-send-email-mkshah@codeaurora.org>
+ <1634107104-22197-3-git-send-email-mkshah@codeaurora.org>
+ <20211015135809.GB7231@dragon>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <0802823a-4be2-6d55-b259-5084a809c7bb@codeaurora.org>
+Date:   Mon, 18 Oct 2021 19:45:30 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211013223921.4380-17-ansuelsmth@gmail.com>
+In-Reply-To: <20211015135809.GB7231@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 14, 2021 at 12:39:21AM +0200, Ansuel Smith wrote:
-> From: Matthew Hagan <mnhagan88@gmail.com>
+Hi Shawn,
+
+On 10/15/2021 7:28 PM, Shawn Guo wrote:
+> Hi Mahesh,
 > 
-> Convert the qca8k bindings to YAML format.
+> Thanks for the work!
 > 
-> Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
-> Co-developed-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../devicetree/bindings/net/dsa/qca8k.txt     | 245 ------------
->  .../devicetree/bindings/net/dsa/qca8k.yaml    | 362 ++++++++++++++++++
->  2 files changed, 362 insertions(+), 245 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.txt
->  create mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-
-
-
-> diff --git a/Documentation/devicetree/bindings/net/dsa/qca8k.yaml b/Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-> new file mode 100644
-> index 000000000000..48de0ace265d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-> @@ -0,0 +1,362 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/dsa/qca8k.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Atheros QCA83xx switch family
-> +
-> +maintainers:
-> +  - John Crispin <john@phrozen.org>
-> +
-> +description:
-> +  If the QCA8K switch is connect to an SoC's external mdio-bus, each subnode
-> +  describing a port needs to have a valid phandle referencing the internal PHY
-> +  it is connected to. This is because there is no N:N mapping of port and PHY
-> +  ID. To declare the internal mdio-bus configuration, declare an MDIO node in
-> +  the switch node and declare the phandle for the port, referencing the internal
-> +  PHY it is connected to. In this config, an internal mdio-bus is registered and
-> +  the MDIO master is used for communication. Mixed external and internal
-> +  mdio-bus configurations are not supported by the hardware.
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - enum:
-
-Don't need oneOf with one entry.
-
-> +          - qca,qca8327
-> +          - qca,qca8328
-> +          - qca,qca8334
-> +          - qca,qca8337
-> +    description: |
-> +      qca,qca8328: referenced as AR8328(N)-AK1(A/B) QFN 176 pin package
-> +      qca,qca8327: referenced as AR8327(N)-AL1A DR-QFN 148 pin package
-> +      qca,qca8334: referenced as QCA8334-AL3C QFN 88 pin package
-> +      qca,qca8337: referenced as QCA8337N-AL3(B/C) DR-QFN 148 pin package
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  reset-gpios:
-> +    description:
-> +      GPIO to be used to reset the whole device
-> +    maxItems: 1
-> +
-> +  qca,ignore-power-on-sel:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description:
-> +      Ignore power-on pin strapping to configure LED open-drain or EEPROM
-> +      presence. This is needed for devices with incorrect configuration or when
-> +      the OEM has decided not to use pin strapping and falls back to SW regs.
-> +
-> +  qca,led-open-drain:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description:
-> +      Set LEDs to open-drain mode. This requires the qca,ignore-power-on-sel to
-> +      be set, otherwise the driver will fail at probe. This is required if the
-> +      OEM does not use pin strapping to set this mode and prefers to set it
-> +      using SW regs. The pin strappings related to LED open-drain mode are
-> +      B68 on the QCA832x and B49 on the QCA833x.
-> +
-> +  mdio:
-> +    type: object
-> +    description: Qca8k switch have an internal mdio to access switch port.
-> +                 If this is not present, the legacy mapping is used and the
-> +                 internal mdio access is used.
-> +                 With the legacy mapping the reg corresponding to the internal
-> +                 mdio is the switch reg with an offset of -1.
-
-2 spaces more than description.
-
-> +
-> +    properties:
-> +      '#address-cells':
-> +        const: 1
-> +      '#size-cells':
-> +        const: 0
-
-The mdio bus provides these constraints already.
-
-> +
-> +    patternProperties:
-> +      "^(ethernet-)?phy@[0-4]$":
-> +        type: object
-> +
-> +        allOf:
-
-Don't need allOf.
-
-> +          - $ref: "http://devicetree.org/schemas/net/mdio.yaml#"
-
-The phy is an mdio bus? 
-
-You don't need any of this. Just:
-
-mdio:
-  $ref: /schemas/net/mdio.yaml#
-  unevaluatedProperties: false
-  description: ...
-
-> +
-> +        properties:
-> +          reg:
-> +            maxItems: 1
-> +
-> +        required:
-> +          - reg
-> +
-> +patternProperties:
-> +  "^(ethernet-)?ports$":
-> +    type: object
-> +    properties:
-> +      '#address-cells':
-> +        const: 1
-> +      '#size-cells':
-> +        const: 0
-> +
-> +    patternProperties:
-> +      "^(ethernet-)?port@[0-6]$":
-> +        type: object
-> +        description: Ethernet switch ports
-> +
-> +        properties:
-> +          reg:
-> +            description: Port number
-> +
-> +          label:
-> +            description:
-> +              Describes the label associated with this port, which will become
-> +              the netdev name
-> +            $ref: /schemas/types.yaml#/definitions/string
-> +
-> +          link:
-> +            description:
-> +              Should be a list of phandles to other switch's DSA port. This
-> +              port is used as the outgoing port towards the phandle ports. The
-> +              full routing information must be given, not just the one hop
-> +              routes to neighbouring switches
-> +            $ref: /schemas/types.yaml#/definitions/phandle-array
-> +
-> +          ethernet:
-> +            description:
-> +              Should be a phandle to a valid Ethernet device node.  This host
-> +              device is what the switch port is connected to
-> +            $ref: /schemas/types.yaml#/definitions/phandle
-
-All of this is defined in dsa.yaml. Add a $ref to it and don't duplicate 
-it here.
-
-> +
-> +          phy-handle: true
-> +
-> +          phy-mode: true
-> +
-> +          fixed-link: true
-> +
-> +          mac-address: true
-> +
-> +          sfp: true
-> +
-> +          qca,sgmii-rxclk-falling-edge:
-> +            $ref: /schemas/types.yaml#/definitions/flag
-> +            description:
-> +              Set the receive clock phase to falling edge. Mostly commonly used on
-> +              the QCA8327 with CPU port 0 set to SGMII.
-> +
-> +          qca,sgmii-txclk-falling-edge:
-> +            $ref: /schemas/types.yaml#/definitions/flag
-> +            description:
-> +              Set the transmit clock phase to falling edge.
-> +
-> +          qca,sgmii-enable-pll:
-> +            $ref: /schemas/types.yaml#/definitions/flag
-> +            description:
-> +              For SGMII CPU port, explicitly enable PLL, TX and RX chain along with
-> +              Signal Detection. On the QCA8327 this should not be enabled, otherwise
-> +              the SGMII port will not initialize. When used on the QCA8337, revision 3
-> +              or greater, a warning will be displayed. When the CPU port is set to
-> +              SGMII on the QCA8337, it is advised to set this unless a communication
-> +              issue is observed.
-> +
-> +        required:
-> +          - reg
-> +
-> +        additionalProperties: false
-> +
-> +oneOf:
-> +  - required:
-> +      - ports
-> +  - required:
-> +      - ethernet-ports
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: true
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    mdio {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        external_phy_port1: ethernet-phy@0 {
-> +            reg = <0>;
-> +        };
-> +
-> +        external_phy_port2: ethernet-phy@1 {
-> +            reg = <1>;
-> +        };
-> +
-> +        external_phy_port3: ethernet-phy@2 {
-> +            reg = <2>;
-> +        };
-> +
-> +        external_phy_port4: ethernet-phy@3 {
-> +            reg = <3>;
-> +        };
-> +
-> +        external_phy_port5: ethernet-phy@4 {
-> +            reg = <4>;
-> +        };
-> +
-> +        switch@10 {
-> +            compatible = "qca,qca8337";
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +            reset-gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
-> +            reg = <0x10>;
-> +
-> +            ports {
-
-Use the preferred 'ethernet-ports'.
-
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                port@0 {
-> +                    reg = <0>;
-> +                    label = "cpu";
-> +                    ethernet = <&gmac1>;
-> +                    phy-mode = "rgmii";
-> +
-> +                    fixed-link {
-> +                        speed = <1000>;
-> +                        full-duplex;
-> +                    };
-> +                };
-> +
-> +                port@1 {
-> +                    reg = <1>;
-> +                    label = "lan1";
-> +                    phy-handle = <&external_phy_port1>;
-> +                };
-> +
-> +                port@2 {
-> +                    reg = <2>;
-> +                    label = "lan2";
-> +                    phy-handle = <&external_phy_port2>;
-> +                };
-> +
-> +                port@3 {
-> +                    reg = <3>;
-> +                    label = "lan3";
-> +                    phy-handle = <&external_phy_port3>;
-> +                };
-> +
-> +                port@4 {
-> +                    reg = <4>;
-> +                    label = "lan4";
-> +                    phy-handle = <&external_phy_port4>;
-> +                };
-> +
-> +                port@5 {
-> +                    reg = <5>;
-> +                    label = "wan";
-> +                    phy-handle = <&external_phy_port5>;
-> +                };
-> +            };
-> +        };
-> +    };
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    mdio {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        switch@10 {
-> +            compatible = "qca,qca8337";
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +            reset-gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
-> +            reg = <0x10>;
-> +
-> +            ports {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                port@0 {
-> +                    reg = <0>;
-> +                    label = "cpu";
-> +                    ethernet = <&gmac1>;
-> +                    phy-mode = "rgmii";
-> +
-> +                    fixed-link {
-> +                        speed = <1000>;
-> +                        full-duplex;
-> +                    };
-> +                };
-> +
-> +                port@1 {
-> +                    reg = <1>;
-> +                    label = "lan1";
-> +                    phy-mode = "internal";
-> +                    phy-handle = <&internal_phy_port1>;
-> +                };
-> +
-> +                port@2 {
-> +                    reg = <2>;
-> +                    label = "lan2";
-> +                    phy-mode = "internal";
-> +                    phy-handle = <&internal_phy_port2>;
-> +                };
-> +
-> +                port@3 {
-> +                    reg = <3>;
-> +                    label = "lan3";
-> +                    phy-mode = "internal";
-> +                    phy-handle = <&internal_phy_port3>;
-> +                };
-> +
-> +                port@4 {
-> +                    reg = <4>;
-> +                    label = "lan4";
-> +                    phy-mode = "internal";
-> +                    phy-handle = <&internal_phy_port4>;
-> +                };
-> +
-> +                port@5 {
-> +                    reg = <5>;
-> +                    label = "wan";
-> +                    phy-mode = "internal";
-> +                    phy-handle = <&internal_phy_port5>;
-> +                };
-> +
-> +                port@6 {
-> +                    reg = <0>;
-> +                    label = "cpu";
-> +                    ethernet = <&gmac1>;
-> +                    phy-mode = "sgmii";
-> +
-> +                    qca,sgmii-rxclk-falling-edge;
-> +
-> +                    fixed-link {
-> +                        speed = <1000>;
-> +                        full-duplex;
-> +                    };
-> +                };
-> +            };
-> +
-> +            mdio {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +
-> +                internal_phy_port1: ethernet-phy@0 {
-> +                    reg = <0>;
-> +                };
-> +
-> +                internal_phy_port2: ethernet-phy@1 {
-> +                    reg = <1>;
-> +                };
-> +
-> +                internal_phy_port3: ethernet-phy@2 {
-> +                    reg = <2>;
-> +                };
-> +
-> +                internal_phy_port4: ethernet-phy@3 {
-> +                    reg = <3>;
-> +                };
-> +
-> +                internal_phy_port5: ethernet-phy@4 {
-> +                    reg = <4>;
-> +                };
-> +            };
-> +        };
-> +    };
-> -- 
-> 2.32.0
+> While I tested it good on SDM660 and MSM8939, I have a question
+> regarding 'vlow' mode below.
 > 
+> On Wed, Oct 13, 2021 at 12:08:21PM +0530, Maulik Shah wrote:
+>> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+>>
+>> Let's add a driver to read the stats from remote processor and
+>> export to debugfs.
+>>
+>> The driver creates "qcom_sleep_stats" directory in debugfs and
+>> adds files for various low power mode available. Below is sample
+>> output with command
+>>
+>> cat /sys/kernel/debug/qcom_sleep_stats/ddr
+>> count = 0
+>> Last Entered At = 0
+>> Last Exited At = 0
+>> Accumulated Duration = 0
+>>
+>> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+>> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> [mkshah: add subsystem sleep stats, create one file for each stat]
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/soc/qcom/Kconfig      |  10 ++
+>>   drivers/soc/qcom/Makefile     |   1 +
+>>   drivers/soc/qcom/qcom_stats.c | 277 ++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 288 insertions(+)
+>>   create mode 100644 drivers/soc/qcom/qcom_stats.c
+>>
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index abfef20..3cf3a6b 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -199,6 +199,16 @@ config QCOM_SPM
+>>   	  to manage cores, L2 low power modes and to configure the internal
+>>   	  Adaptive Voltage Scaler parameters, where supported.
+>>   
+>> +config QCOM_STATS
+>> +	tristate "Qualcomm Technologies, Inc. (QTI) Sleep stats driver"
+>> +	depends on (ARCH_QCOM && DEBUG_FS) || COMPILE_TEST
+>> +	depends on QCOM_SMEM
+>> +	help
+>> +	  Qualcomm Technologies, Inc. (QTI) Sleep stats driver to read
+>> +	  the shared memory exported by the remote processor related to
+>> +	  various SoC level low power modes statistics and export to debugfs
+>> +	  interface.
+>> +
+>>   config QCOM_WCNSS_CTRL
+>>   	tristate "Qualcomm WCNSS control driver"
+>>   	depends on ARCH_QCOM || COMPILE_TEST
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index 24514c7..70d5de6 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -21,6 +21,7 @@ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
+>>   obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
+>>   obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
+>>   obj-$(CONFIG_QCOM_SPM)		+= spm.o
+>> +obj-$(CONFIG_QCOM_STATS)	+= qcom_stats.o
+>>   obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
+>>   obj-$(CONFIG_QCOM_APR) += apr.o
+>>   obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+>> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+>> new file mode 100644
+>> index 0000000..817505b
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/qcom_stats.c
+>> @@ -0,0 +1,277 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/debugfs.h>
+>> +#include <linux/device.h>
+>> +#include <linux/io.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/seq_file.h>
+>> +
+>> +#include <linux/soc/qcom/smem.h>
+>> +#include <clocksource/arm_arch_timer.h>
+>> +
+>> +#define RPM_DYNAMIC_ADDR	0x14
+>> +#define RPM_DYNAMIC_ADDR_MASK	0xFFFF
+>> +
+>> +#define STAT_TYPE_OFFSET	0x0
+>> +#define COUNT_OFFSET		0x4
+>> +#define LAST_ENTERED_AT_OFFSET	0x8
+>> +#define LAST_EXITED_AT_OFFSET	0x10
+>> +#define ACCUMULATED_OFFSET	0x18
+>> +#define CLIENT_VOTES_OFFSET	0x1c
+>> +
+>> +struct subsystem_data {
+>> +	const char *name;
+>> +	u32 smem_item;
+>> +	u32 pid;
+>> +};
+>> +
+>> +static const struct subsystem_data subsystems[] = {
+>> +	{ "modem", 605, 1 },
+>> +	{ "wpss", 605, 13 },
+>> +	{ "adsp", 606, 2 },
+>> +	{ "cdsp", 607, 5 },
+>> +	{ "slpi", 608, 3 },
+>> +	{ "gpu", 609, 0 },
+>> +	{ "display", 610, 0 },
+>> +	{ "adsp_island", 613, 2 },
+>> +	{ "slpi_island", 613, 3 },
+>> +};
+>> +
+>> +struct stats_config {
+>> +	size_t stats_offset;
+>> +	size_t num_records;
+>> +	bool appended_stats_avail;
+>> +	bool dynamic_offset;
+>> +	bool subsystem_stats_in_smem;
+>> +};
+>> +
+>> +struct stats_data {
+>> +	bool appended_stats_avail;
+>> +	void __iomem *base;
+>> +};
+>> +
+>> +struct sleep_stats {
+>> +	u32 stat_type;
+>> +	u32 count;
+>> +	u64 last_entered_at;
+>> +	u64 last_exited_at;
+>> +	u64 accumulated;
+>> +};
+>> +
+>> +struct appended_stats {
+>> +	u32 client_votes;
+>> +	u32 reserved[3];
+>> +};
+>> +
+>> +static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
+>> +{
+>> +	u64 accumulated = stat->accumulated;
+>> +	/*
+>> +	 * If a subsystem is in sleep when reading the sleep stats adjust
+>> +	 * the accumulated sleep duration to show actual sleep time.
+>> +	 */
+>> +	if (stat->last_entered_at > stat->last_exited_at)
+>> +		accumulated += arch_timer_read_counter() - stat->last_entered_at;
+>> +
+>> +	seq_printf(s, "Count: %u\n", stat->count);
+>> +	seq_printf(s, "Last Entered At: %llu\n", stat->last_entered_at);
+>> +	seq_printf(s, "Last Exited At: %llu\n", stat->last_exited_at);
+>> +	seq_printf(s, "Accumulated Duration: %llu\n", accumulated);
+>> +}
+>> +
+>> +static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+>> +{
+>> +	struct subsystem_data *subsystem = s->private;
+>> +	struct sleep_stats *stat;
+>> +
+>> +	/* Items are allocated lazily, so lookup pointer each time */
+>> +	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+>> +	if (IS_ERR(stat))
+>> +		return -EIO;
+>> +
+>> +	qcom_print_stats(s, stat);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int qcom_soc_sleep_stats_show(struct seq_file *s, void *unused)
+>> +{
+>> +	struct stats_data *d = s->private;
+>> +	void __iomem *reg = d->base;
+>> +	struct sleep_stats stat;
+>> +
+>> +	memcpy_fromio(&stat, reg, sizeof(stat));
+>> +	qcom_print_stats(s, &stat);
+>> +
+>> +	if (d->appended_stats_avail) {
+>> +		struct appended_stats votes;
+>> +
+>> +		memcpy_fromio(&votes, reg + CLIENT_VOTES_OFFSET, sizeof(votes));
+>> +		seq_printf(s, "Client Votes: %#x\n", votes.client_votes);
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +DEFINE_SHOW_ATTRIBUTE(qcom_soc_sleep_stats);
+>> +DEFINE_SHOW_ATTRIBUTE(qcom_subsystem_sleep_stats);
+>> +
+>> +static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *reg,
+>> +					     struct stats_data *d,
+>> +					     const struct stats_config *config)
+>> +{
+>> +	char stat_type[sizeof(u32) + 1] = {0};
+>> +	size_t stats_offset = config->stats_offset;
+>> +	u32 offset = 0, type;
+>> +	int i, j;
+>> +
+>> +	/*
+>> +	 * On RPM targets, stats offset location is dynamic and changes from target
+>> +	 * to target and sometimes from build to build for same target.
+>> +	 *
+>> +	 * In such cases the dynamic address is present at 0x14 offset from base
+>> +	 * address in devicetree. The last 16bits indicates the stats_offset.
+>> +	 */
+>> +	if (config->dynamic_offset) {
+>> +		stats_offset = readl(reg + RPM_DYNAMIC_ADDR);
+>> +		stats_offset &= RPM_DYNAMIC_ADDR_MASK;
+>> +	}
+>> +
+>> +	for (i = 0; i < config->num_records; i++) {
+>> +		d[i].base = reg + offset + stats_offset;
+>> +
+>> +		/*
+>> +		 * Read the low power mode name and create debugfs file for it.
+>> +		 * The names read could be of below,
+>> +		 * (may change depending on low power mode supported).
+>> +		 * For rpmh-sleep-stats: "aosd", "cxsd" and "ddr".
+>> +		 * For rpm-sleep-stats: "vmin" and "vlow".
 > 
+> It reports 'vmin' and 'xosd' on MSM8939, 'vmin' and 'vlow' on SDM660.
+> I know that 'vmin' is VDD Minimization mode, and 'xosd' is XO Shutdown
+> mode.  But I'm not sure about 'vlow' mode.  Could you share some
+> information regarding what this low power mode is, and how it differs
+> from 'vmin' and 'xosd'?
+
+vlow and xosd are same.
+vmin is xosd plus voltage minimization of chip, memory rails.
+
+Thanks,
+Maulik
+
+> 
+> Also I guess XO Shutdown mode is still available on SoCs that report
+> 'vlow' instead of 'xosd', just like SDM660.  Is there any way we can
+> still check the stats of XO Shutdown mode on these SoCs?  Thanks!
+> 
+> Shawn
+> 
+>> +		 */
+>> +		type = readl(d[i].base);
+>> +		for (j = 0; j < sizeof(u32); j++) {
+>> +			stat_type[j] = type & 0xff;
+>> +			type = type >> 8;
+>> +		}
+>> +		strim(stat_type);
+>> +		debugfs_create_file(stat_type, 0400, root, &d[i],
+>> +				    &qcom_soc_sleep_stats_fops);
+>> +
+>> +		offset += sizeof(struct sleep_stats);
+>> +		if (d[i].appended_stats_avail)
+>> +			offset += sizeof(struct appended_stats);
+>> +	}
+>> +}
+>> +
+>> +static void qcom_create_subsystem_stat_files(struct dentry *root,
+>> +					     const struct stats_config *config)
+>> +{
+>> +	const struct sleep_stats *stat;
+>> +	int i;
+>> +
+>> +	if (!config->subsystem_stats_in_smem)
+>> +		return;
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+>> +		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+>> +		if (IS_ERR(stat))
+>> +			continue;
+>> +
+>> +		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+>> +				    &qcom_subsystem_sleep_stats_fops);
+>> +	}
+>> +}
+>> +
+>> +static int qcom_stats_probe(struct platform_device *pdev)
+>> +{
+>> +	void __iomem *reg;
+>> +	struct dentry *root;
+>> +	const struct stats_config *config;
+>> +	struct stats_data *d;
+>> +	int i;
+>> +
+>> +	config = device_get_match_data(&pdev->dev);
+>> +	if (!config)
+>> +		return -ENODEV;
+>> +
+>> +	reg = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
+>> +	if (IS_ERR(reg))
+>> +		return -ENOMEM;
+>> +
+>> +	d = devm_kcalloc(&pdev->dev, config->num_records,
+>> +			 sizeof(*d), GFP_KERNEL);
+>> +	if (!d)
+>> +		return -ENOMEM;
+>> +
+>> +	for (i = 0; i < config->num_records; i++)
+>> +		d[i].appended_stats_avail = config->appended_stats_avail;
+>> +
+>> +	root = debugfs_create_dir("qcom_stats", NULL);
+>> +
+>> +	qcom_create_subsystem_stat_files(root, config);
+>> +	qcom_create_soc_sleep_stat_files(root, reg, d, config);
+>> +
+>> +	platform_set_drvdata(pdev, root);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int qcom_stats_remove(struct platform_device *pdev)
+>> +{
+>> +	struct dentry *root = platform_get_drvdata(pdev);
+>> +
+>> +	debugfs_remove_recursive(root);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct stats_config rpm_data = {
+>> +	.stats_offset = 0,
+>> +	.num_records = 2,
+>> +	.appended_stats_avail = true,
+>> +	.dynamic_offset = true,
+>> +	.subsystem_stats_in_smem = false,
+>> +};
+>> +
+>> +static const struct stats_config rpmh_data = {
+>> +	.stats_offset = 0x48,
+>> +	.num_records = 3,
+>> +	.appended_stats_avail = false,
+>> +	.dynamic_offset = false,
+>> +	.subsystem_stats_in_smem = true,
+>> +};
+>> +
+>> +static const struct of_device_id qcom_stats_table[] = {
+>> +	{ .compatible = "qcom,rpm-stats", .data = &rpm_data },
+>> +	{ .compatible = "qcom,rpmh-stats", .data = &rpmh_data },
+>> +	{ }
+>> +};
+>> +MODULE_DEVICE_TABLE(of, qcom_stats_table);
+>> +
+>> +static struct platform_driver qcom_stats = {
+>> +	.probe = qcom_stats_probe,
+>> +	.remove = qcom_stats_remove,
+>> +	.driver = {
+>> +		.name = "qcom_stats",
+>> +		.of_match_table = qcom_stats_table,
+>> +	},
+>> +};
+>> +
+>> +static int __init qcom_stats_init(void)
+>> +{
+>> +	return platform_driver_register(&qcom_stats);
+>> +}
+>> +late_initcall(qcom_stats_init);
+>> +
+>> +static void __exit qcom_stats_exit(void)
+>> +{
+>> +	platform_driver_unregister(&qcom_stats);
+>> +}
+>> +module_exit(qcom_stats_exit)
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) Stats driver");
+>> +MODULE_LICENSE("GPL v2");
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
