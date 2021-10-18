@@ -2,115 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 603F94322B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 17:21:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9456A4322E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 17:31:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232367AbhJRPX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 11:23:28 -0400
-Received: from new4-smtp.messagingengine.com ([66.111.4.230]:47439 "EHLO
-        new4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232363AbhJRPX1 (ORCPT
+        id S231971AbhJRPd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 11:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232831AbhJRPd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 11:23:27 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 5BBA3580B22;
-        Mon, 18 Oct 2021 11:21:16 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 18 Oct 2021 11:21:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-type:content-transfer-encoding; s=fm1; bh=
-        CGCHnQh8YfsDbNmhWqbZpULcIeaSOSKYfULNXySwmlk=; b=faJlnAxBWFPKhHS0
-        FOLGZX6QFb7LE/iIHc9Vwie9La5cfIHcjzGnty1lxbfkJbwvEGi229gvVkztyQn7
-        EtZ9UlVZjmGKuM9daN+I1wdxjHkujzgMr2VHmzx97MdkiMX4RPZK5uIQRqxwe2Yz
-        U8SPfNXDm7O8KVw63ZV8VBsIv/4Hbio9D/xj1WIezh6Gng5W5hXPiZ68E1g8TCiE
-        ehMzdo38VoRtbAB775MLVTTw3LCzc+Uo2Peb1qOGdWIyONqXpBNKbp7HU6aYbyZc
-        6ZEkwd8mD5n1vz1/uNXh8i3+LOV90r4asZ9YaYICDwE+qLNSwGgcc/iPlViaP5QQ
-        u5lx9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=CGCHnQh8YfsDbNmhWqbZpULcIeaSOSKYfULNXySwm
-        lk=; b=EJXXByRwYNJKyuZp8Fv1JrVK0kbg8+koFVIewVimO2jjO9pkPhuFzygQz
-        5PxuL2DI8YYT3fkVn9mMpP58MHW5nxnsnwlopmdBNH19jq8V718VAQL1qLXzxM4S
-        +omS+SIZWK6Yjw20zM8DR3lq0UswVE6Pq/966ODWNRgQz7Om1vOamTAZs1PAaBag
-        rpv2f4ITVmfg4KKhw5hNkwXmmLB+As6ZUWzAx63cSjULOdGQE2gJCX6l00SEmd3T
-        qIJS5jN93OCh1F72y+75JOKTRGqGOpnf1yT9iVJ2ryZR8BrnLx9hUe7UokZRun3M
-        Ae3LooVBP9v7fnY479BLFzZifi+Bg==
-X-ME-Sender: <xms:6pBtYc54dO3NJRE5nNjAfZs8FjKpm0aK18j9rgS38YsWIPq5y4hZDQ>
-    <xme:6pBtYd6f_giIuzB_Qv6PmMJyKKBc-gG6ATWqmsz9EDjxfiT1di8mFpQBmgRIb3X1O
-    hb0gGerLn69Icf3ySI>
-X-ME-Received: <xmr:6pBtYbfdE3T88CMPoA3TaHGpBkEYofDpH-SS9VWbp1HnCKGFGBIkEy6JqWVKgbkbz1LDw60fz-hVYYqXzpnITNtTuTEMRRlRqHiixOCr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvtddgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeejuefggeekfffgueevtddvudffhfejffejjedvvdduudethefhfefhfeeg
-    ieekkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:6pBtYRI9P6GXidggW157octoSwj5AXLhP05YWq10_TDxKwDKr1vi9g>
-    <xmx:6pBtYQLxpp08AfCEp31VSH_90uxpKxg9XNMW7tWyVAa0u9dEDSejKA>
-    <xmx:6pBtYSwGW4dnCXd-Xc_faVs53Y2VgyWnRoA0Mdc4bkkZxaIixNNvkw>
-    <xmx:7JBtYfUAnag_ZqFjB8_cDQ8ZRd7q8mX2wC9y9fgVN7X8s2vC1tE79g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Oct 2021 11:21:13 -0400 (EDT)
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     linux-kernel@vger.kernel.org,
-        Arnaud Ferraris <arnaud.ferraris@collabora.com>
-Cc:     Maxime Ripard <maxime@cerno.tech>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Chen-Yu Tsai <wens@csie.org>,
-        Brian Norris <briannorris@chromium.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Dan Johansen <strit@manjaro.org>, devicetree@vger.kernel.org,
-        Fabio Estevam <festevam@gmail.com>,
-        Johan Jonker <jbx6244@gmail.com>,
-        Eddie Cai <eddie.cai.linux@gmail.com>,
-        Martin Kepplinger <martink@posteo.de>,
-        Lucas Stach <dev@lynxeye.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-rockchip@lists.infradead.org,
-        Heiko Stuebner <heiko@sntech.de>,
-        Angus Ainslie <angus@akkea.ca>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shunqian Zheng <zhengsq@rock-chips.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        linux-sunxi@lists.linux.dev, Matthias Brugger <mbrugger@suse.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Simon South <simon@simonsouth.net>,
-        Guido Gunther <agx@sigxcpu.org>
-Subject: Re: (subset) [PATCH 1/4] arm64: dts: allwinner: add 'chassis-type' property
-Date:   Mon, 18 Oct 2021 17:21:11 +0200
-Message-Id: <163457046206.219378.2737975440418368271.b4-ty@cerno.tech>
+        Mon, 18 Oct 2021 11:33:57 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC027C06161C;
+        Mon, 18 Oct 2021 08:31:46 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id c4so9566606pgv.11;
+        Mon, 18 Oct 2021 08:31:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5nAxUhiohFw8E/dLvkWEsSUAVxjPg+HfNNJoup320RQ=;
+        b=Iw6xvvAIMSZXU1rGcGv1/MP6RkbVOHaOhHmf+XbrgHD7Byo3eOutTpfKGdTE7py/mO
+         ekobRUrT8gXzEhSpjhgIxGvjNXJY8K9jvO6+pfdFpYjuvalzf1cx1cissMgwXqOddXzE
+         Okgb2N4Pz5L9ySBd6Brjy5UryC19FCKDFBaPJncV/3Zfm5qv8fbnjNfR868PTNm//aHy
+         T2KOb6AEhJItapcMBfYW17DvKxd0XbpNLCnGL+gIWK3x60uc852f3n5pewOupNxKgTvl
+         99EjlD28hvO/cozcl3zqRAy6GtiVCXxe3wOC/CTiDLK01GkUzrs7ym5O64mtkvcC5RRx
+         LTEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5nAxUhiohFw8E/dLvkWEsSUAVxjPg+HfNNJoup320RQ=;
+        b=qRVaWBVRJyXIOiTIVeyOTZee6unHqrjANia/8+VXXCh/ysYkS7nPulNObAbsg3CU/1
+         mfLEV8qVbPwdfQ09PSWrQr//8nex4I6QMWxLcynsrdY950QlwfSNtTmslSwhgr7jOmWq
+         Wldkur55U/evz5Y8iDL2SK5vnF5B4A5zS+uGPDe5m8zXo3Hvf/SzW8oLGwzBk+kEazST
+         GNAwElOvmRU9tpEkKktcnE++uLZpBSwmHSGmLYNUE8veGlTeoFVJeCaUChWqs70Y9Cx0
+         TR2kug1LuW0NFC6rjQNi2Iu6LcKlazVsr2nX9nHlhY4ujmYB1M//PLUdisJ7hKmLE/Re
+         kAKw==
+X-Gm-Message-State: AOAM533PcZ/mZV3i7VUbt0JiWG312U4OQwnrwZkyyPVjOLELDMIeonsO
+        ZCRFbxT/YkA2ZFc5huguGSUqYL3qhkc=
+X-Google-Smtp-Source: ABdhPJzx/67tRE7LZ74Xr3oWGr/dThMTUbbmMp7W2dP0iGjeZmkTK0a9FWEAz1ZK3N+YjdfeXd8HJA==
+X-Received: by 2002:a62:7688:0:b0:44d:186d:c4bd with SMTP id r130-20020a627688000000b0044d186dc4bdmr29641892pfc.71.1634571106220;
+        Mon, 18 Oct 2021 08:31:46 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id c27sm14233262pgb.89.2021.10.18.08.31.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Oct 2021 08:31:44 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/devfreq: Restrict idle clamping to a618 for now
+Date:   Mon, 18 Oct 2021 08:36:25 -0700
+Message-Id: <20211018153627.2787882-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211016102025.23346-2-arnaud.ferraris@collabora.com>
-References: <20211016102025.23346-1-arnaud.ferraris@collabora.com> <20211016102025.23346-2-arnaud.ferraris@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 16 Oct 2021 12:20:22 +0200, Arnaud Ferraris wrote:
-> A new 'chassis-type' root node property has recently been approved for
-> the device-tree specification, in order to provide a simple way for
-> userspace to detect the device form factor and adjust their behavior
-> accordingly.
-> 
-> This patch fills in this property for end-user devices (such as laptops,
-> smartphones and tablets) based on Allwinner ARM64 processors.
-> 
-> [...]
+From: Rob Clark <robdclark@chromium.org>
 
-Applied to local tree (sunxi/dt-for-5.17).
+Until we better understand the stability issues caused by frequent
+frequency changes, lets limit them to a618.
 
-Thanks!
-Maxime
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+Caleb/John, I think this should help as a workaround for the power
+instability issues on a630.. could you give it a try?
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 +++++++
+ drivers/gpu/drm/msm/msm_gpu.h         | 4 ++++
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 3 ++-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 33da25b81615..267a880811d6 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1838,6 +1838,13 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 			adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), info->rev)))
+ 		adreno_gpu->base.hw_apriv = true;
+ 
++	/*
++	 * For now only clamp to idle freq for devices where this is known not
++	 * to cause power supply issues:
++	 */
++	if (info && (info->revn == 618))
++		gpu->clamp_to_idle = true;
++
+ 	a6xx_llc_slices_init(pdev, a6xx_gpu);
+ 
+ 	ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 59870095ea41..59cdd00b69d0 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -210,6 +210,10 @@ struct msm_gpu {
+ 	uint32_t suspend_count;
+ 
+ 	struct msm_gpu_state *crashstate;
++
++	/* Enable clamping to idle freq when inactive: */
++	bool clamp_to_idle;
++
+ 	/* True if the hardware supports expanded apriv (a650 and newer) */
+ 	bool hw_apriv;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index d32b729b4616..8b7473f69cb8 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -214,7 +214,8 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
+ 
+ 	idle_freq = get_freq(gpu);
+ 
+-	msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
++	if (gpu->clamp_to_idle)
++		msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
+ 
+ 	df->idle_time = ktime_get();
+ 	df->idle_freq = idle_freq;
+-- 
+2.31.1
+
