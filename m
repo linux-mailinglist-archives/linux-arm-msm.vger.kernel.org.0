@@ -2,175 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92BCF432443
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 18:53:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8934324EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 19:23:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232576AbhJRQzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 12:55:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53132 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231898AbhJRQzt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 12:55:49 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7585461074;
-        Mon, 18 Oct 2021 16:53:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634576018;
-        bh=pny5MV37vO/R5ODvgjHU15HLB7aU2hdszTQDIICB7Fs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cAQjAmCQHdXJo1SSHCFcpxmG2v+BkcmgZ0x4r+IaMAybc/yJ45971oDozm5e+UFtP
-         t7/Az+QT55gviZ6aOH+sdpcT3hKZwWNVeN6nZj42pq2l6yMbMmeRtTh5JE28p6smFd
-         8BVGhZV7OHryW/WSiWbtHgpm9zTuTOr/fvRQ87KMP1psK3on+OeUvgNqZYJgVtJIfU
-         Iv/cE12fIdoQ0BMWeGfyWb1uo2LLvIchWJ/fFoeozL46Qo0Jm0ZoKvau7JMwbaM7XR
-         RIqrpfOLCnlEoqZiL2nZkJnZL4CEw+TtxO3jZ+4Uosa3a/ocF6B/F0303+jkWgMnmR
-         wlGGrwnGuARbA==
-Date:   Mon, 18 Oct 2021 22:23:32 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        linux-i2c <linux-i2c@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 4/5] spi: spi-geni-qcom: Add support for GPI dma
-Message-ID: <YW2mjFm5TcesGBux@matsya>
-References: <20210625052213.32260-1-vkoul@kernel.org>
- <20210625052213.32260-5-vkoul@kernel.org>
- <CAD=FV=UfZxKyUZMK9c74KmMBBqgYROn1zp+vLfHaj_ghUK1t+g@mail.gmail.com>
- <YWhVIm+rqRMmkMMn@matsya>
- <CAD=FV=XMrurp4TLD7BCpVR9-+daHidHhkHG6P7u69HOBcvkMxA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=XMrurp4TLD7BCpVR9-+daHidHhkHG6P7u69HOBcvkMxA@mail.gmail.com>
+        id S233591AbhJRRZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 13:25:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232272AbhJRRZO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Oct 2021 13:25:14 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE00C06161C;
+        Mon, 18 Oct 2021 10:23:03 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id v20so11723902plo.7;
+        Mon, 18 Oct 2021 10:23:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:content-transfer-encoding:to:cc:subject:from:date
+         :message-id:in-reply-to;
+        bh=KDtNvROv/emFHAIcdrMJhdJgVC4zcXHGcLaLCPrH1OA=;
+        b=Zj5uiURO92L8XvERHEm0QTtpUBIK8I8U+kgMLUJMWArshfy4CuQ5qBBwv35ptCjh/u
+         0bwhw0+PSc5VO4G+EybDHgTrCFqIkTnha8ixKGazLDoFliUWDRWkgQLSBmmwPxtv+hmB
+         FpnABZG5YW4HBAc3a27OkFcSv3y8YG5wvoHrQ4vZl3TNaNnXBx/KnXimjezsTPiwY8jB
+         +TiGQ7NbyV2CZ6b02DjkHtDe7E4NWUGW/Vyb7ZtNyx1mKTDs9NrEpmbsMvvXR+CKPwtb
+         7HBZ763ZdBuIOX04zmADDYA6KAEGlKnHq7OaAvfDkR+hOSVQ5IiiHjg5kR7BM/QLYk4I
+         FFUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:to:cc
+         :subject:from:date:message-id:in-reply-to;
+        bh=KDtNvROv/emFHAIcdrMJhdJgVC4zcXHGcLaLCPrH1OA=;
+        b=W5HllaLhDv0tx0ocUAMYW4Y3/Wg8oxmsmVGDsl3hh86cuwnttQnAMutMnoPe+zz6zp
+         ajI5xkSxGZc3pXbUFyQKyIZz2xVqtx/0Hksz/llOcJA01EL/jGLMeQIjRVhGcOjEn07t
+         ZJP2d/Bp9sBIkYwUFRftQnGqAKHnwWgCvPZuyEs8ibXu6tXBXmPWKl+6f5LRFs4OwWjU
+         aLuXrUSfzNSC8X54kSKP4ttB0XsBUSai4OQ4oGtFsnyCs7xQEkpdifxhVA4I3DJ9HK47
+         S5vnRXZQowBMpQ076XfX78CAgDNIbOPxpM8I4NhjEgKqFuZeEdtYeKAzeSmPwL8wz0hn
+         XXbA==
+X-Gm-Message-State: AOAM530r8yBr3bGWEb/JWa7g7bhZ7Wu+DwveZ3BlY73BldmgQkd/WwsQ
+        oNeTDQGsHBb/gKAvVIgVv/Q=
+X-Google-Smtp-Source: ABdhPJx40xJU8YE1isP+oL8/lINyv5pBl24icWiCna71nEI8P6QEHIWo7YAGX9JEZRNhlcZrYal87A==
+X-Received: by 2002:a17:902:e74a:b0:13f:3538:fca0 with SMTP id p10-20020a170902e74a00b0013f3538fca0mr28311600plf.22.1634577782509;
+        Mon, 18 Oct 2021 10:23:02 -0700 (PDT)
+Received: from localhost ([117.200.53.211])
+        by smtp.gmail.com with ESMTPSA id ip10sm34849pjb.40.2021.10.18.10.22.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Oct 2021 10:23:01 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+To:     "Alex Elder" <elder@ieee.org>, <phone-devel@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <elder@kernel.org>
+Cc:     "Vladimir Lypak" <vladimir.lypak@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Jakub Kicinski" <kuba@kernel.org>
+Subject: Re: [RFC PATCH 06/17] net: ipa: Add timeout for
+ ipa_cmd_pipeline_clear_wait
+From:   "Sireesh Kodali" <sireeshkodali1@gmail.com>
+Date:   Mon, 18 Oct 2021 22:32:31 +0530
+Message-Id: <CF2P11HZE0H2.S4II3PH6QLCF@skynet-linux>
+In-Reply-To: <5219dde9-665d-a813-a9b8-3db51aea97b5@ieee.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu Oct 14, 2021 at 3:59 AM IST, Alex Elder wrote:
+> On 9/19/21 10:08 PM, Sireesh Kodali wrote:
+> > From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> >=20
+> > Sometimes the pipeline clear fails, and when it does, having a hang in
+> > kernel is ugly. The timeout gives us a nice error message. Note that
+> > this shouldn't actually hang, ever. It only hangs if there is a mistake
+> > in the config, and the timeout is only useful when debugging.
+> >=20
+> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+>
+> This is actually an item on my to-do list. All of the waits
+> for GSI completions should have timeouts. The only reason it
+> hasn't been implemented already is that I would like to be sure
+> all paths that could have a timeout actually have a reasonable
+> recovery.
+>
+> I'd say an error message after a timeout is better than a hung
+> task panic, but if this does time out, I'm not sure the state
+> of the hardware is well-defined.
 
-On 14-10-21, 09:55, Doug Anderson wrote:
-> On Thu, Oct 14, 2021 at 9:04 AM Vinod Koul <vkoul@kernel.org> wrote:
-> > > > +static bool geni_can_dma(struct spi_controller *ctlr,
-> > > > +                        struct spi_device *slv, struct spi_transfer *xfer)
-> > > > +{
-> > > > +       struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
-> > > > +
-> > > > +       /* check if dma is supported */
-> > > > +       if (mas->cur_xfer_mode == GENI_GPI_DMA)
-> > > > +               return true;
-> > > > +
-> > > > +       return false;
-> > > > +}
-> > >
-> > > nit: might as well handle GENI_SE_DMA as well since it's just as easy
-> > > to test against GENI_SE_FIFO?
-> >
-> > I think I will leave that for the person adding GENI_SE_DMA support :)
-> 
-> I was just thinking of changing the "if" statement:
-> 
-> if (mas->cur_xfer_mode != GENI_SE_FIFO)
-> 
-> It's no skin off your teeth and would make one fewer line to change
-> if/when the other DMA mode is supported. In any case, I won't push it.
-> ;-)
+Early on while wiring up BAM support, I handn't quite figured out the
+IPA init sequence, and some of the BAM opcode stuff. This caused the
+driver to hang when it would reach the completion. Since this particular
+completion was waited for just before the probe function retured, it
+prevented hung up the kernel thread, and prevented the module from being
+`modprobe -r`ed.
 
-I can do that!
+Since then, I've properly fixed the BAM code, the completion always
+returns, making the patch kinda useless for now. Since its only for
+debugging, I'll just drop this patch. I think the only error handling we
+can do at this stage is to return -EIO, and get the callee to handle
+de-initing everything.
 
-> > > > @@ -738,6 +1021,14 @@ static int spi_geni_probe(struct platform_device *pdev)
-> > > >         if (ret)
-> > > >                 goto spi_geni_probe_runtime_disable;
-> > > >
-> > > > +       /*
-> > > > +        * check the mode supported and set_cs for fifo mode only
-> > > > +        * for dma (gsi) mode, the gsi will set cs based on params passed in
-> > > > +        * TRE
-> > > > +        */
-> > > > +       if (mas->cur_xfer_mode == GENI_SE_FIFO)
-> > > > +               spi->set_cs = spi_geni_set_cs;
-> > >
-> > > I'm curious: is there no way to get set_cs() working in GPI mode? In
-> > > an off-thread conversation Qualcomm seemed to indicate that it was
-> > > possible, but maybe they didn't quite understand what I was asking.
+Regards,
+Sireesh
 
-I dont think so, as the GPI firmware controls CS here. IIRC set_cs() was
-causing issues with gpi mode
+>
+> -Alex
+>
+> > ---
+> >   drivers/net/ipa/ipa_cmd.c | 5 ++++-
+> >   1 file changed, 4 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/net/ipa/ipa_cmd.c b/drivers/net/ipa/ipa_cmd.c
+> > index 3db9e94e484f..0bdbc331fa78 100644
+> > --- a/drivers/net/ipa/ipa_cmd.c
+> > +++ b/drivers/net/ipa/ipa_cmd.c
+> > @@ -658,7 +658,10 @@ u32 ipa_cmd_pipeline_clear_count(void)
+> >  =20
+> >   void ipa_cmd_pipeline_clear_wait(struct ipa *ipa)
+> >   {
+> > -	wait_for_completion(&ipa->completion);
+> > +	unsigned long timeout_jiffies =3D msecs_to_jiffies(1000);
+> > +
+> > +	if (!wait_for_completion_timeout(&ipa->completion, timeout_jiffies))
+> > +		dev_err(&ipa->pdev->dev, "%s time out\n", __func__);
+> >   }
+> >  =20
+> >   void ipa_cmd_pipeline_clear(struct ipa *ipa)
+> >=20
 
-> > > Without an implementation of set_cs() there will be drivers in Linux
-> > > that simply aren't compatible because they make the assumption that
-> > > they can lock the bus, set the CS, and do several transfers that are
-> > > part of some logical "transaction". I believe that both of the SPI
-> > > peripherals on boards that I work on, cros-ec and the SPI TPM make
-> > > this assumption. I don't even believe that the drivers can be "fixed"
-> > > because the requirement is more at the protocol level. The protocol
-> > > requires you to do things like:
-> > >
-> > > 0. Lock the bus.
-> > > 1. Set the CS.
-> > > 2. Transfer a few bytes, reading the response as you go.
-> > > 3. Once you see the other side respond that it's ready, transfer some
-> > > more bytes.
-> > > 4. Release the CS.
-> > > 5. Unlock the bus.
-> > >
-> > > You can't do this without a set_cs() implementation because of the
-> > > requirement to read the responses of the other side before moving on
-> > > to the next phase of the transfer.
-> > >
-> > > As I understand it this is roughly the equivalent of i2c clock
-> > > stretching but much more ad-hoc and defined peripherals-by-peripheral.
-> > >
-> > > In any case, I guess you must have examples of peripherals that need
-> > > GPI mode and don't need set_cs() so we shouldn't block your way
-> > > forward, but I'm just curious if you had more info on this.
-
-Yes, I am testing with CAN bus on Rb3.
-
-> > So I have asked some qcom folks, they tell me it is _possible_ to use
-> > the cs bit in the TRE and it can work. But TBH I am not yet convinced it
-> > would work as advertised. So do you enable the GPI mode for chrome books
-> > or it is SE DMA mode (i think SE DMA mode might be simpler to use for
-> > your case)
-> 
-> Sounds promising. I'm curious about why you're not convinced it would
-> work as advertised? Right now we have all our SPI devices running in
-> FIFO mode (!) and we've been trying to find a way to get them in DMA
-> mode. I think Qualcomm is trying to avoid supporting both SE DMA and
-> GPI DMA mode so they are saying that once GPI mode works then we can
-> just use that.
-> 
-> I don't really have a huge objection to that, but I also have zero
-> experience with GPI DMA mode. We don't have any need (at the moment)
-> to share our SPI bus with multiple execution environments, but it
-> seems like GPI mode _could_ still work as long as the chip select
-> problem is solved. I did manage to get some more documentation and I
-> do see a "LOCK" command, so maybe that combined with leaving the CS
-> asserted would solve the problem? Maybe Mark would allow your driver
-> to get called from spi_bus_lock() and spi_bus_unlock(). That seems
-> like it would be important to do anyway to match the Linux SPI client
-> model...
-
-We can add lock support, but IIUC it was to prevent other EEs from
-running, it may not help with chip select. It also needs someone loading
-firmware on the controller.
-
-For us, since some boards are shipping with firmware loaded, fifo and se
-dma mode will not work, only option is to get gpi mode working.
-
-> NOTE: in reality, we sorta paper over the "chip select" problem anyway
-> on Chromebooks. We just configure the chip select lines as GPIOs and
-> let Linux manage them. There is much less overhead in setting a GPIO
-> compared to messaging a QUP, so this improves performance. As long as
-> this continues to work, perhaps we don't care about whether we can
-> really tell GPI mode to leave the CS asserted.
-
-I think it would be good experiment to get it working with chromebooks.
-I am sure it wont be trivial and may not work out of box, but would be a
-good experiment to do :)
-
--- 
-~Vinod
