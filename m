@@ -2,156 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B6424327EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 21:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C8E44327F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 21:51:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231775AbhJRTvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 15:51:11 -0400
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:34661 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230159AbhJRTvL (ORCPT
+        id S233555AbhJRTxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 15:53:16 -0400
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:33534 "EHLO
+        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233058AbhJRTxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 15:51:11 -0400
-Received: by mail-ot1-f48.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so152951otb.1;
-        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
+        Mon, 18 Oct 2021 15:53:14 -0400
+Received: by mail-oi1-f181.google.com with SMTP id q129so1420019oib.0;
+        Mon, 18 Oct 2021 12:51:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AAoBj4y4weGMfJE/H2YUzE461Zo+UYbwtItvsEO1Bq0=;
-        b=EHVWgI716m7OkjJMCLZVqV+EVYnqSs//3UYE5dWyyIQFUJwGBDVXj6NGzvinyB4oXf
-         GgUzMKlDG1iryJ38SOlTPVx8t2seZ1tmquc9RD2e7CO9newyugeAMdaoHe1HoZEEgVv9
-         IFNz2f2vRbL0y4ri5GadjurgK7lPJ8WxX7zyh/FFYKAECal2jwxwo6gWDOPETH5/fy8T
-         9SD/yO3+kjFdNjbAv3RGc+Z8p1SYJNuEkEziZ3D7poFvhZWL2xPw6QNUvTpgkHW0zTfZ
-         EbEd+/wY9Fkq+wrHB2xMnV0rjttSiY5neoeJXYz5IR0RFVJB8XDJwq7uXjxgeNfm7Fu9
-         IBgA==
-X-Gm-Message-State: AOAM531FnTU/VxY/QwsvN1e3iobgcryTKPhQQ7LZ4u+0BwV9WqPFX7sW
-        +e86rfe97cHwqQGVurGAhw==
-X-Google-Smtp-Source: ABdhPJzO339HRKj4AW98yudKu8l33V+dVFUqkR3/vATJbubDlMODK604QfCtHQumP/dOc5zpMWb41g==
-X-Received: by 2002:a05:6830:1e08:: with SMTP id s8mr1515560otr.305.1634586539491;
-        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
+        bh=lf3qtAxK2ioLkCYFQ61b4Q438IlhGZsYG/jj2QqM7UU=;
+        b=Zgk298lt7ejA3N1TYrRrIQPGeGTXJnbToYhRVFjex1cFjvu7AYmfoXnCHXZ/E2gCZ1
+         lIyoLaTmU0s2KXuGlyWFLOuhkf731WeQApRy85wPhVpt1hFI9QelJFgtzAWwY1HbbINc
+         Q9WQ/8m3jWcqoS4b+q7jtt2I9EKFmba5pEHKAHQMyhg/tU5nqFhhGslRvUG6zTlBQk7i
+         iZVquoHAKenHTUiPvmlC+AUf6rZB8aDhExtpbsP338GIjl/Ear6pB+SoZCgcryPv5j3R
+         rpNZ2xvNTk6qwcyBN8VO40ncvaGaFG4reoXw93GfLh8moJzyUzYZ6Ama8nsOczGMwdjn
+         yyMg==
+X-Gm-Message-State: AOAM5337pOeowPq+HIAWIgrL043Q874nMotVoonAUaQ7YKiHa808e0s2
+        /APSKWx/sZOOUKE3Nl3uwPOEzVkiiw==
+X-Google-Smtp-Source: ABdhPJwy38f+G119ZJbY4wMzLDCMvMfqXcc7P7WcoSVKfwmQEz684171NnJwHyQXIn1sft4nIxhP7w==
+X-Received: by 2002:aca:1e04:: with SMTP id m4mr714654oic.67.1634586661558;
+        Mon, 18 Oct 2021 12:51:01 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id e59sm3222734ote.14.2021.10.18.12.48.58
+        by smtp.gmail.com with ESMTPSA id bb39sm3360644oib.28.2021.10.18.12.51.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
-Received: (nullmailer pid 2836064 invoked by uid 1000);
-        Mon, 18 Oct 2021 19:48:58 -0000
-Date:   Mon, 18 Oct 2021 14:48:58 -0500
+        Mon, 18 Oct 2021 12:51:01 -0700 (PDT)
+Received: (nullmailer pid 2839571 invoked by uid 1000);
+        Mon, 18 Oct 2021 19:51:00 -0000
+Date:   Mon, 18 Oct 2021 14:51:00 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        abhinavk@codeaurora.org, Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: phy: Introduce Qualcomm eDP/DP PHY
- binding
-Message-ID: <YW3PqhQHauDYRlwN@robh.at.kernel.org>
-References: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: dmaengine: bam_dma: Add "powered
+ remotely" mode
+Message-ID: <YW3QJJoprJgre/sg@robh.at.kernel.org>
+References: <20211018102421.19848-1-stephan@gerhold.net>
+ <20211018102421.19848-2-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20211018102421.19848-2-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Oct 16, 2021 at 04:21:27PM -0700, Bjorn Andersson wrote:
-> Introduce a binding for the eDP/DP PHY hardware block found in several
-> different Qualcomm platforms.
+On Mon, 18 Oct 2021 12:24:20 +0200, Stephan Gerhold wrote:
+> In some configurations, the BAM DMA controller is set up by a remote
+> processor and the local processor can simply start making use of it
+> without setting up the BAM. This is already supported using the
+> "qcom,controlled-remotely" property.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> However, for some reason another possible configuration is that the
+> remote processor is responsible for powering up the BAM, but we are
+> still responsible for initializing it (e.g. resetting it etc). Add
+> a "qcom,powered-remotely" property to describe that configuration.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
+> Changes in v3: None, split from BAM-DMUX patch set
+> Changes since RFC:
+>   - Rename qcom,remote-power-collapse -> qcom,powered-remotely
+>     for consistency with "qcom,controlled-remotely"
 > 
-> Changes since v2:
-> - None
+> Also note that there is an ongoing effort to convert these bindings
+> to DT schema but sadly there were not any updates for a while. :/
+> https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
+> ---
+>  Documentation/devicetree/bindings/dma/qcom_bam_dma.txt | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
->  .../devicetree/bindings/phy/qcom,edp-phy.yaml | 69 +++++++++++++++++++
->  1 file changed, 69 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> new file mode 100644
-> index 000000000000..c258e4f7e332
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> @@ -0,0 +1,69 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm DP/eDP PHY
-> +
-> +maintainers:
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +
-> +description:
-> +  The Qualcomm DP/eDP PHY is found in a number of Qualcomm platform and
-> +  provides the physical interface for DisplayPort and Embedded Display Port.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sc8180x-dp-phy
-> +      - qcom,sc8180x-edp-phy
 
-Is there a difference between DP and eDP?
-
-Perhaps note what that is if so.
-
-> +
-> +  reg:
-> +    items:
-> +      - description: PHY base register block
-> +      - description: tx0 register block
-> +      - description: tx1 register block
-> +      - description: PLL register block
-> +
-> +  clocks:
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    items:
-> +      - const: aux
-> +      - const: cfg_ahb
-> +
-> +  "#clock-cells":
-> +    const: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - "#clock-cells"
-> +  - "#phy-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    phy@aec2a00 {
-> +      compatible = "qcom,sc8180x-edp-phy";
-> +      reg = <0x0aec2a00 0x1c0>,
-> +            <0x0aec2200 0xa0>,
-> +            <0x0aec2600 0xa0>,
-> +            <0x0aec2000 0x19c>;
-> +
-> +      clocks = <&dispcc 0>, <&dispcc 1>;
-> +      clock-names = "aux", "cfg_ahb";
-> +
-> +      #clock-cells = <1>;
-> +      #phy-cells = <0>;
-> +    };
-> +...
-> -- 
-> 2.29.2
-> 
-> 
+Acked-by: Rob Herring <robh@kernel.org>
