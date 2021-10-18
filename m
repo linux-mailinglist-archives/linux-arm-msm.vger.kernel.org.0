@@ -2,451 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C021E431F42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:16:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89AA3431F44
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:16:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231920AbhJROSU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 10:18:20 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:21009 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233309AbhJROSO (ORCPT
+        id S231889AbhJROSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 10:18:21 -0400
+Received: from relay11.mail.gandi.net ([217.70.178.231]:38421 "EHLO
+        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233689AbhJROSP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 10:18:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634566563; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=edn+ht/kj02iC7/qCMRlKNpqNrQ3hyYyCP0V95+hZBQ=; b=b9RIrsD0GtSdnwhfs6kozIdZ93HfYHkePo7gLXjlyGpu9TvxuZ/doPNMfnj9zoVm56B1gyoT
- RjZbhMAocVF6WOS39AiXNHVuH1CpmdUzFR6haSAgurlg3bVX6J0fB4pv4Uywq+f4f1IT7Gi5
- KO5+oZiVoOv6X3/w3RmN+2HEUJU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 616d81908ea00a941f588926 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Oct 2021 14:15:44
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 251C1C4479A; Mon, 18 Oct 2021 14:15:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.202.137] (unknown [106.213.135.3])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DE0FC43618;
-        Mon, 18 Oct 2021 14:15:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9DE0FC43618
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v12 2/5] soc: qcom: Add Sleep stats driver
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        dianders@chromium.org, linux@roeck-us.net, rnayak@codeaurora.org,
-        lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>
-References: <1634107104-22197-1-git-send-email-mkshah@codeaurora.org>
- <1634107104-22197-3-git-send-email-mkshah@codeaurora.org>
- <20211015135809.GB7231@dragon>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <0802823a-4be2-6d55-b259-5084a809c7bb@codeaurora.org>
-Date:   Mon, 18 Oct 2021 19:45:30 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 18 Oct 2021 10:18:15 -0400
+Received: (Authenticated sender: thomas.perrot@bootlin.com)
+        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 0EF45100009;
+        Mon, 18 Oct 2021 14:16:01 +0000 (UTC)
+Message-ID: <99c6dd698ec93377476adf77c1770db9b94c5876.camel@bootlin.com>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+From:   Thomas Perrot <thomas.perrot@bootlin.com>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Aleksander Morgado <aleksander@aleksander.es>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Date:   Mon, 18 Oct 2021 16:16:01 +0200
+In-Reply-To: <1f846b0be78560c1299fa26d351b66567be403e1.camel@bootlin.com>
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+         <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
+         <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com>
+         <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
+         <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
+         <CAMZdPi8QXrjN6VYU1VrGeOBhvVSnxopioM7POEOcS5ywsSFDHQ@mail.gmail.com>
+         <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
+         <CAAP7uc+5=GMGgz3MKfSWaAtes1WwCCx+6iYhb058ZUr0=A52cg@mail.gmail.com>
+         <CAMZdPi9cbDVWVxvimg-uc_TRvskrxbjEQ4AxdLjA57Ewm2tSPA@mail.gmail.com>
+         <bd875c3b9d19f8827362b129999d84cd04ad90ae.camel@bootlin.com>
+         <CAMZdPi_J7ePh22v7J3WgqO9X3Y1KffTm__TfL9jGHj61H2x9QA@mail.gmail.com>
+         <1f846b0be78560c1299fa26d351b66567be403e1.camel@bootlin.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+        protocol="application/pgp-signature"; boundary="=-2Kb2Bk/oNe7Vq88EgNRU"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-In-Reply-To: <20211015135809.GB7231@dragon>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
 
-On 10/15/2021 7:28 PM, Shawn Guo wrote:
-> Hi Mahesh,
-> 
-> Thanks for the work!
-> 
-> While I tested it good on SDM660 and MSM8939, I have a question
-> regarding 'vlow' mode below.
-> 
-> On Wed, Oct 13, 2021 at 12:08:21PM +0530, Maulik Shah wrote:
->> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->>
->> Let's add a driver to read the stats from remote processor and
->> export to debugfs.
->>
->> The driver creates "qcom_sleep_stats" directory in debugfs and
->> adds files for various low power mode available. Below is sample
->> output with command
->>
->> cat /sys/kernel/debug/qcom_sleep_stats/ddr
->> count = 0
->> Last Entered At = 0
->> Last Exited At = 0
->> Accumulated Duration = 0
->>
->> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> [mkshah: add subsystem sleep stats, create one file for each stat]
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
->>   drivers/soc/qcom/Kconfig      |  10 ++
->>   drivers/soc/qcom/Makefile     |   1 +
->>   drivers/soc/qcom/qcom_stats.c | 277 ++++++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 288 insertions(+)
->>   create mode 100644 drivers/soc/qcom/qcom_stats.c
->>
->> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->> index abfef20..3cf3a6b 100644
->> --- a/drivers/soc/qcom/Kconfig
->> +++ b/drivers/soc/qcom/Kconfig
->> @@ -199,6 +199,16 @@ config QCOM_SPM
->>   	  to manage cores, L2 low power modes and to configure the internal
->>   	  Adaptive Voltage Scaler parameters, where supported.
->>   
->> +config QCOM_STATS
->> +	tristate "Qualcomm Technologies, Inc. (QTI) Sleep stats driver"
->> +	depends on (ARCH_QCOM && DEBUG_FS) || COMPILE_TEST
->> +	depends on QCOM_SMEM
->> +	help
->> +	  Qualcomm Technologies, Inc. (QTI) Sleep stats driver to read
->> +	  the shared memory exported by the remote processor related to
->> +	  various SoC level low power modes statistics and export to debugfs
->> +	  interface.
->> +
->>   config QCOM_WCNSS_CTRL
->>   	tristate "Qualcomm WCNSS control driver"
->>   	depends on ARCH_QCOM || COMPILE_TEST
->> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->> index 24514c7..70d5de6 100644
->> --- a/drivers/soc/qcom/Makefile
->> +++ b/drivers/soc/qcom/Makefile
->> @@ -21,6 +21,7 @@ obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
->>   obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
->>   obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
->>   obj-$(CONFIG_QCOM_SPM)		+= spm.o
->> +obj-$(CONFIG_QCOM_STATS)	+= qcom_stats.o
->>   obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
->>   obj-$(CONFIG_QCOM_APR) += apr.o
->>   obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
->> new file mode 100644
->> index 0000000..817505b
->> --- /dev/null
->> +++ b/drivers/soc/qcom/qcom_stats.c
->> @@ -0,0 +1,277 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +#include <linux/debugfs.h>
->> +#include <linux/device.h>
->> +#include <linux/io.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/seq_file.h>
->> +
->> +#include <linux/soc/qcom/smem.h>
->> +#include <clocksource/arm_arch_timer.h>
->> +
->> +#define RPM_DYNAMIC_ADDR	0x14
->> +#define RPM_DYNAMIC_ADDR_MASK	0xFFFF
->> +
->> +#define STAT_TYPE_OFFSET	0x0
->> +#define COUNT_OFFSET		0x4
->> +#define LAST_ENTERED_AT_OFFSET	0x8
->> +#define LAST_EXITED_AT_OFFSET	0x10
->> +#define ACCUMULATED_OFFSET	0x18
->> +#define CLIENT_VOTES_OFFSET	0x1c
->> +
->> +struct subsystem_data {
->> +	const char *name;
->> +	u32 smem_item;
->> +	u32 pid;
->> +};
->> +
->> +static const struct subsystem_data subsystems[] = {
->> +	{ "modem", 605, 1 },
->> +	{ "wpss", 605, 13 },
->> +	{ "adsp", 606, 2 },
->> +	{ "cdsp", 607, 5 },
->> +	{ "slpi", 608, 3 },
->> +	{ "gpu", 609, 0 },
->> +	{ "display", 610, 0 },
->> +	{ "adsp_island", 613, 2 },
->> +	{ "slpi_island", 613, 3 },
->> +};
->> +
->> +struct stats_config {
->> +	size_t stats_offset;
->> +	size_t num_records;
->> +	bool appended_stats_avail;
->> +	bool dynamic_offset;
->> +	bool subsystem_stats_in_smem;
->> +};
->> +
->> +struct stats_data {
->> +	bool appended_stats_avail;
->> +	void __iomem *base;
->> +};
->> +
->> +struct sleep_stats {
->> +	u32 stat_type;
->> +	u32 count;
->> +	u64 last_entered_at;
->> +	u64 last_exited_at;
->> +	u64 accumulated;
->> +};
->> +
->> +struct appended_stats {
->> +	u32 client_votes;
->> +	u32 reserved[3];
->> +};
->> +
->> +static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
->> +{
->> +	u64 accumulated = stat->accumulated;
->> +	/*
->> +	 * If a subsystem is in sleep when reading the sleep stats adjust
->> +	 * the accumulated sleep duration to show actual sleep time.
->> +	 */
->> +	if (stat->last_entered_at > stat->last_exited_at)
->> +		accumulated += arch_timer_read_counter() - stat->last_entered_at;
->> +
->> +	seq_printf(s, "Count: %u\n", stat->count);
->> +	seq_printf(s, "Last Entered At: %llu\n", stat->last_entered_at);
->> +	seq_printf(s, "Last Exited At: %llu\n", stat->last_exited_at);
->> +	seq_printf(s, "Accumulated Duration: %llu\n", accumulated);
->> +}
->> +
->> +static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
->> +{
->> +	struct subsystem_data *subsystem = s->private;
->> +	struct sleep_stats *stat;
->> +
->> +	/* Items are allocated lazily, so lookup pointer each time */
->> +	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
->> +	if (IS_ERR(stat))
->> +		return -EIO;
->> +
->> +	qcom_print_stats(s, stat);
->> +
->> +	return 0;
->> +}
->> +
->> +static int qcom_soc_sleep_stats_show(struct seq_file *s, void *unused)
->> +{
->> +	struct stats_data *d = s->private;
->> +	void __iomem *reg = d->base;
->> +	struct sleep_stats stat;
->> +
->> +	memcpy_fromio(&stat, reg, sizeof(stat));
->> +	qcom_print_stats(s, &stat);
->> +
->> +	if (d->appended_stats_avail) {
->> +		struct appended_stats votes;
->> +
->> +		memcpy_fromio(&votes, reg + CLIENT_VOTES_OFFSET, sizeof(votes));
->> +		seq_printf(s, "Client Votes: %#x\n", votes.client_votes);
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +DEFINE_SHOW_ATTRIBUTE(qcom_soc_sleep_stats);
->> +DEFINE_SHOW_ATTRIBUTE(qcom_subsystem_sleep_stats);
->> +
->> +static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *reg,
->> +					     struct stats_data *d,
->> +					     const struct stats_config *config)
->> +{
->> +	char stat_type[sizeof(u32) + 1] = {0};
->> +	size_t stats_offset = config->stats_offset;
->> +	u32 offset = 0, type;
->> +	int i, j;
->> +
->> +	/*
->> +	 * On RPM targets, stats offset location is dynamic and changes from target
->> +	 * to target and sometimes from build to build for same target.
->> +	 *
->> +	 * In such cases the dynamic address is present at 0x14 offset from base
->> +	 * address in devicetree. The last 16bits indicates the stats_offset.
->> +	 */
->> +	if (config->dynamic_offset) {
->> +		stats_offset = readl(reg + RPM_DYNAMIC_ADDR);
->> +		stats_offset &= RPM_DYNAMIC_ADDR_MASK;
->> +	}
->> +
->> +	for (i = 0; i < config->num_records; i++) {
->> +		d[i].base = reg + offset + stats_offset;
->> +
->> +		/*
->> +		 * Read the low power mode name and create debugfs file for it.
->> +		 * The names read could be of below,
->> +		 * (may change depending on low power mode supported).
->> +		 * For rpmh-sleep-stats: "aosd", "cxsd" and "ddr".
->> +		 * For rpm-sleep-stats: "vmin" and "vlow".
-> 
-> It reports 'vmin' and 'xosd' on MSM8939, 'vmin' and 'vlow' on SDM660.
-> I know that 'vmin' is VDD Minimization mode, and 'xosd' is XO Shutdown
-> mode.  But I'm not sure about 'vlow' mode.  Could you share some
-> information regarding what this low power mode is, and how it differs
-> from 'vmin' and 'xosd'?
+--=-2Kb2Bk/oNe7Vq88EgNRU
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-vlow and xosd are same.
-vmin is xosd plus voltage minimization of chip, memory rails.
+Hi Loic,
 
-Thanks,
-Maulik
+Sorry, I forgot to answer your other questions.
 
-> 
-> Also I guess XO Shutdown mode is still available on SoCs that report
-> 'vlow' instead of 'xosd', just like SDM660.  Is there any way we can
-> still check the stats of XO Shutdown mode on these SoCs?  Thanks!
-> 
-> Shawn
-> 
->> +		 */
->> +		type = readl(d[i].base);
->> +		for (j = 0; j < sizeof(u32); j++) {
->> +			stat_type[j] = type & 0xff;
->> +			type = type >> 8;
->> +		}
->> +		strim(stat_type);
->> +		debugfs_create_file(stat_type, 0400, root, &d[i],
->> +				    &qcom_soc_sleep_stats_fops);
->> +
->> +		offset += sizeof(struct sleep_stats);
->> +		if (d[i].appended_stats_avail)
->> +			offset += sizeof(struct appended_stats);
->> +	}
->> +}
->> +
->> +static void qcom_create_subsystem_stat_files(struct dentry *root,
->> +					     const struct stats_config *config)
->> +{
->> +	const struct sleep_stats *stat;
->> +	int i;
->> +
->> +	if (!config->subsystem_stats_in_smem)
->> +		return;
->> +
->> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
->> +		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
->> +		if (IS_ERR(stat))
->> +			continue;
->> +
->> +		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
->> +				    &qcom_subsystem_sleep_stats_fops);
->> +	}
->> +}
->> +
->> +static int qcom_stats_probe(struct platform_device *pdev)
->> +{
->> +	void __iomem *reg;
->> +	struct dentry *root;
->> +	const struct stats_config *config;
->> +	struct stats_data *d;
->> +	int i;
->> +
->> +	config = device_get_match_data(&pdev->dev);
->> +	if (!config)
->> +		return -ENODEV;
->> +
->> +	reg = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
->> +	if (IS_ERR(reg))
->> +		return -ENOMEM;
->> +
->> +	d = devm_kcalloc(&pdev->dev, config->num_records,
->> +			 sizeof(*d), GFP_KERNEL);
->> +	if (!d)
->> +		return -ENOMEM;
->> +
->> +	for (i = 0; i < config->num_records; i++)
->> +		d[i].appended_stats_avail = config->appended_stats_avail;
->> +
->> +	root = debugfs_create_dir("qcom_stats", NULL);
->> +
->> +	qcom_create_subsystem_stat_files(root, config);
->> +	qcom_create_soc_sleep_stat_files(root, reg, d, config);
->> +
->> +	platform_set_drvdata(pdev, root);
->> +
->> +	return 0;
->> +}
->> +
->> +static int qcom_stats_remove(struct platform_device *pdev)
->> +{
->> +	struct dentry *root = platform_get_drvdata(pdev);
->> +
->> +	debugfs_remove_recursive(root);
->> +
->> +	return 0;
->> +}
->> +
->> +static const struct stats_config rpm_data = {
->> +	.stats_offset = 0,
->> +	.num_records = 2,
->> +	.appended_stats_avail = true,
->> +	.dynamic_offset = true,
->> +	.subsystem_stats_in_smem = false,
->> +};
->> +
->> +static const struct stats_config rpmh_data = {
->> +	.stats_offset = 0x48,
->> +	.num_records = 3,
->> +	.appended_stats_avail = false,
->> +	.dynamic_offset = false,
->> +	.subsystem_stats_in_smem = true,
->> +};
->> +
->> +static const struct of_device_id qcom_stats_table[] = {
->> +	{ .compatible = "qcom,rpm-stats", .data = &rpm_data },
->> +	{ .compatible = "qcom,rpmh-stats", .data = &rpmh_data },
->> +	{ }
->> +};
->> +MODULE_DEVICE_TABLE(of, qcom_stats_table);
->> +
->> +static struct platform_driver qcom_stats = {
->> +	.probe = qcom_stats_probe,
->> +	.remove = qcom_stats_remove,
->> +	.driver = {
->> +		.name = "qcom_stats",
->> +		.of_match_table = qcom_stats_table,
->> +	},
->> +};
->> +
->> +static int __init qcom_stats_init(void)
->> +{
->> +	return platform_driver_register(&qcom_stats);
->> +}
->> +late_initcall(qcom_stats_init);
->> +
->> +static void __exit qcom_stats_exit(void)
->> +{
->> +	platform_driver_unregister(&qcom_stats);
->> +}
->> +module_exit(qcom_stats_exit)
->> +
->> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) Stats driver");
->> +MODULE_LICENSE("GPL v2");
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
+On Mon, 2021-10-18 at 16:07 +0200, Thomas Perrot wrote:
+> Hi,
+>=20
+> On Mon, 2021-10-18 at 14:46 +0200, Loic Poulain wrote:
+> > On Mon, 18 Oct 2021 at 13:26, Thomas Perrot <
+> > thomas.perrot@bootlin.com> wrote:
+> > >=20
+> > > Hi Loic,
+> > >=20
+> > > On Mon, 2021-10-18 at 11:59 +0200, Loic Poulain wrote:
+> > > > Hi Aleksander,
+> > > >=20
+> > > > On Mon, 18 Oct 2021 at 11:14, Aleksander Morgado
+> > > > <aleksander@aleksander.es> wrote:
+> > > > >=20
+> > > > > Hey all,
+> > > > >=20
+> > > > > > [=C2=A0=C2=A0=C2=A0 7.056113] mhi-pci-generic 0000:01:00.0: MHI=
+ PCI device
+> > > > > > found:
+> > > > > > sierra-em919x
+> > > > > > [=C2=A0=C2=A0=C2=A0 7.063298] mhi-pci-generic 0000:01:00.0: BAR=
+ 0: assigned
+> > > > > > [mem
+> > > > > > 0x600000000-0x600000fff 64bit]
+> > > > > > [=C2=A0=C2=A0=C2=A0 7.071846] mhi-pci-generic 0000:01:00.0: ena=
+bling device
+> > > > > > (0000
+> > > > > > -> 0002)
+> > > > > > [=C2=A0=C2=A0=C2=A0 7.078671] mhi-pci-generic 0000:01:00.0: usi=
+ng shared MSI
+> > > > >=20
+> > > > > In this specific setup we request 4 MSI vectors through
+> > > > > pci_alloc_irq_vectors(), but only end up allocating a single
+> > > > > one
+> > > > > (i.e.
+> > > > > mhi_cntrl->nr_irqs =3D 1). Could that be related to the problem
+> > > > > somehow?
+> > > >=20
+> > > > It shouldn't, we have the 'shared IRQ' fallback which is used
+> > > > when we
+> > > > can not setup multiple MSI, and this works with other SDX55 based
+> > > > modems.
+> > > >=20
+> > >=20
+> > > Compared to other SDX55 based modems, EM919x uses the same event
+> > > ring
+> > > for the control, the data and the diag, and we use the macro
+> > > MHI_EVENT_CONFIG_CTRL to configure it.
+> > > - Perhaps this macro is not suitable in this case?
+> >=20
+> > Well it should work, but it's usually better to have a dedicated
+> > event
+> > ring for non-control stuff.
+> > The number of event ring is normally driven by the host, is it a
+> > limitation with EM919X?
+>=20
+> I asked the question to our Sierra distributor, because it isn't
+> indicated in the technical documentation that I have, I'm still waiting
+> for the answer.
+>=20
+> > What is done in the downstream driver?
+>=20
+> As we encountered issues with the generic event ring configuration, I
+> tried with a configuration equivalent to that of the vendor driver,
+> that uses the same ring for data, control and diag stuff.
+>=20
+> Best regards,
+> Thomas
+>=20
+> >=20
+> > > - Could this be explaining, what are we observing?
+> >=20
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
+We observing following things:
+- Either the kernel spam in loop this error: =E2=80=9Cmhi_wwan_ctrl mhi0_QM=
+I:
+"Failed to queue buffer=E2=80=9D
+- Either some command succeed, then timeout,
+- Received unexpected response or the response to a previous command,
+- All AT commands seem succeed,
+- And the firmware is well updated.
+
+> > Hmm, as I said device should follow what the host is configuring in
+> > terms of event rings, but maybe in your case a specific
+> > configuration
+> > is expected, so it would be nice to double check with what is done
+> > in
+> > the downstream driver. As well, do you have any way to access the
+> > serial/debug console of the EM919X?
+> >=20
+> > > Moreover, we have voluntarily reduced the number of shared MSI
+> > > vectors
+> > > to one, on a platform able to provide enough, then we observe the
+> > > same
+> > > kind of issues, as on i.MX6DL which end up allocating a single
+> > > one.
+> > > However, we carried out this test only with the vendor driver.
+> >=20
+> > You mean the same initialization issue?
+> >=20
+
+Yes, we are also seeing the same initialization issue.
+
+Best regards,
+Thomas
+
+> > Regards,
+> > Loic
+>=20
+
+--=20
+Thomas Perrot, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com
+
+
+--=-2Kb2Bk/oNe7Vq88EgNRU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmFtgaEACgkQn8ALBXH+
+Cu0c8gwAl1JqYuI6xIMNCHlIxpBFXulXijMcHN/KRoANm4CP3WxZ+C57P3vLR2Gm
+QRbNPLhtJhygow9MoTlNZNnH4B7/WVaX2JKa1mgWLmDQTq0USi7hTm0Ecx8iS3lL
+jbx+EYJPawbgndFCgLfERE974hqrxBFk8kTMl1RMHto5+Y7yCPnJsggzodtojpxJ
+snrY5oIz1iHa3f/R5oshmsP88KEBaMxBoQ+aum21oQ47894M9Oqx67A8trVAg+bK
+ByJfGlZYO+erR8qeEnn689LZQmri3Fp9hC7e0/DCAyxS0ucuJl/c9O7VY32JAaS4
+IB+6fDx4sqTDaecOh4MU703tWSoJ+RZZLjcHEyoAGbtpEypZr448x+y13jXy69kN
+aH/ZnRhCIhSbcj5m0qijcrOhUZJT4Mk7H1Q+80Br/Ox/JbdYN6aOZnCArDGzDHB6
+UcmNu3sU3/Am6sMBHTRgG3ixjWH552RWa2xTXbrpsExpvGcxkw+L7oljZQ+NH6Lb
+7/nDQ9qZ
+=Ft4O
+-----END PGP SIGNATURE-----
+
+--=-2Kb2Bk/oNe7Vq88EgNRU--
+
