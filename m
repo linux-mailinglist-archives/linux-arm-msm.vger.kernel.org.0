@@ -2,146 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61FB04325E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 20:04:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9BE843260B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 20:07:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbhJRSHD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 14:07:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60919 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229634AbhJRSHC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 14:07:02 -0400
+        id S231548AbhJRSKF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 14:10:05 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:64332 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229634AbhJRSKE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Oct 2021 14:10:04 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634580291; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=SUWZB9KOSx7eMRkpWGVYj84V/I8WTnVES96xnJl+xhI=; b=fPKjpRY0bKeHR4y2KIr7JFjS5nwI8wInuptmhyef0dstOFx+uVp3THLjise1FTbXQjsp9TdW
- NEhCgXNTBMQCIxbPs2l9hedUzkN5aTqufJAXe8LN6ZMzyjp0AwlvnmJaXQhWSkJIR7qUUa6p
- RUnVwBH4T8zzuMl63TuwdgxC42Q=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1634580473; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=wE6yodEiHlCyDKx6c+cRw1HegT8wlNeH4R9hFXJ+hrA=;
+ b=wYbJc3NNF/aGIhY+aNaDcLxT8mwwp4v0vYejh6txP1RyOUrdH68c0eiidNzrYUH0vOwBFw15
+ KlisJGfwzQicUpCuy11i1yr96qa71lCQrwFP0AbuuTYyzGWC6PJqUTmoJWn1q9i/Cdf/XJgH
+ F7nHI3ocXTOT9vNzZko0ewlTBJs=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 616db7020605239689e132f1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Oct 2021 18:03:46
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 616db7d8446c6db0cb10eb8a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 18 Oct 2021 18:07:20
  GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B2E3AC4360C; Mon, 18 Oct 2021 18:03:45 +0000 (UTC)
+        id 04846C43616; Mon, 18 Oct 2021 18:07:20 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [172.20.10.6] (mobile-166-170-49-175.mycingular.net [166.170.49.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 42747C4338F;
-        Mon, 18 Oct 2021 18:03:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 42747C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <f36341b8-8957-a265-59a6-f5ca9759574c@codeaurora.org>
-Date:   Mon, 18 Oct 2021 11:03:42 -0700
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 835DAC4338F;
+        Mon, 18 Oct 2021 18:07:17 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [bug report] drm/msm: dsi: Handle dual-channel for 6G as well
-Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@oracle.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>
-References: <20211001123115.GE2283@kili>
- <144b8ba5-82db-fc90-1d0f-5a8e2ce45c90@codeaurora.org>
- <CAA8EJpoDfWRT48J=G5-VQcHC6Zg8D-0VujjnjQyvHD0PQ=SoKQ@mail.gmail.com>
- <1f3f3047-327e-15dd-3179-d012edfc1865@quicinc.com>
- <20211016193515.GA2083@kadam>
-From:   Jessica Zhang <jesszhan@codeaurora.org>
-In-Reply-To: <20211016193515.GA2083@kadam>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Mon, 18 Oct 2021 11:07:17 -0700
+From:   abhinavk@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [Freedreno] [PATCH] drm/msm/dp: Move debugfs files into
+ subdirectory
+In-Reply-To: <YWxSWlRp+log+Trz@ripper>
+References: <20211015231702.1784254-1-bjorn.andersson@linaro.org>
+ <f72263e0d4c118653fff8b1341dc487b@codeaurora.org> <YWxSWlRp+log+Trz@ripper>
+Message-ID: <7a77045f4069a21305e5c3614a6739f0@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bjorn
 
-On 10/16/2021 12:35 PM, Dan Carpenter wrote:
-> On Fri, Oct 15, 2021 at 12:34:20PM -0700, Jessica Zhang wrote:
->> Hey Dmitry,
->>
->> On 10/15/2021 11:24 AM, Dmitry Baryshkov wrote:
->>> On Fri, 15 Oct 2021 at 04:43, Jessica Zhang <jesszhan@codeaurora.org> wrote:
->>>> Hey Dan,
->>>>
->>>> On 10/1/2021 5:31 AM, Dan Carpenter wrote:
->>>>> Hello Sean Paul,
->>>>>
->>>>> The patch a6bcddbc2ee1: "drm/msm: dsi: Handle dual-channel for 6G as
->>>>> well" from Jul 25, 2018, leads to the following
->>>>> Smatch static checker warning:
->>>>>
->>>>>         drivers/gpu/drm/msm/dsi/dsi_host.c:729 dsi_calc_clk_rate_6g()
->>>>>         warn: wrong type for 'msm_host->esc_clk_rate' (should be 'ulong')
->>>>>
->>>>> drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>        721 int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>        722 {
->>>>>        723         if (!msm_host->mode) {
->>>>>        724                 pr_err("%s: mode not set\n", __func__);
->>>>>        725                 return -EINVAL;
->>>>>        726         }
->>>>>        727
->>>>>        728         dsi_calc_pclk(msm_host, is_bonded_dsi);
->>>>> --> 729         msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
->>>>>                    ^^^^^^^^^^^^^^^^^^^^^^
->>>>> I don't know why Smatch is suddenly warning about ancient msm code, but
->>>>> clock rates should be unsigned long.  (I don't remember why).
->>>>>
->>>>>        730         return 0;
->>>>>        731 }
->>>> I'm unable to recreate the warning with Smatch. After running
->>>> build_kernel_data.sh, I ran `<path to smatch>/smatch_scripts/kchecker
->>>> drivers/gpu/drm/msm/dsi/dsi_host.c` and got the following output:
->>>>
->>>> CHECK scripts/mod/empty.c
->>>> CALL scripts/checksyscalls.sh
->>>> CALL scripts/atomic/check-atomics.sh
->>>> CHECK arch/arm64/kernel/vdso/vgettimeofday.c
->>>> CC drivers/gpu/drm/msm/dsi/dsi_host.o
->>>> CHECK drivers/gpu/drm/msm/dsi/dsi_host.c
->>>> drivers/gpu/drm/msm/dsi/dsi_host.c:2380 msm_dsi_host_power_on() warn:
->>>> missing error code 'ret'
->>>>
->>>> Is there a specific .config you're using (that's not the default
->>>> mainline defconfig)? If so, can you please share it?
->>> Are you running your checks with ARM32 or ARM64 in mind?
->>> Note, esc_clk_rate is u32, while clk_get_rate()'s returns unsigned long.
->>> It would make sense to change all three clocks rates in msm_dsi_host
->>> struct (and several places where they are used) to unsigned long.
->> Thanks for the response. I'm aware of what's causing this issue and how to
->> fix it, but I want to also be able to recreate the warning locally with
->> Smatch.
-> No, sorry, I haven't published that check.  It's just something I have
-> locally.
-Understood. It would be helpful for future warnings if the issue was 
-reproducible using Smatch scripts available in the repo since we would 
-be able to verify the fix locally.
->
-> Btw, I will be offline for the next two weeks...
+On 2021-10-17 09:42, Bjorn Andersson wrote:
+> On Fri 15 Oct 16:53 PDT 2021, abhinavk@codeaurora.org wrote:
+> 
+>> On 2021-10-15 16:17, Bjorn Andersson wrote:
+>> > In the cleanup path of the MSM DP driver the DP driver's debugfs files
+>> > are destroyed by invoking debugfs_remove_recursive() on debug->root,
+>> > which during initialization has been set to minor->debugfs_root.
+>> >
+>> > To allow cleaning up the DP driver's debugfs files either each dentry
+>> > needs to be kept track of or the files needs to be put in a subdirectory
+>> > which can be removed in one go.
+>> >
+>> > By choosing to put the debugfs files in a subdirectory, based on the
+>> > name of the associated connector this also solves the problem that these
+>> > names would collide as support for multiple DP instances are introduced.
+>> >
+>> > One alternative solution to the problem with colliding file names would
+>> > have been to put keep track of the individual files and put them under
+>> > the connector's debugfs directory. But while the drm_connector has been
+>> > allocated, its associated debugfs directory has not been created at the
+>> > time of initialization of the dp_debug.
+>> >
+>> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> 
+>> I have been thinking about this problem ever since multi-DP has been 
+>> posted
+>> :)
+>> Creating sub-directories seems right but at the moment it looks like 
+>> IGT
+>> which
+>> uses these debugfs nodes doesnt check sub-directories:
+>> 
+>> https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/blob/master/tools/msm_dp_compliance.c#L215
+>> 
+>> It looks for the DP debugfs nodes under /sys/kernel/debug/dri/*/
+>> 
+>> We have to fix IGT too to be able to handle multi-DP cases. I will try 
+>> to
+>> come up
+>> with a proposal to address this.
+>> 
+>> Till then, can we go with the other solution to keep track of the 
+>> dentries?
+>> 
+> 
+> I'm afraid I don't see what you're proposing.
+> 
+> Afaict we need one set of dp_test{type,active,data} per DP controller,
+> so even doing this by keeping track of the dentries requires that we
+> rename the files based on some identifier (id or connector name) - 
+> which
+> will cause igt to break.
 
-Gotcha, thanks for the heads up! I will release a fix ASAP for you to ack.
+Yes, I also thought the same that there needs to be some identifier.
 
-Best,
+"To allow cleaning up the DP driver's debugfs files either each dentry
+needs to be kept track of or the files needs to be put in a subdirectory
+which can be removed in one go"
 
-Jessica Zhang
+I guess I misunderstood your statement in the commit text thinking that 
+you
+had some other way to keep track of the dentries as it mentioned that
+use a subdirectory OR keep track of each dentry.
 
-> regards,
-> dan carpenter
->
->
+> 
+> As such, I think the practical path forward is that we merge the
+> multi-DP series as currently proposed. This will not cause any issues 
+> on
+> single-DP systems, but on multi-DP systems we will have warnings about
+> duplicate debugfs entries in the kernel logs.
+> 
+> Then you can figure out how to rework igt to deal with the multiple DP
+> instances and update the dp_debug interface accordingly.
+> 
+
+Fine with me, I will take care of this.
+
+> 
+> Which also implies that we should hold this patch back. But if we go
+> that path, I think we should fix dp_debug_deinit() so that it doesn't
+> remove /sys/kernel/debug/dri/128 when the DP driver is unloaded.
+Yes, lets hold this patch back till I fix multi-DP for IGT.
+> 
+> Regards,
+> Bjorn
+> 
+>> > ---
+>> >
+>> > This depends on
+>> > https://lore.kernel.org/linux-arm-msm/20211010030435.4000642-1-bjorn.andersson@linaro.org/
+>> > reducing the connector from a double pointer.
+>> >
+>> >  drivers/gpu/drm/msm/dp/dp_debug.c | 15 +++++++++------
+>> >  1 file changed, 9 insertions(+), 6 deletions(-)
+>> >
+>> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c
+>> > b/drivers/gpu/drm/msm/dp/dp_debug.c
+>> > index da4323556ef3..67da4c69eca1 100644
+>> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+>> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+>> > @@ -210,26 +210,29 @@ static const struct file_operations
+>> > test_active_fops = {
+>> >  static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor
+>> > *minor)
+>> >  {
+>> >  	int rc = 0;
+>> > +	char path[64];
+>> >  	struct dp_debug_private *debug = container_of(dp_debug,
+>> >  			struct dp_debug_private, dp_debug);
+>> >
+>> > -	debugfs_create_file("dp_debug", 0444, minor->debugfs_root,
+>> > +	snprintf(path, sizeof(path), "msm_dp-%s", debug->connector->name);
+>> > +
+>> > +	debug->root = debugfs_create_dir(path, minor->debugfs_root);
+>> > +
+>> > +	debugfs_create_file("dp_debug", 0444, debug->root,
+>> >  			debug, &dp_debug_fops);
+>> >
+>> >  	debugfs_create_file("msm_dp_test_active", 0444,
+>> > -			minor->debugfs_root,
+>> > +			debug->root,
+>> >  			debug, &test_active_fops);
+>> >
+>> >  	debugfs_create_file("msm_dp_test_data", 0444,
+>> > -			minor->debugfs_root,
+>> > +			debug->root,
+>> >  			debug, &dp_test_data_fops);
+>> >
+>> >  	debugfs_create_file("msm_dp_test_type", 0444,
+>> > -			minor->debugfs_root,
+>> > +			debug->root,
+>> >  			debug, &dp_test_type_fops);
+>> >
+>> > -	debug->root = minor->debugfs_root;
+>> > -
+>> >  	return rc;
+>> >  }
