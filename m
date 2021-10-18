@@ -2,70 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CAAE14326BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 20:40:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B6424327EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 21:49:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232488AbhJRSma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 14:42:30 -0400
-Received: from mail-ot1-f54.google.com ([209.85.210.54]:38487 "EHLO
-        mail-ot1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232204AbhJRSm3 (ORCPT
+        id S231775AbhJRTvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 15:51:11 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:34661 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230159AbhJRTvL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 14:42:29 -0400
-Received: by mail-ot1-f54.google.com with SMTP id l10-20020a056830154a00b00552b74d629aso995156otp.5;
-        Mon, 18 Oct 2021 11:40:18 -0700 (PDT)
+        Mon, 18 Oct 2021 15:51:11 -0400
+Received: by mail-ot1-f48.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so152951otb.1;
+        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=r3X1ifyviq85D3kYFgE9ZYCvHfqfPnp8hioFYQJaRoM=;
-        b=d5FiuE7MrvzPz8g1Dpab3nzMk+9y/J4+JXkZ6S2tWjEGu13tkQGsQTICzfrFITd3bq
-         ZWmhiSJugKb+SPnarYrBQkc5Cedl0iP7LfOps7fwzTN0cN/Jzd4NtoSyknJtt284YqLE
-         014cZNfuk7mXBBPNBnS0LC8LunrelpHRpyQFWx1Uvkz3a+yTSdHKBGzxW0ejZyoHvFES
-         Flxx4qjWuLuax/dkWKvbVsi2zNOrtr63bLZifcE/F7X6AfXjgFJqBChVz9ofbspO5x48
-         pIqEERs5sSJWJMAfjXFMhp4XzqwJA//yUOfWyx15Dpcn3lH7vzZAGRf9YC0f2TGDphv3
-         gjrw==
-X-Gm-Message-State: AOAM531ZTwx+MKq/2vCkokMB4YYAe8ONNmrQqZmgypPJ4omtgSiqABKR
-        EMLPtU7qq/AjP4dTlbAmz8mIuH6riA==
-X-Google-Smtp-Source: ABdhPJyTISW6vAihjTlJRqFSF5/LmNUGpNgtLZ+xBpIe5B1qpA0fRBu5T1XlOKP4Jr7ckjcEYaOlpg==
-X-Received: by 2002:a05:6830:57d:: with SMTP id f29mr1287524otc.285.1634582417871;
-        Mon, 18 Oct 2021 11:40:17 -0700 (PDT)
+        bh=AAoBj4y4weGMfJE/H2YUzE461Zo+UYbwtItvsEO1Bq0=;
+        b=EHVWgI716m7OkjJMCLZVqV+EVYnqSs//3UYE5dWyyIQFUJwGBDVXj6NGzvinyB4oXf
+         GgUzMKlDG1iryJ38SOlTPVx8t2seZ1tmquc9RD2e7CO9newyugeAMdaoHe1HoZEEgVv9
+         IFNz2f2vRbL0y4ri5GadjurgK7lPJ8WxX7zyh/FFYKAECal2jwxwo6gWDOPETH5/fy8T
+         9SD/yO3+kjFdNjbAv3RGc+Z8p1SYJNuEkEziZ3D7poFvhZWL2xPw6QNUvTpgkHW0zTfZ
+         EbEd+/wY9Fkq+wrHB2xMnV0rjttSiY5neoeJXYz5IR0RFVJB8XDJwq7uXjxgeNfm7Fu9
+         IBgA==
+X-Gm-Message-State: AOAM531FnTU/VxY/QwsvN1e3iobgcryTKPhQQ7LZ4u+0BwV9WqPFX7sW
+        +e86rfe97cHwqQGVurGAhw==
+X-Google-Smtp-Source: ABdhPJzO339HRKj4AW98yudKu8l33V+dVFUqkR3/vATJbubDlMODK604QfCtHQumP/dOc5zpMWb41g==
+X-Received: by 2002:a05:6830:1e08:: with SMTP id s8mr1515560otr.305.1634586539491;
+        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w9sm3108564otp.64.2021.10.18.11.40.16
+        by smtp.gmail.com with ESMTPSA id e59sm3222734ote.14.2021.10.18.12.48.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 11:40:17 -0700 (PDT)
-Received: (nullmailer pid 2725898 invoked by uid 1000);
-        Mon, 18 Oct 2021 18:40:16 -0000
-Date:   Mon, 18 Oct 2021 13:40:16 -0500
+        Mon, 18 Oct 2021 12:48:59 -0700 (PDT)
+Received: (nullmailer pid 2836064 invoked by uid 1000);
+        Mon, 18 Oct 2021 19:48:58 -0000
+Date:   Mon, 18 Oct 2021 14:48:58 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 02/25] dt-bindings: mfd: qcom-pm8xxx: add missing
- child nodes
-Message-ID: <YW2/kL2cGgUEqhpJ@robh.at.kernel.org>
-References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
- <20211008012524.481877-3-dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abhinavk@codeaurora.org, Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: phy: Introduce Qualcomm eDP/DP PHY
+ binding
+Message-ID: <YW3PqhQHauDYRlwN@robh.at.kernel.org>
+References: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211008012524.481877-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 08 Oct 2021 04:25:01 +0300, Dmitry Baryshkov wrote:
-> Add gpio@[0-9a-f]+, mpps@[0-9a-f]+ and xoadc@[0-9a-f]+ as possible child
-> nodes of qcom,pm8xxx, referencing existint schema files. Schema for
-> other possible nodes does not exist yet.
+On Sat, Oct 16, 2021 at 04:21:27PM -0700, Bjorn Andersson wrote:
+> Introduce a binding for the eDP/DP PHY hardware block found in several
+> different Qualcomm platforms.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml         | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
 > 
+> Changes since v2:
+> - None
+> 
+>  .../devicetree/bindings/phy/qcom,edp-phy.yaml | 69 +++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> new file mode 100644
+> index 000000000000..c258e4f7e332
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+> @@ -0,0 +1,69 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm DP/eDP PHY
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description:
+> +  The Qualcomm DP/eDP PHY is found in a number of Qualcomm platform and
+> +  provides the physical interface for DisplayPort and Embedded Display Port.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8180x-dp-phy
+> +      - qcom,sc8180x-edp-phy
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Is there a difference between DP and eDP?
+
+Perhaps note what that is if so.
+
+> +
+> +  reg:
+> +    items:
+> +      - description: PHY base register block
+> +      - description: tx0 register block
+> +      - description: tx1 register block
+> +      - description: PLL register block
+> +
+> +  clocks:
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: aux
+> +      - const: cfg_ahb
+> +
+> +  "#clock-cells":
+> +    const: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - "#clock-cells"
+> +  - "#phy-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    phy@aec2a00 {
+> +      compatible = "qcom,sc8180x-edp-phy";
+> +      reg = <0x0aec2a00 0x1c0>,
+> +            <0x0aec2200 0xa0>,
+> +            <0x0aec2600 0xa0>,
+> +            <0x0aec2000 0x19c>;
+> +
+> +      clocks = <&dispcc 0>, <&dispcc 1>;
+> +      clock-names = "aux", "cfg_ahb";
+> +
+> +      #clock-cells = <1>;
+> +      #phy-cells = <0>;
+> +    };
+> +...
+> -- 
+> 2.29.2
+> 
+> 
