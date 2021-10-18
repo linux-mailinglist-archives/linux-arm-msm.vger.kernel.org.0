@@ -2,195 +2,508 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89AA3431F44
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AD87431F65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 16:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231889AbhJROSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 10:18:21 -0400
-Received: from relay11.mail.gandi.net ([217.70.178.231]:38421 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbhJROSP (ORCPT
+        id S231961AbhJROYp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 10:24:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231634AbhJROYp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 10:18:15 -0400
-Received: (Authenticated sender: thomas.perrot@bootlin.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 0EF45100009;
-        Mon, 18 Oct 2021 14:16:01 +0000 (UTC)
-Message-ID: <99c6dd698ec93377476adf77c1770db9b94c5876.camel@bootlin.com>
-Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
-From:   Thomas Perrot <thomas.perrot@bootlin.com>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Aleksander Morgado <aleksander@aleksander.es>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Date:   Mon, 18 Oct 2021 16:16:01 +0200
-In-Reply-To: <1f846b0be78560c1299fa26d351b66567be403e1.camel@bootlin.com>
-References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
-         <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
-         <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com>
-         <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
-         <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
-         <CAMZdPi8QXrjN6VYU1VrGeOBhvVSnxopioM7POEOcS5ywsSFDHQ@mail.gmail.com>
-         <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
-         <CAAP7uc+5=GMGgz3MKfSWaAtes1WwCCx+6iYhb058ZUr0=A52cg@mail.gmail.com>
-         <CAMZdPi9cbDVWVxvimg-uc_TRvskrxbjEQ4AxdLjA57Ewm2tSPA@mail.gmail.com>
-         <bd875c3b9d19f8827362b129999d84cd04ad90ae.camel@bootlin.com>
-         <CAMZdPi_J7ePh22v7J3WgqO9X3Y1KffTm__TfL9jGHj61H2x9QA@mail.gmail.com>
-         <1f846b0be78560c1299fa26d351b66567be403e1.camel@bootlin.com>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-2Kb2Bk/oNe7Vq88EgNRU"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        Mon, 18 Oct 2021 10:24:45 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BAAFC06161C;
+        Mon, 18 Oct 2021 07:22:33 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id y12so74171596eda.4;
+        Mon, 18 Oct 2021 07:22:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wbz6WGltBgut6hrUdYHzAG6b4KJe2di+kw3HuZ+pnWE=;
+        b=E96/UEAUbTKHXb/OqsfNmFLzRtykIs0RBocBYylgP+/TdvdydWOWsZKtrENFGTcxz2
+         5CR4ohKhO2WzqUKVdVl4vgbCqTS1joNjlZ4+b8yG9SOdyKfokG+icwuYDE8Na1A2xPvG
+         vkYcsywqGMoX1Xl8HrGxAJrq6hnyknJB4SkiDrIyI6aR4r6IE2t0u44MsukVMh2xnV9Y
+         CzJaBp32vaZSsLlgNB8amfA/OK1pBd+AFu+E4Ju4MMTDy7cdpYNCaPnpHw7NfwYFgyPT
+         7eiqSBJxeNu+xwPPOMMT0FiJbHbcgvmtJYQ+H+1SnEU+Jwg+gQUiwOTE0OB+EhGq3CQf
+         K81w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wbz6WGltBgut6hrUdYHzAG6b4KJe2di+kw3HuZ+pnWE=;
+        b=LvryVUp0wuMSb+7SA97ckAKgS71SP9KVYfjgx8mo+olUUIBstKV0ehR+jHfSEXq2HJ
+         DrNtphPYFcPtJjqY75O9HhHwUzosmwqdzHKeuOul45T4Xla4+yTAbDFUh63UYT/df7tE
+         MWfDiXFB+a+PW5imFVGqAytRy9SAah1ukF8gfeOCp7QUUsovdwhqHMcbPqRJckvO6mLp
+         wUS8SLWBJNMPMrCX7JYKdqxFU5XkolqDwoOmIoRxKeY9S/viQz3lL+tDt1gMeb5dp0dc
+         rYi4eRFIQ1koj9mkF8X0VPHg9daeglfq1YFMgicS/qeEas+h+oqV470yPe4gIyUuJorX
+         Xs/Q==
+X-Gm-Message-State: AOAM533P+aHE0nzGCDGjcLRa2Mak6GP3UksLF9rt0gfN1ZAxXaPtBfvy
+        ncLGbELnKNC0zw9H6LHnmJM=
+X-Google-Smtp-Source: ABdhPJyGDBaXlN2uCkATWqJFjXFTbqSmCzmkjy7/0zsNuTESyao9L+Tg9+8VbFGRdkh4jZma7Ok6Mg==
+X-Received: by 2002:a17:907:1c0e:: with SMTP id nc14mr30709890ejc.103.1634566824622;
+        Mon, 18 Oct 2021 07:20:24 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.gmail.com with ESMTPSA id g9sm8855291ejo.60.2021.10.18.07.20.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Oct 2021 07:20:24 -0700 (PDT)
+Date:   Mon, 18 Oct 2021 16:20:23 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andrew Lunn <andrew@lunn.ch>,
+        Vivien Didelot <vivien.didelot@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Russell King <linux@armlinux.org.uk>,
+        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Matthew Hagan <mnhagan88@gmail.com>
+Subject: Re: [net-next PATCH v7 16/16] dt-bindings: net: dsa: qca8k: convert
+ to YAML schema
+Message-ID: <YW2Cp6vWAYDM68rs@Ansuel-xps.localdomain>
+References: <20211013223921.4380-1-ansuelsmth@gmail.com>
+ <20211013223921.4380-17-ansuelsmth@gmail.com>
+ <YW2BcC2izFM6HjG5@robh.at.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YW2BcC2izFM6HjG5@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 18, 2021 at 09:15:12AM -0500, Rob Herring wrote:
+> On Thu, Oct 14, 2021 at 12:39:21AM +0200, Ansuel Smith wrote:
+> > From: Matthew Hagan <mnhagan88@gmail.com>
+> > 
+> > Convert the qca8k bindings to YAML format.
+> > 
+> > Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
+> > Co-developed-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >  .../devicetree/bindings/net/dsa/qca8k.txt     | 245 ------------
+> >  .../devicetree/bindings/net/dsa/qca8k.yaml    | 362 ++++++++++++++++++
+> >  2 files changed, 362 insertions(+), 245 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.txt
+> >  create mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.yaml
+> 
+> 
+> 
+> > diff --git a/Documentation/devicetree/bindings/net/dsa/qca8k.yaml b/Documentation/devicetree/bindings/net/dsa/qca8k.yaml
+> > new file mode 100644
+> > index 000000000000..48de0ace265d
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/net/dsa/qca8k.yaml
+> > @@ -0,0 +1,362 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/net/dsa/qca8k.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Atheros QCA83xx switch family
+> > +
+> > +maintainers:
+> > +  - John Crispin <john@phrozen.org>
+> > +
+> > +description:
+> > +  If the QCA8K switch is connect to an SoC's external mdio-bus, each subnode
+> > +  describing a port needs to have a valid phandle referencing the internal PHY
+> > +  it is connected to. This is because there is no N:N mapping of port and PHY
+> > +  ID. To declare the internal mdio-bus configuration, declare an MDIO node in
+> > +  the switch node and declare the phandle for the port, referencing the internal
+> > +  PHY it is connected to. In this config, an internal mdio-bus is registered and
+> > +  the MDIO master is used for communication. Mixed external and internal
+> > +  mdio-bus configurations are not supported by the hardware.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    oneOf:
+> > +      - enum:
+> 
+> Don't need oneOf with one entry.
+> 
+> > +          - qca,qca8327
+> > +          - qca,qca8328
+> > +          - qca,qca8334
+> > +          - qca,qca8337
+> > +    description: |
+> > +      qca,qca8328: referenced as AR8328(N)-AK1(A/B) QFN 176 pin package
+> > +      qca,qca8327: referenced as AR8327(N)-AL1A DR-QFN 148 pin package
+> > +      qca,qca8334: referenced as QCA8334-AL3C QFN 88 pin package
+> > +      qca,qca8337: referenced as QCA8337N-AL3(B/C) DR-QFN 148 pin package
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  reset-gpios:
+> > +    description:
+> > +      GPIO to be used to reset the whole device
+> > +    maxItems: 1
+> > +
+> > +  qca,ignore-power-on-sel:
+> > +    $ref: /schemas/types.yaml#/definitions/flag
+> > +    description:
+> > +      Ignore power-on pin strapping to configure LED open-drain or EEPROM
+> > +      presence. This is needed for devices with incorrect configuration or when
+> > +      the OEM has decided not to use pin strapping and falls back to SW regs.
+> > +
+> > +  qca,led-open-drain:
+> > +    $ref: /schemas/types.yaml#/definitions/flag
+> > +    description:
+> > +      Set LEDs to open-drain mode. This requires the qca,ignore-power-on-sel to
+> > +      be set, otherwise the driver will fail at probe. This is required if the
+> > +      OEM does not use pin strapping to set this mode and prefers to set it
+> > +      using SW regs. The pin strappings related to LED open-drain mode are
+> > +      B68 on the QCA832x and B49 on the QCA833x.
+> > +
+> > +  mdio:
+> > +    type: object
+> > +    description: Qca8k switch have an internal mdio to access switch port.
+> > +                 If this is not present, the legacy mapping is used and the
+> > +                 internal mdio access is used.
+> > +                 With the legacy mapping the reg corresponding to the internal
+> > +                 mdio is the switch reg with an offset of -1.
+> 
+> 2 spaces more than description.
+> 
+> > +
+> > +    properties:
+> > +      '#address-cells':
+> > +        const: 1
+> > +      '#size-cells':
+> > +        const: 0
+> 
+> The mdio bus provides these constraints already.
+> 
+> > +
+> > +    patternProperties:
+> > +      "^(ethernet-)?phy@[0-4]$":
+> > +        type: object
+> > +
+> > +        allOf:
+> 
+> Don't need allOf.
+> 
+> > +          - $ref: "http://devicetree.org/schemas/net/mdio.yaml#"
+> 
+> The phy is an mdio bus? 
+> 
+> You don't need any of this. Just:
+> 
+> mdio:
+>   $ref: /schemas/net/mdio.yaml#
+>   unevaluatedProperties: false
+>   description: ...
+> 
+> > +
+> > +        properties:
+> > +          reg:
+> > +            maxItems: 1
+> > +
+> > +        required:
+> > +          - reg
+> > +
+> > +patternProperties:
+> > +  "^(ethernet-)?ports$":
+> > +    type: object
+> > +    properties:
+> > +      '#address-cells':
+> > +        const: 1
+> > +      '#size-cells':
+> > +        const: 0
+> > +
+> > +    patternProperties:
+> > +      "^(ethernet-)?port@[0-6]$":
+> > +        type: object
+> > +        description: Ethernet switch ports
+> > +
+> > +        properties:
+> > +          reg:
+> > +            description: Port number
+> > +
+> > +          label:
+> > +            description:
+> > +              Describes the label associated with this port, which will become
+> > +              the netdev name
+> > +            $ref: /schemas/types.yaml#/definitions/string
+> > +
+> > +          link:
+> > +            description:
+> > +              Should be a list of phandles to other switch's DSA port. This
+> > +              port is used as the outgoing port towards the phandle ports. The
+> > +              full routing information must be given, not just the one hop
+> > +              routes to neighbouring switches
+> > +            $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +
+> > +          ethernet:
+> > +            description:
+> > +              Should be a phandle to a valid Ethernet device node.  This host
+> > +              device is what the switch port is connected to
+> > +            $ref: /schemas/types.yaml#/definitions/phandle
+> 
+> All of this is defined in dsa.yaml. Add a $ref to it and don't duplicate 
+> it here.
+>
 
---=-2Kb2Bk/oNe7Vq88EgNRU
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The reason I redefined it is because I didn't manage to find a way on
+how to add additional bindings for the qca,sgmii... . Any hint about
+that?
 
-Hi Loic,
+I tried with allOf but the make check still printed errors in the
+example with not valid binding about qca,sgmii.
 
-Sorry, I forgot to answer your other questions.
+> > +
+> > +          phy-handle: true
+> > +
+> > +          phy-mode: true
+> > +
+> > +          fixed-link: true
+> > +
+> > +          mac-address: true
+> > +
+> > +          sfp: true
+> > +
+> > +          qca,sgmii-rxclk-falling-edge:
+> > +            $ref: /schemas/types.yaml#/definitions/flag
+> > +            description:
+> > +              Set the receive clock phase to falling edge. Mostly commonly used on
+> > +              the QCA8327 with CPU port 0 set to SGMII.
+> > +
+> > +          qca,sgmii-txclk-falling-edge:
+> > +            $ref: /schemas/types.yaml#/definitions/flag
+> > +            description:
+> > +              Set the transmit clock phase to falling edge.
+> > +
+> > +          qca,sgmii-enable-pll:
+> > +            $ref: /schemas/types.yaml#/definitions/flag
+> > +            description:
+> > +              For SGMII CPU port, explicitly enable PLL, TX and RX chain along with
+> > +              Signal Detection. On the QCA8327 this should not be enabled, otherwise
+> > +              the SGMII port will not initialize. When used on the QCA8337, revision 3
+> > +              or greater, a warning will be displayed. When the CPU port is set to
+> > +              SGMII on the QCA8337, it is advised to set this unless a communication
+> > +              issue is observed.
+> > +
+> > +        required:
+> > +          - reg
+> > +
+> > +        additionalProperties: false
+> > +
+> > +oneOf:
+> > +  - required:
+> > +      - ports
+> > +  - required:
+> > +      - ethernet-ports
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +additionalProperties: true
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +
+> > +    mdio {
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        external_phy_port1: ethernet-phy@0 {
+> > +            reg = <0>;
+> > +        };
+> > +
+> > +        external_phy_port2: ethernet-phy@1 {
+> > +            reg = <1>;
+> > +        };
+> > +
+> > +        external_phy_port3: ethernet-phy@2 {
+> > +            reg = <2>;
+> > +        };
+> > +
+> > +        external_phy_port4: ethernet-phy@3 {
+> > +            reg = <3>;
+> > +        };
+> > +
+> > +        external_phy_port5: ethernet-phy@4 {
+> > +            reg = <4>;
+> > +        };
+> > +
+> > +        switch@10 {
+> > +            compatible = "qca,qca8337";
+> > +            #address-cells = <1>;
+> > +            #size-cells = <0>;
+> > +            reset-gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
+> > +            reg = <0x10>;
+> > +
+> > +            ports {
+> 
+> Use the preferred 'ethernet-ports'.
+> 
+> > +                #address-cells = <1>;
+> > +                #size-cells = <0>;
+> > +
+> > +                port@0 {
+> > +                    reg = <0>;
+> > +                    label = "cpu";
+> > +                    ethernet = <&gmac1>;
+> > +                    phy-mode = "rgmii";
+> > +
+> > +                    fixed-link {
+> > +                        speed = <1000>;
+> > +                        full-duplex;
+> > +                    };
+> > +                };
+> > +
+> > +                port@1 {
+> > +                    reg = <1>;
+> > +                    label = "lan1";
+> > +                    phy-handle = <&external_phy_port1>;
+> > +                };
+> > +
+> > +                port@2 {
+> > +                    reg = <2>;
+> > +                    label = "lan2";
+> > +                    phy-handle = <&external_phy_port2>;
+> > +                };
+> > +
+> > +                port@3 {
+> > +                    reg = <3>;
+> > +                    label = "lan3";
+> > +                    phy-handle = <&external_phy_port3>;
+> > +                };
+> > +
+> > +                port@4 {
+> > +                    reg = <4>;
+> > +                    label = "lan4";
+> > +                    phy-handle = <&external_phy_port4>;
+> > +                };
+> > +
+> > +                port@5 {
+> > +                    reg = <5>;
+> > +                    label = "wan";
+> > +                    phy-handle = <&external_phy_port5>;
+> > +                };
+> > +            };
+> > +        };
+> > +    };
+> > +  - |
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +
+> > +    mdio {
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        switch@10 {
+> > +            compatible = "qca,qca8337";
+> > +            #address-cells = <1>;
+> > +            #size-cells = <0>;
+> > +            reset-gpios = <&gpio 42 GPIO_ACTIVE_LOW>;
+> > +            reg = <0x10>;
+> > +
+> > +            ports {
+> > +                #address-cells = <1>;
+> > +                #size-cells = <0>;
+> > +
+> > +                port@0 {
+> > +                    reg = <0>;
+> > +                    label = "cpu";
+> > +                    ethernet = <&gmac1>;
+> > +                    phy-mode = "rgmii";
+> > +
+> > +                    fixed-link {
+> > +                        speed = <1000>;
+> > +                        full-duplex;
+> > +                    };
+> > +                };
+> > +
+> > +                port@1 {
+> > +                    reg = <1>;
+> > +                    label = "lan1";
+> > +                    phy-mode = "internal";
+> > +                    phy-handle = <&internal_phy_port1>;
+> > +                };
+> > +
+> > +                port@2 {
+> > +                    reg = <2>;
+> > +                    label = "lan2";
+> > +                    phy-mode = "internal";
+> > +                    phy-handle = <&internal_phy_port2>;
+> > +                };
+> > +
+> > +                port@3 {
+> > +                    reg = <3>;
+> > +                    label = "lan3";
+> > +                    phy-mode = "internal";
+> > +                    phy-handle = <&internal_phy_port3>;
+> > +                };
+> > +
+> > +                port@4 {
+> > +                    reg = <4>;
+> > +                    label = "lan4";
+> > +                    phy-mode = "internal";
+> > +                    phy-handle = <&internal_phy_port4>;
+> > +                };
+> > +
+> > +                port@5 {
+> > +                    reg = <5>;
+> > +                    label = "wan";
+> > +                    phy-mode = "internal";
+> > +                    phy-handle = <&internal_phy_port5>;
+> > +                };
+> > +
+> > +                port@6 {
+> > +                    reg = <0>;
+> > +                    label = "cpu";
+> > +                    ethernet = <&gmac1>;
+> > +                    phy-mode = "sgmii";
+> > +
+> > +                    qca,sgmii-rxclk-falling-edge;
+> > +
+> > +                    fixed-link {
+> > +                        speed = <1000>;
+> > +                        full-duplex;
+> > +                    };
+> > +                };
+> > +            };
+> > +
+> > +            mdio {
+> > +                #address-cells = <1>;
+> > +                #size-cells = <0>;
+> > +
+> > +                internal_phy_port1: ethernet-phy@0 {
+> > +                    reg = <0>;
+> > +                };
+> > +
+> > +                internal_phy_port2: ethernet-phy@1 {
+> > +                    reg = <1>;
+> > +                };
+> > +
+> > +                internal_phy_port3: ethernet-phy@2 {
+> > +                    reg = <2>;
+> > +                };
+> > +
+> > +                internal_phy_port4: ethernet-phy@3 {
+> > +                    reg = <3>;
+> > +                };
+> > +
+> > +                internal_phy_port5: ethernet-phy@4 {
+> > +                    reg = <4>;
+> > +                };
+> > +            };
+> > +        };
+> > +    };
+> > -- 
+> > 2.32.0
+> > 
+> > 
 
-On Mon, 2021-10-18 at 16:07 +0200, Thomas Perrot wrote:
-> Hi,
->=20
-> On Mon, 2021-10-18 at 14:46 +0200, Loic Poulain wrote:
-> > On Mon, 18 Oct 2021 at 13:26, Thomas Perrot <
-> > thomas.perrot@bootlin.com> wrote:
-> > >=20
-> > > Hi Loic,
-> > >=20
-> > > On Mon, 2021-10-18 at 11:59 +0200, Loic Poulain wrote:
-> > > > Hi Aleksander,
-> > > >=20
-> > > > On Mon, 18 Oct 2021 at 11:14, Aleksander Morgado
-> > > > <aleksander@aleksander.es> wrote:
-> > > > >=20
-> > > > > Hey all,
-> > > > >=20
-> > > > > > [=C2=A0=C2=A0=C2=A0 7.056113] mhi-pci-generic 0000:01:00.0: MHI=
- PCI device
-> > > > > > found:
-> > > > > > sierra-em919x
-> > > > > > [=C2=A0=C2=A0=C2=A0 7.063298] mhi-pci-generic 0000:01:00.0: BAR=
- 0: assigned
-> > > > > > [mem
-> > > > > > 0x600000000-0x600000fff 64bit]
-> > > > > > [=C2=A0=C2=A0=C2=A0 7.071846] mhi-pci-generic 0000:01:00.0: ena=
-bling device
-> > > > > > (0000
-> > > > > > -> 0002)
-> > > > > > [=C2=A0=C2=A0=C2=A0 7.078671] mhi-pci-generic 0000:01:00.0: usi=
-ng shared MSI
-> > > > >=20
-> > > > > In this specific setup we request 4 MSI vectors through
-> > > > > pci_alloc_irq_vectors(), but only end up allocating a single
-> > > > > one
-> > > > > (i.e.
-> > > > > mhi_cntrl->nr_irqs =3D 1). Could that be related to the problem
-> > > > > somehow?
-> > > >=20
-> > > > It shouldn't, we have the 'shared IRQ' fallback which is used
-> > > > when we
-> > > > can not setup multiple MSI, and this works with other SDX55 based
-> > > > modems.
-> > > >=20
-> > >=20
-> > > Compared to other SDX55 based modems, EM919x uses the same event
-> > > ring
-> > > for the control, the data and the diag, and we use the macro
-> > > MHI_EVENT_CONFIG_CTRL to configure it.
-> > > - Perhaps this macro is not suitable in this case?
-> >=20
-> > Well it should work, but it's usually better to have a dedicated
-> > event
-> > ring for non-control stuff.
-> > The number of event ring is normally driven by the host, is it a
-> > limitation with EM919X?
->=20
-> I asked the question to our Sierra distributor, because it isn't
-> indicated in the technical documentation that I have, I'm still waiting
-> for the answer.
->=20
-> > What is done in the downstream driver?
->=20
-> As we encountered issues with the generic event ring configuration, I
-> tried with a configuration equivalent to that of the vendor driver,
-> that uses the same ring for data, control and diag stuff.
->=20
-> Best regards,
-> Thomas
->=20
-> >=20
-> > > - Could this be explaining, what are we observing?
-> >=20
-
-We observing following things:
-- Either the kernel spam in loop this error: =E2=80=9Cmhi_wwan_ctrl mhi0_QM=
-I:
-"Failed to queue buffer=E2=80=9D
-- Either some command succeed, then timeout,
-- Received unexpected response or the response to a previous command,
-- All AT commands seem succeed,
-- And the firmware is well updated.
-
-> > Hmm, as I said device should follow what the host is configuring in
-> > terms of event rings, but maybe in your case a specific
-> > configuration
-> > is expected, so it would be nice to double check with what is done
-> > in
-> > the downstream driver. As well, do you have any way to access the
-> > serial/debug console of the EM919X?
-> >=20
-> > > Moreover, we have voluntarily reduced the number of shared MSI
-> > > vectors
-> > > to one, on a platform able to provide enough, then we observe the
-> > > same
-> > > kind of issues, as on i.MX6DL which end up allocating a single
-> > > one.
-> > > However, we carried out this test only with the vendor driver.
-> >=20
-> > You mean the same initialization issue?
-> >=20
-
-Yes, we are also seeing the same initialization issue.
-
-Best regards,
-Thomas
-
-> > Regards,
-> > Loic
->=20
-
---=20
-Thomas Perrot, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
-
-
---=-2Kb2Bk/oNe7Vq88EgNRU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmFtgaEACgkQn8ALBXH+
-Cu0c8gwAl1JqYuI6xIMNCHlIxpBFXulXijMcHN/KRoANm4CP3WxZ+C57P3vLR2Gm
-QRbNPLhtJhygow9MoTlNZNnH4B7/WVaX2JKa1mgWLmDQTq0USi7hTm0Ecx8iS3lL
-jbx+EYJPawbgndFCgLfERE974hqrxBFk8kTMl1RMHto5+Y7yCPnJsggzodtojpxJ
-snrY5oIz1iHa3f/R5oshmsP88KEBaMxBoQ+aum21oQ47894M9Oqx67A8trVAg+bK
-ByJfGlZYO+erR8qeEnn689LZQmri3Fp9hC7e0/DCAyxS0ucuJl/c9O7VY32JAaS4
-IB+6fDx4sqTDaecOh4MU703tWSoJ+RZZLjcHEyoAGbtpEypZr448x+y13jXy69kN
-aH/ZnRhCIhSbcj5m0qijcrOhUZJT4Mk7H1Q+80Br/Ox/JbdYN6aOZnCArDGzDHB6
-UcmNu3sU3/Am6sMBHTRgG3ixjWH552RWa2xTXbrpsExpvGcxkw+L7oljZQ+NH6Lb
-7/nDQ9qZ
-=Ft4O
------END PGP SIGNATURE-----
-
---=-2Kb2Bk/oNe7Vq88EgNRU--
-
+-- 
+	Ansuel
