@@ -2,111 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A8C3430D06
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 02:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98B0E430D0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 02:16:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344839AbhJRAQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 17 Oct 2021 20:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52974 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344832AbhJRAQI (ORCPT
+        id S1344847AbhJRATH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 17 Oct 2021 20:19:07 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:63651 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344846AbhJRATH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 17 Oct 2021 20:16:08 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FC8C06161C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 17:13:57 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id k11-20020a4aa5cb000000b002b73749f3cdso763063oom.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 17:13:57 -0700 (PDT)
+        Sun, 17 Oct 2021 20:19:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+YarjN59B/YpZF87egTLf9DlT73ZAFyg2a72BJpblNM=;
-        b=fXGL48PjsKEeQLoF6lB1HzxnbSETa4YCBl29R1fdfuO0NiKHIPWngx/IeEJ7PMPCFi
-         uNP3mzDHQH4MMHTpPxOsfZ9h5270XAK0mUi4gUmYc20Jan0GfgXMkfRiCyEJIhlqL6Hq
-         vu+L/zt2CoKcv/E9fbpMzIlICzf+bgl7wb/UYZCx1mwQtmGGQVuZy8q5VshaxtCOAS4z
-         8SGAvdi8T4q4Mr6BW2MVGzXCiy+LMiZMPMetBsLybMR8lCiM0x1Zsy7xy4pNOXC9Zrkw
-         k+NJcPzBDWdBjksLDWnoeQSurZgclwgrgRadnpBvWBKHYX7f31r0YxUwWrc4Ef6sJSNo
-         a7mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+YarjN59B/YpZF87egTLf9DlT73ZAFyg2a72BJpblNM=;
-        b=4qZ2XUT8mLpXwX/wm69JROoBLvJxZI7FesFmgeKIxglz9SdMAZ/7xtQ1aotFIjB09Z
-         4JJFSsnpFX3oOTvXIbpJ85ubxqf7qKXI+dQuScolQBu/+NdB4d/uZu6juAEu70C/Pqxk
-         H7WUAzUUbGBcCcN2YUmcFMrSd/OcpTU6kwtjP96m70oT3ryVAGxcSY8JJMnOTawhXQKj
-         AZ4tjaS59bnLs7vwIDn/qaNKejT4Lb3oVjNluIVv35fOdQZ3uB9Cg1mL56vdUJPjRCZ1
-         lN2gL5WFzlEMpMuAR9+A5KgDl6qvzEVu4ZqQuWhUHG3/JUQhe+jkTm+3zNZz5EACF3bP
-         Eizg==
-X-Gm-Message-State: AOAM5304U75EoDkpG+7+ifjepIUlMLtTZ5qJVQKrtp003cLg/JzXNw3a
-        fWOZmBs4K1kL716d9/H9wUA74Q==
-X-Google-Smtp-Source: ABdhPJzFZrviIzpT32yXdWeEb9wzc9D5kwrjqNu06JxApomyzkqkQOLcKrPhO1gzJomhCyQdETWkew==
-X-Received: by 2002:a4a:e1fd:: with SMTP id u29mr18974214ood.0.1634516037143;
-        Sun, 17 Oct 2021 17:13:57 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id l10sm2670189otj.9.2021.10.17.17.13.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Oct 2021 17:13:56 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: (subset) 
-Date:   Sun, 17 Oct 2021 19:13:55 -0500
-Message-Id: <163451593812.443375.5973446055625018432.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
-References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634516217; x=1666052217;
+  h=subject:from:to:cc:references:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=+DqZghC6e7EKUymLWMHM4xicG8Jx1RULn6GiJV197L8=;
+  b=BvTemcqyXMWDxn/ueVvV2wbLB3rCKRc97SuhpBS0C2IGzvhl8wWk4mZH
+   2s7dt0Dw0UK6rXHx6lJN9Awz2ecuwnI5H6yt5qGY9gk0nfheP//3QgmeF
+   DZRWlY7BeBqcival50w8LTZu/WnV+OpIxT6A3rGCIPQOLo3q6fPcq5uKr
+   w=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 17 Oct 2021 17:16:56 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2021 17:16:56 -0700
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Sun, 17 Oct 2021
+ 17:16:54 -0700
+Subject: Re: [RESEND PATCH v1 1/9] spmi: pmic-arb: add a print in cleanup_irq
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1631860384-26608-2-git-send-email-quic_fenglinw@quicinc.com>
+ <163406078422.936959.12726677103787301939@swboyd.mtv.corp.google.com>
+ <6c91a6ad-0ff2-a431-138a-2ec83f2bfa74@quicinc.com>
+ <163415372158.936959.16897606198271075227@swboyd.mtv.corp.google.com>
+ <e94d4b54-316e-220e-aaec-f60311c37745@quicinc.com>
+ <163426014715.936959.6136985763712059359@swboyd.mtv.corp.google.com>
+ <83fa65c8-3442-ee26-22ed-e26b013cca14@quicinc.com>
+Message-ID: <456da380-e613-14dc-6e42-5d6350dc2389@quicinc.com>
+Date:   Mon, 18 Oct 2021 08:16:52 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <83fa65c8-3442-ee26-22ed-e26b013cca14@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 8 Oct 2021 04:24:59 +0300, Dmitry Baryshkov wrote:
-> In 2019 (in kernel 5.4) spmi-gpio and ssbi-gpio drivers were converted
-> to hierarchical IRQ helpers, however MPP drivers were not converted at
-> that moment. Complete this by converting MPP drivers.
-> 
-> Changes since v2:
->  - Add patches fixing/updating mpps nodes in the existing device trees
-> 
-> [...]
 
-Applied, thanks!
+On 10/15/2021 9:27 AM, Fenglin Wu wrote:
+>
+> On 10/15/2021 9:09 AM, Stephen Boyd wrote:
+>> Quoting Fenglin Wu (2021-10-13 19:26:55)
+>>> On 10/14/2021 3:35 AM, Stephen Boyd wrote:
+>>>> Quoting Fenglin Wu (2021-10-12 21:15:42)
+>>>>> On 10/13/2021 1:46 AM, Stephen Boyd wrote:
+>>>>>> Quoting Fenglin Wu (2021-09-16 23:32:56)
+>>>>>>> From: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+>>>>>>>
+>>>>>>> The cleanup_irq() was meant to clear and mask interrupts that were
+>>>>>>> left enabled in the hardware but there was no interrupt handler
+>>>>>>> registered for it. Add an error print when it gets invoked.
+>>>>>> Why? Don't we get the genirq spurious irq message in this scenario?
+>>>>> Thanks for reviewing the change.
+>>>>>
+>>>>> No, there is no existing message printed out in this special case 
+>>>>> ( IRQ
+>>>>> fired for not registered interrupt).
+>>>> Ah I see so the irq doesn't have a flow handler? Shouldn't you call
+>>>> handle_bad_irq() in this case so we get a irq descriptor print?
+>>> In such case, the irq number is not valid and there won't be a valid
+>>> irq_desc, hence it's not possible to call handle_bad_irq() here.
+>> I mean handle_bad_irq() on the irqdesc for the spmi pmic arb chained
+>> irq. Because things are not good with the chained irq.
+> Okay, how about this, Update periph_interrupt() function with a return
+> value, and return -EINVAL once an invalid IRQ is detected. In
+> pmic_arb_chained_irq(), call handle_bad_irq() if periph_interrupt()
+> returned -EINVAL.
+Combined with your comments in "[PATCH v1 3/9] spmi: pmic-arb:check apid
+againstlimits before calling irq handler",it seemslike that it can be
+a independentpatch for handling spuriousinterrupt, something like this
+in my mind:
 
-[03/25] ARM: dts: qcom-apq8064: add gpio-ranges to mpps nodes
-        commit: 9be51f0b16ef83208fbfdc42fe59a622b6beee4c
-[04/25] ARM: dts: qcom-msm8660: add gpio-ranges to mpps nodes
-        commit: cd1049b631d05ad25b7976cf67144277598e72f2
-[05/25] ARM: dts: qcom-pm8841: add gpio-ranges to mpps nodes
-        commit: 6a91e584a3a0a247f836f063cbd3d99b1babaf4c
-[06/25] ARM: dts: qcom-pm8941: add gpio-ranges to mpps nodes
-        commit: 72af8d006b68cb88ae618d812b1053e59b06fe56
-[07/25] ARM: dts: qcom-pma8084: add gpio-ranges to mpps nodes
-        commit: 50ec4abed12cd0d5d34656330bb82192d607b3b7
-[08/25] ARM: dts: qcom-mdm9615: add gpio-ranges to mpps node, fix its name
-        commit: 7cf05e3b457b4d0eea385ad0acec327ee0adc5a1
-[09/25] ARM: dts: qcom-apq8060-dragonboard: fix mpps state names
-        commit: 636396efe303345cba6b0084b3228cf861d22e36
-[18/25] ARM: dts: qcom-apq8064: add interrupt controller properties
-        commit: 216f41938d669e7949964c181350cb61b4fdda03
-[19/25] ARM: dts: qcom-mdm9615: add interrupt controller properties
-        commit: f574aa0b12403dd0f4bef366199bfba860188086
-[20/25] ARM: dts: qcom-msm8660: add interrupt controller properties
-        commit: 789a247a3f10985ddae58a975e2550a35388ca52
-[21/25] ARM: dts: qcom-pm8841: add interrupt controller properties
-        commit: 3dca61a70c0453ea02089059d9d435a7b9b104ce
-[22/25] ARM: dts: qcom-pm8941: add interrupt controller properties
-        commit: 9fb04774f3436f93075b80870fd94e2e68f8bf04
-[23/25] ARM: dts: qcom-pma8084: add interrupt controller properties
-        commit: a7fe01561e6cda173b1fffb1c8552040933e7588
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index 295e19f..bd01ad4 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -504,10 +504,10 @@ static void cleanup_irq(struct spmi_pmic_arb 
+*pmic_arb, u16 apid, int id)
+                                 irq_mask, ppid);
+  }
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+-static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
++static int periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
+  {
+         unsigned int irq;
+-       u32 status, id;
++       u32 status, id, handled = 0;
+         u8 sid = (pmic_arb->apid_data[apid].ppid >> 8) & 0xF;
+         u8 per = pmic_arb->apid_data[apid].ppid & 0xFF;
+
+@@ -522,7 +522,10 @@ static void periph_interrupt(struct spmi_pmic_arb 
+*pmic_arb, u16 apid)
+                         continue;
+                 }
+                 generic_handle_irq(irq);
++               handled++;
+         }
++
++       return (handled == 0) ? -EINVAL : 0;
+  }
+
+  static void pmic_arb_chained_irq(struct irq_desc *desc)
+@@ -533,7 +536,7 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+         int first = pmic_arb->min_apid >> 5;
+         int last = pmic_arb->max_apid >> 5;
+         u8 ee = pmic_arb->ee;
+-       u32 status, enable;
++       u32 status, enable, handled = 0;
+         int i, id, apid;
+
+         chained_irq_enter(chip, desc);
+@@ -548,10 +551,14 @@ static void pmic_arb_chained_irq(struct irq_desc 
+*desc)
+                         enable = readl_relaxed(
+ver_ops->acc_enable(pmic_arb, apid));
+                         if (enable & SPMI_PIC_ACC_ENABLE_BIT)
+- periph_interrupt(pmic_arb, apid);
++                               if (periph_interrupt(pmic_arb, apid) == 0)
++ handled++;
+                 }
+         }
+
++       if (handled == 0)
++               handle_bad_irq(desc);
++
+         chained_irq_exit(chip, desc);
+  }
+
+Is this what you expected? The original patch is only for printing a 
+debug message when any
+sub-irq is detected as enabled but not registered, some other sub-IRQ 
+maybe still valid and
+be handled after that, which means the chained-irq may still be a good 
+one.Should I keep
+the original patch unchanged and submit a separate one to handle the 
+spuriousinterrupt?
+
+
