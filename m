@@ -2,110 +2,265 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C2BC431A28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 14:56:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5387431D6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 15:50:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231466AbhJRM6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 08:58:30 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:18822 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbhJRM6a (ORCPT
+        id S233469AbhJRNv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 09:51:26 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([81.169.146.170]:16751 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231893AbhJRNtZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 08:58:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1634561774;
+        Mon, 18 Oct 2021 09:49:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1634564830;
     s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=OqccIkY4i1t4VJRk9mPtA2mqAlP8NFJGUylFRJUf6so=;
-    b=emhYqEC1M0Czer1t0/DniSH/7MJn6qmwkRVR+AIC9QU0Kgdgr/ysxF0cFISY2nntww
-    ZGo9fiSp87F4bYLp28466WnF7UQtpQ3xsSJtyNQVT+fBG/be9UYjFMqDa8D3Ydl7HwU0
-    KK5CKMC9820YJZH5jxjq2IIbS432RyqVHsO9pq0XnUbwa7leL2WWwuNvDsLznupg3VjZ
-    KoPH3Ktl7HRMmOFvxVehv9c1ZAAA8BPRRtYXE1N1P1MH16TSK7yJ8jW+SyAYso2JjxIm
-    04GKNPzezm6VMPbvZM8X+PydhmpMLcpF9pg99PBc7jEfl2srVf81yAzpvbxNCHf0u8/v
-    BW5Q==
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=1mMw6YuDELOq6zOK2SjiTcuTtmZUdFxJCRNKU8bgwTg=;
+    b=EVeGBcLZsGBFaLjq8B11jXZNXNuhZgv5iPBTZa4pPya9errCkdlg31jzBl29JFKSM1
+    iRFDWOxIfG0oyI3flKXzOnjM9BltGWdegmA/tI2j7wS5o40xZyE6OyyV62TzWuGIn63T
+    YJcAT+KIc/qaXNfMlwB2HFI1xEG3zcPieU5Fcc3WFwm6oIu+8M5zm2QW5jOWY/onPoGu
+    fxrXXcNDp3WPO8ZnNc1WiakXAzQ4bWe430On1HVuroz2QOuA5DhPoVW80AnLPbrO4er1
+    i+OeX8okYPSnHJ0TUqLnnjFF4VClhU9vl7dJarNSdFqXSSp6fAZR4MnKZgSmPB2a+EWe
+    qtRw==
 Authentication-Results: strato.com;
     dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw5+aY="
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL1OfxR"
 X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
+Received: from droid..
     by smtp.strato.de (RZmta 47.33.8 AUTH)
-    with ESMTPSA id 301038x9ICuAWJs
+    with ESMTPSA id 301038x9IDlAWs1
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Mon, 18 Oct 2021 14:56:10 +0200 (CEST)
-Date:   Mon, 18 Oct 2021 14:56:05 +0200
+    Mon, 18 Oct 2021 15:47:10 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        netdev@vger.kernel.org, MSM <linux-arm-msm@vger.kernel.org>,
-        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: Re: [PATCH net-next v2 1/4] dt-bindings: dmaengine: bam_dma: Add
- "powered remotely" mode
-Message-ID: <YW1u5UlmrypFxp9C@gerhold.net>
-References: <20211011141733.3999-1-stephan@gerhold.net>
- <20211011141733.3999-2-stephan@gerhold.net>
- <CAH=2NtwH9kmZBMsOkZkwiuN2mpmOTiAVtw3zC2O4xNdCgG8P4w@mail.gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH] arm64: dts: qcom: Drop unneeded extra device-specific includes
+Date:   Mon, 18 Oct 2021 15:36:56 +0200
+Message-Id: <20211018133656.32649-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH=2NtwH9kmZBMsOkZkwiuN2mpmOTiAVtw3zC2O4xNdCgG8P4w@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 18, 2021 at 05:04:31PM +0530, Bhupesh Sharma wrote:
-> On Mon, 11 Oct 2021 at 20:12, Stephan Gerhold <stephan@gerhold.net> wrote:
-> >
-> > In some configurations, the BAM DMA controller is set up by a remote
-> > processor and the local processor can simply start making use of it
-> > without setting up the BAM. This is already supported using the
-> > "qcom,controlled-remotely" property.
-> >
-> > However, for some reason another possible configuration is that the
-> > remote processor is responsible for powering up the BAM, but we are
-> > still responsible for initializing it (e.g. resetting it etc). Add
-> > a "qcom,powered-remotely" property to describe that configuration.
-> >
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> > Changes since RFC:
-> >   - Rename qcom,remote-power-collapse -> qcom,powered-remotely
-> >     for consistency with "qcom,controlled-remotely"
-> >
-> > NOTE: This is *not* a compile-time requirement for the BAM-DMUX driver
-> >       so this could also go through the dmaengine tree.
-> >
-> > Also note that there is an ongoing effort to convert these bindings
-> > to DT schema but sadly there were not any updates for a while. :/
-> > https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
-> 
-> Seems you missed the latest series posted last week - [1]. Sorry I got
-> a bit delayed posting it due to being caught up in other patches.
-> 
-> Maybe you can rebase your patch on the same and use the YAML bindings
-> for the qcom,bam_dma controller.
-> 
-> [1]. https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/T/#t
-> 
+For some reason apq8016-sbc, apq8096-db820c, msm8916-mtp and msm8996-mtp
+were added as separate .dts and .dtsi files where the first only contains
+the model name and the latter contains most of the actual definitions.
+Perhaps this was done with the expectation that there would be other
+devices also making use of exactly the same. However, this has not
+been the case until now and it also seems unlikely in the future.
+Having the extra .dtsi only clutters the file list and provides
+little benefit.
 
-Ah, you're right sorry! Seems like you sent it two days after I sent the
-v2 of this patch. Thanks a lot for continuing work on this! :)
+Move the contents of the .dtsi into the .dts file to make this consistent
+with most other devices that simply define everything in the .dts.
 
-Since I already sent v3 of this patch earlier, I think it is best if
-I wait a bit first and see if Vinod has any comments or still wants to
-take it for 5.16. Should be simple to rebase either of our patches on
-the other one.
+There are no functional changes introduced by this patch:
+The compiled ".dtb"s are completely identical.
 
-Thanks!
-Stephan
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Note that Git generates a terrible diff by default for this patch.
+(It tries to move the contents of the much longer .dtsi into the .dts
+ rather than the other way around...)
+
+I had to use some magic to get a properly readable diff, let me know
+if this causes any problems for some reason.
+---
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts            | 13 -------------
+ .../dts/qcom/{apq8016-sbc.dtsi => apq8016-sbc.dts}  |  5 +++++
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts         | 13 -------------
+ .../{apq8096-db820c.dtsi => apq8096-db820c.dts}     |  5 +++++
+ arch/arm64/boot/dts/qcom/msm8916-mtp.dts            | 13 -------------
+ .../dts/qcom/{msm8916-mtp.dtsi => msm8916-mtp.dts}  |  5 +++++
+ arch/arm64/boot/dts/qcom/msm8996-mtp.dts            | 13 -------------
+ .../dts/qcom/{msm8996-mtp.dtsi => msm8996-mtp.dts}  |  5 +++++
+ 8 files changed, 20 insertions(+), 52 deletions(-)
+ delete mode 100644 arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+ rename arch/arm64/boot/dts/qcom/{apq8016-sbc.dtsi => apq8016-sbc.dts} (99%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+ rename arch/arm64/boot/dts/qcom/{apq8096-db820c.dtsi => apq8096-db820c.dts} (99%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+ rename arch/arm64/boot/dts/qcom/{msm8916-mtp.dtsi => msm8916-mtp.dts} (68%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+ rename arch/arm64/boot/dts/qcom/{msm8996-mtp.dtsi => msm8996-mtp.dts} (78%)
+
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+deleted file mode 100644
+index f3c0dbfd0a23..000000000000
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+- */
+-
+-/dts-v1/;
+-
+-#include "apq8016-sbc.dtsi"
+-
+-/ {
+-	model = "Qualcomm Technologies, Inc. APQ 8016 SBC";
+-	compatible = "qcom,apq8016-sbc", "qcom,apq8016";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+similarity index 99%
+rename from arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+rename to arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index 1c097098f1e0..a5320d6d30e7 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -3,6 +3,8 @@
+  * Copyright (c) 2015, The Linux Foundation. All rights reserved.
+  */
+ 
++/dts-v1/;
++
+ #include "msm8916-pm8916.dtsi"
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/input.h>
+@@ -11,6 +13,9 @@
+ #include <dt-bindings/sound/apq8016-lpass.h>
+ 
+ / {
++	model = "Qualcomm Technologies, Inc. APQ 8016 SBC";
++	compatible = "qcom,apq8016-sbc", "qcom,apq8016";
++
+ 	aliases {
+ 		serial0 = &blsp1_uart2;
+ 		serial1 = &blsp1_uart1;
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+deleted file mode 100644
+index 757afa27424d..000000000000
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
+- */
+-
+-/dts-v1/;
+-
+-#include "apq8096-db820c.dtsi"
+-
+-/ {
+-	model = "Qualcomm Technologies, Inc. DB820c";
+-	compatible = "arrow,apq8096-db820c", "qcom,apq8096-sbc", "qcom,apq8096";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+similarity index 99%
+rename from arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+rename to arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+index eca428ab2517..d01a512634cf 100644
+--- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
+@@ -3,6 +3,8 @@
+  * Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
+  */
+ 
++/dts-v1/;
++
+ #include "msm8996.dtsi"
+ #include "pm8994.dtsi"
+ #include "pmi8994.dtsi"
+@@ -40,6 +42,9 @@
+  */
+ 
+ / {
++	model = "Qualcomm Technologies, Inc. DB820c";
++	compatible = "arrow,apq8096-db820c", "qcom,apq8096-sbc", "qcom,apq8096";
++
+ 	aliases {
+ 		serial0 = &blsp2_uart2;
+ 		serial1 = &blsp2_uart3;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-mtp.dts b/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+deleted file mode 100644
+index d66c15538785..000000000000
+--- a/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+- */
+-
+-/dts-v1/;
+-
+-#include "msm8916-mtp.dtsi"
+-
+-/ {
+-	model = "Qualcomm Technologies, Inc. MSM 8916 MTP";
+-	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+similarity index 68%
+rename from arch/arm64/boot/dts/qcom/msm8916-mtp.dtsi
+rename to arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+index 1bd05046cdeb..7c0ceb3cff45 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-mtp.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-mtp.dts
+@@ -3,9 +3,14 @@
+  * Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+  */
+ 
++/dts-v1/;
++
+ #include "msm8916-pm8916.dtsi"
+ 
+ / {
++	model = "Qualcomm Technologies, Inc. MSM 8916 MTP";
++	compatible = "qcom,msm8916-mtp", "qcom,msm8916-mtp/1", "qcom,msm8916";
++
+ 	aliases {
+ 		serial0 = &blsp1_uart2;
+ 		usid0 = &pm8916_0;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+deleted file mode 100644
+index 45ed594c1b9c..000000000000
+--- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
++++ /dev/null
+@@ -1,13 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+- */
+-
+-/dts-v1/;
+-
+-#include "msm8996-mtp.dtsi"
+-
+-/ {
+-	model = "Qualcomm Technologies, Inc. MSM 8996 MTP";
+-	compatible = "qcom,msm8996-mtp";
+-};
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dtsi b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+similarity index 78%
+rename from arch/arm64/boot/dts/qcom/msm8996-mtp.dtsi
+rename to arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+index ac43a91f1104..7d9fc35bc7a0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+@@ -3,9 +3,14 @@
+  * Copyright (c) 2014-2015, The Linux Foundation. All rights reserved.
+  */
+ 
++/dts-v1/;
++
+ #include "msm8996.dtsi"
+ 
+ / {
++	model = "Qualcomm Technologies, Inc. MSM 8996 MTP";
++	compatible = "qcom,msm8996-mtp";
++
+ 	aliases {
+ 		serial0 = &blsp2_uart2;
+ 	};
+-- 
+2.33.0-magic42
+
