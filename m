@@ -2,104 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABAB6430FB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 07:21:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F0C2431047
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 08:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbhJRFYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 01:24:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35700 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbhJRFYG (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 01:24:06 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F93CC06161C
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 22:21:56 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id l16-20020a9d6a90000000b0054e7ab56f27so516591otq.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 Oct 2021 22:21:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jfN5TQ22U2KTDvkMiOGUKIajMf8GYobcA00Dr8Mt+CY=;
-        b=tS8ToojrQ4pmJBf1PdisCQBfJHtzq32axihoCCbxboNp7zEJM50K6zHjUHNR/Wcw4y
-         mfOPm0O4w6F2Pm6BG5Og2/JCfSSOfMqbtHE9O/LDvUgCUty1YoqsykWCzaGEWwFbR893
-         KknzVhfDxA70cMQQ0KO5eOunhje+tM+vctrFOBcSZCM8D2rOMQ5rWly5bAkZ/JUGO/lr
-         iZO+esqkbAM9UuYeCP4+kWe+1qjNx96fVlOk9a5mWGxMV4ikDRoLUBAN3dmdLtB+qpBX
-         EnpXzYQKinlIRrCnqKp2dGjNTS9ptYDsGQGEbIghTnjumV/otuIAQcXANsg6/lYQDzSb
-         uXuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jfN5TQ22U2KTDvkMiOGUKIajMf8GYobcA00Dr8Mt+CY=;
-        b=iCHvsIHE5eX0xH5sevBXuctSLr6QGi2hosijUSy4ye0/w48m6WVNoPtBZooAEZnDgy
-         LoQnrdtraqyIDstJgsqiPaYe+TfVIJdVDpXUN7NJMetHjYhA8EjbGCKRMQncLMgB8AHV
-         QXQo7kX1xgdmoVRmXQdgvoHfhyQhz5fVOhhGBUudEm6wyyAiEtIiuTKBLt0iAuuhse9i
-         aIVhDgyyDnghdb26SyZ2iWLGITK6uWM0lu4BnLl1rglP1DrzhSJCBVLkkGCEpOdd9fUa
-         v0QC/PLufhMO5LQFHGivY+Rbzqn+iqebQu70O8whf6h6E6UOMV2G3YYhoFJySX9bJXIf
-         S23Q==
-X-Gm-Message-State: AOAM530GC2KNkGe8UHLjCLq9ZhK1UGWb4qgMCH47EQrmsfkPpndbS7sb
-        kvDGRNiYEAIBlhFSltBUbnqA8bxOx+6ZgG5RpjyzmA==
-X-Google-Smtp-Source: ABdhPJw95k5KegGUv5YGfjdWaUckEAabcBIHOIenlhum4/S/scJJlhCp/9gw6fX9QebXdznc9O34rreiCUWCzbkNOa4=
-X-Received: by 2002:a05:6830:1c26:: with SMTP id f6mr19614185ote.28.1634534515216;
- Sun, 17 Oct 2021 22:21:55 -0700 (PDT)
+        id S230006AbhJRGTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 02:19:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43672 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229533AbhJRGTV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 18 Oct 2021 02:19:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0F0B360EB2;
+        Mon, 18 Oct 2021 06:17:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634537830;
+        bh=tbeYO4SB6h2XwPY3OFzR5vFWaqhgyaKQVbzLGhlxkeY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n8gi+n9fU46L71M9i6Ez2+q9n35ml71iVpTSOJzpjVaHTUl2ddSz3OA3vKSRAoPW0
+         TWybBKHD8YvUsS4kMoxshh6g03RnDd08Zvz40yuLvddWvke8D4x9XlB9koWAqTngH6
+         AwvxBeCEE9eRMUx0UbvLN0FuCgKc6m6/VRbtb9xZr93jYknUKwsH2x+p6WTDKy3Zto
+         US/bq5LlG7WoSW1QFnFxXgzwfP2MpxUEc8Z25WjQL5upuu5R3YNgO+kvwpr4s2zfNO
+         wE/7unG207pTadTy0mjUm//vnpfGtk2mmxw+d7n+z1XIxwa2WIiS0bKEZU6U7DYGYT
+         7HeNV2C2Zce1g==
+Date:   Mon, 18 Oct 2021 11:47:06 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Subject: Re: [PATCH net-next v2 1/4] dt-bindings: dmaengine: bam_dma: Add
+ "powered remotely" mode
+Message-ID: <YW0RYufCyPi5JLo3@matsya>
+References: <20211011141733.3999-1-stephan@gerhold.net>
+ <20211011141733.3999-2-stephan@gerhold.net>
 MIME-Version: 1.0
-References: <20211017204036.2761122-1-bjorn.andersson@linaro.org> <CAH=2Nty2yyVa1ow_zEOv3nsjjWg9Cb0CpTyDXAenMPMiBs4NQg@mail.gmail.com>
-In-Reply-To: <CAH=2Nty2yyVa1ow_zEOv3nsjjWg9Cb0CpTyDXAenMPMiBs4NQg@mail.gmail.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Mon, 18 Oct 2021 10:51:44 +0530
-Message-ID: <CAH=2NtypnKZsBva93yCQgBa-9pufkn0-vGAH04mOezfo4496AA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm LMH driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211011141733.3999-2-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 18 Oct 2021 at 10:47, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> Hi,
->
-> On Mon, 18 Oct 2021 at 02:08, Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > With the introduction of LMH in '36c6581214c4 ("arm64: dts: qcom:
-> > sdm845: Add support for LMh node")' the CPUfreq gained a reference for
-> > the two interrupts from the LMh. This means that if the LMh driver isn't
-> > enabled CPUfreq will not probe and there's no frequency scaling.
-> >
-> > Enable LMh to make CPUfreq functional again on SDM845.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  arch/arm64/configs/defconfig | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index 86224aa3a74b..0ae6cd2748d2 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -577,6 +577,7 @@ CONFIG_TEGRA_BPMP_THERMAL=m
-> >  CONFIG_TEGRA_SOCTHERM=m
-> >  CONFIG_QCOM_TSENS=y
-> >  CONFIG_QCOM_SPMI_TEMP_ALARM=m
-> > +CONFIG_QCOM_LMH=m
-> >  CONFIG_UNIPHIER_THERMAL=y
-> >  CONFIG_WATCHDOG=y
-> >  CONFIG_SL28CPLD_WATCHDOG=m
-> > --
->
-> Tested on SA8155p-ADP board, so:
+On 11-10-21, 16:17, Stephan Gerhold wrote:
+> In some configurations, the BAM DMA controller is set up by a remote
+> processor and the local processor can simply start making use of it
+> without setting up the BAM. This is already supported using the
+> "qcom,controlled-remotely" property.
+> 
+> However, for some reason another possible configuration is that the
+> remote processor is responsible for powering up the BAM, but we are
+> still responsible for initializing it (e.g. resetting it etc). Add
+> a "qcom,powered-remotely" property to describe that configuration.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+> Changes since RFC:
+>   - Rename qcom,remote-power-collapse -> qcom,powered-remotely
+>     for consistency with "qcom,controlled-remotely"
+> 
+> NOTE: This is *not* a compile-time requirement for the BAM-DMUX driver
+>       so this could also go through the dmaengine tree.
 
-Sorry, a typo here, I meant the patch was tested on the sdm845-mtp board here :)
+Can we split that this to dmaengine & net series if there is not
+dependency on the two... I think I skipped rev1 when I saw net-next
 
-> Reviewed-and-Tested-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->
-> Regards.
+
+> 
+> Also note that there is an ongoing effort to convert these bindings
+> to DT schema but sadly there were not any updates for a while. :/
+> https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
+> ---
+>  Documentation/devicetree/bindings/dma/qcom_bam_dma.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> index cf5b9e44432c..6e9a5497b3f2 100644
+> --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> @@ -15,6 +15,8 @@ Required properties:
+>    the secure world.
+>  - qcom,controlled-remotely : optional, indicates that the bam is controlled by
+>    remote proccessor i.e. execution environment.
+> +- qcom,powered-remotely : optional, indicates that the bam is powered up by
+> +  a remote processor but must be initialized by the local processor.
+>  - num-channels : optional, indicates supported number of DMA channels in a
+>    remotely controlled bam.
+>  - qcom,num-ees : optional, indicates supported number of Execution Environments
+> -- 
+> 2.33.0
+
+-- 
+~Vinod
