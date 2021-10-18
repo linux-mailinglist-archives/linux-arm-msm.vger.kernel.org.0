@@ -2,140 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED43E43180C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 13:50:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5A95431934
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 Oct 2021 14:35:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbhJRLwP convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 07:52:15 -0400
-Received: from mail-ua1-f45.google.com ([209.85.222.45]:34588 "EHLO
-        mail-ua1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhJRLwP (ORCPT
+        id S231617AbhJRMhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 08:37:09 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:55861 "EHLO
+        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231615AbhJRMhJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 07:52:15 -0400
-Received: by mail-ua1-f45.google.com with SMTP id h4so3784127uaw.1;
-        Mon, 18 Oct 2021 04:50:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5k/lpb+l8LiCQGm9WxrBH5sQpLcaEAbjVKVFfUJrgn0=;
-        b=cXd7+xHv4/YI8q2NCKEGi4EJtQDbeaf6n9wYyhxqn2VCF/q9u9jsyygdnN69nJK3CI
-         iOHljqGOxuBXg5biDHRgaYPBnCdhDK547d9NTl5hqsp/wVhWdNzSOOIiEx7JNDsvkKHg
-         RZ8E9Gv80Na1lB3hKSGUowT5Q4l1xGDLaeVnOvAoOZ+7lbNp2jNVLa8oSikDIDQZq0aO
-         Zaw/ShX01UKDdgd391+mOcUCYOUpF2nlFcgFsuyCW4QJykmsq8hoXfxPYmdmCSBcNLcw
-         Y+fREK29+bkXH8DrzRu+ub2Np1jcuhAAKuYNeRlx4n1xjNRAw1JHcvy1rnsRmUj7/Mlr
-         rQrA==
-X-Gm-Message-State: AOAM532ZdJXkHxMOlyzEMKkzigTetqe9qvITRrpCGvccoyGHg8rFaAHV
-        OdlfCUsYhElGplz40YCzJrovF4+FQayK8g==
-X-Google-Smtp-Source: ABdhPJy5xtX5yPiIpEdlxivyFzQnKS/we2003kVbgLIZyrjhBgWU1Qeru3vVbOtTGMFSPs5WI+NB4Q==
-X-Received: by 2002:a9f:23e2:: with SMTP id 89mr24638342uao.44.1634557803403;
-        Mon, 18 Oct 2021 04:50:03 -0700 (PDT)
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com. [209.85.222.42])
-        by smtp.gmail.com with ESMTPSA id 37sm8579119uac.20.2021.10.18.04.50.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Oct 2021 04:50:02 -0700 (PDT)
-Received: by mail-ua1-f42.google.com with SMTP id f4so5191835uad.4;
-        Mon, 18 Oct 2021 04:50:01 -0700 (PDT)
-X-Received: by 2002:ab0:538a:: with SMTP id k10mr25439724uaa.14.1634557801457;
- Mon, 18 Oct 2021 04:50:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211013144308.2248978-1-arnd@kernel.org> <25ccdc75-67da-a955-b8ef-641a2f007d13@amd.com>
- <CAMuHMdWKp-v=df0JA_tr-YgNnyfu7NS9dA3Zr+bqwZX9JuBAGQ@mail.gmail.com> <ad5d95ab-7cb5-aef7-9904-eda0befe8519@amd.com>
-In-Reply-To: <ad5d95ab-7cb5-aef7-9904-eda0befe8519@amd.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Mon, 18 Oct 2021 13:49:50 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVW3eBAozRLcWXfeh20ycC4sjfrjPv+yrf89xLSM0VMpQ@mail.gmail.com>
-Message-ID: <CAMuHMdVW3eBAozRLcWXfeh20ycC4sjfrjPv+yrf89xLSM0VMpQ@mail.gmail.com>
-Subject: Re: [PATCH] drm: msm: fix building without CONFIG_COMMON_CLK
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Arnd Bergmann <arnd@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Arnd Bergmann <arnd@arndb.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rajeev Nandan <rajeevny@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Mon, 18 Oct 2021 08:37:09 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 6D747580B31;
+        Mon, 18 Oct 2021 08:34:57 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 18 Oct 2021 08:34:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=JDzR27XjpWVhhT/HjvP8lcBn6jm
+        H4lkGCuYgmDjihJ4=; b=lP2VOyWu1ebz/g4Gnn5VQRD5s0QN5vqebY4j2zGaQWZ
+        WxirDaLuYdegvSCbYQcWpbMgk2kt1mVFHBAC/CQuYAeZ9t4/zHxVBb19F84NUl16
+        rbAtFfmiHj4LoAeakBomh2yxd90TWjRzQkI0PAwkYhuuc3KWvh7Z/wqwSWiu6ynr
+        eGDU/62Xstk31q+Mqb3+VyX8SZc6MWh1bGeiLPFFKZcQxdrUgjoX8Aa1DJgsz7+O
+        JDpK72hPLV4P2C157FYmY4NG1xx/IZFhR+5v4SzbR27efC5VRMV8VOyc/VBf7Oaj
+        riXMnJsWzK13n2hQdvbZ6iRyKpOJTml2B+rDq2ez36g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=JDzR27
+        XjpWVhhT/HjvP8lcBn6jmH4lkGCuYgmDjihJ4=; b=WaqXf6aMKIlHL32mvYybKc
+        LHhkGBjGWj7hpFnq+KEqeKoT05o7i4KbxIMSDrHMPqp/rPTPou375bf0kL0v3XTY
+        6EVJAgIQEgKuWF8wsUE0WVQXSKFRWlkhJc0ZFbJEqv01FtGaSCGjrDd5y+ngwCvf
+        O1PGzqpMwtUFOwnCS2shCTx2POqnUlLNLg83hexSxk5DtSSfFr1AwehNlEb9oCdj
+        QSh0zhI72ScS+c35p76dxsJzZ0n7HNcz2d9u6DNZcREGNtgW11Ut9/LVihoNS4UU
+        YSUNXMkNDmcIwHTXl3ZWsxji1ULGBauRF3VvTHfegx3qzM6i1hBMoSFICkwET/JQ
+        ==
+X-ME-Sender: <xms:72ltYfGZfkfbWLlDXmlo5-6NjGjaTB8FKcsz-iH5q3UdKbj_aREffg>
+    <xme:72ltYcUtWF9kC4L5E93weNuRO9k73Z_HLfvrNZOwcaBTktE4md2HNEIhajFHcroL8
+    DIQkImIIaC85S_TwAk>
+X-ME-Received: <xmr:72ltYRLTptB_8B4nt9k0YGuSZOLfSzPKhFJh5EYsWDWRebxemxedsSotrZy9S69YF6-2eRDxuQdbzqELk7F29nHdedj7yUeDR0Wju9ak>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvtddgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepkefgffekffelgfeukedvhffggeehtedugfekgeeihfefhfehieeukeevffev
+    hfefnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdgtrghlvggsshdrug
+    gvvhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehm
+    rgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:72ltYdF2JS4fmhrgUht9RogaVJ0XPeydDW9pm8WTFX0qukFuPQgvKw>
+    <xmx:72ltYVUho1H9PzUdDxtphBo4cAuil-eA0H3dV2AlIQc9MKPZ3CotuA>
+    <xmx:72ltYYMrqkOpAYz8dTqliKzZzTGe5iUrB2UC8utlt7YbD1XNFoOzDw>
+    <xmx:8WltYfhd9w57PWI7uceJqjcF6Tb3QT_hFL4q6wvZNey02HS6q4Pp9g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Oct 2021 08:34:55 -0400 (EDT)
+Date:   Mon, 18 Oct 2021 14:34:52 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        freedreno@lists.freedesktop.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Subject: Re: [Freedreno] [PATCH v4 00/24] drm/bridge: Make panel and bridge
+ probe order consistent
+Message-ID: <20211018123452.efwx5varmxihsv6n@gilmour>
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+ <CALAqxLUqdkxXogmPhPgHv4Bgx-4b3mxe12LzzvWb07pLSnb2kA@mail.gmail.com>
+ <CALAqxLUYb=ge4AZZzmk71Qr-92vnnE6sJxwCNUdEz4=VDKr1kg@mail.gmail.com>
+ <CALAqxLX7oK6DeoCPZhMTpHKCihSYq7KZDrt5UKb46=ZBbJd9fA@mail.gmail.com>
+ <CAF6AEGuJgrYrg7FXpVj8P_qf73CXb4=0KysSYQaobJuheDeUSA@mail.gmail.com>
+ <YXiZIuao6wNch7j-D3ZktdSR3_IRAQ3oSeL8sLCCX8lEhwsoWaouE6_eV6C2Zv9r2_dww_Mtal18UBJfc4fz4g==@protonmail.internalid>
+ <CAMi1Hd0sUUFvNzYwt29af9d99o1-x+LiXBPCrQ8=9H0tHvxVHg@mail.gmail.com>
+ <b57fbc24-9ef3-a57b-17d4-2cb33fb409d4@linaro.org>
+ <20211013141629.qfeqwsyi5yobzjca@gilmour>
+ <CAF6AEGu2CyQA6XZ=r4c9Z0tiiPUxyhTf0OAu3v6w0oswJ3567w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="c73vrvulwt5myj34"
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGu2CyQA6XZ=r4c9Z0tiiPUxyhTf0OAu3v6w0oswJ3567w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Christian,
 
-On Mon, Oct 18, 2021 at 1:41 PM Christian König
-<christian.koenig@amd.com> wrote:
-> Am 18.10.21 um 13:38 schrieb Geert Uytterhoeven:
-> > On Mon, Oct 18, 2021 at 1:37 PM Christian König
-> > <christian.koenig@amd.com> wrote:
-> >> Am 13.10.21 um 16:42 schrieb Arnd Bergmann:
-> >>> From: Arnd Bergmann <arnd@arndb.de>
-> >>>
-> >>> When CONFIG_COMMON_CLOCK is disabled, the 8996 specific
-> >>> phy code is left out, which results in a link failure:
-> >>>
-> >>> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined reference to `msm_hdmi_phy_8996_cfg'
-> >>>
-> >>> This was only exposed after it became possible to build
-> >>> test the driver without the clock interfaces.
-> >>>
-> >>> Make COMMON_CLK a hard dependency for compile testing,
-> >>> and simplify it a little based on that.
-> >>>
-> >>> Fixes: b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
-> >>> Reported-by: Randy Dunlap <rdunlap@infradead.org>
-> >>> Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> >>> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> >>> ---
-> >>>    drivers/gpu/drm/msm/Kconfig  | 2 +-
-> >>>    drivers/gpu/drm/msm/Makefile | 6 +++---
-> >>>    2 files changed, 4 insertions(+), 4 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-> >>> index f5107b6ded7b..cb204912e0f4 100644
-> >>> --- a/drivers/gpu/drm/msm/Kconfig
-> >>> +++ b/drivers/gpu/drm/msm/Kconfig
-> >>> @@ -4,8 +4,8 @@ config DRM_MSM
-> >>>        tristate "MSM DRM"
-> >>>        depends on DRM
-> >>>        depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
-> >>> +     depends on COMMON_CLK
-> >>>        depends on IOMMU_SUPPORT
-> >> We also need a "depends on MMU" here because some automated test is now
-> >> trying to compile the driver on parisc as well.
-> >>
-> >> I have absolutely no idea how a platform can have IOMMU but no MMU
-> >> support but it indeed seems to be the case here.
-> > Huh?
+--c73vrvulwt5myj34
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rob,
+
+On Wed, Oct 13, 2021 at 05:16:58PM -0700, Rob Clark wrote:
+> On Wed, Oct 13, 2021 at 7:16 AM Maxime Ripard <maxime@cerno.tech> wrote:
 > >
-> > Parisc has config MMU def_bool y?
->
-> Then why vmap isn't available?
->
-> See the mail thread: [linux-next:master 3576/7806]
-> drivers/gpu/drm/msm/msm_gem.c:624:20: error: implicit declaration of
-> function 'vmap'
+> > Hi Caleb,
+> >
+> > On Thu, Sep 30, 2021 at 09:20:52PM +0100, Caleb Connolly wrote:
+> > > Hi,
+> > >
+> > > On 30/09/2021 20:49, Amit Pundir wrote:
+> > > > On Thu, 30 Sept 2021 at 04:50, Rob Clark <robdclark@gmail.com> wrot=
+e:
+> > > > >
+> > > > > On Wed, Sep 29, 2021 at 2:51 PM John Stultz <john.stultz@linaro.o=
+rg> wrote:
+> > > > > >
+> > > > > > On Wed, Sep 29, 2021 at 2:32 PM John Stultz <john.stultz@linaro=
+=2Eorg> wrote:
+> > > > > > > On Wed, Sep 29, 2021 at 2:27 PM John Stultz <john.stultz@lina=
+ro.org> wrote:
+> > > > > > > > On Fri, Sep 10, 2021 at 3:12 AM Maxime Ripard <maxime@cerno=
+=2Etech> wrote:
+> > > > > > > > > The best practice to avoid those issues is to register it=
+s functions only after
+> > > > > > > > > all its dependencies are live. We also shouldn't wait any=
+ longer than we should
+> > > > > > > > > to play nice with the other components that are waiting f=
+or us, so in our case
+> > > > > > > > > that would mean moving the DSI device registration to the=
+ bridge probe.
+> > > > > > > > >
+> > > > > > > > > I also had a look at all the DSI hosts, and it seems that=
+ exynos, kirin and msm
+> > > > > > > > > would be affected by this and wouldn't probe anymore afte=
+r those changes.
+> > > > > > > > > Exynos and kirin seems to be simple enough for a mechanic=
+al change (that still
+> > > > > > > > > requires to be tested), but the changes in msm seemed to =
+be far more important
+> > > > > > > > > and I wasn't confortable doing them.
+> > > > > > > >
+> > > > > > > >
+> > > > > > > > Hey Maxime,
+> > > > > > > >    Sorry for taking so long to get to this, but now that pl=
+umbers is
+> > > > > > > > over I've had a chance to check it out on kirin
+> > > > > > > >
+> > > > > > > > Rob Clark pointed me to his branch with some fixups here:
+> > > > > > > >     https://gitlab.freedesktop.org/robclark/msm/-/commits/f=
+or-mripard/bridge-rework
+> > > > > > > >
+> > > > > > > > But trying to boot hikey with that, I see the following loo=
+p indefinitely:
+> > > > > > > > [    4.632132] adv7511 2-0039: supply avdd not found, using=
+ dummy regulator
+> > > > > > > > [    4.638961] adv7511 2-0039: supply dvdd not found, using=
+ dummy regulator
+> > > > > > > > [    4.645741] adv7511 2-0039: supply pvdd not found, using=
+ dummy regulator
+> > > > > > > > [    4.652483] adv7511 2-0039: supply a2vdd not found, usin=
+g dummy regulator
+> > > > > > > > [    4.659342] adv7511 2-0039: supply v3p3 not found, using=
+ dummy regulator
+> > > > > > > > [    4.666086] adv7511 2-0039: supply v1p2 not found, using=
+ dummy regulator
+> > > > > > > > [    4.681898] adv7511 2-0039: failed to find dsi host
+> > > > > > >
+> > > > > > > I just realized Rob's tree is missing the kirin patch. My apo=
+logies!
+> > > > > > > I'll retest and let you know.
+> > > > > >
+> > > > > > Ok, just retested including the kirin patch and unfortunately I=
+'m
+> > > > > > still seeing the same thing.  :(
+> > > > > >
+> > > > > > Will dig a bit and let you know when I find more.
+> > > > >
+> > > > > Did you have a chance to test it on anything using drm/msm with D=
+SI
+> > > > > panels?  That would at least confirm that I didn't miss anything =
+in
+> > > > > the drm/msm patch to swap the dsi-host vs bridge ordering..
+> > > >
+> > > > Hi, smoke tested
+> > > > https://gitlab.freedesktop.org/robclark/msm/-/commits/for-mripard/b=
+ridge-rework
+> > > > on Pocophone F1 (sdm845 / A630) with v5.15-rc3. I see no obvious
+> > > > regressions in my limited testing so far including video (youtube)
+> > > > playback.
+> > > Tested on the OnePlus 6 too booting AOSP, works fine. This *fixes*
+> > > FBDEV_EMULATION (so we can get a working framebuffer console) which w=
+as
+> > > otherwise broken on 5.15.
+> > >
+> > > However it spits out some warnings during boot: https://p.calebs.dev/=
+gucysowyna.yaml
+> >
+> > Thanks for testing. It looks like the runtime_pm ordering between the
+> > msm devices changed a bit with the conversion Rob did.
+> >
+> > Rob, do you know what could be going on?
+> >
+>=20
+> Not entirely sure.. I didn't see that first splat, but maybe I was
+> missing some debug config? (The 2nd one is kind of "normal", I think
+> related to bootloader leaving the display on)
 
-You mean https://lore.kernel.org/all/202110141259.i36iJnsA-lkp@intel.com/?
+So do you feel like this is a blocker or do you expect it to be fixed
+sometime down the road?
 
-Hexagon != parisc.
-.
-And Hexagon also has config MMU def_bool y
+Maxime
 
-Gr{oetje,eeting}s,
+--c73vrvulwt5myj34
+Content-Type: application/pgp-signature; name="signature.asc"
 
-                        Geert
+-----BEGIN PGP SIGNATURE-----
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYW1p7AAKCRDj7w1vZxhR
+xfplAP4yJr2s6Y5qrWgoFIp1L95G4i4FWj0MWRxHMozE1tgeIgD/U5MlG7xXCrPy
+t96IzznNLtX+n7ec3+WzQhPM3z4qCA4=
+=l5hK
+-----END PGP SIGNATURE-----
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+--c73vrvulwt5myj34--
