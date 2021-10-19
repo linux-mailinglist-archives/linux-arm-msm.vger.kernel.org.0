@@ -2,151 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C51E4341B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 00:54:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D55F543421E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 01:34:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbhJSW4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 18:56:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbhJSW4f (ORCPT
+        id S229554AbhJSXgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 19:36:35 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:48317 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhJSXgf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 18:56:35 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0991FC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:54:22 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id o133so1256755pfg.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=cU3HJbTF7v8oN4m9QpyNLUi7Z2VsnXCEZXyNBnXavMs=;
-        b=cuhVndCamK8/716BHL8VV3m6G8gcGkThTiSVQ6WCdR23cmkvS8BAdf5MUWNZ3+xdJh
-         SXNvDs9u/lEzXmzt2H4VqFJR13EW1nC9xTyUpNjgvdyajBpGbxaWkVSkwru2zDmzhJL5
-         9+BvigGJweB1Imcox7fO16zbnV5IFg9bzbcUo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cU3HJbTF7v8oN4m9QpyNLUi7Z2VsnXCEZXyNBnXavMs=;
-        b=Egj66kmIWRzZQ6i1XYALcxsz6c4SZSuB1CaYKeYTP6kHesTI4He2m1PT5vrHMgJnG5
-         f1hcFbT5vXDl44lVwoQ9w8zCaY35S7IR9jtzchwOhL2AtSgV/i7R/3yvYJZUXV8u+yqY
-         9zDbioWlDQ0GtOQcUhpBbZqxoa46cvnaCM3l0rIM5EUFzWefjmvu540DQdCjoDqquu40
-         cew69vEMuyChmyyh0fgfHFEXS5UHZcMhVznQGFaN79dNj5kxcwqbT0+dfbBQzTZjE6tS
-         WoG4mtfn44PW8UJPWsRKmW4nGNL6H+AdfHuhDLZgotFOwd6UW3CK6Sd25t24JKDjUHy7
-         ImEA==
-X-Gm-Message-State: AOAM532w3UiO9ikhRBMk1brgPbMl+m1Q3L7GDImbe5jEugQGCOudaV2u
-        mjHysgxGfzO/0nYv8I4UNuOr/Q==
-X-Google-Smtp-Source: ABdhPJwhFFyHmKUMVfxbdbUIRSGmuKpqlVMRtb5XW/S/r0SYWKyVbrnMtwygjRKH7m1CQn1PDJPYsw==
-X-Received: by 2002:a62:5804:0:b0:44b:b75b:ec8f with SMTP id m4-20020a625804000000b0044bb75bec8fmr2499812pfb.63.1634684061497;
-        Tue, 19 Oct 2021 15:54:21 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6c1f:a561:f56:7d16])
-        by smtp.gmail.com with UTF8SMTPSA id q6sm245804pgc.1.2021.10.19.15.54.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Oct 2021 15:54:21 -0700 (PDT)
-Date:   Tue, 19 Oct 2021 15:54:18 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Peter Chen <peter.chen@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-usb@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Andy Gross <agross@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Nishanth Menon <nm@ti.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Roger Quadros <rogerq@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v15 0/6] usb: misc: Add onboard_usb_hub driver
-Message-ID: <YW9MmoSTouEDdpxa@google.com>
-References: <20210727004118.2583774-1-mka@chromium.org>
- <CAA8EJpq55e+fk9oDi8+JXDWiPcXDXK5oz1DL5eqfx+FkT-xhnw@mail.gmail.com>
+        Tue, 19 Oct 2021 19:36:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634686461; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qOnN/S+9RE7D3SqAFVshlOLHzL8eWKbXAxUSsArQSc4=;
+ b=ZU59kvyu/dMVrqKjArmTWvrCHoRuMIsKRHuzoeB8hpusjNygTOixeUhO9AB/4BtgL0At30va
+ y7ViUbMbg2w6/e+yPqHQPW8fw6U7gLBP2mzlUYtR6jWZMwrrab1Ne2SGkyO8caTeajoakz8X
+ 4N5P3y95Q2QHs9+yLdKCVLw/oxQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 616f55eb14914866fab69449 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Oct 2021 23:34:03
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AF057C4361A; Tue, 19 Oct 2021 23:34:02 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8E789C4338F;
+        Tue, 19 Oct 2021 23:34:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpq55e+fk9oDi8+JXDWiPcXDXK5oz1DL5eqfx+FkT-xhnw@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 19 Oct 2021 16:34:01 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH 1/2] drm/msm/dsi: untangle cphy setting from
+ the src pll setting
+In-Reply-To: <20211006204828.1218225-1-dmitry.baryshkov@linaro.org>
+References: <20211006204828.1218225-1-dmitry.baryshkov@linaro.org>
+Message-ID: <87b52292450d443fd5be678da8a7bf41@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-On Tue, Oct 19, 2021 at 07:24:41PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 27 Jul 2021 at 03:41, Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > This series adds:
-> > - the onboard_usb_hub_driver
-> > - glue in the xhci-plat driver to create and destroy the
-> >   onboard_usb_hub platform devices if needed
-> > - a device tree binding for the Realtek RTS5411 USB hub controller
-> > - device tree changes that add RTS5411 entries for the QCA SC7180
-> >   based boards trogdor and lazor
-> > - a couple of stubs for platform device functions to avoid
-> >   unresolved symbols with certain kernel configs
-> >
-> > The main issue the driver addresses is that a USB hub needs to be
-> > powered before it can be discovered. For discrete onboard hubs (an
-> > example for such a hub is the Realtek RTS5411) this is often solved
-> > by supplying the hub with an 'always-on' regulator, which is kind
-> > of a hack. Some onboard hubs may require further initialization
-> > steps, like changing the state of a GPIO or enabling a clock, which
-> > requires even more hacks. This driver creates a platform device
-> > representing the hub which performs the necessary initialization.
-> > Currently it only supports switching on a single regulator, support
-> > for multiple regulators or other actions can be added as needed.
-> > Different initialization sequences can be supported based on the
-> > compatible string.
+On 2021-10-06 13:48, Dmitry Baryshkov wrote:
+> Move DPHY/CPHY setting from msm_dsi_host_set_src_pll() to new function
+> msm_dsi_host_set_phy_mode().
 > 
-> I have the feeling that you might want to check if you can use pwrseq
-> subsystem being proposed at
-> https://lore.kernel.org/linux-arm-msm/20211006035407.1147909-1-dmitry.baryshkov@linaro.org/.
-> It has been created for exactly the same reason of handling complex
-> power up/down requirements in a bus-neutral way. So instead of
-> creating an onboard-usb-hub, you might want to populate the hub node
-> with the reference to pwrseq device and make usb core call into
-> pwrseq. How does that sound to you?
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks for the pointer, it's good to see another attempt to sort out
-power sequencing.
+Just a minor comment, can you also include the part which removes
+msm_host->cphy_mode = src_phy->cphy_mode; from msm_dsi_host_set_src_pll
+in this change itself so that its clear that you are removing from there
+and moving it into a new API?
 
-The pwrseq framework could potentially be used by the onboard_usb_hub
-driver, but it probably can't replace it completely. Besides powering
-the USB hub on before enumeration the driver also can optionally power
-it off during system suspend when no wakeup capable USB devices are
-connected, which can result in signifcant power savings on battery
-powered devices. For this the driver needs knowledge about the USB
-(hub) devices that are provided by a hub chip. That part is probably
-best implemented by a driver under drivers/usb/.
+You can still keep my
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 
-It might be an option to have the USB core and the onboard_usb_hub
-driver use the pwrseq framework, though we'd have to ensure that it
-isn't a problem that the USB core turns power on (before
-enumeration) and the onboard_usb_hub driver turns it off during
-system suspend (and on again on resume).
+once you address this.
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi.h         | 2 ++
+>  drivers/gpu/drm/msm/dsi/dsi_host.c    | 8 ++++++++
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c | 3 +++
+>  3 files changed, 13 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
+> b/drivers/gpu/drm/msm/dsi/dsi.h
+> index b50db91cb8a7..7dfb6d198ca9 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -118,6 +118,8 @@ unsigned long msm_dsi_host_get_mode_flags(struct
+> mipi_dsi_host *host);
+>  struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host 
+> *host);
+>  int msm_dsi_host_register(struct mipi_dsi_host *host, bool 
+> check_defer);
+>  void msm_dsi_host_unregister(struct mipi_dsi_host *host);
+> +void msm_dsi_host_set_phy_mode(struct mipi_dsi_host *host,
+> +			struct msm_dsi_phy *src_phy);
+>  int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
+>  			struct msm_dsi_phy *src_phy);
+>  void msm_dsi_host_reset_phy(struct mipi_dsi_host *host);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index e269df285136..1ffcd0577e99 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -2224,6 +2224,14 @@ void msm_dsi_host_cmd_xfer_commit(struct
+> mipi_dsi_host *host, u32 dma_base,
+>  	wmb();
+>  }
+> 
+> +void msm_dsi_host_set_phy_mode(struct mipi_dsi_host *host,
+> +	struct msm_dsi_phy *src_phy)
+> +{
+> +	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+> +
+> +	msm_host->cphy_mode = src_phy->cphy_mode;
+> +}
+> +
+>  int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
+>  	struct msm_dsi_phy *src_phy)
+>  {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index c41d39f5b7cf..49a0a0841487 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -77,6 +77,7 @@ static int dsi_mgr_setup_components(int id)
+>  			return ret;
+> 
+>  		msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
+> +		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
+>  		ret = msm_dsi_host_set_src_pll(msm_dsi->host, msm_dsi->phy);
+>  	} else if (!other_dsi) {
+>  		ret = 0;
+> @@ -104,6 +105,8 @@ static int dsi_mgr_setup_components(int id)
+>  					MSM_DSI_PHY_MASTER);
+>  		msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
+>  					MSM_DSI_PHY_SLAVE);
+> +		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
+> +		msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
+>  		ret = msm_dsi_host_set_src_pll(msm_dsi->host, clk_master_dsi->phy);
+>  		if (ret)
+>  			return ret;
