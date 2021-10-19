@@ -2,144 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9DEA433BE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 18:18:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA4ED433C0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 18:24:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231642AbhJSQUg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 12:20:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46410 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229789AbhJSQUg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 12:20:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 274FA6113D;
-        Tue, 19 Oct 2021 16:18:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634660303;
-        bh=CSThRwfLLBbnWmpSAkjzo6ykAldK6QMiL9G46/Dm69w=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=nVlcNJMijXvUCkk4ZNOavUI5JqGD7uYB1LEujLRt6C24Y9Dp4GGcBQzIcpTEcUJ65
-         tIl/13gwTNZtxSAGmErXo80daX/BWtXLbTa3PNUN1uxc6Ja7E+JDGpYXeffBf50wPg
-         kzE9NUEhBmkIja6HvQtT8CEesZLNCZRmz7YFLMfrQcJefyplMnQMZpstSdel1NoPv8
-         5C9rrybmpr1+vpm3CxebjEowX9gfHUxxGHwg1syJ7mZ2CerpR+sPADgvGuru3tTLqQ
-         MGXAhGoeknfwRASCjuSqq5ImM2xpA+ylpNccmFZ/XU5FGNdZKmH8br7cHU2Go2HZLK
-         R2eW43Ge42x1Q==
-Received: by mail-ed1-f51.google.com with SMTP id i20so14731424edj.10;
-        Tue, 19 Oct 2021 09:18:23 -0700 (PDT)
-X-Gm-Message-State: AOAM533dLQZYmL+GnX1F1unmNbXkLQIxmzLkPhAxCSa0ATU6oPOFQhuS
-        t+0X4QjQyxSzUoRxzVpk19y2G/bv9XYC3Vr3lQ==
-X-Google-Smtp-Source: ABdhPJyECg/ex6JGhxYjfVAKj9ZTQDiYmMDq836QH65YEzFdOsqIbnkT+Rd0QJdZrzxam94/CGdjldneWAz1SLg2GHg=
-X-Received: by 2002:aa7:c357:: with SMTP id j23mr57477452edr.145.1634660136617;
- Tue, 19 Oct 2021 09:15:36 -0700 (PDT)
+        id S234125AbhJSQ1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 12:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35552 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233693AbhJSQ1G (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Oct 2021 12:27:06 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0224CC06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 09:24:53 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id r17so440841qtx.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 09:24:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=15SUVNjuA+MqctsOYnbPTmIlkRsNZOxO4riu8UF//h0=;
+        b=fK+lPSwI1RGJXAeOcYSmAi+RRs1ueziY8FqbXBa7BV7E6/7ByaK9ZCRh4GJ/AD3tJH
+         KMFoi6ZnmXOtxgyveYyZLIIKkdqGEn4bgFZ3npMLiyPPZEXjf0FRBJ1QWsPUmy1GmqQ+
+         ORo+WtPrWflHN2JPS3no9tLz1jt1sMSSC3YZ8rMATQuYIPelGrmMCmKm7S+8Ep+km5v3
+         UFS0dGbUDHUjmRPJuqMEekENex2g/uxRI7rjUae03apr/DsfFWa8coFytMyrG4wID414
+         L3Evm2x5kDzlTqn1GMnnCbRu6EW8I//L9ZRBKvMu+bHgTrg4SBgU0SLRCd4fcA3rvy1K
+         JUNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=15SUVNjuA+MqctsOYnbPTmIlkRsNZOxO4riu8UF//h0=;
+        b=n/8JSlB9WAiBs8N7jfUa6Z+6RlPN/Z+MZ3h8l3hqxNPWwzvFhSc5Rjf2vovQpO+K13
+         +3YsaRZx3ccNUGE/pW4VvLmS5bU2yPrEP8FhVPjDgB8EmLLTMzAyU6cw8zcwUCcTi8J/
+         N4EdamIKWZH9P5q6xMyZrRwMONbl/gaugymjLLMVFkV4E7gIqPzOUGfbMUaafQ/MNOg7
+         JTUVVpc5tNGoECbDOsU/aQvBpzdYc5TCJcyg6R5p/ho87OsuAWwt7hB8GNhW/1bNo1yL
+         E8RxA3vc8hwcXKPdCAhJNk7eOJY94FCQ0xMzuFvVipOmBCbVPeV4iP85D2EwjEV6XzpX
+         V6/w==
+X-Gm-Message-State: AOAM533QJ6iYP/HiX4UIkBC1GDjMozMZBtzlcDwaA8hHcAP3Be+a4r43
+        3y2u8BHwweulfHGm1QPDdaPgofxzHIjg0JST8Nm4jw==
+X-Google-Smtp-Source: ABdhPJwhsxdepZGrzEMoIzc6l/55gIir0sm89iZlWRUPYW3kP59vAcG9XWpOFy592VMNC+pRPFoGt4IIFn2UIbiT9J8=
+X-Received: by 2002:ac8:7d92:: with SMTP id c18mr1039528qtd.388.1634660693042;
+ Tue, 19 Oct 2021 09:24:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211013223921.4380-1-ansuelsmth@gmail.com> <20211013223921.4380-17-ansuelsmth@gmail.com>
- <YW2BcC2izFM6HjG5@robh.at.kernel.org> <YW2Cp6vWAYDM68rs@Ansuel-xps.localdomain>
-In-Reply-To: <YW2Cp6vWAYDM68rs@Ansuel-xps.localdomain>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 19 Oct 2021 11:15:24 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ7QAMRWQs4iuEmPpj2q2t0tCEGBNP+9QvTwZ=aeJn4vQ@mail.gmail.com>
-Message-ID: <CAL_JsqJ7QAMRWQs4iuEmPpj2q2t0tCEGBNP+9QvTwZ=aeJn4vQ@mail.gmail.com>
-Subject: Re: [net-next PATCH v7 16/16] dt-bindings: net: dsa: qca8k: convert
- to YAML schema
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Vivien Didelot <vivien.didelot@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
+References: <20210727004118.2583774-1-mka@chromium.org>
+In-Reply-To: <20210727004118.2583774-1-mka@chromium.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 19 Oct 2021 19:24:41 +0300
+Message-ID: <CAA8EJpq55e+fk9oDi8+JXDWiPcXDXK5oz1DL5eqfx+FkT-xhnw@mail.gmail.com>
+Subject: Re: [PATCH v15 0/6] usb: misc: Add onboard_usb_hub driver
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Peter Chen <peter.chen@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-usb@vger.kernel.org,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
         Andy Gross <agross@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        John Crispin <john@phrozen.org>,
-        netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Matthew Hagan <mnhagan88@gmail.com>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        =?UTF-8?Q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Nishanth Menon <nm@ti.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 18, 2021 at 9:22 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+On Tue, 27 Jul 2021 at 03:41, Matthias Kaehlcke <mka@chromium.org> wrote:
 >
-> On Mon, Oct 18, 2021 at 09:15:12AM -0500, Rob Herring wrote:
-> > On Thu, Oct 14, 2021 at 12:39:21AM +0200, Ansuel Smith wrote:
-> > > From: Matthew Hagan <mnhagan88@gmail.com>
-> > >
-> > > Convert the qca8k bindings to YAML format.
-> > >
-> > > Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
-> > > Co-developed-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../devicetree/bindings/net/dsa/qca8k.txt     | 245 ------------
-> > >  .../devicetree/bindings/net/dsa/qca8k.yaml    | 362 ++++++++++++++++++
-> > >  2 files changed, 362 insertions(+), 245 deletions(-)
-> > >  delete mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.txt
-> > >  create mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-
-> > > +patternProperties:
-> > > +  "^(ethernet-)?ports$":
-> > > +    type: object
-> > > +    properties:
-> > > +      '#address-cells':
-> > > +        const: 1
-> > > +      '#size-cells':
-> > > +        const: 0
-> > > +
-> > > +    patternProperties:
-> > > +      "^(ethernet-)?port@[0-6]$":
-> > > +        type: object
-> > > +        description: Ethernet switch ports
-> > > +
-> > > +        properties:
-> > > +          reg:
-> > > +            description: Port number
-> > > +
-> > > +          label:
-> > > +            description:
-> > > +              Describes the label associated with this port, which will become
-> > > +              the netdev name
-> > > +            $ref: /schemas/types.yaml#/definitions/string
-> > > +
-> > > +          link:
-> > > +            description:
-> > > +              Should be a list of phandles to other switch's DSA port. This
-> > > +              port is used as the outgoing port towards the phandle ports. The
-> > > +              full routing information must be given, not just the one hop
-> > > +              routes to neighbouring switches
-> > > +            $ref: /schemas/types.yaml#/definitions/phandle-array
-> > > +
-> > > +          ethernet:
-> > > +            description:
-> > > +              Should be a phandle to a valid Ethernet device node.  This host
-> > > +              device is what the switch port is connected to
-> > > +            $ref: /schemas/types.yaml#/definitions/phandle
-> >
-> > All of this is defined in dsa.yaml. Add a $ref to it and don't duplicate
-> > it here.
-> >
+> This series adds:
+> - the onboard_usb_hub_driver
+> - glue in the xhci-plat driver to create and destroy the
+>   onboard_usb_hub platform devices if needed
+> - a device tree binding for the Realtek RTS5411 USB hub controller
+> - device tree changes that add RTS5411 entries for the QCA SC7180
+>   based boards trogdor and lazor
+> - a couple of stubs for platform device functions to avoid
+>   unresolved symbols with certain kernel configs
 >
-> The reason I redefined it is because I didn't manage to find a way on
-> how to add additional bindings for the qca,sgmii... . Any hint about
-> that?
+> The main issue the driver addresses is that a USB hub needs to be
+> powered before it can be discovered. For discrete onboard hubs (an
+> example for such a hub is the Realtek RTS5411) this is often solved
+> by supplying the hub with an 'always-on' regulator, which is kind
+> of a hack. Some onboard hubs may require further initialization
+> steps, like changing the state of a GPIO or enabling a clock, which
+> requires even more hacks. This driver creates a platform device
+> representing the hub which performs the necessary initialization.
+> Currently it only supports switching on a single regulator, support
+> for multiple regulators or other actions can be added as needed.
+> Different initialization sequences can be supported based on the
+> compatible string.
 
-The problem is we can't have a single schema for parent and child
-nodes and then allow additional properties in a child node at least if
-we want to make sure all child properties are defined.
-
-The port part of dsa.yaml needs to be split out either to a separate
-file or under '$defs' in the same file so that you can reference it
-and add properties.
-
-As a separate file, you can then do:
-
-"^(ethernet-)?port@[0-9]+$":
-  $ref: dsa-port.yaml#
-  unevaluatedProperties: false
-  properties:
-    a-custom-prop: ...
+I have the feeling that you might want to check if you can use pwrseq
+subsystem being proposed at
+https://lore.kernel.org/linux-arm-msm/20211006035407.1147909-1-dmitry.baryshkov@linaro.org/.
+It has been created for exactly the same reason of handling complex
+power up/down requirements in a bus-neutral way. So instead of
+creating an onboard-usb-hub, you might want to populate the hub node
+with the reference to pwrseq device and make usb core call into
+pwrseq. How does that sound to you?
 
 >
-> I tried with allOf but the make check still printed errors in the
-> example with not valid binding about qca,sgmii.
+> Besides performing the initialization the driver can be configured
+> to power the hub off during system suspend. This can help to extend
+> battery life on battery powered devices which have no requirements
+> to keep the hub powered during suspend. The driver can also be
+> configured to leave the hub powered when a wakeup capable USB device
+> is connected when suspending, and power it off otherwise.
+
+
+-- 
+With best wishes
+Dmitry
