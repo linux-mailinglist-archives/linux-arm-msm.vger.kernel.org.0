@@ -2,207 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C55B5434127
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 00:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13327434132
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 00:10:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbhJSWFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 18:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55934 "EHLO
+        id S229820AbhJSWMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 18:12:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbhJSWFl (ORCPT
+        with ESMTP id S229570AbhJSWMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 18:05:41 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75CCC06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:03:28 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id d125so22191750iof.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:03:28 -0700 (PDT)
+        Tue, 19 Oct 2021 18:12:43 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E38C06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:10:30 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id s136so17439662pgs.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cte4Yz9UFBWmtaszK1pKMNyLvlLh7oIZGqKpmP55a3I=;
-        b=csVvT0wfMqWYCBhKdl6GyQrkezOZCrIVdUbcC5K1aknXxIFfCqX44qyP+Xk35PU6ey
-         Fhy88PO2FkN0632kEENPegDw4nDguAq2P8M880cMLSvDsTPs6tvBKiHG0R2jhnCj0VXd
-         J84U3O/AhcbQgndBfMhpw3PTYaJLg8WduUlrU=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gcH42ft4PL5Uc/1EXoL8Dp6lDCUUCAQKKLWYXAKG1cg=;
+        b=gLWWTkEYbZJ9S5wn4tB9utjlf9XVjePkQgnPtpzqwjV5+Tgd9KNtnGEhYWs+gca1Lh
+         rNxbvgYEXhl0I3xqP+Cmu1u86u6h2HL6+AWpTA1fXMnsiEkM3o5cQaKyjsu7nhg3rY91
+         gjfn5RrgwxY3j3wjOSMw4nbZQW+p1PmXD32HA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cte4Yz9UFBWmtaszK1pKMNyLvlLh7oIZGqKpmP55a3I=;
-        b=Gx1RJ9yhCrM9bMI7Trp7ByrIdXs+nQ4l9Z+c7yTxSIh76jzRCjX4Ynk7YBGLtGoh1B
-         6C+8RvVyI0oYw+KDNCjCstcAyhI16f23AXMCaqpdcmIHquFE6gNrZrPXmReMBfdyML2z
-         zhSFb7AL8Pf5qTov2sGEr7hOQJpw6Ylr7Q/Q5TvrM2LybVgx+Fc0B9wOKzDQbrNXnyAB
-         U/UQg9zDv8ykgUWJfs4G+eu3/w5lXHoM/IVWLh5nEQcvPzVGq6Fd8JCisn3CEvVD4a2/
-         cfoIwsqbz6fDMbd5Rx3EdwBCBV621ht/m7lc5PHUyRV8mAJtRb/aVuYvPfcFuIXLWO/Y
-         SADw==
-X-Gm-Message-State: AOAM532Oc0bWCtkjaAkC1y3qysKjWg63FdGVQmL699E+tMdBT5acJ3L2
-        rz5jBqSFAOqb1fgwjF9yYKmlBAjbA95eJA==
-X-Google-Smtp-Source: ABdhPJxX8vlp38LlpmaCP8tKeJgSDa54GaK6C46O9S4CJthB5ob9aFYh+m3riM8owXjADiPCn0gmDA==
-X-Received: by 2002:a05:6602:3420:: with SMTP id n32mr20511171ioz.181.1634681007436;
-        Tue, 19 Oct 2021 15:03:27 -0700 (PDT)
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com. [209.85.166.178])
-        by smtp.gmail.com with ESMTPSA id y11sm150216ior.4.2021.10.19.15.03.26
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gcH42ft4PL5Uc/1EXoL8Dp6lDCUUCAQKKLWYXAKG1cg=;
+        b=W/NJ9iPS1jGM1hx1x9jNQ5fZP/ycDC+HLl0NFFeL4NboXsQEp4dHYCPdlkA+63/7QV
+         fcKvJZr83OajB9BJ2u+Efr540bViK3jXcOIRieED5DW41cCYGA6+oeRGBXLoBSJKn7BT
+         h/VF3pIhUWejhlYo3BOBHfYKynIzsRHPVqiZClvjT5yjj/yCkzb7Hney4/X4opD4OPZd
+         p/xz3TnR8yn+2fmBYWWBTJiEpnYiWCpYpjDDibx3nAMFVgDuYWNs/qQmYDzqVCII+ZNk
+         yEWKNrevvk4lX1n+zmGHFaX0bj4jdWtlNCLeKhG3994ziqAHuQCin9pOFNh/XTrdy8Tj
+         Zfmw==
+X-Gm-Message-State: AOAM533TyMHnKw9gVCVx6HjI4SVXHxjc9SmRgG97H6Q2LkH1tta+dWCx
+        cwnZs2MR+rXBLQg9BXjm/7cifw==
+X-Google-Smtp-Source: ABdhPJz8FQqhb8sxAUF9c1/0TkQZqd983/XaDEdJ60GExi3IhnaND//4FpVJC7NyexgDMDDuQ7+QWQ==
+X-Received: by 2002:a63:7f0e:: with SMTP id a14mr24338961pgd.390.1634681430017;
+        Tue, 19 Oct 2021 15:10:30 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:6c1f:a561:f56:7d16])
+        by smtp.gmail.com with UTF8SMTPSA id n207sm203903pfd.143.2021.10.19.15.10.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Oct 2021 15:03:26 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id j3so2188294ilr.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 15:03:26 -0700 (PDT)
-X-Received: by 2002:a05:6e02:15cb:: with SMTP id q11mr20328357ilu.180.1634681005902;
- Tue, 19 Oct 2021 15:03:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
- <1632399378-12229-9-git-send-email-rajpat@codeaurora.org> <CAK8P3a3KuTEAXbSTU+n3D_fryquo8B-eXSF2+HrikiNVn6kSSg@mail.gmail.com>
- <YW8xl0fLnQE5o3AQ@ripper> <CAD=FV=XsiMp5jSpX5ong27KYW=G-XYhCfjo48E5cC6Cm+oU-mA@mail.gmail.com>
- <CAK8P3a2FroDEppfEkPge7Mm4gGF8ZNHvCwL3r-8Cg7f575YhPw@mail.gmail.com>
-In-Reply-To: <CAK8P3a2FroDEppfEkPge7Mm4gGF8ZNHvCwL3r-8Cg7f575YhPw@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 19 Oct 2021 15:03:14 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wi9xTnWTPbakSnf9rKkiT+4AT=3db-uwhww1bdLKjv9g@mail.gmail.com>
-Message-ID: <CAD=FV=Wi9xTnWTPbakSnf9rKkiT+4AT=3db-uwhww1bdLKjv9g@mail.gmail.com>
-Subject: Re: [PATCH V10 8/8] arm64: dts: sc7280: Add aliases for I2C and SPI
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rajesh Patil <rajpat@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 19 Oct 2021 15:10:29 -0700 (PDT)
+Date:   Tue, 19 Oct 2021 15:10:25 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Doug Anderson <dianders@chromium.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Peter Chen <peter.chen@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre TORGUE - foss <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Lionel DEBIEVE <lionel.debieve@st.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin =?utf-8?Q?J=C3=BCcker?= <martin.juecker@gmail.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier MOYSAN <olivier.moysan@st.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
+Message-ID: <YW9CUabfA0HrtTAq@google.com>
+References: <20210813195228.2003500-1-mka@chromium.org>
+ <YUoRq1RrOIoiBJ5+@google.com>
+ <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
+ <YWkiGGBKOVokBye9@kroah.com>
+ <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Oct 19, 2021 at 06:04:06PM +0200, Fabrice Gasnier wrote:
+> On 10/15/21 8:39 AM, Greg Kroah-Hartman wrote:
+> > On Thu, Oct 14, 2021 at 02:38:55PM -0700, Doug Anderson wrote:
+> >> Hi,
+> >>
+> >> On Tue, Sep 21, 2021 at 10:09 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >>>
+> >>> Hi Greg,
+> >>>
+> >>> are there any actions pending or can this land in usb-testing?
+> >>>
+> >>> I confirmed that this series can be rebased on top of v5.15-rc2
+> >>> without conflicts.
+> >>
+> >> I'm quite interested to know what the next action items are, too. This
+> >> is one of the very few patches we have for trogdor (excluding MIPI
+> >> camera, which is a long story) that we're carrying downstream, so I'm
+> >> keenly interested in making sure it's unblocked (if, indeed, it's
+> >> blocked on anything).
+> >>
+> >> If folks feel that this needs more review eyes before landing again
+> >> then I'll try to find some time in the next week or two. If it's just
+> >> waiting for the merge window to open/close so it can have maximal bake
+> >> time, that's cool too. Please yell if there's something that I can do
+> >> to help, though! :-)
+> > 
+> > I would love more review-eyes on this please.
+> > 
+> 
+> Hi,
+> 
+> I noticed this series some time ago, and wanted to take a closer look.
+> 
+> The same issue this series address is seen on stm32 board for instance.
+> (arch/arm/boot/dts/stm32mp15xx-dkx.dtsi). On board HUB (not described in
+> the DT) is supplied by an always-on regulator.
+> So it could could be interesting/useful to address the same case ,
+> on stm32 boards, where USB2 (ehci-platform driver) is used currently.
+> 
+> I noticed a few things, especially on the dt-bindings. I've some
+> questions here.
+> 
+> In this series, RTS5411 is used. The dt-bindings documents it as a child
+> node of the USB controller. E.g.
+> 
+> &usb {
+> 	usb_hub_2_0: hub@1 {
+> 		...
+> 	};
+> 
+> 	usb_hub_3_0: hub@2 {
+> 	};
+> }
+> 
+> I had a quick look at RTS5411 datasheet. It looks like there's an i2c
+> interface too.
+> - I guess the I2C interface isn't used in your case ?
+>   (I haven't checked what it could be used for...)
 
-On Tue, Oct 19, 2021 at 2:27 PM Arnd Bergmann <arnd@kernel.org> wrote:
->
-> On Tue, Oct 19, 2021 at 11:11 PM Doug Anderson <dianders@chromium.org> wrote:
-> > On Tue, Oct 19, 2021 at 1:57 PM Bjorn Andersson
-> >
-> > Hrm. I know this gets into slightly controversial topics, but I'm a
-> > little curious what the downside of having these in the dtsi is. In
-> > the case where these i2c/spi/mmc devices _don't_ have "well defined"
-> > numbers in the hardware manual of the SoC then I can agree that it
-> > doesn't make sense to list these in the dtsi file. However, in the
-> > case of sc7280 these numbers are well defined at the SoC level for i2c
-> > and SPI.
-> >
-> > Said another way: if you have a board that's got peripherals connected
-> > on the pins labelled "i2c2" and "i2c6" on the SoC then it's a really
-> > nice thing if these show up on /dev/i2c-2 and /dev/i2c-6.
-> >
-> > ...so I'm not sure what board exactly would be overriding and
-> > re-numbering? Unless a board really has a strong use case where they
-> > need the device connected to the pins for "i2c2" to show up on
-> > "/dev/i2c-0"?
->
-> There are multiple things going on here:
->
-> - The aliases are traditionally managed by the bootloader, same way
->    as the /chosen nodes including the kernel command line, so the
->    numbers are local policy, and the per-board defaults are just
->    for convenience.
+Correct, the i2c interface isn't used on my board.
 
-The bootloader creates aliases? I've never seen this for I2C or SPI or
-MMC, but I will admit I've been off in Chrome OS land for a really
-long time and coreboot/depthcharge don't do this. I guess I could
-believe that u-boot or some other bootloader does? Do you happen to
-have a pointer to code that does this?
+Also the binding isn't completely new, it is based on the generic USB
+binding (https://www.kernel.org/doc/Documentation/devicetree/bindings/usb/usb-device.txt)
 
+> In the stm32 boards (stm32mp15xx-dkx), there's an usb2514b chip
+> - that also could be wired on I2C interface (0R mount option)
+> - unused on stm32 boards by default
+> 
+> usb2514b chip already has a dt-bindings (with compatible), and a driver:
+> - drivers/usb/misc/usb251xb.c
+> - Documentation/devicetree/bindings/usb/usb251xb.txt
+> 
+> It is defined more as an i2c chip, so I'd expect it as an i2c child,
+> e.g. like:
+> 
+> &i2c {
+> 	usb2514b@2c {
+> 		compatible = "microchip,usb2514b";
+> 		...
+> 	};
+> };
+> 
+> 
+> This way, I don't see how it could be used together with onboard_usb_hub
+> driver ? (But I may have missed it)
 
-> - IMHO there should not be any aliases for status="disabled"
->   nodes, and the status is usually set in the board files.
+Indeed, you can either use the i2c driver for the hub or the onboard_usb_hub
+driver, but not both at the same time. The i2c driver requires the hub to be
+powered before communicating with it over i2c, hence the power sequence
+should not be delegated to the onboard_usb_hub driver.
 
-...but there is no harm in having an alias for status="disabled",
-right? Below I have a use case where it's helpful to have aliases even
-for status="disabled", and if it doesn't hurt...
+> Is it possible to use a phandle, instead of a child node ?
 
+The child node is part of the generic USB binding. The onboard_usb_hub
+driver needs it to find the USB device(s) that correspond to the hub,
+to optionally power the hub off during system suspend when no wakeup
+capable devices are connected.
 
-> - The labels on the board don't always match what the SoC calls
->   them, or there might not be any labels at all.
+> However, in the stm32mp15xx-dkx case, i2c interface isn't wired/used by
+> default. So obviously the i2c driver isn't used. In this case, could the
+> "microchip,usb2514b" be listed in onboard_usb_hub driver ?
+> (wouldn't it be redundant ?)
 
-Are you saying that someone would draw up schematics and write on the
-schematics "i2c0" and then connect it up to the pins on the SoC
-labeled "i2c2"? I mean, I guess they could. I would really not like
-working with the EE who did that, but people can do all sorts of crazy
-things.
+You would use the compatible string of the generic USB binding, i.e.
+"usbVID,PID", which would have to be added to the onboard_usb_hub driver.
 
-...or maybe you're saying that someone would take these I2C and SPI
-pins and expose them to the end user with a little label over them
-that said "i2c-0", "i2c-1", and "i2c-2"? ...and that end user would be
-confused because the "/dev/i2c" and "/dev/spi" numbers wouldn't match?
-I guess I could see that being a problem, though it feels unlikely to
-come up in many cases except maybe in dev boards? This is also a new
-SoC not designed onto any existing boards, so I'm not convinced that
-someone would actually go and do this...
+> In this case it would be a child node of the usb DT node... Maybe that's
+> more a question for Rob: would it be "legal" regarding existing
+> dt-bindings ?
 
+The USB node is always there implicitly (the USB device exists), the only
+difference is that the node is added explicitly (plus additional
+properties).
 
->   This is more
->   important for things like serial ports that are often bare
->   connectors rather than already wired up. The aliases should
->   normally match how the board numbers the connectors, not
->   how they are attached internally.
-
-So for UARTs I agree with you and that's one reason why this patch
-doesn't include serial aliases. There seems to be a lot of history
-around UART and requirements built into userspace / other places that
-require UARTs be numbered starting at 0. Also UARTs _are_ historically
-exposed to end users and they want sane numbers. Luckily this doesn't
-cause _too_ much confusion since usually there is only one or two
-UARTs in use and mostly they just hook up to console and bluetooth.
-
-I think of UARTs as really the exception here, not the norm.
-
-
-> - For i2c, it's not uncommon to have i2c devices attached behind
->   expanders on i2c/spi/gpio/usb/pci devices
-
-If there are extra i2c devices, that's OK. The i2c subsystem handles
-will pick a number that's above the highest defined alias.
-
-...and, in my mind, that actually gives a really good reason for
-including all the aliases, even for status="disabled" nodes. Here's an
-example output of `i2cdetect -l` on a sc7180-based device which has
-aliases for all i2c adapters:
-
-# i2cdetect -l
-i2c-13  i2c             dpu_dp_aux                              I2C adapter
-i2c-4   i2c             Geni-I2C                                I2C adapter
-i2c-2   i2c             Geni-I2C                                I2C adapter
-i2c-9   i2c             Geni-I2C                                I2C adapter
-i2c-7   i2c             Geni-I2C                                I2C adapter
-i2c-14  i2c             ti-sn65dsi86-aux                        I2C adapter
-i2c-12  i2c             cros-ec-i2c-tunnel                      I2C adapter
-
-You can see that we've got peripherals hooked up to i2c ports 2, 4, 7, and 9.
-
-On the sc7180 SoC, there are 12 i2c ports built-in to the SoC with
-well-defined numbers. These are i2c-0 through i2c-11. On this system,
-there are 3 additional extra i2c adapters. You can see that the i2c
-subsystem starts numbering the extra adapters at 12. This is
-specifically because i2c-10 and i2c-11 aliases were defined. This is
-_good_ IMO.
-
-If I saw a log message about "i2c-10" in the logs or in /dev/, I would
-first look in the sc7180 devicetree file and assume that the
-peripherals must be connected to the i2c10 pins on the SoC. If I see
-"i2c-12" in the logs I would quickly realize that it couldn't be one
-of the SoC i2c ports and I'd go look at the dynamically numbered ones.
-
-Yes, yes. I'm smart enough to look things up and deal with any random
-/ arbitrary numbers. You could also come up with an arbitrary Chinese
-character for each i2c bus and I'm smart enough to look it up and map
-it to find the right port. ...but there is no reason to make people go
-through this work. This is the primary SoC on the system and it has
-well-defined numbers. It just makes everyone's lives a little easier
-if the numbers match the reference manual.
-
-
--Doug
+There was a somewhat related long-winded discussion with Rob on an earlier
+version of the driver/binding:
+https://lore.kernel.org/linux-usb/1613055380.685661.519681.nullmailer@robh.at.kernel.org/
