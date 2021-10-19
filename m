@@ -2,182 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5AFF433F43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 21:29:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BC3D433FE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 22:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231895AbhJSTcK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 15:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230432AbhJSTcJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 15:32:09 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57E6C06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 12:29:56 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id s136so17090229pgs.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 12:29:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rfcO7m570cVuA/+Db71WdJTCayi39VVzxp2McfxCX74=;
-        b=B7Z9r9zCyfmJ619PtenNpaQGb6qmcF4yoCj76L8uwEDsm4NkXnSyI2EiwoHO9r2/ly
-         G/gHBXShpzddrPltdGZyEelGpaaJMFi+cCZZIBQqK2MR4AstD1vJwJ8+F//rPA62T6gE
-         pbmc3pNFNPDP7+Ypxq5jK9F7zebdWalWyC39c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rfcO7m570cVuA/+Db71WdJTCayi39VVzxp2McfxCX74=;
-        b=WqNHlnvn+4hCDoOHpj3OKLSp5BES6HBRfkK1G6OAz/TG5KzOf7nX08sFxcpo4MtlQr
-         LA//uJPhoyVnJ+G06vKQWi508HU1aAEPZ6OIIa3IjGN/d5vPh44ROLqLC5vuDVmrXqK1
-         ErGn1iTgudq9V4KO3b3LaqOo+yFAh+Wj+quxR5yQta/apvEceEO4wMSOXctfm3szw8Ew
-         Vo1WYi9wTz8OKbSAdpNqA83MO5ljy7U+gTA9I9suP/aI6zmBqACP27R+cTQyTQ47Hj7S
-         PqmFSB+dTxJZARchTKfSx4vCxEV3MO5ut+O0KSuAL8yJPDADg98ahsMGrcpHzZ5MJot0
-         ZN/Q==
-X-Gm-Message-State: AOAM533ajFQGhGWZb4h6RXLFRLrcDcrTJf0fDd3ypH+xTwgiPDs6r8nI
-        gV1KMXeHMpyo/vLInPsBdSuhrw==
-X-Google-Smtp-Source: ABdhPJx5yIg+YlwtgRdehYGb3XeBfLuwpZPey4QJAE352AvMl6Jb4rurpfHyp4NKVQlduw0Kgn0kUw==
-X-Received: by 2002:a63:8bca:: with SMTP id j193mr27225596pge.213.1634671796405;
-        Tue, 19 Oct 2021 12:29:56 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6c1f:a561:f56:7d16])
-        by smtp.gmail.com with UTF8SMTPSA id u74sm24063pfc.87.2021.10.19.12.29.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Oct 2021 12:29:55 -0700 (PDT)
-Date:   Tue, 19 Oct 2021 12:29:53 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     tjiang@codeaurora.org
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: Re: [PATCH v2] Bluetooth: btusb: Add support for variant WCN6855 by
- using different nvm
-Message-ID: <YW8csSr/I1IRgAaT@google.com>
-References: <81add00a4a038008e9f734c5f5e5b712@codeaurora.org>
+        id S231402AbhJSUqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 16:46:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48856 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230147AbhJSUqZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Oct 2021 16:46:25 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D12FB61373;
+        Tue, 19 Oct 2021 20:44:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634676251;
+        bh=T8mHmJya+ILFpd3CCIxQDtDOrlirWq4tUXYlbvgnPik=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=e7h8XCbiWISq39ZW24xItKFZT0ZZM66Qo387xD8ygYxNkxcSxsfdjuBE0nODgV8nd
+         xZe8RNARDPbJ10V89jhBLGD/SQQlTqwZVlUpPSzaSA4eNhGYQc8Mj/AOvdFu5SEqVW
+         dw02rsY/6JSH7v4H1I6ZhZS3DdLhgor/rkqINNayJEUEIZ6itjoJRmJJfgvyv9eUGG
+         ukjlfLdvgrLU2WQBuc4A3wgrjkMCuXCBMxTkcjHJnLLFReHg3uMZBiPjwpJms/HQ+L
+         HZqEvFConnQ4LlCRP/ETOkoGh4rmD7tWANXoa19SyiwgnyfYXbfehmK9IXbvjqzNrC
+         4Trf0AOlel7Eg==
+Received: by mail-wm1-f41.google.com with SMTP id z77-20020a1c7e50000000b0030db7b70b6bso5453807wmc.1;
+        Tue, 19 Oct 2021 13:44:11 -0700 (PDT)
+X-Gm-Message-State: AOAM531CrHDCYgXjy1G71lwXu5DboTMkL/SU3qiWm9T4T8gNFzoxr5WG
+        ohMelj61pVJTJqrijTL96zAYLC5Z4hvB1Ycv8n4=
+X-Google-Smtp-Source: ABdhPJyJhNq13/SKtqK5Qj+ZXoJCuLOxLsA8F5PoL249ralobTTeSAlxk94fzTdhFycLrA5AaDtEaiCfGufMtVS9Ei4=
+X-Received: by 2002:a05:600c:208:: with SMTP id 8mr8317592wmi.173.1634676250240;
+ Tue, 19 Oct 2021 13:44:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <81add00a4a038008e9f734c5f5e5b712@codeaurora.org>
+References: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org> <1632399378-12229-9-git-send-email-rajpat@codeaurora.org>
+In-Reply-To: <1632399378-12229-9-git-send-email-rajpat@codeaurora.org>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Tue, 19 Oct 2021 22:43:54 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a3KuTEAXbSTU+n3D_fryquo8B-eXSF2+HrikiNVn6kSSg@mail.gmail.com>
+Message-ID: <CAK8P3a3KuTEAXbSTU+n3D_fryquo8B-eXSF2+HrikiNVn6kSSg@mail.gmail.com>
+Subject: Re: [PATCH V10 8/8] arm64: dts: sc7280: Add aliases for I2C and SPI
+To:     Rajesh Patil <rajpat@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 12, 2021 at 03:55:56PM +0800, tjiang@codeaurora.org wrote:
-> the RF performance of wcn6855 soc chip from different foundries will be
-> difference, so we should use different nvm to configure them.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
->  drivers/bluetooth/btusb.c | 56
-> +++++++++++++++++++++++++++++++++++------------
->  1 file changed, 42 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 75c83768c257..f352ff351b61 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3190,6 +3190,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev
-> *hdev,
->  #define QCA_DFU_TIMEOUT		3000
->  #define QCA_FLAG_MULTI_NVM      0x80
-> 
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
->  struct qca_version {
->  	__le32	rom_version;
->  	__le32	patch_version;
-> @@ -3221,6 +3224,7 @@ static const struct qca_device_info
-> qca_devices_table[] = {
->  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
->  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
->  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
->  };
-> 
->  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -3375,6 +3379,43 @@ static int btusb_setup_qca_load_rampatch(struct
-> hci_dev *hdev,
->  	return err;
->  }
-> 
-> +static void btusb_generate_qca_nvm_name(char *fwname,
-> +					size_t max_size,
-> +					struct qca_version *ver)
+On Thu, Sep 23, 2021 at 2:18 PM Rajesh Patil <rajpat@codeaurora.org> wrote:
+>
+> Add aliases for i2c and spi for sc7280 soc.
+>
+> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-=> const struct qca_version *ver
+I saw this in the pull request, can this please be reverted?
 
-> +{
-> +	u32 rom_version = le32_to_cpu(ver->rom_version);
-> +	u16 flag = le16_to_cpu(ver->flag);
-> +
-> +	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +		u16 board_id = le16_to_cpu(ver->board_id);
-> +		u32 ram_version = le32_to_cpu(ver->ram_version);
-> +		const char *variant;
-> +
-> +		switch (ram_version) {
-> +		case WCN6855_2_0_RAM_VERSION_GF:
-> +		case WCN6855_2_1_RAM_VERSION_GF:
-> +			variant = "_gf";
-> +			break;
-> +		default:
-> +			variant = "";
+Putting the aliases into the .dtsi file is really silly, as there are
+likely boards that
+don't connect every single one of those, and then will have to
+override and renumber
+them.
 
-instead of the default branch you could assign a default to 'variant' at
-declaration time, but it's fine either way.
+Please only list the aliases that are actually connected on a particular
+board.
 
-> +			break;
-> +		}
-> +
-> +		/* if boardid equal 0, use default nvm without suffix */
+        Arnd
 
-delete the comment, it just states the obvious
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index c26647a..e5fefd1 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -26,8 +26,40 @@
+>         chosen { };
+>
+>         aliases {
+> +               i2c0 = &i2c0;
+> +               i2c1 = &i2c1;
+> +               i2c2 = &i2c2;
+> +               i2c3 = &i2c3;
+> +               i2c4 = &i2c4;
+> +               i2c5 = &i2c5;
+> +               i2c6 = &i2c6;
+> +               i2c7 = &i2c7;
+> +               i2c8 = &i2c8;
+> +               i2c9 = &i2c9;
+> +               i2c10 = &i2c10;
+> +               i2c11 = &i2c11;
+> +               i2c12 = &i2c12;
+> +               i2c13 = &i2c13;
+> +               i2c14 = &i2c14;
+> +               i2c15 = &i2c15;
+>                 mmc1 = &sdhc_1;
+>                 mmc2 = &sdhc_2;
 
-> +		if (board_id == 0x0) {
+The mmc ones should probably go away as well.
 
-nit: is there really any value in using a hex number here instead of a
-plain decimal 0?
-
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin",
-> +				rom_version, variant);
-> +		} else {
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin",
-> +				rom_version, variant, board_id);
-> +		}
-> +	} else {
-> +		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
-> +			rom_version);
-> +	}
-> +
-> +}
-> +
->  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
->  				    struct qca_version *ver,
->  				    const struct qca_device_info *info)
-> @@ -3383,20 +3424,7 @@ static int btusb_setup_qca_load_nvm(struct hci_dev
-> *hdev,
->  	char fwname[64];
->  	int err;
-> 
-> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> -		/* if boardid equal 0, use default nvm without surfix */
-> -		if (le16_to_cpu(ver->board_id) == 0x0) {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -				 le32_to_cpu(ver->rom_version));
-> -		} else {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> -				le32_to_cpu(ver->rom_version),
-> -				le16_to_cpu(ver->board_id));
-> -		}
-> -	} else {
-> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -			 le32_to_cpu(ver->rom_version));
-> -	}
-> +	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
-> 
->  	err = request_firmware(&fw, fwname, &hdev->dev);
->  	if (err) {
+> +               spi0 = &spi0;
+> +               spi1 = &spi1;
+> +               spi2 = &spi2;
+> +               spi3 = &spi3;
+> +               spi4 = &spi4;
+> +               spi5 = &spi5;
+> +               spi6 = &spi6;
+> +               spi7 = &spi7;
+> +               spi8 = &spi8;
+> +               spi9 = &spi9;
+> +               spi10 = &spi10;
+> +               spi11 = &spi11;
+> +               spi12 = &spi12;
+> +               spi13 = &spi13;
+> +               spi14 = &spi14;
+> +               spi15 = &spi15;
+>         };
+>
