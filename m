@@ -2,122 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D87D4432CC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 06:31:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB47432D22
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 07:29:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbhJSEdG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 00:33:06 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48942 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229692AbhJSEdE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 00:33:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634617852; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=9woJRJCdvTxyTHSeEiuDf/eJRUof627R7Fo3s9JH8WM=; b=hlSroiQjjCp5VtG8qWG8dgcvQkryWBFiN8Qj0X+hGC2wPZnMl2GT38JpqsrfTqAxm+bnNO4b
- iu/Y/g9oz+fRIanETxIF0R51HDcYM1SLOD44ws30D1liTNZ2IsZ8wy8j7WoRmndIeDt0EMMn
- Q51/eyQHnUwBWCS7ByO0897Tq5s=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 616e49f4321f24005125cffc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 19 Oct 2021 04:30:44
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1B2EC43617; Tue, 19 Oct 2021 04:30:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.5] (cpe-76-176-73-171.san.res.rr.com [76.176.73.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 75CC2C4338F;
-        Tue, 19 Oct 2021 04:30:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 75CC2C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 3/3] bus: mhi: replace snprintf in show functions with
- sysfs_emit
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Greg KH <gregkh@linuxfoundation.org>
-Cc:     Joe Perches <joe@perches.com>, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, wangqing@vivo.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-References: <20211016065734.28802-1-manivannan.sadhasivam@linaro.org>
- <20211016065734.28802-4-manivannan.sadhasivam@linaro.org>
- <YWqBTj4slHq7HexS@kroah.com>
- <6ddc01b24b1c72f7e92174a037043b5cfffa3431.camel@perches.com>
- <YWrqmiT1pC+SbecM@kroah.com> <20211016161531.GA4048@thinkpad>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <c276a912-a382-46af-1573-570c3429be94@codeaurora.org>
-Date:   Mon, 18 Oct 2021 21:30:41 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S229649AbhJSFcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 01:32:09 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:40351 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229521AbhJSFcI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Oct 2021 01:32:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634621397; x=1666157397;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=3KXJipwBT5wM0QpPKt1Aur/nMl/J6f6HBWrRGQ/gVn4=;
+  b=nXzb0GR5EEILJS29dbl34DeDnCbOpllaGZQ7YzAyDRAhfSMOz9Kp+q52
+   RZA8TnJssq8goUaRp8zCi0JPq0K16S7PkDe7K5ylY/gBzN+tQxJGi934y
+   BbbdmlMCacD0NVh4VdbzqvlPJy6zp7n1Gp1RnF0yNLueRaeSpWtb9wHl5
+   U=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 18 Oct 2021 22:29:57 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2021 22:29:56 -0700
+Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Mon, 18 Oct 2021 22:29:53 -0700
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>,
+        <maz@kernel.org>, "Fenglin Wu" <fenglinw@codeaurora.org>
+Subject: [PATCH v2 00/10] A bunch of fix and optimization patches in spmi-pmic-arb.c
+Date:   Tue, 19 Oct 2021 13:29:11 +0800
+Message-ID: <1634621361-17155-1-git-send-email-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <20211016161531.GA4048@thinkpad>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Fenglin Wu <fenglinw@codeaurora.org>
 
+This change series includes some fixes and optimizations in spmi-pmic-arb.c.
+Following changes are made in v2 patches comparing to v1:
+  In [v2 01/10], added code to handle spurious interrupt.
+  In [v2 03/10], adressed minor comments to update the code logic.
+  In [v2 04/10], minor update to detect spurious interrupt.
+  In [v2 05/10], added Fixes tag.
+  In [v2 07/10], added Fixes tag and updated commit text to explain the problem.
+  In [v2 08/10], added binding change to make interrupt properties as optional.
+  In [v2 09/10], updated to check presence of "interrupt-controller" property.
 
-On 10/16/2021 9:15 AM, Manivannan Sadhasivam wrote:
-> On Sat, Oct 16, 2021 at 05:07:06PM +0200, Greg KH wrote:
->> On Sat, Oct 16, 2021 at 03:24:17AM -0700, Joe Perches wrote:
->>> On Sat, 2021-10-16 at 09:37 +0200, Greg KH wrote:
->>>> On Sat, Oct 16, 2021 at 12:27:34PM +0530, Manivannan Sadhasivam wrote:
->>>>> From: Qing Wang <wangqing@vivo.com>
->>>>> coccicheck complains about the use of snprintf() in sysfs show functions.
->>> []
->>>>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->>> []
->>>>> @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
->>>>>   	struct mhi_device *mhi_dev = to_mhi_device(dev);
->>>>>   	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
->>>>>   
->>>>> -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
->>>>> +	return sysfs_emit(buf, "Serial Number: %u\n",
->>>>>   			mhi_cntrl->serial_number);
->>>>
->>>> The text "Serial Number: " should not be in here, right?  It's obvious
->>>> this is a serial number, that's what the documentation and file name
->>>> says.  Userspace should not have to parse sysfs files.
->>>
->>> sysfs is ABI right?  Parsing or not, it's what's already there.
->>
->> If no tools rely on this, and we can change it, we should at least try.
->>
->> We can not change ABI if something breaks.  If nothing relies on it,
->> then it is fine to do so.
->>
-> 
-> Hemant, Bhaumik, do you guys know if there are any possible users (scripts/apps)
-> of this ABI? I'm not 100% inclined to change it but if we are _sure_ that there
-> are no users yet, then I'm ok with it.
+Abhijeet Dharmapurikar (1):
+  spmi: pmic-arb: handle spurious interrupt
 
-Mani, i dont know if any script being used by any user to parse "Serial 
-Number".
+Ashay Jaiswal (1):
+  spmi: pmic-arb: add support to dispatch interrupt based on IRQ status
 
-Thanks,
-Hemant
-> 
-> Thanks,
-> Mani
-> 
->> thanks,
->>
->> greg k-h
+David Collins (6):
+  spmi: pmic-arb: check apid against limits before calling irq handler
+  spmi: pmic-arb: correct duplicate APID to PPID mapping logic
+  spmi: pmic-arb: block access for invalid PMIC arbiter v5 SPMI writes
+  bindings: spmi: spmi-pmic-arb: mark interrupt properties as optional
+  spmi: pmic-arb: make interrupt support optional
+  spmi: pmic-arb: increase SPMI transaction timeout delay
+
+Subbaraman Narayanamurthy (1):
+  spmi: pmic-arb: do not ack and clear peripheral interrupts in
+    cleanup_irq
+
+Yimin Peng (1):
+  spmi: pmic-arb: clear unexpected interrupt trigger type
+
+ .../bindings/spmi/qcom,spmi-pmic-arb.txt           |   2 +
+ drivers/spmi/spmi-pmic-arb.c                       | 148 +++++++++++++++------
+ 2 files changed, 107 insertions(+), 43 deletions(-)
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+2.7.4
+
