@@ -2,347 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDF6B432BEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 04:46:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 965D9432BEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 04:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbhJSCsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 18 Oct 2021 22:48:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45826 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbhJSCsj (ORCPT
+        id S229897AbhJSCw5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 18 Oct 2021 22:52:57 -0400
+Received: from smtprelay-out1.synopsys.com ([149.117.73.133]:52510 "EHLO
+        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229692AbhJSCw4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 18 Oct 2021 22:48:39 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15470C06161C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 19:46:27 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id v2-20020a05683018c200b0054e3acddd91so196695ote.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 Oct 2021 19:46:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=n2gibJdl+dd9jJqPZuOZAXdph7at9JLRdd3TStlw3p4=;
-        b=E6KeS0M3n5nEYvskNyfv9yvbI0Uy5FMj9xc6Tm0nDVNl0OKvPh2BYDdtv5Mzn9O7na
-         roJuwSYhOTw6xT0OnLxNq8HGwqZ3Bpd96Y39vhcjHPRwBdTNsdEMaLCYl3AqF4Edd21I
-         cCg0Or57O7UrpYdol5oXEO4kQtxqsgwHiCae2hMWcgs04JSHLCThe2c3QmA4zkABDYrc
-         r4TJwYflU+31W+A4Cpajg/GjxJ1JK5HZN4/j+/SgLIEGSxhQF6lqVDhINlHdcP0zZ1Ml
-         2Lx7LYMescy1/fQjeqA0I7xkPMSB/RI+HOcmct2Rw7MkCEN/s0kalnaT+dU29Urq0gIJ
-         CFsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=n2gibJdl+dd9jJqPZuOZAXdph7at9JLRdd3TStlw3p4=;
-        b=xDqQM5xKpwb0fofLd+egVbh3EVqER7JYgsYQAgRRYOW5e/k6PXCSqlQimfumD62ZS4
-         8Wwq83gKzJk/608jjaKPESsMV1tUlz9sVqJPFqsFLpdNhPC+LBb2hv039uKhLXBK6j7O
-         isS7zOWNEpG4HPlGjKg2NVLnB7SOm/uCr+aUy0GkGY/uULpSD4DKD2y1LMQbiNJteKgd
-         uSHCDRfdhYrLFL9vj5Xz120g9QDD3ore5AlK+xK65FFpQaFtAZmw5azKhnlRGdRtzJ+z
-         eafAokvcDtsLiW942POFjnfljir2oSEcEm5AkVX6GWgGIHrHEX8DoLuZK0MksyOcmuj6
-         NFrA==
-X-Gm-Message-State: AOAM531dnrczqvC5pLW2EyRJ5gmOGFM3xM6OMHo0yLWXgeO6qDDJ814P
-        qLxiUC/uKpa7A5Gfhaka1X/xLw==
-X-Google-Smtp-Source: ABdhPJwuRLbNwrWQpmvavoG9wYaZfPn1XhNAyZImN9YwSKsy4HQ2aulRA4kOi0mL2DVR47pCeoT9pg==
-X-Received: by 2002:a9d:588d:: with SMTP id x13mr390314otg.248.1634611586124;
-        Mon, 18 Oct 2021 19:46:26 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id r23sm3415353otg.71.2021.10.18.19.46.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Oct 2021 19:46:25 -0700 (PDT)
-Date:   Mon, 18 Oct 2021 19:48:12 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        swboyd@chromium.org, clew@codeaurora.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Ohad Ben-Cohen <ohad@wizery.com>
-Subject: Re: [PATCH V1 1/3] rpmsg: core: Add signal API support
-Message-ID: <YW4x7GTWLE02ZyqR@ripper>
-References: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
- <1633015924-881-2-git-send-email-deesin@codeaurora.org>
- <20211011180245.GA3817586@p14s>
- <YWpcq2Uy9wM1voRH@yoga>
- <7df52b45-be2f-62dc-dd4b-db77a42f9a7b@foss.st.com>
+        Mon, 18 Oct 2021 22:52:56 -0400
+Received: from mailhost.synopsys.com (badc-mailhost3.synopsys.com [10.192.0.81])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
+        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 4EE97460B6;
+        Tue, 19 Oct 2021 02:50:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+        t=1634611844; bh=QJYkYnA8FMwjP/MepnQs/OKxm02D3y+oIKRmGt8vZuk=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=mWNmlZILUyg4wO8qyUOsNzrTYf1rz+gHxXBGD4GZcmqipChefkHLoLmtq5smWO06i
+         NOCN3AgiyAUMrwycrjlvSqC+aLCn1ZI6yge/c5jw+pDZxvlYhweZ9ENQaxFa59XvmG
+         MgHYxxvCaDtq9UwL9m/jd5+5NDWTfE1Du/O+Ymbd5VsO1WpJmBsiyjpVnEbfGTzFhb
+         aaVYUmpZPKWIgsOfZQ8geZoRm3fNl2O/tD/76+1XKQYv0MiFY1QBwYPX+JG5GgRQJD
+         FZV5rPuV2GrBHFOLB/jMl2sGoubpFaTuroVQ2yeIu69OGxv1EMd2VTESAyhkaJge7y
+         OANaqoG5SVHxg==
+Received: from o365relay-in.synopsys.com (sv2-o365relay3.synopsys.com [10.202.1.139])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (verified OK))
+        by mailhost.synopsys.com (Postfix) with ESMTPS id 5252CA00A7;
+        Tue, 19 Oct 2021 02:50:43 +0000 (UTC)
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2108.outbound.protection.outlook.com [104.47.55.108])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
+        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 274E140143;
+        Tue, 19 Oct 2021 02:50:41 +0000 (UTC)
+Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
+Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=thinhn@synopsys.com
+Authentication-Results: o365relay-in.synopsys.com;
+        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="Ypx5p5iU";
+        dkim-atps=neutral
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NSxdeT/EgjME0XzD4ZGnjQLei0NMQ5QZ/oFJZV/WImNxsvKOoSPCvTOXUWP3UE+dSDOyaYnn4yoeAjCupFV5SoE3PPGd979GF7nOtOCOW+hh6VogHv3MIfIGnuMh9s2+mT/3dBUZwx12SrdXIaMbCcnyXFYkN3gVNc448lEckj2p6GjLVltq7q4qmX460BAwmP1ksEmqbFAAjA8JmTE1pyVDeOoo4JVsJjz68bWRU0dT3xUSJy7A83Qds8tBAnwGbKvTHS9E0wtzfTHW2RtGYY865J9DHlv+xk0OwzmfK2ipdgeQYGs6YLn8VkiOmKKOd5CyWOOY9AvdoQpAp3txZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QJYkYnA8FMwjP/MepnQs/OKxm02D3y+oIKRmGt8vZuk=;
+ b=AWtTBKH0Dof50QdCctvItR/sPdzIbrfumz6obL/FwKAXmG32BaGHeJ8DKJiKa6VS5kxPIOq+KxBiU4HGJglFd+vYE7R+fbM0g2TdtgB5mrTFzcXthcV72cCSP2X+ARHhp7liAsaxHfNI+aC05xKNXXpbfooIr/iRHpe9e/c+Ev844iUp2w2EB4UvL74lxKcIYC4Y6IhRyJw5SKipZgpKI73774Yns8SyXtU6CEdUOkqOY8HkDJMirvw3rNYiq2YkyWp8tfLrYZDHX7aMlHyB228ehOHeC38hcdfEORnnta37Nnr9cm/DiFlolmmki9HQh2zMiffOxJiB4GSmvyFSXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
+ dkim=pass header.d=synopsys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QJYkYnA8FMwjP/MepnQs/OKxm02D3y+oIKRmGt8vZuk=;
+ b=Ypx5p5iUXZ0s0cyLXpIM/yN4ISJff0dLl5RgFpOcbDIFUBvT2eCohwMCe8kFctHOxKg8TqQ3+8eR//wEwZkJKTqjIkNgaEzWCQ1jGV/IdxuasYI8X8MqSW/tUoAjcoz5aPKo+v/hk1OMjmvzI7hQjOSmfWy/NMGDAD0265yPdNI=
+Received: from BYAPR12MB4791.namprd12.prod.outlook.com (2603:10b6:a03:10a::12)
+ by BYAPR12MB2951.namprd12.prod.outlook.com (2603:10b6:a03:138::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.15; Tue, 19 Oct
+ 2021 02:50:39 +0000
+Received: from BYAPR12MB4791.namprd12.prod.outlook.com
+ ([fe80::5865:4cfa:3e30:26d6]) by BYAPR12MB4791.namprd12.prod.outlook.com
+ ([fe80::5865:4cfa:3e30:26d6%7]) with mapi id 15.20.4608.018; Tue, 19 Oct 2021
+ 02:50:39 +0000
+X-SNPS-Relay: synopsys.com
+From:   Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+To:     Jack Pham <jackp@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Wesley Cheng <wcheng@codeaurora.org>
+CC:     "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
+ already resized
+Thread-Topic: [PATCH v2] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
+ already resized
+Thread-Index: AQHXxIIRSK9bwmPlIEW9C+wWaD+4NKvZny6A
+Date:   Tue, 19 Oct 2021 02:50:39 +0000
+Message-ID: <b2ab6498-4598-8b6c-4e6d-4535697f22be@synopsys.com>
+References: <20211019004123.15987-1-jackp@codeaurora.org>
+In-Reply-To: <20211019004123.15987-1-jackp@codeaurora.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+authentication-results: codeaurora.org; dkim=none (message not signed)
+ header.d=none;codeaurora.org; dmarc=none action=none
+ header.from=synopsys.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5861b22c-ee4f-49b8-e95e-08d992ab3c3d
+x-ms-traffictypediagnostic: BYAPR12MB2951:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR12MB29510EA4070D9B76E1B45004AABD9@BYAPR12MB2951.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: G2BYIRx/QyaakuHn6Q6IlQAdkTgo0dNlagIEO94zTtDBWlt2pCgZ1b2dAaqR1NsG8P1VGdlsUKX/MlzWRSmSuDqYawI8si19NVGH/Sz4RMa3MoNdWkuXaSv1Y/lA5I+JptdKcYmVKNLFWMFe6U2ynTy0MZBJGrmNKqm3E9aJ4WRits30tAmV3TD2DdW3uSxWl1kI7YNjhrp3Ha0traV6ruuPbPdqNma1VVABCRjYuYFRKqdj/P4kEgKyzmBQMxmIVXBHBi4WSVDfSpKUMvQQqL/bGLpY6cfL8uJAr2cBqLXKjw37krpg2TpLbs/LlXfjgJjiayM5yF34/bhlVSivpGh3KWE+F9EUQ0lXaSIIJhXbVe3RYLyMqwtER+lPaLdZKhY9VcL+xf2KM0n5T0HHUkdwrRKK0qY19azbGsGfTYnms6PlGgcll76lDJE3sY1Fwir2+gRCxIvv1I2XvYOFCKy6K5JxK/z7vqwo4f5tkm63a6umFxsupgDRkt3sgmpyjAIi+XB5ZBhLBuaS1O/Ts2pb2mNwkZYNJsEVuZcsjKZSZtCRr1ntOYfeAQpQhpaF84+SwLgV8nIzc0RJ51wpPfhW6mWcgi8xKnRYRdYRSfiCRKUogXWYWAQGI+WOH0zsRH3AVP3b65cdOq0dOoSXO1tasg2ZK/LEjkT0RCLFr6JChUVmYK5001dXC06zs615QpwyPxFNlg4omgc9D3voa3bh7neMU5ddEFhSHYw+JqzhpoDhyIT9cEE8rVYB8WmmHcDerS0Vq+79/AQyN8icjA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4791.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(83380400001)(71200400001)(6486002)(4326008)(2906002)(38070700005)(31696002)(31686004)(86362001)(64756008)(6512007)(508600001)(66476007)(66946007)(76116006)(5660300002)(66446008)(2616005)(8936002)(38100700002)(122000001)(66556008)(36756003)(54906003)(110136005)(186003)(6506007)(8676002)(26005)(316002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NG8xV29mUHdLOUxDTU4vS0RPaW9iZllBS1VSb2RIZlMxaWpFQlBPQlk0Z25W?=
+ =?utf-8?B?dFRSRXpXdFYwWlU1b3o1SmdqL1pFV25DRzFDNkhSVXkvVWxJN3I2TldRejBR?=
+ =?utf-8?B?ck41eDYwNC95LzV0ZU8xQVVaRXp5ZFowVHN3OWt1Y0RYN3d2U0xrRUFjeTZw?=
+ =?utf-8?B?cTVCRDh6MVZKekw2MUJuL1RZWTFuQTRmSW80T1dHZzByRWE1RWl4UDhLRWVq?=
+ =?utf-8?B?bjRhOXFsK3lyZjg5WHlVZlRDNXQvcnlndnd0c3BNbHIrdk9nSU54cVRzVC9v?=
+ =?utf-8?B?aTdEbCtCUzZMZ2IxdDdqVTJzdjFnWFFxNVI1LzhwOFd2TVVRZnRTc0w0a3Zm?=
+ =?utf-8?B?bXY4UlkxYWlEaVg3eXJNTWRtb3pBcEtYdVlMcllGZjlXR1hJSER6NGpQUjls?=
+ =?utf-8?B?MU1KbEUzay9iNHpER2RaYXF2RW4wcE8rN2pzRGR5T2tGRjM0U1krVFNKay9u?=
+ =?utf-8?B?L0lML2NKUXFiTnp6UHhzRVlucDNpTEpneVRMOTlCR0pwV3RqbFYzTkhCYkJJ?=
+ =?utf-8?B?RG12WjRuK0cxOTJMY3YwUVlyUGZCUXlZaHZxUEE3c2NjMXAwV1JnQU53K2cx?=
+ =?utf-8?B?bnJFSE00WkV2eTd6dTVVNG1Sd1NlUGo1LzFWbkRTeFhFcmRjb0JZMVBrZmsv?=
+ =?utf-8?B?ajVldElOcXZxNjZoVGE0dTg3emd5aDlDNVE2RTJUcXpneDVOSk4yKzBqTTZH?=
+ =?utf-8?B?S29SbnRFSU42UjZabWMwTjBxRXhtU0UyNXRZZERUcWlUL1pwcVRvOUY2THRB?=
+ =?utf-8?B?cHpBaXFBb2pacmtyQWdBRXVycy94TmIvSEswWHFNUXRieVdaUWNEWDNIMVBL?=
+ =?utf-8?B?SnlsMFJLVTBFUE9DN0tDaXA4WTRPcStGUngvSjRJY0VxTE1ML3hVN3NmYlBS?=
+ =?utf-8?B?L3YybUxEcmxiRkpzUW9XazdkQXhRVG1OOTBjNUZDbS9rNE8rdWNPSWU4emUz?=
+ =?utf-8?B?R25VUG9BTDhRcGRIVFN6eFpyczRaU0c2UWd0eDk2OW9qeFJ4Yk5kQVpIMGJT?=
+ =?utf-8?B?VlV6Wk9QSWJPN2UwOTlMZW1rSFRmMGVVUnhpZ25UaGM4SzJCTFA3ZmZSVmlB?=
+ =?utf-8?B?ekRKUlBzeVVnb3VTU2oxZDZLSTNyMkVodWFIcXNVKzhRNFdMc1JXT0k3UUdi?=
+ =?utf-8?B?VTJ6WC9OQ1JNVkdRRHN4ak1NNlllclBoak9qYzN5YUZ0Z3NhRjhvRkI1aHBl?=
+ =?utf-8?B?bENJSVI3a3VubXFFY3NuVWVqcElHSHRITFFjTEd3UTlqeHAxQ2tQMzFQT1or?=
+ =?utf-8?B?c3F6OWhlc29BaVlmKytNTVlGTGdLdmhSc1VtRElSU3IxYjRuZVVXV3hQN1ZS?=
+ =?utf-8?B?N3dRNjNleTR2U09UcytnNXlpcTJNN09TdVNJL216V2kwSGc5NllnVUsxTXpq?=
+ =?utf-8?B?UUtWdXdYQ3hRTHNWYlpmUm5nbW56K2xFMWFmSW53amFtaDc0aitvY3VXWkh5?=
+ =?utf-8?B?eDYraytDbTNuL2Y5V29XLzAyVU1mVW9GQnFYMkliTERCdzA4N2xvYVFQSVRz?=
+ =?utf-8?B?ZjQ0dTBTRWl2d2FhQS9YeHZSL1VhY1kyNFhmby9yOUUrY0JYc1pwZXNyRHY0?=
+ =?utf-8?B?VXdWSUxlemFxcE4yVmtmaHhHRVZ4R2VrT2FBdmNYN2RLVmtqa2Job00zUXVF?=
+ =?utf-8?B?M2hlTkdKbEpobWY2MW5mQk9iZnM2ZlVQL1JudHhyYWZKNE5IU1hsUVNTYmlQ?=
+ =?utf-8?B?SHhNMStQYzRNTXpVcHJSYTQ0bU8vaEtaWkp0cFlzdXFFWnM4cXhWd3hVM204?=
+ =?utf-8?Q?ucdypoi20ZsuAh1YLA=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <402CFF1F39FB204CA8B9642680E09791@namprd12.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7df52b45-be2f-62dc-dd4b-db77a42f9a7b@foss.st.com>
+X-OriginatorOrg: synopsys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4791.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5861b22c-ee4f-49b8-e95e-08d992ab3c3d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Oct 2021 02:50:39.6499
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: dN+xVnarfSHPoE6EwKLzGVrPSEPReoHxQH6KlxBwpBXI96phIaJYztnpmWi/dizFgXSYXiIIBwL02FWeyGTacg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB2951
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 18 Oct 02:00 PDT 2021, Arnaud POULIQUEN wrote:
-
-> Hello,
-> 
-> On 10/16/21 7:01 AM, Bjorn Andersson wrote:
-> > On Mon 11 Oct 13:02 CDT 2021, Mathieu Poirier wrote:
-> > 
-> >> Good day Deepak,
-> >>
-> >> On Thu, Sep 30, 2021 at 09:02:01PM +0530, Deepak Kumar Singh wrote:
-> >>> Some transports like Glink support the state notifications between
-> >>> clients using signals similar to serial protocol signals.
-> >>> Local glink client drivers can send and receive signals to glink
-> >>> clients running on remote processors.
-> >>>
-> >>> Add apis to support sending and receiving of signals by rpmsg clients.
-> >>>
-> >>> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> >>> ---
-> >>>  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
-> >>>  drivers/rpmsg/rpmsg_internal.h |  2 ++
-> >>>  include/linux/rpmsg.h          | 15 +++++++++++++++
-> >>>  3 files changed, 38 insertions(+)
-> >>>
-> >>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> >>> index 9151836..5cae50c 100644
-> >>> --- a/drivers/rpmsg/rpmsg_core.c
-> >>> +++ b/drivers/rpmsg/rpmsg_core.c
-> >>> @@ -327,6 +327,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
-> >>>  }
-> >>>  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
-> >>>  
-> >>> +/**
-> >>> + * rpmsg_set_flow_control() - sets/clears searial flow control signals
-> >>> + * @ept:	the rpmsg endpoint
-> >>> + * @enable:	enable or disable serial flow control
-> >>> + *
-> >>> + * Returns 0 on success and an appropriate error value on failure.
-> >>> + */
-> >>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
-> >>> +{
-> >>> +	if (WARN_ON(!ept))
-> >>> +		return -EINVAL;
-> >>> +	if (!ept->ops->set_flow_control)
-> >>> +		return -ENXIO;
-> >>> +
-> >>> +	return ept->ops->set_flow_control(ept, enable);
-> >>> +}
-> >>> +EXPORT_SYMBOL(rpmsg_set_flow_control);
-> >>> +
-> >>
-> >> I'm looking at this patchset as the introduction of an out-of-bound
-> >> control interface.  But looking at the implementation of the GLINK's
-> >> set_flow_control() the data is sent in-band, making me perplexed about
-> >> introducing a new rpmsg_endpoint_ops for something that could be done
-> >> from user space.  Especially when user space is triggering the message
-> >> with an ioctl in patch 3.
-> >>
-> > 
-> > GLINK is built around one fifo per processor pair, similar to a
-> > virtqueue. So the signal request is muxed in the same pipe as data
-> > requests, but the signal goes alongside data request, not within them.
-> 
-> That would be the equivalent of 2 additional virtqueues in virtio RPmsg backend
-> - two virtqueues for the stream,
-> - two virtqueues for the control
-> Right?
-> 
-
-Imagine rather the equivalent of struct rpmsg_hdr carrying a "type"
-field to specify if the payload is data, channel open, close, open_ack,
-close_ack and flow control commands.
-
-I.e. only "data" will be passed up to the client, the other types of
-messages are interpreted internally.
-
-> > 
-> >> Moreover this interface is case specific and doesn't reflect the
-> >> generic nature found in ept->sig_cb.
-> >>
-> > 
-> > The previous proposal from Deepak was to essentially expose the normal
-> > tty flags all the way down to the rpmsg driver. But I wasn't sure how
-> > those various flags should be interpreted in the typical rpmsg driver.
-> > 
-> > I therefor asked Deepak to change it so the rpmsg api would contain a
-> > single "pause incoming data"/"resume incoming data" - given that this is
-> > a wish that we've seen in a number of discussions.
-> > 
-> > 
-> > Unfortunately I don't have any good suggestion for how we could
-> > implement this in the virtio backend at this time, but with the muxing
-> > of all the different channels in the same virtqueue it would be good for
-> > a driver to able to pause the inflow on a specific endpoint, to avoid
-> > stalling other communication when a driver can't receive more messages.
-> 
-> yes this feature is something that would improve the rpmsg protocol.this could
-> also be interesting to pause some services on suspend.
-> If I well remember we also spoke about QOS, with possibility to define allocated
-> bandwidth per service.
-> 
-> In proposed implementation the signaling is managed in RPMsg backend. This means
-> that the backend has to be aware about the signaling defined in a service. In
-> some other term the signaling is fixed by the backend, and this patchset would
-> fix the signaling for all the backend, right?
-
-Correct, it's the responsibility of the backend to exchange the flow
-control signals.
-
-> In this case shouldn't it be part of the rpmsg core?
-> 
-
-In the case of GLINK flow control is inband control messages, for SMD
-it's status bits in a fixed located "per-channel information struct".
-And when we have talked about introducing this for virtio we have toyed
-with the idea of creating a single control channel to exchange them.
-
-So I don't think we have the ability to push the implementation itself
-into the core, but I think if we define a small set of well defined
-operations (such as flow on/off), it should be fairly straight forward
-to implement these in the backend.
-
-> Then to be able to transfer signaling to the remote processor based on RPMsg
-> protocol
-> I suppose that the signaling has to be encapsulated in a RPMsg sent by an
-> endpoint to a remote endpoint.
-> 
-> How to do you keep compatibility with the legacy (no flow control)?
-> 
-
-In the case of the two Qualcomm protocols we simply have been ignoring
-them upstream and Qualcomm have carried downstream patches adding this
-functionality.
-
-This has worked out okay, because in addition to the explicit flow
-control there's above described data packets are also governed by a
-sliding window-like flow control. So no single channel is able to
-completely saturate the link.
-
-But for certain applications explicit flow control is necessary.
-
-> What about associating a control endpoint with a channel?
-> A channel could contain:
-> - a default data ept (the exiting one)
-> - a default control endpoint (the new one).
-
-As both GLINK and SMD has these operations defined in the protocol
-itself and the firmware is already written, I don't think we can come up
-with something completely generic.
-
-> 
-> We could extend the ns announcement mechanism to notify the control endpoint to
-> a remote processor...
-> 
-
-But I think these are good suggestions for how this functionality could
-be implemented in the virtio backend.
-
-Or one could borrow the design from GLINK and make use of the "reserved"
-filed in struct rpmsg_hdr?
-
-Regards,
-Bjorn
-
-> Regards,
-> Arnaud
-> 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> >>>  /*
-> >>>   * match a rpmsg channel with a channel info struct.
-> >>>   * this is used to make sure we're not creating rpmsg devices for channels
-> >>> @@ -514,6 +532,9 @@ static int rpmsg_dev_probe(struct device *dev)
-> >>>  
-> >>>  		rpdev->ept = ept;
-> >>>  		rpdev->src = ept->addr;
-> >>> +
-> >>> +		if (rpdrv->signals)
-> >>> +			ept->sig_cb = rpdrv->signals;
-> >>>  	}
-> >>>  
-> >>>  	err = rpdrv->probe(rpdev);
-> >>> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> >>> index a76c344..dcb2ec1 100644
-> >>> --- a/drivers/rpmsg/rpmsg_internal.h
-> >>> +++ b/drivers/rpmsg/rpmsg_internal.h
-> >>> @@ -53,6 +53,7 @@ struct rpmsg_device_ops {
-> >>>   * @trysendto:		see @rpmsg_trysendto(), optional
-> >>>   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
-> >>>   * @poll:		see @rpmsg_poll(), optional
-> >>> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
-> >>>   *
-> >>>   * Indirection table for the operations that a rpmsg backend should implement.
-> >>>   * In addition to @destroy_ept, the backend must at least implement @send and
-> >>> @@ -72,6 +73,7 @@ struct rpmsg_endpoint_ops {
-> >>>  			     void *data, int len);
-> >>>  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
-> >>>  			     poll_table *wait);
-> >>> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
-> >>>  };
-> >>>  
-> >>>  struct device *rpmsg_find_device(struct device *parent,
-> >>> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> >>> index d97dcd0..b805c70 100644
-> >>> --- a/include/linux/rpmsg.h
-> >>> +++ b/include/linux/rpmsg.h
-> >>> @@ -62,12 +62,14 @@ struct rpmsg_device {
-> >>>  };
-> >>>  
-> >>>  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
-> >>> +typedef int (*rpmsg_rx_sig_t)(struct rpmsg_device *, void *, u32);
-> >>>  
-> >>>  /**
-> >>>   * struct rpmsg_endpoint - binds a local rpmsg address to its user
-> >>>   * @rpdev: rpmsg channel device
-> >>>   * @refcount: when this drops to zero, the ept is deallocated
-> >>>   * @cb: rx callback handler
-> >>> + * @sig_cb: rx serial signal handler
-> >>>   * @cb_lock: must be taken before accessing/changing @cb
-> >>>   * @addr: local rpmsg address
-> >>>   * @priv: private data for the driver's use
-> >>> @@ -90,6 +92,7 @@ struct rpmsg_endpoint {
-> >>>  	struct rpmsg_device *rpdev;
-> >>>  	struct kref refcount;
-> >>>  	rpmsg_rx_cb_t cb;
-> >>> +	rpmsg_rx_sig_t sig_cb;
-> >>>  	struct mutex cb_lock;
-> >>>  	u32 addr;
-> >>>  	void *priv;
-> >>> @@ -104,6 +107,7 @@ struct rpmsg_endpoint {
-> >>>   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
-> >>>   * @remove: invoked when the rpmsg channel is removed
-> >>>   * @callback: invoked when an inbound message is received on the channel
-> >>> + * @signals: invoked when a serial signal change is received on the channel
-> >>>   */
-> >>>  struct rpmsg_driver {
-> >>>  	struct device_driver drv;
-> >>> @@ -111,6 +115,7 @@ struct rpmsg_driver {
-> >>>  	int (*probe)(struct rpmsg_device *dev);
-> >>>  	void (*remove)(struct rpmsg_device *dev);
-> >>>  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
-> >>> +	int (*signals)(struct rpmsg_device *rpdev, void *priv, u32);
-> >>>  };
-> >>>  
-> >>>  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
-> >>> @@ -186,6 +191,8 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
-> >>>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
-> >>>  			poll_table *wait);
-> >>>  
-> >>> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
-> >>> +
-> >>>  #else
-> >>>  
-> >>>  static inline int rpmsg_register_device(struct rpmsg_device *rpdev)
-> >>> @@ -296,6 +303,14 @@ static inline __poll_t rpmsg_poll(struct rpmsg_endpoint *ept,
-> >>>  	return 0;
-> >>>  }
-> >>>  
-> >>> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
-> >>> +{
-> >>> +	/* This shouldn't be possible */
-> >>> +	WARN_ON(1);
-> >>> +
-> >>> +	return -ENXIO;
-> >>> +}
-> >>> +
-> >>>  #endif /* IS_ENABLED(CONFIG_RPMSG) */
-> >>>  
-> >>>  /* use a macro to avoid include chaining to get THIS_MODULE */
-> >>> -- 
-> >>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> >>> a Linux Foundation Collaborative Project
-> >>>
+SmFjayBQaGFtIHdyb3RlOg0KPiBTb21lIGZ1bmN0aW9ucyBtYXkgZHluYW1pY2FsbHkgZW5hYmxl
+IGFuZCBkaXNhYmxlIHRoZWlyIGVuZHBvaW50cw0KPiByZWd1bGFybHkgdGhyb3VnaG91dCB0aGVp
+ciBvcGVyYXRpb24sIHBhcnRpY3VsYXJseSB3aGVuIFNldCBJbnRlcmZhY2UNCj4gaXMgZW1wbG95
+ZWQgdG8gc3dpdGNoIGJldHdlZW4gQWx0ZXJuYXRlIFNldHRpbmdzLiAgRm9yIGluc3RhbmNlIHRo
+ZQ0KPiBVQUMyIGZ1bmN0aW9uIGhhcyBpdHMgcmVzcGVjdGl2ZSBlbmRwb2ludHMgZm9yIHBsYXli
+YWNrICYgY2FwdHVyZQ0KPiBhc3NvY2lhdGVkIHdpdGggQWx0U2V0dGluZyAxLCBpbiB3aGljaCBj
+YXNlIHRob3NlIGVuZHBvaW50cyB3b3VsZCBub3QNCj4gZ2V0IGVuYWJsZWQgdW50aWwgdGhlIGhv
+c3QgYWN0aXZhdGVzIHRoZSBBbHRTZXR0aW5nLiAgQW5kIHRoZXkNCj4gY29udmVyc2VseSBiZWNv
+bWUgZGlzYWJsZWQgd2hlbiB0aGUgaW50ZXJmYWNlcycgQWx0U2V0dGluZyAwIGlzDQo+IGNob3Nl
+bi4NCj4gDQo+IFdpdGggdGhlIERXQzMgRklGTyByZXNpemluZyBhbGdvcml0aG0gcmVjZW50bHkg
+YWRkZWQsIGV2ZXJ5DQo+IHVzYl9lcF9lbmFibGUoKSBjYWxsIHJlc3VsdHMgaW4gYSBjYWxsIHRv
+IHJlc2l6ZSB0aGF0IEVQJ3MgVFhGSUZPLA0KPiBidXQgaWYgdGhlIHNhbWUgZW5kcG9pbnQgaXMg
+ZW5hYmxlZCBhZ2FpbiBhbmQgYWdhaW4sIHRoaXMgaW5jb3JyZWN0bHkNCj4gbGVhZHMgdG8gRklG
+TyBSQU0gYWxsb2NhdGlvbiBleGhhdXN0aW9uIGFzIHRoZSBtZWNoYW5pc20gZGlkIG5vdA0KPiBh
+Y2NvdW50IGZvciB0aGUgcG9zc2liaWxpdHkgdGhhdCBlbmRwb2ludHMgY2FuIGJlIHJlLWVuYWJs
+ZWQgbWFueQ0KPiB0aW1lcy4NCj4gDQo+IEV4YW1wbGUgbG9nIHNwbGF0Og0KPiANCj4gCWR3YzMg
+YTYwMDAwMC5kd2MzOiBGaWZvc2l6ZSgzNzE3KSA+IFJBTSBzaXplKDM0NjIpIGVwM2luIGRlcHRo
+OjIxNzk3MzEyNw0KPiAJY29uZmlnZnMtZ2FkZ2V0IGdhZGdldDogdV9hdWRpb19zdGFydF9jYXB0
+dXJlOjUyMSBFcnJvciENCj4gCWR3YzMgYTYwMDAwMC5kd2MzOiByZXF1ZXN0IDAwMDAwMDAwMGJl
+MTNlMTggd2FzIG5vdCBxdWV1ZWQgdG8gZXAzaW4NCj4gDQo+IEFkZCBhbm90aGVyIGJpdCBEV0Mz
+X0VQX1RYRklGT19SRVNJWkVEIHRvIGRlcC0+ZmxhZ3MgdG8ga2VlcCB0cmFjayBvZg0KPiB3aGV0
+aGVyIGFuIEVQIGhhZCBhbHJlYWR5IGJlZW4gcmVzaXplZCBpbiB0aGUgY3VycmVudCBjb25maWd1
+cmF0aW9uLg0KPiBJZiBzbywgYmFpbCBvdXQgb2YgZHdjM19nYWRnZXRfcmVzaXplX3R4X2ZpZm9z
+KCkgdG8gYXZvaWQgdGhlDQo+IGNhbGN1bGF0aW9uIGVycm9yIHJlc3VsdGluZyBmcm9tIGFjY3Vt
+dWxhdGluZyB0aGUgRVAncyBGSUZPIGRlcHRoDQo+IHJlcGVhdGVkbHkuICBUaGlzIGZsYWcgaXMg
+cmV0YWluZWQgYWNyb3NzIG11bHRpcGxlIGVwX2Rpc2FibGUoKSBhbmQNCj4gZXBfZW5hYmxlKCkg
+Y2FsbHMgYW5kIGlzIGNsZWFyZWQgd2hlbiBHVFhGSUZPU0labiBpcyByZXNldCBpbg0KPiBkd2Mz
+X2dhZGdldF9jbGVhcl90eF9maWZvcygpIHVwb24gcmVjZWl2aW5nIHRoZSBuZXh0IFNldCBDb25m
+aWcuDQo+IA0KPiBGaXhlczogOWY2MDdhMzA5ZmJlOSAoInVzYjogZHdjMzogUmVzaXplIFRYIEZJ
+Rk9zIHRvIG1lZXQgRVAgYnVyc3RpbmcgcmVxdWlyZW1lbnRzIikNCj4gU2lnbmVkLW9mZi1ieTog
+SmFjayBQaGFtIDxqYWNrcEBjb2RlYXVyb3JhLm9yZz4NCj4gLS0tDQo+IHYyOiBBZGRlZCBleHBs
+aWNpdCBmbGFnIHRvIGRlcC0+ZmxhZ3MgYW5kIGNoZWNrIHRoYXQgaW5zdGVhZCBvZiBkaXJlY3Rs
+eQ0KPiAgICAgcmVhZGluZyB0aGUgR1RYRklGT1NJWm4gcmVnaXN0ZXIuDQo+IA0KPiAgZHJpdmVy
+cy91c2IvZHdjMy9jb3JlLmggICB8IDEgKw0KPiAgZHJpdmVycy91c2IvZHdjMy9nYWRnZXQuYyB8
+IDggKysrKysrKy0NCj4gIDIgZmlsZXMgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCAxIGRlbGV0
+aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy91c2IvZHdjMy9jb3JlLmggYi9kcml2
+ZXJzL3VzYi9kd2MzL2NvcmUuaA0KPiBpbmRleCA1NjEyYmZkZjM3ZGEuLmYwMzMwNjNmNjk0OCAx
+MDA2NDQNCj4gLS0tIGEvZHJpdmVycy91c2IvZHdjMy9jb3JlLmgNCj4gKysrIGIvZHJpdmVycy91
+c2IvZHdjMy9jb3JlLmgNCj4gQEAgLTcyMyw2ICs3MjMsNyBAQCBzdHJ1Y3QgZHdjM19lcCB7DQo+
+ICAjZGVmaW5lIERXQzNfRVBfRk9SQ0VfUkVTVEFSVF9TVFJFQU0JQklUKDkpDQo+ICAjZGVmaW5l
+IERXQzNfRVBfRklSU1RfU1RSRUFNX1BSSU1FRAlCSVQoMTApDQo+ICAjZGVmaW5lIERXQzNfRVBf
+UEVORElOR19DTEVBUl9TVEFMTAlCSVQoMTEpDQo+ICsjZGVmaW5lIERXQzNfRVBfVFhGSUZPX1JF
+U0laRUQJQklUKDEyKQ0KPiAgDQo+ICAJLyogVGhpcyBsYXN0IG9uZSBpcyBzcGVjaWZpYyB0byBF
+UDAgKi8NCj4gICNkZWZpbmUgRFdDM19FUDBfRElSX0lOCQlCSVQoMzEpDQo+IGRpZmYgLS1naXQg
+YS9kcml2ZXJzL3VzYi9kd2MzL2dhZGdldC5jIGIvZHJpdmVycy91c2IvZHdjMy9nYWRnZXQuYw0K
+PiBpbmRleCA0NTE5ZDA2YzljYTIuLmVkOTdlNDdkMzI2MSAxMDA2NDQNCj4gLS0tIGEvZHJpdmVy
+cy91c2IvZHdjMy9nYWRnZXQuYw0KPiArKysgYi9kcml2ZXJzL3VzYi9kd2MzL2dhZGdldC5jDQo+
+IEBAIC03MDIsNiArNzAyLDcgQEAgdm9pZCBkd2MzX2dhZGdldF9jbGVhcl90eF9maWZvcyhzdHJ1
+Y3QgZHdjMyAqZHdjKQ0KPiAgCQkJCSAgIERXQzMxX0dUWEZJRk9TSVpfVFhGUkFNTlVNOw0KPiAg
+DQo+ICAJCWR3YzNfd3JpdGVsKGR3Yy0+cmVncywgRFdDM19HVFhGSUZPU0laKG51bSA+PiAxKSwg
+c2l6ZSk7DQo+ICsJCWRlcC0+ZmxhZ3MgJj0gfkRXQzNfRVBfVFhGSUZPX1JFU0laRUQ7DQo+ICAJ
+fQ0KPiAgCWR3Yy0+bnVtX2VwX3Jlc2l6ZWQgPSAwOw0KPiAgfQ0KPiBAQCAtNzQ3LDYgKzc0OCwx
+MCBAQCBzdGF0aWMgaW50IGR3YzNfZ2FkZ2V0X3Jlc2l6ZV90eF9maWZvcyhzdHJ1Y3QgZHdjM19l
+cCAqZGVwKQ0KPiAgCWlmICghdXNiX2VuZHBvaW50X2Rpcl9pbihkZXAtPmVuZHBvaW50LmRlc2Mp
+IHx8IGRlcC0+bnVtYmVyIDw9IDEpDQo+ICAJCXJldHVybiAwOw0KPiAgDQo+ICsJLyogYmFpbCBp
+ZiBhbHJlYWR5IHJlc2l6ZWQgKi8NCj4gKwlpZiAoZGVwLT5mbGFncyAmIERXQzNfRVBfVFhGSUZP
+X1JFU0laRUQpDQo+ICsJCXJldHVybiAwOw0KPiArDQo+ICAJcmFtMV9kZXB0aCA9IERXQzNfUkFN
+MV9ERVBUSChkd2MtPmh3cGFyYW1zLmh3cGFyYW1zNyk7DQo+ICANCj4gIAlpZiAoKGRlcC0+ZW5k
+cG9pbnQubWF4YnVyc3QgPiAxICYmDQo+IEBAIC04MDcsNiArODEyLDcgQEAgc3RhdGljIGludCBk
+d2MzX2dhZGdldF9yZXNpemVfdHhfZmlmb3Moc3RydWN0IGR3YzNfZXAgKmRlcCkNCj4gIAl9DQo+
+ICANCj4gIAlkd2MzX3dyaXRlbChkd2MtPnJlZ3MsIERXQzNfR1RYRklGT1NJWihkZXAtPm51bWJl
+ciA+PiAxKSwgZmlmb19zaXplKTsNCj4gKwlkZXAtPmZsYWdzIHw9IERXQzNfRVBfVFhGSUZPX1JF
+U0laRUQ7DQo+ICAJZHdjLT5udW1fZXBfcmVzaXplZCsrOw0KPiAgDQo+ICAJcmV0dXJuIDA7DQo+
+IEBAIC05OTUsNyArMTAwMSw3IEBAIHN0YXRpYyBpbnQgX19kd2MzX2dhZGdldF9lcF9kaXNhYmxl
+KHN0cnVjdCBkd2MzX2VwICpkZXApDQo+ICANCj4gIAlkZXAtPnN0cmVhbV9jYXBhYmxlID0gZmFs
+c2U7DQo+ICAJZGVwLT50eXBlID0gMDsNCj4gLQlkZXAtPmZsYWdzID0gMDsNCj4gKwlkZXAtPmZs
+YWdzICY9IERXQzNfRVBfVFhGSUZPX1JFU0laRUQ7DQo+ICANCj4gIAlyZXR1cm4gMDsNCj4gIH0N
+Cj4gDQoNClJldmlld2VkLWJ5OiBUaGluaCBOZ3V5ZW4gPFRoaW5oLk5ndXllbkBzeW5vcHN5cy5j
+b20+DQoNClRoYW5rcywNClRoaW5oDQo=
