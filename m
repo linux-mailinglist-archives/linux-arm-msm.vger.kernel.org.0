@@ -2,107 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07E76433C18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 18:26:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FE61433C29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Oct 2021 18:29:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231495AbhJSQ2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 19 Oct 2021 12:28:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51172 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229774AbhJSQ2R (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 19 Oct 2021 12:28:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9C08C61052;
-        Tue, 19 Oct 2021 16:26:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634660764;
-        bh=JTD0yxhNiwoaimOyKxDh67eqXCwBhnj/uYevNf6Vv3Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rfqMZQs6S02wfD8Lpp8XLsn1KTOo22eHxr2zRCkJ5Rx0usL24hdRRybMsoG+uo35G
-         ACfcoy2t3M3NjUr35CHgJ2dhLnDVvI8KJW3Ew2w0ykiySlRrcjRcGwAdxAsO1HEN7Y
-         7/ufr5N2LivOQxB3UnL0WBKVuSLT+++WBLT62149x183uP05AXTO71mZ3mmina9P0N
-         23Vh8IX9t3poHfgli5j8e41bzbF5AHqHrd8W7hP8MCPyjbHWyBQAyLjT2i4yL4aCJD
-         s22FNKlQ7QKgoM/YvdzwS8Zpw7uS8luNYqVf3YrScnBKWg8/d8ccVx72fdnoSP7kTG
-         EZ6vGSIJjBzdA==
-Date:   Tue, 19 Oct 2021 21:55:59 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH v2 04/11] drm/msm/disp/dpu1: Add DSC support in RM
-Message-ID: <YW7xlyuIq1vh4Fg2@matsya>
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-5-vkoul@kernel.org>
- <d249d880-1137-d5cc-6d96-83a730f7de29@linaro.org>
- <YW7koEt85EVMcUDs@matsya>
- <CAA8EJprNTUrh66yqaOCoReWdwLcBc9LfMm=WNDi54o9nzd8RRA@mail.gmail.com>
+        id S234166AbhJSQbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 19 Oct 2021 12:31:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36660 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234124AbhJSQbn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 19 Oct 2021 12:31:43 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3882C061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 09:29:30 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id y7so397226pfg.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Oct 2021 09:29:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=fFEh57XjcGZVMKBRwiESvTpWJiCdB5W9SosJkX+vQWA=;
+        b=PDEz3QO6bizr3TeemGpmyFhZMkcbbFAno6plOYztjq61G/qJbbMmx9OUMcpCocg/IH
+         n0ospFhCGFpeEx8pue3eDNfKhtC37lUIPIagl9Wduw3nU4WiM8kxdaHPJ51rH/pn2T7m
+         gy6dF68XY9NFhoVBCXFihjXY9h5h2YdTKj1tkKH+8XYJhqeIy0csNKN6usIEu/U6cV1i
+         v1l/Q2KuS0BV2p/XT7XZiGhGygv1FjBCqMr0fBQab1mlb2pV44hOYho8IO2/7FdoDXDo
+         TCZOtkIT6AOf7sge4pArMm+IFCs9OhdJ6X69sc79tpWBpb28LRuXR09PitYj6AlXLF9s
+         2+Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=fFEh57XjcGZVMKBRwiESvTpWJiCdB5W9SosJkX+vQWA=;
+        b=N1XFg01NsRYgBXpHA5/MUngPxuvcvE2fZOH+xON6N9TwaGRbwMnvDGmvpAa5gHfDlg
+         MK5RxxU2o9ZfOPSooTTBHBpuOmP2SBd1RBq3+PKvgQAgOA/RVo2AoiJxM6+rJN+VEjQp
+         zWmTfCx/e0TCUkWV0I1hCWv4hUs0dZSmdy13E3Jz83vQASXmKhovuuKyQe20L+F8Lf0c
+         36kTUF620hU7dWAjoDpdc32lu7P/Zl5ElAiNfrlrRFKNvTeXtswonluVL7SKK7GFcSf7
+         xozCg9y6/9cQfwXB3KVdaaAj+DrNZt2EmsSbubvHE4AgSgG2LGyBAi9PkG2DbrHTrxxg
+         MVKw==
+X-Gm-Message-State: AOAM5332suBDsgbT9fY2OX21NmAoqnNWCx4KOLLTQvRKVqUsCh03ZHth
+        GwYiq7IdWo8J7tojBs1Vk1AZ
+X-Google-Smtp-Source: ABdhPJxg1UV9ay1tnqW4qYoObXmuV5HDK5RsbsdNduyr70lGkjBTQUW/8sVpeoD3DwtkpUdBRULl+Q==
+X-Received: by 2002:a05:6a00:1484:b0:44c:de7f:30 with SMTP id v4-20020a056a00148400b0044cde7f0030mr757072pfu.62.1634660970206;
+        Tue, 19 Oct 2021 09:29:30 -0700 (PDT)
+Received: from thinkpad ([2409:4072:6e0a:4e8d:17f:7a74:8180:8fca])
+        by smtp.gmail.com with ESMTPSA id x13sm15808132pge.37.2021.10.19.09.29.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Oct 2021 09:29:29 -0700 (PDT)
+Date:   Tue, 19 Oct 2021 21:59:23 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     mhi@lists.linux.dev, loic.poulain@linaro.org,
+        hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Greg KH <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH] bus: mhi: Add mhi_prepare_for_transfer_autoqueue API for
+ DL auto queue
+Message-ID: <20211019162923.GA189099@thinkpad>
+References: <20211019134451.174318-1-manivannan.sadhasivam@linaro.org>
+ <20211019074918.5b498937@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJprNTUrh66yqaOCoReWdwLcBc9LfMm=WNDi54o9nzd8RRA@mail.gmail.com>
+In-Reply-To: <20211019074918.5b498937@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-10-21, 18:52, Dmitry Baryshkov wrote:
-> On Tue, 19 Oct 2021 at 18:30, Vinod Koul <vkoul@kernel.org> wrote:
-> >
-> > On 14-10-21, 17:11, Dmitry Baryshkov wrote:
-> > > On 07/10/2021 10:08, Vinod Koul wrote:
-> >
-> > > > +static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
-> > > > +                          struct dpu_global_state *global_state,
-> > > > +                          struct drm_encoder *enc)
-> > > > +{
-> > > > +   struct msm_drm_private *priv;
-> > > > +
-> > > > +   priv = enc->dev->dev_private;
-> > > > +
-> > > > +   if (!priv)
-> > > > +           return -EIO;
-> > > > +
-> > > > +   /* check if DSC is supported */
-> > > > +   if (!priv->dsc)
-> > > > +           return 0;
-> > > > +
-> > > > +   /* check if DSC 0 & 1 and allocated or not */
-> > > > +   if (global_state->dsc_to_enc_id[0] || global_state->dsc_to_enc_id[1]) {
-> > > > +           DPU_ERROR("DSC 0|1 is already allocated\n");
-> > > > +           return -EIO;
-> > > > +   }
-> > > > +
-> > > > +   global_state->dsc_to_enc_id[0] = enc->base.id;
-> > > > +   global_state->dsc_to_enc_id[1] = enc->base.id;
-> > >
-> > > Still hardcoding DSC_0 and DSC_1.
-> >
-> > Yes!
-> >
-> > > Could you please add num_dsc to the topology and allocate the requested
-> > > amount of DSC blocks? Otherwise this would break for the DSI + DP case.
-> >
-> > It wont as we check for dsc and dont proceed, so it cant make an impact
-> > in non dsc case.
-> >
-> > Nevertheless I agree with you, so I am making it based on dsc defined in
-> > topology. Do we need additional field for num_dsc in topology, num_enc
-> > should be it, right?
+On Tue, Oct 19, 2021 at 07:49:18AM -0700, Jakub Kicinski wrote:
+> On Tue, 19 Oct 2021 19:14:51 +0530 Manivannan Sadhasivam wrote:
+> > Add a new API "mhi_prepare_for_transfer_autoqueue" for using with client
+> > drivers like QRTR to request MHI core to autoqueue buffers for the DL
+> > channel along with starting both UL and DL channels.
+> > 
+> > So far, the "auto_queue" flag specified by the controller drivers in
+> > channel definition served this purpose but this will be removed at some
+> > point in future.
+> > 
+> > Cc: netdev@vger.kernel.org
+> > Co-developed-by: Loic Poulain <loic.poulain@linaro.org>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> > 
+> > Dave, Jakub: This patch should go through MHI tree. But since the QRTR driver
+> > is also modified, this needs an Ack from you.
 > 
-> I'd vote for the separate num_dsc.
+> CCing us wouldn't hurt.
+> 
 
-Okay will update... will move up topology patch up in the order for that
-as well
+Okay.
 
--- 
-~Vinod
+> Speaking of people who aren't CCed I've seen Greg nack the flags
+> argument.
+> 
+
+I usually send patches to Greg during the PR time as MHI patches goes through
+char-misc tree. I don't include him during the patch reviews.
+
+And yes, Greg indeed NACK the API that had flags argument. But this one didn't.
+
+Thanks,
+Mani
+
+> SMH
