@@ -2,85 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF0104346FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 10:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C1BD434728
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 10:43:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbhJTIgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 04:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54158 "EHLO
+        id S229544AbhJTIpi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 04:45:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbhJTIgR (ORCPT
+        with ESMTP id S229503AbhJTIpg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 04:36:17 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705E1C06161C;
-        Wed, 20 Oct 2021 01:34:03 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id r19so13397685lfe.10;
-        Wed, 20 Oct 2021 01:34:03 -0700 (PDT)
+        Wed, 20 Oct 2021 04:45:36 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D354CC06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 01:43:21 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id z20so23574645edc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 01:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:to:cc:references
-         :from:in-reply-to:content-transfer-encoding;
-        bh=lhlJC9eINwtf3OPi5fDRUQ5o8RilMSHMkBZ4fEM0caE=;
-        b=iX4g1pCFVllFCpx63AQ86dbyahwxdCqygPhUx28cGYjP2ii5yZmdDXvPa7qNdm6V9G
-         9arAuTVBQlTZVYOKBWPxcZsi37ylXoWnueEiKyUH2JM/TPKkGaGLE03iERv51qYOu8d6
-         cv6B6ovg9CGd2nXfJe8wJ8Y3mbEeouQDZd6h+K+pT4MFpr5SvySxUS4fVIiSwAHpzXMM
-         B7BQvXv8Hz9r2xdwziYmKOJ1kXLvifkr8Wb25Sza9ELCN5BudVNkzLLk2xJNKX2Dmp6g
-         pkpdv+QpS+/iQXKEzzsJImARntvdrW+nEpBIOcUBvOJAZ/+LkfMJ+BhBQz7WmmOwEErr
-         QJfQ==
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XzYd6rAdl8brTjw2FymUxSF2VtmMiUK06D2LEiXCAKU=;
+        b=4/U+APoPsdkb+PUNwbQSXyVfBHNWvdSq7+b7ixVS2liRfK7uVp8RAfQg+ycfDwejbF
+         gM0RCMuT9S0Dscc6ga6UTmr/SKbVn6yRV7BpGX959MyeD4B1SsVolw9JevXp8ozacMs7
+         HagDEFltnQjewLyGW9XAaqVe8RVLFvkiZa5TFbbi6tppPgAzuF8mVDx2C1zyHYhAZl88
+         Q5hltM8+x1musETOrwlm/ufYpKfXR/DzgTIsjsiigEakaFiRv5DxeanQVUzsOM7+shbH
+         ihMjeOQ0Wvl9WWw/BdxY2NDE5Evw0F/0BuW14hQ9IGzNOrIbA4iNKWK26saYEr0jvkB0
+         /j5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :to:cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lhlJC9eINwtf3OPi5fDRUQ5o8RilMSHMkBZ4fEM0caE=;
-        b=RdD/PLYq+W8dXLwZnS8xnPDdeJPP3kfzJHRwjxgk3eqBsnEBacQufg+EgnIcDcSTsh
-         9Ju0PlzZ7H05onDJRMurVUDTAPNMNr9NgPdy9KIqzBn0GQDYxIiyKxAZ8+mXQj+qlTGE
-         mOcVqKSu1emurmmT8CQnTzn/aekAxKGG0ksH96z63Fwv7Sz+sFm1wszrmVXnphldjWLC
-         OFU2KCyyuNj5k0pVlFEQZZhzC2S6Cj4PRUnt8wCViajCZpMNSMrNzQnDvzG8ZdRKygm9
-         K5xdyzqKW0bz7yoOzVmkUL7JaXlfOEmWlC8vZOh4+aLEpZM7wSQh1q9D+/Vamt2n/yrn
-         2S3g==
-X-Gm-Message-State: AOAM530fCGpuvmZjA+37T0GvLdq/zqU960cIXQ1P1qvWHbgRY5AorQlH
-        I36l75mR2A3jqspkwAHmnQ8=
-X-Google-Smtp-Source: ABdhPJyCzQ/cI8HRaRTFUKYOJc35UsvwijD1Z3dH7ElJANOry74TXJmFtqEwmagpApv3ugGRB8/50Q==
-X-Received: by 2002:a05:6512:3c83:: with SMTP id h3mr10833527lfv.170.1634718841033;
-        Wed, 20 Oct 2021 01:34:01 -0700 (PDT)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl. [194.29.137.1])
-        by smtp.gmail.com with ESMTPSA id c6sm136045lfs.211.2021.10.20.01.34.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Oct 2021 01:34:00 -0700 (PDT)
-Message-ID: <a0bf8a10-a73f-a322-422d-ce638212d45c@gmail.com>
-Date:   Wed, 20 Oct 2021 10:33:59 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XzYd6rAdl8brTjw2FymUxSF2VtmMiUK06D2LEiXCAKU=;
+        b=zymyShS5xAWVYdBOqktL9iPKik/ZdxqOAVmR20EL4Ct9tNkTw8zBRNub1ljuCim4tX
+         ax8AHiqSfZA5PJRq3u/JuyGKKxXhSpAAmsjH4RZDfCxbakWKK1LzA//NKLIQ04rik9tT
+         R9yckDTBqGvTNIrThpTXr9V8sR+BQWgWg94NMnRNBfoH3K7ceiUvqpoelUlLrP9eqnbd
+         n/AmghFB7gfAItzCO7aMER9SFiNBmgC7Au4Ivslu5pfn0QhurCna7Bbei9FEadmUQnNf
+         s6mIONz9Z/8/cSDdjhn9O8/TWzSsq1JYrL1o9rDw+3YncntxOizAf1jnNJqY6+8fKB2M
+         Iypw==
+X-Gm-Message-State: AOAM531DuCvLhHmtCw+qcQfIL7UD82yCuAexOfmSgE53kydrkLLGZSG8
+        JUmvEpLsSUiHJF5Xxia/WvDP5Wi4xR1J6ARzMiUruQ==
+X-Google-Smtp-Source: ABdhPJy/TospKZ2YSzjA0jNaO8DscnS/NwxXWtCDRiUDQjWLf1iPNR6OfqzweS2V9DWO1OaiFuzjSGglkFEkdIhKfrc=
+X-Received: by 2002:a17:906:354a:: with SMTP id s10mr46932850eja.475.1634719400428;
+ Wed, 20 Oct 2021 01:43:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.2.0
-Subject: Re: [PATCH] dt-bindings: arm: qcom: Nexus 4 was build by LG, not Asus
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@codeaurora.org>
-Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211020001327.37490-1-david@ixit.cz>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20211020001327.37490-1-david@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+ <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
+ <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com>
+ <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
+ <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
+ <CAMZdPi8QXrjN6VYU1VrGeOBhvVSnxopioM7POEOcS5ywsSFDHQ@mail.gmail.com>
+ <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
+ <CAAP7uc+5=GMGgz3MKfSWaAtes1WwCCx+6iYhb058ZUr0=A52cg@mail.gmail.com>
+ <CAMZdPi9cbDVWVxvimg-uc_TRvskrxbjEQ4AxdLjA57Ewm2tSPA@mail.gmail.com>
+ <bd875c3b9d19f8827362b129999d84cd04ad90ae.camel@bootlin.com>
+ <CAMZdPi_J7ePh22v7J3WgqO9X3Y1KffTm__TfL9jGHj61H2x9QA@mail.gmail.com>
+ <1f846b0be78560c1299fa26d351b66567be403e1.camel@bootlin.com> <CAAP7ucJBed_5rCdyjWC9x8EkXn5+E7p4P46=ukAaC1vTFLdDAQ@mail.gmail.com>
+In-Reply-To: <CAAP7ucJBed_5rCdyjWC9x8EkXn5+E7p4P46=ukAaC1vTFLdDAQ@mail.gmail.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Wed, 20 Oct 2021 10:43:09 +0200
+Message-ID: <CAAP7ucLCL37aYWMeqyj4eb-r6B-puZ+w9KeXMScpw3YhWgzXNA@mail.gmail.com>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+To:     Thomas Perrot <thomas.perrot@bootlin.com>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey,
 
- > dt-bindings: arm: qcom: Nexus 4 was build by LG, not Asus
+> This is the event ring configuration in the MBPL driver from Sierra,
+> with NUM_MHI_EVT_RING_ELEMENTS=2048:
+>
+> static struct mhi_event_properties event_config[] = {
+> /*    num                        intmod  msi chan    pri brs type
+> hw_ev   c_m off  */
+>     { NUM_MHI_EVT_RING_ELEMENTS,  1,      1,  0,      1,  2,  1,
+> 0,      0,  0},
+>     { NUM_MHI_EVT_RING_ELEMENTS,  1,      2,  100,    1,  3,  0,
+> 1,      0,  0},
+>     { NUM_MHI_EVT_RING_ELEMENTS,  1,      3,  101,    1,  3,  0,
+> 1,      0,  0},
+> //    { 240,  1,      3,  101,    1,  2,  0,      1,      0,  0},
+> //    { 240,  1,      4,  0,      1,  2,  1,      0,      0,  0},
+> };
+>
 
+Looking in detail at the table above, I can see at least 2 differences
+between the Sierra MBPL driver and the upstream one:
+ * In the upstream driver, MHI_EVENT_CONFIG_CTRL() sets
+irq_moderation_ms to 0, while in the Sierra MBPL driver the table
+above (intmod column) we can see it's set to 1 in channel 0.
+ * In the upstream driver, MHI_EVENT_CONFIG_HW_DATA() sets mode to
+MHI_DB_BRST_DISABLE(2), while in the Sierra MBPL driver the table
+above (brs column) we can see it's set to MHI_DB_BRST_ENABLE (3) in
+channels 100 and 101.
 
-Very cool, but what does that patch change? (It should be more in the 
-likes of
+But changing those in my setup to be in line with the MBPL driver
+didn't make any difference :/
 
-"Fix Nexus 4 vendor prefix", as the patch title should describe the 
-change or
-
-the point of it, not the problem)
-
-
-Konrad
-
+-- 
+Aleksander
+https://aleksander.es
