@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA8024347C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 11:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81F79434A98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 13:53:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229627AbhJTJVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 05:21:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35378 "EHLO mail.kernel.org"
+        id S230282AbhJTLz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 07:55:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34538 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229555AbhJTJVp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 05:21:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5CDDF61074;
-        Wed, 20 Oct 2021 09:19:30 +0000 (UTC)
+        id S230272AbhJTLz2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 07:55:28 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6AD9C610FF;
+        Wed, 20 Oct 2021 11:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634721571;
-        bh=lyuguw0XyKC7pblfSP/PKjf0tJ9Omz7vG2CSkCF9b/Y=;
+        s=k20201202; t=1634730793;
+        bh=LPilRozXFzNZOz01IWQiBAPTdt+ygRCJKYug0spKdNQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GpfTbXlxvTLq3xEnQP+Mt5K79oLCsTz8gWGIsl0Bs3jXM1H0sbH/VBxXQmTdapqZJ
-         ss4z/dkeFrhUx+tpjQmDQvkkDQfYy0AbS/gYWN8knXneehPld6hyAW+uL5GH5gAYPR
-         ieVjo2Dz2AIa7UUy38tZOb0p8e/pLyFQ7TPcaHpkGL1NQQ2e2EHqWwZtrJNMDYZGvH
-         sabCabEJDrySLq7HUGodzbr6Mq64EC9kxPYSKTDHZp5q47eMp3pgE4IbFfuY1bkMkd
-         YuGbvZZJ9cuLbmC3ZvAHqTtddR4TDz97+VI2JqPx5+SLI4/w+jbW+fMtLRgoHrnp8B
-         pM42Dau48lQ2w==
-Date:   Wed, 20 Oct 2021 14:49:26 +0530
+        b=jvhn22dibhmZuoveod285NcYtaYI65jhGHLy4kXrkuPF+lOrVtlQjNFtJ0VXEAKgd
+         4yHPAa05ane+E/hdIOrkMcEP9oZsc50AZXny5UjwlzM+gJf2HdmqB3qH4Yn7fg7hk6
+         lFhu+cOcz0rOiyijiAX3Uq2RK1nCaLHHT51hAHuT/PGz67DhHDUvF5pIyWHj9PjYJF
+         Jj+83ZGrrpbzJWOPHmCyyG8Bno0Yj0DvfyXxDtsMDzSSVvc/l+VFwEQJ+ohOzOhJnX
+         GEtYyyPldbZ+9r8a6DTPRe1cTjcF0vwJlGp/iaVVvBnkcGdqlt3GadBmBGmJM8Sbka
+         wd/mj3iWVR/0Q==
+Date:   Wed, 20 Oct 2021 17:23:10 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
@@ -36,90 +36,132 @@ Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
         Sumit Semwal <sumit.semwal@linaro.org>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 07/11] drm/msm/disp/dpu1: Add DSC support in hw_ctl
-Message-ID: <YW/fHkaTcCbezKMT@matsya>
+Subject: Re: [PATCH v2 10/11] drm/msm/dsi: Add support for DSC configuration
+Message-ID: <YXADJjJ1y9Xp2Zlj@matsya>
 References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-8-vkoul@kernel.org>
- <f5f6162c-7ed0-2964-7cf9-0bb894c8b4f5@linaro.org>
+ <20211007070900.456044-11-vkoul@kernel.org>
+ <785fe3bf-71fa-aabd-dadf-828b91396fba@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f5f6162c-7ed0-2964-7cf9-0bb894c8b4f5@linaro.org>
+In-Reply-To: <785fe3bf-71fa-aabd-dadf-828b91396fba@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14-10-21, 17:06, Dmitry Baryshkov wrote:
+On 15-10-21, 02:18, Dmitry Baryshkov wrote:
 > On 07/10/2021 10:08, Vinod Koul wrote:
-> > Later gens of hardware have DSC bits moved to hw_ctl, so configure these
-> > bits so that DSC would work there as well
+> > When DSC is enabled, we need to configure DSI registers accordingly and
+> > configure the respective stream compression registers.
+> > 
+> > Add support to calculate the register setting based on DSC params and
+> > timing information and configure these registers.
 > > 
 > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > > ---
-> > Changes since
-> > v1:
-> >   - Move this patch from 6 to 7 due to dependency on 6th one
-> >   - Use DSC indices for programming DSC registers and program only on non
-> >     null indices
+> >   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
+> >   drivers/gpu/drm/msm/dsi/dsi_host.c | 123 ++++++++++++++++++++++++++++-
+> >   2 files changed, 132 insertions(+), 1 deletion(-)
 > > 
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 12 ++++++++++--
-> >   1 file changed, 10 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > index 3c79bd9c2fe5..8ea9d8dce3f7 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > @@ -25,6 +25,8 @@
-> >   #define   CTL_MERGE_3D_ACTIVE           0x0E4
-> >   #define   CTL_INTF_ACTIVE               0x0F4
-> >   #define   CTL_MERGE_3D_FLUSH            0x100
-> > +#define   CTL_DSC_ACTIVE                0x0E8
-> > +#define   CTL_DSC_FLUSH                0x104
-> >   #define   CTL_INTF_FLUSH                0x110
-> >   #define   CTL_INTF_MASTER               0x134
-> >   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> > @@ -34,6 +36,7 @@
-> >   #define DPU_REG_RESET_TIMEOUT_US        2000
-> >   #define  MERGE_3D_IDX   23
-> > +#define  DSC_IDX        22
-> >   #define  INTF_IDX       31
-> >   #define CTL_INVALID_BIT                 0xffff
-> > @@ -120,7 +123,6 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
-> >   static void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
-> >   {
-> > -
-> >   	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
-> >   		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
-> >   				ctx->pending_merge_3d_flush_mask);
-> > @@ -128,7 +130,6 @@ static void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
-> >   		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
-> >   				ctx->pending_intf_flush_mask);
-> > -	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
-> 
-> This would break non-DSC case.
-
-This is a mistake, I have fixed it up now..
-
-> >   }
-> >   static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
-> > @@ -498,6 +499,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> >   	u32 intf_active = 0;
-> >   	u32 mode_sel = 0;
-> > +	if (cfg->dsc)
-> > +		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> > index 49b551ad1bff..c1c85df58c4b 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> > @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
+> >   #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
+> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
 > > +
-> >   	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
-> >   		mode_sel |= BIT(17);
-> > @@ -509,6 +513,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> >   	if (cfg->merge_3d)
-> >   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
-> >   			      BIT(cfg->merge_3d - MERGE_3D_0));
-> > +	if (cfg->dsc) {
-> > +		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask |  BIT(DSC_IDX));
+> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
+> > +
+> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
+> > +
+> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
+> > +
+> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
+> > +
+> >   #endif /* DSI_XML */
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > index ba24458c2e38..86e36a3e97b6 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -946,6 +946,26 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+> >   		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+> >   }
+> > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
+> > +				  int pic_width, int pic_height)
+> > +{
+> > +	if (!dsc || !pic_width || !pic_height) {
+> > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	if ((pic_width % dsc->drm->slice_width) || (pic_height % dsc->drm->slice_height)) {
+> > +		pr_err("DSI: pic_dim %dx%d has to be multiple of slice %dx%d\n",
+> > +		       pic_width, pic_height, dsc->drm->slice_width, dsc->drm->slice_height);
+> > +		return -EINVAL;
+> > +	}
 > 
-> Why?
+> This should go to the mode_valid() callback for the dsi_bridge.
 
-I have fixed it up to write only DSC_IDX
+Done added a new callback for dsi_bridge to check the mode valid if DSC
+is enabled
+
+> 
+> > +
+> > +	dsc->drm->pic_width = pic_width;
+> > +	dsc->drm->pic_height = pic_height;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >   static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> >   {
+> >   	struct drm_display_mode *mode = msm_host->mode;
+> > @@ -978,7 +998,72 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> >   		hdisplay /= 2;
+> >   	}
+> > +	if (msm_host->dsc) {
+> > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > +
+> > +		/* update dsc params with timing params */
+> > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
+> > +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
+> > +
+> > +		/* we do the calculations for dsc parameters here so that
+> > +		 * panel can use these parameters
+> > +		 */
+> > +		dsi_populate_dsc_params(dsc);
+> > +
+> > +		/* Divide the display by 3 but keep back/font porch and
+> > +		 * pulse width same
+> > +		 */
+> > +		h_total -= hdisplay;
+> > +		hdisplay /= 3;
+> > +		h_total += hdisplay;
+> > +		ha_end = ha_start + hdisplay;
+> > +	}
+> > +
+> >   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> > +		if (msm_host->dsc) {
+> > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > +			u32 reg, intf_width, slice_per_intf;
+> > +			u32 total_bytes_per_intf;
+> > +
+> > +			/* first calculate dsc parameters and then program
+> > +			 * compress mode registers
+> > +			 */
+> > +			intf_width = hdisplay;
+> > +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
+> > +
+> > +			/* If slice_count > slice_per_intf, then use 1
+> > +			 * This can happen during partial update
+> > +			 */
+> > +				dsc->drm->slice_count = 1;
+> 
+> Is the if() missing here? The indentpation and the comment seems unclear
+> about that.
+
+yes, fixed that
 
 -- 
 ~Vinod
