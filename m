@@ -2,312 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AB2E43523A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 20:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BB5C4352BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 20:35:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230328AbhJTSCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 14:02:34 -0400
-Received: from ixit.cz ([94.230.151.217]:57606 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230325AbhJTSCd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 14:02:33 -0400
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S230439AbhJTShW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 14:37:22 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:48715 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231254AbhJTShW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 14:37:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634754907; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=B2TjKcLNRQ5IG8/kowOe6QFC6qfz68TcGJVbcMH4U3E=; b=QirIiZQuQrsr03M3WsmMbwfLgOas6LlIQRrvYWUpeVjBnHZbtfeS0vX5EFk6DexEFhoPfMs/
+ iCrlg0CgNhY99s66LrcW+gjBpgKvVz6+abMd5p/Rdzi7tTEQErizCJWKvNA/j3FMbalAQLn2
+ Afkqfl7HSgvDOLDj8yFUFD+Yunw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6170614dfd91319f0f83dc8e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 Oct 2021 18:34:53
+ GMT
+Sender: jesszhan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 24DD9C4360D; Wed, 20 Oct 2021 18:34:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id C964D20064;
-        Wed, 20 Oct 2021 20:00:16 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1634752817;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=3ibLoTk5wk9475L6WbiLc8aasbYXHbmu7P497FWhuxs=;
-        b=j/+kMKHTGjvE+ES+AG5z2G1sDSO4XVCmJiUEJuXRP7WoBI/jFcAF1kJXU+dgNA/BM52gEM
-        Kr8KHAKoB/b9suB7fvr4qMyP+6WIQu4XWaNrr01gQApsVVN1BMOZlPM4+JIJZRo2RblHNr
-        qYrtnvszpaNCYrvRhlcRjMbetFq6caI=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom: fix thermal zones naming
-Date:   Wed, 20 Oct 2021 20:00:01 +0200
-Message-Id: <20211020180002.195467-1-david@ixit.cz>
+        (Authenticated sender: jesszhan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F87FC4338F;
+        Wed, 20 Oct 2021 18:34:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6F87FC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Jessica Zhang <jesszhan@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     Jessica Zhang <jesszhan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dan.carpenter@oracle.com,
+        dri-devel@lists.freedesktop.org, dmitry.baryshkov@linaro.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org
+Subject: [PATCH] drm/msm/dsi: fix wrong type in msm_dsi_host
+Date:   Wed, 20 Oct 2021 11:34:38 -0700
+Message-Id: <20211020183438.32263-1-jesszhan@codeaurora.org>
 X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename thermal zones according to dt-schema.
+Change byte_clk_rate, pixel_clk_rate, esc_clk_rate, and src_clk_rate
+from u32 to unsigned long, since clk_get_rate() returns an unsigned long.
 
-Fix warnings like:
-arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml: thermal-zones: 'cpu-thermal0', 'cpu-thermal1', 'cpu-thermal2', 'cpu-thermal3' do not match any of the regexes: '^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
-        From schema: Documentation/devicetree/bindings/thermal/thermal-zones.yaml
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: a6bcddbc2ee1 ("drm/msm: dsi: Handle dual-channel for 6G as well")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Jessica Zhang <jesszhan@codeaurora.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi |  8 ++++----
- arch/arm/boot/dts/qcom-apq8084.dtsi |  8 ++++----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 24 ++++++++++++------------
- arch/arm/boot/dts/qcom-msm8974.dtsi | 12 ++++++------
- 4 files changed, 26 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index dbc86a765be1..a6f83b590fd9 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -101,7 +101,7 @@ memory@0 {
- 	};
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index c86b5090fae6..20a92cb967d0 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -115,16 +115,16 @@ struct msm_dsi_host {
+ 	struct clk *pixel_clk_src;
+ 	struct clk *byte_intf_clk;
  
- 	thermal-zones {
--		cpu-thermal0 {
-+		cpu0-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+-	u32 byte_clk_rate;
+-	u32 pixel_clk_rate;
+-	u32 esc_clk_rate;
++	unsigned long byte_clk_rate;
++	unsigned long pixel_clk_rate;
++	unsigned long esc_clk_rate;
  
-@@ -122,7 +122,7 @@ cpu_crit0: trip1 {
- 			};
- 		};
+ 	/* DSI v2 specific clocks */
+ 	struct clk *src_clk;
+ 	struct clk *esc_clk_src;
+ 	struct clk *dsi_clk_src;
  
--		cpu-thermal1 {
-+		cpu1-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+-	u32 src_clk_rate;
++	unsigned long src_clk_rate;
  
-@@ -143,7 +143,7 @@ cpu_crit1: trip1 {
- 			};
- 		};
+ 	struct gpio_desc *disp_en_gpio;
+ 	struct gpio_desc *te_gpio;
+@@ -498,10 +498,10 @@ int msm_dsi_runtime_resume(struct device *dev)
  
--		cpu-thermal2 {
-+		cpu2-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+ {
+-	u32 byte_intf_rate;
++	unsigned long byte_intf_rate;
+ 	int ret;
  
-@@ -164,7 +164,7 @@ cpu_crit2: trip1 {
- 			};
- 		};
+-	DBG("Set clk rates: pclk=%d, byteclk=%d",
++	DBG("Set clk rates: pclk=%d, byteclk=%lu",
+ 		msm_host->mode->clock, msm_host->byte_clk_rate);
  
--		cpu-thermal3 {
-+		cpu3-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+ 	ret = dev_pm_opp_set_rate(&msm_host->pdev->dev,
+@@ -583,7 +583,7 @@ int dsi_link_clk_set_rate_v2(struct msm_dsi_host *msm_host)
+ {
+ 	int ret;
  
-diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
-index bf6a03506b45..52240fc7a1a6 100644
---- a/arch/arm/boot/dts/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
-@@ -102,7 +102,7 @@ scm {
- 	};
+-	DBG("Set clk rates: pclk=%d, byteclk=%d, esc_clk=%d, dsi_src_clk=%d",
++	DBG("Set clk rates: pclk=%d, byteclk=%lu, esc_clk=%lu, dsi_src_clk=%lu",
+ 		msm_host->mode->clock, msm_host->byte_clk_rate,
+ 		msm_host->esc_clk_rate, msm_host->src_clk_rate);
  
- 	thermal-zones {
--		cpu-thermal0 {
-+		cpu0-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+@@ -673,10 +673,10 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+ 	clk_disable_unprepare(msm_host->byte_clk);
+ }
  
-@@ -122,7 +122,7 @@ cpu_crit0: trip1 {
- 			};
- 		};
+-static u32 dsi_get_pclk_rate(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
++static unsigned long dsi_get_pclk_rate(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ {
+ 	struct drm_display_mode *mode = msm_host->mode;
+-	u32 pclk_rate;
++	unsigned long pclk_rate;
  
--		cpu-thermal1 {
-+		cpu1-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+ 	pclk_rate = mode->clock * 1000;
  
-@@ -142,7 +142,7 @@ cpu_crit1: trip1 {
- 			};
- 		};
+@@ -696,7 +696,7 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ {
+ 	u8 lanes = msm_host->lanes;
+ 	u32 bpp = dsi_get_bpp(msm_host->format);
+-	u32 pclk_rate = dsi_get_pclk_rate(msm_host, is_bonded_dsi);
++	unsigned long pclk_rate = dsi_get_pclk_rate(msm_host, is_bonded_dsi);
+ 	u64 pclk_bpp = (u64)pclk_rate * bpp;
  
--		cpu-thermal2 {
-+		cpu2-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+ 	if (lanes == 0) {
+@@ -713,7 +713,7 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 	msm_host->pixel_clk_rate = pclk_rate;
+ 	msm_host->byte_clk_rate = pclk_bpp;
  
-@@ -162,7 +162,7 @@ cpu_crit2: trip1 {
- 			};
- 		};
+-	DBG("pclk=%d, bclk=%d", msm_host->pixel_clk_rate,
++	DBG("pclk=%lu, bclk=%lu", msm_host->pixel_clk_rate,
+ 				msm_host->byte_clk_rate);
  
--		cpu-thermal3 {
-+		cpu3-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
+ }
+@@ -772,7 +772,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
  
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 4139d3817bd6..110113f3b8e2 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -49,7 +49,7 @@ L2: l2-cache {
- 	};
+ 	msm_host->esc_clk_rate = msm_host->byte_clk_rate / esc_div;
  
- 	thermal-zones {
--		tsens_tz_sensor0 {
-+		sensor0-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 0>;
-@@ -69,7 +69,7 @@ cpu-hot {
- 			};
- 		};
+-	DBG("esc=%d, src=%d", msm_host->esc_clk_rate,
++	DBG("esc=%lu, src=%lu", msm_host->esc_clk_rate,
+ 		msm_host->src_clk_rate);
  
--		tsens_tz_sensor1 {
-+		sensor1-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 1>;
-@@ -89,7 +89,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor2 {
-+		sensor2-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 2>;
-@@ -109,7 +109,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor3 {
-+		sensor3-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 3>;
-@@ -129,7 +129,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor4 {
-+		sensor4-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 4>;
-@@ -149,7 +149,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor5 {
-+		sensor5-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 5>;
-@@ -169,7 +169,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor6 {
-+		sensor6-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 6>;
-@@ -189,7 +189,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor7 {
-+		sensor7-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 7>;
-@@ -209,7 +209,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor8 {
-+		sensor8-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 8>;
-@@ -229,7 +229,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor9 {
-+		sensor9-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 9>;
-@@ -249,7 +249,7 @@ cpu-hot {
- 			};
- 		};
- 
--		tsens_tz_sensor10 {
-+		sensor10-thermal {
- 			polling-delay-passive = <0>;
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens 10>;
-@@ -751,7 +751,7 @@ tsens: thermal-sensor@900000 {
- 				interrupt-names = "uplow";
- 
- 				#qcom,sensors = <11>;
--				#thermal-sensor-cells = <1>;
-+				#thermal-sensorcells = <1>;
- 			};
- 		};
- 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index fa8e3642b949..deaf7d288b2e 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -142,7 +142,7 @@ memory {
- 	};
- 
- 	thermal-zones {
--		cpu-thermal0 {
-+		cpu0-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -162,7 +162,7 @@ cpu_crit0: trip1 {
- 			};
- 		};
- 
--		cpu-thermal1 {
-+		cpu1-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -182,7 +182,7 @@ cpu_crit1: trip1 {
- 			};
- 		};
- 
--		cpu-thermal2 {
-+		cpu2-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -202,7 +202,7 @@ cpu_crit2: trip1 {
- 			};
- 		};
- 
--		cpu-thermal3 {
-+		cpu3-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -282,7 +282,7 @@ wlan_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -297,7 +297,7 @@ gpu1_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
+ 	return 0;
 -- 
-2.33.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
