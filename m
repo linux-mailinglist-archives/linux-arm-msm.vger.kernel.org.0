@@ -2,153 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F9D2434AD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 14:06:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA05B434AF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 14:14:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbhJTMJK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 08:09:10 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:54837 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbhJTMJJ (ORCPT
+        id S230182AbhJTMQy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 08:16:54 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:4402 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230117AbhJTMQy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 08:09:09 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20211020120654euoutp01e77bbb8fead1659e90bce9240c894c5b~vu73z2DNh1439514395euoutp01R
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 12:06:54 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20211020120654euoutp01e77bbb8fead1659e90bce9240c894c5b~vu73z2DNh1439514395euoutp01R
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1634731614;
-        bh=8ssmdz378H2O6GPkTWYZCibFa9nC5r5ueHzA0hIFHVo=;
-        h=From:To:Cc:Subject:Date:References:From;
-        b=u/5Lxkg6fJ6AP96ZQSZe0pSxJX7Ut/idMVsgo7Hc/PwikEEY36Bso6YO7dtvwiUWX
-         X8JGng4vG4/oDa/zh+XHAiqvT3g4MJFwXtk6McrTmI4OtH7MKPDDCvCO5SgpprldUs
-         mlSnTSrZVcaPC0nytrnzB3J2ok2k1fHl8LTeQgHM=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20211020120653eucas1p18d0a90d20c1e55bd931a6cbdc19baa2d~vu73Xa5rI2464724647eucas1p1n;
-        Wed, 20 Oct 2021 12:06:53 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges2new.samsung.com (EUCPMTA) with SMTP id ED.25.42068.D5600716; Wed, 20
-        Oct 2021 13:06:53 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20211020120653eucas1p176e7d48624cd773f2d96c06994e21856~vu72srT8A1153911539eucas1p1R;
-        Wed, 20 Oct 2021 12:06:53 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20211020120653eusmtrp2dbbcef9489ba0e7510c901ea1d8d5709~vu72r4SZ21871218712eusmtrp2B;
-        Wed, 20 Oct 2021 12:06:53 +0000 (GMT)
-X-AuditID: cbfec7f4-c89ff7000002a454-5f-6170065d59f8
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id E8.7C.20981.D5600716; Wed, 20
-        Oct 2021 13:06:53 +0100 (BST)
-Received: from AMDC2765.digital.local (unknown [106.120.51.73]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20211020120652eusmtip1f97a50283e9634607e59aeb8e70cb4f6~vu72LtMRP2013220132eusmtip1J;
-        Wed, 20 Oct 2021 12:06:52 +0000 (GMT)
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH] cpuidle: qcom_spm: make driver multi-arch friendly
-Date:   Wed, 20 Oct 2021 14:06:43 +0200
-Message-Id: <20211020120643.28231-1-m.szyprowski@samsung.com>
-X-Mailer: git-send-email 2.17.1
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsWy7djPc7qxbAWJBsf2yFuce/ybxWLmyVYm
-        i7+TjrFbnN7/jsVi3mdZi4n7z7JbXN41h83ic+8RRou1R+6yW8z9MpXZ4sZcEwduj9+/JjF6
-        tC2w99i0qpPN4861PWwefVtWMXp0nmX0+LxJLoA9issmJTUnsyy1SN8ugSvj4JtG9oL/3BXb
-        ptk3ME7m6mLk5JAQMJE4MPEVexcjF4eQwApGiY833kM5Xxgl1q66zQLhfGaUWPn8BQtMy5kb
-        35ghEssZJXqm32eCa9nxewIjSBWbgKFE19suNhBbRCBa4uvPq2BFzAKvmCQ2b3jFBJIQFnCW
-        WHf+LTuIzSKgKjHn6kKwBl4BW4kjPQeYIdbJS6zecABsnYTAUg6Jn7cvs0MkXCRudPQzQtjC
-        Eq+Ob4GKy0j83zmfCaKhmVHi4bm17BBOD6PE5aYZUB3WEnfO/QJaxwF0k6bE+l36EGFHiaYl
-        zewgYQkBPokbbwVBwsxA5qRt05khwrwSHW1CENVqErOOr4Nbe/DCJaibPSR+rzgP9ouQQKzE
-        7I3f2Ccwys1C2LWAkXEVo3hqaXFuemqxUV5quV5xYm5xaV66XnJ+7iZGYAo5/e/4lx2My199
-        1DvEyMTBeIhRgoNZSYR3d0V+ohBvSmJlVWpRfnxRaU5q8SFGaQ4WJXHepC1r4oUE0hNLUrNT
-        UwtSi2CyTBycUg1MgQy8QXl8Pvu4trewfpPfrC4t+1iI/W/PopopniYC3X/SZcobHyZWnXB9
-        K3Ck/UratVPu2qVV7bYZqk+8/1mJn/eeke4c+rL+l4XXuQM9Ny6e22HvzKR9uDIlrWi/iele
-        TvF7r2/93eDEIv/J9fYqE93Hwf7qYaptuXUxZ0vfSa0R2Gs/68SNRwYXxKK9Ju3Jc9+3X2XX
-        wfY9iSsYN+lziH5c617/1UWnge1c8K/Dl5Z/mbMoifVJFL856/pk1owdclJqvsuY3nkkPtJX
-        CDvi1vJ196r2o0Zt69UyX7ytV5qsu8ix9Mb7B64bom6Jis+p/7OPX/WTkYvXG0PxbBH16pWF
-        DtmvT0/38uV211BiKc5INNRiLipOBADakz8CkAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrELMWRmVeSWpSXmKPExsVy+t/xu7qxbAWJBucfM1uce/ybxWLmyVYm
-        i7+TjrFbnN7/jsVi3mdZi4n7z7JbXN41h83ic+8RRou1R+6yW8z9MpXZ4sZcEwduj9+/JjF6
-        tC2w99i0qpPN4861PWwefVtWMXp0nmX0+LxJLoA9Ss+mKL+0JFUhI7+4xFYp2tDCSM/Q0kLP
-        yMRSz9DYPNbKyFRJ384mJTUnsyy1SN8uQS/j4JtG9oL/3BXbptk3ME7m6mLk5JAQMJE4c+Mb
-        cxcjF4eQwFJGiTd3H7JBJGQkTk5rYIWwhSX+XOtigyj6xChx/8gCFpAEm4ChRNfbLrAGEYFY
-        ibsHD7KDFDELvGOSuL5qDVi3sICzxLrzb9lBbBYBVYk5VxeCNfAK2Eoc6TnADLFBXmL1hgPM
-        Exh5FjAyrGIUSS0tzk3PLTbSK07MLS7NS9dLzs/dxAgM3G3Hfm7Zwbjy1Ue9Q4xMHIyHGCU4
-        mJVEeHdX5CcK8aYkVlalFuXHF5XmpBYfYjQF2jeRWUo0OR8YO3kl8YZmBqaGJmaWBqaWZsZK
-        4rwmR9bECwmkJ5akZqemFqQWwfQxcXBKNTBJLImU+crPPPWm5HaLRy4u308F6mlEb5DYfss/
-        TMmCJ45tse+Kj93HQzr/vVhkuXKC0sdEliPms+XP1p+umRGbcv+y+8EvVew7trn9jVi1unDB
-        6xvLd9701nO6x9a1s2vTy+XLGDrnlwafXbNHJaVUOPXl7pcFP18pqrlzsW2V+PJv2wH2VWlK
-        PPzOzPXTlYxyIzgb3y/oe6L8vb0u0ea09vQ1a55sErgWK/2Ty3qS2oovQUsklbiz/zO9aun6
-        +/GpR69Y7U/zOn7GSweX7KgW3fUpbtkXp+suSz9XfZ+xo4xJgnNB6Obrx3bv+q4ud8I+Jf7A
-        5TLtm2qpco5PqnyOLd8Q1LLa5s2TOp2e3p8KSizFGYmGWsxFxYkActV4lOUCAAA=
-X-CMS-MailID: 20211020120653eucas1p176e7d48624cd773f2d96c06994e21856
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20211020120653eucas1p176e7d48624cd773f2d96c06994e21856
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20211020120653eucas1p176e7d48624cd773f2d96c06994e21856
-References: <CGME20211020120653eucas1p176e7d48624cd773f2d96c06994e21856@eucas1p1.samsung.com>
+        Wed, 20 Oct 2021 08:16:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634732080; x=1666268080;
+  h=from:to:cc:subject:date:message-id;
+  bh=xee9a9OQlfjI1byPU2DSnr6ScUFGZ5MBgkmQyIdABuM=;
+  b=pKBfTQGn9X8rk85RzDFehV7NC5rTOL9pPUzk/tLXTcR/kNUkWZ4KW6lD
+   0LCIlNrzLV6omO29hWaxRY25wtDy+kr0UWL10MLPQHofwPGEZ+WWsffvO
+   Zv1/XZ9AgtV1MMsnGvlgrsVqCL3AKLm9Orfhg6ixpwUK0yIjkKPPEl9yY
+   M=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 20 Oct 2021 05:14:39 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Oct 2021 05:14:38 -0700
+X-QCInternal: smtphost
+Received: from sbillaka-linux.qualcomm.com ([10.204.66.13])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Oct 2021 17:44:21 +0530
+Received: by sbillaka-linux.qualcomm.com (Postfix, from userid 2305739)
+        id 6D8B520E28; Wed, 20 Oct 2021 17:44:20 +0530 (IST)
+From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
+        dianders@chromium.org, khsieh@codeaurora.org,
+        mkrishn@codeaurora.org, sbillaka@codeaurora.org
+Subject: [PATCH v2 0/2] Add support for eDP on SC7280
+Date:   Wed, 20 Oct 2021 17:44:09 +0530
+Message-Id: <1634732051-31282-1-git-send-email-quic_sbillaka@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Avoid returning -EPROBE_DEFER from spm_cpuidle_drv_probe() on non-qcom
-based systems. This makes the driver multi-arch friendly again after
-commit 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main
-SPM handling").
+This series will add eDP controller support for Qualcomm SC7280
+platform. These patches are baseline changes with which we can enable
+eDP display on sc7280. The sc7280 eDP controller can also support
+additional features such as which will be enabled in subsequent patch series.
 
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
----
-This fixes the issue I've reported some time ago:
-https://lore.kernel.org/all/86e3e09f-a8d7-3dff-3fc6-ddd7d30c5d78@samsung.com/
----
- drivers/cpuidle/cpuidle-qcom-spm.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+	This is based on Bjorn's changes in the below mentioned series
+to support both eDP and DP programming through the same driver:
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=564841
 
-diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-index 01e77913a414..1ee056fdfbb8 100644
---- a/drivers/cpuidle/cpuidle-qcom-spm.c
-+++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-@@ -129,12 +129,26 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
- 	return cpuidle_register(&data->cpuidle_driver, NULL);
- }
- 
-+static int spm_dev_check(struct device_driver *drv, void *data)
-+{
-+	if (strcmp(drv->name, "qcom_spm") == 0) {
-+		struct device_node *np;
-+
-+		np = of_find_matching_node(NULL, drv->of_match_table);
-+		if (np) {
-+			of_node_put(np);
-+			return -EPROBE_DEFER;
-+		}
-+	}
-+	return -ENODEV;
-+}
-+
- static int spm_cpuidle_drv_probe(struct platform_device *pdev)
- {
- 	int cpu, ret;
- 
- 	if (!qcom_scm_is_available())
--		return -EPROBE_DEFER;
-+		return bus_for_each_drv(pdev->dev.bus, NULL, NULL, spm_dev_check);
- 
- 	for_each_possible_cpu(cpu) {
- 		ret = spm_cpuidle_register(&pdev->dev, cpu);
+Summary of changes:
+
+Changes in V2:
+- Remove gpio programming from DP driver
+- Implemented code review comments
+
+Changes in V1:
+- Add support for eDP on SC7280 platform.
+- Add the new compatible string to documentation.
+
+Sankeerth Billakanti (2):
+  drm/msm/dp: Add support for SC7280 eDP
+  dt-bindings: Add SC7280 compatible string
+
+ .../bindings/display/msm/dp-controller.yaml          |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       |  4 ++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                     | 20 ++++++++++++++++++--
+ drivers/gpu/drm/msm/dp/dp_display.c                  | 10 +++++++++-
+ 4 files changed, 30 insertions(+), 5 deletions(-)
+
 -- 
-2.17.1
+The Qualcomm Innovatin Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
