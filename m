@@ -2,428 +2,338 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8312D4344F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 08:10:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46AA9434514
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 08:21:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbhJTGMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 02:12:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35696 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229591AbhJTGMV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 02:12:21 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 48FFE6008E;
-        Wed, 20 Oct 2021 06:10:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634710207;
-        bh=gEj9/YwEGuSQnHWtdHI6ZwJVcQiSr8M5YRtoLg1Xbzo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=b9Uy5Fs/v7fhwYpHV8L66taaHDgXmCjaF6Sljh2cEGLjUgY65MbkZVofFBPTdp1k4
-         FtIYakimgPg/wfl9zzR5cRSN6reTY13QvBmAHKHjtDbRFTYyFH/FEEDADKINcjDl57
-         2LEwGGw1zKVvFngTqyY/e66V9XkQ3SO5nmjU4lKnvmccPDvussdoKwR40xjDYrKTAJ
-         E16jZ6cmg0GcBAtxsQzn+S5Z2LJ1EUWyvhe4QrvodVGrpZ/R0qHeYvcthhdZlwrYnd
-         oQSghyy2Vw5Jjw9LLKha/3gDIbw6TlXGUSwV/ETbh0baTjVopnFd/tSMMQwlZKcICj
-         /C3JCyDbHzSEQ==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v5] spi: spi-geni-qcom: Add support for GPI dma
-Date:   Wed, 20 Oct 2021 11:39:54 +0530
-Message-Id: <20211020060954.1531783-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
+        id S229715AbhJTGXz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 02:23:55 -0400
+Received: from mail-bn1nam07on2061.outbound.protection.outlook.com ([40.107.212.61]:39103
+        "EHLO NAM02-BN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229691AbhJTGXy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 02:23:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=m9TakCvWYlSSyT80I7m82tOuXBv3o9EtVlr4LLfplqmrPdAb6cicwzPv0t7WJ3drbnkLMILWCRmBYkK07HCTe9nYaX08QW9+1SYrhK8YCwrqSOS3ST7ciYSPL5nQVjDjxKx0PqpMdWtGl//QiMNOvBTkKZiDS/ekfw9mSZAV2UjKcK/bjU9Nihh81Yw0z+EinXeSuFJgulgyE3ZnBDnYm30FsDQZYR8vOSOGXmpJlmPGCu8YpAmfiV7PNjSuDb+n4YtpqFJAeuZQ425ZrLEKrRPIiLN+gVCHtw5c0ouJygg/2+M2dPJ1CFxr7g5usXTGr4MTHJnjWtMvhvXlOJ2DUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=giHEi8StHDpFAIKZ2fjbrOrRzROdUjeBGR7s6YiPPk8=;
+ b=dmS4rRrK/g3O33ldx8as3eJekD7ORXwiGET1tB1HB/7u+pN7OidYdb6Wc2Xxx5JV1Pk5MCMajIoEXip9DY3V24+ysizzXBV7WhUplMmV4BIh5c30ZCN689KyBvAj2GEOMgM9yBqOZ3t68fImj8wyUNZwvqCUkwRcfY37fJtNkldRKI+pfth2CjZPBokxl8lBT08l7wy6qSoAW/1DiqaQSUvm2suMD5NBD4lKDR68vv0hmfJ348XGh4kDS2wCVXmSeynMNBsFYeNslozNWf4GSaweAMEoRJqw9e+bHiD9E0NDw6Xq0RjcKRXH3qYre6mRn4W7hwZVUhr4Th+3hGq4Uw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 149.199.62.198) smtp.rcpttodomain=foss.st.com smtp.mailfrom=xilinx.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=xilinx.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=xilinx.onmicrosoft.com; s=selector2-xilinx-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=giHEi8StHDpFAIKZ2fjbrOrRzROdUjeBGR7s6YiPPk8=;
+ b=GK+hmKXrGWW5qR8g5NU00hPJaTOxWrRF6u1pFuZPIsrjlu1rLJdKLfONq3f5Bq6FGy5vgzD9nZrIWRz8jMO0OndubmN+6A3DJlSJ39gZOk80CKi3WFDXeoir9FVhqJUijlx4C34MGWiyBFf85rT7dGGPUy9YPuo+EzhoI0T7yWk=
+Received: from SA9PR11CA0017.namprd11.prod.outlook.com (2603:10b6:806:6e::22)
+ by BN7PR02MB4993.namprd02.prod.outlook.com (2603:10b6:408:25::29) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4608.18; Wed, 20 Oct
+ 2021 06:21:36 +0000
+Received: from SN1NAM02FT0020.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:806:6e:cafe::70) by SA9PR11CA0017.outlook.office365.com
+ (2603:10b6:806:6e::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.15 via Frontend
+ Transport; Wed, 20 Oct 2021 06:21:36 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 149.199.62.198)
+ smtp.mailfrom=xilinx.com; foss.st.com; dkim=none (message not signed)
+ header.d=none;foss.st.com; dmarc=pass action=none header.from=xilinx.com;
+Received-SPF: Pass (protection.outlook.com: domain of xilinx.com designates
+ 149.199.62.198 as permitted sender) receiver=protection.outlook.com;
+ client-ip=149.199.62.198; helo=xsj-pvapexch01.xlnx.xilinx.com;
+Received: from xsj-pvapexch01.xlnx.xilinx.com (149.199.62.198) by
+ SN1NAM02FT0020.mail.protection.outlook.com (10.97.5.96) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.4608.15 via Frontend Transport; Wed, 20 Oct 2021 06:21:35 +0000
+Received: from xsj-pvapexch02.xlnx.xilinx.com (172.19.86.41) by
+ xsj-pvapexch01.xlnx.xilinx.com (172.19.86.40) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.14; Tue, 19 Oct 2021 23:21:35 -0700
+Received: from smtp.xilinx.com (172.19.127.95) by
+ xsj-pvapexch02.xlnx.xilinx.com (172.19.86.41) with Microsoft SMTP Server id
+ 15.1.2176.14 via Frontend Transport; Tue, 19 Oct 2021 23:21:35 -0700
+Envelope-to: fabrice.gasnier@foss.st.com,
+ gregkh@linuxfoundation.org,
+ dianders@chromium.org,
+ mka@chromium.org,
+ robh+dt@kernel.org,
+ stern@rowland.harvard.edu,
+ frowand.list@gmail.com,
+ mathias.nyman@intel.com,
+ balbi@kernel.org,
+ devicetree@vger.kernel.org,
+ peter.chen@kernel.org,
+ linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org,
+ hadess@hadess.net,
+ ravisadineni@chromium.org,
+ rogerq@kernel.org,
+ krzk@kernel.org,
+ swboyd@chromium.org,
+ alcooperx@gmail.com,
+ viro@zeniv.linux.org.uk,
+ alexandre.belloni@bootlin.com,
+ alexandre.torgue@foss.st.com,
+ andrew@lunn.ch,
+ andrey.zhizhikin@leica-geosystems.com,
+ agross@kernel.org,
+ arnd@arndb.de,
+ a-govindraju@ti.com,
+ bjorn.andersson@linaro.org,
+ catalin.marinas@arm.com,
+ dmitry.baryshkov@linaro.org,
+ digetx@gmail.com,
+ aisheng.dong@nxp.com,
+ enric.balletbo@collabora.com,
+ festevam@gmail.com,
+ f.fainelli@gmail.com,
+ gregory.clement@bootlin.com,
+ grygorii.strashko@ti.com,
+ agx@sigxcpu.org,
+ jagan@amarulasolutions.com,
+ axboe@kernel.dk,
+ johan@kernel.org,
+ krzysztof.kozlowski@canonical.com,
+ prabhakar.mahadev-lad.rj@bp.renesas.com,
+ lionel.debieve@st.com,
+ mani@kernel.org,
+ m.szyprowski@samsung.com,
+ broonie@kernel.org,
+ martin.juecker@gmail.com,
+ nm@ti.com,
+ olivier.moysan@st.com,
+ pawell@cadence.com,
+ rric@kernel.org,
+ linux@armlinux.org.uk,
+ sebastian.hesselbarth@gmail.com,
+ shawnguo@kernel.org,
+ tglx@linutronix.de,
+ tony@atomide.com,
+ vkoul@kernel.org,
+ viresh.kumar@linaro.org,
+ will@kernel.org,
+ wcohen@redhat.com,
+ linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org,
+ linux-omap@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org,
+ l.stelmach@samsung.com
+Received: from [10.254.241.49] (port=58266)
+        by smtp.xilinx.com with esmtp (Exim 4.90)
+        (envelope-from <michal.simek@xilinx.com>)
+        id 1md4yk-0000Uh-VX; Tue, 19 Oct 2021 23:21:35 -0700
+Message-ID: <0739e563-c8e7-2a19-e440-4f32e7de3917@xilinx.com>
+Date:   Wed, 20 Oct 2021 08:21:21 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
+Content-Language: en-US
+To:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     Alan Stern <stern@rowland.harvard.edu>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Peter Chen <peter.chen@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre TORGUE - foss <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        =?UTF-8?Q?Guido_G=c3=bcnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Lionel DEBIEVE <lionel.debieve@st.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        =?UTF-8?Q?Martin_J=c3=bccker?= <martin.juecker@gmail.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier MOYSAN <olivier.moysan@st.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        =?UTF-8?Q?=c5=81ukasz_Stelmach?= <l.stelmach@samsung.com>
+References: <20210813195228.2003500-1-mka@chromium.org>
+ <YUoRq1RrOIoiBJ5+@google.com>
+ <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
+ <YWkiGGBKOVokBye9@kroah.com>
+ <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
+From:   Michal Simek <michal.simek@xilinx.com>
+In-Reply-To: <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 169799c7-e285-46bd-f041-08d99391de50
+X-MS-TrafficTypeDiagnostic: BN7PR02MB4993:
+X-Microsoft-Antispam-PRVS: <BN7PR02MB499358B36AB14EFB6257D5EEC6BE9@BN7PR02MB4993.namprd02.prod.outlook.com>
+X-Auto-Response-Suppress: DR, RN, NRN, OOF, AutoReply
+X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 4aTsYdVKpydSui2KMony/3+fxpka/pnXS5lrt95t/8bJYtSY6Wr5G+2oq51wH/Rg3/xduAIfgyXf2RvzFS6R01i5amcSmaDBh0lEJfg1Vf/zGHDOIE0kHxB0aA9dACu82Rr5zhtKGJwW6E7vEfu/ciiP2LlvkC2Al+GZ5wQGeOrm2oyYewfEZw64ONGvWyxqC5uOI4SG5q/Pb7K9AAuC7w5708FrrxqWggN4dXnjTOpfH2GGqX/Lu9gzaeAu86smcXeyeAabVuTKOVEQAMMllEg+iKEp0CkninuFIK+uI5xyuNlSG6M8CmzjvOhhhOtCvzs/jRi429MtK7GygOhcOkfKgwG1dbPlNzZ9t9zlTUGa9w984CmsOIhlQFMJuzfNykS7LgreyjwDYCzX3RBtQGiQGG12YMROeDb3q/3rssEx0SJIiFMibB+rrTtqe8T0az/eVl8N2gZ6Q373HJPLd/IhrMuuC+qQdjqPSmFa5gL9pyCrsDsQgZz9DQ4GLq4v2sSLB1AuqF9ocz0k1cbA8ulXFulXC2SHxXnD7BIBZFDN5/2g7ECe9teCBegzQRLaJXUWRlN1BMnXkPZ2Kt7OfBkAU1IyejdTNVvUlZ6xnH+ut71uYQbNr1RUngjo6I6BP/TOFTqBaaZb4QCLE5UxmUXuVgWnMEtJx6RTSUSZ8p5H1kmwseMw1Yqrg00YytjzCThQhPIapgnpHIrcw2JE2u2ZO4QcM9oItMfrCpOtBmlcBjjkpQYgKZHUGyTTSuMwRHsdzaaoT3uPJNKUnLcvSDep4bG4aATYC2Lk8nzPo62q43siNfTrymhKbLHv63Y6g45K4++We+kNBxOJ54on53ONCcrZI83inA2UCpPuoKw=
+X-Forefront-Antispam-Report: CIP:149.199.62.198;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:xsj-pvapexch01.xlnx.xilinx.com;PTR:unknown-62-198.xilinx.com;CAT:NONE;SFS:(36840700001)(46966006)(70206006)(7406005)(7366002)(7416002)(36860700001)(36906005)(508600001)(110136005)(426003)(70586007)(9786002)(7636003)(6666004)(2616005)(36756003)(5660300002)(186003)(82310400003)(26005)(8676002)(356005)(8936002)(54906003)(31696002)(2906002)(83380400001)(31686004)(44832011)(53546011)(316002)(966005)(4326008)(47076005)(336012)(50156003)(43740500002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: xilinx.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2021 06:21:35.8123
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 169799c7-e285-46bd-f041-08d99391de50
+X-MS-Exchange-CrossTenant-Id: 657af505-d5df-48d0-8300-c31994686c5c
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=657af505-d5df-48d0-8300-c31994686c5c;Ip=[149.199.62.198];Helo=[xsj-pvapexch01.xlnx.xilinx.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1NAM02FT0020.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR02MB4993
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We can use GPI DMA for devices where it is enabled by firmware. Add
-support for this mode
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
---
--Changes since v4:
- - Fix the kbuild bot warning
 
--Changes since v3:
- - Drop merged spi core, geni patches
- - Remove global structs and use local variables instead
- - modularize code more as suggested by Doug
- - fix kbuild bot warning
+On 10/19/21 18:04, Fabrice Gasnier wrote:
+> On 10/15/21 8:39 AM, Greg Kroah-Hartman wrote:
+>> On Thu, Oct 14, 2021 at 02:38:55PM -0700, Doug Anderson wrote:
+>>> Hi,
+>>>
+>>> On Tue, Sep 21, 2021 at 10:09 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+>>>>
+>>>> Hi Greg,
+>>>>
+>>>> are there any actions pending or can this land in usb-testing?
+>>>>
+>>>> I confirmed that this series can be rebased on top of v5.15-rc2
+>>>> without conflicts.
+>>>
+>>> I'm quite interested to know what the next action items are, too. This
+>>> is one of the very few patches we have for trogdor (excluding MIPI
+>>> camera, which is a long story) that we're carrying downstream, so I'm
+>>> keenly interested in making sure it's unblocked (if, indeed, it's
+>>> blocked on anything).
+>>>
+>>> If folks feel that this needs more review eyes before landing again
+>>> then I'll try to find some time in the next week or two. If it's just
+>>> waiting for the merge window to open/close so it can have maximal bake
+>>> time, that's cool too. Please yell if there's something that I can do
+>>> to help, though! :-)
+>>
+>> I would love more review-eyes on this please.
+>>
+> 
+> Hi,
+> 
+> I noticed this series some time ago, and wanted to take a closer look.
+> 
+> The same issue this series address is seen on stm32 board for instance.
+> (arch/arm/boot/dts/stm32mp15xx-dkx.dtsi). On board HUB (not described in
+> the DT) is supplied by an always-on regulator.
+> So it could could be interesting/useful to address the same case ,
+> on stm32 boards, where USB2 (ehci-platform driver) is used currently.
+> 
+> I noticed a few things, especially on the dt-bindings. I've some
+> questions here.
+> 
+> In this series, RTS5411 is used. The dt-bindings documents it as a child
+> node of the USB controller. E.g.
+> 
+> &usb {
+> 	usb_hub_2_0: hub@1 {
+> 		...
+> 	};
+> 
+> 	usb_hub_3_0: hub@2 {
+> 	};
+> }
+> 
+> I had a quick look at RTS5411 datasheet. It looks like there's an i2c
+> interface too.
+> - I guess the I2C interface isn't used in your case ?
+>    (I haven't checked what it could be used for...)
+> 
+> In the stm32 boards (stm32mp15xx-dkx), there's an usb2514b chip
+> - that also could be wired on I2C interface (0R mount option)
+> - unused on stm32 boards by default
+> 
+> usb2514b chip already has a dt-bindings (with compatible), and a driver:
+> - drivers/usb/misc/usb251xb.c
+> - Documentation/devicetree/bindings/usb/usb251xb.txt
+> 
+> It is defined more as an i2c chip, so I'd expect it as an i2c child,
+> e.g. like:
+> 
+> &i2c {
+> 	usb2514b@2c {
+> 		compatible = "microchip,usb2514b";
+> 		...
+> 	};
+> };
+> 
+> 
+> This way, I don't see how it could be used together with onboard_usb_hub
+> driver ? (But I may have missed it)
+> Is it possible to use a phandle, instead of a child node ?
+> 
+> However, in the stm32mp15xx-dkx case, i2c interface isn't wired/used by
+> default. So obviously the i2c driver isn't used. In this case, could the
+> "microchip,usb2514b" be listed in onboard_usb_hub driver ?
+> (wouldn't it be redundant ?)
+> 
+> In this case it would be a child node of the usb DT node... Maybe that's
+> more a question for Rob: would it be "legal" regarding existing
+> dt-bindings ?
 
- drivers/spi/spi-geni-qcom.c | 254 +++++++++++++++++++++++++++++++++---
- 1 file changed, 239 insertions(+), 15 deletions(-)
+We wanted to upstream driver for microchip usb5744 and based on this 
+thread with Rob
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 2f51421e2a71..27a446faf143 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -2,6 +2,9 @@
- // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
- 
- #include <linux/clk.h>
-+#include <linux/dmaengine.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/dma/qcom-gpi-dma.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/log2.h>
-@@ -63,6 +66,15 @@
- #define TIMESTAMP_AFTER		BIT(3)
- #define POST_CMD_DELAY		BIT(4)
- 
-+#define GSI_LOOPBACK_EN		BIT(0)
-+#define GSI_CS_TOGGLE		BIT(3)
-+#define GSI_CPHA		BIT(4)
-+#define GSI_CPOL		BIT(5)
-+
-+#define MAX_TX_SG		3
-+#define NUM_SPI_XFER		8
-+#define SPI_XFER_TIMEOUT_MS	250
-+
- struct spi_geni_master {
- 	struct geni_se se;
- 	struct device *dev;
-@@ -84,6 +96,9 @@ struct spi_geni_master {
- 	int irq;
- 	bool cs_flag;
- 	bool abort_failed;
-+	struct dma_chan *tx;
-+	struct dma_chan *rx;
-+	int cur_xfer_mode;
- };
- 
- static int get_spi_clk_cfg(unsigned int speed_hz,
-@@ -330,34 +345,197 @@ static int setup_fifo_params(struct spi_device *spi_slv,
- 	return geni_spi_set_clock_and_bw(mas, spi_slv->max_speed_hz);
- }
- 
-+static void
-+spi_gsi_callback_result(void *cb, const struct dmaengine_result *result)
-+{
-+	struct spi_master *spi = cb;
-+
-+	if (result->result != DMA_TRANS_NOERROR) {
-+		dev_err(&spi->dev, "DMA txn failed: %d\n", result->result);
-+		return;
-+	}
-+
-+	if (!result->residue) {
-+		dev_dbg(&spi->dev, "DMA txn completed\n");
-+		spi_finalize_current_transfer(spi);
-+	} else {
-+		dev_err(&spi->dev, "DMA xfer has pending: %d\n", result->residue);
-+	}
-+}
-+
-+static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas,
-+			  struct spi_device *spi_slv, struct spi_master *spi)
-+{
-+	unsigned long flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
-+	struct dma_slave_config config = {};
-+	struct gpi_spi_config peripheral = {};
-+	struct dma_async_tx_descriptor *tx_desc, *rx_desc;
-+	int ret;
-+
-+	config.peripheral_config = &peripheral;
-+	config.peripheral_size = sizeof(peripheral);
-+	peripheral.set_config = true;
-+
-+	if (xfer->bits_per_word != mas->cur_bits_per_word ||
-+	    xfer->speed_hz != mas->cur_speed_hz) {
-+		mas->cur_bits_per_word = xfer->bits_per_word;
-+		mas->cur_speed_hz = xfer->speed_hz;
-+	}
-+
-+	if (xfer->tx_buf && xfer->rx_buf) {
-+		peripheral.cmd = SPI_DUPLEX;
-+	} else if (xfer->tx_buf) {
-+		peripheral.cmd = SPI_TX;
-+		peripheral.rx_len = 0;
-+	} else if (xfer->rx_buf) {
-+		peripheral.cmd = SPI_RX;
-+		if (!(mas->cur_bits_per_word % MIN_WORD_LEN)) {
-+			peripheral.rx_len = ((xfer->len << 3) / mas->cur_bits_per_word);
-+		} else {
-+			int bytes_per_word = (mas->cur_bits_per_word / BITS_PER_BYTE) + 1;
-+
-+			peripheral.rx_len = (xfer->len / bytes_per_word);
-+		}
-+	}
-+
-+	peripheral.loopback_en = !!(spi_slv->mode & SPI_LOOP);
-+	peripheral.clock_pol_high = !!(spi_slv->mode & SPI_CPOL);
-+	peripheral.data_pol_high = !!(spi_slv->mode & SPI_CPHA);
-+	peripheral.cs = spi_slv->chip_select;
-+	peripheral.pack_en = true;
-+	peripheral.word_len = xfer->bits_per_word - MIN_WORD_LEN;
-+
-+	ret = get_spi_clk_cfg(mas->cur_speed_hz, mas,
-+			      &peripheral.clk_src, &peripheral.clk_div);
-+	if (ret) {
-+		dev_err(mas->dev, "Err in get_spi_clk_cfg() :%d\n", ret);
-+		return ret;
-+	}
-+
-+	if (!xfer->cs_change) {
-+		if (!list_is_last(&xfer->transfer_list, &spi->cur_msg->transfers))
-+			peripheral.fragmentation = FRAGMENTATION;
-+	}
-+
-+	if (peripheral.cmd & SPI_RX) {
-+		dmaengine_slave_config(mas->rx, &config);
-+		rx_desc = dmaengine_prep_slave_sg(mas->rx, xfer->rx_sg.sgl, xfer->rx_sg.nents,
-+						  DMA_DEV_TO_MEM, flags);
-+		if (!rx_desc) {
-+			dev_err(mas->dev, "Err setting up rx desc\n");
-+			return -EIO;
-+		}
-+	}
-+
-+	/*
-+	 * Prepare the TX always, even for RX or tx_buf being null, we would
-+	 * need TX to be prepared per GSI spec
-+	 */
-+	dmaengine_slave_config(mas->tx, &config);
-+	tx_desc = dmaengine_prep_slave_sg(mas->tx, xfer->tx_sg.sgl, xfer->tx_sg.nents,
-+					  DMA_MEM_TO_DEV, flags);
-+	if (!tx_desc) {
-+		dev_err(mas->dev, "Err setting up tx desc\n");
-+		return -EIO;
-+	}
-+
-+	tx_desc->callback_result = spi_gsi_callback_result;
-+	tx_desc->callback_param = spi;
-+
-+	if (peripheral.cmd & SPI_RX)
-+		dmaengine_submit(rx_desc);
-+	dmaengine_submit(tx_desc);
-+
-+	if (peripheral.cmd & SPI_RX)
-+		dma_async_issue_pending(mas->rx);
-+
-+	dma_async_issue_pending(mas->tx);
-+	return 1;
-+}
-+
-+static bool geni_can_dma(struct spi_controller *ctlr,
-+			 struct spi_device *slv, struct spi_transfer *xfer)
-+{
-+	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
-+
-+	/* check if dma is supported */
-+	return mas->cur_xfer_mode != GENI_SE_FIFO;
-+}
-+
- static int spi_geni_prepare_message(struct spi_master *spi,
- 					struct spi_message *spi_msg)
- {
--	int ret;
- 	struct spi_geni_master *mas = spi_master_get_devdata(spi);
-+	int ret;
- 
--	if (spi_geni_is_abort_still_pending(mas))
--		return -EBUSY;
-+	switch (mas->cur_xfer_mode) {
-+	case GENI_SE_FIFO:
-+		if (spi_geni_is_abort_still_pending(mas))
-+			return -EBUSY;
-+		ret = setup_fifo_params(spi_msg->spi, spi);
-+		if (ret)
-+			dev_err(mas->dev, "Couldn't select mode %d\n", ret);
-+		return ret;
- 
--	ret = setup_fifo_params(spi_msg->spi, spi);
--	if (ret)
--		dev_err(mas->dev, "Couldn't select mode %d\n", ret);
-+	case GENI_GPI_DMA:
-+		/* nothing to do for GPI DMA */
-+		return 0;
-+	}
-+
-+	dev_err(mas->dev, "Mode not supported %d", mas->cur_xfer_mode);
-+	return -EINVAL;
-+}
-+
-+static int spi_geni_grab_gpi_chan(struct spi_geni_master *mas)
-+{
-+	int ret;
-+
-+	mas->tx = dma_request_chan(mas->dev, "tx");
-+	ret = dev_err_probe(mas->dev, IS_ERR(mas->tx), "Failed to get tx DMA ch\n");
-+	if (ret < 0)
-+		goto err_tx;
-+
-+	mas->rx = dma_request_chan(mas->dev, "rx");
-+	ret = dev_err_probe(mas->dev, IS_ERR(mas->rx), "Failed to get rx DMA ch\n");
-+	if (ret < 0)
-+		goto err_rx;
-+
-+	return 0;
-+
-+err_rx:
-+	dma_release_channel(mas->tx);
-+	mas->tx = NULL;
-+err_tx:
-+	mas->rx = NULL;
- 	return ret;
- }
- 
-+static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
-+{
-+	if (mas->rx) {
-+		dma_release_channel(mas->rx);
-+		mas->rx = NULL;
-+	}
-+
-+	if (mas->tx) {
-+		dma_release_channel(mas->tx);
-+		mas->tx = NULL;
-+	}
-+}
-+
- static int spi_geni_init(struct spi_geni_master *mas)
- {
- 	struct geni_se *se = &mas->se;
- 	unsigned int proto, major, minor, ver;
--	u32 spi_tx_cfg;
-+	u32 spi_tx_cfg, fifo_disable;
-+	int ret = -ENXIO;
- 
- 	pm_runtime_get_sync(mas->dev);
- 
- 	proto = geni_se_read_proto(se);
- 	if (proto != GENI_SE_SPI) {
- 		dev_err(mas->dev, "Invalid proto %d\n", proto);
--		pm_runtime_put(mas->dev);
--		return -ENXIO;
-+		goto out_pm;
- 	}
- 	mas->tx_fifo_depth = geni_se_get_tx_fifo_depth(se);
- 
-@@ -380,15 +558,38 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	else
- 		mas->oversampling = 1;
- 
--	geni_se_select_mode(se, GENI_SE_FIFO);
-+	fifo_disable = readl(se->base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
-+	switch (fifo_disable) {
-+	case 1:
-+		ret = spi_geni_grab_gpi_chan(mas);
-+		if (!ret) { /* success case */
-+			mas->cur_xfer_mode = GENI_GPI_DMA;
-+			geni_se_select_mode(se, GENI_GPI_DMA);
-+			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
-+			break;
-+		}
-+		/*
-+		 * in case of failure to get dma channel, we can still do the
-+		 * FIFO mode, so fallthrough
-+		 */
-+		dev_warn(mas->dev, "FIFO mode disabled, but couldn't get DMA, fall back to FIFO mode\n");
-+		fallthrough;
-+
-+	case 0:
-+		mas->cur_xfer_mode = GENI_SE_FIFO;
-+		geni_se_select_mode(se, GENI_SE_FIFO);
-+		ret = 0;
-+		break;
-+	}
- 
- 	/* We always control CS manually */
- 	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
- 	spi_tx_cfg &= ~CS_TOGGLE;
- 	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
- 
-+out_pm:
- 	pm_runtime_put(mas->dev);
--	return 0;
-+	return ret;
- }
- 
- static unsigned int geni_byte_per_fifo_word(struct spi_geni_master *mas)
-@@ -569,8 +770,11 @@ static int spi_geni_transfer_one(struct spi_master *spi,
- 	if (!xfer->len)
- 		return 0;
- 
--	setup_fifo_xfer(xfer, mas, slv->mode, spi);
--	return 1;
-+	if (mas->cur_xfer_mode == GENI_SE_FIFO) {
-+		setup_fifo_xfer(xfer, mas, slv->mode, spi);
-+		return 1;
-+	}
-+	return setup_gsi_xfer(xfer, mas, slv, spi);
- }
- 
- static irqreturn_t geni_spi_isr(int irq, void *data)
-@@ -665,6 +869,13 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
-+	if (ret) {
-+		ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-+		if (ret)
-+			return dev_err_probe(dev, ret, "could not set DMA mask\n");
-+	}
-+
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -704,9 +915,10 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	spi->max_speed_hz = 50000000;
- 	spi->prepare_message = spi_geni_prepare_message;
- 	spi->transfer_one = spi_geni_transfer_one;
-+	spi->can_dma = geni_can_dma;
-+	spi->dma_map_dev = dev->parent;
- 	spi->auto_runtime_pm = true;
- 	spi->handle_err = handle_fifo_timeout;
--	spi->set_cs = spi_geni_set_cs;
- 	spi->use_gpio_descriptors = true;
- 
- 	init_completion(&mas->cs_done);
-@@ -732,9 +944,17 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto spi_geni_probe_runtime_disable;
- 
-+	/*
-+	 * check the mode supported and set_cs for fifo mode only
-+	 * for dma (gsi) mode, the gsi will set cs based on params passed in
-+	 * TRE
-+	 */
-+	if (mas->cur_xfer_mode == GENI_SE_FIFO)
-+		spi->set_cs = spi_geni_set_cs;
-+
- 	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
- 	if (ret)
--		goto spi_geni_probe_runtime_disable;
-+		goto spi_geni_release_dma;
- 
- 	ret = spi_register_master(spi);
- 	if (ret)
-@@ -743,6 +963,8 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	return 0;
- spi_geni_probe_free_irq:
- 	free_irq(mas->irq, spi);
-+spi_geni_release_dma:
-+	spi_geni_release_dma_chan(mas);
- spi_geni_probe_runtime_disable:
- 	pm_runtime_disable(dev);
- 	return ret;
-@@ -756,6 +978,8 @@ static int spi_geni_remove(struct platform_device *pdev)
- 	/* Unregister _before_ disabling pm_runtime() so we stop transfers */
- 	spi_unregister_master(spi);
- 
-+	spi_geni_release_dma_chan(mas);
-+
- 	free_irq(mas->irq, spi);
- 	pm_runtime_disable(&pdev->dev);
- 	return 0;
--- 
-2.31.1
+https://lore.kernel.org/all/CAL_JsqJZBbu+UXqUNdZwg-uv0PAsNg55026PTwhKr5wQtxCjVQ@mail.gmail.com/
 
+the recommendation was to use i2c-bus link. And in our usb5744 case 
+where usb hub has only one i2c address we just hardcoded it in the 
+driver. I should be pushing this driver to xilinx soc tree soon if you 
+want to take a look.
+
+Thanks,
+Michal
