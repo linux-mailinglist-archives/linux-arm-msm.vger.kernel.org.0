@@ -2,82 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B29434748
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 10:49:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA8024347C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 11:19:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbhJTIvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 04:51:46 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:27470 "EHLO m43-7.mailgun.net"
+        id S229627AbhJTJVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 05:21:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35378 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229632AbhJTIvq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 04:51:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634719772; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=hcAWFLkrr3vyex+n2PUyQV7o3dqbvwtfVb8aoLuhovg=; b=RulKoafDwKBoEn15B7P573fRzSXpGZqbX0ea89lTcdo8c9ujchJNv54CqCLJJq2W3dad0M6N
- n2Oc8E+nkAHiPIPNBxrbA19HvOsB+LWpkoGdSWwpee5ss0/hO594WE+KNTqZD93cPU96N816
- pI8ad/BXSUX6aZawQs8jSTlE2Uk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 616fd81859612e0100d6042a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 Oct 2021 08:49:28
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B4C81C4360C; Wed, 20 Oct 2021 08:49:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9EE6EC43460;
-        Wed, 20 Oct 2021 08:49:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9EE6EC43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, rnayak@codeaurora.org, lsrao@codeaurora.org,
-        stephan@gerhold.net, shawn.guo@linaro.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH] soc: qcom: qcom_stats: Fix client votes offset
-Date:   Wed, 20 Oct 2021 14:19:13 +0530
-Message-Id: <1634719753-26064-1-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S229555AbhJTJVp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 05:21:45 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5CDDF61074;
+        Wed, 20 Oct 2021 09:19:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634721571;
+        bh=lyuguw0XyKC7pblfSP/PKjf0tJ9Omz7vG2CSkCF9b/Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GpfTbXlxvTLq3xEnQP+Mt5K79oLCsTz8gWGIsl0Bs3jXM1H0sbH/VBxXQmTdapqZJ
+         ss4z/dkeFrhUx+tpjQmDQvkkDQfYy0AbS/gYWN8knXneehPld6hyAW+uL5GH5gAYPR
+         ieVjo2Dz2AIa7UUy38tZOb0p8e/pLyFQ7TPcaHpkGL1NQQ2e2EHqWwZtrJNMDYZGvH
+         sabCabEJDrySLq7HUGodzbr6Mq64EC9kxPYSKTDHZp5q47eMp3pgE4IbFfuY1bkMkd
+         YuGbvZZJ9cuLbmC3ZvAHqTtddR4TDz97+VI2JqPx5+SLI4/w+jbW+fMtLRgoHrnp8B
+         pM42Dau48lQ2w==
+Date:   Wed, 20 Oct 2021 14:49:26 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 07/11] drm/msm/disp/dpu1: Add DSC support in hw_ctl
+Message-ID: <YW/fHkaTcCbezKMT@matsya>
+References: <20211007070900.456044-1-vkoul@kernel.org>
+ <20211007070900.456044-8-vkoul@kernel.org>
+ <f5f6162c-7ed0-2964-7cf9-0bb894c8b4f5@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f5f6162c-7ed0-2964-7cf9-0bb894c8b4f5@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Client votes starts at 0x20 offset. Correct the offset.
+On 14-10-21, 17:06, Dmitry Baryshkov wrote:
+> On 07/10/2021 10:08, Vinod Koul wrote:
+> > Later gens of hardware have DSC bits moved to hw_ctl, so configure these
+> > bits so that DSC would work there as well
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> > Changes since
+> > v1:
+> >   - Move this patch from 6 to 7 due to dependency on 6th one
+> >   - Use DSC indices for programming DSC registers and program only on non
+> >     null indices
+> > 
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 12 ++++++++++--
+> >   1 file changed, 10 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > index 3c79bd9c2fe5..8ea9d8dce3f7 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > @@ -25,6 +25,8 @@
+> >   #define   CTL_MERGE_3D_ACTIVE           0x0E4
+> >   #define   CTL_INTF_ACTIVE               0x0F4
+> >   #define   CTL_MERGE_3D_FLUSH            0x100
+> > +#define   CTL_DSC_ACTIVE                0x0E8
+> > +#define   CTL_DSC_FLUSH                0x104
+> >   #define   CTL_INTF_FLUSH                0x110
+> >   #define   CTL_INTF_MASTER               0x134
+> >   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+> > @@ -34,6 +36,7 @@
+> >   #define DPU_REG_RESET_TIMEOUT_US        2000
+> >   #define  MERGE_3D_IDX   23
+> > +#define  DSC_IDX        22
+> >   #define  INTF_IDX       31
+> >   #define CTL_INVALID_BIT                 0xffff
+> > @@ -120,7 +123,6 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+> >   static void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+> >   {
+> > -
+> >   	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
+> >   		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
+> >   				ctx->pending_merge_3d_flush_mask);
+> > @@ -128,7 +130,6 @@ static void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+> >   		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
+> >   				ctx->pending_intf_flush_mask);
+> > -	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+> 
+> This would break non-DSC case.
 
-Reported-and-suggested-by: Shawn Guo <shawn.guo@linaro.org>
-Fixes: 1d7724690344 ("soc: qcom: Add Sleep stats driver")
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/soc/qcom/qcom_stats.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is a mistake, I have fixed it up now..
 
-diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-index 817505b..131d24c 100644
---- a/drivers/soc/qcom/qcom_stats.c
-+++ b/drivers/soc/qcom/qcom_stats.c
-@@ -22,7 +22,7 @@
- #define LAST_ENTERED_AT_OFFSET	0x8
- #define LAST_EXITED_AT_OFFSET	0x10
- #define ACCUMULATED_OFFSET	0x18
--#define CLIENT_VOTES_OFFSET	0x1c
-+#define CLIENT_VOTES_OFFSET	0x20
- 
- struct subsystem_data {
- 	const char *name;
+> >   }
+> >   static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
+> > @@ -498,6 +499,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+> >   	u32 intf_active = 0;
+> >   	u32 mode_sel = 0;
+> > +	if (cfg->dsc)
+> > +		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+> > +
+> >   	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
+> >   		mode_sel |= BIT(17);
+> > @@ -509,6 +513,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+> >   	if (cfg->merge_3d)
+> >   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+> >   			      BIT(cfg->merge_3d - MERGE_3D_0));
+> > +	if (cfg->dsc) {
+> > +		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask |  BIT(DSC_IDX));
+> 
+> Why?
+
+I have fixed it up to write only DSC_IDX
+
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+~Vinod
