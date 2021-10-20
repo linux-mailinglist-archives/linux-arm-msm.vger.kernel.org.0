@@ -2,68 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F8E343503D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 18:34:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 501D543504F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 18:37:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230283AbhJTQhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 12:37:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbhJTQhG (ORCPT
+        id S230285AbhJTQjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 12:39:23 -0400
+Received: from mail-4018.proton.ch ([185.70.40.18]:57639 "EHLO
+        mail-4018.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230076AbhJTQjV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 12:37:06 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0A6C061749
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 09:34:50 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id 186-20020a1c01c3000000b0030d8315b593so3112544wmb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 09:34:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=7/EQvl15sKmmFV0znwQKddKDn63M7objIey6nkd04EY=;
-        b=EsHvAQkTA4qAwz1FpPqNTakQ+dmhFU+VC8vf+LEM0la9puZqKg5hQ8Lg3UJyGJZJc0
-         vqRMwYBU2p2AtU82EPA0knNoYEi4Dh0sWWGbvxW0SeSRQyLo5s7Y5pscXN7ao4rhHJtx
-         8kVyDzXMrP8z4VxmtFS9TX4hwXWmWWZ2kGjW09Q1QsxXJALWmA8qPLvtkDMb3V6M56fv
-         D7GJLsEjIFagoLrSQLJUeC6mdVABuUHWxGtEm/iBbgplG/rar5E3okw0p8RDiiKBt5PG
-         /yt3sn40aH0eCZjnpuvkOw+qqQB+Ck3m8+nNVFllwi7MfpvRvB4vQecvy+91aY1GYGq9
-         1jXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=7/EQvl15sKmmFV0znwQKddKDn63M7objIey6nkd04EY=;
-        b=Kf6GiP/KWDDngHUVa3bo4C/NP3cOJQqZwPgCDFFs0sfKm8EYitAyslxrKW/RaUiZSg
-         /fhj1sfbPITaPiuns/YWJ+n/5r9rVz6w52me3sUZiXba36aVayBWYz1uKKh7x2BaNDeS
-         E/mNGFCU0x86Bi8+9dS1KyZZCUD8Tdx9UFB/fFe9ZbzCW5QPQX9VgVDS1OkFf74nZArg
-         w5l1fgNtoeHRMQFFQgkyip2UY73oZbHfkE8Sd3b+gyXyWwmtT5PSHLyhgjQyC8ERctEH
-         XpXzTcsrTCdombWoX+0ZXXjcu9CXbI2GqBLCAKKd93d2O6+9RUok0hmROIuvPFd9Jf7p
-         d6hA==
-X-Gm-Message-State: AOAM532/GmaUjEzNVNGMtcoO4feY+xeKOot6eo/HrEoAroCb/aiPkvHc
-        fXKSUphhr6w/wC9UmixdOKh0WvxtrhBMgjSevJ8=
-X-Google-Smtp-Source: ABdhPJwJ/K6fKx3G38rJ9y4HmO3d6fp1A5m6TsAW5xqf2iVaNVuJc7WuhBkrfTB3tC1A0ff8Q9liSvMzMAFujBNRaAM=
-X-Received: by 2002:a7b:cb99:: with SMTP id m25mr15062484wmi.192.1634747689438;
- Wed, 20 Oct 2021 09:34:49 -0700 (PDT)
+        Wed, 20 Oct 2021 12:39:21 -0400
+Date:   Wed, 20 Oct 2021 16:36:59 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1634747824;
+        bh=d2roxbyt8b4yNeziE8Odnw0Moch2ElML4lV+Hjkivkk=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=TuwzoSevEYLt926RQ3REVkJDqQC8gn20aPBgTIhE0kjTtclmtdnDetQlkGXhlh6F6
+         rEjkZni+qo86r2ISypda9IviYklar69e1iYzy+wnACAFZDbNf1lX8qS4muIvmp/Xyk
+         FCuFAOIwuaaQB3aU9Esz1aKa8DmnLfJfRqQPn+WU=
+To:     Caleb Connolly <caleb@connolly.tech>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: [PATCH] arm64: dts: qcom: sdm845-oneplus: enable second wifi channel
+Message-ID: <20211020163557.291803-1-caleb@connolly.tech>
 MIME-Version: 1.0
-Received: by 2002:a5d:5089:0:0:0:0:0 with HTTP; Wed, 20 Oct 2021 09:34:49
- -0700 (PDT)
-Reply-To: jeai2nasri@yahoo.com
-From:   Jean nasri <oie662t@gmail.com>
-Date:   Wed, 20 Oct 2021 18:34:49 +0200
-Message-ID: <CADk689gBxTPuQK2-R7VT6ORJ0KSkOC42Jv_HxXAivSJA8U=qBw@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ol=C3=A1,
-Voc=C3=AA tem uma conta para receber um dinheiro patrimonial? Por favor res=
-ponda para
-explica=C3=A7=C3=A3o adicional
+Like the c630, the OnePlus 6 is also capable of using both antenna
+channels for 2.4 and 5ghz wifi, however unlike the c630 only the first
+channel is used for bluetooth.
 
-Do you have an account to receive an heritage Money? Please reply for
-further explanation
-Nasri
+Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+---
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
+64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index d4355522374a..8bf2430a3af7 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -248,6 +248,12 @@ vreg_l20a_2p95: ldo20 {
+ =09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
+ =09=09};
+
++=09=09vreg_l23a_3p3: ldo23 {
++=09=09=09regulator-min-microvolt =3D <3300000>;
++=09=09=09regulator-max-microvolt =3D <3312000>;
++=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
++=09=09};
++
+ =09=09vdda_qusb_hs0_3p1:
+ =09=09vreg_l24a_3p075: ldo24 {
+ =09=09=09regulator-min-microvolt =3D <3088000>;
+@@ -647,6 +653,7 @@ &wifi {
+ =09vdd-1.8-xo-supply =3D <&vreg_l7a_1p8>;
+ =09vdd-1.3-rfa-supply =3D <&vreg_l17a_1p3>;
+ =09vdd-3.3-ch0-supply =3D <&vreg_l25a_3p3>;
++=09vdd-3.3-ch1-supply =3D <&vreg_l23a_3p3>;
+
+ =09qcom,snoc-host-cap-8bit-quirk;
+ };
+--
+2.33.1
+
+
