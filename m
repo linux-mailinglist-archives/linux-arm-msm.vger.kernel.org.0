@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1530B434AFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 14:14:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00AFA434B9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 14:54:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230201AbhJTMQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 08:16:57 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:4402 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230310AbhJTMQ4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 08:16:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1634732082; x=1666268082;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=NDa9KEOle5Dvn0boViSDp3mupUuPQQnHaePh4Ug4R4E=;
-  b=b1Y8BuxepWhvlK5edrCtihec4nlli3naC7nnXvjDQWWBwBxT2dsMmYRS
-   XsvVcI9f8AqQwFFjWu4FTFYBLHYOi3rErKAWWZrVYZvu11sUzqZvdm9jj
-   zOEX/qktt2CX7guBWlasnKQ7Zs0KSCGUglyHV5UIdiBeekBktIHB/d9DW
-   E=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 20 Oct 2021 05:14:42 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Oct 2021 05:14:41 -0700
-X-QCInternal: smtphost
-Received: from sbillaka-linux.qualcomm.com ([10.204.66.13])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Oct 2021 17:44:27 +0530
-Received: by sbillaka-linux.qualcomm.com (Postfix, from userid 2305739)
-        id 5E91420E29; Wed, 20 Oct 2021 17:44:26 +0530 (IST)
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Cc:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
-        dianders@chromium.org, khsieh@codeaurora.org,
-        mkrishn@codeaurora.org,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Subject: [PATCH v2 2/2] dt-bindings: Add SC7280 compatible string
-Date:   Wed, 20 Oct 2021 17:44:11 +0530
-Message-Id: <1634732051-31282-3-git-send-email-quic_sbillaka@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1634732051-31282-1-git-send-email-quic_sbillaka@quicinc.com>
-References: <1634732051-31282-1-git-send-email-quic_sbillaka@quicinc.com>
+        id S229911AbhJTM4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 08:56:22 -0400
+Received: from foss.arm.com ([217.140.110.172]:59878 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229817AbhJTM4W (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 08:56:22 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BA1551FB;
+        Wed, 20 Oct 2021 05:54:07 -0700 (PDT)
+Received: from [10.57.23.81] (unknown [10.57.23.81])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 83E853F73D;
+        Wed, 20 Oct 2021 05:54:06 -0700 (PDT)
+Subject: Re: [PATCH] PM: EM: do not allow pd creation prior to debugfs
+ initialization
+To:     Chandrasekhar L <clingutla@codeaurora.org>
+Cc:     rafael.j.wysocki@intel.com, qperret@google.com,
+        daniel.lezcano@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20211019152819.6141-1-clingutla@codeaurora.org>
+ <e01188a0-1dc7-db57-309f-f49390216875@arm.com>
+ <0c42bec7-4358-a8d6-b1db-f52218a8e59a@codeaurora.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <c2d9dfa8-d7ac-d9ca-fab8-3d93c6a9e0bc@arm.com>
+Date:   Wed, 20 Oct 2021 13:54:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <0c42bec7-4358-a8d6-b1db-f52218a8e59a@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sankeerth Billakanti <sbillaka@codeaurora.org>
 
-The Qualcomm SC7280 platform supports an eDP controller, add
-compatible string for it to dp-controller.
 
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
----
- Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
- 1 file changed, 1 insertion(+)
+On 10/20/21 1:03 PM, Chandrasekhar L wrote:
+> Thanks Lukasz for comment.
+> For any reason (ex: HW dependency, etc), if  init_call level of cpufreq/devfreq driver changed
+> prior to fs_init call, we would land there right?
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index 63e585f..ab2bb1b 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -17,6 +17,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,sc7180-dp
-+      - qcom,sc7280-edp
-       - qcom,sc8180x-dp
-       - qcom,sc8180x-edp
- 
--- 
-The Qualcomm Innovatin Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+It's not the same triggering point, so we should be safe.
 
+> 
+> One of such example is, 'drivers/cpufreq/qcom-cpufreq-hw.c' uses postcore_initcall().
+
+It uses the postcore_initcall to probe and register a driver into
+the cpufreq framework. Then the cpufreq framework later constructs the
+'policy' and calls your cpufreq_driver::init() function that your
+driver provided during registration. Thus, these are two different
+phases. It used to be true that if a driver required to use an
+'advanced' EM registration with custom private 'em_data_callback',
+we put the registration call into that .init() code [1] (old [2]).
+Recently Viresh added a dedicated callback for this, which IMO
+is good and avoids confusion where to put that custom registration
+code.
+
+In your driver code, there is also this callback but using a
+generic function [3]. It's a 'simple' EM, which is based on OPP
+framework helper. A few drivers use that option, if their platform
+doesn't need the 'advanced' EM (but that's not in $subject).
+
+Regards,
+Lukasz
+
+
+[1] 
+https://elixir.bootlin.com/linux/v5.15-rc1/source/drivers/cpufreq/scmi-cpufreq.c#L249
+[2] 
+https://elixir.bootlin.com/linux/v5.14/source/drivers/cpufreq/scmi-cpufreq.c#L192
+[3] 
+https://elixir.bootlin.com/linux/v5.15-rc6/source/drivers/cpufreq/qcom-cpufreq-hw.c#L561
