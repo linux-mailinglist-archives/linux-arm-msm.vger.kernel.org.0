@@ -2,57 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CC174352C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 20:39:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46808435468
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 22:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230076AbhJTSlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 14:41:14 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27512 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230454AbhJTSlM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 14:41:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634755137; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=fMhK37NgLablZIXyn9LXXzethSwsYFf/HVVYPlJwWJA=; b=HpML66G/9v7u02i88C2ybZ/Ke2pXo6BQlsUYZ4O+X+ib//pwr14pvQQRccO85Hx5dm+YQV0k
- Pk1UUZmByzHZxt+3vHQ4BQH86GXL35oZT6gWrjL8Eyn6swu1oHfQkUDZcZH4xxQI6OyU4FsO
- qTkVVNHQi6eM/h4jQr7GUn17b5Y=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6170623ab03398c06c96f0b3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 Oct 2021 18:38:50
- GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C8AFEC43618; Wed, 20 Oct 2021 18:38:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S230076AbhJTURB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 16:17:01 -0400
+Received: from ixit.cz ([94.230.151.217]:57890 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229910AbhJTURB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 16:17:01 -0400
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 777B3C4338F;
-        Wed, 20 Oct 2021 18:38:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 777B3C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Jessica Zhang <jesszhan@codeaurora.org>
-To:     freedreno@lists.freedesktop.org
-Cc:     Jessica Zhang <jesszhan@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dan.carpenter@oracle.com,
-        dri-devel@lists.freedesktop.org, dmitry.baryshkov@linaro.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        abhinavk@codeaurora.org
-Subject: [PATCH] drm/msm: Fix potential NULL dereference in DPU
-Date:   Wed, 20 Oct 2021 11:38:37 -0700
-Message-Id: <20211020183837.959-1-jesszhan@codeaurora.org>
+        by ixit.cz (Postfix) with ESMTPSA id 38C3820064;
+        Wed, 20 Oct 2021 22:14:44 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1634760884;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=3xm0DPHOl9yQRCEmN8ie1WfoCaoHVhNhOOGY6/WiZ+U=;
+        b=zssKQ5/ABu0ZdhEyxx0NaaTXMQf/9BA4ggeYiFMkPMkudu46R4x+8A5x/NpvSL8K0CCgFZ
+        bslcrbkgWNByYvft5xhez87Y7UvF8ttPOTY8x9N2/hnf9xcRG1v8gYdIiWkgrBu155lPUa
+        EZTu6DoU3wxybt7Esy3RR9ALOT1MF5E=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: correct mmc node naming
+Date:   Wed, 20 Oct 2021 22:14:39 +0200
+Message-Id: <20211020201440.229196-1-david@ixit.cz>
 X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -60,100 +43,338 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add NULL checks in KMS CRTC funcs to avoid potential NULL
-dereference.
+MMC nodes has to be named mmc@ to comply with dt-bindings.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Jessica Zhang <jesszhan@codeaurora.org>
+Fix warnings as:
+arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml: sdcc@12400000: $nodename:0: 'sdcc@12400000' does not match '^mmc(@.*)?$'
+	From schema: Documentation/devicetree/bindings/mmc/arm,pl18x.yaml
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c      | 8 ++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c          | 5 +++++
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c        | 3 +++
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 3 +++
- drivers/gpu/drm/msm/msm_gpu.c                     | 3 +++
- 5 files changed, 22 insertions(+)
+ arch/arm/boot/dts/qcom-apq8060-dragonboard.dts      |  6 +++---
+ arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts  |  2 +-
+ arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts         |  6 +++---
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts          |  6 +++---
+ arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts |  4 ++--
+ arch/arm/boot/dts/qcom-apq8064.dtsi                 |  6 +++---
+ arch/arm/boot/dts/qcom-ipq8064.dtsi                 |  4 ++--
+ arch/arm/boot/dts/qcom-mdm9615.dtsi                 |  4 ++--
+ arch/arm/boot/dts/qcom-msm8660-surf.dts             |  4 ++--
+ arch/arm/boot/dts/qcom-msm8660.dtsi                 | 10 +++++-----
+ arch/arm/boot/dts/qcom-msm8960-cdp.dts              |  4 ++--
+ arch/arm/boot/dts/qcom-msm8960.dtsi                 |  4 ++--
+ 12 files changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-index d2457490930b..53d80572181e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.c
-@@ -208,8 +208,16 @@ void dpu_core_irq_preinstall(struct dpu_kms *dpu_kms)
- 	dpu_kms->irq_obj.total_irqs = dpu_kms->hw_intr->total_irqs;
- 	dpu_kms->irq_obj.irq_cb_tbl = kcalloc(dpu_kms->irq_obj.total_irqs,
- 			sizeof(struct list_head), GFP_KERNEL);
-+
-+	if (!dpu_kms->irq_obj.irq_cb_tbl)
-+		return;
-+
- 	dpu_kms->irq_obj.irq_counts = kcalloc(dpu_kms->irq_obj.total_irqs,
- 			sizeof(atomic_t), GFP_KERNEL);
-+
-+	if (!dpu_kms->irq_obj.irq_counts)
-+		return;
-+
- 	for (i = 0; i < dpu_kms->irq_obj.total_irqs; i++) {
- 		INIT_LIST_HEAD(&dpu_kms->irq_obj.irq_cb_tbl[i]);
- 		atomic_set(&dpu_kms->irq_obj.irq_counts[i], 0);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 768012243b44..0a1cad0cfcc0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -921,6 +921,11 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
+index 5bedbb902ad5..d664ccd454c5 100644
+--- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
++++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
+@@ -899,7 +899,7 @@ ncp {
+ 		};
+ 		amba {
+ 			/* Internal 3.69 GiB eMMC */
+-			sdcc@12400000 {
++			mmc@12400000 {
+ 				status = "okay";
+ 				pinctrl-names = "default";
+ 				pinctrl-0 = <&dragon_sdcc1_pins>;
+@@ -908,7 +908,7 @@ sdcc@12400000 {
+ 			};
  
- 	pstates = kzalloc(sizeof(*pstates) * DPU_STAGE_MAX * 4, GFP_KERNEL);
+ 			/* External micro SD card, directly connected, pulled up to 2.85 V */
+-			sdcc@12180000 {
++			mmc@12180000 {
+ 				status = "okay";
+ 				/* Enable SSBI GPIO 22 as input, use for card detect */
+ 				pinctrl-names = "default";
+@@ -922,7 +922,7 @@ sdcc@12180000 {
+ 			 * Second external micro SD card, using two TXB104RGYR levelshifters
+ 			 * to lift from 1.8 V to 2.85 V
+ 			 */
+-			sdcc@12200000 {
++			mmc@12200000 {
+ 				status = "okay";
+ 				/* Enable SSBI GPIO 26 as input, use for card detect */
+ 				pinctrl-names = "default";
+diff --git a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
+index 197494ef887b..b2cd32f440e0 100644
+--- a/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
++++ b/arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dts
+@@ -367,7 +367,7 @@ phy {
  
-+	if (!pstates) {
-+		rc = -ENOMEM;
-+		goto end;
-+	}
-+
- 	if (!crtc_state->enable || !crtc_state->active) {
- 		DRM_DEBUG_ATOMIC("crtc%d -> enable %d, active %d, skip atomic_check\n",
- 				crtc->base.id, crtc_state->enable,
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index c6b69afcbac8..09751b480db5 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -92,6 +92,9 @@ static void mdp5_plane_reset(struct drm_plane *plane)
- 	kfree(to_mdp5_plane_state(plane->state));
- 	mdp5_state = kzalloc(sizeof(*mdp5_state), GFP_KERNEL);
+ 		amba {
+ 			/* eMMC */
+-			sdcc@12400000 {
++			mmc@12400000 {
+ 				status = "okay";
+ 				vmmc-supply = <&pm8921_l5>;
+ 				vqmmc-supply = <&pm8921_s4>;
+diff --git a/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts b/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
+index 0148148a8e0a..e068a8d0adf0 100644
+--- a/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
++++ b/arch/arm/boot/dts/qcom-apq8064-cm-qs600.dts
+@@ -220,14 +220,14 @@ pci@1b500000 {
  
-+	if (!mdp5_state)
-+		return;
-+
- 	if (plane->type == DRM_PLANE_TYPE_PRIMARY)
- 		mdp5_state->base.zpos = STAGE_BASE;
- 	else
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index cabe15190ec1..71e209d07120 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -170,6 +170,9 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
+ 		amba {
+ 			/* eMMC */
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status = "okay";
+ 				vmmc-supply = <&pm8921_l5>;
+ 				vqmmc-supply = <&pm8921_s4>;
+ 			};
  
- 	new_blk = kzalloc(sizeof(struct msm_disp_state_block), GFP_KERNEL);
+ 			/* External micro SD card */
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				status = "okay";
+ 				vmmc-supply = <&v3p3_fixed>;
+ 				pinctrl-names	= "default";
+@@ -235,7 +235,7 @@ sdcc3: sdcc@12180000 {
+ 				cd-gpios	= <&tlmm_pinmux 26 GPIO_ACTIVE_LOW>;
+ 			};
+ 			/* WLAN */
+-			sdcc4: sdcc@121c0000 {
++			sdcc4: mmc@121c0000 {
+ 				status = "okay";
+ 				vmmc-supply = <&v3p3_fixed>;
+ 				vqmmc-supply = <&v3p3_fixed>;
+diff --git a/arch/arm/boot/dts/qcom-apq8064-ifc6410.dts b/arch/arm/boot/dts/qcom-apq8064-ifc6410.dts
+index d0a17b5a5fa3..2638b380be20 100644
+--- a/arch/arm/boot/dts/qcom-apq8064-ifc6410.dts
++++ b/arch/arm/boot/dts/qcom-apq8064-ifc6410.dts
+@@ -314,14 +314,14 @@ pios {
  
-+	if (!new_blk)
-+		return;
-+
- 	va_start(va, fmt);
+ 		amba {
+ 			/* eMMC */
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status = "okay";
+ 				vmmc-supply = <&pm8921_l5>;
+ 				vqmmc-supply = <&pm8921_s4>;
+ 			};
  
- 	vaf.fmt = fmt;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 8a3a592da3a4..ddd23f3a4a99 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -296,6 +296,9 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 		state->bos = kcalloc(nr,
- 			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
+ 			/* External micro SD card */
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				status = "okay";
+ 				vmmc-supply = <&pm8921_l6>;
+ 				pinctrl-names	= "default";
+@@ -329,7 +329,7 @@ sdcc3: sdcc@12180000 {
+ 				cd-gpios	= <&tlmm_pinmux 26 GPIO_ACTIVE_LOW>;
+ 			};
+ 			/* WLAN */
+-			sdcc4: sdcc@121c0000 {
++			sdcc4: mmc@121c0000 {
+ 				status = "okay";
+ 				vmmc-supply = <&ext_3p3v>;
+ 				vqmmc-supply = <&pm8921_lvs1>;
+diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
+index 72e47bdc5c12..f8c97efc61fc 100644
+--- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
++++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
+@@ -374,14 +374,14 @@ serial@1a240000 {
+ 		};
  
-+		if (!state->bos)
-+			return;
-+
- 		for (i = 0; i < submit->nr_bos; i++) {
- 			if (should_dump(submit, i)) {
- 				msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
+ 		amba {
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status = "okay";
+ 
+ 				vmmc-supply = <&pm8921_l5>;
+ 				vqmmc-supply = <&pm8921_s4>;
+ 			};
+ 
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				status = "okay";
+ 
+ 				vmmc-supply = <&pm8921_l6>;
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 8a389323a474..ed1cd2c529cc 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1073,7 +1073,7 @@ amba {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status		= "disabled";
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				pinctrl-names	= "default";
+@@ -1093,7 +1093,7 @@ sdcc1: sdcc@12400000 {
+ 				dma-names = "tx", "rx";
+ 			};
+ 
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
+@@ -1111,7 +1111,7 @@ sdcc3: sdcc@12180000 {
+ 				dma-names = "tx", "rx";
+ 			};
+ 
+-			sdcc4: sdcc@121c0000 {
++			sdcc4: mmc@121c0000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
+diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+index 110113f3b8e2..7f67b282da10 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+@@ -1181,7 +1181,7 @@ amba: amba {
+ 			#size-cells = <1>;
+ 			ranges;
+ 
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status          = "disabled";
+ 				compatible      = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -1201,7 +1201,7 @@ sdcc1: sdcc@12400000 {
+ 				dma-names = "tx", "rx";
+ 			};
+ 
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				compatible      = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status          = "disabled";
+diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+index 6e90c5d5a050..c32415f0e66d 100644
+--- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
++++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+@@ -354,7 +354,7 @@ amba {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+-			sdcc1: sdcc@12180000 {
++			sdcc1: mmc@12180000 {
+ 				status = "disabled";
+ 				compatible = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -374,7 +374,7 @@ sdcc1: sdcc@12180000 {
+ 				assigned-clock-rates = <400000>;
+ 			};
+ 
+-			sdcc2: sdcc@12140000 {
++			sdcc2: mmc@12140000 {
+ 				compatible = "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status = "disabled";
+diff --git a/arch/arm/boot/dts/qcom-msm8660-surf.dts b/arch/arm/boot/dts/qcom-msm8660-surf.dts
+index 6a321ccb0bd0..414280d9bdba 100644
+--- a/arch/arm/boot/dts/qcom-msm8660-surf.dts
++++ b/arch/arm/boot/dts/qcom-msm8660-surf.dts
+@@ -35,13 +35,13 @@ vsdcc_fixed: vsdcc-regulator {
+ 
+ 		amba {
+ 			/* eMMC */
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status = "okay";
+ 				vmmc-supply = <&vsdcc_fixed>;
+ 			};
+ 
+ 			/* External micro SD card */
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				status = "okay";
+ 				vmmc-supply = <&vsdcc_fixed>;
+ 			};
+diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
+index 21cb58ab68ac..1e8aab357f9c 100644
+--- a/arch/arm/boot/dts/qcom-msm8660.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
+@@ -483,7 +483,7 @@ amba {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status		= "disabled";
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -499,7 +499,7 @@ sdcc1: sdcc@12400000 {
+ 				cap-mmc-highspeed;
+ 			};
+ 
+-			sdcc2: sdcc@12140000 {
++			sdcc2: mmc@12140000 {
+ 				status		= "disabled";
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -514,7 +514,7 @@ sdcc2: sdcc@12140000 {
+ 				cap-mmc-highspeed;
+ 			};
+ 
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
+@@ -530,7 +530,7 @@ sdcc3: sdcc@12180000 {
+ 				no-1-8-v;
+ 			};
+ 
+-			sdcc4: sdcc@121c0000 {
++			sdcc4: mmc@121c0000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
+@@ -545,7 +545,7 @@ sdcc4: sdcc@121c0000 {
+ 				cap-mmc-highspeed;
+ 			};
+ 
+-			sdcc5: sdcc@12200000 {
++			sdcc5: mmc@12200000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
+diff --git a/arch/arm/boot/dts/qcom-msm8960-cdp.dts b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+index e7d2e937ea4c..4af01039c3b2 100644
+--- a/arch/arm/boot/dts/qcom-msm8960-cdp.dts
++++ b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+@@ -26,12 +26,12 @@ serial@16440000 {
+ 
+ 		amba {
+ 			/* eMMC */
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status = "okay";
+ 			};
+ 
+ 			/* External micro SD card */
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				status = "okay";
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+index 172ea3c70eac..2a0ec97a264f 100644
+--- a/arch/arm/boot/dts/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+@@ -263,7 +263,7 @@ amba {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+-			sdcc1: sdcc@12400000 {
++			sdcc1: mmc@12400000 {
+ 				status		= "disabled";
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+@@ -280,7 +280,7 @@ sdcc1: sdcc@12400000 {
+ 				vmmc-supply = <&vsdcc_fixed>;
+ 			};
+ 
+-			sdcc3: sdcc@12180000 {
++			sdcc3: mmc@12180000 {
+ 				compatible	= "arm,pl18x", "arm,primecell";
+ 				arm,primecell-periphid = <0x00051180>;
+ 				status		= "disabled";
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.33.0
 
