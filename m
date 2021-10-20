@@ -2,103 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 510DE435180
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 19:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71BA4435185
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 19:41:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbhJTRnT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 13:43:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39642 "EHLO
+        id S231199AbhJTRnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 13:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230523AbhJTRnT (ORCPT
+        with ESMTP id S230474AbhJTRnt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 13:43:19 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD7FC06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 10:41:04 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id a8so22931630ilj.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 10:41:04 -0700 (PDT)
+        Wed, 20 Oct 2021 13:43:49 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA653C06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id ls14-20020a17090b350e00b001a00e2251c8so2957271pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=09x1oRFaTKDmQrhlhOb9jy+N6hL8DwJNbTkF0zphjoE=;
-        b=mnQOVOqgdt1WuKAT8iYksqfZizblzHqHQ0ZpeyU/Tr7i35LtYOojJ16b518ll9ZQop
-         mSXIV/ojivDGtUBOWZKJAjqQpyiuL6uYQv8P1dwI4WVCWO4wf9sJhg+9F4yd4Opbq1HD
-         yzO3c7Ha5/V2RuTtNP0UfuMMt6qwM6HdXnzJ0=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tLS8+kBpzekWeBdekKGTRJk0E4srTCOVGmq4Px1Q8VQ=;
+        b=gJbARJpG2w9XXkcZ6CSy2/THoVI0FcFNYFPuofYL8NVisjqdt0X0eq+HH+reaQpVXm
+         5MI+SplxtlxvZ1E0OLUyfIl/XiVcXduiwQnprTmO3DEStW4HT30c1IoDI1oVZxm+iOAV
+         3/XJwkPNgY1b56D39N24JZYm6H5qZHpfKUBzM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=09x1oRFaTKDmQrhlhOb9jy+N6hL8DwJNbTkF0zphjoE=;
-        b=FNLrELrnzfwG7sc0hspuHQ+wud/Ub6nDjxZNtchIN1TFWr3at8UOYb4LJyUiLhBTd/
-         qSglSVoXXah7+PxWNYn+25jvIonXMu0yRgDMzYAhNd4kPFFwo6OAOH7O08+fTZiZ9VYe
-         ahsQs4udoLu9O9CHRea/D0Z/UlCfTsOp1kXamxFbw2Wz5AxzJePYPq6zgiZecKlGSfMH
-         W1DJgVf1qzcgk7mQynxiAjoRmdoPqsQfbapUL9y+oLZch8goMcTNJOF5fyfAwz6wIzQr
-         7FbjJu+MEpzBEFAAxOcsDy9i3JMowtfPO1EhpbFxoaCTleWnoae/+MVtCKPqlv3w1CGj
-         Mlfw==
-X-Gm-Message-State: AOAM533CGt3vu72uVw6gusxZlNSNsbrbXC/W7HgpT7dS69QGgcQAfKVR
-        ljuUFKeJiaSUjtoPh1IujTjn0Uz8ZBbrBA==
-X-Google-Smtp-Source: ABdhPJwOqf9z9O1HSEoe1hMYIGoEmfqhxe62XfRNpbLyD3FOx8vRYurvKF3bcNVH+mwR0UChMdjmZA==
-X-Received: by 2002:a92:cd82:: with SMTP id r2mr342650ilb.198.1634751663739;
-        Wed, 20 Oct 2021 10:41:03 -0700 (PDT)
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com. [209.85.166.47])
-        by smtp.gmail.com with ESMTPSA id f4sm1416912ioc.15.2021.10.20.10.41.03
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tLS8+kBpzekWeBdekKGTRJk0E4srTCOVGmq4Px1Q8VQ=;
+        b=mfLqg1vC88uguSCaYZG4Lp0tnCFNvtAt6cnVNFHdMIw/WtbP3HDa4zmcHBprolaxXy
+         b1LjBTMF4IKLNRSuK5iV7l5kfz/SKEdYYgdU8OywL0zq5ONpUvO/iNdNuNdIgiaWLLhI
+         byzMX/As9QVKQbNGqtpzLCFiBocGvhr+qM22VBsqr4SWTWRYYOBGFPlGuc2t3nhw90U0
+         tNEAJC0PpHcxjOfnDKL3gOavdLQLjHGaZ/aWFIov2omZM6TqsJtZZv3wBk+EdcvzkeR1
+         94hsl+WzDLDbdoqL00FyBBinVgKHYVPk0H6da/gaRNp0l8TeYM7iAizF9wx7kThq9WTt
+         ccpA==
+X-Gm-Message-State: AOAM531qgclXghgdxIsQjssP4iSbpl5rhqlpO0HMvTAe1nq4bDPeGqE/
+        I3n/JvW71ow8Ery/nEu6GaI6xQ==
+X-Google-Smtp-Source: ABdhPJzlGMQDOJLoQZpO+D08HsHF1MsykzBHtuqJvEm206lRGp9Qb3pe7UydXadxkqIvENvT61l62w==
+X-Received: by 2002:a17:903:1ca:b0:13e:f367:9361 with SMTP id e10-20020a17090301ca00b0013ef3679361mr507344plh.3.1634751694235;
+        Wed, 20 Oct 2021 10:41:34 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:d5fe:85e9:caf2:ec4e])
+        by smtp.gmail.com with UTF8SMTPSA id i128sm3148602pfc.47.2021.10.20.10.41.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Oct 2021 10:41:03 -0700 (PDT)
-Received: by mail-io1-f47.google.com with SMTP id o184so13667811iof.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Oct 2021 10:41:03 -0700 (PDT)
-X-Received: by 2002:a05:6638:2510:: with SMTP id v16mr514672jat.68.1634751662770;
- Wed, 20 Oct 2021 10:41:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <1634732051-31282-1-git-send-email-quic_sbillaka@quicinc.com> <1634732051-31282-3-git-send-email-quic_sbillaka@quicinc.com>
-In-Reply-To: <1634732051-31282-3-git-send-email-quic_sbillaka@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 20 Oct 2021 10:40:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U9==zFpYtiU1S=n+Ygy5Qa4xfA6GFMpHJUtkpjpNfcyw@mail.gmail.com>
-Message-ID: <CAD=FV=U9==zFpYtiU1S=n+Ygy5Qa4xfA6GFMpHJUtkpjpNfcyw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] dt-bindings: Add SC7280 compatible string
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
+        Wed, 20 Oct 2021 10:41:33 -0700 (PDT)
+Date:   Wed, 20 Oct 2021 10:41:31 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Michal Simek <michal.simek@xilinx.com>
+Cc:     Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Peter Chen <peter.chen@kernel.org>,
         LKML <linux-kernel@vger.kernel.org>,
-        Sankeerth Billakanti <sbillaka@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Roger Quadros <rogerq@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Al Cooper <alcooperx@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre TORGUE - foss <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Lionel DEBIEVE <lionel.debieve@st.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin =?utf-8?Q?J=C3=BCcker?= <martin.juecker@gmail.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier MOYSAN <olivier.moysan@st.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
+Message-ID: <YXBUywpxasyTtSCr@google.com>
+References: <20210813195228.2003500-1-mka@chromium.org>
+ <YUoRq1RrOIoiBJ5+@google.com>
+ <CAD=FV=WrddUhWT0wUVZD0gN_+8Zy1VGY77LYLYBvhaPQQ_SqZw@mail.gmail.com>
+ <YWkiGGBKOVokBye9@kroah.com>
+ <03f28680-35eb-25f4-5041-f3a56144da24@foss.st.com>
+ <0739e563-c8e7-2a19-e440-4f32e7de3917@xilinx.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0739e563-c8e7-2a19-e440-4f32e7de3917@xilinx.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, Oct 20, 2021 at 08:21:21AM +0200, Michal Simek wrote:
+> 
+> 
+> On 10/19/21 18:04, Fabrice Gasnier wrote:
+> > On 10/15/21 8:39 AM, Greg Kroah-Hartman wrote:
+> > > On Thu, Oct 14, 2021 at 02:38:55PM -0700, Doug Anderson wrote:
+> > > > Hi,
+> > > > 
+> > > > On Tue, Sep 21, 2021 at 10:09 AM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > > > > 
+> > > > > Hi Greg,
+> > > > > 
+> > > > > are there any actions pending or can this land in usb-testing?
+> > > > > 
+> > > > > I confirmed that this series can be rebased on top of v5.15-rc2
+> > > > > without conflicts.
+> > > > 
+> > > > I'm quite interested to know what the next action items are, too. This
+> > > > is one of the very few patches we have for trogdor (excluding MIPI
+> > > > camera, which is a long story) that we're carrying downstream, so I'm
+> > > > keenly interested in making sure it's unblocked (if, indeed, it's
+> > > > blocked on anything).
+> > > > 
+> > > > If folks feel that this needs more review eyes before landing again
+> > > > then I'll try to find some time in the next week or two. If it's just
+> > > > waiting for the merge window to open/close so it can have maximal bake
+> > > > time, that's cool too. Please yell if there's something that I can do
+> > > > to help, though! :-)
+> > > 
+> > > I would love more review-eyes on this please.
+> > > 
+> > 
+> > Hi,
+> > 
+> > I noticed this series some time ago, and wanted to take a closer look.
+> > 
+> > The same issue this series address is seen on stm32 board for instance.
+> > (arch/arm/boot/dts/stm32mp15xx-dkx.dtsi). On board HUB (not described in
+> > the DT) is supplied by an always-on regulator.
+> > So it could could be interesting/useful to address the same case ,
+> > on stm32 boards, where USB2 (ehci-platform driver) is used currently.
+> > 
+> > I noticed a few things, especially on the dt-bindings. I've some
+> > questions here.
+> > 
+> > In this series, RTS5411 is used. The dt-bindings documents it as a child
+> > node of the USB controller. E.g.
+> > 
+> > &usb {
+> > 	usb_hub_2_0: hub@1 {
+> > 		...
+> > 	};
+> > 
+> > 	usb_hub_3_0: hub@2 {
+> > 	};
+> > }
+> > 
+> > I had a quick look at RTS5411 datasheet. It looks like there's an i2c
+> > interface too.
+> > - I guess the I2C interface isn't used in your case ?
+> >    (I haven't checked what it could be used for...)
+> > 
+> > In the stm32 boards (stm32mp15xx-dkx), there's an usb2514b chip
+> > - that also could be wired on I2C interface (0R mount option)
+> > - unused on stm32 boards by default
+> > 
+> > usb2514b chip already has a dt-bindings (with compatible), and a driver:
+> > - drivers/usb/misc/usb251xb.c
+> > - Documentation/devicetree/bindings/usb/usb251xb.txt
+> > 
+> > It is defined more as an i2c chip, so I'd expect it as an i2c child,
+> > e.g. like:
+> > 
+> > &i2c {
+> > 	usb2514b@2c {
+> > 		compatible = "microchip,usb2514b";
+> > 		...
+> > 	};
+> > };
+> > 
+> > 
+> > This way, I don't see how it could be used together with onboard_usb_hub
+> > driver ? (But I may have missed it)
+> > Is it possible to use a phandle, instead of a child node ?
+> > 
+> > However, in the stm32mp15xx-dkx case, i2c interface isn't wired/used by
+> > default. So obviously the i2c driver isn't used. In this case, could the
+> > "microchip,usb2514b" be listed in onboard_usb_hub driver ?
+> > (wouldn't it be redundant ?)
+> > 
+> > In this case it would be a child node of the usb DT node... Maybe that's
+> > more a question for Rob: would it be "legal" regarding existing
+> > dt-bindings ?
+> 
+> We wanted to upstream driver for microchip usb5744 and based on this thread
+> with Rob
+> 
+> https://lore.kernel.org/all/CAL_JsqJZBbu+UXqUNdZwg-uv0PAsNg55026PTwhKr5wQtxCjVQ@mail.gmail.com/
+> 
+> the recommendation was to use i2c-bus link. And in our usb5744 case where
+> usb hub has only one i2c address we just hardcoded it in the driver. I
+> should be pushing this driver to xilinx soc tree soon if you want to take a
+> look.
 
-On Wed, Oct 20, 2021 at 5:14 AM Sankeerth Billakanti
-<quic_sbillaka@quicinc.com> wrote:
->
-> From: Sankeerth Billakanti <sbillaka@codeaurora.org>
->
-> The Qualcomm SC7280 platform supports an eDP controller, add
-> compatible string for it to dp-controller.
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
->  1 file changed, 1 insertion(+)
-
-I think you ignored some of the feedback that was given on v1. Perhaps
-you could go back and re-read that feedback? See the replies to:
-
-https://lore.kernel.org/r/1628726882-27841-3-git-send-email-sbillaka@codeaurora.org/
-
-For one, ${SUBJECT} needs updating. It's probably as simple as adding
-the "msm/dp" tag, like:
-
-dt-bindings: msm/dp: Add SC7280 compatible string
-
-For another, Stephen requested that you add "sc7280-dp" too.
+Interesting, with the 'i2c-bus' link it might be feasible to support the
+i2c functionality in the onboard_usb_hub driver if desired. Not sure how
+things would look when the hub can have different i2c addresses. Also in
+case of powering down the hub during system suspend any configuration
+through i2c would have to be done again on resume.
