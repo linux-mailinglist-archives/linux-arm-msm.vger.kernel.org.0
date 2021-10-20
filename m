@@ -2,166 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F79434A98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 13:53:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBC22434AB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Oct 2021 14:03:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230282AbhJTLz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 20 Oct 2021 07:55:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34538 "EHLO mail.kernel.org"
+        id S230091AbhJTMFn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 20 Oct 2021 08:05:43 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:52052 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230272AbhJTLz2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 20 Oct 2021 07:55:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6AD9C610FF;
-        Wed, 20 Oct 2021 11:53:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634730793;
-        bh=LPilRozXFzNZOz01IWQiBAPTdt+ygRCJKYug0spKdNQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jvhn22dibhmZuoveod285NcYtaYI65jhGHLy4kXrkuPF+lOrVtlQjNFtJ0VXEAKgd
-         4yHPAa05ane+E/hdIOrkMcEP9oZsc50AZXny5UjwlzM+gJf2HdmqB3qH4Yn7fg7hk6
-         lFhu+cOcz0rOiyijiAX3Uq2RK1nCaLHHT51hAHuT/PGz67DhHDUvF5pIyWHj9PjYJF
-         Jj+83ZGrrpbzJWOPHmCyyG8Bno0Yj0DvfyXxDtsMDzSSVvc/l+VFwEQJ+ohOzOhJnX
-         GEtYyyPldbZ+9r8a6DTPRe1cTjcF0vwJlGp/iaVVvBnkcGdqlt3GadBmBGmJM8Sbka
-         wd/mj3iWVR/0Q==
-Date:   Wed, 20 Oct 2021 17:23:10 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 10/11] drm/msm/dsi: Add support for DSC configuration
-Message-ID: <YXADJjJ1y9Xp2Zlj@matsya>
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-11-vkoul@kernel.org>
- <785fe3bf-71fa-aabd-dadf-828b91396fba@linaro.org>
+        id S229702AbhJTMFn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 20 Oct 2021 08:05:43 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634731409; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=O0IH1Cq3STR9DF8CefTN3jktoLIAHu/Gkj+D6afaP00=; b=qlg5enohVDZn6p3k7Ki4ubsDKzQ/Hht+H+T7qPnvXzxhYyIxO9I/W+Yf3ZY6LsoByzBKzXaW
+ BQvm1F5aSBJN+ZEhnw+BHkpMO5Cmx+pXm9rdtswlnRMc5IKRPMdriKbIRSGFNP/p2IoYdmZQ
+ CeoY44w9cjPrG7Nw1TX7GPCTbC8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 6170058d59612e01006cb13c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 20 Oct 2021 12:03:25
+ GMT
+Sender: clingutla=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A18DBC4338F; Wed, 20 Oct 2021 12:03:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.40] (unknown [223.185.83.206])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: clingutla)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 70153C4338F;
+        Wed, 20 Oct 2021 12:03:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 70153C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH] PM: EM: do not allow pd creation prior to debugfs
+ initialization
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     rafael.j.wysocki@intel.com, qperret@google.com,
+        daniel.lezcano@linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20211019152819.6141-1-clingutla@codeaurora.org>
+ <e01188a0-1dc7-db57-309f-f49390216875@arm.com>
+From:   Chandrasekhar L <clingutla@codeaurora.org>
+Message-ID: <0c42bec7-4358-a8d6-b1db-f52218a8e59a@codeaurora.org>
+Date:   Wed, 20 Oct 2021 17:33:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <785fe3bf-71fa-aabd-dadf-828b91396fba@linaro.org>
+In-Reply-To: <e01188a0-1dc7-db57-309f-f49390216875@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-10-21, 02:18, Dmitry Baryshkov wrote:
-> On 07/10/2021 10:08, Vinod Koul wrote:
-> > When DSC is enabled, we need to configure DSI registers accordingly and
-> > configure the respective stream compression registers.
-> > 
-> > Add support to calculate the register setting based on DSC params and
-> > timing information and configure these registers.
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
-> >   drivers/gpu/drm/msm/dsi/dsi_host.c | 123 ++++++++++++++++++++++++++++-
-> >   2 files changed, 132 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > index 49b551ad1bff..c1c85df58c4b 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
-> >   #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
-> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-> > +
-> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
-> > +
-> >   #endif /* DSI_XML */
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index ba24458c2e38..86e36a3e97b6 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -946,6 +946,26 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
-> >   		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
-> >   }
-> > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> > +				  int pic_width, int pic_height)
-> > +{
-> > +	if (!dsc || !pic_width || !pic_height) {
-> > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	if ((pic_width % dsc->drm->slice_width) || (pic_height % dsc->drm->slice_height)) {
-> > +		pr_err("DSI: pic_dim %dx%d has to be multiple of slice %dx%d\n",
-> > +		       pic_width, pic_height, dsc->drm->slice_width, dsc->drm->slice_height);
-> > +		return -EINVAL;
-> > +	}
-> 
-> This should go to the mode_valid() callback for the dsi_bridge.
+Thanks Lukasz for comment.
+For any reason (ex: HW dependency, etc), if  init_call level of cpufreq/devfreq driver changed
+prior to fs_init call, we would land there right?
 
-Done added a new callback for dsi_bridge to check the mode valid if DSC
-is enabled
+One of such example is, 'drivers/cpufreq/qcom-cpufreq-hw.c' uses postcore_initcall().
 
-> 
-> > +
-> > +	dsc->drm->pic_width = pic_width;
-> > +	dsc->drm->pic_height = pic_height;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >   static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >   {
-> >   	struct drm_display_mode *mode = msm_host->mode;
-> > @@ -978,7 +998,72 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >   		hdisplay /= 2;
-> >   	}
-> > +	if (msm_host->dsc) {
-> > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > +
-> > +		/* update dsc params with timing params */
-> > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> > +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-> > +
-> > +		/* we do the calculations for dsc parameters here so that
-> > +		 * panel can use these parameters
-> > +		 */
-> > +		dsi_populate_dsc_params(dsc);
-> > +
-> > +		/* Divide the display by 3 but keep back/font porch and
-> > +		 * pulse width same
-> > +		 */
-> > +		h_total -= hdisplay;
-> > +		hdisplay /= 3;
-> > +		h_total += hdisplay;
-> > +		ha_end = ha_start + hdisplay;
-> > +	}
-> > +
-> >   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> > +		if (msm_host->dsc) {
-> > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > +			u32 reg, intf_width, slice_per_intf;
-> > +			u32 total_bytes_per_intf;
-> > +
-> > +			/* first calculate dsc parameters and then program
-> > +			 * compress mode registers
-> > +			 */
-> > +			intf_width = hdisplay;
-> > +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> > +
-> > +			/* If slice_count > slice_per_intf, then use 1
-> > +			 * This can happen during partial update
-> > +			 */
-> > +				dsc->drm->slice_count = 1;
-> 
-> Is the if() missing here? The indentpation and the comment seems unclear
-> about that.
+Thanks,
+Chandrasekhar L
 
-yes, fixed that
+
+On 10/19/2021 10:35 PM, Lukasz Luba wrote:
+>
+>
+> On 10/19/21 4:28 PM, Lingutla Chandrasekhar wrote:
+>> em_dev_register_perf_domain() can be called from any initcall level before
+>
+> The EM is registered by cpufreq drivers (or devfreq), which is later
+> than fs_initcall, so the debugfs is setup. We even have added recently
+> a dedicated callback into the cpufreq (register_em()) for that.
+>
+> Do you have such code which registers EM for CPUs (or some devfreq)
+> earlier than this fs_initcall?
+>
+> I cannot find such code in mainline.
+>
+> Regards,
+> Lukasz
 
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+ a Linux Foundation Collaborative Project.
+
