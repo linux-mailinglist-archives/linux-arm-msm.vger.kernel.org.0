@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4604436D88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:36:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CA46436DA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230233AbhJUWiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 18:38:17 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:44050 "EHLO m43-7.mailgun.net"
+        id S230233AbhJUWoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 18:44:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40572 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229935AbhJUWiR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 18:38:17 -0400
+        id S229567AbhJUWoB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 18:44:01 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634855761; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1634856105; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=nz46hJHg14w27MvaxWuLRSJj9BjKYZ+W7Iuyx5TwDEU=;
- b=FSL+GgUFkIU8VsNHTrKyby/TUJKVt+RMe7QDuVtEId+BiF0kagYFMKEBG3SHxpqXgXc1QwC0
- 2/qahMe43or59JajSbpwId7mCHwp62+HUkOP5b1u1LRL7wz8QxWd7/qVP3xnazuYoMlW+O+3
- Rlsr2CKnz/HSVJ/SbFSeL8hcc1Q=
+ MIME-Version: Sender; bh=UTRK+asHkVmSaVJYYfLMtmmtXWUM2tAIeK5G9Vjm9lI=;
+ b=LaKjwvp34M0IYz8yMFXAof48g+TDDZvwjlOotbZGs/StEdYVve78953ikbDiJrq9EB7ltTOb
+ okl9icRIBHWtpZ74TpGf2EPhHQOHGu4wfdWUbs0Tv6XAHhBFgC8qDRZkC89HKUWwMQCqeJXI
+ TufPNG2ChATw1iIYjeGqmr1465U=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6171eb4f5baa84c77b7ee51d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:35:59
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 6171ec9559612e01003941d5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:41:25
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 32909C4361A; Thu, 21 Oct 2021 22:35:59 +0000 (UTC)
+        id 9A352C43460; Thu, 21 Oct 2021 22:41:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,13 +38,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2DDF8C4338F;
-        Thu, 21 Oct 2021 22:35:57 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 72F07C4338F;
+        Thu, 21 Oct 2021 22:41:22 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 Oct 2021 15:35:57 -0700
+Date:   Thu, 21 Oct 2021 15:41:22 -0700
 From:   abhinavk@codeaurora.org
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -54,12 +54,12 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 05/11] drm/msm/dpu: move dpu_hw_pipe_cfg out
- of struct dpu_plane
-In-Reply-To: <20210930140002.308628-6-dmitry.baryshkov@linaro.org>
+Subject: Re: [Freedreno] [PATCH 06/11] drm/msm/dpu: drop scaler config from
+ plane state
+In-Reply-To: <20210930140002.308628-7-dmitry.baryshkov@linaro.org>
 References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
- <20210930140002.308628-6-dmitry.baryshkov@linaro.org>
-Message-ID: <25f95f7fa81c2b9d771f6e3f26dc2820@codeaurora.org>
+ <20210930140002.308628-7-dmitry.baryshkov@linaro.org>
+Message-ID: <d9aaf57840d9c4dd4ad9ea1020123c46@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -67,327 +67,201 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2021-09-30 06:59, Dmitry Baryshkov wrote:
-> struct dpu_hw_pipe_cfg represents an interim state during atomic
-> update/color fill, so move it out of struct dpu_plane.
+> Scaler and pixel_ext configuration does not contain a long living 
+> state,
+> it is used only during plane update, so remove these two fiels from
+fiels ---> fields
+> dpu_plane_state and allocate them on stack.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+
+While addressing the bugs reported by the smatch tool, I saw that pe is 
+not
+being used at the moment.
+
+412 static void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_pipe *ctx,
+413 		struct dpu_hw_pipe_cfg *sspp,
+414 		struct dpu_hw_pixel_ext *pe,
+415 		void *scaler_cfg)
+416 {
+417 	u32 idx;
+418 	struct dpu_hw_scaler3_cfg *scaler3_cfg = scaler_cfg;
+419
+420 	(void)pe;
+421 	if (_sspp_subblk_offset(ctx, DPU_SSPP_SCALER_QSEED3, &idx) || !sspp
+422 		|| !scaler3_cfg || !ctx || !ctx->cap || !ctx->cap->sblk)
+423 		return;
+424
+425 	dpu_hw_setup_scaler3(&ctx->hw, scaler3_cfg, idx,
+426 			ctx->cap->sblk->scaler_blk.version,
+427 			sspp->layout.format);
+428 }
+
+As part of this change, can you please drop this?
+
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 104 ++++++++++++----------
->  1 file changed, 57 insertions(+), 47 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 59 ++++++++++-------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  6 ---
+>  2 files changed, 26 insertions(+), 39 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index ef3737642b0c..5288b5b824f8 100644
+> index 5288b5b824f8..4259c4ecde9b 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -104,7 +104,6 @@ struct dpu_plane {
->  	uint32_t features;      /* capabilities from catalog */
-> 
->  	struct dpu_hw_pipe *pipe_hw;
-> -	struct dpu_hw_pipe_cfg pipe_cfg;
->  	uint32_t color_fill;
->  	bool is_error;
->  	bool is_rt_pipe;
-> @@ -143,14 +142,15 @@ static struct dpu_kms *_dpu_plane_get_kms(struct
-> drm_plane *plane)
->   * _dpu_plane_calc_bw - calculate bandwidth required for a plane
->   * @plane: Pointer to drm plane.
->   * @fb:   Pointer to framebuffer associated with the given plane
-> + * @pipe_cfg: Pointer to pipe configuration
->   * Result: Updates calculated bandwidth in the plane state.
->   * BW Equation: src_w * src_h * bpp * fps * (v_total / v_dest)
->   * Prefill BW Equation: line src bytes * line_time
->   */
->  static void _dpu_plane_calc_bw(struct drm_plane *plane,
-> -	struct drm_framebuffer *fb)
-> +	struct drm_framebuffer *fb,
-> +	struct dpu_hw_pipe_cfg *pipe_cfg)
->  {
-> -	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	struct dpu_plane_state *pstate;
->  	struct drm_display_mode *mode;
->  	const struct dpu_format *fmt = NULL;
-> @@ -167,9 +167,9 @@ static void _dpu_plane_calc_bw(struct drm_plane 
-> *plane,
-> 
->  	fmt = dpu_get_dpu_format_ext(fb->format->format, fb->modifier);
-> 
-> -	src_width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
-> -	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
-> -	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
-> +	src_width = drm_rect_width(&pipe_cfg->src_rect);
-> +	src_height = drm_rect_height(&pipe_cfg->src_rect);
-> +	dst_height = drm_rect_height(&pipe_cfg->dst_rect);
->  	fps = drm_mode_vrefresh(mode);
->  	vbp = mode->vtotal - mode->vsync_end;
->  	vpw = mode->vsync_end - mode->vsync_start;
-> @@ -200,12 +200,12 @@ static void _dpu_plane_calc_bw(struct drm_plane 
-> *plane,
->  /**
->   * _dpu_plane_calc_clk - calculate clock required for a plane
->   * @plane: Pointer to drm plane.
-> + * @pipe_cfg: Pointer to pipe configuration
->   * Result: Updates calculated clock in the plane state.
->   * Clock equation: dst_w * v_total * fps * (src_h / dst_h)
->   */
-> -static void _dpu_plane_calc_clk(struct drm_plane *plane)
-> +static void _dpu_plane_calc_clk(struct drm_plane *plane, struct
-> dpu_hw_pipe_cfg *pipe_cfg)
->  {
-> -	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	struct dpu_plane_state *pstate;
->  	struct drm_display_mode *mode;
->  	int dst_width, src_height, dst_height, fps;
-> @@ -213,9 +213,9 @@ static void _dpu_plane_calc_clk(struct drm_plane 
-> *plane)
->  	pstate = to_dpu_plane_state(plane->state);
->  	mode = &plane->state->crtc->mode;
-> 
-> -	src_height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
-> -	dst_width = drm_rect_width(&pdpu->pipe_cfg.dst_rect);
-> -	dst_height = drm_rect_height(&pdpu->pipe_cfg.dst_rect);
-> +	src_height = drm_rect_height(&pipe_cfg->src_rect);
-> +	dst_width = drm_rect_width(&pipe_cfg->dst_rect);
-> +	dst_height = drm_rect_height(&pipe_cfg->dst_rect);
->  	fps = drm_mode_vrefresh(mode);
-> 
->  	pstate->plane_clk =
-> @@ -252,14 +252,17 @@ static int _dpu_plane_calc_fill_level(struct
-> drm_plane *plane,
->  	fixed_buff_size = pdpu->catalog->caps->pixel_ram_size;
-> 
->  	list_for_each_entry(tmp, &pdpu->mplane_list, mplane_list) {
-> +		u32 tmp_width;
-> +
->  		if (!tmp->base.state->visible)
->  			continue;
-> +		tmp_width = drm_rect_width(&tmp->base.state->src) >> 16;
->  		DPU_DEBUG("plane%d/%d src_width:%d/%d\n",
->  				pdpu->base.base.id, tmp->base.base.id,
->  				src_width,
-> -				drm_rect_width(&tmp->pipe_cfg.src_rect));
-> +				tmp_width);
->  		src_width = max_t(u32, src_width,
-> -				  drm_rect_width(&tmp->pipe_cfg.src_rect));
-> +				  tmp_width);
->  	}
-> 
->  	if (fmt->fetch_planes == DPU_PLANE_PSEUDO_PLANAR) {
-> @@ -319,9 +322,10 @@ static u64 _dpu_plane_get_qos_lut(const struct
-> dpu_qos_lut_tbl *tbl,
->   * _dpu_plane_set_qos_lut - set QoS LUT of the given plane
->   * @plane:		Pointer to drm plane
->   * @fb:			Pointer to framebuffer associated with the given plane
-> + * @pipe_cfg:		Pointer to pipe configuration
->   */
->  static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
-> -		struct drm_framebuffer *fb)
-> +		struct drm_framebuffer *fb, struct dpu_hw_pipe_cfg *pipe_cfg)
->  {
->  	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	const struct dpu_format *fmt = NULL;
-> @@ -335,7 +339,7 @@ static void _dpu_plane_set_qos_lut(struct drm_plane 
-> *plane,
->  				fb->format->format,
->  				fb->modifier);
->  		total_fl = _dpu_plane_calc_fill_level(plane, fmt,
-> -				drm_rect_width(&pdpu->pipe_cfg.src_rect));
-> +				drm_rect_width(&pipe_cfg->src_rect));
-> 
->  		if (fmt && DPU_FORMAT_IS_LINEAR(fmt))
->  			lut_usage = DPU_QOS_LUT_USAGE_LINEAR;
-> @@ -461,9 +465,10 @@ static void _dpu_plane_set_qos_ctrl(struct
-> drm_plane *plane,
->   * _dpu_plane_set_ot_limit - set OT limit for the given plane
->   * @plane:		Pointer to drm plane
->   * @crtc:		Pointer to drm crtc
-> + * @pipe_cfg:		Pointer to pipe configuration
->   */
->  static void _dpu_plane_set_ot_limit(struct drm_plane *plane,
-> -		struct drm_crtc *crtc)
-> +		struct drm_crtc *crtc, struct dpu_hw_pipe_cfg *pipe_cfg)
->  {
->  	struct dpu_plane *pdpu = to_dpu_plane(plane);
->  	struct dpu_vbif_set_ot_params ot_params;
-> @@ -472,8 +477,8 @@ static void _dpu_plane_set_ot_limit(struct 
-> drm_plane *plane,
->  	memset(&ot_params, 0, sizeof(ot_params));
->  	ot_params.xin_id = pdpu->pipe_hw->cap->xin_id;
->  	ot_params.num = pdpu->pipe_hw->idx - SSPP_NONE;
-> -	ot_params.width = drm_rect_width(&pdpu->pipe_cfg.src_rect);
-> -	ot_params.height = drm_rect_height(&pdpu->pipe_cfg.src_rect);
-> +	ot_params.width = drm_rect_width(&pipe_cfg->src_rect);
-> +	ot_params.height = drm_rect_height(&pipe_cfg->src_rect);
->  	ot_params.is_wfd = !pdpu->is_rt_pipe;
->  	ot_params.frame_rate = drm_mode_vrefresh(&crtc->mode);
->  	ot_params.vbif_idx = VBIF_RT;
-> @@ -651,17 +656,18 @@ static void _dpu_plane_setup_csc(struct dpu_plane 
-> *pdpu)
-> 
->  static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+> @@ -542,14 +542,12 @@ static void _dpu_plane_setup_scaler3(struct
+> dpu_plane *pdpu,
 >  		struct dpu_plane_state *pstate,
-> -		const struct dpu_format *fmt, bool color_fill)
-> +		const struct dpu_format *fmt, bool color_fill,
-> +		struct dpu_hw_pipe_cfg *pipe_cfg)
+>  		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
+>  		struct dpu_hw_scaler3_cfg *scale_cfg,
+> +		struct dpu_hw_pixel_ext *pixel_ext,
+>  		const struct dpu_format *fmt,
+>  		uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
+>  {
+>  	uint32_t i;
+> 
+> -	memset(scale_cfg, 0, sizeof(*scale_cfg));
+> -	memset(&pstate->pixel_ext, 0, sizeof(struct dpu_hw_pixel_ext));
+> -
+>  	scale_cfg->phase_step_x[DPU_SSPP_COMP_0] =
+>  		mult_frac((1 << PHASE_STEP_SHIFT), src_w, dst_w);
+>  	scale_cfg->phase_step_y[DPU_SSPP_COMP_0] =
+> @@ -588,9 +586,9 @@ static void _dpu_plane_setup_scaler3(struct 
+> dpu_plane *pdpu,
+>  			scale_cfg->preload_y[i] = DPU_QSEED3_DEFAULT_PRELOAD_V;
+>  		}
+> 
+> -		pstate->pixel_ext.num_ext_pxls_top[i] =
+> +		pixel_ext->num_ext_pxls_top[i] =
+>  			scale_cfg->src_height[i];
+> -		pstate->pixel_ext.num_ext_pxls_left[i] =
+> +		pixel_ext->num_ext_pxls_left[i] =
+>  			scale_cfg->src_width[i];
+>  	}
+>  	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
+> @@ -660,6 +658,11 @@ static void _dpu_plane_setup_scaler(struct 
+> dpu_plane *pdpu,
+>  		struct dpu_hw_pipe_cfg *pipe_cfg)
 >  {
 >  	const struct drm_format_info *info = 
 > drm_format_info(fmt->base.pixel_format);
+> +	struct dpu_hw_scaler3_cfg scaler3_cfg;
+> +	struct dpu_hw_pixel_ext pixel_ext;
+> +
+> +	memset(&scaler3_cfg, 0, sizeof(scaler3_cfg));
+> +	memset(&pixel_ext, 0, sizeof(pixel_ext));
 > 
 >  	/* don't chroma subsample if decimating */
 >  	/* update scaler. calculate default config for QSEED3 */
->  	_dpu_plane_setup_scaler3(pdpu, pstate,
-> -			drm_rect_width(&pdpu->pipe_cfg.src_rect),
-> -			drm_rect_height(&pdpu->pipe_cfg.src_rect),
-> -			drm_rect_width(&pdpu->pipe_cfg.dst_rect),
-> -			drm_rect_height(&pdpu->pipe_cfg.dst_rect),
-> +			drm_rect_width(&pipe_cfg->src_rect),
-> +			drm_rect_height(&pipe_cfg->src_rect),
-> +			drm_rect_width(&pipe_cfg->dst_rect),
-> +			drm_rect_height(&pipe_cfg->dst_rect),
->  			&pstate->scaler3_cfg, fmt,
+> @@ -668,8 +671,23 @@ static void _dpu_plane_setup_scaler(struct 
+> dpu_plane *pdpu,
+>  			drm_rect_height(&pipe_cfg->src_rect),
+>  			drm_rect_width(&pipe_cfg->dst_rect),
+>  			drm_rect_height(&pipe_cfg->dst_rect),
+> -			&pstate->scaler3_cfg, fmt,
+> +			&scaler3_cfg, &pixel_ext, fmt,
 >  			info->hsub, info->vsub);
->  }
-> @@ -679,6 +685,7 @@ static int _dpu_plane_color_fill(struct dpu_plane 
-> *pdpu,
->  	const struct dpu_format *fmt;
->  	const struct drm_plane *plane = &pdpu->base;
->  	struct dpu_plane_state *pstate = to_dpu_plane_state(plane->state);
-> +	struct dpu_hw_pipe_cfg pipe_cfg;
-> 
->  	DPU_DEBUG_PLANE(pdpu, "\n");
-> 
-> @@ -695,13 +702,15 @@ static int _dpu_plane_color_fill(struct dpu_plane 
-> *pdpu,
->  				pstate->multirect_index);
-> 
->  		/* override scaler/decimation if solid fill */
-> -		pdpu->pipe_cfg.src_rect.x1 = 0;
-> -		pdpu->pipe_cfg.src_rect.y1 = 0;
-> -		pdpu->pipe_cfg.src_rect.x2 =
-> -			drm_rect_width(&pdpu->pipe_cfg.dst_rect);
-> -		pdpu->pipe_cfg.src_rect.y2 =
-> -			drm_rect_height(&pdpu->pipe_cfg.dst_rect);
-> -		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true);
-> +		pipe_cfg.dst_rect = pstate->base.dst;
 > +
-> +		pipe_cfg.src_rect.x1 = 0;
-> +		pipe_cfg.src_rect.y1 = 0;
-> +		pipe_cfg.src_rect.x2 =
-> +			drm_rect_width(&pipe_cfg.dst_rect);
-> +		pipe_cfg.src_rect.y2 =
-> +			drm_rect_height(&pipe_cfg.dst_rect);
-> +		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
+> +	if (pdpu->pipe_hw->ops.setup_pe)
+> +		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> +				&pixel_ext);
+> +
+> +	/**
+> +	 * when programmed in multirect mode, scalar block will be
+> +	 * bypassed. Still we need to update alpha and bitwidth
+> +	 * ONLY for RECT0
+> +	 */
+> +	if (pdpu->pipe_hw->ops.setup_scaler &&
+> +			pstate->multirect_index != DPU_SSPP_RECT_1)
+> +		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> +				pipe_cfg, &pixel_ext,
+> +				&scaler3_cfg);
+>  }
+> 
+>  /**
+> @@ -710,7 +728,6 @@ static int _dpu_plane_color_fill(struct dpu_plane 
+> *pdpu,
+>  			drm_rect_width(&pipe_cfg.dst_rect);
+>  		pipe_cfg.src_rect.y2 =
+>  			drm_rect_height(&pipe_cfg.dst_rect);
+> -		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
 > 
 >  		if (pdpu->pipe_hw->ops.setup_format)
 >  			pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw,
-> @@ -710,7 +719,7 @@ static int _dpu_plane_color_fill(struct dpu_plane 
+> @@ -722,15 +739,7 @@ static int _dpu_plane_color_fill(struct dpu_plane 
 > *pdpu,
-> 
->  		if (pdpu->pipe_hw->ops.setup_rects)
->  			pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
-> -					&pdpu->pipe_cfg,
-> +					&pipe_cfg,
+>  					&pipe_cfg,
 >  					pstate->multirect_index);
 > 
->  		if (pdpu->pipe_hw->ops.setup_pe)
-> @@ -720,7 +729,7 @@ static int _dpu_plane_color_fill(struct dpu_plane 
-> *pdpu,
->  		if (pdpu->pipe_hw->ops.setup_scaler &&
->  				pstate->multirect_index != DPU_SSPP_RECT_1)
->  			pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
-> -					&pdpu->pipe_cfg, &pstate->pixel_ext,
-> +					&pipe_cfg, &pstate->pixel_ext,
->  					&pstate->scaler3_cfg);
+> -		if (pdpu->pipe_hw->ops.setup_pe)
+> -			pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> -					&pstate->pixel_ext);
+> -
+> -		if (pdpu->pipe_hw->ops.setup_scaler &&
+> -				pstate->multirect_index != DPU_SSPP_RECT_1)
+> -			pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> -					&pipe_cfg, &pstate->pixel_ext,
+> -					&pstate->scaler3_cfg);
+> +		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
 >  	}
 > 
-> @@ -1087,10 +1096,11 @@ static void
-> dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->  	bool is_rt_pipe, update_qos_remap;
->  	const struct dpu_format *fmt =
->  		to_dpu_format(msm_framebuffer_format(fb));
-> +	struct dpu_hw_pipe_cfg pipe_cfg;
-> 
-> -	memset(&(pdpu->pipe_cfg), 0, sizeof(struct dpu_hw_pipe_cfg));
-> +	memset(&pipe_cfg, 0, sizeof(struct dpu_hw_pipe_cfg));
-> 
-> -	_dpu_plane_set_scanout(plane, pstate, &pdpu->pipe_cfg, fb);
-> +	_dpu_plane_set_scanout(plane, pstate, &pipe_cfg, fb);
-> 
->  	pstate->pending = true;
-> 
-> @@ -1102,17 +1112,17 @@ static void
-> dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->  			crtc->base.id, DRM_RECT_ARG(&state->dst),
->  			(char *)&fmt->base.pixel_format, DPU_FORMAT_IS_UBWC(fmt));
-> 
-> -	pdpu->pipe_cfg.src_rect = state->src;
-> +	pipe_cfg.src_rect = state->src;
-> 
->  	/* state->src is 16.16, src_rect is not */
-> -	pdpu->pipe_cfg.src_rect.x1 >>= 16;
-> -	pdpu->pipe_cfg.src_rect.x2 >>= 16;
-> -	pdpu->pipe_cfg.src_rect.y1 >>= 16;
-> -	pdpu->pipe_cfg.src_rect.y2 >>= 16;
-> +	pipe_cfg.src_rect.x1 >>= 16;
-> +	pipe_cfg.src_rect.x2 >>= 16;
-> +	pipe_cfg.src_rect.y1 >>= 16;
-> +	pipe_cfg.src_rect.y2 >>= 16;
-> 
-> -	pdpu->pipe_cfg.dst_rect = state->dst;
-> +	pipe_cfg.dst_rect = state->dst;
-> 
-> -	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false);
-> +	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
-> 
->  	/* override for color fill */
->  	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
-> @@ -1122,7 +1132,7 @@ static void dpu_plane_sspp_atomic_update(struct
+>  	return 0;
+> @@ -1122,8 +1131,6 @@ static void dpu_plane_sspp_atomic_update(struct
 > drm_plane *plane)
 > 
->  	if (pdpu->pipe_hw->ops.setup_rects) {
->  		pdpu->pipe_hw->ops.setup_rects(pdpu->pipe_hw,
-> -				&pdpu->pipe_cfg,
-> +				&pipe_cfg,
+>  	pipe_cfg.dst_rect = state->dst;
+> 
+> -	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
+> -
+>  	/* override for color fill */
+>  	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
+>  		/* skip remaining processing on color fill */
+> @@ -1136,21 +1143,7 @@ static void dpu_plane_sspp_atomic_update(struct
+> drm_plane *plane)
 >  				pstate->multirect_index);
 >  	}
 > 
-> @@ -1139,7 +1149,7 @@ static void dpu_plane_sspp_atomic_update(struct
-> drm_plane *plane)
->  	if (pdpu->pipe_hw->ops.setup_scaler &&
->  			pstate->multirect_index != DPU_SSPP_RECT_1)
->  		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
-> -				&pdpu->pipe_cfg, &pstate->pixel_ext,
-> +				&pipe_cfg, &pstate->pixel_ext,
->  				&pstate->scaler3_cfg);
+> -	if (pdpu->pipe_hw->ops.setup_pe &&
+> -			(pstate->multirect_index != DPU_SSPP_RECT_1))
+> -		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> -				&pstate->pixel_ext);
+> -
+> -	/**
+> -	 * when programmed in multirect mode, scalar block will be
+> -	 * bypassed. Still we need to update alpha and bitwidth
+> -	 * ONLY for RECT0
+> -	 */
+> -	if (pdpu->pipe_hw->ops.setup_scaler &&
+> -			pstate->multirect_index != DPU_SSPP_RECT_1)
+> -		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> -				&pipe_cfg, &pstate->pixel_ext,
+> -				&pstate->scaler3_cfg);
+> +	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
 > 
 >  	if (pdpu->pipe_hw->ops.setup_multirect)
-> @@ -1192,12 +1202,12 @@ static void
-> dpu_plane_sspp_atomic_update(struct drm_plane *plane)
->  			pdpu->csc_ptr = 0;
->  	}
+>  		pdpu->pipe_hw->ops.setup_multirect(
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index 34e03ac05f4a..087194be3c22 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -23,8 +23,6 @@
+>   * @multirect_index: index of the rectangle of SSPP
+>   * @multirect_mode: parallel or time multiplex multirect mode
+>   * @pending:	whether the current update is still pending
+> - * @scaler3_cfg: configuration data for scaler3
+> - * @pixel_ext: configuration data for pixel extensions
+>   * @cdp_cfg:	CDP configuration
+>   * @plane_fetch_bw: calculated BW per plane
+>   * @plane_clk: calculated clk per plane
+> @@ -38,10 +36,6 @@ struct dpu_plane_state {
+>  	uint32_t multirect_mode;
+>  	bool pending;
 > 
-> -	_dpu_plane_set_qos_lut(plane, fb);
-> +	_dpu_plane_set_qos_lut(plane, fb, &pipe_cfg);
->  	_dpu_plane_set_danger_lut(plane, fb);
-> 
->  	if (plane->type != DRM_PLANE_TYPE_CURSOR) {
->  		_dpu_plane_set_qos_ctrl(plane, true, DPU_PLANE_QOS_PANIC_CTRL);
-> -		_dpu_plane_set_ot_limit(plane, crtc);
-> +		_dpu_plane_set_ot_limit(plane, crtc, &pipe_cfg);
->  	}
-> 
->  	update_qos_remap = (is_rt_pipe != pdpu->is_rt_pipe) ||
-> @@ -1211,9 +1221,9 @@ static void dpu_plane_sspp_atomic_update(struct
-> drm_plane *plane)
->  		_dpu_plane_set_qos_remap(plane);
->  	}
-> 
-> -	_dpu_plane_calc_bw(plane, fb);
-> +	_dpu_plane_calc_bw(plane, fb, &pipe_cfg);
-> 
-> -	_dpu_plane_calc_clk(plane);
-> +	_dpu_plane_calc_clk(plane, &pipe_cfg);
->  }
-> 
->  static void _dpu_plane_atomic_disable(struct drm_plane *plane)
+> -	/* scaler configuration */
+> -	struct dpu_hw_scaler3_cfg scaler3_cfg;
+> -	struct dpu_hw_pixel_ext pixel_ext;
+> -
+>  	struct dpu_hw_pipe_cdp_cfg cdp_cfg;
+>  	u64 plane_fetch_bw;
+>  	u64 plane_clk;
