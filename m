@@ -2,124 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7153E43635F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 15:50:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B62E43636E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 15:51:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230361AbhJUNwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 09:52:25 -0400
-Received: from mga09.intel.com ([134.134.136.24]:31697 "EHLO mga09.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230072AbhJUNwY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 09:52:24 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10143"; a="228907432"
-X-IronPort-AV: E=Sophos;i="5.87,169,1631602800"; 
-   d="scan'208";a="228907432"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2021 06:50:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,169,1631602800"; 
-   d="scan'208";a="444808596"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.171])
-  by orsmga006.jf.intel.com with SMTP; 21 Oct 2021 06:50:00 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Thu, 21 Oct 2021 16:49:59 +0300
-Date:   Thu, 21 Oct 2021 16:49:59 +0300
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Claudio Suarez <cssk@net-c.es>
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
-        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
-Subject: Re: [PATCH v3 13/13] drm/i915: replace drm_detect_hdmi_monitor()
- with drm_display_info.is_hdmi
-Message-ID: <YXFwB7rN4bvR0Z+m@intel.com>
-References: <20211016184226.3862-1-cssk@net-c.es>
- <20211016184226.3862-14-cssk@net-c.es>
- <YW8QYsmkm3ZrBAx3@intel.com>
- <YW9L6d7e+RO29VJu@gineta.localdomain>
+        id S231203AbhJUNx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 09:53:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231424AbhJUNx0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 09:53:26 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD023C061348
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 06:51:10 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id 188so994808iou.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 06:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mZ6f66NX0UsycGjWXczZLCtk7FyG6D46mxZapKtt/dY=;
+        b=W48LVNPTKUhObiQbdvl110IGZntU9+KymKiTruJC40lHm7dGdkNsNRs2GQgRC0UW/n
+         wLhCd1u/DfSQAHcZ2sbpzR33BdYBLGvQ5Y/J79yxbRi5o7iIegPxMO866nywrupL3Aur
+         6qVN2LL0sCF8xsYGch2N96I0xh2gldJ4l3vv0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mZ6f66NX0UsycGjWXczZLCtk7FyG6D46mxZapKtt/dY=;
+        b=ed0O4xOK8Mk0+4WyPIGjqJi7r0Ltvj3yQtAGx9BjPvqme3FD5GPTK6JsxyLEjVfl1j
+         Ht42RhpHiRGd1GnNn6rz+yMeMKP9sUI3JkAloD1TX/XSNOy2aT2iXjD9kerH21Y5qB0m
+         7QVbtJLOVk57Du0w2Zf1HEv5fYIWte2/A04gaQkFd3blZEUFRNs4kYcj7W1mvYfrAMa6
+         kWnY/sIgDrV9t5uKTa8CvzwzB9+GcVCwGmQdvbvjzBl4zKv8cLvMkflEOg5YJJkoSegx
+         y89MXoBfJu5lUeU3uJAqT1fWyW/htjUL1bAAKpRtRs8tcgo7FNdtuEZJ5HTD+WBcEUaH
+         CzUg==
+X-Gm-Message-State: AOAM533nTEnLLFhepAtW+A14lb0tv8ZhYW08xaaTfNxRynnmxQB4PAUa
+        PEsoKRqbnlS8v9itzc3/xyUHlg==
+X-Google-Smtp-Source: ABdhPJxQxeB3XfovTDQe7gY8kZQ5+ab5WjKnwJYHyGX4L+YuHKFmBsuiIl5zDaY7lik2jhekroUpZQ==
+X-Received: by 2002:a05:6638:23a:: with SMTP id f26mr4098325jaq.2.1634824270136;
+        Thu, 21 Oct 2021 06:51:10 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id e14sm2827506ioe.37.2021.10.21.06.51.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Oct 2021 06:51:09 -0700 (PDT)
+Subject: Re: [PATCH 1/2] dt-bindings: net: qcom,ipa: describe IPA v4.5
+ interconnects
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, ~okias/devicetree@lists.sr.ht,
+        linux-kernel@vger.kernel.org
+References: <20211020225435.274628-1-david@ixit.cz>
+From:   Alex Elder <elder@ieee.org>
+Message-ID: <8b425afc-55ec-e1d1-4a09-31e7aa216c58@ieee.org>
+Date:   Thu, 21 Oct 2021 08:51:08 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YW9L6d7e+RO29VJu@gineta.localdomain>
-X-Patchwork-Hint: comment
+In-Reply-To: <20211020225435.274628-1-david@ixit.cz>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 20, 2021 at 12:51:21AM +0200, Claudio Suarez wrote:
-> drm_get_edid() internally calls to drm_connector_update_edid_property()
-> and then drm_add_display_info(), which parses the EDID.
-> This happens in the function intel_hdmi_set_edid() and
-> intel_sdvo_tmds_sink_detect() (via intel_sdvo_get_edid()).
+On 10/20/21 5:54 PM, David Heidelberg wrote:
+> IPA v4.5 interconnects was missing from dt-schema, which was trigering
+> warnings while validation.
 > 
-> Once EDID is parsed, the monitor HDMI support information is available
-> through drm_display_info.is_hdmi. Retriving the same information with
-> drm_detect_hdmi_monitor() is less efficient. Change to
-> drm_display_info.is_hdmi
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-I meant we need to examine all call chains that can lead to
-.detect() to make sure all of them do in fact update the
-display_info beforehand.
+Sorry about that.  This is actually not correct, because
+the DTS file is not correct.  I've been meaning to fix it
+but didn't want to commit the change until I had actually
+tested it.
 
-> 
-> This is a TODO task in Documentation/gpu/todo.rst
-> 
-> Signed-off-by: Claudio Suarez <cssk@net-c.es>
+The DTS file was sent out before I had a better understanding
+of what it was supposed to represent.
+
+I will put a priority on fixing the DTS file soon.
+
+					-Alex
+
 > ---
->  drivers/gpu/drm/i915/display/intel_hdmi.c | 2 +-
->  drivers/gpu/drm/i915/display/intel_sdvo.c | 3 ++-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/i915/display/intel_hdmi.c b/drivers/gpu/drm/i915/display/intel_hdmi.c
-> index b04685bb6439..008e5b0ba408 100644
-> --- a/drivers/gpu/drm/i915/display/intel_hdmi.c
-> +++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
-> @@ -2355,7 +2355,7 @@ intel_hdmi_set_edid(struct drm_connector *connector)
->  	to_intel_connector(connector)->detect_edid = edid;
->  	if (edid && edid->input & DRM_EDID_INPUT_DIGITAL) {
->  		intel_hdmi->has_audio = drm_detect_monitor_audio(edid);
-> -		intel_hdmi->has_hdmi_sink = drm_detect_hdmi_monitor(edid);
-> +		intel_hdmi->has_hdmi_sink = connector->display_info.is_hdmi;
->  
->  		connected = true;
->  	}
-> diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-> index 6cb27599ea03..b4065e4df644 100644
-> --- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-> +++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-> @@ -2060,8 +2060,9 @@ intel_sdvo_tmds_sink_detect(struct drm_connector *connector)
->  		if (edid->input & DRM_EDID_INPUT_DIGITAL) {
->  			status = connector_status_connected;
->  			if (intel_sdvo_connector->is_hdmi) {
-> -				intel_sdvo->has_hdmi_monitor = drm_detect_hdmi_monitor(edid);
->  				intel_sdvo->has_hdmi_audio = drm_detect_monitor_audio(edid);
-> +				intel_sdvo->has_hdmi_monitor =
-> +							    connector->display_info.is_hdmi;
->  			}
->  		} else
->  			status = connector_status_disconnected;
-> -- 
-> 2.33.0
-> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> index b8a0b392b24e..a2835ed52076 100644
+> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+> @@ -95,6 +95,11 @@ properties:
+>             - description: Path leading to system memory
+>             - description: Path leading to internal memory
+>             - description: Path between the AP and IPA config space
+> +      - items: # IPA v4.5
+> +          - description: Path leading to system memory region A
+> +          - description: Path leading to system memory region B
+> +          - description: Path leading to internal memory
+> +          - description: Path between the AP and IPA config space
+>   
+>     interconnect-names:
+>       oneOf:
+> @@ -105,6 +110,11 @@ properties:
+>             - const: memory
+>             - const: imem
+>             - const: config
+> +      - items: # IPA v4.5
+> +          - const: memory-a
+> +          - const: memory-b
+> +          - const: imem
+> +          - const: config
+>   
+>     qcom,smem-states:
+>       $ref: /schemas/types.yaml#/definitions/phandle-array
 > 
 
--- 
-Ville Syrjälä
-Intel
