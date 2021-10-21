@@ -2,96 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCBEF436089
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 13:45:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4949C4360A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 13:45:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231126AbhJULro (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 07:47:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
+        id S231197AbhJULr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 07:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230438AbhJULrh (ORCPT
+        with ESMTP id S231129AbhJULrw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 07:47:37 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1324C061753
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:17 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id s198-20020a1ca9cf000000b0030d6986ea9fso481674wme.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:17 -0700 (PDT)
+        Thu, 21 Oct 2021 07:47:52 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91FEC061753
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id j11-20020a4a92cb000000b002902ae8cb10so44834ooh.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=owpULBMgb/o8W8Jj/XFDSTD94XSBfwHWWJu1e1uw3tA=;
-        b=H2cELnypzD0Rp+TToSUjL0RPhteHXb7suFNso9RvMEtpe+0xldeq/lfyRe9nMO6S+q
-         Tizacz76S6G0aZCu084DYZiRJ9kcWDokUr7WSTLX7VhNnAQ8xynccV1jEa7SOy+gw3Ex
-         YAx9vh4Gqbreq/uW0bZor2bUAz1JZ3S6PRD5BRsyqeZh36WIDGHcsopDSo6CwSPcRUgc
-         LCqigOANv/KHG5ig++u9ajQiv2yFRLw+0tCQbaXHsTOcbpbJd3nzud2RNQyj/HFl7haD
-         0bT1l/A8w564GQEKqc7vcpi6hjVl04Z75rDtqT9uWNqP6rDuOj6O9vRoM+Ngx3UVcJRC
-         9uog==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WOkBwlSoZofkybAk4F+yxr1MJ3MNGeAkoQp5SMBScKI=;
+        b=lrkoDgGU3oxSva13UKIskhuNcjuvSuSsT7JEAyq2Cha7HhbJk2jnVLmW1GUm+w9btL
+         WG/bzZVmeUr/9uk99LTnK1FHpQvaPbiPtSGCebfJV0A3jEYSzlYVQSeWrSOMFMUXQlgn
+         ldViDb7zAj/ZHUA3JcLWdMOYAta84p2vC9i2+yokMESA2mMCpspkDn8ZwTwUwpP7vG+0
+         J1w7E4AMgc8zwWFT4NlPhJ+lAUC58gmZ9W1z/lgNfDapR+qkLElTk1BOpakG0pjgYb8u
+         a1mgXlPXLDL/550UXd2DPfNGPEZSgbiY+la8zb2ppsBcNuP15cVD6dxShA96O0Z4XkfF
+         86mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=owpULBMgb/o8W8Jj/XFDSTD94XSBfwHWWJu1e1uw3tA=;
-        b=rU8R+kZOOKqbjYO6f8go/2gwF717W5BwlmVm4L/2gxD3LxhXUDwSSUTJlRjN9mAQmQ
-         tezXS/KIh23s6pGs6bw/hb+RrMoR790hIxmwI6h8PIqbs08EQqipC7ARcyQOl3a2X+8N
-         FftMAiHPvapD2F9nSkHxrThtGJDmftSB8NxFRpjUcQmldqCtJ0ZUPgMC5Zzk15kQgpts
-         B7HmH52i2v604I8qrTnM+IGpe+4LmZ2O4TOmdTfpPKGBWvUNqii0RuIvttGns+Bh5eG1
-         qA2rrAPj/zNvt1g4IxqtXAJ+4LhJH+e6xeqCEZj9RWZPotEYYcNgNMMI6kyuSF9q4WjE
-         Ai+g==
-X-Gm-Message-State: AOAM5318qTCwlMHAB3hLXngFAR3bX42V2hSmQ1MLf04Xq9K21gJXXug3
-        5rHxd5Q56QHyrNGRuSexRRHq1Q==
-X-Google-Smtp-Source: ABdhPJwDORk+sA/o+SuCvqs+xZT+ZhRzur5pLydG2pK3EW9E1c++e7AJ3bCNaPdQhjBhqJK4a8zoeg==
-X-Received: by 2002:a05:600c:4999:: with SMTP id h25mr6246328wmp.140.1634816716515;
-        Thu, 21 Oct 2021 04:45:16 -0700 (PDT)
-Received: from google.com ([95.148.6.207])
-        by smtp.gmail.com with ESMTPSA id r5sm7453016wmh.28.2021.10.21.04.45.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 04:45:16 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 12:45:14 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] mfd: qcom-spmi-pmic: Document ten more PMICs in
- the binding
-Message-ID: <YXFSypuLcHTJZoPp@google.com>
-References: <20211017161218.2378176-1-bjorn.andersson@linaro.org>
- <20211017161218.2378176-3-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WOkBwlSoZofkybAk4F+yxr1MJ3MNGeAkoQp5SMBScKI=;
+        b=jApDGWs4+ogOQmWiQzxukuBKmOj5pYEKysRGTKDa5Th3dBwCHEEabdvi/5xyeSydGC
+         RbIogZJx7MeBBm3/SCLWijkJ1U7WAQv4d52sMst0o8aGj/qD4RNQoqYQgJfW5+hfwVfE
+         BeegbJNZ0u54XMXKObYJLf8/tWVVmTkG2uDr0Km1Fwjfd4S0tFAWEMANm2uijYZwAefw
+         hB1q7Bgsx0ANJK5twW858LX6g4SiQbCYVyY2h+wJF6JKqiHq5E/wLrUfCjPjnjYn6cKq
+         oL/CaObDJU1FygZdKHABPskQnr/H0N+yrhpoxb95a09iXYj2FGMBEwAEyqocifSFkzds
+         Kz4w==
+X-Gm-Message-State: AOAM533qwfHFhYKgL+PAB5HxuWL7X2VfwLdxnc1ckb2UUU4rC0EIxj68
+        ea4frdlzpj0T5mgcMkEsKfER33mcsi3BOUNre2Y=
+X-Google-Smtp-Source: ABdhPJxxuBQAfkMeaF90FZTJmaSeTos98bFunKxz22ZrFszUOg9x/rgoAANU+p34amMBcnoous/70+nWhD6V4bvA4OA=
+X-Received: by 2002:a4a:e9f0:: with SMTP id w16mr4041723ooc.3.1634816736053;
+ Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211017161218.2378176-3-bjorn.andersson@linaro.org>
+References: <cover.1634200323.git.siyanteng@loongson.cn>
+In-Reply-To: <cover.1634200323.git.siyanteng@loongson.cn>
+From:   yanteng si <siyanteng01@gmail.com>
+Date:   Thu, 21 Oct 2021 19:45:24 +0800
+Message-ID: <CAEensMxkPb9KexjJpy4j5x1Bf7npdknH44KfzSEx4JHm9DK7oA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] drm/msm: fix build error
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Yanteng Si <siyanteng@loongson.cn>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 17 Oct 2021, Bjorn Andersson wrote:
+Yanteng Si <siyanteng01@gmail.com> =E4=BA=8E2021=E5=B9=B410=E6=9C=8814=E6=
+=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=884:51=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Include linux/vmalloc.h to fix below errors:
+>
+> error: implicit declaration of function 'vmap';
+> error: implicit declaration of function 'register_vmap_purge_notifier'
+> error: implicit declaration of function 'unregister_vmap_purge_notifier'
+>
+> Yanteng Si (2):
+>   drm/msm: Fix missing include files in msm_gem.c
+>   drm/msm: Fix missing include files in msm_gem_shrinker.c
+ping?
 
-> Update the binding with eight more SPMI PMIC compatibles found in the
-> PMIC info list in the Qualcomm socinfo driver and add the two PM660
-> related PMICs supported by the SPMI PMIC driver but are missing from the
-> document.
-> 
-> Then remove the duplicate entry for pma8084.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - Rebased on top of sorting of entries
-> - Added the two PM660 related PMICs from the binding
-> - Dropped he duplicate pma8084 that showed up in the sort
-> 
->  .../devicetree/bindings/mfd/qcom,spmi-pmic.txt        | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+Thanks,
 
-Applied, thanks.
-
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+Yanteng
