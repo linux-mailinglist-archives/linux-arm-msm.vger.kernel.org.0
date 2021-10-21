@@ -2,91 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D17304362F4
+	by mail.lfdr.de (Postfix) with ESMTP id 182F14362F1
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 15:30:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231130AbhJUNc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 09:32:28 -0400
-Received: from mail-oi1-f182.google.com ([209.85.167.182]:40694 "EHLO
-        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbhJUNcX (ORCPT
+        id S230444AbhJUNc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 09:32:27 -0400
+Received: from mail-oi1-f179.google.com ([209.85.167.179]:44859 "EHLO
+        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230349AbhJUNc0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 09:32:23 -0400
-Received: by mail-oi1-f182.google.com with SMTP id n63so852673oif.7;
-        Thu, 21 Oct 2021 06:30:07 -0700 (PDT)
+        Thu, 21 Oct 2021 09:32:26 -0400
+Received: by mail-oi1-f179.google.com with SMTP id y207so823471oia.11;
+        Thu, 21 Oct 2021 06:30:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=V5N+7zO5qSAX0L4/A84OsXTp0ekly+BVlSHh5ax6RkA=;
-        b=kpaPyr29eBdZo09OjqgpqJd6tfqpGAT4xfbRltAhVb4Sxku1vy/4FC4nTqUZVBEf5E
-         mQThlWtywXlJtWpmEV8beKUbjqJd6aRa0arQO+vhFr/+k5hP1asNm54Ovf/aaYlePmAE
-         oohS2+qBzLOogL9ZvZ0HvBkydPOGMuNPiHapU2+akoPvRkEbqhbZjGUij1UlbqMiuxCL
-         oxr9JcS7ytxm04/ZrXtGwmsoIjQRUFk/WvwgP8HbUnnaBbzHCLoNasLrAJUpa54HnrDZ
-         nsZ/b2Uaxub2t5KD92xOehhBCuN2OD7d3u7jJmTIoQZzghePg5i1fzW5BX/JyTSWyQuf
-         eUTw==
-X-Gm-Message-State: AOAM530ieOPCjRiqEt230ZvU4gN3Y4+QLy7C3VEwMGXzP/duXOQPhI0D
-        XmBM+vCNKANIn3VseujvVQ==
-X-Google-Smtp-Source: ABdhPJxbuh6jA4gLSE0j+Dt9lkKZIvpY3rCZOZ3TrDSn8R8XfMbnISH64PC+pQyPK0CUUwig7P7CFg==
-X-Received: by 2002:a05:6808:13d2:: with SMTP id d18mr4837768oiw.73.1634823006689;
-        Thu, 21 Oct 2021 06:30:06 -0700 (PDT)
+        bh=9tYUSXrv+aJRgRoUi4LsxnIyvrDFQxilKTvm9UGMfQw=;
+        b=XUgWrudnuO9IVhZnpMs1r9qQDLpZdxjf6BfyyXPiPJdHunrckVb8o3N+mz42vQQ1h8
+         5I/tBeFTstW8ASuXoGXI73E8rlVJojVBW0Yuo1ceuXgWGkRanMPM64VgdlfUyuXB5PNI
+         gpZVMDCdhXqnXevJA0DMnzvXhmXl24JPGnMrn5zuT5+BeGtD166F87J8pP4V2zQN18JV
+         4yWrf4MsicBMPlJ8IIKSc1v9SgEVcXX+i6d2r1h9ROVMfCe156TFdX7jNnOFpByuCkLM
+         CCKTrkh+fwUS3MGrAcAM9/uYJ6wI7KXrn/YFsR1zo1Vr9U81RKlvvTgTWvIK96xUzRtH
+         1Dzw==
+X-Gm-Message-State: AOAM530+5ljUxzu66/24MIYvBesixdJF6w6OzkZpHyUw7jMe1FuCK21e
+        ijtqkbI/rm8vK4vjmOm0Gw==
+X-Google-Smtp-Source: ABdhPJzwATZTOqJPdVrIby7aiYWs8CklYXzzyozkscDmUEsTPHn+sO4ma6HMFkCRHgfWTxZeyhXT1w==
+X-Received: by 2002:a05:6808:bcc:: with SMTP id o12mr4569690oik.151.1634823009913;
+        Thu, 21 Oct 2021 06:30:09 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id x8sm1033148ota.75.2021.10.21.06.30.05
+        by smtp.gmail.com with ESMTPSA id c17sm1136592ots.35.2021.10.21.06.30.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 06:30:06 -0700 (PDT)
-Received: (nullmailer pid 353164 invoked by uid 1000);
+        Thu, 21 Oct 2021 06:30:09 -0700 (PDT)
+Received: (nullmailer pid 353172 invoked by uid 1000);
         Thu, 21 Oct 2021 13:30:05 -0000
 From:   Rob Herring <robh@kernel.org>
 To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        Jakub Kicinski <kuba@kernel.org>,
-        Alex Elder <elder@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20211020225435.274628-2-david@ixit.cz>
-References: <20211020225435.274628-1-david@ixit.cz> <20211020225435.274628-2-david@ixit.cz>
-Subject: Re: [PATCH 2/2] dt-bindings: net: qcom,ipa: IPA does support up to two iommus
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org,
+        ~okias/devicetree@lists.sr.ht, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Satya Priya <skakit@codeaurora.org>
+In-Reply-To: <20211020231646.278706-1-david@ixit.cz>
+References: <20211020231646.278706-1-david@ixit.cz>
+Subject: Re: [PATCH] dt-bindings: mfd: qcom: pm8xxx: add pm8018 compatible
 Date:   Thu, 21 Oct 2021 08:30:05 -0500
-Message-Id: <1634823005.083640.353162.nullmailer@robh.at.kernel.org>
+Message-Id: <1634823005.115639.353170.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Oct 2021 00:54:35 +0200, David Heidelberg wrote:
-> Fix warnings as:
-> arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml: ipa@1e40000: iommus: [[21, 1504, 0], [21, 1506, 0]] is too long
-> 	From schema: Documentation/devicetree/bindings/net/qcom,ipa.yaml
+On Thu, 21 Oct 2021 01:16:45 +0200, David Heidelberg wrote:
+> Add missing compatible for the PM8018 model.
 > 
 > Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
->  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: ipa@1e40000: iommus: [[4294967295, 1824, 3]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+Full log is available here: https://patchwork.ozlabs.org/patch/1544064
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1544063
+pmic@0: compatible: Additional items are not allowed ('qcom,pm8921' was unexpected)
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+pmic@0: 'gpio@150', 'keypad@148', 'led@131', 'led@132', 'led@133', 'led@48', 'mpps@50', 'pwrkey@1c', 'vibrator@4a', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
 
-pip3 install dtschema --upgrade
+pmic@0: 'gpio@150', 'keypad@148', 'mpps@50', 'pwrkey@1c', 'vibrator@4a', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
 
-Please check and re-submit.
+pmic@0: 'gpio@150', 'mpp@50', 'pwrkey@1c' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@0: 'gpio@150', 'mpps@50', 'pwrkey@1c', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+
+pmic@0: 'keypad@148', 'pwrkey@1c' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-msm8960-cdp.dt.yaml
+
+pmic@0: rtc@11d:compatible: Additional items are not allowed ('qcom,pm8921-rtc' was unexpected)
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
 
