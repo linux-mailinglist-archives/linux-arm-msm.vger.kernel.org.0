@@ -2,79 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4949C4360A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 13:45:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCF0B4360AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 13:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhJULr6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 07:47:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
+        id S231489AbhJULsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 07:48:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231129AbhJULrw (ORCPT
+        with ESMTP id S231334AbhJULrx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 07:47:52 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91FEC061753
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id j11-20020a4a92cb000000b002902ae8cb10so44834ooh.7
+        Thu, 21 Oct 2021 07:47:53 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D0BC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:37 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 193-20020a1c01ca000000b00327775075f7so1039927wmb.5
         for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WOkBwlSoZofkybAk4F+yxr1MJ3MNGeAkoQp5SMBScKI=;
-        b=lrkoDgGU3oxSva13UKIskhuNcjuvSuSsT7JEAyq2Cha7HhbJk2jnVLmW1GUm+w9btL
-         WG/bzZVmeUr/9uk99LTnK1FHpQvaPbiPtSGCebfJV0A3jEYSzlYVQSeWrSOMFMUXQlgn
-         ldViDb7zAj/ZHUA3JcLWdMOYAta84p2vC9i2+yokMESA2mMCpspkDn8ZwTwUwpP7vG+0
-         J1w7E4AMgc8zwWFT4NlPhJ+lAUC58gmZ9W1z/lgNfDapR+qkLElTk1BOpakG0pjgYb8u
-         a1mgXlPXLDL/550UXd2DPfNGPEZSgbiY+la8zb2ppsBcNuP15cVD6dxShA96O0Z4XkfF
-         86mw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=F+qAS+mhY6yRfCRNETby0UpQHRseEdMMofPhAfH7ev8=;
+        b=Pwk6viT49X+syXYKYWNK1KKREh4DtPRMQG9EV30yd3vyA1O15WFi1wpeTMAgll/opz
+         RksxPNrDeGpjN+Z8omHmyNG4ZJ/4x8Pf/ivMm0XE79c4wx5mrUx/eVnF6oy0qEnZlJ25
+         cracL6jn0GfyUSc+FuNl0eS10ghCBuT6SYGJOUT+htgcVoe3lxDnDP2d/Zt9lwuyUaW2
+         SyqzDus3GPjQqyBcuhXWPeTo/S27vmJ96BmDLj24OM0DEdYJX5tLR9OPDmDxgyxq7NPf
+         jhr/Nd6kA18TacC6uQ4iatMS6OmFX81aOxCB9yaRes+aqic1o3AXv8fPBk+Hqiz2qc4K
+         RAaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WOkBwlSoZofkybAk4F+yxr1MJ3MNGeAkoQp5SMBScKI=;
-        b=jApDGWs4+ogOQmWiQzxukuBKmOj5pYEKysRGTKDa5Th3dBwCHEEabdvi/5xyeSydGC
-         RbIogZJx7MeBBm3/SCLWijkJ1U7WAQv4d52sMst0o8aGj/qD4RNQoqYQgJfW5+hfwVfE
-         BeegbJNZ0u54XMXKObYJLf8/tWVVmTkG2uDr0Km1Fwjfd4S0tFAWEMANm2uijYZwAefw
-         hB1q7Bgsx0ANJK5twW858LX6g4SiQbCYVyY2h+wJF6JKqiHq5E/wLrUfCjPjnjYn6cKq
-         oL/CaObDJU1FygZdKHABPskQnr/H0N+yrhpoxb95a09iXYj2FGMBEwAEyqocifSFkzds
-         Kz4w==
-X-Gm-Message-State: AOAM533qwfHFhYKgL+PAB5HxuWL7X2VfwLdxnc1ckb2UUU4rC0EIxj68
-        ea4frdlzpj0T5mgcMkEsKfER33mcsi3BOUNre2Y=
-X-Google-Smtp-Source: ABdhPJxxuBQAfkMeaF90FZTJmaSeTos98bFunKxz22ZrFszUOg9x/rgoAANU+p34amMBcnoous/70+nWhD6V4bvA4OA=
-X-Received: by 2002:a4a:e9f0:: with SMTP id w16mr4041723ooc.3.1634816736053;
- Thu, 21 Oct 2021 04:45:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=F+qAS+mhY6yRfCRNETby0UpQHRseEdMMofPhAfH7ev8=;
+        b=GL31aJT9suZhFBoJQ+8bLr4BfHnparEkDgj52v8CtY1vWNIqMB91PVyDbka2s4viBh
+         cq9FMPlxnFEgHI0Hgql9o8tCS1QEsAm03VvvagvYgO64CxLj8AMRfgA51YG+CA6oHq9k
+         ZxuHMqMg58prT0psepveXllxszohiEybXypehiJxAbjUL3UjPZKjlNl8VWreEOJkkwul
+         dCU9L9BGiXoDYYfeYCYf00jRC5eVn1T5iHn9Vkda+TgHYuGOWnUnxa5HdbxBAXyORvko
+         1EML87DW8e9rgWxUI0psNCTD4ut7xn0tPJ6uDLNtTgXq4aDPZjqI6MQV18Svi1+SzZCw
+         DY/g==
+X-Gm-Message-State: AOAM531BBGR6FBPwDZpdGDRMnJ0VWY08TZgPM+w4RLSEMoAH4OlvgKqO
+        9PZO9XsMz5WxlIRAMhmflBP1iv4LdxU01A==
+X-Google-Smtp-Source: ABdhPJz7QOQP57aRGeoLHQetlmKk3gOhEUiZirCaK9m0eg6DgYnQhpdyWktuOyZPjcs78zytWDh0Cg==
+X-Received: by 2002:a05:600c:4f8b:: with SMTP id n11mr5889196wmq.54.1634816735665;
+        Thu, 21 Oct 2021 04:45:35 -0700 (PDT)
+Received: from google.com ([95.148.6.207])
+        by smtp.gmail.com with ESMTPSA id o6sm6735697wri.49.2021.10.21.04.45.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 04:45:35 -0700 (PDT)
+Date:   Thu, 21 Oct 2021 12:45:33 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] mfd: qcom-spmi-pmic: Add missing PMICs supported
+ by socinfo
+Message-ID: <YXFS3Y1Q0QtqR93b@google.com>
+References: <20211017161218.2378176-1-bjorn.andersson@linaro.org>
+ <20211017161218.2378176-4-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-References: <cover.1634200323.git.siyanteng@loongson.cn>
-In-Reply-To: <cover.1634200323.git.siyanteng@loongson.cn>
-From:   yanteng si <siyanteng01@gmail.com>
-Date:   Thu, 21 Oct 2021 19:45:24 +0800
-Message-ID: <CAEensMxkPb9KexjJpy4j5x1Bf7npdknH44KfzSEx4JHm9DK7oA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] drm/msm: fix build error
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Yanteng Si <siyanteng@loongson.cn>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211017161218.2378176-4-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Yanteng Si <siyanteng01@gmail.com> =E4=BA=8E2021=E5=B9=B410=E6=9C=8814=E6=
-=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=884:51=E5=86=99=E9=81=93=EF=BC=9A
->
-> Include linux/vmalloc.h to fix below errors:
->
-> error: implicit declaration of function 'vmap';
-> error: implicit declaration of function 'register_vmap_purge_notifier'
-> error: implicit declaration of function 'unregister_vmap_purge_notifier'
->
-> Yanteng Si (2):
->   drm/msm: Fix missing include files in msm_gem.c
->   drm/msm: Fix missing include files in msm_gem_shrinker.c
-ping?
+On Sun, 17 Oct 2021, Bjorn Andersson wrote:
 
-Thanks,
+> The Qualcomm socinfo driver has eight more PMICs described, add these to
+> the SPMI PMIC driver as well.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Rebased on top of sorting of entries
+> 
+>  drivers/mfd/qcom-spmi-pmic.c | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 
-Yanteng
+Applied, thanks.
+
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
