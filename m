@@ -2,109 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 182F14362F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 15:30:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7153E43635F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 15:50:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbhJUNc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 09:32:27 -0400
-Received: from mail-oi1-f179.google.com ([209.85.167.179]:44859 "EHLO
-        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230349AbhJUNc0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 09:32:26 -0400
-Received: by mail-oi1-f179.google.com with SMTP id y207so823471oia.11;
-        Thu, 21 Oct 2021 06:30:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=9tYUSXrv+aJRgRoUi4LsxnIyvrDFQxilKTvm9UGMfQw=;
-        b=XUgWrudnuO9IVhZnpMs1r9qQDLpZdxjf6BfyyXPiPJdHunrckVb8o3N+mz42vQQ1h8
-         5I/tBeFTstW8ASuXoGXI73E8rlVJojVBW0Yuo1ceuXgWGkRanMPM64VgdlfUyuXB5PNI
-         gpZVMDCdhXqnXevJA0DMnzvXhmXl24JPGnMrn5zuT5+BeGtD166F87J8pP4V2zQN18JV
-         4yWrf4MsicBMPlJ8IIKSc1v9SgEVcXX+i6d2r1h9ROVMfCe156TFdX7jNnOFpByuCkLM
-         CCKTrkh+fwUS3MGrAcAM9/uYJ6wI7KXrn/YFsR1zo1Vr9U81RKlvvTgTWvIK96xUzRtH
-         1Dzw==
-X-Gm-Message-State: AOAM530+5ljUxzu66/24MIYvBesixdJF6w6OzkZpHyUw7jMe1FuCK21e
-        ijtqkbI/rm8vK4vjmOm0Gw==
-X-Google-Smtp-Source: ABdhPJzwATZTOqJPdVrIby7aiYWs8CklYXzzyozkscDmUEsTPHn+sO4ma6HMFkCRHgfWTxZeyhXT1w==
-X-Received: by 2002:a05:6808:bcc:: with SMTP id o12mr4569690oik.151.1634823009913;
-        Thu, 21 Oct 2021 06:30:09 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id c17sm1136592ots.35.2021.10.21.06.30.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Oct 2021 06:30:09 -0700 (PDT)
-Received: (nullmailer pid 353172 invoked by uid 1000);
-        Thu, 21 Oct 2021 13:30:05 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org,
-        ~okias/devicetree@lists.sr.ht, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Satya Priya <skakit@codeaurora.org>
-In-Reply-To: <20211020231646.278706-1-david@ixit.cz>
-References: <20211020231646.278706-1-david@ixit.cz>
-Subject: Re: [PATCH] dt-bindings: mfd: qcom: pm8xxx: add pm8018 compatible
-Date:   Thu, 21 Oct 2021 08:30:05 -0500
-Message-Id: <1634823005.115639.353170.nullmailer@robh.at.kernel.org>
+        id S230361AbhJUNwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 09:52:25 -0400
+Received: from mga09.intel.com ([134.134.136.24]:31697 "EHLO mga09.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230072AbhJUNwY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 09:52:24 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10143"; a="228907432"
+X-IronPort-AV: E=Sophos;i="5.87,169,1631602800"; 
+   d="scan'208";a="228907432"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2021 06:50:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,169,1631602800"; 
+   d="scan'208";a="444808596"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.171])
+  by orsmga006.jf.intel.com with SMTP; 21 Oct 2021 06:50:00 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Thu, 21 Oct 2021 16:49:59 +0300
+Date:   Thu, 21 Oct 2021 16:49:59 +0300
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     Claudio Suarez <cssk@net-c.es>
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
+        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
+Subject: Re: [PATCH v3 13/13] drm/i915: replace drm_detect_hdmi_monitor()
+ with drm_display_info.is_hdmi
+Message-ID: <YXFwB7rN4bvR0Z+m@intel.com>
+References: <20211016184226.3862-1-cssk@net-c.es>
+ <20211016184226.3862-14-cssk@net-c.es>
+ <YW8QYsmkm3ZrBAx3@intel.com>
+ <YW9L6d7e+RO29VJu@gineta.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YW9L6d7e+RO29VJu@gineta.localdomain>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 21 Oct 2021 01:16:45 +0200, David Heidelberg wrote:
-> Add missing compatible for the PM8018 model.
+On Wed, Oct 20, 2021 at 12:51:21AM +0200, Claudio Suarez wrote:
+> drm_get_edid() internally calls to drm_connector_update_edid_property()
+> and then drm_add_display_info(), which parses the EDID.
+> This happens in the function intel_hdmi_set_edid() and
+> intel_sdvo_tmds_sink_detect() (via intel_sdvo_get_edid()).
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Once EDID is parsed, the monitor HDMI support information is available
+> through drm_display_info.is_hdmi. Retriving the same information with
+> drm_detect_hdmi_monitor() is less efficient. Change to
+> drm_display_info.is_hdmi
+
+I meant we need to examine all call chains that can lead to
+.detect() to make sure all of them do in fact update the
+display_info beforehand.
+
+> 
+> This is a TODO task in Documentation/gpu/todo.rst
+> 
+> Signed-off-by: Claudio Suarez <cssk@net-c.es>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom-pm8xxx.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/gpu/drm/i915/display/intel_hdmi.c | 2 +-
+>  drivers/gpu/drm/i915/display/intel_sdvo.c | 3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/i915/display/intel_hdmi.c b/drivers/gpu/drm/i915/display/intel_hdmi.c
+> index b04685bb6439..008e5b0ba408 100644
+> --- a/drivers/gpu/drm/i915/display/intel_hdmi.c
+> +++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
+> @@ -2355,7 +2355,7 @@ intel_hdmi_set_edid(struct drm_connector *connector)
+>  	to_intel_connector(connector)->detect_edid = edid;
+>  	if (edid && edid->input & DRM_EDID_INPUT_DIGITAL) {
+>  		intel_hdmi->has_audio = drm_detect_monitor_audio(edid);
+> -		intel_hdmi->has_hdmi_sink = drm_detect_hdmi_monitor(edid);
+> +		intel_hdmi->has_hdmi_sink = connector->display_info.is_hdmi;
+>  
+>  		connected = true;
+>  	}
+> diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+> index 6cb27599ea03..b4065e4df644 100644
+> --- a/drivers/gpu/drm/i915/display/intel_sdvo.c
+> +++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+> @@ -2060,8 +2060,9 @@ intel_sdvo_tmds_sink_detect(struct drm_connector *connector)
+>  		if (edid->input & DRM_EDID_INPUT_DIGITAL) {
+>  			status = connector_status_connected;
+>  			if (intel_sdvo_connector->is_hdmi) {
+> -				intel_sdvo->has_hdmi_monitor = drm_detect_hdmi_monitor(edid);
+>  				intel_sdvo->has_hdmi_audio = drm_detect_monitor_audio(edid);
+> +				intel_sdvo->has_hdmi_monitor =
+> +							    connector->display_info.is_hdmi;
+>  			}
+>  		} else
+>  			status = connector_status_disconnected;
+> -- 
+> 2.33.0
+> 
 > 
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
-
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/1544064
-
-
-pmic@0: compatible: Additional items are not allowed ('qcom,pm8921' was unexpected)
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-pmic@0: 'gpio@150', 'keypad@148', 'led@131', 'led@132', 'led@133', 'led@48', 'mpps@50', 'pwrkey@1c', 'vibrator@4a', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
-
-pmic@0: 'gpio@150', 'keypad@148', 'mpps@50', 'pwrkey@1c', 'vibrator@4a', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
-
-pmic@0: 'gpio@150', 'mpp@50', 'pwrkey@1c' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-pmic@0: 'gpio@150', 'mpps@50', 'pwrkey@1c', 'xoadc@197' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
-
-pmic@0: 'keypad@148', 'pwrkey@1c' do not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-msm8960-cdp.dt.yaml
-
-pmic@0: rtc@11d:compatible: Additional items are not allowed ('qcom,pm8921-rtc' was unexpected)
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-pmic@1: 'mpps@50' does not match any of the regexes: 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$'
-	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
-	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
-
+-- 
+Ville Syrjälä
+Intel
