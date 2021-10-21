@@ -2,33 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 343B0436D68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:24:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 312E3436D6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:25:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231515AbhJUW0k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 18:26:40 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13149 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229935AbhJUW0j (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 18:26:39 -0400
+        id S229935AbhJUW14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 18:27:56 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:46409 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231750AbhJUW14 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 18:27:56 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634855063; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1634855140; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Nz3m5FXwi9y6Y4F2zLFGhez/TDMz+KApwbGiRVj60G0=;
- b=un5WUhW72rg74NN+mQNFCdqPze+1GpLO3kvHTw1Lk6a8/7N+dSNOyQU20iXJ+TfqXO+egXzg
- AJPs/0qxLBPbE0bxNF0lytUdyLdDw1qmqgBy5cHg4w4UD9/klB4JRNIiXYGFLYH08GLrPLIE
- aS+M3Vg8AKbIGYxF+KT5Z0opP44=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ MIME-Version: Sender; bh=oy4Ke29RPvTBtTqqlrgVweNHxSdPx8fieD6oBcjg70c=;
+ b=oWrpOHg4L9QSK1EF7VmnPDSVHF8br3xulGpRwVIRz5NrWpKamax/5hz7oXdM8/ILDWlXChmC
+ /pSHqZ1nFunO0ai+acTUcPB1SAu60W8fTPv+PN2M/Px4/Zh6QX8pfhMMkLTKfrL6C9PZ2eyj
+ oUoclO1GNnbR6EtkagPRtHofO7o=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6171e892321f2400515f4e54 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:24:18
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6171e8ce5ca800b6c1767fe6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:25:18
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 83E72C4360D; Thu, 21 Oct 2021 22:24:18 +0000 (UTC)
+        id 6F07AC43619; Thu, 21 Oct 2021 22:25:18 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,13 +39,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 95044C4338F;
-        Thu, 21 Oct 2021 22:24:17 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98420C4338F;
+        Thu, 21 Oct 2021 22:25:17 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 Oct 2021 15:24:17 -0700
+Date:   Thu, 21 Oct 2021 15:25:17 -0700
 From:   abhinavk@codeaurora.org
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -54,12 +55,12 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 02/11] drm/msm/dpu: remove pipe_qos_cfg from
- struct dpu_plane
-In-Reply-To: <20210930140002.308628-3-dmitry.baryshkov@linaro.org>
+Subject: Re: [Freedreno] [PATCH 03/11] drm/msm/dpu: drop pipe_name from struct
+ dpu_plane
+In-Reply-To: <20210930140002.308628-4-dmitry.baryshkov@linaro.org>
 References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
- <20210930140002.308628-3-dmitry.baryshkov@linaro.org>
-Message-ID: <f2625a3f82f535fd544f72c53a0033ff@codeaurora.org>
+ <20210930140002.308628-4-dmitry.baryshkov@linaro.org>
+Message-ID: <fed157cc7d06e79a7b96c493b89bc0e2@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -67,83 +68,49 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2021-09-30 06:59, Dmitry Baryshkov wrote:
-> The pipe_qos_cfg is used only in _dpu_plane_set_qos_ctrl(), so remove 
-> it
-> from the dpu_plane struct and allocate it on stack when necessary.
+> Use plane->name instead of artificial pipe_name.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 30 ++++++++++++-----------
->  1 file changed, 16 insertions(+), 14 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 8 ++------
+>  1 file changed, 2 insertions(+), 6 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 5e0d06f26e53..88d726133b8b 100644
+> index 88d726133b8b..ef3737642b0c 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -105,7 +105,6 @@ struct dpu_plane {
+> @@ -115,7 +115,6 @@ struct dpu_plane {
+>  	struct dpu_csc_cfg *csc_ptr;
 > 
->  	struct dpu_hw_pipe *pipe_hw;
->  	struct dpu_hw_pipe_cfg pipe_cfg;
-> -	struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
->  	uint32_t color_fill;
->  	bool is_error;
->  	bool is_rt_pipe;
-> @@ -422,38 +421,41 @@ static void _dpu_plane_set_qos_ctrl(struct
-> drm_plane *plane,
->  	bool enable, u32 flags)
->  {
->  	struct dpu_plane *pdpu = to_dpu_plane(plane);
-> +	struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
-> +
-> +	memset(&pipe_qos_cfg, 0, sizeof(pipe_qos_cfg));
+>  	const struct dpu_sspp_sub_blks *pipe_sblk;
+> -	char pipe_name[DPU_NAME_SIZE];
 > 
->  	if (flags & DPU_PLANE_QOS_VBLANK_CTRL) {
-> -		pdpu->pipe_qos_cfg.creq_vblank = pdpu->pipe_sblk->creq_vblank;
-> -		pdpu->pipe_qos_cfg.danger_vblank =
-> +		pipe_qos_cfg.creq_vblank = pdpu->pipe_sblk->creq_vblank;
-> +		pipe_qos_cfg.danger_vblank =
->  				pdpu->pipe_sblk->danger_vblank;
-> -		pdpu->pipe_qos_cfg.vblank_en = enable;
-> +		pipe_qos_cfg.vblank_en = enable;
->  	}
+>  	/* debugfs related stuff */
+>  	struct dentry *debugfs_root;
+> @@ -1429,7 +1428,7 @@ static int _dpu_plane_init_debugfs(struct
+> drm_plane *plane)
 > 
->  	if (flags & DPU_PLANE_QOS_VBLANK_AMORTIZE) {
->  		/* this feature overrules previous VBLANK_CTRL */
-> -		pdpu->pipe_qos_cfg.vblank_en = false;
-> -		pdpu->pipe_qos_cfg.creq_vblank = 0; /* clear vblank bits */
-> +		pipe_qos_cfg.vblank_en = false;
-> +		pipe_qos_cfg.creq_vblank = 0; /* clear vblank bits */
->  	}
+>  	/* create overall sub-directory for the pipe */
+>  	pdpu->debugfs_root =
+> -		debugfs_create_dir(pdpu->pipe_name,
+> +		debugfs_create_dir(plane->name,
+>  				plane->dev->primary->debugfs_root);
 > 
->  	if (flags & DPU_PLANE_QOS_PANIC_CTRL)
-> -		pdpu->pipe_qos_cfg.danger_safe_en = enable;
-> +		pipe_qos_cfg.danger_safe_en = enable;
+>  	/* don't error check these */
+> @@ -1660,12 +1659,9 @@ struct drm_plane *dpu_plane_init(struct 
+> drm_device *dev,
+>  	/* success! finalize initialization */
+>  	drm_plane_helper_add(plane, &dpu_plane_helper_funcs);
 > 
->  	if (!pdpu->is_rt_pipe) {
-> -		pdpu->pipe_qos_cfg.vblank_en = false;
-> -		pdpu->pipe_qos_cfg.danger_safe_en = false;
-> +		pipe_qos_cfg.vblank_en = false;
-> +		pipe_qos_cfg.danger_safe_en = false;
->  	}
+> -	/* save user friendly pipe name for later */
+> -	snprintf(pdpu->pipe_name, DPU_NAME_SIZE, "plane%u", plane->base.id);
+> -
+>  	mutex_init(&pdpu->lock);
 > 
->  	DPU_DEBUG_PLANE(pdpu, "pnum:%d ds:%d vb:%d pri[0x%x, 0x%x] 
-> is_rt:%d\n",
->  		pdpu->pipe - SSPP_VIG0,
-> -		pdpu->pipe_qos_cfg.danger_safe_en,
-> -		pdpu->pipe_qos_cfg.vblank_en,
-> -		pdpu->pipe_qos_cfg.creq_vblank,
-> -		pdpu->pipe_qos_cfg.danger_vblank,
-> +		pipe_qos_cfg.danger_safe_en,
-> +		pipe_qos_cfg.vblank_en,
-> +		pipe_qos_cfg.creq_vblank,
-> +		pipe_qos_cfg.danger_vblank,
->  		pdpu->is_rt_pipe);
-> 
->  	pdpu->pipe_hw->ops.setup_qos_ctrl(pdpu->pipe_hw,
-> -			&pdpu->pipe_qos_cfg);
-> +			&pipe_qos_cfg);
->  }
-> 
->  /**
+> -	DPU_DEBUG("%s created for pipe:%u id:%u virtual:%u\n", 
+> pdpu->pipe_name,
+> +	DPU_DEBUG("%s created for pipe:%u id:%u virtual:%u\n", plane->name,
+>  					pipe, plane->base.id, master_plane_id);
+>  	return plane;
