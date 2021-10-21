@@ -2,120 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 736FC436C42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 22:35:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97E02436C7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 23:12:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbhJUUhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 16:37:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbhJUUhc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 16:37:32 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496BFC061764
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:35:16 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id b188so2592900iof.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Wg0Jus9TL4rCInXKPmpU7yOccL+OmPZ9RnN1FPY/86c=;
-        b=akrkvWstL+3WOecYTO0PLNiiDc0WcMR8iMjDJN29uVq6E7oe5C07mh6zjJq8DsaaUh
-         7ysysm8AJ978/Upa9Ap1QP7OMZECXUUuffq4VEXB8nEOHpVx4cIOialsQo4mAiikBXyc
-         HpqxRb9EMBOT+q2fVDVEHkLwDk0qrrGI324DY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Wg0Jus9TL4rCInXKPmpU7yOccL+OmPZ9RnN1FPY/86c=;
-        b=dhunFVCPQkEU+VCtKoIWDtXne8A9a0djN6Y+7KZuIZsnHJIVTpN8mnJ7RWSuVuGDrA
-         9cLQvy2uGI5yJL/wFFxQb78g1ySOQ11U1SXUYbflhtxzCpFgg/5h7SHNT40BScuA/xUd
-         /psEKFatiEud/ZQr6t2Q9r+vFM/ZO+R8w704NEIexC8neQfBVvQI5ZiyIo/loA+PeJ8M
-         ptJWOlUqMhxUzpXnP/M+yfSZ2wIudPxZ8lF+dVnyyfsECqDJ7xGr+ow940XCgbq5iGda
-         eTStMrC/m3EJDGOqeOTVQry5EFOLxsL5G8QR+gIM6w0s3adF6VR30SAEH7HVfkSjWrSk
-         388Q==
-X-Gm-Message-State: AOAM533z3N1FDbGZZSmmQ+d03UWmFguW0ZPW09F+8m9nAntndDOycDxC
-        EDKlwUH2RICW1bumw0cX3NQu3W2knaOlEA==
-X-Google-Smtp-Source: ABdhPJxUpkvVKJYdnJ8nWqoBfp2mW3VqpjVlNca8iPS3DV7G82q7NyyNf02/PAqc1mnDNnnBbp4A5Q==
-X-Received: by 2002:a5d:9d82:: with SMTP id ay2mr5527961iob.128.1634848515695;
-        Thu, 21 Oct 2021 13:35:15 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id e11sm829754ils.34.2021.10.21.13.35.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Oct 2021 13:35:15 -0700 (PDT)
-Subject: Re: [PATCH 1/2] dt-bindings: net: qcom,ipa: describe IPA v4.5
- interconnects
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211020225435.274628-1-david@ixit.cz>
-From:   Alex Elder <elder@ieee.org>
-Message-ID: <05b2cc69-d8a4-750d-d98d-db8580546a15@ieee.org>
-Date:   Thu, 21 Oct 2021 15:35:14 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232070AbhJUVOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 17:14:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52210 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230272AbhJUVOW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 17:14:22 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 30603608FE;
+        Thu, 21 Oct 2021 21:12:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634850726;
+        bh=ZP9iEXx5WLvma9hJFwVIZE4q2XCeEw2KAGb/t5rrBJg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=DymmzPBtlZV5i4kQ/ZQgU9tgwsEGlxZnC5zCox8SmmOs+72abZo11DfueJJmN/PoG
+         HzLG2H4glyZpY/F0mIZNhAs716hCkhiH+2Ho/L4lioVcEkI6QyItN07uuDSDy+EsMB
+         xqRVJDds1KCiUHRpEyX5MWNwZKcZp9IuWEGu6uEPS1wukIdKJArFknJJaB/k7YsTXw
+         Z3WnwygdeO7oen1iqgAFK56qTQAyBeaok8Ns8PTQvmgf/mABuc7FIxY5ag8Pl4HOo4
+         tVM8AvL7vk5pTatgnDrIFrZy1edcByOT2lRUqSNay09eybcM+VETrStK2JSvcDzFbk
+         5diCgfavXTYTg==
+Received: by mail-ed1-f54.google.com with SMTP id w14so6105718edv.11;
+        Thu, 21 Oct 2021 14:12:06 -0700 (PDT)
+X-Gm-Message-State: AOAM532QwtnHWdHseXiwU8P6WRbfqEpTgQnQABabzbsBQlX/oywyfrhb
+        2ZmZDdWzn0IoPRW1jeSyaZj7DX+ipupcZvU/nA==
+X-Google-Smtp-Source: ABdhPJyd9DgKuGaJtccu3R8WDxdvJU1K8eSz9ykib/Dr6Ub5jXdLb2A7Fts8YIXsAHNe09YrRnHLESpYagsdxpX17fk=
+X-Received: by 2002:a17:906:5a47:: with SMTP id my7mr9784145ejc.128.1634850724700;
+ Thu, 21 Oct 2021 14:12:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20211020225435.274628-1-david@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210928192210.1842377-1-robh@kernel.org>
+In-Reply-To: <20210928192210.1842377-1-robh@kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 21 Oct 2021 16:11:53 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLxojde1Pr4ObCbfWh+D=bopZrb0x6eoXXvjBwTENgNGw@mail.gmail.com>
+Message-ID: <CAL_JsqLxojde1Pr4ObCbfWh+D=bopZrb0x6eoXXvjBwTENgNGw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Fix 'interrupt-map' parent address cells
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/20/21 5:54 PM, David Heidelberg wrote:
-> IPA v4.5 interconnects was missing from dt-schema, which was trigering
-> warnings while validation.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-
-Can you please tell me a command to use to trigger
-the warnings you are seeing?  I don't see an error
-when building "dtbs" or doing "dt_binding_check".
-
-Thanks.
-
-					-Alex
-
+On Tue, Sep 28, 2021 at 2:22 PM Rob Herring <robh@kernel.org> wrote:
+>
+> The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
+> size of the parent interrupt controller (the GIC) is not accounted for.
+>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> index b8a0b392b24e..a2835ed52076 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> @@ -95,6 +95,11 @@ properties:
->             - description: Path leading to system memory
->             - description: Path leading to internal memory
->             - description: Path between the AP and IPA config space
-> +      - items: # IPA v4.5
-> +          - description: Path leading to system memory region A
-> +          - description: Path leading to system memory region B
-> +          - description: Path leading to internal memory
-> +          - description: Path between the AP and IPA config space
->   
->     interconnect-names:
->       oneOf:
-> @@ -105,6 +110,11 @@ properties:
->             - const: memory
->             - const: imem
->             - const: config
-> +      - items: # IPA v4.5
-> +          - const: memory-a
-> +          - const: memory-b
-> +          - const: imem
-> +          - const: config
->   
->     qcom,smem-states:
->       $ref: /schemas/types.yaml#/definitions/phandle-array
-> 
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi |  8 ++++----
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 16 ++++++++--------
+>  2 files changed, 12 insertions(+), 12 deletions(-)
 
+Ping!
+
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 34039b5c8017..5a04a0427d08 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -954,10 +954,10 @@ pcie0: pci@1c00000 {
+>                         interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
+>                         interrupt-names = "msi";
+>                         interrupt-map-mask = <0 0 0 0x7>;
+> -                       interrupt-map = <0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
+> -                                       <0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
+> -                                       <0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
+> -                                       <0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-map = <0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+>
+>                         clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+>                                  <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 6d7172e6f4c3..287c12666a3a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -1990,10 +1990,10 @@ pcie0: pci@1c00000 {
+>                         interrupt-names = "msi";
+>                         #interrupt-cells = <1>;
+>                         interrupt-map-mask = <0 0 0 0x7>;
+> -                       interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> -                                       <0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> -                                       <0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> -                                       <0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> +                       interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> +                                       <0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> +                                       <0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> +                                       <0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>
+>                         clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+>                                  <&gcc GCC_PCIE_0_AUX_CLK>,
+> @@ -2095,10 +2095,10 @@ pcie1: pci@1c08000 {
+>                         interrupt-names = "msi";
+>                         #interrupt-cells = <1>;
+>                         interrupt-map-mask = <0 0 0 0x7>;
+> -                       interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> -                                       <0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> -                                       <0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> -                                       <0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> +                       interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> +                                       <0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> +                                       <0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> +                                       <0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>
+>                         clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
+>                                  <&gcc GCC_PCIE_1_AUX_CLK>,
+> --
+> 2.30.2
+>
