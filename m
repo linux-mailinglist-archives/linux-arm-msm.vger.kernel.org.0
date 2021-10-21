@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 312E3436D6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:25:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA13E436D77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 00:30:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbhJUW14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 18:27:56 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:46409 "EHLO
+        id S229935AbhJUWco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 18:32:44 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:54235 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231750AbhJUW14 (ORCPT
+        with ESMTP id S229567AbhJUWcm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 18:27:56 -0400
+        Thu, 21 Oct 2021 18:32:42 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634855140; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1634855426; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=oy4Ke29RPvTBtTqqlrgVweNHxSdPx8fieD6oBcjg70c=;
- b=oWrpOHg4L9QSK1EF7VmnPDSVHF8br3xulGpRwVIRz5NrWpKamax/5hz7oXdM8/ILDWlXChmC
- /pSHqZ1nFunO0ai+acTUcPB1SAu60W8fTPv+PN2M/Px4/Zh6QX8pfhMMkLTKfrL6C9PZ2eyj
- oUoclO1GNnbR6EtkagPRtHofO7o=
+ MIME-Version: Sender; bh=E4FlMrRofoJfOfRjLa/P/6CL3IX9SB4XRDs3or4KY9Q=;
+ b=W/PwfdmvmhaZo1UEbi1U3a5wOTQMtlfdg6KeT7kTGw9hENURE+SjdD8eZcg9I1KnT7x97KYF
+ F4siNtrMr94uHSmYFbtan0iaYO43TwY10H8Mkm4lN1RvkfM0uvz/xxHizcTP+SOCjJOCSzcD
+ O/z1sL3JQSsVaFocW2AU7vXWKqU=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6171e8ce5ca800b6c1767fe6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:25:18
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6171e9f514914866fa959410 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 22:30:13
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 6F07AC43619; Thu, 21 Oct 2021 22:25:18 +0000 (UTC)
+        id 82CC2C4360D; Thu, 21 Oct 2021 22:30:12 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,13 +39,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98420C4338F;
-        Thu, 21 Oct 2021 22:25:17 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 87725C4338F;
+        Thu, 21 Oct 2021 22:30:11 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 Oct 2021 15:25:17 -0700
+Date:   Thu, 21 Oct 2021 15:30:11 -0700
 From:   abhinavk@codeaurora.org
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,12 +55,12 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH 03/11] drm/msm/dpu: drop pipe_name from struct
- dpu_plane
-In-Reply-To: <20210930140002.308628-4-dmitry.baryshkov@linaro.org>
+Subject: Re: [Freedreno] [PATCH 04/11] drm/msm/dpu: remove stage_cfg from
+ struct dpu_crtc
+In-Reply-To: <20210930140002.308628-5-dmitry.baryshkov@linaro.org>
 References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
- <20210930140002.308628-4-dmitry.baryshkov@linaro.org>
-Message-ID: <fed157cc7d06e79a7b96c493b89bc0e2@codeaurora.org>
+ <20210930140002.308628-5-dmitry.baryshkov@linaro.org>
+Message-ID: <4496a4f97ce112726c31bc05aa173cd5@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -68,49 +68,93 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2021-09-30 06:59, Dmitry Baryshkov wrote:
-> Use plane->name instead of artificial pipe_name.
+> The stage_cfg is not used outside of _dpu_crtc_blend_setup(), so remove
+> the temporary config from global struct.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 11 ++++++-----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h |  2 --
+>  2 files changed, 6 insertions(+), 7 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 88d726133b8b..ef3737642b0c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -115,7 +115,6 @@ struct dpu_plane {
->  	struct dpu_csc_cfg *csc_ptr;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 768012243b44..19f0715a4089 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -207,7 +207,8 @@ static void _dpu_crtc_program_lm_output_roi(struct
+> drm_crtc *crtc)
+>  }
 > 
->  	const struct dpu_sspp_sub_blks *pipe_sblk;
-> -	char pipe_name[DPU_NAME_SIZE];
+>  static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+> -	struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer)
+> +	struct dpu_crtc *dpu_crtc, struct dpu_crtc_mixer *mixer,
+> +	struct dpu_hw_stage_cfg *stage_cfg)
+>  {
+>  	struct drm_plane *plane;
+>  	struct drm_framebuffer *fb;
+> @@ -216,7 +217,6 @@ static void _dpu_crtc_blend_setup_mixer(struct
+> drm_crtc *crtc,
+>  	struct dpu_plane_state *pstate = NULL;
+>  	struct dpu_format *format;
+>  	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
+> -	struct dpu_hw_stage_cfg *stage_cfg = &dpu_crtc->stage_cfg;
 > 
->  	/* debugfs related stuff */
+>  	u32 flush_mask;
+>  	uint32_t stage_idx, lm_idx;
+> @@ -292,6 +292,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc 
+> *crtc)
+>  	struct dpu_crtc_mixer *mixer = cstate->mixers;
+>  	struct dpu_hw_ctl *ctl;
+>  	struct dpu_hw_mixer *lm;
+> +	struct dpu_hw_stage_cfg stage_cfg;
+>  	int i;
+> 
+>  	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
+> @@ -305,9 +306,9 @@ static void _dpu_crtc_blend_setup(struct drm_crtc 
+> *crtc)
+>  	}
+> 
+>  	/* initialize stage cfg */
+> -	memset(&dpu_crtc->stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+> +	memset(&stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+> 
+> -	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer);
+> +	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg);
+> 
+>  	for (i = 0; i < cstate->num_mixers; i++) {
+>  		ctl = mixer[i].lm_ctl;
+> @@ -328,7 +329,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc 
+> *crtc)
+>  			mixer[i].flush_mask);
+> 
+>  		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
+> -			&dpu_crtc->stage_cfg);
+> +			&stage_cfg);
+>  	}
+>  }
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index cec3474340e8..30535acec670 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -116,7 +116,6 @@ struct dpu_crtc_frame_event {
+>   * @drm_requested_vblank : Whether vblanks have been enabled in the 
+> encoder
+>   * @property_info : Opaque structure for generic property support
+>   * @property_defaults : Array of default values for generic property 
+> support
+> - * @stage_cfg     : H/w mixer stage configuration
+>   * @debugfs_root  : Parent of debugfs node
+>   * @vblank_cb_count : count of vblank callback since last reset
+>   * @play_count    : frame count between crtc enable and disable
+> @@ -147,7 +146,6 @@ struct dpu_crtc {
+>  	struct drm_pending_vblank_event *event;
+>  	u32 vsync_count;
+> 
+> -	struct dpu_hw_stage_cfg stage_cfg;
 >  	struct dentry *debugfs_root;
-> @@ -1429,7 +1428,7 @@ static int _dpu_plane_init_debugfs(struct
-> drm_plane *plane)
 > 
->  	/* create overall sub-directory for the pipe */
->  	pdpu->debugfs_root =
-> -		debugfs_create_dir(pdpu->pipe_name,
-> +		debugfs_create_dir(plane->name,
->  				plane->dev->primary->debugfs_root);
-> 
->  	/* don't error check these */
-> @@ -1660,12 +1659,9 @@ struct drm_plane *dpu_plane_init(struct 
-> drm_device *dev,
->  	/* success! finalize initialization */
->  	drm_plane_helper_add(plane, &dpu_plane_helper_funcs);
-> 
-> -	/* save user friendly pipe name for later */
-> -	snprintf(pdpu->pipe_name, DPU_NAME_SIZE, "plane%u", plane->base.id);
-> -
->  	mutex_init(&pdpu->lock);
-> 
-> -	DPU_DEBUG("%s created for pipe:%u id:%u virtual:%u\n", 
-> pdpu->pipe_name,
-> +	DPU_DEBUG("%s created for pipe:%u id:%u virtual:%u\n", plane->name,
->  					pipe, plane->base.id, master_plane_id);
->  	return plane;
+>  	u32 vblank_cb_count;
