@@ -2,96 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C468F435FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 12:52:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E440443607C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 13:44:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbhJUKy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 06:54:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60382 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229567AbhJUKy0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 06:54:26 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A931760EE9;
-        Thu, 21 Oct 2021 10:52:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1634813531;
-        bh=ju2/G1q9d1NsW6DFlmH3WjqOSsI8ErlJ2aYm/MR0KDo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rp/cEbz3k5j+qHt2ta4LiVmNsU8w3jEotL0w2gyQM3aSKE8q1vzDQNFn+Opg4Cedt
-         K68UUAqlULtJs4pmK8euYmowvopud7SMSRQ4dnBcVmN2Dl7vDIDcfT2IggS0CUyLvR
-         wUxQq29tvzhP2BsVVfyOKCjb66kAQJiGJArDZzZ0=
-Date:   Thu, 21 Oct 2021 12:52:08 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
- already resized
-Message-ID: <YXFGWPMmmdyaSOPg@kroah.com>
-References: <20211019004123.15987-1-jackp@codeaurora.org>
+        id S230231AbhJULq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 07:46:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230072AbhJULq4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 21 Oct 2021 07:46:56 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F81C06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:44:40 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id s198-20020a1ca9cf000000b0030d6986ea9fso479520wme.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 04:44:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=BQghDj/yxu+BYKgp+pewmhnc8VbRAWzyyq3pG3ohJ1c=;
+        b=alOuexoeOEbr2u8pleBfmWODBwtFG2z91Gz8hmXndjHSCaea+xFC+IrALsOsA/0slB
+         TTDJdjFp8rx1Xgg9DbjskOOC8liEuGxs/9kUDJgnvPdAc4WfnkuUX8TVfIgCutB4u8IP
+         MMKl/KUsSmAQex8Rgvz71iUWPzpJAl0O8OhmfIJGik1X+VtT0PJiEA9Fkoo0BLC2YaLO
+         /JIeRhZ4htghC9+ZhNeeDv5tdB0t50F6sN5aIvxSHSCEZLlWivsPQfvApPHuIN6l0jm4
+         zegbvtVcjysF4fcEOhe/xRiQVbLxt4NtLQ/XqiDrbO/NgnMYiI8td/gzWHgrOGJJ4mT+
+         eSFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=BQghDj/yxu+BYKgp+pewmhnc8VbRAWzyyq3pG3ohJ1c=;
+        b=6B2+LsUeYC0sHM5OAljfFbr3wdgcAYTmKiJnGKJBvHj9M1UBHatsLYr9Mu/KSoN/jg
+         RFfqJ5QyjdXPjfyosdwrnzQcwCv0GZJr6eQMn458D0J/qEqSGslxbkPKVcsZ9dIaBbdU
+         d3QZM/IzUKSYlQKq6jbOdVGapj86inSiVUT4FE/BSyXFcDXNHqkK6vROVqQqFvDC3auB
+         ksAPf+X0cVOtQqr0J0ZxuzCfbAEdzLg0C/4UL2FrBSpYlkNl5WwQS+5yJEiR0c++O7dx
+         0LS0RS97Mn/EdFt0aQg4IcikKv5D3pfnmUKcF4iE3W9Kp5RaBaH54Ul0HWX5zkRPAwL1
+         wTEA==
+X-Gm-Message-State: AOAM531nS1MzmnS3lZX+uJK/vXUaZngOPzT2CgKQHNHM5DQen9hNfOKL
+        Scv0KNRNOZc4pc0oUL20Mgphkg==
+X-Google-Smtp-Source: ABdhPJw7ZyD5LBmoz3xrLWqdu8YqVeD4Omz4svKdSjfuWID+h+2qKj3oUHCPZYTIsfW60MV/5c7IZg==
+X-Received: by 2002:a1c:20cc:: with SMTP id g195mr6321718wmg.22.1634816678970;
+        Thu, 21 Oct 2021 04:44:38 -0700 (PDT)
+Received: from google.com ([95.148.6.207])
+        by smtp.gmail.com with ESMTPSA id c17sm4619298wmk.23.2021.10.21.04.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Oct 2021 04:44:38 -0700 (PDT)
+Date:   Thu, 21 Oct 2021 12:44:36 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] mfd: qcom-spmi-pmic: Sort the compatibles in the
+ binding
+Message-ID: <YXFSpGfOOF3pk/OY@google.com>
+References: <20211017161218.2378176-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211019004123.15987-1-jackp@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211017161218.2378176-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 18, 2021 at 05:41:23PM -0700, Jack Pham wrote:
-> Some functions may dynamically enable and disable their endpoints
-> regularly throughout their operation, particularly when Set Interface
-> is employed to switch between Alternate Settings.  For instance the
-> UAC2 function has its respective endpoints for playback & capture
-> associated with AltSetting 1, in which case those endpoints would not
-> get enabled until the host activates the AltSetting.  And they
-> conversely become disabled when the interfaces' AltSetting 0 is
-> chosen.
+On Sun, 17 Oct 2021, Bjorn Andersson wrote:
+
+> Create some order in the list of compatibles by sorting them.
 > 
-> With the DWC3 FIFO resizing algorithm recently added, every
-> usb_ep_enable() call results in a call to resize that EP's TXFIFO,
-> but if the same endpoint is enabled again and again, this incorrectly
-> leads to FIFO RAM allocation exhaustion as the mechanism did not
-> account for the possibility that endpoints can be re-enabled many
-> times.
-> 
-> Example log splat:
-> 
-> 	dwc3 a600000.dwc3: Fifosize(3717) > RAM size(3462) ep3in depth:217973127
-> 	configfs-gadget gadget: u_audio_start_capture:521 Error!
-> 	dwc3 a600000.dwc3: request 000000000be13e18 was not queued to ep3in
-> 
-> Add another bit DWC3_EP_TXFIFO_RESIZED to dep->flags to keep track of
-> whether an EP had already been resized in the current configuration.
-> If so, bail out of dwc3_gadget_resize_tx_fifos() to avoid the
-> calculation error resulting from accumulating the EP's FIFO depth
-> repeatedly.  This flag is retained across multiple ep_disable() and
-> ep_enable() calls and is cleared when GTXFIFOSIZn is reset in
-> dwc3_gadget_clear_tx_fifos() upon receiving the next Set Config.
-> 
-> Fixes: 9f607a309fbe9 ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
-> Signed-off-by: Jack Pham <jackp@codeaurora.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> v2: Added explicit flag to dep->flags and check that instead of directly
->     reading the GTXFIFOSIZn register.
 > 
->  drivers/usb/dwc3/core.h   | 1 +
->  drivers/usb/dwc3/gadget.c | 8 +++++++-
->  2 files changed, 8 insertions(+), 1 deletion(-)
+> Changed since v1:
+> - New patch
 > 
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 5612bfdf37da..f033063f6948 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -723,6 +723,7 @@ struct dwc3_ep {
->  #define DWC3_EP_FORCE_RESTART_STREAM	BIT(9)
->  #define DWC3_EP_FIRST_STREAM_PRIMED	BIT(10)
->  #define DWC3_EP_PENDING_CLEAR_STALL	BIT(11)
-> +#define DWC3_EP_TXFIFO_RESIZED	BIT(12)
+>  .../bindings/mfd/qcom,spmi-pmic.txt           | 30 +++++++++----------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
 
-Any specific reason this isn't lined up properly?
+Applied, thanks.
 
-thanks,
-
-greg k-h
+-- 
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
