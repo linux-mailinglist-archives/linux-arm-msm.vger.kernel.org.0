@@ -2,135 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16A9C435D58
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 10:51:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4376D435DD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 11:24:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231573AbhJUIyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 04:54:09 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:25578 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231342AbhJUIyG (ORCPT
+        id S231308AbhJUJ1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 05:27:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52932 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231447AbhJUJ1B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 04:54:06 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634806311; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=TsTUaUN6UAZjto/Yd/hWLc73ukdwtGkHFVUFsfzhjq4=;
- b=G3oBkKyzKz9Q3AYU09qhW3P/aAxd+EJZLWqwV3PBgWZpAS3a7urKJ18P2i0YhoNSoqBee8bh
- AEKQTEtdnFQreXXTUP1SIG/vJdLJYCIqmWofQrMW9y4CKeaOHzWbau61kWgwTE+ZbBCRYEG+
- W1+5IoZvlEJt3DuY9Q0nTTkNHNE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 61712a0e308e0dd330b1e034 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 08:51:26
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E37D9C43617; Thu, 21 Oct 2021 08:51:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3A2CAC4338F;
-        Thu, 21 Oct 2021 08:51:25 +0000 (UTC)
+        Thu, 21 Oct 2021 05:27:01 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7510C06161C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 02:24:45 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id z20so70416edc.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 02:24:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=V5V3mrMbGu1ppi6ARFhGUSANkmRh+1a3b9M8ZtI/3z4=;
+        b=ddBd6V4x0LmBfVs0vWUySyZVPTrIMF1gV+CCLfHKHDKc3ECi5Fmd/GaH8SzbNtk/8A
+         EoM0ln1xJOL7zBl2ZRajrUOHvohw8Swt4OA8rIc81MlinO1h5+ySqYC+40rQ+NxBJfsh
+         0W40qXW4TCeVGiqmw6FLXQb2xzRF1kCnx91dmbldr1K5iDIOQbiXILBBSJU5buxK2Cwh
+         VWqaUnwpsfR00unKVDXvsRI02792Ajy/YXTWrpOAm53ZkbAG59myMlmtriBJvvSlUxNN
+         9eDOkMTVaO29cfs+bdSZS97QtQnH5ut5qvCIgjRS1bZE3Yqdq/vwThRvauytwAAi9T50
+         a0Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=V5V3mrMbGu1ppi6ARFhGUSANkmRh+1a3b9M8ZtI/3z4=;
+        b=jcfhL3YJX/LTQwIfaij+amZS294XjCYUnwEGSY8BmyxK/aoOnjiBOFVBRvxCWY7Ar7
+         zidGsPC2ok8B92FcNFJMF+qyZMtAn1sH/v4lDJZTOboebiXo31iPrmZjxpv6LAufMKu7
+         XLymyEKtxevPGfNXSWI7l1XNjnM8tpzsGuyH1rQAcSYnWoIILkcR0A3B1568Qppt4raC
+         dTsSqLuiugCey5EzpmdKYUBZo02EbqRFhKY1nhnLaFzQs0V7SuBOEcCd8yHNQKX5XqkD
+         9Rg5GdKuUWbbyYHdEDWFxspHwY6W5+72izRBsX+tutjILtXlXdRN2Hx9FJrmcVbRphd4
+         V12w==
+X-Gm-Message-State: AOAM532LQj/t18xcJrWS9Cd2tQ/tpwy7UY00WyJ4th7ixlvKqOdvQglE
+        MbtMoqhNLj1z8s568XJw3tjteQ==
+X-Google-Smtp-Source: ABdhPJy8oS0zIhlGWv0DvQGXh9QF2VSWhQLKdi+HZnhxRaaHACjc9YqWyLKfLgZGT7KGPkEhCd2ssw==
+X-Received: by 2002:a17:906:8893:: with SMTP id ak19mr6013410ejc.124.1634808284520;
+        Thu, 21 Oct 2021 02:24:44 -0700 (PDT)
+Received: from [192.168.1.15] (hst-221-64.medicom.bg. [84.238.221.64])
+        by smtp.googlemail.com with ESMTPSA id t6sm2558168edj.27.2021.10.21.02.24.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Oct 2021 02:24:44 -0700 (PDT)
+Subject: Re: [PATCH 1/3] dt-bindings: media: venus: Add sdm660 dt schema
+To:     Rob Herring <robh@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Cc:     mchehab@kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, martin.botka@somainline.org,
+        robh+dt@kernel.org, phone-devel@vger.kernel.org,
+        linux-media@vger.kernel.org, agross@kernel.org,
+        stanimir.varbanov@linaro.org, bjorn.andersson@linaro.org
+References: <20211008102119.268869-1-angelogioacchino.delregno@collabora.com>
+ <YW824G+mII83pjU5@robh.at.kernel.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <99a0bb09-6892-f103-6eb7-b6333b56090a@linaro.org>
+Date:   Thu, 21 Oct 2021 12:24:42 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <YW824G+mII83pjU5@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 21 Oct 2021 14:21:25 +0530
-From:   skakit@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mka@chromium.org,
-        collinsd@codeurora.org, subbaram@codeaurora.org,
-        kgunda@codeaurora.org
-Subject: Re: [PATCH V2 2/4] dt-bindings: mfd: pm8008: Add pm8008 regulator
- node
-In-Reply-To: <CAE-0n51pCkrdOSJFf3V4HGB5PcUcRa2y6zRQbQ30i-hQVhjC=Q@mail.gmail.com>
-References: <1633060859-22969-1-git-send-email-skakit@codeaurora.org>
- <1633060859-22969-3-git-send-email-skakit@codeaurora.org>
- <CAE-0n51pCkrdOSJFf3V4HGB5PcUcRa2y6zRQbQ30i-hQVhjC=Q@mail.gmail.com>
-Message-ID: <23abf3d093df63b1025e466f45ff16c6@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-05 23:40, Stephen Boyd wrote:
-> Quoting Satya Priya (2021-09-30 21:00:57)
->> Add pm8008-regulator node and example.
->> 
->> Signed-off-by: Satya Priya <skakit@codeaurora.org>
->> ---
->> Changes in V2:
->>  - As per Rob's comments changed "pm8008[a-z]?-regulator" to
->>    "^pm8008[a-z]?-regulators".
->> 
->>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 24 
->> ++++++++++++++++++++++
->>  1 file changed, 24 insertions(+)
->> 
->> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml 
->> b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> index ec3138c..0c9665e 100644
->> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> @@ -45,6 +45,10 @@ properties:
->>      const: 0
->> 
->>  patternProperties:
->> +  "^pm8008[a-z]?-regulators$":
-> 
-> Please just call it 'regulators'
-> 
->> +    type: object
->> +    $ref: "../regulator/qcom,pm8008-regulator.yaml#"
->> +
->>    "^gpio@[0-9a-f]+$":
->>      type: object
->> 
->> @@ -122,6 +126,26 @@ examples:
->>            interrupt-controller;
->>            #interrupt-cells = <2>;
->>          };
->> +
->> +        pm8008-regulators {
-> 
-> Please just call it 'regulators'
-> 
+Thanks Rob, I will push this through media tree.
 
-Okay
+On 10/20/21 12:21 AM, Rob Herring wrote:
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
->> +          compatible = "qcom,pm8008-regulator";
->> +          #address-cells = <1>;
->> +          #size-cells = <0>;
->> +
->> +          vdd_l1_l2-supply = <&vreg_s8b_1p2>;
->> +          vdd_l3_l4-supply = <&vreg_s1b_1p8>;
->> +          vdd_l5-supply = <&vreg_bob>;
->> +          vdd_l6-supply = <&vreg_bob>;
->> +          vdd_l7-supply = <&vreg_bob>;
->> +
->> +          pm8008_l1: regulator@4000 {
->> +            reg = <0x4000>;
->> +            regulator-name = "pm8008_l1";
->> +            regulator-min-microvolt = <950000>;
->> +            regulator-max-microvolt = <1300000>;
->> +            qcom,min-dropout-voltage = <96000>;
->> +          };
->> +        };
+-- 
+regards,
+Stan
