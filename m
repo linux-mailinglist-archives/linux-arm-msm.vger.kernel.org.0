@@ -2,110 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BBF9435BD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 09:36:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1246A435BE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 09:40:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231228AbhJUHjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 03:39:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230385AbhJUHjI (ORCPT
+        id S231489AbhJUHmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 03:42:15 -0400
+Received: from wnew3-smtp.messagingengine.com ([64.147.123.17]:56439 "EHLO
+        wnew3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231452AbhJUHmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 03:39:08 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648D8C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 00:36:53 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id v8so5113215pfu.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 00:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nMefmvewH1bH95bhvHE2Njo8TjUqxRvrxWxFSi0K4aQ=;
-        b=tnynrcs1C3rrt5B3tGjtk2O0V2SZ8JttjctkOD2WOlr9+JuBf0r3U8/WWxMoePzRtZ
-         zaSwLSo95yB81cYRZIENRFqi+SIx7xHJxeTP4t4+0KVBNI2qLUfdt91wLZbEADHWNjPq
-         oo++L2+wXvnbWwHRY7ZXdhJf3CDiyYyhs5vPHEfOA79dJW6YcgaS8wIBEC3nxJkFy8P1
-         xHuqKe5h8UwahrQ+uWzFiyUVAlzzEIIZ8xiWKHJrQ5qBkdp9BQIpEaJx8TFgy07pyRsF
-         OIxAtfKlVOf92khB6wX/8wRMjYVRxrbGN5eTDRLFLHveHHhNi9KHqAHdqPRZeYnRNsIZ
-         BN6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nMefmvewH1bH95bhvHE2Njo8TjUqxRvrxWxFSi0K4aQ=;
-        b=E/Q9jA7AJwo/QEX0QjJ+xyoA1ubktnOzaHOGcqBqH3e9VO3sAQ+ZfiD0nffHH/s6b2
-         BLKLKYk8sN6AvbzU3mWbbjRlJIe4ZUE/xy8cppSHpUW9mA1UuBqppwuBkXYFOEfdSRXx
-         Q/aQaocD+vPnjs2uqOzQlIZPgwO/I6QMct9sj8VsALTgGgrQIrSPvHBMpdBs0kMrN8b0
-         xYVB2dGPdTxpuZ78+1jBpBLeiPyFfrRVxLVENYAb10NOTDQWUe5BFUKdNqeFsmB9//c7
-         WT+/I2OTKb7V9Ut7bgPd9oq+Optr+7AYE+1XsUxmaAZ6DoCJoJWfcfrQZntWBo91+Q2v
-         522g==
-X-Gm-Message-State: AOAM533fgvZD35fbhFBDzfAcq+LSdWIluaCYTqzhetWYOlPNiU0jJ672
-        mKNOne1te1BsBDvxudz1YWQc
-X-Google-Smtp-Source: ABdhPJxWH+Ux9aLgpp+A6wyKXL3yggOtAl+kwvYgqfoYXoaVAofNqEn2lz8VRoFexW77upLfB3zdjA==
-X-Received: by 2002:a63:f145:: with SMTP id o5mr3228923pgk.273.1634801812729;
-        Thu, 21 Oct 2021 00:36:52 -0700 (PDT)
-Received: from workstation ([202.21.43.20])
-        by smtp.gmail.com with ESMTPSA id x31sm4832983pfu.40.2021.10.21.00.36.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Oct 2021 00:36:51 -0700 (PDT)
-Date:   Thu, 21 Oct 2021 13:06:47 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Prasad Malisetty <pmaliset@codeaurora.org>
-Cc:     svarbanov@mm-sol.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, lorenzo.pieralisi@arm.com,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, vbadigan@codeaurora.org,
-        kw@linux.com, bhelgaas@google.com
-Subject: Re: [PATCH v1] PCI: qcom: Fix incorrect register offset in pcie init
-Message-ID: <20211021073647.GA7580@workstation>
-References: <1634237929-25459-1-git-send-email-pmaliset@codeaurora.org>
+        Thu, 21 Oct 2021 03:42:11 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.west.internal (Postfix) with ESMTP id D4BE92B012EA;
+        Thu, 21 Oct 2021 03:39:52 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Thu, 21 Oct 2021 03:39:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        from:to:cc:subject:date:message-id:content-type:mime-version
+        :content-transfer-encoding; s=fm1; bh=Ig1NvDgki9mc/elboNYuCt9K83
+        3bzrfrL+LUGb9uXpg=; b=OGSlvN/lnYQBUsMdggz3wEVvHYB2Bn31n4plOWWkxM
+        rWRzs1wBWRYd7IFuHbQwgQcfYhPvt+y/1LLMygK+mH6OI2hOmSXlydu93E30/sOR
+        1LEuTnj4CAURh857bNT9PxwAeookSU4Qmx5ZSPT8luTCwmMFrJIqUcepQ+S2sLV+
+        wZfpCdl/pmxVpn4B2hV+NWEO0N0dOVaMbk8TKXUHyRDpNJOiNbR7sGnXyBFg8gj4
+        uFryvZUXIfQV+tsNmzN6hLcyjtTkyQVMF88ds5Wz4YLjbdfBmitsrdaZgOaoOaJ/
+        3IJIt81jgj+jagQY1pdvabkc4GyyYuFTuzepPnSxS4sw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Ig1NvD
+        gki9mc/elboNYuCt9K833bzrfrL+LUGb9uXpg=; b=jweG4n6R0zrCNasc0QxO8I
+        h+W74iVQQn0nFHhvtudyxSX/RSSRIzuJnzrTQGK/WDAai6DrVYIPSGF6QiP3uYMm
+        MnoBlnJH/8i9dQrJmS/H6ipPICqyVDGP+XSLcfPmKoia1TKijeFF4HQ9/rYzOa4W
+        g96ziizY0N1HpAwLiMDx/kHYZPX8arJcQdnsrotMLibbJSzUlsPZ4KdYgEerkyd8
+        8UvK51iSjHg0sT03VhFvNC/o85bmVpTgicfIzI9IXUZZOLyC8f0G6y9DdtZ/LrJ/
+        WOPyBQMVfvE34EztJ0fjgCkYSlQxzHkEEGA/TJHICwnEYBNYCAJi3mJOzNa0Z80A
+        ==
+X-ME-Sender: <xms:RRlxYcXFvwguWd3dmZWHRQ3WjV5Oy53_r1Rd7SDRjC12y_Qnw_kbPA>
+    <xme:RRlxYQlP6HTrl9SC6uWdf5yS6npjMLwFJrpbsmTCO6ea4fwIjkHHUu_qQhlopYjyj
+    AeEtdA1LQXnjsq487Q>
+X-ME-Received: <xmr:RRlxYQYVmB9ir25rs9tGYt71BZNF4VYBjbzD3NqGcuNuNIDY3bUoNbzfSWPmhmBInHcbd3THCu-dyRV5pB5iBAVV3HujMVBgWFkOG7Sg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddvhedgudduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefhvffufffkofgtggfgsehtqhertdertdejnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepteeikefgffekgeekledtheduteetjefgkeeuvefhhfetgedugfektdeugeff
+    gfefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
+    grgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:RRlxYbXDD_GnPb0xAQgYrZ2-s_U5LgW5aB1f-iALx2cbvbwSAxuy9g>
+    <xmx:RRlxYWm2qmpQlplvdr0s0gxyTw91TUG3QLHX9wBqg5HzOD7jx8V8aQ>
+    <xmx:RRlxYQedRIIrJbFSpzTS_9N9pXBjGrxbeMkXe6D-vICqPbspx2rTJA>
+    <xmx:SBlxYU3ZFLlG9khXKHP-woEqyAQ5VoFfiOntNkv5kWRwQ1ocyNYdnUzHozY>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Oct 2021 03:39:48 -0400 (EDT)
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Tian Tao <tiantao6@hisilicon.com>,
+        freedreno@lists.freedesktop.org,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        dri-devel@lists.freedesktop.org
+Subject: [PATCH v5 00/21] drm/bridge: Make panel and bridge probe order consistent
+Date:   Thu, 21 Oct 2021 09:39:26 +0200
+Message-Id: <20211021073947.499373-1-maxime@cerno.tech>
+X-Mailer: git-send-email 2.31.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1634237929-25459-1-git-send-email-pmaliset@codeaurora.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 15, 2021 at 12:28:49AM +0530, Prasad Malisetty wrote:
-> In pcie_init_2_7_0 one of the register writes using incorrect offset
-> as per the platform register definitions (PCIE_PARF_AXI_MSTR_WR_ADDR_HALT
-> offset value should be 0x1A8 instead 0x178).
-> Update the correct offset value for SDM845 platform.
-> 
-> fixes: ed8cc3b1 ("PCI: qcom: Add support for SDM845 PCIe controller")
-> 
-> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-
-After incorporating the reviews from Bjorn H,
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 8a7a300..5bce152 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1230,9 +1230,9 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
->  
->  	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-> -		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> +		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
->  		val |= BIT(31);
-> -		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
-> +		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
->  	}
->  
->  	return 0;
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Hi,=0D
+=0D
+We've encountered an issue with the RaspberryPi DSI panel that prevented th=
+e=0D
+whole display driver from probing.=0D
+=0D
+The issue is described in detail in the commit 7213246a803f ("drm/vc4: dsi:=
+=0D
+Only register our component once a DSI device is attached"), but the basic =
+idea=0D
+is that since the panel is probed through i2c, there's no synchronization=0D
+between its probe and the registration of the MIPI-DSI host it's attached t=
+o.=0D
+=0D
+We initially moved the component framework registration to the MIPI-DSI Hos=
+t=0D
+attach hook to make sure we register our component only when we have a DSI=
+=0D
+device attached to our MIPI-DSI host, and then use lookup our DSI device in=
+ our=0D
+bind hook.=0D
+=0D
+However, all the DSI bridges controlled through i2c are only registering th=
+eir=0D
+associated DSI device in their bridge attach hook, meaning with our change=
+=0D
+above, we never got that far, and therefore ended up in the same situation =
+than=0D
+the one we were trying to fix for panels.=0D
+=0D
+The best practice to avoid those issues is to register its functions only a=
+fter=0D
+all its dependencies are live. We also shouldn't wait any longer than we sh=
+ould=0D
+to play nice with the other components that are waiting for us, so in our c=
+ase=0D
+that would mean moving the DSI device registration to the bridge probe.=0D
+=0D
+This has been tested on vc4 (with sn65dsi83 and ps8640), msm (sn65dsi86,=0D
+lt9611), kirin (adv7511) and exynos.=0D
+=0D
+Let me know what you think,=0D
+Maxime=0D
+=0D
+---=0D
+=0D
+Changes from v4:=0D
+  - Rebased on current drm-misc-next=0D
+  - Collected the various tags=0D
+  - Fix for Kirin=0D
+  - Added conversion patch for msm=0D
+=0D
+Changes from v3:=0D
+  - Converted exynos and kirin=0D
+  - Converted all the affected bridge drivers=0D
+  - Reworded the documentation a bit=0D
+=0D
+Changes from v2:=0D
+  - Changed the approach as suggested by Andrzej, and aligned the bridge on=
+ the=0D
+    panel this time.=0D
+  - Fixed some typos=0D
+=0D
+Changes from v1:=0D
+  - Change the name of drm_of_get_next function to drm_of_get_bridge=0D
+  - Mention the revert of 87154ff86bf6 and squash the two patches that were=
+=0D
+    reverting that commit=0D
+  - Add some documentation=0D
+  - Make drm_panel_attach and _detach succeed when no callback is there=0D
+=0D
+Maxime Ripard (20):=0D
+  drm/bridge: adv7533: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: adv7511: Register and attach our DSI device at probe=0D
+  drm/bridge: anx7625: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: anx7625: Register and attach our DSI device at probe=0D
+  drm/bridge: lt8912b: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt8912b: Register and attach our DSI device at probe=0D
+  drm/bridge: lt9611: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt9611: Register and attach our DSI device at probe=0D
+  drm/bridge: lt9611uxc: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt9611uxc: Register and attach our DSI device at probe=0D
+  drm/bridge: ps8640: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: ps8640: Register and attach our DSI device at probe=0D
+  drm/bridge: sn65dsi83: Fix bridge removal=0D
+  drm/bridge: sn65dsi83: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: sn65dsi83: Register and attach our DSI device at probe=0D
+  drm/bridge: sn65dsi86: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: sn65dsi86: Register and attach our DSI device at probe=0D
+  drm/bridge: tc358775: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: tc358775: Register and attach our DSI device at probe=0D
+  drm/kirin: dsi: Adjust probe order=0D
+=0D
+Rob Clark (1):=0D
+  drm/msm/dsi: Adjust probe order=0D
+=0D
+ drivers/gpu/drm/bridge/adv7511/adv7511.h     |   1 -=0D
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  15 ++-=0D
+ drivers/gpu/drm/bridge/adv7511/adv7533.c     |  20 +---=0D
+ drivers/gpu/drm/bridge/analogix/anx7625.c    |  40 ++++---=0D
+ drivers/gpu/drm/bridge/lontium-lt8912b.c     |  31 ++----=0D
+ drivers/gpu/drm/bridge/lontium-lt9611.c      |  62 ++++-------=0D
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c   |  65 +++++------=0D
+ drivers/gpu/drm/bridge/parade-ps8640.c       | 107 ++++++++++---------=0D
+ drivers/gpu/drm/bridge/tc358775.c            |  50 +++++----=0D
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c        |  88 ++++++++-------=0D
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c        | 101 +++++++++--------=0D
+ drivers/gpu/drm/hisilicon/kirin/dw_drm_dsi.c |  52 +++++----=0D
+ drivers/gpu/drm/msm/dsi/dsi.c                |  50 +++++----=0D
+ drivers/gpu/drm/msm/dsi/dsi.h                |   2 +-=0D
+ drivers/gpu/drm/msm/dsi/dsi_host.c           |  22 ++--=0D
+ drivers/gpu/drm/msm/dsi/dsi_manager.c        |   6 +-=0D
+ drivers/gpu/drm/msm/msm_drv.h                |   2 +=0D
+ 17 files changed, 348 insertions(+), 366 deletions(-)=0D
+=0D
+-- =0D
+2.31.1=0D
+=0D
