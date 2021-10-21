@@ -2,85 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4376D435DD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 11:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 316AB435DF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 11:29:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231308AbhJUJ1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 05:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231447AbhJUJ1B (ORCPT
+        id S231391AbhJUJb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 05:31:56 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:39851 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231308AbhJUJb4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 05:27:01 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7510C06161C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 02:24:45 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id z20so70416edc.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 02:24:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=V5V3mrMbGu1ppi6ARFhGUSANkmRh+1a3b9M8ZtI/3z4=;
-        b=ddBd6V4x0LmBfVs0vWUySyZVPTrIMF1gV+CCLfHKHDKc3ECi5Fmd/GaH8SzbNtk/8A
-         EoM0ln1xJOL7zBl2ZRajrUOHvohw8Swt4OA8rIc81MlinO1h5+ySqYC+40rQ+NxBJfsh
-         0W40qXW4TCeVGiqmw6FLXQb2xzRF1kCnx91dmbldr1K5iDIOQbiXILBBSJU5buxK2Cwh
-         VWqaUnwpsfR00unKVDXvsRI02792Ajy/YXTWrpOAm53ZkbAG59myMlmtriBJvvSlUxNN
-         9eDOkMTVaO29cfs+bdSZS97QtQnH5ut5qvCIgjRS1bZE3Yqdq/vwThRvauytwAAi9T50
-         a0Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=V5V3mrMbGu1ppi6ARFhGUSANkmRh+1a3b9M8ZtI/3z4=;
-        b=jcfhL3YJX/LTQwIfaij+amZS294XjCYUnwEGSY8BmyxK/aoOnjiBOFVBRvxCWY7Ar7
-         zidGsPC2ok8B92FcNFJMF+qyZMtAn1sH/v4lDJZTOboebiXo31iPrmZjxpv6LAufMKu7
-         XLymyEKtxevPGfNXSWI7l1XNjnM8tpzsGuyH1rQAcSYnWoIILkcR0A3B1568Qppt4raC
-         dTsSqLuiugCey5EzpmdKYUBZo02EbqRFhKY1nhnLaFzQs0V7SuBOEcCd8yHNQKX5XqkD
-         9Rg5GdKuUWbbyYHdEDWFxspHwY6W5+72izRBsX+tutjILtXlXdRN2Hx9FJrmcVbRphd4
-         V12w==
-X-Gm-Message-State: AOAM532LQj/t18xcJrWS9Cd2tQ/tpwy7UY00WyJ4th7ixlvKqOdvQglE
-        MbtMoqhNLj1z8s568XJw3tjteQ==
-X-Google-Smtp-Source: ABdhPJy8oS0zIhlGWv0DvQGXh9QF2VSWhQLKdi+HZnhxRaaHACjc9YqWyLKfLgZGT7KGPkEhCd2ssw==
-X-Received: by 2002:a17:906:8893:: with SMTP id ak19mr6013410ejc.124.1634808284520;
-        Thu, 21 Oct 2021 02:24:44 -0700 (PDT)
-Received: from [192.168.1.15] (hst-221-64.medicom.bg. [84.238.221.64])
-        by smtp.googlemail.com with ESMTPSA id t6sm2558168edj.27.2021.10.21.02.24.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Oct 2021 02:24:44 -0700 (PDT)
-Subject: Re: [PATCH 1/3] dt-bindings: media: venus: Add sdm660 dt schema
-To:     Rob Herring <robh@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Cc:     mchehab@kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, martin.botka@somainline.org,
-        robh+dt@kernel.org, phone-devel@vger.kernel.org,
-        linux-media@vger.kernel.org, agross@kernel.org,
-        stanimir.varbanov@linaro.org, bjorn.andersson@linaro.org
-References: <20211008102119.268869-1-angelogioacchino.delregno@collabora.com>
- <YW824G+mII83pjU5@robh.at.kernel.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <99a0bb09-6892-f103-6eb7-b6333b56090a@linaro.org>
-Date:   Thu, 21 Oct 2021 12:24:42 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Thu, 21 Oct 2021 05:31:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634808580; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=PWbkCPMO+PW1QVTah0vArwReeYKjcKVCzAZnQ2H4qO4=; b=l6fWHid7jzyndV75kdym17z5iIgEyvhaChYUtGE+oIebQ2xQfh2d2XesRGOV427b9Jzg0Apz
+ XMIAxJeJ0S7qn19qEtnW3n1l73W9TyM9IQAoV4drZ2C4mLa7wl/IcXcrNE8jqoFf3Ir0vZ7H
+ 4YMP9TuGqiRWk9+N9ev6s4fsnLU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 61713304321f240051e06fa2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 21 Oct 2021 09:29:40
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2D3ABC4361A; Thu, 21 Oct 2021 09:29:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.43.137] (unknown [27.61.145.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DDA5FC4360C;
+        Thu, 21 Oct 2021 09:29:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DDA5FC4360C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: stats: Document
+ qcom,rpm-legacy-stats
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20211018110803.32777-1-stephan@gerhold.net>
+ <20211018110803.32777-2-stephan@gerhold.net>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <b7254fba-3064-4b72-e9df-1b799d404769@codeaurora.org>
+Date:   Thu, 21 Oct 2021 14:59:33 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <YW824G+mII83pjU5@robh.at.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <20211018110803.32777-2-stephan@gerhold.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Rob, I will push this through media tree.
+Hi,
 
-On 10/20/21 12:21 AM, Rob Herring wrote:
-> Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Maulik Shah <mkshah@codeaurora.org>
+
+Thanks,
+Maulik
+
+On 10/18/2021 4:38 PM, Stephan Gerhold wrote:
+> Document an additional qcom,rpm-legacy-stats compatible that can be
+> used similarly to qcom,rpm-stats for older RPM firmware versions that
+> have the sleep stats at a fixed offset rather than a dynamic one.
+> 
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>   Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> index 99dff7d73b7e..566678d02008 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> @@ -21,6 +21,8 @@ properties:
+>       enum:
+>         - qcom,rpmh-stats
+>         - qcom,rpm-stats
+> +      # For older RPM firmware versions with fixed offset for the sleep stats
+> +      - qcom,rpm-legacy-stats
+>   
+>     reg:
+>       maxItems: 1
+> 
 
 -- 
-regards,
-Stan
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
