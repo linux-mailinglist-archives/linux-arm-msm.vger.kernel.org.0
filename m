@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99AE7436C3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 22:34:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 736FC436C42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Oct 2021 22:35:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231934AbhJUUhL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 21 Oct 2021 16:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39744 "EHLO
+        id S232095AbhJUUhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 21 Oct 2021 16:37:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbhJUUhL (ORCPT
+        with ESMTP id S231206AbhJUUhc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 21 Oct 2021 16:37:11 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12101C061348
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:34:55 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id h196so2649021iof.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:34:55 -0700 (PDT)
+        Thu, 21 Oct 2021 16:37:32 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496BFC061764
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:35:16 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id b188so2592900iof.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Oct 2021 13:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ieee.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
         bh=Wg0Jus9TL4rCInXKPmpU7yOccL+OmPZ9RnN1FPY/86c=;
-        b=C4i+PrPvs3FZzr017AwDFrkctEQ3Ggc/CFRoi6cD0Btfrhy12ZEEFURY+91vXu042f
-         1bG8C/VwYKvcwN1vxWNkw/4cffIvN/AOOTxZxNFZ/piTmBmPIcdvHQ+Cyar9W+OXmFui
-         w3AotlxrjuVmwYvreW1JgjKkStxz+fhZo6KGg=
+        b=akrkvWstL+3WOecYTO0PLNiiDc0WcMR8iMjDJN29uVq6E7oe5C07mh6zjJq8DsaaUh
+         7ysysm8AJ978/Upa9Ap1QP7OMZECXUUuffq4VEXB8nEOHpVx4cIOialsQo4mAiikBXyc
+         HpqxRb9EMBOT+q2fVDVEHkLwDk0qrrGI324DY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
         bh=Wg0Jus9TL4rCInXKPmpU7yOccL+OmPZ9RnN1FPY/86c=;
-        b=oKTl61MxTr9ptRKIYz5M5tVGbM3Y2TD9lD5Z7AoeNIdQFLDwFMICizH8PNjG+EMKys
-         /UEj4x38Ozh3mnCxEpVfdvlAgWSyRotMyIwA5FduEHpPIsqeUmdZrG6v4/miupl7LFIp
-         hRgSZa4CildlfffC9V9snvrUcBEY1XhWg/JgYVlmLcAWDLBPqLXWdQlQVA1iW6/a7wWN
-         BCkgMakeyZhqC4kI9Onp0kPHeUNHe5IRlaQ5aM7/zjR89cqesMzjIiLREZeUnBYoEWjc
-         hAIwQ0Jmy8Gn8cRtnoRVAo5VnQQBb76DJIdPGH8DwyKwBOaCIzSeNP8di4FIZUwRD5BN
-         zQ/A==
-X-Gm-Message-State: AOAM530bVt+RKdymZ+ykSCUFcNDqmzv2vH+xLMMMgm1GThMtDZYH0Rt8
-        SR7e76ivrHUNHnx9XKLhUc9Dkw==
-X-Google-Smtp-Source: ABdhPJzyqzFmrGAx2vXYYdoLjJNxUGrUR007nbUYsb/f4BnthTB05d3uUivNeaag/DbTwaUk3Fc3Dw==
-X-Received: by 2002:a05:6602:13d3:: with SMTP id o19mr5406412iov.18.1634848494437;
-        Thu, 21 Oct 2021 13:34:54 -0700 (PDT)
+        b=dhunFVCPQkEU+VCtKoIWDtXne8A9a0djN6Y+7KZuIZsnHJIVTpN8mnJ7RWSuVuGDrA
+         9cLQvy2uGI5yJL/wFFxQb78g1ySOQ11U1SXUYbflhtxzCpFgg/5h7SHNT40BScuA/xUd
+         /psEKFatiEud/ZQr6t2Q9r+vFM/ZO+R8w704NEIexC8neQfBVvQI5ZiyIo/loA+PeJ8M
+         ptJWOlUqMhxUzpXnP/M+yfSZ2wIudPxZ8lF+dVnyyfsECqDJ7xGr+ow940XCgbq5iGda
+         eTStMrC/m3EJDGOqeOTVQry5EFOLxsL5G8QR+gIM6w0s3adF6VR30SAEH7HVfkSjWrSk
+         388Q==
+X-Gm-Message-State: AOAM533z3N1FDbGZZSmmQ+d03UWmFguW0ZPW09F+8m9nAntndDOycDxC
+        EDKlwUH2RICW1bumw0cX3NQu3W2knaOlEA==
+X-Google-Smtp-Source: ABdhPJxUpkvVKJYdnJ8nWqoBfp2mW3VqpjVlNca8iPS3DV7G82q7NyyNf02/PAqc1mnDNnnBbp4A5Q==
+X-Received: by 2002:a5d:9d82:: with SMTP id ay2mr5527961iob.128.1634848515695;
+        Thu, 21 Oct 2021 13:35:15 -0700 (PDT)
 Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id y1sm3261561ilp.43.2021.10.21.13.34.53
+        by smtp.googlemail.com with ESMTPSA id e11sm829754ils.34.2021.10.21.13.35.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Oct 2021 13:34:53 -0700 (PDT)
+        Thu, 21 Oct 2021 13:35:15 -0700 (PDT)
 Subject: Re: [PATCH 1/2] dt-bindings: net: qcom,ipa: describe IPA v4.5
  interconnects
 To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
@@ -58,8 +58,8 @@ Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20211020225435.274628-1-david@ixit.cz>
 From:   Alex Elder <elder@ieee.org>
-Message-ID: <d854d069-2bf0-8b21-2039-d53307aa25e3@ieee.org>
-Date:   Thu, 21 Oct 2021 15:34:52 -0500
+Message-ID: <05b2cc69-d8a4-750d-d98d-db8580546a15@ieee.org>
+Date:   Thu, 21 Oct 2021 15:35:14 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
