@@ -2,150 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D899F437923
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 16:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DF13437BA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 19:14:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbhJVOmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 10:42:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56796 "EHLO
+        id S233594AbhJVRRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 13:17:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233145AbhJVOmu (ORCPT
+        with ESMTP id S233570AbhJVRRF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 10:42:50 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429E1C061764
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:40:33 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id gn3so3147850pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:40:33 -0700 (PDT)
+        Fri, 22 Oct 2021 13:17:05 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E097DC061767
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 10:14:47 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so5229540otb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 10:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=t+jlPMA1dg4OfWoGGFCEON4a1V3lKsDj3UlO4kiDoNY=;
-        b=HdWpvwuSquNCyQQNNZHuz34B3PGHXbpjbgIc56ZKSkY47WKBt8edHi5TFH7K9NsZTZ
-         x9jrWUmX1EcpYUrli2pE2Od9CaoGexjyk6cb85wCPcHc6PBfUKsVkFrAM40X11cUl74V
-         IFdFnm/bagNsLEqZnkMDUPkxTCHNKCkSEzsSqkSQovd54idWCytvgyGpYy88++uy/y5c
-         NH+HWfJpiAmDY5GgiYeRtTw7nWOIpZIF/bq8Nd0yTtNZfz9oDOzaA1aTA/SkBoMqhEJ9
-         cZYlZx0fhdbqNOxOMi9nT9Tv3PyAs/Gis7sUlmzfkwjPBd5Y9PoM99weniYmUhLvWA7k
-         CCcA==
+        bh=khihIRBEDwfkgoT9XzW4kObgxI4RYFVX0d5V9aipBkI=;
+        b=JDzt2sgU2asdNcC2nctv1gQBaMXlCEYffS5ssU/Bhl7jtz1udhOlWYAbaY9MgQPnmC
+         9WPcfPdlElKtgv/Ds+SNc1X3RLhGQxd1X9uHVsrAePxPYezIJntxfN3D7kzuR/oTH6gy
+         hLwjKqsFCm6KKCjFhh16ZrDXiCzMgCoQosMHBukz5O4Xm3faQpoA3PsgIi0CpA3Vr+Ow
+         aF+lgfRPShuK2+mE4DZTRnud06RvFCZHTW1tzxq25MO2a3RH7vFnQmj/YhlpTQMjddbQ
+         3GE6JpDn1YfmndPhoglUiXkoFx57eGjkL9RfUl8Jw6tuh/CUCGiOahFYvpMrJ6tQUZ45
+         qcVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=t+jlPMA1dg4OfWoGGFCEON4a1V3lKsDj3UlO4kiDoNY=;
-        b=NEXtIrCfzTBDZYNFwTbsU6KCwt+OMWqjTKi8UHX4VZCZ34TmSd6+9Eybg5rMq2BXEy
-         n1ioGaUlmkgtcysrPLfPWOWyeFnEfqKBXwY/KzESL2kfEBATW7V+sCpEDlOt1mEs/+ur
-         65ASiPDmq9VVX6ec77CWjCo1TnUgzgyJKIGJOUbQhGW+XR0hOf5aFQL5oX2fWa+RcpKq
-         29BnfUOQCkD6gKsP0vPgBOOVr8qOPPCU0taW/vbzPjhMYUakIOxj5ziZ5h77z7Z22PbH
-         jky+qEQm6t65MMr/8aNR3mrsYVhW7iJ3q32bkho42J8pNoPfogtD5F2ze4pNfYLmztt/
-         vyLg==
-X-Gm-Message-State: AOAM531SIzgtr0Bj2Hrld/DbEah1/BZ1L9akIiYsahAbaB5jPACmXVyw
-        L6SAWNXcUukfm/3ne46vepLCzWsswmec
-X-Google-Smtp-Source: ABdhPJwdl26K1EE7BngfpCdwlm20FGf2XpZtreqgiiOyqxwPfl2FPp9wW2521UQYko9SnFBxyURJKw==
-X-Received: by 2002:a17:90a:6b4f:: with SMTP id x15mr15095023pjl.233.1634913632588;
-        Fri, 22 Oct 2021 07:40:32 -0700 (PDT)
-Received: from thinkpad ([59.92.97.72])
-        by smtp.gmail.com with ESMTPSA id b3sm6618522pfm.54.2021.10.22.07.40.29
+        bh=khihIRBEDwfkgoT9XzW4kObgxI4RYFVX0d5V9aipBkI=;
+        b=gELam8bJqAS3XLeVAEB6RdLYdmr6+96uhbQ+5fCyBaz52j0ulMXuofW+vah+popUcB
+         KSa06vpAf5051AJmfZXmPWUfJuzBJpm2qGN/4BM/9ya6oTgcgKjCOzu/mxne9N2q52v6
+         vUtJMn4Ym1zJXtWLHGl2kNi5WFmZ3l7qz44RMrHEYEAOoiC+QjbqfYz6283Zg0gu4arW
+         aC1U0XT0+lfkoC35qHbqNGS46VZnmXORhaD5bmNDEB9O6xkP8mPDmAsuGO39shpXr8RZ
+         35oJK6R2f5VFx6vl7zHsLWDyfiHzFqSuRZPunktMEHin62SaRAc7sEY8JsDH1KHcoFzR
+         p+fw==
+X-Gm-Message-State: AOAM530ZpnyH/hiPkND0i5vRlyjof3E1Db8MHDejaHQuDY43q6Nr5ioq
+        VyVLmYKPDMVGIhUuJP5WrtffOX1+ZiO2Rw==
+X-Google-Smtp-Source: ABdhPJyUurLqXmz/k4ajla41wyPVwPizzTYqnndr7ozwJjgTBnhA4qlZm4eBgUKwrA4WcgYLFUDcdQ==
+X-Received: by 2002:a05:6830:2b11:: with SMTP id l17mr946819otv.298.1634922887137;
+        Fri, 22 Oct 2021 10:14:47 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id p14sm1522495oov.0.2021.10.22.10.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 07:40:31 -0700 (PDT)
-Date:   Fri, 22 Oct 2021 20:10:26 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Aleksander Morgado <aleksander@aleksander.es>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Thomas Perrot <thomas.perrot@bootlin.com>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
-Message-ID: <20211022144026.GA7657@thinkpad>
-References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
- <20211009105132.GA204538@thinkpad>
- <CAAP7uc+kPCyASq1ki_qZdft7W9rJxnx4-4TmhRJjMDQuQAHsFA@mail.gmail.com>
- <20211022044229.GD3138@workstation>
- <CAAP7ucJrj1HSvqeoXGOc3F2_z2tv5ZgTTexmX8xr57La=_H4ow@mail.gmail.com>
+        Fri, 22 Oct 2021 10:14:46 -0700 (PDT)
+Date:   Fri, 22 Oct 2021 10:16:28 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        abhinavk@codeaurora.org, Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v3 2/2] phy: qcom: Introduce new eDP PHY driver
+Message-ID: <YXLx7EV7ZiMIxauO@ripper>
+References: <20211016232128.2341395-1-bjorn.andersson@linaro.org>
+ <20211016232128.2341395-2-bjorn.andersson@linaro.org>
+ <YXGmJFoeXwtTvl7p@matsya>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAAP7ucJrj1HSvqeoXGOc3F2_z2tv5ZgTTexmX8xr57La=_H4ow@mail.gmail.com>
+In-Reply-To: <YXGmJFoeXwtTvl7p@matsya>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 22, 2021 at 11:20:00AM +0200, Aleksander Morgado wrote:
-> Hey,
+On Thu 21 Oct 10:40 PDT 2021, Vinod Koul wrote:
+
+> On 16-10-21, 16:21, Bjorn Andersson wrote:
+> > Many recent Qualcomm platforms comes with native DP and eDP support.
+> > This consists of a controller in the MDSS and a QMP-like PHY.
+> > 
+> > While similar to the well known QMP block, the eDP PHY only has TX lanes
+> > and the programming sequences are slightly different. Rather than
+> > continuing the trend of parameterize the QMP driver to pieces, this
+> > introduces the support as a new driver.
+> > 
+> > The registration of link and pixel clocks are borrowed from the QMP
+> > driver. The non-DP link frequencies are omitted for now.
+> > 
+> > The eDP PHY is very similar to the dedicated (non-USB) DP PHY, but only
+> > the prior is supported for now.
 > 
-> > > The successful boots seem to happen always on cold boots, and the
-> > > success rate is low (30% or so) on some manual testing here. I haven't
-> > > seen one single successful boot on system restarts, they all fail like
-> > > in the previous email.
-> > >
-> > > When the boot is successful it looks like this:
-> > >
-> >
-> > This looks to be a firmware issue. The device is in SYS_ERR state during
-> > boot and that's expected. But what is strange is that the device stays
-> > in SYS_ERR even after host issues RESET.
-> >
-> > Can you try the below diff and see if it does any good?
-> >
-> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> > index fb99e3727155..a43c3ed77fb1 100644
-> > --- a/drivers/bus/mhi/core/pm.c
-> > +++ b/drivers/bus/mhi/core/pm.c
-> > @@ -104,7 +104,8 @@ static struct mhi_pm_transitions const dev_state_transitions[] = {
-> >         /* L3 States */
-> >         {
-> >                 MHI_PM_LD_ERR_FATAL_DETECT,
-> > -               MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE
-> > +               MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE |
-> > +               MHI_PM_SYS_ERR_PROCESS
-> >         },
-> >  };
-> 
-> Tested again in the RPi CM4 based setup, but didn't help, it's failing
-> in the same way, still says PASS THROUGH state: SYS ERROR:
+> since this is QMP phy, pls add an explanation why common QMP driver
+> is not used here?
 > 
 
-Yes, that's expected. As I said, the device is going to a bad state and from the
-host side, we could only try to recover it.
+Looked at this again, doesn't the second paragraph answer that?
 
-> [    7.032037] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
-> [    7.039213] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
-> 0x600000000-0x600000fff 64bit]
-> [    7.047759] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-> [    7.054573] mhi-pci-generic 0000:01:00.0: using shared MSI
-> [    7.060848] mhi mhi0: Requested to power ON
-> [    7.065277] mhi mhi0: Attempting power on with EE: PASS THROUGH,
-> state: SYS ERROR
-> [    7.072799] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
-> PASS THROUGH state: SYS ERROR
-> [    7.081589] mhi mhi0: System error detected
-> [    7.085867] mhi-pci-generic 0000:01:00.0: firmware crashed (7)
-> [    7.091886] mhi mhi0: Handling state transition: SYS ERROR
-> [    7.097399] mhi mhi0: Transitioning from PM state: SYS ERROR Detect
-> to: SYS ERROR Process
-> [    7.105588] mhi-pci-generic 0000:01:00.0: firmware crashed (6)
+> > +static int qcom_edp_phy_init(struct phy *phy)
+> > +{
+[..]
+> > +	writel(0x00, edp->edp + DP_PHY_AUX_CFG0);
+> > +	writel(0x13, edp->edp + DP_PHY_AUX_CFG1);
+> > +	writel(0x24, edp->edp + DP_PHY_AUX_CFG2);
+> > +	writel(0x00, edp->edp + DP_PHY_AUX_CFG3);
+> > +	writel(0x0a, edp->edp + DP_PHY_AUX_CFG4);
+> > +	writel(0x26, edp->edp + DP_PHY_AUX_CFG5);
+> > +	writel(0x0a, edp->edp + DP_PHY_AUX_CFG6);
+> > +	writel(0x03, edp->edp + DP_PHY_AUX_CFG7);
+> > +	writel(0x37, edp->edp + DP_PHY_AUX_CFG8);
+> > +	writel(0x03, edp->edp + DP_PHY_AUX_CFG9);
+> 
+> In qmp phy we use a table for this, that looks very elegant and I am
+> sure next rev will have different magic numbers, so should we go the
+> table approach here on as well..?
 > 
 
-What happened after this point? Can you share the complete log?
+Comparing the v3 and v4 USB/DP combo phy and this, the only number that
+differs is CFG_AUX2 and CFG_AUX8.
 
-> I've tested the same patches in my desktop PC (based on 5.13.1, and
-> even without this last addition) and the boot process is much more
-> stable and I cannot see the "firmware crashed" errors reported. My
-> assumption right now is that the pci_generic.c entries we're adding
-> are correct, but there's some limitation in this system that is making
-> the EM9191 boot fail, but I still don't know which limitation it is.
-> The memory addresses in the "BAR 0: assigned" log are definitely
-> different in the RPi CM4, and also the shared MSI limitation. I recall
-> Thomas saying that he also tested on a desktop PC forcing the shared
-> MSI limitation and he had the same kind of firmware errors reported;
-> I'll also try to test that.
-> 
+CFG_AUX8 is 0x37 for eDP and 0xb7 for DP and AUX_CFG2 seems better to
+mask together, but I don't fully understand the content yet.
 
-I think the PCI behaviour could be the issue between these 2 setups. But for
-knowing exactly what's happening we need to get the log of the modem (I don't
-think you can get that though).
+I did check two other platforms and they have the same sequence, except
+one additional bit in AUX_CFG2. There also seem to be a few additional
+permutations of this value, so I don't think tables are the solution.
 
-Thanks,
-Mani
+
+So I think it's better if we leave this as proposed and then
+parameterize the two individual entries as needed when we go forward -
+or determine that I missed something.
+
+Regards,
+Bjorn
