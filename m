@@ -2,148 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8634373AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 10:31:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1959D437481
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 11:13:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbhJVIdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 04:33:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232165AbhJVIdY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 04:33:24 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49BDFC061764
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 01:31:07 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id w19so3912343edd.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 01:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+s3RKjcGG+MOOi5e3FStCyMo3mus4CdAelMYmF9XjNI=;
-        b=XA6b/fmmHaNPaJQ3RWZTTghGLmKtShh6KbyR2G7KJhw/Dx2kZN+ehZcl1lgX9u/iPM
-         3jf1s1h/0pRoiNYq7JNYf4RHU4Ew5+3dKl+rddx82JmMj887Yd0Qvhejhf/JTty8tIEV
-         655GZsYB1eyWoOPS9rEr7vTrFCdt6myHuW+zwyt2bYlIWSErX2wEDuiFkSxDNemfy5/p
-         7XwCzABaOuK0O1+c6vsIHnaH0YBrwdo7CukTK9IvEquCe3tVlpqi2NisDNYrOzddI71c
-         F9Y/Dj0y1vw4P1gOLHkcY1+VFIFk2Rt5OSt0fZBlUmPagryhXyWfxo01DiTtVzXL9hR/
-         2EEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+s3RKjcGG+MOOi5e3FStCyMo3mus4CdAelMYmF9XjNI=;
-        b=K5CCma5vC+CZ2idjWdaJa8nFda5J7g0nx+eCmCcD9X28vrF03qOKoG1jkIgeJ8TdCv
-         zRc77TwOtWsR9xK6FMVATvEZZF0tYveQFmImyzWdxPJyO3k4KCGITYXCzojqeXWs8HZQ
-         WvdxqZ6ZyQXdkiqUaVbEMuHaPwsMlWHWopmU9Qv/eRgpUwlWQGFWfDVnsXN95KghhE+7
-         HpsF5aSseepiWYOikWbco+SxtWzC8nTMhrpHdnkLWf5vMYwKsD2H3LP0J3s4oxvD1wuH
-         5h7Y3HBj69S9WNFBk1JQuZYhHx4mU/8sQkRCDhVeHCUSofo8zntoi/zWSdSt43Ic7r15
-         ntpg==
-X-Gm-Message-State: AOAM533KUh4SQS0OQIgfQCo0CujMKobv/P68z6GD2xDR0tHVQgFGmZjQ
-        kuBlffWuU+vUA49xeGfROzBE9g==
-X-Google-Smtp-Source: ABdhPJyjALlIYBx258q1rME3+PI/RUJSvPoCUA5pHFn2TnQwq1Dol04vdP1h5OJqKSklFppy+EzwbQ==
-X-Received: by 2002:a17:906:5805:: with SMTP id m5mr13683921ejq.221.1634891464458;
-        Fri, 22 Oct 2021 01:31:04 -0700 (PDT)
-Received: from [192.168.1.15] (hst-221-79.medicom.bg. [84.238.221.79])
-        by smtp.googlemail.com with ESMTPSA id e7sm4448621edk.3.2021.10.22.01.31.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Oct 2021 01:31:03 -0700 (PDT)
-Subject: Re: [RESEND PATCH v6] arm64: dts: qcom: sc7280: Add venus DT node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-References: <1632199829-25686-1-git-send-email-dikshita@codeaurora.org>
- <YUpZaQ42ldzEKtV/@builder.lan>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <68a9da44-b568-85e9-6ec4-28fc8d95633f@linaro.org>
-Date:   Fri, 22 Oct 2021 11:31:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S232548AbhJVJQG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 05:16:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46368 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232624AbhJVJQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Oct 2021 05:16:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id ABC0D610CB;
+        Fri, 22 Oct 2021 09:13:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1634894024;
+        bh=H/IecAZU9Vka+FxLgVpI5lpGtmOBDxUU4pOnlzjcF/Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=f8AHFMPsk4W9sPlhRKDCcNhSpVkeiKGyHCcsNY3/Z9n5MFHf2qz+b9rcJvEWaDUD0
+         PzlKRSBADuM0aL272QgHN+QoRpPmGUOY35l0cCHu/0qBtyzP3WyFBCY5PIQgW3GhRx
+         K2/c+sABfdfjyFj3/OSX06UX3ciy9+GP5ad94yLg=
+Date:   Fri, 22 Oct 2021 11:13:41 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
+ already resized
+Message-ID: <YXKAxYZ+ikGaDvv/@kroah.com>
+References: <20211019004123.15987-1-jackp@codeaurora.org>
+ <YXFGWPMmmdyaSOPg@kroah.com>
+ <20211021174316.GA2357@jackp-linux.qualcomm.com>
 MIME-Version: 1.0
-In-Reply-To: <YUpZaQ42ldzEKtV/@builder.lan>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211021174316.GA2357@jackp-linux.qualcomm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
-
-On 9/22/21 1:15 AM, Bjorn Andersson wrote:
-> On Mon 20 Sep 23:50 CDT 2021, Dikshita Agarwal wrote:
+On Thu, Oct 21, 2021 at 10:43:17AM -0700, Jack Pham wrote:
+> On Thu, Oct 21, 2021 at 12:52:08PM +0200, Greg Kroah-Hartman wrote:
+> > On Mon, Oct 18, 2021 at 05:41:23PM -0700, Jack Pham wrote:
+> > > Some functions may dynamically enable and disable their endpoints
+> > > regularly throughout their operation, particularly when Set Interface
+> > > is employed to switch between Alternate Settings.  For instance the
+> > > UAC2 function has its respective endpoints for playback & capture
+> > > associated with AltSetting 1, in which case those endpoints would not
+> > > get enabled until the host activates the AltSetting.  And they
+> > > conversely become disabled when the interfaces' AltSetting 0 is
+> > > chosen.
+> > > 
+> > > With the DWC3 FIFO resizing algorithm recently added, every
+> > > usb_ep_enable() call results in a call to resize that EP's TXFIFO,
+> > > but if the same endpoint is enabled again and again, this incorrectly
+> > > leads to FIFO RAM allocation exhaustion as the mechanism did not
+> > > account for the possibility that endpoints can be re-enabled many
+> > > times.
+> > > 
+> > > Example log splat:
+> > > 
+> > > 	dwc3 a600000.dwc3: Fifosize(3717) > RAM size(3462) ep3in depth:217973127
+> > > 	configfs-gadget gadget: u_audio_start_capture:521 Error!
+> > > 	dwc3 a600000.dwc3: request 000000000be13e18 was not queued to ep3in
+> > > 
+> > > Add another bit DWC3_EP_TXFIFO_RESIZED to dep->flags to keep track of
+> > > whether an EP had already been resized in the current configuration.
+> > > If so, bail out of dwc3_gadget_resize_tx_fifos() to avoid the
+> > > calculation error resulting from accumulating the EP's FIFO depth
+> > > repeatedly.  This flag is retained across multiple ep_disable() and
+> > > ep_enable() calls and is cleared when GTXFIFOSIZn is reset in
+> > > dwc3_gadget_clear_tx_fifos() upon receiving the next Set Config.
+> > > 
+> > > Fixes: 9f607a309fbe9 ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
+> > > Signed-off-by: Jack Pham <jackp@codeaurora.org>
+> > > ---
+> > > v2: Added explicit flag to dep->flags and check that instead of directly
+> > >     reading the GTXFIFOSIZn register.
+> > > 
+> > >  drivers/usb/dwc3/core.h   | 1 +
+> > >  drivers/usb/dwc3/gadget.c | 8 +++++++-
+> > >  2 files changed, 8 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+> > > index 5612bfdf37da..f033063f6948 100644
+> > > --- a/drivers/usb/dwc3/core.h
+> > > +++ b/drivers/usb/dwc3/core.h
+> > > @@ -723,6 +723,7 @@ struct dwc3_ep {
+> > >  #define DWC3_EP_FORCE_RESTART_STREAM	BIT(9)
+> > >  #define DWC3_EP_FIRST_STREAM_PRIMED	BIT(10)
+> > >  #define DWC3_EP_PENDING_CLEAR_STALL	BIT(11)
+> > > +#define DWC3_EP_TXFIFO_RESIZED	BIT(12)
+> > 
+> > Any specific reason this isn't lined up properly?
 > 
->> Add DT entries for the sc7280 venus encoder/decoder.
->>
->> this patch depends on [1].
->>
->> [1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=529463
-
-Please drop those two lines above.
-
+> The preceding macros admittedly aren't consistent either :-P.  Here's
+> the whole section with my change:
 > 
-> The stuff you write here will be forever imprinted in the git history
-> and it's already unnecessary, given that the patch you reference here is
-> available in linux-next.
+> 	unsigned int            flags;
+> #define DWC3_EP_ENABLED		BIT(0)
+> #define DWC3_EP_STALL		BIT(1)
+> #define DWC3_EP_WEDGE		BIT(2)
+> #define DWC3_EP_TRANSFER_STARTED BIT(3)
+> #define DWC3_EP_END_TRANSFER_PENDING BIT(4)
+> #define DWC3_EP_PENDING_REQUEST	BIT(5)
+> #define DWC3_EP_DELAY_START	BIT(6)
+> #define DWC3_EP_WAIT_TRANSFER_COMPLETE	BIT(7)
+> #define DWC3_EP_IGNORE_NEXT_NOSTREAM	BIT(8)
+> #define DWC3_EP_FORCE_RESTART_STREAM	BIT(9)
+> #define DWC3_EP_FIRST_STREAM_PRIMED	BIT(10)
+> #define DWC3_EP_PENDING_CLEAR_STALL	BIT(11)
+> #define DWC3_EP_TXFIFO_RESIZED	BIT(12)
+
+Ah, didn't notice that, I only could see the context here.  Nevermind
+then :)
+
+> The macros for the earlier bits 0-2, 5 and 6 have shorter names and
+> therefore use one or two tabs to line up at an earlier tab stop.  But
+> the ones with the longer names for bits 7-11 use a single tab which bump
+> out the definition to the next tab column.  Since the macro I'm adding
+> in my patch has a shorter name I thought I'd follow the precedent of the
+> earlier bits and use a single tab which aligns with the earlier bits but
+> I agree it does look strange overall.  Especially with bits 3 & 4 which
+> aren't lined up at all.
 > 
-> Things you want to mention, but shouldn't go into the git history, put
-> those below the '---' line.
-> 
->>
->> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
->> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
->> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> I guess a patch to fix the rest of the earlier macros wouldn't hurt but
+> I'd also like this to go to stable too.  Should I send this as a 2-part
+> series: 1/2 being my change (with correct alignment and cc:stable) and
+> 2/2 as a cleanup for bits 0-6?
 
-I guess this should be :
+Looks like you already did that, thanks.
 
-Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-
-but checkpatch --strict should complain about this, no?
-
->> ---
->>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
->>  1 file changed, 75 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index a8c274a..f171ababc 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -63,6 +63,11 @@
->>  			no-map;
->>  			reg = <0x0 0x80b00000 0x0 0x100000>;
->>  		};
->> +
->> +		video_mem: memory@8b200000 {
->> +			reg = <0x0 0x8b200000 0x0 0x500000>;
->> +			no-map;
->> +		};
->>  	};
->>  
->>  	cpus {
->> @@ -1063,6 +1068,76 @@
->>  			qcom,bcm-voters = <&apps_bcm_voter>;
->>  		};
->>  
->> +		venus: video-codec@aa00000 {
->> +			compatible = "qcom,sc7280-venus";
-> 
-> I do however now see this compatible defined in a binding in linux-next,
-> so you definitely should have listed that patch as a dependency - and
-> preferably held off sending me 6 versions (plus resend) of a patch that
-> I can't merge.
-> 
-> Please ping me once the binding is merged, so that I know when I can
-> merge this patch.
-Bjorn, the binding is in linux-next now.
-
--- 
--- 
-regards,
-Stan
+greg k-h
