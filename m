@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E77924380CB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Oct 2021 01:58:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C3724380CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Oct 2021 01:58:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbhJWAAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 20:00:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40996 "EHLO
+        id S232285AbhJWAAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 20:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231820AbhJWAAk (ORCPT
+        with ESMTP id S232241AbhJWAAp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 20:00:40 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 276A4C061348
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 16:58:22 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id s3so6054146ild.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 16:58:22 -0700 (PDT)
+        Fri, 22 Oct 2021 20:00:45 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22A9DC061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 16:58:27 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id r134so7386013iod.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 16:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Zag9BI4WnzwDMKirvs2JgqIo0CDKPVykBXhBbv4X39Y=;
-        b=esMSn5hJb8IItHgig97yRqtzEPLjQ5wvKy21dsq93D/9KdO5VckJBLoUjO6OKQn3nT
-         sjn/zPdbJbqZnBvCbkO0ga/S5+gs+MJxGh8knw2SyqQD9f4bZda4Jh/opwtwps8Zs8iZ
-         iDWlunooI0AvB6g2PubmbSUAa1aI+n4mDVSNw=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HDS7qDHjHOaWOFZwMpIbasUAJZB8YLyW4e2fBz6JHaQ=;
+        b=YSzqSWMAubbhHAheo3UGfbnP6ZHGIfBUiuOKXaagQp/0NGVfyeIXSPBYRLy8DyfSB9
+         n73i7f6FAdN6aqM2VmycTp6+BhhlQwB+xM5c4cKl98FYC2nyc0qsf70FYQNVzlMxDF+N
+         /MPSzk9Mv3VAPlAZOgQ2SIH56zImPqoLfgvfs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Zag9BI4WnzwDMKirvs2JgqIo0CDKPVykBXhBbv4X39Y=;
-        b=QCQhWgMKlp2ubNpSmTh+5AACm2SoTtouaMGEOYQ8r4XhqC5pM12g0Kbr8hJL/eIU7F
-         fnV3NFTfRlik5pG0JViX9zIOOgMcI+wCDa8LEp3x79YF/I9GjIuke/1nt+rJpEpUa3XP
-         jhmt8sjmCNixVM59+Cy22fYvugC+4bn/QbY+WL8GR8G2ksdEwAvCaN/YYg2XBMHhbtwL
-         3tfnhynO5IpmJpgbj1WMaXF0/NDH84xnEv5WPnnx2vNlNfxFnnPSk9Yw/P+4mFgbRg5S
-         eHyz86Kbq1z2xgRpu6gNgZlASMgS2Buigo7vl8+LrqODnZ4cNUYPAgq7NY++Li7CKaLj
-         RD+A==
-X-Gm-Message-State: AOAM5335vEJtn69DaAHkp5B1ZA7DCC+kb/PlEzWuV+ZcnIDE4FCZfv7N
-        IDvevkRHlzBFfdEZm+8sioY7/2REbzBEEQ==
-X-Google-Smtp-Source: ABdhPJyfL1SYIYp4iGWUhti94T+a/ZkkCY5DCwSKnOOb5IenpW3zYjR6X0q/mPfbnsxuNMOTOgM8uA==
-X-Received: by 2002:a05:6e02:156b:: with SMTP id k11mr1766148ilu.115.1634947101373;
-        Fri, 22 Oct 2021 16:58:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HDS7qDHjHOaWOFZwMpIbasUAJZB8YLyW4e2fBz6JHaQ=;
+        b=rkiCgZVMG/QiGDH1SBzqf5Ionez45asZLn+R3i3Kk+7YVhbajTEicywjaPGoy76Fl7
+         z8+Op2t76c+9C4ZQuEUITY2nhrXAmKMn2P4FVJqyuY1nHhR7T50Pij3lolaKPRZMZlB0
+         wFPERx9bF5/vyUyttK1s89TYGViCsnVhv57ywZLkRgq2r55aGVjhgYzMwtPhEHRuE9iP
+         TVdr7V91wNi7BXY5Iq+Cle9p3c6O5Hj54e01XKHlhiaIMdir3Hrn4jBTVRzOmtH/0cL3
+         f8q1tQjayXUxJlc/19ZPF+vNKD8eMJ811gVW/Nd5S2zAkZzyqLPOuZGhOFdNDt0U2B6Z
+         lpQQ==
+X-Gm-Message-State: AOAM533Dn8SAy4qNMFJiwk74UEBgfSW0FX1sOAy+jUcyLUhGnCwxH5dQ
+        vo0BlvuuuGJcCFmxdfEKqnxQFQ==
+X-Google-Smtp-Source: ABdhPJwlcG4U/fvs7GLKW6fhpUoafn85mCdtXLVaK6ElzfOmSbH/J7pgw/ag96lYFBXBh4KjZPu1lg==
+X-Received: by 2002:a6b:ce03:: with SMTP id p3mr1672879iob.163.1634947106513;
+        Fri, 22 Oct 2021 16:58:26 -0700 (PDT)
 Received: from localhost ([2600:6c50:4d00:cd01::382])
-        by smtp.gmail.com with ESMTPSA id g1sm5163277ild.86.2021.10.22.16.58.19
+        by smtp.gmail.com with ESMTPSA id o1sm4993337ilj.41.2021.10.22.16.58.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Oct 2021 16:58:20 -0700 (PDT)
+        Fri, 22 Oct 2021 16:58:25 -0700 (PDT)
 From:   Benjamin Li <benl@squareup.com>
 To:     Kalle Valo <kvalo@codeaurora.org>
 Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
@@ -54,32 +54,44 @@ Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
         linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 0/2] wcn36xx: add missing 5GHz channels 136 and 144
-Date:   Fri, 22 Oct 2021 16:57:36 -0700
-Message-Id: <20211022235738.2970167-1-benl@squareup.com>
+Subject: [PATCH 1/2] wcn36xx: Switch on Antenna diversity feature bit
+Date:   Fri, 22 Oct 2021 16:57:37 -0700
+Message-Id: <20211022235738.2970167-2-benl@squareup.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20211022235738.2970167-1-benl@squareup.com>
+References: <20211022235738.2970167-1-benl@squareup.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Think Bryan's commit was accidentally lost during upstreaming of his original
-WCN3680 support patches, so I've included it here.
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Omitted Fixes: tag as this was a regression from downstream prima, but not a
-regression from previous versions of wcn36xx.
+Switches on Antenna diversity feature bit.
 
-Benjamin Li (1):
-  wcn36xx: add missing 5GHz channels 136 and 144
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Benjamin Li <benl@squareup.com>
+---
+ drivers/net/wireless/ath/wcn36xx/smd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Bryan O'Donoghue (1):
-  wcn36xx: Switch on Antenna diversity feature bit
-
- drivers/net/wireless/ath/wcn36xx/main.c | 2 ++
- drivers/net/wireless/ath/wcn36xx/smd.c  | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
+diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+index 3979171c92dd..be6442b3c80b 100644
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -2394,8 +2394,10 @@ int wcn36xx_smd_feature_caps_exchange(struct wcn36xx *wcn)
+ 	INIT_HAL_MSG(msg_body, WCN36XX_HAL_FEATURE_CAPS_EXCHANGE_REQ);
+ 
+ 	set_feat_caps(msg_body.feat_caps, STA_POWERSAVE);
+-	if (wcn->rf_id == RF_IRIS_WCN3680)
++	if (wcn->rf_id == RF_IRIS_WCN3680) {
+ 		set_feat_caps(msg_body.feat_caps, DOT11AC);
++		set_feat_caps(msg_body.feat_caps, ANTENNA_DIVERSITY_SELECTION);
++	}
+ 
+ 	PREPARE_HAL_BUF(wcn->hal_buf, msg_body);
+ 
 -- 
 2.25.1
 
