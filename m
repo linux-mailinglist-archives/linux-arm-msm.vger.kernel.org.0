@@ -2,15 +2,15 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02CAE43760C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 13:36:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A2C0437611
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 13:37:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232769AbhJVLjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 07:39:12 -0400
-Received: from ip-8.mailobj.net ([213.182.54.8]:42534 "EHLO msg-3.mailo.com"
+        id S232773AbhJVLjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 07:39:17 -0400
+Received: from ip-16.mailobj.net ([213.182.54.16]:55884 "EHLO msg-6.mailo.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232539AbhJVLjM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 07:39:12 -0400
+        id S232539AbhJVLjQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Oct 2021 07:39:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
         t=1634898358; bh=qXTIz9NUZOX9AJLI0EfpCFCuPKutlkzQauklWJ1ZdII=;
         h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
