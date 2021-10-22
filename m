@@ -2,140 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86DF9437913
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 16:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D899F437923
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 16:40:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233128AbhJVOgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 10:36:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55282 "EHLO
+        id S233159AbhJVOmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 10:42:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232949AbhJVOgC (ORCPT
+        with ESMTP id S233145AbhJVOmu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 10:36:02 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E1B4C061764
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:33:44 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id y12so1918781eda.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:33:44 -0700 (PDT)
+        Fri, 22 Oct 2021 10:42:50 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429E1C061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:40:33 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id gn3so3147850pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 07:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/WVZM6fPojKl+UIwJ5m3rOvROAHJd6WnuD794RcLRAU=;
-        b=QhX0x4AQqFOupQwCHW3UexCDrqUA0VSDwwb+DyDt5iEh0Uxgerdd1eRn6mZny/kFKQ
-         QZS0UaCDDCTuxDk8rwSG9Iq5C7zB/Kz5t8ljHq7U1vrMZFZN/pY0c9WtwVHv2tsCqGeu
-         a7Oo5P8fapdw2t5BXWdpaspQ7QDZ7cs4MgJC/Ys+wNurJZHLY3sSxY1DJMjCBKWW2iJ9
-         bf9Gv3OGCGAsdbTDr0oNRFiv+eCIAObB6GCif8CNqoojbkt6GPJnCCnk4ITFXKczD6Mp
-         3UcTBizS5SvhiWnuPurBiD6BiiqTHdpIq6cNmgagudJsUIrGlZW4t5oI7EgCNN1pTyP4
-         /vIA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=t+jlPMA1dg4OfWoGGFCEON4a1V3lKsDj3UlO4kiDoNY=;
+        b=HdWpvwuSquNCyQQNNZHuz34B3PGHXbpjbgIc56ZKSkY47WKBt8edHi5TFH7K9NsZTZ
+         x9jrWUmX1EcpYUrli2pE2Od9CaoGexjyk6cb85wCPcHc6PBfUKsVkFrAM40X11cUl74V
+         IFdFnm/bagNsLEqZnkMDUPkxTCHNKCkSEzsSqkSQovd54idWCytvgyGpYy88++uy/y5c
+         NH+HWfJpiAmDY5GgiYeRtTw7nWOIpZIF/bq8Nd0yTtNZfz9oDOzaA1aTA/SkBoMqhEJ9
+         cZYlZx0fhdbqNOxOMi9nT9Tv3PyAs/Gis7sUlmzfkwjPBd5Y9PoM99weniYmUhLvWA7k
+         CCcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/WVZM6fPojKl+UIwJ5m3rOvROAHJd6WnuD794RcLRAU=;
-        b=1asD/z7yZFRRKHwo+Z6obgMtKLpyBr4W9O5N1mp34HX8vSkW4F24Mm4SUcQlCWFqG8
-         1CqPCJs6cBb7QTY50UjP3Ni+4yQKg4A0QF4FjokPf54gZsSxjv+NI4nptEe66HvX9O5n
-         gWKqktL2zZO1wa/fPBu514XDKIiGXIOefIuPdPNrQaj5w1dDYhqckm0r+S5023Oq6Yq/
-         HJPB6k1HHmjhDS7P9KUUZstUScY+tsIAn1AE3hFL0S7AOXfuJZCXN17RXzKKuiuothyZ
-         eTDu3C3zklPQDV+5yO8v1OSfaqyzOMkSiHGQrBN34y4ygjnQm8yEFd10HoSO8Xzc8NRM
-         gEaA==
-X-Gm-Message-State: AOAM533m1Hfibo6NIFosUl0jJmAO6bONZbHdr4Wl/EaTnwzigUAIxFqt
-        xdIwTXQN2Gmcw0/5YXUzDy6wrCfs4T6ZweSOXTUc1Q==
-X-Google-Smtp-Source: ABdhPJzkdKTAQvd+r7gefjEewFVdtJOFgSLha9pjtBTflvt4XF0MAGLHbGPHdRdInJQSnHosie2JpuQOzrTYOB6r9Ao=
-X-Received: by 2002:a17:907:168c:: with SMTP id hc12mr15692065ejc.570.1634913223181;
- Fri, 22 Oct 2021 07:33:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
- <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
- <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com>
- <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
- <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
- <CAMZdPi8QXrjN6VYU1VrGeOBhvVSnxopioM7POEOcS5ywsSFDHQ@mail.gmail.com>
- <CAAP7ucKL+5oUmidVp1W-oOyfuuYR3F-11GuNdxLX9iYijaL6_A@mail.gmail.com>
- <CAAP7uc+5=GMGgz3MKfSWaAtes1WwCCx+6iYhb058ZUr0=A52cg@mail.gmail.com>
- <CAMZdPi9cbDVWVxvimg-uc_TRvskrxbjEQ4AxdLjA57Ewm2tSPA@mail.gmail.com>
- <bd875c3b9d19f8827362b129999d84cd04ad90ae.camel@bootlin.com> <CAMZdPi_J7ePh22v7J3WgqO9X3Y1KffTm__TfL9jGHj61H2x9QA@mail.gmail.com>
-In-Reply-To: <CAMZdPi_J7ePh22v7J3WgqO9X3Y1KffTm__TfL9jGHj61H2x9QA@mail.gmail.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Fri, 22 Oct 2021 16:33:32 +0200
-Message-ID: <CAAP7ucL3T6nfLSj8p1Urqo2yPwBGfkK1JnOtpbcrkYWVnkCKdw@mail.gmail.com>
-Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Thomas Perrot <thomas.perrot@bootlin.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=t+jlPMA1dg4OfWoGGFCEON4a1V3lKsDj3UlO4kiDoNY=;
+        b=NEXtIrCfzTBDZYNFwTbsU6KCwt+OMWqjTKi8UHX4VZCZ34TmSd6+9Eybg5rMq2BXEy
+         n1ioGaUlmkgtcysrPLfPWOWyeFnEfqKBXwY/KzESL2kfEBATW7V+sCpEDlOt1mEs/+ur
+         65ASiPDmq9VVX6ec77CWjCo1TnUgzgyJKIGJOUbQhGW+XR0hOf5aFQL5oX2fWa+RcpKq
+         29BnfUOQCkD6gKsP0vPgBOOVr8qOPPCU0taW/vbzPjhMYUakIOxj5ziZ5h77z7Z22PbH
+         jky+qEQm6t65MMr/8aNR3mrsYVhW7iJ3q32bkho42J8pNoPfogtD5F2ze4pNfYLmztt/
+         vyLg==
+X-Gm-Message-State: AOAM531SIzgtr0Bj2Hrld/DbEah1/BZ1L9akIiYsahAbaB5jPACmXVyw
+        L6SAWNXcUukfm/3ne46vepLCzWsswmec
+X-Google-Smtp-Source: ABdhPJwdl26K1EE7BngfpCdwlm20FGf2XpZtreqgiiOyqxwPfl2FPp9wW2521UQYko9SnFBxyURJKw==
+X-Received: by 2002:a17:90a:6b4f:: with SMTP id x15mr15095023pjl.233.1634913632588;
+        Fri, 22 Oct 2021 07:40:32 -0700 (PDT)
+Received: from thinkpad ([59.92.97.72])
+        by smtp.gmail.com with ESMTPSA id b3sm6618522pfm.54.2021.10.22.07.40.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Oct 2021 07:40:31 -0700 (PDT)
+Date:   Fri, 22 Oct 2021 20:10:26 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Aleksander Morgado <aleksander@aleksander.es>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Thomas Perrot <thomas.perrot@bootlin.com>,
         Hemant Kumar <hemantk@codeaurora.org>,
         Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+Message-ID: <20211022144026.GA7657@thinkpad>
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+ <20211009105132.GA204538@thinkpad>
+ <CAAP7uc+kPCyASq1ki_qZdft7W9rJxnx4-4TmhRJjMDQuQAHsFA@mail.gmail.com>
+ <20211022044229.GD3138@workstation>
+ <CAAP7ucJrj1HSvqeoXGOc3F2_z2tv5ZgTTexmX8xr57La=_H4ow@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAAP7ucJrj1HSvqeoXGOc3F2_z2tv5ZgTTexmX8xr57La=_H4ow@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey,
+On Fri, Oct 22, 2021 at 11:20:00AM +0200, Aleksander Morgado wrote:
+> Hey,
+> 
+> > > The successful boots seem to happen always on cold boots, and the
+> > > success rate is low (30% or so) on some manual testing here. I haven't
+> > > seen one single successful boot on system restarts, they all fail like
+> > > in the previous email.
+> > >
+> > > When the boot is successful it looks like this:
+> > >
+> >
+> > This looks to be a firmware issue. The device is in SYS_ERR state during
+> > boot and that's expected. But what is strange is that the device stays
+> > in SYS_ERR even after host issues RESET.
+> >
+> > Can you try the below diff and see if it does any good?
+> >
+> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > index fb99e3727155..a43c3ed77fb1 100644
+> > --- a/drivers/bus/mhi/core/pm.c
+> > +++ b/drivers/bus/mhi/core/pm.c
+> > @@ -104,7 +104,8 @@ static struct mhi_pm_transitions const dev_state_transitions[] = {
+> >         /* L3 States */
+> >         {
+> >                 MHI_PM_LD_ERR_FATAL_DETECT,
+> > -               MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE
+> > +               MHI_PM_LD_ERR_FATAL_DETECT | MHI_PM_DISABLE |
+> > +               MHI_PM_SYS_ERR_PROCESS
+> >         },
+> >  };
+> 
+> Tested again in the RPi CM4 based setup, but didn't help, it's failing
+> in the same way, still says PASS THROUGH state: SYS ERROR:
+> 
 
-> What is done in the downstream driver?
->
+Yes, that's expected. As I said, the device is going to a bad state and from the
+host side, we could only try to recover it.
 
-For reference, the same kind of instabilities can also be observed
-when using Sierra Wireless' MBPL driver (R20).
+> [    7.032037] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
+> [    7.039213] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+> 0x600000000-0x600000fff 64bit]
+> [    7.047759] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+> [    7.054573] mhi-pci-generic 0000:01:00.0: using shared MSI
+> [    7.060848] mhi mhi0: Requested to power ON
+> [    7.065277] mhi mhi0: Attempting power on with EE: PASS THROUGH,
+> state: SYS ERROR
+> [    7.072799] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
+> PASS THROUGH state: SYS ERROR
+> [    7.081589] mhi mhi0: System error detected
+> [    7.085867] mhi-pci-generic 0000:01:00.0: firmware crashed (7)
+> [    7.091886] mhi mhi0: Handling state transition: SYS ERROR
+> [    7.097399] mhi mhi0: Transitioning from PM state: SYS ERROR Detect
+> to: SYS ERROR Process
+> [    7.105588] mhi-pci-generic 0000:01:00.0: firmware crashed (6)
+> 
 
-The failed boots look like:
-[    7.048072] [D][mhi_pci_probe] enter
-[    7.051852] mhictrl 0000:01:00.0: BAR 0: assigned [mem
-0x600000000-0x600000fff 64bit]
-[    7.059720] mhictrl 0000:01:00.0: enabling device (0000 -> 0002)
-[   12.582341] [D][mhi_pci_probe] failed!
-[   12.586130] mhictrl: probe of 0000:01:00.0 failed with error -5
-[   12.593561] [D][mhi_netdev_init] enter
-[   12.598049] [D][mhitty_init] Enter
-[   12.601493] [D][mhitty_init] mhi_driver_register 0x0
-[   12.606975] [D][mhi_uci_init] enter
+What happened after this point? Can you share the complete log?
 
-The successful boots look like:
-[    7.009119] [D][mhi_pci_probe] enter
-[    7.012995] mhictrl 0000:01:00.0: BAR 0: assigned [mem
-0x600000000-0x600000fff 64bit]
-[    7.020877] mhictrl 0000:01:00.0: enabling device (0000 -> 0002)
-[    7.027542] [D][mhi_async_power_up] current EE PASS THRU
-[    7.027572] [D][mhi_pci_probe] Return successful
-[    7.037764] [D][mhi_pm_st_worker] current EE AMSS
-[    7.037773] [D][mhi_intvec_threaded_handlr] device ee:AMSS dev_state:READY
-[    7.049532] [D][mhi_netdev_init] enter
-[    7.054771] [D][mhitty_init] Enter
-[    7.058247] [D][mhitty_init] mhi_driver_register 0x0
-[    7.063982] [D][mhi_uci_init] enter
-[   15.432947] [D][mhi_process_ctrl_ev_ring] MHI state change event to state:M0
-[   15.440028] [D][mhi_pm_m0_transition] Entered With State:READY PM_STATE:POR
-[   15.447060] [D][mhi_process_ctrl_ev_ring] MHI EE received event:AMSS
-[   15.453447] [D][mhi_pm_mission_mode_transition] current EE AMSS
-[   15.468941] [D][mhi_process_ctrl_ev_ring] MHI state change event to state:M3
-[   15.481902] [D][mhi_pm_m3_transition] Entered mhi_state:M3 pm_state:M3
-[   15.488438] [D][mhi_pm_resume] Entered with pm_state:M3 dev_state:M3
-[   15.507320] [D][mhi_process_ctrl_ev_ring] MHI state change event to state:M0
-[   15.514363] [D][mhi_pm_m0_transition] Entered With State:M3 PM_STATE:M3->M0
-[   15.521437] [D][mhi_create_time_sync_dev] device add 0306_00.01.00_TIME_SYNC
-[   15.521553] [D][mhi_create_devices] chan 5 device add 0306_00.01.00_DIAG
-[   15.528676] [D][mhi_tty_probe] enter
-[   15.539024] [D][mhi_tty_probe] probe chan DIAG successful!
-[   15.544673] [D][mhi_create_devices] chan 13 device add 0306_00.01.00_MBIM
-[   15.544735] [D][mhi_uci_probe] enter
-[   15.555217] [D][mhi_uci_probe] channel:MBIM successfully probed
-[   15.561312] [D][mhi_create_devices] chan 15 device add 0306_00.01.00_QMI0
-[   15.561377] [D][mhi_uci_probe] enter
-[   15.571824] [D][mhi_uci_probe] channel:QMI0 successfully probed
-[   15.577897] [D][mhi_create_devices] chan 33 device add 0306_00.01.00_DUN
-[   15.577960] [D][mhi_tty_probe] enter
-[   15.588328] [D][mhi_tty_probe] probe chan DUN successful!
-[   15.593893] [D][mhi_create_devices] chan 101 device add 0306_00.01.00_IP_HW0
-[   15.593953] [D][mhi_netdev_probe] enter
-[   15.826612] [D][mhi_netdev_probe] success
-[   15.832353] [D][mhi_pm_mission_mode_transition] current EE AMSS
-[   15.969077] [D][mhi_process_ctrl_ev_ring] MHI state change event to state:M3
-[   15.982047] [D][mhi_pm_m3_transition] Entered mhi_state:M3 pm_state:M3
-[   15.988602] [D][mhi_pm_resume] Entered with pm_state:M3 dev_state:M3
-[   16.071030] [D][mhi_process_ctrl_ev_ring] MHI state change event to state:M0
-[   16.078074] [D][mhi_pm_m0_transition] Entered With State:M3 PM_STATE:M3->M0
+> I've tested the same patches in my desktop PC (based on 5.13.1, and
+> even without this last addition) and the boot process is much more
+> stable and I cannot see the "firmware crashed" errors reported. My
+> assumption right now is that the pci_generic.c entries we're adding
+> are correct, but there's some limitation in this system that is making
+> the EM9191 boot fail, but I still don't know which limitation it is.
+> The memory addresses in the "BAR 0: assigned" log are definitely
+> different in the RPi CM4, and also the shared MSI limitation. I recall
+> Thomas saying that he also tested on a desktop PC forcing the shared
+> MSI limitation and he had the same kind of firmware errors reported;
+> I'll also try to test that.
+> 
 
--- 
-Aleksander
-https://aleksander.es
+I think the PCI behaviour could be the issue between these 2 setups. But for
+knowing exactly what's happening we need to get the log of the modem (I don't
+think you can get that though).
+
+Thanks,
+Mani
