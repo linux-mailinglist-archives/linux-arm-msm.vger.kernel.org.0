@@ -2,191 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D002437BAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 19:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A66F0437BC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 19:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233794AbhJVRSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 13:18:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36044 "EHLO
+        id S233833AbhJVRXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 13:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233799AbhJVRSd (ORCPT
+        with ESMTP id S233627AbhJVRXQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 13:18:33 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2774BC061764;
-        Fri, 22 Oct 2021 10:16:16 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id e5-20020a17090a804500b001a116ad95caso3538167pjw.2;
-        Fri, 22 Oct 2021 10:16:16 -0700 (PDT)
+        Fri, 22 Oct 2021 13:23:16 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EADE3C061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 10:20:58 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id t4so5893995oie.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 10:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=F9xtcbi+q+YfLP2muy6TXktd/IJLbaDHMhjmAQ1kOuY=;
-        b=EEFmFl5GKzDWPv07RsGYrNoyyXj6T/VNMx/d/u86IkTISJxf70wllx4b8ZCdpmkc1m
-         EivJqD54g7dTu4/G3LWeloYIpbMRCCxWx0P3HtZKoktkeB6GFf+c3nwuoJp6YCXIZtwf
-         z88Y8wML9rFenAl2Ib0Dd7IA+EVz+5auR3uHOzIBsb45l/mfcmdtCoLT8ENqrAtzi8Hn
-         5XEGIP83A9/bfY4NKlSMUFRqnr9o5sTmQ/kP/K/JXDySGCHLllKsfMVL/pFW+A9CGQi0
-         nRjrX3SNk+HfmRGc+LKIS+OFOi8KKc5S4V8cuuP3yYgLhKDshEvMUahFZN+T8teyxTe+
-         Tlzw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Z4mIXFa4iFtG0/3MwjffVdtreROCML6cO1oSaovl7kw=;
+        b=XOzPRrO+Dvgdv3N4+FSroOWjBFonbuNYcEmpzvPV6UGjh253V/4q5E9p8PiTGIBpHC
+         rOILz6x6sIFB9QWjRemrSUyUcvHTStC+p5kboTvkRdIwK4F07acGSnS6RUa+aq0CodDx
+         04hutEYEf4NNzk0mCmzM3/lVOITwnf8xljYzwwEhF06r5W2jIMvc+Zbh+ixBi/5ZjqIB
+         9g7HFYayHuHrepHGvKKOXbgp6yWBjT3e/mpUwRbb+43i9U2C37hUvL55kyhWd9gwwDsl
+         I/8YdJzBjaDSHAKBgCLhb64AHVu3+pqDpdrNJjWI30WsyEQw9XefCACVP3kJpw4iaXTF
+         U7pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=F9xtcbi+q+YfLP2muy6TXktd/IJLbaDHMhjmAQ1kOuY=;
-        b=GtThrWTF8zSHxw58RTKopjxVT230YCjGGLvkWsVm+RZqC0bJcuK2iftyZbb7ad+XuL
-         2FXsF2OAaQ/V4E80dxGKDGLw4md9JxMR+KQq8HGfODBerGbCrfqEJvZjlHFrGxlSo74h
-         a6GTzGmgc6BAD1pFw8/3C9ugAWcz5sW5/0Ve3zMNZMYVCUkyn/nBG2ZjXrcV8gGerzrJ
-         VFBY8EYVBclmM5LSb1Ky0WbcjblvRrrlOIxDL5lMAMP6zdTosyTQxp6B3JisvN24ElIY
-         RaGMjk/QeCUwXKwGLaFan6k+75CfQzVeDhpkXHs6UzpcqHqL/WRO5PgqlxIxdb+t3plr
-         tZLw==
-X-Gm-Message-State: AOAM533wIj1CuttSiIp4PHiXPwTxMY7kKTCoyS5NCKXxVDDbAYr7Yn6F
-        LQlx863c/uFEF7fJKltZd0U=
-X-Google-Smtp-Source: ABdhPJz7Xw0PKD0lUzvaTy3wu6Bnz0HoX69tAKkbowuhz0cG44Ly0C2bPDVHqysDHRWn0hjLq4m6nQ==
-X-Received: by 2002:a17:90a:62c9:: with SMTP id k9mr3449793pjs.52.1634922975722;
-        Fri, 22 Oct 2021 10:16:15 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id b134sm8742135pga.3.2021.10.22.10.16.14
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Z4mIXFa4iFtG0/3MwjffVdtreROCML6cO1oSaovl7kw=;
+        b=EFj2/WJtwJZ1RelcrYrpU2kAs5qHOAcXdzEnRZSN741UUwNGMX18ugBHeGQ0uCdiPY
+         a0wrUO0WuHE5Yxtj7wBtMxDjYiGxkJxEmhzklTgU4c/u145IqXB847OEteOkw7rRQOfS
+         Ub/cd16924YxKgqQj+6F+7kPVD6OJ/oAX55sM4BjNQVFjV2EGZoSSy6a5CmoFxtHYs5+
+         jhuXRfJBEM6WIQuO/UiA8JEPICidlo3T/3pTNFHnDPM+5cLtRVd0eJWLoKnQuWhR436X
+         abf6cLiIjF3hVkPqfhFZDqS44tWvzvc/W6t3o4B5dkd2R3Q2xhO6mNBiQXYNE/gtEvsn
+         nR6w==
+X-Gm-Message-State: AOAM532+3gQZN+Dd/chXSsWh9/uxefSv8RrNjlwMFuIgm8mZh3T25wza
+        QSj6arKjM5zgmqbg236CiLpk0A==
+X-Google-Smtp-Source: ABdhPJyR2plvLY6BCo2Ofj58TKpqgSWaXCB+Dm622BxD1FqjVK5Fs30d1anipkQ7nPlZrg6E+bkBFw==
+X-Received: by 2002:a05:6808:188a:: with SMTP id bi10mr11093696oib.9.1634923255751;
+        Fri, 22 Oct 2021 10:20:55 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id c37sm1871895otu.36.2021.10.22.10.20.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Oct 2021 10:16:14 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Jessica Zhang <jesszhan@codeaurora.org>,
-        Mark Yacoub <markyacoub@google.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm/dpu: Remove dynamic allocation from atomic context
-Date:   Fri, 22 Oct 2021 10:20:51 -0700
-Message-Id: <20211022172053.3219597-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211022172053.3219597-1-robdclark@gmail.com>
-References: <20211022172053.3219597-1-robdclark@gmail.com>
+        Fri, 22 Oct 2021 10:20:55 -0700 (PDT)
+Date:   Fri, 22 Oct 2021 10:22:37 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Satya Priya <skakit@codeaurora.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>, swboyd@chromium.org,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V2 2/3] leds: Add pm8350c support to Qualcomm LPG driver
+Message-ID: <YXLzXWzq6BQqZsmY@ripper>
+References: <1634640531-15813-1-git-send-email-skakit@codeaurora.org>
+ <1634640531-15813-3-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1634640531-15813-3-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue 19 Oct 03:48 PDT 2021, Satya Priya wrote:
 
-We know the upper bound on # of mixers (ie. two), so lets just allocate
-this on the stack.
+> From: satya priya <skakit@codeaurora.org>
+> 
+> Add pm8350c compatible and lpg_data to the driver.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
+> Changes in V2:
+>  - Added const for lpg_channel_data[] struct.
+> 
+>  drivers/leds/rgb/leds-qcom-lpg.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index 45ef4ec..99235af 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -1275,9 +1275,19 @@ static const struct lpg_data pm8150l_lpg_data = {
+>  	},
+>  };
+>  
+> +static const struct lpg_data pm8350c_pwm_data = {
+> +	.pwm_9bit_mask = BIT(2),
+> +
+> +	.num_channels = 1,
 
-Fixes:
+No, this should be 4. The fact that you only care about the first
+channel in your product should be reflected in the dts, not in the
+driver.
 
-   BUG: sleeping function called from invalid context at include/linux/sched/mm.h:201
-   in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
-   INFO: lockdep is turned off.
-   irq event stamp: 43642
-   hardirqs last  enabled at (43641): [<ffffffe24dd276bc>] cpuidle_enter_state+0x158/0x25c
-   hardirqs last disabled at (43642): [<ffffffe24dfff450>] enter_el1_irq_or_nmi+0x10/0x1c
-   softirqs last  enabled at (43620): [<ffffffe24d4103fc>] __do_softirq+0x1e4/0x464
-   softirqs last disabled at (43615): [<ffffffe24d48bd90>] __irq_exit_rcu+0x104/0x150
-   CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W         5.15.0-rc3-debug+ #105
-   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-   Call trace:
-    dump_backtrace+0x0/0x18c
-    show_stack+0x24/0x30
-    dump_stack_lvl+0xa0/0xd4
-    dump_stack+0x18/0x34
-    ___might_sleep+0x1e0/0x1f0
-    __might_sleep+0x78/0x8c
-    slab_pre_alloc_hook.constprop.0+0x48/0x6c
-    __kmalloc+0xc8/0x21c
-    dpu_crtc_vblank_callback+0x158/0x1f8
-    dpu_encoder_vblank_callback+0x70/0xc4
-    dpu_encoder_phys_vid_vblank_irq+0x50/0x12c
-    dpu_core_irq+0x1bc/0x1d0
-    dpu_irq+0x1c/0x28
-    msm_irq+0x34/0x40
-    __handle_irq_event_percpu+0x15c/0x308
-    handle_irq_event_percpu+0x3c/0x90
-    handle_irq_event+0x54/0x98
-    handle_level_irq+0xa0/0xd0
-    handle_irq_desc+0x2c/0x44
-    generic_handle_domain_irq+0x28/0x34
-    dpu_mdss_irq+0x90/0xe8
-    handle_irq_desc+0x2c/0x44
-    handle_domain_irq+0x54/0x80
-    gic_handle_irq+0xd4/0x148
-    call_on_irq_stack+0x2c/0x54
-    do_interrupt_handler+0x4c/0x64
-    el1_interrupt+0x30/0xd0
-    el1h_64_irq_handler+0x18/0x24
-    el1h_64_irq+0x78/0x7c
-    arch_local_irq_enable+0xc/0x14
-    cpuidle_enter+0x44/0x5c
-    do_idle+0x248/0x268
-    cpu_startup_entry+0x30/0x48
-    rest_init+0x188/0x19c
-    arch_call_rest_init+0x1c/0x28
-    start_kernel+0x704/0x744
-    __primary_switched+0xc0/0xc8
+Thanks,
+Bjorn
 
-Fixes: 78d9b458cc21 ("drm/msm/dpu: Add CRC support for DPU")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 0ae397044310..80c0ae688734 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -182,21 +182,19 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- {
- 	struct dpu_crtc_state *crtc_state;
- 	struct dpu_crtc_mixer *m;
--	u32 *crcs;
-+	u32 crcs[CRTC_DUAL_MIXERS];
- 
- 	int i = 0;
- 	int rc = 0;
- 
- 	crtc_state = to_dpu_crtc_state(crtc->state);
--	crcs = kcalloc(crtc_state->num_mixers, sizeof(*crcs), GFP_KERNEL);
- 
--	if (!crcs)
--		return -ENOMEM;
-+	static_assert(ARRAY_SIZE(crcs) == ARRAY_SIZE(crtc_state->mixers));
- 
- 	/* Skip first 2 frames in case of "uncooked" CRCs */
- 	if (crtc_state->crc_frame_skip_count < 2) {
- 		crtc_state->crc_frame_skip_count++;
--		goto cleanup;
-+		return 0;
- 	}
- 
- 	for (i = 0; i < crtc_state->num_mixers; ++i) {
-@@ -210,16 +208,12 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- 
- 		if (rc) {
- 			DRM_DEBUG_DRIVER("MISR read failed\n");
--			goto cleanup;
-+			return rc;
- 		}
- 	}
- 
--	rc = drm_crtc_add_crc_entry(crtc, true,
-+	return drm_crtc_add_crc_entry(crtc, true,
- 			drm_crtc_accurate_vblank_count(crtc), crcs);
--
--cleanup:
--	kfree(crcs);
--	return rc;
- }
- 
- static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
--- 
-2.31.1
-
+> +	.channels = (const struct lpg_channel_data[]) {
+> +		{ .base = 0xeb00 },
+> +	},
+> +};
+> +
+>  static const struct of_device_id lpg_of_table[] = {
+>  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
+>  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
+> +	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
+>  	{ .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
+>  	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
+>  	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
