@@ -2,224 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1B99437E6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 21:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CFEA437E99
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 21:25:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233906AbhJVTRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 15:17:19 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29155 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232476AbhJVTRT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 15:17:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634930101; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=7PLFWqeXbIw/FKPXXE0m5n+MeY5dORydeOsZzfigINM=; b=YgX3oBW9h5mfKhlZv9x3gxXWTf7EvA6tx8rAAKlCgHkb9k5TYoV744hhNAC5p8Edpt5rV2dG
- hkGSvHan7TZvlFL7Zq4k/ZDTRwdzsmGoN8JtY3bE/ZNfhWWKfVP5GiORJNY6H70n88OoAf0R
- ACu1SSXYp2JG8iiysKTZ8jDF/Bo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61730da8fd91319f0f490462 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 22 Oct 2021 19:14:48
- GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E9559C43460; Fri, 22 Oct 2021 19:14:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [10.71.111.83] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98E5DC4338F;
-        Fri, 22 Oct 2021 19:14:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 98E5DC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <d40ffca4-b7fd-1797-31b4-35b15e7a438b@codeaurora.org>
-Date:   Fri, 22 Oct 2021 12:14:45 -0700
+        id S234064AbhJVT1i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 15:27:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37118 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233564AbhJVT1i (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Oct 2021 15:27:38 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A499C061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 12:25:20 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id h10so5437106ilq.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 12:25:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IFA4wQlK8CaJ1hsur/1XKvwpvXwy3gkeKIlN9LvzEXo=;
+        b=rLomiKzN1fvLTUesFN4FsINXNm+w/LrB2o5/eWt84mtqPWqYwdzh/K2yIhZXhq60v5
+         jZq7ZhN8IHFdFn6ymywqjTysXCp6H7KF0WPorpOWZJn/A0QZ9xCJDC2etyOaV9oAomTs
+         +QdYrypKZwRsuzxTyhdqlZnFNfAqZ+508z+85OkGoBFUJI4khVGEfHYIEMGDSvm6RYVT
+         rY984v4bEqJsQQIvvfBkmOMva/I9A+gkPdxO4Ls/SaajWH1gOnawzN/Kr7SJpv3Ffd3U
+         apdsb38aqGg6FUCQH2BondlgVJRZEe7JTJ5KU+r/b2IGuor4mCtZx5Qw35qfNgpbCn2P
+         ZrzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IFA4wQlK8CaJ1hsur/1XKvwpvXwy3gkeKIlN9LvzEXo=;
+        b=chVdncdodvCDWcjByEnoDE7Kr1U8jdlI8gQveEC7RNoSGneRvmiT4VoiWEO6v44AoW
+         RTKjVEfcguHQKlgfkx4FywmlgXLD8JbLdIbq0gr6OycBQVCTHEs7/SYoYdm3dNOlY3pr
+         HI8lzP+SZSdy9E33dkEFXkDPVuQjYyIZXreSWJZLC+tMef1ETBCNUJvEEaZMOOXc/F6H
+         RcVy00ok9ZSqnBAY3UXDp+h5cvRQySvOusKUzh0eZsm8iyIdK9puOs8eIM+QvcaPZHnq
+         VkBonnt1GBOiUuBfcup79VWL3FgkuD3ZIwK53T6GNLzSTrcRkJmp9+DSEpGk8VXvNrJz
+         hCdA==
+X-Gm-Message-State: AOAM532Dx73d295tfjr2fJHzvmknuZuAtQj8/rY7UaCzfG1GWYuH5ejq
+        DJEXrvFuiNkoDy2u1uL1pxPixvxL4HwLUobm8AT/SQ==
+X-Google-Smtp-Source: ABdhPJwvWnJcpi9p4Iog2ilpcyx5pHCQ1DxE1z9y9o1svoDRBNloCTdriMWufTsRJesTGutghF0pvYQAlf/QVGTOqaE=
+X-Received: by 2002:a05:6e02:120f:: with SMTP id a15mr1159054ilq.109.1634930719824;
+ Fri, 22 Oct 2021 12:25:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: [PATCH 2/2] drm/msm/dpu: Remove dynamic allocation from atomic
- context
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maxime Ripard <maxime@cerno.tech>,
+References: <20211014135410.4136412-1-dmitry.baryshkov@linaro.org>
+ <3af41112-7ccd-5da8-c189-3ed8d22273c0@linaro.org> <CAA8EJprjoEX4BDHOHevQQ=TMwM21xZSHuqYm8yNJ=L6GiovQYA@mail.gmail.com>
+In-Reply-To: <CAA8EJprjoEX4BDHOHevQQ=TMwM21xZSHuqYm8yNJ=L6GiovQYA@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Sat, 23 Oct 2021 00:54:43 +0530
+Message-ID: <CAMi1Hd15Qb=xitFax-0OrL47reZnkpg-=Tvu3w=rKtwBk00JuQ@mail.gmail.com>
+Subject: Re: Revert "arm64: dts: qcom: sm8250: remove bus clock from the mdss
+ node for sm8250 target"
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Jessica Zhang <jesszhan@codeaurora.org>,
-        Mark Yacoub <markyacoub@google.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20211022172053.3219597-1-robdclark@gmail.com>
- <20211022172053.3219597-2-robdclark@gmail.com>
-From:   Jessica Zhang <jesszhan@codeaurora.org>
-In-Reply-To: <20211022172053.3219597-2-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/22/2021 10:20 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Fri, 15 Oct 2021 at 02:53, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> We know the upper bound on # of mixers (ie. two), so lets just allocate
-> this on the stack.
+> On Thu, 14 Oct 2021 at 19:54, Vladimir Zapolskiy
+> <vladimir.zapolskiy@linaro.org> wrote:
+> >
+> > Hi Dmitry,
+> >
+> > On 10/14/21 4:54 PM, Dmitry Baryshkov wrote:
+> > > From: Amit Pundir <amit.pundir@linaro.org>
+> > >
+> > > This reverts commit 001ce9785c0674d913531345e86222c965fc8bf4.
+> > >
+> > > This upstream commit broke AOSP (post Android 12 merge) build
+> > > on RB5. The device either silently crashes into USB crash mode
+> > > after android boot animation or we see a blank blue screen
+> > > with following dpu errors in dmesg:
+> > >
+> > > [  T444] hw recovery is not complete for ctl:3
+> > > [  T444] [drm:dpu_encoder_phys_vid_prepare_for_kickoff:539] [dpu error]enc31 intf1 ctl 3 reset failure: -22
+> > > [  T444] [drm:dpu_encoder_phys_vid_wait_for_commit_done:513] [dpu error]vblank timeout
+> > > [  T444] [drm:dpu_kms_wait_for_commit_done:454] [dpu error]wait for commit done returned -110
+> > > [    C7] [drm:dpu_encoder_frame_done_timeout:2127] [dpu error]enc31 frame done timeout
+> > > [  T444] [drm:dpu_encoder_phys_vid_wait_for_commit_done:513] [dpu error]vblank timeout
+> > > [  T444] [drm:dpu_kms_wait_for_commit_done:454] [dpu error]wait for commit done returned -110
+> > >
+> > > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> >
+> > your sob tag is missing.
 >
-> Fixes:
+> True. I hope this is fine:
 >
->     BUG: sleeping function called from invalid context at include/linux/sched/mm.h:201
->     in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
->     INFO: lockdep is turned off.
->     irq event stamp: 43642
->     hardirqs last  enabled at (43641): [<ffffffe24dd276bc>] cpuidle_enter_state+0x158/0x25c
->     hardirqs last disabled at (43642): [<ffffffe24dfff450>] enter_el1_irq_or_nmi+0x10/0x1c
->     softirqs last  enabled at (43620): [<ffffffe24d4103fc>] __do_softirq+0x1e4/0x464
->     softirqs last disabled at (43615): [<ffffffe24d48bd90>] __irq_exit_rcu+0x104/0x150
->     CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W         5.15.0-rc3-debug+ #105
->     Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
->     Call trace:
->      dump_backtrace+0x0/0x18c
->      show_stack+0x24/0x30
->      dump_stack_lvl+0xa0/0xd4
->      dump_stack+0x18/0x34
->      ___might_sleep+0x1e0/0x1f0
->      __might_sleep+0x78/0x8c
->      slab_pre_alloc_hook.constprop.0+0x48/0x6c
->      __kmalloc+0xc8/0x21c
->      dpu_crtc_vblank_callback+0x158/0x1f8
->      dpu_encoder_vblank_callback+0x70/0xc4
->      dpu_encoder_phys_vid_vblank_irq+0x50/0x12c
->      dpu_core_irq+0x1bc/0x1d0
->      dpu_irq+0x1c/0x28
->      msm_irq+0x34/0x40
->      __handle_irq_event_percpu+0x15c/0x308
->      handle_irq_event_percpu+0x3c/0x90
->      handle_irq_event+0x54/0x98
->      handle_level_irq+0xa0/0xd0
->      handle_irq_desc+0x2c/0x44
->      generic_handle_domain_irq+0x28/0x34
->      dpu_mdss_irq+0x90/0xe8
->      handle_irq_desc+0x2c/0x44
->      handle_domain_irq+0x54/0x80
->      gic_handle_irq+0xd4/0x148
->      call_on_irq_stack+0x2c/0x54
->      do_interrupt_handler+0x4c/0x64
->      el1_interrupt+0x30/0xd0
->      el1h_64_irq_handler+0x18/0x24
->      el1h_64_irq+0x78/0x7c
->      arch_local_irq_enable+0xc/0x14
->      cpuidle_enter+0x44/0x5c
->      do_idle+0x248/0x268
->      cpu_startup_entry+0x30/0x48
->      rest_init+0x188/0x19c
->      arch_call_rest_init+0x1c/0x28
->      start_kernel+0x704/0x744
->      __primary_switched+0xc0/0xc8
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >
-> Fixes: 78d9b458cc21 ("drm/msm/dpu: Add CRC support for DPU")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 16 +++++-----------
->   1 file changed, 5 insertions(+), 11 deletions(-)
+
+Hi,
+
+Any update on this? I'd really like to see this or a relevant fix to
+land in v5.15, because I can't boot AOSP on RB5 otherwise.
+
+Regards,
+Amit Pundir
+
+> >
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 ++-
+> > >   1 file changed, 2 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > index 8c15d9fed08f..d12e4cbfc852 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > > @@ -2590,9 +2590,10 @@
+> > >                       power-domains = <&dispcc MDSS_GDSC>;
+> > >
+> > >                       clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > > +                              <&gcc GCC_DISP_HF_AXI_CLK>,
+> > >                                <&gcc GCC_DISP_SF_AXI_CLK>,
+> > >                                <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > > -                     clock-names = "iface", "nrt_bus", "core";
+> > > +                     clock-names = "iface", "bus", "nrt_bus", "core";
+> > >
+> > >                       assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> > >                       assigned-clock-rates = <460000000>;
+> > >
+> >
+> > --
+> > Best wishes,
+> > Vladimir
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 0ae397044310..80c0ae688734 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -182,21 +182,19 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->   {
->   	struct dpu_crtc_state *crtc_state;
->   	struct dpu_crtc_mixer *m;
-> -	u32 *crcs;
-> +	u32 crcs[CRTC_DUAL_MIXERS];
->   
->   	int i = 0;
->   	int rc = 0;
->   
->   	crtc_state = to_dpu_crtc_state(crtc->state);
-> -	crcs = kcalloc(crtc_state->num_mixers, sizeof(*crcs), GFP_KERNEL);
->   
-> -	if (!crcs)
-> -		return -ENOMEM;
-> +	static_assert(ARRAY_SIZE(crcs) == ARRAY_SIZE(crtc_state->mixers));
->   
-
-Getting a C90 compiler warning for static_assert():
-
-     In file included from ./include/linux/bits.h:22,
-                     from ./include/linux/bitops.h:6,
-                     from ./include/linux/kernel.h:12,
-                     from ./include/linux/list.h:9,
-                     from ./include/linux/wait.h:7,
-                     from ./include/linux/wait_bit.h:8,
-                     from ./include/linux/fs.h:6,
-                     from ./include/linux/debugfs.h:15,
-                     from drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:10:
-     drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c: In function 
-‘dpu_crtc_get_crc’:
-     ./include/linux/build_bug.h:78:41: warning: ISO C90 forbids mixed 
-declarations and code [-Wdeclaration-after-statement]
-         78 | #define __static_assert(expr, msg, ...) 
-_Static_assert(expr, msg)
-         |                                         ^~~~~~~~~~~~~~
-     ./include/linux/build_bug.h:77:34: note: in expansion of macro 
-‘__static_assert’
-         77 | #define static_assert(expr, ...) __static_assert(expr, 
-##__VA_ARGS__, #expr)
-         |                                  ^~~~~~~~~~~~~~~
-     drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:192:2: note: in expansion 
-of macro ‘static_assert’
-     192 |  static_assert(ARRAY_SIZE(crcs) == 
-ARRAY_SIZE(crtc_state->mixers));
-         |  ^~~~~~~~~~~~~
-
-Can be fixed by moving the static_assert() before `crtc_state = ...`
-
-Thanks,
-
-Jessica Zhang
-
->   	/* Skip first 2 frames in case of "uncooked" CRCs */
->   	if (crtc_state->crc_frame_skip_count < 2) {
->   		crtc_state->crc_frame_skip_count++;
-> -		goto cleanup;
-> +		return 0;
->   	}
->   
->   	for (i = 0; i < crtc_state->num_mixers; ++i) {
-> @@ -210,16 +208,12 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
->   
->   		if (rc) {
->   			DRM_DEBUG_DRIVER("MISR read failed\n");
-> -			goto cleanup;
-> +			return rc;
->   		}
->   	}
->   
-> -	rc = drm_crtc_add_crc_entry(crtc, true,
-> +	return drm_crtc_add_crc_entry(crtc, true,
->   			drm_crtc_accurate_vblank_count(crtc), crcs);
-> -
-> -cleanup:
-> -	kfree(crcs);
-> -	return rc;
->   }
->   
->   static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+>
+>
+> --
+> With best wishes
+> Dmitry
