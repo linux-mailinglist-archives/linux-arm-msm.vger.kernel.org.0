@@ -2,95 +2,634 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A2C0437611
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 13:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9E16437603
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Oct 2021 13:35:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232773AbhJVLjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 22 Oct 2021 07:39:17 -0400
-Received: from ip-16.mailobj.net ([213.182.54.16]:55884 "EHLO msg-6.mailo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232539AbhJVLjQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 22 Oct 2021 07:39:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
-        t=1634898358; bh=qXTIz9NUZOX9AJLI0EfpCFCuPKutlkzQauklWJ1ZdII=;
-        h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
-         MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To;
-        b=CDMwG+cYraiCkOvqWNoXRIOQdd1SKnLC6HrdHC95WxmidMkx+VnAsy2hnJqIKzTzu
-         FEtdjZUf6XU2V9+66nVczdfj8AX/zERhEb1ooKV1f1ToGqd9ubuQgXMALLiCPlSACK
-         XGc2B/eNeFQHv6UGVfpbYVPnwzAUmBX65vye7TSQ=
-Received: by b-6.in.mailobj.net [192.168.90.16] with ESMTP
-        via ip-206.mailobj.net [213.182.55.206]
-        Fri, 22 Oct 2021 12:25:37 +0200 (CEST)
-X-EA-Auth: ZUkw32usS9GpQ95qw4isUA4Qn5D5k42ZU4ER4OtDUnr2ExZFz+AjbHpLkWo4vIllva24n6AgDPqBGMsl893/BqHzRs7jwkE6
-Date:   Fri, 22 Oct 2021 12:25:33 +0200
-From:   Claudio Suarez <cssk@net-c.es>
-To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        id S232670AbhJVLha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 22 Oct 2021 07:37:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43006 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232539AbhJVLha (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 22 Oct 2021 07:37:30 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF93C061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 04:35:12 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id g20so4387033qka.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Oct 2021 04:35:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l4liOeJjEK78svo422wgYda6e1CDPrm4JsHeIOq6Qug=;
+        b=laHpEvHCiU2sER9GaXm4pirElOu66S3hWMo8/FzKUQRU6wCUX7gIRvFZldda3KKpSR
+         7p8SzUaETktbb4yBLaSboWc0TGA0oYV3b8dmkdUMhQ2PMIcloP7gMW8XVbNyMmIzgXbZ
+         L85Zkhvepx3cbuNoatSvWopm81X0vewfgYFxgjSXBrP051fAejGKfTNVR6ZqWaS2cpwX
+         s2aBSa2i0l4XHUVq+oMY3ab+SE0vfyFMgsNFG22YpYvIEPtmswJtstcBICbcPDA6TLCi
+         +xjE2VX5oUSsAdyKLJc2jIu83JGQRNHyLHGwHPd/0p6+h1b59tQUYPRtkiDtTFmpO1zt
+         oywg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l4liOeJjEK78svo422wgYda6e1CDPrm4JsHeIOq6Qug=;
+        b=kJFQwQDSOJJHpeENx4n/MOME7eN9or1wbOeIStFFtoCLv/E6KG0ioTFztJX6c2h3to
+         s0xhqQ/jbW2qlFiFmrBa7b1qxYeT2YTI7JIZPyRr4n9g1WuaOpfb3Q8BU0bwOqvKLsx1
+         r7p8rjR4SAYGWJptzr3AjKMD5I/i5/KKqTAf6CwiLQB5nGHZVNzGymXvy9aLddiu15UE
+         4L2NwEN28NRC3C+hbdTua6aannfH2nE9gpNjYbkbwg/VwIsBDHtlZGPiMrSHnXO4auhA
+         r37OH8tiSUqGRvrU0uYuGRWIDuklDwqO1r/s2nr8ZGpb1xYWz+Vlktxa1pKyMlrrtPHH
+         amkw==
+X-Gm-Message-State: AOAM531mkAchuY1LoxErnboDxwiE8792AOeI3XfqED40fDSYfpFu8Yn+
+        EGQkEo+NFB9usvjUDnyteabrSI6MsbD6QhKfhQcNGg==
+X-Google-Smtp-Source: ABdhPJwlj7/UPtRtuS96XDGXWrcDdjH2op86QNYSx7+a6gSeq9T6t+dl1GR+TyakXwOdjMne2QcWInmDJOdCF0kHSBI=
+X-Received: by 2002:a05:620a:1a05:: with SMTP id bk5mr9219649qkb.195.1634902511893;
+ Fri, 22 Oct 2021 04:35:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
+ <20210930140002.308628-12-dmitry.baryshkov@linaro.org> <0a10e5b55f61e5ed8a02f75699c31f08@codeaurora.org>
+In-Reply-To: <0a10e5b55f61e5ed8a02f75699c31f08@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 22 Oct 2021 14:35:00 +0300
+Message-ID: <CAA8EJpoomnh6ijFvc73-sicd-tryeSAghMEmT9qcosLyAsucmQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 11/11] drm/msm/dpu: rip out debugfs support
+ from dpu_plane
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
-        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
-Subject: Re: [PATCH v3 13/13] drm/i915: replace drm_detect_hdmi_monitor()
- with drm_display_info.is_hdmi
-Message-ID: <YXKRnUHWuboQKBF1@zorro.micasa>
-References: <20211016184226.3862-1-cssk@net-c.es>
- <20211016184226.3862-14-cssk@net-c.es>
- <YW8QYsmkm3ZrBAx3@intel.com>
- <YW9L6d7e+RO29VJu@gineta.localdomain>
- <YXFwB7rN4bvR0Z+m@intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YXFwB7rN4bvR0Z+m@intel.com>
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 21, 2021 at 04:49:59PM +0300, Ville Syrjälä wrote:
-> On Wed, Oct 20, 2021 at 12:51:21AM +0200, Claudio Suarez wrote:
-> > drm_get_edid() internally calls to drm_connector_update_edid_property()
-> > and then drm_add_display_info(), which parses the EDID.
-> > This happens in the function intel_hdmi_set_edid() and
-> > intel_sdvo_tmds_sink_detect() (via intel_sdvo_get_edid()).
-> > 
-> > Once EDID is parsed, the monitor HDMI support information is available
-> > through drm_display_info.is_hdmi. Retriving the same information with
-> > drm_detect_hdmi_monitor() is less efficient. Change to
-> > drm_display_info.is_hdmi
-> 
-> I meant we need to examine all call chains that can lead to
-> .detect() to make sure all of them do in fact update the
-> display_info beforehand.
+Hi,
 
-Well, I studied it carefully and, yes, all call chains that can lead to
-drm_display_info.is_hdmi / drm_detect_hdmi_monitor() update display_info
-beforehand. In the case that this doesn't happen, the code is unchanged.
+On Fri, 22 Oct 2021 at 02:53, <abhinavk@codeaurora.org> wrote:
+>
+> On 2021-09-30 07:00, Dmitry Baryshkov wrote:
+> > In preparations of virtualizing the dpu_plane rip out debugfs support
+> > from dpu_plane (as it is mostly used to expose plane's pipe registers).
+> > Also move disable_danger file to danger/ debugfs subdir where it
+> > belongs.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> I am yet to review the second part of the virtual plane series to
+> understand why this removal
+> is necessary so I might be missing something.
 
-Do you want I explain the changes in the code here again ? Or do you want
-to me change the commit message to be more clear ? In the first case, I can
-write here a detailed explanation. In the second case I can make a longer commit
-message.
+See below
 
-Or both?
+>
+> The plane's debugfs holds useful information to check a few things
+> rightaway.
+>
+> So if there is some misconfiguration or corruption in addition to the
+> plane state,
+> this is good to check.
+>
+> localhost /sys/kernel/debug/dri/1/plane35 # cat src_blk
+> [4000] 03000556 00000000 00000000 03000556
+> [4010] 00000000 00414000 00000000 0040e000
+> [4020] 00000000 00001600 00000080 00000000
+> [4030] 800236ff 03010002 80000001 00000000
+> [4040] 00000000 00000030 000c0087 00000707
+> [4050] 00000000 00000000 00000000 00000000
+> [4060] 0000ffff 00000000 00000000 00000001
+> [4070] 00000000 44556677 00112233 00000000
+> [4080] 00000000 00000000 00000000 00000000
+> [4090] 00000000 00000000 00000000 00000000
+> [40a0] 00000000 00414000 00000000 0040e000
+> [40b0] 00000000 00000000 00000000 00000000
+> [40c0] 00000000 00000000 00000000 00000000
+> [40d0] 0003f820 00000000 00000000 00000000
+> [40e0] 0003e2c4 00000000 00000000 00000000
+> [40f0] 000f000f 00010330 02e402e4 00000000
+> [4100] 00000000 00000000 03000556 00000000
+> [4110] 00000000 00000000 03000556 00000000
+> [4120] 00000000 00000000 03000556 00000000
+> [4130] 00000000 0000000f 00000000 0000000f
+> [4140] 00000000 00000000 00000000 00000000
+>
+> So I would like to keep this functionality unless there is some
+> compelling reason
+> to remove this.
 
-Best Regards,
-Claudio Suarez.
+Ok, I'll take a look if I can keep it or rework somehow.
+The problem is that if you have the plane is virtual, there is no
+strong plane <-> sspp mapping. Consider wide planes, where you'd have
+two SSPPs per single plane.
+
+I think it would make sense to move src_blk to global namespace (as
+ssppN_src) and then add a file giving plane -> sspp relationship.
+
+>
+> BTW, are you going to submit the second half as a new series now that
+> most
+> of the first one has been reviewed?
+>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   | 123 ++++++++--------
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |  69 ---------
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 171 +---------------------
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   6 +
+> >  4 files changed, 69 insertions(+), 300 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index ae48f41821cf..fe33273cdf57 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -101,84 +101,85 @@ static int dpu_debugfs_safe_stats_show(struct
+> > seq_file *s, void *v)
+> >  }
+> >  DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_safe_stats);
+> >
+> > -static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+> > -             struct dentry *parent)
+> > +static ssize_t _dpu_plane_danger_read(struct file *file,
+> > +                     char __user *buff, size_t count, loff_t *ppos)
+> >  {
+> > -     struct dentry *entry = debugfs_create_dir("danger", parent);
+> > +     struct dpu_kms *kms = file->private_data;
+> > +     int len;
+> > +     char buf[40];
+> >
+> > -     debugfs_create_file("danger_status", 0600, entry,
+> > -                     dpu_kms, &dpu_debugfs_danger_stats_fops);
+> > -     debugfs_create_file("safe_status", 0600, entry,
+> > -                     dpu_kms, &dpu_debugfs_safe_stats_fops);
+> > +     len = scnprintf(buf, sizeof(buf), "%d\n", !kms->has_danger_ctrl);
+> > +
+> > +     return simple_read_from_buffer(buff, count, ppos, buf, len);
+> >  }
+> >
+> > -static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
+> > +static void _dpu_plane_set_danger_state(struct dpu_kms *kms, bool
+> > enable)
+> >  {
+> > -     struct dpu_debugfs_regset32 *regset = s->private;
+> > -     struct dpu_kms *dpu_kms = regset->dpu_kms;
+> > -     void __iomem *base;
+> > -     uint32_t i, addr;
+> > -
+> > -     if (!dpu_kms->mmio)
+> > -             return 0;
+> > -
+> > -     base = dpu_kms->mmio + regset->offset;
+> > -
+> > -     /* insert padding spaces, if needed */
+> > -     if (regset->offset & 0xF) {
+> > -             seq_printf(s, "[%x]", regset->offset & ~0xF);
+> > -             for (i = 0; i < (regset->offset & 0xF); i += 4)
+> > -                     seq_puts(s, "         ");
+> > -     }
+> > -
+> > -     pm_runtime_get_sync(&dpu_kms->pdev->dev);
+> > -
+> > -     /* main register output */
+> > -     for (i = 0; i < regset->blk_len; i += 4) {
+> > -             addr = regset->offset + i;
+> > -             if ((addr & 0xF) == 0x0)
+> > -                     seq_printf(s, i ? "\n[%x]" : "[%x]", addr);
+> > -             seq_printf(s, " %08x", readl_relaxed(base + i));
+> > +     struct drm_plane *plane;
+> > +
+> > +     drm_for_each_plane(plane, kms->dev) {
+> > +             if (plane->fb && plane->state) {
+> > +                     dpu_plane_danger_signal_ctrl(plane, enable);
+> > +                     DPU_DEBUG("plane:%d img:%dx%d ",
+> > +                             plane->base.id, plane->fb->width,
+> > +                             plane->fb->height);
+> > +                     DPU_DEBUG("src[%d,%d,%d,%d] dst[%d,%d,%d,%d]\n",
+> > +                             plane->state->src_x >> 16,
+> > +                             plane->state->src_y >> 16,
+> > +                             plane->state->src_w >> 16,
+> > +                             plane->state->src_h >> 16,
+> > +                             plane->state->crtc_x, plane->state->crtc_y,
+> > +                             plane->state->crtc_w, plane->state->crtc_h);
+> > +             } else {
+> > +                     DPU_DEBUG("Inactive plane:%d\n", plane->base.id);
+> > +             }
+> >       }
+> > -     seq_puts(s, "\n");
+> > -     pm_runtime_put_sync(&dpu_kms->pdev->dev);
+> > -
+> > -     return 0;
+> >  }
+> >
+> > -static int dpu_debugfs_open_regset32(struct inode *inode,
+> > -             struct file *file)
+> > +static ssize_t _dpu_plane_danger_write(struct file *file,
+> > +                 const char __user *user_buf, size_t count, loff_t *ppos)
+> >  {
+> > -     return single_open(file, _dpu_debugfs_show_regset32,
+> > inode->i_private);
+> > -}
+> > +     struct dpu_kms *kms = file->private_data;
+> > +     int disable_panic;
+> > +     int ret;
+> >
+> > -static const struct file_operations dpu_fops_regset32 = {
+> > -     .open =         dpu_debugfs_open_regset32,
+> > -     .read =         seq_read,
+> > -     .llseek =       seq_lseek,
+> > -     .release =      single_release,
+> > -};
+> > +     ret = kstrtouint_from_user(user_buf, count, 0, &disable_panic);
+> > +     if (ret)
+> > +             return ret;
+> >
+> > -void dpu_debugfs_setup_regset32(struct dpu_debugfs_regset32 *regset,
+> > -             uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms)
+> > -{
+> > -     if (regset) {
+> > -             regset->offset = offset;
+> > -             regset->blk_len = length;
+> > -             regset->dpu_kms = dpu_kms;
+> > +     if (disable_panic) {
+> > +             /* Disable panic signal for all active pipes */
+> > +             DPU_DEBUG("Disabling danger:\n");
+> > +             _dpu_plane_set_danger_state(kms, false);
+> > +             kms->has_danger_ctrl = false;
+> > +     } else {
+> > +             /* Enable panic signal for all active pipes */
+> > +             DPU_DEBUG("Enabling danger:\n");
+> > +             kms->has_danger_ctrl = true;
+> > +             _dpu_plane_set_danger_state(kms, true);
+> >       }
+> > +
+> > +     return count;
+> >  }
+> >
+> > -void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+> > -             void *parent, struct dpu_debugfs_regset32 *regset)
+> > +static const struct file_operations dpu_plane_danger_enable = {
+> > +     .open = simple_open,
+> > +     .read = _dpu_plane_danger_read,
+> > +     .write = _dpu_plane_danger_write,
+> > +};
+> > +
+> > +static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+> > +             struct dentry *parent)
+> >  {
+> > -     if (!name || !regset || !regset->dpu_kms || !regset->blk_len)
+> > -             return;
+> > +     struct dentry *entry = debugfs_create_dir("danger", parent);
+> >
+> > -     /* make sure offset is a multiple of 4 */
+> > -     regset->offset = round_down(regset->offset, 4);
+> > +     debugfs_create_file("danger_status", 0600, entry,
+> > +                     dpu_kms, &dpu_debugfs_danger_stats_fops);
+> > +     debugfs_create_file("safe_status", 0600, entry,
+> > +                     dpu_kms, &dpu_debugfs_safe_stats_fops);
+> > +     debugfs_create_file("disable_danger", 0600, entry,
+> > +                     dpu_kms, &dpu_plane_danger_enable);
+> >
+> > -     debugfs_create_file(name, mode, parent, regset, &dpu_fops_regset32);
+> >  }
+> >
+> >  static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor
+> > *minor)
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > index 323a6bce9e64..ab65c817eb42 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > @@ -166,75 +166,6 @@ struct dpu_global_state
+> >  struct dpu_global_state
+> >       *__must_check dpu_kms_get_global_state(struct drm_atomic_state *s);
+> >
+> > -/**
+> > - * Debugfs functions - extra helper functions for debugfs support
+> > - *
+> > - * Main debugfs documentation is located at,
+> > - *
+> > - * Documentation/filesystems/debugfs.rst
+> > - *
+> > - * @dpu_debugfs_setup_regset32: Initialize data for
+> > dpu_debugfs_create_regset32
+> > - * @dpu_debugfs_create_regset32: Create 32-bit register dump file
+> > - * @dpu_debugfs_get_root: Get root dentry for DPU_KMS's debugfs node
+> > - */
+> > -
+> > -/**
+> > - * Companion structure for dpu_debugfs_create_regset32. Do not
+> > initialize the
+> > - * members of this structure explicitly; use
+> > dpu_debugfs_setup_regset32 instead.
+> > - */
+> > -struct dpu_debugfs_regset32 {
+> > -     uint32_t offset;
+> > -     uint32_t blk_len;
+> > -     struct dpu_kms *dpu_kms;
+> > -};
+> > -
+> > -/**
+> > - * dpu_debugfs_setup_regset32 - Initialize register block definition
+> > for debugfs
+> > - * This function is meant to initialize dpu_debugfs_regset32
+> > structures for use
+> > - * with dpu_debugfs_create_regset32.
+> > - * @regset: opaque register definition structure
+> > - * @offset: sub-block offset
+> > - * @length: sub-block length, in bytes
+> > - * @dpu_kms: pointer to dpu kms structure
+> > - */
+> > -void dpu_debugfs_setup_regset32(struct dpu_debugfs_regset32 *regset,
+> > -             uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms);
+> > -
+> > -/**
+> > - * dpu_debugfs_create_regset32 - Create register read back file for
+> > debugfs
+> > - *
+> > - * This function is almost identical to the standard
+> > debugfs_create_regset32()
+> > - * function, with the main difference being that a list of register
+> > - * names/offsets do not need to be provided. The 'read' function
+> > simply outputs
+> > - * sequential register values over a specified range.
+> > - *
+> > - * Similar to the related debugfs_create_regset32 API, the structure
+> > pointed to
+> > - * by regset needs to persist for the lifetime of the created file.
+> > The calling
+> > - * code is responsible for initialization/management of this
+> > structure.
+> > - *
+> > - * The structure pointed to by regset is meant to be opaque. Please
+> > use
+> > - * dpu_debugfs_setup_regset32 to initialize it.
+> > - *
+> > - * @name:   File name within debugfs
+> > - * @mode:   File mode within debugfs
+> > - * @parent: Parent directory entry within debugfs, can be NULL
+> > - * @regset: Pointer to persistent register block definition
+> > - */
+> > -void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+> > -             void *parent, struct dpu_debugfs_regset32 *regset);
+> > -
+> > -/**
+> > - * dpu_debugfs_get_root - Return root directory entry for KMS's
+> > debugfs
+> > - *
+> > - * The return value should be passed as the 'parent' argument to
+> > subsequent
+> > - * debugfs create calls.
+> > - *
+> > - * @dpu_kms: Pointer to DPU's KMS structure
+> > - *
+> > - * Return: dentry pointer for DPU's debugfs location
+> > - */
+> > -void *dpu_debugfs_get_root(struct dpu_kms *dpu_kms);
+> > -
+> >  /**
+> >   * DPU info management functions
+> >   * These functions/definitions allow for building up a 'dpu_info'
+> > structure
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > index d8018e664925..42bcde1ddd0f 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -108,13 +108,6 @@ struct dpu_plane {
+> >       bool is_virtual;
+> >       struct list_head mplane_list;
+> >       struct dpu_mdss_cfg *catalog;
+> > -
+> > -     /* debugfs related stuff */
+> > -     struct dentry *debugfs_root;
+> > -     struct dpu_debugfs_regset32 debugfs_src;
+> > -     struct dpu_debugfs_regset32 debugfs_scaler;
+> > -     struct dpu_debugfs_regset32 debugfs_csc;
+> > -     bool debugfs_default_scale;
+> >  };
+> >
+> >  static const uint64_t supported_format_modifiers[] = {
+> > @@ -1343,7 +1336,7 @@ static void dpu_plane_reset(struct drm_plane
+> > *plane)
+> >  }
+> >
+> >  #ifdef CONFIG_DEBUG_FS
+> > -static void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool
+> > enable)
+> > +void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool
+> > enable)
+> >  {
+> >       struct dpu_plane *pdpu = to_dpu_plane(plane);
+> >       struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> > @@ -1355,168 +1348,8 @@ static void
+> > dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+> >       _dpu_plane_set_qos_ctrl(plane, enable, DPU_PLANE_QOS_PANIC_CTRL);
+> >       pm_runtime_put_sync(&dpu_kms->pdev->dev);
+> >  }
+> > -
+> > -static ssize_t _dpu_plane_danger_read(struct file *file,
+> > -                     char __user *buff, size_t count, loff_t *ppos)
+> > -{
+> > -     struct dpu_kms *kms = file->private_data;
+> > -     int len;
+> > -     char buf[40];
+> > -
+> > -     len = scnprintf(buf, sizeof(buf), "%d\n", !kms->has_danger_ctrl);
+> > -
+> > -     return simple_read_from_buffer(buff, count, ppos, buf, len);
+> > -}
+> > -
+> > -static void _dpu_plane_set_danger_state(struct dpu_kms *kms, bool
+> > enable)
+> > -{
+> > -     struct drm_plane *plane;
+> > -
+> > -     drm_for_each_plane(plane, kms->dev) {
+> > -             if (plane->fb && plane->state) {
+> > -                     dpu_plane_danger_signal_ctrl(plane, enable);
+> > -                     DPU_DEBUG("plane:%d img:%dx%d ",
+> > -                             plane->base.id, plane->fb->width,
+> > -                             plane->fb->height);
+> > -                     DPU_DEBUG("src[%d,%d,%d,%d] dst[%d,%d,%d,%d]\n",
+> > -                             plane->state->src_x >> 16,
+> > -                             plane->state->src_y >> 16,
+> > -                             plane->state->src_w >> 16,
+> > -                             plane->state->src_h >> 16,
+> > -                             plane->state->crtc_x, plane->state->crtc_y,
+> > -                             plane->state->crtc_w, plane->state->crtc_h);
+> > -             } else {
+> > -                     DPU_DEBUG("Inactive plane:%d\n", plane->base.id);
+> > -             }
+> > -     }
+> > -}
+> > -
+> > -static ssize_t _dpu_plane_danger_write(struct file *file,
+> > -                 const char __user *user_buf, size_t count, loff_t *ppos)
+> > -{
+> > -     struct dpu_kms *kms = file->private_data;
+> > -     int disable_panic;
+> > -     int ret;
+> > -
+> > -     ret = kstrtouint_from_user(user_buf, count, 0, &disable_panic);
+> > -     if (ret)
+> > -             return ret;
+> > -
+> > -     if (disable_panic) {
+> > -             /* Disable panic signal for all active pipes */
+> > -             DPU_DEBUG("Disabling danger:\n");
+> > -             _dpu_plane_set_danger_state(kms, false);
+> > -             kms->has_danger_ctrl = false;
+> > -     } else {
+> > -             /* Enable panic signal for all active pipes */
+> > -             DPU_DEBUG("Enabling danger:\n");
+> > -             kms->has_danger_ctrl = true;
+> > -             _dpu_plane_set_danger_state(kms, true);
+> > -     }
+> > -
+> > -     return count;
+> > -}
+> > -
+> > -static const struct file_operations dpu_plane_danger_enable = {
+> > -     .open = simple_open,
+> > -     .read = _dpu_plane_danger_read,
+> > -     .write = _dpu_plane_danger_write,
+> > -};
+> > -
+> > -static int _dpu_plane_init_debugfs(struct drm_plane *plane)
+> > -{
+> > -     struct dpu_plane *pdpu = to_dpu_plane(plane);
+> > -     struct dpu_kms *kms = _dpu_plane_get_kms(plane);
+> > -     const struct dpu_sspp_cfg *cfg = pdpu->pipe_hw->cap;
+> > -     const struct dpu_sspp_sub_blks *sblk = cfg->sblk;
+> > -
+> > -     /* create overall sub-directory for the pipe */
+> > -     pdpu->debugfs_root =
+> > -             debugfs_create_dir(plane->name,
+> > -                             plane->dev->primary->debugfs_root);
+> > -
+> > -     /* don't error check these */
+> > -     debugfs_create_xul("features", 0600,
+> > -                     pdpu->debugfs_root, (unsigned long
+> > *)&pdpu->pipe_hw->cap->features);
+> > -
+> > -     /* add register dump support */
+> > -     dpu_debugfs_setup_regset32(&pdpu->debugfs_src,
+> > -                     sblk->src_blk.base + cfg->base,
+> > -                     sblk->src_blk.len,
+> > -                     kms);
+> > -     dpu_debugfs_create_regset32("src_blk", 0400,
+> > -                     pdpu->debugfs_root, &pdpu->debugfs_src);
+> > -
+> > -     if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
+> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED4)) {
+> > -             dpu_debugfs_setup_regset32(&pdpu->debugfs_scaler,
+> > -                             sblk->scaler_blk.base + cfg->base,
+> > -                             sblk->scaler_blk.len,
+> > -                             kms);
+> > -             dpu_debugfs_create_regset32("scaler_blk", 0400,
+> > -                             pdpu->debugfs_root,
+> > -                             &pdpu->debugfs_scaler);
+> > -             debugfs_create_bool("default_scaling",
+> > -                             0600,
+> > -                             pdpu->debugfs_root,
+> > -                             &pdpu->debugfs_default_scale);
+> > -     }
+> > -
+> > -     if (cfg->features & BIT(DPU_SSPP_CSC) ||
+> > -                     cfg->features & BIT(DPU_SSPP_CSC_10BIT)) {
+> > -             dpu_debugfs_setup_regset32(&pdpu->debugfs_csc,
+> > -                             sblk->csc_blk.base + cfg->base,
+> > -                             sblk->csc_blk.len,
+> > -                             kms);
+> > -             dpu_debugfs_create_regset32("csc_blk", 0400,
+> > -                             pdpu->debugfs_root, &pdpu->debugfs_csc);
+> > -     }
+> > -
+> > -     debugfs_create_u32("xin_id",
+> > -                     0400,
+> > -                     pdpu->debugfs_root,
+> > -                     (u32 *) &cfg->xin_id);
+> > -     debugfs_create_u32("clk_ctrl",
+> > -                     0400,
+> > -                     pdpu->debugfs_root,
+> > -                     (u32 *) &cfg->clk_ctrl);
+> > -     debugfs_create_x32("creq_vblank",
+> > -                     0600,
+> > -                     pdpu->debugfs_root,
+> > -                     (u32 *) &sblk->creq_vblank);
+> > -     debugfs_create_x32("danger_vblank",
+> > -                     0600,
+> > -                     pdpu->debugfs_root,
+> > -                     (u32 *) &sblk->danger_vblank);
+> > -
+> > -     debugfs_create_file("disable_danger",
+> > -                     0600,
+> > -                     pdpu->debugfs_root,
+> > -                     kms, &dpu_plane_danger_enable);
+> > -
+> > -     return 0;
+> > -}
+> > -#else
+> > -static int _dpu_plane_init_debugfs(struct drm_plane *plane)
+> > -{
+> > -     return 0;
+> > -}
+> >  #endif
+> >
+> > -static int dpu_plane_late_register(struct drm_plane *plane)
+> > -{
+> > -     return _dpu_plane_init_debugfs(plane);
+> > -}
+> > -
+> > -static void dpu_plane_early_unregister(struct drm_plane *plane)
+> > -{
+> > -     struct dpu_plane *pdpu = to_dpu_plane(plane);
+> > -
+> > -     debugfs_remove_recursive(pdpu->debugfs_root);
+> > -}
+> > -
+> >  static bool dpu_plane_format_mod_supported(struct drm_plane *plane,
+> >               uint32_t format, uint64_t modifier)
+> >  {
+> > @@ -1541,8 +1374,6 @@ static const struct drm_plane_funcs
+> > dpu_plane_funcs = {
+> >               .reset = dpu_plane_reset,
+> >               .atomic_duplicate_state = dpu_plane_duplicate_state,
+> >               .atomic_destroy_state = dpu_plane_destroy_state,
+> > -             .late_register = dpu_plane_late_register,
+> > -             .early_unregister = dpu_plane_early_unregister,
+> >               .format_mod_supported = dpu_plane_format_mod_supported,
+> >  };
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > index 1ee5ca5fcdf7..9d51dad5c6a5 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> > @@ -126,4 +126,10 @@ void dpu_plane_clear_multirect(const struct
+> > drm_plane_state *drm_state);
+> >  int dpu_plane_color_fill(struct drm_plane *plane,
+> >               uint32_t color, uint32_t alpha);
+> >
+> > +#ifdef CONFIG_DEBUG_FS
+> > +void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool
+> > enable);
+> > +#else
+> > +static inline void dpu_plane_danger_signal_ctrl(struct drm_plane
+> > *plane, bool enable) {}
+> > +#endif
+> > +
+> >  #endif /* _DPU_PLANE_H_ */
 
 
+
+-- 
+With best wishes
+Dmitry
