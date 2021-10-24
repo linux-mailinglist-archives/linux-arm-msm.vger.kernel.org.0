@@ -2,331 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A19D43895E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Oct 2021 15:55:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C275438963
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Oct 2021 15:58:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbhJXN6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 24 Oct 2021 09:58:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
+        id S231400AbhJXOAg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 24 Oct 2021 10:00:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231548AbhJXN6B (ORCPT
+        with ESMTP id S230355AbhJXOAg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 24 Oct 2021 09:58:01 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B4EC061243
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Oct 2021 06:55:40 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id z126so11836730oiz.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Oct 2021 06:55:40 -0700 (PDT)
+        Sun, 24 Oct 2021 10:00:36 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5AEC061767
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Oct 2021 06:58:15 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id y15-20020a9d460f000000b0055337e17a55so11102821ote.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Oct 2021 06:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lNANrxfUuh+LtYxumiTOrGEMeShVF/FDsIdZeb2kwcM=;
-        b=wKwglXa9ao02zFoZrLG/nt8DCthpGdAEL9q16oi1/uE2C/mGvDuI9Si/JnPNmLo91X
-         CIlOYIhOKC8mH2GSzCyUfM0v1XlbQZtOBPeLkFwA5a8Jsm0SwpyokAjkjnBOBmqeJKKJ
-         qdDIrWXPBZn4VKYxOGWwdB6x/Gcrhnr6i5mP1u9EAw2fG8hWgCiUDK6OKsbtMO2w5/oJ
-         hZA3cbUJjd4eQVya8f87CrHISh/0Sv56JuqTr0uGuB2sOYwphM75UYPVDl6aOExJ4xzN
-         PWUI1Ah6J56Qi+EeNQTVg1t8Y2ALTaeFddt5OY06wX5I7jTIDKUdAtl+Aww+MG+DP2YC
-         ATCg==
+        bh=YY0ykMbflRlWO1UcyI3Q6Xhl5BeEo40+CEHPuWbOWVE=;
+        b=FXOyEcLZFGx39BEbINgPsrseN8HM6oioA48PhAgo6HD8KUF2TneTW8WR+xcDyiTQxh
+         QDnFVHxtd5FbZYAFCdM4Cwol64woYhS/oFKUnH4xh3FDMbHHmjFXdrzDhfqZUHfe2K6T
+         j5HNb5B2jAGMPLeKs3vqMBpiSnfk76qaV5JaghcFDtE4A/Q8XxK2KBIjoZTOMItfWdqd
+         XW5U1qC2b5fH75zx7HXVmsCsGg0JpYtwMgUouX8Fn5Jh8l27W8cizYBX1Lo1bjKGpouk
+         qR7j56CWRbv1BEafJJdntYLFEYU2W96bXj12KneHdm1Ciawgi17Wkx82m7yhAP7bbC3E
+         Cuig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lNANrxfUuh+LtYxumiTOrGEMeShVF/FDsIdZeb2kwcM=;
-        b=EgvOr0YNct7PDkOCM1JXqmfZHnDApfcc4ygZOh4k/HfRb4Wno+Y8tMtCDH2iJE05e7
-         xfD5h7DdLBXamfFvZdVVsgT5gcjY+LXfN1qxyI1J3VA+Xtr3PTCjoh4jNdf+Ir/hbU0G
-         myqP0vK0c/19NL8+fwarKT8af/c/CDHIKG/v4ZJjQbCOuF1dCryv4VaLBk3kRLm8RTxq
-         Zsx/mMZsmA16imtQdeEd9UFwJuULmK+/o4rvy7/Uj0Yep6a5esRLtJZhF6KKRHGZiciP
-         8E7lThArHtBJ2Ler+bjbPtDQEsBBVvbDivKx6PmsKQFXd4oZrQgL4l6U5usBlFxUl/UZ
-         wA/A==
-X-Gm-Message-State: AOAM533uis7xKL513Nhl5dOwOycTLB53GCyW7mK+f3Vo0XLx5f7Wx/p0
-        ZHf00kWcEqDPvb9Ky8I3/S9QTFOUEAyhlth8xJui3A==
-X-Google-Smtp-Source: ABdhPJz0i0nXaAtuIBV1Cz9uD/DCyMtHiIika8B6yTFo/aVPq2vs/CxBw1Vxn6nUS7gjnW7I/XJ6r2tPwwfFMQpTpJY=
-X-Received: by 2002:a05:6808:1686:: with SMTP id bb6mr8257772oib.40.1635083739816;
- Sun, 24 Oct 2021 06:55:39 -0700 (PDT)
+        bh=YY0ykMbflRlWO1UcyI3Q6Xhl5BeEo40+CEHPuWbOWVE=;
+        b=SgIrQyECPcwoD8oIg7pNNwe+hseAqRq/2F+Frdzm+J0ni87koKKtif4mqDT9wvsG8i
+         bn6gRUtq824eW10VRI4pPJZxRCdgShBcH1QWtr/4gYl+k1pXtJZNGCbpIXJ1rLacjINH
+         IKo5Fu0M1Z50sMGEWlvH01kGrX+74yBRcZ6b0QQIoLzSf1SRAYj2HeB8sX3x5b1FttQ4
+         UBhjh8j9MSCo7cMiyGZOC6cSt24a0a5yubKbcBfdaSwf8ceO6MTUb9EgrRsAHb393gBH
+         jA0rV3cWYdwxLrsn3wTKphz/X5pHEScJ+kelZv8uvyal9YKkRkRPdMF2QFCsrdZWiyQ8
+         mYQg==
+X-Gm-Message-State: AOAM5313LKtDhP3JHMyvOxGwdDNlGFO3cKf4ZvBFgtV47bhhTm/5n4Un
+        tssRtv/P5HQ6WzYQryoN05rfBEEkHMW3oxXlb2Ccyg==
+X-Google-Smtp-Source: ABdhPJzf43bh1mPOcsyeHedw+iQLM168Gf76LvYgzEpsZhLSqjOEZ5P6jQpTHLqLE6frIYIMiyZrjopUloHwtyJLJnE=
+X-Received: by 2002:a9d:26:: with SMTP id 35mr9008458ota.379.1635083894573;
+ Sun, 24 Oct 2021 06:58:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
- <20211013105541.68045-6-bhupesh.sharma@linaro.org> <1634150392.555106.1324767.nullmailer@robh.at.kernel.org>
- <CAH=2NtyJZoPMSDr4aYgX29BeSq3qXyJta3o7ZHPNrNOF+Ym-gA@mail.gmail.com>
-In-Reply-To: <CAH=2NtyJZoPMSDr4aYgX29BeSq3qXyJta3o7ZHPNrNOF+Ym-gA@mail.gmail.com>
+References: <20211013105541.68045-1-bhupesh.sharma@linaro.org> <a5927363-5e2f-9af1-7446-2146fd455f36@linaro.org>
+In-Reply-To: <a5927363-5e2f-9af1-7446-2146fd455f36@linaro.org>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Sun, 24 Oct 2021 19:25:28 +0530
-Message-ID: <CAH=2NtyZKB+tDgWrdy=QJzfP=3epRhQO_zsJjO=HUVrS=HgdvA@mail.gmail.com>
-Subject: Re: [PATCH v4 05/20] dt-bindings: qcom-bam: Add 'interconnects' &
- 'interconnect-names' to optional properties
-To:     Rob Herring <robh@kernel.org>
-Cc:     Herbert Xu <herbert@gondor.apana.org.au>,
+Date:   Sun, 24 Oct 2021 19:28:03 +0530
+Message-ID: <CAH=2Ntx-gDk-QqKDNkm9_=NU5uGiYaOEJYc_e7TCMHGu58+SeQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/20] Enable Qualcomm Crypto Engine on sm8250
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>, linux-crypto@vger.kernel.org,
+        bhupesh.linux@gmail.com,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         devicetree <devicetree@vger.kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        bhupesh.linux@gmail.com, Andy Gross <agross@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-crypto@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
         "David S . Miller" <davem@davemloft.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi Thara,
 
-On Thu, 14 Oct 2021 at 12:33, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+On Wed, 20 Oct 2021 at 19:33, Thara Gopinath <thara.gopinath@linaro.org> wrote:
 >
-> Hello Rob,
+> On 10/13/21 6:55 AM, Bhupesh Sharma wrote:
+> > Sorry for a delayed v4, but I have been caught up with some other
+> > patches.
 >
-> Thanks for your review.
-> These issues are already fixed via patches within this series itself
-> (as some dts also need correction to pass the 'make dtbs_check'
-> check). I am not sure, but it seems the check was run without applying
-> other patches from this series.
+> Hi Bhupesh,
 >
-> See details below:
->
-> On Thu, 14 Oct 2021 at 00:09, Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Wed, 13 Oct 2021 16:25:26 +0530, Bhupesh Sharma wrote:
-> > > Add new optional properties - 'interconnects' and
-> > > 'interconnect-names' to the device-tree binding documentation for
-> > > qcom-bam DMA IP.
-> > >
-> > > These properties describe the interconnect path between bam and main
-> > > memory and the interconnect type respectively.
-> > >
-> > > Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > > ---
-> > >  Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml | 8 ++++++++
-> > >  1 file changed, 8 insertions(+)
-> > >
-> >
-> > Running 'make dtbs_check' with the schema in this patch gives the
-> > following warnings. Consider if they are expected or the schema is
-> > incorrect. These may not be new warnings.
-> >
-> > Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> > This will change in the future.
-> >
-> > Full log is available here: https://patchwork.ozlabs.org/patch/1540390
-> >
-> >
-> > dma@12142000: $nodename:0: 'dma@12142000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-> >
-> > dma@12182000: $nodename:0: 'dma@12182000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq8064-ap148.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq8064-rb3011.dt.yaml
-> >         arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-> >
-> > dma@121c2000: $nodename:0: 'dma@121c2000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
-> >
-> > dma@12402000: $nodename:0: 'dma@12402000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
-> >         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq8064-ap148.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq8064-rb3011.dt.yaml
-> >
-> > dma@1dc4000: $nodename:0: 'dma@1dc4000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
->
-> All the above will be fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
->  'qcom,controlled-remotely' nodes in dts' in this series. See the git
-> log of the this patch for details:
->
-> 'A few qcom device-tree files define dma-controller nodes
-> with non-standard 'node names' and also set
-> the bool property 'qcom,controlled-remotely' incorrectly, which
-> leads to following errors with 'make dtbs_check':
->
->  $ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml:
->      dma@1dc4000: $nodename:0: 'dma@1dc4000' does not match
->      '^dma-controller(@.*)?$'
->
->  $ arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml:
->      dma@1dc4000: qcom,controlled-remotely: 'oneOf' conditional
->      failed, one must be fixed:
->     [[1]] is not of type 'boolean'
->     True was expected
->     [[1]] is not of type 'null'
->
-> Fix the same.
-> '
->
-> > dma@1dc4000: 'iommus' does not match any of the regexes: 'pinctrl-[0-9]+'
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
->
-> Fixed by ' [PATCH 06/20] dt-bindings: qcom-bam: Add 'iommus' to optional
->  properties ' in this series.
->
-> > dma@1dc4000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
->
-> Again this would be fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
->  'qcom,controlled-remotely' nodes in dts' in this series.
->
-> > dma@704000: $nodename:0: 'dma@704000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
->
-> Fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
-> 'qcom,controlled-remotely' nodes in dts' in this series
->
-> > dma@704000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
->
-> Fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
-> 'qcom,controlled-remotely' nodes in dts' in this series
->
-> > dma@7544000: $nodename:0: 'dma@7544000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
-> >
-> > dma@7584000: $nodename:0: 'dma@7584000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
-> >
-> > dma@7884000: $nodename:0: 'dma@7884000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
-> >
-> > dma@7984000: $nodename:0: 'dma@7984000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
-> >
-> > dma@8e04000: $nodename:0: 'dma@8e04000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
-> >         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
-> >
-> > dma@c184000: $nodename:0: 'dma@c184000' does not match '^dma-controller(@.*)?$'
-> >         arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dt.yaml
-> >         arch/arm64/boot/dts/qcom/msm8998-oneplus-dumpling.dt.yaml
->
-> All the above 6 issues are fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
->  'qcom,controlled-remotely' nodes in dts' in this series.
->
-> > dma-controller@17184000: 'iommus' does not match any of the regexes: 'pinctrl-[0-9]+'
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-> >         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
->
-> Fixed by ' [PATCH 06/20] dt-bindings: qcom-bam: Add 'iommus' to optional
->  properties ' in this series.
->
-> > dma-controller@704000: 'qcom,config-pipe-trust-reg' does not match any of the regexes: 'pinctrl-[0-9]+'
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
->
-> Fixed by '[PATCH 02/20] arm64/dts: qcom: ipq6018: Remove unused
->  'qcom,config-pipe-trust-reg' property' in this series.
->
-> > dma-controller@704000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
->
-> Fixed by '[PATCH 01/20] arm64/dts: qcom: Fix 'dma' &
-> ''qcom,controlled-remotely' nodes in dts' in this series.
->
-> > dma-controller@7984000: clock-names:0: 'bam_clk' was expected
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-> >
-> > dma-controller@7984000: clock-names: Additional items are not allowed ('bam_clk' was unexpected)
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-> >
-> > dma-controller@7984000: clock-names: ['iface_clk', 'bam_clk'] is too long
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-> >
-> > dma-controller@7984000: clocks: [[9, 138], [9, 137]] is too long
-> >         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
->
-> Fixed by '[PATCH 03/20] arm64/dts: qcom: ipq6018: Remove unused 'iface_clk'
-> property from dma-controller node' in this series.
->
-> In summary, I ran 'make dtbs_check' after applying this series on
-> linus's tip and linux-next's tip as well and saw no errors being
-> reported for 'Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml'.
+> If possible, please consider splitting this series into 2. One with
+> changes required to support crypto driver on
+> sm8250 and other with the generic fixes / fixing the dt-bindings et all.
+> It would be easier to review as well
 
-Ping. Do I need to fix anything in v5 or are the fixes regarding the
-YAML documentation fine? I am about to send the v5.
+That's a good suggestion, but I would suggest keeping the series as
+one for now (as we are already approaching v5 and most of the review
+comments are taken care of in v5).
 
 Regards,
 Bhupesh
+
+> > Changes since v3:
+> > =================
+> > - v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
+> > - Dropped a couple of patches from v3, on basis of the review comments:
+> >     ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
+> >     ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
+> > - Addressed review comments from Thara, Rob and Stephan Gerhold.
+> > - Collect Reviewed-by from Rob and Thara on some of the patches from the
+> >    v3 patchset.
+> >
+> > Changes since v2:
+> > =================
+> > - v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+> > - Drop a couple of patches from v1, which tried to address the defered
+> >    probing of qce driver in case bam dma driver is not yet probed.
+> >    Replace it instead with a single (simpler) patch [PATCH 16/17].
+> > - Convert bam dma and qce crypto dt-bindings to YAML.
+> > - Addressed review comments from Thara, Bjorn, Vinod and Rob.
+> >
+> > Changes since v1:
+> > =================
+> > - v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/
+> > - v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+> >    changes/fixes:
+> >    ~ Enable the interconnect path b/w BAM DMA and main memory first
+> >      before trying to access the BAM DMA registers.
+> >    ~ Enable the interconnect path b/w qce crytpo and main memory first
+> >      before trying to access the qce crypto registers.
+> >    ~ Make sure to document the required and optional properties for both
+> >      BAM DMA and qce crypto drivers.
+> >    ~ Add a few debug related print messages in case the qce crypto driver
+> >      passes or fails to probe.
+> >    ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+> >      or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+> >      yet probed.
+> >
+> > Qualcomm crypto engine is also available on sm8250 SoC.
+> > It supports hardware accelerated algorithms for encryption
+> > and authentication. It also provides support for aes, des, 3des
+> > encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+> > authentication algorithms.
+> >
+> > Tested the enabled crypto algorithms with cryptsetup test utilities
+> > on sm8250-mtp and RB5 board (see [1]) and also with crypto self-tests,
+> > including the fuzz tests (CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y).
+> >
+> > Note that this series is rebased on a SMMU related fix from Arnd applied
+> > on either linus's tip of linux-next's tip (see [2]), without which
+> > the sm8250 based boards fail to boot with the latest tip.
+> >
+> > [1]. https://linux.die.net/man/8/cryptsetup
+> > [2]. https://lore.kernel.org/linux-arm-kernel/CAA8EJpoD4Th1tdwYQLnZur2oA0xX0LojSrNFLyJqdi6+rnB3YQ@mail.gmail.com/T/
+> >
+> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> >
+> > Bhupesh Sharma (17):
+> >    arm64/dts: qcom: Fix 'dma' & 'qcom,controlled-remotely' nodes in dts
+> >    arm64/dts: qcom: ipq6018: Remove unused 'qcom,config-pipe-trust-reg'
+> >      property
+> >    arm64/dts: qcom: ipq6018: Remove unused 'iface_clk' property from
+> >      dma-controller node
+> >    dt-bindings: qcom-bam: Convert binding to YAML
+> >    dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
+> >      optional properties
+> >    dt-bindings: qcom-bam: Add 'iommus' to optional properties
+> >    dt-bindings: qcom-qce: Convert bindings to yaml
+> >    dt-bindings: qcom-qce: Add 'interconnects' and move 'clocks' to
+> >      optional properties
+> >    dt-bindings: qcom-qce: Add 'iommus' to optional properties
+> >    arm64/dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
+> >    dt-bindings: crypto : Add new compatible strings for qcom-qce
+> >    arm64/dts: qcom: Use new compatibles for crypto nodes
+> >    crypto: qce: Add new compatibles for qce crypto driver
+> >    crypto: qce: Print a failure msg in case probe() fails
+> >    crypto: qce: Defer probing if BAM dma channel is not yet initialized
+> >    crypto: qce: Add 'sm8250-qce' compatible string check
+> >    arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
+> >
+> > Thara Gopinath (3):
+> >    dma: qcom: bam_dma: Add support to initialize interconnect path
+> >    crypto: qce: core: Add support to initialize interconnect path
+> >    crypto: qce: core: Make clocks optional
+> >
+> >   .../devicetree/bindings/crypto/qcom-qce.yaml  |  90 +++++++++++++++
+> >   .../devicetree/bindings/dma/qcom_bam_dma.txt  |  50 --------
+> >   .../devicetree/bindings/dma/qcom_bam_dma.yaml | 107 ++++++++++++++++++
+> >   arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  10 +-
+> >   arch/arm64/boot/dts/qcom/ipq8074.dtsi         |   4 +-
+> >   arch/arm64/boot/dts/qcom/msm8996.dtsi         |   4 +-
+> >   arch/arm64/boot/dts/qcom/msm8998.dtsi         |   2 +-
+> >   arch/arm64/boot/dts/qcom/sdm845.dtsi          |  10 +-
+> >   arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 +++++
+> >   drivers/crypto/qce/core.c                     |  66 +++++++----
+> >   drivers/crypto/qce/core.h                     |   1 +
+> >   drivers/dma/qcom/bam_dma.c                    |  16 ++-
+> >   12 files changed, 302 insertions(+), 86 deletions(-)
+> >   create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> >   delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> >   create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> >
+>
+>
