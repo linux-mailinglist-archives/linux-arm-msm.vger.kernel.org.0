@@ -2,191 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6C43438433
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Oct 2021 17:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 138EC438668
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Oct 2021 05:19:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230452AbhJWP5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 23 Oct 2021 11:57:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49196 "EHLO
+        id S231414AbhJXDGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 23 Oct 2021 23:06:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbhJWP5v (ORCPT
+        with ESMTP id S229868AbhJXDGj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 23 Oct 2021 11:57:51 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ABDC061714;
-        Sat, 23 Oct 2021 08:55:32 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id n36-20020a17090a5aa700b0019fa884ab85so7964574pji.5;
-        Sat, 23 Oct 2021 08:55:32 -0700 (PDT)
+        Sat, 23 Oct 2021 23:06:39 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBDA4C061764
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Oct 2021 20:04:19 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id s18-20020a0568301e1200b0054e77a16651so9762132otr.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Oct 2021 20:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/pSiwo+cqnHDXHq5IyuMaCuGSJ1F7Qgv+xIG/gujbcY=;
-        b=Lo5pB7LK4ASUpV9T0nhmFJmhsvRgF4B3M+PdM2rUpggIiWX1T4rEhaDMyeXl+hE2BX
-         kftGkYKm2tnacs4oo871EiyVJvi8kLYBymnEZH1nFnOqSfS3SFgMXXITCtdpAdmFmOXW
-         G9NrOOwOS/IQfVvcr+8LzU/mGBBv+8e+Kg177FnK5pNsRvLQakBhS1CgoGKudLoaAMHa
-         sDpB2k6pHJOgWYfvu3EAwbCC5hEttKMFJsV/uBRpiQ17AkeQgxftgpLlasvzV+/CCf9z
-         T1de4yKQYlFEV7NozJgOYibWPlzXW7xCOQlaNv46lfzsT+xc7f+ntDfCeyKlIPPJ0aEQ
-         169g==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=09khimdAjQRi8HKATJj9Yiw14F//GZIJY/3Fe7+1+Ew=;
+        b=lHDyo+4Dao/LPjRiG1bPgSM38hRwp9NmMy+FE4x4UHptLKk5sQX82TX7R+yqo/Sx1k
+         vpmwoKDWHfskPP7m3dpCjBSwcLHkZ3OZ+0rZ/xNTX+qi/cB3O2MvU2BGYzrCOPP73+Ko
+         Nz8xruVnyHemho7jFWSjyfS7glTYTx1jInbqcttKImabSlDLIUzh/yHzieGAVxO6OGyl
+         ZFY2B2eYCP466an727i+vHIuOWDzkDSQJnH0Z9tl0KsQDXQEeGSoYySzgw8cQZooqebY
+         XvKTE6zrAC2cCr3Btcl0mS/SOtSmfMNTy8SaWiLYgK3mK3YtlUMpbnLXL9AkO36Vni/Z
+         1WVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/pSiwo+cqnHDXHq5IyuMaCuGSJ1F7Qgv+xIG/gujbcY=;
-        b=EQLeCIWvSx7Q7FRd8WQvGIj0VGFWxr42KzAHryCcUMbsd8DK0NYhBOi93Hy1zrO37y
-         9DY1iNb+uTpW09MKi4V5LhDEynMfsIZK+WOv/rJrl0WgtuW0DtPQl8PD252p+HKW6I/w
-         iIqrYVYO8PlWGxMqoFopzKMXtshvvoheMht8X96i0DeAPIVkokmvlVv8CnqMH/m8I+RS
-         7I9oY0zn192noCpB8N5tfSetiCpg171rxM2V8Of/P3QvEjcRGpl5MuiKrb81dcQJybSz
-         qQlsg4pzX/+rWPMNB4iPV5QvWCppnTYSKLXbGCiS3qXIanmbdXG/CbQE67MEKSimVxb9
-         P3aw==
-X-Gm-Message-State: AOAM533opDix4OTCAxDEhgEhTrOBmNLhPr+uUS5WZHt8DgEd3+R6EVdU
-        8G5bMaJTuWwYLPud9MCIZVg=
-X-Google-Smtp-Source: ABdhPJxNTy5Vqw0d9jUVsUmEoGQNGNcpSYCHxtyx5N1R+Ctvdyrad7wp36YiAb+YNHiWwM6mI3qZ6A==
-X-Received: by 2002:a17:90b:1bc3:: with SMTP id oa3mr7847706pjb.75.1635004531693;
-        Sat, 23 Oct 2021 08:55:31 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id j1sm2212635pfj.155.2021.10.23.08.55.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=09khimdAjQRi8HKATJj9Yiw14F//GZIJY/3Fe7+1+Ew=;
+        b=mSnu74/J9Z8VXgRvywOv8cfcIXoaVBTMvwPTOSE1m/sKFxNMS1Wezka3I72g+lTEaO
+         H4TyG93c4Kz/xdQQK3mLOPWkk0Ebk2DAJ0s1dVMHvH2ha0LiGuTOM5RvKYWrV4Dx8As9
+         PUIMRPyOnEG09MV3XNuGus0mpTcUaMgdhgaRCoJ/S1t1dMpAryGDA+zEAiMifzAcLE9S
+         kEV9hvzR9sNzGxXkDzOkAv44cclZ881jEwzrj7ZbCzSUiMVx8Npr8FTgr5iESa6tbrDr
+         yzL8uiA+vzOALBahuodjh1i+wkwpPnINWb1E8PUHBvKCtqhyxAnZNtDVeYT5zlRgNLVT
+         AgFg==
+X-Gm-Message-State: AOAM533iyJxAkywePekL0pU0WTtkh11vcwBdRJpJI9RGcxAbyvH0tU+v
+        KQgpDYPcZ6DqOghyzgaI4k45PoURZJligg==
+X-Google-Smtp-Source: ABdhPJxXIK+1OUczhalebYJ7/W4p3n75GDzIHUTDynp8eQPC+UOq1fcxo3/zmNL2HgmGyBdZhEfL9A==
+X-Received: by 2002:a9d:20a3:: with SMTP id x32mr6982286ota.91.1635044658537;
+        Sat, 23 Oct 2021 20:04:18 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id h2sm2679287otr.37.2021.10.23.20.04.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Oct 2021 08:55:30 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Jessica Zhang <jesszhan@codeaurora.org>,
-        Mark Yacoub <markyacoub@google.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 2/2] drm/msm/dpu: Remove dynamic allocation from atomic context
-Date:   Sat, 23 Oct 2021 09:00:13 -0700
-Message-Id: <20211023160016.3322052-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211023160016.3322052-1-robdclark@gmail.com>
-References: <20211023160016.3322052-1-robdclark@gmail.com>
+        Sat, 23 Oct 2021 20:04:17 -0700 (PDT)
+Date:   Sat, 23 Oct 2021 22:04:15 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Raffaele Tranquillini <raffaele.tranquillini@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] arm64: dts: qcom: msm8996: Revamp reserved memory
+Message-ID: <YXTNL7boyiRFKQiV@builder.lan>
+References: <20210926190555.278589-1-y.oudjana@protonmail.com>
+ <20210926190555.278589-2-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210926190555.278589-2-y.oudjana@protonmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Sun 26 Sep 14:06 CDT 2021, Yassine Oudjana wrote:
 
-We know the upper bound on # of mixers (ie. two), so lets just allocate
-this on the stack.
+> Fix a total overlap between zap_shader_region and slpi_region, and rename
+> all regions to match the naming convention in other Qualcomm SoC device trees.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 
-Fixes:
+FYI, I like this series, but I held off applying it because I wanted to
+verify that the shuffling of the memory regions works on the existing
+8996 boards.
 
-   BUG: sleeping function called from invalid context at include/linux/sched/mm.h:201
-   in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/0
-   INFO: lockdep is turned off.
-   irq event stamp: 43642
-   hardirqs last  enabled at (43641): [<ffffffe24dd276bc>] cpuidle_enter_state+0x158/0x25c
-   hardirqs last disabled at (43642): [<ffffffe24dfff450>] enter_el1_irq_or_nmi+0x10/0x1c
-   softirqs last  enabled at (43620): [<ffffffe24d4103fc>] __do_softirq+0x1e4/0x464
-   softirqs last disabled at (43615): [<ffffffe24d48bd90>] __irq_exit_rcu+0x104/0x150
-   CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W         5.15.0-rc3-debug+ #105
-   Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-   Call trace:
-    dump_backtrace+0x0/0x18c
-    show_stack+0x24/0x30
-    dump_stack_lvl+0xa0/0xd4
-    dump_stack+0x18/0x34
-    ___might_sleep+0x1e0/0x1f0
-    __might_sleep+0x78/0x8c
-    slab_pre_alloc_hook.constprop.0+0x48/0x6c
-    __kmalloc+0xc8/0x21c
-    dpu_crtc_vblank_callback+0x158/0x1f8
-    dpu_encoder_vblank_callback+0x70/0xc4
-    dpu_encoder_phys_vid_vblank_irq+0x50/0x12c
-    dpu_core_irq+0x1bc/0x1d0
-    dpu_irq+0x1c/0x28
-    msm_irq+0x34/0x40
-    __handle_irq_event_percpu+0x15c/0x308
-    handle_irq_event_percpu+0x3c/0x90
-    handle_irq_event+0x54/0x98
-    handle_level_irq+0xa0/0xd0
-    handle_irq_desc+0x2c/0x44
-    generic_handle_domain_irq+0x28/0x34
-    dpu_mdss_irq+0x90/0xe8
-    handle_irq_desc+0x2c/0x44
-    handle_domain_irq+0x54/0x80
-    gic_handle_irq+0xd4/0x148
-    call_on_irq_stack+0x2c/0x54
-    do_interrupt_handler+0x4c/0x64
-    el1_interrupt+0x30/0xd0
-    el1h_64_irq_handler+0x18/0x24
-    el1h_64_irq+0x78/0x7c
-    arch_local_irq_enable+0xc/0x14
-    cpuidle_enter+0x44/0x5c
-    do_idle+0x248/0x268
-    cpu_startup_entry+0x30/0x48
-    rest_init+0x188/0x19c
-    arch_call_rest_init+0x1c/0x28
-    start_kernel+0x704/0x744
-    __primary_switched+0xc0/0xc8
+Unfortunately it didn't work, either with or without the shuffling on
+the db820c - and I've not found the time to figure out why that is. I
+hope to get back to this shortly (or that someone else will figure it
+out and provide a tested-by)
 
-Fixes: 78d9b458cc21 ("drm/msm/dpu: Add CRC support for DPU")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+Regards,
+Bjorn
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 0ae397044310..2523e829f485 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -182,21 +182,19 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- {
- 	struct dpu_crtc_state *crtc_state;
- 	struct dpu_crtc_mixer *m;
--	u32 *crcs;
-+	u32 crcs[CRTC_DUAL_MIXERS];
- 
- 	int i = 0;
- 	int rc = 0;
- 
- 	crtc_state = to_dpu_crtc_state(crtc->state);
--	crcs = kcalloc(crtc_state->num_mixers, sizeof(*crcs), GFP_KERNEL);
- 
--	if (!crcs)
--		return -ENOMEM;
-+	BUILD_BUG_ON(ARRAY_SIZE(crcs) != ARRAY_SIZE(crtc_state->mixers));
- 
- 	/* Skip first 2 frames in case of "uncooked" CRCs */
- 	if (crtc_state->crc_frame_skip_count < 2) {
- 		crtc_state->crc_frame_skip_count++;
--		goto cleanup;
-+		return 0;
- 	}
- 
- 	for (i = 0; i < crtc_state->num_mixers; ++i) {
-@@ -210,16 +208,12 @@ static int dpu_crtc_get_crc(struct drm_crtc *crtc)
- 
- 		if (rc) {
- 			DRM_DEBUG_DRIVER("MISR read failed\n");
--			goto cleanup;
-+			return rc;
- 		}
- 	}
- 
--	rc = drm_crtc_add_crc_entry(crtc, true,
-+	return drm_crtc_add_crc_entry(crtc, true,
- 			drm_crtc_accurate_vblank_count(crtc), crcs);
--
--cleanup:
--	kfree(crcs);
--	return rc;
- }
- 
- static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
--- 
-2.31.1
-
+> ---
+>  .../dts/qcom/msm8996-sony-xperia-tone.dtsi    | 18 ++++--
+>  .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  | 18 +++---
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         | 63 ++++++++++---------
+>  3 files changed, 55 insertions(+), 44 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> index 507396c4d23b..4c26e66f0610 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+> @@ -13,9 +13,10 @@
+>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>  #include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
+>  
+> -/delete-node/ &slpi_region;
+> -/delete-node/ &venus_region;
+> -/delete-node/ &zap_shader_region;
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &slpi_mem;
+> +/delete-node/ &venus_mem;
+> +/delete-node/ &gpu_mem;
+>  
+>  / {
+>  	qcom,msm-id = <246 0x30001>; /* MSM8996 V3.1 (Final) */
+> @@ -46,18 +47,23 @@ cont_splash_mem: memory@83401000 {
+>  			no-map;
+>  		};
+>  
+> -		zap_shader_region: gpu@90400000 {
+> +		adsp_mem: adsp@8ea00000 {
+> +			reg = <0x0 0x8ea00000 0x0 0x1a00000>;
+> +			no-map;
+> +		};
+> +
+> +		gpu_mem: gpu@90400000 {
+>  			compatible = "shared-dma-pool";
+>  			reg = <0x0 0x90400000 0x0 0x2000>;
+>  			no-map;
+>  		};
+>  
+> -		slpi_region: memory@90500000 {
+> +		slpi_mem: memory@90500000 {
+>  			reg = <0 0x90500000 0 0xa00000>;
+>  			no-map;
+>  		};
+>  
+> -		venus_region: memory@90f00000 {
+> +		venus_mem: memory@90f00000 {
+>  			reg = <0 0x90f00000 0 0x500000>;
+>  			no-map;
+>  		};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> index d239b01b8505..a5e7bccadba2 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+> @@ -66,32 +66,32 @@ memory@88800000 {
+>  
+>  		/* This platform has all PIL regions offset by 0x1400000 */
+>  		/delete-node/ mpss@88800000;
+> -		mpss_region: mpss@89c00000 {
+> +		mpss_mem: mpss@89c00000 {
+>  			reg = <0x0 0x89c00000 0x0 0x6200000>;
+>  			no-map;
+>  		};
+>  
+>  		/delete-node/ adsp@8ea00000;
+> -		adsp_region: adsp@8ea00000 {
+> +		adsp_mem: adsp@8fe00000 {
+>  			reg = <0x0 0x8fe00000 0x0 0x1b00000>;
+>  			no-map;
+>  		};
+>  
+> -		/delete-node/ slpi@90b00000;
+> -		slpi_region: slpi@91900000 {
+> +		/delete-node/ slpi@90500000;
+> +		slpi_mem: slpi@91900000 {
+>  			reg = <0x0 0x91900000 0x0 0xa00000>;
+>  			no-map;
+>  		};
+>  
+> -		/delete-node/ gpu@8f200000;
+> -		zap_shader_region: gpu@92300000 {
+> +		/delete-node/ gpu@90f00000;
+> +		gpu_mem: gpu@92300000 {
+>  			compatible = "shared-dma-pool";
+>  			reg = <0x0 0x92300000 0x0 0x2000>;
+>  			no-map;
+>  		};
+>  
+>  		/delete-node/ venus@91000000;
+> -		venus_region: venus@90400000 {
+> +		venus_mem: venus@92400000 {
+>  			reg = <0x0 0x92400000 0x0 0x500000>;
+>  			no-map;
+>  		};
+> @@ -107,7 +107,7 @@ ramoops@92900000 {
+>  			pmsg-size = <0x40000>;
+>  		};
+>  
+> -		/delete-node/ rmtfs@86700000;
+> +		/delete-node/ rmtfs;
+>  		rmtfs@f6c00000 {
+>  			compatible = "qcom,rmtfs-mem";
+>  			reg = <0 0xf6c00000 0 0x200000>;
+> @@ -118,7 +118,7 @@ rmtfs@f6c00000 {
+>  		};
+>  
+>  		/delete-node/ mba@91500000;
+> -		mba_region: mba@f6f00000 {
+> +		mba_mem: mba@f6f00000 {
+>  			reg = <0x0 0xf6f00000 0x0 0x100000>;
+>  			no-map;
+>  		};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index eb3ec5ff46eb..1495fff6ffc9 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -384,60 +384,65 @@ reserved-memory {
+>  		#size-cells = <2>;
+>  		ranges;
+>  
+> -		mba_region: mba@91500000 {
+> -			reg = <0x0 0x91500000 0x0 0x200000>;
+> +		hyp_mem: memory@85800000 {
+> +			reg = <0x0 0x85800000 0x0 0x600000>;
+>  			no-map;
+>  		};
+>  
+> -		slpi_region: slpi@90b00000 {
+> -			reg = <0x0 0x90b00000 0x0 0xa00000>;
+> +		xbl_mem: memory@85e00000 {
+> +			reg = <0x0 0x85e00000 0x0 0x200000>;
+>  			no-map;
+>  		};
+>  
+> -		venus_region: venus@90400000 {
+> -			reg = <0x0 0x90400000 0x0 0x700000>;
+> +		smem_mem: smem-mem@86000000 {
+> +			reg = <0x0 0x86000000 0x0 0x200000>;
+>  			no-map;
+>  		};
+>  
+> -		adsp_region: adsp@8ea00000 {
+> -			reg = <0x0 0x8ea00000 0x0 0x1a00000>;
+> +		tz_mem: memory@86200000 {
+> +			reg = <0x0 0x86200000 0x0 0x2600000>;
+>  			no-map;
+>  		};
+>  
+> -		mpss_region: mpss@88800000 {
+> -			reg = <0x0 0x88800000 0x0 0x6200000>;
+> +		rmtfs_mem: rmtfs {
+> +			compatible = "qcom,rmtfs-mem";
+> +
+> +			size = <0x0 0x200000>;
+> +			alloc-ranges = <0x0 0xa0000000 0x0 0x2000000>;
+>  			no-map;
+> +
+> +			qcom,client-id = <1>;
+> +			qcom,vmid = <15>;
+>  		};
+>  
+> -		smem_mem: smem-mem@86000000 {
+> -			reg = <0x0 0x86000000 0x0 0x200000>;
+> +		mpss_mem: mpss@88800000 {
+> +			reg = <0x0 0x88800000 0x0 0x6200000>;
+>  			no-map;
+>  		};
+>  
+> -		memory@85800000 {
+> -			reg = <0x0 0x85800000 0x0 0x800000>;
+> +		adsp_mem: adsp@8ea00000 {
+> +			reg = <0x0 0x8ea00000 0x0 0x1b00000>;
+>  			no-map;
+>  		};
+>  
+> -		memory@86200000 {
+> -			reg = <0x0 0x86200000 0x0 0x2600000>;
+> +		slpi_mem: slpi@90500000 {
+> +			reg = <0x0 0x90500000 0x0 0xa00000>;
+>  			no-map;
+>  		};
+>  
+> -		rmtfs@86700000 {
+> -			compatible = "qcom,rmtfs-mem";
+> -
+> -			size = <0x0 0x200000>;
+> -			alloc-ranges = <0x0 0xa0000000 0x0 0x2000000>;
+> +		gpu_mem: gpu@90f00000 {
+> +			compatible = "shared-dma-pool";
+> +			reg = <0x0 0x90f00000 0x0 0x100000>;
+>  			no-map;
+> +		};
+>  
+> -			qcom,client-id = <1>;
+> -			qcom,vmid = <15>;
+> +		venus_mem: venus@91000000 {
+> +			reg = <0x0 0x91000000 0x0 0x500000>;
+> +			no-map;
+>  		};
+>  
+> -		zap_shader_region: gpu@8f200000 {
+> -			compatible = "shared-dma-pool";
+> -			reg = <0x0 0x90b00000 0x0 0xa00000>;
+> +		mba_mem: mba@91500000 {
+> +			reg = <0x0 0x91500000 0x0 0x200000>;
+>  			no-map;
+>  		};
+>  	};
+> @@ -1013,7 +1018,7 @@ opp-133000000 {
+>  			};
+>  
+>  			zap-shader {
+> -				memory-region = <&zap_shader_region>;
+> +				memory-region = <&gpu_mem>;
+>  			};
+>  		};
+>  
+> @@ -2001,7 +2006,7 @@ venus: video-codec@c00000 {
+>  				 <&venus_smmu 0x2c>,
+>  				 <&venus_smmu 0x2d>,
+>  				 <&venus_smmu 0x31>;
+> -			memory-region = <&venus_region>;
+> +			memory-region = <&venus_mem>;
+>  			status = "disabled";
+>  
+>  			video-decoder {
+> @@ -3008,7 +3013,7 @@ adsp_pil: remoteproc@9300000 {
+>  			clocks = <&xo_board>;
+>  			clock-names = "xo";
+>  
+> -			memory-region = <&adsp_region>;
+> +			memory-region = <&adsp_mem>;
+>  
+>  			qcom,smem-states = <&smp2p_adsp_out 0>;
+>  			qcom,smem-state-names = "stop";
+> -- 
+> 2.33.0
+> 
+> 
