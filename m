@@ -2,285 +2,300 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6062B4398E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 16:44:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D47614398F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 16:44:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233040AbhJYOqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 10:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43682 "EHLO
+        id S231437AbhJYOrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 10:47:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbhJYOqd (ORCPT
+        with ESMTP id S233204AbhJYOq6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 10:46:33 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EC5C061767
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:11 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id r2so11115464pgl.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:11 -0700 (PDT)
+        Mon, 25 Oct 2021 10:46:58 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F72FC061745
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:35 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id bq11so10510097lfb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=7nWtBZUACjwks83t/CbzMB0IKdyuj93VnZG1s4Wg6K4=;
-        b=VNxJvSFI1z9qQSTztSflwy5b4APSzJ6zu0h2rpD72QkaqpDQwYSGVAeftoBVDWBoWM
-         e4ugOwzxUYBaigWTGpdx8rzvA5eUA/Eb0b6O7aeO4evVs32HPPHiSzyiVHwnaCfzYhBd
-         83gh6PQy/cl9OWdc1d6Y4I7BKtJKauMm3m4h+I35PqQmeGg758S9JVycxYvjW2XmcIoE
-         N1oy52LRHbbE50MupYHtW+9htJvmYZIugDg3BOOFY4eqrnvy+AkTPrnW5l0tZhmijm/Z
-         zJmpdV9imijlRWX8ON6ZEd9HnYd4/XiM4r2i3BxnZuyEJ+rAfx4l1SR0ViZqnJMmmlAQ
-         U6lg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=v1mMWeJ4eN0jON4Tvhqworti70ZpkjNPMSIyXJ+VLbI=;
+        b=WFcklZTVt7vJVB15GuEypjH1pAU0tMy5fdSyc/fuf/HAPm+8RfxB7+YDclQVB76xjo
+         i5mBFGciMx6unYZEa5h89n2MwKT4jghiER/WpNYW5m/YynwXNbnZX4conC0mo2OfM4vT
+         P1jCYpHOEbSOZB7+8KvuDJ4Hw9KucVWfpo4lxMJU18kaTULhuiMgu5rNf9YfeVPQoEME
+         tX5RfIKBRZiR3+lg9yG0ehpJpNfiEP+GlXub6KELemRITQJ72IblYiUWy2L3JXu9TxAs
+         cpA+UDvZLl0VYqhAEM5SeoWu54AIUc2/M/0ONmuaF2dtv0PD8xXjhNqXkAlDV1glpNlY
+         Iy+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=7nWtBZUACjwks83t/CbzMB0IKdyuj93VnZG1s4Wg6K4=;
-        b=R4LnMCKMxHpsnyQvk28fkFXPAnLF0m/QBNKdurqWp9TjL5AhrwU6bZO8/4wpNu2lXI
-         Ev7tVvDKTI0YnQk2x9C3fmcYL64mdsPe04FCHwo//VUhIemHoTjz0JfPsdrTnsxZ17/p
-         JdFvJjfj0a3fcHWIdxzEeK3s4MGXOACplvilKbH4s82LvANoGmU+ojPKLyMIeZ/a2RtL
-         IgOam7btMduhVoMxcRwrV0EJYoXSJRxJIS/swVXbq775FLrMms+jgjDff4RgPRlHV07g
-         Ayrv3XJeLWZttbbMKeAuZridgp3wSh6u0YiUKeh3rCzzWqPkCRtoSxkZR0qm+yZFvICe
-         feKg==
-X-Gm-Message-State: AOAM530Ggwbg5Z3ha5MOAEQO1QBkiI+Je/KaOgOO6jX8E0Cq3zmsMdXw
-        mMl0+KL/4L98EZqqYIO0CJyFlw==
-X-Google-Smtp-Source: ABdhPJyDCXbOk5f2duwNws5Luz2UQWlwQAtLGm2Utu2xjATqYpebx8rWy1uqoaThvXsLfeTc4dJgxw==
-X-Received: by 2002:a63:35cd:: with SMTP id c196mr11793848pga.284.1635173050457;
-        Mon, 25 Oct 2021 07:44:10 -0700 (PDT)
-Received: from localhost.localdomain ([50.39.160.154])
-        by smtp.gmail.com with ESMTPSA id f9sm7074977pfv.43.2021.10.25.07.44.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 07:44:09 -0700 (PDT)
-From:   Tadeusz Struk <tadeusz.struk@linaro.org>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        John Stultz <john.stultz@linaro.org>,
-        Tadeusz Struk <tadeusz.struk@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] media: venus: Synchronize probe() between venus_core and enc/dec
-Date:   Mon, 25 Oct 2021 07:43:45 -0700
-Message-Id: <20211025144345.267107-1-tadeusz.struk@linaro.org>
-X-Mailer: git-send-email 2.31.1
+        bh=v1mMWeJ4eN0jON4Tvhqworti70ZpkjNPMSIyXJ+VLbI=;
+        b=aEZ6vKoYbnREWNDww9y32fu8CQlqg9TAk4hpic4ivyXjQxgzssC9ssoalOE2G4rJYN
+         51QhGSmicIWaGCqCzYVqoCYCVbqkJLd1+L/GvPpm8Br2ELw7fYMj78Xbf3ovv7BFWXLV
+         upBxrJVBNAt7X0t7mRKIZUEUK1rqg71wnLLLIxTq0pCv4kFLJZYUKUFg72UzrEzn4j9G
+         lPU7QzkeJ/kwb1s9k9FB7wKnSSVrFxrZIJUEz6Zr6COrhNMdEa5Zs3SiTT55KnT8NZJX
+         JPup99d8K2EKyQ2UP4ReWl8j6V7AZv76jDlMlS4+/zAqZRgz42WxU0NGbSFLQUEZSNw3
+         pf7Q==
+X-Gm-Message-State: AOAM530cGHbNMk9hgOOF3QlUghe8HYqEKNjVFz/mVYsxl2uEi1EPmzIB
+        9zC7D1f6LNlhfpSMDtcwd1ClAQ==
+X-Google-Smtp-Source: ABdhPJwBjFjyK/Nc+qQ0ZiUYPVs157D7zQLXPwUTFO95z9Mc69tejJhIgjGnWyncD7G4LX1hx4aESQ==
+X-Received: by 2002:a19:3813:: with SMTP id f19mr11095588lfa.284.1635173073947;
+        Mon, 25 Oct 2021 07:44:33 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a19sm1742188ljb.3.2021.10.25.07.44.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 07:44:33 -0700 (PDT)
+Subject: Re: [PATCH v2 08/11] drm/msm/disp/dpu1: Add support for DSC in
+ encoder
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20211007070900.456044-1-vkoul@kernel.org>
+ <20211007070900.456044-9-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <e53aee33-1fd9-cd2f-9b98-99e20d26632b@linaro.org>
+Date:   Mon, 25 Oct 2021 17:44:32 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211007070900.456044-9-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Venus video encode/decode hardware driver consists of three modules.
-The parent module venus-core, and two sub modules venus-enc and venus-dec.
-The venus-core module allocates a common structure that is used by the
-enc/dec modules, loads the firmware, and performs some common hardware
-initialization. Since the three modules are loaded one after the other,
-and their probe functions can run in parallel it is possible that
-the venc_probe and vdec_probe functions can finish before the core
-venus_probe function, which then can fail when, for example it
-fails to load the firmware. In this case the subsequent call to venc_open
-causes an Oops as it tries to dereference already uninitialized structures
-through dev->parent and the system crashes in __pm_runtime_resume() as in
-the trace below:
+On 07/10/2021 10:08, Vinod Koul wrote:
+> We need to configure the encoder for DSC configuration and calculate DSC
+> parameters for the given timing so this patch adds that support by
+> adding dpu_encoder_prep_dsc() which is invoked when DSC is enabled.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+> Changes since
+> v1:
+>   - Remove duplicate defines
+>   - Update changelog
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 139 +++++++++++++++++++-
+>   1 file changed, 138 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 0e9d3fa1544b..aac51c1bdf94 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -21,6 +21,7 @@
+>   #include "dpu_hw_intf.h"
+>   #include "dpu_hw_ctl.h"
+>   #include "dpu_hw_dspp.h"
+> +#include "dpu_hw_dsc.h"
+>   #include "dpu_formats.h"
+>   #include "dpu_encoder_phys.h"
+>   #include "dpu_crtc.h"
+> @@ -136,6 +137,7 @@ enum dpu_enc_rc_states {
+>    * @cur_slave:		As above but for the slave encoder.
+>    * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+>    *			pingpong blocks can be different than num_phys_encs.
+> + * @hw_dsc:		Handle to the DSC blocks used for the display.
+>    * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
+>    *			for partial update right-only cases, such as pingpong
+>    *			split where virtual pingpong does not generate IRQs
+> @@ -181,6 +183,7 @@ struct dpu_encoder_virt {
+>   	struct dpu_encoder_phys *cur_master;
+>   	struct dpu_encoder_phys *cur_slave;
+>   	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+>   
+>   	bool intfs_swapped;
+>   
+> @@ -977,7 +980,8 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>   	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+>   	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+>   	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
+> -	int num_lm, num_ctl, num_pp;
+> +	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	int num_lm, num_ctl, num_pp, num_dsc;
+>   	int i, j;
+>   
+>   	if (!drm_enc) {
+> @@ -1035,6 +1039,13 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>   		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
+>   						: NULL;
+>   
+> +	if (priv->dsc) {
+> +		num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> +			drm_enc->base.id, DPU_HW_BLK_DSC, hw_dsc, ARRAY_SIZE(hw_dsc));
+> +		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +			dpu_enc->hw_dsc[i] = i < num_dsc ? to_dpu_hw_dsc(hw_dsc[i]) : NULL;
+> +	}
+> +
+>   	cstate = to_dpu_crtc_state(drm_crtc->state);
+>   
+>   	for (i = 0; i < num_lm; i++) {
+> @@ -1778,10 +1789,132 @@ static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
+>   			nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
+>   }
+>   
+> +static void
+> +dpu_encoder_dsc_pclk_param_calc(struct msm_display_dsc_config *dsc, u32 width)
+> +{
+> +	int slice_count, slice_per_intf;
+> +	int bytes_in_slice, total_bytes_per_intf;
+> +
+> +	if (!dsc || !dsc->drm->slice_width || !dsc->drm->slice_count) {
+> +		DPU_ERROR("Invalid DSC/slices\n");
+> +		return;
+> +	}
+> +
+> +	slice_count = dsc->drm->slice_count;
+> +	slice_per_intf = DIV_ROUND_UP(width, dsc->drm->slice_width);
+> +
+> +	/*
+> +	 * If slice_count is greater than slice_per_intf then default to 1.
+> +	 * This can happen during partial update.
+> +	 */
+> +	if (slice_count > slice_per_intf)
+> +		slice_count = 1;
+> +
+> +	bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
+> +				      dsc->drm->bits_per_pixel, 8);
+> +	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
+> +
+> +	dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +	dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
+> +	dsc->bytes_in_slice = bytes_in_slice;
+> +	dsc->bytes_per_pkt = bytes_in_slice * slice_count;
+> +	dsc->pkt_per_line = slice_per_intf / slice_count;
+> +}
+> +
+> +static void
+> +dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
+> +				  u32 enc_ip_width)
+> +{
+> +	int ssm_delay, total_pixels, soft_slice_per_enc;
+> +
+> +	soft_slice_per_enc = enc_ip_width / dsc->drm->slice_width;
+> +
+> +	/*
+> +	 * minimum number of initial line pixels is a sum of:
+> +	 * 1. sub-stream multiplexer delay (83 groups for 8bpc,
+> +	 *    91 for 10 bpc) * 3
+> +	 * 2. for two soft slice cases, add extra sub-stream multiplexer * 3
+> +	 * 3. the initial xmit delay
+> +	 * 4. total pipeline delay through the "lock step" of encoder (47)
+> +	 * 5. 6 additional pixels as the output of the rate buffer is
+> +	 *    48 bits wide
+> +	 */
+> +	ssm_delay = ((dsc->drm->bits_per_component < 10) ? 84 : 92);
+> +	total_pixels = ssm_delay * 3 + dsc->drm->initial_xmit_delay + 47;
+> +	if (soft_slice_per_enc > 1)
+> +		total_pixels += (ssm_delay * 3);
+> +	dsc->initial_lines = DIV_ROUND_UP(total_pixels, dsc->drm->slice_width);
+> +}
+> +
+> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+> +				     struct dpu_hw_pingpong *hw_pp,
+> +				     struct msm_display_dsc_config *dsc,
+> +				     u32 common_mode)
+> +{
+> +	if (hw_dsc->ops.dsc_config)
+> +		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode);
+> +
+> +	if (hw_dsc->ops.dsc_config_thresh)
+> +		hw_dsc->ops.dsc_config_thresh(hw_dsc, dsc);
+> +
+> +	if (hw_pp->ops.setup_dsc)
+> +		hw_pp->ops.setup_dsc(hw_pp);
+> +
+> +	if (hw_pp->ops.enable_dsc)
+> +		hw_pp->ops.enable_dsc(hw_pp);
+> +}
+> +
+> +static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> +				 struct msm_display_dsc_config *dsc)
+> +{
+> +	/* coding only for 2LM, 2enc, 1 dsc config */
+> +	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	int this_frame_slices;
+> +	int intf_ip_w, enc_ip_w;
+> +	int dsc_common_mode;
+> +	int pic_width;
+> +	int i;
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
+> +		hw_pp[i] = dpu_enc->hw_pp[i];
+> +		hw_dsc[i] = dpu_enc->hw_dsc[i];
+> +
+> +		if (!hw_pp[i] || !hw_dsc[i]) {
+> +			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
+> +			return;
+> +		}
+> +	}
+> +
+> +	dsc_common_mode = 0;
+> +	pic_width = dsc->drm->pic_width;
+> +
+> +	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+> +	if (enc_master->intf_mode == INTF_MODE_VIDEO)
+> +		dsc_common_mode |= DSC_MODE_VIDEO;
+> +
+> +	this_frame_slices = pic_width / dsc->drm->slice_width;
+> +	intf_ip_w = this_frame_slices * dsc->drm->slice_width;
+> +
+> +	dpu_encoder_dsc_pclk_param_calc(dsc, intf_ip_w);
+> +
+> +	/*
+> +	 * dsc merge case: when using 2 encoders for the same stream,
+> +	 * no. of slices need to be same on both the encoders.
+> +	 */
+> +	enc_ip_w = intf_ip_w / 2;
+> +	dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode);
+> +}
+> +
+>   void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+>   {
+>   	struct dpu_encoder_virt *dpu_enc;
+>   	struct dpu_encoder_phys *phys;
+> +	struct msm_drm_private *priv;
+>   	bool needs_hw_reset = false;
+>   	unsigned int i;
+>   
+> @@ -1809,6 +1942,10 @@ void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+>   			dpu_encoder_helper_hw_reset(dpu_enc->phys_encs[i]);
+>   		}
+>   	}
+> +
+> +	priv = drm_enc->dev->dev_private;
+> +	if (priv->dsc)
+> +		dpu_encoder_prep_dsc(dpu_enc, priv->dsc);
 
-[   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-[   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
-[   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
-[   26.286374][  T213] lt9611 10-003b: hdmi cable connected
-[   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
-[   26.290326][  T485] Call trace:
-[   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
-[   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
-[   26.290335][  T485]  v4l2_open+0x184/0x294
-[   26.290340][  T485]  chrdev_open+0x468/0x5c8
-[   26.290344][  T485]  do_dentry_open+0x260/0x54c
-[   26.290349][  T485]  path_openat+0xbe8/0xd5c
-[   26.290352][  T485]  do_filp_open+0xb8/0x168
-[   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
-[   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
-[   26.290359][  T485]  invoke_syscall+0x60/0x170
-[   26.290363][  T485]  el0_svc_common+0xb8/0xf8
-[   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
-[   26.290367][  T485]  el0_svc_compat+0x24/0x84
-[   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
-[   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
-[   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
-[   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+Again, DP + DSI case would be broken here. We'd need to tie DSC config 
+to the encoder itself rather than having a single global DSC config.
 
-This can be fixed by synchronizing the three probe functions and
-only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
-returns success.
+>   }
+>   
+>   void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
+> 
 
-Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c |  6 ++++++
- drivers/media/platform/qcom/venus/core.h |  2 ++
- drivers/media/platform/qcom/venus/vdec.c | 18 +++++++++++++++---
- drivers/media/platform/qcom/venus/venc.c | 18 +++++++++++++++---
- 4 files changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 91b15842c555..18f3e3a9823f 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -317,6 +317,7 @@ static int venus_probe(struct platform_device *pdev)
- 
- 	INIT_LIST_HEAD(&core->instances);
- 	mutex_init(&core->lock);
-+	mutex_init(&core->sync_lock);
- 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
- 
- 	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
-@@ -331,6 +332,8 @@ static int venus_probe(struct platform_device *pdev)
- 
- 	venus_assign_register_offsets(core);
- 
-+	mutex_lock(&core->sync_lock);
-+
- 	ret = v4l2_device_register(dev, &core->v4l2_dev);
- 	if (ret)
- 		goto err_core_deinit;
-@@ -377,6 +380,7 @@ static int venus_probe(struct platform_device *pdev)
- 		goto err_dev_unregister;
- 	}
- 
-+	mutex_unlock(&core->sync_lock);
- 	venus_dbgfs_init(core);
- 
- 	return 0;
-@@ -392,6 +396,7 @@ static int venus_probe(struct platform_device *pdev)
- 	hfi_destroy(core);
- err_core_deinit:
- 	hfi_core_deinit(core, false);
-+	mutex_unlock(&core->sync_lock);
- err_core_put:
- 	if (core->pm_ops->core_put)
- 		core->pm_ops->core_put(core);
-@@ -428,6 +433,7 @@ static int venus_remove(struct platform_device *pdev)
- 
- 	mutex_destroy(&core->pm_lock);
- 	mutex_destroy(&core->lock);
-+	mutex_destroy(&core->sync_lock);
- 	venus_dbgfs_deinit(core);
- 
- 	return ret;
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 5ec851115eca..3f80dc26febb 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -119,6 +119,7 @@ struct venus_format {
-  * @use_tz:	a flag that suggests presence of trustzone
-  * @fw:		structure of firmware parameters
-  * @lock:	a lock for this strucure
-+ * @sync_lock	a lock for probe sync between venus_core and venus_enc/dec
-  * @instances:	a list_head of all instances
-  * @insts_count:	num of instances
-  * @state:	the state of the venus core
-@@ -176,6 +177,7 @@ struct venus_core {
- 		size_t mem_size;
- 	} fw;
- 	struct mutex lock;
-+	struct mutex sync_lock;
- 	struct list_head instances;
- 	atomic_t insts_count;
- 	unsigned int state;
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 198e47eb63f4..9dbda3d7a2d2 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1659,17 +1659,26 @@ static int vdec_probe(struct platform_device *pdev)
- 	if (!core)
- 		return -EPROBE_DEFER;
- 
-+	mutex_lock(&core->sync_lock);
-+
-+	if (core->state != CORE_INIT) {
-+		ret = -ENODEV;
-+		goto err_core_unlock;
-+	}
-+
- 	platform_set_drvdata(pdev, core);
- 
- 	if (core->pm_ops->vdec_get) {
- 		ret = core->pm_ops->vdec_get(dev);
- 		if (ret)
--			return ret;
-+			goto err_core_unlock;
- 	}
- 
- 	vdev = video_device_alloc();
--	if (!vdev)
--		return -ENOMEM;
-+	if (!vdev) {
-+		ret = -ENOMEM;
-+		goto err_core_unlock;
-+	}
- 
- 	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
- 	vdev->release = video_device_release;
-@@ -1690,11 +1699,14 @@ static int vdec_probe(struct platform_device *pdev)
- 	pm_runtime_set_autosuspend_delay(dev, 2000);
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_enable(dev);
-+	mutex_unlock(&core->sync_lock);
- 
- 	return 0;
- 
- err_vdev_release:
- 	video_device_release(vdev);
-+err_core_unlock:
-+	mutex_unlock(&core->sync_lock);
- 	return ret;
- }
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index bc1c42dd53c0..e7439236385a 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1338,17 +1338,26 @@ static int venc_probe(struct platform_device *pdev)
- 	if (!core)
- 		return -EPROBE_DEFER;
- 
-+	mutex_lock(&core->sync_lock);
-+
-+	if (core->state != CORE_INIT) {
-+		ret = -ENODEV;
-+		goto err_core_unlock;
-+	}
-+
- 	platform_set_drvdata(pdev, core);
- 
- 	if (core->pm_ops->venc_get) {
- 		ret = core->pm_ops->venc_get(dev);
- 		if (ret)
--			return ret;
-+			goto err_core_unlock;
- 	}
- 
- 	vdev = video_device_alloc();
--	if (!vdev)
--		return -ENOMEM;
-+	if (!vdev) {
-+		ret = -ENOMEM;
-+		goto err_core_unlock;
-+	}
- 
- 	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
- 	vdev->release = video_device_release;
-@@ -1367,11 +1376,14 @@ static int venc_probe(struct platform_device *pdev)
- 
- 	video_set_drvdata(vdev, core);
- 	pm_runtime_enable(dev);
-+	mutex_unlock(&core->sync_lock);
- 
- 	return 0;
- 
- err_vdev_release:
- 	video_device_release(vdev);
-+err_core_unlock:
-+	mutex_unlock(&core->sync_lock);
- 	return ret;
- }
- 
 -- 
-2.31.1
-
+With best wishes
+Dmitry
