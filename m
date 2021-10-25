@@ -2,111 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 540B7439B17
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BEAD439B36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:10:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233843AbhJYQEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 12:04:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233627AbhJYQEP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:04:15 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3AFC061767
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:01:53 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id a16so12496651wrh.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:01:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zMkg/0xA2M5G/rhCUOwOXIDgsrNS6y7y/a+diRyWYzc=;
-        b=x6efCHXNxaYrirQVpspZroKoKRD7/1SgHGFiUxfs4LIlHXrgby1/xhprQ9XHEfRHiO
-         KgIje9no8GY375bClUsmuMiAqJHd1zqphUCi9ZcLISCqrgsWVNP4DYdb9qptXCqJpLfu
-         xdCl4qAbJDSZVP+dYrxcAESmtkX1tSCtWP6nGmyxCZntSCgUBDsqXvAuTTUJ2+cg2f4g
-         tYStffmQyW/K1uH/ftQtJv9zoDHPyNr5Rz6hIuMVOlWsKUdOSfHmTz1yGRgPDDDpkYHf
-         rNvT14S1GkDZ1UKW3qww3WE6NIstZTmuwqU13idA4sJmAOgyy0UJA0U6Z1eMH3Ea4/6U
-         9MLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zMkg/0xA2M5G/rhCUOwOXIDgsrNS6y7y/a+diRyWYzc=;
-        b=1CrLa6B2kDAbmZieLKEFT558RebBENa+IFDHkzahjPSF0exY88KafS9gnoY9wzm8Jx
-         XN4jVz+xRnlk/3t7WkU/cimLjjQm4coB/WXctc4TXZ2VshXSMWN3RD2dKC1tISXTu+Za
-         a0bHjvEDpk6csGvRQkOuHHuaqjfkx6ebLm2CL/vRoxJ8x6n2utOhxVvKk7s1gcGmA0tU
-         +EQ7yYlaQchfcZUWH+qg7zV9ffALphtZBaFNrOepXCzYMFQANK044wZb5W4QUDpIwV8B
-         PdRpMN3y24AmdKjA2dlaUE0TewNKnOX4qfAJdJ+nDHAd1FIJLYJe7Mx5h8qzX0KCwJ+z
-         KlAw==
-X-Gm-Message-State: AOAM531Xi1xyVdOKNm4HEQ8jNnmjD25+j0h7jeN0CfYOxGqQtTdMcFjN
-        d/O1bJw/IRaj3JpBJ7hXOJSRlg==
-X-Google-Smtp-Source: ABdhPJzhIfub+4l1wiD7yr36/+orUeB6LL3rR5ftkCBdo6TCfFkDiInNpCKTsodqMrJ3eu2Sixr3Sg==
-X-Received: by 2002:a05:6000:1241:: with SMTP id j1mr24785718wrx.419.1635177711769;
-        Mon, 25 Oct 2021 09:01:51 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id r11sm2165904wrx.79.2021.10.25.09.01.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Oct 2021 09:01:51 -0700 (PDT)
-Message-ID: <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
-Date:   Mon, 25 Oct 2021 17:03:52 +0100
+        id S231616AbhJYQNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 12:13:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36984 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230177AbhJYQNM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Oct 2021 12:13:12 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CB37960C41;
+        Mon, 25 Oct 2021 16:10:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635178249;
+        bh=Ht5CCepW+Bus8R8OY85RyRafOK9dzOlZSwh9jF1DXGY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oo+Ms53iM3smAXsA/mnUJ+MEWY39MsSACEuPImhUxEj7ZuhVyGcyxGd7qfGjH6ffl
+         VaRDwAB+xXYptDAGgU/7/1xTwqr4FX2Gd74JhWio8hJGgCEK5heoXY++2C2ybSEfcj
+         c0Q9GiO68kysf0Tiz0wx4uGoJJ+WnY2NSdM7kXS7wbo4Daj3ke0XE+IrUphjixHJLr
+         RqtbmJ5UM/stKzoS7H7RYyPtBuWAVgjNLgL2B8QDhIYrmIUDYKphXQf4IQY8bobhbe
+         XwpG317IArwLw6PaUoLjAk7CfnqUFuRqm/CxKuX7fvVYyBi6mvWKAFI8DY2CAClf0U
+         VT3u+amfcHaRg==
+Date:   Mon, 25 Oct 2021 21:40:45 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 06/11] drm/msm/disp/dpu1: Don't use DSC with mode_3d
+Message-ID: <YXbXBTlgDRa564Ic@matsya>
+References: <20211007070900.456044-1-vkoul@kernel.org>
+ <20211007070900.456044-7-vkoul@kernel.org>
+ <11becace-7b44-6141-5a8b-1bd6d0673243@linaro.org>
+ <35eb95c5-1c42-94d1-3f33-df029f753ab3@linaro.org>
+ <YW+957ZKnbf1g/89@matsya>
+ <e96d1368-fe7b-cf24-82c9-99783df44b0d@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
- enc/dec
-Content-Language: en-US
-To:     Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
- <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
- <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e96d1368-fe7b-cf24-82c9-99783df44b0d@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2021 16:30, Tadeusz Struk wrote:
-> No, we want a hard stop here. At this point the venus_core probe()
-> has finished and it failed. Returning -EPROBE_DEFER here will just
-> cause it to loop infinitely.
+On 25-10-21, 17:40, Dmitry Baryshkov wrote:
+> On 20/10/2021 09:57, Vinod Koul wrote:
+> > On 14-10-21, 16:50, Dmitry Baryshkov wrote:
+> > > On 14/10/2021 16:41, Dmitry Baryshkov wrote:
+> > > > On 07/10/2021 10:08, Vinod Koul wrote:
 
-I don't think there's any guarantee at all, that core probe() has 
-completed at that point.
+> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > > > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > > > > index 806c171e5df2..5dfac5994bd4 100644
+> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > > > > @@ -39,6 +39,7 @@ struct dpu_hw_stage_cfg {
+> > > > >     * @mode_3d:               3d mux configuration
+> > > > >     * @merge_3d:              3d merge block used
+> > > > >     * @intf_mode_sel:         Interface mode, cmd / vid
+> > > > > + * @dsc:                   DSC BIT masks
+> > > > >     * @stream_sel:            Stream selection for multi-stream interfaces
+> > > > >     */
+> > > > >    struct dpu_hw_intf_cfg {
+> > > > > @@ -46,6 +47,7 @@ struct dpu_hw_intf_cfg {
+> > > > >        enum dpu_3d_blend_mode mode_3d;
+> > > > >        enum dpu_merge_3d merge_3d;
+> > > > >        enum dpu_ctl_mode_sel intf_mode_sel;
+> > > > > +    unsigned int dsc;
+> > > 
+> > > I think this should be:
+> > > enum dpu_dsc dsc[MAX_DSCS];
+> > > unsigned int num_dsc;
+> > 
+> > hmmm, how do we go about getting the num_dsc value here.
+> > dpu_encoder_phys does not know about that..
+> 
+> dpu_encoder_get_topology() can decide whether to use DSC or not and then set
+> num_dsc. For now it will always set 2 if we are using DSC at all, but let's
+> keep the decision in a single place rather than having it scattered all over
+> the driver.
 
-of_platform_populate() doesn't guarantee ordering of the probe() 
-completing before or after the probe() of the platform drivers that are 
-associated with the devices in of_platform_populate().
-
-When you think it about it can't do that and you wouldn't want it to do 
-that since a device might have a legitimate reason to EPROBE_DEFER
-
-As an example core could call of_platform_populate() and then as a 
-ridiculous example go to sleep for five seconds - in which case it is 
-perfectly possible the encoder and decoder probe() functions will bug 
-out illegitimately waiting because of core->state != CORE_INIT
-
-This is a problem we have and still haven't solved in 
-drivers/usb/dwc3/dwc3-qcom.c::probe() and child devices 
-drivers/usb/dwc3/dwc3-qcom.c
-
-Here:
-https://patches.linaro.org/cover/470387/
-
-There's no serialisation guarantee between parent and child on 
-of_platform_populate() - at least none I'm aware of.
-
----
-bod
+Yes agree, but dpu_encoder_get_topology() is private to encoder. Am not
+sure how best to propagate the info into the hw_intf_cfg?
+-- 
+~Vinod
