@@ -2,80 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9BB439BF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DD87439C29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234063AbhJYQpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 12:45:40 -0400
-Received: from foss.arm.com ([217.140.110.172]:48052 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234036AbhJYQpi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:45:38 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 498441FB;
-        Mon, 25 Oct 2021 09:43:16 -0700 (PDT)
-Received: from [10.57.21.241] (unknown [10.57.21.241])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 006DD3F5A1;
-        Mon, 25 Oct 2021 09:43:12 -0700 (PDT)
-Subject: Re: [PATCH v2 0/5] Refactor thermal pressure update to avoid code
- duplication
-To:     rafael@kernel.org, viresh.kumar@linaro.org,
-        daniel.lezcano@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, amitk@kernel.org,
-        amit.kachhap@gmail.com, thara.gopinath@linaro.org,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211015144550.23719-1-lukasz.luba@arm.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <3cc80fea-1320-9a1a-9954-85b30f3d933a@arm.com>
-Date:   Mon, 25 Oct 2021 17:43:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S234126AbhJYRAH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 13:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46776 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234118AbhJYRAH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Oct 2021 13:00:07 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2590EC061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:57:45 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id nn3-20020a17090b38c300b001a03bb6c4ebso523477pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:content-language:to:cc
+         :references:from:subject:in-reply-to;
+        bh=kBFK5avOSffzIDZ8gdxEawrxHlV/coTmIHi8PWPtDhw=;
+        b=dqZgE9qjWUkL/Uwcy5XzZlhQZTGs6SZsieM8X5/BpXicHCSTYGcNl1a80o/F5FfEUl
+         AMbec5pC3/5CqwGzwFOwBkdrsSPeoa6FiwCdtiBZejJUG62/PylzVTykLLsN6qUz9JC5
+         Obna//B2OszPRu1N4rKg9GYEa8acJnWVCvh18th9l8dUTNz0ZvKgtmf7D31pFdKLfn9c
+         Br6YjWgBo8I+5oZcLbyODQCuRuoiuueovWocpuuOIt5ScSCrnGwDgx6qZmImWMRYYGKO
+         XIQ4DKyguIDnPiJwCZkyjA6VTFX0eN2DDz5bLivptg7m/btaaAXNC44AqdsP7CiYj9tu
+         hcEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:cc:references:from:subject:in-reply-to;
+        bh=kBFK5avOSffzIDZ8gdxEawrxHlV/coTmIHi8PWPtDhw=;
+        b=x5b0f8ZGE5EyKj+ISp9u2zfmWEeluMx6EcQPIyoa75npjAbOf/kmaYJ6EfcEnKEWeN
+         S3Z7WZl6OTv2LQ4XMFCWmMJKRwVpi5mS3x57LAAVM9E/rWeqjD3FuSOrao7r9nGOHtSR
+         MCwaYAu4SznoiYHBq1Iie6HDiLxiIr9149bbJzhx8hMxkoRilzxsdyFEEjOnh+rzrQ1y
+         9SL4TvuDeoidCK4bXjXRa+Oxnjx9eLWt5DE51U17ymg1GDmOpG52jIqqHsyzEmaRCr/X
+         LOXdhBIpAWxLi19AlBi0LS3QVIWEOJxQ2W2iG852tt9qIz8olojYCSK7kEq34zyyL00P
+         2A5g==
+X-Gm-Message-State: AOAM533rufShaG4GnSWEHo+pg84P5xgUvCk5tTAB+/pg3t/jPyJhK5SX
+        JRqN0ZJr4n5soQAIlGuIMW0cRA==
+X-Google-Smtp-Source: ABdhPJy1d2GtQabPdg2cP0rHnWwz2wETCyB6opMAxnjIjtaDfLX5lyZ4HO0ARVGVG0yTNk4ErmZQFA==
+X-Received: by 2002:a17:90b:2514:: with SMTP id ns20mr30278137pjb.210.1635181064601;
+        Mon, 25 Oct 2021 09:57:44 -0700 (PDT)
+Received: from [192.168.254.17] ([50.39.160.154])
+        by smtp.gmail.com with ESMTPSA id a11sm21494559pfv.11.2021.10.25.09.57.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 09:57:44 -0700 (PDT)
+Message-ID: <25da5210-8e1f-7183-a8e7-8584f8dd2cef@linaro.org>
+Date:   Mon, 25 Oct 2021 09:57:43 -0700
 MIME-Version: 1.0
-In-Reply-To: <20211015144550.23719-1-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+ <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+ <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+From:   Tadeusz Struk <tadeusz.struk@linaro.org>
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+In-Reply-To: <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------tUiHshhowjtBrvcDh5JRdKKH"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------tUiHshhowjtBrvcDh5JRdKKH
+Content-Type: multipart/mixed; boundary="------------hI7wLglQLw51d5RqtTeDgAKU";
+ protected-headers="v1"
+From: Tadeusz Struk <tadeusz.struk@linaro.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Lee Jones
+ <lee.jones@linaro.org>, Amit Pundir <amit.pundir@linaro.org>,
+ John Stultz <john.stultz@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-ID: <25da5210-8e1f-7183-a8e7-8584f8dd2cef@linaro.org>
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+ <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+ <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+In-Reply-To: <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
 
-On 10/15/21 3:45 PM, Lukasz Luba wrote:
-> Hi all,
-> 
-> This patch set v2 aims to refactor the thermal pressure update
-> code. There are already two clients which do similar thing:
-> convert the capped frequency value into the capacity of
-> affected CPU and call the 'set' function to store the
-> reduced capacity into the per-cpu variable.
-> There might be more than two of these users. In near future
-> it will be scmi-cpufreq driver, which receives notification
-> from FW about reduced frequency due to thermal. Other vendors
-> might follow. Let's avoid code duplication and potential
-> conversion bugs. Move the conversion code into the arch_topology.c
-> where the capacity calculation setup code and thermal pressure sit.
-> 
-> Apart from that $subject patches, there is one patch (3/5) which fixes
-> issue in qcom-cpufreq-hw.c when the thermal pressure is not
-> updated for offline CPUs. It's similar fix that has been merged
-> recently for cpufreq_cooling.c:
-> 2ad8ccc17d1e4270cf65a3f2
-> 
-> Changes:
-> v2:
-> - added Reviewed-by from Thara for patch 3/5
-> - changed the doxygen comment and used mult_frac()
->    according to Thara's suggestion in patch 1/5
-> v1 -> [1]
-> 
+--------------hI7wLglQLw51d5RqtTeDgAKU
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Gentle ping.
+T24gMTAvMjUvMjEgMDk6MDMsIEJyeWFuIE8nRG9ub2dodWUgd3JvdGU6DQo+IEkgZG9uJ3Qg
+dGhpbmsgdGhlcmUncyBhbnkgZ3VhcmFudGVlIGF0IGFsbCwgdGhhdCBjb3JlIHByb2JlKCkg
+aGFzIGNvbXBsZXRlZCBhdCANCj4gdGhhdCBwb2ludC4NCg0KSSB0aGluayB0aGVyZSBpcywg
+dGhhbmtzIHRvIHRoZSBuZXcgc3luY19tdXRleC4gVGhlIGVuYy9kZWMgcHJvYmUgd2lsbCBr
+ZWVwDQpyZXR1cm5pbmcgLUVQUk9CRV9ERUZFUjsgdW50aWwgdGhlIGNvcmUgZHJpdmVyIGNh
+bGxzDQpwbGF0Zm9ybV9zZXRfZHJ2ZGF0YShwZGV2LCBjb3JlKTsgaW4gbGluZSAzMzgsIGJ1
+dCBiZWZvcmUgaXQgZG9lcyB0aGF0IGl0DQp0YWtlcyB0aGUgc3luX2xvY2suIFRoZW4gYm90
+aCBlbmMvZGVjIGRyaXZlcnMgd2lsbCBibG9jayBvbiB0aGUgc2FtZSBzeW5jX2xvY2sNCnVu
+dGlsIGVpdGhlciB0aGUgY29yZSBoYXMgZmluaXNoZWQgaW5pdGlhbGl6YXRpb24gZnVsbHkg
+YW5kIHVubG9ja3MgaXQgaW4gbGluZQ0KMzc4IGp1c3QgYmVmb3JlIHJldHVybmluZyAwLCBv
+ciBpdCBmYWlscyBpbiBiZXR3ZWVuIGFuZCB1bmxvY2tzIGl0IG9uIHRoZSBlcnINCnBhdGgu
+IE9ubHkgdGhlbiB0aGUgb3RoZXIgdHdvIGNhbiBwcm9jZWVkIGFuZCBjaGVjayBpZiB0aGUg
+Y29yZSBwcm9iZSBmYWlsZWQsDQppbiB3aGljaCBjYXNlIHRoZSBjb25kaXRpb24gY29yZS0+
+c3RhdGUgIT0gQ09SRV9JTklUIHdpbGwgYmUgdHJ1ZS4NCg0KPiANCj4gb2ZfcGxhdGZvcm1f
+cG9wdWxhdGUoKSBkb2Vzbid0IGd1YXJhbnRlZSBvcmRlcmluZyBvZiB0aGUgcHJvYmUoKSBj
+b21wbGV0aW5nIA0KPiBiZWZvcmUgb3IgYWZ0ZXIgdGhlIHByb2JlKCkgb2YgdGhlIHBsYXRm
+b3JtIGRyaXZlcnMgdGhhdCBhcmUgYXNzb2NpYXRlZCB3aXRoIHRoZSANCj4gZGV2aWNlcyBp
+biBvZl9wbGF0Zm9ybV9wb3B1bGF0ZSgpLg0KDQphZ3JlZSwgYnV0IEkgZG9uJ3QgZGVwZW5k
+IG9uIG9mX3BsYXRmb3JtX3BvcHVsYXRlKCkuIFRoZSBvcmRlcmluZyBiZXR3ZWVuIHRoZQ0K
+dGhyZWUgcHJvYmUgZnVuY3Rpb25zIGlzIGVuZm9yY2VkIGJ5IHRoZSBuZXcgc3luYyBtdXRl
+eC4NCg0KPiANCj4gV2hlbiB5b3UgdGhpbmsgaXQgYWJvdXQgaXQgY2FuJ3QgZG8gdGhhdCBh
+bmQgeW91IHdvdWxkbid0IHdhbnQgaXQgdG8gZG8gdGhhdCANCj4gc2luY2UgYSBkZXZpY2Ug
+bWlnaHQgaGF2ZSBhIGxlZ2l0aW1hdGUgcmVhc29uIHRvIEVQUk9CRV9ERUZFUg0KPiANCj4g
+QXMgYW4gZXhhbXBsZSBjb3JlIGNvdWxkIGNhbGwgb2ZfcGxhdGZvcm1fcG9wdWxhdGUoKSBh
+bmQgdGhlbiBhcyBhIHJpZGljdWxvdXMgDQo+IGV4YW1wbGUgZ28gdG8gc2xlZXAgZm9yIGZp
+dmUgc2Vjb25kcyAtIGluIHdoaWNoIGNhc2UgaXQgaXMgcGVyZmVjdGx5IHBvc3NpYmxlIA0K
+DQphbmQgdGhpcyBpcyBleGFjdGx5IHdoYXQgaGFwcGVucyB3aGVuIHRoZSBjb3JlIHByb2Jl
+KCkgbG9hZHMgdGhlIGZpcm13YXJlIGZyb20NCmRpc2suDQoNCj4gdGhlIGVuY29kZXIgYW5k
+IGRlY29kZXIgcHJvYmUoKSBmdW5jdGlvbnMgd2lsbCBidWcgb3V0IGlsbGVnaXRpbWF0ZWx5
+IHdhaXRpbmcgDQo+IGJlY2F1c2Ugb2YgY29yZS0+c3RhdGUgIT0gQ09SRV9JTklUDQoNCm5v
+dCByZWFsbHksIGJlY2F1c2UgaXQgd2lsbCBibG9jayBvbiB0aGUgbXV0ZXggYW5kIG9ubHkg
+Y2hlY2sgdGhlIGNvbmRpdGlvbg0KYWZ0ZXIgdGhlIHN5bmNfbG9jayBpcyB1bmxvY2tlZC4N
+Cg0KLS0gDQpUaGFua3MsDQpUYWRldXN6DQo=
 
-Viresh, Daniel, Rafael could you have a look at this, please?
+--------------hI7wLglQLw51d5RqtTeDgAKU--
 
-Regards,
-Lukasz
+--------------tUiHshhowjtBrvcDh5JRdKKH
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEb3ghm5bfkfSeegvwo0472xuDAo4FAmF24gcFAwAAAAAACgkQo0472xuDAo7+
+7g/+Mh51FmoVF2DtUXc2/93JP0AR2siWYIAJJ214LKTdiIQfngdgyEuJb+Ff8IXMsZufZL8lpW+9
+kM0gwmWerBTaR75+tdysHsJAX2yGC2iEfebJrC5K3I/aFWO18IaBU4u6osatgCtFn5hHEIf0LAE1
+sAquY0JkTmdltTkbWtZsIphiQ5ptcQ7c9F1BcpG+4T2z9laqiNSXfR3qEfHL+EEbDKXmsFTY5T45
+6RPvLVBWXW2aztzPPOInkYMRvxRhgLv2qBwFQKYt2nUyRlFm80jrk7DYAqb6EieyEV3OLXLYJ+MP
+3ulF2Yd/0E2JVWu95XwOIc8huUgogQrfIFwQJ8x/YiX6Q7w6D5CG9meXrBj3KY9lBr9OwcCRHjDz
+xtqsfq5fbS1GUFn/D5g32a2KY9XZFpZ+ZYWdLToEOqiNkdlaxu6IiamMKuwMp/Yzz4opyFr0nu9H
+fI7IfHfNKOWaFkNex+/2yIo5EYZDGT3gZoA1AGMGeKDV2xFbr8alVdI6ZjgwBxfaxWtWDnruHBTl
+JbVQdyXkTbZnIManArMv4etXBEkQcYy7ZEGWJzOIyS8KwEvs9hHeJTmFgwb8HGkPCeNYAapjRbB2
+q6yggTsBQxPJdZMfR2IHlutj5NfgqgVyShpgTD/8ozQGW+dvvhHFNnkHlxsaFLVU/lTwrLvZPuME
+bs8=
+=b9Bo
+-----END PGP SIGNATURE-----
+
+--------------tUiHshhowjtBrvcDh5JRdKKH--
