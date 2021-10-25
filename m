@@ -2,311 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51D3A4398E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 16:43:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6062B4398E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 16:44:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232336AbhJYOqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 10:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
+        id S233040AbhJYOqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 10:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232260AbhJYOqA (ORCPT
+        with ESMTP id S232308AbhJYOqd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 10:46:00 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CE85C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:43:38 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id bp15so12469201lfb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:43:38 -0700 (PDT)
+        Mon, 25 Oct 2021 10:46:33 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EC5C061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:11 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id r2so11115464pgl.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aMOZolOh952xsKGqN5bct3zBu9Lzqg6czkVYsSx1yuE=;
-        b=EopIQ637SwICGuNGZ+FPeowtA/DYsvyXfLRdoww1gNrE/I1SnIHaejm4UDhe0zFQLF
-         9a00CEWBYMBzJ1LnZHsezIjNvfEFHpenmrMiFqnOjFCw8h92rkiyxLwwcQChTO4MHlIu
-         KNMwi9lycAes7Ss6t7xdoRPLmQzW3e5+w+BaUW8/3JS+w0LHZOVYIL6uNWxQ/p8gRf2X
-         zXiWzMC+mOlwwYRJp2lRKH/jH0XvwKlROk7O/oplMmhUqif6soy3z+Fo16Yqx8MSX7a/
-         zgBh7mFCDDjv9a6UaKQQB0MCt1/QBHqnwe1nRuGqMEI2LrZ8u6rdtgl8rV9Kn+LMSD1K
-         vFwQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7nWtBZUACjwks83t/CbzMB0IKdyuj93VnZG1s4Wg6K4=;
+        b=VNxJvSFI1z9qQSTztSflwy5b4APSzJ6zu0h2rpD72QkaqpDQwYSGVAeftoBVDWBoWM
+         e4ugOwzxUYBaigWTGpdx8rzvA5eUA/Eb0b6O7aeO4evVs32HPPHiSzyiVHwnaCfzYhBd
+         83gh6PQy/cl9OWdc1d6Y4I7BKtJKauMm3m4h+I35PqQmeGg758S9JVycxYvjW2XmcIoE
+         N1oy52LRHbbE50MupYHtW+9htJvmYZIugDg3BOOFY4eqrnvy+AkTPrnW5l0tZhmijm/Z
+         zJmpdV9imijlRWX8ON6ZEd9HnYd4/XiM4r2i3BxnZuyEJ+rAfx4l1SR0ViZqnJMmmlAQ
+         U6lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=aMOZolOh952xsKGqN5bct3zBu9Lzqg6czkVYsSx1yuE=;
-        b=Vr1ea3bkNtEUW3HPw2EYjYJNWr1gkheZa5Ij+8u3J2m5kdd913HzoPcM8YGpBXqWqG
-         FcFSIAdX9jg5uRPnSXVkSOYba3sAKC4XavR/6PS9wGhit5XCEzlf4c3QtMdVT5uE8bhs
-         sVhvekDypTt6v/bQOnxjFdMCD4ypn630+XHJ6vqoVMj3gEqLVSfKq0NuwrWFO7yTyoxD
-         fmzOe9JvTqE+COsI7lSAY9jow7akdv2Nre4/q2y4ttOWvEhet39/QI2A1UsNU+P1r9p5
-         aDvV0My4Fre3gGijuridDBLuqurp1tQmHhAmpFdAQ/Hu4rBUSKy9mzfKi8l7dWYKgjqY
-         wCTg==
-X-Gm-Message-State: AOAM530ld9DgRdQD2sH/74nbtQenKoWYSnEswkIKav7Q8kLcIdUFXh5O
-        Q+AchahRo52ERgO9sgzqzHPKhA==
-X-Google-Smtp-Source: ABdhPJyUiKd7W8f5v481Cr2XfmxR/TZp5YKQBrpbr3tbw9tGoTk0iMP67J0/fxqCeUqzw+aCAiqRCg==
-X-Received: by 2002:a05:6512:230d:: with SMTP id o13mr17423554lfu.333.1635173016436;
-        Mon, 25 Oct 2021 07:43:36 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r10sm1745292ljg.10.2021.10.25.07.43.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Oct 2021 07:43:36 -0700 (PDT)
-Subject: Re: [PATCH v2 01/11] drm/msm/dsi: add support for dsc data
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-2-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <76e0c41c-5de8-1015-c795-948b227c6013@linaro.org>
-Date:   Mon, 25 Oct 2021 17:43:35 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        bh=7nWtBZUACjwks83t/CbzMB0IKdyuj93VnZG1s4Wg6K4=;
+        b=R4LnMCKMxHpsnyQvk28fkFXPAnLF0m/QBNKdurqWp9TjL5AhrwU6bZO8/4wpNu2lXI
+         Ev7tVvDKTI0YnQk2x9C3fmcYL64mdsPe04FCHwo//VUhIemHoTjz0JfPsdrTnsxZ17/p
+         JdFvJjfj0a3fcHWIdxzEeK3s4MGXOACplvilKbH4s82LvANoGmU+ojPKLyMIeZ/a2RtL
+         IgOam7btMduhVoMxcRwrV0EJYoXSJRxJIS/swVXbq775FLrMms+jgjDff4RgPRlHV07g
+         Ayrv3XJeLWZttbbMKeAuZridgp3wSh6u0YiUKeh3rCzzWqPkCRtoSxkZR0qm+yZFvICe
+         feKg==
+X-Gm-Message-State: AOAM530Ggwbg5Z3ha5MOAEQO1QBkiI+Je/KaOgOO6jX8E0Cq3zmsMdXw
+        mMl0+KL/4L98EZqqYIO0CJyFlw==
+X-Google-Smtp-Source: ABdhPJyDCXbOk5f2duwNws5Luz2UQWlwQAtLGm2Utu2xjATqYpebx8rWy1uqoaThvXsLfeTc4dJgxw==
+X-Received: by 2002:a63:35cd:: with SMTP id c196mr11793848pga.284.1635173050457;
+        Mon, 25 Oct 2021 07:44:10 -0700 (PDT)
+Received: from localhost.localdomain ([50.39.160.154])
+        by smtp.gmail.com with ESMTPSA id f9sm7074977pfv.43.2021.10.25.07.44.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Oct 2021 07:44:09 -0700 (PDT)
+From:   Tadeusz Struk <tadeusz.struk@linaro.org>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Tadeusz Struk <tadeusz.struk@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] media: venus: Synchronize probe() between venus_core and enc/dec
+Date:   Mon, 25 Oct 2021 07:43:45 -0700
+Message-Id: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <20211007070900.456044-2-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2021 10:08, Vinod Koul wrote:
-> Display Stream Compression (DSC) parameters need to be calculated. Add
-> helpers and struct msm_display_dsc_config in msm_drv for this
-> msm_display_dsc_config uses drm_dsc_config for DSC parameters.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
-> Changes since
-> v1:
->   - Drop unused fields from msm_display_dsc_config
-> RFC:
->   - Drop the DT parsing code
->   - Port dsc param calculation from downstream
-> 
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 132 +++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/msm_drv.h      |  18 ++++
->   2 files changed, 150 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index e269df285136..ba24458c2e38 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -31,6 +31,8 @@
->   
->   #define DSI_RESET_TOGGLE_DELAY_MS 20
->   
-> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc);
-> +
->   static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
->   {
->   	u32 ver;
-> @@ -156,6 +158,7 @@ struct msm_dsi_host {
->   	struct regmap *sfpb;
->   
->   	struct drm_display_mode *mode;
-> +	struct msm_display_dsc_config *dsc;
->   
->   	/* connected device info */
->   	struct device_node *device_node;
-> @@ -1748,6 +1751,135 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
->   	return -EINVAL;
->   }
->   
-> +static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
-> +	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
-> +	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
-> +};
-> +
-> +/* only 8bpc, 8bpp added */
-> +static char min_qp[DSC_NUM_BUF_RANGES] = {
-> +	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
-> +};
-> +
-> +static char max_qp[DSC_NUM_BUF_RANGES] = {
-> +	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
-> +};
-> +
-> +static char bpg_offset[DSC_NUM_BUF_RANGES] = {
-> +	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
-> +};
-> +
-> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
-> +{
-> +	int mux_words_size;
-> +	int groups_per_line, groups_total;
-> +	int min_rate_buffer_size;
-> +	int hrd_delay;
-> +	int pre_num_extra_mux_bits, num_extra_mux_bits;
-> +	int slice_bits;
-> +	int target_bpp_x16;
-> +	int data;
-> +	int final_value, final_scale;
-> +	int i;
-> +
-> +	dsc->drm->rc_model_size = 8192;
-> +	dsc->drm->first_line_bpg_offset = 12;
-> +	dsc->drm->rc_edge_factor = 6;
-> +	dsc->drm->rc_tgt_offset_high = 3;
-> +	dsc->drm->rc_tgt_offset_low = 3;
-> +	dsc->drm->simple_422 = 0;
-> +	dsc->drm->convert_rgb = 1;
-> +	dsc->drm->vbr_enable = 0;
-> +
-> +	/* handle only bpp = bpc = 8 */
-> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
-> +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
-> +
-> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
-> +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
-> +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
-> +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
-> +	}
-> +
-> +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
-> +	if (dsc->drm->bits_per_pixel != 8)
-> +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
-> +
-> +	mux_words_size = 48;		/* bpc == 8/10 */
-> +	if (dsc->drm->bits_per_component == 12)
-> +		mux_words_size = 64;
-> +
-> +	dsc->drm->initial_xmit_delay = 512;
-> +	dsc->drm->initial_scale_value = 32;
-> +	dsc->drm->first_line_bpg_offset = 12;
-> +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
-> +
-> +	/* bpc 8 */
-> +	dsc->drm->flatness_min_qp = 3;
-> +	dsc->drm->flatness_max_qp = 12;
-> +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
-> +	dsc->drm->rc_quant_incr_limit0 = 11;
-> +	dsc->drm->rc_quant_incr_limit1 = 11;
-> +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-> +
-> +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
-> +	 * params are calculated
-> +	 */
-> +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
-> +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
-> +	dsc->drm->slice_chunk_size = dsc->drm->slice_width * dsc->drm->bits_per_pixel / 8;
-> +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
-> +		dsc->drm->slice_chunk_size++;
-> +
-> +	/* rbs-min */
-> +	min_rate_buffer_size =  dsc->drm->rc_model_size - dsc->drm->initial_offset +
-> +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
-> +				groups_per_line * dsc->drm->first_line_bpg_offset;
-> +
-> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->drm->bits_per_pixel);
-> +
-> +	dsc->drm->initial_dec_delay = hrd_delay - dsc->drm->initial_xmit_delay;
-> +
-> +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
-> +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
-> +
-> +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
-> +
-> +	groups_total = groups_per_line * dsc->drm->slice_height;
-> +
-> +	data = dsc->drm->first_line_bpg_offset * 2048;
-> +
-> +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height - 1));
-> +
-> +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->drm->bits_per_component + 4) - 2);
-> +
-> +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
-> +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
-> +
-> +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset + num_extra_mux_bits);
-> +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
-> +
-> +	/* bpp * 16 + 0.5 */
-> +	data = dsc->drm->bits_per_pixel * 16;
-> +	data *= 2;
-> +	data++;
-> +	data /= 2;
-> +	target_bpp_x16 = data;
-> +
-> +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
-> +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
-> +	dsc->drm->final_offset = final_value;
-> +
-> +	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size - final_value);
-> +
-> +	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset + dsc->drm->slice_bpg_offset);
-> +	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) / data;
-> +
-> +	dsc->drm->scale_decrement_interval = groups_per_line / (dsc->drm->initial_scale_value - 8);
-> +
-> +	return 0;
-> +}
-> +
->   static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
->   {
->   	struct device *dev = &msm_host->pdev->dev;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 8b005d1ac899..367eb1092374 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -30,6 +30,7 @@
->   #include <drm/drm_plane_helper.h>
->   #include <drm/drm_probe_helper.h>
->   #include <drm/drm_fb_helper.h>
-> +#include <drm/drm_dsc.h>
->   #include <drm/msm_drm.h>
->   #include <drm/drm_gem.h>
->   
-> @@ -135,6 +136,20 @@ struct msm_drm_thread {
->   	struct kthread_worker *worker;
->   };
->   
-> +/* DSC config */
-> +struct msm_display_dsc_config {
-> +	struct drm_dsc_config *drm;
-> +
-> +	u32 initial_lines;
-> +	u32 pkt_per_line;
-> +	u32 bytes_in_slice;
-> +	u32 bytes_per_pkt;
-> +	u32 eol_byte_num;
-> +	u32 pclk_per_line;
-> +	u32 slice_last_group_size;
-> +	u32 det_thresh_flatness;
-> +};
-> +
->   struct msm_drm_private {
->   
->   	struct drm_device *dev;
-> @@ -229,6 +244,9 @@ struct msm_drm_private {
->   	/* Properties */
->   	struct drm_property *plane_property[PLANE_PROP_MAX_NUM];
->   
-> +	/* DSC configuration */
-> +	struct msm_display_dsc_config *dsc;
-> +
+Venus video encode/decode hardware driver consists of three modules.
+The parent module venus-core, and two sub modules venus-enc and venus-dec.
+The venus-core module allocates a common structure that is used by the
+enc/dec modules, loads the firmware, and performs some common hardware
+initialization. Since the three modules are loaded one after the other,
+and their probe functions can run in parallel it is possible that
+the venc_probe and vdec_probe functions can finish before the core
+venus_probe function, which then can fail when, for example it
+fails to load the firmware. In this case the subsequent call to venc_open
+causes an Oops as it tries to dereference already uninitialized structures
+through dev->parent and the system crashes in __pm_runtime_resume() as in
+the trace below:
 
-I have been looking at this again. I think that we should not put sole 
-msm_display_dsc_config into msm_drm_private. Even if we agree that it is 
-used only for DSI for now, we have two separate DSI channels (and up to 
-two bridges/panels). Do you really need it in the global private data?
+[   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+[   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+[   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+[   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+[   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+[   26.290326][  T485] Call trace:
+[   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+[   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+[   26.290335][  T485]  v4l2_open+0x184/0x294
+[   26.290340][  T485]  chrdev_open+0x468/0x5c8
+[   26.290344][  T485]  do_dentry_open+0x260/0x54c
+[   26.290349][  T485]  path_openat+0xbe8/0xd5c
+[   26.290352][  T485]  do_filp_open+0xb8/0x168
+[   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+[   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+[   26.290359][  T485]  invoke_syscall+0x60/0x170
+[   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+[   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+[   26.290367][  T485]  el0_svc_compat+0x24/0x84
+[   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+[   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+[   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+[   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
 
-Anyway, this field should be moved to the patch where it is actually set 
-or used.
+This can be fixed by synchronizing the three probe functions and
+only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+returns success.
 
->   	/* VRAM carveout, used when no IOMMU: */
->   	struct {
->   		unsigned long size;
-> 
+Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.c |  6 ++++++
+ drivers/media/platform/qcom/venus/core.h |  2 ++
+ drivers/media/platform/qcom/venus/vdec.c | 18 +++++++++++++++---
+ drivers/media/platform/qcom/venus/venc.c | 18 +++++++++++++++---
+ 4 files changed, 38 insertions(+), 6 deletions(-)
 
-
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 91b15842c555..18f3e3a9823f 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -317,6 +317,7 @@ static int venus_probe(struct platform_device *pdev)
+ 
+ 	INIT_LIST_HEAD(&core->instances);
+ 	mutex_init(&core->lock);
++	mutex_init(&core->sync_lock);
+ 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
+ 
+ 	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
+@@ -331,6 +332,8 @@ static int venus_probe(struct platform_device *pdev)
+ 
+ 	venus_assign_register_offsets(core);
+ 
++	mutex_lock(&core->sync_lock);
++
+ 	ret = v4l2_device_register(dev, &core->v4l2_dev);
+ 	if (ret)
+ 		goto err_core_deinit;
+@@ -377,6 +380,7 @@ static int venus_probe(struct platform_device *pdev)
+ 		goto err_dev_unregister;
+ 	}
+ 
++	mutex_unlock(&core->sync_lock);
+ 	venus_dbgfs_init(core);
+ 
+ 	return 0;
+@@ -392,6 +396,7 @@ static int venus_probe(struct platform_device *pdev)
+ 	hfi_destroy(core);
+ err_core_deinit:
+ 	hfi_core_deinit(core, false);
++	mutex_unlock(&core->sync_lock);
+ err_core_put:
+ 	if (core->pm_ops->core_put)
+ 		core->pm_ops->core_put(core);
+@@ -428,6 +433,7 @@ static int venus_remove(struct platform_device *pdev)
+ 
+ 	mutex_destroy(&core->pm_lock);
+ 	mutex_destroy(&core->lock);
++	mutex_destroy(&core->sync_lock);
+ 	venus_dbgfs_deinit(core);
+ 
+ 	return ret;
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 5ec851115eca..3f80dc26febb 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -119,6 +119,7 @@ struct venus_format {
+  * @use_tz:	a flag that suggests presence of trustzone
+  * @fw:		structure of firmware parameters
+  * @lock:	a lock for this strucure
++ * @sync_lock	a lock for probe sync between venus_core and venus_enc/dec
+  * @instances:	a list_head of all instances
+  * @insts_count:	num of instances
+  * @state:	the state of the venus core
+@@ -176,6 +177,7 @@ struct venus_core {
+ 		size_t mem_size;
+ 	} fw;
+ 	struct mutex lock;
++	struct mutex sync_lock;
+ 	struct list_head instances;
+ 	atomic_t insts_count;
+ 	unsigned int state;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 198e47eb63f4..9dbda3d7a2d2 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1659,17 +1659,26 @@ static int vdec_probe(struct platform_device *pdev)
+ 	if (!core)
+ 		return -EPROBE_DEFER;
+ 
++	mutex_lock(&core->sync_lock);
++
++	if (core->state != CORE_INIT) {
++		ret = -ENODEV;
++		goto err_core_unlock;
++	}
++
+ 	platform_set_drvdata(pdev, core);
+ 
+ 	if (core->pm_ops->vdec_get) {
+ 		ret = core->pm_ops->vdec_get(dev);
+ 		if (ret)
+-			return ret;
++			goto err_core_unlock;
+ 	}
+ 
+ 	vdev = video_device_alloc();
+-	if (!vdev)
+-		return -ENOMEM;
++	if (!vdev) {
++		ret = -ENOMEM;
++		goto err_core_unlock;
++	}
+ 
+ 	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+@@ -1690,11 +1699,14 @@ static int vdec_probe(struct platform_device *pdev)
+ 	pm_runtime_set_autosuspend_delay(dev, 2000);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_enable(dev);
++	mutex_unlock(&core->sync_lock);
+ 
+ 	return 0;
+ 
+ err_vdev_release:
+ 	video_device_release(vdev);
++err_core_unlock:
++	mutex_unlock(&core->sync_lock);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index bc1c42dd53c0..e7439236385a 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1338,17 +1338,26 @@ static int venc_probe(struct platform_device *pdev)
+ 	if (!core)
+ 		return -EPROBE_DEFER;
+ 
++	mutex_lock(&core->sync_lock);
++
++	if (core->state != CORE_INIT) {
++		ret = -ENODEV;
++		goto err_core_unlock;
++	}
++
+ 	platform_set_drvdata(pdev, core);
+ 
+ 	if (core->pm_ops->venc_get) {
+ 		ret = core->pm_ops->venc_get(dev);
+ 		if (ret)
+-			return ret;
++			goto err_core_unlock;
+ 	}
+ 
+ 	vdev = video_device_alloc();
+-	if (!vdev)
+-		return -ENOMEM;
++	if (!vdev) {
++		ret = -ENOMEM;
++		goto err_core_unlock;
++	}
+ 
+ 	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+@@ -1367,11 +1376,14 @@ static int venc_probe(struct platform_device *pdev)
+ 
+ 	video_set_drvdata(vdev, core);
+ 	pm_runtime_enable(dev);
++	mutex_unlock(&core->sync_lock);
+ 
+ 	return 0;
+ 
+ err_vdev_release:
+ 	video_device_release(vdev);
++err_core_unlock:
++	mutex_unlock(&core->sync_lock);
+ 	return ret;
+ }
+ 
 -- 
-With best wishes
-Dmitry
+2.31.1
+
