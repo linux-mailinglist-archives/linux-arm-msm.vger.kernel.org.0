@@ -2,94 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FE63439F1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 21:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716C643A29C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 21:48:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234136AbhJYTRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 15:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50184 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234104AbhJYTR3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 15:17:29 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F994C061227
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 12:15:06 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mf5Qy-0002TC-A6; Mon, 25 Oct 2021 21:15:00 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mf5Qx-0003UP-7b; Mon, 25 Oct 2021 21:14:59 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mf5Qx-0002b5-6B; Mon, 25 Oct 2021 21:14:59 +0200
-Date:   Mon, 25 Oct 2021 21:14:59 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-pwm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v7 3/3] drm/bridge: ti-sn65dsi86: Implement the pwm_chip
-Message-ID: <20211025191459.flhyrjgql3z2bwqo@pengutronix.de>
-References: <20211025170925.3096444-1-bjorn.andersson@linaro.org>
- <20211025170925.3096444-3-bjorn.andersson@linaro.org>
+        id S237557AbhJYTuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 15:50:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36944 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235738AbhJYTrY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Oct 2021 15:47:24 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1772561205;
+        Mon, 25 Oct 2021 19:40:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635190820;
+        bh=7i0EGCIRB4HrVnhBD2qDiI6GxHmFk3q3ZtD9GUd1INA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=IZYbzKSAk4vMkqevR8sy5nqAFXwOoSEHNjogCmvkDtWsYdgskXTD55Ei3quSLi94M
+         Tz9Qut0hR+P5PJ8rOxjSr0+3M4TZHsvMkx6fPyWU1MqeqHWx2pF+VhEhiNMfD5qgF8
+         TAFp8Um1yuM9lCuSNkBaHcjktU0lAszMP2DqG1SweVLNdYExWfAXrtONGM3aQXfFt9
+         EuPTF1C92aqmiJ0Mky79Tik4ni4tSvZHlzX29hxf6JC62o/AbnryKX11+HbAxmuwka
+         o8R9oFc5EufcPhddizzL3lGuaJ4PBzNJzTVZePfkYBEJ5U7tG6f9587RXP0GM8Cgj+
+         dEL+I6AvuI8dw==
+From:   Mark Brown <broonie@kernel.org>
+To:     alsa-devel@alsa-project.org, plai@codeaurora.org,
+        srinivas.kandagatla@linaro.org, devicetree@vger.kernel.org,
+        perex@perex.cz, lgirdwood@gmail.com, judyhsiao@chromium.org,
+        bjorn.andersson@linaro.org, swboyd@chromium.org, tiwai@suse.com,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        rohitkr@codeaurora.org, bgoswami@codeaurora.org
+Cc:     Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v3] ASoC: dt-bindings: lpass: add binding headers for digital codecs
+Date:   Mon, 25 Oct 2021 20:40:12 +0100
+Message-Id: <163519067112.407220.9849529941824458080.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <1633670491-27432-1-git-send-email-srivasam@codeaurora.org>
+References: <1633670491-27432-1-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4slazjvqhfh4scsn"
-Content-Disposition: inline
-In-Reply-To: <20211025170925.3096444-3-bjorn.andersson@linaro.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 8 Oct 2021 10:51:31 +0530, Srinivasa Rao Mandadapu wrote:
+> Add header defining for lpass internal digital codecs rx,tx and va
+> dai node id's.
+> 
+> 
 
---4slazjvqhfh4scsn
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied to
 
-Hello,
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-On Mon, Oct 25, 2021 at 10:09:25AM -0700, Bjorn Andersson wrote:
-> The SN65DSI86 provides the ability to supply a PWM signal on GPIO 4,
-> with the primary purpose of controlling the backlight of the attached
-> panel. Add an implementation that exposes this using the standard PWM
-> framework, to allow e.g. pwm-backlight to expose this to the user.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Thanks!
 
-Reviewed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+[1/1] ASoC: dt-bindings: lpass: add binding headers for digital codecs
+      commit: de6e9190a8a74d55ed936ec483919b328bbbbf5c
 
-Thanks
-Uwe
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
---4slazjvqhfh4scsn
-Content-Type: application/pgp-signature; name="signature.asc"
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
------BEGIN PGP SIGNATURE-----
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmF3Ai8ACgkQwfwUeK3K
-7AkkDgf8C0WLBUS6WV9nMw6e3yWDIqZWXJg9UOhhEP+8ZzVDLSGSp6C0a83QbL8P
-ePPUMTIX44rsdkDZaTk+7TPAucGi+RahrFHRh+kzesg9I7N8pdX7VpL06PaK7ha5
-ufckLAAIv875cJa2YlmqGCesN3ydqISoYUNuSqgqZB8ApHBq2VyDkTeHVLXS44Mb
-6ByGOnuoNy5U6tunqHuNTASKaGHbT31JLJYdLmODCaHpy0CHwPeMMPO0K5mxDHUM
-mHHP/Teh95dOWSnH/GHdROO22aiPTw8FnXpoQn2ORm8kdfYv/xDXbQVqsUHKjnbl
-9KavbJEMVsJnXZb6FoNCYAfZ4EXPuQ==
-=YQqA
------END PGP SIGNATURE-----
-
---4slazjvqhfh4scsn--
+Thanks,
+Mark
