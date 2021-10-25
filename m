@@ -2,300 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D47614398F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 16:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 167184399A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:07:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231437AbhJYOrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 10:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
+        id S233789AbhJYPJa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 11:09:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233204AbhJYOq6 (ORCPT
+        with ESMTP id S233786AbhJYPJ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 10:46:58 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F72FC061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:35 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id bq11so10510097lfb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 07:44:35 -0700 (PDT)
+        Mon, 25 Oct 2021 11:09:29 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B9EC061746
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:07:07 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a16so12194504wrh.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:07:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=v1mMWeJ4eN0jON4Tvhqworti70ZpkjNPMSIyXJ+VLbI=;
-        b=WFcklZTVt7vJVB15GuEypjH1pAU0tMy5fdSyc/fuf/HAPm+8RfxB7+YDclQVB76xjo
-         i5mBFGciMx6unYZEa5h89n2MwKT4jghiER/WpNYW5m/YynwXNbnZX4conC0mo2OfM4vT
-         P1jCYpHOEbSOZB7+8KvuDJ4Hw9KucVWfpo4lxMJU18kaTULhuiMgu5rNf9YfeVPQoEME
-         tX5RfIKBRZiR3+lg9yG0ehpJpNfiEP+GlXub6KELemRITQJ72IblYiUWy2L3JXu9TxAs
-         cpA+UDvZLl0VYqhAEM5SeoWu54AIUc2/M/0ONmuaF2dtv0PD8xXjhNqXkAlDV1glpNlY
-         Iy+w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=r3wknB51IB1YnTAJzsIFZkuKQE3RsPZNmcjzc4IBcDg=;
+        b=ORwqpZirW8FsR0ML6vPd1iyQKwDX8LGmP7hvwMIfz4o0N+ZAL8WcEFOHK/LNOU1Pka
+         yTneVoSnEgli5MS6Fx/xoEMvylRbQqpcx8u2qhvujpQ4wBPP6XJq9i3mrS1CQSktS4mZ
+         sViONSQjOZJFnY5TskRD4CSlFucgsji1y1rksvjNachaIlk+GsW+ym71UFyoloT5Otuu
+         /Enr/KQn5HCoapLrPDF7CLfqwnj/w9WyHaX1T6dfreBLfnrC6V6QfUmC+yVIa8PF1//F
+         qUGcYDiyQud1qU8wsm6Kme7rtZo72hyaybZoxboFlTH7Xk++8TGc8bHP54Tm6XaaQ4v1
+         Y0cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=v1mMWeJ4eN0jON4Tvhqworti70ZpkjNPMSIyXJ+VLbI=;
-        b=aEZ6vKoYbnREWNDww9y32fu8CQlqg9TAk4hpic4ivyXjQxgzssC9ssoalOE2G4rJYN
-         51QhGSmicIWaGCqCzYVqoCYCVbqkJLd1+L/GvPpm8Br2ELw7fYMj78Xbf3ovv7BFWXLV
-         upBxrJVBNAt7X0t7mRKIZUEUK1rqg71wnLLLIxTq0pCv4kFLJZYUKUFg72UzrEzn4j9G
-         lPU7QzkeJ/kwb1s9k9FB7wKnSSVrFxrZIJUEz6Zr6COrhNMdEa5Zs3SiTT55KnT8NZJX
-         JPup99d8K2EKyQ2UP4ReWl8j6V7AZv76jDlMlS4+/zAqZRgz42WxU0NGbSFLQUEZSNw3
-         pf7Q==
-X-Gm-Message-State: AOAM530cGHbNMk9hgOOF3QlUghe8HYqEKNjVFz/mVYsxl2uEi1EPmzIB
-        9zC7D1f6LNlhfpSMDtcwd1ClAQ==
-X-Google-Smtp-Source: ABdhPJwBjFjyK/Nc+qQ0ZiUYPVs157D7zQLXPwUTFO95z9Mc69tejJhIgjGnWyncD7G4LX1hx4aESQ==
-X-Received: by 2002:a19:3813:: with SMTP id f19mr11095588lfa.284.1635173073947;
-        Mon, 25 Oct 2021 07:44:33 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a19sm1742188ljb.3.2021.10.25.07.44.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Oct 2021 07:44:33 -0700 (PDT)
-Subject: Re: [PATCH v2 08/11] drm/msm/disp/dpu1: Add support for DSC in
- encoder
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-9-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <e53aee33-1fd9-cd2f-9b98-99e20d26632b@linaro.org>
-Date:   Mon, 25 Oct 2021 17:44:32 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        bh=r3wknB51IB1YnTAJzsIFZkuKQE3RsPZNmcjzc4IBcDg=;
+        b=Q0afCu0G02Kd79Y8aAm9pxzKnhxYSo9jA2zA19C91ALO3v47WwFzuNgctapSVa9EZ1
+         DROP8igW1NPN+Q9WRCmb6v4Y+vaYBVeoYG3aORCFieammpgvaTibBh70Nbd2oxQojz90
+         REknTOmSGpkTc4Xoo6kOK9kApXJuzdSXZotYuOtjagDCbzHOCas3cbTKz7QtEsTh6j2r
+         j1lkTUvBN0BFoT+pmfCnYRSgi2AEILn8xYMR4j31VqaYbLlE6gc/H42P3AqgT9GN+C0J
+         NIR5O/XDy76woHTQ+uLwsEr8JHOa85RJLgkah5R1RkGyOkebl71Q+KgMJePRzD1HSFs1
+         6YtA==
+X-Gm-Message-State: AOAM5305xYEpUONKZEUTMbSld74/JbeGiO1jT5JU01+cVD3SRDXegyAq
+        uqSGhdkAXficLMbgaFpi53uUUA==
+X-Google-Smtp-Source: ABdhPJy0TLBHbJ825k86gTm3EtWbSekMuzP/+YvTPC6lXpchekFbsp+EVH5b+3G7gYTyRbdBAlJeRQ==
+X-Received: by 2002:a5d:4a12:: with SMTP id m18mr23677773wrq.203.1635174425787;
+        Mon, 25 Oct 2021 08:07:05 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id f20sm19173554wmq.38.2021.10.25.08.07.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Oct 2021 08:07:05 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     wcheng@codeaurora.org, bryan.odonoghue@linaro.org
+Subject: [PATCH 0/6] Add pm8150b TPCM driver
+Date:   Mon, 25 Oct 2021 16:09:00 +0100
+Message-Id: <20211025150906.176686-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <20211007070900.456044-9-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2021 10:08, Vinod Koul wrote:
-> We need to configure the encoder for DSC configuration and calculate DSC
-> parameters for the given timing so this patch adds that support by
-> adding dpu_encoder_prep_dsc() which is invoked when DSC is enabled.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
-> Changes since
-> v1:
->   - Remove duplicate defines
->   - Update changelog
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 139 +++++++++++++++++++-
->   1 file changed, 138 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 0e9d3fa1544b..aac51c1bdf94 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -21,6 +21,7 @@
->   #include "dpu_hw_intf.h"
->   #include "dpu_hw_ctl.h"
->   #include "dpu_hw_dspp.h"
-> +#include "dpu_hw_dsc.h"
->   #include "dpu_formats.h"
->   #include "dpu_encoder_phys.h"
->   #include "dpu_crtc.h"
-> @@ -136,6 +137,7 @@ enum dpu_enc_rc_states {
->    * @cur_slave:		As above but for the slave encoder.
->    * @hw_pp:		Handle to the pingpong blocks used for the display. No.
->    *			pingpong blocks can be different than num_phys_encs.
-> + * @hw_dsc:		Handle to the DSC blocks used for the display.
->    * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
->    *			for partial update right-only cases, such as pingpong
->    *			split where virtual pingpong does not generate IRQs
-> @@ -181,6 +183,7 @@ struct dpu_encoder_virt {
->   	struct dpu_encoder_phys *cur_master;
->   	struct dpu_encoder_phys *cur_slave;
->   	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
->   
->   	bool intfs_swapped;
->   
-> @@ -977,7 +980,8 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
->   	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
->   	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
->   	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
-> -	int num_lm, num_ctl, num_pp;
-> +	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
-> +	int num_lm, num_ctl, num_pp, num_dsc;
->   	int i, j;
->   
->   	if (!drm_enc) {
-> @@ -1035,6 +1039,13 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
->   		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
->   						: NULL;
->   
-> +	if (priv->dsc) {
-> +		num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> +			drm_enc->base.id, DPU_HW_BLK_DSC, hw_dsc, ARRAY_SIZE(hw_dsc));
-> +		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> +			dpu_enc->hw_dsc[i] = i < num_dsc ? to_dpu_hw_dsc(hw_dsc[i]) : NULL;
-> +	}
-> +
->   	cstate = to_dpu_crtc_state(drm_crtc->state);
->   
->   	for (i = 0; i < num_lm; i++) {
-> @@ -1778,10 +1789,132 @@ static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
->   			nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
->   }
->   
-> +static void
-> +dpu_encoder_dsc_pclk_param_calc(struct msm_display_dsc_config *dsc, u32 width)
-> +{
-> +	int slice_count, slice_per_intf;
-> +	int bytes_in_slice, total_bytes_per_intf;
-> +
-> +	if (!dsc || !dsc->drm->slice_width || !dsc->drm->slice_count) {
-> +		DPU_ERROR("Invalid DSC/slices\n");
-> +		return;
-> +	}
-> +
-> +	slice_count = dsc->drm->slice_count;
-> +	slice_per_intf = DIV_ROUND_UP(width, dsc->drm->slice_width);
-> +
-> +	/*
-> +	 * If slice_count is greater than slice_per_intf then default to 1.
-> +	 * This can happen during partial update.
-> +	 */
-> +	if (slice_count > slice_per_intf)
-> +		slice_count = 1;
-> +
-> +	bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-> +				      dsc->drm->bits_per_pixel, 8);
-> +	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
-> +
-> +	dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +	dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-> +	dsc->bytes_in_slice = bytes_in_slice;
-> +	dsc->bytes_per_pkt = bytes_in_slice * slice_count;
-> +	dsc->pkt_per_line = slice_per_intf / slice_count;
-> +}
-> +
-> +static void
-> +dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
-> +				  u32 enc_ip_width)
-> +{
-> +	int ssm_delay, total_pixels, soft_slice_per_enc;
-> +
-> +	soft_slice_per_enc = enc_ip_width / dsc->drm->slice_width;
-> +
-> +	/*
-> +	 * minimum number of initial line pixels is a sum of:
-> +	 * 1. sub-stream multiplexer delay (83 groups for 8bpc,
-> +	 *    91 for 10 bpc) * 3
-> +	 * 2. for two soft slice cases, add extra sub-stream multiplexer * 3
-> +	 * 3. the initial xmit delay
-> +	 * 4. total pipeline delay through the "lock step" of encoder (47)
-> +	 * 5. 6 additional pixels as the output of the rate buffer is
-> +	 *    48 bits wide
-> +	 */
-> +	ssm_delay = ((dsc->drm->bits_per_component < 10) ? 84 : 92);
-> +	total_pixels = ssm_delay * 3 + dsc->drm->initial_xmit_delay + 47;
-> +	if (soft_slice_per_enc > 1)
-> +		total_pixels += (ssm_delay * 3);
-> +	dsc->initial_lines = DIV_ROUND_UP(total_pixels, dsc->drm->slice_width);
-> +}
-> +
-> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
-> +				     struct dpu_hw_pingpong *hw_pp,
-> +				     struct msm_display_dsc_config *dsc,
-> +				     u32 common_mode)
-> +{
-> +	if (hw_dsc->ops.dsc_config)
-> +		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode);
-> +
-> +	if (hw_dsc->ops.dsc_config_thresh)
-> +		hw_dsc->ops.dsc_config_thresh(hw_dsc, dsc);
-> +
-> +	if (hw_pp->ops.setup_dsc)
-> +		hw_pp->ops.setup_dsc(hw_pp);
-> +
-> +	if (hw_pp->ops.enable_dsc)
-> +		hw_pp->ops.enable_dsc(hw_pp);
-> +}
-> +
-> +static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
-> +				 struct msm_display_dsc_config *dsc)
-> +{
-> +	/* coding only for 2LM, 2enc, 1 dsc config */
-> +	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
-> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-> +	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-> +	int this_frame_slices;
-> +	int intf_ip_w, enc_ip_w;
-> +	int dsc_common_mode;
-> +	int pic_width;
-> +	int i;
-> +
-> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-> +		hw_pp[i] = dpu_enc->hw_pp[i];
-> +		hw_dsc[i] = dpu_enc->hw_dsc[i];
-> +
-> +		if (!hw_pp[i] || !hw_dsc[i]) {
-> +			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
-> +			return;
-> +		}
-> +	}
-> +
-> +	dsc_common_mode = 0;
-> +	pic_width = dsc->drm->pic_width;
-> +
-> +	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
-> +	if (enc_master->intf_mode == INTF_MODE_VIDEO)
-> +		dsc_common_mode |= DSC_MODE_VIDEO;
-> +
-> +	this_frame_slices = pic_width / dsc->drm->slice_width;
-> +	intf_ip_w = this_frame_slices * dsc->drm->slice_width;
-> +
-> +	dpu_encoder_dsc_pclk_param_calc(dsc, intf_ip_w);
-> +
-> +	/*
-> +	 * dsc merge case: when using 2 encoders for the same stream,
-> +	 * no. of slices need to be same on both the encoders.
-> +	 */
-> +	enc_ip_w = intf_ip_w / 2;
-> +	dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
-> +
-> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> +		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode);
-> +}
-> +
->   void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
->   {
->   	struct dpu_encoder_virt *dpu_enc;
->   	struct dpu_encoder_phys *phys;
-> +	struct msm_drm_private *priv;
->   	bool needs_hw_reset = false;
->   	unsigned int i;
->   
-> @@ -1809,6 +1942,10 @@ void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
->   			dpu_encoder_helper_hw_reset(dpu_enc->phys_encs[i]);
->   		}
->   	}
-> +
-> +	priv = drm_enc->dev->dev_private;
-> +	if (priv->dsc)
-> +		dpu_encoder_prep_dsc(dpu_enc, priv->dsc);
+This series adds a set of yaml and a driver to bind together the type-c and
+pdphy silicon in qcom's pm8150b block as a Linux type-c port manager.
 
-Again, DP + DSI case would be broken here. We'd need to tie DSC config 
-to the encoder itself rather than having a single global DSC config.
+As part of that we retire the existing qcom-pmic-typec driver and fully
+replicate its functionality inside of the new block with the additional
+pdphy stuff along with it.
 
->   }
->   
->   void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
-> 
+An additional series will follow this one for the SoC and RB5 dtsi and dts
+respectively.
 
+A bootable series can be found here
+
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=usb-next-25-10-21-pm8150b-tcpm
+
+Bryan O'Donoghue (6):
+  dt-bindings: usb: Add qcom,pmic-usb-typec dt-binding header
+  dt-bindings: usb: Add Qualcomm PMIC type C controller YAML schema
+  dt-bindings: usb: Add qcom,pmic-usb-pdphy dt-binding header
+  dt-bindings: usb: Add Qualcomm PMIC PDPHY controller YAML schema
+  dt-bindings: usb: Add Qualcomm PMIC TCPM YAML schema
+  usb: typec: qcom: Add pm8150b TCPM driver
+
+ .../bindings/usb/qcom,pmic-pdphy.yaml         | 115 ++++
+ .../bindings/usb/qcom,pmic-tcpm.yaml          | 110 ++++
+ .../bindings/usb/qcom,pmic-typec.yaml         | 116 ++++
+ MAINTAINERS                                   |   8 +
+ drivers/usb/typec/Makefile                    |   1 -
+ drivers/usb/typec/qcom-pmic-typec.c           | 262 --------
+ drivers/usb/typec/tcpm/Kconfig                |  11 +
+ drivers/usb/typec/tcpm/Makefile               |   1 +
+ .../usb/typec/tcpm/qcom/qcom_pmic_tcpm_core.c | 345 ++++++++++
+ .../typec/tcpm/qcom/qcom_pmic_tcpm_pdphy.c    | 577 +++++++++++++++++
+ .../typec/tcpm/qcom/qcom_pmic_tcpm_pdphy.h    |  85 +++
+ .../typec/tcpm/qcom/qcom_pmic_tcpm_typec.c    | 593 ++++++++++++++++++
+ .../typec/tcpm/qcom/qcom_pmic_tcpm_typec.h    | 163 +++++
+ .../usb/typec/tcpm/qcom,pmic-usb-pdphy.h      |  18 +
+ .../usb/typec/tcpm/qcom,pmic-usb-typec.h      |  18 +
+ 15 files changed, 2160 insertions(+), 263 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-pdphy.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-tcpm.yaml
+ create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+ delete mode 100644 drivers/usb/typec/qcom-pmic-typec.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm_core.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm_pdphy.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm_pdphy.h
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm_typec.c
+ create mode 100644 drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm_typec.h
+ create mode 100644 include/dt-bindings/usb/typec/tcpm/qcom,pmic-usb-pdphy.h
+ create mode 100644 include/dt-bindings/usb/typec/tcpm/qcom,pmic-usb-typec.h
 
 -- 
-With best wishes
-Dmitry
+2.33.0
+
