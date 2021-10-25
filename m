@@ -2,105 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E80F34391D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 10:58:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5082C4391FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 11:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232168AbhJYJA7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 05:00:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48358 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232371AbhJYJAz (ORCPT
+        id S232099AbhJYJKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 05:10:24 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:2828 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232222AbhJYJKX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 05:00:55 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3962CC061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 01:58:33 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mevoA-0002sk-Ad; Mon, 25 Oct 2021 10:58:18 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mevo7-00029q-84; Mon, 25 Oct 2021 10:58:15 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1mevo7-0007eQ-6e; Mon, 25 Oct 2021 10:58:15 +0200
-Date:   Mon, 25 Oct 2021 10:58:15 +0200
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@google.com>
-Subject: Re: [PATCH v6 1/3] pwm: Introduce single-PWM of_xlate function
-Message-ID: <20211025085815.wrvifi3kmviw7jpw@pengutronix.de>
-References: <20210930030557.1426-1-bjorn.andersson@linaro.org>
+        Mon, 25 Oct 2021 05:10:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635152881; x=1666688881;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=2PkNjhUphczudseeH6pBm+cV1kX02FQKp+tuRQaRBoQ=;
+  b=wJHZF7ZoevHsnMHU7NYTJl29L3elFfBoMD2RyTJd6rcvvGZuLmjHpQuV
+   owkKGiq4VR7Cdc5K6JnqDWaq76HRzkeqtAbf9Q7DCLe3N41VF0L1r5rvz
+   eF1S9ph3iac/dlEOW1PnU8f5SKfswtYUgOPXs/YHx5wXmaUNOq8LXXccE
+   k=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 25 Oct 2021 02:08:00 -0700
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2021 02:07:59 -0700
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Mon, 25 Oct 2021 02:07:54 -0700
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v2 0/3] USB DWC3 QCOM Multi power domain support
+Date:   Mon, 25 Oct 2021 14:37:28 +0530
+Message-ID: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="muvk4bp3iyxkfh5l"
-Content-Disposition: inline
-In-Reply-To: <20210930030557.1426-1-bjorn.andersson@linaro.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add multi pd support to set performance state for cx domain
+to maintain minimum corner voltage for USB clocks.
 
---muvk4bp3iyxkfh5l
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add corresponding dt bindings, driver changes and dt changes.
 
-On Wed, Sep 29, 2021 at 10:05:55PM -0500, Bjorn Andersson wrote:
-> The existing pxa driver and the upcoming addition of PWM support in the
-> TI sn565dsi86 DSI/eDP bridge driver both has a single PWM channel and
-> thereby a need for a of_xlate function with the period as its single
-> argument.
->=20
-> Introduce a common helper function in the core that can be used as
-> of_xlate by such drivers and migrate the pxa driver to use this.
->=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+changes in v2:
+make cx as mandatory power domain.
+Added error handling and detach function.Used attach_by_id function.
+Changed rpmhd_opp_svs to rmphd_opp_nom for cx domain.
 
-I'm OK with this patch, in the long run I'd like to share more code with
-of_pwm_xlate_with_flags, but this shouldn't be a stopper here.
 
-Acked-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+Sandeep Maheswaram (3):
+  dt-bindings: usb: qcom,dwc3: Add multi-pd bindings for dwc3 qcom
+  usb: dwc3: qcom: Add multi-pd support
+  arm64: dts: qcom: sc7280: Add cx power domain support
 
-Best regards
-Uwe
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |  8 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  3 +-
+ drivers/usb/dwc3/dwc3-qcom.c                       | 87 ++++++++++++++++++++++
+ 3 files changed, 96 insertions(+), 2 deletions(-)
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+-- 
+2.7.4
 
---muvk4bp3iyxkfh5l
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmF2caQACgkQwfwUeK3K
-7Alt7Af/a8nhxh/xMENHkzBDVn57d2C7qsBdAEnOKYmtoLJheJpFRCDPP1lNm54d
-6qlewUjuQAAwqO93kCcufhzwIHrgl73SVvr4iqgw8P8fmwM/xrkovALRkeL771xD
-veid1BSxIOJtJDjbYNf0rEBSXMkhN4I5LUDahJzezG1be5ULwexNiBpibDnPnR2L
-jseYVX2ipv6L4FVf2TceJAP5TuLRRVCGzRGxAfKvIG3WA71Z+EhsjurvKEbKvBSi
-qW68/MIFahttoB5VF3PQZ8mYUF+lbOOnnO4uT+i+fLF4unm9rLu+6pmnp69V95QV
-Sd1y58/frTRWk7Vo38MBuwav2HXo3g==
-=BOeX
------END PGP SIGNATURE-----
-
---muvk4bp3iyxkfh5l--
