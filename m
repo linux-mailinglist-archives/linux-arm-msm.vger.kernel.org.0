@@ -2,235 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B857439A5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:22:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC271439A66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:26:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233734AbhJYPZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 11:25:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        id S233581AbhJYP2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 11:28:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbhJYPZE (ORCPT
+        with ESMTP id S232785AbhJYP2f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 11:25:04 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E302C061746
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:22:41 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id k7so8879288wrd.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:22:41 -0700 (PDT)
+        Mon, 25 Oct 2021 11:28:35 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D48BC061746
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:26:13 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id y207so16021138oia.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=eMmqWJZ6oJqIJ/55vipIBrGpLZzc8VL4SaUkmNSwTfE=;
-        b=eOIIywv3bmsf2Pm9Q9q4Dp+g1UsEZTb9BA/sFGJjAalCXgOh/n/F/zkRW7hXLkCyEa
-         KleTHwt56/oX0k67+xiZjEqVK9Y77k0b7C2WT+II6AZ2AlisvbHcky7wSv/aJx1d/0C7
-         9f3GjfHWUOcQp/d9RLdpga9RTmxyf7XGbv9nZO3EBW1gCAbfeFKrznAMneaP7bZO7A35
-         yQA6Z59DKd2ClGXKfTv7V1I7Og+o9iukbs3K/0Gwz/8QREnTKj+bYLWTllbdncan54TA
-         QYfs5ahmkNXoJyuMxN0AnwhVwbJ3fJ6iq0D0DugSF1/3qOp8Pz+R8LT5hp/GlVmqa9Kf
-         PxUQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=p4DTS+XDrRU1zoDF0JXsJDKfzlw1Jx2jETNT5iMePnI=;
+        b=g2mOb7t41N5cc6GiB6ZWW8pit9ZMFe7sLknkU8KdXdL+pOnmDmId3kzmHS4y0DtBpw
+         I32xsjou3/rS4rnA+q4kYdvturfTXNlWEso0uvlQFO2DEmEqVQ65bRt3ouiS/5iEYAA7
+         e1iVvseAu+CdriJ4zt2zMeWIBXO1FUjPbaxZwclrkzofT3BZLGKgom6aztrN9cwjGKd3
+         pBhMmEYMMQa4Yssj1VLaiUdEndOq5LU7c7Qm76pD9Xuz11TflCmhq7J9c2fIlByX/yBl
+         dFEAz+0ixVWJf9fvHKKMlW/mdsZSyq24e2DFQqxx1D2rxllUJ+ZQNdQmeL61FGXOR77i
+         rozg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=eMmqWJZ6oJqIJ/55vipIBrGpLZzc8VL4SaUkmNSwTfE=;
-        b=zY5XKmDq2lT1ulBKMPWqMThUDRxvV49KPV/97B6nWosLpi0l+bdOUtZg+NbvtNO4xe
-         OBfZIwRPtUI0YAd6/5LiTbkBfCQiisWEI37q04Srd2yZ80xF7HVsOIDSmhTNsKD4D27X
-         YldIqcZeWVCNFC9LviuHMXwEyeg/dBEVcrm69vETM8CIHqRI8mV16kJM8Zu9HKJNu4BB
-         e1oG4tPmLqj+GTtwmlsp60UUJvS/tUu6inVGkS16H+KZ23paUQ2MIqZ0ezhgMrB26Sgo
-         RIAy1REpggu3F+YHlzrWleCbAGFSwwFHc814clka9tYlKaHca5uGp7TIdFMiCTlaggFK
-         1OGQ==
-X-Gm-Message-State: AOAM5333KASsYe94eDLPbg2p9fyYIhOTYagDsYjP8BB45zShZMftjzWJ
-        jDZ/L7zqAV98XfhN09zzhdz+9A==
-X-Google-Smtp-Source: ABdhPJysGNhOAZSe8Z3U0WxQ0j9b092wEfMRqFQtgUVEKt9cvBy2B4xlXrvfnSyVfdXvgPJHw8PYuA==
-X-Received: by 2002:a05:6000:18c7:: with SMTP id w7mr23572122wrq.411.1635175360158;
-        Mon, 25 Oct 2021 08:22:40 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o2sm13412452wrg.1.2021.10.25.08.22.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Oct 2021 08:22:39 -0700 (PDT)
-Message-ID: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
-Date:   Mon, 25 Oct 2021 16:24:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
- enc/dec
-Content-Language: en-US
-To:     Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=p4DTS+XDrRU1zoDF0JXsJDKfzlw1Jx2jETNT5iMePnI=;
+        b=HLTDyztu0drHcA4SLA58LLSih+kIQtW1QqUr/kTWuVwbTeJjYQAbqWBJJjKl6gavEw
+         aTfUrNNQpgMg6hTsYcfbPX3omIk54GSVxi4+421Wa/RYzB0wKzx5bCyqtAH2hGPoUcRn
+         L0qDS9rygrofR/9Ss6jIuUU7AuASufG6qWkZ7w9//aJjYz/n1Tje5m1JYqsSGez80k2R
+         zNoyrfyfw6Wu7XvVJJGKtNDlhLwtigaFjFWs2tr6nX+2HWdsvOtExzxytNq/5fqZ8qzw
+         nm7RvxyvjfvLotcugsv49pJjVDuAvNbfiCXklEeAsL12F/m2Umf3EKAZqbNbZipfDjPw
+         j+8w==
+X-Gm-Message-State: AOAM530XcjhMcbxtP821+f13zsezOu16rnLgl4TtFQpRsg8NMZhgEQHV
+        kNsC88quH9qSU1xbGNFKF9n/CQ==
+X-Google-Smtp-Source: ABdhPJz+aGu1DW+AHAHdR7S/AfP0mjfSmCKCdM4kWHzZY7VGk5rnkngQoMCvlKGwWg4u8iN0ZVtFRQ==
+X-Received: by 2002:aca:a817:: with SMTP id r23mr12992262oie.71.1635175572431;
+        Mon, 25 Oct 2021 08:26:12 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id bn41sm3688631oib.43.2021.10.25.08.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Oct 2021 08:26:11 -0700 (PDT)
+Date:   Mon, 25 Oct 2021 08:27:48 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>
+Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thierry Reding <thierry.reding@gmail.com>,
         Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20211025144345.267107-1-tadeusz.struk@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Doug Anderson <dianders@google.com>
+Subject: Re: [PATCH v6 3/3] drm/bridge: ti-sn65dsi86: Implement the pwm_chip
+Message-ID: <YXbM9Pnxpo50TQy+@ripper>
+References: <20210930030557.1426-1-bjorn.andersson@linaro.org>
+ <20210930030557.1426-3-bjorn.andersson@linaro.org>
+ <20211025084250.pkd5s4zdmevjjl7m@pengutronix.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211025084250.pkd5s4zdmevjjl7m@pengutronix.de>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2021 15:43, Tadeusz Struk wrote:
-> Venus video encode/decode hardware driver consists of three modules.
-> The parent module venus-core, and two sub modules venus-enc and venus-dec.
-> The venus-core module allocates a common structure that is used by the
-> enc/dec modules, loads the firmware, and performs some common hardware
-> initialization. Since the three modules are loaded one after the other,
-> and their probe functions can run in parallel it is possible that
-> the venc_probe and vdec_probe functions can finish before the core
-> venus_probe function, which then can fail when, for example it
-> fails to load the firmware. In this case the subsequent call to venc_open
-> causes an Oops as it tries to dereference already uninitialized structures
-> through dev->parent and the system crashes in __pm_runtime_resume() as in
-> the trace below:
+On Mon 25 Oct 01:42 PDT 2021, Uwe Kleine-K?nig wrote:
+
+> Hello,
 > 
-> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
-> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
-> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
-> [   26.290326][  T485] Call trace:
-> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
-> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
-> [   26.290335][  T485]  v4l2_open+0x184/0x294
-> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
-> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
-> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
-> [   26.290352][  T485]  do_filp_open+0xb8/0x168
-> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
-> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
-> [   26.290359][  T485]  invoke_syscall+0x60/0x170
-> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
-> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
-> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
-> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
-> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
-> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
-> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+> [replaced Andrzej Hajda's email address with his new one]
 > 
-> This can be fixed by synchronizing the three probe functions and
-> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
-> returns success.
+> On Wed, Sep 29, 2021 at 10:05:57PM -0500, Bjorn Andersson wrote:
+> > The SN65DSI86 provides the ability to supply a PWM signal on GPIO 4,
+> > with the primary purpose of controlling the backlight of the attached
+> > panel. Add an implementation that exposes this using the standard PWM
+> > framework, to allow e.g. pwm-backlight to expose this to the user.
 > 
-> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
-> ---
+> Sorry for the long delay in reviewing this.
+> 
 
-> +	struct mutex sync_lock;
+No worries, glad to hear from you again.
 
-Why have an additional mutex, will the existing core::lock not do ?
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+[..]
+> > +static int ti_sn_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> > +			   const struct pwm_state *state)
+> > +{
+> > +	struct ti_sn65dsi86 *pdata = pwm_chip_to_ti_sn_bridge(chip);
+> > +	unsigned int pwm_en_inv;
+> > +	unsigned int backlight;
+> > +	unsigned int pre_div;
+> > +	unsigned int scale;
+> > +	u64 period_max;
+> > +	u64 period;
+> > +	int ret;
+> > +
+> > +	if (!pdata->pwm_enabled) {
+> > +		ret = pm_runtime_get_sync(pdata->dev);
+> > +		if (ret < 0) {
+> > +			pm_runtime_put_sync(pdata->dev);
+> > +			return ret;
+> > +		}
+> > +	}
+> > +
+> > +	if (state->enabled) {
+> > +		if (!pdata->pwm_enabled) {
+> > +			/*
+> > +			 * The chip might have been powered down while we
+> > +			 * didn't hold a PM runtime reference, so mux in the
+> > +			 * PWM function on the GPIO pin again.
+> > +			 */
+> > +			ret = regmap_update_bits(pdata->regmap, SN_GPIO_CTRL_REG,
+> > +						 SN_GPIO_MUX_MASK << (2 * SN_PWM_GPIO_IDX),
+> > +						 SN_GPIO_MUX_SPECIAL << (2 * SN_PWM_GPIO_IDX));
+> > +			if (ret) {
+> > +				dev_err(pdata->dev, "failed to mux in PWM function\n");
+> > +				goto out;
+> > +			}
+> > +		}
+> > +
+> > +		/*
+> > +		 * Per the datasheet the PWM frequency is given by:
+> > +		 *
+> > +		 *                          REFCLK_FREQ
+> > +		 *   PWM_FREQ = -----------------------------------
+> > +		 *               PWM_PRE_DIV * BACKLIGHT_SCALE + 1
+> > +		 *
+> > +		 * However, after careful review the author is convinced that
+> > +		 * the documentation has lost some parenthesis around
+> > +		 * "BACKLIGHT_SCALE + 1".
+> > +		 * With that the formula can be written:
+> > +		 *
+> > +		 *   T_pwm * REFCLK_FREQ = PWM_PRE_DIV * (BACKLIGHT_SCALE + 1)
+> 
+> For my understanding: T_pwm = period length = 1 / PWM_FREQ, right? Maybe
+> it's a good idea to state this more explicitly?
+> 
 
->   	struct list_head instances;
->   	atomic_t insts_count;
->   	unsigned int state;
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 198e47eb63f4..9dbda3d7a2d2 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1659,17 +1659,26 @@ static int vdec_probe(struct platform_device *pdev)
->   	if (!core)
->   		return -EPROBE_DEFER;
->   
-> +	mutex_lock(&core->sync_lock);
-> +
-> +	if (core->state != CORE_INIT) {
-> +		ret = -ENODEV;
-> +		goto err_core_unlock;
-> +	}
-> +
->   	platform_set_drvdata(pdev, core);
->   
->   	if (core->pm_ops->vdec_get) {
->   		ret = core->pm_ops->vdec_get(dev);
->   		if (ret)
-> -			return ret;
-> +			goto err_core_unlock;
->   	}
->   
->   	vdev = video_device_alloc();
-> -	if (!vdev)
-> -		return -ENOMEM;
-> +	if (!vdev) {
-> +		ret = -ENOMEM;
-> +		goto err_core_unlock;
-> +	}
->   
->   	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
->   	vdev->release = video_device_release;
-> @@ -1690,11 +1699,14 @@ static int vdec_probe(struct platform_device *pdev)
->   	pm_runtime_set_autosuspend_delay(dev, 2000);
->   	pm_runtime_use_autosuspend(dev);
->   	pm_runtime_enable(dev);
-> +	mutex_unlock(&core->sync_lock);
->   
->   	return 0;
->   
->   err_vdev_release:
->   	video_device_release(vdev);
-> +err_core_unlock:
-> +	mutex_unlock(&core->sync_lock);
->   	return ret;
->   }
->   
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index bc1c42dd53c0..e7439236385a 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1338,17 +1338,26 @@ static int venc_probe(struct platform_device *pdev)
->   	if (!core)
->   		return -EPROBE_DEFER;
->   
-> +	mutex_lock(&core->sync_lock);
-> +
-> +	if (core->state != CORE_INIT) {
-> +		ret = -ENODEV;
-> +		goto err_core_unlock;
-> +	}
-> +
+Correct. I've improved the comment accordingly.
 
-shouldn't this be an -EPROBE_DEFER i.e. CORE_INIT hasn't completed/run 
-yet so defer until it does.
+> > +		 * In order to keep BACKLIGHT_SCALE within its 16 bits,
+> > +		 * PWM_PRE_DIV must be:
+> > +		 *
+> > +		 *                     T_pwm * REFCLK_FREQ
+> > +		 *   PWM_PRE_DIV >= -------------------------
+> > +		 *                   BACKLIGHT_SCALE_MAX + 1
+> > +		 *
+> > +		 * To simplify the search and to favour higher resolution of
+> > +		 * the duty cycle over accuracy of the period, the lowest
+> > +		 * possible PWM_PRE_DIV is used. Finally the scale is
+> > +		 * calculated as:
+> > +		 *
+> > +		 *                      T_pwm * REFCLK_FREQ
+> > +		 *   BACKLIGHT_SCALE = ---------------------- - 1
+> > +		 *                          PWM_PRE_DIV
+> > +		 *
+> > +		 * Here T_pwm is represented in seconds, so appropriate scaling
+> > +		 * to nanoseconds is necessary.
+> > +		 */
+> > +
+> > +		/* Minimum T_pwm is 1 / REFCLK_FREQ */
+> > +		if (state->period <= NSEC_PER_SEC / pdata->pwm_refclk_freq) {
+> > +			ret = -EINVAL;
+> > +			goto out;
+> > +		}
+> > +
+> > +		/*
+> > +		 * Maximum T_pwm is 255 * (65535 + 1) / REFCLK_FREQ
+> > +		 * Limit period to this to avoid overflows
+> > +		 */
+> > +		period_max = div_u64((u64)NSEC_PER_SEC * 255 * (65535 + 1),
+> > +				     pdata->pwm_refclk_freq);
+> > +		if (period > period_max)
+> 
+> period is uninitialized here. This must be
+> 
+> 		if (state->period > period_max)
+> 
+> . Alternatively to the if you could use
+> 
+> 		period = min(state->period, period_max);
+> 
 
-This fragment here looks racy to me without a DEFER above ?
+Yes of course.
 
-drivers/media/platform/qcom/venus/core.c::venus_probe()
+> 
+> Apart from this I'm happy with your patch set now.
+> 
 
-ret = v4l2_device_register(dev, &core->v4l2_dev);
-if (ret)
-         goto err_core_deinit;
+Thank you.
 
-platform_set_drvdata(pdev, core);
+> > +			period = period_max;
+> > +		else
+> > +			period = state->period;
+> > +
+> > +		pre_div = DIV64_U64_ROUND_UP(period * pdata->pwm_refclk_freq,
+> > +					     (u64)NSEC_PER_SEC * (BACKLIGHT_SCALE_MAX + 1));
+> > +		scale = div64_u64(period * pdata->pwm_refclk_freq, (u64)NSEC_PER_SEC * pre_div) - 1;
+> 
+> After thinking a while about this---I think I stumbled about this
+> calculation already in earlier revisions of this patch set---I think I
+> now understood it. I never saw something like this before because other
+> drivers with similar HW conditions would pick:
+> 
+> 	pre_div = div64_u64(period * pdata->pwm_refclk_freq,
+> 			    (u64)NSEC_PER_SEC * (BACKLIGHT_SCALE_MAX + 1));
+> 
+> and then scale = BACKLIGHT_SCALE_MAX. This latter approach weights high
+> resolution of duty_cycle still higher over period exactness than your
+> approach.
 
-pm_runtime_enable(dev);
+Interesting.
 
-ret = pm_runtime_get_sync(dev);
-if (ret < 0)
-         goto err_runtime_disable;
+> For me both approaches are fine.
+> 
 
-ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-if (ret)
-         goto err_runtime_disable;
+Thanks, I'll respin with the two minor things above and leave the math
+as is now :)
 
-ret = venus_firmware_init(core);
-if (ret)
-         goto err_runtime_disable;
+Regards,
+Bjorn
 
-ret = venus_boot(core);
-if (ret)
-         goto err_runtime_disable;
+> Best regards
+> Uwe
+> 
+> -- 
+> Pengutronix e.K.                           | Uwe Kleine-König            |
+> Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
-ret = hfi_core_resume(core, true);
-if (ret)
-         goto err_venus_shutdown;
 
-ret = hfi_core_init(core);
-if (ret)
-         goto err_venus_shutdown;
-
----
-bod
