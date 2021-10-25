@@ -2,247 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC271439A66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:26:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B917A439A8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:30:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233581AbhJYP2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 11:28:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53626 "EHLO
+        id S233867AbhJYPcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 11:32:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232785AbhJYP2f (ORCPT
+        with ESMTP id S233927AbhJYPcb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 11:28:35 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D48BC061746
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:26:13 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id y207so16021138oia.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:26:13 -0700 (PDT)
+        Mon, 25 Oct 2021 11:32:31 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187EAC061745
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:30:09 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id f8so1385569plo.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=p4DTS+XDrRU1zoDF0JXsJDKfzlw1Jx2jETNT5iMePnI=;
-        b=g2mOb7t41N5cc6GiB6ZWW8pit9ZMFe7sLknkU8KdXdL+pOnmDmId3kzmHS4y0DtBpw
-         I32xsjou3/rS4rnA+q4kYdvturfTXNlWEso0uvlQFO2DEmEqVQ65bRt3ouiS/5iEYAA7
-         e1iVvseAu+CdriJ4zt2zMeWIBXO1FUjPbaxZwclrkzofT3BZLGKgom6aztrN9cwjGKd3
-         pBhMmEYMMQa4Yssj1VLaiUdEndOq5LU7c7Qm76pD9Xuz11TflCmhq7J9c2fIlByX/yBl
-         dFEAz+0ixVWJf9fvHKKMlW/mdsZSyq24e2DFQqxx1D2rxllUJ+ZQNdQmeL61FGXOR77i
-         rozg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to;
+        bh=/oQC3c6kHPBnBYaCXyk3XQoSwBx0MJsbDNrgRDHiTYM=;
+        b=pCc4tEnlzbOlYCNDcTOgyL6If8XqWi1Q0zLmpkNfUyKh+BuBP45aijAy/kmyp2nLNf
+         V1/R8D9ZjsNp3qBZL1RzcaN8S0dA2xpJ90H7pBofgOw6tjafiMQpgYw0xldsCjUREs4b
+         MyFKVQ7G/z+jsNIuc5zGadm7e4gwuvTfLUolr5GbrUysEgS3k/cHI8eu2oHj1EmN9W0T
+         2cvHFje7oBkU0KuaJSg5NeSDd/p4EEYYrbQMeojtYp+f5rY3xuzpNw3iboNjD63A67kj
+         lBn3zuPvmiOxNMXnPLe7K2ZTnZSxoE8emqs6GhPQmVGRASAsp2y4FeenmWxXBRqGxh1X
+         zozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=p4DTS+XDrRU1zoDF0JXsJDKfzlw1Jx2jETNT5iMePnI=;
-        b=HLTDyztu0drHcA4SLA58LLSih+kIQtW1QqUr/kTWuVwbTeJjYQAbqWBJJjKl6gavEw
-         aTfUrNNQpgMg6hTsYcfbPX3omIk54GSVxi4+421Wa/RYzB0wKzx5bCyqtAH2hGPoUcRn
-         L0qDS9rygrofR/9Ss6jIuUU7AuASufG6qWkZ7w9//aJjYz/n1Tje5m1JYqsSGez80k2R
-         zNoyrfyfw6Wu7XvVJJGKtNDlhLwtigaFjFWs2tr6nX+2HWdsvOtExzxytNq/5fqZ8qzw
-         nm7RvxyvjfvLotcugsv49pJjVDuAvNbfiCXklEeAsL12F/m2Umf3EKAZqbNbZipfDjPw
-         j+8w==
-X-Gm-Message-State: AOAM530XcjhMcbxtP821+f13zsezOu16rnLgl4TtFQpRsg8NMZhgEQHV
-        kNsC88quH9qSU1xbGNFKF9n/CQ==
-X-Google-Smtp-Source: ABdhPJz+aGu1DW+AHAHdR7S/AfP0mjfSmCKCdM4kWHzZY7VGk5rnkngQoMCvlKGwWg4u8iN0ZVtFRQ==
-X-Received: by 2002:aca:a817:: with SMTP id r23mr12992262oie.71.1635175572431;
-        Mon, 25 Oct 2021 08:26:12 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id bn41sm3688631oib.43.2021.10.25.08.26.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 08:26:11 -0700 (PDT)
-Date:   Mon, 25 Oct 2021 08:27:48 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>
-Cc:     Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@google.com>
-Subject: Re: [PATCH v6 3/3] drm/bridge: ti-sn65dsi86: Implement the pwm_chip
-Message-ID: <YXbM9Pnxpo50TQy+@ripper>
-References: <20210930030557.1426-1-bjorn.andersson@linaro.org>
- <20210930030557.1426-3-bjorn.andersson@linaro.org>
- <20211025084250.pkd5s4zdmevjjl7m@pengutronix.de>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to;
+        bh=/oQC3c6kHPBnBYaCXyk3XQoSwBx0MJsbDNrgRDHiTYM=;
+        b=XZKQMLx4cmDV9SYGhNrqBN86I8HBGXeOyXV4sl36gj914kFEsixdYtxX8ts2qrWKv1
+         UwQT3JJaTT8hGjS5GALqfu1kY+PKxnQwx8uCU7GxzSPp5eUbWj3jx7nuvySbdkVBQKtZ
+         oRuRF5oBl57awB1wPg6d8HwHUD8kerz9NfJjRZguw+s2MOmAcSqO0AOFOwTe9JksxR0O
+         gcJ7w7ZQnxGHcRSKWuBMicKzS4pca6arC194dzsJl/2+xWik0LUsn225lu58olz5Gl4y
+         bS2oWva66memMz29wFOwhKl5aq7k0of3q6SRalU4h+xUzrJiwzb1f6B5Q+BwQ0lrc9NP
+         CyRg==
+X-Gm-Message-State: AOAM53391bQtSbUmmc230j39QBlgDUUBFfpO7BHaSofCVrL/QXLjW5pm
+        LsufDmbW/vxUws+EqmXw2XKGpQ==
+X-Google-Smtp-Source: ABdhPJyr4pfh618Fcc7JKCHq2J8ZamOvVnZCEbt++k4esy3a34dSZzGuq3W3UVid31/WtHehz2eymA==
+X-Received: by 2002:a17:90b:1c02:: with SMTP id oc2mr21614855pjb.128.1635175808339;
+        Mon, 25 Oct 2021 08:30:08 -0700 (PDT)
+Received: from [192.168.254.17] ([50.39.160.154])
+        by smtp.gmail.com with ESMTPSA id ng5sm19150359pjb.51.2021.10.25.08.30.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 08:30:07 -0700 (PDT)
+Message-ID: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+Date:   Mon, 25 Oct 2021 08:30:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211025084250.pkd5s4zdmevjjl7m@pengutronix.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+Content-Language: en-US
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+From:   Tadeusz Struk <tadeusz.struk@linaro.org>
+In-Reply-To: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------mAhZPgdr3mdsZ2DcUcEr18WS"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 25 Oct 01:42 PDT 2021, Uwe Kleine-K?nig wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------mAhZPgdr3mdsZ2DcUcEr18WS
+Content-Type: multipart/mixed; boundary="------------YsFxvfcQkaI2CagWnGszgzcf";
+ protected-headers="v1"
+From: Tadeusz Struk <tadeusz.struk@linaro.org>
+To: Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Lee Jones
+ <lee.jones@linaro.org>, Amit Pundir <amit.pundir@linaro.org>,
+ John Stultz <john.stultz@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-ID: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+In-Reply-To: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
 
-> Hello,
-> 
-> [replaced Andrzej Hajda's email address with his new one]
-> 
-> On Wed, Sep 29, 2021 at 10:05:57PM -0500, Bjorn Andersson wrote:
-> > The SN65DSI86 provides the ability to supply a PWM signal on GPIO 4,
-> > with the primary purpose of controlling the backlight of the attached
-> > panel. Add an implementation that exposes this using the standard PWM
-> > framework, to allow e.g. pwm-backlight to expose this to the user.
-> 
-> Sorry for the long delay in reviewing this.
-> 
+--------------YsFxvfcQkaI2CagWnGszgzcf
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-No worries, glad to hear from you again.
+SGkgQnJ5YW4sDQpPbiAxMC8yNS8yMSAwODoyNCwgQnJ5YW4gTydEb25vZ2h1ZSB3cm90ZToN
+Cj4gDQo+PiArwqDCoMKgIHN0cnVjdCBtdXRleCBzeW5jX2xvY2s7DQo+IA0KPiBXaHkgaGF2
+ZSBhbiBhZGRpdGlvbmFsIG11dGV4LCB3aWxsIHRoZSBleGlzdGluZyBjb3JlOjpsb2NrIG5v
+dCBkbyA/DQoNCkkgd2FudGVkIHRvIHJldXNlIGl0LCBidXQgdGhlIGNvcmU6OmxvY2sgaW4g
+dXNlZCBpbnRlcm5hbGx5IGluIGhmaSBhbmQNCml0IHdpbGwgZGVhZGxvY2sgdGhlcmUgaWYg
+d2UgdXNlIHRoYXQgb25lIGhlcmUuDQoNCj4gc2hvdWxkbid0IHRoaXMgYmUgYW4gLUVQUk9C
+RV9ERUZFUiBpLmUuIENPUkVfSU5JVCBoYXNuJ3QgY29tcGxldGVkL3J1biB5ZXQgc28gZGVm
+ZXIgdW50aWwgDQo+IGl0IGRvZXMuDQo+IA0KPiBUaGlzIGZyYWdtZW50IGhlcmUgbG9va3Mg
+cmFjeSB0byBtZSB3aXRob3V0IGEgREVGRVIgYWJvdmUgPw0KPiANCj4gZHJpdmVycy9tZWRp
+YS9wbGF0Zm9ybS9xY29tL3ZlbnVzL2NvcmUuYzo6dmVudXNfcHJvYmUoKQ0KDQpObywgd2Ug
+d2FudCBhIGhhcmQgc3RvcCBoZXJlLiBBdCB0aGlzIHBvaW50IHRoZSB2ZW51c19jb3JlIHBy
+b2JlKCkNCmhhcyBmaW5pc2hlZCBhbmQgaXQgZmFpbGVkLiBSZXR1cm5pbmcgLUVQUk9CRV9E
+RUZFUiBoZXJlIHdpbGwganVzdA0KY2F1c2UgaXQgdG8gbG9vcCBpbmZpbml0ZWx5Lg0KDQot
+LSANClRoYW5rcywNClRhZGV1c3oNCg==
 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-[..]
-> > +static int ti_sn_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-> > +			   const struct pwm_state *state)
-> > +{
-> > +	struct ti_sn65dsi86 *pdata = pwm_chip_to_ti_sn_bridge(chip);
-> > +	unsigned int pwm_en_inv;
-> > +	unsigned int backlight;
-> > +	unsigned int pre_div;
-> > +	unsigned int scale;
-> > +	u64 period_max;
-> > +	u64 period;
-> > +	int ret;
-> > +
-> > +	if (!pdata->pwm_enabled) {
-> > +		ret = pm_runtime_get_sync(pdata->dev);
-> > +		if (ret < 0) {
-> > +			pm_runtime_put_sync(pdata->dev);
-> > +			return ret;
-> > +		}
-> > +	}
-> > +
-> > +	if (state->enabled) {
-> > +		if (!pdata->pwm_enabled) {
-> > +			/*
-> > +			 * The chip might have been powered down while we
-> > +			 * didn't hold a PM runtime reference, so mux in the
-> > +			 * PWM function on the GPIO pin again.
-> > +			 */
-> > +			ret = regmap_update_bits(pdata->regmap, SN_GPIO_CTRL_REG,
-> > +						 SN_GPIO_MUX_MASK << (2 * SN_PWM_GPIO_IDX),
-> > +						 SN_GPIO_MUX_SPECIAL << (2 * SN_PWM_GPIO_IDX));
-> > +			if (ret) {
-> > +				dev_err(pdata->dev, "failed to mux in PWM function\n");
-> > +				goto out;
-> > +			}
-> > +		}
-> > +
-> > +		/*
-> > +		 * Per the datasheet the PWM frequency is given by:
-> > +		 *
-> > +		 *                          REFCLK_FREQ
-> > +		 *   PWM_FREQ = -----------------------------------
-> > +		 *               PWM_PRE_DIV * BACKLIGHT_SCALE + 1
-> > +		 *
-> > +		 * However, after careful review the author is convinced that
-> > +		 * the documentation has lost some parenthesis around
-> > +		 * "BACKLIGHT_SCALE + 1".
-> > +		 * With that the formula can be written:
-> > +		 *
-> > +		 *   T_pwm * REFCLK_FREQ = PWM_PRE_DIV * (BACKLIGHT_SCALE + 1)
-> 
-> For my understanding: T_pwm = period length = 1 / PWM_FREQ, right? Maybe
-> it's a good idea to state this more explicitly?
-> 
+--------------YsFxvfcQkaI2CagWnGszgzcf--
 
-Correct. I've improved the comment accordingly.
+--------------mAhZPgdr3mdsZ2DcUcEr18WS
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-> > +		 * In order to keep BACKLIGHT_SCALE within its 16 bits,
-> > +		 * PWM_PRE_DIV must be:
-> > +		 *
-> > +		 *                     T_pwm * REFCLK_FREQ
-> > +		 *   PWM_PRE_DIV >= -------------------------
-> > +		 *                   BACKLIGHT_SCALE_MAX + 1
-> > +		 *
-> > +		 * To simplify the search and to favour higher resolution of
-> > +		 * the duty cycle over accuracy of the period, the lowest
-> > +		 * possible PWM_PRE_DIV is used. Finally the scale is
-> > +		 * calculated as:
-> > +		 *
-> > +		 *                      T_pwm * REFCLK_FREQ
-> > +		 *   BACKLIGHT_SCALE = ---------------------- - 1
-> > +		 *                          PWM_PRE_DIV
-> > +		 *
-> > +		 * Here T_pwm is represented in seconds, so appropriate scaling
-> > +		 * to nanoseconds is necessary.
-> > +		 */
-> > +
-> > +		/* Minimum T_pwm is 1 / REFCLK_FREQ */
-> > +		if (state->period <= NSEC_PER_SEC / pdata->pwm_refclk_freq) {
-> > +			ret = -EINVAL;
-> > +			goto out;
-> > +		}
-> > +
-> > +		/*
-> > +		 * Maximum T_pwm is 255 * (65535 + 1) / REFCLK_FREQ
-> > +		 * Limit period to this to avoid overflows
-> > +		 */
-> > +		period_max = div_u64((u64)NSEC_PER_SEC * 255 * (65535 + 1),
-> > +				     pdata->pwm_refclk_freq);
-> > +		if (period > period_max)
-> 
-> period is uninitialized here. This must be
-> 
-> 		if (state->period > period_max)
-> 
-> . Alternatively to the if you could use
-> 
-> 		period = min(state->period, period_max);
-> 
+-----BEGIN PGP SIGNATURE-----
 
-Yes of course.
+wsF5BAABCAAjFiEEb3ghm5bfkfSeegvwo0472xuDAo4FAmF2zX4FAwAAAAAACgkQo0472xuDAo6l
+dw/+LhN7/VzFJraQeSIJGUhEKX9NetR2fYto6nKpoGEvuDNqoQJXhR8mTSjP1DtQtMVJB56Ssk+8
+GFkvTw4ewas2WIMCgJ6JNmkCLUvgFeY+tEAQl/wKCt1Bh/2cDz1f5LhCwRsP+QAfTRT0fBjSKr3F
+F2dXCUA45fEqntT7qJoTGe11ovdQgA+6MLFPDNPPJHFxAFGEeEsYLwwUiQ5tdTxeEeyLtyYYf1ic
+0Iog6xG079IOYYFljIkZTlWJGJyHpZqLOtbNIy/qPjFLXNVc7OuQq/U9yFJcb9jj/tMkEcLFstJX
+2tEK0MIvZi8eKAc5tg+RSxBUFNs5Qspq/XjvR6PWQ1RM0JryUThL1jIiVjWhJzrzxadFXnwofQ7z
+ozuDiHNgJbvKik6R6NzRQ6NkI1NhslSr4OticLiJpJgqP00n8M+mEryhxG6vY19lQ0+7Ze0DAVlQ
+AurSvVISPiHr20zkQrJAv5epizTcxhUxP9dfsPUgV6hO/a9Do1bW5r22Wt22YzuxQzlEpXqDVrSf
+V0MQyj5BBzgyymzmkZGu5XtXZGZd1EdDHHk52JwAei/ZxmkOPcij/lv/plN2GHS7bKG3tjaYzcNB
+jZLzheDx1Kl935zOo3Rdbziy0QT952iIB53CpsL2lIrJvpk2hdU9H20AnRqacjfPule8LRH9F+3v
+5zc=
+=5XHO
+-----END PGP SIGNATURE-----
 
-> 
-> Apart from this I'm happy with your patch set now.
-> 
-
-Thank you.
-
-> > +			period = period_max;
-> > +		else
-> > +			period = state->period;
-> > +
-> > +		pre_div = DIV64_U64_ROUND_UP(period * pdata->pwm_refclk_freq,
-> > +					     (u64)NSEC_PER_SEC * (BACKLIGHT_SCALE_MAX + 1));
-> > +		scale = div64_u64(period * pdata->pwm_refclk_freq, (u64)NSEC_PER_SEC * pre_div) - 1;
-> 
-> After thinking a while about this---I think I stumbled about this
-> calculation already in earlier revisions of this patch set---I think I
-> now understood it. I never saw something like this before because other
-> drivers with similar HW conditions would pick:
-> 
-> 	pre_div = div64_u64(period * pdata->pwm_refclk_freq,
-> 			    (u64)NSEC_PER_SEC * (BACKLIGHT_SCALE_MAX + 1));
-> 
-> and then scale = BACKLIGHT_SCALE_MAX. This latter approach weights high
-> resolution of duty_cycle still higher over period exactness than your
-> approach.
-
-Interesting.
-
-> For me both approaches are fine.
-> 
-
-Thanks, I'll respin with the two minor things above and leave the math
-as is now :)
-
-Regards,
-Bjorn
-
-> Best regards
-> Uwe
-> 
-> -- 
-> Pengutronix e.K.                           | Uwe Kleine-König            |
-> Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
-
+--------------mAhZPgdr3mdsZ2DcUcEr18WS--
