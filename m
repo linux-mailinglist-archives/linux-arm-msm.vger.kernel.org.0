@@ -2,133 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 160EB439A40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:17:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B857439A5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233909AbhJYPTk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 11:19:40 -0400
-Received: from new3-smtp.messagingengine.com ([66.111.4.229]:57703 "EHLO
-        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233872AbhJYPTM (ORCPT
+        id S233734AbhJYPZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 11:25:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230169AbhJYPZE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 11:19:12 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailnew.nyi.internal (Postfix) with ESMTP id C5BA45806D1;
-        Mon, 25 Oct 2021 11:16:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 25 Oct 2021 11:16:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=D4bLfD9dgR7qDPZz1c2NJXrKeyz
-        Cs/YSQzcSXsgDvWg=; b=QCOs+ZNnLFEb1BYhWJdlYJEDlasbqwKAF0qVOeziiAI
-        K0Wn8u4hvJ6O9fhAwN+Vcq45oZZ3elyvAPkX9cuF1jIJu0O9zX1xknPWe7xw0klP
-        y2ZFbdgYyn7WFmChP8orE01Anpw6ZxSiIa+AzuGb0enpRRpSTlkqbVJUng/pOpCP
-        cvP8DIbeRzDY0g06WEOHqD0T7g8D/t+QXCUHi9BWHw+xdvrhaVPYj1pbO3FMfaWB
-        qK3gRf3HO3OW349bzNZNvn+CWG4hoN+h/ppU5v1DeCs5dE0qQOV9WI2SgnTloAvg
-        //adJ76SZXChxzVNid+3T1NlynwhoshxrJJsanlSTYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=D4bLfD
-        9dgR7qDPZz1c2NJXrKeyzCs/YSQzcSXsgDvWg=; b=IP1xyiXuWxBCBd8vYnrWwC
-        chI+gem54xqqu9EFECP2wgiXsZJbEvD1X9N3SfnpdFoGabdjaVm11ScRzfk/ubex
-        +QVbfybZ4RUfvO9uw9UXZ5QirROap/xH+gB9xpIPgixzjF5sBLh/ybc6X0W2RqlP
-        CXHec+4bLFJAzIj1GcLZkf5zwqgze0p0g3amfOjJ3a+/49X4eveo76ICyojMVngf
-        YrGBIyEj4war4fnFBoeIJP1SWMWllOH4QhysvSQ+Mm3M7UH3C+g20q9Ec2BixwoX
-        oJ3vEHdBtu8fTh3GpWfKpEsNEF2Olq70p/ZkpnAoxYnQGPEThYQIKfLlyOmSiJ+g
-        ==
-X-ME-Sender: <xms:Vsp2YTzLI-lWf4gWFlFSIAr-KY96qgJ-fDpksW1oKYmu-oKUwWp8IA>
-    <xme:Vsp2YbSMGxh6EZaxcktQBOnL4zBBq5l0IWptj0fWFCrdCw8x1GugQ7EhZrfcCrROT
-    w2w0PPVUUUZPgi2P-8>
-X-ME-Received: <xmr:Vsp2YdX4dMnSvkLl-OsyXvG9gMXio7UHJG02W5wI3QYi0hOZal1mDXmsjp1HMXmajv0s3BGhSSf7vjzYs31YR3UYoAmlzQyv-G4az68N>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefhedgheehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
-    gedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:Vsp2Ydi8nD0-KAhUReZShBdheQbeicblLxZVMH9F6YwnRgAGmCIshw>
-    <xmx:Vsp2YVA8yrCLKfNlUsf6mtu4-xEn4QTZptHVVfDtA1adJZz56XmLYw>
-    <xmx:Vsp2YWIq8nL2OQ_H_el1-60fX19AIQtgiqQe43U4nSish4LDC-H-Ag>
-    <xmx:Vsp2YQUIHmoQgLTv4MjLLPVJlKELz9QKKhYwyX7xdzp_WdJ8Q4kwvA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Oct 2021 11:16:37 -0400 (EDT)
-Date:   Mon, 25 Oct 2021 17:16:36 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Tian Tao <tiantao6@hisilicon.com>,
-        freedreno@lists.freedesktop.org,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v5 00/21] drm/bridge: Make panel and bridge probe order
- consistent
-Message-ID: <20211025151636.dsc3akojm7ywoecm@gilmour>
-References: <20211021073947.499373-1-maxime@cerno.tech>
- <YXGFz4o5fWrfGnGk@ravnborg.org>
+        Mon, 25 Oct 2021 11:25:04 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E302C061746
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:22:41 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id k7so8879288wrd.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=eMmqWJZ6oJqIJ/55vipIBrGpLZzc8VL4SaUkmNSwTfE=;
+        b=eOIIywv3bmsf2Pm9Q9q4Dp+g1UsEZTb9BA/sFGJjAalCXgOh/n/F/zkRW7hXLkCyEa
+         KleTHwt56/oX0k67+xiZjEqVK9Y77k0b7C2WT+II6AZ2AlisvbHcky7wSv/aJx1d/0C7
+         9f3GjfHWUOcQp/d9RLdpga9RTmxyf7XGbv9nZO3EBW1gCAbfeFKrznAMneaP7bZO7A35
+         yQA6Z59DKd2ClGXKfTv7V1I7Og+o9iukbs3K/0Gwz/8QREnTKj+bYLWTllbdncan54TA
+         QYfs5ahmkNXoJyuMxN0AnwhVwbJ3fJ6iq0D0DugSF1/3qOp8Pz+R8LT5hp/GlVmqa9Kf
+         PxUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=eMmqWJZ6oJqIJ/55vipIBrGpLZzc8VL4SaUkmNSwTfE=;
+        b=zY5XKmDq2lT1ulBKMPWqMThUDRxvV49KPV/97B6nWosLpi0l+bdOUtZg+NbvtNO4xe
+         OBfZIwRPtUI0YAd6/5LiTbkBfCQiisWEI37q04Srd2yZ80xF7HVsOIDSmhTNsKD4D27X
+         YldIqcZeWVCNFC9LviuHMXwEyeg/dBEVcrm69vETM8CIHqRI8mV16kJM8Zu9HKJNu4BB
+         e1oG4tPmLqj+GTtwmlsp60UUJvS/tUu6inVGkS16H+KZ23paUQ2MIqZ0ezhgMrB26Sgo
+         RIAy1REpggu3F+YHlzrWleCbAGFSwwFHc814clka9tYlKaHca5uGp7TIdFMiCTlaggFK
+         1OGQ==
+X-Gm-Message-State: AOAM5333KASsYe94eDLPbg2p9fyYIhOTYagDsYjP8BB45zShZMftjzWJ
+        jDZ/L7zqAV98XfhN09zzhdz+9A==
+X-Google-Smtp-Source: ABdhPJysGNhOAZSe8Z3U0WxQ0j9b092wEfMRqFQtgUVEKt9cvBy2B4xlXrvfnSyVfdXvgPJHw8PYuA==
+X-Received: by 2002:a05:6000:18c7:: with SMTP id w7mr23572122wrq.411.1635175360158;
+        Mon, 25 Oct 2021 08:22:40 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o2sm13412452wrg.1.2021.10.25.08.22.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 08:22:39 -0700 (PDT)
+Message-ID: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+Date:   Mon, 25 Oct 2021 16:24:41 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="3qjpa2xa76ueomsl"
-Content-Disposition: inline
-In-Reply-To: <YXGFz4o5fWrfGnGk@ravnborg.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+Content-Language: en-US
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/10/2021 15:43, Tadeusz Struk wrote:
+> Venus video encode/decode hardware driver consists of three modules.
+> The parent module venus-core, and two sub modules venus-enc and venus-dec.
+> The venus-core module allocates a common structure that is used by the
+> enc/dec modules, loads the firmware, and performs some common hardware
+> initialization. Since the three modules are loaded one after the other,
+> and their probe functions can run in parallel it is possible that
+> the venc_probe and vdec_probe functions can finish before the core
+> venus_probe function, which then can fail when, for example it
+> fails to load the firmware. In this case the subsequent call to venc_open
+> causes an Oops as it tries to dereference already uninitialized structures
+> through dev->parent and the system crashes in __pm_runtime_resume() as in
+> the trace below:
+> 
+> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+> [   26.290326][  T485] Call trace:
+> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+> [   26.290335][  T485]  v4l2_open+0x184/0x294
+> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
+> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
+> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
+> [   26.290352][  T485]  do_filp_open+0xb8/0x168
+> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+> [   26.290359][  T485]  invoke_syscall+0x60/0x170
+> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
+> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+> 
+> This can be fixed by synchronizing the three probe functions and
+> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+> returns success.
+> 
+> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+> ---
 
---3qjpa2xa76ueomsl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +	struct mutex sync_lock;
 
-Hi Sam,
+Why have an additional mutex, will the existing core::lock not do ?
 
-On Thu, Oct 21, 2021 at 05:22:55PM +0200, Sam Ravnborg wrote:
-> Hi Maxime,
->=20
-> > Let me know what you think,
->=20
-> apply the lot to drm-misc-next. Maybe wait for an r-b or a-b on the kirin
-> patch but the rest is IMO good to go.
+>   	struct list_head instances;
+>   	atomic_t insts_count;
+>   	unsigned int state;
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 198e47eb63f4..9dbda3d7a2d2 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1659,17 +1659,26 @@ static int vdec_probe(struct platform_device *pdev)
+>   	if (!core)
+>   		return -EPROBE_DEFER;
+>   
+> +	mutex_lock(&core->sync_lock);
+> +
+> +	if (core->state != CORE_INIT) {
+> +		ret = -ENODEV;
+> +		goto err_core_unlock;
+> +	}
+> +
+>   	platform_set_drvdata(pdev, core);
+>   
+>   	if (core->pm_ops->vdec_get) {
+>   		ret = core->pm_ops->vdec_get(dev);
+>   		if (ret)
+> -			return ret;
+> +			goto err_core_unlock;
+>   	}
+>   
+>   	vdev = video_device_alloc();
+> -	if (!vdev)
+> -		return -ENOMEM;
+> +	if (!vdev) {
+> +		ret = -ENOMEM;
+> +		goto err_core_unlock;
+> +	}
+>   
+>   	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+>   	vdev->release = video_device_release;
+> @@ -1690,11 +1699,14 @@ static int vdec_probe(struct platform_device *pdev)
+>   	pm_runtime_set_autosuspend_delay(dev, 2000);
+>   	pm_runtime_use_autosuspend(dev);
+>   	pm_runtime_enable(dev);
+> +	mutex_unlock(&core->sync_lock);
+>   
+>   	return 0;
+>   
+>   err_vdev_release:
+>   	video_device_release(vdev);
+> +err_core_unlock:
+> +	mutex_unlock(&core->sync_lock);
+>   	return ret;
+>   }
+>   
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index bc1c42dd53c0..e7439236385a 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -1338,17 +1338,26 @@ static int venc_probe(struct platform_device *pdev)
+>   	if (!core)
+>   		return -EPROBE_DEFER;
+>   
+> +	mutex_lock(&core->sync_lock);
+> +
+> +	if (core->state != CORE_INIT) {
+> +		ret = -ENODEV;
+> +		goto err_core_unlock;
+> +	}
+> +
 
-I had a compilation error since the rebase of the v4, so I sent a new
-version. John Stultz has tested this series and given his tested-by, and
-is the kirin maintainer.
+shouldn't this be an -EPROBE_DEFER i.e. CORE_INIT hasn't completed/run 
+yet so defer until it does.
 
-I guess it's enough?
+This fragment here looks racy to me without a DEFER above ?
 
-Maxime
+drivers/media/platform/qcom/venus/core.c::venus_probe()
 
---3qjpa2xa76ueomsl
-Content-Type: application/pgp-signature; name="signature.asc"
+ret = v4l2_device_register(dev, &core->v4l2_dev);
+if (ret)
+         goto err_core_deinit;
 
------BEGIN PGP SIGNATURE-----
+platform_set_drvdata(pdev, core);
 
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYXbKVAAKCRDj7w1vZxhR
-xTxXAP98t442n6HxxRUgrl5mGMNjKHZ0TTJhGYni7sAlWVGvsAEAuk3303Gnx9f9
-LeU+JY3jE8IazEwdHOzyzxzY50X/LAU=
-=hbta
------END PGP SIGNATURE-----
+pm_runtime_enable(dev);
 
---3qjpa2xa76ueomsl--
+ret = pm_runtime_get_sync(dev);
+if (ret < 0)
+         goto err_runtime_disable;
+
+ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+if (ret)
+         goto err_runtime_disable;
+
+ret = venus_firmware_init(core);
+if (ret)
+         goto err_runtime_disable;
+
+ret = venus_boot(core);
+if (ret)
+         goto err_runtime_disable;
+
+ret = hfi_core_resume(core, true);
+if (ret)
+         goto err_venus_shutdown;
+
+ret = hfi_core_init(core);
+if (ret)
+         goto err_venus_shutdown;
+
+---
+bod
