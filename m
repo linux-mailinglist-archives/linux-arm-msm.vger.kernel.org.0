@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B917A439A8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 17:30:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 540B7439B17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233867AbhJYPcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 11:32:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54556 "EHLO
+        id S233843AbhJYQEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 12:04:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233927AbhJYPcb (ORCPT
+        with ESMTP id S233627AbhJYQEP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 11:32:31 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 187EAC061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:30:09 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id f8so1385569plo.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 08:30:09 -0700 (PDT)
+        Mon, 25 Oct 2021 12:04:15 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F3AFC061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:01:53 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a16so12496651wrh.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to;
-        bh=/oQC3c6kHPBnBYaCXyk3XQoSwBx0MJsbDNrgRDHiTYM=;
-        b=pCc4tEnlzbOlYCNDcTOgyL6If8XqWi1Q0zLmpkNfUyKh+BuBP45aijAy/kmyp2nLNf
-         V1/R8D9ZjsNp3qBZL1RzcaN8S0dA2xpJ90H7pBofgOw6tjafiMQpgYw0xldsCjUREs4b
-         MyFKVQ7G/z+jsNIuc5zGadm7e4gwuvTfLUolr5GbrUysEgS3k/cHI8eu2oHj1EmN9W0T
-         2cvHFje7oBkU0KuaJSg5NeSDd/p4EEYYrbQMeojtYp+f5rY3xuzpNw3iboNjD63A67kj
-         lBn3zuPvmiOxNMXnPLe7K2ZTnZSxoE8emqs6GhPQmVGRASAsp2y4FeenmWxXBRqGxh1X
-         zozQ==
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zMkg/0xA2M5G/rhCUOwOXIDgsrNS6y7y/a+diRyWYzc=;
+        b=x6efCHXNxaYrirQVpspZroKoKRD7/1SgHGFiUxfs4LIlHXrgby1/xhprQ9XHEfRHiO
+         KgIje9no8GY375bClUsmuMiAqJHd1zqphUCi9ZcLISCqrgsWVNP4DYdb9qptXCqJpLfu
+         xdCl4qAbJDSZVP+dYrxcAESmtkX1tSCtWP6nGmyxCZntSCgUBDsqXvAuTTUJ2+cg2f4g
+         tYStffmQyW/K1uH/ftQtJv9zoDHPyNr5Rz6hIuMVOlWsKUdOSfHmTz1yGRgPDDDpkYHf
+         rNvT14S1GkDZ1UKW3qww3WE6NIstZTmuwqU13idA4sJmAOgyy0UJA0U6Z1eMH3Ea4/6U
+         9MLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to;
-        bh=/oQC3c6kHPBnBYaCXyk3XQoSwBx0MJsbDNrgRDHiTYM=;
-        b=XZKQMLx4cmDV9SYGhNrqBN86I8HBGXeOyXV4sl36gj914kFEsixdYtxX8ts2qrWKv1
-         UwQT3JJaTT8hGjS5GALqfu1kY+PKxnQwx8uCU7GxzSPp5eUbWj3jx7nuvySbdkVBQKtZ
-         oRuRF5oBl57awB1wPg6d8HwHUD8kerz9NfJjRZguw+s2MOmAcSqO0AOFOwTe9JksxR0O
-         gcJ7w7ZQnxGHcRSKWuBMicKzS4pca6arC194dzsJl/2+xWik0LUsn225lu58olz5Gl4y
-         bS2oWva66memMz29wFOwhKl5aq7k0of3q6SRalU4h+xUzrJiwzb1f6B5Q+BwQ0lrc9NP
-         CyRg==
-X-Gm-Message-State: AOAM53391bQtSbUmmc230j39QBlgDUUBFfpO7BHaSofCVrL/QXLjW5pm
-        LsufDmbW/vxUws+EqmXw2XKGpQ==
-X-Google-Smtp-Source: ABdhPJyr4pfh618Fcc7JKCHq2J8ZamOvVnZCEbt++k4esy3a34dSZzGuq3W3UVid31/WtHehz2eymA==
-X-Received: by 2002:a17:90b:1c02:: with SMTP id oc2mr21614855pjb.128.1635175808339;
-        Mon, 25 Oct 2021 08:30:08 -0700 (PDT)
-Received: from [192.168.254.17] ([50.39.160.154])
-        by smtp.gmail.com with ESMTPSA id ng5sm19150359pjb.51.2021.10.25.08.30.07
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zMkg/0xA2M5G/rhCUOwOXIDgsrNS6y7y/a+diRyWYzc=;
+        b=1CrLa6B2kDAbmZieLKEFT558RebBENa+IFDHkzahjPSF0exY88KafS9gnoY9wzm8Jx
+         XN4jVz+xRnlk/3t7WkU/cimLjjQm4coB/WXctc4TXZ2VshXSMWN3RD2dKC1tISXTu+Za
+         a0bHjvEDpk6csGvRQkOuHHuaqjfkx6ebLm2CL/vRoxJ8x6n2utOhxVvKk7s1gcGmA0tU
+         +EQ7yYlaQchfcZUWH+qg7zV9ffALphtZBaFNrOepXCzYMFQANK044wZb5W4QUDpIwV8B
+         PdRpMN3y24AmdKjA2dlaUE0TewNKnOX4qfAJdJ+nDHAd1FIJLYJe7Mx5h8qzX0KCwJ+z
+         KlAw==
+X-Gm-Message-State: AOAM531Xi1xyVdOKNm4HEQ8jNnmjD25+j0h7jeN0CfYOxGqQtTdMcFjN
+        d/O1bJw/IRaj3JpBJ7hXOJSRlg==
+X-Google-Smtp-Source: ABdhPJzhIfub+4l1wiD7yr36/+orUeB6LL3rR5ftkCBdo6TCfFkDiInNpCKTsodqMrJ3eu2Sixr3Sg==
+X-Received: by 2002:a05:6000:1241:: with SMTP id j1mr24785718wrx.419.1635177711769;
+        Mon, 25 Oct 2021 09:01:51 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id r11sm2165904wrx.79.2021.10.25.09.01.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Oct 2021 08:30:07 -0700 (PDT)
-Message-ID: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
-Date:   Mon, 25 Oct 2021 08:30:06 -0700
+        Mon, 25 Oct 2021 09:01:51 -0700 (PDT)
+Message-ID: <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+Date:   Mon, 25 Oct 2021 17:03:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
+ Thunderbird/91.1.1
 Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
  enc/dec
 Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         Andy Gross <agross@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -68,75 +69,44 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-kernel@vger.kernel.org
 References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
  <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
-From:   Tadeusz Struk <tadeusz.struk@linaro.org>
-In-Reply-To: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------mAhZPgdr3mdsZ2DcUcEr18WS"
+ <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------mAhZPgdr3mdsZ2DcUcEr18WS
-Content-Type: multipart/mixed; boundary="------------YsFxvfcQkaI2CagWnGszgzcf";
- protected-headers="v1"
-From: Tadeusz Struk <tadeusz.struk@linaro.org>
-To: Bryan O'Donoghue <pure.logic@nexus-software.ie>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Lee Jones
- <lee.jones@linaro.org>, Amit Pundir <amit.pundir@linaro.org>,
- John Stultz <john.stultz@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-ID: <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
-Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
- enc/dec
-References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
- <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
-In-Reply-To: <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+On 25/10/2021 16:30, Tadeusz Struk wrote:
+> No, we want a hard stop here. At this point the venus_core probe()
+> has finished and it failed. Returning -EPROBE_DEFER here will just
+> cause it to loop infinitely.
 
---------------YsFxvfcQkaI2CagWnGszgzcf
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+I don't think there's any guarantee at all, that core probe() has 
+completed at that point.
 
-SGkgQnJ5YW4sDQpPbiAxMC8yNS8yMSAwODoyNCwgQnJ5YW4gTydEb25vZ2h1ZSB3cm90ZToN
-Cj4gDQo+PiArwqDCoMKgIHN0cnVjdCBtdXRleCBzeW5jX2xvY2s7DQo+IA0KPiBXaHkgaGF2
-ZSBhbiBhZGRpdGlvbmFsIG11dGV4LCB3aWxsIHRoZSBleGlzdGluZyBjb3JlOjpsb2NrIG5v
-dCBkbyA/DQoNCkkgd2FudGVkIHRvIHJldXNlIGl0LCBidXQgdGhlIGNvcmU6OmxvY2sgaW4g
-dXNlZCBpbnRlcm5hbGx5IGluIGhmaSBhbmQNCml0IHdpbGwgZGVhZGxvY2sgdGhlcmUgaWYg
-d2UgdXNlIHRoYXQgb25lIGhlcmUuDQoNCj4gc2hvdWxkbid0IHRoaXMgYmUgYW4gLUVQUk9C
-RV9ERUZFUiBpLmUuIENPUkVfSU5JVCBoYXNuJ3QgY29tcGxldGVkL3J1biB5ZXQgc28gZGVm
-ZXIgdW50aWwgDQo+IGl0IGRvZXMuDQo+IA0KPiBUaGlzIGZyYWdtZW50IGhlcmUgbG9va3Mg
-cmFjeSB0byBtZSB3aXRob3V0IGEgREVGRVIgYWJvdmUgPw0KPiANCj4gZHJpdmVycy9tZWRp
-YS9wbGF0Zm9ybS9xY29tL3ZlbnVzL2NvcmUuYzo6dmVudXNfcHJvYmUoKQ0KDQpObywgd2Ug
-d2FudCBhIGhhcmQgc3RvcCBoZXJlLiBBdCB0aGlzIHBvaW50IHRoZSB2ZW51c19jb3JlIHBy
-b2JlKCkNCmhhcyBmaW5pc2hlZCBhbmQgaXQgZmFpbGVkLiBSZXR1cm5pbmcgLUVQUk9CRV9E
-RUZFUiBoZXJlIHdpbGwganVzdA0KY2F1c2UgaXQgdG8gbG9vcCBpbmZpbml0ZWx5Lg0KDQot
-LSANClRoYW5rcywNClRhZGV1c3oNCg==
+of_platform_populate() doesn't guarantee ordering of the probe() 
+completing before or after the probe() of the platform drivers that are 
+associated with the devices in of_platform_populate().
 
---------------YsFxvfcQkaI2CagWnGszgzcf--
+When you think it about it can't do that and you wouldn't want it to do 
+that since a device might have a legitimate reason to EPROBE_DEFER
 
---------------mAhZPgdr3mdsZ2DcUcEr18WS
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+As an example core could call of_platform_populate() and then as a 
+ridiculous example go to sleep for five seconds - in which case it is 
+perfectly possible the encoder and decoder probe() functions will bug 
+out illegitimately waiting because of core->state != CORE_INIT
 
------BEGIN PGP SIGNATURE-----
+This is a problem we have and still haven't solved in 
+drivers/usb/dwc3/dwc3-qcom.c::probe() and child devices 
+drivers/usb/dwc3/dwc3-qcom.c
 
-wsF5BAABCAAjFiEEb3ghm5bfkfSeegvwo0472xuDAo4FAmF2zX4FAwAAAAAACgkQo0472xuDAo6l
-dw/+LhN7/VzFJraQeSIJGUhEKX9NetR2fYto6nKpoGEvuDNqoQJXhR8mTSjP1DtQtMVJB56Ssk+8
-GFkvTw4ewas2WIMCgJ6JNmkCLUvgFeY+tEAQl/wKCt1Bh/2cDz1f5LhCwRsP+QAfTRT0fBjSKr3F
-F2dXCUA45fEqntT7qJoTGe11ovdQgA+6MLFPDNPPJHFxAFGEeEsYLwwUiQ5tdTxeEeyLtyYYf1ic
-0Iog6xG079IOYYFljIkZTlWJGJyHpZqLOtbNIy/qPjFLXNVc7OuQq/U9yFJcb9jj/tMkEcLFstJX
-2tEK0MIvZi8eKAc5tg+RSxBUFNs5Qspq/XjvR6PWQ1RM0JryUThL1jIiVjWhJzrzxadFXnwofQ7z
-ozuDiHNgJbvKik6R6NzRQ6NkI1NhslSr4OticLiJpJgqP00n8M+mEryhxG6vY19lQ0+7Ze0DAVlQ
-AurSvVISPiHr20zkQrJAv5epizTcxhUxP9dfsPUgV6hO/a9Do1bW5r22Wt22YzuxQzlEpXqDVrSf
-V0MQyj5BBzgyymzmkZGu5XtXZGZd1EdDHHk52JwAei/ZxmkOPcij/lv/plN2GHS7bKG3tjaYzcNB
-jZLzheDx1Kl935zOo3Rdbziy0QT952iIB53CpsL2lIrJvpk2hdU9H20AnRqacjfPule8LRH9F+3v
-5zc=
-=5XHO
------END PGP SIGNATURE-----
+Here:
+https://patches.linaro.org/cover/470387/
 
---------------mAhZPgdr3mdsZ2DcUcEr18WS--
+There's no serialisation guarantee between parent and child on 
+of_platform_populate() - at least none I'm aware of.
+
+---
+bod
