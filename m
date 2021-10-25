@@ -2,81 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F342439B3C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:12:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 457BD439B4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 18:15:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbhJYQOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 12:14:24 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37460 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230177AbhJYQOY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 12:14:24 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 135C660EBD;
-        Mon, 25 Oct 2021 16:12:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635178321;
-        bh=syAB+df5IPHsjUcZpMOSy08OXq0IujFncL8KFiRTvOQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Xv0TWdNFBiGEZc6TVChr42vVbecdpKFm5RmxXTuNhOwnMLXqmxR1cqYo12ZbSwXB0
-         msnNoBFZ8d8U2DpJjuGSTJ+p4I/TgpHN5u/Z6fl8l5cSlqMk2dH7VSWtCOUNDPduWn
-         ck4Rha2Vu4jyMMkE2oR5GR+727+cnPyJeb5Q6xk6egjQur+wRi0VL+cvaIhqZYPCAJ
-         jTVJhuAspF86jNPGq4HxLm9SdWN9URB6fqFMNVzC4SVn41v2NvRholBSapP5DCKxCe
-         Sbh4UVcWxFa30kZQRgT7nKdbbuS/dLQ3YvUTFujPmGP25oDJQ55yycRYfNiaH3uhCB
-         O6Lb1cZ1vkijA==
-Date:   Mon, 25 Oct 2021 21:41:57 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 09/11] drm/msm/disp/dpu1: Add support for DSC in
- topology
-Message-ID: <YXbXTRZZFLKYsqnC@matsya>
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-10-vkoul@kernel.org>
- <020ab810-c975-d58b-a572-57eb3010d6c0@linaro.org>
- <7ba115c8-16e6-54c4-b151-e69eedcb47d2@linaro.org>
+        id S233913AbhJYQRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 12:17:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36786 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233873AbhJYQRv (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 25 Oct 2021 12:17:51 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4425EC061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:15:29 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id g141so11217108wmg.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 09:15:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=YfXAT9J3zg9nM6acPCxL/mbo5sK8qaM6YnGKL8Z4sis=;
+        b=AWg0kI+n5Qz+KOgHdnePtR9QI0EJQNR9ymM4xxpxLH32V+OqnFfNhVebESKNeZkMYs
+         VrnzWaL64M8zVq/kSYn8yHy2AwighyaraIEd8JQBeNurOQNyYhqRFkHyMKvBxqMv4mpU
+         lVxc4EX6HDNyx+c4oEEimSV3HwbcpYI6kvDtbEtXCetVw6+NqzwbQ2R2185qp9zXOYNW
+         3QI6OAMh38Gcp+rF3uk7rxT+qB7dpAGPz2VOYDKx6V+XMgUIjcSXe+IXLfgchGLx9GFP
+         G3N/U4ls6loXtPdrcRLgJRwc/PHT68HUxy18wgfOwYTC0reFgzj3edLLMFxAyrLCW7iS
+         tz5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=YfXAT9J3zg9nM6acPCxL/mbo5sK8qaM6YnGKL8Z4sis=;
+        b=UCy8BPJWdv8cdcnpLaTolaULSIkHAyUYhY5ZAxkawqkv/P4Z6PII4LeaVWMH2fMFPt
+         Oeaau1BU0rRH8aUGsVj5locaU7llznNjpPzVdZURaeCeeEaL1lv+1ueRVHWoww3v8ADe
+         9RuMLTWn0fbjrK9+HjVQaWuOpkGN26m82vXCCjAibiy3FG0dFcnDphTV9ItgKeUQzyzI
+         FPBbaxWOfqd5RMuogxmmyL1X3+bV4TZkY3lAik/WSQN7F9Fx6XFwRKIXCQiQJojKRkD3
+         08Gj4YJb/mO43gFPfNUIJv8uIL8iVDVcsGteHvA+yVdQQSgsgEjo0GiDef9wjqRZw99b
+         p3hg==
+X-Gm-Message-State: AOAM532P3TR7Vkz1fjF4dNT1/rdc5JtxKzzbW8pm8BNr3iRfl/73x8g8
+        PDH7iv/gOA2xN4XNrcgPvcQO+g==
+X-Google-Smtp-Source: ABdhPJzlJEUM4JECSJtllaaEViuXR3XCiEmdLs27IiVm2DR7HM3U0zuqDIaPaAvBcGPKwoplfCwp8g==
+X-Received: by 2002:a7b:c5d9:: with SMTP id n25mr10315342wmk.139.1635178527938;
+        Mon, 25 Oct 2021 09:15:27 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id k6sm17037479wri.83.2021.10.25.09.15.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 09:15:26 -0700 (PDT)
+Message-ID: <9ea50569-1d4d-5413-5c77-241f2a589f09@linaro.org>
+Date:   Mon, 25 Oct 2021 17:17:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7ba115c8-16e6-54c4-b151-e69eedcb47d2@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and
+ enc/dec
+Content-Language: en-US
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <72f8dd7a-66c7-fb50-db23-f98ba753af1d@nexus-software.ie>
+ <bba3acc1-cfa1-0c53-75de-f4ffa0a2bc9e@linaro.org>
+ <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+In-Reply-To: <00b817a4-f1ac-6a94-5f1e-836d8d313406@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25-10-21, 17:37, Dmitry Baryshkov wrote:
-> On 14/10/2021 17:13, Dmitry Baryshkov wrote:
-> > On 07/10/2021 10:08, Vinod Koul wrote:
+On 25/10/2021 17:03, Bryan O'Donoghue wrote:
+> child devices drivers/usb/dwc3/dwc3-qcom.c
 
-> > > @@ -572,8 +574,22 @@ static struct msm_display_topology
-> > > dpu_encoder_get_topology(
-> > >       topology.num_enc = 0;
-> > >       topology.num_intf = intf_count;
-> > > +    drm_enc = &dpu_enc->base;
-> > > +    priv = drm_enc->dev->dev_private;
-> > > +    if (priv && priv->dsc) {
-> > > +        /* In case of Display Stream Compression DSC, we would use
-> > > +         * 2 encoders, 2 line mixers and 1 interface
-> > > +         * this is power optimal and can drive upto (including) 4k
-> > > +         * screens
-> > > +         */
-> > > +        topology.num_enc = 2;
-> > > +        topology.num_intf = 1;
-> > > +        topology.num_lm = 2;
-> > 
-> > So, here you'd set the topology.num_rm.
-> 
-> I meant 'num_dsc', please excuse the typo.
+doh - learn to type
 
-No worries, i had assumed such and made it num_dsc
-
--- 
-~Vinod
+*child devices drivers/usb/dwc3/core.c
