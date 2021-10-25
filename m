@@ -2,92 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8021D438E0D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 06:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B2F2438E96
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Oct 2021 07:03:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbhJYEWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 00:22:45 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:41381 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbhJYEWo (ORCPT
+        id S232211AbhJYFFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 01:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229489AbhJYFFh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 00:22:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1635135623; x=1666671623;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=X7bAkQfz6aT4/715bzVhw0pglrEtN8FLQnyZrTVFNdU=;
-  b=GsQUwD+ka644G4LLLLTj8ootb0+CBTsyG0rxaTXlv0wCUaAd3UP4ti5l
-   wY02psWHtg17oqJnWBsklpJ3jDBnODtmwXx/pOXQM/nFtAmPTNQUhSjtg
-   pyFH4rPq3+eCdFiVrG0uislI/eYXWxmdZuPt12BHGQkthjxuJSC/n06i5
-   I=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 Oct 2021 21:20:23 -0700
-X-QCInternal: smtphost
-Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2021 21:20:22 -0700
-Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Sun, 24 Oct 2021 21:20:17 -0700
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 25 Oct 2021 01:05:37 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97BD5C061745;
+        Sun, 24 Oct 2021 22:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=1h0WaOdivaQpGou6EXOqToxlTtTFUc2nlylZntQctDc=; b=hJZpOBftPioI3dFTzAQ7dGaSbf
+        LHbKuw1LZuCsojNXhLsC2IjNg5KrT25HpyaOO9d6duevEOWd0fg3rS0r1H6LLiIiGQtc4Mb0AqDH9
+        xVvtOuy8XVLOnks0Hs2pcPS5ezaAt0vT9YJ6QILJtPDZnzlor0Rfwb6opTjKZYE3keltj3M7DDFWJ
+        7wv/PmSCVki4XXDxVUdWKFalTfszEOz9hEkSORczUDVC/u/8A6DkRXiSKQczlxOLDn65wyQxXYyDE
+        L+KZubKz/lIo9n6LKbU8BGGJ3TBTJkNJ8egQDjtG9rUaNtcTsy6wxfMxAqTl+4atcYKPXPUm4cPfe
+        JiGs0C3g==;
+Received: from [2601:1c0:6280:3f0::aa0b] (helo=bombadil.infradead.org)
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1mes8g-00FI3I-La; Mon, 25 Oct 2021 05:03:14 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-i2c@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>,
+        Matthew Wilcox <willy@infradead.org>,
+        Wolfram Sang <wsa@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        "Vinod Koul" <vkoul@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-usb@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH v2] phy: qcom-snps: Correct the FSEL_MASK
-Date:   Mon, 25 Oct 2021 09:49:35 +0530
-Message-ID: <1635135575-5668-1-git-send-email-quic_c_sanm@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] i2c: qup: fix a trivial typo
+Date:   Sun, 24 Oct 2021 22:03:13 -0700
+Message-Id: <20211025050313.32409-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The FSEL_MASK which selects the refclock is defined incorrectly.
-It should be [4:6] not [5:7]. Due to this incorrect definition, the BIT(7)
-in USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON0 is reset which keeps PHY analog
-blocks ON during suspend.
-Fix this issue by correctly defining the FSEL_MASK.
+Correct the typo of "reamining" to "remaining".
 
-Fixes: 51e8114f80d0 (phy: qcom-snps: Add SNPS USB PHY driver for
-QCOM based SOCs)
-Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Matthew Wilcox <willy@infradead.org>
+Cc: Wolfram Sang <wsa@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
 ---
-v2:
-Corrected the register name COMMON1 > COMMMON0 in commit description.
-Added Fixes tag.
-Dropped copyright line.
-
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 2 +-
+ drivers/i2c/busses/i2c-qup.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index ae4bac0..7e61202 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -33,7 +33,7 @@
- 
- #define USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON0	(0x54)
- #define RETENABLEN				BIT(3)
--#define FSEL_MASK				GENMASK(7, 5)
-+#define FSEL_MASK				GENMASK(6, 4)
- #define FSEL_DEFAULT				(0x3 << 4)
- 
- #define USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON1	(0x58)
--- 
-2.7.4
-
+--- linux-next-20211022.orig/drivers/i2c/busses/i2c-qup.c
++++ linux-next-20211022/drivers/i2c/busses/i2c-qup.c
+@@ -1290,7 +1290,7 @@ static void qup_i2c_write_rx_tags_v2(str
+  * 1. Check if tx_tags_sent is false i.e. the start of QUP block so write the
+  *    tags to TX FIFO and set tx_tags_sent to true.
+  * 2. Check if send_last_word is true. It will be set when last few data bytes
+- *    (less than 4 bytes) are reamining to be written in FIFO because of no FIFO
++ *    (less than 4 bytes) are remaining to be written in FIFO because of no FIFO
+  *    space. All this data bytes are available in tx_fifo_data so write this
+  *    in FIFO.
+  * 3. Write the data to TX FIFO and check for cur_blk_len. If it is non zero
