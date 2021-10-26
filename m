@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDF7C43A8D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:01:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC9E843A8D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:02:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235792AbhJZAEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 20:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58478 "EHLO
+        id S235672AbhJZAED (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 20:04:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235779AbhJZADg (ORCPT
+        with ESMTP id S235789AbhJZADg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 25 Oct 2021 20:03:36 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341D8C061229
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:11 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id g184so12293025pgc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:11 -0700 (PDT)
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137A0C06122B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:12 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id n11-20020a17090a2bcb00b001a1e7a0a6a6so756379pje.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uzJHB9t+Bicwdag3X6iL63lm7ZGof5i0wMOcRCsHtBw=;
-        b=boke8wkv6Aham8Rt4L0L5vG7+UiINMv54CSRwWE5RydVsN59BHDs3a+awA6esz9uWu
-         XwHPcUKkuQb3LB/LRTLBkKJvP6FpQE+PQYWhEP1O1RLc3qhDd+SM0K/laNL0JQ0YB3WL
-         +NauKlzlORpgl8Fmq31rtSDDkSwXwjNEJ5zpk=
+        bh=+JAo2MaGppQnqjiILYakqrQo0dvp6TO6MPFSMqu2Msw=;
+        b=PYjqBgBuC4Ln3ClxVTkBrUeIYtIzbr3/5t+stBdwqdI5JN2yqaozNc3LTXIWEmp43Y
+         6PHTQ4PjUxKD5uPJ1pH5iA38AouWfjyJQePxoiYsvWR9QQ5fP9IZR6rgjj9GCecp9Z+u
+         XVoZw9JtkZ0XlO8+AVypz02I0Tiq/Y4wGz3rM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uzJHB9t+Bicwdag3X6iL63lm7ZGof5i0wMOcRCsHtBw=;
-        b=dMTTj6pWrUti0wDxHCIkrEm4t4i/2aqZXrCk6vfOyVBW+/4oZz+2WS1LbMwAN0ZE5S
-         81cU1auLcMOUHhaGTt/JA+zNhzfz4PmlE1+wWlhUKZ+BDalIYKclztFShh38lQN53GS7
-         5A6KsRQe28Wx6n5lJByuIKCcg90w/EJovH/xOwfYlO/EK6OPS9X1GhsQLeG+t0zzd+uL
-         Lc3GX9mwWIcNnn6YvVh8lw2HY8nk40OQYq3QoB40S9KMdABJmP3FlHS10D1Eq3tS3obS
-         Tj9eKAErlIG1fcY31eu91pGXeqT3e8/rg97JSvVNhp3cBblpa/Q2I9VITO6lroT7/Cnk
-         7Z6Q==
-X-Gm-Message-State: AOAM531pXoU8WSnzEQEEEwwP/6pLktvtYjkpQ9mNQkrzVAp2P4nFScQ+
-        S47Ns9qDHtGf51w7uZ0EBK/O2g==
-X-Google-Smtp-Source: ABdhPJxbbHUNLbuw3wWsLSHvufzeB/7MKJjbgFqA9Hr4ZQjVEZvD6yklukD9Oh3Qh4aCj1tOM7pf4Q==
-X-Received: by 2002:a63:c:: with SMTP id 12mr16453074pga.477.1635206470644;
-        Mon, 25 Oct 2021 17:01:10 -0700 (PDT)
+        bh=+JAo2MaGppQnqjiILYakqrQo0dvp6TO6MPFSMqu2Msw=;
+        b=odJf4qKuZ/ccRk/qqUKE7F4JZdPDTAcixMMMWLukH2a8dN1lFH6CHfVSSm1K3oDsGz
+         Yc62jK3Q/JWg0nuNgCaNDEMF7EHz7MGVrpKLA8Kl6WgrUCZ+As/cS7mf/GbY5DAqryqU
+         VVDRMGP4tkylAl0lT2DZbzHWhIDZO/p4QtRX5SAvLT4SqwuiY2hQkuLY/QmCqSzLNoNm
+         PIv1930noiZteEMXNwgM8yxDNyp6REjjc5tT6WMBDubSzVQf45sKzpcXiTMuRGpOOxus
+         wxuTXJlLCTlIsxPi98gW2UsWONCfphmQsCG7ySbMXiqapcvvYOT6y1VFV6tdaY82Tb6C
+         ihsA==
+X-Gm-Message-State: AOAM533zv0gX+O9gEmFHWJOmW9Ewsk1DmUyA/7FcBvrxDUAVxGrzYXso
+        AZjCt0zk/W7+AvpDnL6e4qC1ow==
+X-Google-Smtp-Source: ABdhPJwA9n3Ot/w9JjBI5C4NrIIH8c4zADKFZcKc6vhKDtEfh02R2LlRSa/uKHdcQQORxarG90RPxw==
+X-Received: by 2002:a17:902:ecc5:b0:140:4db1:e74 with SMTP id a5-20020a170902ecc500b001404db10e74mr9949902plh.10.1635206471632;
+        Mon, 25 Oct 2021 17:01:11 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:f5e3:5eb1:d5ee:6893])
-        by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.01.09
+        by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.01.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 17:01:10 -0700 (PDT)
+        Mon, 25 Oct 2021 17:01:11 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Tomas Winkler <tomas.winkler@intel.com>,
-        Arnd Bergmann <arnd@arndb.de>,
+        Sebastian Reichel <sre@kernel.org>, linux-pm@vger.kernel.org,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Linus Walleij <linus.walleij@linaro.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v3 28/34] mei: Migrate to aggregate driver
-Date:   Mon, 25 Oct 2021 17:00:38 -0700
-Message-Id: <20211026000044.885195-29-swboyd@chromium.org>
+Subject: [PATCH v3 29/34] power: supply: ab8500: Migrate to aggregate driver
+Date:   Mon, 25 Oct 2021 17:00:39 -0700
+Message-Id: <20211026000044.885195-30-swboyd@chromium.org>
 X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
 In-Reply-To: <20211026000044.885195-1-swboyd@chromium.org>
 References: <20211026000044.885195-1-swboyd@chromium.org>
@@ -72,82 +72,82 @@ Use an aggregate driver instead of component ops so that we can get
 proper driver probe ordering of the aggregate device with respect to all
 the component devices that make up the aggregate device.
 
-Cc: Tomas Winkler <tomas.winkler@intel.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Sebastian Reichel <sre@kernel.org>
+Cc: <linux-pm@vger.kernel.org>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Linus Walleij <linus.walleij@linaro.org>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/misc/mei/hdcp/mei_hdcp.c | 22 +++++++++++++---------
+ drivers/power/supply/ab8500_charger.c | 22 +++++++++++++---------
  1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/misc/mei/hdcp/mei_hdcp.c b/drivers/misc/mei/hdcp/mei_hdcp.c
-index ec2a4fce8581..79dcc02277d2 100644
---- a/drivers/misc/mei/hdcp/mei_hdcp.c
-+++ b/drivers/misc/mei/hdcp/mei_hdcp.c
-@@ -732,8 +732,9 @@ static const struct i915_hdcp_component_ops mei_hdcp_ops = {
- 	.close_hdcp_session = mei_hdcp_close_session,
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index 15eadaf46f14..52d4105e28f2 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3312,8 +3312,9 @@ static const struct power_supply_desc ab8500_usb_chg_desc = {
+ 	.get_property	= ab8500_charger_usb_get_property,
  };
  
--static int mei_component_master_bind(struct device *dev)
-+static int mei_component_master_bind(struct aggregate_device *adev)
+-static int ab8500_charger_bind(struct device *dev)
++static int ab8500_charger_bind(struct aggregate_device *adev)
  {
 +	struct device *dev = adev->parent;
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
- 	struct i915_hdcp_comp_master *comp_master =
- 						mei_cldev_get_drvdata(cldev);
-@@ -749,8 +750,9 @@ static int mei_component_master_bind(struct device *dev)
+ 	struct ab8500_charger *di = dev_get_drvdata(dev);
+ 	int ch_stat;
+ 	int ret;
+@@ -3354,8 +3355,9 @@ static int ab8500_charger_bind(struct device *dev)
  	return 0;
  }
  
--static void mei_component_master_unbind(struct device *dev)
-+static void mei_component_master_unbind(struct aggregate_device *adev)
+-static void ab8500_charger_unbind(struct device *dev)
++static void ab8500_charger_unbind(struct aggregate_device *adev)
  {
 +	struct device *dev = adev->parent;
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
- 	struct i915_hdcp_comp_master *comp_master =
- 						mei_cldev_get_drvdata(cldev);
-@@ -759,9 +761,13 @@ static void mei_component_master_unbind(struct device *dev)
- 	component_unbind_all(dev, comp_master);
+ 	struct ab8500_charger *di = dev_get_drvdata(dev);
+ 	int ret;
+ 
+@@ -3380,9 +3382,13 @@ static void ab8500_charger_unbind(struct device *dev)
+ 	component_unbind_all(dev, di);
  }
  
--static const struct component_master_ops mei_component_master_ops = {
--	.bind = mei_component_master_bind,
--	.unbind = mei_component_master_unbind,
-+static struct aggregate_driver mei_aggregate_driver = {
-+	.probe = mei_component_master_bind,
-+	.remove = mei_component_master_unbind,
+-static const struct component_master_ops ab8500_charger_comp_ops = {
+-	.bind = ab8500_charger_bind,
+-	.unbind = ab8500_charger_unbind,
++static struct aggregate_driver ab8500_charger_aggregate_driver = {
++	.probe = ab8500_charger_bind,
++	.remove = ab8500_charger_unbind,
 +	.driver = {
-+		.name = "mei_agg",
++		.name = "ab8500_charger_agg",
 +		.owner = THIS_MODULE,
 +	},
  };
  
- /**
-@@ -826,9 +832,7 @@ static int mei_hdcp_probe(struct mei_cl_device *cldev,
+ static struct platform_driver *const ab8500_charger_component_drivers[] = {
+@@ -3663,9 +3669,7 @@ static int ab8500_charger_probe(struct platform_device *pdev)
  	}
  
- 	mei_cldev_set_drvdata(cldev, comp_master);
--	ret = component_master_add_with_match(&cldev->dev,
--					      &mei_component_master_ops,
--					      master_match);
-+	ret = component_aggregate_register(&cldev->dev, &mei_aggregate_driver, master_match);
- 	if (ret < 0) {
- 		dev_err(&cldev->dev, "Master comp add failed %d\n", ret);
- 		goto err_exit;
-@@ -850,7 +854,7 @@ static void mei_hdcp_remove(struct mei_cl_device *cldev)
- 						mei_cldev_get_drvdata(cldev);
- 	int ret;
  
--	component_master_del(&cldev->dev, &mei_component_master_ops);
-+	component_aggregate_unregister(&cldev->dev, &mei_aggregate_driver);
- 	kfree(comp_master);
- 	mei_cldev_set_drvdata(cldev, NULL);
+-	ret = component_master_add_with_match(&pdev->dev,
+-					      &ab8500_charger_comp_ops,
+-					      match);
++	ret = component_aggregate_register(&pdev->dev, &ab8500_charger_aggregate_driver, match);
+ 	if (ret) {
+ 		dev_err(dev, "failed to add component master\n");
+ 		goto free_notifier;
+@@ -3688,7 +3692,7 @@ static int ab8500_charger_remove(struct platform_device *pdev)
+ {
+ 	struct ab8500_charger *di = platform_get_drvdata(pdev);
  
+-	component_master_del(&pdev->dev, &ab8500_charger_comp_ops);
++	component_aggregate_unregister(&pdev->dev, &ab8500_charger_aggregate_driver);
+ 
+ 	usb_unregister_notifier(di->usb_phy, &di->nb);
+ 	usb_put_phy(di->usb_phy);
 -- 
 https://chromeos.dev
 
