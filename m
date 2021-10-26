@@ -2,111 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E637243BADA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 21:33:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E75943BB19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 21:40:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238775AbhJZTfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 15:35:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237035AbhJZTfd (ORCPT
+        id S235634AbhJZTmc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 15:42:32 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:39791 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231182AbhJZTmb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 15:35:33 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775BBC061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 12:33:09 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id w193so175957oie.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 12:33:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=N+6YPLFrjwgdtCUJfPROJUL3QTAN19p6nyz5HyyDtK4=;
-        b=bwQVfE1iYX9MIZ9fiCHs3adkHdyfOkx5hhBzkC7jWLgIdcSsCSYWq2QLllwOfVVG9j
-         /qobU+jHLvUR++xcY972QXpv1OVxCGwsmhZmihMcmoSLl2uPPg+9RbhrGjogeCK4mDBF
-         FsDc4/q9pdianaa3KZJ9DpZsajeQI3ERC7dVY=
+        Tue, 26 Oct 2021 15:42:31 -0400
+Received: by mail-ot1-f53.google.com with SMTP id e59-20020a9d01c1000000b00552c91a99f7so223686ote.6;
+        Tue, 26 Oct 2021 12:40:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=N+6YPLFrjwgdtCUJfPROJUL3QTAN19p6nyz5HyyDtK4=;
-        b=NYxHT2Tsse8OEh5ezCp4tatjfEWfcIjEqX0ahV77Ru7DRKDF6XDVIzTZix8ZtQntNk
-         0fbSw/wBqD9108rm2uOlmdbKqTUQuZ2jfAoYixDbrC7nVbDkzdOUx+89kvEhXCwH10LQ
-         6r+IDL8Zk1qCNU6M1HM931Ji4vCzxgDv5XugX/Ec7M0rL012XTRIx6Tohmm8q2bzWnmj
-         hCzHE2DBSGPMSidE9JWLvuTL2+WyrlhQSGEvnX5B5uIywSsEEiZTvC5fIhw5g6rfKZec
-         FcgUEzBh4FqgjbzrSjQ+cRRbbgHEtQAMuFCqJZs5Wci3//UqaKW9NKS07Zr9Q75L7rme
-         UV1A==
-X-Gm-Message-State: AOAM533IRFP45AmSYXcX8V44VVwch0hG3itD1mF0BVuqV2BM4eRsyCBb
-        GcraZmuFp4b4AptTBjoAqZBaf9nMcr7AEBDg/zZh4bF4CKg=
-X-Google-Smtp-Source: ABdhPJz2feIZoXb0OU1UFvKLPQtsVf3EiA3LjrGD6qfKLOXPs1wesM0P/U/URyOya6G/f7joJZ5ris8KEn2SD03vMv8=
-X-Received: by 2002:a05:6808:1d9:: with SMTP id x25mr555758oic.64.1635276788733;
- Tue, 26 Oct 2021 12:33:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 26 Oct 2021 12:33:08 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7p/ufL2M3OnUPk5rBVBJ5fuMyPDL6fxEt0PgZdd2ydI=;
+        b=DOtGX5tqpoO6e5IXE7virPwvX9OJGQ1wQwQ6LXuFCYgsLaBGB44krrazVg9E/8POqH
+         iBEgI7fhnaW3KDPMBMgSY94p7Wl3orhWvnmzxYCnNwkIXss6kNcWwZNQR4m8eTJYZbep
+         JHrYtIanhe1x97UB/YrPCtAv4TvZNP+C26NrZyCOwpfDiL4SI/rD+pTxHEwqnJdigqb5
+         tWxbHa4I1T/wYFkGuoe1c6ZzmgTTrUsVjd+XPgchjWG/+D/+LnH7g/tEEAXWVTFbUHVD
+         Jhp6zqFT7KR5vKaDmr9hR2l1h3/qAiHqkrWeMgDRRkG5RKswDyksE1idZeS2K4GUJhKL
+         p6HQ==
+X-Gm-Message-State: AOAM533Rq0Vzk5qLIg3RrWR4dTHntwHOep5pzUVQvb/0Bov/COh4nUQ6
+        J1q8/3Zwzsa6mkbJg0Z5Cw==
+X-Google-Smtp-Source: ABdhPJwm5YTwFVKDIKl1Y/ODwgAATttreV8BXjct1QcFbTppCC+u0nIG7wzvIOqw1AsBKqxu7YpiCw==
+X-Received: by 2002:a05:6830:25d1:: with SMTP id d17mr17898464otu.197.1635277204356;
+        Tue, 26 Oct 2021 12:40:04 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id l24sm4085964oop.4.2021.10.26.12.40.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Oct 2021 12:40:03 -0700 (PDT)
+Received: (nullmailer pid 3105620 invoked by uid 1000);
+        Tue, 26 Oct 2021 19:40:02 -0000
+Date:   Tue, 26 Oct 2021 14:40:02 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4 08/20] dt-bindings: qcom-qce: Add 'interconnects' and
+ move 'clocks' to optional properties
+Message-ID: <YXhZkloL9BP5o2hA@robh.at.kernel.org>
+References: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
+ <20211013105541.68045-9-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <202110262230.8EQoYnHj-lkp@intel.com>
-References: <20211026000044.885195-4-swboyd@chromium.org> <202110262230.8EQoYnHj-lkp@intel.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 26 Oct 2021 12:33:08 -0700
-Message-ID: <CAE-0n51k5HnvVuXgRvuOtpUovceTBeqnQdh1hhKzPV=qB0JjsQ@mail.gmail.com>
-Subject: Re: [PATCH v3 03/34] component: Introduce the aggregate bus_type
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        kernel test robot <lkp@intel.com>
-Cc:     kbuild-all@lists.01.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211013105541.68045-9-bhupesh.sharma@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting kernel test robot (2021-10-26 07:02:03)
->
->    drivers/base/component.c: In function '__component_add':
-> >> drivers/base/component.c:858:13: error: variable 'ret' set but not used [-Werror=unused-but-set-variable]
->      858 |         int ret;
->          |             ^~~
->    cc1: all warnings being treated as errors
->
->
-> vim +/ret +858 drivers/base/component.c
->
-> 2a41e6070dd7ef Russell King  2014-01-10  853
-> 3521ee994bca90 Daniel Vetter 2019-02-08  854  static int __component_add(struct device *dev, const struct component_ops *ops,
-> 3521ee994bca90 Daniel Vetter 2019-02-08  855    int subcomponent)
-> 2a41e6070dd7ef Russell King  2014-01-10  856  {
-> 2a41e6070dd7ef Russell King  2014-01-10  857    struct component *component;
-> 2a41e6070dd7ef Russell King  2014-01-10 @858    int ret;
-> 2a41e6070dd7ef Russell King  2014-01-10  859
-> 2a41e6070dd7ef Russell King  2014-01-10  860    component = kzalloc(sizeof(*component), GFP_KERNEL);
-> 2a41e6070dd7ef Russell King  2014-01-10  861    if (!component)
-> 2a41e6070dd7ef Russell King  2014-01-10  862            return -ENOMEM;
-> 2a41e6070dd7ef Russell King  2014-01-10  863
-> 2a41e6070dd7ef Russell King  2014-01-10  864    component->ops = ops;
-> 2a41e6070dd7ef Russell King  2014-01-10  865    component->dev = dev;
-> 3521ee994bca90 Daniel Vetter 2019-02-08  866    component->subcomponent = subcomponent;
-> 2a41e6070dd7ef Russell King  2014-01-10  867
-> 2a41e6070dd7ef Russell King  2014-01-10  868    dev_dbg(dev, "adding component (ops %ps)\n", ops);
-> 2a41e6070dd7ef Russell King  2014-01-10  869
-> 2a41e6070dd7ef Russell King  2014-01-10  870    mutex_lock(&component_mutex);
-> 2a41e6070dd7ef Russell King  2014-01-10  871    list_add_tail(&component->node, &component_list);
-> 2a41e6070dd7ef Russell King  2014-01-10  872    mutex_unlock(&component_mutex);
-> 2a41e6070dd7ef Russell King  2014-01-10  873
-> 748369f5c5e62a Stephen Boyd  2021-10-25  874    /*
-> 748369f5c5e62a Stephen Boyd  2021-10-25  875     * Try to bind.
-> 748369f5c5e62a Stephen Boyd  2021-10-25  876     *
-> 748369f5c5e62a Stephen Boyd  2021-10-25  877     * Note: we don't check the return value here because component devices
-> 748369f5c5e62a Stephen Boyd  2021-10-25  878     * don't care that the aggregate device can actually probe or not. They
-> 748369f5c5e62a Stephen Boyd  2021-10-25  879     * only care about adding themselves to the component_list and then
-> 748369f5c5e62a Stephen Boyd  2021-10-25  880     * waiting for their component_ops::bind_component callback to be
-> 748369f5c5e62a Stephen Boyd  2021-10-25  881     * called.
-> 748369f5c5e62a Stephen Boyd  2021-10-25  882     */
-> 748369f5c5e62a Stephen Boyd  2021-10-25  883    ret = bus_rescan_devices(&aggregate_bus_type);
+On Wed, Oct 13, 2021 at 04:25:29PM +0530, Bhupesh Sharma wrote:
+> Add 'interconnects' and 'interconnect-names' as optional properties
+> to the device-tree binding documentation for qcom crypto IP.
+> 
+> These properties describe the interconnect path between crypto and main
+> memory and the interconnect type respectively.
 
-Ok I guess I have to print a dev_dbg() as well to silence this.
+And why are 'clocks' now optional? Seems like it should be 2 patches 
+given the long subject with a conjunction.
+
+> 
+> Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> index b7ae873dc943..954f762090f3 100644
+> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> @@ -32,6 +32,14 @@ properties:
+>        - const: bus
+>        - const: core
+>  
+> +  interconnects:
+> +    maxItems: 1
+> +    description: |
+> +      Interconnect path between qce crypto and main memory.
+> +
+> +  interconnect-names:
+> +    const: memory
+> +
+>    dmas:
+>      items:
+>        - description: DMA specifiers for tx dma channel.
+> @@ -45,8 +53,6 @@ properties:
+>  required:
+>    - compatible
+>    - reg
+> -  - clocks
+> -  - clock-names
+>    - dmas
+>    - dma-names
+>  
+> -- 
+> 2.31.1
+> 
+> 
