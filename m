@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57BFB43A8C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:01:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E07543A8C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235647AbhJZADv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 20:03:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58402 "EHLO
+        id S233728AbhJZADt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 20:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235695AbhJZAD0 (ORCPT
+        with ESMTP id S235703AbhJZAD1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 20:03:26 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8354DC061220
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:03 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id 75so12302049pga.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:03 -0700 (PDT)
+        Mon, 25 Oct 2021 20:03:27 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8F5C061225
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:04 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id l203so7757201pfd.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5Xg9zrUyKFMa3ddbem3zPmmRQ2IkXwWBatRdclbFjwA=;
-        b=X+qIwuMITz6qKYQulA551uMYxR8jlZgi8Db5cvWB3HBwUrd3DvVFN2hlELtd3puyiy
-         Ww1WqQqWkyJNVSY8STnESySzdjIyVTwTccUSZMhpSSkbO117dO+9sqLyJaNkB+NtjZsn
-         QMPPk6RaLEZ10FxQZ2hMHJxkO7EZWoksXQ/5E=
+        bh=+z8spq4cdcPKhNDSMMsr6lVILQ9GCMpzmsR3lgzTaCA=;
+        b=GqQ5kyBfdujj6JoSagw/WB1EChhN7ufbXzuOrahKX/bgO4kIfpT3o3DRsZ6mqKlkKZ
+         jxWO5B2Ap/xeraADeerds/phTIMSR7tJCixj2Ses+fqOxvrSIRawUiv15esASpBwuEp+
+         GVnnREmcybPjPdvfxa3FGMSYdZC4nPP8GatuA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5Xg9zrUyKFMa3ddbem3zPmmRQ2IkXwWBatRdclbFjwA=;
-        b=Aw8674RiR+REXsRI/z0WGWUvJtPZozx0QgzkkIQp7CNSlA6YyXoLUlwE1C0HfE/H6T
-         n5JPhoz/SaOh3sMGQ+aUszhke+mRDja9GrJ9AQ84VrWAjzsd1C6enwbpH9EZeOzXU/ad
-         3/k8oHSsosOczGzR+XV7i08lGcNYylpzZtwqnd2yQNsgoYlfjZf4znb4BlPvk7hZQpzh
-         VtJt87NLwez89dCu2iWpOG9GSFaTss2chQ/XukyeC3qT2nUF5NnnEC3yojG3ZQDyPBI+
-         Ufl8MADYsPIquR/rHwPLNWfYwEvlGHiGGxnkNthgbeENEke0+osf+fTyKdNy3orI9fVD
-         fAdA==
-X-Gm-Message-State: AOAM530HlDtVuklvnVvN8XqmTBZgAvqawqjGJXWjyAQrhOPKbBoDD+tX
-        JX9ngEeec822Yggn5gH+Fg8IlA==
-X-Google-Smtp-Source: ABdhPJzbX7RPHuR4HDgzeUFNvnhN67eizAx7LkYEUmVqp2zteJi/RHEY1pIzsIFJ6ZJOOv9SAGyaDQ==
-X-Received: by 2002:a63:35cd:: with SMTP id c196mr13974325pga.284.1635206462978;
-        Mon, 25 Oct 2021 17:01:02 -0700 (PDT)
+        bh=+z8spq4cdcPKhNDSMMsr6lVILQ9GCMpzmsR3lgzTaCA=;
+        b=faEp9WbFLqMa8iNGB5skcrsHXY76fsxMVcpyED8I8x2we9/CsGf2m8ycVe82wqm5Kw
+         uN+4rDvrvDBwZS5i+G3Ph+m5FIPphZiZcrNQQk4H4bxnpnwDoHib/Mrslq1mb/7/HbBO
+         UDKRlM6DqO87zMWHgKQKn8cLq8ft4TwnsAUCkhU2hLP9sPG8mpeZJ+a3ZLIBC1a/xIuu
+         q0+DE6yVJeuJ9eMRXPGr89Nsnm8vy2axILxiIkK+aEijRqrMLa8qR38LE5QIKLHnQeUc
+         UhF3RGqPMdk2yXyxGXHjcvs7dGTNwgjzYYEPe1OVHCyTsfA1xEWVB68L13WkSHZNNIRu
+         r2pw==
+X-Gm-Message-State: AOAM530U9q/kjl2k2C+vSQfo/A7Z4JGDyKchhbZ4VkyMzMnDEwFJ2RZO
+        jKWaMPqJrt4yMHJE1/eUVC+oLQ==
+X-Google-Smtp-Source: ABdhPJxCANbMX5TTDTOV2/Y7EfbB1lRdKW/LtDxnuqDYCG6hNDa5OYYhhH3CLzY66/HjeMCgqRSfEA==
+X-Received: by 2002:a62:ab14:0:b0:47b:e126:ea50 with SMTP id p20-20020a62ab14000000b0047be126ea50mr15898439pff.58.1635206463863;
+        Mon, 25 Oct 2021 17:01:03 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:f5e3:5eb1:d5ee:6893])
-        by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.01.02
+        by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 17:01:02 -0700 (PDT)
+        Mon, 25 Oct 2021 17:01:03 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Neil Armstrong <narmstrong@baylibre.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v3 19/34] drm/meson: Migrate to aggregate driver
-Date:   Mon, 25 Oct 2021 17:00:29 -0700
-Message-Id: <20211026000044.885195-20-swboyd@chromium.org>
+Subject: [PATCH v3 20/34] drm/omap: Migrate to aggregate driver
+Date:   Mon, 25 Oct 2021 17:00:30 -0700
+Message-Id: <20211026000044.885195-21-swboyd@chromium.org>
 X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
 In-Reply-To: <20211026000044.885195-1-swboyd@chromium.org>
 References: <20211026000044.885195-1-swboyd@chromium.org>
@@ -71,7 +71,7 @@ Use an aggregate driver instead of component ops so that we can get
 proper driver probe ordering of the aggregate device with respect to all
 the component devices that make up the aggregate device.
 
-Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Tomi Valkeinen <tomba@kernel.org>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
@@ -79,60 +79,59 @@ Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/gpu/drm/meson/meson_drv.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/omapdrm/dss/dss.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
-index bc0d60df04ae..109fb9d057e3 100644
---- a/drivers/gpu/drm/meson/meson_drv.c
-+++ b/drivers/gpu/drm/meson/meson_drv.c
-@@ -357,13 +357,16 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/omapdrm/dss/dss.c b/drivers/gpu/drm/omapdrm/dss/dss.c
+index d6a5862b4dbf..6a6ae2786d7a 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dss.c
++++ b/drivers/gpu/drm/omapdrm/dss/dss.c
+@@ -1304,8 +1304,9 @@ static const struct soc_device_attribute dss_soc_devices[] = {
+ 	{ /* sentinel */ }
+ };
  
--static int meson_drv_bind(struct device *dev)
-+static int meson_drv_bind(struct aggregate_device *adev)
+-static int dss_bind(struct device *dev)
++static int dss_bind(struct aggregate_device *adev)
  {
 +	struct device *dev = adev->parent;
-+
- 	return meson_drv_bind_master(dev, true);
+ 	struct dss_device *dss = dev_get_drvdata(dev);
+ 	struct platform_device *drm_pdev;
+ 	struct dss_pdata pdata;
+@@ -1339,9 +1340,13 @@ static void dss_unbind(struct device *dev)
+ 	component_unbind_all(dev, NULL);
  }
  
--static void meson_drv_unbind(struct device *dev)
-+static void meson_drv_unbind(struct aggregate_device *adev)
- {
-+	struct device *dev = adev->parent;
- 	struct meson_drm *priv = dev_get_drvdata(dev);
- 	struct drm_device *drm = priv->drm;
- 
-@@ -387,9 +390,13 @@ static void meson_drv_unbind(struct device *dev)
- 	}
- }
- 
--static const struct component_master_ops meson_drv_master_ops = {
--	.bind	= meson_drv_bind,
--	.unbind	= meson_drv_unbind,
-+static struct aggregate_driver meson_aggregate_drv = {
-+	.probe	= meson_drv_bind,
-+	.remove	= meson_drv_unbind,
+-static const struct component_master_ops dss_component_ops = {
+-	.bind = dss_bind,
+-	.unbind = dss_unbind,
++static struct aggregate_driver dss_aggregate_driver = {
++	.probe = dss_bind,
++	.remove = dss_unbind,
 +	.driver = {
-+		.name = "meson_drm",
++		.name = "dss_drm",
 +		.owner = THIS_MODULE,
 +	},
  };
  
- static int __maybe_unused meson_drv_pm_suspend(struct device *dev)
-@@ -503,9 +510,7 @@ static int meson_drv_probe(struct platform_device *pdev)
- 	if (count) {
- 		dev_info(&pdev->dev, "Queued %d outputs on vpu\n", count);
+ static int dss_component_compare(struct device *dev, void *data)
+@@ -1504,7 +1509,7 @@ static int dss_probe(struct platform_device *pdev)
+ 	cmatch.match = &match;
+ 	device_for_each_child(&pdev->dev, &cmatch, dss_add_child_component);
  
--		return component_master_add_with_match(&pdev->dev,
--						       &meson_drv_master_ops,
--						       match);
-+		return component_aggregate_register(&pdev->dev, &meson_aggregate_drv, match);
- 	}
+-	r = component_master_add_with_match(&pdev->dev, &dss_component_ops, match);
++	r = component_aggregate_register(&pdev->dev, &dss_aggregate_driver, match);
+ 	if (r)
+ 		goto err_of_depopulate;
  
- 	/* If no output endpoints were available, simply bail out */
+@@ -1543,7 +1548,7 @@ static int dss_remove(struct platform_device *pdev)
+ 
+ 	of_platform_depopulate(&pdev->dev);
+ 
+-	component_master_del(&pdev->dev, &dss_component_ops);
++	component_aggregate_unregister(&pdev->dev, &dss_aggregate_driver);
+ 
+ 	dss_debugfs_remove_file(dss->debugfs.clk);
+ 	dss_debugfs_remove_file(dss->debugfs.dss);
 -- 
 https://chromeos.dev
 
