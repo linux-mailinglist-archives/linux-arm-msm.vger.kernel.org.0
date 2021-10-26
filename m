@@ -2,436 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D52443A8DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:02:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB92843A939
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:29:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235999AbhJZAEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 20:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58508 "EHLO
+        id S235350AbhJZAbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 20:31:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235820AbhJZADj (ORCPT
+        with ESMTP id S235092AbhJZAbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 20:03:39 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD414C061226
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:16 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id 187so12450600pfc.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:01:16 -0700 (PDT)
+        Mon, 25 Oct 2021 20:31:38 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94B8C061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:29:15 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id np13so9550830pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V9ilZCQDc8PNTgTJZyEfkygPrvLsJLXU67mb2e4XKms=;
-        b=JxSqCRiRixECfSC0iPBGGnq0B81YdxDe3sZbCNt+TW4XpEqJlbvQe+bEZLMci2lYk2
-         uEH9LNu0KTeEL+wN/gJI7F7yH2aK/W54a/6ZaXxFZNamZyWtzNeSeR/HnligXhN/Qs2X
-         zZUH9ry531if+rhhTSMXpjMdSyZUp1c3N8qdw=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kzA4EpTi7z77s3KOJZLkB0akISy0U4YTxQuvmocFUgU=;
+        b=OTupR3eFronvQywS7qKloj2ZVgcgrUGU/A/27Yw2/EU5C9UbHbGZucQzrCf2ptOXdz
+         JExxVRam2bJbStJtkTgcgv3YR0cZYtk9mNJ27PLJ5JQtLcoUt+aNeh0/qa03koQNa6Nl
+         V4YDAax5mWX2epn6cq3yjiQTCAl/s/72/ZXfI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V9ilZCQDc8PNTgTJZyEfkygPrvLsJLXU67mb2e4XKms=;
-        b=QZholP3CjRYXtwSAxHAq+2TOUA9zMLd9iV1GRA4dF+40eShIrYMEv1jCjqMxXCBPRQ
-         8u7L9jCzO5HOXkpGaTY//it9MzFXgAwnCuxlJnpL7/XpZ4SIL/nXJpm/EVf8/2hGOfio
-         5aWRowTKIR7POACljdmphV89+tDmRfRMIGK05P/iwZXIsq07GxQ7LksDUqdKsBgmYQuD
-         OXSCr7T8ntcso7CQd82PTiPv4n5kAsL5RP1a+GUsCc/CcHEm1IcusgGAWCi0RXfG+hXD
-         znG1uM0pzJLZUEXFYhYCrxMnHVjnwNdDNJaG68tCkLF/VRW+XlW6BCImuHGwhyBsLvzl
-         NJtg==
-X-Gm-Message-State: AOAM53118vo8BGgCeSkjqFOhXMpvYaOhEM4a68IUPcFpvy399mS6+ddr
-        /63ARxhmiRtPuDwUbuVVZYqQhA==
-X-Google-Smtp-Source: ABdhPJxbJj6H/BBM1VC/+qEoFFReCxEoHGfdsO4xUJh0moIBv+bvetLdGsS8+OKDNcw33pheiTyJEQ==
-X-Received: by 2002:a05:6a00:1485:b0:47c:104c:8c64 with SMTP id v5-20020a056a00148500b0047c104c8c64mr573408pfu.59.1635206476114;
-        Mon, 25 Oct 2021 17:01:16 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:f5e3:5eb1:d5ee:6893])
-        by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.01.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 17:01:15 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v3 34/34] component: Remove component_master_ops and friends
-Date:   Mon, 25 Oct 2021 17:00:44 -0700
-Message-Id: <20211026000044.885195-35-swboyd@chromium.org>
-X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
-In-Reply-To: <20211026000044.885195-1-swboyd@chromium.org>
-References: <20211026000044.885195-1-swboyd@chromium.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kzA4EpTi7z77s3KOJZLkB0akISy0U4YTxQuvmocFUgU=;
+        b=qkaMzC9RtjzLrswor29HwJYEgAQa/4s1MjtRfE/A+9DT57b+VrWWMb6Fgg0nHxxHpZ
+         D6LVR+ZRQJC/Re+a1DpEzW4Z2VdWhUM3u3fKEoosbVHwJCXuB8bw7TxLFkXnzClRuf5D
+         Hv+vanBtgRpoJdKBbrbFBtjXWJThkdcL4kexCPtN0kUAyfGDGjh6fnMS3jgJqAQx9uB1
+         N58nd21wFHuJHB1bp+FnKDWMfGSBV64eVNNrQqqlecuDyyNbVa3uOeHWMFpzibSOxIFj
+         j5wK1GirUbvGei+/oU3lP76XAPJI+27f1v3YUYdgNXDhVdhlDwZDC07d0fmLPKYOQfMQ
+         Tffg==
+X-Gm-Message-State: AOAM531JKtFL4IBklLPeq4i2LV65w328bIWG4lhCorIMHLbatTaxmHD9
+        HLC0T2qu1vZ8Izf/e+ZolfvTxw==
+X-Google-Smtp-Source: ABdhPJwYnSMKPYjmI8QhrAgLoT1GbHwUyZJLSvXqMzWfZiE7NSs2GXs7skPU1ESitnVKLZoPFaldrQ==
+X-Received: by 2002:a17:90a:e505:: with SMTP id t5mr14530311pjy.33.1635208155201;
+        Mon, 25 Oct 2021 17:29:15 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:5822:765c:9f84:e1b3])
+        by smtp.gmail.com with UTF8SMTPSA id l14sm23244442pjq.13.2021.10.25.17.29.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Oct 2021 17:29:14 -0700 (PDT)
+Date:   Mon, 25 Oct 2021 17:29:13 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sujit Kautkar <sujitka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] rpmsg: glink: Fix use-after-free in
+ qcom_glink_rpdev_release()
+Message-ID: <YXdL2RfdYwy2g+kr@google.com>
+References: <20211025233751.1777479-1-sujitka@chromium.org>
+ <20211025163739.v2.1.Id19324ea36b4cf89faf98bf520bc6b6f01240433@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20211025163739.v2.1.Id19324ea36b4cf89faf98bf520bc6b6f01240433@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The struct is unused now so drop it along with the functions that use
-it.
+On Mon, Oct 25, 2021 at 04:37:52PM -0700, Sujit Kautkar wrote:
+> qcom_glink_rpdev_release() sets channel->rpdev to NULL. However, with
+> debug enabled kernel, qcom_glink_rpdev_release() gets delayed due to
+> delayed kobject release and channel gets released by that time and
+> triggers below kernel warning. To avoid this use-after-free, add a
+> condition to checks if channel was already released.
+> 
+> | BUG: KASAN: use-after-free in qcom_glink_rpdev_release+0x54/0x70
+> | Write of size 8 at addr ffffffaba438e8d0 by task kworker/6:1/54
+> |
+> | CPU: 6 PID: 54 Comm: kworker/6:1 Not tainted 5.4.109-lockdep #16
+> | Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
+> | Workqueue: events kobject_delayed_cleanup
+> | Call trace:
+> |  dump_backtrace+0x0/0x284
+> |  show_stack+0x20/0x2c
+> |  dump_stack+0xd4/0x170
+> |  print_address_description+0x3c/0x4a8
+> |  __kasan_report+0x144/0x168
+> |  kasan_report+0x10/0x18
+> |  __asan_report_store8_noabort+0x1c/0x24
+> |  qcom_glink_rpdev_release+0x54/0x70
+> |  device_release+0x68/0x14c
+> |  kobject_delayed_cleanup+0x158/0x2cc
+> |  process_one_work+0x7cc/0x10a4
+> |  worker_thread+0x80c/0xcec
+> |  kthread+0x2a8/0x314
+> |  ret_from_fork+0x10/0x18
+> 
+> Signed-off-by: Sujit Kautkar <sujitka@chromium.org>
+> ---
+> 
+> (no changes since v1)
+> 
+>  drivers/rpmsg/qcom_glink_native.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index e1444fefdd1c0..cc3556a9385a9 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -270,6 +270,7 @@ static void qcom_glink_channel_release(struct kref *ref)
+>  	spin_unlock_irqrestore(&channel->intent_lock, flags);
+>  
+>  	kfree(channel->name);
+> +	channel = NULL;
 
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/base/component.c  | 148 +++++---------------------------------
- drivers/gpu/drm/drm_drv.c |   2 +-
- include/linux/component.h |  45 ------------
- 3 files changed, 17 insertions(+), 178 deletions(-)
+This doesn't make much sense, 'channel' is a local variable, the only effect
+this has is that the memory of 'channel' isn't freed by the 'kfree' below.
 
-diff --git a/drivers/base/component.c b/drivers/base/component.c
-index cbf2d4cc0794..5a2a6c5b8b83 100644
---- a/drivers/base/component.c
-+++ b/drivers/base/component.c
-@@ -134,18 +134,12 @@ static void component_debugfs_del(struct aggregate_device *m)
- 
- #endif
- 
--struct aggregate_bus_find_data {
--	const struct component_master_ops *ops;
--	struct device *parent;
--};
--
- static int aggregate_bus_find_match(struct device *dev, const void *_data)
- {
- 	struct aggregate_device *adev = to_aggregate_device(dev);
--	const struct aggregate_bus_find_data *data = _data;
-+	const struct device *parent = _data;
- 
--	if (adev->parent == data->parent &&
--	    (!data->ops || adev->ops == data->ops))
-+	if (adev->parent == parent)
- 		return 1;
- 
- 	return 0;
-@@ -406,30 +400,15 @@ static int aggregate_device_match(struct device *dev, struct device_driver *drv)
- 	return ret;
- }
- 
--/* TODO: Remove once all aggregate drivers use component_aggregate_register() */
--static int component_probe_bind(struct aggregate_device *adev)
--{
--	return adev->ops->bind(adev->parent);
--}
--
--static void component_remove_unbind(struct aggregate_device *adev)
--{
--	adev->ops->unbind(adev->parent);
--}
--
- static int aggregate_driver_probe(struct device *dev)
- {
- 	const struct aggregate_driver *adrv = to_aggregate_driver(dev->driver);
- 	struct aggregate_device *adev = to_aggregate_device(dev);
--	bool modern = adrv->probe != component_probe_bind;
- 	int ret;
- 
--	/* Only do runtime PM when drivers migrate */
--	if (modern) {
--		pm_runtime_get_noresume(dev);
--		pm_runtime_set_active(dev);
--		pm_runtime_enable(dev);
--	}
-+	pm_runtime_get_noresume(dev);
-+	pm_runtime_set_active(dev);
-+	pm_runtime_enable(dev);
- 
- 	mutex_lock(&component_mutex);
- 	if (devres_open_group(adev->parent, NULL, GFP_KERNEL)) {
-@@ -441,7 +420,7 @@ static int aggregate_driver_probe(struct device *dev)
- 	}
- 	mutex_unlock(&component_mutex);
- 
--	if (ret && modern) {
-+	if (ret) {
- 		pm_runtime_disable(dev);
- 		pm_runtime_set_suspended(dev);
- 		pm_runtime_put_noidle(dev);
-@@ -454,15 +433,10 @@ static void aggregate_driver_remove(struct device *dev)
- {
- 	const struct aggregate_driver *adrv = to_aggregate_driver(dev->driver);
- 	struct aggregate_device *adev = to_aggregate_device(dev);
--	bool modern = adrv->remove != component_remove_unbind;
- 
--	/* Only do runtime PM when drivers migrate */
--	if (modern)
--		pm_runtime_get_sync(dev);
-+	pm_runtime_get_sync(dev);
- 	adrv->remove(to_aggregate_device(dev));
- 	devres_release_group(adev->parent, NULL);
--	if (!modern)
--		return;
- 
- 	pm_runtime_put_noidle(dev);
- 
-@@ -488,16 +462,11 @@ static struct bus_type aggregate_bus_type = {
- };
- 
- /* Callers take ownership of return value, should call put_device() */
--static struct aggregate_device *__aggregate_find(struct device *parent,
--	const struct component_master_ops *ops)
-+static struct aggregate_device *__aggregate_find(struct device *parent)
- {
- 	struct device *dev;
--	struct aggregate_bus_find_data data = {
--		.ops = ops,
--		.parent = parent,
--	};
- 
--	dev = bus_find_device(&aggregate_bus_type, NULL, &data,
-+	dev = bus_find_device(&aggregate_bus_type, NULL, parent,
- 			      aggregate_bus_find_match);
- 
- 	return dev ? to_aggregate_device(dev) : NULL;
-@@ -515,7 +484,7 @@ static void aggregate_driver_unregister(struct aggregate_driver *adrv)
- }
- 
- static struct aggregate_device *aggregate_device_add(struct device *parent,
--	const struct component_master_ops *ops, struct aggregate_driver *adrv,
-+	struct aggregate_driver *adrv,
- 	struct component_match *match)
- {
- 	struct aggregate_device *adev;
-@@ -540,7 +509,6 @@ static struct aggregate_device *aggregate_device_add(struct device *parent,
- 	adev->parent = parent;
- 	adev->dev.bus = &aggregate_bus_type;
- 	adev->dev.release = aggregate_device_release;
--	adev->ops = ops;
- 	adev->match = match;
- 	adev->adrv = adrv;
- 	dev_set_name(&adev->dev, "aggregate%d", id);
-@@ -556,54 +524,6 @@ static struct aggregate_device *aggregate_device_add(struct device *parent,
- 	return adev;
- }
- 
--/**
-- * component_master_add_with_match - register an aggregate driver
-- * @parent: parent device of the aggregate driver
-- * @ops: callbacks for the aggregate driver
-- * @match: component match list for the aggregate driver
-- *
-- * Registers a new aggregate driver consisting of the components added to @match
-- * by calling one of the component_match_add() functions. Once all components in
-- * @match are available, it will be assembled by calling
-- * &component_master_ops.bind from @ops. Must be unregistered by calling
-- * component_master_del().
-- *
-- * Deprecated: Use component_aggregate_register() instead.
-- */
--int component_master_add_with_match(struct device *parent,
--	const struct component_master_ops *ops,
--	struct component_match *match)
--{
--	struct aggregate_driver *adrv;
--	struct aggregate_device *adev;
--	int ret = 0;
--
--	adrv = kzalloc(sizeof(*adrv), GFP_KERNEL);
--	if (!adrv)
--		return -ENOMEM;
--
--	adev = aggregate_device_add(parent, ops, adrv, match);
--	if (IS_ERR(adev)) {
--		ret = PTR_ERR(adev);
--		goto err;
--	}
--
--	adrv->probe = component_probe_bind;
--	adrv->remove = component_remove_unbind;
--	adrv->driver.owner = THIS_MODULE;
--	adrv->driver.name = dev_name(&adev->dev);
--
--	ret = aggregate_driver_register(adrv);
--	if (!ret)
--		return 0;
--
--	put_device(&adev->dev);
--err:
--	kfree(adrv);
--	return ret;
--}
--EXPORT_SYMBOL_GPL(component_master_add_with_match);
--
- /**
-  * component_aggregate_register - register an aggregate driver
-  * @parent: parent device of the aggregate driver
-@@ -620,7 +540,7 @@ int component_aggregate_register(struct device *parent,
- 	struct aggregate_device *adev;
- 	int ret;
- 
--	adev = aggregate_device_add(parent, NULL, adrv, match);
-+	adev = aggregate_device_add(parent, adrv, match);
- 	if (IS_ERR(adev))
- 		return PTR_ERR(adev);
- 
-@@ -632,42 +552,6 @@ int component_aggregate_register(struct device *parent,
- }
- EXPORT_SYMBOL_GPL(component_aggregate_register);
- 
--/**
-- * component_master_del - unregister an aggregate driver
-- * @parent: parent device of the aggregate driver
-- * @ops: callbacks for the aggregate driver
-- *
-- * Unregisters an aggregate driver registered with
-- * component_master_add_with_match(). If necessary the aggregate driver is first
-- * disassembled by calling &component_master_ops.unbind from @ops.
-- *
-- * Deprecated: Use component_aggregate_unregister() instead.
-- */
--void component_master_del(struct device *parent,
--	const struct component_master_ops *ops)
--{
--	struct aggregate_device *adev;
--	struct aggregate_driver *adrv;
--	struct device_driver *drv;
--
--	mutex_lock(&component_mutex);
--	adev = __aggregate_find(parent, ops);
--	mutex_unlock(&component_mutex);
--
--	if (adev) {
--		drv = adev->dev.driver;
--		if (drv) {
--			adrv = to_aggregate_driver(drv);
--			aggregate_driver_unregister(adrv);
--			kfree(adrv);
--		}
--
--		device_unregister(&adev->dev);
--	}
--	put_device(&adev->dev);
--}
--EXPORT_SYMBOL_GPL(component_master_del);
--
- /**
-  * component_aggregate_unregister - unregister an aggregate driver
-  * @parent: parent device of the aggregate driver
-@@ -683,7 +567,7 @@ void component_aggregate_unregister(struct device *parent,
- 	struct aggregate_device *adev;
- 
- 	mutex_lock(&component_mutex);
--	adev = __aggregate_find(parent, NULL);
-+	adev = __aggregate_find(parent);
- 	mutex_unlock(&component_mutex);
- 
- 	if (adev)
-@@ -719,7 +603,7 @@ static void component_unbind(struct component *component,
-  *
-  * Unbinds all components of the aggregate device by passing @data to their
-  * &component_ops.unbind functions. Should be called from
-- * &component_master_ops.unbind.
-+ * &aggregate_driver.remove.
-  */
- void component_unbind_all(struct device *parent, void *data)
- {
-@@ -729,7 +613,7 @@ void component_unbind_all(struct device *parent, void *data)
- 
- 	WARN_ON(!mutex_is_locked(&component_mutex));
- 
--	adev = __aggregate_find(parent, NULL);
-+	adev = __aggregate_find(parent);
- 	if (!adev)
- 		return;
- 
-@@ -807,7 +691,7 @@ static int component_bind(struct component *component, struct aggregate_device *
-  *
-  * Binds all components of the aggregate @dev by passing @data to their
-  * &component_ops.bind functions. Should be called from
-- * &component_master_ops.bind.
-+ * &aggregate_driver.probe.
-  */
- int component_bind_all(struct device *parent, void *data)
- {
-@@ -818,7 +702,7 @@ int component_bind_all(struct device *parent, void *data)
- 
- 	WARN_ON(!mutex_is_locked(&component_mutex));
- 
--	adev = __aggregate_find(parent, NULL);
-+	adev = __aggregate_find(parent);
- 	if (!adev)
- 		return -EINVAL;
- 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 7a5097467ba5..d188fa26bb1b 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -544,7 +544,7 @@ static void drm_fs_inode_free(struct inode *inode)
-  * following guidelines apply:
-  *
-  *  - The entire device initialization procedure should be run from the
-- *    &component_master_ops.master_bind callback, starting with
-+ *    &aggregate_driver.probe callback, starting with
-  *    devm_drm_dev_alloc(), then binding all components with
-  *    component_bind_all() and finishing with drm_dev_register().
-  *
-diff --git a/include/linux/component.h b/include/linux/component.h
-index d8dcbf9733da..07fe481d4e3b 100644
---- a/include/linux/component.h
-+++ b/include/linux/component.h
-@@ -63,47 +63,7 @@ void component_del(struct device *, const struct component_ops *);
- int component_bind_all(struct device *master, void *master_data);
- void component_unbind_all(struct device *master, void *master_data);
- 
--/**
-- * struct component_master_ops - callback for the aggregate driver
-- *
-- * Aggregate drivers are registered with component_master_add_with_match() and
-- * unregistered with component_master_del().
-- */
--struct component_master_ops {
--	/**
--	 * @bind:
--	 *
--	 * Called when all components or the aggregate driver, as specified in
--	 * the match list passed to component_master_add_with_match(), are
--	 * ready. Usually there are 3 steps to bind an aggregate driver:
--	 *
--	 * 1. Allocate a structure for the aggregate driver.
--	 *
--	 * 2. Bind all components to the aggregate driver by calling
--	 *    component_bind_all() with the aggregate driver structure as opaque
--	 *    pointer data.
--	 *
--	 * 3. Register the aggregate driver with the subsystem to publish its
--	 *    interfaces.
--	 *
--	 * Note that the lifetime of the aggregate driver does not align with
--	 * any of the underlying &struct device instances. Therefore devm cannot
--	 * be used and all resources acquired or allocated in this callback must
--	 * be explicitly released in the @unbind callback.
--	 */
--	int (*bind)(struct device *master);
--	/**
--	 * @unbind:
--	 *
--	 * Called when either the aggregate driver, using
--	 * component_master_del(), or one of its components, using
--	 * component_del(), is unregistered.
--	 */
--	void (*unbind)(struct device *master);
--};
--
- struct aggregate_device {
--	const struct component_master_ops *ops;
- 	struct device *parent;
- 	struct device dev;
- 	struct component_match *match;
-@@ -171,11 +131,6 @@ int component_aggregate_register(struct device *parent,
- void component_aggregate_unregister(struct device *parent,
- 	struct aggregate_driver *adrv);
- 
--void component_master_del(struct device *,
--	const struct component_master_ops *);
--
--int component_master_add_with_match(struct device *,
--	const struct component_master_ops *, struct component_match *);
- void component_match_add_release(struct device *master,
- 	struct component_match **matchptr,
- 	void (*release)(struct device *, void *),
--- 
-https://chromeos.dev
+Maybe this is debug code and wasn't intended to be part of this patch?
 
+>  	kfree(channel);
+>  }
+>  
+> @@ -1372,8 +1373,10 @@ static void qcom_glink_rpdev_release(struct device *dev)
+>  {
+>  	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+>  	struct glink_channel *channel = to_glink_channel(rpdev->ept);
+> +	if (channel) {
+> +		channel->rpdev = NULL;
+> +	}
+
+Remove curly braces for single line branch.
+
+>  
+> -	channel->rpdev = NULL;
+>  	kfree(rpdev);
+>  }
+>  
+> -- 
+> 2.31.0
+> 
