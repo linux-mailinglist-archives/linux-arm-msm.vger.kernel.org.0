@@ -2,99 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D62843B7CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 19:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA14643B7B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 18:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237306AbhJZREm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 13:04:42 -0400
-Received: from ixit.cz ([94.230.151.217]:43048 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237663AbhJZREl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 13:04:41 -0400
-Received: from [192.168.1.138] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 7153320064;
-        Tue, 26 Oct 2021 19:02:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1635267734;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Yr9uhClX24/LPzr3j28xMSkldVyzrS/jPB9TXwItW/Q=;
-        b=Yh5h1/PdyDWYWMmGnNH2FK2FhyIlEnkwGw/C5a4HremTpgkN5mF+shIUq80pTLKyljAKVi
-        0rbvXGc7e4SnG0rbRzaZlDW1ksWR91fy6mltEPxmWSeL0mi77v4wuRJgqzz9y47YhsqY74
-        FYU1fCsxFsOBNdo6eg+N3BR5FASsJJs=
-Date:   Tue, 26 Oct 2021 19:02:07 +0200
-From:   David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH v2] dt-bindings: net: qcom,ipa: IPA does support up to two
- iommus
-To:     Alex Elder <elder@ieee.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Alex Elder <elder@kernel.org>, ~okias/devicetree@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-Id: <JNGL1R.U8OWUCOV58262@ixit.cz>
-In-Reply-To: <2de53575-af6e-5bb9-e7ad-5d924656867d@ieee.org>
-References: <20211026163240.131052-1-david@ixit.cz>
-        <2de53575-af6e-5bb9-e7ad-5d924656867d@ieee.org>
-X-Mailer: geary/40.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+        id S236295AbhJZRAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 13:00:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236231AbhJZRAk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Oct 2021 13:00:40 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A30EC061767
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 09:58:16 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id k7so15819750wrd.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 09:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=zTEZYPI9/d7veyMrSB1TfsKqIwH3Vyu7VmuuMxTxDGQ=;
+        b=jMBv0zwDMyWXrmOd3tlMbzLV+7gCRPIPdspTIJZllfjNzW4QJDpBe3+qT8j6lGCYPm
+         CYohCQqTSUUnqt1G9ISmUrRBQ4YSUuXaPoCkAsEubEiW9Kdq4eUX6D4w7Ib95GPiWtA7
+         /8dcH1FPOs44oziJaqg1UW1eAWbEWT0LlqRsnA918Yfo4j1SKQEyb+cIelHwcRJUjwNT
+         QyLa1Q9hI6eENgRAihvmTw+UqU4WjDrjCgEFRET64a9nZNFOGQ8xZpDQ/IFQd3YRFnKZ
+         3X84Xk7K6jtM9ehTqQicBWvh5iuvcaPwja2lxcL81NFg1Nm0pscG3qwv93DvBx0FDUiE
+         q0Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zTEZYPI9/d7veyMrSB1TfsKqIwH3Vyu7VmuuMxTxDGQ=;
+        b=Fj2IRBT55ChiToJHyS1UIYTRPD+j4rgXKr2j7zbTSWOl93f2nGdNVr0KYCN6KJsFhZ
+         bKMAqDTBcEYUuEtw5z9twlYIGFZyWHWRHmUK2wdzquataabngNgBnjwUf7Wnu+uxp0ss
+         HmrlR9pUCPc9lwSc3zPJ2tLJX5tQUTtERRguTtxzuFeq20JtT89cPBd12x9mma9A6wNL
+         5VcI7fKFa+4mf+HxMTqs1iRys5bP+U8qsCyxLpARNQz89Awd57La924qcQxYNSapB5I2
+         7OtzIZFB0Fk8DfGsg62giBZzlROQe8f9ToSBvU28TmwIbUyGyv0Ak8eil9tXiKqflFZA
+         8tXA==
+X-Gm-Message-State: AOAM5321Mogg6fc/ea6GxwciE3EuEsxaFgcnn9RLoo53oct+rFNsLBSK
+        rf7nCGaV32v5RJeSLw1Y+pHRxg==
+X-Google-Smtp-Source: ABdhPJzQxh565RvzbOV3gUrwRtJS+VhTZ2g7qT/2hxUI5AdkqewzO2L882JnEenhTdN7ghKrikWDyg==
+X-Received: by 2002:a5d:5402:: with SMTP id g2mr29506285wrv.290.1635267494542;
+        Tue, 26 Oct 2021 09:58:14 -0700 (PDT)
+Received: from localhost.localdomain ([88.160.176.23])
+        by smtp.gmail.com with ESMTPSA id q1sm1097415wmj.20.2021.10.26.09.58.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Oct 2021 09:58:14 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     mani@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        bbhatt@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH v2] mhi: pci_generic: Graceful shutdown on freeze
+Date:   Tue, 26 Oct 2021 19:09:40 +0200
+Message-Id: <1635268180-13699-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-thanks, I'll try to work on my commit messages :)
+There is no reason for shutting down MHI ungracefully on freeze,
+this causes the MHI host stack & device stack to not be aligned
+anymore since the proper MHI reset sequence is not performed for
+ungraceful shutdown.
 
-David
+Cc: stable@vger.kernel.org
+Fixes: 5f0c2ee1fe8d ("bus: mhi: pci-generic: Fix hibernation")
+Suggested-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+---
+ v2: Forgot to mention this change comes from a Bhaumik suggestion
 
+ drivers/bus/mhi/pci_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Tue, Oct 26 2021 at 11:47:46 -0500, Alex Elder <elder@ieee.org> 
-wrote:
-> On 10/26/21 11:32 AM, David Heidelberg wrote:
->> Fix warnings as:
->> arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml: ipa@1e40000: iommus: [[21, 
->> 1504, 0], [21, 1506, 0]] is too long
->> 	From schema: Documentation/devicetree/bindings/net/qcom,ipa.yaml
->> 
->> Signed-off-by: David Heidelberg <david@ixit.cz>
-> 
-> Looks good to me.  I'm not sure why the minItems is required,
-> unless it's to indicate that it must be at least 1 and can't
-> be missing.  But iommus is also stated to be required elsewhere
-> in the binding.
-> 
-> In the future, it's helpful to indicate the command you
-> used to produce the warning in your commit message.  And
-> furthermore, describing the problem (and not just including
-> the error message) is even more helpful.
-> 
-> Reviewed-by: Alex Elder <elder@linaro.org>
-> 
->> ---
->>   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->> 
->> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml 
->> b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->> index b8a0b392b24e..b86edf67ce62 100644
->> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
->> @@ -64,7 +64,8 @@ properties:
->>         - const: gsi
->>       iommus:
->> -    maxItems: 1
->> +    minItems: 1
->> +    maxItems: 2
->>       clocks:
->>       maxItems: 1
->> 
-> 
-
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 6a42425..d4a3ce2 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -1018,7 +1018,7 @@ static int __maybe_unused mhi_pci_freeze(struct device *dev)
+ 	 * context.
+ 	 */
+ 	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+-		mhi_power_down(mhi_cntrl, false);
++		mhi_power_down(mhi_cntrl, true);
+ 		mhi_unprepare_after_power_down(mhi_cntrl);
+ 	}
+ 
+-- 
+2.7.4
 
