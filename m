@@ -2,107 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BC9443BA4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 21:06:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E637243BADA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 21:33:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234461AbhJZTJR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 15:09:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44918 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234008AbhJZTJQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 15:09:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 68A45610A1;
-        Tue, 26 Oct 2021 19:06:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635275212;
-        bh=DBEx9t2CB+8MmSY7UjuuCdmlBwQL3CUhnAaUE+XYyRQ=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=A60IOoRMMZGy3t3QJ/KgLxG6B68GkrknhmQv60RG9RzcnPF+kGVJLYBZNyaJAbIP7
-         mH0xmyBZ0YOwFw3zFWEbeZ0AfMbrWdViwtX2wIJ/j88Gwlf8J0u+TzDP3JhYn/szgM
-         D6UX937++toP4t4hWIUfesB5c4t/p80Akjnh3NaPMrXCmRi/WhpmawY3qsNsGTQxpf
-         Wl94+wQBPcbmaCaMJl2t9Ul3CyX5E2bBfqXRWVOgRCZYuK5pUCw7F3DV4syn6UL1Nt
-         a5QirX7LtfktYZO3DMw3ITf2tg1Suyn4sSUbnRHiDFcfhz3hLAisSLF+w/IddH3uUL
-         nZwANVZMl/Kpg==
-From:   Mark Brown <broonie@kernel.org>
-To:     lgirdwood@gmail.com, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        judyhsiao@chromium.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, bgoswami@codeaurora.org,
-        alsa-devel@alsa-project.org, plai@codeaurora.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        tiwai@suse.com, swboyd@chromium.org,
-        srinivas.kandagatla@linaro.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, perex@perex.cz
-In-Reply-To: <1635234188-7746-1-git-send-email-srivasam@codeaurora.org>
-References: <1635234188-7746-1-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v4 0/5] Update Lpass digital codec macro drivers
-Message-Id: <163527520915.2033755.14378859701858526354.b4-ty@kernel.org>
-Date:   Tue, 26 Oct 2021 20:06:49 +0100
+        id S238775AbhJZTfe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 15:35:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41594 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237035AbhJZTfd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Oct 2021 15:35:33 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775BBC061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 12:33:09 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id w193so175957oie.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 12:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=N+6YPLFrjwgdtCUJfPROJUL3QTAN19p6nyz5HyyDtK4=;
+        b=bwQVfE1iYX9MIZ9fiCHs3adkHdyfOkx5hhBzkC7jWLgIdcSsCSYWq2QLllwOfVVG9j
+         /qobU+jHLvUR++xcY972QXpv1OVxCGwsmhZmihMcmoSLl2uPPg+9RbhrGjogeCK4mDBF
+         FsDc4/q9pdianaa3KZJ9DpZsajeQI3ERC7dVY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=N+6YPLFrjwgdtCUJfPROJUL3QTAN19p6nyz5HyyDtK4=;
+        b=NYxHT2Tsse8OEh5ezCp4tatjfEWfcIjEqX0ahV77Ru7DRKDF6XDVIzTZix8ZtQntNk
+         0fbSw/wBqD9108rm2uOlmdbKqTUQuZ2jfAoYixDbrC7nVbDkzdOUx+89kvEhXCwH10LQ
+         6r+IDL8Zk1qCNU6M1HM931Ji4vCzxgDv5XugX/Ec7M0rL012XTRIx6Tohmm8q2bzWnmj
+         hCzHE2DBSGPMSidE9JWLvuTL2+WyrlhQSGEvnX5B5uIywSsEEiZTvC5fIhw5g6rfKZec
+         FcgUEzBh4FqgjbzrSjQ+cRRbbgHEtQAMuFCqJZs5Wci3//UqaKW9NKS07Zr9Q75L7rme
+         UV1A==
+X-Gm-Message-State: AOAM533IRFP45AmSYXcX8V44VVwch0hG3itD1mF0BVuqV2BM4eRsyCBb
+        GcraZmuFp4b4AptTBjoAqZBaf9nMcr7AEBDg/zZh4bF4CKg=
+X-Google-Smtp-Source: ABdhPJz2feIZoXb0OU1UFvKLPQtsVf3EiA3LjrGD6qfKLOXPs1wesM0P/U/URyOya6G/f7joJZ5ris8KEn2SD03vMv8=
+X-Received: by 2002:a05:6808:1d9:: with SMTP id x25mr555758oic.64.1635276788733;
+ Tue, 26 Oct 2021 12:33:08 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 26 Oct 2021 12:33:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <202110262230.8EQoYnHj-lkp@intel.com>
+References: <20211026000044.885195-4-swboyd@chromium.org> <202110262230.8EQoYnHj-lkp@intel.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 26 Oct 2021 12:33:08 -0700
+Message-ID: <CAE-0n51k5HnvVuXgRvuOtpUovceTBeqnQdh1hhKzPV=qB0JjsQ@mail.gmail.com>
+Subject: Re: [PATCH v3 03/34] component: Introduce the aggregate bus_type
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        kernel test robot <lkp@intel.com>
+Cc:     kbuild-all@lists.01.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Oct 2021 13:13:03 +0530, Srinivasa Rao Mandadapu wrote:
-> This patch set is to add support for lpass sc7280 based targets.
-> Upadate compatible name and change of bulk clock voting to optional
-> clock voting in digital codecs va, rx, tx macro drivers.
-> 
-> Changes Since V3:
->     -- Removed fixes tag.
->     -- Change signedoff by sequence.
-> Changes Since V2:
->     -- Add Tx macro deafults for lpass sc7280
-> Changes Since V1:
->     -- Removed individual clock voting and used bulk clock optional.
->     -- Removed volatile changes and fixed default values.
->     -- Typo errors.
-> Srinivasa Rao Mandadapu (5):
->   ASoC: qcom: Add compatible names in va,wsa,rx,tx codec drivers for
->     sc7280
->   ASoC: qcom: dt-bindings: Add compatible names for lpass sc7280 digital
->     codecs
->   ASoC: codecs: tx-macro: Enable tx top soundwire mic clock
->   ASoC: codecs: tx-macro: Update tx default values
->   ASoC: codecs: Change bulk clock voting to optional voting in digital
->     codecs
-> 
-> [...]
+Quoting kernel test robot (2021-10-26 07:02:03)
+>
+>    drivers/base/component.c: In function '__component_add':
+> >> drivers/base/component.c:858:13: error: variable 'ret' set but not used [-Werror=unused-but-set-variable]
+>      858 |         int ret;
+>          |             ^~~
+>    cc1: all warnings being treated as errors
+>
+>
+> vim +/ret +858 drivers/base/component.c
+>
+> 2a41e6070dd7ef Russell King  2014-01-10  853
+> 3521ee994bca90 Daniel Vetter 2019-02-08  854  static int __component_add(struct device *dev, const struct component_ops *ops,
+> 3521ee994bca90 Daniel Vetter 2019-02-08  855    int subcomponent)
+> 2a41e6070dd7ef Russell King  2014-01-10  856  {
+> 2a41e6070dd7ef Russell King  2014-01-10  857    struct component *component;
+> 2a41e6070dd7ef Russell King  2014-01-10 @858    int ret;
+> 2a41e6070dd7ef Russell King  2014-01-10  859
+> 2a41e6070dd7ef Russell King  2014-01-10  860    component = kzalloc(sizeof(*component), GFP_KERNEL);
+> 2a41e6070dd7ef Russell King  2014-01-10  861    if (!component)
+> 2a41e6070dd7ef Russell King  2014-01-10  862            return -ENOMEM;
+> 2a41e6070dd7ef Russell King  2014-01-10  863
+> 2a41e6070dd7ef Russell King  2014-01-10  864    component->ops = ops;
+> 2a41e6070dd7ef Russell King  2014-01-10  865    component->dev = dev;
+> 3521ee994bca90 Daniel Vetter 2019-02-08  866    component->subcomponent = subcomponent;
+> 2a41e6070dd7ef Russell King  2014-01-10  867
+> 2a41e6070dd7ef Russell King  2014-01-10  868    dev_dbg(dev, "adding component (ops %ps)\n", ops);
+> 2a41e6070dd7ef Russell King  2014-01-10  869
+> 2a41e6070dd7ef Russell King  2014-01-10  870    mutex_lock(&component_mutex);
+> 2a41e6070dd7ef Russell King  2014-01-10  871    list_add_tail(&component->node, &component_list);
+> 2a41e6070dd7ef Russell King  2014-01-10  872    mutex_unlock(&component_mutex);
+> 2a41e6070dd7ef Russell King  2014-01-10  873
+> 748369f5c5e62a Stephen Boyd  2021-10-25  874    /*
+> 748369f5c5e62a Stephen Boyd  2021-10-25  875     * Try to bind.
+> 748369f5c5e62a Stephen Boyd  2021-10-25  876     *
+> 748369f5c5e62a Stephen Boyd  2021-10-25  877     * Note: we don't check the return value here because component devices
+> 748369f5c5e62a Stephen Boyd  2021-10-25  878     * don't care that the aggregate device can actually probe or not. They
+> 748369f5c5e62a Stephen Boyd  2021-10-25  879     * only care about adding themselves to the component_list and then
+> 748369f5c5e62a Stephen Boyd  2021-10-25  880     * waiting for their component_ops::bind_component callback to be
+> 748369f5c5e62a Stephen Boyd  2021-10-25  881     * called.
+> 748369f5c5e62a Stephen Boyd  2021-10-25  882     */
+> 748369f5c5e62a Stephen Boyd  2021-10-25  883    ret = bus_rescan_devices(&aggregate_bus_type);
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/5] ASoC: qcom: Add compatible names in va,wsa,rx,tx codec drivers for sc7280
-      commit: 9d8c69814d7d8abf299998dd1d3f4a0b595cddca
-[2/5] ASoC: qcom: dt-bindings: Add compatible names for lpass sc7280 digital codecs
-      commit: 6e3b196e5ad2e4cd23498935ba32cecedae53642
-[3/5] ASoC: codecs: tx-macro: Enable tx top soundwire mic clock
-      commit: 864b9b5856ae74a350933782399934bdde5df989
-[4/5] ASoC: codecs: tx-macro: Update tx default values
-      commit: 7b285c74e422d35b02349650a62d32f8ec78f51d
-[5/5] ASoC: codecs: Change bulk clock voting to optional voting in digital codecs
-      commit: 9f589cf0f91485c8591775acad056c80378a2d34
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Ok I guess I have to print a dev_dbg() as well to silence this.
