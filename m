@@ -2,185 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5813543BC41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 23:20:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 996A743BD1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 00:18:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235967AbhJZVWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 17:22:50 -0400
-Received: from smtprelay-out1.synopsys.com ([149.117.87.133]:35304 "EHLO
-        smtprelay-out1.synopsys.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235364AbhJZVWt (ORCPT
+        id S234994AbhJZWUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 18:20:39 -0400
+Received: from mailout1.samsung.com ([203.254.224.24]:46406 "EHLO
+        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232718AbhJZWUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 17:22:49 -0400
-Received: from mailhost.synopsys.com (badc-mailhost3.synopsys.com [10.192.0.81])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
-        by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 5AC24C1D1D;
-        Tue, 26 Oct 2021 21:20:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
-        t=1635283224; bh=gxVmv5HEEOi91petQrdp1jAu61CLYir2xBECnfLR1gQ=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
-        b=dySJ73FL1mC15CGhv+uTd9t5WTvmKS3dVfGa+f3fiG/VVPnQ2XNQ11SFoYNxzmryj
-         QJeCqB+MkCfPNu2uLdFFogEdQgaT0ae4oWfuW1i36+41NSWXA1VZ2ja5ky7pS5nZZB
-         TYP+QGjbQwyTg443uI5dLeu4OxldCaf1RvBIcGrB/Hf+TbXdaQZcP7fTwR+PzMlcwg
-         VfBo/2EntXBSDOhecmiiDLN9zJQjjYxbQwhEqsK9a5qD0Y4WgM0XYLENBdfN57oslH
-         GhUobwLedEQDwbH86FO5nFvniO+E8uatSJmA4+/5nevFz8ivh3YaHJLpy7rXvCmg7k
-         qYxuDmDLVK4FQ==
-Received: from o365relay-in.synopsys.com (us03-o365relay1.synopsys.com [10.4.161.137])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (verified OK))
-        by mailhost.synopsys.com (Postfix) with ESMTPS id EAB5BA0068;
-        Tue, 26 Oct 2021 21:20:22 +0000 (UTC)
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2044.outbound.protection.outlook.com [104.47.66.44])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
-        by o365relay-in.synopsys.com (Postfix) with ESMTPS id 47D46800E7;
-        Tue, 26 Oct 2021 21:20:21 +0000 (UTC)
-Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
-Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=thinhn@synopsys.com
-Authentication-Results: o365relay-in.synopsys.com;
-        dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.b="BjIcjF+O";
-        dkim-atps=neutral
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QIz71KxIcHbSDwuRJ5S/od52oc9q1W05qKy9F+FXbU8GiwwZriIEiV941N71hCfZf5hJXE7KCUMA91rpBvvCvZuDX/+mcEfeDh38SmxI33363I14f7INfZ+TwU2S17aFxyZRNtFDrd9T6+s9JwoXHptKgQvZ5F/XAe/igDkS6FSSd0Bg3HfZjDReVVSj0WrXrDOVgsI3y2EP+614BWXOcjzz9jiZBMJfdmAQNJwd+Mrfy3PvfaBXdW1HvOoUSNMUuwMuxNqRUBVSa47IbDedznXARx9Ob5nSl11FeXw+EY7gUa4Ryhr+P/DsAOu/pjRKPtcKF5kevBIE0D3GqOc/rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gxVmv5HEEOi91petQrdp1jAu61CLYir2xBECnfLR1gQ=;
- b=YTX5AyJarAeBE507GoGmXwRufC4eI78UfOthzs2K7tMEFvuF1Gsuwxl4JQyaFj/TFY4Fbcrw5R8gzZS9gnPW2V9V4X9jejZ0k5MgTDpe1nFg7VsJOVd6cKOikAJz7CRb/AF3POkW2esnIj6N9MbX4nDGzuI+VwgzIbvY+i2vkuiMSNA3eStvHmV7IBZW9IM1h1fz3RCPdHdwEKcPcQ8lSFLXl67Oo/lMoQhMNchiXYmgE2/XB9Wl/ndwx3AQlRCQ7mCx7U5IOwmB7gsY6rdi2/DVYwyCBgj4QZ5NRIpR4LFpCL/H1wcLrRNf55gtFmxd32k5cHRqJb+ybIrsiIiA7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
- dkim=pass header.d=synopsys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gxVmv5HEEOi91petQrdp1jAu61CLYir2xBECnfLR1gQ=;
- b=BjIcjF+Oiu9VzHMCOIDkQOr4aRZrw/gYMv/YpZvqHXwg5MELn/x42rN7qXPwpUC5Tg3P0stX2FQ9Mn1vwz9ZywHW3O5JJfHG9fsvpwDz4MwHZDboZZWkHwF6MJ4sD9EPvKQLfjb2g+4yLuv1zA2TRIeZ/WigBul2pktxQA6LTTE=
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com (2603:10b6:a03:10a::12)
- by BYAPR12MB3590.namprd12.prod.outlook.com (2603:10b6:a03:ae::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.18; Tue, 26 Oct
- 2021 21:20:19 +0000
-Received: from BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::5865:4cfa:3e30:26d6]) by BYAPR12MB4791.namprd12.prod.outlook.com
- ([fe80::5865:4cfa:3e30:26d6%7]) with mapi id 15.20.4628.020; Tue, 26 Oct 2021
- 21:20:19 +0000
-X-SNPS-Relay: synopsys.com
-From:   Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "quic_pkondeti@quicinc.com" <quic_pkondeti@quicinc.com>,
-        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>
-Subject: Re: [PATCH 3/3] usb: dwc: host: Set the property usb-skip-phy-init
-Thread-Topic: [PATCH 3/3] usb: dwc: host: Set the property usb-skip-phy-init
-Thread-Index: AQHXypYn7JJlmIzjPka1bYxacyiUv6vlyWAA
-Date:   Tue, 26 Oct 2021 21:20:18 +0000
-Message-ID: <058bd1fb-0db6-622a-f312-1f7e4cc64ce3@synopsys.com>
-References: <1635272372-9982-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635272372-9982-4-git-send-email-quic_c_sanm@quicinc.com>
-In-Reply-To: <1635272372-9982-4-git-send-email-quic_c_sanm@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-authentication-results: quicinc.com; dkim=none (message not signed)
- header.d=none;quicinc.com; dmarc=none action=none header.from=synopsys.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ddb3140e-b76c-44be-b59b-08d998c669ab
-x-ms-traffictypediagnostic: BYAPR12MB3590:
-x-microsoft-antispam-prvs: <BYAPR12MB3590351BA88E1D5A273FFFCAAA849@BYAPR12MB3590.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3276;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9bJGDPnQn2F4SppVKcFURT0NNHe8bPWH6hNt0X0hOqcvo50xeTlGU65bEcnvjcwwSYAlJHUKEzdSieDJiae6qrGvauRmeyys/YPIL+Z9T/Bstskx80+nNmL8RugWxf0kj+XPZCMYYwBke4KWJ0U9o25Zgxq2rAN2rRePlNpidYmQGpcy2YJmj/WY2tYL6Dq1Wp1SQmevoBVG+wB42m5aVQxB0swFDtopaK7svd8CCXuZ1TBJ1CC5esblGpwdZzrD2DzB5WCDf7U0VfqXF8qNNHtp++eVcUG2CAjP52Kz+ePG12ulcTvnGT8tHyZ9/K5i0EWf7P7F8x2hKikXYKmV0ZELjH16MNY3GZX9yfepAkoFvydUrXU8TCp3C+yAMJa2vLV6HfXn7cyinF5mhxdKqI2+UTdQvG5G8b76jkiM4hRK07MMHQOP/Vb0bKJTzvX8lbRFiabPTQIlviJS/fTEZYYe7yW6ck2XThNYHDyGkWrY3Am7dySWSZKws53FD3dDq3bmD1fBWPBKXcPIjC9cWVRNNy4v5/UCPctnzMorB9M4OfkMIqDygSxw+DImTE7jshY/ox9FHyRrZewMxjMe8+H8fyNtNrDrsToyoWp18FBQXPjE1dqV1c2XUisEFWA9zA3aj8MhbN/sD/IOxAJ2bONSdwOlPCrSVZ1Mj8X/9b4cmdm4VDp070gBXxPLnq1QtvH+rOdjOhp92nVYg0W5fEeKJk8KUkfFxCU9XTC7Yb8MqtzpD8aHCUstdvY1eMYHRLNxycqOTlsSu3pKpegLYC9YRHr+8VQKqqmVaqtxqgI=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4791.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(508600001)(6506007)(4744005)(186003)(76116006)(26005)(6512007)(38070700005)(316002)(54906003)(4326008)(8936002)(66946007)(6486002)(71200400001)(110136005)(83380400001)(5660300002)(8676002)(921005)(2906002)(122000001)(86362001)(38100700002)(31696002)(31686004)(7416002)(66556008)(64756008)(36756003)(2616005)(66476007)(66446008)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eEpsU0oySkFVemFEV0Z1MWpHR0d3eGtMZUsyelk5Q0VQSVVjb2RNck5xTTNy?=
- =?utf-8?B?T1dNOWxZYlFVL2IrejNFK0M5QjBoYTlIdmdwQ1ZiSjI1andRTVdmaGdiMDhX?=
- =?utf-8?B?RHM4cEtmZFdNYjN3VmpobXdoM0NjdHl3aGpqMktIT2J2bk9hRVJHdlpmTGtt?=
- =?utf-8?B?MVJ3SjN5STlneVIwUitmc3ltMytKcnRYYytNZEduZUh3M2JBOWEzbW10WElq?=
- =?utf-8?B?SEVpYXZkTUtueFpEZmJsMkg0SllZaXVoMGV1dW5ReFZMZzNlMWI3djUvWkpz?=
- =?utf-8?B?SCsvc0NGQWdDcFZXRFFGQzFndnlEcE8wYVhmSDUyanFkUy9KYk50cFEyUXFT?=
- =?utf-8?B?Mk9zMFRuanR1bnA1bEJENGh1RWtUS1BFNGd5ZmtGTTRuMGlJVnRvdWl4cU8z?=
- =?utf-8?B?MnpKRDlXRWh0Q2x0dmh2Q2NlSUJkeXd1ZzVZNmNmb3VYUllIcVdtWlRnWCtt?=
- =?utf-8?B?d3pJMlFEMVI3SDMwMTVQZ2l6UkkxZ1doTDZBS2JGelpHQTBNM0pCZU5vNmU0?=
- =?utf-8?B?Z2dmbU5lbmdrSTRHN25zazFOVEZ4QkI3WUpwZVRDZkhTWDRPUU1IV3J6RnRp?=
- =?utf-8?B?T2hBQ0t2MGc3dk10Smg4MWpBVzU4cGt3azVDNncreGlUa3hSbkg5Smp1dncz?=
- =?utf-8?B?ZW9jNERuTWQ4WnV5MTkzYXhNRzZiaEVXVG5WM2NRWkxpVFc2dVc1aG80dnYv?=
- =?utf-8?B?a0ZLNFQySmtMVkRzR1hYd09waGxSV3FBVE9BczgwZ0pCWmJsamhTaG5zd09y?=
- =?utf-8?B?OW83M0p2K21LaGkxNHJSaDhkSndCRTJCVmx4R2hvTFV6VFlXdXI0UGtqSU1K?=
- =?utf-8?B?bG1POWpDS05kYU9ISzVELzJPQkZhOVltbmdaYUdDVHR1L2xzK3FsblY1bVpV?=
- =?utf-8?B?blJ2S3lQUkRiKy8rU2QrN1MwcFJqSjNlTGU3RkhzNk5vMkxiQWZSNFpmTHBK?=
- =?utf-8?B?OWNpNXZVRlAzR0F3NTR5K213cDhVZ1FUdzhSUDZseFEwTzZVRXIwRWhCdjNB?=
- =?utf-8?B?SE85ZUFvOEZHR1V6dXFxUmVjTXJ5OENVTlc0WCtoTm5jNTJrYTNqUXk5YlJk?=
- =?utf-8?B?VjBYUXp2QUpZYTZmOEJsR3JadzVnME40b3kxYnZ0eEhmTnQ2NjJEZllLQXMw?=
- =?utf-8?B?S0NGODlPSUh3cUxhTEVmaFVVdzVydXZsTVdBR0U3R2l5T2pQTEhZVjYvWjVO?=
- =?utf-8?B?ekFSU3ZsR3lxZFdVQ3VjYUVRU2xDeXVpemtNZ0wzdmcwbHpqcEJJdmxtWi9a?=
- =?utf-8?B?eFNxM3M1K2hCaWJvS1ZpV0tsWGF2U3l4S08yN3lUL2hDRlB5clpHV1ZzeUl3?=
- =?utf-8?B?b3NGVTArUytaWWh6aGs0dVdyQ0NSOGlwUHBjVGp3SUFFVnhVa2RBSTN1bzY3?=
- =?utf-8?B?VFAyUkFOOXZGeEJPTnpPaC9CZ1JlUVZSK05GZ2pYa1JlRmIyVzNsNExqYlhl?=
- =?utf-8?B?eU1OUXdCYzYzd2Q1K1pQdFdxOTdkbkRscnJ6MUJ4TmlXQW9oUkFaOXNvOWNF?=
- =?utf-8?B?aXFwU2JiY0pkNmJJNnltdllsZzBqUmxoTmRWTDR1a2QraVUwamxaeDFlbzZk?=
- =?utf-8?B?K2xWL0JValBVdCtBVm9Tekk2WnJobW5nYlNXeWQ5czc0M1FWeFZzUHpNTHRw?=
- =?utf-8?B?b2FBeEpiVS80TWVJc3JWd0lYbVlWWjZabXpYTFk3TjlJeDd3UlpqMVNmL0d2?=
- =?utf-8?B?N2c2a3RmejhoM2U4Rk41WWI1dVpUa3AzdjRYTGY3a1NqSFZuek55Uy9abFps?=
- =?utf-8?B?RkplUnNuQVNzdnlhZnVHMEtlS1lSUG50alhDb29OWWxvRGRMelUyY3Nrdy9X?=
- =?utf-8?B?NmZHVUNOLzVzTklJOGs2WGNWZi9uc0NnYjdmUDNWWmtZbjU4NWdHcC9URWl4?=
- =?utf-8?B?MXZQTUhDSnVLbmdsKzVzUnF5RDBESmVQbmV5Zm9XelZzSW9hREZsTlpBZ2xv?=
- =?utf-8?B?WGdRSXVMaDJKc1hoMEVlMVY1UERaTk82VFl4ZjRMVjc3TmVJZkhsL0grRUV6?=
- =?utf-8?B?ZGk0cGs2MG02dEp3aWF5MDEyRHRBcE4vRFZjMGY0dHpvUU5SVG9WOVlvZHhC?=
- =?utf-8?B?UFREMkh6OEZyT2lVWE0rVUNFYzY5TVBIY0RKVzZNU0pCV2pueHRPQkxkSmVl?=
- =?utf-8?B?b2t4L280V3BGaWxnRU1ielRoZzF6U3h6SWd5Q3dUWnZmbUVGTmZ3NlpTK05E?=
- =?utf-8?B?OVE9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BF4965CDCD51A44D8A1EBD3CAD543860@namprd12.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        Tue, 26 Oct 2021 18:20:38 -0400
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20211026221812epoutp0114cf88ba4448b457f12ee53bdb5ca6d0~xtJUSxmwq0846108461epoutp01c;
+        Tue, 26 Oct 2021 22:18:12 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20211026221812epoutp0114cf88ba4448b457f12ee53bdb5ca6d0~xtJUSxmwq0846108461epoutp01c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1635286692;
+        bh=YpSE6qnCQzEz7yZwtDVd9ekJ3kJ9xV2pwDRmKtQvlR4=;
+        h=Subject:To:From:Date:In-Reply-To:References:From;
+        b=DhIdexF5Qxadf1IqNPjtsOWb7/Y7QHnx89wa6eXwXBxVo03KJYHIrz9TdfHU1tPgt
+         cIJD05A2SydOmY1DfZHkZHz1esctGkA93syd/Jas2NozFPWIEC37TzwwBOHzi+lhF1
+         CyRPLKtjymnGDIigHPXwnNcusSFmmt483XcYM4Ls=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+        epcas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20211026221811epcas1p1a5cfec876e41534f9d27ea252974a422~xtJUBusaL0988809888epcas1p1L;
+        Tue, 26 Oct 2021 22:18:11 +0000 (GMT)
+Received: from epsmges1p3.samsung.com (unknown [182.195.38.235]) by
+        epsnrtp4.localdomain (Postfix) with ESMTP id 4Hf5ms65Wpz4x9Pv; Tue, 26 Oct
+        2021 22:18:05 +0000 (GMT)
+Received: from epcas1p4.samsung.com ( [182.195.41.48]) by
+        epsmges1p3.samsung.com (Symantec Messaging Gateway) with SMTP id
+        E2.DB.09592.D9E78716; Wed, 27 Oct 2021 07:18:05 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+        epcas1p3.samsung.com (KnoxPortal) with ESMTPA id
+        20211026221804epcas1p398bd502c4f4a0479d79e700e1368d645~xtJNr7oq32900529005epcas1p3Y;
+        Tue, 26 Oct 2021 22:18:04 +0000 (GMT)
+Received: from epsmgms1p1new.samsung.com (unknown [182.195.42.41]) by
+        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20211026221804epsmtrp20a474ddc52a5261c65af9e99586b041b~xtJNqjiSR0527705277epsmtrp2L;
+        Tue, 26 Oct 2021 22:18:04 +0000 (GMT)
+X-AuditID: b6c32a37-2a5ff70000002578-dd-61787e9d1960
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+        epsmgms1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+        89.D3.29871.C9E78716; Wed, 27 Oct 2021 07:18:04 +0900 (KST)
+Received: from [10.113.221.211] (unknown [10.113.221.211]) by
+        epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20211026221804epsmtip1a2d7b68c6a675cea8adda7e9be2ead61~xtJNSXFDn2682326823epsmtip1i;
+        Tue, 26 Oct 2021 22:18:04 +0000 (GMT)
+Subject: Re: [PATCH v2 06/13] drm/exynos: replace drm_detect_hdmi_monitor()
+ with drm_display_info.is_hdmi
+To:     Claudio Suarez <cssk@net-c.es>, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
+        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
+        ville.syrjala@linux.intel.com
+From:   Inki Dae <inki.dae@samsung.com>
+Message-ID: <ee6b3bac-4762-fd8f-c12a-c0a7ea7b56e9@samsung.com>
+Date:   Wed, 27 Oct 2021 07:28:45 +0900
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+        Thunderbird/78.13.0
 MIME-Version: 1.0
-X-OriginatorOrg: synopsys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4791.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ddb3140e-b76c-44be-b59b-08d998c669ab
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Oct 2021 21:20:19.3043
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fpQiS8jwbLCT0yViNgyPowYsBIH0iHo2o9ZdkqmqoQ63qVGxWkb9D+0xhco48IWnZTgU5X0wy3++4RhcW8O8sA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB3590
+In-Reply-To: <20211016184226.3862-7-cssk@net-c.es>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01TaVBTVxTufUneS7DRlKXcoRUhlDpgwYT1asGtFF9bW6l2uoAdfIU3wJDN
+        JLQKYwehIogFIkgg7LJZoGyCStjBilhorVRwWAZlGQc6QEXZxoINPGz5933nfOee75w7h8sy
+        7iAsuCEyNa2UURIhbsS+1m4ncsj6/iQlmiyzQz/+1omh1MF6DiqsOEOgieJYgKaGDVS79AKg
+        F9c0LPTn3AyOspoeYijzcbchNvIXB2VdPI0ykq5iqLinAqArz9IJ1JiHoThNAYE0zd0Einum
+        w1FMXBEHtSX4oYWEBA766fIcjh7nLbLQrO4RCzXregk0lHwToCV9NhstrBjql9p+x1DJVQ2+
+        bxt59t4yTkbN3MLJmQdnCbJypJRDNs7nssk63RBBZsSmc8j8hgmMrC6Jw8nB3gacvD7/kENm
+        d35KDsd3YGTVaBFGduj7CXKm6T7uY+Ib6hFMU4G00oqWBcgDQ2RBnsKPjvq/5+/qJhI7iHch
+        d6GVjJLSnkKvQz4O3iESw8qEVt9SkjBDyIdSqYQ793go5WFq2ipYrlJ7CmlFoEThqnBUUVJV
+        mCzIUUard4tFIidXg/B4aHB9fzehSOGfzCgbJCKBdtN5wONCgQucaS4Aq9hYcAPA1mrReWBk
+        wLMAPslYZDFkHsDExU7iZUWkZpBgEo0A3m6pZDNkBsD2Ze3aWyaCUHimZ3ZNZSo4x4NRFTGs
+        1QQusIWaK8P4KuYL9sDIwg72KmYb4l35NdgqNhN8BZc79RxG8xrsTB9b0/AETnAx8cKahiUw
+        h/1jOet4G4yuzVjzCgXzPHi9ZggwXr1gTV8mi8EmcLKjZn0GC/h0uhFnCqIB1KT9ijEkFsCh
+        0T42o3KGzYXJhgTX0MIOVuh3MmFrWPc8CzCdN8PpuQucVQkU8GFsjDEjEcJbfzxY9wDh3QIN
+        zmASjpfVr6/rZwDjb+fhScBKt2FQ3YbhdBuG0/3vIhewS8DrtEIlDaJVYoXzfx8eIJdWg7WL
+        sne/AVKn/nZsAxgXtAHIZQlN+T3Z31HG/EDqVDitlPsrwyS0qg24GlavYVmYBcgNJylT+4td
+        dolc3JycXZDYTSw05z+1PEEZC4IoNR1K0wpa+bIO4/IsIjHJgLdvqvKtkPzE4eZj8dbvf5kz
+        UCN/O6/+6MIRo+2dmJ7zZEv5m35tuZuSa9Vq89Nkq80n3+iPKHmXVFUlfuG24vDn7M0BlViC
+        tst0JSL5IJV3+PLox7vr3tUOWO7H0ix2eET8Y/tZmeXkeHTW/Szfz6W+DaWzd17pc48sKfCI
+        vHuOP+4wvlfYf3xyaV9TDPdQK9u5vEVRb190aW/3vuWKEwfSL2Zq26NDqkPe6bLZX1m81f9e
+        lSjph9qRafZAsGzLL+U7Ppj48PByjnW6zRdbtamPjn3dPDVPd2wv8n4jn3WTa5bSbbei6z3o
+        NZaWZ3IHBA23LJa6SF9NkSorayI4VVVRS6eEbFUwJbZnKVXUvwc1qyXaBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUxTZxiG957T89G6zkNBeQUysyLZdBtapvFN5nCE6E6y/UCjcXOLtdGT
+        QqSl60Gl4kfBQdq6gdVNpHwJFZAyxlexIkpNa4ZlVBdwhBUUrDhnwKAEsV2mrhSX8O9+7vu6
+        /j00LikhYugMdTanVSsypaRIcNEtffvD8qM5ijVVeR+hH256MHRmpItAtc15FHpUbwDo8Wjo
+        LAm+AujVRTOObj+bIlFF9xiGyh96Q51/gkAVp46gspPtGKofaAbowkwpha5WY8hoPk8hs9NL
+        IeOMhUSFxjoCuYq+Rs+LigjUUPOMRA+rAziattzDkdMySKE7p68DFLxcKUDPX4b8oOsWhmzt
+        ZvLT5WxB/wuSzZ/6lWSnhgootsXfSLBXZ88J2E7LHYotM5QSrPXKI4xtsxlJdmTwCsk6ZscI
+        ttKzhR090YOxrffrMLbnso9ip7r/INMid4o27OUyMw5w2tXJu0XpXT4vpflRnFP28wilByWL
+        TEBIQ2Yt1JtHKBMQ0RKmC8C/88eACdChAUJ7Bz0fI6Hbzc8jjwEMNDvxOTeS2QfzBqbDbhRz
+        QgjPuq34PNUEYI/VJ5ijSCYBmi+MknNZzCRDfW1PuBeE+j6rHZvLS5ivYP6NjtdMBPSUjocZ
+        IZMEA8XfhxmceRf+W9mPz+do6Buvet0vh8c7yvCTIMKyQLcsUCwLFMsC5RwQ2MAyTsOrlCpe
+        ppGpuYOJvELF71crE/dkqdpA+HdWrbwEHLYniS6A0cAFII1Lo8QDlQcVEvFehe4Qp82Sa/dn
+        crwLxNICabT4d5NHLmGUimxuH8dpOO3/K0YLY/RY9yzeH9GbJLvd6Z8R7ey/5dZZ7/rL5dO+
+        jGDuxzdPp9bXv7P+/vZJZ8K2ztq4Pseu6jhV07eUXSIvSmhnPosyBNbQQ3GdvU9Seye2LI1V
+        jha7vtCtO7P4l8D5+IH1Zx+88YHtmxx+46AsOSvlk2HM42gojW8pVC5Ne5qyYVOFSf3+KSBb
+        9934IeZa9LFJed1PrmvKt3QRb9JdwtxgjVPoTd0omRQP/+NpuFdeoMtpGi7O1fR5Dif6uCXS
+        xibKo3HyLfZUo8GJTBNJjPFzdYZ9R4rWG9t2Pe944+YVhUb/Vv1uwvFezZcH0lodf2qH0/9a
+        1DFjiLmxGmG/tQ5lZ96VCvh0hWwVruUV/wEmvDQhqgMAAA==
+X-CMS-MailID: 20211026221804epcas1p398bd502c4f4a0479d79e700e1368d645
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20211016193513epcas1p4e354183520df0aa4c381b19eb2863262
+References: <20211016184226.3862-1-cssk@net-c.es>
+        <CGME20211016193513epcas1p4e354183520df0aa4c381b19eb2863262@epcas1p4.samsung.com>
+        <20211016184226.3862-7-cssk@net-c.es>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-U2FuZGVlcCBNYWhlc3dhcmFtIHdyb3RlOg0KPiBkd2MzIG1hbmFnZXMgUEhZIGJ5IG93biBEUkQg
-ZHJpdmVyLCBzbyBza2lwIHRoZSBtYW5hZ2VtZW50IGJ5DQo+IEhDRCBjb3JlLg0KPiBEdXJpbmcg
-cnVudGltZSBzdXNwZW5kIHBoeSB3YXMgbm90IGdldHRpbmcgc3VzcGVuZCBiZWNhdXNlDQo+IHJ1
-bnRpbWVfdXNhZ2UgdmFsdWUgaXMgMi4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IFNhbmRlZXAgTWFo
-ZXN3YXJhbSA8cXVpY19jX3Nhbm1AcXVpY2luYy5jb20+DQo+IC0tLQ0KPiAgZHJpdmVycy91c2Iv
-ZHdjMy9ob3N0LmMgfCAyICsrDQo+ICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspDQo+
-IA0KPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy91c2IvZHdjMy9ob3N0LmMgYi9kcml2ZXJzL3VzYi9k
-d2MzL2hvc3QuYw0KPiBpbmRleCBmMjlhMjY0Li41MTQ0NTEzIDEwMDY0NA0KPiAtLS0gYS9kcml2
-ZXJzL3VzYi9kd2MzL2hvc3QuYw0KPiArKysgYi9kcml2ZXJzL3VzYi9kd2MzL2hvc3QuYw0KPiBA
-QCAtMTA3LDYgKzEwNyw4IEBAIGludCBkd2MzX2hvc3RfaW5pdChzdHJ1Y3QgZHdjMyAqZHdjKQ0K
-PiAgCWlmIChEV0MzX1ZFUl9JU19XSVRISU4oRFdDMywgQU5ZLCAzMDBBKSkNCj4gIAkJcHJvcHNb
-cHJvcF9pZHgrK10gPSBQUk9QRVJUWV9FTlRSWV9CT09MKCJxdWlyay1icm9rZW4tcG9ydC1wZWQi
-KTsNCj4gIA0KPiArCXByb3BzW3Byb3BfaWR4KytdID0gUFJPUEVSVFlfRU5UUllfQk9PTCgidXNi
-LXNraXAtcGh5LWluaXQiKTsNCg0KSW5jcmVhc2UgcHJvcHNbXSBhcnJheSBzaXplIHdpdGggdGhp
-cyBuZXcgY2hhbmdlLg0KDQo+ICsNCj4gIAlpZiAocHJvcF9pZHgpIHsNCj4gIAkJcmV0ID0gZGV2
-aWNlX2NyZWF0ZV9tYW5hZ2VkX3NvZnR3YXJlX25vZGUoJnhoY2ktPmRldiwgcHJvcHMsIE5VTEwp
-Ow0KPiAgCQlpZiAocmV0KSB7DQo+IA0KDQpDYW4gd2UgdXBkYXRlIHRoZSAkc3ViamVjdCBwcmVm
-aXggZnJvbSAiZHdjIiB0byAiZHdjMyI/DQoNClRoYW5rcywNClRoaW5oDQo=
+Hi,
+
+21. 10. 17. 오전 3:42에 Claudio Suarez 이(가) 쓴 글:
+> Once EDID is parsed, the monitor HDMI support information is available
+> through drm_display_info.is_hdmi. Retriving the same information with
+> drm_detect_hdmi_monitor() is less efficient. Change to
+> drm_display_info.is_hdmi
+> 
+> Signed-off-by: Claudio Suarez <cssk@net-c.es>
+> ---
+>  drivers/gpu/drm/exynos/exynos_hdmi.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(
+> 
+> diff --git a/drivers/gpu/drm/exynos/exynos_hdmi.c b/drivers/gpu/drm/exynos/exynos_hdmi.c
+> index 7655142a4651..a563d6386abe 100644
+> --- a/drivers/gpu/drm/exynos/exynos_hdmi.c
+> +++ b/drivers/gpu/drm/exynos/exynos_hdmi.c
+> @@ -893,12 +893,14 @@ static int hdmi_get_modes(struct drm_connector *connector)
+>  	if (!edid)
+>  		return -ENODEV;
+>  
+> -	hdata->dvi_mode = !drm_detect_hdmi_monitor(edid);
+> +	/* This updates connector->display_info */
+> +	drm_connector_update_edid_property(connector, edid);
+> +
+> +	hdata->dvi_mode = !connector->display_info.is_hdmi;
+
+Thanks for correcting this. Yeah, we should use drm_display_info.is_hdmi parsed from EDID.
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/gpu/drm/drm_edid.c?h=v5.14.14#n4725
+
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+
+Thanks,
+Inki Dae
+
+>  	DRM_DEV_DEBUG_KMS(hdata->dev, "%s : width[%d] x height[%d]\n",
+>  			  (hdata->dvi_mode ? "dvi monitor" : "hdmi monitor"),
+>  			  edid->width_cm, edid->height_cm);
+>  
+> -	drm_connector_update_edid_property(connector, edid);
+>  	cec_notifier_set_phys_addr_from_edid(hdata->notifier, edid);
+>  
+>  	ret = drm_add_edid_modes(connector, edid);
+> 
