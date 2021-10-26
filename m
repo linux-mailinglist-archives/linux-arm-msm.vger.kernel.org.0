@@ -2,166 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5BE043B398
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 16:07:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A34C643B3C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 16:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235321AbhJZOJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 10:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50078 "EHLO
+        id S234880AbhJZOUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 10:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231493AbhJZOJc (ORCPT
+        with ESMTP id S230316AbhJZOUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 10:09:32 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3311EC061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:07:09 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id w12-20020a056830410c00b0054e7ceecd88so19988233ott.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:07:09 -0700 (PDT)
+        Tue, 26 Oct 2021 10:20:09 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C61C061767
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:17:45 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id y67so20606613iof.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G5Qlx1y7ALla3mofzLviDldMhP9x8JiihdYD246zlCY=;
-        b=JmNzDIh4MWt3N9J8HsHlhZS+nlhV7KoxC7nizgJuk8hQsmjIouKI6bZ5bpUnuqfv9F
-         eYV+4iGHhN5KXAdPqk14uGbuD89z20WMaKbJ3yHzvhJ5b+1OEVg34W+Fze33WKrTBCNg
-         ksxMj0PjQNXIkkeWcxguTLeeSKKuYwATCYfMlf+RklW+iae+QVlRAvbAkzB0cnE/D8qn
-         1Xa5yEy4VEvsh5vlETy2qNsjMsqnFzPDdIh33FdFP7oSUpmcsfIEI8g6WvNneS0+x86E
-         wd7FgHSN0dvPvMXYrXFZsTLwdU/lCpty2XRCuhk+tybAdZ0rGPumQ/58kbLyufSdZ0e6
-         GMMg==
+        d=ieee.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=760ZElop6ZLsQ88z+YqPOpJFTUrugLm2l1ikv3lUPKE=;
+        b=cu/RKYxnwzW3x8m/UFGetYR/dPqlR1mmPEFE7NVkJgedNQX1zAonFkRRMpZkTLXmB6
+         qMWatzgemSDh25dKIXhJQ8jo+IGA7cREO2B88PbhGVzwB57c4lkwu/HNecHtR7i6uubE
+         2By5Ctfba1wIoFYe2rtNrlXkaC7G13kqqhq7g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=G5Qlx1y7ALla3mofzLviDldMhP9x8JiihdYD246zlCY=;
-        b=rDdqaFGZjCgHIhrEtSDL9s+KVy6xSAwb3/mrNJoIJkrw9CwvJQSE2d95yaine72EV5
-         ylGOc/Dl0roX7J2qylQ/Y7Om/zXsp/BGMfp1A1UXerD8GPMTdGZinRSWENPo/9M03IR1
-         vHUuY1O8uBVDTPo9/oKFgLd16v8PGDYGRm5/vYmu8KN0PzEIvKXHfuHX2mOi4YR56Dz2
-         VepTg14AotapFkgAhIfsga85N6NXw7jHf3dMwQDAFpfL0io8A7jgl8cZctB1veQe9nsu
-         iza83eP68IhItGuMorJAo3ySp3GWVAAQWLGFEBQCq5lEFHwFzYt49HeV33CnzFpRg2Yl
-         MFOQ==
-X-Gm-Message-State: AOAM5326cETPEaCnl9sRV2ZIiUxTFwqNl0hw+FD+mBvoYpQSpaZCvgwb
-        5sZxOpqtsvxWl6xz2GevnAxjuQ==
-X-Google-Smtp-Source: ABdhPJySoYtqBF6E1gZIxLymCcbN+YVTvANHlMP5w77ok+wlM6XMABiz0bKovqVOltEZwyU2aKVweQ==
-X-Received: by 2002:a05:6830:60f:: with SMTP id w15mr1773894oti.150.1635257228425;
-        Tue, 26 Oct 2021 07:07:08 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id f8sm4473429otp.63.2021.10.26.07.07.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 07:07:07 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Wan Jiabing <wanjiabing@vivo.com>,
-        Chris Lew <clew@codeaurora.org>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Lina Iyer <lina.iyer@linaro.org>,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [GIT PULL] More Qualcomm driver updates for v5.16
-Date:   Tue, 26 Oct 2021 09:07:06 -0500
-Message-Id: <20211026140706.1205989-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        bh=760ZElop6ZLsQ88z+YqPOpJFTUrugLm2l1ikv3lUPKE=;
+        b=VyTqPG2w8qOMjc56lRmVMS9QqjkA1tQDTzc/2+Ioi0LX6EPbQQdkZJqLvshK0KTM0Z
+         MvmU4CNf3fNLNiTDKkV6P8k7W0g2L1KEBJVR6PYYx/4H/r4XcWt5ctMWZ2hts1PeYogC
+         0C2i3D/97+dCSKZJrxaRn9Z54UVq7Kte8H4EEuUyFUtaWQS+CvoflGPL3oYo9z/ZF4iw
+         Ol9lGt0gey4acvS0yp45bsJiCtOTS1ERKFlQotgqqNtJWQDRHcQdWRaWgDTObvc2SZDT
+         EvPotJwiEdZwU8llRDWtSIHFkpCaJJyxtcPOJH6OmdRwC4i8tohATvornLV0rG8INUIX
+         +8yw==
+X-Gm-Message-State: AOAM530l+JwfvTKps8G7bFznYjzG5viwayghAd2+5cpGS1c96WgeTVxH
+        1IyALs6xGXBl2JtYIvJjunbRXw==
+X-Google-Smtp-Source: ABdhPJw+vuHb4SnbwrgIFtuOrWJsylVX+xHOd8CFggfyuK3BnxNMbdiCVQJFjmy+HXybBe7wmw0gkg==
+X-Received: by 2002:a05:6638:1505:: with SMTP id b5mr16017331jat.99.1635257865169;
+        Tue, 26 Oct 2021 07:17:45 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id l3sm4682381ilv.46.2021.10.26.07.17.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Oct 2021 07:17:44 -0700 (PDT)
+Subject: Re: [PATCH 1/2] dt-bindings: net: qcom,ipa: describe IPA v4.5
+ interconnects
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211020225435.274628-1-david@ixit.cz>
+ <05b2cc69-d8a4-750d-d98d-db8580546a15@ieee.org>
+ <C9217CCA-1A9B-40DC-9A96-13655270BA8F@ixit.cz>
+From:   Alex Elder <elder@ieee.org>
+Message-ID: <52362729-032b-e9e2-bbb9-663b1d566b37@ieee.org>
+Date:   Tue, 26 Oct 2021 09:17:43 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <C9217CCA-1A9B-40DC-9A96-13655270BA8F@ixit.cz>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit f27591125a56c8c50491919b159569ab5730878d:
+On 10/21/21 5:11 PM, David Heidelberg wrote:
+> Hello Alex,
+> 
+> it's make dtbs_check (for me with ARCH=arm)
+> 
+> David
 
-  Merge tag '20210927135559.738-6-srinivas.kandagatla@linaro.org' into drivers-for-5.16 (2021-09-27 22:13:45 -0500)
+Thank you, I see the errors now.  I am gathering information
+so I can fix the interconnect issue for IPA v4.5 (SDX55).
 
-are available in the Git repository at:
+Your other suggested change (increasing the allowed number of
+iommus) is the right thing to do, but it seems you need to
+specify "minItems = 1" as well to avoid the error Rob pointed
+out.  You should post version two of that patch (only), or if
+you would prefer I do that, say so.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.16-2
+Another error that shows up is that no "qcom,smp2p" schema
+matches.  I'm pretty sure that's simply because the binding
+"soc/qcom/qcom,smp2p.txt" has not bee converted to YAML.
 
-for you to fetch changes up to c50031f03dfe1c1462f326973ddc5f0db839fb68:
-
-  firmware: qcom: scm: Don't break compile test on non-ARM platforms (2021-10-25 14:21:34 -0500)
-
-----------------------------------------------------------------
-More Qualcomm driver updates for v5.16
-
-This introduces the Qualcomm "sleep stats" driver, which aids the
-efforts of bringing various Qualcomm platforms into low power mode.
-
-The SMP2P driver gains support for negotiating the "SSR" feature, which
-is used to better synchronize some corner cases that might appear as the
-remoteproc is recovering from a crash.
-
-The socinfo driver learns about a few new PMICs.
-
-SMEM is updated so that it's possible to put the compatible property
-directly in the reserved-memory node, to avoid having to have a separate
-node just pointing to the memory-region.
-
-Lastly it fixes some bugs in smp2p, apr, rpmhpd drivers, notably
-avoiding the issue where powering on a power-domain using rpmhpd while
-keeping the performance_state at 0 is a nop
-
-----------------------------------------------------------------
-Bjorn Andersson (6):
-      dt-bindings: sram: Document qcom,rpm-msg-ram
-      dt-bindings: soc: smem: Make indirection optional
-      soc: qcom: smem: Support reserved-memory description
-      soc: qcom: rpmhpd: Make power_on actually enable the domain
-      soc: qcom: socinfo: Add PM8150C and SMB2351 models
-      firmware: qcom: scm: Don't break compile test on non-ARM platforms
-
-Chris Lew (1):
-      soc: qcom: smp2p: add feature negotiation and ssr ack feature support
-
-Dmitry Baryshkov (2):
-      soc: qcom: socinfo: add two missing PMIC IDs
-      soc: qcom: rpmhpd: fix sm8350_mxc's peer domain
-
-Guru Das Srinagesh (1):
-      firmware: qcom_scm: Fix error retval in __qcom_scm_is_call_available()
-
-Lina Iyer (1):
-      soc: qcom: spm: Add 8916 SPM register data
-
-Mahesh Sivasubramanian (2):
-      dt-bindings: Introduce QCOM Sleep stats bindings
-      soc: qcom: Add Sleep stats driver
-
-Maulik Shah (1):
-      soc: qcom: qcom_stats: Fix client votes offset
-
-Stephan Gerhold (4):
-      dt-bindings: soc: qcom: spm: Document qcom,msm8916-saw2-v3.0-cpu
-      firmware: qcom: scm: Add support for MC boot address API
-      ARM: qcom: Add qcom,msm8916-smp enable-method identical to MSM8226
-      dt-bindings: arm: cpus: Document qcom,msm8916-smp enable-method
-
-Wan Jiabing (2):
-      soc: qcom: apr: Add of_node_put() before return
-      soc: qcom: smp2p: Add of_node_put() before goto
-
- Documentation/devicetree/bindings/arm/cpus.yaml    |   5 +-
- .../devicetree/bindings/soc/qcom/qcom,smem.yaml    |  34 ++-
- .../devicetree/bindings/soc/qcom/qcom,spm.yaml     |   1 +
- .../devicetree/bindings/soc/qcom/qcom-stats.yaml   |  47 ++++
- Documentation/devicetree/bindings/sram/sram.yaml   |   5 +-
- arch/arm/mach-qcom/platsmp.c                       |   1 +
- drivers/firmware/qcom_scm.c                        |  96 +++++--
- drivers/firmware/qcom_scm.h                        |   4 +
- drivers/of/platform.c                              |   1 +
- drivers/soc/qcom/Kconfig                           |  10 +
- drivers/soc/qcom/Makefile                          |   1 +
- drivers/soc/qcom/apr.c                             |   2 +
- drivers/soc/qcom/qcom_stats.c                      | 277 +++++++++++++++++++++
- drivers/soc/qcom/rpmhpd.c                          |  20 +-
- drivers/soc/qcom/smem.c                            |  57 +++--
- drivers/soc/qcom/smp2p.c                           | 134 +++++++---
- drivers/soc/qcom/socinfo.c                         |   6 +-
- drivers/soc/qcom/spm.c                             |  21 ++
- 18 files changed, 645 insertions(+), 77 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
- create mode 100644 drivers/soc/qcom/qcom_stats.c
+					-Alex
