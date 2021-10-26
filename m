@@ -2,155 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCF7C43B48A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 16:43:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AE3343B4D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 16:52:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236892AbhJZOpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 10:45:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236880AbhJZOpV (ORCPT
+        id S236876AbhJZOyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 10:54:52 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30099 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233612AbhJZOyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 10:45:21 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7808CC061220
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:42:57 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id j9so17775598lfu.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 07:42:57 -0700 (PDT)
+        Tue, 26 Oct 2021 10:54:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IeDPLqe3LBKUpRJz9gheIRoaNjTzo/azi2xTKJ59u4Q=;
-        b=rtTjZwJ3hBs0LVsm1btVhVOPMJ9I5MezaBoSmoqbce3/qjWaQC2+rhDsqRinNFpWQ9
-         XEIv2SKGN2wjW6chPzCLFT9zXOXt09mKGJ/wp/DNysqfz/QAU71tshSVm8II8W/47Zro
-         fFViFfYJTYFIggox35NWeXMsLXyiHz4KJZOhp09/tVEVgiKZNFcmb7ZD3JDtHb1fBhVQ
-         yS2F4rXj6uNpRlrHm4EgqyOu1tCiRlDKS7dy0yVGyj64Vd+6Vc46iZY7ovCpsczbeLZF
-         xEdJJP60JLVtl8SPNzMqy327fFe1kk/K19U6B1zRdDm/RDl/oaOFpQn9GHaOGF5wYdRV
-         5zfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IeDPLqe3LBKUpRJz9gheIRoaNjTzo/azi2xTKJ59u4Q=;
-        b=uGShN8ScjajRub2J0DXhTjAboWVjL4Swka2DDlOLek1vd0GxQCrwHasBkEBaAW+jOx
-         60A60J5isJRL6GaN/rp7HSe5dqHdZeJ/AZco0KPpzrJOnRXa2/03pgpjvUzwUXZffAcr
-         ieAJVa85li7sgayWoXrgF23PzSuXPlD/1FJB6IpG+GxuH/YT+13l5rbJvwqpKxWTCiib
-         aYr0CBsqD3U7sImcc/LTP8LQyFIq5AKXUU/T9lf+jigskHwBJNt11YnV2A+/X9WzPB1x
-         5rlHJqPSO8kr0wVU1YqRhZOyv+M21CzFHUfGvmZXZqMfzNbL8rO9X4lERbj6yotID1dZ
-         HMdg==
-X-Gm-Message-State: AOAM533ZdEEpRriFbQCjnA9Et5WBuWQyxbmInoHUFPmigYfT5Tm3cq1K
-        EJI/gj2M5oKWl3UqilwJjEiM+Q==
-X-Google-Smtp-Source: ABdhPJzbC4V4BOc77PUffVI7AxDyDMkYAgocDN0aDe9m5/bXIjvUGOQ5RhLNx5fCyuk5xWO+M9NHyA==
-X-Received: by 2002:a05:6512:3407:: with SMTP id i7mr24013249lfr.563.1635259375652;
-        Tue, 26 Oct 2021 07:42:55 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bi9sm2256901lfb.40.2021.10.26.07.42.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Oct 2021 07:42:55 -0700 (PDT)
-Subject: Re: [PATCH v1 01/15] dt-bindings: add pwrseq device tree bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
- <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
- <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <37b26090-945f-1e17-f6ab-52552a4b6d89@linaro.org>
-Date:   Tue, 26 Oct 2021 17:42:54 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635259948; x=1666795948;
+  h=from:to:cc:subject:date:message-id;
+  bh=hbJhp0/sw60fOOldoInBhAGBQJw+4TbdTVWu98hF2CM=;
+  b=Z5Xuzy2cyVYS+vUIxwuQDjA3TUYzg7SWfuWCcFQDNgtkwuuRRXQennPX
+   1V9NuNh/RkXTqHMujfCEJ6KUhIbnHloHxXaRJwQ9srJxTPAqXofuoqLmx
+   5JGs23NO0fQxf7fo7uszOHImr+uRlv4rIMxL2SmdP41v3k+2jJdSJyU/y
+   4=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 26 Oct 2021 07:52:28 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Oct 2021 07:52:26 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 26 Oct 2021 20:22:11 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id B0AE221E0F; Tue, 26 Oct 2021 20:22:09 +0530 (IST)
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mchehab@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: [PATCH v7] arm64: dts: qcom: sc7280: Add venus DT node
+Date:   Tue, 26 Oct 2021 20:22:02 +0530
+Message-Id: <1635259922-25378-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2021 15:53, Rob Herring wrote:
-> On Wed, Oct 06, 2021 at 06:53:53AM +0300, Dmitry Baryshkov wrote:
->> Add device tree bindings for the new power sequencer subsystem.
->> Consumers would reference pwrseq nodes using "foo-pwrseq" properties.
->> Providers would use '#pwrseq-cells' property to declare the amount of
->> cells in the pwrseq specifier.
-> 
-> Please use get_maintainers.pl.
-> 
-> This is not a pattern I want to encourage, so NAK on a common binding.
+From: Dikshita Agarwal <dikshita@codeaurora.org>
 
+Add DT entries for the sc7280 venus encoder/decoder.
 
-Could you please spend a few more words, describing what is not 
-encouraged? The whole foo-subsys/#subsys-cells structure?
+Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+---
+changes since v6:
+    fixed checkpatch errors.
 
-Or just specifying the common binding?
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
-> 
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../bindings/power/pwrseq/pwrseq.yaml         | 32 +++++++++++++++++++
->>   1 file changed, 32 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
->> new file mode 100644
->> index 000000000000..4a8f6c0218bf
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
->> @@ -0,0 +1,32 @@
->> +# SPDX-License-Identifier: GPL-2.0
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/power/pwrseq/pwrseq.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Power Sequencer devices
->> +
->> +maintainers:
->> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> +
->> +properties:
->> +  "#powerseq-cells":
->> +    description:
->> +      Number of cells in a pwrseq specifier.
->> +
->> +patternProperties:
->> +  ".*-pwrseq$":
->> +    description: Power sequencer supply phandle(s) for this node
->> +
->> +additionalProperties: true
->> +
->> +examples:
->> +  - |
->> +    qca_pwrseq: qca-pwrseq {
->> +      #pwrseq-cells = <1>;
->> +    };
->> +
->> +    bluetooth {
->> +      bt-pwrseq = <&qca_pwrseq 1>;
->> +    };
->> +...
->> -- 
->> 2.33.0
->>
->>
-
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 365a2e0..e4988ea 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -129,6 +129,11 @@
+ 			no-map;
+ 		};
+ 
++		video_mem: memory@8b200000 {
++			reg = <0x0 0x8b200000 0x0 0x500000>;
++			no-map;
++		};
++
+ 		ipa_fw_mem: memory@8b700000 {
+ 			reg = <0 0x8b700000 0 0x10000>;
+ 			no-map;
+@@ -2675,6 +2680,76 @@
+ 			};
+ 		};
+ 
++		venus: video-codec@aa00000 {
++			compatible = "qcom,sc7280-venus";
++			reg = <0 0x0aa00000 0 0xd0600>;
++			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++			clock-names = "core", "bus", "iface",
++				      "vcodec_core", "vcodec_bus";
++
++			power-domains = <&videocc MVSC_GDSC>,
++					<&videocc MVS0_GDSC>,
++					<&rpmhpd SC7280_CX>;
++			power-domain-names = "venus", "vcodec0", "cx";
++			operating-points-v2 = <&venus_opp_table>;
++
++			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
++					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "cpu-cfg", "video-mem";
++
++			iommus = <&apps_smmu 0x2180 0x20>,
++				 <&apps_smmu 0x2184 0x20>;
++			memory-region = <&video_mem>;
++
++			video-decoder {
++				compatible = "venus-decoder";
++			};
++
++			video-encoder {
++				compatible = "venus-encoder";
++			};
++
++			video-firmware {
++				iommus = <&apps_smmu 0x21a2 0x0>;
++			};
++
++			venus_opp_table: venus-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-133330000 {
++					opp-hz = /bits/ 64 <133330000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-240000000 {
++					opp-hz = /bits/ 64 <240000000>;
++					required-opps = <&rpmhpd_opp_svs>;
++				};
++
++				opp-335000000 {
++					opp-hz = /bits/ 64 <335000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++
++				opp-424000000 {
++					opp-hz = /bits/ 64 <424000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++
++				opp-460000048 {
++					opp-hz = /bits/ 64 <460000048>;
++					required-opps = <&rpmhpd_opp_turbo>;
++				};
++			};
++
++		};
++
+ 		videocc: clock-controller@aaf0000 {
+ 			compatible = "qcom,sc7280-videocc";
+ 			reg = <0 0xaaf0000 0 0x10000>;
 -- 
-With best wishes
-Dmitry
+2.7.4
+
