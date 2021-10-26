@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E76943A8B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 929FA43A8C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 02:01:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235871AbhJZADo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 25 Oct 2021 20:03:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58364 "EHLO
+        id S235531AbhJZADs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 25 Oct 2021 20:03:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235647AbhJZADV (ORCPT
+        with ESMTP id S235669AbhJZADX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 25 Oct 2021 20:03:21 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F76C061225
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:00:58 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id r28so7951433pga.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:00:58 -0700 (PDT)
+        Mon, 25 Oct 2021 20:03:23 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D994C061745
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:00:59 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id o133so12470536pfg.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Oct 2021 17:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9+fM2dIjOxE0hdJ7o5inMEoSl4k+Dtn8hCQbdOli+o8=;
-        b=WK1ox2oRHtuob3v/ROgeEhC1PVQBBzfwdp0Vcx+Dzp3pUstlggErRUG3DVNU3uE2n/
-         vRNQwS26UtVE2R4pJjjbJxrVBD1WGWrU9P20RfSOtE5t14iUTUOVyJjOi4BSBgmP69U+
-         Wx41UMi8X3CGf7P7D+FfisrIp491w2OHpPdzU=
+        bh=FPtGNMfzlxXubKgayi75A1lRD5p2YHP9GYCHjNIhA04=;
+        b=ZQosD7V6yQmvlhhH7d9LVxQjs391cq+ZugAInt195ZJB1c31iI7cpfD6FPl7x6BVal
+         jAp6KnYpubjBSvUeerLBNjMSLqvvohfmu+7stNepicCuaGyF3rTtuU1cTvqrzPBwOAZx
+         ZfubfBnwp95j7sOejWDuWRNYZPT3gf3dhS3bI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9+fM2dIjOxE0hdJ7o5inMEoSl4k+Dtn8hCQbdOli+o8=;
-        b=l2Ay0043/VRjs++z2/ff2Ob9k4Sk4LuGDtL7uvS9ljMUEekVdwQVJrpZxvzuZ7r9bM
-         Tr0C57KPVB8RAzdprGWtwfL+gtOzfT7fFdBs/p3zUMaYCaU7T+9y2TDCx5vmpDqa0WkZ
-         9NIbdBrDnYwkGamkdyq2AYErkhdnj7EhdfXv6QYQwRpunvWZz3QHGMgdv4TZ5q0bn9DF
-         rlyWWHpELCWgCzO+I17hzZZbmhLoTJMO4B7RAUrlmXM1jZVPoY4imN5VjEMR1ecZXJ4h
-         /D4LZUM5a6Y+5M5Adf4bPlxuCHvubXc64XZPFdrriEDZQuhEKaH69/jJ0uWNSjaHjOQw
-         0LGQ==
-X-Gm-Message-State: AOAM530stT7Cv/VZSfaaDqI7oTNYfHkKyqOhboqTegiWm9NHu6iq2/le
-        hoNSYcOPYFNNcClD7qG5lPw6Pw==
-X-Google-Smtp-Source: ABdhPJyAH+KqK4V7Wo1bh2UQ9/xYGJyYJ5MoNL/eKeZvWyDr56giKqwSJvUB9ld4uN59VRUEoCXXxw==
-X-Received: by 2002:a62:2944:0:b0:44d:b731:4228 with SMTP id p65-20020a622944000000b0044db7314228mr21635086pfp.9.1635206457831;
-        Mon, 25 Oct 2021 17:00:57 -0700 (PDT)
+        bh=FPtGNMfzlxXubKgayi75A1lRD5p2YHP9GYCHjNIhA04=;
+        b=OMSp9Rgw8eCn9FBuVSlLDKcaPC+ymEG2GgDZPrzIuP9ISLkvTNkdSdexzEbo5rf4Pn
+         m2LLQ0/LPJO2ix+iiCN3yv10UHanR8pC4TyKsv5OOdTJXPrsvFCRU33J1I7bXGMnVGoR
+         Ax/R3mVYRJElLKxdwfBGqLEV2PR5asdCBKvNfIKHVJcj3ndwnftHKwYfBE1o5c30d15S
+         pu6AVLWtEjl7b300mLj5HDr/MerqFNpSXKZ4p++co7tVE3wbV0S0kjIeGEcF6Bgf4Smr
+         dhbm+nR5DZYgB3G1R0Y+qZGYv93ug4+wAg86La8/kB1ZFy6SKFL/uh8Unj7SaySZGs1Y
+         l+Nw==
+X-Gm-Message-State: AOAM5333fNEQV5sqiJrsFU5n5xHCbzM4pUZOu36OwK7eozmCWjSFeBe9
+        Tnh4elCZRDxD4ENbdqpMgIexNQ==
+X-Google-Smtp-Source: ABdhPJx69oVwipKUghIvmYhjX0TWb7kTFl046wE1UKExMmiU0ZfDB+iEl0k76E5rUysVBHJQyoUFOw==
+X-Received: by 2002:aa7:9ad8:0:b0:44d:24d0:3ddf with SMTP id x24-20020aa79ad8000000b0044d24d03ddfmr22014955pfp.29.1635206458706;
+        Mon, 25 Oct 2021 17:00:58 -0700 (PDT)
 Received: from smtp.gmail.com ([2620:15c:202:201:f5e3:5eb1:d5ee:6893])
         by smtp.gmail.com with ESMTPSA id b7sm9900747pfm.28.2021.10.25.17.00.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Oct 2021 17:00:57 -0700 (PDT)
+        Mon, 25 Oct 2021 17:00:58 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v3 13/34] drm/kirin: Migrate to aggregate driver
-Date:   Mon, 25 Oct 2021 17:00:23 -0700
-Message-Id: <20211026000044.885195-14-swboyd@chromium.org>
+Subject: [PATCH v3 14/34] drm/exynos: Migrate to aggregate driver
+Date:   Mon, 25 Oct 2021 17:00:24 -0700
+Message-Id: <20211026000044.885195-15-swboyd@chromium.org>
 X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
 In-Reply-To: <20211026000044.885195-1-swboyd@chromium.org>
 References: <20211026000044.885195-1-swboyd@chromium.org>
@@ -75,11 +74,10 @@ Use an aggregate driver instead of component ops so that we can get
 proper driver probe ordering of the aggregate device with respect to all
 the component devices that make up the aggregate device.
 
-Cc: Xinliang Liu <xinliang.liu@linaro.org>
-Cc: Tian Tao <tiantao6@hisilicon.com>
-Cc: John Stultz <john.stultz@linaro.org>
-Cc: Xinwei Kong <kong.kongxinwei@hisilicon.com>
-Cc: Chen Feng <puck.chen@hisilicon.com>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
@@ -87,64 +85,65 @@ Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- .../gpu/drm/hisilicon/kirin/kirin_drm_drv.c   | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_drv.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-index 98ae9a48f3fe..00d47c784cbb 100644
---- a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-+++ b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
-@@ -217,8 +217,9 @@ static int kirin_drm_kms_cleanup(struct drm_device *dev)
- 	return 0;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+index d8f1cf4d6b69..dcb52ec2bd35 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+@@ -253,8 +253,9 @@ static struct component_match *exynos_drm_match_add(struct device *dev)
+ 	return match ?: ERR_PTR(-ENODEV);
  }
  
--static int kirin_drm_bind(struct device *dev)
-+static int kirin_drm_bind(struct aggregate_device *adev)
+-static int exynos_drm_bind(struct device *dev)
++static int exynos_drm_bind(struct aggregate_device *adev)
  {
 +	struct device *dev = adev->parent;
- 	struct kirin_drm_data *driver_data;
- 	struct drm_device *drm_dev;
- 	int ret;
-@@ -253,8 +254,9 @@ static int kirin_drm_bind(struct device *dev)
+ 	struct exynos_drm_private *private;
+ 	struct drm_encoder *encoder;
+ 	struct drm_device *drm;
+@@ -330,8 +331,9 @@ static int exynos_drm_bind(struct device *dev)
  	return ret;
  }
  
--static void kirin_drm_unbind(struct device *dev)
-+static void kirin_drm_unbind(struct aggregate_device *adev)
+-static void exynos_drm_unbind(struct device *dev)
++static void exynos_drm_unbind(struct aggregate_device *adev)
  {
 +	struct device *dev = adev->parent;
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
  
- 	drm_dev_unregister(drm_dev);
-@@ -262,9 +264,13 @@ static void kirin_drm_unbind(struct device *dev)
- 	drm_dev_put(drm_dev);
+ 	drm_dev_unregister(drm);
+@@ -350,9 +352,13 @@ static void exynos_drm_unbind(struct device *dev)
+ 	drm_dev_put(drm);
  }
  
--static const struct component_master_ops kirin_drm_ops = {
--	.bind = kirin_drm_bind,
--	.unbind = kirin_drm_unbind,
-+static struct aggregate_driver kirin_drm_aggregate_driver = {
-+	.probe = kirin_drm_bind,
-+	.remove = kirin_drm_unbind,
-+	.driver = {
-+		.name = "kirin_drm",
-+		.owner = THIS_MODULE,
+-static const struct component_master_ops exynos_drm_ops = {
+-	.bind		= exynos_drm_bind,
+-	.unbind		= exynos_drm_unbind,
++static struct aggregate_driver exynos_drm_aggregate_driver = {
++	.probe		= exynos_drm_bind,
++	.remove		= exynos_drm_unbind,
++	.driver		= {
++		.name	= "exynos_drm",
++		.owner	= THIS_MODULE,
 +	},
  };
  
- static int kirin_drm_platform_probe(struct platform_device *pdev)
-@@ -281,12 +287,12 @@ static int kirin_drm_platform_probe(struct platform_device *pdev)
- 	drm_of_component_match_add(dev, &match, compare_of, remote);
- 	of_node_put(remote);
+ static int exynos_drm_platform_probe(struct platform_device *pdev)
+@@ -365,13 +371,12 @@ static int exynos_drm_platform_probe(struct platform_device *pdev)
+ 	if (IS_ERR(match))
+ 		return PTR_ERR(match);
  
--	return component_master_add_with_match(dev, &kirin_drm_ops, match);
-+	return component_aggregate_register(dev, &kirin_drm_aggregate_driver, match);
+-	return component_master_add_with_match(&pdev->dev, &exynos_drm_ops,
+-					       match);
++	return component_aggregate_register(&pdev->dev, &exynos_drm_aggregate_driver, match);
  }
  
- static int kirin_drm_platform_remove(struct platform_device *pdev)
+ static int exynos_drm_platform_remove(struct platform_device *pdev)
  {
--	component_master_del(&pdev->dev, &kirin_drm_ops);
-+	component_aggregate_unregister(&pdev->dev, &kirin_drm_aggregate_driver);
+-	component_master_del(&pdev->dev, &exynos_drm_ops);
++	component_aggregate_unregister(&pdev->dev, &exynos_drm_aggregate_driver);
  	return 0;
  }
  
