@@ -2,109 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 033EF43B34F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 15:42:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCAAD43B35F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 15:49:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234250AbhJZNom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 09:44:42 -0400
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:33554 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230420AbhJZNoj (ORCPT
+        id S233751AbhJZNwT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 09:52:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236273AbhJZNwS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 09:44:39 -0400
-Received: by mail-ot1-f51.google.com with SMTP id 107-20020a9d0a74000000b00553bfb53348so2141053otg.0;
-        Tue, 26 Oct 2021 06:42:15 -0700 (PDT)
+        Tue, 26 Oct 2021 09:52:18 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A868C061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 06:49:55 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id x27-20020a9d459b000000b0055303520cc4so19840839ote.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 06:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PgcgUi0aKzGvNSZ/upN2vDxathxvZMJpdDJTs+D3GFg=;
+        b=ilH9IDaXEJChoPlap7VE1xIGKJT0kcBhQv8CLpxuK6nnI5KmOgZOH8vfMubcxAc4vy
+         y6p5NmEjcZQOhXrSwuyuL25IP8XOh/rogu4+pdJiTacRwqkNxfNtMK3Dox8IiJYrSnBc
+         vfa8YwreJu6Mr2LFioJX61AJjoUwseK3akxaU7CylDvEyH2IJ5hTfQnwMAFzJI5Tuvig
+         O0sbm3X90FYZR9JhZN1deD5rZgIMvPqdC1KRCvD0rhSa9VviJH+w79L8HOn6ctQtj0Kw
+         eu08NB+CabcApEHrR57Rn3MGOrRmcxmsWKC6hEBfkqyWYQN9pTlcjVVcFzo1vLcSG0PT
+         8a1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZLF/RSQc/WiflaSY0ZupsORfhON+Yiy4zLK9+j5ymtI=;
-        b=sI7ve687dTXw0k6/yy4Sj6sZVx69m0YJ/ex+sOc1wZyDqDj4cVQRKZdkBQK86Zqfdp
-         9+DjBNIkt/+21v5wx4xqyClixqzmqHSo26uU3GjPPluXU71lgJEDaG5dtx5zBc5tULX9
-         pUVtyL/VBO1KG8exaIpfT4lxNZ2dLsYr0JWqgLfhxzMOL4MID4gtcfoAYVw8Ai4ZmKpy
-         KjdxRXlckjamlT7gJey2N3SsqUjKiVWQ21XJsM8wsEi2w+s3KNnpzTOBS3fpXpt+UGsn
-         4/mYgfywMAqp7PhAJFrEv5NEJZDNHB+TdQ6ijPwPlZuVFtxLaFRUKPt4XqqmmTasrg5g
-         iFKw==
-X-Gm-Message-State: AOAM533TsXvi8KWoJ9dJN1aT6LAHWHGULqr9AaiFsgt3G2BB2vo/wgdx
-        YfYJJTNWEZp7+d+bdt0w/cW7ybEUNvYYiWDMKGw=
-X-Google-Smtp-Source: ABdhPJxGD/GRph7GnjGJpYV5SHMstOTxDb52gzL4qpypFSKXy7VQrJk1KlQhvVV5EYbQSOx1DwxlEBnjwSpL8mZkAU4=
-X-Received: by 2002:a9d:65c1:: with SMTP id z1mr19082692oth.198.1635255735613;
- Tue, 26 Oct 2021 06:42:15 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PgcgUi0aKzGvNSZ/upN2vDxathxvZMJpdDJTs+D3GFg=;
+        b=02qz30SDDWer195xslfL3bQNwNnfOYQ9VuhECbqJi87uqcv0WDTCSTzkoM4KCPUhi/
+         7MQSYZ/5cpMZD/ZDMdCDYDJ3pWVRLL5DSzLKii7iGOBlE6+sH2kybQOxE1WpffY8cdT6
+         hFbsjw/kTqAZE9flYDYiXmWxcbe+XLQYhlJkodvEbcJViWCDHVNcQD2sZUnIpusEJeO0
+         PfkCeY+rPPcRuNOh1WtgO60WIiO+FPpzDhCO2JVcoLyVPYPykVSO1OXYrKZXJRaH4U3k
+         UmrhySsHC6WxLyFwOlaQvYXuNBBJnJSHFhrHwrQgEvwdC6CQkgHInyaLpWe1RBpPsK+M
+         n0Iw==
+X-Gm-Message-State: AOAM533RMTEke/Trm2i33eFI3gmCtFOL+WFgEjodVCky1nOaB01KGgMt
+        JajthSeNO/trukXD6tvISZH2VA==
+X-Google-Smtp-Source: ABdhPJx0vq6FZnYNI9ja1HEk+yhqXMevPwQk6aw7o0kPhZ56uvsWFUomcnLFC9klJi5kKxyFnFGRcQ==
+X-Received: by 2002:a9d:4b8d:: with SMTP id k13mr18797941otf.103.1635256194482;
+        Tue, 26 Oct 2021 06:49:54 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id c17sm4767607ots.35.2021.10.26.06.49.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Oct 2021 06:49:54 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Subject: [GIT PULL] Qualcomm ARM64 defconfig updates for v5.16
+Date:   Tue, 26 Oct 2021 08:49:53 -0500
+Message-Id: <20211026134953.1204327-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <4369779.LvFx2qVVIh@kreacher> <3338400.QJadu78ljV@kreacher> <21252081.EfDdHjke4D@kreacher>
-In-Reply-To: <21252081.EfDdHjke4D@kreacher>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Tue, 26 Oct 2021 15:41:59 +0200
-Message-ID: <CAJZ5v0gOUdM64FqkeXmGd+Zyc5a_u=RBC6S2rxM4F5oTJ57wNw@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] perf: qcom_l2_pmu: ACPI: Use ACPI_COMPANION() directly
-To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Cc:     Linux ACPI <linux-acpi@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 13, 2021 at 6:16 PM Rafael J. Wysocki <rjw@rjwysocki.net> wrote:
->
-> From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->
-> The ACPI_HANDLE() macro is a wrapper arond the ACPI_COMPANION()
-> macro and the ACPI handle produced by the former comes from the
-> ACPI device object produced by the latter, so it is way more
-> straightforward to evaluate the latter directly instead of passing
-> the handle produced by the former to acpi_bus_get_device().
->
-> Modify l2_cache_pmu_probe_cluster() accordingly (no intentional
-> functional impact).
->
-> While at it, rename the ACPI device pointer to adev for more
-> clarity.
->
-> Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The following changes since commit 6880fa6c56601bb8ed59df6c30fd390cc5f6dd8f:
 
-If nobody nas any concerns regarding this patch, I will queue it up
-for 5.16 in the ACPI tree, because it is requisite for further
-changes.
+  Linux 5.15-rc1 (2021-09-12 16:28:37 -0700)
 
-Thanks!
+are available in the Git repository at:
 
-> ---
->
-> v1 -> v2:
->    * Resend with a different From and S-o-b address.  No other changes.
->
-> ---
->  drivers/perf/qcom_l2_pmu.c |    7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
->
-> Index: linux-pm/drivers/perf/qcom_l2_pmu.c
-> ===================================================================
-> --- linux-pm.orig/drivers/perf/qcom_l2_pmu.c
-> +++ linux-pm/drivers/perf/qcom_l2_pmu.c
-> @@ -840,17 +840,14 @@ static int l2_cache_pmu_probe_cluster(st
->  {
->         struct platform_device *pdev = to_platform_device(dev->parent);
->         struct platform_device *sdev = to_platform_device(dev);
-> +       struct acpi_device *adev = ACPI_COMPANION(dev);
->         struct l2cache_pmu *l2cache_pmu = data;
->         struct cluster_pmu *cluster;
-> -       struct acpi_device *device;
->         unsigned long fw_cluster_id;
->         int err;
->         int irq;
->
-> -       if (acpi_bus_get_device(ACPI_HANDLE(dev), &device))
-> -               return -ENODEV;
-> -
-> -       if (kstrtoul(device->pnp.unique_id, 10, &fw_cluster_id) < 0) {
-> +       if (!adev || kstrtoul(adev->pnp.unique_id, 10, &fw_cluster_id) < 0) {
->                 dev_err(&pdev->dev, "unable to read ACPI uid\n");
->                 return -ENODEV;
->         }
->
->
->
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-5.16
+
+for you to fetch changes up to 2da521272ad3bba2019dd1a610261d99d62401fd:
+
+  arm64: defconfig: Enable Qualcomm LMH driver (2021-10-21 09:41:00 -0500)
+
+----------------------------------------------------------------
+Qualcomm ARM64 defconfig updates for v5.16
+
+The major change here is the disabling of the firmware loades user space
+fallback, this is done as arm64 is the only platform with this flag
+enabled and as a result doesn't play nice with standard distributions.
+
+It then enables the new limits driver, which controls the hardware based
+thermal mitigation on a range of Qualcomm platforms. The prima/pronto
+WiFi and Bluetooth drivers are enabled to ensure these features works
+out of the box, now that the last details in the dts are landed.
+
+The new driver for acquiring sleep stats is enabled to facilitate the
+various efforts on getting these platforms into low power mode.
+
+Lastly the base SC7280 drivers needed to simply boot this platform are
+enabled.
+
+----------------------------------------------------------------
+Bjorn Andersson (3):
+      arm64: defconfig: Disable firmware sysfs fallback
+      arm64: defconfig: Enable Qualcomm prima/pronto drivers
+      arm64: defconfig: Enable Qualcomm LMH driver
+
+Maulik Shah (1):
+      arm64: defconfig: Enable Sleep stats driver
+
+Sai Prakash Ranjan (1):
+      arm64: defconfig: Enable QTI SC7280 pinctrl, gcc and interconnect
+
+ arch/arm64/configs/defconfig | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
