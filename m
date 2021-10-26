@@ -2,111 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3249343B786
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 18:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBAA143B795
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 18:51:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237518AbhJZQuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 12:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237515AbhJZQuM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 12:50:12 -0400
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794B5C061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 09:47:48 -0700 (PDT)
-Received: by mail-il1-x129.google.com with SMTP id j6so17778314ila.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Oct 2021 09:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=YKwRxPBjph63txYkU/60zXWK4/WhUFpeAqg9AkQ4hnM=;
-        b=Z9ToptDFzfh/mwbDivSN0t3grjkZ/mCL4ttDd6BrGK6Gt665J8VtTIu2PSSprYwIBc
-         zxg7iBNLk+3xYL/OwS3wZpZ6CnUC4lS1sqSArz9R/Soal4ljp93MM317irp1totwKITO
-         P+kwFix4j2veuUINrqKRyKDr5GDf/jKtrDqkg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=YKwRxPBjph63txYkU/60zXWK4/WhUFpeAqg9AkQ4hnM=;
-        b=wVQy1v6xfa3k/kS1SLgpS6OGArNFId6UbDSlXs1gyqayB+IMwBM39wl5eWYKmBB6FN
-         xKmS845y43EvYm5dkrRGOV3fAdBsga9jvDYnxoiL8+Vs4NifWSQcBVTJpChbT0/VNoMz
-         VZGjKHHj0YfIpt6athqXJePxD7Q1j5rnp9E+O7lb+WSJlVpt/z7OdlsT8zqqx45A6qk2
-         CUjxbJINul2oR7jFazbD2j5M+CzTF9sGgApW8BMIvzl5WojoxyBN5c4mXFdc2Ody/N8D
-         k3RukHLHBab4bQWGo1Hb99sq0Ohl1NYaGZp8yB2EWFel452hZWMgA8mG0JHyL+O4+eMZ
-         dy6Q==
-X-Gm-Message-State: AOAM532T07qU1MQ0BFGP5KmrkJ+1vt8ktQLpGz4Kz7xau/6H5LKJXQCx
-        UVz+hKf0kT3YBJTDAW5pbeMCcQ==
-X-Google-Smtp-Source: ABdhPJz4MwNT6x0eqE/fwWtC2vUza4je3EDZG0CcQCInRJtS+XYPOqPxaxjQXvslMpA88wGXPHKtbQ==
-X-Received: by 2002:a05:6e02:1a23:: with SMTP id g3mr4664396ile.103.1635266867924;
-        Tue, 26 Oct 2021 09:47:47 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id s7sm11616003iow.31.2021.10.26.09.47.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Oct 2021 09:47:47 -0700 (PDT)
-Subject: Re: [PATCH v2] dt-bindings: net: qcom,ipa: IPA does support up to two
- iommus
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211026163240.131052-1-david@ixit.cz>
-From:   Alex Elder <elder@ieee.org>
-Message-ID: <2de53575-af6e-5bb9-e7ad-5d924656867d@ieee.org>
-Date:   Tue, 26 Oct 2021 11:47:46 -0500
+        id S236240AbhJZQxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 12:53:22 -0400
+Received: from foss.arm.com ([217.140.110.172]:34910 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232410AbhJZQxP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Oct 2021 12:53:15 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0DB061FB;
+        Tue, 26 Oct 2021 09:50:50 -0700 (PDT)
+Received: from [192.168.185.184] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 34BA03F70D;
+        Tue, 26 Oct 2021 09:50:44 -0700 (PDT)
+Subject: Re: [PATCH v2 1/5] arch_topology: Introduce thermal pressure update
+ function
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org
+References: <20211015144550.23719-1-lukasz.luba@arm.com>
+ <20211015144550.23719-2-lukasz.luba@arm.com>
+From:   Dietmar Eggemann <dietmar.eggemann@arm.com>
+Message-ID: <431230a5-00e9-0211-0731-035eab5fa3f6@arm.com>
+Date:   Tue, 26 Oct 2021 18:51:03 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <20211026163240.131052-1-david@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20211015144550.23719-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/26/21 11:32 AM, David Heidelberg wrote:
-> Fix warnings as:
-> arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml: ipa@1e40000: iommus: [[21, 1504, 0], [21, 1506, 0]] is too long
-> 	From schema: Documentation/devicetree/bindings/net/qcom,ipa.yaml
+On 15/10/2021 16:45, Lukasz Luba wrote:
+> The thermal pressure is a mechanism which is used for providing
+> information about reduced CPU performance to the scheduler. Usually code
+> has to convert the value from frequency units into capacity units,
+> which are understandable by the scheduler. Create a common conversion code
+> which can be just used via a handy API.
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-
-Looks good to me.  I'm not sure why the minItems is required,
-unless it's to indicate that it must be at least 1 and can't
-be missing.  But iommus is also stated to be required elsewhere
-in the binding.
-
-In the future, it's helpful to indicate the command you
-used to produce the warning in your commit message.  And
-furthermore, describing the problem (and not just including
-the error message) is even more helpful.
-
-Reviewed-by: Alex Elder <elder@linaro.org>
-
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 > ---
->   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>  arch/arm/include/asm/topology.h   |  1 +
+>  arch/arm64/include/asm/topology.h |  1 +
+>  drivers/base/arch_topology.c      | 36 ++++++++++++++++++++++++++++++-
+>  include/linux/arch_topology.h     |  3 +++
+>  include/linux/sched/topology.h    |  7 ++++++
+>  5 files changed, 47 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> index b8a0b392b24e..b86edf67ce62 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> @@ -64,7 +64,8 @@ properties:
->         - const: gsi
->   
->     iommus:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 2
->   
->     clocks:
->       maxItems: 1
-> 
+> diff --git a/arch/arm/include/asm/topology.h b/arch/arm/include/asm/topology.h
+> index 470299ee2fba..aee6c456c085 100644
+> --- a/arch/arm/include/asm/topology.h
+> +++ b/arch/arm/include/asm/topology.h
+> @@ -24,6 +24,7 @@
+>  /* Replace task scheduler's default thermal pressure API */
+>  #define arch_scale_thermal_pressure topology_get_thermal_pressure
+>  #define arch_set_thermal_pressure   topology_set_thermal_pressure
+> +#define arch_thermal_pressure_update	topology_thermal_pressure_update
+>  
+>  #else
+>  
+> diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
+> index ec2db3419c41..c997015402bc 100644
+> --- a/arch/arm64/include/asm/topology.h
+> +++ b/arch/arm64/include/asm/topology.h
+> @@ -33,6 +33,7 @@ void update_freq_counters_refs(void);
+>  /* Replace task scheduler's default thermal pressure API */
+>  #define arch_scale_thermal_pressure topology_get_thermal_pressure
+>  #define arch_set_thermal_pressure   topology_set_thermal_pressure
+> +#define arch_thermal_pressure_update	topology_thermal_pressure_update
 
+s/thermal_pressure_update/update_thermal_pressure ?
+
+The scheme seems to be {arch|topology}_*foo*_thermal_pressure
+
+But ...
+
+>  
+>  #include <asm-generic/topology.h>
+>  
+> diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
+> index 43407665918f..1fa28b5afdb2 100644
+> --- a/drivers/base/arch_topology.c
+> +++ b/drivers/base/arch_topology.c
+> @@ -25,6 +25,7 @@
+>  static DEFINE_PER_CPU(struct scale_freq_data __rcu *, sft_data);
+>  static struct cpumask scale_freq_counters_mask;
+>  static bool scale_freq_invariant;
+> +static DEFINE_PER_CPU(u32, freq_factor) = 1;
+>  
+>  static bool supports_scale_freq_counters(const struct cpumask *cpus)
+>  {
+> @@ -168,6 +169,40 @@ void topology_set_thermal_pressure(const struct cpumask *cpus,
+>  }
+>  EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
+>  
+> +/**
+> + * topology_thermal_pressure_update() - Update thermal pressure for CPUs
+> + * @cpus	: The related CPUs for which capacity has been reduced
+> + * @capped_freq	: The maximum allowed frequency that CPUs can run at
+> + *
+> + * Update the value of thermal pressure for all @cpus in the mask. The
+> + * cpumask should include all (online+offline) affected CPUs, to avoid
+> + * operating on stale data when hot-plug is used for some CPUs. The
+> + * @capped_freq must be less or equal to the max possible frequency and
+> + * reflects the currently allowed max CPUs frequency due to thermal capping.
+> + * The @capped_freq must be provided in kHz.
+> + */
+> +void topology_thermal_pressure_update(const struct cpumask *cpus,
+> +				      unsigned long capped_freq)
+> +{
+
+... why not just s/unsigned long th_pressure/unsigned long capped_freq
+in existing topology_set_thermal_pressure() and move code the
+frequency/capacity conversion in there? The patch set will become
+considerably smaller.
+
+ void topology_set_thermal_pressure(const struct cpumask *cpus,
+-                              unsigned long th_pressure)
++                              unsigned long capped_freq)
+ {
++       unsigned long max_capacity, capacity;
+        int cpu;
+
+-       for_each_cpu(cpu, cpus)
+-               WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
++       if (!cpus)
++               return;
++
++       cpu = cpumask_first(cpus);
++       max_capacity = arch_scale_cpu_capacity(cpu);
++
++       /* Convert to MHz scale which is used in 'freq_factor' */
++       capped_freq /= 1000;
++
++       capacity = mult_frac(capped_freq, max_capacity,
++                            per_cpu(freq_factor, cpu));
++
++       for_each_cpu(cpu, cpus) {
++               WRITE_ONCE(per_cpu(thermal_pressure, cpu),
++                          max_capacity - capacity);
++       }
+ }
+ EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
+
+And a user like [drivers/thermal/cpufreq_cooling.c] can call
+arch_set_thermal_pressure(cpus, frequency).
+
+[...]
