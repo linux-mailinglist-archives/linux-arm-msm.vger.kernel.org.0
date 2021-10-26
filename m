@@ -2,212 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C195B43B139
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 13:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF08843B1FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 14:09:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234218AbhJZL3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 07:29:46 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:26063 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229887AbhJZL3p (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 07:29:45 -0400
+        id S234520AbhJZMMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 08:12:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:11586 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233642AbhJZMMQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 26 Oct 2021 08:12:16 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635247642; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+VfAOGNRqKPzh6Cqta9+SYjWQCyLtNY13BI23W5daME=; b=L3VLDKq43uCavle89KAZS9iP8drz4zUpVUus4WfNly46UEHA/LZhlWV5x4VmvicvKLNW4gRZ
- 6RSKYLQQLx+Axbh/u/m2OaL/vi9saZS4ZDbLYhB/Zbxus09SM59yDh+ztNymlOTSnIn7S00k
- JK7/kiTDcQ9dfMkRIneuxwhr6JM=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1635250192; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Wi2g9oaHJT7mM82NA73R8R3pp1Mfzb/U/GZ9dKT5FOc=; b=jy4y0q8rnWtHpcsokn2qNMneMeZiOVx651scTCeqEk4yqJ+fWBSrxe+4kIovkz2qCIjwIHz7
+ RlxbW5+g6vO4mbSHiWCVcGtaOOZxWBt0XSOnbjZh1tgwFQjPrrkC+zzuaadxNEUR1DK+rwFj
+ LAuVff3ncHbxjKonkYUpCcyGskk=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6177e60dfd91319f0ffb7c84 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Oct 2021 11:27:09
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 6177f002b03398c06cb31c3d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 26 Oct 2021 12:09:38
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59418C43616; Tue, 26 Oct 2021 11:27:09 +0000 (UTC)
+        id 4B978C4338F; Tue, 26 Oct 2021 12:09:37 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D3FDCC4338F;
-        Tue, 26 Oct 2021 11:27:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D3FDCC4338F
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AE3DDC4338F;
+        Tue, 26 Oct 2021 12:09:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org AE3DDC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v3] ASoC: qcom: soundwire: Enable soundwire bus clock for
- version 1.6
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1633671232-30310-1-git-send-email-srivasam@codeaurora.org>
- <YWBXIIjPP7Qunyvf@ripper>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <11a57c35-5e38-1b74-bc70-c1eeeb81fbfe@codeaurora.org>
-Date:   Tue, 26 Oct 2021 16:57:00 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <YWBXIIjPP7Qunyvf@ripper>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
+        dianders@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
+Date:   Tue, 26 Oct 2021 17:37:35 +0530
+Message-Id: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Prasad Sodagudi <psodagud@codeaurora.org>
 
-On 10/8/2021 8:05 PM, Bjorn Andersson wrote:
-Thanks for Your time Bjorn!!!
-> On Thu 07 Oct 22:33 PDT 2021, Srinivasa Rao Mandadapu wrote:
->
->> Add support for soundwire 1.6 version to gate RX/TX bus clock.
->>
-> Are you really adding soundwire 1.6 support in order to gate RX/TX bus
-> clock?
->
-> Could it be that you're ungating the bus clock so that soundwire 1.6
-> starts working? The commit message should properly describe why you're
-> doing your change.
-Yes. After updating RX/TX CGCR Register so it's started working. Will 
-update proper commit message.
->> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Venkata is the first who certified the origin of this patch, yet you're
-> the author. Either this should be From Venkata (i.e. git commit
-> --author) or perhaps you need a Co-developed-by here to say that you
-> collaborated on this and both certify its origin.
-Okay. Actually Venakta is the Co developer. Will change accordingly.
->> ---
->> Changes since v2:
->>      -- Update error check after ioremap.
-> What about the other things I noted in v2?
-Okay. Will update.
->
->> Changes since v1:
->>      -- Add const name to mask value.
->>
->>   drivers/soundwire/qcom.c | 15 ++++++++++++++-
->>   1 file changed, 14 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index 0ef79d6..bd6fabd 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -109,6 +109,7 @@
->>   #define SWR_MAX_CMD_ID	14
->>   #define MAX_FIFO_RD_RETRY 3
->>   #define SWR_OVERFLOW_RETRY_COUNT 30
->> +#define SWRM_HCTL_REG_MASK ~BIT(1)
->>   
->>   struct qcom_swrm_port_config {
->>   	u8 si;
->> @@ -127,6 +128,7 @@ struct qcom_swrm_ctrl {
->>   	struct device *dev;
->>   	struct regmap *regmap;
->>   	void __iomem *mmio;
->> +	char __iomem *swrm_hctl_reg;
->>   	struct completion broadcast;
->>   	struct completion enumeration;
->>   	struct work_struct slave_work;
->> @@ -610,6 +612,12 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->>   	val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
->>   	val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
->>   
->> +	if (ctrl->swrm_hctl_reg) {
->> +		val = ioread32(ctrl->swrm_hctl_reg);
->> +		val &= SWRM_HCTL_REG_MASK;
-> Make a define with a name that clarifies what BIT(1) is and use that
-> here, hiding a magic number in an empty define isn't making this more
-> maintainable.
->
-> Essentially put the name of the bit in the register description in a
-> define and use that here.
-Okay. Will change name appropriately.
->
->> +		iowrite32(val, ctrl->swrm_hctl_reg);
->> +	}
->> +
->>   	ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
->>   
->>   	/* Enable Auto enumeration */
->> @@ -1200,7 +1208,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->>   	struct qcom_swrm_ctrl *ctrl;
->>   	const struct qcom_swrm_data *data;
->>   	int ret;
->> -	u32 val;
->> +	int val, swrm_hctl_reg = 0;
-> Don't you get a warning from passing val as an int to a function that
-> takes a u32 pointer?
-Yeah. Will revert val variable type change.
-> Also there's no reason to zero-initialize swrm_hctl_reg.
-Okay. Will change.
->>   
->>   	ctrl = devm_kzalloc(dev, sizeof(*ctrl), GFP_KERNEL);
->>   	if (!ctrl)
->> @@ -1251,6 +1259,11 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->>   	ctrl->bus.port_ops = &qcom_swrm_port_ops;
->>   	ctrl->bus.compute_params = &qcom_swrm_compute_params;
->>   
->> +	if (!of_property_read_u32(dev->of_node, "qcom,swrm-hctl-reg", &swrm_hctl_reg)) {
-> As I said in my feedback of v2, this property is not documented in the
-> DT binding.
-Okay. Will update dt bindings.
->
-> But more important, upstream we do not approve of the downstream
-> methodology of having properties pointing to single registers in some
-> memory block somewhere.
->
-> Describe the hardware block that you reference fully in devicetree and
-> make a proper reference to it.
->
-> Unfortunately your patch lacks details necessary to know where this
-> register lives, so it's not possible for me to recommend a proper
-> design.
+egpio is a scheme which allows special power Island Domain IOs
+(LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+TLMM functions with Island Domain functions.
+With this scheme, an IO can be controlled both by the cpu running
+linux and the Island processor. This provides great flexibility to
+re-purpose the Island IOs for regular TLMM usecases.
 
-These Registers lies in LPASS_AUDIO_LPASS_AUDIO_CSR | 0x032A9000 Range.
+2 new bits are added to ctl_reg, egpio_present is a read only bit
+which shows if egpio feature is available or not on a given gpio.
+egpio_enable is the read/write bit and only effective if egpio_present
+is 1. Once its set, the Island IO is controlled from Chip TLMM.
+egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
 
-Register description:
+To support this we add a new function 'egpio' which can be used to
+set the egpio_enable to 0, for any other TLMM controlled functions
+we set the egpio_enable to 1.
 
-LPASS_AUDIO_SWR_RX_CGCR(0x032A90A0) & LPASS_AUDIO_SWR_TX_CGCR (0x032A90A8)
+Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 17 +++++++++++++++--
+ drivers/pinctrl/qcom/pinctrl-msm.h |  4 ++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-Bits  Field Name    Description
-1        HW_CTL        HW Dynamic Clock Gating Control Register
-                                  1: HW Controlled
-                                  0: SW Controlled
-0        CLK_ENABLE    Enabling the clock when in SW Controlled Mode
-                                     1: Clock Enabled
-                                      0: Clock Disabled
-> Regards,
-> Bjorn
->
->> +		ctrl->swrm_hctl_reg = devm_ioremap(&pdev->dev, swrm_hctl_reg, 0x4);
->> +		if (!ctrl->swrm_hctl_reg)
->> +			return -ENODEV;
->> +	}
->>   	ret = qcom_swrm_get_port_config(ctrl);
->>   	if (ret)
->>   		goto err_clk;
->> -- 
->> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
->> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
->>
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 8476a8a..bfdba3a 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -185,6 +185,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
+ 	struct irq_data *d = irq_get_irq_data(irq);
+ 	unsigned int gpio_func = pctrl->soc->gpio_func;
++	unsigned int egpio_func = pctrl->soc->egpio_func;
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
+ 	u32 val, mask;
+@@ -218,8 +219,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 
+ 	val = msm_readl_ctl(pctrl, g);
+-	val &= ~mask;
+-	val |= i << g->mux_bit;
++
++	if (egpio_func && i == egpio_func) {
++		if (val & BIT(g->egpio_present))
++			val &= ~BIT(g->egpio_enable);
++		else
++			return -EINVAL;
++	} else {
++		val &= ~mask;
++		val |= i << g->mux_bit;
++		/* Check if egpio present and enable that feature */
++		if (egpio_func && (val & BIT(g->egpio_present)))
++			val |= BIT(g->egpio_enable);
++	}
++
+ 	msm_writel_ctl(val, pctrl, g);
+ 
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index e31a516..b7110ac 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -77,6 +77,8 @@ struct msm_pingroup {
+ 	unsigned drv_bit:5;
+ 
+ 	unsigned od_bit:5;
++	unsigned egpio_enable:5;
++	unsigned egpio_present:5;
+ 	unsigned oe_bit:5;
+ 	unsigned in_bit:5;
+ 	unsigned out_bit:5;
+@@ -119,6 +121,7 @@ struct msm_gpio_wakeirq_map {
+  *                            to be aware that their parent can't handle dual
+  *                            edge interrupts.
+  * @gpio_func: Which function number is GPIO (usually 0).
++ * @egpio_func: Which function number is eGPIO
+  */
+ struct msm_pinctrl_soc_data {
+ 	const struct pinctrl_pin_desc *pins;
+@@ -136,6 +139,7 @@ struct msm_pinctrl_soc_data {
+ 	unsigned int nwakeirq_map;
+ 	bool wakeirq_dual_edge_errata;
+ 	unsigned int gpio_func;
++	unsigned int egpio_func;
+ };
+ 
+ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
