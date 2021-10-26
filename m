@@ -2,125 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A66B443B2B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 14:53:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 033EF43B34F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Oct 2021 15:42:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235176AbhJZM4A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 26 Oct 2021 08:56:00 -0400
-Received: from mail-oi1-f178.google.com ([209.85.167.178]:35449 "EHLO
-        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233805AbhJZMz7 (ORCPT
+        id S234250AbhJZNom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 26 Oct 2021 09:44:42 -0400
+Received: from mail-ot1-f51.google.com ([209.85.210.51]:33554 "EHLO
+        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230420AbhJZNoj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 26 Oct 2021 08:55:59 -0400
-Received: by mail-oi1-f178.google.com with SMTP id r6so20419687oiw.2;
-        Tue, 26 Oct 2021 05:53:35 -0700 (PDT)
+        Tue, 26 Oct 2021 09:44:39 -0400
+Received: by mail-ot1-f51.google.com with SMTP id 107-20020a9d0a74000000b00553bfb53348so2141053otg.0;
+        Tue, 26 Oct 2021 06:42:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=o0sKLuOigkZzRb9mIiQk8+FcI77ASATTLv5/Ga7FhFA=;
-        b=LiN5b/hUlWdKTy22hfFNhcVPgP2d9oZTpnTBCB4F+ceWJ7c0gDrb88A18gFTBSItm+
-         ciwbn06AoG+RBwZ0QvaH7xW+TvWFIZJQMhatFiXk6Oye8CM7d3bAzLoe41hR4vyfYq2U
-         Q4ysH9xFsXdUZvVwM9ANoZYj0sNxG/BNciH8Na13e9xtiGUpTmv0HxCY9xH7HJk9r3h4
-         4UkXOT7YcXDuzW1zLyT4G+aqmufgi5UFL3Kd8NZZpZ6d/u2++EN6rcs2Bh9aI7hRw9hC
-         6ZUh5iPpekGPMqhCOYxs47WR6Q5nysQ8qzoe5x00qvRqlKXrcgwljnukCV0gT0ZNkM2O
-         4Z/Q==
-X-Gm-Message-State: AOAM533lbAtFgm9jDD7jbjpLAl/m87n4NQd3HTBAKzwYa2dydELKxDy/
-        4PZLZ8yGLGe0q7vNnmHVag==
-X-Google-Smtp-Source: ABdhPJwP8phGmuV03HOFOfdE+cAf7lJnT51ZIqVF78khc0VQIqXv3RKQK4+vTgDjB/WIq+QnAMnzvA==
-X-Received: by 2002:a05:6808:144d:: with SMTP id x13mr17653853oiv.132.1635252815289;
-        Tue, 26 Oct 2021 05:53:35 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id j6sm3760099oot.18.2021.10.26.05.53.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Oct 2021 05:53:34 -0700 (PDT)
-Received: (nullmailer pid 2444200 invoked by uid 1000);
-        Tue, 26 Oct 2021 12:53:33 -0000
-Date:   Tue, 26 Oct 2021 07:53:33 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v1 01/15] dt-bindings: add pwrseq device tree bindings
-Message-ID: <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
- <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZLF/RSQc/WiflaSY0ZupsORfhON+Yiy4zLK9+j5ymtI=;
+        b=sI7ve687dTXw0k6/yy4Sj6sZVx69m0YJ/ex+sOc1wZyDqDj4cVQRKZdkBQK86Zqfdp
+         9+DjBNIkt/+21v5wx4xqyClixqzmqHSo26uU3GjPPluXU71lgJEDaG5dtx5zBc5tULX9
+         pUVtyL/VBO1KG8exaIpfT4lxNZ2dLsYr0JWqgLfhxzMOL4MID4gtcfoAYVw8Ai4ZmKpy
+         KjdxRXlckjamlT7gJey2N3SsqUjKiVWQ21XJsM8wsEi2w+s3KNnpzTOBS3fpXpt+UGsn
+         4/mYgfywMAqp7PhAJFrEv5NEJZDNHB+TdQ6ijPwPlZuVFtxLaFRUKPt4XqqmmTasrg5g
+         iFKw==
+X-Gm-Message-State: AOAM533TsXvi8KWoJ9dJN1aT6LAHWHGULqr9AaiFsgt3G2BB2vo/wgdx
+        YfYJJTNWEZp7+d+bdt0w/cW7ybEUNvYYiWDMKGw=
+X-Google-Smtp-Source: ABdhPJxGD/GRph7GnjGJpYV5SHMstOTxDb52gzL4qpypFSKXy7VQrJk1KlQhvVV5EYbQSOx1DwxlEBnjwSpL8mZkAU4=
+X-Received: by 2002:a9d:65c1:: with SMTP id z1mr19082692oth.198.1635255735613;
+ Tue, 26 Oct 2021 06:42:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211006035407.1147909-2-dmitry.baryshkov@linaro.org>
+References: <4369779.LvFx2qVVIh@kreacher> <3338400.QJadu78ljV@kreacher> <21252081.EfDdHjke4D@kreacher>
+In-Reply-To: <21252081.EfDdHjke4D@kreacher>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Tue, 26 Oct 2021 15:41:59 +0200
+Message-ID: <CAJZ5v0gOUdM64FqkeXmGd+Zyc5a_u=RBC6S2rxM4F5oTJ57wNw@mail.gmail.com>
+Subject: Re: [PATCH v2 7/7] perf: qcom_l2_pmu: ACPI: Use ACPI_COMPANION() directly
+To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Cc:     Linux ACPI <linux-acpi@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 06, 2021 at 06:53:53AM +0300, Dmitry Baryshkov wrote:
-> Add device tree bindings for the new power sequencer subsystem.
-> Consumers would reference pwrseq nodes using "foo-pwrseq" properties.
-> Providers would use '#pwrseq-cells' property to declare the amount of
-> cells in the pwrseq specifier.
+On Wed, Oct 13, 2021 at 6:16 PM Rafael J. Wysocki <rjw@rjwysocki.net> wrote:
+>
+> From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>
+> The ACPI_HANDLE() macro is a wrapper arond the ACPI_COMPANION()
+> macro and the ACPI handle produced by the former comes from the
+> ACPI device object produced by the latter, so it is way more
+> straightforward to evaluate the latter directly instead of passing
+> the handle produced by the former to acpi_bus_get_device().
+>
+> Modify l2_cache_pmu_probe_cluster() accordingly (no intentional
+> functional impact).
+>
+> While at it, rename the ACPI device pointer to adev for more
+> clarity.
+>
+> Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-Please use get_maintainers.pl.
+If nobody nas any concerns regarding this patch, I will queue it up
+for 5.16 in the ACPI tree, because it is requisite for further
+changes.
 
-This is not a pattern I want to encourage, so NAK on a common binding.
+Thanks!
 
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/power/pwrseq/pwrseq.yaml         | 32 +++++++++++++++++++
->  1 file changed, 32 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
-> new file mode 100644
-> index 000000000000..4a8f6c0218bf
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/pwrseq/pwrseq.yaml
-> @@ -0,0 +1,32 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/pwrseq/pwrseq.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Power Sequencer devices
-> +
-> +maintainers:
-> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> +
-> +properties:
-> +  "#powerseq-cells":
-> +    description:
-> +      Number of cells in a pwrseq specifier.
-> +
-> +patternProperties:
-> +  ".*-pwrseq$":
-> +    description: Power sequencer supply phandle(s) for this node
-> +
-> +additionalProperties: true
-> +
-> +examples:
-> +  - |
-> +    qca_pwrseq: qca-pwrseq {
-> +      #pwrseq-cells = <1>;
-> +    };
-> +
-> +    bluetooth {
-> +      bt-pwrseq = <&qca_pwrseq 1>;
-> +    };
-> +...
-> -- 
-> 2.33.0
-> 
-> 
+>
+> v1 -> v2:
+>    * Resend with a different From and S-o-b address.  No other changes.
+>
+> ---
+>  drivers/perf/qcom_l2_pmu.c |    7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+>
+> Index: linux-pm/drivers/perf/qcom_l2_pmu.c
+> ===================================================================
+> --- linux-pm.orig/drivers/perf/qcom_l2_pmu.c
+> +++ linux-pm/drivers/perf/qcom_l2_pmu.c
+> @@ -840,17 +840,14 @@ static int l2_cache_pmu_probe_cluster(st
+>  {
+>         struct platform_device *pdev = to_platform_device(dev->parent);
+>         struct platform_device *sdev = to_platform_device(dev);
+> +       struct acpi_device *adev = ACPI_COMPANION(dev);
+>         struct l2cache_pmu *l2cache_pmu = data;
+>         struct cluster_pmu *cluster;
+> -       struct acpi_device *device;
+>         unsigned long fw_cluster_id;
+>         int err;
+>         int irq;
+>
+> -       if (acpi_bus_get_device(ACPI_HANDLE(dev), &device))
+> -               return -ENODEV;
+> -
+> -       if (kstrtoul(device->pnp.unique_id, 10, &fw_cluster_id) < 0) {
+> +       if (!adev || kstrtoul(adev->pnp.unique_id, 10, &fw_cluster_id) < 0) {
+>                 dev_err(&pdev->dev, "unable to read ACPI uid\n");
+>                 return -ENODEV;
+>         }
+>
+>
+>
