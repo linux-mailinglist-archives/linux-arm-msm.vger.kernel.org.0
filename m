@@ -2,257 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B70943CF61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 19:03:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54AF643D003
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 19:47:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243162AbhJ0RGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 13:06:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243168AbhJ0RF4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 13:05:56 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 679FFC0613B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 10:03:30 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id h196so4585913iof.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 10:03:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KS5UdkZMEdsSS7sRvW29mKpAHVC0RJgUbKs3rC8KkRA=;
-        b=QCIATHeZUD0+8iQC0Uryon9qMumrpm3wA9rcxLO6jJcNr8EwP8SFcKLQvQWRrKAnp5
-         Ep2FT096SOaoZjHehOaYauW0Fo9oJ9Hm4FFVu6fErFA+lCV/uVKbcjbkOZippz3jslC3
-         09Bd38rzX/Od15pNHrdAcjfgL8taebm9/zQcI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KS5UdkZMEdsSS7sRvW29mKpAHVC0RJgUbKs3rC8KkRA=;
-        b=RyY0nem6fCEC+xMtxme4ioCWlGnc8obOdqe2OfRhypOe8p34dGjmIOnUEbUcESPMhd
-         CxlzNZz77KVxNyIdnIUwEGrYwvBwszHLnkGMrcAkAM75vgs/Hk0+BSqC4p7OZcgwey/s
-         vHDByfmqIvTsiFVDesgCyvCYUaac1UUO58JU0aj3JIN+UdRSKnkwO5E1K7sBPAI9oJFt
-         1Pke29Dt3K4BYGsJL3Tet/8soYW1xb7HXNBqaDnij2dS9/QUYhptqMUbgqz4ZqNIFhRA
-         zVUTB/VqtVsmWBZ2Q9Y7xnm9olTxAaFM3zycfQ0v6BiEfdLhqrSdhbvaBKoXKYRkVK3Q
-         XkRA==
-X-Gm-Message-State: AOAM5322/Iz5pGmb9ELQHvSPID5BR+c2PcY7VhOIV3w4nvSCRlm+YCCI
-        wbjpxLInBm9DfNjbVX3pQ9gHXg==
-X-Google-Smtp-Source: ABdhPJwUsvq5sj/2Z+oqiMVE9ZasBnCzDky5j3uv7ukHPYOUHH+q0n7S3L0aoJqvP6zlbvAhOdhn0Q==
-X-Received: by 2002:a6b:b5c2:: with SMTP id e185mr7524258iof.127.1635354209659;
-        Wed, 27 Oct 2021 10:03:29 -0700 (PDT)
-Received: from localhost ([2600:6c50:4d00:cd01::382])
-        by smtp.gmail.com with ESMTPSA id j22sm280170ila.6.2021.10.27.10.03.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Oct 2021 10:03:29 -0700 (PDT)
-From:   Benjamin Li <benl@squareup.com>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Joseph Gates <jgates@squareup.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eugene Krasnikov <k.eugene.e@gmail.com>,
-        "John W. Linville" <linville@tuxdriver.com>,
-        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] wcn36xx: ensure pairing of init_scan/finish_scan and start_scan/end_scan
-Date:   Wed, 27 Oct 2021 10:03:05 -0700
-Message-Id: <20211027170306.555535-4-benl@squareup.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211027170306.555535-1-benl@squareup.com>
-References: <20211027170306.555535-1-benl@squareup.com>
+        id S239467AbhJ0Rtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 13:49:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47158 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235983AbhJ0Rtj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 13:49:39 -0400
+Received: from jic23-huawei (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 3498660296;
+        Wed, 27 Oct 2021 17:47:06 +0000 (UTC)
+Date:   Wed, 27 Oct 2021 18:51:33 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Jishnu Prakash <quic_jprakash@quicinc.com>
+Cc:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <devicetree@vger.kernel.org>, <mka@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <robh+dt@kernel.org>,
+        <knaack.h@gmx.de>, <lars@metafoo.de>, <pmeerw@pmeerw.net>,
+        <manivannan.sadhasivam@linaro.org>, <linus.walleij@linaro.org>,
+        <quic_kgunda@quicinc.com>, <quic_aghayal@quicinc.com>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <quic_subbaram@quicinc.com>, <Jonathan.Cameron@huawei.com>,
+        <amitk@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>
+Subject: Re: [PATCH V2 1/3] dt-bindings: thermal: qcom: add PMIC5 Gen2
+ ADC_TM bindings
+Message-ID: <20211027185133.0d7831fc@jic23-huawei>
+In-Reply-To: <1635264275-12530-2-git-send-email-quic_jprakash@quicinc.com>
+References: <1635264275-12530-1-git-send-email-quic_jprakash@quicinc.com>
+        <1635264275-12530-2-git-send-email-quic_jprakash@quicinc.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-An SMD capture from the downstream prima driver on WCN3680B shows the
-following command sequence for connected scans:
+On Tue, 26 Oct 2021 21:34:33 +0530
+Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
 
-- init_scan_req
-    - start_scan_req, channel 1
-    - end_scan_req, channel 1
-    - start_scan_req, channel 2
-    - ...
-    - end_scan_req, channel 3
-- finish_scan_req
-- init_scan_req
-    - start_scan_req, channel 4
-    - ...
-    - end_scan_req, channel 6
-- finish_scan_req
-- ...
-    - end_scan_req, channel 165
-- finish_scan_req
+> Add documentation for PMIC5 Gen2 ADC_TM peripheral.
+> It is used for monitoring ADC channel thresholds for PMIC7-type
+> PMICs. It is present on PMK8350, like PMIC7 ADC and can be used
+> to monitor up to 8 ADC channels, from any of the PMIC7 PMICs
+> on a target, through PBS(Programmable Boot Sequence).
+> 
+> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
 
-Upstream currently never calls wcn36xx_smd_end_scan, and in some cases[1]
-still sends finish_scan_req twice in a row or before init_scan_req. A
-typical connected scan looks like this:
+Hi Jishnu,
 
-- init_scan_req
-    - start_scan_req, channel 1
-- finish_scan_req
-- init_scan_req
-    - start_scan_req, channel 2
-- ...
-    - start_scan_req, channel 165
-- finish_scan_req
-- finish_scan_req
+A few comments inline.
 
-This patch cleans up scanning so that init/finish and start/end are always
-paired together and correctly nested.
+Thanks,
 
-- init_scan_req
-    - start_scan_req, channel 1
-    - end_scan_req, channel 1
-- finish_scan_req
-- init_scan_req
-    - start_scan_req, channel 2
-    - end_scan_req, channel 2
-- ...
-    - start_scan_req, channel 165
-    - end_scan_req, channel 165
-- finish_scan_req
+Jonathan
 
-Note that upstream will not do batching of 3 active-probe scans before
-returning to the operating channel, and this patch does not change that.
-To match downstream in this aspect, adjust IEEE80211_PROBE_DELAY and/or
-the 125ms max off-channel time in ieee80211_scan_state_decision.
+> ---
+>  .../bindings/thermal/qcom-spmi-adc-tm5.yaml        | 83 +++++++++++++++++++++-
+>  1 file changed, 81 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> index 3ea8c0c..71a05a3 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> @@ -10,7 +10,9 @@ maintainers:
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,spmi-adc-tm5
+> +    enum:
+> +      - qcom,spmi-adc-tm5
+> +      - qcom,spmi-adc-tm5-gen2
+>  
+>    reg:
+>      maxItems: 1
+> @@ -33,6 +35,7 @@ properties:
+>    qcom,avg-samples:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      description: Number of samples to be used for measurement.
+> +            Not applicable for Gen2 ADC_TM peripheral.
 
-[1]: commit d195d7aac09b ("wcn36xx: Ensure finish scan is not requested
-before start scan") addressed one case of finish_scan_req being sent
-without a preceding init_scan_req (the case of the operating channel
-coinciding with the first scan channel); two other cases are:
-1) if SW scan is started and aborted immediately, without scanning any
-   channels, we send a finish_scan_req without ever sending init_scan_req,
-   and
-2) as SW scan logic always returns us to the operating channel before
-   calling wcn36xx_sw_scan_complete, finish_scan_req is always sent twice
-   at the end of a SW scan
+Why not use an matching statement to set
+qcom,avg_samples: false
+for that compatible rather than relying on the fuzzy nature of a coment.
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Benjamin Li <benl@squareup.com>
----
- drivers/net/wireless/ath/wcn36xx/main.c    | 34 +++++++++++++++++-----
- drivers/net/wireless/ath/wcn36xx/smd.c     |  4 +++
- drivers/net/wireless/ath/wcn36xx/wcn36xx.h |  1 +
- 3 files changed, 32 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
-index 18383d0fc0933..37b4016f020c9 100644
---- a/drivers/net/wireless/ath/wcn36xx/main.c
-+++ b/drivers/net/wireless/ath/wcn36xx/main.c
-@@ -400,6 +400,7 @@ static void wcn36xx_change_opchannel(struct wcn36xx *wcn, int ch)
- static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
- {
- 	struct wcn36xx *wcn = hw->priv;
-+	int ret;
- 
- 	wcn36xx_dbg(WCN36XX_DBG_MAC, "mac config changed 0x%08x\n", changed);
- 
-@@ -415,17 +416,31 @@ static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
- 			 * want to receive/transmit regular data packets, then
- 			 * simply stop the scan session and exit PS mode.
- 			 */
--			wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
--						wcn->sw_scan_vif);
--			wcn->sw_scan_channel = 0;
-+			if (wcn->sw_scan_channel)
-+				wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-+			if (wcn->sw_scan_init) {
-+				wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
-+							wcn->sw_scan_vif);
-+			}
- 		} else if (wcn->sw_scan) {
- 			/* A scan is ongoing, do not change the operating
- 			 * channel, but start a scan session on the channel.
- 			 */
--			wcn36xx_smd_init_scan(wcn, HAL_SYS_MODE_SCAN,
--					      wcn->sw_scan_vif);
-+			if (wcn->sw_scan_channel)
-+				wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-+			if (!wcn->sw_scan_init) {
-+				/* This can fail if we are unable to notify the
-+				 * operating channel.
-+				 */
-+				ret = wcn36xx_smd_init_scan(wcn,
-+							    HAL_SYS_MODE_SCAN,
-+							    wcn->sw_scan_vif);
-+				if (ret) {
-+					mutex_unlock(&wcn->conf_mutex);
-+					return -EIO;
-+				}
-+			}
- 			wcn36xx_smd_start_scan(wcn, ch);
--			wcn->sw_scan_channel = ch;
- 		} else {
- 			wcn36xx_change_opchannel(wcn, ch);
- 		}
-@@ -723,7 +738,12 @@ static void wcn36xx_sw_scan_complete(struct ieee80211_hw *hw,
- 	wcn36xx_dbg(WCN36XX_DBG_MAC, "sw_scan_complete");
- 
- 	/* ensure that any scan session is finished */
--	wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN, wcn->sw_scan_vif);
-+	if (wcn->sw_scan_channel)
-+		wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-+	if (wcn->sw_scan_init) {
-+		wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
-+					wcn->sw_scan_vif);
-+	}
- 	wcn->sw_scan = false;
- 	wcn->sw_scan_opchannel = 0;
- }
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 3cecc8f9c9647..830341be72673 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -721,6 +721,7 @@ int wcn36xx_smd_init_scan(struct wcn36xx *wcn, enum wcn36xx_hal_sys_mode mode,
- 		wcn36xx_err("hal_init_scan response failed err=%d\n", ret);
- 		goto out;
- 	}
-+	wcn->sw_scan_init = true;
- out:
- 	mutex_unlock(&wcn->hal_mutex);
- 	return ret;
-@@ -751,6 +752,7 @@ int wcn36xx_smd_start_scan(struct wcn36xx *wcn, u8 scan_channel)
- 		wcn36xx_err("hal_start_scan response failed err=%d\n", ret);
- 		goto out;
- 	}
-+	wcn->sw_scan_channel = scan_channel;
- out:
- 	mutex_unlock(&wcn->hal_mutex);
- 	return ret;
-@@ -781,6 +783,7 @@ int wcn36xx_smd_end_scan(struct wcn36xx *wcn, u8 scan_channel)
- 		wcn36xx_err("hal_end_scan response failed err=%d\n", ret);
- 		goto out;
- 	}
-+	wcn->sw_scan_channel = 0;
- out:
- 	mutex_unlock(&wcn->hal_mutex);
- 	return ret;
-@@ -822,6 +825,7 @@ int wcn36xx_smd_finish_scan(struct wcn36xx *wcn,
- 		wcn36xx_err("hal_finish_scan response failed err=%d\n", ret);
- 		goto out;
- 	}
-+	wcn->sw_scan_init = false;
- out:
- 	mutex_unlock(&wcn->hal_mutex);
- 	return ret;
-diff --git a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-index 1c8d918137da2..fbd0558c2c196 100644
---- a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-+++ b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-@@ -248,6 +248,7 @@ struct wcn36xx {
- 	struct cfg80211_scan_request *scan_req;
- 	bool			sw_scan;
- 	u8			sw_scan_opchannel;
-+	bool			sw_scan_init;
- 	u8			sw_scan_channel;
- 	struct ieee80211_vif	*sw_scan_vif;
- 	struct mutex		scan_lock;
--- 
-2.25.1
+>      enum:
+>        - 1
+>        - 2
+> @@ -45,6 +48,7 @@ properties:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      description: This parameter is used to decrease ADC sampling rate.
+>              Quicker measurements can be made by reducing decimation ratio.
+> +            Not applicable for Gen2 ADC_TM peripheral.
+>      enum:
+>        - 250
+>        - 420
+> @@ -93,6 +97,29 @@ patternProperties:
+>            - const: 1
+>            - enum: [ 1, 3, 4, 6, 20, 8, 10 ]
+>  
+> +      qcom,avg-samples:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: Number of samples to be used for measurement.
+> +          This property in child node is applicable only for Gen2 ADC_TM peripheral.
+> +        enum:
+> +          - 1
+> +          - 2
+> +          - 4
+> +          - 8
+> +          - 16
+> +        default: 1
+> +
+> +      qcom,decimation:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: This parameter is used to decrease ADC sampling rate.
+> +          Quicker measurements can be made by reducing decimation ratio.
+> +          This property in child node is applicable only for Gen2 ADC_TM peripheral.
+> +        enum:
+> +          - 85
+> +          - 340
+> +          - 1360
+> +        default: 1360
+> +
+>      required:
+>        - reg
+>        - io-channels
+> @@ -124,7 +151,7 @@ examples:
+>              #size-cells = <0>;
+>              #io-channel-cells = <1>;
+>  
+> -            /* Other propreties are omitted */
+> +            /* Other properties are omitted */
+
+Should really be a separate patch, but up to Rob.
+
+
+>              conn-therm@4f {
+>                  reg = <ADC5_AMUX_THM3_100K_PU>;
+>                  qcom,ratiometric;
+> @@ -148,4 +175,56 @@ examples:
+>              };
+>          };
+>      };
+> +
+> +  - |
+> +    #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
+> +    #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    spmi_bus {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +        pmk8350_vadc: adc@3100 {
+> +            reg = <0x3100>;
+> +            compatible = "qcom,spmi-adc7";
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +            #io-channel-cells = <1>;
+> +
+> +            /* Other properties are omitted */
+> +            xo-therm@44 {
+> +                reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time = <200>;
+> +            };
+> +
+> +            conn-therm@47 {
+> +                reg = <PM8350_ADC7_AMUX_THM4_100K_PU>;
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time = <200>;
+> +            };
+> +        };
+> +
+> +        pmk8350_adc_tm: adc-tm@3400 {
+> +            compatible = "qcom,spmi-adc-tm5-gen2";
+> +            reg = <0x3400>;
+> +            interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+> +            #thermal-sensor-cells = <1>;
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            pmk8350-xo-therm@0 {
+> +                reg = <0>;
+> +                io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time-us = <200>;
+
+Perhaps include the new properties you are defining in the example?
+
+> +            };
+> +
+> +            conn-therm@1 {
+> +                reg = <1>;
+> +                io-channels = <&pmk8350_vadc PM8350_ADC7_AMUX_THM4_100K_PU>;
+> +                qcom,ratiometric;
+> +                qcom,hw-settle-time-us = <200>;
+> +            };
+> +        };
+> +    };
+>  ...
 
