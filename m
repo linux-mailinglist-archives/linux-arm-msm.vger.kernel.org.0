@@ -2,74 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E65D43D377
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:03:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B21143D595
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240937AbhJ0VFc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 17:05:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50274 "EHLO
+        id S229532AbhJ0V3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 17:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234360AbhJ0VFc (ORCPT
+        with ESMTP id S241730AbhJ0V2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 17:05:32 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A6D3C061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 14:03:06 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id n63so5281635oif.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 14:03:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=K1cJbfN0OSOMsbFbVCJ0EO8mI0HlFfWYSQvqTD00ru4=;
-        b=e35MzeQrMXHSsSdMjyOv+zh1luLWn9GrVbs5Hb4Oy5C4QMhydNIfOOCx+V/4wuT2OA
-         JpTpTEp4av9Ds5cnAqZqJVPlFqwB9A1Ib8loZUcuXgaKd/EJzTs9oikW/u8LH6DR7IdR
-         hSoYLWZ60pjeAEQxTcKpMn041AieviHlkwWbI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=K1cJbfN0OSOMsbFbVCJ0EO8mI0HlFfWYSQvqTD00ru4=;
-        b=hdy/Ey0fAjseXwvzDwsXogGuaQZ0VrI0UvowZ/t+PsKGcJMJFtNDNyk107lx891VhU
-         oDo9UdEzsF4bcu0CMC6/NZHBamEdhOnrgyvXLjxIlJcWHjkbU/+7mxEd+zx5nf5zyvvL
-         JGBRbqcTmlC4WpTSE92Y0MFtJNnkzwj1jac6fJVdd0KM7RLCb0Rkqcek5GgUWjZheWkY
-         bD9tCY+fB1nZCYQ1tAryEGI+AH0aiL8xOP5bW9t0q1mDVLGU3hdIjHBk+a1RjPC4sApW
-         q1hQJ5UqDincEGscMTNJqDbUuN+lSyqRES4hhO3geW35uqWcKHxahGqqS9P16/UxCvGr
-         yB1Q==
-X-Gm-Message-State: AOAM532MfllFOXxYpsaCG5Eq/ZTDqAoZRr/YnIqbnMPUpRO3nZBbEupy
-        XNaI7wtyKwG5SsgTuLZTAnKcYDyY4uFgmn73tmpj1g==
-X-Google-Smtp-Source: ABdhPJxHw7dmKoTIvG/anG/8Dw0L4C9jo9mZ+kAZqCRF0a97PQ4X738EkYlKk/qVhI6mGSLA+AD4D7F/zXlNIYK+1ME=
-X-Received: by 2002:a05:6808:23c2:: with SMTP id bq2mr5657582oib.32.1635368585748;
- Wed, 27 Oct 2021 14:03:05 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 Oct 2021 14:03:05 -0700
+        Wed, 27 Oct 2021 17:28:24 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AED3C061232
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 14:19:34 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 810521F673;
+        Wed, 27 Oct 2021 23:19:29 +0200 (CEST)
+Date:   Wed, 27 Oct 2021 23:19:28 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v10 2/2] leds: Add driver for Qualcomm LPG
+Message-ID: <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
+References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+ <20211010043912.136640-2-bjorn.andersson@linaro.org>
+ <YXL0DyyPkS4/wfB7@ripper>
 MIME-Version: 1.0
-In-Reply-To: <1635250764-13994-2-git-send-email-srivasam@codeaurora.org>
-References: <1635250764-13994-1-git-send-email-srivasam@codeaurora.org> <1635250764-13994-2-git-send-email-srivasam@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 27 Oct 2021 14:03:05 -0700
-Message-ID: <CAE-0n51A80C3J6t+GeADU8e4dVJBu6JX-DmVXquWK+a9ysfyWg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] ASoC: qcom: soundwire: Disable soundwire rxtx cgcr
- hardware control
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YXL0DyyPkS4/wfB7@ripper>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-10-26 05:19:22)
-> Update soundwire master rxtx cgcr register field to make clock gating control as
-> software controllable.
-> It is required for soundwire v1.6.0 and above for RX and TX path to work.
+Hi Bjorn,
 
-Why not do that when the clk driver probes?
+On 2021-10-22 10:25:35, Bjorn Andersson wrote:
+> On Sat 09 Oct 21:39 PDT 2021, Bjorn Andersson wrote:
+> 
+> > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> > PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
+> > with their output being routed to various other components, such as
+> > current sinks or GPIOs.
+> > 
+> > Each LPG instance can operate on fixed parameters or based on a shared
+> > lookup-table, altering the duty cycle over time. This provides the means
+> > for hardware assisted transitions of LED brightness.
+> > 
+> > A typical use case for the fixed parameter mode is to drive a PWM
+> > backlight control signal, the driver therefor allows each LPG instance
+> > to be exposed to the kernel either through the LED framework or the PWM
+> > framework.
+> > 
+> > A typical use case for the LED configuration is to drive RGB LEDs in
+> > smartphones etc, for which the driver support multiple channels to be
+> > ganged up to a MULTICOLOR LED. In this configuration the pattern
+> > generators will be synchronized, to allow for multi-color patterns.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> 
+> Any feedback on this?
+
+I asked in #linux-msm whether anything is wrong with the patterns,
+since my Sony Discovery (sdm630 with a pm660l) blinks way quicker on a
+pattern that's supposed to stay on for 1s and off for 1s:
+
+    echo "0 1000 255 1000" > /sys/class/leds/rgb\:status/hw_pattern
+
+It however seems to be broken in the same way on an older version now
+(this might be v9 or v8) which I don't remember to be the case.  Can you
+double-check if this is all working fine on your side?  If so, I'll have
+to find some time to debug it on my end.
+
+Thanks!
+- Marijn
