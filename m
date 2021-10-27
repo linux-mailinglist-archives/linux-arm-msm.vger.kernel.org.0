@@ -2,133 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 038FF43D75C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 01:13:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6EA943D773
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 01:23:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbhJ0XPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 19:15:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
+        id S229480AbhJ0X0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 19:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230248AbhJ0XPt (ORCPT
+        with ESMTP id S229474AbhJ0XZ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 19:15:49 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDA5C061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:23 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id v65so5766219ioe.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:23 -0700 (PDT)
+        Wed, 27 Oct 2021 19:25:58 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5963C061767
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:23:31 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id d3so6791966wrh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rl0KiyZVmnRa9RIsZlZ/dKBg5oxrwgNJJclLrbASD8g=;
-        b=HjFzfoLJ+HriIHgi6MmL9orHjnaLdbN7A06ITgUTPEL1Gnfof/gyL4GBHhc6Fepxwb
-         8vZrGwr+DOoKI8CPHpsQpT4Ksl/Adasiqn7vJ52uqBFWis6zN6KqTLNnZLwWoesiX0wa
-         Rogrcleh20EWM10gudKnGxlNQELGWDArr4k3M=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F1kzwP0JYJEJZtRxZX6aGDTnXu7MfQJRi7LeHOrAvTM=;
+        b=L6OkokghhCoD7PH2pbu4qrnD1/JZBiFujSS4Me9HOY68fZDOkoF53enf+xZiurYxyt
+         Cjw4CdK+lXZAOfkPbDKWUisC4E/pOebsGzuaGAABkPzW1PAdvBFP7MAsXyMmygtEG8LI
+         EfCDfcm0s0s1L0eh2aD3IlFNttKObqOoD/KwedlJYfCBwEBr/ukPqbE1l+4FP+RDeqqB
+         SRKKg3nmCX93AkvOV5cp5Ld7sh/WLJhdsjPkZbZAmzcktXiY+P6Hx3EKP56Ys9eqTJJX
+         VEZRIbhaH5vjG+w6RYSQKB/bnzyLDTXwWCPsppKMkyWlgyGve9Qby5PGIqcTjZ1vR0hb
+         yIDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rl0KiyZVmnRa9RIsZlZ/dKBg5oxrwgNJJclLrbASD8g=;
-        b=oy7mp477uEQ27L13zZxdXnTRxxqL87wKSgBGexIIlfKomyPbEnCLhLa2v2IycSuQqU
-         3SMcC39EP9VLmLbzaskEHZCLXitgcAVn5dtpRYIaN007vMsNXGYr8tU+Hcy50kSY6J3n
-         5YT1cQpzyYC74FRuNE0rCxISGEe31g2Pwu6V2xe6qJtG9ba+tBrAoHr28np30aE9+1yX
-         NVLQ4zcqTj1P5JBF0dWa1HdweaX6/RxMXqEG1HZXfXedkWwOfV2/HFJ/Aj3SgFWz4/jg
-         YKhqpDkI9MF+6dBXnBxPdbnES3zTCuvBVndxW+kl5hKVUJT6rP/Pq03B7vIDs39OPg/t
-         wkxg==
-X-Gm-Message-State: AOAM531PvClA2ryBLflR+2rAgbak2S2cOmsOlUJgH9xP7qpgZWEzrOSw
-        4JD0Vxm49n/KpOgaG3jLcHi9cT74c/sP/A==
-X-Google-Smtp-Source: ABdhPJxDQYJ2EzpOaFpaJqVA3DNFNw8ED8yfnOEbE9B1H7uAOBFX/uexMo5o44q+yGme6ccEPYigeA==
-X-Received: by 2002:a02:cb58:: with SMTP id k24mr553440jap.59.1635376402731;
-        Wed, 27 Oct 2021 16:13:22 -0700 (PDT)
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com. [209.85.166.53])
-        by smtp.gmail.com with ESMTPSA id k16sm645113ior.50.2021.10.27.16.13.21
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Oct 2021 16:13:22 -0700 (PDT)
-Received: by mail-io1-f53.google.com with SMTP id i14so5672008ioa.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:21 -0700 (PDT)
-X-Received: by 2002:a05:6638:13d2:: with SMTP id i18mr549944jaj.3.1635376401029;
- Wed, 27 Oct 2021 16:13:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=F1kzwP0JYJEJZtRxZX6aGDTnXu7MfQJRi7LeHOrAvTM=;
+        b=s4Jg2wm9+TILJT7sV6FYKjbiIoVPYIJ75tW0G6HYMYcSwFwSr3Bup5yexvEcMeV/nA
+         D/8IXFacPFFVOD0dGmCww7UfkvD3t2Gigpbwssm17gBMfL5Asfn3CC45lq9N3TFBy9Gf
+         nRtdALfLrWm1+aSZKXEg3QyQ1KvzMw/6rBSTk32v8B4N6jIxMxp8JUWaoq6e9znl52FY
+         pdgxSBfbAHGF21jC/NqWuvSs9kJjKwaSLO/SE/jTRJotiE9VM8Z9GpawFjlodcbTf3hB
+         evBFBPA+9irJqYrtyKgofRi/Kk9YzRJ4GITflOA0KkJvZVeG//XtXi/ziaoXBEv2hWDl
+         AQ4Q==
+X-Gm-Message-State: AOAM531Kgb1mJkMVWDah+83PPvePXaMlYs2QsqRukgBsEnLfWEhkUgk6
+        OuiGlmhNwASmO1aRj5FFshmOPQ==
+X-Google-Smtp-Source: ABdhPJzzQOJXPQuyD2scAWy3q9+bqCDpU37w7gjHiBQag+DdVWqKeoZWpbmK1/19r9nG46yaBo5IJg==
+X-Received: by 2002:a05:6000:1866:: with SMTP id d6mr867656wri.226.1635377010436;
+        Wed, 27 Oct 2021 16:23:30 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o17sm4937435wmq.11.2021.10.27.16.23.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 16:23:29 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org
+Cc:     linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
+        benl@squareup.com, bryan.odonoghue@linaro.org
+Subject: [PATCH] wcn36xx: Indicate beacon not connection loss on MISSED_BEACON_IND
+Date:   Thu, 28 Oct 2021 00:25:29 +0100
+Message-Id: <20211027232529.657764-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20210929153553.1.Ib44c2ac967833d7a3f51452d44d15b7b8d23c1f0@changeid>
- <86b0d847ddf06c1b445f3dbac9c771a9@codeaurora.org> <CAD=FV=WnMnEckHdu0DG3U8MnyjwQ42aybFxq35nWSLG=vs=LGA@mail.gmail.com>
- <YXTY6BdmKBa+jPeN@builder.lan>
-In-Reply-To: <YXTY6BdmKBa+jPeN@builder.lan>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 27 Oct 2021 16:13:08 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Ue-OUOOQTZnvtW1-88+NhzUp5nOo80OKT9Pgx27L0VkA@mail.gmail.com>
-Message-ID: <CAD=FV=Ue-OUOOQTZnvtW1-88+NhzUp5nOo80OKT9Pgx27L0VkA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: pmk8350: Make RTC disabled by default;
- enable on sc7280-idp
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     satya priya <skakit@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Firmware can trigger a missed beacon indication, this is not the same as a
+lost signal.
 
-On Sat, Oct 23, 2021 at 8:54 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 18 Oct 16:45 CDT 2021, Doug Anderson wrote:
->
-> > Bjorn,
-> >
-> > On Wed, Sep 29, 2021 at 9:00 PM <skakit@codeaurora.org> wrote:
-> > >
-> > > On 2021-09-30 04:08, Douglas Anderson wrote:
-> > > > The RTC on the pmk8350 is not useful on all boards. Some boards may
-> > > > not provide backup power to the PMIC but might have another RTC on the
-> > > > board that does have backup power. In this case it's better to not use
-> > > > the RTC on the PMIC.
-> > > >
-> > > > At the moment, the only boards that includes this PMIC are sc7280-idp
-> > > > and sc7280-idp2. On sc7280-idp I'm not aware of any other RTCs, but
-> > > > sc7280-idp2 has a Chrome OS EC on it and this is intended to provide
-> > > > the RTC for the AP.
-> > > >
-> > > > Let's do what we normally do for hardware that's not used by all
-> > > > boards and set it to a default status of "disabled" and then enable it
-> > > > on the boards that need it.
-> > > >
-> > > > NOTE: for sc7280-idp it's _possible_ we might also want to add
-> > > > `allow-set-time;`. That could be the subject of a future patch if it
-> > > > is indeed true.
-> > > >
-> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > > ---
-> > > >
-> > >
-> > > Reviewed-by: Satya Priya <skakit@codeaurora.org>
-> >
-> > If you're still accepting patches for 5.16, it'd be keen if you'd
-> > consider taking this one. Thanks!
-> >
->
-> I've picked the patch and hope to get it included in v5.16.
->
-> I do however not understand why the commit message so clearly defines
-> that the only device including pmk8350 is the sc7280 idp when the
-> sm8350-mtp.dts contains the following line:
->
-> #include "pmk8350.dtsi"
->
->
-> Perhaps I'm missing something obvious, but I took the liberty of also
-> enabling the RTC in the SM8350 MTP.
+Flag to Linux the missed beacon and let the WiFi stack decide for itself if
+the link is up or down by sending its own probe to determine this.
 
-Thank you for fixing this up. I must have just glazed over that part
-of things. :( Glad you caught and fixed it.
+We should only be signalling the link is lost when the firmware indicates
 
--Doug
+Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ drivers/net/wireless/ath/wcn36xx/smd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+index 599cb220b150e..aee4123035d71 100644
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -2647,7 +2647,7 @@ static int wcn36xx_smd_missed_beacon_ind(struct wcn36xx *wcn,
+ 			wcn36xx_dbg(WCN36XX_DBG_HAL, "beacon missed bss_index %d\n",
+ 				    tmp->bss_index);
+ 			vif = wcn36xx_priv_to_vif(tmp);
+-			ieee80211_connection_loss(vif);
++			ieee80211_beacon_loss(vif);
+ 		}
+ 		return 0;
+ 	}
+@@ -2662,7 +2662,7 @@ static int wcn36xx_smd_missed_beacon_ind(struct wcn36xx *wcn,
+ 			wcn36xx_dbg(WCN36XX_DBG_HAL, "beacon missed bss_index %d\n",
+ 				    rsp->bss_index);
+ 			vif = wcn36xx_priv_to_vif(tmp);
+-			ieee80211_connection_loss(vif);
++			ieee80211_beacon_loss(vif);
+ 			return 0;
+ 		}
+ 	}
+-- 
+2.33.0
+
