@@ -2,192 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBBD043CAEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 15:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E96243CB80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 16:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242243AbhJ0Nov (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 09:44:51 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:18970 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242249AbhJ0Nos (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 09:44:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635342143; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=J3EW1Zq2am1RTaPdOiCGqfwjRwDl6DkV6HGUmMii8GM=; b=rS93HTxNqQNEqWiIQBsf/J9tecgor3OBPSEX8GIxfRXs9/dagZt5XkQkOA8tGAgXEWbR3Sgw
- /3yi4lHfQ2LHNUPExCbTc+1D+PSQjnmhbeEw08cIt0woinNmkV35bVFZ5WtpwZ7IeETGFexY
- pZzC9TE1IRiO6Wk73cy+FtA2OEE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 617957342e144ac4d3edb16e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 13:42:12
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3FC5EC4360C; Wed, 27 Oct 2021 13:42:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9ECC8C4360C;
-        Wed, 27 Oct 2021 13:42:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9ECC8C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: [PATCH v2 3/3] pinctrl: qcom: Add SC7280 lpass pin configuration
-Date:   Wed, 27 Oct 2021 19:11:37 +0530
-Message-Id: <1635342097-2726-4-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1635342097-2726-1-git-send-email-srivasam@codeaurora.org>
-References: <1635342097-2726-1-git-send-email-srivasam@codeaurora.org>
+        id S242343AbhJ0OHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 10:07:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38236 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242290AbhJ0OHZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 10:07:25 -0400
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC19C061745
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 07:04:59 -0700 (PDT)
+Received: by mail-oo1-xc2c.google.com with SMTP id x135-20020a4a418d000000b002b961605657so272290ooa.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 07:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VntufPEXWFWBoEDKmzIiyo/GIHA3Qut0nsI1RRSquPQ=;
+        b=b1UGX9rErTp6W+4QIxehwiD2vWEVnO96A45hsBlatKYdl7QbrI9WKakB84huYPAA2w
+         JYUJdbu1vtNCj2vv/XnjFio/MNRKVxv0jYJA3sy56eGrEAqqE4X/xSdj81dBbHmY5KJi
+         j4OkPBAufm+jKunkkyK7mDNwpKCezsbDmPS2IcgRImLC7Qxh6SX9cFaOxswfxMzVcFFK
+         95H9bsaUc0bpJbZbyjpZFZCziskFTMWhLC4vSVPW5k0xv6ujYE/s6E6W/auOa2e7OGBg
+         B8AvE0RYLfATlhqRhvVlpS73eW20bEIuCXxIaeGopdOswiP+vau3eFKGk2+CSG0EvpHS
+         r8wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VntufPEXWFWBoEDKmzIiyo/GIHA3Qut0nsI1RRSquPQ=;
+        b=TCHjMOJqAjBHZEhJsJMBBU/IrovenUcH3njwqLVU0Gx/+vIYzvSWvB5cBjBc7WnWpZ
+         jAWCbYY9hLYVH1RKWvaq0Qv0Jj//8MLPcvAWwEqrC4B2o+i+TCOCxzu2nLB97YIeXZ/m
+         HWuUW6wvHopV6yQrXenE0ayT8uVtv/Lgl3Vhso5ZKOM8bpit34mQXhlMRAfwhsL6SPFC
+         3UR2NCIPHmcW9SDLMjYu7aCeKkrRym7Gcp0piQZkWqInGtEdPIMC1d1MqEd0SV6drS60
+         vOjy2ZRBS4tSH11iAH7KoOldeQgKdWtlYucUquziN8v5sZDukQc6FmcQtjVvYGDTba+0
+         GBwA==
+X-Gm-Message-State: AOAM531Fvn9k7Ehlvo21z8OKTQhSI3ALDUPAbBDw9yzsiOQGwEiMfNEh
+        2NFP0jZsuilNu2OFI1wN1/jdtQ==
+X-Google-Smtp-Source: ABdhPJyn5syHeDgk5I1YEs92D7gGAaJtHbLqnyK3p9VdwN3sOi7j7PgsxuQuGYkzVcRWjuTLOsK9QQ==
+X-Received: by 2002:a4a:de94:: with SMTP id v20mr22599573oou.77.1635343499224;
+        Wed, 27 Oct 2021 07:04:59 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id i28sm31734ood.23.2021.10.27.07.04.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 07:04:58 -0700 (PDT)
+Date:   Wed, 27 Oct 2021 07:06:51 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v7 2/3] drm/bridge: ti-sn65dsi86: Use regmap_bulk_write
+ API
+Message-ID: <YXlc+7BzbADe/p4A@ripper>
+References: <20211025170925.3096444-1-bjorn.andersson@linaro.org>
+ <20211025170925.3096444-2-bjorn.andersson@linaro.org>
+ <CAG3jFysN4pFqTrF8tGTVapCzysPkvO=MpYosAJnErY-AW7BqgQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG3jFysN4pFqTrF8tGTVapCzysPkvO=MpYosAJnErY-AW7BqgQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update pin control support for SC7280 LPASS LPI.
+On Wed 27 Oct 01:29 PDT 2021, Robert Foss wrote:
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 40 ++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+> Hey Bjorn,
+> 
+> On Mon, 25 Oct 2021 at 19:07, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > The multi-register u16 write operation can use regmap_bulk_write()
+> > instead of two separate regmap_write() calls.
+> >
+> > It's uncertain if this has any effect on the actual updates of the
+> > underlying registers, but this at least gives the hardware the
+> > opportunity and saves us one transation on the bus.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Did you miss including Dougs R-B from v6? As far as I can tell nothing
+> else changed between v6 & v7.
+> 
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index 0bd0c16..17a05a6 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -122,6 +122,7 @@ static const struct pinctrl_pin_desc lpass_lpi_pins[] = {
- 	PINCTRL_PIN(11, "gpio11"),
- 	PINCTRL_PIN(12, "gpio12"),
- 	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
- };
- 
- enum lpass_lpi_functions {
-@@ -136,6 +137,7 @@ enum lpass_lpi_functions {
- 	LPI_MUX_i2s1_ws,
- 	LPI_MUX_i2s2_clk,
- 	LPI_MUX_i2s2_data,
-+	LPI_MUX_sc7280_i2s2_data,
- 	LPI_MUX_i2s2_ws,
- 	LPI_MUX_qua_mi2s_data,
- 	LPI_MUX_qua_mi2s_sclk,
-@@ -144,6 +146,7 @@ enum lpass_lpi_functions {
- 	LPI_MUX_swr_rx_data,
- 	LPI_MUX_swr_tx_clk,
- 	LPI_MUX_swr_tx_data,
-+	LPI_MUX_sc7280_swr_tx_data,
- 	LPI_MUX_wsa_swr_clk,
- 	LPI_MUX_wsa_swr_data,
- 	LPI_MUX_gpio,
-@@ -164,8 +167,11 @@ static const unsigned int gpio10_pins[] = { 10 };
- static const unsigned int gpio11_pins[] = { 11 };
- static const unsigned int gpio12_pins[] = { 12 };
- static const unsigned int gpio13_pins[] = { 13 };
-+static const unsigned int gpio14_pins[] = { 14 };
-+
- static const char * const swr_tx_clk_groups[] = { "gpio0" };
- static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-+static const char * const sc7280_swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
- static const char * const swr_rx_clk_groups[] = { "gpio3" };
- static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
- static const char * const dmic1_clk_groups[] = { "gpio6" };
-@@ -185,6 +191,7 @@ static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
- static const char * const wsa_swr_clk_groups[] = { "gpio10" };
- static const char * const wsa_swr_data_groups[] = { "gpio11" };
- static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-+static const char * const sc7280_i2s2_data_groups[] = { "gpio12", "gpio13" };
- 
- static const struct lpi_pingroup sm8250_groups[] = {
- 	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-@@ -203,6 +210,24 @@ static const struct lpi_pingroup sm8250_groups[] = {
- 	LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
- };
- 
-+static const struct lpi_pingroup sc7280_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, _, _, _),
-+	LPI_PINGROUP(6, NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-+	LPI_PINGROUP(7, NO_SLEW, dmic1_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, NO_SLEW, dmic2_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, NO_SLEW, dmic2_data, i2s1_data, _, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-+	LPI_PINGROUP(12, NO_SLEW, dmic3_clk, sc7280_i2s2_data, _, _),
-+	LPI_PINGROUP(13, NO_SLEW, dmic3_data, sc7280_i2s2_data, _, _),
-+	LPI_PINGROUP(14, 6, sc7280_swr_tx_data, _, _, _),
-+};
-+
- static const struct lpi_function lpass_functions[] = {
- 	LPI_FUNCTION(dmic1_clk),
- 	LPI_FUNCTION(dmic1_data),
-@@ -215,6 +240,7 @@ static const struct lpi_function lpass_functions[] = {
- 	LPI_FUNCTION(i2s1_ws),
- 	LPI_FUNCTION(i2s2_clk),
- 	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(sc7280_i2s2_data),
- 	LPI_FUNCTION(i2s2_ws),
- 	LPI_FUNCTION(qua_mi2s_data),
- 	LPI_FUNCTION(qua_mi2s_sclk),
-@@ -223,6 +249,7 @@ static const struct lpi_function lpass_functions[] = {
- 	LPI_FUNCTION(swr_rx_data),
- 	LPI_FUNCTION(swr_tx_clk),
- 	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(sc7280_swr_tx_data),
- 	LPI_FUNCTION(wsa_swr_clk),
- 	LPI_FUNCTION(wsa_swr_data),
- };
-@@ -236,6 +263,15 @@ static struct lpi_pinctrl_variant_data sm8250_lpi_data = {
- 	.nfunctions = ARRAY_SIZE(lpass_functions),
- };
- 
-+static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
-+	.pins = lpass_lpi_pins,
-+	.npins = ARRAY_SIZE(lpass_lpi_pins),
-+	.groups = sc7280_groups,
-+	.ngroups = ARRAY_SIZE(sc7280_groups),
-+	.functions = lpass_functions,
-+	.nfunctions = ARRAY_SIZE(lpass_functions),
-+};
-+
- static int lpi_gpio_read(struct lpi_pinctrl *state, unsigned int pin,
- 			 unsigned int addr)
- {
-@@ -677,6 +713,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
- 	       .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
- 	       .data = &sm8250_lpi_data,
- 	},
-+	{
-+	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
-+	       .data = &sc7280_lpi_data,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+Yes, I missed adding Doug's R-b from v6. I also missed fixing the
+spelling of transaction (transation) in the commit message.
 
+Would you be willing to correct these two items as you apply the
+patches?
+
+Thanks,
+Bjorn
+
+> > ---
+> >
+> > Changes since v6:
+> > - None
+> >
+> >  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > index 6154bed0af5b..5b59d8dd3acd 100644
+> > --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> > @@ -193,8 +193,9 @@ static const struct regmap_config ti_sn65dsi86_regmap_config = {
+> >  static void ti_sn65dsi86_write_u16(struct ti_sn65dsi86 *pdata,
+> >                                    unsigned int reg, u16 val)
+> >  {
+> > -       regmap_write(pdata->regmap, reg, val & 0xFF);
+> > -       regmap_write(pdata->regmap, reg + 1, val >> 8);
+> > +       u8 buf[2] = { val & 0xff, val >> 8 };
+> > +
+> > +       regmap_bulk_write(pdata->regmap, reg, buf, ARRAY_SIZE(buf));
+> >  }
+> >
+> >  static u32 ti_sn_bridge_get_dsi_freq(struct ti_sn65dsi86 *pdata)
+> > --
+> > 2.29.2
+> >
