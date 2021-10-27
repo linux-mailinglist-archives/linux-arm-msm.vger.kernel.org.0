@@ -2,129 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7F8343D0ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 20:41:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ECEC43D21F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 22:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243577AbhJ0Sn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 14:43:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240392AbhJ0Sn4 (ORCPT
+        id S240438AbhJ0UM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 16:12:29 -0400
+Received: from wnew2-smtp.messagingengine.com ([64.147.123.27]:58109 "EHLO
+        wnew2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238558AbhJ0UM2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 14:43:56 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7039DC061745
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 11:41:30 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id r4-20020a4aa2c4000000b002b6f374cac9so1252869ool.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 11:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wHK6yHDny9iLB//O45DyauV4nk5jaYAc4hww2YZyQ0k=;
-        b=FWwPL9M7EALBivB1WmQb630SogBJYmaJdteHDY//7nj3TsoFhGgdBTtaKSlNgMTPL9
-         Ws/8t0W0AaFm3G8aIXeNr8B7+sCSvOqGj8uDiOG6OM5MXy3CGs91+UAyqvz/8VpERv8n
-         TkD7WLp6AXPRil0K3rbFTSv8Jl/5sVoBafmx+8HN55/+vdpuUUmZmWcu61i42bnQu7QH
-         Tv8Kid/q0wPQCuavDaOcN758r1sJl17OjeqSpNfGpsQZDfwoj5It25xUedUskUvVbnTk
-         +IVeBv5PImQjTXvW4Vc2eAQmiJBdW5i1Fggryxm+SPYwkTYmwTrHdKNaQBV2mRJ+d/JK
-         hYZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wHK6yHDny9iLB//O45DyauV4nk5jaYAc4hww2YZyQ0k=;
-        b=X5bnX9RJFsojt7+5E6mSu6vsaahZhaV9LORT5BRgq+nIfDsbSI9mBw47QoaoJHvGKV
-         hNjILOHYvq1JLkTyJGsF98rVjvNejTRyWhU7OfJcCSN/ef+LEzd93jfSkcRmRVtHI5uG
-         13Cwb8kphfLx2uH4QWkadkljOz1xnHMTYO8CY5IU8qwXbyXGcelsCkwPBWiZaa7zMJx5
-         BfrRqheQzzqK9mBLgmCleUcgzLB5DLdTXoSxtOhqDyrbKfEHcu4j7jTVPMIFEEOlq3Iv
-         oBVgjqknN3vx9y0j+4k0D0AqBx7VjaNbaZN4+IrRqqa+DMRZgaRHUtburEEG/hB9UcXi
-         8O3w==
-X-Gm-Message-State: AOAM533mVoSaLt7AXMj9FDs6lgepcQgb3amOG3TsVDABne7+duGYi+8E
-        UonQaS3oQvNmw7ZMG0KR0GGb2w==
-X-Google-Smtp-Source: ABdhPJwFBBFotXZX5piAxteH5rE+Y4OBNlnksB1oGFkl2n2gZoSj8HvkonS0+VEay3gPQz66SSzY1Q==
-X-Received: by 2002:a4a:b48a:: with SMTP id b10mr23498049ooo.24.1635360089665;
-        Wed, 27 Oct 2021 11:41:29 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id w2sm257922ooa.26.2021.10.27.11.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 11:41:28 -0700 (PDT)
-Date:   Wed, 27 Oct 2021 11:43:21 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        thara.gopinath@linaro.org, agross@kernel.org
-Subject: Re: [PATCH v2 1/5] arch_topology: Introduce thermal pressure update
- function
-Message-ID: <YXmdyeOmNS2x3K0W@ripper>
-References: <20211015144550.23719-1-lukasz.luba@arm.com>
- <20211015144550.23719-2-lukasz.luba@arm.com>
+        Wed, 27 Oct 2021 16:12:28 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailnew.west.internal (Postfix) with ESMTP id A99D62B01443;
+        Wed, 27 Oct 2021 16:10:00 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 27 Oct 2021 16:10:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        from:to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-type:content-transfer-encoding; s=fm1; bh=
+        174Tv2ikzgiRBSTtownAlIa8Hc51jyjcuiG0KQ+hbd4=; b=klhpQktTVF61lxXN
+        z6RCvTo2tny/dJjRuxboJyG1CMUDkRlJEpybOBXpRKDEODVD4d9xuW1WYDpYdx+C
+        KulO2TB5DowEHlq8mZyvDiTPBqGYri8i3hOikVl1Dib0hjseyPj2m3Jt7bhpv1bW
+        CWBUOATejnIDgEb1BPneBdBQvHKxNzrQiB9yMhfeXmh614FK6O8NTbYvmv58qVWo
+        kLHHu2KwNA0kV70AXZQz/s8Wfk/6u1v2trJzo98j9ldksC3Cd3tfTYuG99vf2iSy
+        PrfZAJvoFLz8S5HIw5k2pKVN+ELyy9aVSKOtCZXKh7vKXVKhw8rcGRZgPatdVVxn
+        k8u44A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=174Tv2ikzgiRBSTtownAlIa8Hc51jyjcuiG0KQ+hb
+        d4=; b=axByOoFcgh/+Az9kxCAWrpeZ+pr1oBtjvspPcqjQDmggOrhT6eQp5dOyQ
+        f+dBmGLg57skwzqsyfsNvnC/IkfJ40ghAzlNUXnxt9O/vOAYx91mb3sA4e5kyp1G
+        9iRhLuNtAfD9cIKOT0z2snPjGjH+vMdZyvg9UAXfBAVLl2o/kB1jbxxblWbMc43I
+        8piqXiFWnD/ytNrYWExKS4Q47PiaG+MAcUTJVMIcq2D2esDjbdemR6Y1q2yt58qb
+        DGaTP5EEN+f4UcWsYvq3tQsPSH9q2VENRNQHyBqhk2QTV+Hj1ACJgfMETs7ssbVK
+        2uap3uKjqzPMG5qGJ4XSjKfvhMCUg==
+X-ME-Sender: <xms:E7J5YdAY0n9flJiRx5R0OECAz0MRM-T0-3OXKy0Besh0Rcrt8zH7Ow>
+    <xme:E7J5YbiMdbYr7gJWxYbszTBZxteZRqJaBXd0iTVipXlI-OLPv_XMOk7uW-pqhnxJw
+    ef3aMxyYLCY5hapZf4>
+X-ME-Received: <xmr:E7J5YYmSeo1YK4dfYwkF0CatVXGEjyK5u8Ec-hv0lu_pERSVwncofednqCWir9U0focRTQ0fGoHuY_EplfHuh7oHEXYVykjrXiUGe5qO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddguddutdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefhvffufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpeforgig
+    ihhmvgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrf
+    grthhtvghrnhepjeeugfegkeffgfeuvedtvddufffhjeffjeejvddvudduteehhfefhfef
+    geeikeeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epmhgrgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:E7J5YXzmBoYwJDS2qv2M1HB3Uma-QDNHhBuH_lLh6v9Be4Bch1ji6g>
+    <xmx:E7J5YSRPl4I1q8F6RqB0KEMDScNFcGyKk2pIpURIof-etyvcqXKfcQ>
+    <xmx:E7J5YaamnTlyH3tkt3g4lPSW_1pfw3CaS4xPO9rlVqR_kLDTbNL5dg>
+    <xmx:GLJ5YWwe5m9gr5x4nWinl-9JeTHzLO56Nqf2In0qEr3XLcz6bnvpKQCWZ8Q>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 27 Oct 2021 16:09:55 -0400 (EDT)
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        David Airlie <airlied@linux.ie>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        linux-kernel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Chen Feng <puck.chen@hisilicon.com>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>
+Subject: Re: (subset) [PATCH v6 01/21] drm/bridge: adv7533: Switch to devm MIPI-DSI helpers
+Date:   Wed, 27 Oct 2021 22:09:32 +0200
+Message-Id: <163532324662.18245.12411673920991418196.b4-ty@cerno.tech>
+X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211025151536.1048186-2-maxime@cerno.tech>
+References: <20211025151536.1048186-1-maxime@cerno.tech> <20211025151536.1048186-2-maxime@cerno.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211015144550.23719-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 15 Oct 07:45 PDT 2021, Lukasz Luba wrote:
-> diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
-[..]
-> +/**
-> + * topology_thermal_pressure_update() - Update thermal pressure for CPUs
-> + * @cpus	: The related CPUs for which capacity has been reduced
-> + * @capped_freq	: The maximum allowed frequency that CPUs can run at
+On Mon, 25 Oct 2021 17:15:16 +0200, Maxime Ripard wrote:
+> Let's switch to the new devm MIPI-DSI function to register and attach
+> our secondary device. This also avoids leaking the device when we detach
+> the bridge.
+> 
+> 
 
-I know this matches what I see in e.g. the Qualcomm cpufreq hw driver,
-but in what cases will @capped_freq differ from
-cpufreq_get_hw_max_freq(cpumask_first(cpus))?
+Applied to drm/drm-misc (drm-misc-next).
 
-Regards,
-Bjorn
-
-> + *
-> + * Update the value of thermal pressure for all @cpus in the mask. The
-> + * cpumask should include all (online+offline) affected CPUs, to avoid
-> + * operating on stale data when hot-plug is used for some CPUs. The
-> + * @capped_freq must be less or equal to the max possible frequency and
-> + * reflects the currently allowed max CPUs frequency due to thermal capping.
-> + * The @capped_freq must be provided in kHz.
-> + */
-> +void topology_thermal_pressure_update(const struct cpumask *cpus,
-> +				      unsigned long capped_freq)
-> +{
-> +	unsigned long max_capacity, capacity;
-> +	int cpu;
-> +
-> +	if (!cpus)
-> +		return;
-> +
-> +	cpu = cpumask_first(cpus);
-> +	max_capacity = arch_scale_cpu_capacity(cpu);
-> +
-> +	/* Convert to MHz scale which is used in 'freq_factor' */
-> +	capped_freq /= 1000;
-> +
-> +	capacity = mult_frac(capped_freq, max_capacity,
-> +			     per_cpu(freq_factor, cpu));
-> +
-> +	arch_set_thermal_pressure(cpus, max_capacity - capacity);
-> +}
-> +EXPORT_SYMBOL_GPL(topology_thermal_pressure_update);
-> +
->  static ssize_t cpu_capacity_show(struct device *dev,
->  				 struct device_attribute *attr,
->  				 char *buf)
-> @@ -220,7 +255,6 @@ static void update_topology_flags_workfn(struct work_struct *work)
->  	update_topology = 0;
->  }
->  
-> -static DEFINE_PER_CPU(u32, freq_factor) = 1;
->  static u32 *raw_capacity;
->  
->  static int free_raw_capacity(void)
+Thanks!
+Maxime
