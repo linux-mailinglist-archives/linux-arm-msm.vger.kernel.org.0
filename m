@@ -2,96 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A51BB43D59D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:27:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 442D843D60B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236191AbhJ0VaM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 17:30:12 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:48765 "EHLO
-        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231717AbhJ0V3r (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 17:29:47 -0400
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6A0F2200B4;
-        Wed, 27 Oct 2021 23:27:10 +0200 (CEST)
-Date:   Wed, 27 Oct 2021 23:27:09 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH v10 2/2] leds: Add driver for Qualcomm LPG
-Message-ID: <20211027212709.4ma5uzy5titmgzqv@SoMainline.org>
-References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
- <20211010043912.136640-2-bjorn.andersson@linaro.org>
- <YXL0DyyPkS4/wfB7@ripper>
- <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
+        id S229600AbhJ0V4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 17:56:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44074 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229705AbhJ0V4i (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 17:56:38 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D5D5B610CA;
+        Wed, 27 Oct 2021 21:54:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635371652;
+        bh=P97TBuOSU6VCfn0fOqxvrzobUnZ38EQAx73aJ380G0I=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=M3VfebhT9aqmPN+g46qbnnrewNbanEgi94dTcPhTU7mpjH5jB8Y7+HKwlB8s7jjVw
+         AhPYMHtft/LjFNLK9Hsgj2L68/zVZEBGbpWec7MeDUupldbzjTlVnOAleK8/azkKW8
+         iFoc69n5G3V3irQEsvfGSmy36nnA8Gg9ufrGzY2OC7kVp2uH4tt5vzrFHWkHMKIJj/
+         7wTkzJE1LXtsccFy9kec2XLrFpEWyaIMu7GE41Q4IEaMYAg7teyu8b/AaSKfJARIyI
+         Nlg/tP+rBkWt+6QT1/8s4X3SDvNG/rDkbALb4JlBMtTBjRHbngtdRbmIuIn7wfMf0g
+         O4mAIg9NwhW1g==
+Received: by mail-ed1-f53.google.com with SMTP id h7so16646998ede.8;
+        Wed, 27 Oct 2021 14:54:12 -0700 (PDT)
+X-Gm-Message-State: AOAM530fbq34jSycT0x21NOeLtHrwJpN0NtDgzse7kJYY+zas2mkQlcW
+        hSJ/zyTxheAeFH+pDZuyIBkq+j0spsetsTO7wA==
+X-Google-Smtp-Source: ABdhPJz4kxW1DR4UGq5S1PijHQ34O4WuSLKy+4MFc+0p8RGDh6RSrjWvUEec/qgQMkxVs4c2i1XYv6o1JFKR1o6WZok=
+X-Received: by 2002:a17:907:7f10:: with SMTP id qf16mr244409ejc.390.1635371651311;
+ Wed, 27 Oct 2021 14:54:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
+References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
+ <20211006035407.1147909-2-dmitry.baryshkov@linaro.org> <YXf6TbV2IpPbB/0Y@robh.at.kernel.org>
+ <37b26090-945f-1e17-f6ab-52552a4b6d89@linaro.org>
+In-Reply-To: <37b26090-945f-1e17-f6ab-52552a4b6d89@linaro.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Wed, 27 Oct 2021 16:53:59 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLAnJqZ95_bf6_fFmPJFMjuy43UfP2UxzEmFMNnG_t-Ug@mail.gmail.com>
+Message-ID: <CAL_JsqLAnJqZ95_bf6_fFmPJFMjuy43UfP2UxzEmFMNnG_t-Ug@mail.gmail.com>
+Subject: Re: [PATCH v1 01/15] dt-bindings: add pwrseq device tree bindings
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH DRIVERS" <linux-bluetooth@vger.kernel.org>,
+        ath10k@lists.infradead.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-27 23:19:30, Marijn Suijten wrote:
-> Hi Bjorn,
-> 
-> On 2021-10-22 10:25:35, Bjorn Andersson wrote:
-> > On Sat 09 Oct 21:39 PDT 2021, Bjorn Andersson wrote:
-> > 
-> > > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-> > > PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
-> > > with their output being routed to various other components, such as
-> > > current sinks or GPIOs.
-> > > 
-> > > Each LPG instance can operate on fixed parameters or based on a shared
-> > > lookup-table, altering the duty cycle over time. This provides the means
-> > > for hardware assisted transitions of LED brightness.
-> > > 
-> > > A typical use case for the fixed parameter mode is to drive a PWM
-> > > backlight control signal, the driver therefor allows each LPG instance
-> > > to be exposed to the kernel either through the LED framework or the PWM
-> > > framework.
-> > > 
-> > > A typical use case for the LED configuration is to drive RGB LEDs in
-> > > smartphones etc, for which the driver support multiple channels to be
-> > > ganged up to a MULTICOLOR LED. In this configuration the pattern
-> > > generators will be synchronized, to allow for multi-color patterns.
-> > > 
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > 
-> > Any feedback on this?
-> 
-> I asked in #linux-msm whether anything is wrong with the patterns,
-> since my Sony Discovery (sdm630 with a pm660l) blinks way quicker on a
-> pattern that's supposed to stay on for 1s and off for 1s:
-> 
->     echo "0 1000 255 1000" > /sys/class/leds/rgb\:status/hw_pattern
-> 
-> It however seems to be broken in the same way on an older version now
-> (this might be v9 or v8) which I don't remember to be the case.  Can you
-> double-check if this is all working fine on your side?  If so, I'll have
-> to find some time to debug it on my end.
-> 
-> Thanks!
-> - Marijn
+On Tue, Oct 26, 2021 at 9:42 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 26/10/2021 15:53, Rob Herring wrote:
+> > On Wed, Oct 06, 2021 at 06:53:53AM +0300, Dmitry Baryshkov wrote:
+> >> Add device tree bindings for the new power sequencer subsystem.
+> >> Consumers would reference pwrseq nodes using "foo-pwrseq" properties.
+> >> Providers would use '#pwrseq-cells' property to declare the amount of
+> >> cells in the pwrseq specifier.
+> >
+> > Please use get_maintainers.pl.
+> >
+> > This is not a pattern I want to encourage, so NAK on a common binding.
+>
+>
+> Could you please spend a few more words, describing what is not
+> encouraged? The whole foo-subsys/#subsys-cells structure?
 
-Another thing I just ran into: on both patch revisions the colors are
-flipped.  multi_index reports "red green glue", but the values written
-to multi_intensity correspond to "blue green red" instead.  Is it the
-same on your side?
+No, that's generally how common provider/consumer style bindings work.
 
-- Marijn
+> Or just specifying the common binding?
+
+If we could do it again, I would not have mmc pwrseq binding. The
+properties belong in the device's node. So don't generalize the mmc
+pwrseq binding.
+
+It's a kernel problem if the firmware says there's a device on a
+'discoverable' bus and the kernel can't discover it. I know you have
+the added complication of a device with 2 interfaces, but please,
+let's solve one problem at a time.
+
+Rob
