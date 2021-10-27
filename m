@@ -2,114 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED83543C46A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 09:53:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A99843C4F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 10:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231572AbhJ0H4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 03:56:22 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15724 "EHLO m43-7.mailgun.net"
+        id S240864AbhJ0IZF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 04:25:05 -0400
+Received: from ixit.cz ([94.230.151.217]:53606 "EHLO ixit.cz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240659AbhJ0H4T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 03:56:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635321235; h=Date: Message-ID: Cc: To: References:
- In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
- Content-Type: Sender; bh=OkgHr2Y6HEkj1kBlD9Tm89+Omnw4DhBiRqIgVdp5c8E=;
- b=pRoHNUNFOe2oow5T4tQRWC+SCiqaWycWhWlKxgJsVQ/BB9fE60u2TRJxFog5eyzueSymbOXq
- 2IxrTIz6wOxkMpQqIxE54cwv6cn9UohJBONgNHAohwbce/3t3cxgkFja/LlEMJZ3ZTyDqVR5
- aLfaYLyQKxkzpq2qkGCAyjCaVbg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 61790581c75c436a30cdd23a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 07:53:37
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2563BC43618; Wed, 27 Oct 2021 07:53:37 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        MISSING_DATE,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki.adurom.net (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S236550AbhJ0IZE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 04:25:04 -0400
+Received: from [192.168.1.138] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05E46C4338F;
-        Wed, 27 Oct 2021 07:53:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 05E46C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Content-Type: text/plain; charset="utf-8"
+        by ixit.cz (Postfix) with ESMTPSA id 9035720064;
+        Wed, 27 Oct 2021 10:22:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1635322956;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=hSWxFx5H3u7VkFxWrskfDzG37Qm/SgrsmKEi2GSvllg=;
+        b=tdq+tPMYciG8TbHbeeFjH8BrtqjBswRKJe9zDbjF3pMsPdTrndWT0foAd4ApVprRkwpMaY
+        m8k1+AhAwC/UjibgHgjAjtL3hTuYP0nmvVTyuD5nJhBPUNiyUEdllCbnGNcSqDAesoUQvd
+        c08yO/Xry+4rm1l/vZ3SCqL/FNfCpDs=
+Date:   Wed, 27 Oct 2021 10:22:29 +0200
+From:   David Heidelberg <david@ixit.cz>
+Subject: Re: [PATCH v6] dt-bindings: drm/msm/gpu: convert to YAML
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Herring <robh@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        David Airlie <airlied@linux.ie>
+Message-Id: <H9NM1R.O70ALO0PAFVF@ixit.cz>
+In-Reply-To: <YW17J03XTvJgfBfj@robh.at.kernel.org>
+References: <20211017144350.70295-1-david@ixit.cz>
+        <YW17J03XTvJgfBfj@robh.at.kernel.org>
+X-Mailer: geary/40.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 1/3] wcn36xx: add debug prints for sw_scan start/complete
-From:   Kalle Valo <kvalo@codeaurora.org>
-In-Reply-To: <20211023003949.3082900-2-benl@squareup.com>
-References: <20211023003949.3082900-2-benl@squareup.com>
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Joseph Gates <jgates@squareup.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eugene Krasnikov <k.eugene.e@gmail.com>,
-        "John W. Linville" <linville@tuxdriver.com>,
-        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
-Message-ID: <163532120872.19793.15468481505724352001.kvalo@codeaurora.org>
-Date:   Wed, 27 Oct 2021 07:53:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Benjamin Li <benl@squareup.com> wrote:
+Hello Rob,
 
-> Add some MAC debug prints for more easily demarcating a software scan
-> when parsing logs.
+can this patch can go in?
+
+Thank you
+David
+
+
+On Mon, Oct 18 2021 at 08:48:23 -0500, Rob Herring <robh@kernel.org> 
+wrote:
+> On Sun, 17 Oct 2021 16:43:50 +0200, David Heidelberg wrote:
+>>  Conversion of text binding for Adreno GPU to the YAML format.
+>> 
+>>  Signed-off-by: David Heidelberg <david@ixit.cz>
+>>  ---
+>>  v2:
+>>    - added compatbile description from Rob Clark
+>>    - dropped reg description
+>>    - reg numbers increased to 3 (since we also have uncommon cx_dbgc)
+>>    - specified interconnect-names items range
+>>    - defined zap-shader as an object and added it's properties
+>>    - enforce 0 clocks for Andreno >= 6xx since it's defined in GMU 
+>> node
+>> 
+>>  v3:
+>>   - fix patterns (add backslash before dot)
+>>   - add additional clocks
+>>   - adreno@ -> gpu@
+>>   - add few const and change enum to anyOf
+>>   - added clock & clock-names placeholder in non-conditional part
+>>   (description)
+>> 
+>>  v4:
+>>   - clock & clock-names - true,false instead maxItems
+>>   - impl. #stream-id-cells, nvmem-cell-names, nvmem-cells
+>>   - dropped requirement on firmware-name in zap_shader
+>> 
+>>  v5:
+>>   - maxOtems -> maxItems typo fix
+>> 
+>>  v6:
+>>   - enum -> const to fix ordering
+>>   - opp-table is object
+>>   - spacing
+>>   - drop undocumented and unused #stream-id-cells
+>> 
+>>   .../devicetree/bindings/display/msm/gpu.txt   | 157 ----------
+>>   .../devicetree/bindings/display/msm/gpu.yaml  | 288 
+>> ++++++++++++++++++
+>>   2 files changed, 288 insertions(+), 157 deletions(-)
+>>   delete mode 100644 
+>> Documentation/devicetree/bindings/display/msm/gpu.txt
+>>   create mode 100644 
+>> Documentation/devicetree/bindings/display/msm/gpu.yaml
+>> 
 > 
-> Signed-off-by: Benjamin Li <benl@squareup.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-Failed to build:
-
-In file included from ./include/linux/bitops.h:7,
-                 from ./include/linux/kernel.h:12,
-                 from ./include/linux/interrupt.h:6,
-                 from drivers/net/wireless/ath/wcn36xx/dxe.c:25:
-drivers/net/wireless/ath/wcn36xx/dxe.c: In function '_wcn36xx_dxe_tx_channel_is_empty':
-./include/linux/typecheck.h:12:25: error: comparison of distinct pointer types lacks a cast [-Werror]
-   12 |         (void)(&__dummy == &__dummy2); \
-      |                         ^~
-./include/linux/spinlock.h:255:17: note: in expansion of macro 'typecheck'
-  255 |                 typecheck(unsigned long, flags);        \
-      |                 ^~~~~~~~~
-./include/linux/spinlock.h:393:9: note: in expansion of macro 'raw_spin_lock_irqsave'
-  393 |         raw_spin_lock_irqsave(spinlock_check(lock), flags);     \
-      |         ^~~~~~~~~~~~~~~~~~~~~
-drivers/net/wireless/ath/wcn36xx/dxe.c:844:9: note: in expansion of macro 'spin_lock_irqsave'
-  844 |         spin_lock_irqsave(&ch->lock, flags);
-      |         ^~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[5]: *** [scripts/Makefile.build:277: drivers/net/wireless/ath/wcn36xx/dxe.o] Error 1
-make[4]: *** [scripts/Makefile.build:540: drivers/net/wireless/ath/wcn36xx] Error 2
-make[3]: *** [scripts/Makefile.build:540: drivers/net/wireless/ath] Error 2
-make[2]: *** [scripts/Makefile.build:540: drivers/net/wireless] Error 2
-make[1]: *** [scripts/Makefile.build:540: drivers/net] Error 2
-make: *** [Makefile:1868: drivers] Error 2
-
-3 patches set to Changes Requested.
-
-12579221 [1/3] wcn36xx: add debug prints for sw_scan start/complete
-12579223 [2/3] wcn36xx: implement flush op to speed up connected scan
-12579225 [3/3] wcn36xx: ensure pairing of init_scan/finish_scan and start_scan/end_scan
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20211023003949.3082900-2-benl@squareup.com/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
