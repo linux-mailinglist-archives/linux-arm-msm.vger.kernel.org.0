@@ -2,242 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CEF8343CC19
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 16:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A16443CC35
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 16:28:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242500AbhJ0O1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 10:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43106 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238272AbhJ0O1y (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 10:27:54 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD27AC0613B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 07:25:28 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id l2so4995683lji.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 07:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WNAMDt0ADcK+n3RsR7jtkIgpfhbhOoaoKp+bIVUXzCo=;
-        b=ox50lX+eprZt1V6nglRNBzkFkP9BY6+LFieoj8+/IXJkU7HwHZSE6HKntwtP0qW6Po
-         llsnguVNK7I+uCHSLGEm7j52FncoKeR89sGDLEJdNsKvNVhkWV5LGBb6ExNKqJng/cir
-         hMoIIUg97fyCHt6127zqJRZlfm++CictFvuO2QiKcrkfUpNYnG2Dl2J97hFlnjz3CUND
-         brS4N6M03ATDJkPH8OPtIn4f4O6kOXbl2dJQyugs6ROQi7muJknUmDmzOxHx6hMwEY+r
-         IjYovE2eI/1UAYT8Dpjjfj/l4LvtzD/nOyjVNqBoU348DwT6fZ5tBRKcC2gbv3e95Qn2
-         6VwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WNAMDt0ADcK+n3RsR7jtkIgpfhbhOoaoKp+bIVUXzCo=;
-        b=HTQ0xf8r3oMW7TfgIn3Us88DIPyk2QgZKzaQB6KFIfbiY0+bC8EEZh21h5J8r0TUvG
-         eDgNybNq5Bs8WUEjQvyyxZ3GdmFIHEroKofIELzzR7A8zJ90d+R7jP/wtVPa2SuDMMgw
-         i93sB90Mnd3v4VvCQqL1X1g/31+vcxgLiWyKMJvJyIphjk+SWE72y459DD5DHJtsb7Xy
-         xCsGyJJIOQ04C9QPj1xfr2dVSeVJ57Wi1GjMDG7BnQM0E/D8z1l99TlGutePy+aPNy33
-         pJ4EeNWDP5gyJ0sErUCvljxhMseWIxbB+kIfFr0fyGGrQo82AGXg/eMmx4nChamU2zkK
-         rmMQ==
-X-Gm-Message-State: AOAM533JvLU97G5cDzONWIip8IHrEblvWN+blg/tIkToeqltCL7DMu29
-        asBVcZrQaobA11wNUQ4rVXDlfVZR4LLWo1xtkZA5aQMCxKjK3A==
-X-Google-Smtp-Source: ABdhPJy6HDilhtMJ4mWprnuUa4gEBr21bSJphH24YDGc1eAc5GIF49QKqAbykfnywK/pWXjBK7lgAhjvv/hVR4Mj3tk=
-X-Received: by 2002:a2e:b550:: with SMTP id a16mr34038341ljn.229.1635344726453;
- Wed, 27 Oct 2021 07:25:26 -0700 (PDT)
+        id S242558AbhJ0Oad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 10:30:33 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46460 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242551AbhJ0Oac (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 10:30:32 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2C5A5603E5;
+        Wed, 27 Oct 2021 14:28:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635344886;
+        bh=Mmj309Iy00lc7nVQhNjWfw27f7+Uk5zEEgQ6LZXj8C8=;
+        h=From:To:Cc:Subject:Date:From;
+        b=tFP77WS2hf+g0F5rKeQ0Zoiv3yj/buZpIz06DhSh3R42tqS0LcuMIdtFRL31Rcm06
+         P38iBrcOtLjAGuCizAVCbPzdYBc9qAeb7E/zoJQcmD4a7zX7DdTIGVLjqdMy3CA1e4
+         YRygVSgrnhRKpluAGhvXWOzQ2wWAd+iWaLpckioAdJ98eeUzEYaOis6jGCC10ouOFj
+         tD1MW4eAGxcdm/tqOVEtkQWT3ns0dBq230Y+LYkVXBJ3K9zEE7o/tAkdKgPTc/RaQt
+         PeFm9cZhWOg8XY/dD4FFsCWns8EOfcR1zNQ1HeYQ3UefzmKse2FtjKMmArpEVJtE1/
+         h//iJPDRCYQ6Q==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Stephen Boyd <swboyd@chromium.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] Revert "firmware: qcom: scm: Add support for MC boot address API"
+Date:   Wed, 27 Oct 2021 16:27:40 +0200
+Message-Id: <20211027142802.2060425-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635152851-23660-2-git-send-email-quic_c_sanm@quicinc.com>
- <YXcBK7zqny0s4gd4@ripper> <CAE-0n51k8TycXjEkH7rHYo0j7cYbKJOnOn1keVhx2yyTcBNnvg@mail.gmail.com>
- <YXck+xCJQBRGqTCw@ripper> <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
- <YXdsYlLWnjopyMn/@ripper> <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
- <YXjbs3Bv6Y3d87EC@yoga>
-In-Reply-To: <YXjbs3Bv6Y3d87EC@yoga>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 27 Oct 2021 16:24:49 +0200
-Message-ID: <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
- for dwc3 qcom
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 27 Oct 2021 at 06:55, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Tue 26 Oct 19:48 CDT 2021, Stephen Boyd wrote:
->
-> > +Rajendra
-> >
-> > Quoting Bjorn Andersson (2021-10-25 19:48:02)
-> > > On Mon 25 Oct 15:41 PDT 2021, Stephen Boyd wrote:
-> > >
-> > > >
-> > > > When the binding was introduced I recall we punted on the parent child
-> > > > conversion stuff. One problem at a time. There's also the possibility
-> > > > for a power domain to be parented by multiple power domains so
-> > > > translation tables need to account for that.
-> > > >
-> > >
-> > > But for this case - and below display case - the subdomain (the device's
-> > > power-domain) is just a dumb gate. So there is no translation, the given
-> > > performance_state applies to the parent. Or perhaps such implicitness
-> > > will come back and bite us?
-> >
-> > In the gate case I don't see how the implicitness will ever be a
-> > problem.
-> >
-> > >
-> > > I don't think we allow a power-domain to be a subdomain of two
-> > > power-domains - and again it's not applicable to USB or display afaict.
-> >
-> > Ah maybe. I always confuse power domains and genpd.
-> >
-> > >
-> > > > >
-> > > > > > Or we may need to make another part of the OPP binding to indicate the
-> > > > > > relationship between the power domain and the OPP and the parent of
-> > > > > > the power domain.
-> > > > >
-> > > > > I suspect this would be useful if a power-domain provider needs to
-> > > > > translate a performance_state into a different supply-performance_state.
-> > > > > Not sure if we have such case currently; these examples are all an
-> > > > > adjustable power-domain with "gating" subdomains.
-> > > >
-> > > > Even for this case, we should be able to have the GDSC map the on state
-> > > > to some performance state in the parent domain. Maybe we need to add
-> > > > some code to the gdsc.c file to set a performance state on the parent
-> > > > domain when it is turned on. I'm not sure where the value for that perf
-> > > > state comes from. I guess we can hardcode it in the driver for now and
-> > > > if it needs to be multiple values based on the clk frequency we can push
-> > > > it out to an OPP table or something like that.
-> > > >
-> > >
-> > > For the GDSC I believe we only have 1:1 mapping, so implementing
-> > > set_performance_state to just pass that on to the parent might do the
-> > > trick (although I haven't thought this through).
-> > >
-> > > Conceptually I guess this would be like calling clk_set_rate() on a
-> > > clock gate, relying on it being propagated upwards. The problem here is
-> > > that the performance_state is just a "random" integer without a well
-> > > defined unit.
-> > >
-> >
-> > Right. Ideally it would be in the core code somehow so that if there
-> > isn't a set_performance_state function we go to the parent or some
-> > special return value from the function says "call it on my parent". The
-> > translation scheme could come later so we can translate the "random"
-> > integer between parent-child domains.
->
-> As a proof of concept it should be sufficient to just add an
-> implementation of sc->pd.set_performance_state in gdsc.c. But I agree
-> that it would be nice to push this into some framework code, perhaps
-> made opt-in by some GENPD_FLAG_xyz.
->
-> > At the end of the day the device
-> > driver wants to set a frequency or runtime pm get the device and let the
-> > OPP table or power domain code figure out what the level is supposed to
-> > be.
-> >
->
-> Yes and this is already working for the non-nested case - where the
-> single power-domain jumps between performance states as the opp code
-> switches from one opp to another.
->
-> So if we can list only the child power-domain (i.e. the GDSC) and have
-> the performance_stat requests propagate up to the parent rpmhpd resource
-> I think we're good.
->
->
-> Let's give this a spin and confirm that this is the case...
->
-> > >
-> > >
-> > > The one case where I believe we talked about having different mapping
-> > > between the performance_state levels was in the relationship between CX
-> > > and MX. But I don't think we ever did anything about that...
-> >
-> > Hmm alright. I think there's a constraint but otherwise nobody really
-> > wants to change both at the same time.
-> >
-> > > >
-> > > > Yes, a GDSC is really a gate on a parent power domain like CX or MMCX,
-> > > > etc. Is the display subsystem an example of different clk frequencies
-> > > > wanting to change the perf state of CX? If so it's a good place to work
-> > > > out the translation scheme for devices that aren't listing the CX power
-> > > > domain in DT.
-> > >
-> > > Yes, the various display components sits in MDSS_GDSC but the opp-tables
-> > > needs to change the performance_state of MDSS_GDSC->parent (i.e. CX or
-> > > MMCX, depending on platform).
-> > >
-> > > As I said, today we hack this by trusting that the base drm/msm driver
-> > > will keep MDSS_GDSC on and listing MMCX (or CX) as power-domain for each
-> > > of these components.
-> > >
-> > >
-> > > So if we solve this, then that seems to directly map to the static case
-> > > for USB as well.
-> > >
-> >
-> > Got it. So in this case we could have the various display components
-> > that are in the mdss gdsc domain set their frequency via OPP and then
-> > have that translate to a level in CX or MMCX. How do we parent the power
-> > domains outside of DT? I'm thinking that we'll need to do that if MMCX
-> > is parented by CX or something like that and the drivers for those two
-> > power domains are different. Is it basic string matching?
->
-> In one way or another we need to invoke pm_genpd_add_subdomain() to link
-> the two power-domains (actually genpds) together, like what was done in
-> 3652265514f5 ("clk: qcom: gdsc: enable optional power domain support").
->
-> In the case of MMCX and CX, my impression of the documentation is that
-> they are independent - but if we need to express that CX is parent of
-> MMCX, they are both provided by rpmhpd which already supports this by
-> just specifying .parent on mmcx to point to cx.
+From: Arnd Bergmann <arnd@arndb.de>
 
-I was trying to follow the discussion, but it turned out to be a bit
-complicated to catch up and answer all things. In any case, let me
-just add a few overall comments, perhaps that can help to move things
-forward.
+This reverts commits 55845f46df03 and c50031f03dfe, since this still
+causes a build failure when QCOM_SCM is a loadable module, or when
+CONFIG_SMP is disabled:
 
-First, one domain can have two parent domains. Both from DT and from
-genpd point of view, just to make this clear.
+ERROR: modpost: "cpu_logical_map" [drivers/firmware/qcom-scm.ko] undefined!
 
-Although, it certainly looks questionable to me, to hook up the USB
-device to two separate power domains, one to control power and one to
-control performance. Especially, if it's really the same piece of HW
-that is managing both things. Additionally, if it's correct to model
-the USB GDSC power domain as a child to the CX power domain from HW
-point of view, we should likely do that.
+This be done better for 5.17, but it's too late now to rework
+properly.
 
-From the performance states point of view, genpd supports propagating
-performance states to parent domains, via a 1:1 mapping of the
-performance state. Note that, we have also quite recently made genpd's
-->set_performance_state() callback to be optional. A vote for a
-performance state will be propagated to the parent domain, even if the
-child domain would lack the ->set_performance_state() callback.  This
-should be useful, where a child domain relies on its parent domain for
-performance state management, which seems to be the case for the USB
-GDSC/CX power domains, right?
+Fixes: c50031f03dfe ("firmware: qcom: scm: Don't break compile test on non-ARM platforms")
+Fixes: 55845f46df03 ("firmware: qcom: scm: Add support for MC boot address API")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
 
-In regards to the parsing of the "required-opps" DT binding for a
-device node, I think that should work for cases like these, too. Or is
-there something missing around this?
+I've applied this revert to the arm/drivers branch now
 
-Kind regards
-Uffe
+ drivers/firmware/qcom_scm.c | 94 +++++++------------------------------
+ drivers/firmware/qcom_scm.h |  4 --
+ 2 files changed, 17 insertions(+), 81 deletions(-)
+
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 11464f6502be..7db8066b19fd 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -17,10 +17,6 @@
+ #include <linux/reset-controller.h>
+ #include <linux/arm-smccc.h>
+ 
+-#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
+-#include <asm/smp_plat.h>
+-#endif
+-
+ #include "qcom_scm.h"
+ 
+ static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
+@@ -264,44 +260,15 @@ static bool __qcom_scm_is_call_available(struct device *dev, u32 svc_id,
+ 	return ret ? false : !!res.result[0];
+ }
+ 
+-#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
+-static int __qcom_scm_set_boot_addr_mc(void *entry, const cpumask_t *cpus,
+-				       unsigned int flags)
+-{
+-	struct qcom_scm_desc desc = {
+-		.svc = QCOM_SCM_SVC_BOOT,
+-		.cmd = QCOM_SCM_BOOT_SET_ADDR_MC,
+-		.owner = ARM_SMCCC_OWNER_SIP,
+-		.arginfo = QCOM_SCM_ARGS(6),
+-	};
+-	unsigned int cpu;
+-	u64 map;
+-
+-	/* Need a device for DMA of the additional arguments */
+-	if (!__scm || __get_convention() == SMC_CONVENTION_LEGACY)
+-		return -EOPNOTSUPP;
+-
+-	desc.args[0] = virt_to_phys(entry);
+-	for_each_cpu(cpu, cpus) {
+-		map = cpu_logical_map(cpu);
+-		desc.args[1] |= BIT(MPIDR_AFFINITY_LEVEL(map, 0));
+-		desc.args[2] |= BIT(MPIDR_AFFINITY_LEVEL(map, 1));
+-		desc.args[3] |= BIT(MPIDR_AFFINITY_LEVEL(map, 2));
+-	}
+-	desc.args[4] = ~0ULL; /* Reserved for affinity level 3 */
+-	desc.args[5] = flags;
+-
+-	return qcom_scm_call(__scm->dev, &desc, NULL);
+-}
+-#else
+-static inline int __qcom_scm_set_boot_addr_mc(void *entry, const cpumask_t *cpus,
+-					      unsigned int flags)
+-{
+-	return -EINVAL;
+-}
+-#endif
+-
+-static int __qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
++/**
++ * qcom_scm_set_warm_boot_addr() - Set the warm boot address for cpus
++ * @entry: Entry point function for the cpus
++ * @cpus: The cpumask of cpus that will use the entry point
++ *
++ * Set the Linux entry point for the SCM to transfer control to when coming
++ * out of a power down. CPU power down may be executed on cpuidle or hotplug.
++ */
++int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
+ {
+ 	int ret;
+ 	int flags = 0;
+@@ -337,28 +304,17 @@ static int __qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
+ 
+ 	return ret;
+ }
++EXPORT_SYMBOL(qcom_scm_set_warm_boot_addr);
+ 
+ /**
+- * qcom_scm_set_warm_boot_addr() - Set the warm boot address for cpus
++ * qcom_scm_set_cold_boot_addr() - Set the cold boot address for cpus
+  * @entry: Entry point function for the cpus
+  * @cpus: The cpumask of cpus that will use the entry point
+  *
+- * Set the Linux entry point for the SCM to transfer control to when coming
+- * out of a power down. CPU power down may be executed on cpuidle or hotplug.
++ * Set the cold boot address of the cpus. Any cpu outside the supported
++ * range would be removed from the cpu present mask.
+  */
+-int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus)
+-{
+-	if (!cpus || cpumask_empty(cpus))
+-		return -EINVAL;
+-
+-	if (__qcom_scm_set_boot_addr_mc(entry, cpus, QCOM_SCM_BOOT_MC_FLAG_WARMBOOT))
+-		/* Fallback to old SCM call */
+-		return __qcom_scm_set_warm_boot_addr(entry, cpus);
+-	return 0;
+-}
+-EXPORT_SYMBOL(qcom_scm_set_warm_boot_addr);
+-
+-static int __qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
++int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+ {
+ 	int flags = 0;
+ 	int cpu;
+@@ -375,6 +331,9 @@ static int __qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+ 		.owner = ARM_SMCCC_OWNER_SIP,
+ 	};
+ 
++	if (!cpus || cpumask_empty(cpus))
++		return -EINVAL;
++
+ 	for_each_cpu(cpu, cpus) {
+ 		if (cpu < ARRAY_SIZE(scm_cb_flags))
+ 			flags |= scm_cb_flags[cpu];
+@@ -387,25 +346,6 @@ static int __qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+ 
+ 	return qcom_scm_call_atomic(__scm ? __scm->dev : NULL, &desc, NULL);
+ }
+-
+-/**
+- * qcom_scm_set_cold_boot_addr() - Set the cold boot address for cpus
+- * @entry: Entry point function for the cpus
+- * @cpus: The cpumask of cpus that will use the entry point
+- *
+- * Set the cold boot address of the cpus. Any cpu outside the supported
+- * range would be removed from the cpu present mask.
+- */
+-int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
+-{
+-	if (!cpus || cpumask_empty(cpus))
+-		return -EINVAL;
+-
+-	if (__qcom_scm_set_boot_addr_mc(entry, cpus, QCOM_SCM_BOOT_MC_FLAG_COLDBOOT))
+-		/* Fallback to old SCM call */
+-		return __qcom_scm_set_cold_boot_addr(entry, cpus);
+-	return 0;
+-}
+ EXPORT_SYMBOL(qcom_scm_set_cold_boot_addr);
+ 
+ /**
+diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+index 2a6a87b75231..d92156ceb3ac 100644
+--- a/drivers/firmware/qcom_scm.h
++++ b/drivers/firmware/qcom_scm.h
+@@ -78,12 +78,8 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+ #define QCOM_SCM_BOOT_SET_ADDR		0x01
+ #define QCOM_SCM_BOOT_TERMINATE_PC	0x02
+ #define QCOM_SCM_BOOT_SET_DLOAD_MODE	0x10
+-#define QCOM_SCM_BOOT_SET_ADDR_MC	0x11
+ #define QCOM_SCM_BOOT_SET_REMOTE_STATE	0x0a
+ #define QCOM_SCM_FLUSH_FLAG_MASK	0x3
+-#define QCOM_SCM_BOOT_MC_FLAG_AARCH64	BIT(0)
+-#define QCOM_SCM_BOOT_MC_FLAG_COLDBOOT	BIT(1)
+-#define QCOM_SCM_BOOT_MC_FLAG_WARMBOOT	BIT(2)
+ 
+ #define QCOM_SCM_SVC_PIL		0x02
+ #define QCOM_SCM_PIL_PAS_INIT_IMAGE	0x01
+-- 
+2.29.2
+
