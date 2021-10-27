@@ -2,146 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A13D43C56D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 10:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE32243C581
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 10:50:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240961AbhJ0IrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 04:47:25 -0400
-Received: from new4-smtp.messagingengine.com ([66.111.4.230]:54271 "EHLO
-        new4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239544AbhJ0IrV (ORCPT
+        id S239613AbhJ0Iw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 04:52:28 -0400
+Received: from mout.kundenserver.de ([212.227.126.135]:43025 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239598AbhJ0Iw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 04:47:21 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 71C57580486;
-        Wed, 27 Oct 2021 04:44:55 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 27 Oct 2021 04:44:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=M3eCyMtSzQvSRfpY5rVVZ9RVkh6
-        FdSVbf6yAV0XO4K8=; b=NmzUZOWnydiuj2S8GXj5BmNeI6pr7rLla6OGpcy3C4x
-        SL8j7TvqoSbEzq1BnX6ggFJ9W+aANfQZl2j2oQi9v/Y1m5VlmUeid+r32/oNygjM
-        upk8Qq4jkUaPrI2deYOakvWggWGqh7tAdSbO6N9mvdMrVDLDIUmc5fbffoNGouNh
-        MZYmu70iQwwuO+33jBTTnjaDlpwybEj6wVjaiv8aAaEMS4OMe3eo5UBCx5C4kyQ4
-        amOz6taiTkfqGK39fTrH+gnmsS9doz5wve3bKXvLQgSrno6DoyVTo4WZEpLZxYlr
-        DBse/nwb8rbo5KaCwCVggb670luJpaZaFc+kQZnDktg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=M3eCyM
-        tSzQvSRfpY5rVVZ9RVkh6FdSVbf6yAV0XO4K8=; b=kLB2N0MuxPnehTteBVIRkX
-        /FWES0DM/0mOGMwFgIC9OXlHVkiq1CuZmq/W3sxWzGNh0crFYT0d+G0VEUjA2iQk
-        pa04vRIDZrh/PAvHzPbEjAS709vJwAf34g80ZGTsGDX3eelaifSfQtB8rWOuN/Yu
-        iXEjjmXGEfwmbn/SUTDOzRNqbHz6BPHJLfE1vKcLwTPm3ETQQL09KS6Id93j7/jU
-        um+uYClmfXLMaH86Ljyk4I0l26IQEHdyFK7KGVgDa+u+4uoOu0Y+8nGyyR+HfDQA
-        tW6jd3ix17HW+ZciU5Mau1fBru7L7L1EzBE35SoIp1vqYVN6UjSihcCj1e3YxnQg
-        ==
-X-ME-Sender: <xms:hBF5Yc7BzLyYRk4GGfOgPfbDwi-tlppOdcEnk6ov_Gx9a12rI5hQng>
-    <xme:hBF5Yd60K--rqAYW6wQgyM38yfJDwJ75W7rCk-uOFeWk_G4ANbXKO0HQF2GRzqsFs
-    wAEeethTYlTMbTHrlM>
-X-ME-Received: <xmr:hBF5YbfOI1J3dz9b8owKVh8tx87ejOgb4HxrCXD7nLcTpl3a4BWFzfyx1l2jGmgk3_CY57eC5E5-A0oKYCO7Wh2bSLCLLCDKHxMgSxJh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdegtddgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepleekgeehhfdutdeljefgleejffehfffgieejhffgueefhfdtveetgeehieeh
-    gedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:hBF5YRLajqxC-IThi0jmk6jZ-O0HSCCBD3mbj1wS6NLddJ2x3g8z4w>
-    <xmx:hBF5YQLKmrGZZMo_GHH5FieCkwvCNX5HJtD2SQ7m2_j4WOcF3nXv_Q>
-    <xmx:hBF5YSxrJCfl9CrpGyipV_FdO_GukTIjGidowzUsN_cGUsbkkxgyhw>
-    <xmx:hxF5YbdWEcCvXgYet2d3aj7yyvMAGIwE6wZItn1hxaP9XNTHrlLpqA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Oct 2021 04:43:52 -0400 (EDT)
-Date:   Wed, 27 Oct 2021 10:42:45 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Tian Tao <tiantao6@hisilicon.com>,
-        freedreno@lists.freedesktop.org,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Sean Paul <sean@poorly.run>, Inki Dae <inki.dae@samsung.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v5 00/21] drm/bridge: Make panel and bridge probe order
- consistent
-Message-ID: <20211027084245.6wjqk3e6fa3jw5qg@gilmour>
-References: <20211021073947.499373-1-maxime@cerno.tech>
- <YXGFz4o5fWrfGnGk@ravnborg.org>
- <20211025151636.dsc3akojm7ywoecm@gilmour>
- <YXbhSjsPXk944TlF@ravnborg.org>
+        Wed, 27 Oct 2021 04:52:27 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]) by
+ mrelayeu.kundenserver.de (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1N8EdM-1mkHEn02am-014Aqh; Wed, 27 Oct 2021 10:50:01 +0200
+Received: by mail-wr1-f54.google.com with SMTP id d3so2769158wrh.8;
+        Wed, 27 Oct 2021 01:50:00 -0700 (PDT)
+X-Gm-Message-State: AOAM531QdkrkptBmL4a8v4YR7lBE2jfuzL06RIDg48xhApAYgiQpEU7C
+        fpllDg4XXgHE5K5svuTl0TY4HLAW74txhcjOJEs=
+X-Google-Smtp-Source: ABdhPJzulGMx2l8bar1I6qe5RSM/d5wpOaG0F+fU8zqeLRJg7K2lynybU0xg8HdVMMVSnCWSe2GfQO1flqIYXN352eE=
+X-Received: by 2002:a5d:47a3:: with SMTP id 3mr26057935wrb.336.1635324600576;
+ Wed, 27 Oct 2021 01:50:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="aobqxdixyoh4wxno"
-Content-Disposition: inline
-In-Reply-To: <YXbhSjsPXk944TlF@ravnborg.org>
+References: <20211027072427.2730827-1-arnd@kernel.org>
+In-Reply-To: <20211027072427.2730827-1-arnd@kernel.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 27 Oct 2021 10:49:44 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1CjfRmJsc0p2P2ja1DB6QFsuwnkBdXk1CfdzGjGpK-3A@mail.gmail.com>
+Message-ID: <CAK8P3a1CjfRmJsc0p2P2ja1DB6QFsuwnkBdXk1CfdzGjGpK-3A@mail.gmail.com>
+Subject: Re: [PATCH] firmware: qcom: scm: fix non-SMP build
+To:     SoC Team <soc@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:fEB5JwCg9vpw7hi98kLJDbVZrQBzCf6yHr9+RwrbiguzpI2AGSp
+ 1xbKqgevc+xxZ9kiFXv1dAbzzCu6zFfrrepTW48zPVd2Jtz7najqeEmUVmjQc4htphUohev
+ St/FThT2gyX9tFT6x6PpjfAXmJOZ39/aSYqEGAqt0xYfZGOPjmIX9TJdhTGJ3cZeOFxYV7V
+ bpBHChcIJPdJdO/3jHpeA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:573zewDPWK4=:O1MKOcBLcpipS/3M6AAze+
+ zcun/VtbiqoE9HjGrdhXSoSKQGyX8hQSZPRZ0VOB7EFXN9uq1ZxkhPLigpGC8nYpzwERNgtAt
+ tOjVHzewC1wB1rNf9pd307Mhn8goc+f0lh/j32m016Mny+wj6nJi2DuZeE+o92iBlUCFUZ1gK
+ NWngcxEdjzJegPbkUwdikFLbYGeeTUHy8b/ULMxAVqty42CXUMDPXJdD5sfI4AoqTrFEzZim6
+ wBFX0k464F9BcxlHwJLYGUugPFVeRiYO4Y4zFfQlfpjopyr4Uc2AHy6jJOon1o+dRh+117I6o
+ v37XnpqFPweOT87Z4vXGay1ysfH8j1N7B5/Y44O1vmrGjHybIF6U0KzlYsQPNdoApRmm9H9YS
+ Vwu79Tqwh82ob5r6QnPcRJmg1LCXwfrMnm4mAXlC9BLLuVsMEDzV4xGjGmiY41rplTEg/io+H
+ UqsfYKV4Z4S6cUZj51nww6L/BEomHsNjLZM0bybQVJ/BsyahDEOD+EV1YJ+7e9TUksUjQdjKc
+ lyX68bl1kX3vXoF2LgMbwpf7sxxmXQiJP0CZiSYge0NLkK2N5kBZgbqe9CN46WeHDFNYoFbX2
+ 2So8XWLivaunG/A15RJ4EO03LFEU3iOIDdzdUgIxyqdAaOHLzqkyNxpPbIo7lVdSzhcptgHa9
+ 9ta4vF0rHy/CYipBc+MPwQ9+XK/+VrQBmh7QlbkMxDenj60lCjTrmUb88Jxr2nikk2gM=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Oct 27, 2021 at 9:24 AM Arnd Bergmann <arnd@kernel.org> wrote:
+>
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> A check was added for non-arm platforms, but the same code
+> is still broken on Arm non-SMP:
+>
+> ERROR: modpost: "__cpu_logical_map" [drivers/firmware/qcom-scm.ko] undefined!
+>
+> Fixes: c50031f03dfe ("firmware: qcom: scm: Don't break compile test on non-ARM platforms")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
---aobqxdixyoh4wxno
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nevermind, this is not sufficient, as the symbol is not actually
+exported, so this still
+fails on SMP configurations, both 32 and 64 bit.
 
-On Mon, Oct 25, 2021 at 06:54:34PM +0200, Sam Ravnborg wrote:
-> Hi Maxime,
->=20
-> On Mon, Oct 25, 2021 at 05:16:36PM +0200, Maxime Ripard wrote:
-> > Hi Sam,
-> >=20
-> > On Thu, Oct 21, 2021 at 05:22:55PM +0200, Sam Ravnborg wrote:
-> > > Hi Maxime,
-> > >=20
-> > > > Let me know what you think,
-> > >=20
-> > > apply the lot to drm-misc-next. Maybe wait for an r-b or a-b on the k=
-irin
-> > > patch but the rest is IMO good to go.
-> >=20
-> > I had a compilation error since the rebase of the v4, so I sent a new
-> > version. John Stultz has tested this series and given his tested-by, and
-> > is the kirin maintainer.
-> >=20
-> > I guess it's enough?
->=20
-> Yeah, go ahead and get it applied.
+Any ideas for a better fix, or should I revert 55845f46df03
+("firmware: qcom: scm:
+Add support for MC boot address API") for the merge window?
 
-It turns out dim is not happy with just a Tested-by :)
-
-I'll ask around for an acked-by or reviewed-by
-
-Maxime
-
---aobqxdixyoh4wxno
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYXkRBQAKCRDj7w1vZxhR
-xcX+AQDa5hm15ZvQWQkhoaM7QT0BYcG/8gBhyw2NycTLJeU50wEAsbuKE/SJt3yK
-G9CaUa4imA2133VPQCI/46bOj5VmbAs=
-=1uwT
------END PGP SIGNATURE-----
-
---aobqxdixyoh4wxno--
+       Arnd
