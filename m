@@ -2,73 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A058B43C9ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 14:45:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74EE743CAC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 15:35:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240165AbhJ0MsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 08:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237641AbhJ0MsA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 08:48:00 -0400
-Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E62BFC061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 05:45:34 -0700 (PDT)
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:441:6c1a:bc30:46e])
-        by andre.telenet-ops.be with bizsmtp
-        id B0lY2600C2hfXWm010lYZU; Wed, 27 Oct 2021 14:45:33 +0200
-Received: from rox.of.borg ([192.168.97.57])
-        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1mfiJ9-008U4Y-VJ; Wed, 27 Oct 2021 14:45:31 +0200
-Received: from geert by rox.of.borg with local (Exim 4.93)
-        (envelope-from <geert@linux-m68k.org>)
-        id 1mfiJ9-00DuIR-Ed; Wed, 27 Oct 2021 14:45:31 +0200
-From:   Geert Uytterhoeven <geert+renesas@glider.be>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH] bindings: media: venus: Drop bogus maxItems for power-domain-names
-Date:   Wed, 27 Oct 2021 14:45:30 +0200
-Message-Id: <097d8602906e9db279728330c6cf2837be184704.1635338663.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.25.1
+        id S237460AbhJ0Nhs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 09:37:48 -0400
+Received: from foss.arm.com ([217.140.110.172]:43446 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236811AbhJ0Nhs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 09:37:48 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 821E71FB;
+        Wed, 27 Oct 2021 06:35:22 -0700 (PDT)
+Received: from [192.168.185.184] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 13E003F73D;
+        Wed, 27 Oct 2021 06:35:16 -0700 (PDT)
+Subject: Re: [PATCH v2 1/5] arch_topology: Introduce thermal pressure update
+ function
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org
+References: <20211015144550.23719-1-lukasz.luba@arm.com>
+ <20211015144550.23719-2-lukasz.luba@arm.com>
+ <431230a5-00e9-0211-0731-035eab5fa3f6@arm.com>
+ <e38d2b22-0579-90ac-11fe-3c3163bef685@arm.com>
+From:   Dietmar Eggemann <dietmar.eggemann@arm.com>
+Message-ID: <018a888d-ed39-09a1-9828-cedef23c7701@arm.com>
+Date:   Wed, 27 Oct 2021 15:35:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
+In-Reply-To: <e38d2b22-0579-90ac-11fe-3c3163bef685@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-make dt_binding_check:
+On 27/10/2021 10:56, Lukasz Luba wrote:
+> Hi Dietmar,
+> 
+> Thank you for having a look at this.
+> 
+> On 10/26/21 5:51 PM, Dietmar Eggemann wrote:
+>> On 15/10/2021 16:45, Lukasz Luba wrote:
 
-    Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
-    warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+[...]
 
-Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
- Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
- 1 file changed, 1 deletion(-)
+>>> +void topology_thermal_pressure_update(const struct cpumask *cpus,
+>>> +                      unsigned long capped_freq)
+>>> +{
+>>
+>> ... why not just s/unsigned long th_pressure/unsigned long capped_freq
+>> in existing topology_set_thermal_pressure() and move code the
+>> frequency/capacity conversion in there? The patch set will become
+>> considerably smaller.
+> 
+> I've been trying to avoid confusion when changing actually behavior
+> of the API function. Thus, introducing new would IMO opinion
+> make sure the old 'set' function was expecting proper pressure
+> value, while the new 'update' expects frequency.
+> 
+> I agree that the patch set would be smaller in that case, but I'm
+> not sure if that would not hide some issues. This one would
+> definitely break compilation of some vendor modules (or drivers
+> queuing or under review), not silently passing them through (with wrong
+> argument).
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-index fa54c560e0bde3cb..e2874683b4d5faf3 100644
---- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -30,7 +30,6 @@ properties:
- 
-   power-domain-names:
-     minItems: 2
--    maxItems: 3
-     items:
-       - const: venus
-       - const: vcodec0
--- 
-2.25.1
+I see, since the parameter type list would stay the same, this could
+potentially happen.
 
+[...]
