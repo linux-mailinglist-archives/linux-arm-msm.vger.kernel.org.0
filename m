@@ -2,126 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53AE043C428
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 09:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC63B43C43F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 09:44:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238873AbhJ0Hor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 03:44:47 -0400
+        id S240570AbhJ0HrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 03:47:00 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:11424 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240565AbhJ0Hoq (ORCPT
+        with ESMTP id S238826AbhJ0Hq7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 03:44:46 -0400
+        Wed, 27 Oct 2021 03:46:59 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635320542; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=3ipj9C9Z+CcARpvtwqbGA4rPC5dN+YNxfZHwxGPY7Qc=; b=jtsce476BGnbsUEXkfN/Sx1+8YTYiRiiQdviNSHDOnzVpsW//spXIokDOFX23bS6VhUal1WU
- 4B1NhfB6b3B253Bi1cZ0fjm11XclCTPXPAU27a5tkknP83zuSctZZ4/SHe8wkZG9mygMbRVw
- VhB/CdGv5w1MXjry8SCuK+cK3LQ=
+ s=smtp; t=1635320674; h=Date: Message-ID: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=mz8nJIGGpohR0wU+Oe8hK35Xu2THKa0asqPSQzly+Qw=;
+ b=QA5nzslC1wYyuz2RKTxWwbkWsCoNSDY8FaEvsxDzB6GyEJAgeARb9s2lO9Tto/J05sBzp7lJ
+ z9Fxc7UR8pYrJgv3bFBvP/bl201EGGUksIzQU9PG2swrm6hOlNnAHX6rr+CYO3h6w2FdaerR
+ UutZ1Ken4l72jgJsWHvECkWyW6s=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 617902dd5ca800b6c1cb7e7c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 07:42:21
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6179035a321f2400517d1dfa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 07:44:26
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E88EC4360C; Wed, 27 Oct 2021 07:42:21 +0000 (UTC)
+        id D404FC43617; Wed, 27 Oct 2021 07:44:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        MISSING_DATE,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki.adurom.net (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E47BC43460;
-        Wed, 27 Oct 2021 07:42:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1E47BC43460
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 71612C4338F;
+        Wed, 27 Oct 2021 07:44:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 71612C4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 1/3] pinctrl: qcom: Update lpass variant independent
- functions as generic
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
-        robh+dt@kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, tiwai@suse.com
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1633614519-26680-1-git-send-email-srivasam@codeaurora.org>
- <1633614519-26680-2-git-send-email-srivasam@codeaurora.org>
- <CAE-0n52Ge_XZr914Ksmq5Myk3FRp7+Sc5P-9jj8wuspKkjXnYw@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <d00db826-5834-be00-d75b-e226e6f751b5@codeaurora.org>
-Date:   Wed, 27 Oct 2021 13:12:10 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n52Ge_XZr914Ksmq5Myk3FRp7+Sc5P-9jj8wuspKkjXnYw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Subject: Re: [PATCH] wcn36xx: add proper DMA memory barriers in rx path
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20211023001528.3077822-1-benl@squareup.com>
+References: <20211023001528.3077822-1-benl@squareup.com>
+To:     Benjamin Li <benl@squareup.com>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "John W. Linville" <linville@tuxdriver.com>,
+        Eugene Krasnikov <k.eugene.e@gmail.com>,
+        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
+Message-ID: <163532066175.19793.9331674894554153079.kvalo@codeaurora.org>
+Date:   Wed, 27 Oct 2021 07:44:26 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Benjamin Li <benl@squareup.com> wrote:
 
-On 10/7/2021 11:27 PM, Stephen Boyd wrote:
-Thanks for Your Time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2021-10-07 06:48:37)
->> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> index 2f19ab4..c0117c5 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> @@ -124,7 +124,8 @@ static const struct pinctrl_pin_desc sm8250_lpi_pins[] = {
->>          PINCTRL_PIN(13, "gpio13"),
->>   };
->>
->> -enum sm8250_lpi_functions {
->> +
-> Please drop this extra newline so the diff makes sense.
-Okay.
->> +enum lpass_lpi_functions {
->>          LPI_MUX_dmic1_clk,
->>          LPI_MUX_dmic1_data,
->>          LPI_MUX_dmic2_clk,
->> @@ -203,7 +204,7 @@ static const struct lpi_pingroup sm8250_groups[] = {
->>          LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
->>   };
->>
->> -static const struct lpi_function sm8250_functions[] = {
->> +static const struct lpi_function lpass_functions[] = {
-> Why not follow the approach of other qcom pinctrl drivers and make a
-> core driver that each SoC uses as a library?
+> This is essentially exactly following the dma_wmb()/dma_rmb() usage
+> instructions in Documentation/memory-barriers.txt.
+> 
+> The theoretical races here are:
+> 
+> 1. DXE (the DMA Transfer Engine in the Wi-Fi subsystem) seeing the
+> dxe->ctrl & WCN36xx_DXE_CTRL_VLD write before the dxe->dst_addr_l
+> write, thus performing DMA into the wrong address.
+> 
+> 2. CPU reading dxe->dst_addr_l before DXE unsets dxe->ctrl &
+> WCN36xx_DXE_CTRL_VLD. This should generally be harmless since DXE
+> doesn't write dxe->dst_addr_l (no risk of freeing the wrong skb).
+> 
+> Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+> Signed-off-by: Benjamin Li <benl@squareup.com>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-Actually this driver is for lpass LPI pin control purpose. For this only 
-14 pins are there and mostly fixed for all platforms.
+Patch applied to ath-next branch of ath.git, thanks.
 
-So I feel for now this approach is fine.
+9bfe38e064af wcn36xx: add proper DMA memory barriers in rx path
 
->>          LPI_FUNCTION(dmic1_clk),
->>          LPI_FUNCTION(dmic1_data),
->>          LPI_FUNCTION(dmic2_clk),
->> @@ -615,7 +616,7 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
->>                  return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
->>                                       "Slew resource not provided\n");
->>
->> -       ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
->> +       ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-> Please mention in the commit text why this is now optional.
-Okay. will update commit message accordingly.
->
->>          if (ret)
->>                  return dev_err_probe(dev, ret, "Can't get clocks\n");
->>
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+https://patchwork.kernel.org/project/linux-wireless/patch/20211023001528.3077822-1-benl@squareup.com/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
