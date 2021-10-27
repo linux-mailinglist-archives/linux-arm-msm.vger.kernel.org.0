@@ -2,74 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30C3843D366
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:00:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96BD743D36E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 23:02:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240780AbhJ0VCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 17:02:51 -0400
-Received: from mail-oi1-f170.google.com ([209.85.167.170]:40526 "EHLO
-        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237236AbhJ0VCv (ORCPT
+        id S240807AbhJ0VEa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 17:04:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238879AbhJ0VEa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 17:02:51 -0400
-Received: by mail-oi1-f170.google.com with SMTP id n63so5270185oif.7;
-        Wed, 27 Oct 2021 14:00:25 -0700 (PDT)
+        Wed, 27 Oct 2021 17:04:30 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CEE7C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 14:02:04 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id y207so5235743oia.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 14:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=R/5mqaAD7u8YJi+R3Jae+PBQwDj790p4urFkBQ9hMFo=;
+        b=S+UqJ+m8jTaSYhorC+Syd7X4CBX+ACkq0K53U150PJZr9KjKvCHPTNCgzhr2HXclZq
+         L2h2Ls+caGi3aAV8Avz6WL4SMICh5WwVpLP96WAJSvzIl326jysPNqo4YR2HLn7O4B/O
+         3+wAqkoyuqzdBmCRaWutqsf+NZkmadJiyYAKY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Feu+ijj0c1uWGjND40NWm9tPo385lhiJ4ge94odhHmc=;
-        b=ITKUMaioZy07QMqpnREdN0GTDToj1qK9jdVXNIqeC3umGvi3rUflKWqn6tZSk66rkA
-         iXgxR7VXOdPazsBPmvwM+8+1dmTxqLrh7UoiX9Xf0GGvlWlf/PGVygwgq7mzEMdke+Eq
-         0p46XjPoX+h97tMBrTYha9bOA7AZRRWhm7xSE8sm5yv0yP9AV2kOp51i4vHgvYyParQ2
-         /DgBasnu8vdGW/ZG1J8INnIqzYLLa5cvez4+rkFDfyeSOkRz4sWy9iryXm51KJew98Av
-         QlVOi4jNs7GXh2NnwEB02Arzh3UM0eEMcd7Ti+iLsHIbDAw8kCk6zjydV0gDErwDrpWQ
-         DBvA==
-X-Gm-Message-State: AOAM5338c/zkoYLKNhquPScvRBQxq7KQbfN8K2qWTrQQbDPneu0AqdAK
-        C/nz2G3fVLQg48ZMn6INJg==
-X-Google-Smtp-Source: ABdhPJylT8TaIy/PSzoJWNra3P3eLuzS9TTUapyqBHmGBfyMLk6jEEbO9IiD09ubpm5qUGK4Xq/xRg==
-X-Received: by 2002:aca:1818:: with SMTP id h24mr5422542oih.76.1635368424951;
-        Wed, 27 Oct 2021 14:00:24 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id d16sm356516otq.33.2021.10.27.14.00.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 14:00:24 -0700 (PDT)
-Received: (nullmailer pid 2149644 invoked by uid 1000);
-        Wed, 27 Oct 2021 21:00:22 -0000
-Date:   Wed, 27 Oct 2021 16:00:22 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, perex@perex.cz, broonie@kernel.org,
-        bjorn.andersson@linaro.org, bgoswami@codeaurora.org,
-        tiwai@suse.com, rohitkr@codeaurora.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, robh+dt@kernel.org, plai@codeaurora.org,
-        agross@kernel.org, Venkata Prasad Potturu <potturu@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=R/5mqaAD7u8YJi+R3Jae+PBQwDj790p4urFkBQ9hMFo=;
+        b=RrIEJxzT7t0EqPVudGR8PZuWWq0xjOAi0bWupxGy5MQV0dSEXS1NAnWGrDJLrvy9Fv
+         bwAyDrMl2Ii4YGj8rQaFDwzbgPRCxhpB2ePIRGClmQLBEGP3HQn4kppzgtdroQ7J7ycd
+         w7QpVaXiZqHbWSE0/EY7aldyWEi+Phj2CrD4IjCytOdIsriD3t5lKOBNHCqCs+GHhWeV
+         fWhDW22KVsJQDv0fMkbHytpoAQQAHgQqfmgUXejBoYqNI6IaWygTpp5+vdjdwsbz0jLp
+         xXy44MnDBubmh5YQxiEwE1mb65cq2f7YPVIeT+h3Oqpy62u6uYnFvL9g6U+5ddmN+EFa
+         IMlQ==
+X-Gm-Message-State: AOAM533jvjbRc+Xeh96ZBNxfjMTNk/R7pLZkvWTTa1XTcrvnvIQcFrSE
+        pZtrpko/w94xD/4raryAEy+eEPJLcHXCxRadv40gZg==
+X-Google-Smtp-Source: ABdhPJzHgjm2QUB1Kb2T5goQlClqfwdgymvtu7rf5vHGAkVJ+BI2qr3BG5waUuMOpv+n1SBt2k7GstXBcM56lBVH6xk=
+X-Received: by 2002:a05:6808:a1d:: with SMTP id n29mr5417189oij.164.1635368524003;
+ Wed, 27 Oct 2021 14:02:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 27 Oct 2021 14:02:03 -0700
+MIME-Version: 1.0
+In-Reply-To: <1635250764-13994-3-git-send-email-srivasam@codeaurora.org>
+References: <1635250764-13994-1-git-send-email-srivasam@codeaurora.org> <1635250764-13994-3-git-send-email-srivasam@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 27 Oct 2021 14:02:03 -0700
+Message-ID: <CAE-0n521XmdKMcsf+jhjjoJuTo0C4JvZZ7dRqU3ZxkTU9hu+kg@mail.gmail.com>
 Subject: Re: [PATCH v4 2/3] dt-bindings: soundwire: qcom: Add bindings for RX
  and TX cgcr register control
-Message-ID: <YXm95p7XmvVWjV/w@robh.at.kernel.org>
-References: <1635250764-13994-1-git-send-email-srivasam@codeaurora.org>
- <1635250764-13994-3-git-send-email-srivasam@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1635250764-13994-3-git-send-email-srivasam@codeaurora.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 26 Oct 2021 17:49:23 +0530, Srinivasa Rao Mandadapu wrote:
+Quoting Srinivasa Rao Mandadapu (2021-10-26 05:19:23)
 > Update description for RX and TX cgcr register control property required for
 > soundwire version 1.6.0 and above.
-> 
+>
 > Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 > Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 > ---
 >  Documentation/devicetree/bindings/soundwire/qcom,sdw.txt | 9 +++++++++
 >  1 file changed, 9 insertions(+)
-> 
+>
+> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+> index b93a2b3..91b9086 100644
+> --- a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+> +++ b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+> @@ -150,6 +150,15 @@ board specific bus parameters.
+>                     or applicable for the respective data port.
+>                     More info in MIPI Alliance SoundWire 1.0 Specifications.
+>
+> +- qcom,swrm-hctl-reg:
+> +       Usage: optional
+> +       Value type: <prop-encoded-array>
+> +       Definition: The base address of SoundWire RX and TX cgcr register
+> +                   address space.
 
-Acked-by: Rob Herring <robh@kernel.org>
+cgcr is "clock gate control register"?
+
+> +                   This is to update soundwire master rxtx cgcr register field to
+> +                   make clock gating control as software controllable for RX path and
+> +                   TX path which is required for SoundWire version 1.6.0 and above.
+
+Nak. Use clk APIs to control clks, not direct MMIO writes into a
+different device.
