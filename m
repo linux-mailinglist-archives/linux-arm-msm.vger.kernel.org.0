@@ -2,69 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B08043C5F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 11:00:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01B0943C893
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 13:29:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232466AbhJ0JDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 05:03:10 -0400
-Received: from foss.arm.com ([217.140.110.172]:41002 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232047AbhJ0JDH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 05:03:07 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C1B131063;
-        Wed, 27 Oct 2021 02:00:41 -0700 (PDT)
-Received: from [10.57.24.210] (unknown [10.57.24.210])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D667C3F70D;
-        Wed, 27 Oct 2021 02:00:38 -0700 (PDT)
-Subject: Re: [PATCH v2 2/5] thermal: cpufreq_cooling: Use new thermal pressure
- update function
-To:     Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org
-References: <20211015144550.23719-1-lukasz.luba@arm.com>
- <20211015144550.23719-3-lukasz.luba@arm.com>
- <495d461a-d643-5dbf-7da8-74ddbdc486ca@arm.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <3397e593-637a-8b23-f65e-2aca4d84e627@arm.com>
-Date:   Wed, 27 Oct 2021 10:00:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S239697AbhJ0Lb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 07:31:59 -0400
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:56287 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237421AbhJ0Lb7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 07:31:59 -0400
+Received: by mail-wm1-f47.google.com with SMTP id v127so2274488wme.5;
+        Wed, 27 Oct 2021 04:29:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gbWuQswWTVQ5Wg/Yf89rody666YL6CcVZyTJbqgR1aw=;
+        b=KbAilecw61A15yii5vx6v7tW+vWwnIPzhSH98rldRJNyk3Kkh9B1lEKJoQmCMaGMrU
+         l/8nxi//JAxADPp1aokBmvt03Wp8433fgGgl8dP6uCeI0SAp5iOYPetUPWL2H7C+acQM
+         wAH8x3X0ERfnuVCcxka//fe1kvx0Pph4hipo6afJf2w+4h43d+YpWx7gqiVj1vuzjMcs
+         N15PndWjw+oEMvx4zAO6IRzcWOkM8JBlw0eWmftJskO1Q5nuTUUrLlAsO7hrJlbhm/vn
+         1mIdbP/My8PqguGjV4xUjMVLncbuvSbzzBmidJQa1hg4ZXwpl6kusK589+AXmt/ZOVZQ
+         zbWQ==
+X-Gm-Message-State: AOAM531wUEHaLS8G1TGDw4GRWVopPKIT2HDChqKm4ohPWzIfS+R0FYQx
+        avi0qib4qCB42T4Vzi4hL3U=
+X-Google-Smtp-Source: ABdhPJw1MlEDdjLLITbfvO9rKXbGZO21TE52uVdIbDZol0QmosqRiwgsxt1yg4w9TTYQxUQ1MrYaiQ==
+X-Received: by 2002:a7b:c7d6:: with SMTP id z22mr4976154wmk.65.1635334172793;
+        Wed, 27 Oct 2021 04:29:32 -0700 (PDT)
+Received: from workstation.lan ([95.155.85.46])
+        by smtp.gmail.com with ESMTPSA id 3sm3329521wms.5.2021.10.27.04.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Oct 2021 04:29:32 -0700 (PDT)
+From:   =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
+To:     Bjorn Helgaas <bhelgaas@google.com>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: [PATCH linux-next] PCI: qcom-ep: Remove surplus dev_err() when using platform_get_irq_byname()
+Date:   Wed, 27 Oct 2021 11:29:31 +0000
+Message-Id: <20211027112931.37182-1-kw@linux.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-In-Reply-To: <495d461a-d643-5dbf-7da8-74ddbdc486ca@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There is no need to call the dev_err() function directly to print a
+custom message when handling an error from either the platform_get_irq()
+or platform_get_irq_byname() functions as both are going to display an
+appropriate error message in case of a failure.
 
+This change is as per suggestions from Coccinelle, e.g.,
+  drivers/pci/controller/dwc/pcie-qcom-ep.c:556:2-9: line 556 is redundant because platform_get_irq() already prints an error
 
-On 10/26/21 5:51 PM, Dietmar Eggemann wrote:
-> On 15/10/2021 16:45, Lukasz Luba wrote:
-> 
-> [...]
-> 
->> @@ -479,10 +478,7 @@ static int cpufreq_set_cur_state(struct thermal_cooling_device *cdev,
->>   	if (ret >= 0) {
->>   		cpufreq_cdev->cpufreq_state = state;
->>   		cpus = cpufreq_cdev->policy->related_cpus;
->> -		max_capacity = arch_scale_cpu_capacity(cpumask_first(cpus));
->> -		capacity = frequency * max_capacity;
->> -		capacity /= cpufreq_cdev->policy->cpuinfo.max_freq;
-> 
-> Took me a while to realize that `cpufreq_cdev->policy->cpuinfo.max_freq`
-> is 1000 * per_cpu(freq_factor, cpu), the latter being used now in
-> arch_thermal_pressure_update(). Maybe worth mentioning in the patch header?
-> 
+Related:
+  https://lore.kernel.org/all/20210310131913.2802385-1-kw@linux.com/
+  https://lore.kernel.org/all/20200802142601.1635926-1-kw@linux.com/
 
-OK, I will put that information into the patch description in the next
-version.
+Signed-off-by: Krzysztof Wilczyński <kw@linux.com>
+---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 7b17da2f9b3f..cdabd514dcc1 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -552,10 +552,8 @@ static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
+ 	int irq, ret;
+ 
+ 	irq = platform_get_irq_byname(pdev, "global");
+-	if (irq < 0) {
+-		dev_err(&pdev->dev, "Failed to get Global IRQ\n");
++	if (irq < 0)
+ 		return irq;
+-	}
+ 
+ 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 					qcom_pcie_ep_global_irq_thread,
+-- 
+2.33.1
+
