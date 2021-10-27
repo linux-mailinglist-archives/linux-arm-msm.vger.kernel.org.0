@@ -2,87 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01B0943C893
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 13:29:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A058B43C9ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 14:45:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239697AbhJ0Lb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 07:31:59 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:56287 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237421AbhJ0Lb7 (ORCPT
+        id S240165AbhJ0MsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 08:48:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237641AbhJ0MsA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 07:31:59 -0400
-Received: by mail-wm1-f47.google.com with SMTP id v127so2274488wme.5;
-        Wed, 27 Oct 2021 04:29:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=gbWuQswWTVQ5Wg/Yf89rody666YL6CcVZyTJbqgR1aw=;
-        b=KbAilecw61A15yii5vx6v7tW+vWwnIPzhSH98rldRJNyk3Kkh9B1lEKJoQmCMaGMrU
-         l/8nxi//JAxADPp1aokBmvt03Wp8433fgGgl8dP6uCeI0SAp5iOYPetUPWL2H7C+acQM
-         wAH8x3X0ERfnuVCcxka//fe1kvx0Pph4hipo6afJf2w+4h43d+YpWx7gqiVj1vuzjMcs
-         N15PndWjw+oEMvx4zAO6IRzcWOkM8JBlw0eWmftJskO1Q5nuTUUrLlAsO7hrJlbhm/vn
-         1mIdbP/My8PqguGjV4xUjMVLncbuvSbzzBmidJQa1hg4ZXwpl6kusK589+AXmt/ZOVZQ
-         zbWQ==
-X-Gm-Message-State: AOAM531wUEHaLS8G1TGDw4GRWVopPKIT2HDChqKm4ohPWzIfS+R0FYQx
-        avi0qib4qCB42T4Vzi4hL3U=
-X-Google-Smtp-Source: ABdhPJw1MlEDdjLLITbfvO9rKXbGZO21TE52uVdIbDZol0QmosqRiwgsxt1yg4w9TTYQxUQ1MrYaiQ==
-X-Received: by 2002:a7b:c7d6:: with SMTP id z22mr4976154wmk.65.1635334172793;
-        Wed, 27 Oct 2021 04:29:32 -0700 (PDT)
-Received: from workstation.lan ([95.155.85.46])
-        by smtp.gmail.com with ESMTPSA id 3sm3329521wms.5.2021.10.27.04.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 04:29:32 -0700 (PDT)
-From:   =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
-To:     Bjorn Helgaas <bhelgaas@google.com>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: [PATCH linux-next] PCI: qcom-ep: Remove surplus dev_err() when using platform_get_irq_byname()
-Date:   Wed, 27 Oct 2021 11:29:31 +0000
-Message-Id: <20211027112931.37182-1-kw@linux.com>
-X-Mailer: git-send-email 2.33.1
+        Wed, 27 Oct 2021 08:48:00 -0400
+Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E62BFC061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 05:45:34 -0700 (PDT)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:441:6c1a:bc30:46e])
+        by andre.telenet-ops.be with bizsmtp
+        id B0lY2600C2hfXWm010lYZU; Wed, 27 Oct 2021 14:45:33 +0200
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mfiJ9-008U4Y-VJ; Wed, 27 Oct 2021 14:45:31 +0200
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mfiJ9-00DuIR-Ed; Wed, 27 Oct 2021 14:45:31 +0200
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH] bindings: media: venus: Drop bogus maxItems for power-domain-names
+Date:   Wed, 27 Oct 2021 14:45:30 +0200
+Message-Id: <097d8602906e9db279728330c6cf2837be184704.1635338663.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to call the dev_err() function directly to print a
-custom message when handling an error from either the platform_get_irq()
-or platform_get_irq_byname() functions as both are going to display an
-appropriate error message in case of a failure.
+make dt_binding_check:
 
-This change is as per suggestions from Coccinelle, e.g.,
-  drivers/pci/controller/dwc/pcie-qcom-ep.c:556:2-9: line 556 is redundant because platform_get_irq() already prints an error
+    Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
+    warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
 
-Related:
-  https://lore.kernel.org/all/20210310131913.2802385-1-kw@linux.com/
-  https://lore.kernel.org/all/20200802142601.1635926-1-kw@linux.com/
-
-Signed-off-by: Krzysztof Wilczyński <kw@linux.com>
+Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 7b17da2f9b3f..cdabd514dcc1 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -552,10 +552,8 @@ static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
- 	int irq, ret;
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+index fa54c560e0bde3cb..e2874683b4d5faf3 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+@@ -30,7 +30,6 @@ properties:
  
- 	irq = platform_get_irq_byname(pdev, "global");
--	if (irq < 0) {
--		dev_err(&pdev->dev, "Failed to get Global IRQ\n");
-+	if (irq < 0)
- 		return irq;
--	}
- 
- 	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
- 					qcom_pcie_ep_global_irq_thread,
+   power-domain-names:
+     minItems: 2
+-    maxItems: 3
+     items:
+       - const: venus
+       - const: vcodec0
 -- 
-2.33.1
+2.25.1
 
