@@ -2,102 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0A8343C45C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 09:49:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED83543C46A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Oct 2021 09:53:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240653AbhJ0Hvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 03:51:38 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:53911 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238848AbhJ0Hvi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 03:51:38 -0400
+        id S231572AbhJ0H4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 03:56:22 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15724 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240659AbhJ0H4T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 27 Oct 2021 03:56:19 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635320953; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=8GMdHbbqAULcs7zIj12mg8RI8efLCizjjiOsYZymurY=; b=fqDJEdvOZoskzf8EfSNQAaW0LR67iwEaUcyiLu7Bv9K5iuyihuJ98JT9JKfM49jh/V3rhZbW
- Xw+UNSuzJaVnXDUp94qU3rWS4zq0xvKEz+teLs3XaCzhJR6bWtIiGQ1dKkOHTdUDpwak4C4/
- WSjSoLf5nTyPEFtaS63bpPniWw4=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1635321235; h=Date: Message-ID: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=OkgHr2Y6HEkj1kBlD9Tm89+Omnw4DhBiRqIgVdp5c8E=;
+ b=pRoHNUNFOe2oow5T4tQRWC+SCiqaWycWhWlKxgJsVQ/BB9fE60u2TRJxFog5eyzueSymbOXq
+ 2IxrTIz6wOxkMpQqIxE54cwv6cn9UohJBONgNHAohwbce/3t3cxgkFja/LlEMJZ3ZTyDqVR5
+ aLfaYLyQKxkzpq2qkGCAyjCaVbg=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 61790469bd6886bdf713ba23 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 07:48:57
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 61790581c75c436a30cdd23a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 27 Oct 2021 07:53:37
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CD049C4338F; Wed, 27 Oct 2021 07:48:57 +0000 (UTC)
+        id 2563BC43618; Wed, 27 Oct 2021 07:53:37 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-1.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        MISSING_DATE,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki.adurom.net (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99EA1C43616;
-        Wed, 27 Oct 2021 07:48:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 99EA1C43616
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05E46C4338F;
+        Wed, 27 Oct 2021 07:53:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 05E46C4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 3/3] pinctrl: qcom: Add SC7280 lpass pin configuration
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
-        robh+dt@kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, tiwai@suse.com
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1633614519-26680-1-git-send-email-srivasam@codeaurora.org>
- <1633614519-26680-4-git-send-email-srivasam@codeaurora.org>
- <CAE-0n53SqOHKDpMQicrFNmZ1YxAPesTAk4j6kJVi3xMV8re4-w@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <1d951b30-8298-b739-51c4-13cb2de741b9@codeaurora.org>
-Date:   Wed, 27 Oct 2021 13:18:49 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n53SqOHKDpMQicrFNmZ1YxAPesTAk4j6kJVi3xMV8re4-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Subject: Re: [PATCH 1/3] wcn36xx: add debug prints for sw_scan start/complete
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20211023003949.3082900-2-benl@squareup.com>
+References: <20211023003949.3082900-2-benl@squareup.com>
+To:     Benjamin Li <benl@squareup.com>
+Cc:     Joseph Gates <jgates@squareup.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Eugene Krasnikov <k.eugene.e@gmail.com>,
+        "John W. Linville" <linville@tuxdriver.com>,
+        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
+Message-ID: <163532120872.19793.15468481505724352001.kvalo@codeaurora.org>
+Date:   Wed, 27 Oct 2021 07:53:37 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Benjamin Li <benl@squareup.com> wrote:
 
-On 10/7/2021 11:24 PM, Stephen Boyd wrote:
-> Quoting Srinivasa Rao Mandadapu (2021-10-07 06:48:39)
->> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> index c0117c5..0b68065 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
->> @@ -237,6 +264,15 @@ static struct lpi_pinctrl_variant_data sm8250_lpi_data = {
->>          .nfunctions = ARRAY_SIZE(lpass_functions),
->>   };
->>
->> +static struct lpi_pinctrl_variant_data sc7280_lpi_data = {
-> Can this variant data be const?
-Okay. Will change accordingly.
->> +       .pins = lpass_lpi_pins,
->> +       .npins = ARRAY_SIZE(lpass_lpi_pins),
->> +       .groups = sc7280_groups,
->> +       .ngroups = ARRAY_SIZE(sc7280_groups),
->> +       .functions = lpass_functions,
->> +       .nfunctions = ARRAY_SIZE(lpass_functions),
->> +};
->> +
->>   static int lpi_gpio_read(struct lpi_pinctrl *state, unsigned int pin,
->>                           unsigned int addr)
->>   {
+> Add some MAC debug prints for more easily demarcating a software scan
+> when parsing logs.
+> 
+> Signed-off-by: Benjamin Li <benl@squareup.com>
+
+Failed to build:
+
+In file included from ./include/linux/bitops.h:7,
+                 from ./include/linux/kernel.h:12,
+                 from ./include/linux/interrupt.h:6,
+                 from drivers/net/wireless/ath/wcn36xx/dxe.c:25:
+drivers/net/wireless/ath/wcn36xx/dxe.c: In function '_wcn36xx_dxe_tx_channel_is_empty':
+./include/linux/typecheck.h:12:25: error: comparison of distinct pointer types lacks a cast [-Werror]
+   12 |         (void)(&__dummy == &__dummy2); \
+      |                         ^~
+./include/linux/spinlock.h:255:17: note: in expansion of macro 'typecheck'
+  255 |                 typecheck(unsigned long, flags);        \
+      |                 ^~~~~~~~~
+./include/linux/spinlock.h:393:9: note: in expansion of macro 'raw_spin_lock_irqsave'
+  393 |         raw_spin_lock_irqsave(spinlock_check(lock), flags);     \
+      |         ^~~~~~~~~~~~~~~~~~~~~
+drivers/net/wireless/ath/wcn36xx/dxe.c:844:9: note: in expansion of macro 'spin_lock_irqsave'
+  844 |         spin_lock_irqsave(&ch->lock, flags);
+      |         ^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[5]: *** [scripts/Makefile.build:277: drivers/net/wireless/ath/wcn36xx/dxe.o] Error 1
+make[4]: *** [scripts/Makefile.build:540: drivers/net/wireless/ath/wcn36xx] Error 2
+make[3]: *** [scripts/Makefile.build:540: drivers/net/wireless/ath] Error 2
+make[2]: *** [scripts/Makefile.build:540: drivers/net/wireless] Error 2
+make[1]: *** [scripts/Makefile.build:540: drivers/net] Error 2
+make: *** [Makefile:1868: drivers] Error 2
+
+3 patches set to Changes Requested.
+
+12579221 [1/3] wcn36xx: add debug prints for sw_scan start/complete
+12579223 [2/3] wcn36xx: implement flush op to speed up connected scan
+12579225 [3/3] wcn36xx: ensure pairing of init_scan/finish_scan and start_scan/end_scan
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+https://patchwork.kernel.org/project/linux-wireless/patch/20211023003949.3082900-2-benl@squareup.com/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
