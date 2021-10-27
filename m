@@ -2,268 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6C5643D68E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 00:28:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 038FF43D75C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 01:13:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbhJ0Wat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 18:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41454 "EHLO
+        id S229836AbhJ0XPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 19:15:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbhJ0Wap (ORCPT
+        with ESMTP id S230248AbhJ0XPt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 18:30:45 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EACDC0613B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 15:28:19 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id p14so6591039wrd.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 15:28:19 -0700 (PDT)
+        Wed, 27 Oct 2021 19:15:49 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FDA5C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:23 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id v65so5766219ioe.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=71spJIGnFrqrdouSR+SowZM1rGrDszQ6QivBGBVwrxM=;
-        b=CTUPmzxFh7u7RgDqN9z2hrXSUAzMpZ6XCCvEeMXFpPcSv0lDRI0BQ3nj28WN0yuQRu
-         GaGFINjc/VD24q9cDUiGeC/cSJsAQ8HTSog1jaDuSD7RcxX6yDsQxvaMmTGZYjAffhcs
-         U9FiUYlL16euw8FAT0quJUzEkoTvec8rQlobr+5LY+euyXSCmXuNekCTtgzZSLbt10RF
-         cYIUH/daPyfEQLth/bFvuvCR/Re+aVNEt776fhMIrgqP+GW7y8v4mJPzLRDO7Wcymper
-         YfWjUdDNsiKM9V5LFXkBti3NoQHs3TIRJYxeK/m/ARe2znjSjhqU0lScULJgLJY3JySL
-         5KOQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rl0KiyZVmnRa9RIsZlZ/dKBg5oxrwgNJJclLrbASD8g=;
+        b=HjFzfoLJ+HriIHgi6MmL9orHjnaLdbN7A06ITgUTPEL1Gnfof/gyL4GBHhc6Fepxwb
+         8vZrGwr+DOoKI8CPHpsQpT4Ksl/Adasiqn7vJ52uqBFWis6zN6KqTLNnZLwWoesiX0wa
+         Rogrcleh20EWM10gudKnGxlNQELGWDArr4k3M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=71spJIGnFrqrdouSR+SowZM1rGrDszQ6QivBGBVwrxM=;
-        b=Zny9TOvzxSNVHSdv2aH+uSN2fFNNcGXq1kJhaJbeQfMDAeAbbfqAom4qZ2Itk8fKi0
-         F2OjukB7W+i0KFGd7D3bu3D/JYSWuqZ8fTODnxnSsYfUErbxRR6540IMb2qTYsQKGE+F
-         gxVyjV5Wa8Wdc+deL9A1f+4rIRXIZ3myS3EABQKbRPTkxR0iZANBAjf1ywx//ZqNSgeE
-         J9E6gnfu9nXn9IG3IqHrub8birnh+dp2h2vHw9VoxmyFEyQGfIHsaGEP2eNl8TNZ5uAB
-         2nL2wBlVVMeU1ezrN3/hTOVq80c0wppSb0xGeRoWhsCIc6uQR1rKJh+mmIWCLJXhKcD/
-         UybQ==
-X-Gm-Message-State: AOAM531PFFjYSw+DiVmnoIlOfW+XN+u/+VfKENacCPe68XIU6u3sk0Ys
-        uD+iFBKxbHcRQ5/CSZ1Ak18tfg==
-X-Google-Smtp-Source: ABdhPJyznMWKCylYXdBIPG4173zMZXiUWU+5cGReOY4rcfhKfnB9UIDX8nm/66H3Uau5uvpXFGpTBg==
-X-Received: by 2002:adf:ec88:: with SMTP id z8mr591890wrn.4.1635373697424;
-        Wed, 27 Oct 2021 15:28:17 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q1sm916689wmj.20.2021.10.27.15.28.16
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rl0KiyZVmnRa9RIsZlZ/dKBg5oxrwgNJJclLrbASD8g=;
+        b=oy7mp477uEQ27L13zZxdXnTRxxqL87wKSgBGexIIlfKomyPbEnCLhLa2v2IycSuQqU
+         3SMcC39EP9VLmLbzaskEHZCLXitgcAVn5dtpRYIaN007vMsNXGYr8tU+Hcy50kSY6J3n
+         5YT1cQpzyYC74FRuNE0rCxISGEe31g2Pwu6V2xe6qJtG9ba+tBrAoHr28np30aE9+1yX
+         NVLQ4zcqTj1P5JBF0dWa1HdweaX6/RxMXqEG1HZXfXedkWwOfV2/HFJ/Aj3SgFWz4/jg
+         YKhqpDkI9MF+6dBXnBxPdbnES3zTCuvBVndxW+kl5hKVUJT6rP/Pq03B7vIDs39OPg/t
+         wkxg==
+X-Gm-Message-State: AOAM531PvClA2ryBLflR+2rAgbak2S2cOmsOlUJgH9xP7qpgZWEzrOSw
+        4JD0Vxm49n/KpOgaG3jLcHi9cT74c/sP/A==
+X-Google-Smtp-Source: ABdhPJxDQYJ2EzpOaFpaJqVA3DNFNw8ED8yfnOEbE9B1H7uAOBFX/uexMo5o44q+yGme6ccEPYigeA==
+X-Received: by 2002:a02:cb58:: with SMTP id k24mr553440jap.59.1635376402731;
+        Wed, 27 Oct 2021 16:13:22 -0700 (PDT)
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com. [209.85.166.53])
+        by smtp.gmail.com with ESMTPSA id k16sm645113ior.50.2021.10.27.16.13.21
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Oct 2021 15:28:16 -0700 (PDT)
-Message-ID: <9a933103-afbc-3278-3d2e-ade77b0e4b09@linaro.org>
-Date:   Wed, 27 Oct 2021 23:30:18 +0100
+        Wed, 27 Oct 2021 16:13:22 -0700 (PDT)
+Received: by mail-io1-f53.google.com with SMTP id i14so5672008ioa.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:13:21 -0700 (PDT)
+X-Received: by 2002:a05:6638:13d2:: with SMTP id i18mr549944jaj.3.1635376401029;
+ Wed, 27 Oct 2021 16:13:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH v2 3/3] wcn36xx: ensure pairing of init_scan/finish_scan
- and start_scan/end_scan
-Content-Language: en-US
-To:     Benjamin Li <benl@squareup.com>, Kalle Valo <kvalo@codeaurora.org>
-Cc:     Joseph Gates <jgates@squareup.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eugene Krasnikov <k.eugene.e@gmail.com>,
-        "John W. Linville" <linville@tuxdriver.com>,
-        wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211027170306.555535-1-benl@squareup.com>
- <20211027170306.555535-4-benl@squareup.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20211027170306.555535-4-benl@squareup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20210929153553.1.Ib44c2ac967833d7a3f51452d44d15b7b8d23c1f0@changeid>
+ <86b0d847ddf06c1b445f3dbac9c771a9@codeaurora.org> <CAD=FV=WnMnEckHdu0DG3U8MnyjwQ42aybFxq35nWSLG=vs=LGA@mail.gmail.com>
+ <YXTY6BdmKBa+jPeN@builder.lan>
+In-Reply-To: <YXTY6BdmKBa+jPeN@builder.lan>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 27 Oct 2021 16:13:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Ue-OUOOQTZnvtW1-88+NhzUp5nOo80OKT9Pgx27L0VkA@mail.gmail.com>
+Message-ID: <CAD=FV=Ue-OUOOQTZnvtW1-88+NhzUp5nOo80OKT9Pgx27L0VkA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: pmk8350: Make RTC disabled by default;
+ enable on sc7280-idp
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     satya priya <skakit@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2021 18:03, Benjamin Li wrote:
-> An SMD capture from the downstream prima driver on WCN3680B shows the
-> following command sequence for connected scans:
-> 
-> - init_scan_req
->      - start_scan_req, channel 1
->      - end_scan_req, channel 1
->      - start_scan_req, channel 2
->      - ...
->      - end_scan_req, channel 3
-> - finish_scan_req
-> - init_scan_req
->      - start_scan_req, channel 4
->      - ...
->      - end_scan_req, channel 6
-> - finish_scan_req
-> - ...
->      - end_scan_req, channel 165
-> - finish_scan_req
-> 
-> Upstream currently never calls wcn36xx_smd_end_scan, and in some cases[1]
-> still sends finish_scan_req twice in a row or before init_scan_req. A
-> typical connected scan looks like this:
-> 
-> - init_scan_req
->      - start_scan_req, channel 1
-> - finish_scan_req
-> - init_scan_req
->      - start_scan_req, channel 2
-> - ...
->      - start_scan_req, channel 165
-> - finish_scan_req
-> - finish_scan_req
-> 
-> This patch cleans up scanning so that init/finish and start/end are always
-> paired together and correctly nested.
-> 
-> - init_scan_req
->      - start_scan_req, channel 1
->      - end_scan_req, channel 1
-> - finish_scan_req
-> - init_scan_req
->      - start_scan_req, channel 2
->      - end_scan_req, channel 2
-> - ...
->      - start_scan_req, channel 165
->      - end_scan_req, channel 165
-> - finish_scan_req
-> 
-> Note that upstream will not do batching of 3 active-probe scans before
-> returning to the operating channel, and this patch does not change that.
-> To match downstream in this aspect, adjust IEEE80211_PROBE_DELAY and/or
-> the 125ms max off-channel time in ieee80211_scan_state_decision.
-> 
-> [1]: commit d195d7aac09b ("wcn36xx: Ensure finish scan is not requested
-> before start scan") addressed one case of finish_scan_req being sent
-> without a preceding init_scan_req (the case of the operating channel
-> coinciding with the first scan channel); two other cases are:
-> 1) if SW scan is started and aborted immediately, without scanning any
->     channels, we send a finish_scan_req without ever sending init_scan_req,
->     and
-> 2) as SW scan logic always returns us to the operating channel before
->     calling wcn36xx_sw_scan_complete, finish_scan_req is always sent twice
->     at the end of a SW scan
-> 
-> Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-> Signed-off-by: Benjamin Li <benl@squareup.com>
-> ---
->   drivers/net/wireless/ath/wcn36xx/main.c    | 34 +++++++++++++++++-----
->   drivers/net/wireless/ath/wcn36xx/smd.c     |  4 +++
->   drivers/net/wireless/ath/wcn36xx/wcn36xx.h |  1 +
->   3 files changed, 32 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
-> index 18383d0fc0933..37b4016f020c9 100644
-> --- a/drivers/net/wireless/ath/wcn36xx/main.c
-> +++ b/drivers/net/wireless/ath/wcn36xx/main.c
-> @@ -400,6 +400,7 @@ static void wcn36xx_change_opchannel(struct wcn36xx *wcn, int ch)
->   static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
->   {
->   	struct wcn36xx *wcn = hw->priv;
-> +	int ret;
->   
->   	wcn36xx_dbg(WCN36XX_DBG_MAC, "mac config changed 0x%08x\n", changed);
->   
-> @@ -415,17 +416,31 @@ static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
->   			 * want to receive/transmit regular data packets, then
->   			 * simply stop the scan session and exit PS mode.
->   			 */
-> -			wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
-> -						wcn->sw_scan_vif);
-> -			wcn->sw_scan_channel = 0;
-> +			if (wcn->sw_scan_channel)
-> +				wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-> +			if (wcn->sw_scan_init) {
-> +				wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
-> +							wcn->sw_scan_vif);
-> +			}
->   		} else if (wcn->sw_scan) {
->   			/* A scan is ongoing, do not change the operating
->   			 * channel, but start a scan session on the channel.
->   			 */
-> -			wcn36xx_smd_init_scan(wcn, HAL_SYS_MODE_SCAN,
-> -					      wcn->sw_scan_vif);
-> +			if (wcn->sw_scan_channel)
-> +				wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-> +			if (!wcn->sw_scan_init) {
-> +				/* This can fail if we are unable to notify the
-> +				 * operating channel.
-> +				 */
-> +				ret = wcn36xx_smd_init_scan(wcn,
-> +							    HAL_SYS_MODE_SCAN,
-> +							    wcn->sw_scan_vif);
-> +				if (ret) {
-> +					mutex_unlock(&wcn->conf_mutex);
-> +					return -EIO;
-> +				}
-> +			}
->   			wcn36xx_smd_start_scan(wcn, ch);
-> -			wcn->sw_scan_channel = ch;
->   		} else {
->   			wcn36xx_change_opchannel(wcn, ch);
->   		}
-> @@ -723,7 +738,12 @@ static void wcn36xx_sw_scan_complete(struct ieee80211_hw *hw,
->   	wcn36xx_dbg(WCN36XX_DBG_MAC, "sw_scan_complete");
->   
->   	/* ensure that any scan session is finished */
-> -	wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN, wcn->sw_scan_vif);
-> +	if (wcn->sw_scan_channel)
-> +		wcn36xx_smd_end_scan(wcn, wcn->sw_scan_channel);
-> +	if (wcn->sw_scan_init) {
-> +		wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
-> +					wcn->sw_scan_vif);
-> +	}
->   	wcn->sw_scan = false;
->   	wcn->sw_scan_opchannel = 0;
->   }
-> diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-> index 3cecc8f9c9647..830341be72673 100644
-> --- a/drivers/net/wireless/ath/wcn36xx/smd.c
-> +++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-> @@ -721,6 +721,7 @@ int wcn36xx_smd_init_scan(struct wcn36xx *wcn, enum wcn36xx_hal_sys_mode mode,
->   		wcn36xx_err("hal_init_scan response failed err=%d\n", ret);
->   		goto out;
->   	}
-> +	wcn->sw_scan_init = true;
->   out:
->   	mutex_unlock(&wcn->hal_mutex);
->   	return ret;
-> @@ -751,6 +752,7 @@ int wcn36xx_smd_start_scan(struct wcn36xx *wcn, u8 scan_channel)
->   		wcn36xx_err("hal_start_scan response failed err=%d\n", ret);
->   		goto out;
->   	}
-> +	wcn->sw_scan_channel = scan_channel;
->   out:
->   	mutex_unlock(&wcn->hal_mutex);
->   	return ret;
-> @@ -781,6 +783,7 @@ int wcn36xx_smd_end_scan(struct wcn36xx *wcn, u8 scan_channel)
->   		wcn36xx_err("hal_end_scan response failed err=%d\n", ret);
->   		goto out;
->   	}
-> +	wcn->sw_scan_channel = 0;
->   out:
->   	mutex_unlock(&wcn->hal_mutex);
->   	return ret;
-> @@ -822,6 +825,7 @@ int wcn36xx_smd_finish_scan(struct wcn36xx *wcn,
->   		wcn36xx_err("hal_finish_scan response failed err=%d\n", ret);
->   		goto out;
->   	}
-> +	wcn->sw_scan_init = false;
->   out:
->   	mutex_unlock(&wcn->hal_mutex);
->   	return ret;
-> diff --git a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-> index 1c8d918137da2..fbd0558c2c196 100644
-> --- a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-> +++ b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-> @@ -248,6 +248,7 @@ struct wcn36xx {
->   	struct cfg80211_scan_request *scan_req;
->   	bool			sw_scan;
->   	u8			sw_scan_opchannel;
-> +	bool			sw_scan_init;
->   	u8			sw_scan_channel;
->   	struct ieee80211_vif	*sw_scan_vif;
->   	struct mutex		scan_lock;
-> 
+Hi,
 
-LGTM
+On Sat, Oct 23, 2021 at 8:54 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 18 Oct 16:45 CDT 2021, Doug Anderson wrote:
+>
+> > Bjorn,
+> >
+> > On Wed, Sep 29, 2021 at 9:00 PM <skakit@codeaurora.org> wrote:
+> > >
+> > > On 2021-09-30 04:08, Douglas Anderson wrote:
+> > > > The RTC on the pmk8350 is not useful on all boards. Some boards may
+> > > > not provide backup power to the PMIC but might have another RTC on the
+> > > > board that does have backup power. In this case it's better to not use
+> > > > the RTC on the PMIC.
+> > > >
+> > > > At the moment, the only boards that includes this PMIC are sc7280-idp
+> > > > and sc7280-idp2. On sc7280-idp I'm not aware of any other RTCs, but
+> > > > sc7280-idp2 has a Chrome OS EC on it and this is intended to provide
+> > > > the RTC for the AP.
+> > > >
+> > > > Let's do what we normally do for hardware that's not used by all
+> > > > boards and set it to a default status of "disabled" and then enable it
+> > > > on the boards that need it.
+> > > >
+> > > > NOTE: for sc7280-idp it's _possible_ we might also want to add
+> > > > `allow-set-time;`. That could be the subject of a future patch if it
+> > > > is indeed true.
+> > > >
+> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > > ---
+> > > >
+> > >
+> > > Reviewed-by: Satya Priya <skakit@codeaurora.org>
+> >
+> > If you're still accepting patches for 5.16, it'd be keen if you'd
+> > consider taking this one. Thanks!
+> >
+>
+> I've picked the patch and hope to get it included in v5.16.
+>
+> I do however not understand why the commit message so clearly defines
+> that the only device including pmk8350 is the sc7280 idp when the
+> sm8350-mtp.dts contains the following line:
+>
+> #include "pmk8350.dtsi"
+>
+>
+> Perhaps I'm missing something obvious, but I took the liberty of also
+> enabling the RTC in the SM8350 MTP.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Thank you for fixing this up. I must have just glazed over that part
+of things. :( Glad you caught and fixed it.
+
+-Doug
