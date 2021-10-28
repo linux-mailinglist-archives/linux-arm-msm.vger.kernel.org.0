@@ -2,99 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E542D43F343
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:01:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3E0443F33D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:01:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231510AbhJ1XDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 19:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35880 "EHLO
+        id S231362AbhJ1XBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 19:01:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231481AbhJ1XDB (ORCPT
+        with ESMTP id S231343AbhJ1XBt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 19:03:01 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049CBC061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:00:34 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id z126so10534886oiz.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:00:33 -0700 (PDT)
+        Thu, 28 Oct 2021 19:01:49 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F328DC061745
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:59:21 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id x16-20020a9d7050000000b00553d5d169f7so9180867otj.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:59:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=65adDYZK+vJThwwhpee2/9MrxFuS8APYICngTX1DB0s=;
-        b=oae5dTKtxGu2NToR+ozf+x63DzWhTgCYSjaT8t75vHruG8iqdS97M5yJsuwkrTQav2
-         gJG3hZJACb5/R2h4Uu5MqKHUdyI+77qO3b4Kbdl5bzZLo8VXve3XhwHNzOjCd2uz/rG4
-         52GFzHK+hDwYaQqLefCuonC/yNG8PuBJgCDQ4=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UM3UPmM29d/eFua6xPkjjMmDAG+lYOy+FzK4rJP6nWQ=;
+        b=g25IrA98fzp1oONkM54UmVUW1Wfy9BSfo9pM7YSMXqJW4aAqxr5eRHGzMJH9uUdBQO
+         jSp4nCv5WfYJSd8LO+0VXWSILoqjBDVreCeRGWVTtqPOTXG1G7rnVoQIZ5FzdBHIP0h+
+         xLNZB2PgrPnNMQ317fnoqgpMLgx1uLQ3EH9bZuFbFgMY+P4lL+Y+vlKVsaApdOMOjOz4
+         SKQ1rrle0MfTj7kkL6BeHj3ix6XtAlZDUH0wIqLR8xXjOx6AF3r1z24ZjW4tw+0EGvD+
+         aWBjyqPhblJYjW7uJnfHzcBN7yn4uMm9uAWRiBlRRpt7j6R43tWVPu4T0va0WPRufWeM
+         Iv0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=65adDYZK+vJThwwhpee2/9MrxFuS8APYICngTX1DB0s=;
-        b=HCYAUzfPoxXv3Kfj4eFKCkbb5XEYe9Q5c0PcoV6WhEf8gycRuEOWjNn+wt3jdnqpH2
-         f3iYdldJBWnPCHREcZBL+PjeQYNg7V7t9F2XuAdUewoWbX1cqtfuMllgH/XBSfVq4uR3
-         euBop8+0jLmV6CDZ6GKjAte7Egvsh6sBxRUQ3mM5O0YhdEueydDmE5Ua0Pj8pD3eYkNw
-         SbAWKVWzXzAQpXAQaOjebh0V6urTi5e2pFTKd9GtYtZulYDwyufHagIZG7WR5oBdvXz6
-         QiS0sdBm9rKv7erv69xBbVn/R07zGILn3rlYFnkMh1EXkjm1Wmnj65h8Tnti4TL95qos
-         dxfw==
-X-Gm-Message-State: AOAM530ZVnMJWDvcmx2cTs5pl4wpfMH7V0KSG8dHFbiZ7npUFXepyCDM
-        7BPy6X0UbUWEjwWu7dphfEJ3stMd+S86LIMGNHQv7w==
-X-Google-Smtp-Source: ABdhPJz171p5Os7DrFgYldIZYVeYxanaYEOB+mBpsSG31OWLUFDDFkXoCtzg6VJyLnG1h/+IJIDczYxp+lYyreZs/eE=
-X-Received: by 2002:a05:6808:23c2:: with SMTP id bq2mr11188025oib.32.1635462033433;
- Thu, 28 Oct 2021 16:00:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 28 Oct 2021 16:00:32 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UM3UPmM29d/eFua6xPkjjMmDAG+lYOy+FzK4rJP6nWQ=;
+        b=UTB5cVFGgqV3ATWLGa2JpyGnhfmOOnCytBgVIlW+HV6uVumN46JsfygFswJB/gau4M
+         KY85Tndn7m4LnWIK887amRzV6MR/VdqjEEra4izufWF4c94v2WeKqoc0I1VPIlgXt1Sw
+         vgPIA418ilSVRx1VKfNj9a1p5XpoEKnAZTbL8FTdW3gWUQSAxjZu2UHLUzMxgvTNRsK5
+         YUekhQEQDunNE7oHR515wrQIETgBUz9pTXEZ+6wjrrz/jmDArsN/NbKC9S/mLqYRSliy
+         428ZN34wxwmUMa5TBSpquyLDp7fPMf6QeJR1Hxx6G2wGN98ojKn/9C96i5OEQgwf+t4q
+         mBAA==
+X-Gm-Message-State: AOAM531I0OBmMdkLrl3hs1cmJSZyXcWCMe78aNQXFZaaE+ZglE4NrD3v
+        Pd30cC++O+TXIWyrrO8kmRWEfQ==
+X-Google-Smtp-Source: ABdhPJzyfs1hvl7qTeVzKHMS0ZXJqBz/+W6QmOhFcp0/rKhsvy6Ft9Mm3edgHCRdAkcHE9mQ7NJOrg==
+X-Received: by 2002:a05:6830:19d7:: with SMTP id p23mr5709971otp.33.1635461961149;
+        Thu, 28 Oct 2021 15:59:21 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p14sm1269607oov.0.2021.10.28.15.59.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Oct 2021 15:59:20 -0700 (PDT)
+Date:   Thu, 28 Oct 2021 16:01:09 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
+        dianders@chromium.org
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
+Message-ID: <YXsrtTGZW66mUtkU@ripper>
+References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20211028151022.1.Ie56f55924f5c7706fe3194e710bbef6fdb8b5bc6@changeid>
-References: <20211028151022.1.Ie56f55924f5c7706fe3194e710bbef6fdb8b5bc6@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 28 Oct 2021 16:00:32 -0700
-Message-ID: <CAE-0n50XwcLBmOBaRiF-qW=R-HfanjviteEzmMDbDuPJruX65g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Support Lazor/Limozeen rev9
-To:     LKML <linux-kernel@vger.kernel.org>,
-        Philip Chen <philipchen@chromium.org>
-Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Philip Chen (2021-10-28 15:11:31)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> index 8b79fbb75756..69666f92176a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> @@ -5,13 +5,10 @@
->   * Copyright 2020 Google LLC.
+On Tue 26 Oct 05:07 PDT 2021, Rajendra Nayak wrote:
+
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
+> 
+> egpio is a scheme which allows special power Island Domain IOs
+> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+> TLMM functions with Island Domain functions.
+> With this scheme, an IO can be controlled both by the cpu running
+> linux and the Island processor. This provides great flexibility to
+> re-purpose the Island IOs for regular TLMM usecases.
+> 
+> 2 new bits are added to ctl_reg, egpio_present is a read only bit
+> which shows if egpio feature is available or not on a given gpio.
+> egpio_enable is the read/write bit and only effective if egpio_present
+> is 1. Once its set, the Island IO is controlled from Chip TLMM.
+> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
+> 
+> To support this we add a new function 'egpio' which can be used to
+> set the egpio_enable to 0, for any other TLMM controlled functions
+> we set the egpio_enable to 1.
+> 
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-msm.c | 17 +++++++++++++++--
+>  drivers/pinctrl/qcom/pinctrl-msm.h |  4 ++++
+>  2 files changed, 19 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> index 8476a8a..bfdba3a 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> @@ -185,6 +185,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>  	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
+>  	struct irq_data *d = irq_get_irq_data(irq);
+>  	unsigned int gpio_func = pctrl->soc->gpio_func;
+> +	unsigned int egpio_func = pctrl->soc->egpio_func;
+>  	const struct msm_pingroup *g;
+>  	unsigned long flags;
+>  	u32 val, mask;
+> @@ -218,8 +219,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>  	raw_spin_lock_irqsave(&pctrl->lock, flags);
+>  
+>  	val = msm_readl_ctl(pctrl, g);
+> -	val &= ~mask;
+> -	val |= i << g->mux_bit;
+> +
+> +	if (egpio_func && i == egpio_func) {
+> +		if (val & BIT(g->egpio_present))
+> +			val &= ~BIT(g->egpio_enable);
+> +		else
+> +			return -EINVAL;
+
+You're returning here with pctrl->lock held and irqs disabled.
+
+> +	} else {
+> +		val &= ~mask;
+> +		val |= i << g->mux_bit;
+> +		/* Check if egpio present and enable that feature */
+
+I never remember if egpio_enable means apss or lpass, so I think this
+comment would be better as:
+
+		/* Claim ownership of pin if egpio capable */
+
+> +		if (egpio_func && (val & BIT(g->egpio_present)))
+
+Can't you drop the parenthesis around the second expression?
+
+Regards,
+Bjorn
+
+> +			val |= BIT(g->egpio_enable);
+> +	}
+> +
+>  	msm_writel_ctl(val, pctrl, g);
+>  
+>  	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+> index e31a516..b7110ac 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+> @@ -77,6 +77,8 @@ struct msm_pingroup {
+>  	unsigned drv_bit:5;
+>  
+>  	unsigned od_bit:5;
+> +	unsigned egpio_enable:5;
+> +	unsigned egpio_present:5;
+>  	unsigned oe_bit:5;
+>  	unsigned in_bit:5;
+>  	unsigned out_bit:5;
+> @@ -119,6 +121,7 @@ struct msm_gpio_wakeirq_map {
+>   *                            to be aware that their parent can't handle dual
+>   *                            edge interrupts.
+>   * @gpio_func: Which function number is GPIO (usually 0).
+> + * @egpio_func: Which function number is eGPIO
 >   */
->
-> -#include "sc7180.dtsi"
-> -
->  ap_ec_spi: &spi6 {};
->  ap_h1_spi: &spi0 {};
-
-Can we get rid of this node swap now? I think it is only around because
-early on we swapped the EC and H1 spi interfaces and then we had to swap
-it every time we made a new board.
-
-$ git grep ap_ec_spi
-arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi:ap_ec_spi: &spi6 {};
-arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi:ap_ec_spi: &spi6 {};
-arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi:ap_ec_spi: &spi6 {};
-arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts:ap_ec_spi: &spi6 {};
-
-It feels like we'd be better off leaving that quirk in trogdor-r0, which
-conveniently isn't upstream, and then relabel the spi nodes in
-sc7180-trogdor.dtsi now. Otherwise I look at this and have to remember
-that whenever this dtsi file is included, we've already included the
-sc7180.dtsi file before it, so that the relabel actually works.
-
->
->  #include "sc7180-trogdor.dtsi"
-> -#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
->
->  &ap_sar_sensor {
->         semtech,cs0-ground;
+>  struct msm_pinctrl_soc_data {
+>  	const struct pinctrl_pin_desc *pins;
+> @@ -136,6 +139,7 @@ struct msm_pinctrl_soc_data {
+>  	unsigned int nwakeirq_map;
+>  	bool wakeirq_dual_edge_errata;
+>  	unsigned int gpio_func;
+> +	unsigned int egpio_func;
+>  };
+>  
+>  extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
