@@ -2,105 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE70043D902
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 03:55:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A537943D965
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 04:37:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbhJ1B6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 21:58:18 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:33421 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbhJ1B6S (ORCPT
+        id S229785AbhJ1Cjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 22:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229691AbhJ1Cjf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 21:58:18 -0400
+        Wed, 27 Oct 2021 22:39:35 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E19EC061745
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 19:37:09 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id p16so10382654lfa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 19:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1635386152; x=1666922152;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=PumI7KYEnaLZedKWySsRxRR6/fjZlsD1mJD7/WiWdxk=;
-  b=EHI+cn+z/irtcvFviIO/Tc3ad48fi4wBX/LKI9Gxz3cgD572pnjDob0f
-   Ma0LwolewMjARj+C2eGUz/6ceY7hmUmaLIPME7kTYqu58AVLiXNFADJAH
-   oHiZN0h2vdBrGyHej+hq1c6lUcHXQ2Irmf/MyDnR+dJNEbyr6oX/X1F6k
-   4=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 27 Oct 2021 18:55:52 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2021 18:55:51 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Wed, 27 Oct 2021 18:55:51 -0700
-Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Wed, 27 Oct 2021 18:55:46 -0700
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <kalyan_t@codeaurora.org>,
-        <abhinavk@codeaurora.org>, <dianders@chromium.org>,
-        <khsieh@codeaurora.org>, <mkrishn@codeaurora.org>,
-        <sbillaka@codeaurora.org>
-Subject: [PATCH v3 6/6] drm/msm/dp: Remove the hpd init delay for eDP
-Date:   Thu, 28 Oct 2021 07:24:48 +0530
-Message-ID: <1635386088-18089-7-git-send-email-quic_sbillaka@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com>
-References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com>
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3Asrvf8VKIa9PPc0PcDfVcEUpJs3EokG9pVSaXKxHXk=;
+        b=nSO8B/yA59Gwn6Wv3e74FdSXTK2cV4tH7evpbsbTVUD+2g6JyuUdT/4TM4CJmJ7ieO
+         PfTCUF9sSDSAZun5z+6UPxfVH2aBGt7+k2FBNikDZsGG90LQJxC1oZ1S5XEzzejdZ6F0
+         3+MgSj6OO/Grk/UZTepbHgzl3fe0HOhFSm1p4HG2ln67Zu+FpMUy0MXuqEbI4KLJSQvg
+         hSNoH34CFp9owrupPuUAY3WbVZBCiNFnsmUPN1h5rkf0LZjUHOJYGM+w/mhur45wC28R
+         FjzvqFK8CXQxIiUdsffw39c0bbptQyKKlwJM1VcDQZuSISj+PsBSz1dksMyVCyu+z0oD
+         /skw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3Asrvf8VKIa9PPc0PcDfVcEUpJs3EokG9pVSaXKxHXk=;
+        b=r4GO2d5dvcMgemnAXb8UHxGFR0wLoLXy7UanMzrmQuqZH4IFX5dEcvyEcHnQhh4zAd
+         WHF9JXVpv2WVIuHA1z8YsjBrCYfr5d6Ly0WWWPglHrjxP7S0OTUeeQOjiavDjp5dRgdW
+         14U89kmIRBTVxwejlVXaz0AqzLJmDUPhERLLsx0Tx71bqAtfStXI7gI/5QbvY00Fs/Pq
+         jLazPlY5YgsxchV1yr7O27oORatICa7SgjLy3M0FmT/QU32N7NMynxNsXrd5sLMVKrqx
+         ypmnTDoGTEAarIjFRuM7uaam+tN454VDOloNQz/M6Ils5gWp0c5fFaka/Mylx1ixFwAH
+         w8Rg==
+X-Gm-Message-State: AOAM531BsLEdFd0l5YKf8fQE/sRcl5wwwR/fMAE+659g1jmm0mwH9ePD
+        09YyBO7rYv9F8MYUewERWASbMhtPkMmN7W9oAJzPpg==
+X-Google-Smtp-Source: ABdhPJwbkWHrBR3Txzie7bFm6VY0aB2rJomt26Se7hlzs0ULD1c+bKST9SpunaEM+xqGVmFAubOKxOkwV0AoORjNGzQ=
+X-Received: by 2002:a05:6512:2399:: with SMTP id c25mr1432339lfv.298.1635388627753;
+ Wed, 27 Oct 2021 19:37:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+ <CALAqxLXjh9o925G9smW+uwWqKDarsvrBuzr+UL1CsQc4m7W+oQ@mail.gmail.com> <5c3d9b0a-8c68-feec-74b6-59f2e29b1d11@linaro.org>
+In-Reply-To: <5c3d9b0a-8c68-feec-74b6-59f2e29b1d11@linaro.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Wed, 27 Oct 2021 19:36:56 -0700
+Message-ID: <CALAqxLVn0ZARrj1Syvie30Tw__NdNN4-KUCdm8wSfc9aWha3kQ@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and enc/dec
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DP driver needs a 10 second delay before phy_init so that
-the usb combo phy initializes and sets up the necessary
-clocks for usb devices such as keyboard and mouse.
+On Wed, Oct 27, 2021 at 5:19 PM Tadeusz Struk <tadeusz.struk@linaro.org> wrote:
+>
+> Hi John,
+> On 10/27/21 17:01, John Stultz wrote:
+> >    Thanks so much for sending this out, I definitely would like to see
+> > these crashes sorted!
+> >
+> > Unfortunately this patch causes some odd behavior when I use it with a
+> > modular config.  The display does not start up and trying to reboot
+> > the board ends up with it hanging instead of rebooting.
+> >
+> > And booting with this patch in my non-modular config, it just seems to
+> > get stuck during bootup (I suspect waiting on firmware that's not yet
+> > mounted?).
+> >
+>
+> Thanks for trying the patch. With this patch I was able to boot android13
+> running 5.15.0-rc4-mainlineon on my Dragonboard 845c with the default
+> config common/build.config.db845c. Without it it was crashing.
 
-eDP controller uses a standalone phy and need not wait for
-phy initialization from any other component. This change
-will remove the delay for eDP controller.
+Hrm.. For my module enabled build I'm using the current
+android-mainline as well w/ AOSP.
 
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Still seeing some odd behavior, but I'm trying to isolate what change
+in your patch is causing it (as it's not obvious).
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 61385d6..de6a1fd 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1430,6 +1430,7 @@ void __exit msm_dp_unregister(void)
- void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- {
- 	struct dp_display_private *dp;
-+	u8 delay;
- 
- 	if (!dp_display)
- 		return;
-@@ -1438,7 +1439,15 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- 
- 	dp_hpd_event_setup(dp);
- 
--	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-+	if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP) {
-+		/* eDP does not need any delay before phy init */
-+		delay = 0;
-+	} else {
-+		/* DP needs 10 second delay to let usb combo phy initialize */
-+		delay = 100;
-+	}
-+
-+	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, delay);
- }
- 
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
--- 
-2.7.4
-
+thanks
+-john
