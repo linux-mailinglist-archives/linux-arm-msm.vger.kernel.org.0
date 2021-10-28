@@ -2,128 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E79C743F218
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 23:56:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A97C43F238
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 00:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbhJ1V7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 17:59:16 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37244 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230476AbhJ1V7P (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 17:59:15 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1A67560EFF;
-        Thu, 28 Oct 2021 21:56:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635458208;
-        bh=p1CgpYh4aVtdnX6MdBbbbhbddudo+aw//ZNbp0j3+c8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=d4rAxZjeh2FEiYPF4uFQFptIetsY/Q0YZUVzaBQT5mcTcBmZwrniixzFBiFTiTFPA
-         31//Yjvov6QH95zQDzVMYjZWcbG4/wi2OI5+VQUG34WQH0mJbra7YSS/iiIECESneE
-         IlCXBMfXhrth6eqkObgjSYsMp8TqQNlDqvY/qBzMZBp3MiO226/XBLTkDlP0x9s+lW
-         iU/j0SV17Oh6cdRNPZlVbFOtgeeeCyEpiDyjBzB0ilvgnDUzZ1VFBYOdAsKn0C014T
-         OaWTszoJN1jhSY7G57HfA/uODPR1uC/5YSSxPWt0uX8p96tO+Smr2z7Kd4YCakZY+5
-         oPNob95+R/FNg==
-Received: by mail-ed1-f46.google.com with SMTP id 5so29855710edw.7;
-        Thu, 28 Oct 2021 14:56:48 -0700 (PDT)
-X-Gm-Message-State: AOAM532eoqhvHHoHQTMZR7O7bRY0j6Dp+/Q2WkszdC0x4iC1mgMFMzUz
-        uMMBpWo5Xez1W9WmnUrYZCoiFgZPy9550LWJpA==
-X-Google-Smtp-Source: ABdhPJyBZTHa1ojrhvI9yd99LoSOz9t2pRPDfh45BIbRWanmI5KCU7TATgBknuLMfpapt+/+JRbD8NqF5DmgcvkeHrk=
-X-Received: by 2002:a17:906:6a0a:: with SMTP id qw10mr8354497ejc.466.1635458206566;
- Thu, 28 Oct 2021 14:56:46 -0700 (PDT)
+        id S231235AbhJ1WEP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 18:04:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230476AbhJ1WEO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 28 Oct 2021 18:04:14 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761DDC061745
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:01:47 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id y207so10342258oia.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:01:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=kmwgHIUyfSQ6BfCgMiv31EIWkb4KtS9tXlC4mVfy3Iw=;
+        b=gN5xGu8a4JJPCBhhbQEvdKwVpBl+w6OqLRm2f7vkVsZp2n7jyXq1GGexcbQDRstm6+
+         pSaUsIeukgW4o/UppKIiUAxFVWEZFNwnIljG7Qw1UvKBqhiB8XHGS8BgmptYF1hVGxVt
+         BT6/wbMTKqtaxmyrCi6WBLqmC0c8Eo5BIASLI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=kmwgHIUyfSQ6BfCgMiv31EIWkb4KtS9tXlC4mVfy3Iw=;
+        b=TvGHccToCkrfKvgMH1KaQBa7QVm3nAQ3bIflUdEZDAQQsoBHw7NSYCFiBPG8v821Qf
+         DqVdxgw4tMUiKJXe+/1WyizU1v8Fpxu38+vh9scemXlym4fVGFhaKDzXFKkoyX2H5JGr
+         cwMYSzaEkbCXPDul+c1RZhldWapnD5SwgDUXpM5h5UnHyeW8Wp7dKyXDRrjBn8nqmEA7
+         HNKrJsnJTn5JFoJszKYJopnaCDFsOX2wbm6hIyWiWo4IW7Dy0ckbHixX4HOahNkhcaWU
+         bk+ect9pDRZmGVbmWTelfyVYTSoKc9hwAh9b54lNFVcy7hTb30696tOTEj1mUxUk/w0F
+         w4XA==
+X-Gm-Message-State: AOAM5323LiWj3MEBHS4nyECFCPG/pzyKvA0DDeAxxn/jLSTkEB4VBNBF
+        hMfWFJhzw6+M7kPlhSHjyjTjI9pjL0HOkDs8PMXwJQ==
+X-Google-Smtp-Source: ABdhPJzzhpqn43FGuWlx7LrCWvU8e3n/+ToKKqYdn7jIiVawi/ws1aXxZzBYb0c8kaSvso329auJPQ1ZnsMw1vqxq7Y=
+X-Received: by 2002:a05:6808:23c2:: with SMTP id bq2mr10986132oib.32.1635458506879;
+ Thu, 28 Oct 2021 15:01:46 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 Oct 2021 15:01:46 -0700
 MIME-Version: 1.0
-References: <20211028211753.573480-1-jaschultzMS@gmail.com> <20211028211753.573480-2-jaschultzMS@gmail.com>
-In-Reply-To: <20211028211753.573480-2-jaschultzMS@gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 28 Oct 2021 16:56:35 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLxg3-Th85cYNJqCgQFYB0awgXV-=OkASk_aDY-H4Mk5g@mail.gmail.com>
-Message-ID: <CAL_JsqLxg3-Th85cYNJqCgQFYB0awgXV-=OkASk_aDY-H4Mk5g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: platform: microsoft: Document surface xbl
-To:     Jarrett Schultz <jaschultzms@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        platform-driver-x86@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
+In-Reply-To: <001401d7cbfc$f0d1d700$d2758500$@codeaurora.org>
+References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org>
+ <CAE-0n53rkv5SKO74M+7bkuMgaD7tS0k6a8m7KeQL8j3DTHdB_Q@mail.gmail.com> <001401d7cbfc$f0d1d700$d2758500$@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 28 Oct 2021 15:01:46 -0700
+Message-ID: <CAE-0n53KCUoJWdKTY954OviRX4yShigByHB4L3OGTAGQEaHoqQ@mail.gmail.com>
+Subject: RE: [PATCH v6 0/3] Add support for sc7280 WPSS PIL loading
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mathieu.poirier@linaro.org, ohad@wizery.com,
+        p.zabel@pengutronix.de, pillair@codeaurora.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 28, 2021 at 4:18 PM Jarrett Schultz <jaschultzms@gmail.com> wrote:
+Quoting pillair@codeaurora.org (2021-10-28 06:08:39)
 >
-> Introduce yaml for surface xbl driver.
+>
+> > -----Original Message-----
+> > From: Stephen Boyd <swboyd@chromium.org>
+> > Sent: Friday, October 8, 2021 12:05 AM
+> > To: Rakesh Pillai <pillair@codeaurora.org>; agross@kernel.org;
+> > bjorn.andersson@linaro.org; mathieu.poirier@linaro.org; ohad@wizery.com;
+> > p.zabel@pengutronix.de; robh+dt@kernel.org
+> > Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux-
+> > kernel@vger.kernel.org; sibis@codeaurora.org; mpubbise@codeaurora.org;
+> > kuabhs@chromium.org
+> > Subject: Re: [PATCH v6 0/3] Add support for sc7280 WPSS PIL loading
+> >
+> > Quoting Rakesh Pillai (2021-10-03 23:48:50)
+> > > Add support for PIL loading of WPSS co-processor for SC7280 SOCs.
+> > >
+> > > Changes from v4/v5:
+> > > - Add yaml conversion for adsp/cdsp dt-bindings
+> > > - Change clock names in wpss dt-bindings
+> > > - Correct mistake in signed-off enail ID
+> >
+> > Can you keep a running tally here of the full progression of the series?
+> > That helps to look back and make sure we don't make a comment that has
+> > already been made before.
+> >
+> > One more request. Can you add support for 'firmware-name' like there is in
+> > Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt so that we
+> > can install firmware into some namespaced/versioned place instead of
+> > having to put wpss files into /lib/firmware?
+>
+> Hi Stephen,
+> I have posted v7 with the support for firmware-name to be provided in the DT entry.
 
-What's surface? What's xbl? Bindings are for h/w devices, not drivers.
-
-Please send DT patches to the DT list. IOW, run get_maintainers.pl.
+Thanks. I didn't see it in my inbox. No Cc for me?
 
 >
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
-> ---
->  .../platform/microsoft/surface-xbl.yaml       | 37 +++++++++++++++++++
->  1 file changed, 37 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+> > It would also be nice to load a
+> > single firmware file instead of having to split the file into many pieces.
 >
-> diff --git a/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> new file mode 100644
-> index 000000000000..3d2771322e72
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> @@ -0,0 +1,37 @@
-> +# SPDX-License-Identifier: GPL-2.0
-
-Dual license please. Run checkpatch.pl as that will tell you this.
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/platform/microsoft/surface-xbl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Surface Extensible Bootloader for Microsoft Surface Duo
-> +
-> +maintainers:
-> +  - Jarrett Schultz <jaschultzMS@gmail.com>
-> +
-> +description: |
-> +  Exposes device information to user space.
-
-What does that mean?
-
-> +
-> +allOf:
-> +  - $ref: /schemas/platform/microsoft/surface-xbl.c#
-
-You have a C file with json-schema?
-
-> +
-> +properties:
-> +  compatible:
-> +    const: microsoft,sm8150-surface-duo-xbl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +unevaluatedProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +examples:
-> +  - |
-> +    xbl@146bfa94 {
-> +      compatible = "microsoft,sm8150-surface-duo-xbl";
-> +      reg = <0x00 0x146bfa94 0x00 0x100>;
-
-That's an odd address. Is this part of some other block?
-
-> +    };
-> --
-> 2.25.1
+> This would require lot of changes and lot of code duplication from request firmware.
+> Also the base ath11k firmware files have been posted as split files.
 >
+
+Other firmwares have done it so it seems technically possible. So
+nothing is preventing it?
