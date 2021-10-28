@@ -2,104 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9F8443DBC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 09:15:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3662A43DBC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 09:15:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbhJ1HR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 03:17:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:15095 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbhJ1HR6 (ORCPT
+        id S229868AbhJ1HRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 03:17:52 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:17319 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229887AbhJ1HRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 03:17:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635405332; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=QcsIIY4LkdbLo19IWuo9zMQF3oHVFXoolgXrnh06JiY=;
- b=RZaaw4Y6PEM12sJrHOhFEKxdWt7Uy9LqQFKkaDPTLugXU7J3LVxyMI7IwPw7zAD3dbm5Ey1p
- IiarDvFjMTAEMT9mMdgUtHfH+r25KoOyxEMJQ3i8HTH9mMM7+k0z58fh+2T7OZbbMBb67aZq
- AhXtieZy4e7rPWz1oBT8LSrEIJU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 617a4df6ff3eb667a78d012b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Oct 2021 07:15:02
- GMT
-Sender: tjiang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9C4CCC43460; Thu, 28 Oct 2021 07:15:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tjiang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EA3D9C4338F;
-        Thu, 28 Oct 2021 07:15:01 +0000 (UTC)
+        Thu, 28 Oct 2021 03:17:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1635405322;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=f2bKLmpMEPwYsfINUl0KzXLR9UAhc4TXoM5ZG4bME2A=;
+    b=oaE3hHtnQzgulJTpHvs6GNEdmIG6FV3t+WBxuHuffkkR0VgzCNG2WZRXxevqswwaFO
+    S6IWcvbCTPQ2UkzssrFts9yINC1GIBHW1Vai/ARJv6kMbsw0v9TiUmREBLANpiZXYmQc
+    gDcOq6naxCCSPCGHVpvHSWyQF9vGppktCOJCf/dMQPEPx7/afIDOv/KeANK0ezP7Jycv
+    poVjjphWWi9GMbpAibCe0h9CCzU6qqJFhvdlVA2nEC//X5vMschZwW+608AaVcJTfxd1
+    2Wtj78P6aVndVixy2cRLkaHqYuIvT2h25g8WHosc/XrXq099KsFhOgwZ9r0eA+9NIE3j
+    pA/A==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrKw7/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.34.1 AUTH)
+    with ESMTPSA id 207811x9S7FL9NZ
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 28 Oct 2021 09:15:21 +0200 (CEST)
+Date:   Thu, 28 Oct 2021 09:15:14 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, dmaengine@vger.kernel.org,
+        devicetree <devicetree@vger.kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v3 0/2] dmaengine: qcom: bam_dma: Add "powered remotely"
+ mode for BAM-DMUX
+Message-ID: <YXpOAlTO80A4tZcT@gerhold.net>
+References: <20211018102421.19848-1-stephan@gerhold.net>
+ <YXZFGFH5lxDKeenw@matsya>
+ <YXZL655lHukjar/x@gerhold.net>
+ <CAH=2NtzfTqkwZum3owipC0kHvX2BMRssqRFmFAXPFkXK_SmN1w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 28 Oct 2021 15:15:01 +0800
-From:   tjiang@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: Re: [PATCH v3] Bluetooth: btusb: Add support for variant WCN6855 by
- using different nvm
-In-Reply-To: <YXl3S7TT30PFfyB8@google.com>
-References: <1d19afff955cdc8d47582297a26246d9@codeaurora.org>
- <YXgrwKUZwUWuWfG4@google.com>
- <fe118b60df5881b0e9938f57aae6f87e@codeaurora.org>
- <YXl3S7TT30PFfyB8@google.com>
-Message-ID: <a04518bd30761a2fecfbee8f435d4daf@codeaurora.org>
-X-Sender: tjiang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH=2NtzfTqkwZum3owipC0kHvX2BMRssqRFmFAXPFkXK_SmN1w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Matthias for the comments.
+Hi Bhupesh,
 
-the conclusion is that I can continue to use this patch , right ? thank 
-you.
-
-regards.
-tim
-
-
-On 2021-10-27 23:59, Matthias Kaehlcke wrote:
-> On Wed, Oct 27, 2021 at 02:12:07PM +0800, tjiang@codeaurora.org wrote:
->> Hi Matthias:
->>   the previous patch is submitted by zijun , as he is not working on 
->> this
->> project, I take over his job, so can we assume abandon the previous 
->> patch,
->> using my new patch ? thank you.
->> regards.
+On Thu, Oct 28, 2021 at 12:20:35PM +0530, Bhupesh Sharma wrote:
+> On Mon, 25 Oct 2021 at 11:47, Stephan Gerhold <stephan@gerhold.net> wrote:
+> >
+> > On Mon, Oct 25, 2021 at 11:18:08AM +0530, Vinod Koul wrote:
+> > > On 18-10-21, 12:24, Stephan Gerhold wrote:
+> > > > The BAM Data Multiplexer (BAM-DMUX) provides access to the network data
+> > > > channels of modems integrated into many older Qualcomm SoCs, e.g.
+> > > > Qualcomm MSM8916 or MSM8974.
+> > > >
+> > > > Shortly said, BAM-DMUX is built using a simple protocol layer on top of
+> > > > a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
+> > > > a special mode where the modem/remote side is responsible for powering
+> > > > on the BAM when needed but we are responsible to initialize it.
+> > > > The BAM is powered off when unneeded by coordinating power control
+> > > > via bidirectional interrupts from the BAM-DMUX driver.
+> > > >
+> > > > This series adds one possible solution for handling the "powered remotely"
+> > > > mode in the bam_dma driver.
+> > >
+> > > This looks good me me. Bhupesh/Stephan what was the conclusion on the
+> > > the discussion you folks had?
+> > >
+> >
+> > Basically I said I would wait if you still want to take this for 5.16. :)
+> > There is a conflict with the DT schema conversion in Bhupesh's series,
+> > but it's trivial to solve no matter which of the patches is applied first.
+> >
+> > Since Bhupesh still needs to send v5 as far as I can tell (and has a
+> > much larger series overall), I think it's fine to apply this one first.
+> >
+> > Bhupesh, you can just copy-paste this below qcom,controlled-remotely
+> > in your DT schema if Vinod applies this patch first:
+> >
+> >   qcom,powered-remotely:
+> >     $ref: /schemas/types.yaml#/definitions/flag
+> >     description:
+> >       Indicates that the bam is powered up by a remote processor
+> >       but must be initialized by the local processor.
 > 
-> Your patch is clearly based on zijun's one, it even has the same 
-> subject. A
-> change of authorship shouldn't result in resetting the version number, 
-> it's
-> still the same patch/series. You can always add a 'Co-developed-by:' 
-> tag to
-> indicate that someone else contributed to a patch, or use a 'From:' tag 
-> if
-> you only made minor changes on top of someone else's work.
-> 
-> Not sure how to proceed best with the version number, especially since 
-> there
-> are already 3 versions of the 'new' patch. Either option can create 
-> confusion,
-> I guess you can continue with the new scheme, it seems the patch is 
-> almost
-> ready to land anyway.
+> Sure, I can respin my v5 with 'qcom,powered-remotely' property added,
+> if this series gets applied first.
+
+Thanks!
+
+> Can I add you S-o-B to the same?
+
+I literally just copy-pasted this from "qcom,controlled-remotely" in
+your patch with the description from my dt-bindings change that already
+has my S-o-B. I don't think it is necessary to add my S-o-B to your
+patch as well just for this. :)
+
+Thanks,
+Stephan
