@@ -2,213 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F057B43F346
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:01:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3579F43F353
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:10:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbhJ1XEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 19:04:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
+        id S231393AbhJ1XNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 19:13:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbhJ1XED (ORCPT
+        with ESMTP id S230455AbhJ1XNF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 19:04:03 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D93D0C061745
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:01:35 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id a17-20020a4a6851000000b002b59bfbf669so2684176oof.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:01:35 -0700 (PDT)
+        Thu, 28 Oct 2021 19:13:05 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9B9C061570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:10:37 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id l16-20020a9d6a90000000b0054e7ab56f27so10865595otq.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:10:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=vTcTp/Wzid/SbgAPPesCpOnCVxJ0VeAUEDkb6KOgaAQ=;
-        b=buFHREiIhyVCaKVrvUR4qNi/kQcDjzdNRftJjpnCXXuf/uPqks9X+h3rIMVornbMa0
-         kt1IFHAb2OKeU2Er5wxoz1UcEdUCiIhrfwZodSQWupPeRhu7D4/njCZhX5L0GhSTexAi
-         Ag3Ael/OpwLkIoJbCr6o59l6EinZJeAmTvhGPboW16ApSqyzl0olOweNl7A7Vrmxbrqp
-         hlqgo2utYI1qLb4LGwdd7SBStsQjI9+vC6QGpBPMEf4D30DLwn0j6S5ImE4qPtAiyOXk
-         t4SqMRM46klvwi+IvxPabWKNZPr3VT69Pity5wKe6ICcRfFsb4AC6vqrG2UIdx5YtxXR
-         RHrw==
+        bh=BFSAzS7o9HlqBi5yBxBAasptrHGEYLBBAIVppOSx0zE=;
+        b=Ldz/2tMA9mEjSAT6YZFX6bVE8+AFjFwUdG/VRMnEffC1hkPWdXqY0OO0JUyhqrmuFD
+         y2c6vMgpQZk5OcL7FYhXrmOW6PzacNCev+jtjVEWcT5o6NtHLweTPTXIxj561R3KoW7g
+         m9l/57Ob8auaZ/Jr9HeY7YVoQXSqORo4aovRQaXx1PpfQ1etJiTQgVvWCI+1CM7DW3Q0
+         byw0z+xKukDVtb788ytfmBl7Y07wBqBUOVYbAo9dzrcpFQau8FYrL8thuM51QQmy1ixa
+         +bhnIknd8vOHMdzt8PFUBhDjDrIieYndwmARS+taUxMcrFfduXE0+TJjs1HrueGtvH9j
+         p2+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=vTcTp/Wzid/SbgAPPesCpOnCVxJ0VeAUEDkb6KOgaAQ=;
-        b=lNpuFTw/9GI5jPt4sEV2id0gfCinSvyM7NyzMbguNXYtJlB82Hp1WN7my1dOcyGT2w
-         I//cjmJoHEAzmDfQRa4/W9nZx05z4k5n/5mrXj0uOWxNbsZuDQM8bJ3Q/mkVPy2BSM3z
-         YguKpdjf8YR9zeleszPIJLAC+1Hln5LmOvjiuk/4skgtPf3nKu1QqBxp27kXbcjyyHNd
-         u9TOt4FgkQZC6Gw4sLfF2VSCLg8iqz+X2DRWbOcgpE10KFhzCAZLJ7RLvjsXwdrR/P84
-         PWlwdbtAaW8dUxwbvvTUfDEzjjdO2b8GcdqfzxuHQ5IeoXwTPv2XhNlnuyWSX9RkbtPC
-         yq9w==
-X-Gm-Message-State: AOAM532U8NOCvFqF+oJiw3MwD3q1bHefnxUC6B/Df2e5p54RJO5VCFj3
-        5QkHsf6Avzf/hJgke/i8g/lw8A==
-X-Google-Smtp-Source: ABdhPJxTdu3f3l/zvx+sGTC+t77mAT5Hsb7DrZPkM5Guh6tvYtJa3jh+3KHi3Adm4bWLuj+c2pDfNw==
-X-Received: by 2002:a4a:da09:: with SMTP id e9mr4071736oou.60.1635462095167;
-        Thu, 28 Oct 2021 16:01:35 -0700 (PDT)
+        bh=BFSAzS7o9HlqBi5yBxBAasptrHGEYLBBAIVppOSx0zE=;
+        b=D6sXCQ68RpKC8H4pex8Zl2O0v22wFsHudfp+ngc6qAuKk+EsGYXGU68TS8OjrkGd0T
+         gFSeptD5ZElvFXjchSS1VDQyuWgP7gIwM+mXEqnHVCgwoDUGNXP+Gxp4g5UaStC/fSAn
+         vTBXpf3vKS8jTU0plWwx2aKCYJ8JyFye2bS65ynBU5OuZPoRrXLVryZlVtPhpcXsiTZP
+         55gjHUw4ToOMcAuz+CSXqAjDA3OYtX3xl4u/KdRj1OkT1pStqUAGdherTCnxpwvGx4Wc
+         Gu5g4SoerlFNZmDcF/GL80ICcM2VJwe+KgGeWcgWCkrdlAzbNlnhb07FxyKOXKg4rdHF
+         SQcQ==
+X-Gm-Message-State: AOAM530fn9YpnkA8m/psIXZUnnMgcHTDTp175kXzt/aXU+ShGtvKWVDh
+        Fd8CZqJILmvEyYXz1wewmVDFXSef1Y97UjGn
+X-Google-Smtp-Source: ABdhPJxuje1Z/hxzHYMVytECAJruwdjHNvR78MomsEqPj3n+UziSgWFIiXTDZuFc9NuZmH7OuJAq0Q==
+X-Received: by 2002:a05:6830:23a6:: with SMTP id m6mr5703798ots.38.1635462636964;
+        Thu, 28 Oct 2021 16:10:36 -0700 (PDT)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 38sm1409481oti.13.2021.10.28.16.01.34
+        by smtp.gmail.com with ESMTPSA id v9sm1467851oth.62.2021.10.28.16.10.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 16:01:34 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 16:03:23 -0700
+        Thu, 28 Oct 2021 16:10:36 -0700 (PDT)
+Date:   Thu, 28 Oct 2021 16:12:27 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        dianders@chromium.org
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: sc7280: Add egpio support
-Message-ID: <YXssOzkqUHPH0ZQZ@ripper>
-References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
- <1635250056-20274-2-git-send-email-rnayak@codeaurora.org>
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        thara.gopinath@linaro.org, agross@kernel.org
+Subject: Re: [PATCH v2 1/5] arch_topology: Introduce thermal pressure update
+ function
+Message-ID: <YXsuW+wOWoJzgMAA@ripper>
+References: <20211015144550.23719-1-lukasz.luba@arm.com>
+ <20211015144550.23719-2-lukasz.luba@arm.com>
+ <YXmdyeOmNS2x3K0W@ripper>
+ <a75b08d9-cf0f-b132-b07e-878b10d133a2@arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1635250056-20274-2-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <a75b08d9-cf0f-b132-b07e-878b10d133a2@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 26 Oct 05:07 PDT 2021, Rajendra Nayak wrote:
+On Thu 28 Oct 00:16 PDT 2021, Lukasz Luba wrote:
 
-> sc7280 supports the egpio feature, GPIOs ranging from 144 to 174
-> (31 GPIOs) support it, we define gpio_func to 9, which
-> is an unused function for all these pins on sc7280.
+> 
+> 
+> On 10/27/21 7:43 PM, Bjorn Andersson wrote:
+> > On Fri 15 Oct 07:45 PDT 2021, Lukasz Luba wrote:
+> > > diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
+> > [..]
+> > > +/**
+> > > + * topology_thermal_pressure_update() - Update thermal pressure for CPUs
+> > > + * @cpus	: The related CPUs for which capacity has been reduced
+> > > + * @capped_freq	: The maximum allowed frequency that CPUs can run at
+> > 
+> > I know this matches what I see in e.g. the Qualcomm cpufreq hw driver,
+> > but in what cases will @capped_freq differ from
+> > cpufreq_get_hw_max_freq(cpumask_first(cpus))?
+> 
+> The @capped_freq is the maximum allowed frequency value due to
+> thermal reasons, which will always be lower or equal to the value
+> returned by cpufreq_get_hw_max_freq()
+> (effectively: 'policy->cpuinfo.max_freq').
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Read patch 3 and 4 again and now this makes sense to me.
 
-
-Thanks for reworking these patches, I like the end result.
-
-Regards,
+Thanks,
 Bjorn
 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-sc7280.c | 75 ++++++++++++++++++++---------------
->  1 file changed, 44 insertions(+), 31 deletions(-)
+> We limit the frequency (and voltage) of CPU to reduce power (and heat)
+> in the passive cooling system. That information is important to us,
+> because scheduler needs to know how fast the CPU can go. It cannot
+> assume that the speed is always 'policy->cpuinfo.max_freq'. Often
+> it's less then that at heavy load or GPU heavy load (the same SoC).
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> index 9017ede..31df55c 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> @@ -43,6 +43,8 @@
->  		.mux_bit = 2,			\
->  		.pull_bit = 0,			\
->  		.drv_bit = 6,			\
-> +		.egpio_enable = 12,		\
-> +		.egpio_present = 11,		\
->  		.oe_bit = 9,			\
->  		.in_bit = 0,			\
->  		.out_bit = 1,			\
-> @@ -520,6 +522,7 @@ enum sc7280_functions {
->  	msm_mux_dp_lcd,
->  	msm_mux_edp_hot,
->  	msm_mux_edp_lcd,
-> +	msm_mux_egpio,
->  	msm_mux_gcc_gp1,
->  	msm_mux_gcc_gp2,
->  	msm_mux_gcc_gp3,
-> @@ -658,6 +661,14 @@ static const char * const gpio_groups[] = {
->  	"gpio165", "gpio166", "gpio167", "gpio168", "gpio169", "gpio170",
->  	"gpio171", "gpio172", "gpio173", "gpio174",
->  };
-> +static const char * const egpio_groups[] = {
-> +	"gpio144", "gpio145", "gpio146", "gpio147", "gpio148", "gpio149",
-> +	"gpio150", "gpio151", "gpio152", "gpio153", "gpio154", "gpio155",
-> +	"gpio156", "gpio157", "gpio158", "gpio159", "gpio160", "gpio161",
-> +	"gpio162", "gpio163", "gpio164", "gpio165", "gpio166", "gpio167",
-> +	"gpio168", "gpio169", "gpio170", "gpio171", "gpio172", "gpio173",
-> +	"gpio174",
-> +};
->  static const char * const atest_char_groups[] = {
->  	"gpio81",
->  };
-> @@ -1150,6 +1161,7 @@ static const struct msm_function sc7280_functions[] = {
->  	FUNCTION(dp_lcd),
->  	FUNCTION(edp_hot),
->  	FUNCTION(edp_lcd),
-> +	FUNCTION(egpio),
->  	FUNCTION(gcc_gp1),
->  	FUNCTION(gcc_gp2),
->  	FUNCTION(gcc_gp3),
-> @@ -1408,37 +1420,37 @@ static const struct msm_pingroup sc7280_groups[] = {
->  	[141] = PINGROUP(141, _, _, _, _, _, _, _, _, _),
->  	[142] = PINGROUP(142, _, _, _, _, _, _, _, _, _),
->  	[143] = PINGROUP(143, _, _, _, _, _, _, _, _, _),
-> -	[144] = PINGROUP(144, _, _, _, _, _, _, _, _, _),
-> -	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, _),
-> -	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, _),
-> -	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, _),
-> -	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, _),
-> -	[149] = PINGROUP(149, _, _, _, _, _, _, _, _, _),
-> -	[150] = PINGROUP(150, qdss, _, _, _, _, _, _, _, _),
-> -	[151] = PINGROUP(151, qdss, _, _, _, _, _, _, _, _),
-> -	[152] = PINGROUP(152, qdss, _, _, _, _, _, _, _, _),
-> -	[153] = PINGROUP(153, qdss, _, _, _, _, _, _, _, _),
-> -	[154] = PINGROUP(154, _, _, _, _, _, _, _, _, _),
-> -	[155] = PINGROUP(155, _, _, _, _, _, _, _, _, _),
-> -	[156] = PINGROUP(156, qdss_cti, _, _, _, _, _, _, _, _),
-> -	[157] = PINGROUP(157, qdss_cti, _, _, _, _, _, _, _, _),
-> -	[158] = PINGROUP(158, _, _, _, _, _, _, _, _, _),
-> -	[159] = PINGROUP(159, _, _, _, _, _, _, _, _, _),
-> -	[160] = PINGROUP(160, _, _, _, _, _, _, _, _, _),
-> -	[161] = PINGROUP(161, _, _, _, _, _, _, _, _, _),
-> -	[162] = PINGROUP(162, _, _, _, _, _, _, _, _, _),
-> -	[163] = PINGROUP(163, _, _, _, _, _, _, _, _, _),
-> -	[164] = PINGROUP(164, _, _, _, _, _, _, _, _, _),
-> -	[165] = PINGROUP(165, qdss_cti, _, _, _, _, _, _, _, _),
-> -	[166] = PINGROUP(166, qdss_cti, _, _, _, _, _, _, _, _),
-> -	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, _),
-> -	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, _),
-> -	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, _),
-> -	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, _),
-> -	[171] = PINGROUP(171, qdss, _, _, _, _, _, _, _, _),
-> -	[172] = PINGROUP(172, qdss, _, _, _, _, _, _, _, _),
-> -	[173] = PINGROUP(173, qdss, _, _, _, _, _, _, _, _),
-> -	[174] = PINGROUP(174, qdss, _, _, _, _, _, _, _, _),
-> +	[144] = PINGROUP(144, _, _, _, _, _, _, _, _, egpio),
-> +	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, egpio),
-> +	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, egpio),
-> +	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, egpio),
-> +	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, egpio),
-> +	[149] = PINGROUP(149, _, _, _, _, _, _, _, _, egpio),
-> +	[150] = PINGROUP(150, qdss, _, _, _, _, _, _, _, egpio),
-> +	[151] = PINGROUP(151, qdss, _, _, _, _, _, _, _, egpio),
-> +	[152] = PINGROUP(152, qdss, _, _, _, _, _, _, _, egpio),
-> +	[153] = PINGROUP(153, qdss, _, _, _, _, _, _, _, egpio),
-> +	[154] = PINGROUP(154, _, _, _, _, _, _, _, _, egpio),
-> +	[155] = PINGROUP(155, _, _, _, _, _, _, _, _, egpio),
-> +	[156] = PINGROUP(156, qdss_cti, _, _, _, _, _, _, _, egpio),
-> +	[157] = PINGROUP(157, qdss_cti, _, _, _, _, _, _, _, egpio),
-> +	[158] = PINGROUP(158, _, _, _, _, _, _, _, _, egpio),
-> +	[159] = PINGROUP(159, _, _, _, _, _, _, _, _, egpio),
-> +	[160] = PINGROUP(160, _, _, _, _, _, _, _, _, egpio),
-> +	[161] = PINGROUP(161, _, _, _, _, _, _, _, _, egpio),
-> +	[162] = PINGROUP(162, _, _, _, _, _, _, _, _, egpio),
-> +	[163] = PINGROUP(163, _, _, _, _, _, _, _, _, egpio),
-> +	[164] = PINGROUP(164, _, _, _, _, _, _, _, _, egpio),
-> +	[165] = PINGROUP(165, qdss_cti, _, _, _, _, _, _, _, egpio),
-> +	[166] = PINGROUP(166, qdss_cti, _, _, _, _, _, _, _, egpio),
-> +	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, egpio),
-> +	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, egpio),
-> +	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, egpio),
-> +	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, egpio),
-> +	[171] = PINGROUP(171, qdss, _, _, _, _, _, _, _, egpio),
-> +	[172] = PINGROUP(172, qdss, _, _, _, _, _, _, _, egpio),
-> +	[173] = PINGROUP(173, qdss, _, _, _, _, _, _, _, egpio),
-> +	[174] = PINGROUP(174, qdss, _, _, _, _, _, _, _, egpio),
->  	[175] = UFS_RESET(ufs_reset, 0xbe000),
->  	[176] = SDC_QDSD_PINGROUP(sdc1_rclk, 0xb3004, 0, 6),
->  	[177] = SDC_QDSD_PINGROUP(sdc1_clk, 0xb3000, 13, 6),
-> @@ -1481,6 +1493,7 @@ static const struct msm_pinctrl_soc_data sc7280_pinctrl = {
->  	.ngpios = 176,
->  	.wakeirq_map = sc7280_pdc_map,
->  	.nwakeirq_map = ARRAY_SIZE(sc7280_pdc_map),
-> +	.egpio_func = 9,
->  };
->  
->  static int sc7280_pinctrl_probe(struct platform_device *pdev)
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+> Regards,
+> Lukasz
