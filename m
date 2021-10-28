@@ -2,85 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB86043F33A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:01:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E542D43F343
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 01:01:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbhJ1W5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 18:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34722 "EHLO
+        id S231510AbhJ1XDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 19:03:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231319AbhJ1W5u (ORCPT
+        with ESMTP id S231481AbhJ1XDB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 18:57:50 -0400
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A5DC061767
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:55:23 -0700 (PDT)
-Received: by mail-il1-x130.google.com with SMTP id w10so8609159ilc.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:55:23 -0700 (PDT)
+        Thu, 28 Oct 2021 19:03:01 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049CBC061570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:00:34 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id z126so10534886oiz.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 16:00:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=YIO8z6g5pnThmN6nY1IAWvuZN7+8+z/gyR0WIdP+6Nw=;
-        b=hmXjgoKYJzjjMMBsX9LnJxl/pAFVPf56QIHmBYftUTr7StooYQW7HSDt+rjq9ozQzr
-         70MTu3sgwn/pm/25Y62tLpZQqgbVWMArRKLBzlMXfYeuEBjp26SRu6Qv24ngPs/hn49F
-         JYTj3L2leuBCEPLbPSB7xfi4CTSY3fnmRMwUA=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=65adDYZK+vJThwwhpee2/9MrxFuS8APYICngTX1DB0s=;
+        b=oae5dTKtxGu2NToR+ozf+x63DzWhTgCYSjaT8t75vHruG8iqdS97M5yJsuwkrTQav2
+         gJG3hZJACb5/R2h4Uu5MqKHUdyI+77qO3b4Kbdl5bzZLo8VXve3XhwHNzOjCd2uz/rG4
+         52GFzHK+hDwYaQqLefCuonC/yNG8PuBJgCDQ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=YIO8z6g5pnThmN6nY1IAWvuZN7+8+z/gyR0WIdP+6Nw=;
-        b=cuD5kTExh0fb7Hi7MYpFhL1J+DDROWUDcFbm9IzERGeaAwUSjU1AvQGlHD7Qp6iHjK
-         KcJS2LRaGUcN4ltAyY0MCZ7mtz+5sR44hijOrtCZrZ6FGLEcfcDHkW5SAu0DuMeIDNu2
-         6hZyvHn3s/wsdhq4vLeg7PJqyNohqJlS9csL4cXoLV3Ne5ILWO33f+1jKZThSc2Zt0ju
-         fSeAbNH+7XoKqjhGSHGODg5bIoXRckVe1dSndVFy6R3Zn1rXzFIdSxegCKJz6s48SJPd
-         tIzsbXH5QSV/41ja67PmnDJ6XjOy9mRmWNrmHRCaEu1gx+STZnXkZBMSuS/VvBYKV/Op
-         Vd1w==
-X-Gm-Message-State: AOAM533l4pmTHCSVyea0i5EycdlOzEx0LT20dY0/t047u8chJ/eQV5GD
-        l9kiQa3CEYInRtVN+R6JOq5z+1/3n3DFEw==
-X-Google-Smtp-Source: ABdhPJw4ENdl1a2X5Wx/y/ZIzD53jgd6mY4fQeq8dbqRbhgpZH5gkTwivYLKBfKDe2oWgfOjG+IebA==
-X-Received: by 2002:a05:6e02:148b:: with SMTP id n11mr5066092ilk.230.1635461722507;
-        Thu, 28 Oct 2021 15:55:22 -0700 (PDT)
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com. [209.85.166.175])
-        by smtp.gmail.com with ESMTPSA id i1sm2339857iov.10.2021.10.28.15.55.21
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Oct 2021 15:55:21 -0700 (PDT)
-Received: by mail-il1-f175.google.com with SMTP id l7so8652232iln.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:55:21 -0700 (PDT)
-X-Received: by 2002:a05:6e02:1c21:: with SMTP id m1mr4940355ilh.165.1635461721219;
- Thu, 28 Oct 2021 15:55:21 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=65adDYZK+vJThwwhpee2/9MrxFuS8APYICngTX1DB0s=;
+        b=HCYAUzfPoxXv3Kfj4eFKCkbb5XEYe9Q5c0PcoV6WhEf8gycRuEOWjNn+wt3jdnqpH2
+         f3iYdldJBWnPCHREcZBL+PjeQYNg7V7t9F2XuAdUewoWbX1cqtfuMllgH/XBSfVq4uR3
+         euBop8+0jLmV6CDZ6GKjAte7Egvsh6sBxRUQ3mM5O0YhdEueydDmE5Ua0Pj8pD3eYkNw
+         SbAWKVWzXzAQpXAQaOjebh0V6urTi5e2pFTKd9GtYtZulYDwyufHagIZG7WR5oBdvXz6
+         QiS0sdBm9rKv7erv69xBbVn/R07zGILn3rlYFnkMh1EXkjm1Wmnj65h8Tnti4TL95qos
+         dxfw==
+X-Gm-Message-State: AOAM530ZVnMJWDvcmx2cTs5pl4wpfMH7V0KSG8dHFbiZ7npUFXepyCDM
+        7BPy6X0UbUWEjwWu7dphfEJ3stMd+S86LIMGNHQv7w==
+X-Google-Smtp-Source: ABdhPJz171p5Os7DrFgYldIZYVeYxanaYEOB+mBpsSG31OWLUFDDFkXoCtzg6VJyLnG1h/+IJIDczYxp+lYyreZs/eE=
+X-Received: by 2002:a05:6808:23c2:: with SMTP id bq2mr11188025oib.32.1635462033433;
+ Thu, 28 Oct 2021 16:00:33 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 Oct 2021 16:00:32 -0700
 MIME-Version: 1.0
+In-Reply-To: <20211028151022.1.Ie56f55924f5c7706fe3194e710bbef6fdb8b5bc6@changeid>
 References: <20211028151022.1.Ie56f55924f5c7706fe3194e710bbef6fdb8b5bc6@changeid>
- <20211028151022.2.Ib9070172c8173d8e44c10352f68f2f507a151782@changeid>
-In-Reply-To: <20211028151022.2.Ib9070172c8173d8e44c10352f68f2f507a151782@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 28 Oct 2021 15:55:09 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UK0KABr5NchZgrjSFa+7G7Ez_JPcgCVnsN0K1q++O-AA@mail.gmail.com>
-Message-ID: <CAD=FV=UK0KABr5NchZgrjSFa+7G7Ez_JPcgCVnsN0K1q++O-AA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: sc7180: Support Homestar rev4
-To:     Philip Chen <philipchen@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 28 Oct 2021 16:00:32 -0700
+Message-ID: <CAE-0n50XwcLBmOBaRiF-qW=R-HfanjviteEzmMDbDuPJruX65g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: sc7180: Support Lazor/Limozeen rev9
+To:     LKML <linux-kernel@vger.kernel.org>,
+        Philip Chen <philipchen@chromium.org>
+Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Thu, Oct 28, 2021 at 3:11 PM Philip Chen <philipchen@chromium.org> wrote:
+Quoting Philip Chen (2021-10-28 15:11:31)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> index 8b79fbb75756..69666f92176a 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+> @@ -5,13 +5,10 @@
+>   * Copyright 2020 Google LLC.
+>   */
 >
-> Support Homestar rev4 board where Parade ps8640 is added as the
-> second source edp bridge.
+> -#include "sc7180.dtsi"
+> -
+>  ap_ec_spi: &spi6 {};
+>  ap_h1_spi: &spi0 {};
 
-Similar suggestion about mentioning why the include of "sc7180.dtsi"
-moved around, but otherwise looks good.
+Can we get rid of this node swap now? I think it is only around because
+early on we swapped the EC and H1 spi interfaces and then we had to swap
+it every time we made a new board.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+$ git grep ap_ec_spi
+arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi:ap_ec_spi: &spi6 {};
+arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi:ap_ec_spi: &spi6 {};
+arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi:ap_ec_spi: &spi6 {};
+arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts:ap_ec_spi: &spi6 {};
+
+It feels like we'd be better off leaving that quirk in trogdor-r0, which
+conveniently isn't upstream, and then relabel the spi nodes in
+sc7180-trogdor.dtsi now. Otherwise I look at this and have to remember
+that whenever this dtsi file is included, we've already included the
+sc7180.dtsi file before it, so that the relabel actually works.
+
+>
+>  #include "sc7180-trogdor.dtsi"
+> -#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+>
+>  &ap_sar_sensor {
+>         semtech,cs0-ground;
