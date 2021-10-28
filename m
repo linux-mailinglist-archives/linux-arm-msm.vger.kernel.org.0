@@ -2,103 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6EA943D773
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 01:23:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9CA043D7E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 02:01:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbhJ0X0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 19:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
+        id S229508AbhJ1AEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 20:04:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229474AbhJ0XZ6 (ORCPT
+        with ESMTP id S229474AbhJ1AET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 19:25:58 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5963C061767
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:23:31 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id d3so6791966wrh.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 16:23:31 -0700 (PDT)
+        Wed, 27 Oct 2021 20:04:19 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E194C061745
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 17:01:53 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 188so7551389ljj.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 17:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=F1kzwP0JYJEJZtRxZX6aGDTnXu7MfQJRi7LeHOrAvTM=;
-        b=L6OkokghhCoD7PH2pbu4qrnD1/JZBiFujSS4Me9HOY68fZDOkoF53enf+xZiurYxyt
-         Cjw4CdK+lXZAOfkPbDKWUisC4E/pOebsGzuaGAABkPzW1PAdvBFP7MAsXyMmygtEG8LI
-         EfCDfcm0s0s1L0eh2aD3IlFNttKObqOoD/KwedlJYfCBwEBr/ukPqbE1l+4FP+RDeqqB
-         SRKKg3nmCX93AkvOV5cp5Ld7sh/WLJhdsjPkZbZAmzcktXiY+P6Hx3EKP56Ys9eqTJJX
-         VEZRIbhaH5vjG+w6RYSQKB/bnzyLDTXwWCPsppKMkyWlgyGve9Qby5PGIqcTjZ1vR0hb
-         yIDA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uqHiZAh9153nwS+DodprExoTASZ+7YRb3/+XlZxYLIE=;
+        b=uDQ9r6kZiDALGD4eETvKi+OF+Z+JRrO7Ta/eyWLuqzAi1N5S57vey4fLz9MQ7srH01
+         AwA+AwCHxpONEVd93TX/qLMSZqLjLEw+o9DqzKxlM5S/8A6AIbGoeEiwfj96uIt+TLym
+         Y7+IUAhZP4koHDaPoCwyiPWKSLlTGf6ALXjoz4Gif4DhiWVWFBwkY1VXlz9/PohF6yoj
+         PmQlvJs0q+xoifPkDqmQwRKZvvE4bmYpw4YaHJVmEzFleF73zcNL/RWmekWsy1OgHv6M
+         isOFzGkRO3cbxql94FjuVzkUeBh5KAhq0P7OCqN9vXBpi8ZDv3n20rMnVboST+pWPaUC
+         INiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=F1kzwP0JYJEJZtRxZX6aGDTnXu7MfQJRi7LeHOrAvTM=;
-        b=s4Jg2wm9+TILJT7sV6FYKjbiIoVPYIJ75tW0G6HYMYcSwFwSr3Bup5yexvEcMeV/nA
-         D/8IXFacPFFVOD0dGmCww7UfkvD3t2Gigpbwssm17gBMfL5Asfn3CC45lq9N3TFBy9Gf
-         nRtdALfLrWm1+aSZKXEg3QyQ1KvzMw/6rBSTk32v8B4N6jIxMxp8JUWaoq6e9znl52FY
-         pdgxSBfbAHGF21jC/NqWuvSs9kJjKwaSLO/SE/jTRJotiE9VM8Z9GpawFjlodcbTf3hB
-         evBFBPA+9irJqYrtyKgofRi/Kk9YzRJ4GITflOA0KkJvZVeG//XtXi/ziaoXBEv2hWDl
-         AQ4Q==
-X-Gm-Message-State: AOAM531Kgb1mJkMVWDah+83PPvePXaMlYs2QsqRukgBsEnLfWEhkUgk6
-        OuiGlmhNwASmO1aRj5FFshmOPQ==
-X-Google-Smtp-Source: ABdhPJzzQOJXPQuyD2scAWy3q9+bqCDpU37w7gjHiBQag+DdVWqKeoZWpbmK1/19r9nG46yaBo5IJg==
-X-Received: by 2002:a05:6000:1866:: with SMTP id d6mr867656wri.226.1635377010436;
-        Wed, 27 Oct 2021 16:23:30 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o17sm4937435wmq.11.2021.10.27.16.23.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 16:23:29 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
-        wcn36xx@lists.infradead.org
-Cc:     linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
-        benl@squareup.com, bryan.odonoghue@linaro.org
-Subject: [PATCH] wcn36xx: Indicate beacon not connection loss on MISSED_BEACON_IND
-Date:   Thu, 28 Oct 2021 00:25:29 +0100
-Message-Id: <20211027232529.657764-1-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uqHiZAh9153nwS+DodprExoTASZ+7YRb3/+XlZxYLIE=;
+        b=6yoGEhNjHxNtFO7/p8HN+Hq9AdcjlO/1xY7vL1K0F19fL7/0fAFRrUp71gCYyi8adI
+         Oczm3gxVnJBKGEZYsI2KPE9dnP39DXargH34igTSeM8KyNVgFVAhnFhHw6ai79DdCx0J
+         LSjg8W3jktzQ/sjrAx6+eSWaRtPACHtB6HnnV6Ty4logHuNT7UOonXAK53+PtDQ87hrC
+         Wt0XepZ29pXGrIP+XBxJBGaqIgaPjcafqo/e04efhI3CDkFWjItyKkQS3YS8o8SDXo23
+         yKRwyap25pTWCF/tYkjxSxHf7K5b89Cd6+CPzW1r3oy+zLkt/Rtz5b8CEr2N9xK3+m/n
+         Sgpg==
+X-Gm-Message-State: AOAM532HOWMih98EewRziHFqq5NW7UMOTMCQnxcnUHTKc9bHqTtNvgUq
+        /mfWlbktdu4y96TRr6mmRyLBhqaVvldUmOfTKKs9qQ==
+X-Google-Smtp-Source: ABdhPJzUb8Oe3WNE2P7KCn5W7pI7aWmRDIg72+6F/Q8l+7E0d5UFfH0toa7VlbWtqBGVBCspe0x7tehPVJHDYenJX0Q=
+X-Received: by 2002:a05:651c:389:: with SMTP id e9mr1101224ljp.61.1635379311380;
+ Wed, 27 Oct 2021 17:01:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+In-Reply-To: <20211025144345.267107-1-tadeusz.struk@linaro.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Wed, 27 Oct 2021 17:01:39 -0700
+Message-ID: <CALAqxLXjh9o925G9smW+uwWqKDarsvrBuzr+UL1CsQc4m7W+oQ@mail.gmail.com>
+Subject: Re: [PATCH] media: venus: Synchronize probe() between venus_core and enc/dec
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Firmware can trigger a missed beacon indication, this is not the same as a
-lost signal.
+On Mon, Oct 25, 2021 at 7:44 AM Tadeusz Struk <tadeusz.struk@linaro.org> wrote:
+>
+> Venus video encode/decode hardware driver consists of three modules.
+> The parent module venus-core, and two sub modules venus-enc and venus-dec.
+> The venus-core module allocates a common structure that is used by the
+> enc/dec modules, loads the firmware, and performs some common hardware
+> initialization. Since the three modules are loaded one after the other,
+> and their probe functions can run in parallel it is possible that
+> the venc_probe and vdec_probe functions can finish before the core
+> venus_probe function, which then can fail when, for example it
+> fails to load the firmware. In this case the subsequent call to venc_open
+> causes an Oops as it tries to dereference already uninitialized structures
+> through dev->parent and the system crashes in __pm_runtime_resume() as in
+> the trace below:
+>
+> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+> [   26.290326][  T485] Call trace:
+> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+> [   26.290335][  T485]  v4l2_open+0x184/0x294
+> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
+> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
+> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
+> [   26.290352][  T485]  do_filp_open+0xb8/0x168
+> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+> [   26.290359][  T485]  invoke_syscall+0x60/0x170
+> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
+> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+>
+> This can be fixed by synchronizing the three probe functions and
+> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+> returns success.
+>
+> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
 
-Flag to Linux the missed beacon and let the WiFi stack decide for itself if
-the link is up or down by sending its own probe to determine this.
 
-We should only be signalling the link is lost when the firmware indicates
+Hey Tadeusz
+  Thanks so much for sending this out, I definitely would like to see
+these crashes sorted!
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/net/wireless/ath/wcn36xx/smd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Unfortunately this patch causes some odd behavior when I use it with a
+modular config.  The display does not start up and trying to reboot
+the board ends up with it hanging instead of rebooting.
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 599cb220b150e..aee4123035d71 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2647,7 +2647,7 @@ static int wcn36xx_smd_missed_beacon_ind(struct wcn36xx *wcn,
- 			wcn36xx_dbg(WCN36XX_DBG_HAL, "beacon missed bss_index %d\n",
- 				    tmp->bss_index);
- 			vif = wcn36xx_priv_to_vif(tmp);
--			ieee80211_connection_loss(vif);
-+			ieee80211_beacon_loss(vif);
- 		}
- 		return 0;
- 	}
-@@ -2662,7 +2662,7 @@ static int wcn36xx_smd_missed_beacon_ind(struct wcn36xx *wcn,
- 			wcn36xx_dbg(WCN36XX_DBG_HAL, "beacon missed bss_index %d\n",
- 				    rsp->bss_index);
- 			vif = wcn36xx_priv_to_vif(tmp);
--			ieee80211_connection_loss(vif);
-+			ieee80211_beacon_loss(vif);
- 			return 0;
- 		}
- 	}
--- 
-2.33.0
+And booting with this patch in my non-modular config, it just seems to
+get stuck during bootup (I suspect waiting on firmware that's not yet
+mounted?).
 
+I've got to run right now, but I'll try to help debug this down further.
+
+thanks
+-john
