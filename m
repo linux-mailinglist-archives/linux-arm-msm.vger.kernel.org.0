@@ -2,448 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97B3043DCD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 10:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6390243DD3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 10:58:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhJ1IQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 04:16:48 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:23940 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230100AbhJ1IQs (ORCPT
+        id S229987AbhJ1JBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 05:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39974 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229877AbhJ1JA7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 04:16:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635408861; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=GpXPC/18yDkU/LWsLURfMWstQdAZ8ODrJ689zcjar+Y=; b=is3gKj9dvGqgwFhW0facpt6PJMouJTgj7cUjlLwVG8iZ39QCogSLQolWEtqoDkpcRQWyPRgB
- GVoRdB5xT63U3w5NDc9ssc1TQ28ezuJ+ZGgM38tMNJxg3dNXdramvesBNilJyjgO+dyI0Y/J
- pEy8z5lVr6PlRspInP2WMUFf5TE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 617a5bd1648aeeca5ce185cc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Oct 2021 08:14:09
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 372D7C4360C; Thu, 28 Oct 2021 08:14:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2534C43617;
-        Thu, 28 Oct 2021 08:14:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A2534C43617
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
-        mathieu.poirier@linaro.org, robh+dt@kernel.org,
-        p.zabel@pengutronix.de
-Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
-        mpubbise@codeaurora.org, kuabhs@chromium.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v7 3/3] remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
-Date:   Thu, 28 Oct 2021 13:43:37 +0530
-Message-Id: <1635408817-14426-4-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1635408817-14426-1-git-send-email-pillair@codeaurora.org>
-References: <1635408817-14426-1-git-send-email-pillair@codeaurora.org>
+        Thu, 28 Oct 2021 05:00:59 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB47C061570;
+        Thu, 28 Oct 2021 01:58:32 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 82-20020a1c0055000000b0032ccc3ad5c1so6702412wma.2;
+        Thu, 28 Oct 2021 01:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8pRnJQmmB+/kCdjQaACOoqogylSvktqG3v7tsX861XU=;
+        b=hQr+RlB7nQ0kBfkch66CVzLGjeTDfB3+Y0hgwSAS2sIF7Etfjcn1XcPfLlpIGUHMg2
+         ypErUzIrTp2LgbVFx1p0RhBKHqX4iSF0rouLa5lDo9WLKNJu5AZk0uauZWo/LjxYVWAW
+         aSMx3vpPwRqidL6Xl4o1ByaNIE8eaf8bv2KzlC0APlc21nIIu6d5wba1ZN3krvZY4MD1
+         gggPyRk+vDHQ5Y+S265L1eTwGOQaVUykfdsVPiEXgwTGPROcAdj3Q3kpqW4RqfMEDxcq
+         vt9x97Bck2Zw8CGbRYDnZp3YcQgWD0+At0VlfPOEj8Pjs6MGvRQUd0a3A+7SmC4qCIFU
+         DPJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8pRnJQmmB+/kCdjQaACOoqogylSvktqG3v7tsX861XU=;
+        b=ZKjlvhpk5eOSZBi1nrOTAkuHO5v1kzd347ce45LglcyHXLu+GQj5zntJ/G95BO0u2x
+         AcVJrmeiwL93pW1XPZ4JoRRbAPXWjlWArTfihqQ1lIV9wYCGhirvdCVF22O6HwLvi75f
+         AvAi3Ty6dLLf1+7+hBc9mvFPKmfi1PoLaGQ9FbzhazbMXgUtKw2we/jqsAzpuEqpGBx9
+         n7EIooOnS6kQbEVkwUftDwXF4lLGOqYfzGhE9iyAjI4gmzVhIrsQqO5FN4nQfm9SrNvz
+         rFRZAhURTU7n8NUvxLMPuGmuzuAjCObU9sHmXNruJopsAEVC/LtIPmWCxv2RW3ZKUDbp
+         M8XQ==
+X-Gm-Message-State: AOAM5320SGbQRI1IfdxD8CNpQsPhyiqZ8cAhC3Be2vrjc+lX5in2t/pk
+        VSsMByQN++j4YAHwNsy7fCQ=
+X-Google-Smtp-Source: ABdhPJz8YhMDtgUIgGgUYWl+alCbM4WTONsbnjfCXo4Ut5lcjRZxATOVrz1OmZRT4kcVrUlDv3UamA==
+X-Received: by 2002:a7b:cd9a:: with SMTP id y26mr11110448wmj.107.1635411511382;
+        Thu, 28 Oct 2021 01:58:31 -0700 (PDT)
+Received: from abel.fritz.box (p5b0ea1b5.dip0.t-ipconnect.de. [91.14.161.181])
+        by smtp.gmail.com with ESMTPSA id k22sm2412143wrd.59.2021.10.28.01.58.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Oct 2021 01:58:30 -0700 (PDT)
+From:   "=?UTF-8?q?Christian=20K=C3=B6nig?=" 
+        <ckoenig.leichtzumerken@gmail.com>
+X-Google-Original-From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+To:     dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org
+Cc:     etnaviv@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org
+Subject: [PATCH 1/4] dma-buf: add dma_fence_describe and dma_resv_describe
+Date:   Thu, 28 Oct 2021 10:58:26 +0200
+Message-Id: <20211028085829.1726-1-christian.koenig@amd.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for PIL loading of WPSS processor for SC7280
-- WPSS boot will be requested by the wifi driver and hence
-  disable auto-boot for WPSS.
-- Add a separate shutdown sequence handler for WPSS.
-- Add multiple power-domain voting support
-- Parse firmware-name from dtsi entry
+Add functions to dump dma_fence and dma_resv objects into a seq_file and
+use them for printing the debugfs informations.
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 219 +++++++++++++++++++++++++++++++++---
- 1 file changed, 203 insertions(+), 16 deletions(-)
+ drivers/dma-buf/dma-buf.c   | 11 +----------
+ drivers/dma-buf/dma-fence.c | 16 ++++++++++++++++
+ drivers/dma-buf/dma-resv.c  | 23 +++++++++++++++++++++++
+ include/linux/dma-fence.h   |  1 +
+ include/linux/dma-resv.h    |  1 +
+ 5 files changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 098362e6..7d07e79 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -32,6 +32,7 @@
- 
- /* time out value */
- #define ACK_TIMEOUT			1000
-+#define ACK_TIMEOUT_US			1000000
- #define BOOT_FSM_TIMEOUT		10000
- /* mask values */
- #define EVB_MASK			GENMASK(27, 4)
-@@ -51,6 +52,8 @@
- #define QDSP6SS_CORE_CBCR	0x20
- #define QDSP6SS_SLEEP_CBCR	0x3c
- 
-+#define QCOM_Q6V5_RPROC_PROXY_PD_MAX	3
-+
- struct adsp_pil_data {
- 	int crash_reason_smem;
- 	const char *firmware_name;
-@@ -58,9 +61,13 @@ struct adsp_pil_data {
- 	const char *ssr_name;
- 	const char *sysmon_name;
- 	int ssctl_id;
-+	bool is_wpss;
-+	bool auto_boot;
- 
- 	const char **clk_ids;
- 	int num_clks;
-+	const char **proxy_pd_names;
-+	const char *load_state;
- };
- 
- struct qcom_adsp {
-@@ -93,11 +100,143 @@ struct qcom_adsp {
- 	void *mem_region;
- 	size_t mem_size;
- 
-+	struct device *proxy_pds[QCOM_Q6V5_RPROC_PROXY_PD_MAX];
-+	int proxy_pd_count;
-+
- 	struct qcom_rproc_glink glink_subdev;
- 	struct qcom_rproc_ssr ssr_subdev;
- 	struct qcom_sysmon *sysmon;
-+
-+	int (*shutdown)(struct qcom_adsp *adsp);
- };
- 
-+static int qcom_rproc_pds_attach(struct device *dev, struct device **devs,
-+				 const char **pd_names)
-+{
-+	size_t num_pds = 0;
-+	int ret;
-+	int i;
-+
-+	if (!pd_names)
-+		return 0;
-+
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		devs[0] = dev;
-+		pm_runtime_enable(dev);
-+		return 1;
-+	}
-+
-+	while (pd_names[num_pds])
-+		num_pds++;
-+
-+	for (i = 0; i < num_pds; i++) {
-+		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
-+		if (IS_ERR_OR_NULL(devs[i])) {
-+			ret = PTR_ERR(devs[i]) ? : -ENODATA;
-+			goto unroll_attach;
-+		}
-+	}
-+
-+	return num_pds;
-+
-+unroll_attach:
-+	for (i--; i >= 0; i--)
-+		dev_pm_domain_detach(devs[i], false);
-+
-+	return ret;
-+}
-+
-+static void qcom_rproc_pds_detach(struct qcom_adsp *adsp, struct device **pds,
-+				  size_t pd_count)
-+{
-+	struct device *dev = adsp->dev;
-+	int i;
-+
-+	/* Handle single power domain */
-+	if (dev->pm_domain && pd_count) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
-+	for (i = 0; i < pd_count; i++)
-+		dev_pm_domain_detach(pds[i], false);
-+}
-+
-+static int qcom_rproc_pds_enable(struct qcom_adsp *adsp, struct device **pds,
-+				 size_t pd_count)
-+{
-+	int ret;
-+	int i;
-+
-+	for (i = 0; i < pd_count; i++) {
-+		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
-+		ret = pm_runtime_get_sync(pds[i]);
-+		if (ret < 0) {
-+			pm_runtime_put_noidle(pds[i]);
-+			dev_pm_genpd_set_performance_state(pds[i], 0);
-+			goto unroll_pd_votes;
-+		}
-+	}
-+
-+	return 0;
-+
-+unroll_pd_votes:
-+	for (i--; i >= 0; i--) {
-+		dev_pm_genpd_set_performance_state(pds[i], 0);
-+		pm_runtime_put(pds[i]);
-+	}
-+
-+	return ret;
-+}
-+
-+static void qcom_rproc_pds_disable(struct qcom_adsp *adsp, struct device **pds,
-+				   size_t pd_count)
-+{
-+	int i;
-+
-+	for (i = 0; i < pd_count; i++) {
-+		dev_pm_genpd_set_performance_state(pds[i], 0);
-+		pm_runtime_put(pds[i]);
-+	}
-+}
-+
-+static int qcom_wpss_shutdown(struct qcom_adsp *adsp)
-+{
-+	unsigned int val;
-+
-+	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 1);
-+
-+	/* Wait for halt ACK from QDSP6 */
-+	regmap_read_poll_timeout(adsp->halt_map,
-+				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
-+				 val, 1000, ACK_TIMEOUT_US);
-+
-+	/* Assert the WPSS PDC Reset */
-+	reset_control_assert(adsp->pdc_sync_reset);
-+	/* Place the WPSS processor into reset */
-+	reset_control_assert(adsp->restart);
-+	/* wait after asserting subsystem restart from AOSS */
-+	usleep_range(200, 205);
-+	/* Remove the WPSS reset */
-+	reset_control_deassert(adsp->restart);
-+	/* De-assert the WPSS PDC Reset */
-+	reset_control_deassert(adsp->pdc_sync_reset);
-+
-+	usleep_range(100, 105);
-+
-+	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
-+
-+	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 0);
-+
-+	/* Wait for halt ACK from QDSP6 */
-+	regmap_read_poll_timeout(adsp->halt_map,
-+				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
-+				 !val, 1000, ACK_TIMEOUT_US);
-+
-+	return 0;
-+}
-+
- static int qcom_adsp_shutdown(struct qcom_adsp *adsp)
+diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
+index 7b619998f03a..1d6f6c6a0b09 100644
+--- a/drivers/dma-buf/dma-buf.c
++++ b/drivers/dma-buf/dma-buf.c
+@@ -1332,8 +1332,6 @@ static int dma_buf_debug_show(struct seq_file *s, void *unused)
  {
- 	unsigned long timeout;
-@@ -193,12 +332,10 @@ static int adsp_start(struct rproc *rproc)
- 	if (ret)
- 		goto disable_irqs;
- 
--	dev_pm_genpd_set_performance_state(adsp->dev, INT_MAX);
--	ret = pm_runtime_get_sync(adsp->dev);
--	if (ret) {
--		pm_runtime_put_noidle(adsp->dev);
-+	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
-+				    adsp->proxy_pd_count);
-+	if (ret < 0)
- 		goto disable_xo_clk;
--	}
- 
- 	ret = clk_bulk_prepare_enable(adsp->num_clks, adsp->clks);
- 	if (ret) {
-@@ -243,8 +380,7 @@ static int adsp_start(struct rproc *rproc)
- disable_adsp_clks:
- 	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
- disable_power_domain:
--	dev_pm_genpd_set_performance_state(adsp->dev, 0);
--	pm_runtime_put(adsp->dev);
-+	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- disable_xo_clk:
- 	clk_disable_unprepare(adsp->xo);
- disable_irqs:
-@@ -258,8 +394,7 @@ static void qcom_adsp_pil_handover(struct qcom_q6v5 *q6v5)
- 	struct qcom_adsp *adsp = container_of(q6v5, struct qcom_adsp, q6v5);
- 
- 	clk_disable_unprepare(adsp->xo);
--	dev_pm_genpd_set_performance_state(adsp->dev, 0);
--	pm_runtime_put(adsp->dev);
-+	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- }
- 
- static int adsp_stop(struct rproc *rproc)
-@@ -272,7 +407,7 @@ static int adsp_stop(struct rproc *rproc)
- 	if (ret == -ETIMEDOUT)
- 		dev_err(adsp->dev, "timed out on wait\n");
- 
--	ret = qcom_adsp_shutdown(adsp);
-+	ret = adsp->shutdown(adsp);
- 	if (ret)
- 		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
- 
-@@ -427,6 +562,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
- static int adsp_probe(struct platform_device *pdev)
- {
- 	const struct adsp_pil_data *desc;
-+	const char *firmware_name;
- 	struct qcom_adsp *adsp;
- 	struct rproc *rproc;
+ 	struct dma_buf *buf_obj;
+ 	struct dma_buf_attachment *attach_obj;
+-	struct dma_resv_iter cursor;
+-	struct dma_fence *fence;
+ 	int count = 0, attach_count;
+ 	size_t size = 0;
  	int ret;
-@@ -435,12 +571,22 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (!desc)
- 		return -EINVAL;
+@@ -1361,14 +1359,7 @@ static int dma_buf_debug_show(struct seq_file *s, void *unused)
+ 				file_inode(buf_obj->file)->i_ino,
+ 				buf_obj->name ?: "");
  
-+	firmware_name = desc->firmware_name;
-+	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
-+				      &firmware_name);
-+	if (ret < 0 && ret != -EINVAL) {
-+		dev_err(&pdev->dev, "unable to read firmware-name\n");
-+		return ret;
+-		dma_resv_for_each_fence(&cursor, buf_obj->resv, true, fence) {
+-			seq_printf(s, "\t%s fence: %s %s %ssignalled\n",
+-				   dma_resv_iter_is_exclusive(&cursor) ?
+-					"Exclusive" : "Shared",
+-				   fence->ops->get_driver_name(fence),
+-				   fence->ops->get_timeline_name(fence),
+-				   dma_fence_is_signaled(fence) ? "" : "un");
+-		}
++		dma_resv_describe(buf_obj->resv, s);
+ 
+ 		seq_puts(s, "\tAttached Devices:\n");
+ 		attach_count = 0;
+diff --git a/drivers/dma-buf/dma-fence.c b/drivers/dma-buf/dma-fence.c
+index 1e82ecd443fa..5175adf58644 100644
+--- a/drivers/dma-buf/dma-fence.c
++++ b/drivers/dma-buf/dma-fence.c
+@@ -907,6 +907,22 @@ dma_fence_wait_any_timeout(struct dma_fence **fences, uint32_t count,
+ }
+ EXPORT_SYMBOL(dma_fence_wait_any_timeout);
+ 
++/**
++ * dma_fence_describe - Dump fence describtion into seq_file
++ * @fence: the 6fence to describe
++ * @seq: the seq_file to put the textual description into
++ *
++ * Dump a textual description of the fence and it's state into the seq_file.
++ */
++void dma_fence_describe(struct dma_fence *fence, struct seq_file *seq)
++{
++	seq_printf(seq, "%s %s seq %llu %ssignalled\n",
++		   fence->ops->get_driver_name(fence),
++		   fence->ops->get_timeline_name(fence), fence->seqno,
++		   dma_fence_is_signaled(fence) ? "" : "un");
++}
++EXPORT_SYMBOL(dma_fence_describe);
++
+ /**
+  * dma_fence_init - Initialize a custom fence.
+  * @fence: the fence to initialize
+diff --git a/drivers/dma-buf/dma-resv.c b/drivers/dma-buf/dma-resv.c
+index 9eb2baa387d4..ff3c0558b3b8 100644
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -38,6 +38,7 @@
+ #include <linux/mm.h>
+ #include <linux/sched/mm.h>
+ #include <linux/mmu_notifier.h>
++#include <linux/seq_file.h>
+ 
+ /**
+  * DOC: Reservation Object Overview
+@@ -666,6 +667,28 @@ bool dma_resv_test_signaled(struct dma_resv *obj, bool test_all)
+ }
+ EXPORT_SYMBOL_GPL(dma_resv_test_signaled);
+ 
++/**
++ * dma_resv_describe - Dump description of the resv object into seq_file
++ * @obj: the reservation object
++ * @seq: the seq_file to dump the description into
++ *
++ * Dump a textual description of the fences inside an dma_resv object into the
++ * seq_file.
++ */
++void dma_resv_describe(struct dma_resv *obj, struct seq_file *seq)
++{
++	struct dma_resv_iter cursor;
++	struct dma_fence *fence;
++
++	dma_resv_for_each_fence(&cursor, obj, true, fence) {
++		seq_printf(seq, "\t%s fence:",
++			   dma_resv_iter_is_exclusive(&cursor) ?
++				"Exclusive" : "Shared");
++		dma_fence_describe(fence, seq);
 +	}
++}
++EXPORT_SYMBOL_GPL(dma_resv_describe);
 +
- 	rproc = rproc_alloc(&pdev->dev, pdev->name, &adsp_ops,
--			    desc->firmware_name, sizeof(*adsp));
-+			    firmware_name, sizeof(*adsp));
- 	if (!rproc) {
- 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
- 		return -ENOMEM;
- 	}
-+
-+	rproc->auto_boot = desc->auto_boot;
- 	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+ #if IS_ENABLED(CONFIG_LOCKDEP)
+ static int __init dma_resv_lockdep(void)
+ {
+diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
+index a706b7bf51d7..1ea691753bd3 100644
+--- a/include/linux/dma-fence.h
++++ b/include/linux/dma-fence.h
+@@ -264,6 +264,7 @@ void dma_fence_init(struct dma_fence *fence, const struct dma_fence_ops *ops,
  
- 	adsp = (struct qcom_adsp *)rproc->priv;
-@@ -449,6 +595,11 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->info_name = desc->sysmon_name;
- 	platform_set_drvdata(pdev, adsp);
+ void dma_fence_release(struct kref *kref);
+ void dma_fence_free(struct dma_fence *fence);
++void dma_fence_describe(struct dma_fence *fence, struct seq_file *seq);
  
-+	if (desc->is_wpss)
-+		adsp->shutdown = qcom_wpss_shutdown;
-+	else
-+		adsp->shutdown = qcom_adsp_shutdown;
-+
- 	ret = adsp_alloc_memory_region(adsp);
- 	if (ret)
- 		goto free_rproc;
-@@ -457,7 +608,13 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_rproc;
+ /**
+  * dma_fence_put - decreases refcount of the fence
+diff --git a/include/linux/dma-resv.h b/include/linux/dma-resv.h
+index dbd235ab447f..09c6063b199a 100644
+--- a/include/linux/dma-resv.h
++++ b/include/linux/dma-resv.h
+@@ -490,5 +490,6 @@ int dma_resv_copy_fences(struct dma_resv *dst, struct dma_resv *src);
+ long dma_resv_wait_timeout(struct dma_resv *obj, bool wait_all, bool intr,
+ 			   unsigned long timeout);
+ bool dma_resv_test_signaled(struct dma_resv *obj, bool test_all);
++void dma_resv_describe(struct dma_resv *obj, struct seq_file *seq);
  
--	pm_runtime_enable(adsp->dev);
-+	ret = qcom_rproc_pds_attach(adsp->dev, adsp->proxy_pds,
-+				    desc->proxy_pd_names);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "Failed to attach proxy power domains\n");
-+		goto free_rproc;
-+	}
-+	adsp->proxy_pd_count = ret;
- 
- 	ret = adsp_init_reset(adsp);
- 	if (ret)
-@@ -467,8 +624,8 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto disable_pm;
- 
--	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem, NULL,
--			     qcom_adsp_pil_handover);
-+	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem,
-+			     desc->load_state, qcom_adsp_pil_handover);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -489,7 +646,8 @@ static int adsp_probe(struct platform_device *pdev)
- 	return 0;
- 
- disable_pm:
--	pm_runtime_disable(adsp->dev);
-+	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
-+
- free_rproc:
- 	rproc_free(rproc);
- 
-@@ -506,7 +664,7 @@ static int adsp_remove(struct platform_device *pdev)
- 	qcom_remove_glink_subdev(adsp->rproc, &adsp->glink_subdev);
- 	qcom_remove_sysmon_subdev(adsp->sysmon);
- 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
--	pm_runtime_disable(adsp->dev);
-+	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- 	rproc_free(adsp->rproc);
- 
- 	return 0;
-@@ -518,11 +676,16 @@ static const struct adsp_pil_data adsp_resource_init = {
- 	.ssr_name = "lpass",
- 	.sysmon_name = "adsp",
- 	.ssctl_id = 0x14,
-+	.is_wpss = false,
-+	.auto_boot = true,
- 	.clk_ids = (const char*[]) {
- 		"sway_cbcr", "lpass_ahbs_aon_cbcr", "lpass_ahbm_aon_cbcr",
- 		"qdsp6ss_xo", "qdsp6ss_sleep", "qdsp6ss_core", NULL
- 	},
- 	.num_clks = 7,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", NULL
-+	},
- };
- 
- static const struct adsp_pil_data cdsp_resource_init = {
-@@ -531,15 +694,39 @@ static const struct adsp_pil_data cdsp_resource_init = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.is_wpss = false,
-+	.auto_boot = true,
- 	.clk_ids = (const char*[]) {
- 		"sway", "tbu", "bimc", "ahb_aon", "q6ss_slave", "q6ss_master",
- 		"q6_axim", NULL
- 	},
- 	.num_clks = 7,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", NULL
-+	},
-+};
-+
-+static const struct adsp_pil_data wpss_resource_init = {
-+	.crash_reason_smem = 626,
-+	.firmware_name = "wpss.mdt",
-+	.ssr_name = "wpss",
-+	.sysmon_name = "wpss",
-+	.ssctl_id = 0x19,
-+	.is_wpss = true,
-+	.auto_boot = false,
-+	.load_state = "wpss",
-+	.clk_ids = (const char*[]) {
-+		"ahb_bdg", "ahb", "rscp", NULL
-+	},
-+	.num_clks = 3,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", "mx", NULL
-+	},
- };
- 
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_resource_init },
-+	{ .compatible = "qcom,sc7280-wpss-pil", .data = &wpss_resource_init },
- 	{ .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_resource_init },
- 	{ },
- };
+ #endif /* _LINUX_RESERVATION_H */
 -- 
-2.7.4
+2.25.1
 
