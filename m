@@ -2,110 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCBC343E820
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 20:17:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 818FF43E8CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 21:08:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230491AbhJ1ST2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 14:19:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbhJ1ST0 (ORCPT
+        id S231215AbhJ1TLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 15:11:22 -0400
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:41915 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231211AbhJ1TLV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 14:19:26 -0400
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A932C0613B9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 11:16:59 -0700 (PDT)
-Received: by mail-oo1-xc36.google.com with SMTP id q39-20020a4a962a000000b002b8bb100791so2454605ooi.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 11:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Wusxu4vVS094WYADHFLACryqXCZAQomcEnv/oqtQUp8=;
-        b=cIHck4f7AU6fCfChVEV2LovuiRMjA9npqq575g7mD6uUXAWIZK7H/dd0FYbkYWvcLw
-         THcW+crPTr8lmtELnV92shgpOg7arjpaszvQRz613ZU/fICX96ZR7nz0A+Zs5ZWX2Kzu
-         3Fxyh0V1kgUIi49NKrpybu+L1b2eGf9O4QvZQI8qc2ZWwFFux0z41haIX4Vcc6wgljWR
-         MDV+4WCiRPJBUi+UaFPrdiEtNHYRNGNAC/yesi/c2odE1ZPoTN4ofOemZsJA0bfvkzro
-         RVFdWyPcFsTjJWMnxm3mzqX74df7+nxkEJqS8WqXZ6DsJcMWEMdTR/QCI0bM6LMkj2JB
-         0REg==
+        Thu, 28 Oct 2021 15:11:21 -0400
+Received: by mail-oi1-f178.google.com with SMTP id y128so9692644oie.8;
+        Thu, 28 Oct 2021 12:08:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Wusxu4vVS094WYADHFLACryqXCZAQomcEnv/oqtQUp8=;
-        b=a2HvFJ3rkclZJ0df4Kk0NTsb4RPlCbfcRh0l0Y0nEyI1vf8n1rLiFhT+NilExxuiE9
-         LeslfC6tGdq/9RkHfydgJf+G/qDEultTfnERPjb07ByYPxhU79wti68QHQ1pKmVdFLOG
-         6GfPpQYDi2/qnImtQL5oI3IHWzOSoghP4g6zgUBs4xNeEdgv0Z+eP9/viyEQ0VkHvyBU
-         mLLrNxz86eqEptQ2gv/3dY6KLBPrulF3fmoEocSrPpB5nA0a8ILkWQ5Z/yVcU81kb5oN
-         4h0Raosw30wxNsYzNq+JXCqMYbF2Cr/DXko8+0HaP1/0+DzQC2cLj0bFrwxu+6qy9O3w
-         OzTQ==
-X-Gm-Message-State: AOAM530xQIkJjxREgYlPKoMg4OzNSihj/bM/KSIHn8gerZxbvE3+WJgK
-        KffJW1RS6tRKZgfvSiny0pR7sB04UiGPPNck
-X-Google-Smtp-Source: ABdhPJy7YMoWnmrHfImanNmbs6Unt0iAC5Q17Vv8gEqfdVoObsC06l/dfy2j5VCFf7uWMyZht8j/MQ==
-X-Received: by 2002:a4a:e218:: with SMTP id b24mr4268610oot.36.1635445018092;
-        Thu, 28 Oct 2021 11:16:58 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bq10sm1288528oib.25.2021.10.28.11.16.57
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=IkSb8C7GAFz/mAwKL4VgxHujgz4IrSq9GNcKcWkokn4=;
+        b=Gr+lAm1vaZ5XkhEYGwJB6nfPv6MdRdUH+wknrEfdpVZwOogKhYi6h8QEIT9pZO25v0
+         Tt80MW5fIQg0jcFlF3kK3dyna7N5Hkxbu6Uq0wKcQ9hVqQZ7hiw+O5j/XTjSvlTs1qRc
+         bkdkq9lBsUsGSssaRyi/5w6/5q9MLd8F4VNx0Yxq7J4Dvu7H4kiBWzz6eNndoYFOhtpT
+         ucQI1tHOYpuWkS7aUOYDhceuWPYhqQY52YnCkLZIjQHKpqU0cvkIxHN1Marr1jAeZKqp
+         rsNv9G7XVB4lhRnxd6I8k28w86MSGiql5TRr0suodhRvFNz4ni1CEBUIvg91D/oMGOYn
+         vIGQ==
+X-Gm-Message-State: AOAM530+QB6vOZoeUGqf/S+ZOI/Q4XekTQg1Ejrem4YN8FfeD4xIlJoE
+        nygEif9VZhpdsOZIX5jQNw==
+X-Google-Smtp-Source: ABdhPJzqWUAFj8DoNRI5eeZsudzXO8D2foLGlfAb+RGGA12p5K/FSEre5UJJ5oKhdD2iQuUdrC/ahg==
+X-Received: by 2002:aca:3b89:: with SMTP id i131mr2288170oia.102.1635448133600;
+        Thu, 28 Oct 2021 12:08:53 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id h91sm1242529otb.38.2021.10.28.12.08.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 11:16:57 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 11:18:45 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 4/8] cpufreq: qcom_cpufreq_nvmem: Simplify reading kryo
- speedbin
-Message-ID: <YXrphSSG9+zsZbJ9@ripper>
-References: <20211014083016.137441-1-y.oudjana@protonmail.com>
- <20211014083016.137441-5-y.oudjana@protonmail.com>
- <f4af0e40-9e93-dba9-7401-cdfc76ba667e@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f4af0e40-9e93-dba9-7401-cdfc76ba667e@somainline.org>
+        Thu, 28 Oct 2021 12:08:53 -0700 (PDT)
+Received: (nullmailer pid 409857 invoked by uid 1000);
+        Thu, 28 Oct 2021 19:08:48 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     heikki.krogerus@linux.intel.com, linux@roeck-us.net,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, wcheng@codeaurora.org,
+        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
+        rdunlap@infradead.org, linux-usb@vger.kernel.org
+In-Reply-To: <20211028164941.831918-3-bryan.odonoghue@linaro.org>
+References: <20211028164941.831918-1-bryan.odonoghue@linaro.org> <20211028164941.831918-3-bryan.odonoghue@linaro.org>
+Subject: Re: [RESEND PATCH v2 2/7] dt-bindings: usb: Add Qualcomm PMIC type C controller YAML schema
+Date:   Thu, 28 Oct 2021 14:08:48 -0500
+Message-Id: <1635448128.084388.409856.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 15 Oct 11:58 PDT 2021, Konrad Dybcio wrote:
-
+On Thu, 28 Oct 2021 17:49:36 +0100, Bryan O'Donoghue wrote:
+> Add a YAML binding for the type-c silicon interface inside Qualcomm's
+> pm8150b hardware block.
 > 
-> On 14.10.2021 10:32, Yassine Oudjana wrote:
-> > In preparation for adding a separate device tree for MSM8996 Pro, skip reading
-> > msm-id from smem and just read the speedbin efuse.
-> >
-> While I'd really like for this to be merged, it's gonna totally wreck backwards
+> The type-c driver operates with a pdphy driver inside of a high level
+> single TCPM device.
 > 
-> compatibility.. But then, since APCC was not defined properly before commit
+> Based on original work by Wesley.
 > 
-> 0a275a35ceab07 arm64: dts: qcom: msm8996: Make CPUCC actually probe (and work)
-> 
-> there's only 5.14/5.15 (both of which were non-LTS) which would *actually* break given
-> 
-> somebody decided that "ah yes, pulling in DTs from these specific mainline kernel releases
-> 
-> is a good idea"...
-> 
-> 
-> If I were to judge, it would probably be fine to rid the old mechanism..
+> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/usb/qcom,pmic-typec.yaml         | 116 ++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
 > 
 
-Given that various people have reported instabilities on db820c in its
-current form - and prior to that it was too slow - I think it's fine to
-favour getting this sorted out properly over backwards compatibility.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Regards,
-Bjorn
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/usb/qcom,pmic-typec.example.dt.yaml:0:0: /example-0/pm8150b/typec@1500: failed to match any schema with compatible: ['qcom,pm8150b-typec']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1547612
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
