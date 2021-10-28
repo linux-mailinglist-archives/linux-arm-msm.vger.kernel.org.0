@@ -2,82 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 823D043DA0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 06:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7866F43DA07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 05:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229651AbhJ1ECh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 00:02:37 -0400
-Received: from mail-m972.mail.163.com ([123.126.97.2]:45970 "EHLO
-        mail-m972.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhJ1ECg (ORCPT
+        id S229836AbhJ1D7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 23:59:50 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:45838 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229805AbhJ1D7s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 00:02:36 -0400
-X-Greylist: delayed 909 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Oct 2021 00:02:35 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=XVv5S
-        FdNpgCsY/DIDBoDScNacGKqd9KJsrwwR7Ljgzo=; b=M0uiqBWXmiPppcfgTxKPY
-        X+0R/VytFXd9NRxzuh0/3oY4NEQTl9/A8drjCsd8I0sKdnY2INTV+2yxrj2evZYY
-        LstL/k4DejCeURBu3v+dmrXiBD1Sxf/XTV16z0SZAt0gjxX3p4VIEgqWn/S4sjfJ
-        o9r7YRZAr1Kjb+qkMwZIl4=
-Received: from localhost.localdomain (unknown [112.97.53.33])
-        by smtp2 (Coremail) with SMTP id GtxpCgD3_yuzHHphNOvxGg--.49164S2;
-        Thu, 28 Oct 2021 11:44:52 +0800 (CST)
-From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH] bus: mhi: pci_generic: Add new device ID support for T99W175
-Date:   Thu, 28 Oct 2021 11:44:31 +0800
-Message-Id: <20211028034431.3563-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 27 Oct 2021 23:59:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1635393442; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=m+tIbxcshou06MTQ58i8f/rhVixWQJgIxK9i9z23/4k=; b=A8+7LmPCj8N3K4btuTe2KSR45GFzGlSaPEkH6NvMtWAeVSdfYAE5gSnV+gT8OxgIC2w6/1/N
+ ag0QwB64dmLt4fX0Pw87Ift5Bu7x8HuDxJoizNVQbGmjlEnMM/iOeZRb8QX7Mp2hbrvZHTjG
+ 3bWt1ccVWOwi+Z91YWqm6vQssQQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 617a1f93545d7d365f27c2a6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 28 Oct 2021 03:57:07
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 20798C4360D; Thu, 28 Oct 2021 03:57:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.118] (unknown [49.207.214.117])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CE52C4338F;
+        Thu, 28 Oct 2021 03:57:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 0CE52C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
+ for dwc3 qcom
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com
+References: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1635152851-23660-2-git-send-email-quic_c_sanm@quicinc.com>
+ <YXcBK7zqny0s4gd4@ripper>
+ <CAE-0n51k8TycXjEkH7rHYo0j7cYbKJOnOn1keVhx2yyTcBNnvg@mail.gmail.com>
+ <YXck+xCJQBRGqTCw@ripper>
+ <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
+ <YXdsYlLWnjopyMn/@ripper>
+ <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
+ <YXjbs3Bv6Y3d87EC@yoga>
+ <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
+Date:   Thu, 28 Oct 2021 09:26:58 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: GtxpCgD3_yuzHHphNOvxGg--.49164S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7AF4xuw1rtFy7Ww1xuFW3ZFb_yoW8Gr1rpF
-        4S9FWakF4kZF1UKFykK34kZFya9a17CryUKFy7Cw1Ygr1qy3yYgwn3GryxWayUtFZ0qF4a
-        qr1jvryjqa4qyaUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRppBgUUUUU=
-X-Originating-IP: [112.97.53.33]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBrRU6ZF75cHu5FAAAsn
+In-Reply-To: <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new device ID 0xe0bf for T99W175.
 
-Test evidence as below:
-root@jbd-ThinkPad-P1-Gen-4:/dev# lspci -nn | grep Foxconn
-0000:08:00.0 Wireless controller [0d40]: Foxconn International, Inc. Device [105b:e0bf]
-root@jbd-ThinkPad-P1-Gen-4:/dev# cat wwan0at0 & echo -ne "ati\r" > wwan0at0
-[2] 2977
-root@jbd-ThinkPad-P1-Gen-4:/dev# ati
-Manufacturer: Qualcomm
-Model: T99W175
-Revision: T99W175.F0.6.0.0.6.CC.005  1  [Oct 21 2021 10:00:00]
-IMEI:
-+GCAP: +CGSM
 
-OK
+On 10/27/2021 7:54 PM, Ulf Hansson wrote:
+> On Wed, 27 Oct 2021 at 06:55, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+>>
+>> On Tue 26 Oct 19:48 CDT 2021, Stephen Boyd wrote:
+>>
+>>> +Rajendra
+>>>
+>>> Quoting Bjorn Andersson (2021-10-25 19:48:02)
+>>>> On Mon 25 Oct 15:41 PDT 2021, Stephen Boyd wrote:
+>>>>
+>>>>>
+>>>>> When the binding was introduced I recall we punted on the parent child
+>>>>> conversion stuff. One problem at a time. There's also the possibility
+>>>>> for a power domain to be parented by multiple power domains so
+>>>>> translation tables need to account for that.
+>>>>>
+>>>>
+>>>> But for this case - and below display case - the subdomain (the device's
+>>>> power-domain) is just a dumb gate. So there is no translation, the given
+>>>> performance_state applies to the parent. Or perhaps such implicitness
+>>>> will come back and bite us?
+>>>
+>>> In the gate case I don't see how the implicitness will ever be a
+>>> problem.
+>>>
+>>>>
+>>>> I don't think we allow a power-domain to be a subdomain of two
+>>>> power-domains - and again it's not applicable to USB or display afaict.
+>>>
+>>> Ah maybe. I always confuse power domains and genpd.
+>>>
+>>>>
+>>>>>>
+>>>>>>> Or we may need to make another part of the OPP binding to indicate the
+>>>>>>> relationship between the power domain and the OPP and the parent of
+>>>>>>> the power domain.
+>>>>>>
+>>>>>> I suspect this would be useful if a power-domain provider needs to
+>>>>>> translate a performance_state into a different supply-performance_state.
+>>>>>> Not sure if we have such case currently; these examples are all an
+>>>>>> adjustable power-domain with "gating" subdomains.
+>>>>>
+>>>>> Even for this case, we should be able to have the GDSC map the on state
+>>>>> to some performance state in the parent domain. Maybe we need to add
+>>>>> some code to the gdsc.c file to set a performance state on the parent
+>>>>> domain when it is turned on. I'm not sure where the value for that perf
+>>>>> state comes from. I guess we can hardcode it in the driver for now and
+>>>>> if it needs to be multiple values based on the clk frequency we can push
+>>>>> it out to an OPP table or something like that.
+>>>>>
+>>>>
+>>>> For the GDSC I believe we only have 1:1 mapping, so implementing
+>>>> set_performance_state to just pass that on to the parent might do the
+>>>> trick (although I haven't thought this through).
+>>>>
+>>>> Conceptually I guess this would be like calling clk_set_rate() on a
+>>>> clock gate, relying on it being propagated upwards. The problem here is
+>>>> that the performance_state is just a "random" integer without a well
+>>>> defined unit.
+>>>>
+>>>
+>>> Right. Ideally it would be in the core code somehow so that if there
+>>> isn't a set_performance_state function we go to the parent or some
+>>> special return value from the function says "call it on my parent". The
+>>> translation scheme could come later so we can translate the "random"
+>>> integer between parent-child domains.
+>>
+>> As a proof of concept it should be sufficient to just add an
+>> implementation of sc->pd.set_performance_state in gdsc.c. But I agree
+>> that it would be nice to push this into some framework code, perhaps
+>> made opt-in by some GENPD_FLAG_xyz.
+>>
+>>> At the end of the day the device
+>>> driver wants to set a frequency or runtime pm get the device and let the
+>>> OPP table or power domain code figure out what the level is supposed to
+>>> be.
+>>>
+>>
+>> Yes and this is already working for the non-nested case - where the
+>> single power-domain jumps between performance states as the opp code
+>> switches from one opp to another.
+>>
+>> So if we can list only the child power-domain (i.e. the GDSC) and have
+>> the performance_stat requests propagate up to the parent rpmhpd resource
+>> I think we're good.
+>>
+>>
+>> Let's give this a spin and confirm that this is the case...
+>>
+>>>>
+>>>>
+>>>> The one case where I believe we talked about having different mapping
+>>>> between the performance_state levels was in the relationship between CX
+>>>> and MX. But I don't think we ever did anything about that...
+>>>
+>>> Hmm alright. I think there's a constraint but otherwise nobody really
+>>> wants to change both at the same time.
+>>>
+>>>>>
+>>>>> Yes, a GDSC is really a gate on a parent power domain like CX or MMCX,
+>>>>> etc. Is the display subsystem an example of different clk frequencies
+>>>>> wanting to change the perf state of CX? If so it's a good place to work
+>>>>> out the translation scheme for devices that aren't listing the CX power
+>>>>> domain in DT.
+>>>>
+>>>> Yes, the various display components sits in MDSS_GDSC but the opp-tables
+>>>> needs to change the performance_state of MDSS_GDSC->parent (i.e. CX or
+>>>> MMCX, depending on platform).
+>>>>
+>>>> As I said, today we hack this by trusting that the base drm/msm driver
+>>>> will keep MDSS_GDSC on and listing MMCX (or CX) as power-domain for each
+>>>> of these components.
+>>>>
+>>>>
+>>>> So if we solve this, then that seems to directly map to the static case
+>>>> for USB as well.
+>>>>
+>>>
+>>> Got it. So in this case we could have the various display components
+>>> that are in the mdss gdsc domain set their frequency via OPP and then
+>>> have that translate to a level in CX or MMCX. How do we parent the power
+>>> domains outside of DT? I'm thinking that we'll need to do that if MMCX
+>>> is parented by CX or something like that and the drivers for those two
+>>> power domains are different. Is it basic string matching?
+>>
+>> In one way or another we need to invoke pm_genpd_add_subdomain() to link
+>> the two power-domains (actually genpds) together, like what was done in
+>> 3652265514f5 ("clk: qcom: gdsc: enable optional power domain support").
+>>
+>> In the case of MMCX and CX, my impression of the documentation is that
+>> they are independent - but if we need to express that CX is parent of
+>> MMCX, they are both provided by rpmhpd which already supports this by
+>> just specifying .parent on mmcx to point to cx.
+> 
+> I was trying to follow the discussion, but it turned out to be a bit
+> complicated to catch up and answer all things. In any case, let me
+> just add a few overall comments, perhaps that can help to move things
+> forward.
+> 
+> First, one domain can have two parent domains. Both from DT and from
+> genpd point of view, just to make this clear.
+> 
+> Although, it certainly looks questionable to me, to hook up the USB
+> device to two separate power domains, one to control power and one to
+> control performance. Especially, if it's really the same piece of HW
+> that is managing both things. 
+[]..
+> Additionally, if it's correct to model
+> the USB GDSC power domain as a child to the CX power domain from HW
+> point of view, we should likely do that.
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
----
- drivers/bus/mhi/pci_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+I think this would still require a few things in genpd, since
+CX and USB GDSC are power domains from different providers.
+Perhaps a pm_genpd_add_subdomain_by_name()?
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 59a4896a8030..566483dc15db 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -423,6 +423,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
- 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+	/* T99W175 (sdx55) */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0bf),
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
- 	/* MV31-W (Cinterion) */
- 	{ PCI_DEVICE(0x1269, 0x00b3),
- 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 -- 
-2.25.1
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
