@@ -2,94 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58A1743F2D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 00:32:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1601343F2E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 00:39:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231555AbhJ1Wev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 18:34:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57620 "EHLO
+        id S231372AbhJ1Wlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 18:41:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231559AbhJ1Wer (ORCPT
+        with ESMTP id S231252AbhJ1Wlh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 18:34:47 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A8AC061348
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:32:19 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id q127so9142986iod.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:32:19 -0700 (PDT)
+        Thu, 28 Oct 2021 18:41:37 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C59C061570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:39:09 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id o83so10519926oif.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 15:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=pC/0QFm2QzspTuRJ5yjxkysn3z8wLWR4jueB5J/ETjE=;
-        b=OK4UvN1PFVnQ7ZqAaWMvjxl6f7xFPo/WdrepEpveyZyfCFeRz+Ni4rxQmxPOX/GmwE
-         6eJcmt2ubu+LBVfQE2YgpeZDQNT5xKmmNxU1xHKYbiNnBfs8k8mSUxVnD4+/UHpO9Pno
-         qW8MizQJ9ZoLJHFTKIxaX7BbBB5dDRLHpOLzQ=
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to;
+        bh=NL2ODXrSm6ZhmFLsby2Ei6hqV0q649I4yE01/l32yPQ=;
+        b=EzEx8hrE3mS6JZIoGFLUs+ApD5NhXSxVevnPM4sWKpiHe9d/BAezq0wvniKjXvDBhq
+         HbWNzFYwXZXAiTw8rUlunRoFkU17UHGYFAGyaiGznIRKixX8NruEmgqBx06xaK3nBDYA
+         4vyCtXotGrGKOamqpYsaqALhn/KSPva5VoJLE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pC/0QFm2QzspTuRJ5yjxkysn3z8wLWR4jueB5J/ETjE=;
-        b=AIFykDRrumEE/24rBlK2k4Krq51s6yUEA3o8xKqr/gRLcbA+QdQ3gc7qBxVhbfvCWV
-         urShDi6OBhz1R2piGlwVCYLfWyh6PenZtAA6BxRCycWv/hexigphseU1vQOTsWSH1z0v
-         UQiwiYrab8n0PfhesSCu8a0vRs9VNO0FLb78o9OlEdjG9WiJete4CkL33jLvmEo0l6PU
-         1Dbj2THDuKQl7vUaPILBaVFII/O1LA04lbxbGuuZ/59W9swjjvMlVTG8EcRQkz9+uOp9
-         usVB+mH+OVR5VrgMMJxdw69FqZG0DSPXOXYni9na6ifaeSfhXqHFtH3YtSYssbIT+X9u
-         AYhQ==
-X-Gm-Message-State: AOAM532aRNsiUrH/4vCngaV8w9FoL0TS0POm24xUiCB6u9w9UAgtL0xF
-        obiuWrPDposmUApFy/pyjqELKw==
-X-Google-Smtp-Source: ABdhPJw2rOVxKCKteaEQK9fJgPGVsuycReds7y3Sz5m+YsMEX2sj7cWWo0nO3JGAapxqApdiBvnRvA==
-X-Received: by 2002:a05:6602:1651:: with SMTP id y17mr4947907iow.82.1635460339241;
-        Thu, 28 Oct 2021 15:32:19 -0700 (PDT)
-Received: from localhost ([2600:6c50:4d00:cd01::382])
-        by smtp.gmail.com with ESMTPSA id r13sm2142520ilh.80.2021.10.28.15.32.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Oct 2021 15:32:18 -0700 (PDT)
-From:   Benjamin Li <benl@squareup.com>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] wcn36xx: fix RX BD rate mapping for 5GHz legacy rates
-Date:   Thu, 28 Oct 2021 15:31:30 -0700
-Message-Id: <20211028223131.897548-2-benl@squareup.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211028223131.897548-1-benl@squareup.com>
-References: <20211028223131.897548-1-benl@squareup.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to;
+        bh=NL2ODXrSm6ZhmFLsby2Ei6hqV0q649I4yE01/l32yPQ=;
+        b=zO6tmUl1NQpR5bjX2gWdrplz4TLgoaD0V/B2XQ6aeJyrEa52qmGL/0YDCYtcqV2SUv
+         HUdij6o3xka4EjNbZIV2ze02VgNqwYg3/hdrG43FCv46u1quzzvzObWHkQFAQgQBc558
+         zgyLN06dIYM6q8HYnS5L8+Kmtn8FGsZtJ0NnhreH9NBgqCjnxPb++Vfr52IjwF/iyk9I
+         f7WQrT5LNDM0flF4XhKmv+K+Yb0QFoE0gkTl9FhdVSSxR3GmppDf0dLfI+bqhq0Qr/MP
+         MJoQy3Uf/monfvQ+apMaj83M8SYXHS/xbLpZzmyBehkSWbuuZSbVVUcPbnHIIDNaHkR3
+         WhkQ==
+X-Gm-Message-State: AOAM531bGxur+xbJElZL2zAgWclvgkb7uoa9XsLMEtWrDB5Zabg6efLA
+        68Vtf3pekH5Nrok1jQtxXgcACrkTaVneyEbxXMBhzg==
+X-Google-Smtp-Source: ABdhPJwNY2fhQGXvyKhKxiZbkYaL+OKNaCpFlag84zdAsz24L+gCDmW3Zn3S1HtqV5VnAkP3JQPd6x+9VqfiQqM2IKQ=
+X-Received: by 2002:a05:6808:2124:: with SMTP id r36mr5406711oiw.64.1635460749103;
+ Thu, 28 Oct 2021 15:39:09 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 Oct 2021 15:39:08 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE-0n51PGVQ6GT7RMTQajEM54NLOUZBGPkVKmVaG1JV7Fgv9Ag@mail.gmail.com>
+References: <1634234784-5359-1-git-send-email-pmaliset@codeaurora.org> <CAE-0n51PGVQ6GT7RMTQajEM54NLOUZBGPkVKmVaG1JV7Fgv9Ag@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 28 Oct 2021 15:39:08 -0700
+Message-ID: <CAE-0n51noyV7KW9JcY5-TdERC_RSLQDtdqMR4_LDFHJGGE3yiw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add pcie clock support
+To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        manivannan.sadhasivam@linaro.org, robh+dt@kernel.org,
+        sanm@codeaurora.org, vbadigan@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The linear mapping between the BD rate field and the driver's 5GHz
-legacy rates table (wcn_5ghz_rates) does not only apply for the latter
-four rates -- it applies to all eight rates.
+Quoting Stephen Boyd (2021-10-21 11:06:53)
+> Quoting Prasad Malisetty (2021-10-14 11:06:24)
+> > Add pcie clock phandle for sc7280 SoC and correct
+> > The pcie_1_pipe-clk clock name as same as binding.
+> >
+> > fix: ab7772de8 ("arm64: dts: qcom: SC7280: Add rpmhcc clock controller node")
+>
+> This is wrong. Should be
+>
+> Fixes: ab7772de8612 ("arm64: dts: qcom: SC7280: Add rpmhcc clock controller node")
+>
+> > Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> > Reported-by: kernel test robot <lkp@intel.com>
+> >
+> > ---
+> > This change is depends on the below patch series.
+> > https://lkml.org/lkml/2021/10/7/841
+>
+> Why doesn't that patch update this clock cell then?
 
-Fixes: 6ea131acea98 ("wcn36xx: Fix warning due to bad rate_idx")
-Signed-off-by: Benjamin Li <benl@squareup.com>
----
- drivers/net/wireless/ath/wcn36xx/txrx.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Looks like Bjorn already picked it up so that answers my question.
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/txrx.c b/drivers/net/wireless/ath/wcn36xx/txrx.c
-index f0a9f069a92a9..b4a36acdaca74 100644
---- a/drivers/net/wireless/ath/wcn36xx/txrx.c
-+++ b/drivers/net/wireless/ath/wcn36xx/txrx.c
-@@ -354,8 +354,7 @@ int wcn36xx_rx_skb(struct wcn36xx *wcn, struct sk_buff *skb)
- 		status.nss = 1;
- 
- 		if (status.band == NL80211_BAND_5GHZ &&
--		    status.encoding == RX_ENC_LEGACY &&
--		    status.rate_idx >= sband->n_bitrates) {
-+		    status.encoding == RX_ENC_LEGACY) {
- 			/* no dsss rates in 5Ghz rates table */
- 			status.rate_idx -= 4;
- 		}
--- 
-2.25.1
+>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > index 39635da..78694c1 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -569,9 +569,10 @@
+> >                         reg = <0 0x00100000 0 0x1f0000>;
+> >                         clocks = <&rpmhcc RPMH_CXO_CLK>,
+> >                                  <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
+> > -                                <0>, <0>, <0>, <0>, <0>, <0>;
+> > +                                <0>, <&pcie1_lane 0>,
+> > +                                <0>, <0>, <0>, <0>;
+> >                         clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
+> > -                                     "pcie_0_pipe_clk", "pcie_1_pipe-clk",
+> > +                                     "pcie_0_pipe_clk", "pcie_1_pipe_clk",
+>
+> This can be split from the patch to fix just the name in one patch and
+> then add the pcie1_lane phandle in the next patch. That way new features
+> aren't being mixed together with the string fix.
+>
 
+In addition, I see that Rob sent a patch[1] that fixes the interrupt-map
+in the pcie node. Can you send a similar patch for sc7280? It looks
+wrong. We need another two zeroes like on sdm845.dtsi. So please resend
+this series with three patches and the appropriate Fixes tags.
+
+
+[1] https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
