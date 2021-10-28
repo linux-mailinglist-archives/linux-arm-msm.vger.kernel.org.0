@@ -2,85 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ABE343DB06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 08:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F9E943DB0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 08:21:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbhJ1GXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 02:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60692 "EHLO
+        id S229769AbhJ1GXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 02:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbhJ1GW7 (ORCPT
+        with ESMTP id S229762AbhJ1GXl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 02:22:59 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C76C061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:20:33 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id t201-20020a4a3ed2000000b002b8c98da3edso1794088oot.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:20:33 -0700 (PDT)
+        Thu, 28 Oct 2021 02:23:41 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED51C061745
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:21:14 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id o10-20020a9d718a000000b00554a0fe7ba0so1316140otj.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=6+eTf7nyr6M3KwEm+TOLweZAQxKtMfVD5JwzIPGapF4=;
-        b=XFMvMVNKWo0K9tklL2H+PQ5pnRbAvZXkJu6OVqgEKFrzqKb/qBrXK4jeGJCuIl/2Rs
-         ycXF/pYyFD7R3khkDEkpZo6R+ipPDYlxcQEIcRaMUSb/DuplmshZSHY9vfO4n/HZ8/Ir
-         lxD4yIUK5obFrRuQqv5qF5INpaolMTU/WPINM=
+        bh=Mc9LKQAQoslOGm6o+pVM9AhRB1ZUOOEE/5oefVUl9Lc=;
+        b=ispJvbrsPNohrDzzQOfGiAya2Gz/DXYBgvobMGSF8M38h1V5YLwF3zJvQ5mUvZWXwx
+         dNEfCluGOMa///Ra8ket00k+BpYhjPld4QIjQuSaWuENr4YoQZ+SqqB8Z+bJu4ro7cMI
+         wJxalHJpVDA7mjndkAe3QO2kjHgd/v7TFYCuU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=6+eTf7nyr6M3KwEm+TOLweZAQxKtMfVD5JwzIPGapF4=;
-        b=l0cnoPxgrYKHB+AB371maok17VKzog1aKrbJQIVEs8vQjbOUvrn0GPCSsfx6qvdqgb
-         hkywrF8k38jiY4EO4Y7QSay4d+ai5sEZ4SnA5y8o7rkihm4M2so3zuc0FGepmY2db4+L
-         UWWyV37hutSs8e2t+w1pXebwjy1y8TAR4hVLUJpDfP9kQOXptInEqQZ/vBxmXSd758B3
-         U84jvfkpDdW54JzjOAsO7aE81r04f959Ax6E7eTMM/epS/sxUbuFpptLO1sdPmswTitU
-         kL9KIv2NznYuJ7+CTEzuzJrbu97w7F4erzC6JokYGT8CU0Zu0zBeF46PIGVMpNRRXNAL
-         K0Xg==
-X-Gm-Message-State: AOAM530/OGbw731VH+n/RAuw+XnWcZMnpR7V1Uq3qQAZQFQeJ7iVOGjd
-        DSgDmts64dnOS+SM68fVaHTpAuLUQnevHzn1zCHkcQ==
-X-Google-Smtp-Source: ABdhPJyea8Fwx4YyKse423qLTPTFc+z3zOfjtneOqoZsNUJoAqTszW1lfetTqMDV080TNLNVBZYOcvECNsZXED/wHU4=
-X-Received: by 2002:a4a:e94e:: with SMTP id v14mr1125894ood.1.1635402032695;
- Wed, 27 Oct 2021 23:20:32 -0700 (PDT)
+        bh=Mc9LKQAQoslOGm6o+pVM9AhRB1ZUOOEE/5oefVUl9Lc=;
+        b=zpsDrL8jY4c/ETJy3nxmWQPsGQZ7yzK4TmJjRASVM5MIEOPM+/Ns2KCvLxD7aAUNHz
+         edERLCxsRIEz+bV6A54921l3MptEosVYguhaikBoqUsy90MAz0qPzUtbjl8b5sx+n04d
+         p/DNO0VHGSWDv9dRKWGqQAVJkgjPWfHpvFLOKdX+ZsIgBFmJXzPTGjZkf/y//zI7FRKT
+         O4sjkPSIFoO7KSRtMdAlZheuCqzj28A0y8Co6qP2sRSA7j+BmIoAijvgVQLJ9V7z5sxs
+         lN3jkNNA4H04T6QPe5MevB/j51yeqCadwU+R88mMYHbyVzsXZtiQT3gz4Flt/HBfSqXx
+         jaNg==
+X-Gm-Message-State: AOAM5307eBcjfjAr92i8ZwyvR2WPTu8MjI9y1CKdIBcWQclNSHBr0f5r
+        LvrqlgTuhr7+pLQGqnPDxATcNNFFMX3nHil2mlW0uw==
+X-Google-Smtp-Source: ABdhPJwXQHqI3ICCqimmpImWWFhlxNmRD9J4BKAimAk2nP8JakuCfq++JC5QTUaAhvBLQQixIagkH4fHHMXy87/FcEE=
+X-Received: by 2002:a9d:7655:: with SMTP id o21mr1891665otl.126.1635402074047;
+ Wed, 27 Oct 2021 23:21:14 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 27 Oct 2021 23:20:32 -0700
+ HTTPREST; Wed, 27 Oct 2021 23:21:13 -0700
 MIME-Version: 1.0
-In-Reply-To: <1635386088-18089-2-git-send-email-quic_sbillaka@quicinc.com>
-References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com> <1635386088-18089-2-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1635386088-18089-3-git-send-email-quic_sbillaka@quicinc.com>
+References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com> <1635386088-18089-3-git-send-email-quic_sbillaka@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Wed, 27 Oct 2021 23:20:32 -0700
-Message-ID: <CAE-0n51J60efae0yMvC_ZfxX53YZLOgY_K1cpA8PLPedr6hMBA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] dt-bindings: msm/dp: Add DP compatible strings for sc7280
+Date:   Wed, 27 Oct 2021 23:21:13 -0700
+Message-ID: <CAE-0n53gO-NtWosw8kjTkjv7eUPt+VH2rzAvDAYYwpGK+jJ=nw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] drm/msm/dp: Add DP controllers for sc7280
 To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
-        robdclark@gmail.com, seanpaul@chromium.org,
+Cc:     robdclark@gmail.com, seanpaul@chromium.org,
         kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
         dianders@chromium.org, khsieh@codeaurora.org,
-        mkrishn@codeaurora.org
+        mkrishn@codeaurora.org, sbillaka@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2021-10-27 18:54:43)
-> From: Sankeerth Billakanti <sbillaka@codeaurora.org>
+Quoting Sankeerth Billakanti (2021-10-27 18:54:44)
+> The eDP controller on SC7280 is similar to the eDP/DP controllers
+> supported by the current driver implementation.
 >
-> The Qualcomm SC7280 platform supports one eDP controller
-> and a DP controller. This change will add the compatible
-> string for both eDP and DP to msm dp-controller binding.
+> SC7280 supports one EDP and one DP controller which can operate
+> concurrently.
+>
+> This change adds the support for eDP and DP controller on sc7280.
 >
 > Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 >
 > changes in v3:
->     - Modify the subject (Doug Anderson)
->     - Add sc7280-dp also to the list (Stephen Boyd)
+>     - Split into patches according to function (Dmitry Baryshkov)
+>     - Use DP_CONTROLLER_1 for eDP controller intf (Dmitry Baryshkov)
+>     - Use DP_CONTROLLER_0 for sc7280-dp (Dmitry Baryshkov)
+>     - Add macro in drm_helper.h for checking ssc capability (Stephen Boyd)
+>     - Use existing macro to check assr capability (Stephen Boyd)
+>     - Add comment for HPD_INIT_SETUP delay (Stephen Boyd)
 >
 > changes in v2:
->     - Sort alphabetically (Stephen Boyd)
->     - Cleanup residual stale changes in the patch (Matthias Kaehlcke)
->     - Modify the subject (Doug Anderson)
+>     - Don't initialize variables to 0 (Stephen Boyd)
+>     - Use const for read-only dpcd (Stephen Boyd)
+>     - Remove zero pixel clock check (Stephen Boyd)
+>     - Sort compatible strings alphabetically (Stephen Boyd)
+>     - Use pwm_bl.c for backlight instead of gpio (Stephen Boyd)
+>     - Change return type for functions returning always 0 (Matthias Kaehlcke)
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
