@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 84CC943D8FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 03:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DACC643D900
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 03:55:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbhJ1B6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 27 Oct 2021 21:58:04 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:35090 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229877AbhJ1B6E (ORCPT
+        id S229906AbhJ1B6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 27 Oct 2021 21:58:12 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:50035 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229957AbhJ1B6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 27 Oct 2021 21:58:04 -0400
+        Wed, 27 Oct 2021 21:58:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1635386138; x=1666922138;
+  t=1635386145; x=1666922145;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=ZF1/1qhmIp3g86UTXX3h3Puh9hFYHW37oCxJLoFZmug=;
-  b=u5oL79UrjqctlBpzgKQTdNovVCqgGiSw/41TIrvL5FZWwjcz40nsmpHK
-   BNvAVkm2Y/p6njWZck6m0KlO1dmkP60vMY3wNuIzyctpdaRWxbK35aCi0
-   LZX+OlHiIW5f974ew8nbchcjfl5lE5+cgskUKTyc+KbTLyQ9Rn5YF01LB
-   s=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 27 Oct 2021 18:55:38 -0700
+  bh=lMD3kYWOFV+pivVI9FG3pMqNQ7yrz03GZ9yD9lYfO+U=;
+  b=FC7GK9pu0LJecxmCeir97Bz4J0401EelK8QY3u3Z5YoCWO2mVywNSLI5
+   Dj9vahjdYSM4TBlfRq9QrzlphHX8KGSk+PoeaMs0aMgYrsvlWlzCriysH
+   taHb25LZ1wE2m+rpJfZB5G7OlrPAlL4dL/txX8OhEPy6godonDwTasrVq
+   c=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Oct 2021 18:55:45 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2021 18:55:37 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2021 18:55:44 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Wed, 27 Oct 2021 18:55:36 -0700
+ Wed, 27 Oct 2021 18:55:44 -0700
 Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Wed, 27 Oct 2021 18:55:32 -0700
+ Wed, 27 Oct 2021 18:55:40 -0700
 From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
@@ -44,9 +44,9 @@ CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
         <abhinavk@codeaurora.org>, <dianders@chromium.org>,
         <khsieh@codeaurora.org>, <mkrishn@codeaurora.org>,
         <sbillaka@codeaurora.org>
-Subject: [PATCH v3 4/6] drm/msm/dp: Enable downspread for supported DP sinks
-Date:   Thu, 28 Oct 2021 07:24:46 +0530
-Message-ID: <1635386088-18089-5-git-send-email-quic_sbillaka@quicinc.com>
+Subject: [PATCH v3 5/6] drm/msm/dp: Enable ASSR for supported DP sinks
+Date:   Thu, 28 Oct 2021 07:24:47 +0530
+Message-ID: <1635386088-18089-6-git-send-email-quic_sbillaka@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com>
 References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com>
@@ -59,64 +59,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc7280 eDP sink that supports downspread will fail link training
-if source does not enable SSC / downspread. This change will set the
-downspread bit in the DP sink if supported and indicate SSC support
-to the DP PHY driver.
+The eDP sink on sc7280 supports ASSR and dp driver will
+enable ASSR in the source hardware. The driver needs to
+enable the ASSR field in the DPCD configuration register
+to avoid screen corruption. This change will enable ASSR
+if supported in the sink device.
 
 Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 62e75dc..a40e798 100644
+index a40e798..c724cb0 100644
 --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
 +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1228,7 +1228,9 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- 			int *training_step)
+@@ -119,13 +119,13 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+ static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
  {
- 	int ret = 0;
-+	const u8 *dpcd = ctrl->panel->dpcd;
- 	u8 encoding = DP_SET_ANSI_8B10B;
-+	u8 ssc;
- 	struct dp_link_info link_info = {0};
- 
- 	dp_ctrl_config_ctrl(ctrl);
-@@ -1238,6 +1240,12 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
- 	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
- 
- 	dp_aux_link_configure(ctrl->aux, &link_info);
-+
-+	if (drm_dp_max_downspread(dpcd)) {
-+		ssc = DP_SPREAD_AMP_0_5;
-+		drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
-+	}
-+
- 	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
- 				&encoding, 1);
- 
-@@ -1312,9 +1320,11 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
- 	struct dp_io *dp_io = &ctrl->parser->io;
- 	struct phy *phy = dp_io->phy;
- 	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
-+	const u8 *dpcd = ctrl->panel->dpcd;
- 
- 	opts_dp->lanes = ctrl->link->link_params.num_lanes;
- 	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
-+	opts_dp->ssc = drm_dp_max_downspread(dpcd);
- 	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
- 					ctrl->link->link_params.rate * 1000);
- 
-@@ -1406,7 +1416,7 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
- 
- static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
- {
+ 	u32 config = 0, tbd;
 -	u8 *dpcd = ctrl->panel->dpcd;
 +	const u8 *dpcd = ctrl->panel->dpcd;
  
- 	/*
- 	 * For better interop experience, used a fixed NVID=0x8000
+ 	/* Default-> LSCLK DIV: 1/4 LCLK  */
+ 	config |= (2 << DP_CONFIGURATION_CTRL_LSCLK_DIV_SHIFT);
+ 
+ 	/* Scrambler reset enable */
+-	if (dpcd[DP_EDP_CONFIGURATION_CAP] & DP_ALTERNATE_SCRAMBLER_RESET_CAP)
++	if (drm_dp_alternate_scrambler_reset_cap(dpcd))
+ 		config |= DP_CONFIGURATION_CTRL_ASSR;
+ 
+ 	tbd = dp_link_get_test_bits_depth(ctrl->link,
+@@ -1231,6 +1231,7 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+ 	const u8 *dpcd = ctrl->panel->dpcd;
+ 	u8 encoding = DP_SET_ANSI_8B10B;
+ 	u8 ssc;
++	u8 assr;
+ 	struct dp_link_info link_info = {0};
+ 
+ 	dp_ctrl_config_ctrl(ctrl);
+@@ -1249,6 +1250,12 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+ 	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
+ 				&encoding, 1);
+ 
++	if (drm_dp_alternate_scrambler_reset_cap(dpcd)) {
++		assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
++		drm_dp_dpcd_write(ctrl->aux, DP_EDP_CONFIGURATION_SET,
++				&assr, 1);
++	}
++
+ 	ret = dp_ctrl_link_train_1(ctrl, training_step);
+ 	if (ret) {
+ 		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
 -- 
 2.7.4
 
