@@ -2,121 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89B5B43DAD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 07:45:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ABE343DB06
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 08:20:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbhJ1Fr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 01:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
+        id S229694AbhJ1GXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 02:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbhJ1Fr2 (ORCPT
+        with ESMTP id S229586AbhJ1GW7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 01:47:28 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 651EBC061767
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 22:45:02 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 75so5341247pga.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 22:45:02 -0700 (PDT)
+        Thu, 28 Oct 2021 02:22:59 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C76C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:20:33 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id t201-20020a4a3ed2000000b002b8c98da3edso1794088oot.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Oct 2021 23:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=GG4woYR7NisY/q8Aqftt8VbaoIUjeCAFtan/TYRsjpU=;
-        b=GrlMrACUpkv4yRw/bDNI74wjHSJX2ujYSjccxXlMwSqpqwHxbMBmdMvVkv0bO9AjH8
-         ic8U5zL/L9NoK4aaLi1aw4q0ZpTdDrdkzCrxPOmAQlBq6v7AxoqEo3ecAb7FVrY4U+01
-         yB9/LEjRxgwzYrK+z1kmhEWslqQQBaxUgEthyd6cSKEvhtTrypqWG8bqYIbPvwhjGLuK
-         PS3oTkLVzKTq91pmr5BgCC9SRyHeg1dvVQMSMqfh0N5dM9BchT9B4Bhg0enreOm3xcyl
-         2CcPf4CeQYiYc7C9LmwNPU+Q2zHLH3VFKvH9P3tobjVq6wjazpM7MpFRkQQ4YpL4ibCp
-         Ixog==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=6+eTf7nyr6M3KwEm+TOLweZAQxKtMfVD5JwzIPGapF4=;
+        b=XFMvMVNKWo0K9tklL2H+PQ5pnRbAvZXkJu6OVqgEKFrzqKb/qBrXK4jeGJCuIl/2Rs
+         ycXF/pYyFD7R3khkDEkpZo6R+ipPDYlxcQEIcRaMUSb/DuplmshZSHY9vfO4n/HZ8/Ir
+         lxD4yIUK5obFrRuQqv5qF5INpaolMTU/WPINM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GG4woYR7NisY/q8Aqftt8VbaoIUjeCAFtan/TYRsjpU=;
-        b=tbSB3/N4tdXrh0LJiWKhO7hASUjdnGN3refkWdl0mpJtB3czUyfTxM7A5xo0Vomw8+
-         8Vh9iQ2g3Hf5TbRvmpSALirCqro5KnDCvORa+QNmpIDk8rNVkXVSciI58JE8gdmAKWYW
-         D16x5qdXoPpPrDOw87r6bLGcmEAtD/XATomTTSLp6zmkLvrZq/UiG9nCo7vygCh218sg
-         Ue0dEdL59o3xwZmlpVZgi1tVan7K8XMbouYrT/y0vxIt+04DLXFbwfUpNaOtXUwi3gjs
-         fXqA4/B+NrtOVZDOpzU/tMdbpssUXqwjQGr3uWDv7gBCl7aN+rPquPA+acK8QQM3BBVI
-         M56w==
-X-Gm-Message-State: AOAM530UC+gY96t8LY+L7d7jHx0kVckQqTYGcV4+6LUH/HXZVbRU5ihT
-        nxOV0LWr1iegZHylXOUgtn/6Pg==
-X-Google-Smtp-Source: ABdhPJykT+5wpjxxfNlbo1iflYwQ32FIIWG5dI2LruihbbOqUdV3QEb5FgCDaxq2gggVjjxyWadZYA==
-X-Received: by 2002:a63:3759:: with SMTP id g25mr1671466pgn.231.1635399901817;
-        Wed, 27 Oct 2021 22:45:01 -0700 (PDT)
-Received: from localhost ([106.201.113.61])
-        by smtp.gmail.com with ESMTPSA id pj12sm1467465pjb.19.2021.10.27.22.45.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Oct 2021 22:45:01 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 11:14:59 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org
-Subject: Re: [PATCH v2 1/5] arch_topology: Introduce thermal pressure update
- function
-Message-ID: <20211028054459.dve6s2my2tq7odem@vireshk-i7>
-References: <20211015144550.23719-1-lukasz.luba@arm.com>
- <20211015144550.23719-2-lukasz.luba@arm.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=6+eTf7nyr6M3KwEm+TOLweZAQxKtMfVD5JwzIPGapF4=;
+        b=l0cnoPxgrYKHB+AB371maok17VKzog1aKrbJQIVEs8vQjbOUvrn0GPCSsfx6qvdqgb
+         hkywrF8k38jiY4EO4Y7QSay4d+ai5sEZ4SnA5y8o7rkihm4M2so3zuc0FGepmY2db4+L
+         UWWyV37hutSs8e2t+w1pXebwjy1y8TAR4hVLUJpDfP9kQOXptInEqQZ/vBxmXSd758B3
+         U84jvfkpDdW54JzjOAsO7aE81r04f959Ax6E7eTMM/epS/sxUbuFpptLO1sdPmswTitU
+         kL9KIv2NznYuJ7+CTEzuzJrbu97w7F4erzC6JokYGT8CU0Zu0zBeF46PIGVMpNRRXNAL
+         K0Xg==
+X-Gm-Message-State: AOAM530/OGbw731VH+n/RAuw+XnWcZMnpR7V1Uq3qQAZQFQeJ7iVOGjd
+        DSgDmts64dnOS+SM68fVaHTpAuLUQnevHzn1zCHkcQ==
+X-Google-Smtp-Source: ABdhPJyea8Fwx4YyKse423qLTPTFc+z3zOfjtneOqoZsNUJoAqTszW1lfetTqMDV080TNLNVBZYOcvECNsZXED/wHU4=
+X-Received: by 2002:a4a:e94e:: with SMTP id v14mr1125894ood.1.1635402032695;
+ Wed, 27 Oct 2021 23:20:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 27 Oct 2021 23:20:32 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211015144550.23719-2-lukasz.luba@arm.com>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <1635386088-18089-2-git-send-email-quic_sbillaka@quicinc.com>
+References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com> <1635386088-18089-2-git-send-email-quic_sbillaka@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 27 Oct 2021 23:20:32 -0700
+Message-ID: <CAE-0n51J60efae0yMvC_ZfxX53YZLOgY_K1cpA8PLPedr6hMBA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] dt-bindings: msm/dp: Add DP compatible strings for sc7280
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
+        robdclark@gmail.com, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
+        dianders@chromium.org, khsieh@codeaurora.org,
+        mkrishn@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-10-21, 15:45, Lukasz Luba wrote:
-> +/**
-> + * topology_thermal_pressure_update() - Update thermal pressure for CPUs
-> + * @cpus	: The related CPUs for which capacity has been reduced
-> + * @capped_freq	: The maximum allowed frequency that CPUs can run at
+Quoting Sankeerth Billakanti (2021-10-27 18:54:43)
+> From: Sankeerth Billakanti <sbillaka@codeaurora.org>
+>
+> The Qualcomm SC7280 platform supports one eDP controller
+> and a DP controller. This change will add the compatible
+> string for both eDP and DP to msm dp-controller binding.
+>
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+>
+> changes in v3:
+>     - Modify the subject (Doug Anderson)
+>     - Add sc7280-dp also to the list (Stephen Boyd)
+>
+> changes in v2:
+>     - Sort alphabetically (Stephen Boyd)
+>     - Cleanup residual stale changes in the patch (Matthias Kaehlcke)
+>     - Modify the subject (Doug Anderson)
+> ---
 
-Maybe replace tabs with spaces here ?
-
-> + *
-> + * Update the value of thermal pressure for all @cpus in the mask. The
-> + * cpumask should include all (online+offline) affected CPUs, to avoid
-> + * operating on stale data when hot-plug is used for some CPUs. The
-> + * @capped_freq must be less or equal to the max possible frequency and
-> + * reflects the currently allowed max CPUs frequency due to thermal capping.
-> + * The @capped_freq must be provided in kHz.
-> + */
-> +void topology_thermal_pressure_update(const struct cpumask *cpus,
-> +				      unsigned long capped_freq)
-> +{
-> +	unsigned long max_capacity, capacity;
-> +	int cpu;
-> +
-> +	if (!cpus)
-
-I will drop this and let the kernel crash :)
-
-> +		return;
-> +
-> +	cpu = cpumask_first(cpus);
-> +	max_capacity = arch_scale_cpu_capacity(cpu);
-> +
-> +	/* Convert to MHz scale which is used in 'freq_factor' */
-> +	capped_freq /= 1000;
-
-We should make sure capped_freq > freq_factor and WARN if not. This will also
-get rid of similar checks at the users.
-
-> +
-> +	capacity = mult_frac(capped_freq, max_capacity,
-> +			     per_cpu(freq_factor, cpu));
-> +
-> +	arch_set_thermal_pressure(cpus, max_capacity - capacity);
-> +}
-> +EXPORT_SYMBOL_GPL(topology_thermal_pressure_update);
-
--- 
-viresh
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
