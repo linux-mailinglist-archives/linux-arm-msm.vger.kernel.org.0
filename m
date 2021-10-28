@@ -2,87 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0330C43E781
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 19:47:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCBC343E820
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Oct 2021 20:17:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230342AbhJ1Rtu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 13:49:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49260 "EHLO
+        id S230491AbhJ1ST2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 14:19:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbhJ1Rtu (ORCPT
+        with ESMTP id S230329AbhJ1ST0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 13:49:50 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3665FC061745
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 10:47:23 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id m17so26850311edc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 10:47:23 -0700 (PDT)
+        Thu, 28 Oct 2021 14:19:26 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A932C0613B9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 11:16:59 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id q39-20020a4a962a000000b002b8bb100791so2454605ooi.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 11:16:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=WZwJd6pQXuj90DgXnmrq+JdASJsQQ5coXQgD2NBlIMM=;
-        b=G3sr7w/roLYmKlnvisZ1SahLTPw/d5MFZeE22ZJGZ7BOh2T9pXzjLKg6uG5EBc66Nt
-         n8CqKUA9uN37u8E/BPA4fA6m3xaPdlTfb76AgCBciiQjidV/61VkCYaQKZM7/Uw9EdN6
-         tsTMdbYOCJRKf9M1vPdwt0HMdz08BAoOrSjwFcsWgRNcUrGuuasRYnAd0WWvw13LA/Cr
-         ampXu0UqLQRgPkcRzMMXRHWnuPGsyAG7EBNw9pverK6IzaIpr6SOtqO2P6iJWKEC/fhJ
-         iNhKGWroolv+wpgigJ046giMVh02x70kNcDx7Gtp+TozM0cxeRo+Ruck4vcS95R3AUXV
-         2c+A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Wusxu4vVS094WYADHFLACryqXCZAQomcEnv/oqtQUp8=;
+        b=cIHck4f7AU6fCfChVEV2LovuiRMjA9npqq575g7mD6uUXAWIZK7H/dd0FYbkYWvcLw
+         THcW+crPTr8lmtELnV92shgpOg7arjpaszvQRz613ZU/fICX96ZR7nz0A+Zs5ZWX2Kzu
+         3Fxyh0V1kgUIi49NKrpybu+L1b2eGf9O4QvZQI8qc2ZWwFFux0z41haIX4Vcc6wgljWR
+         MDV+4WCiRPJBUi+UaFPrdiEtNHYRNGNAC/yesi/c2odE1ZPoTN4ofOemZsJA0bfvkzro
+         RVFdWyPcFsTjJWMnxm3mzqX74df7+nxkEJqS8WqXZ6DsJcMWEMdTR/QCI0bM6LMkj2JB
+         0REg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=WZwJd6pQXuj90DgXnmrq+JdASJsQQ5coXQgD2NBlIMM=;
-        b=A1DBrja46Tgrp8jy6ujwbX8813EMnELD4Pk2hAl+7pxNjNKh5EPJcmxv6CVrHNPWJC
-         gaGvhxY8kBY2MSPMnUsTOlP5tw1ElQTmS5xoOOe+Pa9HSSJXsdnTLIPzKyuhbw6GC0JD
-         C+7MD1wLOQnzgHLnUaPJIHCLK6+yGFPfrFbyzTlG7tURhYf0mOa35Z2tsX+aapSV95Oz
-         hJL7hM1YLVfOzIn5u+N0fxWnHrrkcROqDIhLp86haZkV5xPWVB1EPPTxc79LLxrGLsB+
-         mFHm6DoAuBXSIbawBB6qDJXFbfUNDx8XCh1TbdEbCKJAIExahJmXjhfO13q+UFo6j2Td
-         e+6A==
-X-Gm-Message-State: AOAM5306UmEAZ9aJFg5W/+lXrEAm2T/9iYrsaZqKgLNcNzwkxMRvvxqX
-        ihITXjEwXoYo9OI3wLQAXtAHk+r3/9e+jl8KSx8=
-X-Google-Smtp-Source: ABdhPJwZpKp8j/ZqLkz/YCaSorgWj3UPYbXwFJbMNJq4izJmxsXGOVNDfIdmOKHu8yvPTG2ZdqwRKPhsWvQCDQY3EeM=
-X-Received: by 2002:a50:e08a:: with SMTP id f10mr8051671edl.319.1635443241516;
- Thu, 28 Oct 2021 10:47:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Wusxu4vVS094WYADHFLACryqXCZAQomcEnv/oqtQUp8=;
+        b=a2HvFJ3rkclZJ0df4Kk0NTsb4RPlCbfcRh0l0Y0nEyI1vf8n1rLiFhT+NilExxuiE9
+         LeslfC6tGdq/9RkHfydgJf+G/qDEultTfnERPjb07ByYPxhU79wti68QHQ1pKmVdFLOG
+         6GfPpQYDi2/qnImtQL5oI3IHWzOSoghP4g6zgUBs4xNeEdgv0Z+eP9/viyEQ0VkHvyBU
+         mLLrNxz86eqEptQ2gv/3dY6KLBPrulF3fmoEocSrPpB5nA0a8ILkWQ5Z/yVcU81kb5oN
+         4h0Raosw30wxNsYzNq+JXCqMYbF2Cr/DXko8+0HaP1/0+DzQC2cLj0bFrwxu+6qy9O3w
+         OzTQ==
+X-Gm-Message-State: AOAM530xQIkJjxREgYlPKoMg4OzNSihj/bM/KSIHn8gerZxbvE3+WJgK
+        KffJW1RS6tRKZgfvSiny0pR7sB04UiGPPNck
+X-Google-Smtp-Source: ABdhPJy7YMoWnmrHfImanNmbs6Unt0iAC5Q17Vv8gEqfdVoObsC06l/dfy2j5VCFf7uWMyZht8j/MQ==
+X-Received: by 2002:a4a:e218:: with SMTP id b24mr4268610oot.36.1635445018092;
+        Thu, 28 Oct 2021 11:16:58 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id bq10sm1288528oib.25.2021.10.28.11.16.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Oct 2021 11:16:57 -0700 (PDT)
+Date:   Thu, 28 Oct 2021 11:18:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 4/8] cpufreq: qcom_cpufreq_nvmem: Simplify reading kryo
+ speedbin
+Message-ID: <YXrphSSG9+zsZbJ9@ripper>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com>
+ <20211014083016.137441-5-y.oudjana@protonmail.com>
+ <f4af0e40-9e93-dba9-7401-cdfc76ba667e@somainline.org>
 MIME-Version: 1.0
-Received: by 2002:a50:6c8b:0:0:0:0:0 with HTTP; Thu, 28 Oct 2021 10:47:21
- -0700 (PDT)
-Reply-To: jennehkandeh@yahoo.com
-From:   Jenneh Kandeh <efffbi12@gmail.com>
-Date:   Thu, 28 Oct 2021 10:47:21 -0700
-Message-ID: <CANLFAeTVz=EdzQBzEL_dMpVdO6A1RwNPknfZdmnpmAipQupmgQ@mail.gmail.com>
-Subject: Re: Regarding Of My Late Father's Fund $10,200,000
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f4af0e40-9e93-dba9-7401-cdfc76ba667e@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dear,
+On Fri 15 Oct 11:58 PDT 2021, Konrad Dybcio wrote:
 
-I got your contact through the internet due to serious searching for a
-reliable personality.  I am Jenneh Kandeh from FreeTown Capital of
-Sierra Leone. Time of opposed to the government of President Ahmad
-Tejan Kebbah the ex-leader.
+> 
+> On 14.10.2021 10:32, Yassine Oudjana wrote:
+> > In preparation for adding a separate device tree for MSM8996 Pro, skip reading
+> > msm-id from smem and just read the speedbin efuse.
+> >
+> While I'd really like for this to be merged, it's gonna totally wreck backwards
+> 
+> compatibility.. But then, since APCC was not defined properly before commit
+> 
+> 0a275a35ceab07 arm64: dts: qcom: msm8996: Make CPUCC actually probe (and work)
+> 
+> there's only 5.14/5.15 (both of which were non-LTS) which would *actually* break given
+> 
+> somebody decided that "ah yes, pulling in DTs from these specific mainline kernel releases
+> 
+> is a good idea"...
+> 
+> 
+> If I were to judge, it would probably be fine to rid the old mechanism..
+> 
 
-Since 21st November, 2005 But I am current residing in Porto-Novo
-Benin due to war of my country, my mother killed on 04/01/2002 for
-Sierra Leone civilian war my father decided to change another
-residence country with me because I am only child for my family bad
-news that my father passed away on 25/11/2018. During the war, My
-father made a lot of money through the illegal sales of Diamonds. To
-the tune of $10,200,000.
+Given that various people have reported instabilities on db820c in its
+current form - and prior to that it was too slow - I think it's fine to
+favour getting this sorted out properly over backwards compatibility.
 
-This money is currently and secretly kept in ECOWAS security company
-here in Benin, but because of the political turmoil which still exists
-here in Africa, I can not invest the money by myself, hence am
-soliciting your help to help me take these funds into your custody and
-also advise me on how to invest it.
-
-And I want to add here that if agreed 35% of the total worth of the
-fund will be yours minus your total expenses incurred during the
-clearing of the fund in
-Porto Novo Benin that 35% is a $3,570,000 I would like to invest on
-heavy duty agricultural equipment and earth moving machines to enable
-me go into a full scale mechanized farming.
-
-l wait to hear from you
+Regards,
+Bjorn
