@@ -2,117 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A48C440124
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 19:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06682440138
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 19:23:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbhJ2RXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 13:23:17 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:41141 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbhJ2RXO (ORCPT
+        id S230196AbhJ2RZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 13:25:42 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:49321 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230189AbhJ2RZm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 13:23:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635528046; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=4HPL9sczbdymRv+oWzyjAE0VxVTQXhBhxNzHHsXiKw0=;
- b=hj+3sS8Pk6kzlucZVnBsgk7EWpjpuDvM+q6N/K7IU1EMSuDaUapBnKdZERj0Lps5YIxhusCk
- 4pfSTTDa6xoUnntlZav36qiZw1YB535Bxf0qJlrItAe1JZeyey6ZupfdZr4E7GZIRJmJAmHT
- Xait4/fz1kMxyAup9igqlze4eBw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 617c2d5ec8c1b282a595d8f7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Oct 2021 17:20:30
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59D3DC43616; Fri, 29 Oct 2021 17:20:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8BE25C4338F;
-        Fri, 29 Oct 2021 17:20:28 +0000 (UTC)
+        Fri, 29 Oct 2021 13:25:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635528193; x=1667064193;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=lz3mQc308MTt4WVACz+DP5zg7iAOix3NKfFOXD0Qx1M=;
+  b=qcxSA4o8jjjE68Tf7Qx+DNinerJt11bD+WJAELsTpJC0OQ7INGfuXLR0
+   hc5uXbd+OHm3GW08e8pN3up03Loj8MiJb6QUJJyd5vrBzgfn4omqu2r6D
+   fcGTQEr2hL3QrCm57rzT/4Db3GPRzMaInBvLfOg7xlXbOVMgtz7bDwS+0
+   8=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 29 Oct 2021 10:23:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2021 10:23:12 -0700
+Received: from [10.110.53.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.47.97.222) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Fri, 29 Oct 2021
+ 10:23:11 -0700
+Subject: Re: [PATCH V3 1/4] dt-bindings: leds: Add pm8350c pmic support
+To:     Satya Priya <quic_c_skakit@quicinc.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        "Rob Herring" <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <mka@chromium.org>, <swboyd@chromium.org>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        satya priya <skakit@codeaurora.org>
+References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1635507893-25490-2-git-send-email-quic_c_skakit@quicinc.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+Message-ID: <7bbc2d70-9b18-7e2f-1121-49d4342341ca@quicinc.com>
+Date:   Fri, 29 Oct 2021 10:23:10 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <1635507893-25490-2-git-send-email-quic_c_skakit@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 29 Oct 2021 10:20:28 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org,
-        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        sbillaka@codeaurora.org
-Subject: Re: [PATCH v3 6/6] drm/msm/dp: Remove the hpd init delay for eDP
-In-Reply-To: <CAE-0n50YcX6sCoTR0bUy_GrZM7=UdHPAGYNwE3Nvj6GL4iTmMg@mail.gmail.com>
-References: <1635386088-18089-1-git-send-email-quic_sbillaka@quicinc.com>
- <1635386088-18089-7-git-send-email-quic_sbillaka@quicinc.com>
- <CAE-0n50YcX6sCoTR0bUy_GrZM7=UdHPAGYNwE3Nvj6GL4iTmMg@mail.gmail.com>
-Message-ID: <d04f4082266e599cbba458d5e39e75e9@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.47.97.222)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-27 23:38, Stephen Boyd wrote:
-> Quoting Sankeerth Billakanti (2021-10-27 18:54:48)
->> DP driver needs a 10 second delay before phy_init so that
->> the usb combo phy initializes and sets up the necessary
->> clocks for usb devices such as keyboard and mouse.
->> 
->> eDP controller uses a standalone phy and need not wait for
->> phy initialization from any other component. This change
->> will remove the delay for eDP controller.
->> 
->> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c | 11 ++++++++++-
->>  1 file changed, 10 insertions(+), 1 deletion(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 61385d6..de6a1fd 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1438,7 +1439,15 @@ void msm_dp_irq_postinstall(struct msm_dp 
->> *dp_display)
->> 
->>         dp_hpd_event_setup(dp);
->> 
->> -       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
->> +       if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP) {
->> +               /* eDP does not need any delay before phy init */
->> +               delay = 0;
->> +       } else {
->> +               /* DP needs 10 second delay to let usb combo phy 
->> initialize */
+On 10/29/2021 4:44 AM, Satya Priya wrote:
+> From: satya priya <skakit@codeaurora.org>
 > 
-> This seems to be a different approach to the patch Kuogee sent a week 
-> or
-> two ago. Can we figure out what's wrong with the DP phy starting before
-> the USB phy? I suppose this patch is OK as a temporary hack to keep
-> moving with eDP, but we really need to figure out what's wrong with DP
-> so this delay can be removed entirely. Has any progress been made on
-> that?
+> Add pm8350c pmic pwm support.
 > 
-Sankeerth,
-Can you drop this patch for now.
-Let's discuss more.
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 
->> +               delay = 100;
->> +       }
->> +
->> +       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, delay);
+If you are sending email form quic_c_skakit@quicinc.com then can you 
+please use the same email for SOB as well?
+
+
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> ---
+> Changes in V2:
+>   - No changes.
+> 
+> Changes in V3:
+>   - No changes.
+> 
+>   Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> index 336bd8e..409a4c7 100644
+> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -19,6 +19,7 @@ properties:
+>       enum:
+>         - qcom,pm8150b-lpg
+>         - qcom,pm8150l-lpg
+> +      - qcom,pm8350c-pwm
+>         - qcom,pm8916-pwm
+>         - qcom,pm8941-lpg
+>         - qcom,pm8994-lpg
+> 
