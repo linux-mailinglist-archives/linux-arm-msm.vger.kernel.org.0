@@ -2,124 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6869143FD3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 15:14:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C526143FE5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 16:21:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbhJ2NQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 09:16:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38338 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230213AbhJ2NQq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 09:16:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CEDA661167;
-        Fri, 29 Oct 2021 13:14:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635513258;
-        bh=P1ON3/62L0Dv3I0JOEX4dWv6/iBLDiTdyLMkn72flOE=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=Z4fNmufrUQYNBmCrjdme6gGW2Xge2pyny+vN2reRjsWoNza44nM3RQ6+hS/PX5DEY
-         scP+rqH8lgWcJyUrZJSEFsuqjQmnCjiFRwG9nIDIxsp75FSd8w2TWJs3yHMAK3lZ0K
-         eYJQB2rmKAtw8vH2GoaczSKOEaeNDnF8NP8gw5zvMTFMW2RhIM8U2jQ/wOeOuvElAO
-         RcDxnAccPUuIqvwcdCAoMac2dv1WPLvei+QVgl07Wmewf0P2RfsGUPxLYkhf9AXZkH
-         NBk7h0YEkNbxUlSG0HDoom8igk35aQR00aOFAr819AIbeCKjrJEcW5ZyJuiLdMN9UC
-         qfz0e7QKgy/lQ==
-References: <20211028211753.573480-1-jaschultzMS@gmail.com>
- <20211028211753.573480-3-jaschultzMS@gmail.com>
- <CAHp75Vfq7ZkXytuAFhGOMGuH7_AsXcYf9O=p30e4OUx+a4jMgw@mail.gmail.com>
- <87fsskqvvc.fsf@kernel.org>
- <CAHp75VdHpHMp7X=8WcVbSUaT3pfxo-ZOTQ0BwdQqD09bJ2ddKg@mail.gmail.com>
- <877ddwqaas.fsf@kernel.org>
- <CAHp75VcwbVh7K=UMgiJ1QpaeB_f_==K4Ewzjt5OwYcOAXqiyUw@mail.gmail.com>
-User-agent: mu4e 1.6.6; emacs 28.0.60
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Jarrett Schultz <jaschultzms@gmail.com>,
+        id S231481AbhJ2OXp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 10:23:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231328AbhJ2OXp (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 Oct 2021 10:23:45 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A31CC061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 07:21:17 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id h2so10755274ili.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 07:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sIUQzVNUIv7UCtk6VWOsz7d0/zFfTc744OnsuueWlvs=;
+        b=DIQ887zrw4zChe9HYWt/WjLPNxc/iYt5HUHzQ4mwGE5XeORYC2UEpNsFOoZC3QwgaT
+         TF48ji3W63maB8D8jK8tteg01GHEbd9pa35XXGVGX80TjCDIEKIfI58wstqA7F/JIHNv
+         SWTVss33qnlUeJ2h7c6YErjgzxUafxydPSo7InFl1g0s1tf1NRKL22IHvQB/l0SZ4pnI
+         XZuemEI4vmRoI3cL4HaUV/eMe/kyggaW74ioPY9b9lr/Yimb/Xq0gk6ZjeMdrKKJitsP
+         0wkFL2SlldC7C7aEe5ZYFEXuLwNAti5Wn4gvsIG9MgorOSChREQ1+9aBARDvOMZvcGRX
+         ifNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sIUQzVNUIv7UCtk6VWOsz7d0/zFfTc744OnsuueWlvs=;
+        b=K+e9etGU5rn5XRmNnZV0dF811ZAlJOnGeb8VH41zRTMpCSk5/zpAFrJHoHrmqpBf8b
+         tCvfdVzSxidxw0ROHU8ITwesQQtrKSVyBnVRGRqI7BNUyXyZdtGPjH5vV5v1Rty8AZpq
+         8qcmsgHrlD+oVLkds6XPXY4dO+AuCHh2QbQZu1L23YMeze5sBFwFAcABIRbEENFhBIf0
+         nCh7Q9SHYtko8Pn/Np+s72pOoS8/hNeR3aCJtk4d7B+7ilLqVnWxvu5BDGx70RyAQEon
+         zMJ+RXzJxCPKLJMGv5vMBo5/Pw7qIIBwJFu7qHX+gg59lGo79mPz9cEthT2UPq+mO8CS
+         NmHg==
+X-Gm-Message-State: AOAM531AjSkjUEKFNtI6wE1DUDnwMSXRh5xRuB3qnNE5SDivg6WZh8yr
+        OlfnZNL6DIzUMuOjwhVcTASYDg==
+X-Google-Smtp-Source: ABdhPJw9vVlq7THY7kGI75S7I+MnEeKid2R/HUuZH+tEX10TwwATfB8tr2VAt0rQHhT4bIf6sFsQUQ==
+X-Received: by 2002:a05:6e02:1c08:: with SMTP id l8mr7574952ilh.203.1635517276430;
+        Fri, 29 Oct 2021 07:21:16 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id e10sm2972754ili.53.2021.10.29.07.21.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Oct 2021 07:21:15 -0700 (PDT)
+Date:   Fri, 29 Oct 2021 10:21:14 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        swboyd@chromium.org, jani.nikula@linux.intel.com,
+        Sean Paul <seanpaul@chromium.org>,
+        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "platform-driver-x86@vger.kernel.org" 
-        <platform-driver-x86@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: Re: [PATCH 2/3] platform: surface: Add surface xbl
-Date:   Fri, 29 Oct 2021 16:12:08 +0300
-In-reply-to: <CAHp75VcwbVh7K=UMgiJ1QpaeB_f_==K4Ewzjt5OwYcOAXqiyUw@mail.gmail.com>
-Message-ID: <875ytgt1lm.fsf@kernel.org>
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 12/14] dt-bindings: msm/dp: Add bindings for HDCP
+ registers
+Message-ID: <20211029142114.GF10475@art_vandelay>
+References: <20211001151145.55916-1-sean@poorly.run>
+ <20211001151145.55916-13-sean@poorly.run>
+ <YVtc8ROAWAy1ja27@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YVtc8ROAWAy1ja27@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 04, 2021 at 02:58:41PM -0500, Bjorn Andersson wrote:
+> On Fri 01 Oct 10:11 CDT 2021, Sean Paul wrote:
+> 
+> > From: Sean Paul <seanpaul@chromium.org>
+> > 
+> > This patch adds the bindings for the MSM DisplayPort HDCP registers
+> > which are required to write the HDCP key into the display controller as
+> > well as the registers to enable HDCP authentication/key
+> > exchange/encryption.
+> > 
+> > We'll use a new compatible string for this since the fields are optional.
+> > 
+> 
+> I don't think you need a new compatible, in particular since I presume
+> we should use the hdcp compatible in all platforms? Or is there a reason
+> for not picking that one?
+> 
+> Instead I suggest that you simply do minItems: 1, maxItems: 3 and detect
+> which of the two cases you have in the driver.
 
-Hi,
+Thanks for your review, Bjorn! I had done this in v2 (see [1] & [2]), but it was
+suggested that a new compatible would be better. I'll change it back to this
+method rebased on top of your changes.
 
-Andy Shevchenko <andy.shevchenko@gmail.com> writes:
->> >> > Capital L will be better to read and understand the
->> >> > abbreviation. Actually usually we do something like this:
->> >> >
->> >> > Extensible Boot Loader (EBL)
->> >>
->> >> nah, this is silly Andy. It's just capitalized as eXtensible Boot
->> >> Loader, very much akin to eXtensible Host Controller Interface.
->> >
->> > My point here is to have a full name followed by the abbreviation. and
->> > n(O)t in (F)ancy st(Y)le.
->>
->> too bad my patch removing acronyms from the kernel got rejects :-p
->>
->> Seriously, this is pretty pointless. You're vouching for something that
->> will just cause confusion. Every piece of internal documentation refers
->> to xbl and you want this to be renamed to ebl because it looks nicer for
->> you. Thanks, but no thanks.
->
-> Maybe I was too unclear. I'm not pushing for EBL, I'm pushing for the form os
->
-> "Foo bAr BullSh*t (FABS)" vs. "(F)oo b(a)r (B)ull(s)h*t".
->
-> If you have x there to be capitalized, do it like "eXtensible Boot
-> Loader (XBL)". Is it too hard?
+Sean
 
-Take a breather Andy, you need it. Winter sure is coming
+[1]- https://patchwork.freedesktop.org/patch/454066/?series=94712&rev=1
+[2]- https://patchwork.freedesktop.org/patch/454068/?series=94712&rev=1
 
->> >> >  +static const struct attribute_group inputs_attr_group = {
->> >> >  +       .attrs = inputs_attrs,
->> >> >  +};
->> >> >  +
->> >> >  +static u8 surface_xbl_readb(void __iomem *base, u32 offset)
->> >> >  +{
->> >> >  +       return readb(base + offset);
->> >> >  +}
->> >> >  +
->> >> >  +static u16 surface_xbl_readw(void __iomem *base, u32 offset)
->> >> >  +{
->> >> >  +       return readw(base + offset);
->> >> >  +}
->> >> >
->> >> > Either use corresponding io accessors in-line, or make first parameter
->> >> > to be sirface_xbl pointer. Otherwise these helpers useless.
->> >>
->> >> I agree with passing surface_xbl point as first parameter, but calling
->> >> the accessors pointless is a bit much. At a minimum, they make it easier
->> >> to ftrace the entire driver by simply ftracing surface_xbl_*
->> >
->> > My point is that the above seems half-baked. It's pointless to have a
->> > func(a,b) { return readl(a + b); }. It doesn't add value.
->>
->> sure it does. echo surface_xbl_* > ftrace_filter_function (or whatever
->> the filename was) it reason enough IMHO. Not to mention that these
->> little accessors will likely be optimized by the compiler.
->
-> readl() will appear in the traces, no? But yeah I also was thinking
-> about the weakness in your argument that the compiler can silently
-> inline them anyway.
 
-In non-debug builds, when tracers are enabled a thunk will be added for
-runtime patching ;-) (IIRC)
+> 
+> PS. I hope to get
+> https://lore.kernel.org/linux-arm-msm/20211001174400.981707-1-bjorn.andersson@linaro.org/
+> landed before we add these new optional regions...
+> 
+> Regards,
+> Bjorn
+> 
+> > Cc: Rob Herring <robh@kernel.org>
+> > Cc: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-13-sean@poorly.run #v1
+> > Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-13-sean@poorly.run #v2
+> > 
+> > Changes in v2:
+> > -Drop register range names (Stephen)
+> > -Fix yaml errors (Rob)
+> > Changes in v3:
+> > -Add new compatible string for dp-hdcp
+> > -Add descriptions to reg
+> > -Add minItems/maxItems to reg
+> > -Make reg depend on the new hdcp compatible string
+> > ---
+> > 
+> > Disclaimer: I really don't know if this is the right way to approach
+> > this. I tried using examples from other bindings, but feedback would be
+> > very much welcome on how I could add the optional register ranges.
+> > 
+> > 
+> >  .../bindings/display/msm/dp-controller.yaml   | 34 ++++++++++++++++---
+> >  1 file changed, 30 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > index 64d8d9e5e47a..a176f97b2f4c 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> > @@ -17,9 +17,10 @@ properties:
+> >    compatible:
+> >      enum:
+> >        - qcom,sc7180-dp
+> > +      - qcom,sc7180-dp-hdcp
+> >  
+> > -  reg:
+> > -    maxItems: 1
+> > +  # See compatible-specific constraints below.
+> > +  reg: true
+> >  
+> >    interrupts:
+> >      maxItems: 1
+> > @@ -89,6 +90,29 @@ required:
+> >    - power-domains
+> >    - ports
+> >  
+> > +allOf:
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: qcom,sc7180-dp-hdcp
+> > +    then:
+> > +      properties:
+> > +        reg:
+> > +          minItems: 3
+> > +          maxItems: 3
+> > +          items:
+> > +            - description: Registers for base DP functionality
+> > +            - description: (Optional) Registers for HDCP device key injection
+> > +            - description: (Optional) Registers for HDCP TrustZone interaction
+> > +    else:
+> > +      properties:
+> > +        reg:
+> > +          minItems: 1
+> > +          maxItems: 1
+> > +          items:
+> > +            - description: Registers for base DP functionality
+> > +
+> >  additionalProperties: false
+> >  
+> >  examples:
+> > @@ -99,8 +123,10 @@ examples:
+> >      #include <dt-bindings/power/qcom-rpmpd.h>
+> >  
+> >      displayport-controller@ae90000 {
+> > -        compatible = "qcom,sc7180-dp";
+> > -        reg = <0xae90000 0x1400>;
+> > +        compatible = "qcom,sc7180-dp-hdcp";
+> > +        reg = <0 0x0ae90000 0 0x1400>,
+> > +              <0 0x0aed1000 0 0x174>,
+> > +              <0 0x0aee1000 0 0x2c>;
+> >          interrupt-parent = <&mdss>;
+> >          interrupts = <12>;
+> >          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> > -- 
+> > Sean Paul, Software Engineer, Google / Chromium OS
+> > 
 
 -- 
-balbi
+Sean Paul, Software Engineer, Google / Chromium OS
