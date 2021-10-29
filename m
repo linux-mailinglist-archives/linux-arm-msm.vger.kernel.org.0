@@ -2,121 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EA2A440222
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 20:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF8834402B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 21:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230126AbhJ2SiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 14:38:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45010 "EHLO
+        id S230522AbhJ2TEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 15:04:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231579AbhJ2SiH (ORCPT
+        with ESMTP id S230517AbhJ2TEL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 14:38:07 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA77C061767
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 11:35:23 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id t5-20020a17090a4e4500b001a0a284fcc2so11262968pjl.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 11:35:23 -0700 (PDT)
+        Fri, 29 Oct 2021 15:04:11 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11549C0613B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:01:41 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id g125so14700960oif.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OLq+ET5R+A3DjUYbgPc27FplW5aMkm/jkqz5GrjfXc8=;
-        b=JXjpPFbH6HiCzc8IWFuCSPzuKBUJAqIBoGAvXZO2s5XeKSn4nqZ1gsE3qXiIIRw6MJ
-         v2BcVlpVnfAZRm2IFNC5mOOuL84abOpDmrWPcH4hvBi0jAGDvTSAM1OBeLAAB+ttPY+N
-         4yBBs+qGUjzgbq3Wczf8HVSViQBwV3rXkkKtc=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=TVdi6Fl/MB/KZRsgDzQbukqjgZZAtYkijpdGcF4lmLs=;
+        b=MzXdmS/4QiP7cYNzBGEEG80o+PYN5LU/WzOdNbM7Wmsq/moQK7lgMJNg2Lg+WE6JVB
+         DmmMtuKqDZP9s6K4K6Wb48SjzZ1WpFD69doHDWGMe2Oi2McGvNwu7A5Kr2Wbze9/wVzp
+         tWo8uMFP7Docoe5tO62X0zga0xREye+jI222Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OLq+ET5R+A3DjUYbgPc27FplW5aMkm/jkqz5GrjfXc8=;
-        b=X7taFhS42DjIQQzTwwDdOno9rpkld47A4F7/Lu3tG3bonbUGyneNGy99phHDC7JM4J
-         0osrp/l3iI13yemqm5QXfRLixXWXb9eLpndujQGd1UyHtbIH32pjho3LPuyOL6MeGNnX
-         KaSFyOKjR8TBqoZwSY/BT8lx0Wf+mh4g9g/4wRnhADhOr5If04RKOUNu0MlwVSiyqwF6
-         xw20MG4tTd83XxXqY4YH+n6kkKvRt5e3mW7EizzUeDYND0p33gaUxG7pKp4VVrvXjifv
-         /7kNtjGW3yhwN13FhsGUGJWwfcrljxcwQ6DVXbuH92/TWLADGg4Y7Wfb0wSOzygOjvdt
-         2opQ==
-X-Gm-Message-State: AOAM530HtLlI3VJOwJyPSxTq8wZxdHmG3Eo9qFGeK8y6H0M3v24rm5Yb
-        FLvMK9KbeHWjkJSP5fUAT9fKuQ==
-X-Google-Smtp-Source: ABdhPJytryGkRWqTdtcqvFyyzQZj6mozxET1Nz8RJNYLVd9tsETsGKPQ03VNK6rsFsmZht46XVtoyg==
-X-Received: by 2002:a17:903:31ce:b0:13e:a6e6:9a53 with SMTP id v14-20020a17090331ce00b0013ea6e69a53mr6746115ple.4.1635532523157;
-        Fri, 29 Oct 2021 11:35:23 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:e16c:3cc5:ae05:5dbe])
-        by smtp.gmail.com with UTF8SMTPSA id a20sm7349017pff.57.2021.10.29.11.35.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Oct 2021 11:35:22 -0700 (PDT)
-Date:   Fri, 29 Oct 2021 11:35:21 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     tjiang@codeaurora.org
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
-Subject: Re: [PATCH v16] Bluetooth: btusb: Add support using different nvm
- for variant WCN6855 controller
-Message-ID: <YXw+6aBO+77O2S+w@google.com>
-References: <4c12452739c0d7fa1c6a4f5998515767@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=TVdi6Fl/MB/KZRsgDzQbukqjgZZAtYkijpdGcF4lmLs=;
+        b=LOV00zBpBCdhQOI7NIfA3mKKeI86Uzr71xAGmtRA5TmKmP/x2N19I7wU1l9KzCuO6R
+         ZEs4OCL3+8WMaj9Ts43ViXhfYNdtzpj8h019Gq/JRtOAlOFekgV9wqvtksdemkk3Sm+F
+         FDfDAEYOMw9HRvmyYrMy2Qb4ijUMzfIjEarD6pIGcREIhYvIWCARpwhAjpVDhLeMXgs5
+         tfuAqYBb3GV45+MhxBFPvcIas0+t6WQKZzMI5eKfOs7IM1Dr1e5I976rciGMF/glgiQx
+         /0hJAK8YnjFpYlAKWwg6IV3E76DD4TOqWBIZ/H5hUFeGxiVIodJmcEjItrhxPEN3vewE
+         dwEg==
+X-Gm-Message-State: AOAM531V+oRTRFAwtxhhz+u3KBcbtgao55b+qTjRKJ2UzzsJY4S9wYyK
+        /fuPfOMz0IWHYUYrjXpmvHO7qUFa5H9+Oy1SzMa0iQ==
+X-Google-Smtp-Source: ABdhPJwQlGvsBPbd7Afpn6FwkrBTZ1o9iZWKjlIZ/CCM3AABnc3sMrHfvoL9Q2sTgQvJLiS+2ORNuI2alq53l5/KmWw=
+X-Received: by 2002:a05:6808:2307:: with SMTP id bn7mr1203456oib.32.1635534100470;
+ Fri, 29 Oct 2021 12:01:40 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 29 Oct 2021 14:01:39 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4c12452739c0d7fa1c6a4f5998515767@codeaurora.org>
+In-Reply-To: <1635507893-25490-3-git-send-email-quic_c_skakit@quicinc.com>
+References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com> <1635507893-25490-3-git-send-email-quic_c_skakit@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 29 Oct 2021 14:01:39 -0500
+Message-ID: <CAE-0n50MZAYkQs4=wmq0oBb3KxFGa9pKevEEtkOtjZ=35PV15Q@mail.gmail.com>
+Subject: Re: [PATCH V3 2/4] leds: Add pm8350c support to Qualcomm LPG driver
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     mka@chromium.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, satya priya <skakit@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 11:21:21AM +0800, tjiang@codeaurora.org wrote:
-> the RF performance of wcn6855 soc chip from different foundries will be
-> difference, so we should use different nvm to configure them.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+Quoting Satya Priya (2021-10-29 04:44:51)
+> From: satya priya <skakit@codeaurora.org>
+>
+> Add pm8350c compatible and lpg_data to the driver.
+>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
->  drivers/bluetooth/btusb.c | 54
-> +++++++++++++++++++++++++++++++++++------------
->  1 file changed, 40 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 87b71740fad8..16bb5de3ce2f 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3195,6 +3195,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev
-> *hdev,
->  #define QCA_DFU_TIMEOUT		3000
->  #define QCA_FLAG_MULTI_NVM      0x80
-> 
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
->  struct qca_version {
->  	__le32	rom_version;
->  	__le32	patch_version;
-> @@ -3226,6 +3229,7 @@ static const struct qca_device_info
-> qca_devices_table[] = {
->  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
->  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
->  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
->  };
-> 
->  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -3380,6 +3384,41 @@ static int btusb_setup_qca_load_rampatch(struct
-> hci_dev *hdev,
->  	return err;
->  }
-> 
-> +static void btusb_generate_qca_nvm_name(char *fwname,
-> +					size_t max_size,
-> +					const struct qca_version *ver)
-> +{
-> +	u32 rom_version = le32_to_cpu(ver->rom_version);
-> +	u16 flag = le16_to_cpu(ver->flag);
-> +
-> +	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +		u16 board_id = le16_to_cpu(ver->board_id);
-> +		const char *variant ;
 
-Remove blank before the semicolon.
-
-Besides that:
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
