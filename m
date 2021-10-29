@@ -2,68 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32BAA43F472
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 03:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29D4B43F53C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 05:09:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbhJ2Bo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 21:44:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229950AbhJ2BoZ (ORCPT
+        id S231621AbhJ2DLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 23:11:51 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:33687 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231592AbhJ2DLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 21:44:25 -0400
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 283C8C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 18:41:58 -0700 (PDT)
-Received: by mail-wr1-x441.google.com with SMTP id r8so701452wra.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 18:41:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=onyH3owmvnaJUzZsogKo2+9AZs4vgAY1UOX7iPK3nNY=;
-        b=HHddsVvo6xM0amWN92PQEFnVpV/8mRbnP1yFEE+s2r60hdXhXCnLRdp3nDUg8EU/Nq
-         LygU3Sv3AswBPotg3+QU/lwgiP1x/peFAZrqxPUK4fXJM0YwcAnMZEx5ZIq0wQnckX11
-         gczlvS8nZ4C1kucG2JnHcLV5O1JWOB3Rya68G7LqbIFRMwVG3Xx8Kt4ocr8MDdGZUOQj
-         Oe5rwNiOk1tuQw4K7IyoOdi2BEUmfqrphbaEAe71ZlLFGez2tEZdLTXW15oc1mRWUeuy
-         EMgsY7m/wfy//FyKrGH+piBvEhVySNVyq1BkDHWP5xyWCDXJb/qDTg0Fll7tZkL28HB8
-         bpzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=onyH3owmvnaJUzZsogKo2+9AZs4vgAY1UOX7iPK3nNY=;
-        b=eNa559RBzdfN1QpkZCCt94KsgblxkxNzFWj90YjkSXU87PpUbbl7sBbpsTHQObhK7O
-         W8c7uVLitljHTwlcjBbGC0eQ4tJczNGv40J6Uc9hzW+38HvYNL2jMWZbhh2WGO1pgp17
-         FIADxvl4xpoh3EeAHxQeyrwuOVEnBd62SNZvHJnzO50TggQOT8DrsjnijZtJJPq7B+t7
-         HmXcu5lsU/HZXHTod0LYkpe5GKMa8zbvotnLXjtBEuciMapuxPA60lrcUiKHj1y2b22y
-         q82obXLprUSM8+Hx4BDt6w8Fm0bKPhaVtRCUReGmi2tIkGnmgrs3goKn+5KocTK/BAUC
-         olfw==
-X-Gm-Message-State: AOAM530Xwmlu1OV1Awun5sHG07TycfWdujSC3Dk2Msgdw3iOjX70vUwf
-        nT/HDUPvdeSeSZto/4HlHJgZgc959SfB2A==
-X-Google-Smtp-Source: ABdhPJxExprOU7Abad7trVg6Md4XUwzd09Zu/gcTudUpS9AdF6Zz+LEENc7tDllwmWZtdkIaDFsDCQ==
-X-Received: by 2002:adf:efca:: with SMTP id i10mr10234421wrp.289.1635471716790;
-        Thu, 28 Oct 2021 18:41:56 -0700 (PDT)
-Received: from [192.168.1.5] ([41.82.189.197])
-        by smtp.gmail.com with ESMTPSA id h8sm5039745wrm.27.2021.10.28.18.41.54
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 28 Oct 2021 18:41:56 -0700 (PDT)
-Message-ID: <617b5164.1c69fb81.f4445.d9bc@mx.google.com>
-From:   abisha <ugosouth6@gmail.com>
-X-Google-Original-From: "abisha" <abishahassan7@gmail.com>
-Content-Type: text/plain; charset="iso-8859-1"
+        Thu, 28 Oct 2021 23:11:50 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1635476962; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=HU9WzdznsyNXwZ00GJMZALNrQCaBt7USfMvElBn+TRI=;
+ b=rFR4EEfTCLHHIsydoC3sEF/PdTvEk2AN0AEXCadTeRDjBEGTF5/Fc6D5gqveuj64tpGmXrXr
+ 104oDMkXu7wTHLm2H8tKN279kptZ8PNoYwqmaebLhXAqUJ5nV9iENU0JI2kjSYq+PSriYYCe
+ MuLCT3ULXUPVhuJaRzg4vdprbyQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 617b65e1c8c1b282a543a9ef (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Oct 2021 03:09:21
+ GMT
+Sender: tjiang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3DDEAC4360D; Fri, 29 Oct 2021 03:09:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tjiang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A8848C4338F;
+        Fri, 29 Oct 2021 03:09:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: HELLO
-To:     Recipients <abishahassan7@gmail.com>
-Date:   Fri, 29 Oct 2021 01:42:57 +0000
-Reply-To: abishahassan7@gmail.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Fri, 29 Oct 2021 11:09:20 +0800
+From:   tjiang@codeaurora.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
+Subject: Re: [PATCH v3] Bluetooth: btusb: Add support for variant WCN6855 by
+ using different nvm
+In-Reply-To: <68A15E46-C716-4324-8B5D-C71C9D2753C5@holtmann.org>
+References: <1d19afff955cdc8d47582297a26246d9@codeaurora.org>
+ <YXgrwKUZwUWuWfG4@google.com>
+ <fe118b60df5881b0e9938f57aae6f87e@codeaurora.org>
+ <YXl3S7TT30PFfyB8@google.com>
+ <68A15E46-C716-4324-8B5D-C71C9D2753C5@holtmann.org>
+Message-ID: <807e0545d14144d2fa8ed8b54041529f@codeaurora.org>
+X-Sender: tjiang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-How are you doing.
+Thanks Marcel for the reply, I will do as what you said , thank you.
 
-MISS=A0abisha
+regards.
+tim
+
+
+On 2021-10-28 22:00, Marcel Holtmann wrote:
+> Hi Matthias,
+> 
+>>>  the previous patch is submitted by zijun , as he is not working on 
+>>> this
+>>> project, I take over his job, so can we assume abandon the previous 
+>>> patch,
+>>> using my new patch ? thank you.
+>>> regards.
+>> 
+>> Your patch is clearly based on zijun's one, it even has the same 
+>> subject. A
+>> change of authorship shouldn't result in resetting the version number, 
+>> it's
+>> still the same patch/series. You can always add a 'Co-developed-by:' 
+>> tag to
+>> indicate that someone else contributed to a patch, or use a 'From:' 
+>> tag if
+>> you only made minor changes on top of someone else's work.
+> 
+> I really don’t care much since that is for them and their company
+> policy to figure out.
+> 
+>> Not sure how to proceed best with the version number, especially since 
+>> there
+>> are already 3 versions of the 'new' patch. Either option can create 
+>> confusion,
+>> I guess you can continue with the new scheme, it seems the patch is 
+>> almost
+>> ready to land anyway.
+> 
+> It is a total mess already for a dead simple patch like this. And they
+> keep messing it up differently every time.
+> 
+> I provided a btusb_generate_qca_nvm_name() in one of my replies, where
+> the variant variable was declared without NULL assignment and the
+> ram_version was converted from little endian in place. That was 28th
+> of September and 4 patches later the patch is still not ready to be
+> merged. The maintainer hands you the recipe and you still screw up the
+> cake multiple times; I am just done with this.
+> 
+> The next version would be a v16 btw. So seriously, how can we have 15
+> revisions so far and still not have this in a mergable state?
+> 
+> Regards
+> 
+> Marcel
