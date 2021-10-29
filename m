@@ -2,114 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C52AF4405D1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 01:35:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5E6A4405F7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 02:00:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229441AbhJ2Xho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 19:37:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56258 "EHLO
+        id S231596AbhJ3AC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 20:02:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230504AbhJ2Xhm (ORCPT
+        with ESMTP id S231401AbhJ3AC3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 19:37:42 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F862C061714
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 16:35:13 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id n11so7454271oig.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 16:35:13 -0700 (PDT)
+        Fri, 29 Oct 2021 20:02:29 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14538C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 17:00:00 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id bi35so24035319lfb.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 16:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=PpuLCz4ga4Gy0Gh5NWyC/cRzLKCgj8drSbwewDSyv/8=;
-        b=Oypysc3NkHamf8CiPca5foDaX4rg23TW2UfyCEtKHki7XkSRFky2YWN++WJHWmmJfM
-         mkbIXUlJiHkGkFVw0c/Wd75fdP21uSCZwExRYIbzXB2Rigp33corJIq+pUtKGGsxtcri
-         X/+yJqOEoqN2mgG9ALqWp7+NFJ1ZXJhqcrTLc=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5g5uYOpUvbfjxaJiICWjHW49d1Em+rTKi4gF70TOHxg=;
+        b=JggKoMhlfFspzcDUsIkc347dS7xht2N8D6Ij6xACaoNBJdGrQOZmVnkuJlGDgtHdlH
+         IQEGiAZBzfrpI4fRfyb0N6bCAdm9mMfBNujFv89B5lZMaqOKosmVtAyjzKcOTS6ZddY0
+         JrmIYSDglEIKMpO0NF3EX1Pd0uGtkuqHaoc8wOPrNzrnjG+kj3OyiSDqFiLJSxHqymh3
+         KSxdlocXpFcaHiIHyonAZ2FhZGCimyRS7VUSO3QTfLlfa2NGTGo0dw/2cakK8VAzwM1j
+         G6ndx9q5ajcRNwsGaYxj9h09CYjCOocgAHsGMJwR8Dxv2PjajogZG6q7NrCBv2vZ4GUh
+         0jLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=PpuLCz4ga4Gy0Gh5NWyC/cRzLKCgj8drSbwewDSyv/8=;
-        b=kc2m8BU25a4UUUzmtOCWAMK2brQdpcdWlJy0wO+tntMWkEDXosRwO76LyMmcWAmFwp
-         h0W43y98I1PqIksX3gLFZLplNQ80o/OgmpO46ntbt71druIrQ+41aK2AGEO5+ZoANTYs
-         kumiEoC1WE1m+C6bjcFYGoOF7w3D35XvndXfq0ZXiRnpC2AxoomENlfk4mZRsyPoEmok
-         O3CzPDCweMZV4IxGfKpBkVK+l+fTpN6CrGmAe5yX3WawCGdZ/Tkf5jl89aAR8KQ9Gtyk
-         UNWxLwJKMlUmZVaMfbKKnP0oFO9mR53OFh5panX/KfViGO2+B79npQaOWYT4FNcpEWwV
-         7l7Q==
-X-Gm-Message-State: AOAM530I6zWBJyYCSMgqP0jAfcgaPtWLie7boPpMtqnZVPvqQiABRAQQ
-        oiFjYwgYWDO9g+ywfSJ56dusWH4CFo9hldmWpJILkA==
-X-Google-Smtp-Source: ABdhPJyWaT+MMZqBwZXfDN3Io0Rslk8aTKIOKmbket2sdZ9RXXz9r/tqr4x0CJsA9ge/fs17qFtWdQqKRcAGi4vSJEk=
-X-Received: by 2002:a05:6808:2307:: with SMTP id bn7mr2111471oib.32.1635550512672;
- Fri, 29 Oct 2021 16:35:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 29 Oct 2021 18:35:12 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5g5uYOpUvbfjxaJiICWjHW49d1Em+rTKi4gF70TOHxg=;
+        b=QatYADd41Vw7GdMQ5M1bf0JMIeTJH5Gq+A0krD9JFau7KQ+hTCX1RL92XtVmPiFf7y
+         V7YiohEe0tRu5KJ+of4dNEwK+7B80Oehe7+XSsYzyMCwSRRGHkTY5jrMF6qr1aHuI5U4
+         wM58U9IGxGn/NE7LdZZl2vtPidXUHYiGEQqKtqjXRyloCrLxNVTC+zUzkF1f2F/jfN/6
+         L4qCykI5rb0lTDx6IdoGHvOUE2Br9/E3meTbtWnrvkmKGQ0M4bOSU5uOJn+XUT8298q/
+         yD4zV/LZ7agVA21aUFku0GFUDGtMdqbTzyK0IerqWsS0mscas0sHZ6bsY3UGarxIQAza
+         t69Q==
+X-Gm-Message-State: AOAM533R2gUCU1+ADARUnLqaasWFZJ0MmA1ryXHhFmgkJPzHavKrykky
+        AhZOLzHNZIb5L9IggEGKa8Y7smjIHhH8AVNCXosddg==
+X-Google-Smtp-Source: ABdhPJyk8AjC0EHArvk9GTYuyo2rPBLN0PMmTTayZatTpOwHnZ5+nkxvQHr9DtN0xzXkg5yuUWo07EnzCEyW/nrIIls=
+X-Received: by 2002:a05:6512:2022:: with SMTP id s2mr12509876lfs.661.1635551998004;
+ Fri, 29 Oct 2021 16:59:58 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CA+cxXhmswiRa7urqXAtF0r6qtAMs1PVMydqGM49O6koOOfUDdA@mail.gmail.com>
-References: <20211029152647.v3.1.Ie17e51ad3eb91d72826ce651ca2786534a360210@changeid>
- <20211029152647.v3.2.If23c83a786fc4d318a1986f43803f22b4b1d82cd@changeid>
- <CAE-0n50JTi+62Nzs+Lc4h4PGDdzEV2Ojm+OD+sqM1LDqC_QSow@mail.gmail.com> <CA+cxXhmswiRa7urqXAtF0r6qtAMs1PVMydqGM49O6koOOfUDdA@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 29 Oct 2021 18:35:12 -0500
-Message-ID: <CAE-0n535BjC_6Q31RBahdDeuEE1WXCJfG=M3ykB75X=5mnLq4A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] arm64: dts: sc7180: Specify "data-lanes" for DSI
- host output
-To:     Philip Chen <philipchen@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>, dianders@chromium.org,
+References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
+In-Reply-To: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Fri, 29 Oct 2021 16:59:46 -0700
+Message-ID: <CALAqxLVJzCUmcWXZo=nQA2GYR_eCbo7R1JX4KVMDRFhMQua6nA@mail.gmail.com>
+Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
+ and enc/dec
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Philip Chen (2021-10-29 16:24:58)
-> Hi Stephen,
+On Fri, Oct 29, 2021 at 2:48 PM Tadeusz Struk <tadeusz.struk@linaro.org> wrote:
 >
-> On Fri, Oct 29, 2021 at 4:16 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Philip Chen (2021-10-29 15:27:41)
-> > > MSM DSI host driver actually parses "data-lanes" in DT and compare
-> > > it with the number of DSI lanes the bridge driver sets for
-> > > mipi_dsi_device. So we need to always specify "data-lanes" for the
-> > > DSI host output. As of now, "data-lanes" is added to ti-sn65dsi86 dts
-> > > fragment, but missing in parade-ps8640 dts fragment, which requires
-> > > a fixup.
-> >
-> > I don't see data-lanes required in the schema, and
-> > dsi_host_parse_lane_data() seems happy to continue without it. I do see
-> > that num_data_lanes isn't set though. Does this patch fix it?
-> The problem I see is from dsi_host_attach().
-> If there is no "data-lanes" in DT, num_data_lanes would be 0.
-> Then dsi_host_attach() would return -EINVAL.
-
-Ok, got it.
-
+> Venus video encode/decode hardware driver consists of three modules.
+> The parent module venus-core, and two sub modules venus-enc and venus-dec.
+> The venus-core module allocates a common structure that is used by the
+> enc/dec modules, loads the firmware, and performs some common hardware
+> initialization. Since the three modules are loaded one after the other,
+> and their probe functions can run in parallel it is possible that
+> the venc_probe and vdec_probe functions can finish before the core
+> venus_probe function, which then can fail when, for example it
+> fails to load the firmware. In this case the subsequent call to venc_open
+> causes an Oops as it tries to dereference already uninitialized structures
+> through dev->parent and the system crashes in __pm_runtime_resume() as in
+> the trace below:
 >
-> >
-> > ----8<----
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index e269df285136..f6fba07220e5 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -1696,6 +1696,7 @@ static int dsi_host_parse_lane_data(struct
-> > msm_dsi_host *msm_host,
-> >         if (!prop) {
-> >                 DRM_DEV_DEBUG(dev,
-> >                         "failed to find data lane mapping, using default\n");
-> > +               msm_host->num_data_lanes = 4;
-> >                 return 0;
-> >         }
+> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+> [   26.290326][  T485] Call trace:
+> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+> [   26.290335][  T485]  v4l2_open+0x184/0x294
+> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
+> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
+> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
+> [   26.290352][  T485]  do_filp_open+0xb8/0x168
+> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+> [   26.290359][  T485]  invoke_syscall+0x60/0x170
+> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
+> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
 >
-> I haven't tried.
-> But I think it can fix the problem I described above.
-> Would you like to send it as a separate patch?
-> Or I can do it.
+> This can be fixed by synchronizing the three probe functions and
+> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+> returns success.
+>
+> Changes in v2:
+> - Change locking from mutex_lock to mutex_trylock
+>   in venc_probe and vdec_probe to avoid potential deadlock.
+>
+> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
 
-Sure feel free to send it as another patch. Or fix the schema to make
-data-lanes required. I think fixing the driver is probably better so
-that we don't have to set data-lanes when it's the default 4 lanes. At
-least I think 4 lanes is the default.
+This works for me, and avoids the deadlock I was hitting with the
+earlier version of the patch!
+
+Tested-by: John Stultz <john.stultz@linaro.org>
+
+thanks so much!
+-john
