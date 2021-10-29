@@ -2,142 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB66B43FCCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 14:57:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD48D43FD1F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 15:07:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231409AbhJ2M75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 08:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52446 "EHLO
+        id S231607AbhJ2NKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 09:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbhJ2M7z (ORCPT
+        with ESMTP id S231566AbhJ2NKM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 08:59:55 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0A0FC061570;
-        Fri, 29 Oct 2021 05:57:26 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id g8so38659362edb.2;
-        Fri, 29 Oct 2021 05:57:26 -0700 (PDT)
+        Fri, 29 Oct 2021 09:10:12 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4110C061570
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 06:07:43 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id u16so1318287qvk.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 06:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YhSN8kedoZeC71/lNKcXSi8I8fonEQD4J4/TeNpr6vw=;
-        b=JBgRi8Xilyx/PG5L52x52MAkiGMkFnYZOttYplJjAn4deDZYEHRWK/reRfubf1FGSt
-         CqOpXj5jfHPegIMK5/A9+IsabK9Uy22s/59ebEEf7BPn78oXRaPN2AYINiTWVEnvW5oP
-         awWrP0Aurn3BFI4TWnx6fDkByE+izf+UjlL3YkigiicGB5tgiLGFGv4+uiIXZXuj2PIi
-         agxIrvB9wkw36fTHez4xQWLD/6uXf9zFb6MYXKeIgFelwl+mvj8wNIrFcruZUbIBopje
-         AqdjO5ydEBGvDAL1YT1ILjd+crk5UzHze0EnNj/QwuTaTaY8qANFbSD3PuPvV7GocDgC
-         Fb+w==
+        bh=RM/bmXapeBMh8+hpkmuvSolriwwEu8yH0p43JcPWCxk=;
+        b=JbrJN6TZUsbo9JpQsvgIVP6KOjV8795JkEAt7GBb1EHJ1OA5nURuxMQ0K2v3Z6Vaj3
+         MT1GY/SYopL87+NU20ZTwHkq8auoreegZImNaxJMuGAKvZtRBclj2VQKCcpoUeLzWtVC
+         imI6YyBK5Hkpvi9BoWCu4eYU+YcigCHMY0KSLezdJrRxnRtSk2WYX5GaC+gX9/qYlPxb
+         qRWqhEaZWwE5kp07fHg+z3Qe0q2LXf7L2cgDjLdbKqcmAOIV4NNCp7fffZ425HRtAPGG
+         2KBecILyimsbz3joFdek1ayqQASemWcmzBwQSoegfJP6RSTyvYdYqNAv5hpYJbF8kWft
+         CA5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YhSN8kedoZeC71/lNKcXSi8I8fonEQD4J4/TeNpr6vw=;
-        b=EXvPIdwkfgZ9Tfy9bh6h0frOZa8neI3g3L1rg3tt26pBRTUGIvKMYvBtjMNThzWvhP
-         Sg1ADpN10uY8sOOw7DSxBQgMPGoo+1qWlWLM7fAVWwJ4m19mSUyd2hU6zz4bKCSGP5fu
-         OOARH25uEn8Mpwf5zasoqIVkZ0gFJO8F4TO4aEyPKZ3KPkMNZyfnEHRPt5mc44rbRwyh
-         FdM7l3uMdKEjyquPpG2wodd4+U5yshCUQ92sUOJeCeWfS6TWDew4t6SuNo9jvTvwGv6e
-         a6lB/BvcWTQqcQoocTDQ1NCiLKOwqtvWFLfhGsljZPFfcMEDkln0wExFeUqudCu0nYDi
-         sBGQ==
-X-Gm-Message-State: AOAM531Bqp6kcGzaWe0m9JR8ChHapFaun3kD7HORdxpQ7iq8ZS+Ac5Tc
-        69Z1MD1VyiwsqMoQIHVpHdM7IuwFAFVrbRvfEdY=
-X-Google-Smtp-Source: ABdhPJyCoz8hyGdASer7LPDOoMscdW3QPsfedNxRAZF8N2vYp8OMBEHsLn6ZpInCpxDaGHDgeDjF9Ea8uV7h5T/VWCM=
-X-Received: by 2002:a17:906:2887:: with SMTP id o7mr13200811ejd.425.1635512245127;
- Fri, 29 Oct 2021 05:57:25 -0700 (PDT)
+        bh=RM/bmXapeBMh8+hpkmuvSolriwwEu8yH0p43JcPWCxk=;
+        b=AYm4yEBiLCHA6MwcRC4H9xWAt7IfE4rISufdW/feUAzVohSmiemUKDl+aYK7KAu7AE
+         r6XcwNmbdTfUc15m6FrBW464RO/tJdEfGxFJJ8XaAmlgPzMPh6MtjnUjWXzqujl39Qbh
+         UgN7gQ0hVqCkHRtSZqD/WrT8ZJc/NKk/og9qJgNFPdDZ7KE34uQOssqfc87ZSA0kl+Jg
+         LayvruP7tevb1+Wb0l0oMMYrAe1WDlkS0gPf6oFVWSofVfoDtwVo6nr5VqWT5cuhjtcg
+         /ZnPmxJK3PCuQHktElhNNvAD9qjybozLNDBOh65btKJEk5I82gtjfoiVQ/lr/1SrCtI7
+         VTWA==
+X-Gm-Message-State: AOAM532CFU1h28i2KyfhL+Qt7Opt4B4mIMCk9w+p/3vEpMg1Wrqj5Q0r
+        JyAMGcKW8/4sPO5tPTvymdyvdAMWY87IueenTiX6uA==
+X-Google-Smtp-Source: ABdhPJycrVL9EM1WkDbofkgiWuRPwE5CFOGucVbQDvC5kPJcPytF2VCCGVy5aLeGKxsgBVw0+jTq+rUAmjM0VVg7ak8=
+X-Received: by 2002:a05:6214:229:: with SMTP id j9mr10536899qvt.27.1635512863100;
+ Fri, 29 Oct 2021 06:07:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211028211753.573480-1-jaschultzMS@gmail.com>
- <20211028211753.573480-3-jaschultzMS@gmail.com> <CAHp75Vfq7ZkXytuAFhGOMGuH7_AsXcYf9O=p30e4OUx+a4jMgw@mail.gmail.com>
- <87fsskqvvc.fsf@kernel.org> <CAHp75VdHpHMp7X=8WcVbSUaT3pfxo-ZOTQ0BwdQqD09bJ2ddKg@mail.gmail.com>
- <877ddwqaas.fsf@kernel.org>
-In-Reply-To: <877ddwqaas.fsf@kernel.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Fri, 29 Oct 2021 15:56:33 +0300
-Message-ID: <CAHp75VcwbVh7K=UMgiJ1QpaeB_f_==K4Ewzjt5OwYcOAXqiyUw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] platform: surface: Add surface xbl
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Jarrett Schultz <jaschultzms@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "platform-driver-x86@vger.kernel.org" 
-        <platform-driver-x86@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
+References: <1635510619-6715-1-git-send-email-quic_kalyant@quicinc.com>
+In-Reply-To: <1635510619-6715-1-git-send-email-quic_kalyant@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 29 Oct 2021 16:07:32 +0300
+Message-ID: <CAA8EJppXBC43=bWigTwQ-QkMsDVf829LRXokEBKcWJdHOoOezQ@mail.gmail.com>
+Subject: Re: [v2] drm/msm/disp/dpu1: set default group ID for CTL.
+To:     Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     y@qualcomm.com,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 3:34 PM Felipe Balbi <balbi@kernel.org> wrote:
-> Andy Shevchenko <andy.shevchenko@gmail.com> writes:
-> > On Fri, Oct 29, 2021 at 7:48 AM Felipe Balbi <balbi@kernel.org> wrote:
-> >> Andy Shevchenko <andy.shevchenko@gmail.com> writes:
-
-...
-
-> >> > Capital L will be better to read and understand the
-> >> > abbreviation. Actually usually we do something like this:
-> >> >
-> >> > Extensible Boot Loader (EBL)
-> >>
-> >> nah, this is silly Andy. It's just capitalized as eXtensible Boot
-> >> Loader, very much akin to eXtensible Host Controller Interface.
-> >
-> > My point here is to have a full name followed by the abbreviation. and
-> > n(O)t in (F)ancy st(Y)le.
+On Fri, 29 Oct 2021 at 15:30, Kalyan Thota <quic_kalyant@quicinc.com> wrote:
 >
-> too bad my patch removing acronyms from the kernel got rejects :-p
+> New required programming in CTL for SC7280. Group ID informs
+> HW of which VM owns that CTL. Force this group ID to
+> default/disabled until virtualization support is enabled in SW.
 >
-> Seriously, this is pretty pointless. You're vouching for something that
-> will just cause confusion. Every piece of internal documentation refers
-> to xbl and you want this to be renamed to ebl because it looks nicer for
-> you. Thanks, but no thanks.
-
-Maybe I was too unclear. I'm not pushing for EBL, I'm pushing for the form os
-
-"Foo bAr BullSh*t (FABS)" vs. "(F)oo b(a)r (B)ull(s)h*t".
-
-If you have x there to be capitalized, do it like "eXtensible Boot
-Loader (XBL)". Is it too hard?
-
-...
-
-> >> >  +static const struct attribute_group inputs_attr_group = {
-> >> >  +       .attrs = inputs_attrs,
-> >> >  +};
-> >> >  +
-> >> >  +static u8 surface_xbl_readb(void __iomem *base, u32 offset)
-> >> >  +{
-> >> >  +       return readb(base + offset);
-> >> >  +}
-> >> >  +
-> >> >  +static u16 surface_xbl_readw(void __iomem *base, u32 offset)
-> >> >  +{
-> >> >  +       return readw(base + offset);
-> >> >  +}
-> >> >
-> >> > Either use corresponding io accessors in-line, or make first parameter
-> >> > to be sirface_xbl pointer. Otherwise these helpers useless.
-> >>
-> >> I agree with passing surface_xbl point as first parameter, but calling
-> >> the accessors pointless is a bit much. At a minimum, they make it easier
-> >> to ftrace the entire driver by simply ftracing surface_xbl_*
-> >
-> > My point is that the above seems half-baked. It's pointless to have a
-> > func(a,b) { return readl(a + b); }. It doesn't add value.
+> Changes in v1:
+>  - Fix documentation and add descritpion for the change (Stephen)
 >
-> sure it does. echo surface_xbl_* > ftrace_filter_function (or whatever
-> the filename was) it reason enough IMHO. Not to mention that these
-> little accessors will likely be optimized by the compiler.
+> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
 
-readl() will appear in the traces, no? But yeah I also was thinking
-about the weakness in your argument that the compiler can silently
-inline them anyway.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 5 ++++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c     | 8 ++++++++
+>  3 files changed, 13 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index ce6f32a..283605c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -45,7 +45,7 @@
+>         (PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+>
+>  #define CTL_SC7280_MASK \
+> -       (BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE))
+> +       (BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_FETCH_ACTIVE) | BIT(DPU_CTL_VM_CFG))
+>
+>  #define MERGE_3D_SM8150_MASK (0)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 4ade44b..31af04a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -179,13 +179,16 @@ enum {
+>
+>  /**
+>   * CTL sub-blocks
+> - * @DPU_CTL_SPLIT_DISPLAY       CTL supports video mode split display
+> + * @DPU_CTL_SPLIT_DISPLAY:     CTL supports video mode split display
+> + * @DPU_CTL_FETCH_ACTIVE:      Active CTL for fetch HW (SSPPs)
+> + * @DPU_CTL_VM_CFG:            CTL config to support multiple VMs
+>   * @DPU_CTL_MAX
+>   */
+>  enum {
+>         DPU_CTL_SPLIT_DISPLAY = 0x1,
+>         DPU_CTL_ACTIVE_CFG,
+>         DPU_CTL_FETCH_ACTIVE,
+> +       DPU_CTL_VM_CFG,
+>         DPU_CTL_MAX
+>  };
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 64740ddb..02da9ec 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -36,6 +36,7 @@
+>  #define  MERGE_3D_IDX   23
+>  #define  INTF_IDX       31
+>  #define CTL_INVALID_BIT                 0xffff
+> +#define CTL_DEFAULT_GROUP_ID           0xf
+>
+>  static const u32 fetch_tbl[SSPP_MAX] = {CTL_INVALID_BIT, 16, 17, 18, 19,
+>         CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, CTL_INVALID_BIT, 0,
+> @@ -498,6 +499,13 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>         u32 intf_active = 0;
+>         u32 mode_sel = 0;
+>
+> +       /* CTL_TOP[31:28] carries group_id to collate CTL paths
+> +        * per VM. Explicitly disable it until VM support is
+> +        * added in SW. Power on reset value is not disable.
+> +        */
+> +       if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
+> +               mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
+> +
+>         if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
+>                 mode_sel |= BIT(17);
+>
+> --
+> 2.7.4
+>
+
 
 -- 
-With Best Regards,
-Andy Shevchenko
+With best wishes
+Dmitry
