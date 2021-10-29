@@ -2,71 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 642644402C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 21:02:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DD814402CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 21:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbhJ2TFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 15:05:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51504 "EHLO
+        id S230273AbhJ2TGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 15:06:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231394AbhJ2TFN (ORCPT
+        with ESMTP id S230126AbhJ2TGf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 15:05:13 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4EA8C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:02:43 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id 71-20020a9d034d000000b00553e24ce2b8so10216625otv.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:02:43 -0700 (PDT)
+        Fri, 29 Oct 2021 15:06:35 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4B46C061767
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:04:05 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id x16-20020a9d7050000000b00553d5d169f7so13203208otj.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 12:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=GpCIhA9+wByobLj7T+jx3wSH4gGS8i8uDhYC2c+0spk=;
-        b=H40YBjSl24IpyRNc3tR66GsznVBBR73W06kOgCkhC7aRGCLDor1RpsqCxk8Mi5zLxU
-         +ajnUrDPlbQHfzTz/5YT3x2kjitBtAxwmSEHw8CyAgPSRH5VjCKNATtDO0zGlfVfzNzH
-         Zq+kUFRrMGBsFJM8P2xhzdu6PvKRPpCejAV4g=
+        bh=msvWE2t5mYMtRDZ8I+17Fkh9yjZ5rWivjCZQNykv7fk=;
+        b=h8ZNXZO6Y41SOBnORBN6mWRYXD8NiYviTASTihebDxoUBuG4reKkOwBjpj+PhwUfIR
+         EV5RM3FzdALQPD4l4MUqP3QJRnMHFt/0jEojgCD2KmkD14HzRAd3+BkSsi/qrM3jG9+U
+         JTXeDZrrA9GfjTCcPg4wlcAMDm50yudFoBXYM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=GpCIhA9+wByobLj7T+jx3wSH4gGS8i8uDhYC2c+0spk=;
-        b=vy/RPlCtVv9CG1cyau9B4k2enjxYjgnpZq5ll7/7j/p7rHj90HSRhU17Agtwtk3fDU
-         znKDJC0o5WkN9HBwZ7ZAX4GKsaAl/YwFzY3ekOIQ22cyNFDNF65zRMbXfDZsjI1D7r5j
-         q3cShsBoObb/PLtQLBBBYZ90B9twnCRZ49oh2GgtISledo4ielBiYjvyFi+EtNHs/nWt
-         yzeK9h/G76v1qOs4zGhaqdToQNKA4H5syrlSanFr17+VaMx8j/PP1ALWsX89ImiGJcOW
-         gpNMSbrFWECZtjuAzeHItzWzj+palJQtQYUTWoK7k56G73NsEoaORLKLhaOfyB26rfm2
-         UL0Q==
-X-Gm-Message-State: AOAM530RAKPxOLZ6PWf+hnHY7iXvYTFQtWetZIbDe6hQK3Bos1G0HLjU
-        W3UtinUXlT4g7ISh4Pm2LA1poOQoQt7CWupx9bWSwQ==
-X-Google-Smtp-Source: ABdhPJwD5Ms7XyyP5ZQv+IuN7Q47sYd9whm72ehzsLFfBOZr7vCMUfWm6H/7b9AIUtvxagjeaRAhHVPH2FHST3pAUUk=
-X-Received: by 2002:a05:6830:1290:: with SMTP id z16mr2795567otp.159.1635534163270;
- Fri, 29 Oct 2021 12:02:43 -0700 (PDT)
+        bh=msvWE2t5mYMtRDZ8I+17Fkh9yjZ5rWivjCZQNykv7fk=;
+        b=FLcJxJa7jnY2gEsQ74cOhNMnwb25yXTvX5Ht828XhhSIY6MpHR6xo96i1eAH5BzfXo
+         Kiqrmbh5xufy7066+CgpHDADZbAvkthTosgzzT4zIOdFa7ajRHnDQbDvbzLyr1PmewyK
+         XuuS+Hz9uyYIOxP3ChHSwwDZzw8Et9WYiiZSiq2nyTaZ0f1L3x/hGqCbMdOQzgHziWSj
+         +0pGNYMqXsu4e2ArP39RjhK1yniR2j1mNVLCOTt2R8gu5ZCOr30ZtU1Ai7iWgrVZC6+1
+         OZHAysb0tI2a3qbuecAFG0JYY0Bb9jWXp8Gqu5xusi3PwNV8+5HTpEH3So9YIuRkCRcr
+         zy2g==
+X-Gm-Message-State: AOAM5307GRSkDKkmyAy2IGf672r7/yTUOfjFXmF29wf64pdZkfLp2wAW
+        EFOxFgBW0H6fAOHVzf6rBayxmDZHPPSR0iz/QR/7Qw==
+X-Google-Smtp-Source: ABdhPJwejTge5mxVTo1xpsG7+GmYiYIEclbSkYga1ic0Puo/7kWiWy21jY9P4cFhgjzOxE55swj6TqN6+gG4s2vvMTY=
+X-Received: by 2002:a9d:7655:: with SMTP id o21mr9902382otl.126.1635534245276;
+ Fri, 29 Oct 2021 12:04:05 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 29 Oct 2021 14:02:42 -0500
+ HTTPREST; Fri, 29 Oct 2021 14:04:04 -0500
 MIME-Version: 1.0
-In-Reply-To: <1635507893-25490-5-git-send-email-quic_c_skakit@quicinc.com>
-References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com> <1635507893-25490-5-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <000201d7ccb2$300dba50$90292ef0$@codeaurora.org>
+References: <1635408817-14426-1-git-send-email-pillair@codeaurora.org>
+ <1635408817-14426-3-git-send-email-pillair@codeaurora.org>
+ <CAE-0n50z=h-avn+K-weZnZFVN7nsR=fLAtge7jFZ0JLx2JvP2w@mail.gmail.com> <000201d7ccb2$300dba50$90292ef0$@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Fri, 29 Oct 2021 14:02:42 -0500
-Message-ID: <CAE-0n53u5mJSApfEn5t7PxRMDfwHBu3iLdDC0V1Brt-5K=YHyA@mail.gmail.com>
-Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: Enable pm8350c pwm for sc7280-idp2
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     mka@chromium.org, linux-leds@vger.kernel.org,
+Date:   Fri, 29 Oct 2021 14:04:04 -0500
+Message-ID: <CAE-0n5155J4vvvFES9V5=v+nX3BhZsBgZxkB=uLQOPij=-sf-Q@mail.gmail.com>
+Subject: RE: [PATCH v7 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mathieu.poirier@linaro.org, ohad@wizery.com,
+        p.zabel@pengutronix.de, pillair@codeaurora.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+        sibis@codeaurora.org, mpubbise@codeaurora.org, kuabhs@chromium.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2021-10-29 04:44:53)
-> Enable pm8350c pmic pwm support for backlight on sc7280-idp2.
+Quoting pillair@codeaurora.org (2021-10-29 03:46:03)
 >
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> ---
+> > > +
+> > > +        glink-edge {
+> > > +            interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
+> > > +                                         IPCC_MPROC_SIGNAL_GLINK_QMP
+> > > +                                         IRQ_TYPE_EDGE_RISING>;
+> > > +            mboxes = <&ipcc IPCC_CLIENT_WPSS
+> > > +                            IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> > > +
+> > > +            label = "wpss";
+> > > +            qcom,remote-pid = <13>;
+> >
+> > There are a few properties here that don't seem to be required. Is that
+> > intentional?
+>
+> Hi Stephen,
+> All the properties in the example are listed as required (except for status, which will be removed in the subsequent patchset).
+> Do you mean the glink-edge node properties ?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Yes I mean all the properties in the glink-edge node. Are they required?
+If so then we need to list them in the schema.
