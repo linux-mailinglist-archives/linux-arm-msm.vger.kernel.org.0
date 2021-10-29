@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC50440573
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 00:27:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73FF9440576
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 00:27:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231579AbhJ2WaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 18:30:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41478 "EHLO
+        id S231610AbhJ2WaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 18:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231394AbhJ2WaT (ORCPT
+        with ESMTP id S231458AbhJ2WaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 18:30:19 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531A9C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 15:27:50 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id n23so487320pgh.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 15:27:50 -0700 (PDT)
+        Fri, 29 Oct 2021 18:30:20 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D75DDC0613F5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 15:27:51 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id 187so10429350pfc.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 15:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8p+7yp48w7//WEs7Ji/brBBMvp8OpaoSralsz2SZ1rQ=;
-        b=hOdKuoyb/kTIYG3+Aimk41yC5VZLTMT9+gJASOR6FGE9iMV23NyGIqMRLjJMPr2Cih
-         4fmeKDUOYqplEoMVe14eVFcURaPSmirM8dfmWYUVN87OVal5ZxgTQv1jAlpCdFmhtX/c
-         ApfjOlpTyWHoApvNBQfveWmGahrcb6Ez06LWA=
+        bh=k4+ZA8NEy3SNBtiPt0mgLmXVJxFi8cUQuAEoLvYAu/8=;
+        b=fJdnclm/yO3BkGQ3spuBFUXgeWyOk7wFRQ1YJBdOf6IcWSE+hS9ygHo3Jq2tldkMC8
+         fAQ46+Co9lDAddI4TzifnjEFd6Wb5Fi5xEcEvfQe8YTucaP5VZQcNSFrF0I9Fy697b/+
+         HQSOZYofz+QBOhFRAVBEawdxyAgSxFgF9speU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8p+7yp48w7//WEs7Ji/brBBMvp8OpaoSralsz2SZ1rQ=;
-        b=N569y/I4ugiCILs71o6Jpfpq2Q+il+Dnm0y3jBnjE5s+2F8SoiYuWhZYugsM5FuZgT
-         wlsXglAoev/J433ASCbNjrTO6bm9ZEHAxMNn2cnSxz5vWilfIyuQiH5r74+3AETJnxkG
-         USs3sm8/uVi+lekUhD/ZQV+l/Uc1oGAKZBA8o3wj/m8gflV/PkRGHyTCgxtN4sm6zEee
-         4wbtI4Ti3FC7CPLO9rYNxrRkbAdFKVPWH9rP542bgfeRKIv2G0OJ4ux6+wOOWuSfJiEk
-         M3AhpJHK3qQ756lWw/o85DatIgww3FyRHQrPJX0Ocb4Ij/wEVgmYE2cq4hf2vzrRHYMA
-         wkYA==
-X-Gm-Message-State: AOAM533eiybULuBxFvpv+uwWMCykGWbWt1j+qQsY4HZG6UxkZ3U/xpr2
-        zvFQmVqm7Yhncad//JNqWBpx7g==
-X-Google-Smtp-Source: ABdhPJxnzZSyIvS4cPeOnXvq/PbcoYEMgbjFgjqr7TNr9LSSaEZ7Ci2Tr6ySneYvz3lBsDdSQLpIlA==
-X-Received: by 2002:a05:6a00:ac1:b0:44c:4dc6:b897 with SMTP id c1-20020a056a000ac100b0044c4dc6b897mr13921865pfl.25.1635546469875;
-        Fri, 29 Oct 2021 15:27:49 -0700 (PDT)
+        bh=k4+ZA8NEy3SNBtiPt0mgLmXVJxFi8cUQuAEoLvYAu/8=;
+        b=JdQhrUtZxcW4ecjDgYsuJImGFFcJnTDog84/EXL1AhIhc/OWZBzpwKYFI5ScB6eQge
+         xu1raEZd1n0jeqobfPtgxoYNz7wmhR+b5IM7yggOT0iW15kWWA6tBeZyAtHXFi+lMcSL
+         8Pb0gGW8goiby2yj474EH54Gh1qKAd1GSOCH/rzBaP4fBI6lf2kJrc1zckYSOT3utXJi
+         kavGuRwBs4tPFOopFwcsXq0uMSwCc4otXQ6Iqn84MyaNjfKDn5fjj4ByYJ7kGAsHznEV
+         LNQFcXFSarumeKrXLEMDZAWMXr41L82Oj4ATMSjx6XX5dm3XkQnjQ8qD+miIeCQAk7st
+         Dl6g==
+X-Gm-Message-State: AOAM530Oo0K8CJ2dC8W5wWCFEmJw1PP6dLk3ti0zQ1uYVGqcm4R9HIVH
+        ui9MobuVay3syzPQLtKlc1iIkQ==
+X-Google-Smtp-Source: ABdhPJwHWdiF3t9XLK6OBPJBwrM/4jrIy+y1c5BW+YgtzaIxZwKCsPAoXthdb941qGNN0diETM1J/w==
+X-Received: by 2002:a63:7d01:: with SMTP id y1mr10261732pgc.343.1635546471265;
+        Fri, 29 Oct 2021 15:27:51 -0700 (PDT)
 Received: from philipchen.mtv.corp.google.com ([2620:15c:202:201:e956:ddc4:6e27:e270])
-        by smtp.gmail.com with ESMTPSA id v14sm7756660pff.199.2021.10.29.15.27.49
+        by smtp.gmail.com with ESMTPSA id v14sm7756660pff.199.2021.10.29.15.27.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Oct 2021 15:27:49 -0700 (PDT)
+        Fri, 29 Oct 2021 15:27:51 -0700 (PDT)
 From:   Philip Chen <philipchen@chromium.org>
 To:     LKML <linux-kernel@vger.kernel.org>
 Cc:     swboyd@chromium.org, dianders@chromium.org,
@@ -53,9 +53,9 @@ Cc:     swboyd@chromium.org, dianders@chromium.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 2/4] arm64: dts: sc7180: Specify "data-lanes" for DSI host output
-Date:   Fri, 29 Oct 2021 15:27:41 -0700
-Message-Id: <20211029152647.v3.2.If23c83a786fc4d318a1986f43803f22b4b1d82cd@changeid>
+Subject: [PATCH v3 3/4] arm64: dts: sc7180: Support Lazor/Limozeen rev9
+Date:   Fri, 29 Oct 2021 15:27:42 -0700
+Message-Id: <20211029152647.v3.3.Ie56f55924f5c7706fe3194e710bbef6fdb8b5bc6@changeid>
 X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
 In-Reply-To: <20211029152647.v3.1.Ie17e51ad3eb91d72826ce651ca2786534a360210@changeid>
 References: <20211029152647.v3.1.Ie17e51ad3eb91d72826ce651ca2786534a360210@changeid>
@@ -65,53 +65,444 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM DSI host driver actually parses "data-lanes" in DT and compare
-it with the number of DSI lanes the bridge driver sets for
-mipi_dsi_device. So we need to always specify "data-lanes" for the
-DSI host output. As of now, "data-lanes" is added to ti-sn65dsi86 dts
-fragment, but missing in parade-ps8640 dts fragment, which requires
-a fixup.
+Support Lazor/Limozeen rev9 board where Parade ps8640 is added as the
+second source edp bridge.
 
-Since we'll do 4-lane DSI regardless of which bridge chip is used,
-instead of adding "data-lanes" to parade-ps8640 dts fragment, let's
-just move "data-lanes" from the bridge dts to sc7180-trogdor.dtsi.
+To support different edp bridge chips in different board revisions,
+now we move the #incldue line of the edp bridge dts fragment (e.g.
+sc7180-trogdor-ti-sn65dsi86.dtsi) from "sc7180-trogdor-lazor.dtsi" to
+per-board-rev dts files.
+
+Since the edp bridge dts fragment overrides 'dsi0_out', which is
+defined in "sc7180.dtsi", move the #incldue line of "sc7180.dtsi" from
+"sc7180-trogdor-lazor.dtsi" to per-board-rev dts files too, before
+the #include line of the edp bridge dts fragment.
 
 Signed-off-by: Philip Chen <philipchen@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
+Retroactively edit the v2 change log slightly
 
-(no changes since v1)
+(no changes since v2)
 
- arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi | 1 -
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi              | 4 ++++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+Changes in v2:
+- Explain why "sc7180.dtsi" is moved out of "sc7180-trogdor-lazor.dtsi"
+  in the commit message.
+- In limozeen (nots) r5 dts, replace "google,rev5-sku5" with
+  "google,lazor-rev5-sku5" and sort it
+- In limozeen (nots) r9 dts, drop the support for "sku5".
+- In limozeen r4 dts, remove the redundant "google,lazor-rev6-sku4" and
+  add "google,lazor-rev7-sku4".
+- Do not add panel compatible in -r9 dts files.
+- Move the #include line of gpio.h from sc7180.dtsi to the bridge dts
+  fragments, and factor out this change to patch 1/3.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-index 6dbf413e4e5b..f869e6a343c1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-@@ -9,7 +9,6 @@
+ arch/arm64/boot/dts/qcom/Makefile             |  9 +++-
+ .../sc7180-trogdor-lazor-limozeen-nots-r4.dts |  2 +-
+ .../sc7180-trogdor-lazor-limozeen-nots-r5.dts | 31 +++++++++++++
+ ...sc7180-trogdor-lazor-limozeen-nots-r9.dts} |  8 ++--
+ .../qcom/sc7180-trogdor-lazor-limozeen-r4.dts | 46 +++++++++++++++++++
+ ...s => sc7180-trogdor-lazor-limozeen-r9.dts} |  6 ++-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  2 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  2 +
+ .../dts/qcom/sc7180-trogdor-lazor-r3-kb.dts   |  9 +++-
+ .../dts/qcom/sc7180-trogdor-lazor-r3-lte.dts  |  9 +++-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r3.dts |  8 +++-
+ .../dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   | 22 +++++++++
+ .../dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  | 30 ++++++++++++
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r9.dts | 18 ++++++++
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  3 --
+ 15 files changed, 188 insertions(+), 17 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-lazor-limozeen-nots.dts => sc7180-trogdor-lazor-limozeen-nots-r9.dts} (60%)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
+ rename arch/arm64/boot/dts/qcom/{sc7180-trogdor-lazor-limozeen.dts => sc7180-trogdor-lazor-limozeen-r9.dts} (82%)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 6b816eb33309..f637c4d3729f 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -64,9 +64,14 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r1-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-kb.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r3-lte.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-kb.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-r9-lte.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r4.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-r9.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r4.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r5.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-lazor-limozeen-nots-r9.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r1-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r2.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+index 6ebde0828550..850776c5323d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+@@ -5,7 +5,7 @@
+  * Copyright 2020 Google LLC.
+  */
  
- &dsi0_out {
- 	remote-endpoint = <&sn65dsi86_in>;
--	data-lanes = <0 1 2 3>;
- };
+-#include "sc7180-trogdor-lazor-limozeen-nots.dts"
++#include "sc7180-trogdor-lazor-limozeen-nots-r5.dts"
  
- edp_brij_i2c: &i2c2 {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index d4f4441179fc..bd5909ffb3dc 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -603,6 +603,10 @@ &dsi0 {
- 	vdda-supply = <&vdda_mipi_dsi0_1p2>;
- };
- 
-+&dsi0_out {
-+	data-lanes = <0 1 2 3>;
+ / {
+ 	model = "Google Lazor Limozeen without Touchscreen (rev4)";
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
+new file mode 100644
+index 000000000000..f360ff27226e
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dts
+@@ -0,0 +1,31 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor Limozeen board device tree source
++ *
++ * Copyright 2021 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
++#include "sc7180-trogdor-lazor.dtsi"
++#include "sc7180-trogdor-lte-sku.dtsi"
++
++/ {
++	model = "Google Lazor Limozeen without Touchscreen (rev5 - rev8)";
++	/* No sku5 post-rev5 */
++	compatible = "google,lazor-rev5-sku5", "google,lazor-rev5-sku6",
++		"google,lazor-rev6-sku6", "google,lazor-rev7-sku6",
++		"google,lazor-rev8-sku6", "qcom,sc7180";
 +};
 +
- &dsi_phy {
- 	status = "okay";
- 	vdds-supply = <&vdda_mipi_dsi0_pll>;
++/delete-node/&ap_ts;
++
++&panel {
++	compatible = "innolux,n116bca-ea1", "innolux,n116bge";
++};
++
++&sdhc_2 {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
+similarity index 60%
+rename from arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dts
+rename to arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
+index 0456c7e05d00..4e35aec6a1e5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
+@@ -2,17 +2,19 @@
+ /*
+  * Google Lazor Limozeen board device tree source
+  *
+- * Copyright 2020 Google LLC.
++ * Copyright 2021 Google LLC.
+  */
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-parade-ps8640.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ #include "sc7180-trogdor-lte-sku.dtsi"
+ 
+ / {
+-	model = "Google Lazor Limozeen without Touchscreen";
+-	compatible = "google,lazor-sku6", "google,lazor-sku5", "qcom,sc7180";
++	model = "Google Lazor Limozeen without Touchscreen (rev9+)";
++	compatible = "google,lazor-sku6", "qcom,sc7180";
+ };
+ 
+ /delete-node/&ap_ts;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
+new file mode 100644
+index 000000000000..42b4bbcc76f4
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r4.dts
+@@ -0,0 +1,46 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor Limozeen board device tree source
++ *
++ * Copyright 2021 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
++#include "sc7180-trogdor-lazor.dtsi"
++#include "sc7180-trogdor-lte-sku.dtsi"
++
++/ {
++	model = "Google Lazor Limozeen (rev4 - rev8)";
++	compatible = "google,lazor-rev4-sku4", "google,lazor-rev5-sku4",
++		"google,lazor-rev6-sku4", "google,lazor-rev7-sku4",
++		"google,lazor-rev8-sku4", "qcom,sc7180";
++};
++
++/delete-node/&ap_ts;
++
++&ap_ts_pen_1v8 {
++	ap_ts: touchscreen@10 {
++		compatible = "elan,ekth3500";
++		reg = <0x10>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
++
++		vcc33-supply = <&pp3300_ts>;
++
++		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
++	};
++};
++
++&panel {
++	compatible = "auo,b116xa01";
++};
++
++&sdhc_2 {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
+similarity index 82%
+rename from arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dts
+rename to arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
+index e6ad6dae4e60..dc47842bc662 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-r9.dts
+@@ -2,16 +2,18 @@
+ /*
+  * Google Lazor Limozeen board device tree source
+  *
+- * Copyright 2020 Google LLC.
++ * Copyright 2021 Google LLC.
+  */
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-parade-ps8640.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ #include "sc7180-trogdor-lte-sku.dtsi"
+ 
+ / {
+-	model = "Google Lazor Limozeen";
++	model = "Google Lazor Limozeen (rev9+)";
+ 	compatible = "google,lazor-sku4", "qcom,sc7180";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+index 30e3e769d2b4..b142006478ea 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
+@@ -7,6 +7,8 @@
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ 
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+index c2ef06367baf..59740799fa3a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
+@@ -7,6 +7,8 @@
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ 
+ / {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+index dcb41afdc82a..18ef9da71998 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+@@ -7,12 +7,17 @@
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ #include "sc7180-lite.dtsi"
+ 
+ / {
+-	model = "Google Lazor (rev3+) with KB Backlight";
+-	compatible = "google,lazor-sku2", "qcom,sc7180";
++	model = "Google Lazor (rev3 - 8) with KB Backlight";
++	compatible = "google,lazor-rev3-sku2", "google,lazor-rev4-sku2",
++		"google,lazor-rev5-sku2", "google,lazor-rev6-sku2",
++		"google,lazor-rev7-sku2", "google,lazor-rev8-sku2",
++		"qcom,sc7180";
+ };
+ 
+ &keyboard_backlight {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+index be44900602d7..c5c9feff41b8 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+@@ -7,12 +7,17 @@
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ #include "sc7180-trogdor-lte-sku.dtsi"
+ 
+ / {
+-	model = "Google Lazor (rev3+) with LTE";
+-	compatible = "google,lazor-sku0", "qcom,sc7180";
++	model = "Google Lazor (rev3 - 8) with LTE";
++	compatible = "google,lazor-rev3-sku0", "google,lazor-rev4-sku0",
++		"google,lazor-rev5-sku0", "google,lazor-rev6-sku0",
++		"google,lazor-rev7-sku0", "google,lazor-rev8-sku0",
++		"qcom,sc7180";
+ };
+ 
+ &ap_sar_sensor {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+index b474df47cd70..7adcedbf080d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dts
+@@ -7,10 +7,14 @@
+ 
+ /dts-v1/;
+ 
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ #include "sc7180-trogdor-lazor.dtsi"
+ #include "sc7180-lite.dtsi"
+ 
+ / {
+-	model = "Google Lazor (rev3+)";
+-	compatible = "google,lazor", "qcom,sc7180";
++	model = "Google Lazor (rev3 - 8)";
++	compatible = "google,lazor-rev3", "google,lazor-rev4",
++		"google,lazor-rev5", "google,lazor-rev6", "google,lazor-rev7",
++		"google,lazor-rev8", "qcom,sc7180";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+new file mode 100644
+index 000000000000..7f5c015e1ecb
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+@@ -0,0 +1,22 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2020 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-parade-ps8640.dtsi"
++#include "sc7180-trogdor-lazor.dtsi"
++#include "sc7180-lite.dtsi"
++
++/ {
++	model = "Google Lazor (rev9+) with KB Backlight";
++	compatible = "google,lazor-sku2", "qcom,sc7180";
++};
++
++&keyboard_backlight {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+new file mode 100644
+index 000000000000..344b57c035d0
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+@@ -0,0 +1,30 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2021 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-parade-ps8640.dtsi"
++#include "sc7180-trogdor-lazor.dtsi"
++#include "sc7180-trogdor-lte-sku.dtsi"
++
++/ {
++	model = "Google Lazor (rev9+) with LTE";
++	compatible = "google,lazor-sku0", "qcom,sc7180";
++};
++
++&ap_sar_sensor {
++	status = "okay";
++};
++
++&ap_sar_sensor_i2c {
++	status = "okay";
++};
++
++&keyboard_backlight {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
+new file mode 100644
+index 000000000000..83f6a4eb5ae5
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9.dts
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Lazor board device tree source
++ *
++ * Copyright 2021 Google LLC.
++ */
++
++/dts-v1/;
++
++#include "sc7180.dtsi"
++#include "sc7180-trogdor-parade-ps8640.dtsi"
++#include "sc7180-trogdor-lazor.dtsi"
++#include "sc7180-lite.dtsi"
++
++/ {
++	model = "Google Lazor (rev9+)";
++	compatible = "google,lazor", "qcom,sc7180";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+index 8b79fbb75756..69666f92176a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+@@ -5,13 +5,10 @@
+  * Copyright 2020 Google LLC.
+  */
+ 
+-#include "sc7180.dtsi"
+-
+ ap_ec_spi: &spi6 {};
+ ap_h1_spi: &spi0 {};
+ 
+ #include "sc7180-trogdor.dtsi"
+-#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+ 
+ &ap_sar_sensor {
+ 	semtech,cs0-ground;
 -- 
 2.33.1.1089.g2158813163f-goog
 
