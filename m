@@ -2,83 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A36A440495
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 23:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC5B64404B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 23:15:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbhJ2VE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 17:04:28 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60256 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229873AbhJ2VE2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 17:04:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CBA4A60FC1;
-        Fri, 29 Oct 2021 21:01:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635541319;
-        bh=MlwnZcKiRgzEiBHOgFW2/VGDn4G5xMER7IIzb2ZL4OU=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=CM5Z3E+Q5LJzMBminhbfGv/FZ+poEnlyTLN5ov6iEwfA21qnmFXQoXPL4yX2/KTTB
-         xVS0mg619X4khp4oPhRMDYputo4fD4Ery6IlJ3DC56pCfRcIKPdU9u/jWWXepRbH/N
-         LUBlUT3bRfWGEuBlEkOrzA9ZGvdRnyRKMGcaOI0Cy3dTVQFROS3WGONaGEDRklqbkt
-         wpQRjFy9dpWDmytPIHUBzfWKMng1u9lEZCTrIA0iJQ5TZHZxdhulYyaqXbXv+Jkg2g
-         V0dPgtZpZFmI3wFKPityxqxeoGUPsuqM6d7pk3Pgd1sjHvER2Iam/uyI92li4Iqq8I
-         gZkdQ2bkwSiBw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20211020060954.1531783-1-vkoul@kernel.org>
-References: <20211020060954.1531783-1-vkoul@kernel.org>
-Subject: Re: [PATCH v5] spi: spi-geni-qcom: Add support for GPI dma
-Message-Id: <163554131757.1998521.12811308342203469073.b4-ty@kernel.org>
-Date:   Fri, 29 Oct 2021 22:01:57 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        id S231315AbhJ2VRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 17:17:41 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:36550 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230257AbhJ2VRl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 Oct 2021 17:17:41 -0400
+Received: by mail-oi1-f174.google.com with SMTP id q124so15174623oig.3;
+        Fri, 29 Oct 2021 14:15:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=Lrv4HMu3pJ4ELKYQ4yExPi3yFrqg0rLji7k8MjNUXdo=;
+        b=WjohNrmTT6XhS6vBnTWDuTAIPidTdAELil8pe12LDAlPZtQnMe82L0iqKslnDu4z+G
+         4wxuYWYT3/1Z74odxp+amTGGOSZkMekfaVlUITU1uN79Xv5xpxoULBTxiG5u74V2mHP9
+         2SjkP7bYZH0SJZ3hVqQNAnzvlhQOkqbE1adABHthfcT66CsFYvcHHX3DKD3VyisbkJKo
+         w5SPwph7vIIo83TjkA0rMNMxz5Wr3c6JQrHJblRHnB+cLmSmsYzd0HS2QhrTdDxtDT2/
+         H4+T7EGmgFCwdHYOPUdlYf6vsxaTHhiwrxYWepg4wtUYcXgcdLiXrHoo7eUsykzzWXwC
+         hRdg==
+X-Gm-Message-State: AOAM533BaDl2HKbpvfAERM+gmm7cEggFbT6ADTGUwwSbqOl8E0XM+6gJ
+        yD44pAKDDo3UPPbDPT2ZTw==
+X-Google-Smtp-Source: ABdhPJwjB0Kh6gEJISuzMDCDeL6VRh6W0N6NspeRpaWZ/L4c9zigIOszctikcivP1FbgRMi2+kWcQA==
+X-Received: by 2002:a05:6808:2127:: with SMTP id r39mr4600232oiw.116.1635542111994;
+        Fri, 29 Oct 2021 14:15:11 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id q15sm2163138otk.81.2021.10.29.14.15.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Oct 2021 14:15:11 -0700 (PDT)
+Received: (nullmailer pid 3221282 invoked by uid 1000);
+        Fri, 29 Oct 2021 21:15:10 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, rohitkr@codeaurora.org,
+        alsa-devel@alsa-project.org, tiwai@suse.com,
+        devicetree@vger.kernel.org, broonie@kernel.org,
+        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        plai@codeaurora.org, swboyd@chromium.org, judyhsiao@chromium.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        perex@perex.cz, bgoswami@codeaurora.org,
+        srinivas.kandagatla@linaro.org
+In-Reply-To: <1635519876-7112-2-git-send-email-srivasam@codeaurora.org>
+References: <1635519876-7112-1-git-send-email-srivasam@codeaurora.org> <1635519876-7112-2-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH v4 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine machine bindings
+Date:   Fri, 29 Oct 2021 16:15:10 -0500
+Message-Id: <1635542110.100441.3221281.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 20 Oct 2021 11:39:54 +0530, Vinod Koul wrote:
-> We can use GPI DMA for devices where it is enabled by firmware. Add
-> support for this mode
+On Fri, 29 Oct 2021 20:34:35 +0530, Srinivasa Rao Mandadapu wrote:
+> Add devicetree bindings documentation file for sc7280 sound card
+> registration.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> --
-> -Changes since v4:
->  - Fix the kbuild bot warning
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>  .../bindings/sound/google,sc7280-herobrine.yaml    | 170 +++++++++++++++++++++
+>  1 file changed, 170 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
 > 
-> [...]
 
-Applied to
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+yamllint warnings/errors:
 
-Thanks!
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dts:46.24-25 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1441: dt_binding_check] Error 2
 
-[1/1] spi: spi-geni-qcom: Add support for GPI dma
-      commit: b59c122484ecb1853882986e04d00bd879cfc051
+doc reference errors (make refcheckdocs):
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+See https://patchwork.ozlabs.org/patch/1548069
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+pip3 install dtschema --upgrade
 
-Thanks,
-Mark
+Please check and re-submit.
+
