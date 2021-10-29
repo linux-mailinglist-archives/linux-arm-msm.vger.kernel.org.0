@@ -2,89 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADDB043F789
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 08:54:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6A2B43F886
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 10:05:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232117AbhJ2G5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 02:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232108AbhJ2G5V (ORCPT
+        id S232310AbhJ2IIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 04:08:06 -0400
+Received: from new4-smtp.messagingengine.com ([66.111.4.230]:56049 "EHLO
+        new4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232313AbhJ2IH4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 02:57:21 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B257C061745
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 23:54:53 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id o83so12057418oif.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 23:54:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=ePIHoriLIVjhSnt0MZ2sr1WXfIYtpmc6bctB4GvfYk4=;
-        b=OmHAJEK0zMenmccOMKcd39WUjZj9QUxY9vCl1ZLJKSHtEpCU2CvRwDbSSrZkPutUU2
-         gX+QqkSxQXFBC5O7dJRy43ietqnteApz22NzV73I/3OSfpy/Qf6R0eZ/pCSM38K865Ay
-         c7ZxdBbTnxPm88SHFEV2cQuHvBbs0iAJNoxVI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=ePIHoriLIVjhSnt0MZ2sr1WXfIYtpmc6bctB4GvfYk4=;
-        b=irQKVgBbXQKixTGyI7pFWEo9h3280gK/ugktjMdOVj6/QduuDdGlE45jdn0EdZXFE6
-         5/9tKByRPJqoaWj+cRKgJQ//m6LvvOJtC8bEXuqvee94KbwagjG1yT5/jo62ezZerbUm
-         X2O/p2Eij1loQxoozXdrG2c9Qtr2t2DseXhdfl9W/IHNbCH7SwSKxXFS6pW4rf+8Fcr1
-         48w+AXl5JJT4o2j9UhpnCwMYffa21Vwfv2D7F7KB2kKGwq4OaRSEm8BoLfvfm7x0kMwW
-         mAcawBq/pkM2+JO/CzLoqa/kRwQwLTnikT1lggUmO00RYGpI1N7zZkbfmmsDfQxwtnxx
-         jEgg==
-X-Gm-Message-State: AOAM5334ZOpg5gpLDajLrIDfG8iPpnJNSMmwSv+5HKV4fYgIKjdTtL9E
-        1Ztgh6HTSTsBDj9T3m4IHBlx+KnwL/5iBphctivS9g==
-X-Google-Smtp-Source: ABdhPJyHUrHkYGLOqR3AfqoEd3h8Vg+Y4D1mydhapVCma/WU0xYA2fXjbJHnOH9sVOH6bK0UdSXOBdl4bzfroyj0XWU=
-X-Received: by 2002:a05:6808:2128:: with SMTP id r40mr4917340oiw.164.1635490492859;
- Thu, 28 Oct 2021 23:54:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 28 Oct 2021 23:54:52 -0700
+        Fri, 29 Oct 2021 04:07:56 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 9229158061F;
+        Fri, 29 Oct 2021 04:05:27 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 29 Oct 2021 04:05:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=T8QQliYtEhk4q5t0tdm2Hh5O/Vf
+        QXZ9zBNnZxk/jzEI=; b=Z6eoJZJq0Ut5F4hP4+9TCoaJtIJDtD7k2Xv5fnNEVtd
+        8G1SVwIbIWfIfVbCxznEJDE/HUjHwkCnhXswpDg1Pbnkrlae/yJD6wpwkpJDtC6E
+        dPLMlCUXqua4EuvIrLoLx54Cq+2NuryE63/4sq2tG5FMO0jYmeH7XnkYLW+/59lB
+        19iOOlcePZpMXSjpkKjmoHdJYNogrIZ87qF/UyvO8vG7adqSHcbUVIf8Sb7pc1/2
+        sljnabVdRqspEvblyb0qroYOlmNRshtWaB6u7QN0CiTjkUUgCO1oEtwP3495P7tM
+        DjnnJD8YYwJUTCz6Zpl+sA2FR8bLIKai2qWu9Up3Sug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=T8QQli
+        YtEhk4q5t0tdm2Hh5O/VfQXZ9zBNnZxk/jzEI=; b=FLlTNFaJVmhAdFWHXLmXZU
+        voY3leb/37+JIBex0QIhiHWUvDsipU1M1e3dbO02bGXaQR9UDRYDRKoWJ3xVzVWU
+        ETjexx4DI3QkPN5mpYCyUa9ovlgr19aTpgniBU10J6T9y4gQ1XHmnXuwI6xuvVNO
+        Rkso5Z4MO+R3PGcIfTExgS3YipF2Tg9Z4QN/1puWkRbd26xFdFwYxrHoi8FXJBbg
+        bG+SjN/eJU1+4XS8KXhLPSyJ4kbcbHjIZ+vymaCcsB6BKIu/URls5IC2iJYgSo1L
+        bQ9xPNIFmZ4Nch8DiOH91iNNvXEsdrPEp0V3h0RNuWgd8KHOKaf57gjKpKywkVog
+        ==
+X-ME-Sender: <xms:RKt7YeSXrCiCbeO7YFYq-XCqAHMPpgAc2wGvelyRtrJ717gNiSnSpw>
+    <xme:RKt7YTygGWgbm3gyH8GdK2h4aEcBCMrIWY2iBahNDknFEADWQlX0u5gNDxvNl2MHz
+    K1FTnX8aAQKO3riRTc>
+X-ME-Received: <xmr:RKt7Yb15jw_gmxeV_c-5egrQN7_LUMb1Z-WEhLI6eqJU8yu4sMY1otnFawahSlKx9n9Rn2Vo75jr2cFKgHUGRiYxMx-5rkK_hzL_4cXU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdeggedguddvfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
+    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
+    htthgvrhhnpeelkeeghefhuddtleejgfeljeffheffgfeijefhgfeufefhtdevteegheei
+    heegudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hmrgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:RKt7YaAPluwc6X3oDdXbDgGqiv8XU4-dAA6g7edKUI-23EZZv01tug>
+    <xmx:RKt7YXgrsvHS8i_b9ZzzaCdJQrM1IFnHUFXEj-56N4bfA-fLE2DXUg>
+    <xmx:RKt7YWrucJ8cWTSX5Svt8sS1i_TikQjRUrm64LZ7ZMbd2ZsTpLbk0w>
+    <xmx:R6t7YTCYbFmAnADED1yUnEGcEsCum-vXgjgXqLs6YvSN6HXt9cf44g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 29 Oct 2021 04:05:24 -0400 (EDT)
+Date:   Fri, 29 Oct 2021 10:05:21 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        linux-arm-msm@vger.kernel.org,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-samsung-soc@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-kernel@vger.kernel.org, Inki Dae <inki.dae@samsung.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Sean Paul <sean@poorly.run>
+Subject: Re: [v6,02/21] drm/bridge: adv7511: Register and attach our DSI
+ device at probe
+Message-ID: <20211029080521.6tmfq4kjngu5slv7@gilmour>
+References: <20211025151536.1048186-3-maxime@cerno.tech>
+ <CGME20211029062347eucas1p1431402205321b066349e3ccf432d2452@eucas1p1.samsung.com>
+ <73c13cf5-ca36-f47b-f53a-11d4f015505c@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
-References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 28 Oct 2021 23:54:52 -0700
-Message-ID: <CAE-0n50E2dmQeDaiggEgMgykrkGB3H38sbkTXDX3avR7XtSizw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
-To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        dianders@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="dxkmld7iruoye3zb"
+Content-Disposition: inline
+In-Reply-To: <73c13cf5-ca36-f47b-f53a-11d4f015505c@samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajendra Nayak (2021-10-26 05:07:35)
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
->
-> egpio is a scheme which allows special power Island Domain IOs
-> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
-> TLMM functions with Island Domain functions.
-> With this scheme, an IO can be controlled both by the cpu running
-> linux and the Island processor. This provides great flexibility to
-> re-purpose the Island IOs for regular TLMM usecases.
->
-> 2 new bits are added to ctl_reg, egpio_present is a read only bit
-> which shows if egpio feature is available or not on a given gpio.
-> egpio_enable is the read/write bit and only effective if egpio_present
-> is 1. Once its set, the Island IO is controlled from Chip TLMM.
-> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
->
-> To support this we add a new function 'egpio' which can be used to
-> set the egpio_enable to 0, for any other TLMM controlled functions
-> we set the egpio_enable to 1.
->
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
 
-Does this supersede adding support for lpass pinctrl in this series[1]?
+--dxkmld7iruoye3zb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[1] https://lore.kernel.org/r/1635342097-2726-1-git-send-email-srivasam@codeaurora.org
+Hi Marek,
+
+On Fri, Oct 29, 2021 at 08:23:45AM +0200, Marek Szyprowski wrote:
+> Hi,
+>=20
+> On 25.10.2021 17:15, Maxime Ripard wrote:
+> > In order to avoid any probe ordering issue, the best practice is to move
+> > the secondary MIPI-DSI device registration and attachment to the
+> > MIPI-DSI host at probe time. Let's do this.
+> >
+> > Acked-by: Sam Ravnborg <sam@ravnborg.org>
+> > Tested-by: John Stultz <john.stultz@linaro.org>
+> > Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+>
+> This patch landed in linux-next as commit 864c49a31d6b ("drm/bridge:
+> adv7511: Register and attach our DSI device at probe"). Sadly it causes
+> endless probe-fail-defer loop on DragonBoard 410c board
+> (arch/arm64/boot/dts/qcom/apq8016-sbc.dts):
+
+I'm sorry to hear that (but would have been surprised if it didn't occur)
+
+This is supposed to be fixed by 8f59ee9a570c ("drm/msm/dsi: Adjust probe
+order"). Do you have that patch applied?
+
+Maxime
+
+--dxkmld7iruoye3zb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYXurQQAKCRDj7w1vZxhR
+xVUEAP9BeVQOJLXYw9Qy6X8VqVrrt6ZD7ANhFfeWPIL13SPJCQD/aD1IaYsn/2Vy
+K56opVCzXYlbVeFJIDN28pPvj+x/ngE=
+=e1Zt
+-----END PGP SIGNATURE-----
+
+--dxkmld7iruoye3zb--
