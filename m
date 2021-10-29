@@ -2,285 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A57443F3D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 02:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C98CD43F3E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 02:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231217AbhJ2AWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 28 Oct 2021 20:22:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53230 "EHLO
+        id S231400AbhJ2Aat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 28 Oct 2021 20:30:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbhJ2AWX (ORCPT
+        with ESMTP id S231387AbhJ2Aas (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 28 Oct 2021 20:22:23 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE989C061714
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 17:19:55 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id 107-20020a9d0a74000000b00553bfb53348so11199036otg.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 17:19:55 -0700 (PDT)
+        Thu, 28 Oct 2021 20:30:48 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BADF6C061767
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 17:28:20 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d10so13256415wrb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Oct 2021 17:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=S95oHAhOZ33aco8y31Nb+6NRNh2mtjVljN3OFxkcnow=;
-        b=fX1BpofDBYkMJm/nHKQ/cUp3Hjha7jt39/dgmREdgOf162aSFJ2S7zBKi03yRNvn08
-         Ko9TtoEutKgw67cI85dZOO+N3EUFBwI0ajADpskhokfXADAjaBSdHkzFOkC1pGsTCs2r
-         9OhE+y3oJQ809aFceeUsafJVgtKTHJln66cdlU66M+KFPuRv7wXnZShfXPtRXKXzzVwJ
-         dlOfnFDhXFwkGRLIK4QA+e64LBrWwYNqDdvRDSjbJoh/h8XA20coZDJqlvuYSgIHiuj/
-         jdlzm02G4DdmHxXXdGhZ1LssRuEGNC1qXHsqNoHtOrF7wgXu0hXyE20maCGagE+sKXYB
-         rmGw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=mSeyR1j+Ai42oFLeIWTXj/VqqxtGGIf4/+Gmw0CPXl8=;
+        b=KBG3boAfNHiAG3Cwkjmg1ck0vlZywg77y8rBtYM5L28jQH40vPAzlrpJyc7mYA1wSR
+         YKS+tDD4+p2xq08MACp8b7Uhxs8gPQiOF5TRaQetj7rL0DZcO7NKejNh9z8mXFlSX+JR
+         fezlGECn8ue9W+j0gYcs9EYMfwEt2RXxxVtpo9WtAaiIVgPtn1S9k2Ph1EoBrvkhklIU
+         zFMPlRWx0WS3g/iAPh7s5CRWqzNJLBaHC9ISA1b4GxBZi0H1bt4CIhcxKsmtvYmDeeqr
+         fQidqIBrl2W2xqitepoRFd0jnAJ/pdgx3FbuOIS1E5c6ALcfjsQmU4W+x9ZlvQk2HC3Y
+         mFbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=S95oHAhOZ33aco8y31Nb+6NRNh2mtjVljN3OFxkcnow=;
-        b=q+15itpU5C9YzghVofJcYXqqRpGBirTfh0oJyVmWHIGBeWXdag++65Pg3L3JXB/JG5
-         XCXDJi7pHKhkwPfyp8IysfpG4iEv8tHo0bYd4pqCJekdjSzKzjayTtxI7axK88kIjbmu
-         F0SfE8y8FcVN4Z6KMotdJ7ZV2iUcSzaUqHWQkEb4L7sLnYxFdaal43Pleh6o578VSaMh
-         PJR6Yze9zeuIskN6XR63hPlcTnVIC2Wkw1GjnPgu2Cm0M5Ng2c9jI9zVWnZB3HrrZs+L
-         fnO/rRA1i2yZ2C/N5uhvUlxPxE637xMcvMByFbe5numohsQSVFfulSEj5vhcAQJZRxJZ
-         AgCA==
-X-Gm-Message-State: AOAM531O1Z5jxrEe1XdXiWx+LCew4HNXNPy6cAzLzw81x8s5M/S8lqD1
-        8MYm95a8F5iSPt9469NUBjEDQA==
-X-Google-Smtp-Source: ABdhPJxMlQ/9QSZzhNsDewrvfItL/HF0LUBwXPfKLuKB25kcyriC5qAcU/7uLU1QT1t67f/kFjD/rw==
-X-Received: by 2002:a05:6830:3114:: with SMTP id b20mr6291033ots.120.1635466793532;
-        Thu, 28 Oct 2021 17:19:53 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 64sm1354758otm.37.2021.10.28.17.19.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Oct 2021 17:19:52 -0700 (PDT)
-Date:   Thu, 28 Oct 2021 17:21:40 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com
-Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd
- bindings for dwc3 qcom
-Message-ID: <YXs+lIizc5UD7Qce@ripper>
-References: <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
- <YXdsYlLWnjopyMn/@ripper>
- <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
- <YXjbs3Bv6Y3d87EC@yoga>
- <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
- <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
- <CAPDyKFoMpmkHgUbRN4pxgW2Gy=aZpS=eVwQrg0ydFbh9_GFG6Q@mail.gmail.com>
- <e32a59e2-0d8b-3338-5963-81ea07a709ef@codeaurora.org>
- <YXrVevUlCJJtbpLi@ripper>
- <CAE-0n50qisTv95PJjMXsOT97B3ZUhUV_TtpSHir7jq-vjTW9mw@mail.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=mSeyR1j+Ai42oFLeIWTXj/VqqxtGGIf4/+Gmw0CPXl8=;
+        b=j+lvgq9xHDGoxOYuX4q0rrs4dgIYlftxT4awwaIz/o5yEoTKCNXZpuqHjDJ1E8K5St
+         ICbb5/tpc0YbHNIurHcSbUaT5k/1mvrsBkySgUN8JIJt9Qa7lmxkJxoGrQWuz5zIrAdR
+         6/VjrajQGVWAs2fl0eDAk6aceUiphqVf9SMgXCcKr4XPNWPh8bv0uQKYcFUA3acsoNB6
+         fhcQsYAMLjU5nm1wmVbaeIVL9E5pgsOtMjwD/9Zd+wHZxcU9XtVOumwZinrgN/Up39bx
+         xBJ3ivonOWyvthOF8QK8qbB/hcIVKR3KiD5DjM3bz5z9A5WQEpDcixGkkZdWyUlJ41m6
+         bKoQ==
+X-Gm-Message-State: AOAM533oCqDeAAYIg60LnbFCycv0xq0UCtzgqUCxQu8fbmoNxqYjxpOL
+        fstwZ/c/Wj4/IzWsUFWrNmxy8w==
+X-Google-Smtp-Source: ABdhPJzUvkKf706MUq4TucvYI8qKJ0DKgxnthUONvly/4RkpOWSiI4kcJ3KzQRcFhWz8ds7DgfySyg==
+X-Received: by 2002:a5d:63cd:: with SMTP id c13mr9520358wrw.224.1635467299285;
+        Thu, 28 Oct 2021 17:28:19 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l22sm245415wmp.34.2021.10.28.17.28.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Oct 2021 17:28:18 -0700 (PDT)
+Message-ID: <b3473977-5bb6-06df-55c3-85f08a29a964@linaro.org>
+Date:   Fri, 29 Oct 2021 01:30:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n50qisTv95PJjMXsOT97B3ZUhUV_TtpSHir7jq-vjTW9mw@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH 2/2] wcn36xx: fix RX BD rate mapping for 5GHz legacy rates
+Content-Language: en-US
+To:     Benjamin Li <benl@squareup.com>, Kalle Valo <kvalo@codeaurora.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211028223131.897548-1-benl@squareup.com>
+ <20211028223131.897548-2-benl@squareup.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20211028223131.897548-2-benl@squareup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 28 Oct 13:04 PDT 2021, Stephen Boyd wrote:
+On 28/10/2021 23:31, Benjamin Li wrote:
+> -		    status.rate_idx >= sband->n_bitrates) {
+This fix was applied because we were getting a negative index
 
-> Quoting Bjorn Andersson (2021-10-28 09:53:14)
-> > On Thu 28 Oct 03:46 PDT 2021, Rajendra Nayak wrote:
-> >
-> > >
-> > > On 10/28/2021 4:05 PM, Ulf Hansson wrote:
-> > > > [...]
-> > > >
-> > > > > > > > Got it. So in this case we could have the various display components
-> > > > > > > > that are in the mdss gdsc domain set their frequency via OPP and then
-> > > > > > > > have that translate to a level in CX or MMCX. How do we parent the power
-> > > > > > > > domains outside of DT? I'm thinking that we'll need to do that if MMCX
-> > > > > > > > is parented by CX or something like that and the drivers for those two
-> > > > > > > > power domains are different. Is it basic string matching?
-> > > > > > >
-> > > > > > > In one way or another we need to invoke pm_genpd_add_subdomain() to link
-> > > > > > > the two power-domains (actually genpds) together, like what was done in
-> > > > > > > 3652265514f5 ("clk: qcom: gdsc: enable optional power domain support").
-> > > > > > >
-> > > > > > > In the case of MMCX and CX, my impression of the documentation is that
-> > > > > > > they are independent - but if we need to express that CX is parent of
-> > > > > > > MMCX, they are both provided by rpmhpd which already supports this by
-> > > > > > > just specifying .parent on mmcx to point to cx.
-> > > > > >
-> > > > > > I was trying to follow the discussion, but it turned out to be a bit
-> > > > > > complicated to catch up and answer all things. In any case, let me
-> > > > > > just add a few overall comments, perhaps that can help to move things
-> > > > > > forward.
-> > > > > >
-> > > > > > First, one domain can have two parent domains. Both from DT and from
-> > > > > > genpd point of view, just to make this clear.
-> > > > > >
-> > > > > > Although, it certainly looks questionable to me, to hook up the USB
-> > > > > > device to two separate power domains, one to control power and one to
-> > > > > > control performance. Especially, if it's really the same piece of HW
-> > > > > > that is managing both things.
-> > > > > []..
-> > > > > > Additionally, if it's correct to model
-> > > > > > the USB GDSC power domain as a child to the CX power domain from HW
-> > > > > > point of view, we should likely do that.
-> > > > >
-> > > > > I think this would still require a few things in genpd, since
-> > > > > CX and USB GDSC are power domains from different providers.
-> > > > > Perhaps a pm_genpd_add_subdomain_by_name()?
-> > > > >
-> > > >
-> > > > I think of_genpd_add_subdomain() should help to address this. No?
-> > >
-> > > We only describe the provider nodes in DT and not the individual power domains.
-> > > For instance GCC is the power domain provider which is in DT, and USB GDSC is one
-> > > of the many power domains it supports, similarly RPMHPD is the provider node in
-> > > DT and CX is one of the many power domains it supports.
-> > > So we would need some non-DT way of hooking up power domains from two different
-> > > providers as parent/child.
-> > >
-> >
-> > See 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator") and
-> > 3652265514f5 ("clk: qcom: gdsc: enable optional power domain support")
-> >
-> > MMCX is declared as power-domain for the dispcc (which is correct
-> > in itself) and the gdsc code will register GDSCs as subdomains of
-> > the same power-domain.
-> >
-> >
-> > To ensure this code path is invoked the clock driver itself needed this
-> > 6158b94ec807 ("clk: qcom: dispcc-sm8250: use runtime PM for the clock
-> > controller")
-> >
-> > So at least in theory, considering only USB the minimum would be to
-> > pm_runtime_enable() gcc-7280 and add power-domains = <CX> to the gcc
-> > node.
-> 
-> I'm wary of runtime PM enabling the main clock controller.
+If you want to remove that, you'll need to do something about this
 
-I thought of that as well after sending my last reply. Seems like a good
-idea if we can avoid it.
+status.rate_idx -= 4;
 
-> Does it work?
-> 
-
-Had to test it, but specifying power-domain = <CX> in &gcc and adding
-the required-opp to the usb node causes CX to enter the given
-performance_state.
-
-So it boots just fine and I didn't pm_runtime_enable() gcc, so
-gdsc_pm_runtime_get() will just return.
-
-That said, I don't grasp all the details happening under the hood, so I
-might be missing some details that will bite us when it comes to suspend
-or power collapse?
-
-> I can understand that we need to get the CX power domain pointer into
-> the gdsc code somehow, and thus setting the power domain to CX in DT is
-> a way to do that. Why do we need to runtime pm enable the clk controller
-> though?
-
-In the case of dispcc we need it because accessing the clock registers
-without it crashes the board.
-
-> Just to make genpd_dev_pm_attach_by_name() hand us a genpd?
-
-dispcc has a single power-domain so ((struct device*)dispcc)->pm_domain
-will automatically be filled out.
-
-> I
-> see in commit 3652265514f5 that we also use it to have gdsc_enable()
-> enable the parent domain by using runtime PM to get the clk controller
-> and enable the parent domain. That is convoluted.
-> 
-
-The purpose of the gdsc_pm_runtime_get() call from gdsc_enable() is to
-ensure that the clock controller is powered up, so that we can access
-the registers - just as you do in clk_pm_runtime_get()
-
-So regardless of us changing how the subdomains are setup I think this
-part should stay, to work for the clock controllers that need to ensure
-their registers are accessible.
-
-> I'd prefer if we could list that the parent domain is in the registering
-> device's power-domain index number, ala clk_parent_data, so that we
-> don't have to make the power domain provider into a consumer itself.
-> This would clean up the gdsc code so that it doesn't have to go from the
-> provider's genpd enable through the provider device to the parent power
-> domain enable. Obviously it works but it's hard to follow.
-> 
-
-Giving it another look I think the current implementation in gdsc.c will
-enable the parent power-domain twice; once in the core because of the
-dependency from the subdomain and one by the device itself.
-
-That said, I do find this technically correct for the dispcc case -
-MDSS_GDSC has a vote and dispcc has another vote.
-
-
-I don't have any objections to replacing the current
-pd_to_genpd(dev->pm_domain) in gdsc's call to pm_genpd_add_subdomain()
-with something carrying information from the clock driver indicating
-which of the multiple power domains the gdsc should be parented by.
-
-> >
-> >
-> > The "problem" I described would be if there are GDSCs that are
-> > subdomains of MX - which I've seen hinted in some documentation. If so
-> > we should to specify both CX and MX as power-domains for &gcc and the
-> > gdsc implementation needs to be extended to allow us to select between
-> > the two.
-> >
-> > For this I believe a combination of genpd_dev_pm_attach_by_name() and
-> > of_genpd_add_subdomain() would do the trick.
-> >
-> > That is, if there actually are GDSCs exposed by gcc that are not
-> > subdomains of CX - otherwise none of this is needed.
-> >
-> 
-> Rajendra can correct me, but I believe every device that has a GDSC
-> gating power to it is actually inside CX and MX. The CX is for digital
-> logic (think registers and interrupts, fetching data from the bus, etc.)
-> and the MX is for memories (think flops that retain state of registers
-> and internal state of the device). In more modern SoCs they've split
-> multimedia (MMCX) and GPU (gpu_gx) out of CX and supply it with a
-> different voltage supply and pin on the SoC package. Historically, MX
-> voltage has been maintained by the power manager, RPM or RPMh, so that
-> when CX is changed, MX >= CX constraints are maintained. I think that
-> also changed over time though and MX had to be controlled in addition to
-> CX on some firmwares. I recall we had some constraint code that bumped
-> up MX whenever CX got higher than it. Having to control both led to more
-> round trip time when changing clk rates though so it got combined on the
-> backend so that only one message had to be sent to the RPM.
-> 
-
-That would explain the current hack(?) in rpmhpd.c which states that mx
-is the parent of cx - which I presume is there to say that "mx needs to
-be on when cx is on".
-
-As a side effect of all this magic though this means that my vote from
-usb is actually applied to MX as well (as would it in Sandeep's original
-proposal)...
-
-> We probably ought to list both CX and MX as power-domains on the clk
-> nodes that provide GDSCs to match the hardware. Then we need to know
-> which power domain each GDSC wants to set a minimum level on. That would
-> be the most correct way to do it.
-
-As we describe multiple power-domains we won't get dev->pm_domain filled
-out for us, so we need to genpd_dev_pm_attach_by_{id,name}() to get the
-struct devices for each power-domain and then use those when setting up
-the subdomain for each gdsc.
-
-But per the current implementation (with the CX votes trickling down to
-MX as well) we should be able to just grab genpd_dev_pm_attach_by_id(0)
-in gdsc_register() and use that if dev->pm_domain isn't set - at least
-until we explicitly need to vote for MX only...
-
-
-Let's see what Rajendra says about the requirements here.
-
-Regards,
-Bjorn
+---
+bod
