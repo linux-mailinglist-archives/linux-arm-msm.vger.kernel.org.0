@@ -2,152 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C57A743FA59
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 11:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07FE543FA90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 12:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbhJ2KBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 06:01:31 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:41261 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231579AbhJ2KBa (ORCPT
+        id S231679AbhJ2KS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 06:18:29 -0400
+Received: from m1353.mail.163.com ([220.181.13.53]:38732 "EHLO
+        m1353.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231564AbhJ2KS0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 06:01:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635501542; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=UnsNoYW7wP4F8KSJMq0q8k/qnjr/LOlMEp/wGWG3buI=; b=Rwo5NEEDl5Xdy9zizHBz7prfiOssQKk2i1aijLFwENg7DjGyikgp29PUUkZUnFz3FtCbKKwH
- gnB+jpqcyNw//lphkQLyYpwOWMu7AYlERAZpN4HNhY8FrW7A6fRglvBtLMsKm9izHzj+FPhn
- aNqlaXA7WBwzdLT1X2r5Tb65FBk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 617bc5da648aeeca5c8222cb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Oct 2021 09:58:50
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B5593C43460; Fri, 29 Oct 2021 09:58:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [49.207.214.117])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBEDBC4338F;
-        Fri, 29 Oct 2021 09:58:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DBEDBC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        dianders@chromium.org
-References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
- <YXsrtTGZW66mUtkU@ripper>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <4fda39ce-189e-4873-dd40-3219c0052ffd@codeaurora.org>
-Date:   Fri, 29 Oct 2021 15:28:44 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Fri, 29 Oct 2021 06:18:26 -0400
+X-Greylist: delayed 910 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Oct 2021 06:18:25 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=rOLTh
+        eprtj5UZw1gUN25Lfnp583GahQE1GPJcAvg308=; b=FBBuKz5CxBPfW8opRn5IZ
+        Y5sfqaqz7Cp2xKOHYEnNaBdjBLjM/g/ojJs14AO2tFjeyh9kxqBYV7EXCpUiJjvw
+        /eQWQAQR+rkDK0GfLlFeOxGVqfesSQJGYSkFnmjX9ZEfgRmFMzRUWiPEo/gQB4Hi
+        W8Eppi8K4OSCSvFXrZjlGI=
+Received: from slark_xiao$163.com ( [112.97.60.167] ) by
+ ajax-webmail-wmsvr53 (Coremail) ; Fri, 29 Oct 2021 18:00:42 +0800 (CST)
+X-Originating-IP: [112.97.60.167]
+Date:   Fri, 29 Oct 2021 18:00:42 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Manivannan Sadhasivam" <mani@kernel.org>
+Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH] bus: mhi: pci_generic: Add new device ID support for
+ T99W175
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2021 www.mailtech.cn 163com
+In-Reply-To: <20211029092619.GA4945@thinkpad>
+References: <20211028034431.3563-1-slark_xiao@163.com>
+ <20211029092619.GA4945@thinkpad>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-In-Reply-To: <YXsrtTGZW66mUtkU@ripper>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Message-ID: <68a1613c.3e54.17ccb7e922b.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: NcGowAB3dOZKxnthSxPYAA--.38320W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDQo7ZFaEFsSeGAAAse
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/29/2021 4:31 AM, Bjorn Andersson wrote:
-> On Tue 26 Oct 05:07 PDT 2021, Rajendra Nayak wrote:
-> 
->> From: Prasad Sodagudi <psodagud@codeaurora.org>
->>
->> egpio is a scheme which allows special power Island Domain IOs
->> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
->> TLMM functions with Island Domain functions.
->> With this scheme, an IO can be controlled both by the cpu running
->> linux and the Island processor. This provides great flexibility to
->> re-purpose the Island IOs for regular TLMM usecases.
->>
->> 2 new bits are added to ctl_reg, egpio_present is a read only bit
->> which shows if egpio feature is available or not on a given gpio.
->> egpio_enable is the read/write bit and only effective if egpio_present
->> is 1. Once its set, the Island IO is controlled from Chip TLMM.
->> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
->>
->> To support this we add a new function 'egpio' which can be used to
->> set the egpio_enable to 0, for any other TLMM controlled functions
->> we set the egpio_enable to 1.
->>
->> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
->>   drivers/pinctrl/qcom/pinctrl-msm.c | 17 +++++++++++++++--
->>   drivers/pinctrl/qcom/pinctrl-msm.h |  4 ++++
->>   2 files changed, 19 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
->> index 8476a8a..bfdba3a 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->> @@ -185,6 +185,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->>   	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
->>   	struct irq_data *d = irq_get_irq_data(irq);
->>   	unsigned int gpio_func = pctrl->soc->gpio_func;
->> +	unsigned int egpio_func = pctrl->soc->egpio_func;
->>   	const struct msm_pingroup *g;
->>   	unsigned long flags;
->>   	u32 val, mask;
->> @@ -218,8 +219,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->>   	raw_spin_lock_irqsave(&pctrl->lock, flags);
->>   
->>   	val = msm_readl_ctl(pctrl, g);
->> -	val &= ~mask;
->> -	val |= i << g->mux_bit;
->> +
->> +	if (egpio_func && i == egpio_func) {
->> +		if (val & BIT(g->egpio_present))
->> +			val &= ~BIT(g->egpio_enable);
->> +		else
->> +			return -EINVAL;
-> 
-> You're returning here with pctrl->lock held and irqs disabled.
-
-argh, right. I will fix that and repost.
-I wonder if I should just drop that error handling completely,
-we wouldn't end up here unless the platform driver wrongly populates
-a pin which does not support egpio with a egpio function.
-
-> 
->> +	} else {
->> +		val &= ~mask;
->> +		val |= i << g->mux_bit;
->> +		/* Check if egpio present and enable that feature */
-> 
-> I never remember if egpio_enable means apss or lpass, so I think this
-> comment would be better as:
-> 
-> 		/* Claim ownership of pin if egpio capable */
-
-:) makes sense
-
-> 
->> +		if (egpio_func && (val & BIT(g->egpio_present)))
-> 
-> Can't you drop the parenthesis around the second expression?
-
-yes, will do, thanks for the review.
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+CkF0IDIwMjEtMTAtMjkgMTc6MjY6MTksICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pQGtl
+cm5lbC5vcmc+IHdyb3RlOgoKPkhpLAo+Cj5PbiBUaHUsIE9jdCAyOCwgMjAyMSBhdCAxMTo0NDoz
+MUFNICswODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiBBZGQgbmV3IGRldmljZSBJRCAweGUwYmYg
+Zm9yIFQ5OVcxNzUuCj4+IAo+Cj5UaGFua3MgZm9yIHRoZSBwYXRjaCEgQ2FuIHlvdSBzaGFyZSB0
+aGUgZGlmZmVyZW5jZSBiZXR3ZWVuIHRoaXMgbW9kZW0gYW5kIHRoZQo+b25lIChUOTlXMTc1KSB3
+ZSBhbHJlYWR5IGhhdmUgd2l0aCBQSUQgMHhlMGFiPwo+Cj5QbGVhc2UgaW5jbHVkZSB0aGUgcHJv
+ZHVjdCBwYWdlIGluIGRlc2NyaXB0aW9uIGlmIGFueS4KPgo+VGhhbmtzLAo+TWFuaQo+CkhpIE1h
+bmksCiAgIFRoYW5rcyBmb3IgdGhpcyByZXZpZXcuIAogICBBY3R1YWxseSB0aGlzIHByb2R1Y3Qo
+U0RYNTUvMHhlMGJmKSBpcyB1c2luZyBRdWFsY29tbSBTRFg1NSBuZXcgYmFzZWxpbmUoTEUxLjQp
+LCAKIGFuZCBwcmV2aW91cyBUOTlXMTc1LzB4ZTBhYiBpcyB1c2luZyBvcmlnaW5hbCBiYXNlIGxp
+bmUoTEUxLjIpLgogICBPdXIgY3VzdG9tZXIgd2FudHMgdXMgdG8gdXNlIGRpZmZlcmVudCBkZXZp
+Y2UgSUQgdG8gc2VwYXJhdGUgZnJvbSBlYWNoIG90aGVyLiAKICAgQ3VycmVudGx5IHdlIGRvbid0
+IGhhdmUgcHJvZHVjdCBwYWdlICBhcyBvdXIgY3VzdG9tZXIncyBuZXcgcHJvZHVjdCBpcyBub3Qg
+cmVsZWFzZWQuCgpUaGFua3MKU2xhcmsKPj4gVGVzdCBldmlkZW5jZSBhcyBiZWxvdzoKPj4gcm9v
+dEBqYmQtVGhpbmtQYWQtUDEtR2VuLTQ6L2RldiMgbHNwY2kgLW5uIHwgZ3JlcCBGb3hjb25uCj4+
+IDAwMDA6MDg6MDAuMCBXaXJlbGVzcyBjb250cm9sbGVyIFswZDQwXTogRm94Y29ubiBJbnRlcm5h
+dGlvbmFsLCBJbmMuIERldmljZSBbMTA1YjplMGJmXQo+PiByb290QGpiZC1UaGlua1BhZC1QMS1H
+ZW4tNDovZGV2IyBjYXQgd3dhbjBhdDAgJiBlY2hvIC1uZSAiYXRpXHIiID4gd3dhbjBhdDAKPj4g
+WzJdIDI5NzcKPj4gcm9vdEBqYmQtVGhpbmtQYWQtUDEtR2VuLTQ6L2RldiMgYXRpCj4+IE1hbnVm
+YWN0dXJlcjogUXVhbGNvbW0KPj4gTW9kZWw6IFQ5OVcxNzUKPj4gUmV2aXNpb246IFQ5OVcxNzUu
+RjAuNi4wLjAuNi5DQy4wMDUgIDEgIFtPY3QgMjEgMjAyMSAxMDowMDowMF0KPj4gSU1FSToKPj4g
+K0dDQVA6ICtDR1NNCj4+IAo+PiBPSwo+PiAKPj4gU2lnbmVkLW9mZi1ieTogU2xhcmsgWGlhbyA8
+c2xhcmtfeGlhb0AxNjMuY29tPgo+PiAtLS0KPj4gIGRyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJp
+Yy5jIHwgMyArKysKPj4gIDEgZmlsZSBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKykKPj4gCj4+IGRp
+ZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYyBiL2RyaXZlcnMvYnVzL21o
+aS9wY2lfZ2VuZXJpYy5jCj4+IGluZGV4IDU5YTQ4OTZhODAzMC4uNTY2NDgzZGMxNWRiIDEwMDY0
+NAo+PiAtLS0gYS9kcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYwo+PiArKysgYi9kcml2ZXJz
+L2J1cy9taGkvcGNpX2dlbmVyaWMuYwo+PiBAQCAtNDIzLDYgKzQyMyw5IEBAIHN0YXRpYyBjb25z
+dCBzdHJ1Y3QgcGNpX2RldmljZV9pZCBtaGlfcGNpX2lkX3RhYmxlW10gPSB7Cj4+ICAJLyogRFc1
+OTMwZSAoc2R4NTUpLCBOb24tZVNJTSwgSXQncyBhbHNvIFQ5OVcxNzUgKi8KPj4gIAl7IFBDSV9E
+RVZJQ0UoUENJX1ZFTkRPUl9JRF9GT1hDT05OLCAweGUwYjEpLAo+PiAgCQkuZHJpdmVyX2RhdGEg
+PSAoa2VybmVsX3Vsb25nX3QpICZtaGlfZm94Y29ubl9zZHg1NV9pbmZvIH0sCj4+ICsJLyogVDk5
+VzE3NSAoc2R4NTUpICovCj4+ICsJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfRk9YQ09OTiwg
+MHhlMGJmKSwKPj4gKwkJLmRyaXZlcl9kYXRhID0gKGtlcm5lbF91bG9uZ190KSAmbWhpX2ZveGNv
+bm5fc2R4NTVfaW5mbyB9LAo+PiAgCS8qIE1WMzEtVyAoQ2ludGVyaW9uKSAqLwo+PiAgCXsgUENJ
+X0RFVklDRSgweDEyNjksIDB4MDBiMyksCj4+ICAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxv
+bmdfdCkgJm1oaV9tdjMxX2luZm8gfSwKPj4gLS0gCj4+IDIuMjUuMQo+PiAK
