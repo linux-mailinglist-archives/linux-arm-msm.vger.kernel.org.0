@@ -2,105 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E22143FA9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 12:19:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55D3843FAB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Oct 2021 12:26:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231694AbhJ2KWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 06:22:08 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40602 "EHLO m43-7.mailgun.net"
+        id S231694AbhJ2K2f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 06:28:35 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39588 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231659AbhJ2KWH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 06:22:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635502779; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=fRFHHpvUsFN1nn8W1Rx5ytaxnlA8Vq5UjIPp2pUj+P0=; b=mP0hy+20f5/NJT9rU6wRpIzr061/fMziyNBmwIUKARzTjz6ag7TUsGtgmtiYMHJdSNNJS9K7
- pHf3jR+fh2WT7YhBNzM4c0EmYKoALv0IC0JAlDTHyhg91+mLWrrTH5jgyKVr9WaoXSWZJZj2
- hbtyiNCXNEoThpA29bgi9SM7M4c=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 617bca9f900d71ea1e48083d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 29 Oct 2021 10:19:11
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3AF6DC4360D; Fri, 29 Oct 2021 10:19:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [49.207.214.117])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7575C4338F;
-        Fri, 29 Oct 2021 10:19:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B7575C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        dianders@chromium.org
-References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
- <CAE-0n50E2dmQeDaiggEgMgykrkGB3H38sbkTXDX3avR7XtSizw@mail.gmail.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <40fa13cd-f24c-e3a9-9b49-23ad26507bfe@codeaurora.org>
-Date:   Fri, 29 Oct 2021 15:49:04 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S231683AbhJ2K2f (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 29 Oct 2021 06:28:35 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9CF3260FC4;
+        Fri, 29 Oct 2021 10:26:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635503167;
+        bh=CcCIID5wduC9z6NVQXcXCOwmBbWGtq0gnP1rXWiVjt8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UoWTvZ4jShB406XOUlPAndbORlCAeDw79g0svpvnmCNjzb66rImQdj1WB1LzYAxJ2
+         SCnf+M1nBrjJ9ulWn4iBBeRzjhBbEuXf9nYcQ6T3izf+fUKNGVd2j8n9AeUw6JrAAr
+         WkDX0tqKZ+xa4a4iO1Y5T/PBz5/cGfARcUiM27lDS4pK25398GA85X68xz35fhCvwP
+         2JFDT83NF0Wvel9w3zijykRV6LTp2AeambcWnWrPg/jPbzNgEBs6dFccWjV7z1LN66
+         mh7UXLZJDOWraJjAKYZ5Qu/bt188+lAqdrCSfHkaTa641MfNtaeV6Y3qI9u0g/ruRb
+         MmGLEN1OqLpKQ==
+Date:   Fri, 29 Oct 2021 15:55:26 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Slark Xiao <slark_xiao@163.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: Re: [PATCH] bus: mhi: pci_generic: Add new device ID support for
+ T99W175
+Message-ID: <20211029102526.GD4945@thinkpad>
+References: <20211028034431.3563-1-slark_xiao@163.com>
+ <20211029092619.GA4945@thinkpad>
+ <68a1613c.3e54.17ccb7e922b.Coremail.slark_xiao@163.com>
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n50E2dmQeDaiggEgMgykrkGB3H38sbkTXDX3avR7XtSizw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <68a1613c.3e54.17ccb7e922b.Coremail.slark_xiao@163.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/29/2021 12:24 PM, Stephen Boyd wrote:
-> Quoting Rajendra Nayak (2021-10-26 05:07:35)
->> From: Prasad Sodagudi <psodagud@codeaurora.org>
->>
->> egpio is a scheme which allows special power Island Domain IOs
->> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
->> TLMM functions with Island Domain functions.
->> With this scheme, an IO can be controlled both by the cpu running
->> linux and the Island processor. This provides great flexibility to
->> re-purpose the Island IOs for regular TLMM usecases.
->>
->> 2 new bits are added to ctl_reg, egpio_present is a read only bit
->> which shows if egpio feature is available or not on a given gpio.
->> egpio_enable is the read/write bit and only effective if egpio_present
->> is 1. Once its set, the Island IO is controlled from Chip TLMM.
->> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
->>
->> To support this we add a new function 'egpio' which can be used to
->> set the egpio_enable to 0, for any other TLMM controlled functions
->> we set the egpio_enable to 1.
->>
->> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
+On Fri, Oct 29, 2021 at 06:00:42PM +0800, Slark Xiao wrote:
 > 
-> Does this supersede adding support for lpass pinctrl in this series[1]?
-
-No, the driver in [1] actually manages the LPASS TLMM instance, while this patch
-makes it possible for the 'same' pins to be managed by the SoC TLMM instance.
-On sc7280 SoC for instance GPIO144-158 maps to LPI-GPIO-0-14, and GPIO159-174
-maps to SSC-GPIO-0-15.
-
-> [1] https://lore.kernel.org/r/1635342097-2726-1-git-send-email-srivasam@codeaurora.org
+> At 2021-10-29 17:26:19, "Manivannan Sadhasivam" <mani@kernel.org> wrote:
+> 
+> >Hi,
+> >
+> >On Thu, Oct 28, 2021 at 11:44:31AM +0800, Slark Xiao wrote:
+> >> Add new device ID 0xe0bf for T99W175.
+> >> 
+> >
+> >Thanks for the patch! Can you share the difference between this modem and the
+> >one (T99W175) we already have with PID 0xe0ab?
+> >
+> >Please include the product page in description if any.
+> >
+> >Thanks,
+> >Mani
+> >
+> Hi Mani,
+>    Thanks for this review. 
+>    Actually this product(SDX55/0xe0bf) is using Qualcomm SDX55 new baseline(LE1.4), 
+>  and previous T99W175/0xe0ab is using original base line(LE1.2).
+>    Our customer wants us to use different device ID to separate from each other. 
+>    Currently we don't have product page  as our customer's new product is not released.
 > 
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Thanks for the explanation. Please send v2 adding the baseline info in commit
+description.
+
+Thanks,
+Mani
+
+> Thanks
+> Slark
+> >> Test evidence as below:
+> >> root@jbd-ThinkPad-P1-Gen-4:/dev# lspci -nn | grep Foxconn
+> >> 0000:08:00.0 Wireless controller [0d40]: Foxconn International, Inc. Device [105b:e0bf]
+> >> root@jbd-ThinkPad-P1-Gen-4:/dev# cat wwan0at0 & echo -ne "ati\r" > wwan0at0
+> >> [2] 2977
+> >> root@jbd-ThinkPad-P1-Gen-4:/dev# ati
+> >> Manufacturer: Qualcomm
+> >> Model: T99W175
+> >> Revision: T99W175.F0.6.0.0.6.CC.005  1  [Oct 21 2021 10:00:00]
+> >> IMEI:
+> >> +GCAP: +CGSM
+> >> 
+> >> OK
+> >> 
+> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >> ---
+> >>  drivers/bus/mhi/pci_generic.c | 3 +++
+> >>  1 file changed, 3 insertions(+)
+> >> 
+> >> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> >> index 59a4896a8030..566483dc15db 100644
+> >> --- a/drivers/bus/mhi/pci_generic.c
+> >> +++ b/drivers/bus/mhi/pci_generic.c
+> >> @@ -423,6 +423,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+> >>  	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
+> >>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
+> >>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> >> +	/* T99W175 (sdx55) */
+> >> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0bf),
+> >> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> >>  	/* MV31-W (Cinterion) */
+> >>  	{ PCI_DEVICE(0x1269, 0x00b3),
+> >>  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
+> >> -- 
+> >> 2.25.1
+> >> 
