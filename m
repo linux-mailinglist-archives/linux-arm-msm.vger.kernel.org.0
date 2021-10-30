@@ -2,123 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5E6A4405F7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 02:00:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D62484405FE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 02:00:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231596AbhJ3AC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 29 Oct 2021 20:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbhJ3AC3 (ORCPT
+        id S231680AbhJ3ADY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 29 Oct 2021 20:03:24 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:14184 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231271AbhJ3ADY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 29 Oct 2021 20:02:29 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14538C061714
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 17:00:00 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id bi35so24035319lfb.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Oct 2021 16:59:59 -0700 (PDT)
+        Fri, 29 Oct 2021 20:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5g5uYOpUvbfjxaJiICWjHW49d1Em+rTKi4gF70TOHxg=;
-        b=JggKoMhlfFspzcDUsIkc347dS7xht2N8D6Ij6xACaoNBJdGrQOZmVnkuJlGDgtHdlH
-         IQEGiAZBzfrpI4fRfyb0N6bCAdm9mMfBNujFv89B5lZMaqOKosmVtAyjzKcOTS6ZddY0
-         JrmIYSDglEIKMpO0NF3EX1Pd0uGtkuqHaoc8wOPrNzrnjG+kj3OyiSDqFiLJSxHqymh3
-         KSxdlocXpFcaHiIHyonAZ2FhZGCimyRS7VUSO3QTfLlfa2NGTGo0dw/2cakK8VAzwM1j
-         G6ndx9q5ajcRNwsGaYxj9h09CYjCOocgAHsGMJwR8Dxv2PjajogZG6q7NrCBv2vZ4GUh
-         0jLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5g5uYOpUvbfjxaJiICWjHW49d1Em+rTKi4gF70TOHxg=;
-        b=QatYADd41Vw7GdMQ5M1bf0JMIeTJH5Gq+A0krD9JFau7KQ+hTCX1RL92XtVmPiFf7y
-         V7YiohEe0tRu5KJ+of4dNEwK+7B80Oehe7+XSsYzyMCwSRRGHkTY5jrMF6qr1aHuI5U4
-         wM58U9IGxGn/NE7LdZZl2vtPidXUHYiGEQqKtqjXRyloCrLxNVTC+zUzkF1f2F/jfN/6
-         L4qCykI5rb0lTDx6IdoGHvOUE2Br9/E3meTbtWnrvkmKGQ0M4bOSU5uOJn+XUT8298q/
-         yD4zV/LZ7agVA21aUFku0GFUDGtMdqbTzyK0IerqWsS0mscas0sHZ6bsY3UGarxIQAza
-         t69Q==
-X-Gm-Message-State: AOAM533R2gUCU1+ADARUnLqaasWFZJ0MmA1ryXHhFmgkJPzHavKrykky
-        AhZOLzHNZIb5L9IggEGKa8Y7smjIHhH8AVNCXosddg==
-X-Google-Smtp-Source: ABdhPJyk8AjC0EHArvk9GTYuyo2rPBLN0PMmTTayZatTpOwHnZ5+nkxvQHr9DtN0xzXkg5yuUWo07EnzCEyW/nrIIls=
-X-Received: by 2002:a05:6512:2022:: with SMTP id s2mr12509876lfs.661.1635551998004;
- Fri, 29 Oct 2021 16:59:58 -0700 (PDT)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635552055; x=1667088055;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=h93vLW2TLTafgwoTepYDQdgP3SwjiW+APNoViyK7yQc=;
+  b=WEyfZUXVWY5did7YzmrGrtjQs6WSKz0cXwsxvJJpYyZFQfLZ5uVgyZhB
+   BSh53fj4aaGuS7sSQhOopIHG7FCzDMYiv4W+ciASkSELoqYugACYQTj62
+   FiWkFq8iC6juEe3M9Vtk63lf3P+JM47K8B0qfa6+6taik+IC2DeKAxELA
+   4=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Oct 2021 17:00:54 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2021 17:00:54 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Fri, 29 Oct 2021 17:00:54 -0700
+Received: from hu-vamslank-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Fri, 29 Oct 2021 17:00:53 -0700
+From:   <quic_vamslank@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <tglx@linutronix.de>, <maz@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        "Vamsi Krishna Lanka" <quic_vamslank@quicinc.com>
+Subject: [PATCH v3 0/6] Add Pdc, GCC and RPMh clock support for SDX65 
+Date:   Fri, 29 Oct 2021 17:00:36 -0700
+Message-ID: <1635552042-16250-1-git-send-email-quic_vamslank@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
-In-Reply-To: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Fri, 29 Oct 2021 16:59:46 -0700
-Message-ID: <CALAqxLVJzCUmcWXZo=nQA2GYR_eCbo7R1JX4KVMDRFhMQua6nA@mail.gmail.com>
-Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
- and enc/dec
-To:     Tadeusz Struk <tadeusz.struk@linaro.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 2:48 PM Tadeusz Struk <tadeusz.struk@linaro.org> wrote:
->
-> Venus video encode/decode hardware driver consists of three modules.
-> The parent module venus-core, and two sub modules venus-enc and venus-dec.
-> The venus-core module allocates a common structure that is used by the
-> enc/dec modules, loads the firmware, and performs some common hardware
-> initialization. Since the three modules are loaded one after the other,
-> and their probe functions can run in parallel it is possible that
-> the venc_probe and vdec_probe functions can finish before the core
-> venus_probe function, which then can fail when, for example it
-> fails to load the firmware. In this case the subsequent call to venc_open
-> causes an Oops as it tries to dereference already uninitialized structures
-> through dev->parent and the system crashes in __pm_runtime_resume() as in
-> the trace below:
->
-> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
-> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
-> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
-> [   26.290326][  T485] Call trace:
-> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
-> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
-> [   26.290335][  T485]  v4l2_open+0x184/0x294
-> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
-> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
-> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
-> [   26.290352][  T485]  do_filp_open+0xb8/0x168
-> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
-> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
-> [   26.290359][  T485]  invoke_syscall+0x60/0x170
-> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
-> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
-> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
-> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
-> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
-> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
-> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
->
-> This can be fixed by synchronizing the three probe functions and
-> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
-> returns success.
->
-> Changes in v2:
-> - Change locking from mutex_lock to mutex_trylock
->   in venc_probe and vdec_probe to avoid potential deadlock.
->
-> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 
-This works for me, and avoids the deadlock I was hitting with the
-earlier version of the patch!
+Hello,
 
-Tested-by: John Stultz <john.stultz@linaro.org>
+Changes from v2:
+ - Addressed Taniya Das and Vinod Koul's comments related to adding LUCID_EVO 
+   PLL type and rpmh support patches
+ - Collected Rob's Acked-by for the dt-bindings patches
 
-thanks so much!
--john
+Changes from v1:
+ - Addressed Bjorn's comments related to the GCC support patch
+ - Collected Bjorn's and Rob's Reviewed-by for the dt-bindings patches
+
+This patch series adds bindings and device driver changes for GCC, pdc and RPMh
+clock support for SDX65 Platform.
+
+Thanks,
+Vamsi
+
+Vamsi krishna Lanka (3):
+  dt-bindings: clock: Add SDX65 GCC clock bindings
+  dt-bindings: clock: Introduce RPMHCC bindings for SDX65
+  clk: qcom: Add support for SDX65 RPMh clocks
+
+ .../devicetree/bindings/clock/qcom,gcc-sdx65.yaml  |   78 +
+ .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
+ .../bindings/interrupt-controller/qcom,pdc.txt     |    1 +
+ drivers/clk/qcom/Kconfig                           |    8 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c                   |  171 +++
+ drivers/clk/qcom/clk-alpha-pll.h                   |    3 +
+ drivers/clk/qcom/clk-rpmh.c                        |   25 +
+ drivers/clk/qcom/gcc-sdx65.c                       | 1597 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sdx65.h         |  122 ++
+ 10 files changed, 2007 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sdx65.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx65.h
+
+-- 
+2.7.4
+
