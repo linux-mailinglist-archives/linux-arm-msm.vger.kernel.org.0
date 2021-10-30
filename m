@@ -2,104 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 71520440A5C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 19:08:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D291F440BE8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 23:46:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbhJ3RL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Oct 2021 13:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57464 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229474AbhJ3RLZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Oct 2021 13:11:25 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2747C061570
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Oct 2021 10:08:55 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id a26so12260362pfr.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Oct 2021 10:08:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H+W1GMLw6C5reaVE/Y3pI1gn/PZ+dci603n52uqzIAc=;
-        b=K6IFILSEntzkjF4zAJE53lfbxpsnnRNjTX18tiLglLxJt0GORz7bgiSEoN5mAxVgsh
-         mGFKli7c6RMXqSX9ifPiVEt2g7fVDBii20SQgVDzVo4LR3co8CO0nNOsWbIk2ue/DqJO
-         qUXF3lMtss5oMddUcgBFo0PkgV8queNnOxfeg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=H+W1GMLw6C5reaVE/Y3pI1gn/PZ+dci603n52uqzIAc=;
-        b=aFNqWfKlzrzy3LtH7oNl2kvdF5d/lkfvYnCodBXGs8SGF/EpHtcD84k8lCNPc6P6s/
-         PDnzK2pKP8l6hcOvnZLn0HMkuCvf4aZ0YWU682GYa1n6/g+2uzaPKxWJvD6TzWviTV28
-         bNZRNKI+6sCh6GLlaJziYdREiOrGuY4e9O3R6VO2+UsxAaIqVIUZyhLsUh+Q7JWNhkpT
-         zruZPZrrQcVmCjBOzqkOlWxPI2mbF44CW53CRHfRBYe1oz2pUx1npjV/xc1CJRdVxZ4d
-         n0bLoCsOAgCr29QwWg/SHcNr4viFBi0qDcAuwqU1RxV9YwltQxAnzSlQqP2YyPvBXXlY
-         /Pqw==
-X-Gm-Message-State: AOAM531DfkFFmqaTr3OnYX+mOIa0u8/B7GidpbLy5HQHdSEpdksQLrBH
-        e0fDB0V0jMAm8Ncg6JQAzYPQ1Q==
-X-Google-Smtp-Source: ABdhPJwSmUoGp7LXb7jUr28+7PBB+QkgoTQGz8UyV8ymunRt9JTMHBCp+cX19W4PjQ1KMU+pSedPog==
-X-Received: by 2002:a63:ce0a:: with SMTP id y10mr13812030pgf.133.1635613735258;
-        Sat, 30 Oct 2021 10:08:55 -0700 (PDT)
-Received: from philipchen.mtv.corp.google.com ([2620:15c:202:201:f63c:4559:725c:b6da])
-        by smtp.gmail.com with ESMTPSA id i7sm8565390pgk.85.2021.10.30.10.08.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Oct 2021 10:08:54 -0700 (PDT)
-From:   Philip Chen <philipchen@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org, swboyd@chromium.org, robdclark@chromium.org,
-        Philip Chen <philipchen@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bernard Zhao <bernard@vivo.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Nicolas Boichat <drinkcat@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: set default num_data_lanes
-Date:   Sat, 30 Oct 2021 10:08:50 -0700
-Message-Id: <20211030100812.1.I6cd9af36b723fed277d34539d3b2ba4ca233ad2d@changeid>
-X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
+        id S231241AbhJ3Vsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Oct 2021 17:48:36 -0400
+Received: from ixit.cz ([94.230.151.217]:35232 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231165AbhJ3Vsg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 30 Oct 2021 17:48:36 -0400
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 7A1D224E6C;
+        Sat, 30 Oct 2021 12:04:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1635588255;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=+UB7wfj4tXFFiJ/lUcfdPIYlNCDtOzEqf+s3HG7n+mo=;
+        b=KqaG6NjarH6QH0LaJ/HcNJ5wvKLcMSgrZHbxzeIb4X+tmmGm91Q3FbSm6SV83Fit5HD5/Y
+        kGh8anD1w1aTa3QoLS4esiad72WdOGdnkVmmqLiRJpS20Lx7XFM/en8uUeF39RiLGZJZRT
+        vW1kcV3DgC5lSpMEEyM4sdlxcbxCuIU=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: msm8996: drop not documented adreno properties
+Date:   Sat, 30 Oct 2021 12:04:12 +0200
+Message-Id: <20211030100413.28370-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If "data_lanes" property of the dsi output endpoint is missing in
-the DT, num_data_lanes would be 0 by default, which could cause
-dsi_host_attach() to fail if dsi->lanes is set to a non-zero value
-by the bridge driver.
+These properties aren't documented nor implemented in the driver.
+Drop them.
 
-According to the binding document of msm dsi controller, the
-input/output endpoint of the controller is expected to have 4 lanes.
-So let's set num_data_lanes to 4 by default.
+Fixes warnings as:
+$ make dtbs_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/display/msm/gpu.yaml
+...
+arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml: gpu@b00000: 'qcom,gpu-quirk-fault-detect-mask', 'qcom,gpu-quirk-two-pass-use-wfi' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: Documentation/devicetree/bindings/display/msm/gpu.yaml
+...
 
-Signed-off-by: Philip Chen <philipchen@chromium.org>
+Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index c86b5090fae6..a32eb33dfc14 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1696,6 +1696,8 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
- 	if (!prop) {
- 		DRM_DEV_DEBUG(dev,
- 			"failed to find data lane mapping, using default\n");
-+		/* Set the number of date lanes to 4 by default. */
-+		msm_host->num_data_lanes = 4;
- 		return 0;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index bccc2d0b35a8..1ac78d9909ab 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -987,9 +987,6 @@ gpu: gpu@b00000 {
+ 			nvmem-cells = <&speedbin_efuse>;
+ 			nvmem-cell-names = "speed_bin";
  
+-			qcom,gpu-quirk-two-pass-use-wfi;
+-			qcom,gpu-quirk-fault-detect-mask;
+-
+ 			operating-points-v2 = <&gpu_opp_table>;
+ 
+ 			status = "disabled";
 -- 
-2.33.1.1089.g2158813163f-goog
+2.33.0
 
