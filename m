@@ -2,74 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5648A44081A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 10:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 235A344083D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Oct 2021 11:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231793AbhJ3JA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 30 Oct 2021 05:00:58 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51316 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230427AbhJ3JA6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 30 Oct 2021 05:00:58 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9FAF960F58;
-        Sat, 30 Oct 2021 08:58:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1635584308;
-        bh=qG3G823JIzBJ2/MxvF2Pm7j/ThHt+frg08MkdIe9CWU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eSkQPHFQ3FzheWgeM7ofBSJMya6fMVELILKWCNXfBgxkhedsSnfglihc/Emiaz8Az
-         0cTUWEQtLGSNTZ8I9tGzUtSxzqj5p4nU+yOBqqo1GFLzuyOAlgWTLvi1Z1LbXS3gt3
-         SPI1zkI6uJNIR02kNEGt9r/GAVHznpzLoi9iZgLA=
-Date:   Sat, 30 Oct 2021 10:58:25 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S231792AbhJ3JaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 30 Oct 2021 05:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231685AbhJ3JaO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 30 Oct 2021 05:30:14 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36E2C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Oct 2021 02:27:44 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1mgkeJ-0008RA-Kh; Sat, 30 Oct 2021 11:27:39 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1mgkeI-00087r-Od; Sat, 30 Oct 2021 11:27:38 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1mgkeI-0007Py-Nb; Sat, 30 Oct 2021 11:27:38 +0200
+Date:   Sat, 30 Oct 2021 11:27:36 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     Steev Klimaszewski <steev@kali.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com
-Subject: Re: [PATCH 2/3] usb: host: xhci-plat: Add device property to set
- XHCI_SKIP_PHY_INIT quirk
-Message-ID: <YX0JMfgHS3vqEdU6@kroah.com>
-References: <1635272372-9982-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635272372-9982-3-git-send-email-quic_c_sanm@quicinc.com>
+        Thierry Reding <thierry.reding@gmail.com>,
+        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v7 1/3] pwm: Introduce single-PWM of_xlate function
+Message-ID: <20211030092736.eam4ahzimiew7erg@pengutronix.de>
+References: <20211025170925.3096444-1-bjorn.andersson@linaro.org>
+ <65243a98-61b9-3311-f41d-fa4782448baa@kali.org>
+ <CAG3jFytmcFcA5W3vmcpWTWrc36-YFMPZ1wAB8gAJfiHHLWmaCA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cwmpryyacyfxuvhj"
 Content-Disposition: inline
-In-Reply-To: <1635272372-9982-3-git-send-email-quic_c_sanm@quicinc.com>
+In-Reply-To: <CAG3jFytmcFcA5W3vmcpWTWrc36-YFMPZ1wAB8gAJfiHHLWmaCA@mail.gmail.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 26, 2021 at 11:49:31PM +0530, Sandeep Maheswaram wrote:
-> Add device property usb-skip-phy-init to check and set XHCI_SKIP_PHY_INIT
-> quirk.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> ---
->  drivers/usb/host/xhci-plat.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-> index c1edcc9..2a45f89 100644
-> --- a/drivers/usb/host/xhci-plat.c
-> +++ b/drivers/usb/host/xhci-plat.c
-> @@ -323,6 +323,9 @@ static int xhci_plat_probe(struct platform_device *pdev)
->  		if (device_property_read_bool(tmpdev, "quirk-broken-port-ped"))
->  			xhci->quirks |= XHCI_BROKEN_PORT_PED;
->  
-> +		if (device_property_read_bool(tmpdev, "usb-skip-phy-init"))
-> +			xhci->quirks |= XHCI_SKIP_PHY_INIT;
-> +
 
-Why is this needed?  What will it fix?
+--cwmpryyacyfxuvhj
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You need more information.
+Hello,
 
-thanks,
-greg k-h
+On Wed, Oct 27, 2021 at 05:06:02PM +0200, Robert Foss wrote:
+> On Tue, 26 Oct 2021 at 19:21, Steev Klimaszewski <steev@kali.org> wrote:
+> >
+> >
+> > On 10/25/21 12:09 PM, Bjorn Andersson wrote:
+> > > The existing pxa driver and the upcoming addition of PWM support in t=
+he
+> > > TI sn565dsi86 DSI/eDP bridge driver both has a single PWM channel and
+> > > thereby a need for a of_xlate function with the period as its single
+> > > argument.
+> > >
+> > > Introduce a common helper function in the core that can be used as
+> > > of_xlate by such drivers and migrate the pxa driver to use this.
+> > >
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > Acked-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> > > Tested-by: Steev Klimaszewski <steev@kali.org>
+> > > ---
+> > >
+> [...]
+>=20
+> Applied to drm-misc-next.
+
+This is now 3ab7b6ac5d829e60c3b89d415811ff1c9f358c8e in next, the Link:
+added in the commit trailer looks as follows:
+
+	Link: https://patchwork.freedesktop.org/patch/msgid/20211025170925.3096444=
+-1-bjorn.andersson@linaro.org
+
+but this link doesn't work, for me at least. I wonder what's wrong with
+it. If you want to fix it and rewrite the commit, you can also drop the
+duplicated "Tested-by: Steev Klimaszewski <steev@kali.org>".
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--cwmpryyacyfxuvhj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmF9EAQACgkQwfwUeK3K
+7AkmVwf/UC0/COH40s3PAmZkJX3EzO2LlqeXFJDYvZZX4T58leO83achdFzOWtXi
+F9kK3WlNNmggZ32zqDHV1HOE42tnn1wLXc7xqevjiIYWzRrHAlW5bXcRQT1ndDjo
+Tiloo0fTBsi24lmuvWeWPVifk77ZMY4eB/dVovyDilTgvuxo9hf55URQTgnSpD8o
+DVToFokj6ckIESylQgJXCKxiM8vqFSIYQFXSqLFDW/FVYDmA9eVlAeme0bjeHv6p
+3mWJ+rC2A7dNz65qYqPvqM02uy0+2o1tMJ3G/n+idjv16M8areb0Owvh47r1q7/O
+H4TZl0wjy5y8SbZ2l1lo8EaWkVE6pA==
+=KqMO
+-----END PGP SIGNATURE-----
+
+--cwmpryyacyfxuvhj--
