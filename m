@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 255CD44146F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 08:54:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 331D1441472
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 08:54:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231271AbhKAH4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 03:56:37 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:3117 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231223AbhKAH4h (ORCPT
+        id S231317AbhKAH4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 03:56:41 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:49575 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231241AbhKAH4l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 03:56:37 -0400
+        Mon, 1 Nov 2021 03:56:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1635753244; x=1667289244;
+  t=1635753248; x=1667289248;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=X+wdQRBLa1HC/CfK9EAfVpdM/vS8LjVQFtsSsB/pc90=;
-  b=KundQqpW3rH/c8iwFTbWfvSURk1vcAs0v4L4vFrvvQIbt/uvSwXu9xIa
-   hElGiiFNIlQ4Hh9YeRlpRSp8ohw1ELpBuor7rQKiVwswgn3gltWYw9p8f
-   sxIrzFdFQa8N0E1DVbqMTSlKwmw5xmryE5ZuDMlKM51hwFh0DGIFtpUzQ
-   g=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Nov 2021 00:54:03 -0700
+  bh=pvb268w8OMOwhmflSiRGofwQaZ5rzOsmDlFqJW7eBKw=;
+  b=WUo35whDbIKb8Byv8cW3qKrDPYqyYJ8SmPyldHpw5zNrWo3IeguMbHdu
+   RlXB2vlUhGOWGGpTQ5etXUcWSs4wCqoNOK5MmGDtrLeU6tbHAWFoFxbly
+   WKfWVnrmjUVANy0yDbfEIy/gKuaWXVXl0Xxihv7/36JBRGmvNSSabeMU3
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Nov 2021 00:54:08 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2021 00:54:03 -0700
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2021 00:54:07 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Mon, 1 Nov 2021 00:54:02 -0700
+ Mon, 1 Nov 2021 00:54:07 -0700
 Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Mon, 1 Nov 2021 00:53:58 -0700
+ Mon, 1 Nov 2021 00:54:03 -0700
 From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -48,9 +48,9 @@ CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
         <quic_ppratap@quicinc.com>,
         Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH v9 1/5] usb: host: xhci: plat: Add suspend quirk for dwc3 controller
-Date:   Mon, 1 Nov 2021 13:23:40 +0530
-Message-ID: <1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com>
+Subject: [PATCH v9 2/5] usb: dwc3: core: Host wake up support from system suspend
+Date:   Mon, 1 Nov 2021 13:23:41 +0530
+Message-ID: <1635753224-23975-3-git-send-email-quic_c_sanm@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1635753224-23975-1-git-send-email-quic_c_sanm@quicinc.com>
 References: <1635753224-23975-1-git-send-email-quic_c_sanm@quicinc.com>
@@ -63,45 +63,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During suspend check if any wakeup capable devices are connected to the
-controller (directly or through hubs), and set the wakeup capable property
-for xhci plat device.
+Avoiding phy powerdown when wakeup capable devices are connected
+by checking wakeup property of xhci plat device.
+Phy should be on to wake up the device from suspend using wakeup capable
+devices such as keyboard and mouse.
 
 Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
 ---
- drivers/usb/host/xhci-plat.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/usb/dwc3/core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index c1edcc9..7ab272b 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -431,6 +431,14 @@ static int xhci_plat_remove(struct platform_device *dev)
- 	return 0;
- }
- 
-+static void xhci_dwc3_suspend_quirk(struct usb_hcd *hcd, struct device *dev)
-+{
-+	if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-+		device_set_wakeup_capable(dev, true);
-+	else
-+		device_set_wakeup_capable(dev, false);
-+}
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 643239d..a6ad0ed 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1787,7 +1787,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ 		dwc3_core_exit(dwc);
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+-		if (!PMSG_IS_AUTO(msg)) {
++		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
+ 			dwc3_core_exit(dwc);
+ 			break;
+ 		}
+@@ -1848,13 +1848,16 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+ 		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+-		if (!PMSG_IS_AUTO(msg)) {
++		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
+ 			ret = dwc3_core_init_for_resume(dwc);
+ 			if (ret)
+ 				return ret;
+ 			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+ 			break;
++		} else {
++			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+ 		}
 +
- static int __maybe_unused xhci_plat_suspend(struct device *dev)
- {
- 	struct usb_hcd	*hcd = dev_get_drvdata(dev);
-@@ -440,6 +448,10 @@ static int __maybe_unused xhci_plat_suspend(struct device *dev)
- 	ret = xhci_priv_suspend_quirk(hcd);
- 	if (ret)
- 		return ret;
-+
-+	if (of_device_is_compatible(dev->parent->of_node, "snps,dwc3"))
-+		xhci_dwc3_suspend_quirk(hcd, dev);
-+
- 	/*
- 	 * xhci_suspend() needs `do_wakeup` to know whether host is allowed
- 	 * to do wakeup during suspend.
+ 		/* Restore GUSB2PHYCFG bits that were modified in suspend */
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 		if (dwc->dis_u2_susphy_quirk)
 -- 
 2.7.4
 
