@@ -2,113 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A576B441B73
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 14:01:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 079B7441BD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 14:40:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232153AbhKANDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 09:03:33 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:47567 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231892AbhKANDa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 09:03:30 -0400
+        id S231741AbhKANmc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 09:42:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:36465 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232053AbhKANmc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 1 Nov 2021 09:42:32 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635771657; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: In-Reply-To: Date: References: Subject: Cc:
- To: From: Sender; bh=vhffXgl6XrT5R0iOl/U73G4M8Vp4ByFiaGaz/tHmkzQ=; b=B+tcg84bbq0101isgRktC99EUMQ+hnbTqdW5hfAnXc2BnwwwPdIgQG8lyKwAVT7c5TNBEdKm
- 6dP0WrrxN2uHdkoNv5ukAQrWcXQLnJJGaJH0Jzv7xE6N0XxMZASxU+bYWK+E1WUYBNxMSdmJ
- bS8B9qW6IViccdyBex55aQL+e34=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1635773999; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=oCiwHNpAGx+7qf4ko0KtXb5a49/AVJ95iHboNyo0CEo=;
+ b=rTVnfd6y1S2+jkheATYPJ1ufg/mDicRJxAxaUil7QFptlvrA7FP0Vt2rUnFQhG+Im1dkePRj
+ JKYamBH9auHnYWmOAFqiEKtZpD7HIcSOf//YgWQDQKBJOlT2xqeInBsNFU4P0EJjDvO2SHBq
+ Nl3UDVkKotL4O/lPmCtU1C4zGyU=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 617fe4f4648aeeca5cde3a52 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Nov 2021 13:00:36
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 617fee2d2e144ac4d3ef0af6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 01 Nov 2021 13:39:57
  GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Sender: okukatla=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D1F9DC4360D; Mon,  1 Nov 2021 13:00:35 +0000 (UTC)
+        id ED320C43617; Mon,  1 Nov 2021 13:39:56 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D89DCC4338F;
-        Mon,  1 Nov 2021 13:00:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D89DCC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] wcn36xx: fix RX BD rate mapping for 5GHz legacy rates
-References: <20211028223131.897548-1-benl@squareup.com>
-        <20211028223131.897548-2-benl@squareup.com>
-        <b3473977-5bb6-06df-55c3-85f08a29a964@linaro.org>
-        <631a3ab4-56d9-5c1d-be53-c885747e3f7b@squareup.com>
-Date:   Mon, 01 Nov 2021 15:00:30 +0200
-In-Reply-To: <631a3ab4-56d9-5c1d-be53-c885747e3f7b@squareup.com> (Benjamin
-        Li's message of "Thu, 28 Oct 2021 17:39:58 -0700")
-Message-ID: <8735og2fpt.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        (Authenticated sender: okukatla)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 435E1C4338F;
+        Mon,  1 Nov 2021 13:39:56 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 01 Nov 2021 19:09:56 +0530
+From:   okukatla@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     georgi.djakov@linaro.org, evgreen@google.com,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@kernel.org,
+        mdtipton@codeaurora.org, sibis@codeaurora.org,
+        saravanak@google.com, seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: Re: [v8 3/3] arm64: dts: qcom: sc7280: Add EPSS L3 interconnect
+ provider
+In-Reply-To: <YXsxxd7f/FaDJEMa@ripper>
+References: <1634812857-10676-1-git-send-email-okukatla@codeaurora.org>
+ <1634812857-10676-4-git-send-email-okukatla@codeaurora.org>
+ <YXsxxd7f/FaDJEMa@ripper>
+Message-ID: <fc4ef5ecd91401f49411cf138b0da526@codeaurora.org>
+X-Sender: okukatla@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Benjamin Li <benl@squareup.com> writes:
-
-> On 10/28/21 5:30 PM, Bryan O'Donoghue wrote:
->> On 28/10/2021 23:31, Benjamin Li wrote:
->>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sta=
-tus.rate_idx >=3D sband->n_bitrates) {
->> This fix was applied because we were getting a negative index
->>=20
->> If you want to remove that, you'll need to do something about this
->>=20
->> status.rate_idx -=3D 4;
->
-> Hmm... so you're saying there's a FW bug where sometimes we get
-> bd->rate_id =3D 0-7 (leading to status.rate_idx =3D 0-3) on a 5GHz
-> channel?
->
-> static const struct wcn36xx_rate wcn36xx_rate_table[] =3D {
->     /* 11b rates */
->     {  10, 0, RX_ENC_LEGACY, 0, RATE_INFO_BW_20 },
->     {  20, 1, RX_ENC_LEGACY, 0, RATE_INFO_BW_20 },
->     {  55, 2, RX_ENC_LEGACY, 0, RATE_INFO_BW_20 },
->     { 110, 3, RX_ENC_LEGACY, 0, RATE_INFO_BW_20 },
->
->     /* 11b SP (short preamble) */
->     {  10, 0, RX_ENC_LEGACY, RX_ENC_FLAG_SHORTPRE, RATE_INFO_BW_20 },
->     {  20, 1, RX_ENC_LEGACY, RX_ENC_FLAG_SHORTPRE, RATE_INFO_BW_20 },
->     {  55, 2, RX_ENC_LEGACY, RX_ENC_FLAG_SHORTPRE, RATE_INFO_BW_20 },
->     { 110, 3, RX_ENC_LEGACY, RX_ENC_FLAG_SHORTPRE, RATE_INFO_BW_20 },
->
-> It sounds like we should WARN and drop the frame in that case. If
-> you agree I'll send a v2.
-
-BTW, please avoid using WARN() family of functions in the data path as
-that can cause host crashes due to too much spamming in the logs. A some
-kind of ratelimited version of an error message is much safer. For
-example ath11k_warn() is ratelimited, maybe wcn36xx_warn() should be as
-well?
-
---=20
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
-hes
+On 2021-10-29 04:57, Bjorn Andersson wrote:
+> On Thu 21 Oct 03:40 PDT 2021, Odelu Kukatla wrote:
+> 
+>> Add Epoch Subsystem (EPSS) L3 interconnect provider node on SC7280
+>> SoCs.
+>> 
+>> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index d74a4c8..0b55742 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -3687,6 +3687,14 @@
+>>  			};
+>>  		};
+>> 
+>> +		epss_l3: interconnect@18590000 {
+>> +			compatible = "qcom,sc7280-epss-l3";
+>> +			reg = <0 0x18590000 0 0x1000>;
+> 
+> This series looks like I would expect, with and without per-core dcvs.
+> But can you please explain why this contradict what Sibi says here:
+> https://lore.kernel.org/all/1627581885-32165-3-git-send-email-sibis@codeaurora.org/
+> 
+> Regards,
+> Bjorn
+> 
+Thanks for Review!
+Sibi's patch will be dropped, it is not required with my updated patch 
+series:
+https://lore.kernel.org/all/1627581885-32165-3-git-send-email-sibis@codeaurora.org/
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
+>> +			clock-names = "xo", "alternate";
+>> +			#interconnect-cells = <1>;
+>> +		};
+>> +
+>>  		cpufreq_hw: cpufreq@18591000 {
+>>  			compatible = "qcom,cpufreq-epss";
+>>  			reg = <0 0x18591000 0 0x1000>,
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
