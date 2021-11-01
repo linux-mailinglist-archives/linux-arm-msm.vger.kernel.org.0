@@ -2,159 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD0954420EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 20:35:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFA264421AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 21:30:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbhKATiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 15:38:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41240 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230107AbhKATiP (ORCPT
+        id S229966AbhKAUc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 16:32:57 -0400
+Received: from mail-ot1-f46.google.com ([209.85.210.46]:36588 "EHLO
+        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229560AbhKAUc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 15:38:15 -0400
-Received: from mail.kapsi.fi (mail.kapsi.fi [IPv6:2001:67c:1be8::25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F88C061714;
-        Mon,  1 Nov 2021 12:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kapsi.fi;
-         s=20161220; h=Content-Transfer-Encoding:Content-Type:Message-ID:References:
-        In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=p5j38nD4C6JFRNTsNhzwvjuue/W06jEH6YlXaA0bpeU=; b=jbLZtsyJxM9oj7PQePkpXtK5kb
-        mdV8zpactjaZuYEv7XKtLrdyChEfIsddeHZmX+saHhtRh1zMhukiG2cGhihHIl8Z8UjnYpqazgi2j
-        G3ePggflvINuBVvN2eCr9T1rW0dtWweZvQsBCe8hWVN+P6rW1XD0lrJ60kTFeQsfD+R5rmFk6AcEp
-        g3XRtTlrMWsFCxgx63tAQuWvV5+01JJcrfMq6IgR2tbhufHcGwh2NpJoNFXcIDu/FwonZiE7NG6Az
-        nhFopVf6K+QEVodyZG7hO5dCIitxX13/iU3mPU3o2/puUu2cS3cP7L7hutsDVf+nVy6jSZ9VYmlQL
-        E0ISl+bQ==;
-Received: from webng-gw.kapsi.fi ([91.232.154.200] helo=roundcube.kapsi.fi)
-        by mail.kapsi.fi with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.89)
-        (envelope-from <jyri.sarha@iki.fi>)
-        id 1mhd5b-000303-Us; Mon, 01 Nov 2021 21:35:27 +0200
+        Mon, 1 Nov 2021 16:32:57 -0400
+Received: by mail-ot1-f46.google.com with SMTP id s23-20020a056830125700b00553e2ca2dccso22117152otp.3;
+        Mon, 01 Nov 2021 13:30:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9oMNIEQqaxWU/IM8w/Ndcf39QnufPi4/bgw6wk3mzDM=;
+        b=FLgTNWCwLwqX12LgsgEp/g+f4Bq7cwubuexTbXmM4pjSXcS+53MxiHGzRW7U6mx4p+
+         Lfo1tASHMrzRFJ0m46yr5pn96Ig6sX/YaKmXgrwQYywME7M45fYo+ihUMxolkc7dSP6a
+         wLhF87aqq8DH5qnLWR1pkbeKkCpG/chj/mLYvCeh23yE9HSe7h6xw0c0oHjN+7DbTKIq
+         SPhuC2KGyUD+Gwv4mf/Zp1XFsNGpALCIvLwKf13rKgmZii+JwRbW3TkXe5nbEhYUEUiK
+         XxB0T9ip8+J8U4nMMr+alxtQedAhsB0+iww+Be+sca0xIIZtKuHGTFxENVY6dh5TafZA
+         y9hg==
+X-Gm-Message-State: AOAM531A9v5aT9ZGuFCA0xzFi0yLkI63LgDzDsbpL26ut6svqIGVn1As
+        CerqCSm+jiMAEEXQHj1q4LrL46GKlg==
+X-Google-Smtp-Source: ABdhPJxilCIZwx40TtnakWQ8SW39n1QYxPshJu8evRs0rwDYLiu4hNz73SRyoQkM9wZ1pDoCkZReTg==
+X-Received: by 2002:a9d:774b:: with SMTP id t11mr15106055otl.7.1635798622949;
+        Mon, 01 Nov 2021 13:30:22 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id r184sm4299132oia.38.2021.11.01.13.30.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Nov 2021 13:30:22 -0700 (PDT)
+Received: (nullmailer pid 992011 invoked by uid 1000);
+        Mon, 01 Nov 2021 20:30:21 -0000
+Date:   Mon, 1 Nov 2021 15:30:21 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        mchehab@kernel.org, angelogioacchino.delregno@somainline.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Subject: Re: [PATCH v1 2/2] media: dt-bindings: media: camss: Document
+ clock-lanes property
+Message-ID: <YYBOXQOXM8USks0G@robh.at.kernel.org>
+References: <20211025103322.160913-1-robert.foss@linaro.org>
+ <20211025103322.160913-2-robert.foss@linaro.org>
 MIME-Version: 1.0
-Date:   Mon, 01 Nov 2021 21:35:25 +0200
-From:   Jyri Sarha <jyri.sarha@iki.fi>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v3 24/34] drm/tilcdc: Migrate to aggregate driver
-In-Reply-To: <20211026000044.885195-25-swboyd@chromium.org>
-References: <20211026000044.885195-1-swboyd@chromium.org>
- <20211026000044.885195-25-swboyd@chromium.org>
-Message-ID: <db784574b2cbe57ac0efbe045c9576f3@iki.fi>
-X-Sender: jyri.sarha@iki.fi
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 91.232.154.200
-X-SA-Exim-Mail-From: jyri.sarha@iki.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211025103322.160913-2-robert.foss@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-26 3:00, Stephen Boyd wrote:
-> Use an aggregate driver instead of component ops so that we can get
-> proper driver probe ordering of the aggregate device with respect to 
-> all
-> the component devices that make up the aggregate device.
+On Mon, Oct 25, 2021 at 12:33:22PM +0200, Robert Foss wrote:
+> The clock-lanes property corresponds to a hardware register field
+> that is required to be set, in order to enable the CSI clock signal.
 > 
-> Cc: Jyri Sarha <jyri.sarha@iki.fi>
-> Cc: Tomi Valkeinen <tomba@kernel.org>
-> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> The physical lane of the clock signal is not programmable, but only
+> togglable On or Off, which what BIT(7) of the
+> CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(5) register controls.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
+>  .../devicetree/bindings/media/qcom,msm8996-camss.yaml        | 5 +++++
+>  .../devicetree/bindings/media/qcom,sdm660-camss.yaml         | 5 +++++
+>  .../devicetree/bindings/media/qcom,sdm845-camss.yaml         | 5 +++++
+>  3 files changed, 15 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> index 38be41e932f0..d4da1fad12cf 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> @@ -106,6 +106,11 @@ properties:
+>  
+>              properties:
+>                clock-lanes:
+> +                description:
+> +                  The index of the clock-lane is not programmable by
+> +                  the hardware, but is required to define a CSI port.
+> +                  Lane 7 reflects the hardware register field that enables
+> +                  the clock lane.
 
-Tested-by: Jyri Sarha <jyri.sarha@iki.fi>
+If it is fixed, then it should not be required. Fix the required part.
 
-Thanks,
-Jyri
+>                  items:
+>                    - const: 7
 
->  drivers/gpu/drm/tilcdc/tilcdc_drv.c | 28 ++++++++++++++++------------
->  1 file changed, 16 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-> b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-> index 6b03f89a98d4..d5c6567eec8d 100644
-> --- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-> +++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
-> @@ -531,13 +531,16 @@ static const struct dev_pm_ops tilcdc_pm_ops = {
->  /*
->   * Platform driver:
->   */
-> -static int tilcdc_bind(struct device *dev)
-> +static int tilcdc_bind(struct aggregate_device *adev)
->  {
-> +	struct device *dev = adev->parent;
-> +
->  	return tilcdc_init(&tilcdc_driver, dev);
->  }
-> 
-> -static void tilcdc_unbind(struct device *dev)
-> +static void tilcdc_unbind(struct aggregate_device *adev)
->  {
-> +	struct device *dev = adev->parent;
->  	struct drm_device *ddev = dev_get_drvdata(dev);
-> 
->  	/* Check if a subcomponent has already triggered the unloading. */
-> @@ -547,9 +550,13 @@ static void tilcdc_unbind(struct device *dev)
->  	tilcdc_fini(dev_get_drvdata(dev));
->  }
-> 
-> -static const struct component_master_ops tilcdc_comp_ops = {
-> -	.bind = tilcdc_bind,
-> -	.unbind = tilcdc_unbind,
-> +static struct aggregate_driver tilcdc_aggregate_driver = {
-> +	.probe = tilcdc_bind,
-> +	.remove = tilcdc_unbind,
-> +	.driver = {
-> +		.name = "tilcdc_drm",
-> +		.owner = THIS_MODULE,
-> +	},
->  };
-> 
->  static int tilcdc_pdev_probe(struct platform_device *pdev)
-> @@ -566,12 +573,9 @@ static int tilcdc_pdev_probe(struct 
-> platform_device *pdev)
->  	ret = tilcdc_get_external_components(&pdev->dev, &match);
->  	if (ret < 0)
->  		return ret;
-> -	else if (ret == 0)
-> +	if (ret == 0)
->  		return tilcdc_init(&tilcdc_driver, &pdev->dev);
-> -	else
-> -		return component_master_add_with_match(&pdev->dev,
-> -						       &tilcdc_comp_ops,
-> -						       match);
-> +	return component_aggregate_register(&pdev->dev,
-> &tilcdc_aggregate_driver, match);
->  }
-> 
->  static int tilcdc_pdev_remove(struct platform_device *pdev)
-> @@ -581,10 +585,10 @@ static int tilcdc_pdev_remove(struct
-> platform_device *pdev)
->  	ret = tilcdc_get_external_components(&pdev->dev, NULL);
->  	if (ret < 0)
->  		return ret;
-> -	else if (ret == 0)
-> +	if (ret == 0)
->  		tilcdc_fini(platform_get_drvdata(pdev));
->  	else
-> -		component_master_del(&pdev->dev, &tilcdc_comp_ops);
-> +		component_aggregate_unregister(&pdev->dev, 
-> &tilcdc_aggregate_driver);
-> 
->  	return 0;
->  }
+I don't know how we let that in, but this should be the lane number. 
+Each binding can't be making up its own interpretation.
+
+Rob
