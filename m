@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDDEB4422BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 22:36:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89AFF4422C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 22:37:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbhKAViv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 17:38:51 -0400
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:39919 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbhKAViu (ORCPT
+        id S230460AbhKAVjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 17:39:44 -0400
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:33467 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229712AbhKAVjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 17:38:50 -0400
-Received: by mail-ot1-f42.google.com with SMTP id x16-20020a9d7050000000b00553d5d169f7so25513735otj.6;
-        Mon, 01 Nov 2021 14:36:17 -0700 (PDT)
+        Mon, 1 Nov 2021 17:39:43 -0400
+Received: by mail-oi1-f178.google.com with SMTP id bm39so16479388oib.0;
+        Mon, 01 Nov 2021 14:37:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=90wG7Obp9B6dHPtoVog3pPpxjm6DgW7vC5lI8mfDfgw=;
-        b=EIkvxP+vQ0dTcJZwNUSTCt+ExRKhytVH+9jNzhV6O4vePsXxEopZY8wmgBpYVYgmjb
-         bt6F41QHUooqz/Jm2wqZOOvXwVqjWuyocGfLn+Gg3uB/eQtJ6tLjFH1gxMAL05b6+v6d
-         ScF7EhJq1Fsw/8u1fK2ppNnt6qpAgreNduabJ2mQyt1kJUt9S4ZzXhx6mZt1u5CCJjr0
-         m527mgiNSfcxsUKT7Scq/QXpdo0u2lYBxC0WPQeAYx8fezLWz5bIpoUPqBThP/BEMFr4
-         Q1qZBvljOUQRxESbMYwwOPlc3r4UUu39fbDdlA8ntaamhZ3+P7vDXIXT1GUWy5P9Too9
-         XLjg==
-X-Gm-Message-State: AOAM532bWbZUwWIKMyTcsFFlGQmwAuVQ8LTI95ptRk4AMyww/jv0jHLD
-        o7nHTT+F+3GkRGYJlMNMjg==
-X-Google-Smtp-Source: ABdhPJwquV8eZYTxZdXaRA68R4NjOW8NuGpiTfWm1kpe3K8ni8vHnYs09eSX4/Vl3p8SCq+h1VeKmQ==
-X-Received: by 2002:a9d:2f61:: with SMTP id h88mr23067465otb.36.1635802576755;
-        Mon, 01 Nov 2021 14:36:16 -0700 (PDT)
+        bh=JAg6KdmFAXzUuXNGb8fBqgMEGAaw9CamDaT7qNQbpL8=;
+        b=BFbYFvOgo4qczFwcTGwoh1NMg9NghgZ64w8H/3kX25aczxExOvtBRTChxdDViq0l3O
+         KHFw8MnplHEaz2xcRhXqxX2fPUyhRtjB+T0k0JqDrQosqWs7JORhY2u7kS1/6YCzqv77
+         ZMcVu6Rj11qvTNzgCyw39/A9EcIgzIUFqZwq2VIi5jVBUV+yn8FdF5WcjluRpwnKTCEi
+         f2e444638QC8SUWDfHFxOlcHZMw84lB28KxSFVxArd2DAc5MNz34YZztSaUJVF58CBtt
+         bFZMFYVwWyscw3lNdxVe3Fj9UB1gnP0vfzwC4AMG0vEGcEPQTOllhAIvu8vmTDOJmX6J
+         9+kQ==
+X-Gm-Message-State: AOAM5314XpmgnjkG6HgMC8yDrtpxEcoXx40f9NODJfUKdE9BVIXxR8Jo
+        impye1mJnKEa4rQn2HBJzYARvaFNcg==
+X-Google-Smtp-Source: ABdhPJwwHJSQi7dkJRcGUNwGb6a7bA1FO3rXq7O3icm5Iokg0YPIWwbrh3XTqnkeg8LqfAGHRmgsWQ==
+X-Received: by 2002:aca:42c5:: with SMTP id p188mr1447707oia.125.1635802629571;
+        Mon, 01 Nov 2021 14:37:09 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w5sm4528865otq.46.2021.11.01.14.36.15
+        by smtp.gmail.com with ESMTPSA id z22sm4001594oth.63.2021.11.01.14.37.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Nov 2021 14:36:16 -0700 (PDT)
-Received: (nullmailer pid 1108565 invoked by uid 1000);
-        Mon, 01 Nov 2021 21:36:15 -0000
-Date:   Mon, 1 Nov 2021 16:36:15 -0500
+        Mon, 01 Nov 2021 14:37:09 -0700 (PDT)
+Received: (nullmailer pid 1110199 invoked by uid 1000);
+        Mon, 01 Nov 2021 21:37:07 -0000
+Date:   Mon, 1 Nov 2021 16:37:07 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bindings: media: venus: Drop bogus maxItems for
- power-domain-names
-Message-ID: <YYBdzwshhM5fmsEE@robh.at.kernel.org>
-References: <097d8602906e9db279728330c6cf2837be184704.1635338663.git.geert+renesas@glider.be>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, judyhsiao@chromium.org,
+        bjorn.andersson@linaro.org, agross@kernel.org, perex@perex.cz,
+        bgoswami@codeaurora.org, devicetree@vger.kernel.org,
+        swboyd@chromium.org, rohitkr@codeaurora.org, broonie@kernel.org,
+        lgirdwood@gmail.com,
+        Venkata Prasad Potturu <potturu@codeaurora.org>,
+        plai@codeaurora.org, alsa-devel@alsa-project.org, tiwai@suse.com,
+        robh+dt@kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi
+ pinctrl compatible
+Message-ID: <YYBeA7Qt2vhFoMeO@robh.at.kernel.org>
+References: <1635342097-2726-1-git-send-email-srivasam@codeaurora.org>
+ <1635342097-2726-3-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <097d8602906e9db279728330c6cf2837be184704.1635338663.git.geert+renesas@glider.be>
+In-Reply-To: <1635342097-2726-3-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 27, 2021 at 02:45:30PM +0200, Geert Uytterhoeven wrote:
-> make dt_binding_check:
-
-I'd say it's redundant rather than bogus.
-
+On Wed, 27 Oct 2021 19:11:36 +0530, Srinivasa Rao Mandadapu wrote:
+> Add device tree binding compatible name for Qualcomm SC7280 LPASS LPI pinctrl driver.
 > 
->     Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
->     warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> 
-> Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
->  1 file changed, 1 deletion(-)
+>  Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
 
 Acked-by: Rob Herring <robh@kernel.org>
-
