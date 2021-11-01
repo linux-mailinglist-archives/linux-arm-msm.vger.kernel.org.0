@@ -2,186 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F31EC442067
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 20:00:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD0954420EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Nov 2021 20:35:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232499AbhKATCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 15:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32784 "EHLO
+        id S230317AbhKATiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 15:38:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232607AbhKATCd (ORCPT
+        with ESMTP id S230107AbhKATiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 15:02:33 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D6EC079784
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Nov 2021 11:59:12 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id a9so7494332pgg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Nov 2021 11:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BD1QsMY1zCUqv9br05N6l/EKmY3X2SxhgDpOAJhSwOg=;
-        b=QPo0fLjV+jATSuaG4z7d8hBSW8RLlY0fKLsiIJmeEcwNnIaOhVSkbc6tymWO6B/t4l
-         I33lEIk9z8XOsPVpQdeoep+FjLeTrkYLFoi/7QriEnA8KqIgMmyfh8eCzmNLqzKEvbkM
-         tEb3FcUyt31GKnlkmRM561dj75yfy5Mu1S7P4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BD1QsMY1zCUqv9br05N6l/EKmY3X2SxhgDpOAJhSwOg=;
-        b=1vtaUQl85nXwWwYK4gtJyFUIuVC3VA7f4auqcAsVRlDBaiKDFh6NvdZQD19IFCckw0
-         VU4u6YQCOMwG+zxvqVTdocRVMkSCXs+07+RfvlKtmwmRiOtDUPfTZNs0dvh0Kpanjupv
-         f1UtC3ki5dUy8VZs1R/8K4vFhGyFJtU7s1FF0lYFw/3jndhFMhNb5Hf+sqtHZBjiU66P
-         zepE3k9EHH+iQ/lhkff1kJM4Xi1DZQTpjrsBfKb0Hn13VQnUGPrwcuRF1//SrDb8X56K
-         7ah/dImSg9/Gov/l9PaojoCCSHo5lBYxvXEne0ILn3FzV+2fPzzQzvtQkU61Rf02zXgL
-         BHpg==
-X-Gm-Message-State: AOAM533YqHigfVmBoHRl0z1mYTNaFz3IjPS0QRsw4Ko06wbBlFLsIPGf
-        elD+NoaTr53ibtvCwg2cNBUmjw==
-X-Google-Smtp-Source: ABdhPJx4ocrPcehkVYoTHEsKFEMRDkN4/T8e7Q6rfuqdhfiqd1F4S4rzBJnlsgJ8GjUvqChmMSEBUA==
-X-Received: by 2002:a63:af07:: with SMTP id w7mr23594572pge.202.1635793152067;
-        Mon, 01 Nov 2021 11:59:12 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6278:520b:a2e1:4ece])
-        by smtp.gmail.com with UTF8SMTPSA id ml24sm191160pjb.16.2021.11.01.11.59.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Nov 2021 11:59:11 -0700 (PDT)
-Date:   Mon, 1 Nov 2021 11:59:10 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v9 1/5] usb: host: xhci: plat: Add suspend quirk for dwc3
- controller
-Message-ID: <YYA4/rjSN/QvIM+w@google.com>
-References: <1635753224-23975-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com>
+        Mon, 1 Nov 2021 15:38:15 -0400
+Received: from mail.kapsi.fi (mail.kapsi.fi [IPv6:2001:67c:1be8::25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F88C061714;
+        Mon,  1 Nov 2021 12:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kapsi.fi;
+         s=20161220; h=Content-Transfer-Encoding:Content-Type:Message-ID:References:
+        In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=p5j38nD4C6JFRNTsNhzwvjuue/W06jEH6YlXaA0bpeU=; b=jbLZtsyJxM9oj7PQePkpXtK5kb
+        mdV8zpactjaZuYEv7XKtLrdyChEfIsddeHZmX+saHhtRh1zMhukiG2cGhihHIl8Z8UjnYpqazgi2j
+        G3ePggflvINuBVvN2eCr9T1rW0dtWweZvQsBCe8hWVN+P6rW1XD0lrJ60kTFeQsfD+R5rmFk6AcEp
+        g3XRtTlrMWsFCxgx63tAQuWvV5+01JJcrfMq6IgR2tbhufHcGwh2NpJoNFXcIDu/FwonZiE7NG6Az
+        nhFopVf6K+QEVodyZG7hO5dCIitxX13/iU3mPU3o2/puUu2cS3cP7L7hutsDVf+nVy6jSZ9VYmlQL
+        E0ISl+bQ==;
+Received: from webng-gw.kapsi.fi ([91.232.154.200] helo=roundcube.kapsi.fi)
+        by mail.kapsi.fi with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        (Exim 4.89)
+        (envelope-from <jyri.sarha@iki.fi>)
+        id 1mhd5b-000303-Us; Mon, 01 Nov 2021 21:35:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com>
+Date:   Mon, 01 Nov 2021 21:35:25 +0200
+From:   Jyri Sarha <jyri.sarha@iki.fi>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+Subject: Re: [PATCH v3 24/34] drm/tilcdc: Migrate to aggregate driver
+In-Reply-To: <20211026000044.885195-25-swboyd@chromium.org>
+References: <20211026000044.885195-1-swboyd@chromium.org>
+ <20211026000044.885195-25-swboyd@chromium.org>
+Message-ID: <db784574b2cbe57ac0efbe045c9576f3@iki.fi>
+X-Sender: jyri.sarha@iki.fi
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 91.232.154.200
+X-SA-Exim-Mail-From: jyri.sarha@iki.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sandeep,
-
-On Mon, Nov 01, 2021 at 01:23:40PM +0530, Sandeep Maheswaram wrote:
-> During suspend check if any wakeup capable devices are connected to the
-> controller (directly or through hubs), and set the wakeup capable property
-> for xhci plat device.
+On 2021-10-26 3:00, Stephen Boyd wrote:
+> Use an aggregate driver instead of component ops so that we can get
+> proper driver probe ordering of the aggregate device with respect to 
+> all
+> the component devices that make up the aggregate device.
 > 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Cc: Jyri Sarha <jyri.sarha@iki.fi>
+> Cc: Tomi Valkeinen <tomba@kernel.org>
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/usb/host/xhci-plat.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+
+Tested-by: Jyri Sarha <jyri.sarha@iki.fi>
+
+Thanks,
+Jyri
+
+>  drivers/gpu/drm/tilcdc/tilcdc_drv.c | 28 ++++++++++++++++------------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
 > 
-> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-> index c1edcc9..7ab272b 100644
-> --- a/drivers/usb/host/xhci-plat.c
-> +++ b/drivers/usb/host/xhci-plat.c
-> @@ -431,6 +431,14 @@ static int xhci_plat_remove(struct platform_device *dev)
+> diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+> b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+> index 6b03f89a98d4..d5c6567eec8d 100644
+> --- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+> +++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+> @@ -531,13 +531,16 @@ static const struct dev_pm_ops tilcdc_pm_ops = {
+>  /*
+>   * Platform driver:
+>   */
+> -static int tilcdc_bind(struct device *dev)
+> +static int tilcdc_bind(struct aggregate_device *adev)
+>  {
+> +	struct device *dev = adev->parent;
+> +
+>  	return tilcdc_init(&tilcdc_driver, dev);
+>  }
+> 
+> -static void tilcdc_unbind(struct device *dev)
+> +static void tilcdc_unbind(struct aggregate_device *adev)
+>  {
+> +	struct device *dev = adev->parent;
+>  	struct drm_device *ddev = dev_get_drvdata(dev);
+> 
+>  	/* Check if a subcomponent has already triggered the unloading. */
+> @@ -547,9 +550,13 @@ static void tilcdc_unbind(struct device *dev)
+>  	tilcdc_fini(dev_get_drvdata(dev));
+>  }
+> 
+> -static const struct component_master_ops tilcdc_comp_ops = {
+> -	.bind = tilcdc_bind,
+> -	.unbind = tilcdc_unbind,
+> +static struct aggregate_driver tilcdc_aggregate_driver = {
+> +	.probe = tilcdc_bind,
+> +	.remove = tilcdc_unbind,
+> +	.driver = {
+> +		.name = "tilcdc_drm",
+> +		.owner = THIS_MODULE,
+> +	},
+>  };
+> 
+>  static int tilcdc_pdev_probe(struct platform_device *pdev)
+> @@ -566,12 +573,9 @@ static int tilcdc_pdev_probe(struct 
+> platform_device *pdev)
+>  	ret = tilcdc_get_external_components(&pdev->dev, &match);
+>  	if (ret < 0)
+>  		return ret;
+> -	else if (ret == 0)
+> +	if (ret == 0)
+>  		return tilcdc_init(&tilcdc_driver, &pdev->dev);
+> -	else
+> -		return component_master_add_with_match(&pdev->dev,
+> -						       &tilcdc_comp_ops,
+> -						       match);
+> +	return component_aggregate_register(&pdev->dev,
+> &tilcdc_aggregate_driver, match);
+>  }
+> 
+>  static int tilcdc_pdev_remove(struct platform_device *pdev)
+> @@ -581,10 +585,10 @@ static int tilcdc_pdev_remove(struct
+> platform_device *pdev)
+>  	ret = tilcdc_get_external_components(&pdev->dev, NULL);
+>  	if (ret < 0)
+>  		return ret;
+> -	else if (ret == 0)
+> +	if (ret == 0)
+>  		tilcdc_fini(platform_get_drvdata(pdev));
+>  	else
+> -		component_master_del(&pdev->dev, &tilcdc_comp_ops);
+> +		component_aggregate_unregister(&pdev->dev, 
+> &tilcdc_aggregate_driver);
+> 
 >  	return 0;
 >  }
->  
-> +static void xhci_dwc3_suspend_quirk(struct usb_hcd *hcd, struct device *dev)
-> +{
-> +	if (usb_wakeup_enabled_descendants(hcd->self.root_hub))
-> +		device_set_wakeup_capable(dev, true);
-> +	else
-> +		device_set_wakeup_capable(dev, false);
-
-IIUC wakeup capability is typically a static property that reflects the
-actual hardware (or firmware) support for wakeup. In that sense it doesn't
-seem a good idea to change it dynamically at suspend time, depending on
-what is connected to the bus. I understand though that the odd split
-of the dwc3 driver makes it hard to do things properly ...
-
-Earlier in this discussion Felipe suggested to add a function like
-device_children_wakeup_capable(), to avoid having to call
-usb_wakeup_enabled_descendants() from the dwc3 drivers.
-
-Below is an initial implementation for device_children_wakeup_capable(),
-could you try if calling it from dwc3_suspend/resume_common() and
-dwc3_qcom_suspend() would work instead of relying on the wakeup
-capability?
-
-Thanks
-
-Matthias
-
-From 97c838334045ed67c3943f8e035ac70acd12b89b Mon Sep 17 00:00:00 2001
-From: Matthias Kaehlcke <mka@chromium.org>
-Date: Mon, 1 Nov 2021 11:37:19 -0700
-Subject: [PATCH] PM / wakeup: Add device_children_wakeup_capable()
-
-Add device_children_wakeup_capable() which checks whether the device itself
-or one if its descendants is wakeup capable.
-
-Change-Id: Ib359eb5ac8650ddf9889c7d1f77707f50777fe99
-Suggested-by: Felipe Balbi <balbi@kernel.org>
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
- drivers/base/power/wakeup.c | 17 +++++++++++++++++
- include/linux/pm_wakeup.h   |  6 ++++++
- 2 files changed, 23 insertions(+)
-
-diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
-index 9c0932603642..2aee7fa8230f 100644
---- a/drivers/base/power/wakeup.c
-+++ b/drivers/base/power/wakeup.c
-@@ -483,6 +483,23 @@ int device_set_wakeup_enable(struct device *dev, bool enable)
- }
- EXPORT_SYMBOL_GPL(device_set_wakeup_enable);
- 
-+static int __device_children_wakeup_capable(struct device *dev, void *dummy)
-+{
-+	return device_may_wakeup(dev) ||
-+		device_for_each_child(dev, NULL, __device_children_wakeup_capable);
-+}
-+
-+/**
-+ * device_children_wakeup_capable - Check whether a device or one of its descendants is
-+ *                                  wakeup capable.
-+ * @dev: Device to handle.
-+ */
-+bool device_children_wakeup_capable(struct device *dev)
-+{
-+	return __device_children_wakeup_capable(dev, NULL);
-+}
-+EXPORT_SYMBOL_GPL(device_children_wakeup_capable);
-+
- /**
-  * wakeup_source_not_registered - validate the given wakeup source.
-  * @ws: Wakeup source to be validated.
-diff --git a/include/linux/pm_wakeup.h b/include/linux/pm_wakeup.h
-index 661efa029c96..a0ca42aac6d6 100644
---- a/include/linux/pm_wakeup.h
-+++ b/include/linux/pm_wakeup.h
-@@ -97,6 +97,7 @@ extern int device_wakeup_disable(struct device *dev);
- extern void device_set_wakeup_capable(struct device *dev, bool capable);
- extern int device_init_wakeup(struct device *dev, bool val);
- extern int device_set_wakeup_enable(struct device *dev, bool enable);
-+extern bool device_children_wakeup_capable(struct device *dev);
- extern void __pm_stay_awake(struct wakeup_source *ws);
- extern void pm_stay_awake(struct device *dev);
- extern void __pm_relax(struct wakeup_source *ws);
-@@ -167,6 +168,11 @@ static inline bool device_may_wakeup(struct device *dev)
- 
- static inline void device_set_wakeup_path(struct device *dev) {}
- 
-+static inline bool device_children_wakeup_capable(struct device *dev)
-+{
-+	return false;
-+}
-+
- static inline void __pm_stay_awake(struct wakeup_source *ws) {}
- 
- static inline void pm_stay_awake(struct device *dev) {}
