@@ -2,94 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96203443796
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 21:59:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CF4D44381A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 22:56:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231240AbhKBVBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 17:01:34 -0400
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:38819 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230061AbhKBVBe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 17:01:34 -0400
-Received: by mail-ot1-f51.google.com with SMTP id c2-20020a056830348200b0055a46c889a8so638377otu.5;
-        Tue, 02 Nov 2021 13:58:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=X+PbCIBbupD5QlN7dstqXrkneFhSekQ8ud9fjKAPemE=;
-        b=5d8I1HX+yOeXST/NTwGV+6nN2V77fuvjfequtTZv9YyyA+uqy6dBzeIpO6d5sWiAqL
-         I7AzRVLrtfLf/j6awhTVFctF7a/fH1kO7dh5R+izoC0/2Q74V5+W9p5w8CNYZyvUNPIA
-         hPloMV6KpohYCf5thdfNfLGjvdRRphyRS/986ciSTluxKpsJfjPZdYj4oSIlEA6BiKTe
-         Fhz5FW8x0AjwqIKWo0aOj6G7UsuY/Zwyjug2oM8udm11e0Q848Hmv+rqdlcXGkZfs7Ba
-         UDvIblxF1qjMSjm06Q3D8Vds34r+Nkp+sRS0cJ1UzsAOOeaiyaRen/mrWMOlpOjsv3rG
-         b5WQ==
-X-Gm-Message-State: AOAM532SI9TWVOcI5qrnVpJbMS6zLmkP+FsmaIohInwE5spXmfqIFCe7
-        FyKEPmkC1koLvC7J0kxakg==
-X-Google-Smtp-Source: ABdhPJxd7nHSOxQQYcM1AqgSl5jOlctl2u+Zih91go3saWqDKwRuki9qZYS+68Gyo04l8qmpTPDT3Q==
-X-Received: by 2002:a9d:75c2:: with SMTP id c2mr29999973otl.69.1635886738566;
-        Tue, 02 Nov 2021 13:58:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id q63sm17699oia.55.2021.11.02.13.58.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Nov 2021 13:58:58 -0700 (PDT)
-Received: (nullmailer pid 3465321 invoked by uid 1000);
-        Tue, 02 Nov 2021 20:58:57 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     plai@codeaurora.org, tiwai@suse.com, robh+dt@kernel.org,
-        perex@perex.cz, devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        broonie@kernel.org, lgirdwood@gmail.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        swboyd@chromium.org, bgoswami@codeaurora.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org
-In-Reply-To: <1635851372-19151-2-git-send-email-srivasam@codeaurora.org>
-References: <1635851372-19151-1-git-send-email-srivasam@codeaurora.org> <1635851372-19151-2-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v5 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine machine bindings
-Date:   Tue, 02 Nov 2021 15:58:56 -0500
-Message-Id: <1635886737.005870.3465320.nullmailer@robh.at.kernel.org>
+        id S229672AbhKBV6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 17:58:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59866 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229525AbhKBV6v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 17:58:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1164F60EBD;
+        Tue,  2 Nov 2021 21:56:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1635890176;
+        bh=oouxKCA5Vs0WFHSRq/Xx8b7jRM+YfD5kWuHpY4xDUzA=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=r8QsGPIFXeDVHgVsfZl5SkeIb/oBa/MoiNzZwati9OuxGJrsn3hTN+hAPNolNDnaS
+         h3fHWSzVeXpCQ2fHGN42fuTD23W6Y31ePp+v8cs9+aUsBlW8u7LfGtnCk/ulASNKSo
+         FJQKXzUjsIxnzOhi3qjml70WMknAfRRK7iqVRolm0nQdSMCuuJ0xd/O9Hdf0acCL7Z
+         6priLo2IeJW23r2BtEyCzwGFqPY7atg3hh0d4ox/OmOBaKBjhHk+Sv5QUja3+83nBF
+         t5nEVNBr/v09rk3gXI78pksR0Pmq+zc+BFYqcbsf7TGOxyIkDb0NpUNVrqvYb8CY7A
+         kORr+d7ITryLw==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1635847013-3220-2-git-send-email-tdas@codeaurora.org>
+References: <1635847013-3220-1-git-send-email-tdas@codeaurora.org> <1635847013-3220-2-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v1 1/4] clk: qcom: clk-alpha-pll: Increase PLL lock detect poll time
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Tue, 02 Nov 2021 14:56:14 -0700
+Message-ID: <163589017472.2993099.8634048687805619874@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 02 Nov 2021 16:39:31 +0530, Srinivasa Rao Mandadapu wrote:
-> Add devicetree bindings documentation file for sc7280 sound card
-> registration.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Quoting Taniya Das (2021-11-02 02:56:50)
+> PLL poll for lock detection can take more than 100us for certain type
+
+What types of PLLs? Is this fixing something that's broken? Or fixing a
+future problem?
+
+> of PLLs, thus update to 200us.
+>=20
+
+Does it needs a Fixes tag?
+
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  .../bindings/sound/google,sc7280-herobrine.yaml    | 170 +++++++++++++++++++++
->  1 file changed, 170 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dts:46.24-25 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1441: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1549576
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+>  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
+a-pll.c
+> index eaedcce..7cf6cfa 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -204,7 +204,7 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u3=
+2 mask, bool inverse,
+>         if (ret)
+>                 return ret;
+>=20
+> -       for (count =3D 100; count > 0; count--) {
+> +       for (count =3D 200; count > 0; count--) {
+>                 ret =3D regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val=
+);
+>                 if (ret)
