@@ -2,86 +2,458 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 604DE443820
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 22:58:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9725443853
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 23:21:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbhKBWAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 18:00:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60176 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229525AbhKBWAk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 18:00:40 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2BDA660EDF;
-        Tue,  2 Nov 2021 21:58:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635890285;
-        bh=P16OQEV/s/AT2BeYrLgBIB2QROVOkYZGirYakOBKtd8=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=JK0aPFSs5hLpl7vTgMaRlAT7rSvA9eNskbYJAdAWx7++gDRJauzmxSx1+VZrR6se9
-         5J5Q4wmjTSkkNgFFocGpQnEN5c7AvE7sYyPiaiSwFHqaleEV1A5KBJq4GFN5P+HlbO
-         L5sZUZ6QWfeQall0MIogFvUA/vvDuym4KzjwQNuJdsANiQ6WCPA6JwRmbYifgxF6Nt
-         lK3sVBMQttdtHUD5QZZLJfwUCq4ToWOBchFkqCO4/Tdv6HbASSYYWgA5/9/fZ0HC16
-         o93h64sKbgubjqBi7qCFlNjvjbvn3OO6cn8QcQ1VUKW3nJo/cm2NkfSfBEjL/Cg37T
-         4zCOOLTmwbo7w==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1635847013-3220-3-git-send-email-tdas@codeaurora.org>
-References: <1635847013-3220-1-git-send-email-tdas@codeaurora.org> <1635847013-3220-3-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v1 2/4] clk: qcom: gdsc: Add support for clock voting from GDSC
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 02 Nov 2021 14:58:03 -0700
-Message-ID: <163589028388.2993099.5936912812368868539@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        id S231325AbhKBWXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 18:23:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:44131 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231254AbhKBWXj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 18:23:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1635891663; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UcGjU5LftLQLEAFIbcCc387grVSqMMM1MiLZ3YIsL2Q=; b=l/bR9Wn0XfbtZJd2l8X+CXdiLA6WL1m/3MWMxkbGTsIb0DyOnBaoOB6lV19Fp/XFCb+bttZP
+ tAonk46Se9zR1kJ6S6WzjQIgKV4sb8GAMnTQbgGJGzLRrEthF/YvdiXMXggNSEjSBrfzra1b
+ bvMkPemuaJ9jP8I3Zpx44HMtFsw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 6181b9ca5c66efd37204f44d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 22:20:58
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DC9CBC43617; Tue,  2 Nov 2021 22:14:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E7CF4C4338F;
+        Tue,  2 Nov 2021 22:14:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E7CF4C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@linux.ie,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_khsieh@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH] drm/msm/dp: employ bridge mechanism for display enable and disable
+Date:   Tue,  2 Nov 2021 15:13:44 -0700
+Message-Id: <1635891224-16357-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-11-02 02:56:51)
-> In the cases where the clock is required to be enabled before the genpd
-> enable add support for the same.
+Current display mode_set, enable and disable functions are implemented
+as function called directly from drm encoder. This patch have display
+mode_set, enable and disable be implemented as callback function of drm
+bridge.
 
-Please describe more. One sentence is not enough here.
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  21 ------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   8 ++
+ drivers/gpu/drm/msm/dp/dp_display.c         |  26 +++----
+ drivers/gpu/drm/msm/dp/dp_display.h         |   8 ++
+ drivers/gpu/drm/msm/dp/dp_drm.c             | 113 ++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h               |  29 ++-----
+ 6 files changed, 147 insertions(+), 58 deletions(-)
 
->=20
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  drivers/clk/qcom/gdsc.c | 45 +++++++++++++++++++++++++++++++++++++++----=
---
->  drivers/clk/qcom/gdsc.h |  3 +++
->  2 files changed, 42 insertions(+), 6 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> index 7e1dd8c..1caca32 100644
-> --- a/drivers/clk/qcom/gdsc.c
-> +++ b/drivers/clk/qcom/gdsc.c
-> @@ -478,6 +499,18 @@ int gdsc_register(struct gdsc_desc *desc,
->                         return PTR_ERR(scs[i]->rsupply);
->         }
->=20
-> +       for (i =3D 0; i < num; i++) {
-> +               if (!scs[i])
-> +                       continue;
-> +
-> +               scs[i]->clk =3D devm_clk_get(dev, scs[i]->clk_name);
-> +               if (IS_ERR(scs[i]->clk))
-> +                       return PTR_ERR(scs[i]->clk);
-> +               ret =3D clk_prepare(scs[i]->clk);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 31050aa..c4e08c4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1003,9 +1003,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+ 
+ 	trace_dpu_enc_mode_set(DRMID(drm_enc));
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
+-		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
+-
+ 	list_for_each_entry(conn_iter, connector_list, head)
+ 		if (conn_iter->encoder == drm_enc)
+ 			conn = conn_iter;
+@@ -1181,14 +1178,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+ 
+ 	_dpu_encoder_virt_enable_helper(drm_enc);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
+-		if (ret) {
+-			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
+-				ret);
+-			goto out;
+-		}
+-	}
+ 	dpu_enc->enabled = true;
+ 
+ out:
+@@ -1214,11 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	/* wait for idle */
+ 	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
+-	}
+-
+ 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+ 
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+@@ -1243,11 +1227,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 
+ 	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
+-	}
+-
+ 	mutex_unlock(&dpu_enc->enc_lock);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index 27d98b5..3bbd09c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -557,6 +557,14 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+ 				  encoder->base.id, rc);
+ 			return rc;
+ 		}
++
++		rc = msm_dp_bridge_init(priv->dp[i], dev, encoder);
++                if (rc) {
++			DPU_ERROR("failed to setup DPU bridge %d: rc:%d\n",
++				  encoder->base.id, rc);
++			return rc;
++                }
++
+ 	}
+ 
+ 	return rc;
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index e41dd40..317f963 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -569,8 +569,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 	return 0;
+ };
+ 
+-static int dp_display_enable(struct dp_display_private *dp, u32 data);
+-static int dp_display_disable(struct dp_display_private *dp, u32 data);
++static int __dp_display_enable(struct dp_display_private *dp, u32 data);
++static int __dp_display_disable(struct dp_display_private *dp, u32 data);
+ 
+ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
+ {
+@@ -855,7 +855,7 @@ static int dp_display_prepare(struct msm_dp *dp_display)
+ 	return 0;
+ }
+ 
+-static int dp_display_enable(struct dp_display_private *dp, u32 data)
++static int __dp_display_enable(struct dp_display_private *dp, u32 data)
+ {
+ 	int rc = 0;
+ 
+@@ -898,7 +898,7 @@ static int dp_display_post_enable(struct msm_dp *dp_display)
+ 	return 0;
+ }
+ 
+-static int dp_display_disable(struct dp_display_private *dp, u32 data)
++static int __dp_display_disable(struct dp_display_private *dp, u32 data)
+ {
+ 	struct msm_dp *dp_display = &dp->dp_display;
+ 
+@@ -1533,7 +1533,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 	return 0;
+ }
+ 
+-int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
++int dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
+ 	struct dp_display_private *dp_display;
+@@ -1569,12 +1569,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	if (state == ST_DISPLAY_OFF)
+ 		dp_display_host_init(dp_display, true);
+ 
+-	dp_display_enable(dp_display, 0);
++	__dp_display_enable(dp_display, 0);
+ 
+ 	rc = dp_display_post_enable(dp);
+ 	if (rc) {
+ 		DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+-		dp_display_disable(dp_display, 0);
++		__dp_display_disable(dp_display, 0);
+ 		dp_display_unprepare(dp);
+ 	}
+ 
+@@ -1590,7 +1590,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	return rc;
+ }
+ 
+-int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
++int dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	struct dp_display_private *dp_display;
+ 
+@@ -1601,7 +1601,7 @@ int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	return 0;
+ }
+ 
+-int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
++int dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ {
+ 	int rc = 0;
+ 	u32 state;
+@@ -1614,7 +1614,7 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	/* stop sentinel checking */
+ 	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
+ 
+-	dp_display_disable(dp_display, 0);
++	__dp_display_disable(dp_display, 0);
+ 
+ 	rc = dp_display_unprepare(dp);
+ 	if (rc)
+@@ -1632,9 +1632,9 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ 	return rc;
+ }
+ 
+-void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++void dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
+ {
+ 	struct dp_display_private *dp_display;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 76f45f9..4fb6ada 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -13,6 +13,7 @@
+ struct msm_dp {
+ 	struct drm_device *drm_dev;
+ 	struct device *codec_dev;
++	struct drm_bridge *bridge;
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	struct drm_panel *drm_panel;
+@@ -40,4 +41,11 @@ int dp_display_get_test_bpp(struct msm_dp *dp_display);
+ void dp_display_signal_audio_start(struct msm_dp *dp_display);
+ void dp_display_signal_audio_complete(struct msm_dp *dp_display);
+ 
++int dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
++int dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
++int dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
++void dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode);
++
+ #endif /* _DP_DISPLAY_H_ */
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index f33e315..812a091 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -3,14 +3,25 @@
+  * Copyright (c) 2017-2020, The Linux Foundation. All rights reserved.
+  */
+ 
++#include <linux/platform_device.h>
++
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_atomic.h>
++#include <drm/drm_bridge.h>
+ #include <drm/drm_crtc.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+ #include "dp_drm.h"
+ 
++
++struct dp_bridge {
++        struct drm_bridge bridge;
++        struct msm_dp *dp_display;
++};      
++
++#define to_dp_display(x)     container_of((x), struct dp_bridge, bridge)
++
+ struct dp_connector {
+ 	struct drm_connector base;
+ 	struct msm_dp *dp_display;
+@@ -162,3 +173,105 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+ 
+ 	return connector;
+ }
++
++
++static int dp_bridge_attach(struct drm_bridge *dp_bridge,
++                                enum drm_bridge_attach_flags flags)
++{
++	return 0;
++}
++
++static bool dp_bridge_mode_fixup(struct drm_bridge *drm_bridge,
++                                  const struct drm_display_mode *mode,
++                                  struct drm_display_mode *adjusted_mode)
++{
++	return true;
++}
++
++static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
++                                const struct drm_display_mode *mode,
++                                const struct drm_display_mode *adjusted_mode)
++{
++	struct dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	dp_display_mode_set(dp_display, drm_bridge->encoder, mode, adjusted_mode);
++}
++
++static void dp_bridge_pre_enable(struct drm_bridge *drm_bridge)
++{
++
++}
++
++static void dp_bridge_enable(struct drm_bridge *drm_bridge)
++{
++	struct dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	dp_display_enable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_disable(struct drm_bridge *drm_bridge)
++{
++	struct dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	dp_display_pre_disable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
++{
++	struct dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	dp_display_disable(dp_display, drm_bridge->encoder);
++}
++
++static const struct drm_bridge_funcs dp_bridge_ops = {
++        .attach       = dp_bridge_attach,
++        .mode_fixup   = dp_bridge_mode_fixup,
++        .pre_enable   = dp_bridge_pre_enable,
++        .enable       = dp_bridge_enable,
++        .disable      = dp_bridge_disable,
++        .post_disable = dp_bridge_post_disable,
++        .mode_set     = dp_bridge_mode_set,
++};
++
++int msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++			struct drm_encoder *encoder)
++{
++	int rc = 0;
++        struct msm_drm_private *priv = NULL;
++        struct dp_bridge *dp_bridge;
++	struct drm_bridge *bridge;
++        
++        dp_bridge = kzalloc(sizeof(*dp_bridge), GFP_KERNEL);
++        if (!dp_bridge) {
++                rc = -ENOMEM;
++                goto error;
++        }
++
++        dp_bridge->dp_display = dp_display;
++
++	bridge = &dp_bridge->bridge;
++        bridge->funcs = &dp_bridge_ops;
++        bridge->encoder = encoder;
++
++        rc = drm_bridge_attach(encoder, bridge, NULL, 0);
++        if (rc) {
++                DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
++                goto error_free_bridge;
++        }
++
++        priv = dev->dev_private;
++	priv->bridges[priv->num_bridges++] = bridge;
++	dp_display->bridge = bridge;
++
++        return 0;
++
++error_free_bridge:
++        kfree(bridge);
++error:
++        return rc;
++
++}
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 4bb797e..ed21dcb 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -384,12 +384,8 @@ int __init msm_dp_register(void);
+ void __exit msm_dp_unregister(void);
+ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			 struct drm_encoder *encoder);
+-int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+-int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+-int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+-void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode);
++int msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++			 struct drm_encoder *encoder);
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+ 
+@@ -409,27 +405,12 @@ static inline int msm_dp_modeset_init(struct msm_dp *dp_display,
+ {
+ 	return -EINVAL;
+ }
+-static inline int msm_dp_display_enable(struct msm_dp *dp,
+-					struct drm_encoder *encoder)
+-{
+-	return -EINVAL;
+-}
+-static inline int msm_dp_display_disable(struct msm_dp *dp,
+-					struct drm_encoder *encoder)
+-{
+-	return -EINVAL;
+-}
+-static inline int msm_dp_display_pre_disable(struct msm_dp *dp,
+-					struct drm_encoder *encoder)
++static inline int msm_dp_bridge_init(struct msm_dp *dp_display,
++				       struct drm_device *dev,
++				       struct drm_encoder *encoder)
+ {
+ 	return -EINVAL;
+ }
+-static inline void msm_dp_display_mode_set(struct msm_dp *dp,
+-				struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
+-{
+-}
+ 
+ static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+ {
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Why do we keep it prepared forever? And don't we have support for
-writing directly into cxc registers?
-
-> +               if (ret)
-> +                       return ret;
-> +       }
-> +
->         data->num_domains =3D num;
->         for (i =3D 0; i < num; i++) {
->                 if (!scs[i])
