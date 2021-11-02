@@ -2,90 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A325442645
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 04:56:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DA8E442720
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 07:29:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232735AbhKBD7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 23:59:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43006 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232720AbhKBD7O (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 23:59:14 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 074BD60EBC;
-        Tue,  2 Nov 2021 03:56:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635825400;
-        bh=dj+iduYD46Zxko0xXTACsVOTIt8MF2IXH58t7O216Xo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fA2WylUAvidZdUUFyCNzrrZX16P+RbT89RH3zDGKJUD+RJECmyauokrJx8qJJVtNn
-         bLyTi5fv0Ec9bdgfEH4Nwm7KaQZGg7FykC1haAurUd/XW+c7XycvV3iB8XzRATszKT
-         0fz6WacB/ksWp10yy703TloVvzbUNS+M8pF+nF+oFRptwSsMOCXb3d1jjCyn21NRFB
-         T+jB4Fg1XisBWDe9tIzkBZmQzISjDeAA06WTnb0Rg6IuRDhFfVmvsXuaMG9MF/juUa
-         k4WP2fl1ydHmhpXqSLOUGZ+NgYR92s9xzUGdvWrRSg5NGVAuITES0ZpDkFO+UER+DV
-         5ly+t1bZeSURw==
-Date:   Tue, 2 Nov 2021 09:26:32 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
-Cc:     mani@kernel.org, hemantk@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] bus: mhi: pci_generic: Add new device ID support for
- T99W175
-Message-ID: <20211102035632.GA5646@thinkpad>
-References: <20211029104918.3976-1-slark_xiao@163.com>
+        id S229873AbhKBGcQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 02:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229947AbhKBGcN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 02:32:13 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A38C061766
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Nov 2021 23:29:39 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 71-20020a9d034d000000b00553e24ce2b8so23957715otv.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Nov 2021 23:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Vk1yMTmG2ya+DPbvtv8niCWZs/tEJAFEV+sln2rxwX4=;
+        b=FdkXCtz1a9s5dI8rUXv9QAKWL4huu+5OCpez8P3/bLStrpCUzJqMF7KFu1ssuFLUU5
+         i0wHQ29Xvu4IT7svR8zwRTTlW8PIA2n1+hl0HWQBymzsqgyEP9bvnIPp8ilYf9M/3Q7u
+         B3TEB9zgKzM+fbfLj9lF/sBR6ZtodInJT6+uw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Vk1yMTmG2ya+DPbvtv8niCWZs/tEJAFEV+sln2rxwX4=;
+        b=ERzLkJ0t3ISlbKv0xuQkhNWsOI1deoIWjKLh4iJ7AUG+XUcYC0GZYcuyYzUj6ZomtU
+         suZKvZT+Cz8TRBFXct4vDFfL0/vOSyIB5SM6nN0HOpl+5BqHzhwmM+ps82DKuIh5JPRY
+         eCPrExzqKlG2/nIPK2wAUSNC94qFJuntaLCvoP9+4Xgftx5mnATYJoopoEgVP/z7aIUI
+         COX43xGY2L2ZPmVNFVWvl2hVtUBZvoPpVVH+60DykSq+L/z1PpVyS/IQqvYASinX0LHI
+         UoipBxGsf+QlFkP6fjV6UOTun+JHXAQVlMY47PlGk6aD0wU7RnDkwWwhRd4HlNGNAGYg
+         voBQ==
+X-Gm-Message-State: AOAM531/7+DgM9gQP6AE/FO25nARgJ9gdHWiM2M8E81rbkHxR5mJ5YSo
+        lWrVOAjHfRIKqcE/JSgEMVygnSvbtUu9n63tfEh9NA==
+X-Google-Smtp-Source: ABdhPJy2WqAWLYnwxT3hzutOGOTANI4ZdtJzurp1Oj63lJtygXTRa6wex8nioVsqy9RGYh1mAYEu3IPtNasGxnbbyW0=
+X-Received: by 2002:a05:6830:1290:: with SMTP id z16mr17390977otp.159.1635834578705;
+ Mon, 01 Nov 2021 23:29:38 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 1 Nov 2021 23:29:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211029104918.3976-1-slark_xiao@163.com>
+In-Reply-To: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
+References: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 1 Nov 2021 23:29:38 -0700
+Message-ID: <CAE-0n53PHpHmyk2rFZtErAo8zGFg8mXvfVYUFU31VhrLC4e-RA@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: sdm845: Enable dual edge errata
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 06:49:18PM +0800, Slark Xiao wrote:
-> Add new device ID 0xe0bf for T99W175.
-> This device ID is created because it is using Qualcomm SDX55 new base line.
-> 
-> Test evidence as below:
-> root@jbd-ThinkPad-P1-Gen-4:/dev# lspci -nn | grep Foxconn
-> 0000:08:00.0 Wireless controller [0d40]: Foxconn International, Inc. Device [105b:e0bf]
-> root@jbd-ThinkPad-P1-Gen-4:/dev# cat wwan0at0 & echo -ne "ati\r" > wwan0at0
-> [2] 2977
-> root@jbd-ThinkPad-P1-Gen-4:/dev# ati
-> Manufacturer: Qualcomm
-> Model: T99W175
-> Revision: T99W175.F0.6.0.0.6.CC.005  1  [Oct 21 2021 10:00:00]
-> IMEI:
-> +GCAP: +CGSM
-> 
-> OK
-> 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Thanks,
-Mani
-
+Quoting Bjorn Andersson (2021-11-01 20:41:15)
+> It has been observed that dual edge triggered wakeirq GPIOs on SDM845
+> doesn't trigger interrupts on the falling edge.
+>
+> Enabling wakeirq_dual_edge_errata for SDM845 indicates that the PDC in
+> SDM845 suffers from the same problem described, and worked around, by
+> Doug in 'c3c0c2e18d94 ("pinctrl: qcom: Handle broken/missing PDC dual
+> edge IRQs on sc7180")', so enable the workaround for SDM845 as well.
+>
+> The specific problem seen without this is that gpio-keys does not detect
+> the falling edge of the LID gpio on the Lenovo Yoga C630 and as such
+> consistently reports the LID as closed.
+>
+> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> 
-> v2: Add descriptions about the dfiiference between 0xe0ab and 0xeobf.
-> ---
->  drivers/bus/mhi/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 59a4896a8030..94d8aa9c2eae 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -423,6 +423,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
->  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* T99W175 (sdx55), Based on Qualcomm new baseline */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0bf),
-> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
->  	/* MV31-W (Cinterion) */
->  	{ PCI_DEVICE(0x1269, 0x00b3),
->  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
-> -- 
-> 2.25.1
-> 
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
