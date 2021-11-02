@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0943A442F3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 14:45:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18CC8442F43
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 14:45:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbhKBNrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 09:47:36 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63953 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbhKBNrf (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 09:47:35 -0400
+        id S230333AbhKBNrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 09:47:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40755 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231326AbhKBNrj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 09:47:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635860700; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1635860704; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=NHCa7K/5OEJkx0LynwNHiz7qvEb4hkarTuDFmBhwxzo=; b=k+kU3hgk2QbjwtsXRNgK1JFD7pwEr4N4ZTqrkJ+VMJe5o3O490uGriC0LbXH3lu5Tr75ohYB
- abAqIaJWh1TfVH6igR/1P5+DIw1YlKu1lVfQUu542X+auAjgnR5wDtVytJVG5WrjC+agGRCE
- Dg31N81bR2jFCPqNax9bGAvHadk=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ bh=p9fXWhWZntCHQB8oUZhIrqA7FmZlD3X0oQQUCinxB3c=; b=EdFTVqEw71BKT5uQdIpcARyZXPhJtjBTFH8nqj8THBLALumP/0fmQuSIa6PCNJNZvtYuQbj2
+ IZsuondM7qoWjtT1jk/V8QIo+SyXN68qtBT0+ZiZpdNGu+6E4Dd7+nD0B4ib2Rh9OQH9z73N
+ U9l7ia+F7V1MkNt7p5VsfoeAZu4=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 618140d9f6a3eeacf999d103 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 13:44:56
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 618140df900d71ea1e806eef (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 13:45:03
  GMT
 Sender: pillair=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C159C43460; Tue,  2 Nov 2021 13:44:56 +0000 (UTC)
+        id 59ACFC43618; Tue,  2 Nov 2021 13:45:02 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +37,9 @@ Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6FAE4C4338F;
-        Tue,  2 Nov 2021 13:44:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6FAE4C4338F
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50230C43619;
+        Tue,  2 Nov 2021 13:44:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 50230C43619
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Rakesh Pillai <pillair@codeaurora.org>
@@ -52,9 +51,9 @@ Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, sibis@codeaurora.org,
         mpubbise@codeaurora.org, kuabhs@chromium.org,
         Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v8 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
-Date:   Tue,  2 Nov 2021 19:14:32 +0530
-Message-Id: <1635860673-12146-3-git-send-email-pillair@codeaurora.org>
+Subject: [PATCH v8 3/3] remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
+Date:   Tue,  2 Nov 2021 19:14:33 +0530
+Message-Id: <1635860673-12146-4-git-send-email-pillair@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1635860673-12146-1-git-send-email-pillair@codeaurora.org>
 References: <1635860673-12146-1-git-send-email-pillair@codeaurora.org>
@@ -62,237 +61,388 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add WPSS PIL loading support for SC7280 SoCs.
+Add support for PIL loading of WPSS processor for SC7280
+- WPSS boot will be requested by the wifi driver and hence
+  disable auto-boot for WPSS.
+- Add a separate shutdown sequence handler for WPSS.
+- Add multiple power-domain voting support
+- Parse firmware-name from dtsi entry
 
 Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
 ---
- .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml  | 217 +++++++++++++++++++++
- 1 file changed, 217 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
+ drivers/remoteproc/qcom_q6v5_adsp.c | 219 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 203 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
-new file mode 100644
-index 0000000..eaf7dd1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
-@@ -0,0 +1,217 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/remoteproc/qcom,sc7280-wpss-pil.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 098362e6..e2e8d33 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -32,6 +32,7 @@
+ 
+ /* time out value */
+ #define ACK_TIMEOUT			1000
++#define ACK_TIMEOUT_US			1000000
+ #define BOOT_FSM_TIMEOUT		10000
+ /* mask values */
+ #define EVB_MASK			GENMASK(27, 4)
+@@ -51,6 +52,8 @@
+ #define QDSP6SS_CORE_CBCR	0x20
+ #define QDSP6SS_SLEEP_CBCR	0x3c
+ 
++#define QCOM_Q6V5_RPROC_PROXY_PD_MAX	3
 +
-+title: Qualcomm SC7280 WPSS Peripheral Image Loader
+ struct adsp_pil_data {
+ 	int crash_reason_smem;
+ 	const char *firmware_name;
+@@ -58,9 +61,13 @@ struct adsp_pil_data {
+ 	const char *ssr_name;
+ 	const char *sysmon_name;
+ 	int ssctl_id;
++	bool is_wpss;
++	bool auto_boot;
+ 
+ 	const char **clk_ids;
+ 	int num_clks;
++	const char **proxy_pd_names;
++	const char *load_state;
+ };
+ 
+ struct qcom_adsp {
+@@ -93,11 +100,143 @@ struct qcom_adsp {
+ 	void *mem_region;
+ 	size_t mem_size;
+ 
++	struct device *proxy_pds[QCOM_Q6V5_RPROC_PROXY_PD_MAX];
++	size_t proxy_pd_count;
 +
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
+ 	struct qcom_rproc_glink glink_subdev;
+ 	struct qcom_rproc_ssr ssr_subdev;
+ 	struct qcom_sysmon *sysmon;
 +
-+description:
-+  This document defines the binding for a component that loads and boots firmware
-+  on the Qualcomm Technology Inc. WPSS.
++	int (*shutdown)(struct qcom_adsp *adsp);
+ };
+ 
++static size_t qcom_rproc_pds_attach(struct device *dev, struct device **devs,
++				    const char **pd_names)
++{
++	size_t num_pds = 0;
++	int ret;
++	int i;
 +
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,sc7280-wpss-pil
++	if (!pd_names)
++		return 0;
 +
-+  reg:
-+    maxItems: 1
-+    description:
-+      The base address and size of the qdsp6ss register
++	/* Handle single power domain */
++	if (dev->pm_domain) {
++		devs[0] = dev;
++		pm_runtime_enable(dev);
++		return 1;
++	}
 +
-+  interrupts:
-+    items:
-+      - description: Watchdog interrupt
-+      - description: Fatal interrupt
-+      - description: Ready interrupt
-+      - description: Handover interrupt
-+      - description: Stop acknowledge interrupt
-+      - description: Shutdown acknowledge interrupt
++	while (pd_names[num_pds])
++		num_pds++;
 +
-+  interrupt-names:
-+    items:
-+      - const: wdog
-+      - const: fatal
-+      - const: ready
-+      - const: handover
-+      - const: stop-ack
-+      - const: shutdown-ack
++	for (i = 0; i < num_pds; i++) {
++		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
++		if (IS_ERR_OR_NULL(devs[i])) {
++			ret = PTR_ERR(devs[i]) ? : -ENODATA;
++			goto unroll_attach;
++		}
++	}
 +
-+  clocks:
-+    items:
-+      - description: GCC WPSS AHB BDG Master clock
-+      - description: GCC WPSS AHB clock
-+      - description: GCC WPSS RSCP clock
-+      - description: XO clock
++	return num_pds;
 +
-+  clock-names:
-+    items:
-+      - const: ahb_bdg
-+      - const: ahb
-+      - const: rscp
-+      - const: xo
++unroll_attach:
++	for (i--; i >= 0; i--)
++		dev_pm_domain_detach(devs[i], false);
 +
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+      - description: MX power domain
++	return ret;
++}
 +
-+  power-domain-names:
-+    items:
-+      - const: cx
-+      - const: mx
++static void qcom_rproc_pds_detach(struct qcom_adsp *adsp, struct device **pds,
++				  size_t pd_count)
++{
++	struct device *dev = adsp->dev;
++	int i;
 +
-+  resets:
-+    items:
-+      - description: AOSS restart
-+      - description: PDC SYNC
++	/* Handle single power domain */
++	if (dev->pm_domain && pd_count) {
++		pm_runtime_disable(dev);
++		return;
++	}
 +
-+  reset-names:
-+    items:
-+      - const: restart
-+      - const: pdc_sync
++	for (i = 0; i < pd_count; i++)
++		dev_pm_domain_detach(pds[i], false);
++}
 +
-+  memory-region:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the reserved-memory for the Hexagon core
++static int qcom_rproc_pds_enable(struct qcom_adsp *adsp, struct device **pds,
++				 size_t pd_count)
++{
++	int ret;
++	int i;
 +
-+  firmware-name:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description:
-+      The name of the firmware which should be loaded for this remote
-+      processor.
++	for (i = 0; i < pd_count; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
++		ret = pm_runtime_get_sync(pds[i]);
++		if (ret < 0) {
++			pm_runtime_put_noidle(pds[i]);
++			dev_pm_genpd_set_performance_state(pds[i], 0);
++			goto unroll_pd_votes;
++		}
++	}
 +
-+  qcom,halt-regs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description:
-+      Phandle reference to a syscon representing TCSR followed by the
-+      three offsets within syscon for q6, modem and nc halt registers.
++	return 0;
 +
-+  qcom,qmp:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the AOSS side-channel message RAM.
++unroll_pd_votes:
++	for (i--; i >= 0; i--) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
 +
-+  qcom,smem-states:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: States used by the AP to signal the Hexagon core
-+    items:
-+      - description: Stop the modem
++	return ret;
++}
 +
-+  qcom,smem-state-names:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: The names of the state bits used for SMP2P output
-+    items:
-+      - const: stop
++static void qcom_rproc_pds_disable(struct qcom_adsp *adsp, struct device **pds,
++				   size_t pd_count)
++{
++	int i;
 +
-+  glink-edge:
-+    type: object
-+    description: |
-+      Qualcomm G-Link subnode which represents communication edge, channels
-+      and devices related to the ADSP.
++	for (i = 0; i < pd_count; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
++}
 +
-+    properties:
-+      interrupts:
-+        items:
-+          - description: IRQ from WPSS to GLINK
++static int qcom_wpss_shutdown(struct qcom_adsp *adsp)
++{
++	unsigned int val;
 +
-+      mboxes:
-+        items:
-+          - description: Mailbox for communication between APPS and WPSS
++	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 1);
 +
-+      label:
-+        description: The names of the state bits used for SMP2P output
-+        items:
-+          - const: wpss
++	/* Wait for halt ACK from QDSP6 */
++	regmap_read_poll_timeout(adsp->halt_map,
++				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
++				 val, 1000, ACK_TIMEOUT_US);
 +
-+      qcom,remote-pid:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description: ID of the shared memory used by GLINK for communication with WPSS
-+        maxItems: 1
++	/* Assert the WPSS PDC Reset */
++	reset_control_assert(adsp->pdc_sync_reset);
++	/* Place the WPSS processor into reset */
++	reset_control_assert(adsp->restart);
++	/* wait after asserting subsystem restart from AOSS */
++	usleep_range(200, 205);
++	/* Remove the WPSS reset */
++	reset_control_deassert(adsp->restart);
++	/* De-assert the WPSS PDC Reset */
++	reset_control_deassert(adsp->pdc_sync_reset);
 +
-+    required:
-+      - interrupts
-+      - mboxes
-+      - label
-+      - qcom,remote-pid
++	usleep_range(100, 105);
 +
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - clocks
-+  - clock-names
-+  - power-domains
-+  - power-domain-names
-+  - resets
-+  - reset-names
-+  - qcom,halt-regs
-+  - memory-region
-+  - qcom,qmp
-+  - qcom,smem-states
-+  - qcom,smem-state-names
-+  - glink-edge
++	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
 +
-+additionalProperties: false
++	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 0);
 +
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+    #include <dt-bindings/reset/qcom,sdm845-aoss.h>
-+    #include <dt-bindings/reset/qcom,sdm845-pdc.h>
-+    #include <dt-bindings/mailbox/qcom-ipcc.h>
-+    remoteproc@8a00000 {
-+        compatible = "qcom,sc7280-wpss-pil";
-+        reg = <0x08a00000 0x10000>;
++	/* Wait for halt ACK from QDSP6 */
++	regmap_read_poll_timeout(adsp->halt_map,
++				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
++				 !val, 1000, ACK_TIMEOUT_US);
 +
-+        interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
-+                              <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-+                              <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready", "handover",
-+                          "stop-ack", "shutdown-ack";
++	return 0;
++}
 +
-+        clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
-+                 <&gcc GCC_WPSS_AHB_CLK>,
-+                 <&gcc GCC_WPSS_RSCP_CLK>,
-+                 <&rpmhcc RPMH_CXO_CLK>;
-+        clock-names = "ahb_bdg", "ahb",
-+                      "rscp", "xo";
+ static int qcom_adsp_shutdown(struct qcom_adsp *adsp)
+ {
+ 	unsigned long timeout;
+@@ -193,12 +332,10 @@ static int adsp_start(struct rproc *rproc)
+ 	if (ret)
+ 		goto disable_irqs;
+ 
+-	dev_pm_genpd_set_performance_state(adsp->dev, INT_MAX);
+-	ret = pm_runtime_get_sync(adsp->dev);
+-	if (ret) {
+-		pm_runtime_put_noidle(adsp->dev);
++	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
++				    adsp->proxy_pd_count);
++	if (ret < 0)
+ 		goto disable_xo_clk;
+-	}
+ 
+ 	ret = clk_bulk_prepare_enable(adsp->num_clks, adsp->clks);
+ 	if (ret) {
+@@ -243,8 +380,7 @@ static int adsp_start(struct rproc *rproc)
+ disable_adsp_clks:
+ 	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
+ disable_power_domain:
+-	dev_pm_genpd_set_performance_state(adsp->dev, 0);
+-	pm_runtime_put(adsp->dev);
++	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ disable_xo_clk:
+ 	clk_disable_unprepare(adsp->xo);
+ disable_irqs:
+@@ -258,8 +394,7 @@ static void qcom_adsp_pil_handover(struct qcom_q6v5 *q6v5)
+ 	struct qcom_adsp *adsp = container_of(q6v5, struct qcom_adsp, q6v5);
+ 
+ 	clk_disable_unprepare(adsp->xo);
+-	dev_pm_genpd_set_performance_state(adsp->dev, 0);
+-	pm_runtime_put(adsp->dev);
++	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ }
+ 
+ static int adsp_stop(struct rproc *rproc)
+@@ -272,7 +407,7 @@ static int adsp_stop(struct rproc *rproc)
+ 	if (ret == -ETIMEDOUT)
+ 		dev_err(adsp->dev, "timed out on wait\n");
+ 
+-	ret = qcom_adsp_shutdown(adsp);
++	ret = adsp->shutdown(adsp);
+ 	if (ret)
+ 		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
+ 
+@@ -427,6 +562,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ static int adsp_probe(struct platform_device *pdev)
+ {
+ 	const struct adsp_pil_data *desc;
++	const char *firmware_name;
+ 	struct qcom_adsp *adsp;
+ 	struct rproc *rproc;
+ 	int ret;
+@@ -435,12 +571,22 @@ static int adsp_probe(struct platform_device *pdev)
+ 	if (!desc)
+ 		return -EINVAL;
+ 
++	firmware_name = desc->firmware_name;
++	ret = of_property_read_string(pdev->dev.of_node, "firmware-name",
++				      &firmware_name);
++	if (ret < 0 && ret != -EINVAL) {
++		dev_err(&pdev->dev, "unable to read firmware-name\n");
++		return ret;
++	}
 +
-+        power-domains = <&rpmhpd SC7280_CX>,
-+                        <&rpmhpd SC7280_MX>;
-+        power-domain-names = "cx", "mx";
+ 	rproc = rproc_alloc(&pdev->dev, pdev->name, &adsp_ops,
+-			    desc->firmware_name, sizeof(*adsp));
++			    firmware_name, sizeof(*adsp));
+ 	if (!rproc) {
+ 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
+ 		return -ENOMEM;
+ 	}
 +
-+        memory-region = <&wpss_mem>;
++	rproc->auto_boot = desc->auto_boot;
+ 	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+ 
+ 	adsp = (struct qcom_adsp *)rproc->priv;
+@@ -449,6 +595,11 @@ static int adsp_probe(struct platform_device *pdev)
+ 	adsp->info_name = desc->sysmon_name;
+ 	platform_set_drvdata(pdev, adsp);
+ 
++	if (desc->is_wpss)
++		adsp->shutdown = qcom_wpss_shutdown;
++	else
++		adsp->shutdown = qcom_adsp_shutdown;
 +
-+        qcom,qmp = <&aoss_qmp>;
+ 	ret = adsp_alloc_memory_region(adsp);
+ 	if (ret)
+ 		goto free_rproc;
+@@ -457,7 +608,13 @@ static int adsp_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto free_rproc;
+ 
+-	pm_runtime_enable(adsp->dev);
++	ret = qcom_rproc_pds_attach(adsp->dev, adsp->proxy_pds,
++				    desc->proxy_pd_names);
++	if (ret < 0) {
++		dev_err(&pdev->dev, "Failed to attach proxy power domains\n");
++		goto free_rproc;
++	}
++	adsp->proxy_pd_count = ret;
+ 
+ 	ret = adsp_init_reset(adsp);
+ 	if (ret)
+@@ -467,8 +624,8 @@ static int adsp_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto disable_pm;
+ 
+-	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem, NULL,
+-			     qcom_adsp_pil_handover);
++	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem,
++			     desc->load_state, qcom_adsp_pil_handover);
+ 	if (ret)
+ 		goto disable_pm;
+ 
+@@ -489,7 +646,8 @@ static int adsp_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ disable_pm:
+-	pm_runtime_disable(adsp->dev);
++	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
 +
-+        qcom,smem-states = <&wpss_smp2p_out 0>;
-+        qcom,smem-state-names = "stop";
+ free_rproc:
+ 	rproc_free(rproc);
+ 
+@@ -506,7 +664,7 @@ static int adsp_remove(struct platform_device *pdev)
+ 	qcom_remove_glink_subdev(adsp->rproc, &adsp->glink_subdev);
+ 	qcom_remove_sysmon_subdev(adsp->sysmon);
+ 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
+-	pm_runtime_disable(adsp->dev);
++	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ 	rproc_free(adsp->rproc);
+ 
+ 	return 0;
+@@ -518,11 +676,16 @@ static const struct adsp_pil_data adsp_resource_init = {
+ 	.ssr_name = "lpass",
+ 	.sysmon_name = "adsp",
+ 	.ssctl_id = 0x14,
++	.is_wpss = false,
++	.auto_boot = true,
+ 	.clk_ids = (const char*[]) {
+ 		"sway_cbcr", "lpass_ahbs_aon_cbcr", "lpass_ahbm_aon_cbcr",
+ 		"qdsp6ss_xo", "qdsp6ss_sleep", "qdsp6ss_core", NULL
+ 	},
+ 	.num_clks = 7,
++	.proxy_pd_names = (const char*[]) {
++		"cx", NULL
++	},
+ };
+ 
+ static const struct adsp_pil_data cdsp_resource_init = {
+@@ -531,15 +694,39 @@ static const struct adsp_pil_data cdsp_resource_init = {
+ 	.ssr_name = "cdsp",
+ 	.sysmon_name = "cdsp",
+ 	.ssctl_id = 0x17,
++	.is_wpss = false,
++	.auto_boot = true,
+ 	.clk_ids = (const char*[]) {
+ 		"sway", "tbu", "bimc", "ahb_aon", "q6ss_slave", "q6ss_master",
+ 		"q6_axim", NULL
+ 	},
+ 	.num_clks = 7,
++	.proxy_pd_names = (const char*[]) {
++		"cx", NULL
++	},
++};
 +
-+        resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
-+                 <&pdc_reset PDC_WPSS_SYNC_RESET>;
-+        reset-names = "restart", "pdc_sync";
-+
-+        qcom,halt-regs = <&tcsr_mutex 0x37000>;
-+
-+        glink-edge {
-+            interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
-+                                         IPCC_MPROC_SIGNAL_GLINK_QMP
-+                                         IRQ_TYPE_EDGE_RISING>;
-+            mboxes = <&ipcc IPCC_CLIENT_WPSS
-+                            IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+
-+            label = "wpss";
-+            qcom,remote-pid = <13>;
-+        };
-+    };
++static const struct adsp_pil_data wpss_resource_init = {
++	.crash_reason_smem = 626,
++	.firmware_name = "wpss.mdt",
++	.ssr_name = "wpss",
++	.sysmon_name = "wpss",
++	.ssctl_id = 0x19,
++	.is_wpss = true,
++	.auto_boot = false,
++	.load_state = "wpss",
++	.clk_ids = (const char*[]) {
++		"ahb_bdg", "ahb", "rscp", NULL
++	},
++	.num_clks = 3,
++	.proxy_pd_names = (const char*[]) {
++		"cx", "mx", NULL
++	},
+ };
+ 
+ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_resource_init },
++	{ .compatible = "qcom,sc7280-wpss-pil", .data = &wpss_resource_init },
+ 	{ .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_resource_init },
+ 	{ },
+ };
 -- 
 2.7.4
 
