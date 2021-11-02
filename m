@@ -2,98 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DB4A4425F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 04:16:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A04FF44261D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 04:41:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232468AbhKBDTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 Nov 2021 23:19:08 -0400
-Received: from m1323.mail.163.com ([220.181.13.23]:30010 "EHLO
-        m1323.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232376AbhKBDTB (ORCPT
+        id S232087AbhKBDnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 Nov 2021 23:43:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231526AbhKBDny (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 Nov 2021 23:19:01 -0400
-X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Nov 2021 23:19:01 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=6VATN
-        KfgorcZVyE79SpdxqyJGlEBWMswbQSsraXZmLE=; b=hbN4mYiuaPOGER0QJE51v
-        7EjmtpLsLCqTa9bUU/eK2mq1b7RMP5t4GbaWtieeGWBszbu/NyGSpwCHqKLrKL5t
-        aacFgOgEkMfq9dG8wNKCauv/zXUxhGEazmsnfyeSMJavv/DiFzZRtNwL5jv/d1sJ
-        h8m7h6K6wGBrg8iwregY04=
-Received: from slark_xiao$163.com ( [112.97.61.236] ) by
- ajax-webmail-wmsvr23 (Coremail) ; Tue, 2 Nov 2021 11:01:07 +0800 (CST)
-X-Originating-IP: [112.97.61.236]
-Date:   Tue, 2 Nov 2021 11:01:07 +0800 (CST)
-From:   "Slark Xiao" <slark_xiao@163.com>
-To:     "Manivannan Sadhasivam" <mani@kernel.org>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: [PATCH] bus: mhi: pci_generic: Add new device ID support
- for T99W175
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- Copyright (c) 2002-2021 www.mailtech.cn 163com
-In-Reply-To: <20211029102526.GD4945@thinkpad>
-References: <20211028034431.3563-1-slark_xiao@163.com>
- <20211029092619.GA4945@thinkpad>
- <68a1613c.3e54.17ccb7e922b.Coremail.slark_xiao@163.com>
- <20211029102526.GD4945@thinkpad>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+        Mon, 1 Nov 2021 23:43:54 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFE9C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 Nov 2021 20:41:20 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id l15so200049oie.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Nov 2021 20:41:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aeZGOfwwnFzjEn/W/1IOfg4SXRk/9i0vOOQaYvl2ndc=;
+        b=UlCdNN5fyuaVmrMcVZwRynpyFuMMAvOz6hBPX7fFsLAGRegSla/Elu0CEijN1t4CrX
+         CAoP+QCZjORGaSrKOTxbRim1oQaIul3RNKQ4AcFnYYEDzJiAXH1EZRmbuKtHeCgU/ptm
+         Yaxas7oF/k0bu4aJsI8FDgljOX80SNLGw++HfP/fZnCevLAx3NukDvKyAXCpF3euBG/f
+         1UKBuU5nWgomT2vM5ERpEj5Or7RwUEklu/WrKHJqrvLiKkxP9xsUAjVAPHbYoLALI1wJ
+         7tRjfTOXcT2b+4ikmV8vo3pFqUG+zVTBPxw6eU1hbL8mkWPmh9aGiyHL3tn1BOhocS97
+         dGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aeZGOfwwnFzjEn/W/1IOfg4SXRk/9i0vOOQaYvl2ndc=;
+        b=FIXGG4Amnyptyc3eGutyHaDqCe2wfCocYMAfjNitVYikwko9Ng9kquDVhfsou7lINy
+         Md7LHGMY7qPYEaVWNnsLqzVnYRf/u6yUz5zKJ2eCmhq6uw2lrmlUXvuFm80h5hKTbGJ+
+         2l4PHjumBfauoqk4jBSzhlZ2j+pMflNS+o+/AI+yykFXRj2/IPHeMoLwEsfPtpE/+3hj
+         sJNUdwWRP8JC9DN7lcVnWOq3k+ul2YYlH7AvdfZuMZnDPJdzHiPey1kosFY29zo8PNt9
+         d30ytNe2QW4mzT9SKfjJJYjrw5enFOD67lEkBF2vAbmsJIKdiwu+smtMNJt5JjLyRklT
+         F9qw==
+X-Gm-Message-State: AOAM530JlZfT7RsdYKGgsJwT60hJB69Qyz0/Veww1W69J8XBhavEhhg9
+        /bHMkUTfPsB0p+ccFkEweBQH5Q==
+X-Google-Smtp-Source: ABdhPJx+RCmVwj69D0ICqYXKngVu1j5eL6YiF7/5ZN2bAOqo1Fb4oR71luDyk8FVgAYW8XPOS6I8bQ==
+X-Received: by 2002:a54:4499:: with SMTP id v25mr1167313oiv.71.1635824479610;
+        Mon, 01 Nov 2021 20:41:19 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r21sm3900916otp.55.2021.11.01.20.41.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Nov 2021 20:41:19 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
+Subject: [PATCH] pinctrl: qcom: sdm845: Enable dual edge errata
+Date:   Mon,  1 Nov 2021 22:41:15 -0500
+Message-Id: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Message-ID: <4cfd51f8.105e.17cde97e0d3.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: F8GowADn76fzqYBhvhajAA--.37377W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNRM7ZFrPd33I4wACsP
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CgpBdCAyMDIxLTEwLTI5IDE4OjI1OjI2LCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBr
-ZXJuZWwub3JnPiB3cm90ZToKPk9uIEZyaSwgT2N0IDI5LCAyMDIxIGF0IDA2OjAwOjQyUE0gKzA4
-MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IAo+PiBBdCAyMDIxLTEwLTI5IDE3OjI2OjE5LCAiTWFu
-aXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBrZXJuZWwub3JnPiB3cm90ZToKPj4gCj4+ID5IaSwK
-Pj4gPgo+PiA+T24gVGh1LCBPY3QgMjgsIDIwMjEgYXQgMTE6NDQ6MzFBTSArMDgwMCwgU2xhcmsg
-WGlhbyB3cm90ZToKPj4gPj4gQWRkIG5ldyBkZXZpY2UgSUQgMHhlMGJmIGZvciBUOTlXMTc1Lgo+
-PiA+PiAKPj4gPgo+PiA+VGhhbmtzIGZvciB0aGUgcGF0Y2ghIENhbiB5b3Ugc2hhcmUgdGhlIGRp
-ZmZlcmVuY2UgYmV0d2VlbiB0aGlzIG1vZGVtIGFuZCB0aGUKPj4gPm9uZSAoVDk5VzE3NSkgd2Ug
-YWxyZWFkeSBoYXZlIHdpdGggUElEIDB4ZTBhYj8KPj4gPgo+PiA+UGxlYXNlIGluY2x1ZGUgdGhl
-IHByb2R1Y3QgcGFnZSBpbiBkZXNjcmlwdGlvbiBpZiBhbnkuCj4+ID4KPj4gPlRoYW5rcywKPj4g
-Pk1hbmkKPj4gPgo+PiBIaSBNYW5pLAo+PiAgICBUaGFua3MgZm9yIHRoaXMgcmV2aWV3LiAKPj4g
-ICAgQWN0dWFsbHkgdGhpcyBwcm9kdWN0KFNEWDU1LzB4ZTBiZikgaXMgdXNpbmcgUXVhbGNvbW0g
-U0RYNTUgbmV3IGJhc2VsaW5lKExFMS40KSwgCj4+ICBhbmQgcHJldmlvdXMgVDk5VzE3NS8weGUw
-YWIgaXMgdXNpbmcgb3JpZ2luYWwgYmFzZSBsaW5lKExFMS4yKS4KPj4gICAgT3VyIGN1c3RvbWVy
-IHdhbnRzIHVzIHRvIHVzZSBkaWZmZXJlbnQgZGV2aWNlIElEIHRvIHNlcGFyYXRlIGZyb20gZWFj
-aCBvdGhlci4gCj4+ICAgIEN1cnJlbnRseSB3ZSBkb24ndCBoYXZlIHByb2R1Y3QgcGFnZSAgYXMg
-b3VyIGN1c3RvbWVyJ3MgbmV3IHByb2R1Y3QgaXMgbm90IHJlbGVhc2VkLgo+PiAKPgo+VGhhbmtz
-IGZvciB0aGUgZXhwbGFuYXRpb24uIFBsZWFzZSBzZW5kIHYyIGFkZGluZyB0aGUgYmFzZWxpbmUg
-aW5mbyBpbiBjb21taXQKPmRlc2NyaXB0aW9uLgo+Cj5UaGFua3MsCj5NYW5pCj4KSGkgTWFuaSwK
-ICAgSSBoYXZlIHNlbnQgVjIgc2V2ZXJhbCBkYXlzIGFnbyAuIFBsZWFzZSB0YWtlIGEgbG9vayBv
-biB0aGF0LgogICBSZWYgbGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGttbC8yMDIxMTAy
-OTEwNDkxOC4zOTc2LTEtc2xhcmtfeGlhb0AxNjMuY29tLwoKVGhhbmtzIQpTbGFyawo+PiA+PiBU
-ZXN0IGV2aWRlbmNlIGFzIGJlbG93Ogo+PiA+PiByb290QGpiZC1UaGlua1BhZC1QMS1HZW4tNDov
-ZGV2IyBsc3BjaSAtbm4gfCBncmVwIEZveGNvbm4KPj4gPj4gMDAwMDowODowMC4wIFdpcmVsZXNz
-IGNvbnRyb2xsZXIgWzBkNDBdOiBGb3hjb25uIEludGVybmF0aW9uYWwsIEluYy4gRGV2aWNlIFsx
-MDViOmUwYmZdCj4+ID4+IHJvb3RAamJkLVRoaW5rUGFkLVAxLUdlbi00Oi9kZXYjIGNhdCB3d2Fu
-MGF0MCAmIGVjaG8gLW5lICJhdGlcciIgPiB3d2FuMGF0MAo+PiA+PiBbMl0gMjk3Nwo+PiA+PiBy
-b290QGpiZC1UaGlua1BhZC1QMS1HZW4tNDovZGV2IyBhdGkKPj4gPj4gTWFudWZhY3R1cmVyOiBR
-dWFsY29tbQo+PiA+PiBNb2RlbDogVDk5VzE3NQo+PiA+PiBSZXZpc2lvbjogVDk5VzE3NS5GMC42
-LjAuMC42LkNDLjAwNSAgMSAgW09jdCAyMSAyMDIxIDEwOjAwOjAwXQo+PiA+PiBJTUVJOgo+PiA+
-PiArR0NBUDogK0NHU00KPj4gPj4gCj4+ID4+IE9LCj4+ID4+IAo+PiA+PiBTaWduZWQtb2ZmLWJ5
-OiBTbGFyayBYaWFvIDxzbGFya194aWFvQDE2My5jb20+Cj4+ID4+IC0tLQo+PiA+PiAgZHJpdmVy
-cy9idXMvbWhpL3BjaV9nZW5lcmljLmMgfCAzICsrKwo+PiA+PiAgMSBmaWxlIGNoYW5nZWQsIDMg
-aW5zZXJ0aW9ucygrKQo+PiA+PiAKPj4gPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9w
-Y2lfZ2VuZXJpYy5jIGIvZHJpdmVycy9idXMvbWhpL3BjaV9nZW5lcmljLmMKPj4gPj4gaW5kZXgg
-NTlhNDg5NmE4MDMwLi41NjY0ODNkYzE1ZGIgMTAwNjQ0Cj4+ID4+IC0tLSBhL2RyaXZlcnMvYnVz
-L21oaS9wY2lfZ2VuZXJpYy5jCj4+ID4+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJp
-Yy5jCj4+ID4+IEBAIC00MjMsNiArNDIzLDkgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBwY2lfZGV2
-aWNlX2lkIG1oaV9wY2lfaWRfdGFibGVbXSA9IHsKPj4gPj4gIAkvKiBEVzU5MzBlIChzZHg1NSks
-IE5vbi1lU0lNLCBJdCdzIGFsc28gVDk5VzE3NSAqLwo+PiA+PiAgCXsgUENJX0RFVklDRShQQ0lf
-VkVORE9SX0lEX0ZPWENPTk4sIDB4ZTBiMSksCj4+ID4+ICAJCS5kcml2ZXJfZGF0YSA9IChrZXJu
-ZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3NkeDU1X2luZm8gfSwKPj4gPj4gKwkvKiBUOTlXMTc1
-IChzZHg1NSkgKi8KPj4gPj4gKwl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9GT1hDT05OLCAw
-eGUwYmYpLAo+PiA+PiArCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfZm94
-Y29ubl9zZHg1NV9pbmZvIH0sCj4+ID4+ICAJLyogTVYzMS1XIChDaW50ZXJpb24pICovCj4+ID4+
-ICAJeyBQQ0lfREVWSUNFKDB4MTI2OSwgMHgwMGIzKSwKPj4gPj4gIAkJLmRyaXZlcl9kYXRhID0g
-KGtlcm5lbF91bG9uZ190KSAmbWhpX212MzFfaW5mbyB9LAo+PiA+PiAtLSAKPj4gPj4gMi4yNS4x
-Cj4+ID4+IAo=
+It has been observed that dual edge triggered wakeirq GPIOs on SDM845
+doesn't trigger interrupts on the falling edge.
+
+Enabling wakeirq_dual_edge_errata for SDM845 indicates that the PDC in
+SDM845 suffers from the same problem described, and worked around, by
+Doug in 'c3c0c2e18d94 ("pinctrl: qcom: Handle broken/missing PDC dual
+edge IRQs on sc7180")', so enable the workaround for SDM845 as well.
+
+The specific problem seen without this is that gpio-keys does not detect
+the falling edge of the LID gpio on the Lenovo Yoga C630 and as such
+consistently reports the LID as closed.
+
+Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-sdm845.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+index c51793f6546f..fdfd7b8f3a76 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
++++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
+@@ -1310,6 +1310,7 @@ static const struct msm_pinctrl_soc_data sdm845_pinctrl = {
+ 	.ngpios = 151,
+ 	.wakeirq_map = sdm845_pdc_map,
+ 	.nwakeirq_map = ARRAY_SIZE(sdm845_pdc_map),
++	.wakeirq_dual_edge_errata = true,
+ };
+ 
+ static const struct msm_pinctrl_soc_data sdm845_acpi_pinctrl = {
+-- 
+2.32.0
+
