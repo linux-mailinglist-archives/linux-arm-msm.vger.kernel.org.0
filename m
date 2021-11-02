@@ -2,121 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D09B9442E51
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 13:39:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3819442E9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 13:58:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbhKBMlc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 08:41:32 -0400
-Received: from mail-oi1-f179.google.com ([209.85.167.179]:44841 "EHLO
-        mail-oi1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbhKBMlb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 08:41:31 -0400
-Received: by mail-oi1-f179.google.com with SMTP id t38so2579099oiw.11;
-        Tue, 02 Nov 2021 05:38:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=vX7tWdjvUh/n8P+ZM1cqLkwBY2iECa34Sj2X0s5E99w=;
-        b=0dfo5DQBTz1IhwmM1H1IyTFB+Sjcw7bGYK4L9nNz00raH2o8SEA+DqNoFuusnitTGZ
-         yxt2MSPSGBqHY5IGey+uB998TEETOmeRvPDTmwPsAGOQiKYzC0huTmnMBKZF2+c6IalT
-         ZEIqs8gf+PN430uXgTjhD3gxPK+YFX4kTE/0Xpa6kk8P/EveyWRkrt39V1BB8ZZzK4lr
-         ol5tHVq/+6T+OJOxwyGNwu/8OLF62NUuYeq3JVbDko4Xj9WAmEdNinYUNoNxkrQHK10U
-         PGs+xcem9U6MYj4Dv3VH2FpVIu3nIyNGsSz3MnrYE5fZtSXTjpjDWhIw34XA5xlbSZSe
-         Fzug==
-X-Gm-Message-State: AOAM533/E8YByf6LSfykvnocqYkZo4KcMETikd9oS1NGdBH26R5zjzyI
-        8I/A4jQiaKz+Lw7cOb1TiQ==
-X-Google-Smtp-Source: ABdhPJzoVPMiX3nMunzERDDXuZ7mJ4SspBwHfVenvCVSNdkdkQw52/a9hWdrWooA7zpr/PHz0br3Ag==
-X-Received: by 2002:a54:4391:: with SMTP id u17mr4814704oiv.15.1635856735813;
-        Tue, 02 Nov 2021 05:38:55 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id 126sm4826933oih.36.2021.11.02.05.38.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Nov 2021 05:38:55 -0700 (PDT)
-Received: (nullmailer pid 2636027 invoked by uid 1000);
-        Tue, 02 Nov 2021 12:38:52 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-soc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org
-In-Reply-To: <1635847013-3220-4-git-send-email-tdas@codeaurora.org>
-References: <1635847013-3220-1-git-send-email-tdas@codeaurora.org> <1635847013-3220-4-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v1 3/4] dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280
-Date:   Tue, 02 Nov 2021 07:38:52 -0500
-Message-Id: <1635856732.621453.2636026.nullmailer@robh.at.kernel.org>
+        id S231303AbhKBNBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 09:01:31 -0400
+Received: from msg-1.mailo.com ([213.182.54.11]:40424 "EHLO msg-1.mailo.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231314AbhKBNBa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 09:01:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=net-c.es; s=mailo;
+        t=1635857790; bh=CxtE17YE8bTxc2OZMsovWXK3+dSK0SB9WZtSH2RbPug=;
+        h=X-EA-Auth:Date:From:To:Cc:Subject:Message-ID:References:
+         MIME-Version:Content-Type:In-Reply-To;
+        b=aXtmxAY1SH2wPjJvfHmAvgVeCVrMuJ6syrBNDNUerpV/YLeEqhs5miXhGUOqDZG5t
+         r7lWYCaq7pBEeKveN4Tu42NfydGmsF5X4KWqaHj++7GbM27PJqfoCESSq5WX5BOVWK
+         NNx4WNbtT4n3PE7H+vgLavkHmkcW2dCaKn8zDZ+Y=
+Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
+        via ip-206.mailobj.net [213.182.55.206]
+        Tue,  2 Nov 2021 13:56:30 +0100 (CET)
+X-EA-Auth: YdEHunKGztPDVs0BRuuYltTcf81Ut8uI6tAipFjzxRq1G8jzqA4E913inzbs1+c4T8oxY2G5RSvtViKvlHZ3omj5ufd2PEoZ
+Date:   Tue, 2 Nov 2021 13:56:27 +0100
+From:   Claudio Suarez <cssk@net-c.es>
+To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+Cc:     dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
+        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org
+Subject: Re: [PATCH v3 13/13] drm/i915: replace drm_detect_hdmi_monitor()
+ with drm_display_info.is_hdmi
+Message-ID: <YYE1ezTN/O+4S/vt@gineta.localdomain>
+References: <20211016184226.3862-1-cssk@net-c.es>
+ <20211016184226.3862-14-cssk@net-c.es>
+ <YW8QYsmkm3ZrBAx3@intel.com>
+ <YW9L6d7e+RO29VJu@gineta.localdomain>
+ <YXFwB7rN4bvR0Z+m@intel.com>
+ <YXKRnUHWuboQKBF1@zorro.micasa>
+ <YXKoMEF/gU98cL9n@intel.com>
+ <YXKtIUDk+f2Bnn++@intel.com>
+ <YXXbgWNHts9CMJXD@gineta.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YXXbgWNHts9CMJXD@gineta.localdomain>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 02 Nov 2021 15:26:52 +0530, Taniya Das wrote:
-> The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
-> properties that are needed in a device tree. Also add clock ids for
-> LPASS core clocks and audio clock IDs for LPASS client to request for
-> the clocks.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../bindings/clock/qcom,sc7280-lpasscorecc.yaml    | 137 +++++++++++++++++++++
->  .../dt-bindings/clock/qcom,lpassaudiocc-sc7280.h   |  43 +++++++
->  .../dt-bindings/clock/qcom,lpasscorecc-sc7280.h    |  26 ++++
->  3 files changed, 206 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
->  create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h
-> 
+On Mon, Oct 25, 2021 at 12:17:37AM +0200, Claudio Suarez wrote:
+[...]
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+No new comments about this, I suppose everything is fine.
 
-yamllint warnings/errors:
+I'm going to send the patch with this changes. Thanks to all and
+special thanks to you, Ville. Hope this helps the kernel.
+Don't hesitate to ask new changes if necessary.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3c00000: clocks: [[4294967295, 169]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3c00000: clock-names: ['iface'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3c00000: clocks: [[4294967295, 169]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3900000: clocks: [[4294967295, 169], [4294967295, 0]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3900000: clock-names: ['iface', 'bi_tcxo'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3900000: clocks: [[4294967295, 169], [4294967295, 0]] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3380000: clocks: [[4294967295, 3], [4294967295, 0]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3380000: clock-names: ['iface', 'bi_tcxo'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3380000: clocks: [[4294967295, 3], [4294967295, 0]] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3300000: clocks: [[4294967295, 0], [4294967295, 6]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3300000: clock-names:0: 'iface' was expected
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3300000: clock-names:1: 'bi_tcxo' was expected
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3300000: clock-names: ['bi_tcxo', 'lpass_aon_cc_main_rcg'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.example.dt.yaml: clock-controller@3300000: clocks: [[4294967295, 0], [4294967295, 6]] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+Best regards
+Claudio Suarez
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1549550
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
 
