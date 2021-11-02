@@ -2,425 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B9D6442C3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:10:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5546C442C71
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:24:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231361AbhKBLNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 07:13:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13632 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231357AbhKBLMv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 07:12:51 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635851416; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=e8j6ALxvJTjSs/uJsjjQm+ckDP3Dk4dyIuqapsZZwdI=; b=Mak19da5tBq3bLzZe+nVyu0QuA9aNnOFeLmqKEuRbGyIXApbJTB4mMODqQQLmFjtdPW7qPws
- ndvr2Oqg/hOgERKdfGbnDGxFvAyp2g+2+1yDLykbEzEg2HEHacSjFXIJMovDURTdGWB8wHF1
- +OMJcHTyWjsVvoCvCld8GdI/+GI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61811c89fd59e9ce7840b91e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 11:10:01
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DBF47C43619; Tue,  2 Nov 2021 11:10:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B6A90C4360C;
-        Tue,  2 Nov 2021 11:09:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B6A90C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v5 2/2] ASoC: qcom: SC7280: Add machine driver
-Date:   Tue,  2 Nov 2021 16:39:32 +0530
-Message-Id: <1635851372-19151-3-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1635851372-19151-1-git-send-email-srivasam@codeaurora.org>
-References: <1635851372-19151-1-git-send-email-srivasam@codeaurora.org>
+        id S229720AbhKBL0p convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 2 Nov 2021 07:26:45 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:60489 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229577AbhKBL0p (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 07:26:45 -0400
+Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 82854CECEE;
+        Tue,  2 Nov 2021 12:24:08 +0100 (CET)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: Add support for QTI bluetooth
+ MAPLE
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <250a87bd-2012-201f-8f53-a229cc641c15@codeaurora.org>
+Date:   Tue, 2 Nov 2021 12:24:07 +0100
+Cc:     Greg KH <gregkh@linuxfoundation.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>,
+        Zijun Hu <quic_zijuhu@quicinc.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <366220B2-223C-4516-BA18-E40448467E9C@holtmann.org>
+References: <1635837177-1341-1-git-send-email-zijuhu@codeaurora.org>
+ <YYDqW6ewycWP1Y7a@kroah.com>
+ <4f6aee28-4d86-116c-6c47-bfce5de6551b@codeaurora.org>
+ <YYD1PJrFw/xmEXIW@kroah.com>
+ <432B905E-5263-47A6-95AA-7F43715BE196@holtmann.org>
+ <18e1cb9d-39e5-3953-6f32-faea6b2dee47@codeaurora.org>
+ <24F36C9D-6219-4A0B-A798-029ED4EEAB06@holtmann.org>
+ <250a87bd-2012-201f-8f53-a229cc641c15@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new machine driver to register sound card on sc7280 based targets and
-do the required configuration for lpass cpu dai and external codecs
-connected over MI2S and soundwire interfaces.
-Add support for audio jack detection, soundwire init and MBHC.
+Hi Zijun,
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- sound/soc/qcom/Kconfig  |  12 ++
- sound/soc/qcom/Makefile |   2 +
- sound/soc/qcom/sc7280.c | 299 ++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 313 insertions(+)
- create mode 100644 sound/soc/qcom/sc7280.c
+>>>>>>>> Add support for MAPLE integrated within SOC, it is mounted on
+>>>>>>>> a virtual tty port and powered on/off via relevant IOCTL, neither
+>>>>>>>> IBS nor RAMPATCH downloading is not required.
+>>>>>>>> 
+>>>>>>>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>>>>>>>> ---
+>>>>>>>> drivers/bluetooth/btqca.c   | 13 ++++++++++++-
+>>>>>>>> drivers/bluetooth/btqca.h   | 13 +++++++++++++
+>>>>>>>> drivers/bluetooth/hci_qca.c | 47 ++++++++++++++++++++++++++++++++++++++++++++-
+>>>>>>>> 3 files changed, 71 insertions(+), 2 deletions(-)
+>>>>>>>> 
+>>>>>>>> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+>>>>>>>> index be04d74037d2..b83d2ecefe5d 100644
+>>>>>>>> --- a/drivers/bluetooth/btqca.c
+>>>>>>>> +++ b/drivers/bluetooth/btqca.c
+>>>>>>>> @@ -255,6 +255,8 @@ static void qca_tlv_check_data(struct hci_dev *hdev,
+>>>>>>>> 		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
+>>>>>>>> 		BT_DBG("Length\t\t : %d bytes", length);
+>>>>>>>> 
+>>>>>>>> +		if (qca_is_maple(soc_type))
+>>>>>>>> +			break;
+>>>>>>>> 		idx = 0;
+>>>>>>>> 		data = tlv->data;
+>>>>>>>> 		while (idx < length) {
+>>>>>>>> @@ -552,6 +554,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>>>>>>>> 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+>>>>>>>> 
+>>>>>>>> 	/* Download rampatch file */
+>>>>>>>> +	if (qca_is_maple(soc_type))
+>>>>>>>> +		goto download_nvm;
+>>>>>>>> +
+>>>>>>>> 	config.type = TLV_TYPE_PATCH;
+>>>>>>>> 	if (qca_is_wcn399x(soc_type)) {
+>>>>>>>> 		snprintf(config.fwname, sizeof(config.fwname),
+>>>>>>>> @@ -580,6 +585,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>>>>>>>> 	/* Give the controller some time to get ready to receive the NVM */
+>>>>>>>> 	msleep(10);
+>>>>>>>> 
+>>>>>>>> +download_nvm:
+>>>>>>>> 	/* Download NVM configuration */
+>>>>>>>> 	config.type = TLV_TYPE_NVM;
+>>>>>>>> 	if (firmware_name)
+>>>>>>>> @@ -597,6 +603,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>>>>>>>> 	else if (soc_type == QCA_QCA6390)
+>>>>>>>> 		snprintf(config.fwname, sizeof(config.fwname),
+>>>>>>>> 			 "qca/htnv%02x.bin", rom_ver);
+>>>>>>>> +	else if (qca_is_maple(soc_type))
+>>>>>>>> +		snprintf(config.fwname, sizeof(config.fwname),
+>>>>>>>> +			 "qca/mpnv%02x.bin", rom_ver);
+>>>>>>>> 	else if (soc_type == QCA_WCN6750)
+>>>>>>>> 		snprintf(config.fwname, sizeof(config.fwname),
+>>>>>>>> 			 "qca/msnv%02x.bin", rom_ver);
+>>>>>>>> @@ -609,6 +618,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>>>>>>>> 		bt_dev_err(hdev, "QCA Failed to download NVM (%d)", err);
+>>>>>>>> 		return err;
+>>>>>>>> 	}
+>>>>>>>> +	if (qca_is_maple(soc_type))
+>>>>>>>> +		msleep(MAPLE_NVM_READY_DELAY_MS);
+>>>>>>>> 
+>>>>>>>> 	if (soc_type >= QCA_WCN3991) {
+>>>>>>>> 		err = qca_disable_soc_logging(hdev);
+>>>>>>>> @@ -637,7 +648,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>>>>>>>> 		return err;
+>>>>>>>> 	}
+>>>>>>>> 
+>>>>>>>> -	if (soc_type == QCA_WCN3991 || soc_type == QCA_WCN6750) {
+>>>>>>>> +	if (soc_type == QCA_WCN3991 || soc_type == QCA_WCN6750 || qca_is_maple(soc_type)) {
+>>>>>>>> 		/* get fw build info */
+>>>>>>>> 		err = qca_read_fw_build_info(hdev);
+>>>>>>>> 		if (err < 0)
+>>>>>>>> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+>>>>>>>> index 30afa7703afd..0a5a7d1daa71 100644
+>>>>>>>> --- a/drivers/bluetooth/btqca.h
+>>>>>>>> +++ b/drivers/bluetooth/btqca.h
+>>>>>>>> @@ -46,6 +46,8 @@
+>>>>>>>> 
+>>>>>>>> #define QCA_FW_BUILD_VER_LEN		255
+>>>>>>>> 
+>>>>>>>> +#define MAPLE_NVM_READY_DELAY_MS        1500
+>>>>>>>> +#define MAPLE_POWER_CONTROL_DELAY_MS    50
+>>>>>>>> 
+>>>>>>>> enum qca_baudrate {
+>>>>>>>> 	QCA_BAUDRATE_115200 	= 0,
+>>>>>>>> @@ -145,6 +147,7 @@ enum qca_btsoc_type {
+>>>>>>>> 	QCA_WCN3991,
+>>>>>>>> 	QCA_QCA6390,
+>>>>>>>> 	QCA_WCN6750,
+>>>>>>>> +	QCA_MAPLE,
+>>>>>>>> };
+>>>>>>>> 
+>>>>>>>> #if IS_ENABLED(CONFIG_BT_QCA)
+>>>>>>>> @@ -167,6 +170,11 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_type soc_type)
+>>>>>>>> 	return soc_type == QCA_WCN6750;
+>>>>>>>> }
+>>>>>>>> 
+>>>>>>>> +static inline bool qca_is_maple(enum qca_btsoc_type soc_type)
+>>>>>>>> +{
+>>>>>>>> +	return soc_type == QCA_MAPLE;
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>> #else
+>>>>>>>> 
+>>>>>>>> static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>>>>>>>> @@ -204,6 +212,11 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_type soc_type)
+>>>>>>>> 	return false;
+>>>>>>>> }
+>>>>>>>> 
+>>>>>>>> +static inline bool qca_is_maple(enum qca_btsoc_type soc_type)
+>>>>>>>> +{
+>>>>>>>> +	return false;
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>> static inline int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>>>>>>>> {
+>>>>>>>> 	return -EOPNOTSUPP;
+>>>>>>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>>>>>>>> index dd768a8ed7cb..f1d9670719c4 100644
+>>>>>>>> --- a/drivers/bluetooth/hci_qca.c
+>>>>>>>> +++ b/drivers/bluetooth/hci_qca.c
+>>>>>>>> @@ -70,6 +70,10 @@
+>>>>>>>> #define QCA_CRASHBYTE_PACKET_LEN	1096
+>>>>>>>> #define QCA_MEMDUMP_BYTE		0xFB
+>>>>>>>> 
+>>>>>>>> +#ifndef IOCTL_IPC_BOOT
+>>>>>>>> +#define IOCTL_IPC_BOOT                  0xBE
+>>>>>>>> +#endif
+>>>>>>> 
+>>>>>>> You send this command, but never use it.  Where is the driver code that
+>>>>>>> uses this command?
+>>>>>>> 
+>>>>>> qca_maple_power_control() will use it.  this driver depends on bt_tty kernel module
+>>>>>> https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/tree/drivers/soc/qcom/bt_tty.c?h=NHSS.QSDK.11.5.0.5.r2
+>>>>> 
+>>>>> You can not add code to the kernel that is not used by the kernel
+>>>>> itself.  That driver needs to be in the tree as well, why is it not
+>>>>> submitted now too?
+>>>>> 
+>>>>>>> And why not tabs?
+>>>>>>> 
+>>>>>>> And why is this patch series not properly threaded so tools can pick it
+>>>>>>> up and find them?
+>>>>>>> 
+>>>>>>> And why the odd named ioctl that is different from other ones in this
+>>>>>>> file?
+>>>>>>> 
+>>>>>> that IOCTL name is defined by that module.
+>>>>>> https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/tree/include/linux/bt.h?h=NHSS.QSDK.11.5.0.5.r2
+>>>>> 
+>>>>> Again, it needs to be in the tree.
+>>>>> 
+>>>>>>> And why not just use normal power management hooks for doing things like
+>>>>>>> turning on and off the hardware like all other drivers?
+>>>>>>> 
+>>>>>> this device is special.
+>>>>> 
+>>>>> All drivers and devices are special and unique.  Just like all of them :)
+>>>>> 
+>>>>> What is so odd about this device that it can not work with the existing
+>>>>> infrastructure that the kernel has for all of the hundreds of thousands
+>>>>> of other devices it supports?
+>>>>> 
+>>>>>> it seems BT maintainer decides to drop this patch.
+>>>>> 
+>>>>> Of course, at the very least because there is no in-kernel user, why
+>>>>> would you accept such a patch if you were the maintainer?
+>>>>> 
+>>>>> Please submit your driver first.
+>>>> 
+>>>> this power on via ioctl is nasty business. I am so happy that we got rid of
+>>>> the crucks when we finally landed serdev.
+>>>> 
+>>>> Some people are working on power sequence support and alike. This needs to
+>>>> use proper infrastructure or extend existing infrastructure. To fit the
+>>>> needs.
+>>>> 
+>>>> I am just 100% certain, that booting an IPC via an ioctl isn’t it. We
+>>>> really suffered through it in the 2.4 kernel days. The hardware needs to
+>>>> be described properly in device tree and the kernel needs to take all
+>>>> the appropriate actions if a Bluetooth device is powered on via its
+>>>> standard power on procedure. And that is through bluetoothd (or if you
+>>>> use some other Bluetooth userspace) via the exposed API from the kernel.
+>>>> 
+>>> thank you. the IOCTL purpose is to bootup the special bluetooth controller.
+>>> i have verified this change.
+>>> i will submit this change to linux-ipq-5.4 firstly even if need to pick up many changes firstly.
+>> 
+>> I am not sure this is fully understood yet. Do _not_ use an ioctl to boot the Bluetooth
+>> controller. Power on/off of Bluetooth hardware happens via the standard interface used
+>> by bluetoothd. The Bluetooth transport driver (in your case hci_qca) has to do everything
+>> needed when a) serdev->probe is called and b) hdev->open is called. Any other path to
+>> power your hardware is (bluntly put) wrong.
+>> 
+> for all the other present controllers supported by hci_qca,  ALL the finial initialization job is Done driver itself(hci_qca)
+> via hdev->setup which call qca_setup(), the initialization includes power control, clock control, driver BT enable
+> pin, download F/W.
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index cc7c1de..530d01f 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -152,4 +152,16 @@ config SND_SOC_SC7180
- 	  SC7180 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs.
- 
-+config SND_SOC_SC7280
-+	tristate "SoC Machine driver for SC7280 boards"
-+	depends on I2C && SOUNDWIRE || COMPILE_TEST
-+	select SND_SOC_QCOM_COMMON
-+	select SND_SOC_MAX98357A
-+	select SND_SOC_LPASS_RX_MACRO
-+	select SND_SOC_LPASS_TX_MACRO
-+	help
-+	  Add support for audio on Qualcomm Technologies Inc.
-+	  SC7280 SoC-based systems.
-+	  Say Y or M if you want to use audio device on this SoCs.
-+
- endif #SND_SOC_QCOM
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 1600ae5..625aec6 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -19,6 +19,7 @@ snd-soc-storm-objs := storm.o
- snd-soc-apq8016-sbc-objs := apq8016_sbc.o
- snd-soc-apq8096-objs := apq8096.o
- snd-soc-sc7180-objs := sc7180.o
-+snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
- snd-soc-sm8250-objs := sm8250.o
- snd-soc-qcom-common-objs := common.o
-@@ -27,6 +28,7 @@ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
- obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
-+obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
- obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
- obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
- obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-new file mode 100644
-index 0000000..c20d4ab1
---- /dev/null
-+++ b/sound/soc/qcom/sc7280.c
-@@ -0,0 +1,299 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+//
-+// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+//
-+// ALSA SoC Machine driver for sc7280
-+
-+#include <linux/gpio.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/input.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <sound/core.h>
-+#include <sound/jack.h>
-+#include <sound/pcm.h>
-+#include <sound/soc.h>
-+
-+#include <dt-bindings/sound/sc7180-lpass.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
-+
-+#include "../codecs/wcd938x.h"
-+#include "common.h"
-+#include "lpass.h"
-+
-+#define LPASS_MAX_PORTS  (LPASS_CDC_DMA_VA_TX8 + 1)
-+
-+struct sc7280_snd_data {
-+	bool stream_prepared[LPASS_MAX_PORTS];
-+	struct snd_soc_card card;
-+	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
-+	struct snd_soc_jack hs_jack;
-+	struct snd_soc_jack hdmi_jack;
-+	bool jack_setup;
-+};
-+
-+static void sc7280_jack_free(struct snd_jack *jack)
-+{
-+	struct snd_soc_component *component = jack->private_data;
-+
-+	snd_soc_component_set_jack(component, NULL, NULL);
-+}
-+
-+static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_soc_component *component = codec_dai->component;
-+	struct snd_jack *jack;
-+	int rval, i;
-+
-+	if (!pdata->jack_setup) {
-+		rval = snd_soc_card_jack_new(card, "Headset Jack",
-+							SND_JACK_HEADSET | SND_JACK_LINEOUT |
-+							SND_JACK_MECHANICAL |
-+							SND_JACK_BTN_0 | SND_JACK_BTN_1 |
-+							SND_JACK_BTN_2 | SND_JACK_BTN_3 |
-+							SND_JACK_BTN_4 | SND_JACK_BTN_5,
-+							&pdata->hs_jack, NULL, 0);
-+
-+		if (rval < 0) {
-+			dev_err(card->dev, "Unable to add Headset Jack\n");
-+			return rval;
-+		}
-+
-+		jack = pdata->hs_jack.jack;
-+
-+		snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
-+		snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
-+		snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
-+		snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
-+
-+		jack->private_data = component;
-+		jack->private_free = sc7280_jack_free;
-+		pdata->jack_setup = true;
-+	}
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		for_each_rtd_codec_dais(rtd, i, codec_dai) {
-+			rval = snd_soc_component_set_jack(component, &pdata->hs_jack, NULL);
-+			if (rval != 0 && rval != -ENOTSUPP) {
-+				dev_err(card->dev, "Failed to set jack: %d\n", rval);
-+				return rval;
-+			}
-+		}
-+
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	struct snd_soc_component *component = codec_dai->component;
-+	struct snd_jack *jack;
-+	int rval;
-+
-+	rval = snd_soc_card_jack_new(
-+			card, "HDMI Jack",
-+			SND_JACK_LINEOUT,
-+			&pdata->hdmi_jack, NULL, 0);
-+
-+	if (rval < 0) {
-+		dev_err(card->dev, "Unable to add HDMI Jack\n");
-+		return rval;
-+	}
-+
-+	jack = pdata->hdmi_jack.jack;
-+	jack->private_data = component;
-+	jack->private_free = sc7280_jack_free;
-+
-+	return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
-+}
-+
-+static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_TX3:
-+		return sc7280_headset_init(rtd);
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_VA_TX0:
-+	case MI2S_SECONDARY:
-+		return 0;
-+	case LPASS_DP_RX:
-+		return sc7280_hdmi_init(rtd);
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
-+				struct snd_pcm_hw_params *params)
-+{
-+	struct snd_pcm_runtime *runtime = substream->runtime;
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *codec_dai;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime;
-+	int i;
-+
-+	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
-+	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 48000, 48000);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_TX3:
-+	case LPASS_CDC_DMA_RX0:
-+		for_each_rtd_codec_dais(rtd, i, codec_dai) {
-+			sruntime = snd_soc_dai_get_sdw_stream(codec_dai, substream->stream);
-+			if (sruntime != ERR_PTR(-ENOTSUPP))
-+				pdata->sruntime[cpu_dai->id] = sruntime;
-+		}
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+	int ret;
-+
-+	if (!sruntime)
-+		return 0;
-+
-+	if (data->stream_prepared[cpu_dai->id]) {
-+		sdw_disable_stream(sruntime);
-+		sdw_deprepare_stream(sruntime);
-+		data->stream_prepared[cpu_dai->id] = false;
-+	}
-+
-+	ret = sdw_prepare_stream(sruntime);
-+	if (ret)
-+		return ret;
-+
-+	ret = sdw_enable_stream(sruntime);
-+	if (ret) {
-+		sdw_deprepare_stream(sruntime);
-+		return ret;
-+	}
-+	data->stream_prepared[cpu_dai->id] = true;
-+
-+	return ret;
-+}
-+
-+static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		return sc7280_snd_swr_prepare(substream);
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		if (sruntime && data->stream_prepared[cpu_dai->id]) {
-+			sdw_disable_stream(sruntime);
-+			sdw_deprepare_stream(sruntime);
-+			data->stream_prepared[cpu_dai->id] = false;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+	return 0;
-+}
-+
-+static const struct snd_soc_ops sc7280_ops = {
-+	.hw_params = sc7280_snd_hw_params,
-+	.hw_free = sc7280_snd_hw_free,
-+	.prepare = sc7280_snd_prepare,
-+};
-+
-+static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
-+	SND_SOC_DAPM_HP("Headphone Jack", NULL),
-+	SND_SOC_DAPM_MIC("Headset Mic", NULL),
-+};
-+
-+static int sc7280_snd_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct sc7280_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	struct snd_soc_dai_link *link;
-+	int ret, i;
-+
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	card = &data->card;
-+	snd_soc_card_set_drvdata(card, data);
-+
-+	card->owner = THIS_MODULE;
-+	card->driver_name = "SC7280";
-+	card->dev = dev;
-+
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		link->init = sc7280_init;
-+		link->ops = &sc7280_ops;
-+	}
-+
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id sc7280_snd_device_id[]  = {
-+	{ .compatible = "google,sc7280-herobrine" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
-+
-+static struct platform_driver sc7280_snd_driver = {
-+	.probe = sc7280_snd_platform_probe,
-+	.driver = {
-+		.name = "msm-snd-sc7280",
-+		.of_match_table = sc7280_snd_device_id,
-+		.pm = &snd_soc_pm_ops,
-+	},
-+};
-+module_platform_driver(sc7280_snd_driver);
-+
-+MODULE_DESCRIPTION("sc7280 ASoC Machine Driver");
-+MODULE_LICENSE("GPL v2");
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+and what I am saying, it has to be the same for this hardware as well. You need to
+re-design your driver / patch.
+
+On a side note, you don’t have to add support for this hardware into hci_qca. You
+can write a brand new driver to support your hardware. If hci_qca is no fit, then
+start from scratch. However same rules apply work in the constraints of serdev->probe
+and hdev->open to establish the Bluetooth transport.
+
+The hdev->setup is post-transport setup and doesn’t really apply to anything powering
+on the controller.
+
+Regards
+
+Marcel
 
