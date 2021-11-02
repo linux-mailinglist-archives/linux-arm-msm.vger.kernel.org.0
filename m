@@ -2,192 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F29E4428B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 08:40:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 279464428D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 08:49:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbhKBHnY convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 2 Nov 2021 03:43:24 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:53142 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbhKBHnX (ORCPT
+        id S229577AbhKBHvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 03:51:47 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:35693 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229505AbhKBHvr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 03:43:23 -0400
-Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 971E6CECE9;
-        Tue,  2 Nov 2021 08:40:47 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [PATCH v1 3/3] Bluetooth: hci_qca: Add support for QTI bluetooth
- MAPLE
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <YYDqW6ewycWP1Y7a@kroah.com>
-Date:   Tue, 2 Nov 2021 08:40:47 +0100
-Cc:     Zijun Hu <zijuhu@codeaurora.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, rjliao@codeaurora.org,
-        Zijun Hu <quic_zijuhu@quicinc.com>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <E6F26BE9-1C2E-4E38-B5A4-A7F06301CC7A@holtmann.org>
-References: <1635837177-1341-1-git-send-email-zijuhu@codeaurora.org>
- <YYDqW6ewycWP1Y7a@kroah.com>
-To:     Greg KH <gregkh@linuxfoundation.org>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+        Tue, 2 Nov 2021 03:51:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635839353; x=1667375353;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=ACJNqGHt3cpapSBqik2oM0AjcgSHSZ3LqelPF8zK9+g=;
+  b=BUyulvYi1TYraZqxr1hHxfI1PunrVKBc0r4IO+p7J77kX6UguiLlUb/a
+   4ZxqLSaCr4+h+UuAIqVLKEHDFZOvTSnACI6j/qyJGlhzbQ4HiYpzAe4/o
+   OrUbEvESMk5+M1Ge+A8QCsVpbcosFXAo8rr0qDQRJpVCfekQQjQwNuQY9
+   g=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 Nov 2021 00:49:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2021 00:49:12 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Tue, 2 Nov 2021 00:49:12 -0700
+Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Tue, 2 Nov 2021 00:49:08 -0700
+From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_kalyant@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <dianders@chromium.org>,
+        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>
+Subject: [PATCH v4 0/5] Add support for eDP controller on SC7280
+Date:   Tue, 2 Nov 2021 13:18:40 +0530
+Message-ID: <1635839325-401-1-git-send-email-quic_sbillaka@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+	This series will add eDP controller support for Qualcomm SC7280
+platform. These patches are baseline changes with which we can enable
+eDP display on sc7280. The sc7280 eDP controller driver can also support
+additional features such as no_hpd detection, PSR, etc. which will be
+enabled in subsequent patch series.
 
->> Add support for MAPLE integrated within SOC, it is mounted on
->> a virtual tty port and powered on/off via relevant IOCTL, neither
->> IBS nor RAMPATCH downloading is not required.
->> 
->> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
->> ---
->> drivers/bluetooth/btqca.c   | 13 ++++++++++++-
->> drivers/bluetooth/btqca.h   | 13 +++++++++++++
->> drivers/bluetooth/hci_qca.c | 47 ++++++++++++++++++++++++++++++++++++++++++++-
->> 3 files changed, 71 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
->> index be04d74037d2..b83d2ecefe5d 100644
->> --- a/drivers/bluetooth/btqca.c
->> +++ b/drivers/bluetooth/btqca.c
->> @@ -255,6 +255,8 @@ static void qca_tlv_check_data(struct hci_dev *hdev,
->> 		BT_DBG("TLV Type\t\t : 0x%x", type_len & 0x000000ff);
->> 		BT_DBG("Length\t\t : %d bytes", length);
->> 
->> +		if (qca_is_maple(soc_type))
->> +			break;
->> 		idx = 0;
->> 		data = tlv->data;
->> 		while (idx < length) {
->> @@ -552,6 +554,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->> 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
->> 
->> 	/* Download rampatch file */
->> +	if (qca_is_maple(soc_type))
->> +		goto download_nvm;
->> +
->> 	config.type = TLV_TYPE_PATCH;
->> 	if (qca_is_wcn399x(soc_type)) {
->> 		snprintf(config.fwname, sizeof(config.fwname),
->> @@ -580,6 +585,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->> 	/* Give the controller some time to get ready to receive the NVM */
->> 	msleep(10);
->> 
->> +download_nvm:
->> 	/* Download NVM configuration */
->> 	config.type = TLV_TYPE_NVM;
->> 	if (firmware_name)
->> @@ -597,6 +603,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->> 	else if (soc_type == QCA_QCA6390)
->> 		snprintf(config.fwname, sizeof(config.fwname),
->> 			 "qca/htnv%02x.bin", rom_ver);
->> +	else if (qca_is_maple(soc_type))
->> +		snprintf(config.fwname, sizeof(config.fwname),
->> +			 "qca/mpnv%02x.bin", rom_ver);
->> 	else if (soc_type == QCA_WCN6750)
->> 		snprintf(config.fwname, sizeof(config.fwname),
->> 			 "qca/msnv%02x.bin", rom_ver);
->> @@ -609,6 +618,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->> 		bt_dev_err(hdev, "QCA Failed to download NVM (%d)", err);
->> 		return err;
->> 	}
->> +	if (qca_is_maple(soc_type))
->> +		msleep(MAPLE_NVM_READY_DELAY_MS);
->> 
->> 	if (soc_type >= QCA_WCN3991) {
->> 		err = qca_disable_soc_logging(hdev);
->> @@ -637,7 +648,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->> 		return err;
->> 	}
->> 
->> -	if (soc_type == QCA_WCN3991 || soc_type == QCA_WCN6750) {
->> +	if (soc_type == QCA_WCN3991 || soc_type == QCA_WCN6750 || qca_is_maple(soc_type)) {
->> 		/* get fw build info */
->> 		err = qca_read_fw_build_info(hdev);
->> 		if (err < 0)
->> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
->> index 30afa7703afd..0a5a7d1daa71 100644
->> --- a/drivers/bluetooth/btqca.h
->> +++ b/drivers/bluetooth/btqca.h
->> @@ -46,6 +46,8 @@
->> 
->> #define QCA_FW_BUILD_VER_LEN		255
->> 
->> +#define MAPLE_NVM_READY_DELAY_MS        1500
->> +#define MAPLE_POWER_CONTROL_DELAY_MS    50
->> 
->> enum qca_baudrate {
->> 	QCA_BAUDRATE_115200 	= 0,
->> @@ -145,6 +147,7 @@ enum qca_btsoc_type {
->> 	QCA_WCN3991,
->> 	QCA_QCA6390,
->> 	QCA_WCN6750,
->> +	QCA_MAPLE,
->> };
->> 
->> #if IS_ENABLED(CONFIG_BT_QCA)
->> @@ -167,6 +170,11 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_type soc_type)
->> 	return soc_type == QCA_WCN6750;
->> }
->> 
->> +static inline bool qca_is_maple(enum qca_btsoc_type soc_type)
->> +{
->> +	return soc_type == QCA_MAPLE;
->> +}
->> +
->> #else
->> 
->> static inline int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
->> @@ -204,6 +212,11 @@ static inline bool qca_is_wcn6750(enum qca_btsoc_type soc_type)
->> 	return false;
->> }
->> 
->> +static inline bool qca_is_maple(enum qca_btsoc_type soc_type)
->> +{
->> +	return false;
->> +}
->> +
->> static inline int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
->> {
->> 	return -EOPNOTSUPP;
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index dd768a8ed7cb..f1d9670719c4 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -70,6 +70,10 @@
->> #define QCA_CRASHBYTE_PACKET_LEN	1096
->> #define QCA_MEMDUMP_BYTE		0xFB
->> 
->> +#ifndef IOCTL_IPC_BOOT
->> +#define IOCTL_IPC_BOOT                  0xBE
->> +#endif
-> 
-> You send this command, but never use it.  Where is the driver code that
-> uses this command?
-> 
-> And why not tabs?
-> 
-> And why is this patch series not properly threaded so tools can pick it
-> up and find them?
-> 
-> And why the odd named ioctl that is different from other ones in this
-> file?
-> 
-> And why not just use normal power management hooks for doing things like
-> turning on and off the hardware like all other drivers?
+	This is based on Bjorn's changes in the below mentioned series
+to support both eDP and DP programming through the same driver:
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=564841
 
-I am not merging this. We are not starting an IPC via an external ioctl.
+Sankeerth Billakanti (5):
+  dt-bindings: msm/dp: Add DP compatible strings for sc7280
+  drm/msm/dp: Add DP controllers for sc7280
+  drm/dp: Add macro to check max_downspread capability
+  drm/msm/dp: Enable downspread for supported DP sinks
+  drm/msm/dp: Enable ASSR for supported DP sinks
 
-Regards
+ .../bindings/display/msm/dp-controller.yaml        |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  4 ++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 23 +++++++++++++++++++---
+ drivers/gpu/drm/msm/dp/dp_display.c                |  9 +++++++++
+ include/drm/drm_dp_helper.h                        |  7 +++++++
+ 5 files changed, 40 insertions(+), 5 deletions(-)
 
-Marcel
+-- 
+2.7.4
 
