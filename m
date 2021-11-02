@@ -2,115 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB2D7442CC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:37:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DAB9C442D23
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:49:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbhKBLk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 07:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
+        id S230175AbhKBLwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 07:52:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230336AbhKBLk0 (ORCPT
+        with ESMTP id S229924AbhKBLwU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 07:40:26 -0400
+        Tue, 2 Nov 2021 07:52:20 -0400
 Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A531EC061766
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Nov 2021 04:37:51 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id n8so4984977plf.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Nov 2021 04:37:51 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD4FC061767
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Nov 2021 04:49:46 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id b13so4291021plg.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Nov 2021 04:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+LcalwcS+7iwU2Z06DjsWxGkhOqaOpX2CeRBZg6uNxI=;
-        b=u1T+gyQ5y9utIQAL69osfNb3bY8W18tAEGHKXB/yOTt4z6DVkjo0Tm9BVQLQYlQvmi
-         +RyAD+cAN0ZnryDgfEwhDomhWP5aHyg5Ddw+FwF0gZJTl/XAP/yxFxTYru4YWi1yyGvJ
-         Nyj3SvEFcTOcvzmYNQ0CoFLHMwyXenD/+RlY68vQyVJLDAzJrMq+x/p9kEwcpaxEik6P
-         WbrrqPpjnKVAB9bhIp9NOjCOgDYCVxAD9qfdxmvVHjjyUpYw53WETAy8gUPku20d08EZ
-         Mjm5PXINnW3OWZm3X+mTRbx7nnM77l1Hnq9RZ5CYtf9EDulCgVA5ot0Bz2ITNNcoxFE0
-         B+Gw==
+         :cc;
+        bh=GaIFo45joCtIbALY4+H73q/4ML+vmLQCj6pBcBGjWho=;
+        b=TvqE4gWEK2JDCGRw3ZG1OomLZxZsLRjXs7xv+VmLItD3E212NodchziFbXAURQKBw3
+         dkeHqKZ+j5sEB1QHUafQnTkl/cYkkX0rUKVaK3q+8IpqtFMWZdrS4lGlWmWdf3vM4Bij
+         WgWkDqwn2gMWsUxRbNoXFzSwR4XUju7Hv0kG5wgh4QtcVOfIn9bCfvV/ueffHtaPSW+0
+         4nc+pxLVjU35BmgpdbDEZ21mBmSINy1e40WaCT2UFwDQV63twocpOx8zV/emHM/j5cWZ
+         yaeb4t6MOU+9rhn0HrR1u/POfGkljVNkrFg78y3ohPhvNH/14A325300EzOfGAj6djPz
+         q/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+LcalwcS+7iwU2Z06DjsWxGkhOqaOpX2CeRBZg6uNxI=;
-        b=lzgr7cuTGA/Pqgkp9O7+8Lj5xHAJOe0Wb+9qS81cVxiqTtTEGLGQvzd/P+YCeLRGw0
-         T5UeWczu4QpOE/BvN4f927nfC5K5ns7RmfaVWXslPInCq971p/OxpDmdEsPk5UoVO6YI
-         cYsJJjzXXMsDAkqWip5o97QlbHk8XpeglgCUbd6qBmY7/pkfoAsNeglptEL3Hxo4ia8T
-         8zuPYYzJMbZiAXtFk3ruCYaMpwBCxX+/HQv2cy/d2X8TNSFQvooQfccPgMShmqTQ80og
-         u60judqAKwhOfamCS5f46LHPo2LFNEb61ZFBXY5Ux9OHVnY6v7gHgNb8C7XcSDKQ41rQ
-         Z6Ww==
-X-Gm-Message-State: AOAM530/dzlwLuR7w42Y4AYAAgJrOVge+mpYwHsGjdbSLxr+xlsYxHfl
-        TBJj5xYUiF4dQfuC4by3hoMMlG2bSreceKdPWJ1IUw==
-X-Google-Smtp-Source: ABdhPJxlukTujJboXT4S57TaNSXOyAMkRW6XndNn4eisc8fX7Oczi13MU70tOQlUfeLfplvXUQ5IVMFqLcPTtBJr/Uo=
-X-Received: by 2002:a17:90b:3149:: with SMTP id ip9mr1957728pjb.232.1635853071054;
- Tue, 02 Nov 2021 04:37:51 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=GaIFo45joCtIbALY4+H73q/4ML+vmLQCj6pBcBGjWho=;
+        b=26oMshGGlN47pe1Sh8Ek4hK22TRLq9zs+yRwVUxlbYypLwc0hGMQb1V5bft9Bff6Ec
+         nQaZznCLXpxjh1GJzfpeUF7B7I5IVZXq38Pp+DefsSmYWkCRJWYvNKLI5GU7eLGPAXjc
+         cipsyudEEynZU4agzBSg9Kg7JSQgv9RpIPVwWyHlwV27Wk1ZJluOCcxt6bTtStzZbwx0
+         9h8WO3WHryOAOzpjXfYbv1ZmgGxP1+D2winrJqDkmSqpHLyJq9SxGsSErwjD2HIKV2yO
+         qon/ZqTymGsHBCcST5Qd3PILK8Bn7xISNXsZBS7LPcmi8MQIACcVUuh2AzrYD5lexjOJ
+         IY9g==
+X-Gm-Message-State: AOAM531Rl8hKiooDOdinCr+okEDI74BFSYmm8rX4shARzaIPj0Xkhdjk
+        dM2vXnNm7IHcJJ4yp2zobwk7QAyHUrcLqV6EGZVJCQ==
+X-Google-Smtp-Source: ABdhPJyh9CGyt6qq9ZsiHAl/WfCjddeiiXcSN+okvKiOqp3IHifyCVQzJSfhbXLiGp5Afl1NXS257Q9cPCyvCazHIGw=
+X-Received: by 2002:a17:902:edc7:b0:141:a2d8:ede9 with SMTP id
+ q7-20020a170902edc700b00141a2d8ede9mr27782887plk.24.1635853785585; Tue, 02
+ Nov 2021 04:49:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211025170925.3096444-1-bjorn.andersson@linaro.org>
- <65243a98-61b9-3311-f41d-fa4782448baa@kali.org> <CAG3jFytmcFcA5W3vmcpWTWrc36-YFMPZ1wAB8gAJfiHHLWmaCA@mail.gmail.com>
- <20211030092736.eam4ahzimiew7erg@pengutronix.de>
-In-Reply-To: <20211030092736.eam4ahzimiew7erg@pengutronix.de>
+References: <20211025103322.160913-1-robert.foss@linaro.org>
+ <20211025103322.160913-2-robert.foss@linaro.org> <YYBOXQOXM8USks0G@robh.at.kernel.org>
+In-Reply-To: <YYBOXQOXM8USks0G@robh.at.kernel.org>
 From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 2 Nov 2021 12:37:39 +0100
-Message-ID: <CAG3jFyuYE_=73LfkQ7KLL+6ZvrGAORT8z1Cw1kmssgn7ewTENQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/3] pwm: Introduce single-PWM of_xlate function
-To:     =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     Steev Klimaszewski <steev@kali.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Date:   Tue, 2 Nov 2021 12:49:34 +0100
+Message-ID: <CAG3jFytkHi06uaP8RFaS9cma68S9oz_AcAtkMxCrPKGXBTtfsA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] media: dt-bindings: media: camss: Document
+ clock-lanes property
+To:     Rob Herring <robh@kernel.org>
+Cc:     todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        mchehab@kernel.org, angelogioacchino.delregno@somainline.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Uwe
-
-On Sat, 30 Oct 2021 at 11:27, Uwe Kleine-K=C3=B6nig
-<u.kleine-koenig@pengutronix.de> wrote:
+On Mon, 1 Nov 2021 at 21:30, Rob Herring <robh@kernel.org> wrote:
 >
-> Hello,
->
-> On Wed, Oct 27, 2021 at 05:06:02PM +0200, Robert Foss wrote:
-> > On Tue, 26 Oct 2021 at 19:21, Steev Klimaszewski <steev@kali.org> wrote=
-:
-> > >
-> > >
-> > > On 10/25/21 12:09 PM, Bjorn Andersson wrote:
-> > > > The existing pxa driver and the upcoming addition of PWM support in=
- the
-> > > > TI sn565dsi86 DSI/eDP bridge driver both has a single PWM channel a=
-nd
-> > > > thereby a need for a of_xlate function with the period as its singl=
-e
-> > > > argument.
-> > > >
-> > > > Introduce a common helper function in the core that can be used as
-> > > > of_xlate by such drivers and migrate the pxa driver to use this.
-> > > >
-> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > Acked-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-> > > > Tested-by: Steev Klimaszewski <steev@kali.org>
-> > > > ---
-> > > >
-> > [...]
+> On Mon, Oct 25, 2021 at 12:33:22PM +0200, Robert Foss wrote:
+> > The clock-lanes property corresponds to a hardware register field
+> > that is required to be set, in order to enable the CSI clock signal.
 > >
-> > Applied to drm-misc-next.
+> > The physical lane of the clock signal is not programmable, but only
+> > togglable On or Off, which what BIT(7) of the
+> > CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(5) register controls.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >  .../devicetree/bindings/media/qcom,msm8996-camss.yaml        | 5 +++++
+> >  .../devicetree/bindings/media/qcom,sdm660-camss.yaml         | 5 +++++
+> >  .../devicetree/bindings/media/qcom,sdm845-camss.yaml         | 5 +++++
+> >  3 files changed, 15 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> > index 38be41e932f0..d4da1fad12cf 100644
+> > --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> > +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> > @@ -106,6 +106,11 @@ properties:
+> >
+> >              properties:
+> >                clock-lanes:
+> > +                description:
+> > +                  The index of the clock-lane is not programmable by
+> > +                  the hardware, but is required to define a CSI port.
+> > +                  Lane 7 reflects the hardware register field that enables
+> > +                  the clock lane.
 >
-> This is now 3ab7b6ac5d829e60c3b89d415811ff1c9f358c8e in next, the Link:
-> added in the commit trailer looks as follows:
+> If it is fixed, then it should not be required. Fix the required part.
 >
->         Link: https://patchwork.freedesktop.org/patch/msgid/2021102517092=
-5.3096444-1-bjorn.andersson@linaro.org
+> >                  items:
+> >                    - const: 7
 >
-> but this link doesn't work, for me at least. I wonder what's wrong with
-> it. If you want to fix it and rewrite the commit, you can also drop the
-> duplicated "Tested-by: Steev Klimaszewski <steev@kali.org>".
+> I don't know how we let that in, but this should be the lane number.
+> Each binding can't be making up its own interpretation.
 
-Weirdly patchwork.fd.o[1] doesn't seem to have the series, but does
-have previous versions.
-
-[1] https://patchwork.freedesktop.org/project/dri-devel/patches/?submitter=
-=3D&state=3D*&q=3D_xlate&archive=3Dboth&delegate=3D
+If the clock lane number isn't programmable, can clock-lanes be omitted?
