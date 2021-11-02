@@ -2,93 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CE4442F28
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 14:38:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC2B442F34
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 14:44:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230175AbhKBNlZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 09:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbhKBNlY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 09:41:24 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0310C061767
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 Nov 2021 06:38:49 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id i12so15713529ila.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Nov 2021 06:38:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NPmlFnsZtjOhlgu33qBtxP1UZOWSahyMoeO4vIQ/8Z0=;
-        b=OVSrn46sf3M7ODJBsJzugoe0wCPuQeHMutpWsElQHERc7suWX1ETX3idIWCLex1Tlt
-         UTq1fIJzkXsD1zhbzmcRcYq1D9k7lXVYOfUWaunuw6gA1J77xqRRhY/hC12Kg4OTsGp4
-         wyZTjNHJDa2TubIWyoB5lBvoPN4gh+8fHdr2Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NPmlFnsZtjOhlgu33qBtxP1UZOWSahyMoeO4vIQ/8Z0=;
-        b=C1jDLYrM+oj8Xqz7UUyVTXv8vwa4IMcbTipPwEDVyTM0FEvf7Dk1ePQ1ytvxHtNPpf
-         LjmhHito3mzE/WMBI+v3U3DCCn0+TyqsGBFsEa+OEOC6MCcfF2EHLaXmUhlLz9rdoL0X
-         OaiPHuAeL0HZ/vXzsi+6YUTqIKiiHmE+TQxxx1zV3ogYKzYqeBhT1SLETUQ2KDHmiauo
-         kCncFzQWFEEa/La4zEkn5Nlipqeti+Y1FUI1OnjmhzMuhQdbRu4BFoMCztFS0M3lXKZD
-         IX4hcvCCmQ9FJhdd5l8wG7pQKFrklrQR1FtI4xW/Ejx7mFHCx45J8C+iLczPWYwKXR/P
-         3WWw==
-X-Gm-Message-State: AOAM531n65AvRXivbeHIzDdF/DrEPgAupD1DMC5Su4EdyyNhdL58u6/W
-        YYJZhdH07t25NpQdX6LgqkZgqlLZChdZwQ==
-X-Google-Smtp-Source: ABdhPJxJ+KwBIvtVCVoAtWFXAUJHuKkCi0CMk71/mU7mB6pQ6h9WZ7HwzvcRA93u3V07Z99VM9M7og==
-X-Received: by 2002:a05:6e02:174e:: with SMTP id y14mr16943494ill.89.1635860329147;
-        Tue, 02 Nov 2021 06:38:49 -0700 (PDT)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id w2sm9348998iou.0.2021.11.02.06.38.48
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Nov 2021 06:38:48 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id y17so21896669ilb.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Nov 2021 06:38:48 -0700 (PDT)
-X-Received: by 2002:a05:6e02:18ce:: with SMTP id s14mr13331028ilu.142.1635860328172;
- Tue, 02 Nov 2021 06:38:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 2 Nov 2021 06:38:36 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VWN36A=O1V+2jfWM5jLShvZfVOCGnt_MSSGct=kFtoOw@mail.gmail.com>
-Message-ID: <CAD=FV=VWN36A=O1V+2jfWM5jLShvZfVOCGnt_MSSGct=kFtoOw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sdm845: Enable dual edge errata
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S230436AbhKBNrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 09:47:25 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40755 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230175AbhKBNrY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 09:47:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1635860690; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=beDd0wHfJo46gYVTwDYf4tIPrmM5O/oEQzr1869j1GY=; b=C1JU7wi3/OpWERzWr196QejuRcolN2DfDE8v4ECLL5mZtlO6kSsad22Y+W1UsXC4YqUKlzzo
+ 7fDIeic7/aWVwMQs3RGd8tJ4hlmIKHWWXicfFiGztL4WYUsU/x5NFg0hQH2bh3Op3BG8VpFq
+ MfkiJdhvuuSl9bTi1cLJIFA2p7A=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 618140cfaeb23905569c005d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 13:44:47
+ GMT
+Sender: pillair=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 542DCC43619; Tue,  2 Nov 2021 13:44:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 89350C4338F;
+        Tue,  2 Nov 2021 13:44:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 89350C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
+        mathieu.poirier@linaro.org, robh+dt@kernel.org,
+        p.zabel@pengutronix.de
+Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v8 0/3] Add support for sc7280 WPSS PIL loading
+Date:   Tue,  2 Nov 2021 19:14:30 +0530
+Message-Id: <1635860673-12146-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add support for PIL loading of WPSS co-processor for SC7280 SOCs.
 
-On Mon, Nov 1, 2021 at 8:41 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> It has been observed that dual edge triggered wakeirq GPIOs on SDM845
-> doesn't trigger interrupts on the falling edge.
->
-> Enabling wakeirq_dual_edge_errata for SDM845 indicates that the PDC in
-> SDM845 suffers from the same problem described, and worked around, by
-> Doug in 'c3c0c2e18d94 ("pinctrl: qcom: Handle broken/missing PDC dual
-> edge IRQs on sc7180")', so enable the workaround for SDM845 as well.
->
-> The specific problem seen without this is that gpio-keys does not detect
-> the falling edge of the LID gpio on the Lenovo Yoga C630 and as such
-> consistently reports the LID as closed.
->
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-sdm845.c | 1 +
->  1 file changed, 1 insertion(+)
+Changes from v7:
+- Use "interrupts" instead of "interrupts-extended" in DT bindings.
+- Add glink-edge properties in DT bindings.
+- Use size_t for "proxy_pd_count" in wpss remoteproc driver
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Changes from v6:
+- Fixed the dt-bindings check in qcom,sc7280-wpss-pil.yaml
+- Fixed CDSP dt-bindings example node (compatible, glink-edge)
+- Fixed the clock-names used in wpss driver
+- Add support to get firmware-name from DTSI entry for wpss.
+
+Changes from v4/v5:
+- Add yaml conversion for adsp/cdsp dt-bindings
+- Change clock names in wpss dt-bindings
+- Correct mistake in signed-off enail ID
+
+Rakesh Pillai (3):
+  dt-bindings: remoteproc: qcom: adsp: Convert binding to YAML
+  dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
+  remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
+
+ .../bindings/remoteproc/qcom,hexagon-v56.txt       | 140 -------------
+ .../bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml  | 161 +++++++++++++++
+ .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml  | 217 ++++++++++++++++++++
+ .../bindings/remoteproc/qcom,sdm845-adsp-pil.yaml  | 160 +++++++++++++++
+ drivers/remoteproc/qcom_q6v5_adsp.c                | 219 +++++++++++++++++++--
+ 5 files changed, 741 insertions(+), 156 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,hexagon-v56.txt
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
+ create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sdm845-adsp-pil.yaml
+
+-- 
+2.7.4
+
