@@ -2,51 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF9AE4428D3
+	by mail.lfdr.de (Postfix) with ESMTP id B3DC24428D4
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 08:49:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230353AbhKBHwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230362AbhKBHwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 2 Nov 2021 03:52:01 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:65147 "EHLO
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:65164 "EHLO
         alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229966AbhKBHwA (ORCPT
+        by vger.kernel.org with ESMTP id S230005AbhKBHwA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 2 Nov 2021 03:52:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1635839365; x=1667375365;
+  t=1635839366; x=1667375366;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=JgtzhM5uHq22p0kNDKdr5arFTdi04se34+KztOlnDWI=;
-  b=UKFBWghtSTycNFAPQ6ELt/iELfijKj0pofvu7LLwnRV5DzlYzx8IAe/p
-   9BwJxK0XFuTtNOj3KjMQsRdThdk7kfXcfjl/+USWFvy1F0+RvRRjpqZGP
-   Nbw4BdQ0gXMwAfIsOc1g5FN6KswNWelbBfrm5TVsI+a3wZl3CFmzyeY6R
-   I=;
+  bh=t/5kmuNFU7C+OHFcd+0xjbwL9B0azkBbIpq2UE7wMug=;
+  b=elKrrOQYzhZy7IPYeOawq8amIOYPy0tGJOiqZB0IlDkgs5pV8UgSNnui
+   rdgLCw6I24/bKwk4LFNmZOHBfVtUW9vigtSSNJwyVAy46SfV9yM3SLz85
+   C8vHkPdaALrsI1KlxLPqSxN+PDAK8qJ4g2t74oMmoPENx2tNriMLhX9Y3
+   M=;
 Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Nov 2021 00:49:19 -0700
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Nov 2021 00:49:26 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2021 00:49:19 -0700
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2021 00:49:26 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Tue, 2 Nov 2021 00:49:18 -0700
+ Tue, 2 Nov 2021 00:49:25 -0700
 Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Tue, 2 Nov 2021 00:49:14 -0700
+ Tue, 2 Nov 2021 00:49:21 -0700
 From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
         <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-CC:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
+CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
         <robdclark@gmail.com>, <seanpaul@chromium.org>,
         <swboyd@chromium.org>, <quic_kalyant@quicinc.com>,
         <quic_abhinavk@quicinc.com>, <dianders@chromium.org>,
-        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>,
-        <quic_sbillaka@quicinc.com>
-Subject: [PATCH v4 1/5] dt-bindings: msm/dp: Add DP compatible strings for sc7280
-Date:   Tue, 2 Nov 2021 13:18:41 +0530
-Message-ID: <1635839325-401-2-git-send-email-quic_sbillaka@quicinc.com>
+        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>
+Subject: [PATCH v4 2/5] drm/msm/dp: Add DP controllers for sc7280
+Date:   Tue, 2 Nov 2021 13:18:42 +0530
+Message-ID: <1635839325-401-3-git-send-email-quic_sbillaka@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1635839325-401-1-git-send-email-quic_sbillaka@quicinc.com>
 References: <1635839325-401-1-git-send-email-quic_sbillaka@quicinc.com>
@@ -59,39 +58,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sankeerth Billakanti <sbillaka@codeaurora.org>
+The eDP controller on SC7280 is similar to the eDP/DP controllers
+supported by the current driver implementation.
 
-The Qualcomm SC7280 platform supports one eDP controller
-and a DP controller. This change will add the compatible
-string for both eDP and DP to msm dp-controller binding.
+SC7280 supports one EDP and one DP controller which can operate
+concurrently.
+
+This change adds the support for eDP and DP controller on sc7280.
 
 Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 
 changes in v3:
-    - Modify the subject (Doug Anderson)
-    - Add sc7280-dp also to the list (Stephen Boyd)
+    - Split into patches according to function (Dmitry Baryshkov)
+    - Use DP_CONTROLLER_1 for eDP controller intf (Dmitry Baryshkov)
+    - Use DP_CONTROLLER_0 for sc7280-dp (Dmitry Baryshkov)
+    - Add macro in drm_helper.h for checking ssc capability (Stephen Boyd)
+    - Use existing macro to check assr capability (Stephen Boyd)
+    - Add comment for HPD_INIT_SETUP delay (Stephen Boyd)
 
 changes in v2:
-    - Sort alphabetically (Stephen Boyd)
-    - Cleanup residual stale changes in the patch (Matthias Kaehlcke)
-    - Modify the subject (Doug Anderson)
+    - Don't initialize variables to 0 (Stephen Boyd)
+    - Use const for read-only dpcd (Stephen Boyd)
+    - Remove zero pixel clock check (Stephen Boyd)
+    - Sort compatible strings alphabetically (Stephen Boyd)
+    - Use pwm_bl.c for backlight instead of gpio (Stephen Boyd)
+    - Change return type for functions returning always 0 (Matthias Kaehlcke)
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+ drivers/gpu/drm/msm/dp/dp_display.c            | 9 +++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index 63e585f..5457612 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -17,6 +17,8 @@ properties:
-   compatible:
-     enum:
-       - qcom,sc7180-dp
-+      - qcom,sc7280-dp
-+      - qcom,sc7280-edp
-       - qcom,sc8180x-dp
-       - qcom,sc8180x-edp
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index ce6f32a..2b4dc9d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -856,9 +856,9 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
+ };
+ 
+ static const struct dpu_intf_cfg sc7280_intf[] = {
+-	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
++	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+ 	INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+-	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
++	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+ };
+ 
+ /*************************************************************
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index aba8aa4..61385d6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -135,8 +135,17 @@ static const struct msm_dp_config sc7180_dp_cfg = {
+ 	.num_descs = 1,
+ };
+ 
++static const struct msm_dp_config sc7280_dp_cfg = {
++	.descs = (const struct msm_dp_desc[]) {
++		[MSM_DP_CONTROLLER_0] =	{ .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
++		[MSM_DP_CONTROLLER_1] =	{ .io_start = 0x0aea0000, .connector_type = DRM_MODE_CONNECTOR_eDP },
++	},
++	.num_descs = 2,
++};
++
+ static const struct of_device_id dp_dt_match[] = {
+ 	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
++	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_cfg },
+ 	{}
+ };
  
 -- 
 2.7.4
