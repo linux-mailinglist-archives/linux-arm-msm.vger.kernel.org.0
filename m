@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CF4D44381A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 22:56:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 604DE443820
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 22:58:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbhKBV6v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 17:58:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59866 "EHLO mail.kernel.org"
+        id S230382AbhKBWAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 18:00:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60176 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229525AbhKBV6v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 17:58:51 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1164F60EBD;
-        Tue,  2 Nov 2021 21:56:16 +0000 (UTC)
+        id S229525AbhKBWAk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 18:00:40 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2BDA660EDF;
+        Tue,  2 Nov 2021 21:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635890176;
-        bh=oouxKCA5Vs0WFHSRq/Xx8b7jRM+YfD5kWuHpY4xDUzA=;
+        s=k20201202; t=1635890285;
+        bh=P16OQEV/s/AT2BeYrLgBIB2QROVOkYZGirYakOBKtd8=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=r8QsGPIFXeDVHgVsfZl5SkeIb/oBa/MoiNzZwati9OuxGJrsn3hTN+hAPNolNDnaS
-         h3fHWSzVeXpCQ2fHGN42fuTD23W6Y31ePp+v8cs9+aUsBlW8u7LfGtnCk/ulASNKSo
-         FJQKXzUjsIxnzOhi3qjml70WMknAfRRK7iqVRolm0nQdSMCuuJ0xd/O9Hdf0acCL7Z
-         6priLo2IeJW23r2BtEyCzwGFqPY7atg3hh0d4ox/OmOBaKBjhHk+Sv5QUja3+83nBF
-         t5nEVNBr/v09rk3gXI78pksR0Pmq+zc+BFYqcbsf7TGOxyIkDb0NpUNVrqvYb8CY7A
-         kORr+d7ITryLw==
+        b=JK0aPFSs5hLpl7vTgMaRlAT7rSvA9eNskbYJAdAWx7++gDRJauzmxSx1+VZrR6se9
+         5J5Q4wmjTSkkNgFFocGpQnEN5c7AvE7sYyPiaiSwFHqaleEV1A5KBJq4GFN5P+HlbO
+         L5sZUZ6QWfeQall0MIogFvUA/vvDuym4KzjwQNuJdsANiQ6WCPA6JwRmbYifgxF6Nt
+         lK3sVBMQttdtHUD5QZZLJfwUCq4ToWOBchFkqCO4/Tdv6HbASSYYWgA5/9/fZ0HC16
+         o93h64sKbgubjqBi7qCFlNjvjbvn3OO6cn8QcQ1VUKW3nJo/cm2NkfSfBEjL/Cg37T
+         4zCOOLTmwbo7w==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1635847013-3220-2-git-send-email-tdas@codeaurora.org>
-References: <1635847013-3220-1-git-send-email-tdas@codeaurora.org> <1635847013-3220-2-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v1 1/4] clk: qcom: clk-alpha-pll: Increase PLL lock detect poll time
+In-Reply-To: <1635847013-3220-3-git-send-email-tdas@codeaurora.org>
+References: <1635847013-3220-1-git-send-email-tdas@codeaurora.org> <1635847013-3220-3-git-send-email-tdas@codeaurora.org>
+Subject: Re: [PATCH v1 2/4] clk: qcom: gdsc: Add support for clock voting from GDSC
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
@@ -37,41 +37,51 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         Taniya Das <tdas@codeaurora.org>
 To:     Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <tdas@codeaurora.org>
-Date:   Tue, 02 Nov 2021 14:56:14 -0700
-Message-ID: <163589017472.2993099.8634048687805619874@swboyd.mtv.corp.google.com>
+Date:   Tue, 02 Nov 2021 14:58:03 -0700
+Message-ID: <163589028388.2993099.5936912812368868539@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-11-02 02:56:50)
-> PLL poll for lock detection can take more than 100us for certain type
+Quoting Taniya Das (2021-11-02 02:56:51)
+> In the cases where the clock is required to be enabled before the genpd
+> enable add support for the same.
 
-What types of PLLs? Is this fixing something that's broken? Or fixing a
-future problem?
+Please describe more. One sentence is not enough here.
 
-> of PLLs, thus update to 200us.
 >=20
-
-Does it needs a Fixes tag?
-
 > Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/clk/qcom/gdsc.c | 45 +++++++++++++++++++++++++++++++++++++++----=
+--
+>  drivers/clk/qcom/gdsc.h |  3 +++
+>  2 files changed, 42 insertions(+), 6 deletions(-)
 >=20
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alph=
-a-pll.c
-> index eaedcce..7cf6cfa 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -204,7 +204,7 @@ static int wait_for_pll(struct clk_alpha_pll *pll, u3=
-2 mask, bool inverse,
->         if (ret)
->                 return ret;
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 7e1dd8c..1caca32 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -478,6 +499,18 @@ int gdsc_register(struct gdsc_desc *desc,
+>                         return PTR_ERR(scs[i]->rsupply);
+>         }
 >=20
-> -       for (count =3D 100; count > 0; count--) {
-> +       for (count =3D 200; count > 0; count--) {
->                 ret =3D regmap_read(pll->clkr.regmap, PLL_MODE(pll), &val=
-);
->                 if (ret)
+> +       for (i =3D 0; i < num; i++) {
+> +               if (!scs[i])
+> +                       continue;
+> +
+> +               scs[i]->clk =3D devm_clk_get(dev, scs[i]->clk_name);
+> +               if (IS_ERR(scs[i]->clk))
+> +                       return PTR_ERR(scs[i]->clk);
+> +               ret =3D clk_prepare(scs[i]->clk);
+
+Why do we keep it prepared forever? And don't we have support for
+writing directly into cxc registers?
+
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+>         data->num_domains =3D num;
+>         for (i =3D 0; i < num; i++) {
+>                 if (!scs[i])
