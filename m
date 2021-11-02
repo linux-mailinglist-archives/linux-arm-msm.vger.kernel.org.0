@@ -2,199 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 905F4442C08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 782BC442C0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 12:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhKBLEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 07:04:51 -0400
+        id S231283AbhKBLFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 07:05:00 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:13821 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbhKBLEn (ORCPT
+        with ESMTP id S231138AbhKBLEx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 07:04:43 -0400
+        Tue, 2 Nov 2021 07:04:53 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635850929; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
- Subject: Sender; bh=qXzp9Dq3okeTeCCG2IPt/sqOPmtUhJPZ3qV0EbiFkQo=; b=Ouy0qSQBJEIGpYqO81R4pohGM95pPrdpUjSQLyIDN7pc/YOD9daVSkdB2/MKkANQV11GIaIk
- hzro0B593zYK9CFp74BTkzxtbhzt1DiAgC4+cIEAmKV3QAxVrSVj0+c2iX1H1OIhd2QJHi01
- thXqhvf8Hhl2EaCbDmsLaW2AlQE=
+ s=smtp; t=1635850939; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=IpKhFFpSXVkoCKRyilQIeCbftdYn9GKYLGgEPw7+VzM=; b=mBKEFjM0LNtlV19KR/fMhliwgJKop7CAOWN4emDsP1wHgUb2CJhiIRDpVmRkTGsjhe+w5wXF
+ KFBoZcYj7fMcPC2TgcjO7LL1JYEFfuWWkE3qOrAiihMgONCVxZ6x7uyI/7B2tZYPdgwGJ9BE
+ +mqvaEj8ZqyLLKEk5aRusQTcCaA=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 61811a94c8c1b282a56f6d21 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 11:01:40
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 61811ab1900d71ea1e5db5b4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 11:02:09
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 25BD7C4360C; Tue,  2 Nov 2021 11:01:40 +0000 (UTC)
+        id 0C41FC43617; Tue,  2 Nov 2021 11:02:09 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
+Received: from [192.168.1.102] (unknown [49.207.214.117])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 76430C43616;
-        Tue,  2 Nov 2021 11:01:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 76430C43616
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8290CC43460;
+        Tue,  2 Nov 2021 11:02:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8290CC43460
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v4 2/2] ASoC: qcom: SC7280: Add machine driver
-To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
-        robh+dt@kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, tiwai@suse.com
-References: <1635519876-7112-1-git-send-email-srivasam@codeaurora.org>
- <1635519876-7112-3-git-send-email-srivasam@codeaurora.org>
- <CAE-0n51zXLZiaB9aCdv=p_Wcxr5ZEdN-=b1hd5VATL6-CD0vRw@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <ee81276a-0715-0e55-9944-6c021075911e@codeaurora.org>
-Date:   Tue, 2 Nov 2021 16:31:32 +0530
+Subject: Re: [PATCH v2 1/2] pinctrl: qcom: Add egpio feature support
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        LinusW <linus.walleij@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+References: <1635250056-20274-1-git-send-email-rnayak@codeaurora.org>
+ <CAD=FV=UoTFzZn5h_VNrwrt2E5P2k9WmqZ7nXFLDHyMzUvSzhUA@mail.gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <27bf8521-f4d2-13b1-8e14-ceacbbeabb1b@codeaurora.org>
+Date:   Tue, 2 Nov 2021 16:32:02 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51zXLZiaB9aCdv=p_Wcxr5ZEdN-=b1hd5VATL6-CD0vRw@mail.gmail.com>
+In-Reply-To: <CAD=FV=UoTFzZn5h_VNrwrt2E5P2k9WmqZ7nXFLDHyMzUvSzhUA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/30/2021 12:40 AM, Stephen Boyd wrote:
-Thanks for our time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2021-10-29 08:04:36)
->> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
->> index cc7c1de..d9ffcb7 100644
->> --- a/sound/soc/qcom/Kconfig
->> +++ b/sound/soc/qcom/Kconfig
->> @@ -152,4 +152,16 @@ config SND_SOC_SC7180
->>            SC7180 SoC-based systems.
->>            Say Y if you want to use audio device on this SoCs.
+
+On 11/2/2021 2:34 AM, Doug Anderson wrote:
+> Hi,
+> 
+> On Tue, Oct 26, 2021 at 5:09 AM Rajendra Nayak <rnayak@codeaurora.org> wrote:
 >>
->> +config SND_SOC_SC7280
->> +       tristate "SoC Machine driver for SC7280 boards"
->> +       depends on I2C && SOUNDWIRE
-> Add || COMPILE_TEST so we can compile test this driver?
-Okay. Will add it.
->
->> +       select SND_SOC_QCOM_COMMON
->> +       select SND_SOC_MAX98357A
->> +       select SND_SOC_LPASS_RX_MACRO
->> +       select SND_SOC_LPASS_TX_MACRO
->> +       help
->> +         To add support for audio on Qualcomm Technologies Inc.
-> Drop "To"?
-Okay.
->
->> +         SC7280 SoC-based systems.
->> +         Say Y if you want to use audio device on this SoCs.
+>> From: Prasad Sodagudi <psodagud@codeaurora.org>
+>>
+>> egpio is a scheme which allows special power Island Domain IOs
+>> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+>> TLMM functions with Island Domain functions.
+>> With this scheme, an IO can be controlled both by the cpu running
+>> linux and the Island processor. This provides great flexibility to
+>> re-purpose the Island IOs for regular TLMM usecases.
+>>
+>> 2 new bits are added to ctl_reg, egpio_present is a read only bit
+>> which shows if egpio feature is available or not on a given gpio.
+>> egpio_enable is the read/write bit and only effective if egpio_present
+>> is 1. Once its set, the Island IO is controlled from Chip TLMM.
+>> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
+>>
+>> To support this we add a new function 'egpio' which can be used to
+>> set the egpio_enable to 0, for any other TLMM controlled functions
+>> we set the egpio_enable to 1.
+>>
+>> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-msm.c | 17 +++++++++++++++--
+>>   drivers/pinctrl/qcom/pinctrl-msm.h |  4 ++++
+>>   2 files changed, 19 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> index 8476a8a..bfdba3a 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+>> @@ -185,6 +185,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>>          unsigned int irq = irq_find_mapping(gc->irq.domain, group);
+>>          struct irq_data *d = irq_get_irq_data(irq);
+>>          unsigned int gpio_func = pctrl->soc->gpio_func;
+>> +       unsigned int egpio_func = pctrl->soc->egpio_func;
+>>          const struct msm_pingroup *g;
+>>          unsigned long flags;
+>>          u32 val, mask;
+>> @@ -218,8 +219,20 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+>>          raw_spin_lock_irqsave(&pctrl->lock, flags);
+>>
+>>          val = msm_readl_ctl(pctrl, g);
+>> -       val &= ~mask;
+>> -       val |= i << g->mux_bit;
 >> +
->>   endif #SND_SOC_QCOM
->> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
->> new file mode 100644
->> index 0000000..1d73b4f
->> --- /dev/null
->> +++ b/sound/soc/qcom/sc7280.c
->> @@ -0,0 +1,343 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +//
->> +// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
->> +//
->> +// sc7280.c -- ALSA SoC Machine driver for sc7280
-> Please remove filename from the comment as it's not useful and may
-> change.
-Okay.
->> +
->> +#include <linux/gpio.h>
-> [...]
->> +
->> +static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
->> +{
->> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
->> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
->> +
->> +       switch (cpu_dai->id) {
->> +       case LPASS_CDC_DMA_RX0:
->> +       case LPASS_CDC_DMA_TX3:
->> +       case LPASS_CDC_DMA_VA_TX0:
->> +               break;
->> +       case MI2S_SECONDARY:
->> +               break;
->> +       case LPASS_DP_RX:
->> +               break;
->> +       default:
->> +               dev_err(rtd->dev, "%s: invalid dai id %d\n", __func__, cpu_dai->id);
->> +               break;
->> +       }
-> The function doesn't do anything though. Why do we care?
-Okay. will remove 'sc7280_snd_startup' and 'sc7280_snd_shutdown'.
->
->> +}
->> +
->> +static const struct snd_soc_ops sc7280_ops = {
->> +       .startup = sc7280_snd_startup,
->> +       .shutdown = sc7280_snd_shutdown,
->> +       .hw_params = sc7280_snd_hw_params,
->> +       .hw_free = sc7280_snd_hw_free,
->> +       .prepare = sc7280_snd_prepare,
->> +};
->> +
->> +static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
->> +       SND_SOC_DAPM_HP("Headphone Jack", NULL),
->> +       SND_SOC_DAPM_MIC("Headset Mic", NULL),
->> +};
->> +
->> +static int sc7280_snd_platform_probe(struct platform_device *pdev)
->> +{
->> +       struct snd_soc_card *card;
->> +       struct sc7280_snd_data *data;
->> +       struct device *dev = &pdev->dev;
->> +       struct snd_soc_dai_link *link;
->> +       int ret, i;
->> +
->> +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
->> +       if (!data)
->> +               return -ENOMEM;
->> +
->> +       card = &data->card;
->> +       snd_soc_card_set_drvdata(card, data);
->> +
->> +       card->owner = THIS_MODULE;
->> +       card->driver_name = "SC7280";
->> +       card->dev = dev;
->> +
->> +       ret = qcom_snd_parse_of(card);
->> +       if (ret)
->> +               return ret;
->> +
->> +       for_each_card_prelinks(card, i, link) {
->> +               link->init = sc7280_init;
->> +               link->ops = &sc7280_ops;
+>> +       if (egpio_func && i == egpio_func) {
+>> +               if (val & BIT(g->egpio_present))
+>> +                       val &= ~BIT(g->egpio_enable);
+>> +               else
+>> +                       return -EINVAL;
+>> +       } else {
+>> +               val &= ~mask;
+>> +               val |= i << g->mux_bit;
+>> +               /* Check if egpio present and enable that feature */
+>> +               if (egpio_func && (val & BIT(g->egpio_present)))
+>> +                       val |= BIT(g->egpio_enable);
 >> +       }
 >> +
->> +       return devm_snd_soc_register_card(dev, card);
->> +}
->> +
->> +static const struct of_device_id sc7280_snd_device_id[]  = {
->> +       {.compatible = "google,sc7280-herobrine"},
-> Please add space after { and before }
-Okay.
->> +       {}
->> +};
->> +MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
+>>          msm_writel_ctl(val, pctrl, g);
+>>
+>>          raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+>> index e31a516..b7110ac 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+>> @@ -77,6 +77,8 @@ struct msm_pingroup {
+>>          unsigned drv_bit:5;
+>>
+>>          unsigned od_bit:5;
+>> +       unsigned egpio_enable:5;
+>> +       unsigned egpio_present:5;
+>>          unsigned oe_bit:5;
+>>          unsigned in_bit:5;
+>>          unsigned out_bit:5;
+>> @@ -119,6 +121,7 @@ struct msm_gpio_wakeirq_map {
+>>    *                            to be aware that their parent can't handle dual
+>>    *                            edge interrupts.
+>>    * @gpio_func: Which function number is GPIO (usually 0).
+>> + * @egpio_func: Which function number is eGPIO
+> 
+> nit: in the above, document that this is actually a _virtual_ number.
+> In other words it doesn't actually map to any real hardware register
+> setting. Also maybe document 0 here means that eGPIO isn't supported
+> on this SoC. ...and lastly, all the other entries in this docstring
+> end with a ".". Something roughly like this:
+> 
+>   * @egpio_func: If non-zero then this SoC supports eGPIO. Even though in
+>                  hardware this is a mux 1-level above the TLMM, we'll treat
+>                  it as if this is just another mux state of the TLMM. Since
+>                  it doesn't really map to hardware, we'll allocate a virtual
+>                  function number for eGPIO and any time we see that function
+>                  number used we'll treat it as a request to mux away from
+>                  our TLMM towards another owner.
+
+Thanks Doug, this sounds perfect, I'll copy-paste it :)
+
+> Thinking about this made me look a little closer at your virtual
+> function number, though. On sc7280 (in the next patch) you chose
+> function "9" as GPIO. Things smell a little strange, though.
+> Apparently sc7280 was already setup for a non-virtual "function 9"
+> since "nfuncs" was 10. Was this just a fortunate bug that kept you
+> from having to touch all the sc7280 PINGROUP definitions in the next
+> patch, or is there actually a true "function 9" somewhere in the
+> hardware that we might want to someday add to Linux? If so, should we
+> pick eGPIO as 10?
+
+Right, I did start off thinking I would need to add a new function, and
+deal with changing all the PINGROUP definitions, and worry about all the
+stuff that you mentioned below, but then I realized function 9 was actually
+unused on all sc7280 pins (and I did look at the couple other SoCs usptream
+which support egpio which also had the same pattern) so decided to just reuse
+function 9 and avoid dealing with all the mess that would result
+with adding a new virtual function ¯\_(ツ)_/¯
+
+> ...and then, looking further, what would happen if we picked eGPIO 10?
+> Should "nfuncs" include this virtual number, or not? If "nfuncs"
+> _does_ include this number and it bumps you over to the next
+> "order_base_2" then the mask calculated by msm_pinmux_set_mux() will
+> be wrong. If "nfuncs" _doesn't_ include this number then we should
+> probably document that fact, and (I suppose) change sc7280's "nfuncs"
+> down to 9?
+> 
+> 
+> -Doug
+> 
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
