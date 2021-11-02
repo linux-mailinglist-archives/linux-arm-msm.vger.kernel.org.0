@@ -2,109 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 806844438AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Nov 2021 23:44:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6E3F4439F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 00:45:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230409AbhKBWqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 Nov 2021 18:46:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54012 "EHLO mail.kernel.org"
+        id S230462AbhKBXsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 Nov 2021 19:48:19 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:24093 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230248AbhKBWqu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 Nov 2021 18:46:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 85B5161058;
-        Tue,  2 Nov 2021 22:44:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1635893054;
-        bh=xlJTg+g45NA5Jmaqfo0H1zJ7M0aSNbSpGn8R3qo/alA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=J3E8y0mMMimFVMbrPwTI/vuLIbS5uGyGpj0wTtaionlsJrkEZvjuqdEcZYJCbGoqC
-         VnR72U8fFhgoSs3c6iwvcNl7Q6Lk24uo1cQLeJHNL2VqBjUlIbUSTuzokk+3KdooQG
-         9AdOmz6ri1V1FKeE93/vitgRtGKkBdyI3un1SXq/UYn46bTcCEOg00dUZAkq/6ONZB
-         VcgtqN/485DnHb4EfdiB3y4FMFkK1RZ0Z/XMYcffQv/QzhM6Fh67KOU7rgTHpmf4Fc
-         y41ieGpHxDUZM2ti0JC3T0sCeTeK6TUdOYr5ZbzOI6vGPnnQYi+jJCaMKEFro/AUI/
-         1HVR4qyzYonKg==
-Received: by mail-ed1-f44.google.com with SMTP id o8so2701547edc.3;
-        Tue, 02 Nov 2021 15:44:14 -0700 (PDT)
-X-Gm-Message-State: AOAM530htOJ4PyPsvP7U6nbz9frq7QZ0HDWigrLJ1gq/cwnx4Gn/mBXR
-        ukjiSjNI5NGU59EW6V0e1poN3CGnHv1krANOJw==
-X-Google-Smtp-Source: ABdhPJwWkcHLupHM+eSOeq+xd9impIHRTT3qkTjxiKN/kL5YOlS59jRuQo/tHhUYUb2vMifYDtwGGYH3OoSmTPh7gC0=
-X-Received: by 2002:a17:907:16ac:: with SMTP id hc44mr26056561ejc.363.1635893052996;
- Tue, 02 Nov 2021 15:44:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <097d8602906e9db279728330c6cf2837be184704.1635338663.git.geert+renesas@glider.be>
- <YYBdzwshhM5fmsEE@robh.at.kernel.org> <CAMuHMdUvy9oVCv+3HJ_dZr6Rm4iP8FPwTETxq+j2ja_BR1=c5A@mail.gmail.com>
-In-Reply-To: <CAMuHMdUvy9oVCv+3HJ_dZr6Rm4iP8FPwTETxq+j2ja_BR1=c5A@mail.gmail.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Tue, 2 Nov 2021 17:44:00 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJTMORDCAb=9nuSaKiHgVgw6wb4jQw7ppMmuru-MZ1uuQ@mail.gmail.com>
-Message-ID: <CAL_JsqJTMORDCAb=9nuSaKiHgVgw6wb4jQw7ppMmuru-MZ1uuQ@mail.gmail.com>
-Subject: Re: [PATCH] bindings: media: venus: Drop bogus maxItems for power-domain-names
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S229960AbhKBXsS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 2 Nov 2021 19:48:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1635896743; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xxynaSB47PKFANJh0W+rTxGSzbolgH2alDmxwuNv1gs=; b=kpCLNa2dxLBpBgyC4d0qa+jEmG0fU/ZgRV+FRNwa/jw9k9QkBUZUVpPkGZkLciTtIbaYKMxn
+ YGR2idfBkgd5O0qlOu+EBI0GAE2YQHWwGwLTUaU/u073LZl/HuscNQmmvAy7cjO1dqLbrWEf
+ DE4Qb1yLWOiForkXuinMA+/Cvhs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6181cd6b883b2746f728631c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 02 Nov 2021 23:44:43
+ GMT
+Sender: quic_khsieh=quicinc.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 65927C4361B; Tue,  2 Nov 2021 23:44:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6C64AC4360D;
+        Tue,  2 Nov 2021 23:44:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6C64AC4360D
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=quicinc.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=quicinc.com
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_khsieh@quicinc.com, quic_sbillaka@quicinc.com,
+        quic_mkrishn@quicinc.com, quic_kalyant@quicinc.coml,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH v3] arm64: dts: qcom: sc7280: Add Display Port node
+Date:   Tue,  2 Nov 2021 16:44:33 -0700
+Message-Id: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 2, 2021 at 3:42 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
->
-> Hi Rob,
->
-> On Mon, Nov 1, 2021 at 10:36 PM Rob Herring <robh@kernel.org> wrote:
-> > On Wed, Oct 27, 2021 at 02:45:30PM +0200, Geert Uytterhoeven wrote:
-> > > make dt_binding_check:
-> >
-> > I'd say it's redundant rather than bogus.
->
-> I wrote "bogus", as the "redundant" ones typically give:
->
->                 hint: "maxItems" is not needed with an "items" list
->
-> And I didn't get that here?
+From: Kuogee Hsieh <khsieh@codeaurora.org>
 
-Any schema file with an error shows up twice. First there's all the
-specific errors with details. Then there's what you reference which is
-all the schemas that we're skipping. If you set DT_SCHEMA_FILES now,
-you should only see the second case for other schema files.
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
 
-So it's probably better to reference the actual error:
+Changes in v2:
+-- move fixes of dp_phy reg property to other patch
 
-Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml:
-properties:power-domain-names: {'minItems': 2, 'maxItems': 3, 'items':
-[{'const': 'venus'}, {'const': 'vcodec0'}, {'const': 'cx'}]} should
-not be valid under {'required': ['maxItems']}
- hint: "maxItems" is not needed with an "items" list
- from schema $id: http://devicetree.org/meta-schemas/items.yaml#
+Changes in v3:
+-- delete "qcom,sc7180-dp" from msm_dp node
 
-> > >     Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
-> > >     warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> > >
-> > > Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
-> > > Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> > > ---
-> > >  Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
-> > >  1 file changed, 1 deletion(-)
-> >
-> > Acked-by: Rob Herring <robh@kernel.org>
->
-> Thanks!
->
-> Gr{oetje,eeting}s,
->
->                         Geert
->
-> --
-> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
->
-> In personal conversations with technical people, I call myself a hacker. But
-> when I'm talking to journalists I just say "programmer" or something like that.
->                                 -- Linus Torvalds
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 89 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 87 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index fb2f1506..4414abc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2709,8 +2709,8 @@
+ 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+ 				 <&dsi_phy 0>,
+ 				 <&dsi_phy 1>,
+-				 <0>,
+-				 <0>,
++			  	 <&dp_phy 0>,
++			  	 <&dp_phy 1>,
+ 				 <&edp_phy 0>,
+ 				 <&edp_phy 1>;
+ 			clock-names = "bi_tcxo",
+@@ -2807,6 +2807,13 @@
+ 							remote-endpoint = <&edp_in>;
+ 						};
+ 					};
++
++					port@2 {
++                                                reg = <2>;
++                                                dpu_intf0_out: endpoint {
++                                                        remote-endpoint = <&dp_in>;
++                                                };
++                                        };
+ 				};
+ 
+ 				mdp_opp_table: opp-table {
+@@ -3018,6 +3025,78 @@
+ 
+ 				status = "disabled";
+ 			};
++
++			msm_dp: displayport-controller@ae90000 {
++				status = "disabled";
++				compatible = "qcom,sc7280-dp";
++
++				reg = <0 0x0ae90000 0 0x1400>;
++
++				interrupt-parent = <&mdss>;
++				interrupts = <12>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
++				clock-names =	"core_iface",
++						"core_aux",
++						"ctrl_link",
++						"ctrl_link_iface",
++						"stream_pixel";
++				#clock-cells = <1>;
++				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
++				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
++				phys = <&dp_phy>;
++				phy-names = "dp";
++
++				operating-points-v2 = <&dp_opp_table>;
++				power-domains = <&rpmhpd SC7280_CX>;
++
++				#sound-dai-cells = <0>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					port@0 {
++						reg = <0>;
++						dp_in: endpoint {
++							remote-endpoint = <&dpu_intf0_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dp_out: endpoint { };
++					};
++				};
++
++				dp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-160000000 {
++						opp-hz = /bits/ 64 <160000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-270000000 {
++						opp-hz = /bits/ 64 <270000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-540000000 {
++						opp-hz = /bits/ 64 <540000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-810000000 {
++						opp-hz = /bits/ 64 <810000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++				};
++			};
+ 		};
+ 
+ 		pdc: interrupt-controller@b220000 {
+@@ -3120,6 +3199,12 @@
+ 				bias-pull-up;
+ 			};
+ 
++			dp_hot_plug_det: dp-hot-plug-det {
++				pins = "gpio47";
++				function = "dp_hot";
++				bias-disable;
++                        };
++
+ 			qspi_clk: qspi-clk {
+ 				pins = "gpio14";
+ 				function = "qspi_clk";
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
