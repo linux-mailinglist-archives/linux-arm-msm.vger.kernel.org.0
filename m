@@ -2,114 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7945F444AC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 23:18:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6793F444AE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 23:31:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230397AbhKCWVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 18:21:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52434 "EHLO
+        id S230202AbhKCWeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 18:34:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229893AbhKCWVW (ORCPT
+        with ESMTP id S229893AbhKCWeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 18:21:22 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290ADC061714
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 15:18:45 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id g25-20020a9d5f99000000b0055af3d227e8so1148496oti.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 15:18:45 -0700 (PDT)
+        Wed, 3 Nov 2021 18:34:04 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EC6DC061714
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 15:31:27 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id n8so3976713plf.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 15:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KbAK3E9gZ0Rf65SdcooIGvTrnplapjhc1zBGEcQwMw0=;
-        b=FxVPe4f6LLQG7z67e383KouBmt/gDlXT01XhIyLpbOX1ubzbbveB/WebH8mdxVvBux
-         BoQH4kuafbBqw6mw9q2LJ5bCsnmHZjtsQis9+tdQGfJEaHQtqef8LpIiCNjy4zhacaad
-         m2NtcBHHSDnN+apNFNe73D1Cuixq/t5Rdm+xilmYnpWW0EbPBnJ0FHq9wO6rWLyJVII1
-         Xg32sN6EyH9QtS5md7S68uOiB819/jerOrmoyhxNGFQeiTm7iCDv8frX9kEA4BZzI620
-         aS7Pe8/2CPHahmk+nHDWlTKg9OlZO4wzwtgcpkZHdW1TRpqXLUggXsjQGEn8Lpn4/vUi
-         Y7pw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wYuh1JY2j6LUOSTdqyWesZ0R/Q+mBuPiwKHvgPQt+68=;
+        b=G/B3rxka7UN4c6zf8gYuxii9Qwd9no3+m+kLb94LFVc3JKwJlMEPU2wxhRRbATpHfN
+         wHkjJ26kzj4Jkg7MbNuppZUX1ABhA5WkGKEptJKiiloJgl6oMSfvL2JFOJaxuoE3txIn
+         pXuo6auKkl8DQCdZSVSgVrLMYdfjL6z9+o7LI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KbAK3E9gZ0Rf65SdcooIGvTrnplapjhc1zBGEcQwMw0=;
-        b=Tzfh/rxAXUh0Xn9M07VrFelYbHToasrJWR/rY8Mo1BVEWF1bcolv8PX41/skq4YBkq
-         wdP1j2SADxmLAdlZkFhtsYHqhNwvBtOrlO2Ntl6epSfz/7Wk3h57aq2s+KxAXJc7Sivt
-         bYildFn9pxZH39yHVYtxvQz02C62yEHOyfYqaEMxwqplXBU7PxIUkgQcbRSdOKV/DJeo
-         n6m5m35/hbbccX+5W7f+9p14S4tMA97rcMEpWXqqVu2tWOwgFeFhupKEiztu6S8UffmO
-         XAuGQtck3rbm7NjOmus3XDGiet0Hjmo/pzW0OrAYT2R6nTrtzgg96zcVAA+gUlz835C5
-         tg+Q==
-X-Gm-Message-State: AOAM5320JbcHk5eIwLWmjC+9LSg44f0c6DXX1THvdfLKHNH+kOne68Qp
-        T9Si+Sg7Y+hRKFfKgdpvPWbwrg==
-X-Google-Smtp-Source: ABdhPJwE3gWlnEHH4Dmdjy/djjbu/ePiC4Xgep2d/Vs4xE4zOZ7x255+QMBS6qvbjDXdOMBbreC0yQ==
-X-Received: by 2002:a9d:774c:: with SMTP id t12mr28285120otl.282.1635977924469;
-        Wed, 03 Nov 2021 15:18:44 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s21sm879524otp.57.2021.11.03.15.18.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wYuh1JY2j6LUOSTdqyWesZ0R/Q+mBuPiwKHvgPQt+68=;
+        b=pK6xt+QDxZ21nrrpm/htgsPxmJMRQTxmd0kn1QRzlda/+PHo3lmp/eRkPmbEOCnGH5
+         2ulxAxloAWTSwXPp219xShpLhbMvTj79ZeDtdiA7BISyycdIWWUro+AdywMQFy2dHAzH
+         STn0BkC9Jr3uqW49S+mxinXtvc6zblhP88DJxvg2/+HxJ94b1GCAdG6tGKnKIOOH2itM
+         f5vyXscOmt+FVdih1SMR2RXhqVmNptLNYgsMhGh3l0u4FLl7DOqtXh39cHUpihKpPA2I
+         0wF0V0cmIHnaor8/73qa8HUifr8K+7cCareHfFuyXrTKbaZAB2U3MdtsMvMIbnWYRjG+
+         UM2A==
+X-Gm-Message-State: AOAM5301pEewCdJWYMgdVWWPif27Jgfnx3fp1u2CKgUJ/HZKY6MS1BoI
+        g//xLIBj9lIzXtG1DbgL4/l90A==
+X-Google-Smtp-Source: ABdhPJwj3QFK3X8rRdGJf8MTmYNgv50bk2p3Le7VnOeB8x8pGV3kxUC0IhqOQLkuVMyU13+3e2zYSw==
+X-Received: by 2002:a17:90a:cb98:: with SMTP id a24mr17742425pju.153.1635978687072;
+        Wed, 03 Nov 2021 15:31:27 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8d42:7991:8f12:2672])
+        by smtp.gmail.com with ESMTPSA id f16sm3657259pfe.172.2021.11.03.15.31.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Nov 2021 15:18:43 -0700 (PDT)
-Date:   Wed, 3 Nov 2021 15:20:24 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        collinsd@codeaurora.org, subbaram@codeaurora.org
-Subject: Re: [PATCH v1] dt-bindings: convert qcom,spmi-pmic-arb binding to
- YAML format
-Message-ID: <YYMLKCspjdyaKWUK@ripper>
-References: <1635836275-8873-1-git-send-email-quic_fenglinw@quicinc.com>
+        Wed, 03 Nov 2021 15:31:26 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Lee Jones <lee.jones@linaro.org>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/a6xx: Allocate enough space for GMU registers
+Date:   Wed,  3 Nov 2021 15:31:08 -0700
+Message-Id: <20211103153049.1.Idfa574ccb529d17b69db3a1852e49b580132035c@changeid>
+X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1635836275-8873-1-git-send-email-quic_fenglinw@quicinc.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 01 Nov 23:57 PDT 2021, Fenglin Wu wrote:
-[..]
-> diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-> new file mode 100644
-> index 0000000..05bb114
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-> @@ -0,0 +1,122 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SPMI PMIC Arbiter
-> +
-> +maintainers:
-> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
-> +
-> +description: |
-> +  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
-> +  controller with wrapping arbitration logic to allow for multiple
-> +  on-chip devices to control a single SPMI master.
-> +
-> +  The PMIC Arbiter can also act as an interrupt controller, providing
-> +  interrupts to slave devices.
-> +
-> +  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
-> +  SPMI controller binding requirements for child nodes.
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^qcom,spmi@.*"
+In commit 142639a52a01 ("drm/msm/a6xx: fix crashstate capture for
+A650") we changed a6xx_get_gmu_registers() to read 3 sets of
+registers. Unfortunately, we didn't change the memory allocation for
+the array. That leads to a KASAN warning (this was on the chromeos-5.4
+kernel, which has the problematic commit backported to it):
 
-Node names should never contain "qcom,". Seems the agreed upon node
-named should be "spmi@.*".
+  BUG: KASAN: slab-out-of-bounds in _a6xx_get_gmu_registers+0x144/0x430
+  Write of size 8 at addr ffffff80c89432b0 by task A618-worker/209
+  CPU: 5 PID: 209 Comm: A618-worker Tainted: G        W         5.4.156-lockdep #22
+  Hardware name: Google Lazor Limozeen without Touchscreen (rev5 - rev8) (DT)
+  Call trace:
+   dump_backtrace+0x0/0x248
+   show_stack+0x20/0x2c
+   dump_stack+0x128/0x1ec
+   print_address_description+0x88/0x4a0
+   __kasan_report+0xfc/0x120
+   kasan_report+0x10/0x18
+   __asan_report_store8_noabort+0x1c/0x24
+   _a6xx_get_gmu_registers+0x144/0x430
+   a6xx_gpu_state_get+0x330/0x25d4
+   msm_gpu_crashstate_capture+0xa0/0x84c
+   recover_worker+0x328/0x838
+   kthread_worker_fn+0x32c/0x574
+   kthread+0x2dc/0x39c
+   ret_from_fork+0x10/0x18
 
-The rest looks like a reasonable conversion to me.
+  Allocated by task 209:
+   __kasan_kmalloc+0xfc/0x1c4
+   kasan_kmalloc+0xc/0x14
+   kmem_cache_alloc_trace+0x1f0/0x2a0
+   a6xx_gpu_state_get+0x164/0x25d4
+   msm_gpu_crashstate_capture+0xa0/0x84c
+   recover_worker+0x328/0x838
+   kthread_worker_fn+0x32c/0x574
+   kthread+0x2dc/0x39c
+   ret_from_fork+0x10/0x18
 
-[..]
-> +examples:
-> +  - |
-> +    qcom,spmi@fc4cf000 {
+Fixes: 142639a52a01 ("drm/msm/a6xx: fix crashstate capture for A650")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+I don't actually know how to trigger a GPU crash. I just happened to
+trigger one by getting "lucky" and hitting a timeout after being in
+kdb. Thus this is just compile tested. However, it looks pretty sane
+to me. ;-)
 
-Regards,
-Bjorn
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 7501849ed15d..6e90209cd543 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -777,12 +777,12 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+ 
+ 	a6xx_state->gmu_registers = state_kcalloc(a6xx_state,
+-		2, sizeof(*a6xx_state->gmu_registers));
++		3, sizeof(*a6xx_state->gmu_registers));
+ 
+ 	if (!a6xx_state->gmu_registers)
+ 		return;
+ 
+-	a6xx_state->nr_gmu_registers = 2;
++	a6xx_state->nr_gmu_registers = 3;
+ 
+ 	/* Get the CX GMU registers from AHB */
+ 	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[0],
+-- 
+2.33.1.1089.g2158813163f-goog
+
