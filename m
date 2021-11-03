@@ -2,85 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE58F443DF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 09:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01E9B443E16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 09:12:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbhKCIG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 04:06:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:45960 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231491AbhKCIG6 (ORCPT
+        id S230463AbhKCIPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 04:15:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230352AbhKCIPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 04:06:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1635926663; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=gLabg9dnu7ENWtsjLV9PI0QK0WezW8DIKrgVSftBrfo=; b=roNcHFsJnspDC0kGzqTDREXrOrqdadd3YwcqYdpuN7uOoY00NBftOejtFsNkfM0uskvamDCi
- KVO7xsA0BkftEuDAT1M4LHia50KM+rxmqXth9GxELV7xmsKYHh6zwoRm9BlxIHXa4Jo6I1C3
- 5Ren4cE0cIzQGstkVk1oI8EBBc0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 61824283883b2746f7e3de88 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 03 Nov 2021 08:04:19
- GMT
-Sender: tjiang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F15D9C4360D; Wed,  3 Nov 2021 08:04:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tjiang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 67AC1C4360C;
-        Wed,  3 Nov 2021 08:04:18 +0000 (UTC)
+        Wed, 3 Nov 2021 04:15:12 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01ECDC061714;
+        Wed,  3 Nov 2021 01:12:36 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id r8so2222059wra.7;
+        Wed, 03 Nov 2021 01:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uh0NRCclsAKfVxkerpNkq71adkos81CcdIhWKjRw+6Y=;
+        b=mr5PnPgRO8OzuCvJMvW5hnrKT6fvInL0UAalZ989hyaB3jvVYItDW8ou3liJfIJoNr
+         hvWaf54dIpbnxdcc373Xcvqh9M6HM18knXjMfLH8s9y9SqdcLaOWvj2x7DpcCaGzVFbZ
+         lRKQhbmITsNkhjsS4nGlQr7p3Lx9KbhcIkcbZuEMqIiRnZFQq9nQAgmb7jI6kyyIYGVr
+         8DuN2xfiamK0PB5ZXxLNCXVJmkxa0CufWXYNL8NcvGDnhKDuJsd3OrctTS27BMaV18TM
+         rng6LYJfdT4RIcJrOUvee5IGHT8G8Pg1qV1oMpUStS5iXhzHspZdxG0dOEiTdyYrycJK
+         yKSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uh0NRCclsAKfVxkerpNkq71adkos81CcdIhWKjRw+6Y=;
+        b=WdEJp8HqoEMxLa+XLcCfbKT5e6SWBuyfTWI0CBoWvlIwstag3C52DZolONecqf7lJh
+         /UMFmq4OSg9O9lCnXv3M/QKzBHT8sypLwOdi7UZEQf6spf9mZWYibYk8eoyKoOXukByb
+         kQ5FFaLwD9Qg37zI3MrIvjvPaGPpx/71YHE2DldhU+lxj6jbTrYEQwlcR2t5funp/1Tn
+         a01S8DPG9axSKcsr9PFamE79ea7B2oWj3aC00pSnfPNK3VKzTrAh21Z+21YU5DzC1YcM
+         LMDGQ/ZsqfoJ0tAJaaMleqtIZALeRVeMuZ2vNuxdj+yecfnuBRpcKj/p0OCCqsh5TxIC
+         YrYw==
+X-Gm-Message-State: AOAM531TkLc2xjiT+ULFl3xbF5A+Rysj070Il7heZKAOxnYX7tGfeBCM
+        icJp/L1DR1iSqB+mDzX4srRnMvdt61g=
+X-Google-Smtp-Source: ABdhPJw1BshvZSVxZm2e89H/8z2XLrQccFGIz7m0oW1jDggouT+C66c3Yi239msG+Ek/pKeY2cfj0A==
+X-Received: by 2002:adf:fe88:: with SMTP id l8mr33010703wrr.208.1635927154697;
+        Wed, 03 Nov 2021 01:12:34 -0700 (PDT)
+Received: from abel.fritz.box (p5b0ea1b5.dip0.t-ipconnect.de. [91.14.161.181])
+        by smtp.gmail.com with ESMTPSA id l7sm1450088wry.86.2021.11.03.01.12.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Nov 2021 01:12:34 -0700 (PDT)
+From:   "=?UTF-8?q?Christian=20K=C3=B6nig?=" 
+        <ckoenig.leichtzumerken@gmail.com>
+X-Google-Original-From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+To:     linux-media@vger.kernel.org, etnaviv@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        virtualization@lists.linux-foundation.org,
+        spice-devel@lists.freedesktop.org
+Cc:     sumit.semwal@linaro.org, l.stach@pengutronix.de, daniel@ffwll.ch
+Subject: DMA-buf debugfs cleanups
+Date:   Wed,  3 Nov 2021 09:12:27 +0100
+Message-Id: <20211103081231.18578-1-christian.koenig@amd.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 03 Nov 2021 16:04:18 +0800
-From:   tjiang@codeaurora.org
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v1] Bluetooth: btusb: correct nvm file name for WCN6855 btsoc
-Message-ID: <6953ba78cc31b7bc1a188b998f6c6b8c@codeaurora.org>
-X-Sender: tjiang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As we name nvm file by using big-endian for boardID, so align host with 
-it.
+Hi guys,
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
----
-  drivers/bluetooth/btusb.c | 2 +-
-  1 file changed, 1 insertion(+), 1 deletion(-)
+second round for those four patches adding some simple yet useful DMA-buf helper functions for debugfs prints.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 46d892bbde62..572d64524cf3 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3072,7 +3072,7 @@ static void btusb_generate_qca_nvm_name(char 
-*fwname, size_t max_size,
-  	u16 flag = le16_to_cpu(ver->flag);
+Fixed some missing includes and typos in commit messages.
 
-  	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
--		u16 board_id = le16_to_cpu(ver->board_id);
-+		u16 board_id = be16_to_cpu(ver->board_id);
-  		const char *variant;
+Please review and/or comment,
+Christian.
 
-  		switch (le32_to_cpu(ver->ram_version)) {
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+
