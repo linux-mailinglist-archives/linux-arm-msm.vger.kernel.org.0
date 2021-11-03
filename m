@@ -2,106 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BA1B44450B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 16:56:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB3A944457B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 17:11:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232487AbhKCP6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 11:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49932 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232513AbhKCP6o (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 11:58:44 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BDCC061203
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 08:56:07 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id e65so2754479pgc.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 08:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fRKGePYlOmiVuBckenaZg2lvZOcrPTPvFy6IKWhuraA=;
-        b=YLEp/Xoz4W2xV+OI2S15NnYwPElTYeS0SpIQ8yv97vYxKejLqOInKtY/oAP/4+D8If
-         YqCq0B7Gm73oeuYX2C0270HXK+PLZp3RO2ZzViWeul/g1R166dSvbJlwbpuzaU+4oEVj
-         K/W6oadXhKmmyRx6f+L4tXrDa22NUqfA9mBAo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fRKGePYlOmiVuBckenaZg2lvZOcrPTPvFy6IKWhuraA=;
-        b=790pBJLPBy5s03vkhqR+K+d9bjn6r3bUq+x8MKRIqom60ZF64bik4d6mbV1SlXCd/l
-         zyk1O5rVMQrwkdtY9T8iSYpp7SYob0x26YR/DbTjmsxf3bnqgeXoVO5l9ZdAM2h+HjfB
-         SFqWk5nxdHjBdVD/+F+LQ7pyAzzgdV1FkbPnIv0M4Q/3dr/0Sv5v9LvbgWfWqXk3MFhe
-         QO3KkidJoF3IWWlXd+O7wQ5uO5i2YDjJLvgvtzv8X5/0k8RJN1PAD4jRQR4m4EnhMY7E
-         p9LYoQvI5JwBGxVkhVs/ctVUWiuMJXMG8qSYBNFGmmw+h2qKNthtTafFma7gS4SqVECU
-         ltWA==
-X-Gm-Message-State: AOAM531eRRNzr5wWKitrpvIG+B+vgVSfpN8z8eLxVd3Fl7p6cYmuyKl/
-        nmoEYgpSkCh8+rGykGfnS9TBPQ==
-X-Google-Smtp-Source: ABdhPJzZXUKnwm5tW5gImvnc6h54z0C6R5vHG6hKRJ120aAOl/5rSmHIVJZ0BQ68n5YA2oGHIXJoSg==
-X-Received: by 2002:a63:4d20:: with SMTP id a32mr33303288pgb.247.1635954967135;
-        Wed, 03 Nov 2021 08:56:07 -0700 (PDT)
-Received: from localhost ([2600:6c50:4d00:d401:aa7a:1484:c7d0:ae82])
-        by smtp.gmail.com with ESMTPSA id h11sm3174517pfc.131.2021.11.03.08.56.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Nov 2021 08:56:06 -0700 (PDT)
-From:   Benjamin Li <benl@squareup.com>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Benjamin Li <benl@squareup.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] wcn36xx: fix RX BD rate mapping for 5GHz legacy rates
-Date:   Wed,  3 Nov 2021 08:55:42 -0700
-Message-Id: <20211103155543.1037604-3-benl@squareup.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211103155543.1037604-1-benl@squareup.com>
-References: <20211103155543.1037604-1-benl@squareup.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S232506AbhKCQNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 12:13:36 -0400
+Received: from foss.arm.com ([217.140.110.172]:32992 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232762AbhKCQNO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 3 Nov 2021 12:13:14 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 49C8EED1;
+        Wed,  3 Nov 2021 09:10:37 -0700 (PDT)
+Received: from e123648.arm.com (unknown [10.57.26.226])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id D1DA23F7D7;
+        Wed,  3 Nov 2021 09:10:32 -0700 (PDT)
+From:   Lukasz Luba <lukasz.luba@arm.com>
+To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, lukasz.luba@arm.com,
+        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
+        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
+        rafael@kernel.org, viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
+        agross@kernel.org
+Subject: [PATCH v3 0/5] Refactor thermal pressure update to avoid code duplication
+Date:   Wed,  3 Nov 2021 16:10:15 +0000
+Message-Id: <20211103161020.26714-1-lukasz.luba@arm.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The linear mapping between the BD rate field and the driver's 5GHz
-legacy rates table (wcn_5ghz_rates) does not only apply for the latter
-four rates -- it applies to all eight rates.
+Hi all,
 
-Fixes: 6ea131acea98 ("wcn36xx: Fix warning due to bad rate_idx")
-Signed-off-by: Benjamin Li <benl@squareup.com>
----
- drivers/net/wireless/ath/wcn36xx/txrx.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+This patch set v3 aims to refactor the thermal pressure update
+code. There are already two clients which do similar thing:
+convert the capped frequency value into the capacity of
+affected CPU and call the 'set' function to store the 
+reduced capacity into the per-cpu variable.
+There might be more than two of these users. In near future
+it will be scmi-cpufreq driver, which receives notification
+from FW about reduced frequency due to thermal. Other vendors
+might follow. Let's avoid code duplication and potential
+conversion bugs. Move the conversion code into the arch_topology.c
+where the capacity calculation setup code and thermal pressure sit.
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/txrx.c b/drivers/net/wireless/ath/wcn36xx/txrx.c
-index f0a9f069a92a9..fce3a6a98f596 100644
---- a/drivers/net/wireless/ath/wcn36xx/txrx.c
-+++ b/drivers/net/wireless/ath/wcn36xx/txrx.c
-@@ -272,7 +272,6 @@ int wcn36xx_rx_skb(struct wcn36xx *wcn, struct sk_buff *skb)
- 	const struct wcn36xx_rate *rate;
- 	struct ieee80211_hdr *hdr;
- 	struct wcn36xx_rx_bd *bd;
--	struct ieee80211_supported_band *sband;
- 	u16 fc, sn;
- 
- 	/*
-@@ -350,12 +349,10 @@ int wcn36xx_rx_skb(struct wcn36xx *wcn, struct sk_buff *skb)
- 		status.enc_flags = rate->encoding_flags;
- 		status.bw = rate->bw;
- 		status.rate_idx = rate->mcs_or_legacy_index;
--		sband = wcn->hw->wiphy->bands[status.band];
- 		status.nss = 1;
- 
- 		if (status.band == NL80211_BAND_5GHZ &&
--		    status.encoding == RX_ENC_LEGACY &&
--		    status.rate_idx >= sband->n_bitrates) {
-+		    status.encoding == RX_ENC_LEGACY) {
- 			/* no dsss rates in 5Ghz rates table */
- 			status.rate_idx -= 4;
- 		}
+Apart from that $subject patches, there is one patch (3/5) which fixes
+issue in qcom-cpufreq-hw.c when the thermal pressure is not 
+updated for offline CPUs. It's similar fix that has been merged
+recently for cpufreq_cooling.c:
+2ad8ccc17d1e4270cf65a3f2
+
+Changes:
+v3:
+- added warning and check if provided capped frequency is lower than
+  max (Viresh)
+- removed check for empty cpu mask (Viresh)
+- replaced tabs with spaces in the doxygen comment (Viresh)
+- renamed {arch|topology}_thermal_pressure_update() to
+  {arch|topology}_update_thermal_pressure() so it's align with scheme (Dietmar)
+- added info about MHz in freq_factor into patch description (Dietmar)
+v2 [2]:
+- added Reviewed-by from Thara for patch 3/5
+- changed the doxygen comment and used mult_frac()
+  according to Thara's suggestion in patch 1/5
+v1 -> [1]
+
+Regards,
+Lukasz Luba
+
+[1] https://lore.kernel.org/linux-pm/20211007080729.8262-1-lukasz.luba@arm.com/
+[2] https://lore.kernel.org/linux-pm/20211015144550.23719-1-lukasz.luba@arm.com/
+
+Lukasz Luba (5):
+  arch_topology: Introduce thermal pressure update function
+  thermal: cpufreq_cooling: Use new thermal pressure update function
+  cpufreq: qcom-cpufreq-hw: Update offline CPUs per-cpu thermal pressure
+  cpufreq: qcom-cpufreq-hw: Use new thermal pressure update function
+  arch_topology: Remove unused topology_set_thermal_pressure() and
+    related
+
+ arch/arm/include/asm/topology.h   |  2 +-
+ arch/arm64/include/asm/topology.h |  2 +-
+ drivers/base/arch_topology.c      | 36 +++++++++++++++++++++++++++----
+ drivers/cpufreq/qcom-cpufreq-hw.c | 14 +++++-------
+ drivers/thermal/cpufreq_cooling.c |  6 +-----
+ include/linux/arch_topology.h     |  4 ++--
+ include/linux/sched/topology.h    |  6 +++---
+ init/Kconfig                      |  2 +-
+ 8 files changed, 46 insertions(+), 26 deletions(-)
+
 -- 
-2.25.1
+2.17.1
 
