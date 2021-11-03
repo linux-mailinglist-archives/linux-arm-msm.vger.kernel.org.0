@@ -2,217 +2,395 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C5F444080
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 12:22:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82F7E4442D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Nov 2021 14:55:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231911AbhKCLZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 07:25:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43396 "EHLO
+        id S231705AbhKCN5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 09:57:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231876AbhKCLY7 (ORCPT
+        with ESMTP id S231964AbhKCN5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 07:24:59 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FA9FC061203
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 04:22:23 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id d5so3049137wrc.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 04:22:23 -0700 (PDT)
+        Wed, 3 Nov 2021 09:57:48 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 796F9C061203
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 06:55:11 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id s24so3903420lji.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 06:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xvRy8189/PatcFWb8Yj/D891VzazaAXtP9HMgX8A0nQ=;
-        b=naqXJPRvnK8bF3PMFmomTuXyKAPAzSb0z3wTSm+JnP3wBYNZrAlLSTN/xBFG4dVRuR
-         d7lc74EFavOnu/pS3MZAqMprJuKoBK6907WaCb196MBtGV/zBxbGBdR37FjzSR9Eu27W
-         uyX5G/70gmxypyQgWaRa74qQu1GhZoRlDFll64L09HyC9uXZyNk0c1cAnCtfhymU0WKC
-         kh5qOWQMUZ4T6/3T6Et09TlXSFTulSIS6WtbYWGQa2w87XRqEaL+5nd9VQdD4YTL/zyv
-         79joWDIbfMq0BmW4W/KLIrNC9moK2QfEYa3s+6Oi2AYExnDU+eiwatJQvbd4nEWsim2R
-         lm9w==
+        bh=yfikhx5lD6H4OrTwev9q1XoxrbyVQ+Nr+SFoJkjr/Qc=;
+        b=WRPeotSogutRyERtr8+k7ErZJzMVL1RlafpF9XIcpCxP0sS47WcRVR9PBUuWRUm0V1
+         mfGFzUjfCv/xe1jxXKkn70BN89qou1u8TT5Utr12MNRlwf1wNR9bl2zgF45wVaq8YLvh
+         r0s4hTW0LSZECUKHPSb1+g0eUTADzkxc88FawkxvhBCog/PgV2dkyrErtul1BuuHxUIn
+         9powIfTAp1oHWh2J2eBhvtDOqMnGfV8Ya6JC5/hhP1KikAKGKMhy4tDGvHOo9I0SfqUk
+         ADxGABR4i5ePr06NWoKo7O7LEx/5XKzTPN5FN6qfUGOg+1vElDsYpDXd7p5dk9/Cy74v
+         m30w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=xvRy8189/PatcFWb8Yj/D891VzazaAXtP9HMgX8A0nQ=;
-        b=XyCMw4f0QgUCeqZgq0ubpfP3GMX/sRWSuIGXyTEkWr4TIP71+eoGbrZlW/Igz/AyaO
-         FuJ/sH3MzZDI4qCC/8oYYpaJgf8QfvKurSy3gffaauVN0jbZ2AFn78f7UOo3Ivu+66Je
-         ZgyBq59NhaJZ6fDhtSYRk1qWrj96woz0xc4AfMpcBsjwMJF91lu5HO656TDbqKnv5l4Z
-         1K2aftYWXjv99gZWzk4V+pJLfrNeGmP4XybxkU8aP4jdyu62WwE/uXaj/u319m2PA0xQ
-         Ef778j5UgF5T/mYoy/c6/Uujp62dOFmFDZp8ZHV5TbqiYoDvnXIPWuKX+PmaViUHTvgo
-         uPXg==
-X-Gm-Message-State: AOAM531M8aN1Jkb18bPo0+P7qNj2V+P9Hq5ciQ3dxrv4ACFDWHIVBWiZ
-        7qIISuCmAXvqwPC2P2oZM6KT4A==
-X-Google-Smtp-Source: ABdhPJyXWkbG6Ra2Pj7zQiEQ3L/R/kN0TUGvlv9OSMWlLRmWllNCm16kbG0h+J29Us/K5UXaXMuEjg==
-X-Received: by 2002:adf:df0b:: with SMTP id y11mr30942648wrl.181.1635938542002;
-        Wed, 03 Nov 2021 04:22:22 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id k37sm1591933wms.21.2021.11.03.04.22.20
+        bh=yfikhx5lD6H4OrTwev9q1XoxrbyVQ+Nr+SFoJkjr/Qc=;
+        b=orkfvEzPh9FPSUfc7MP2vVTuCsZAx7mtAtyLFeQjViNzUaZ7qoWvvjW24STtYXXY/V
+         0YLnQ2qSdU24uEWEOUgfyYgNlN/83QFsIv5VRq6A4n5rOrugWztKCEkPNUvlwuZraIue
+         3A8UioxUOoL17HjwCO0di1NLezuElMJGX9QWEN0XVwUae6e9XlVr08HmexVRba3AGVpJ
+         +kxw3HA2YbL+qOEDzXIJE4z2FLWT+BM0xqDBrDs+ftY9NAPXRM6loU6drT2waHI6u7Yu
+         E+KYTYel5Ar9W0rj/DG7NUi2ZdOgFgPv2WzviGJXrQS+NzupifrnWBjKSnpvHbzJ9NUR
+         8Q2w==
+X-Gm-Message-State: AOAM5301PzVgXvq9BeqTY6t7r16m76fwl4HwRWbZNxIa2SiAxO0OwPXY
+        AZ2K+CTVYScCZQbuZCd3UD5cKg==
+X-Google-Smtp-Source: ABdhPJzEU5Irc+DqLsdFfRseBtZZbnYSPeOfQRE9nJ+tuVxW+0QisgPUoU99hKMstcCDkLyWYVBmTA==
+X-Received: by 2002:a2e:b8c7:: with SMTP id s7mr16502027ljp.73.1635947709655;
+        Wed, 03 Nov 2021 06:55:09 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y11sm185930lfs.135.2021.11.03.06.55.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Nov 2021 04:22:21 -0700 (PDT)
-Subject: Re: [PATCH v2 3/3] pinctrl: qcom: Add SC7280 lpass pin configuration
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1635342097-2726-1-git-send-email-srivasam@codeaurora.org>
- <1635342097-2726-4-git-send-email-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <3a05fc62-a060-3257-ad54-53e376763fe3@linaro.org>
-Date:   Wed, 3 Nov 2021 11:22:20 +0000
+        Wed, 03 Nov 2021 06:55:09 -0700 (PDT)
+Subject: Re: [PATCH v2 1/5] arm64: dts: qcom: msm8996: Revamp reserved memory
+To:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Raffaele Tranquillini <raffaele.tranquillini@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210926190555.278589-1-y.oudjana@protonmail.com>
+ <20210926190555.278589-2-y.oudjana@protonmail.com>
+ <YXTNL7boyiRFKQiV@builder.lan>
+ <4455e52f-7e8a-c431-9977-dcf4aefe9822@linaro.org>
+ <91b184266e545efcc5969fe6661b50da82351119.camel@protonmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <05b1f668-4dbf-36f7-76ef-6559e277d3c6@linaro.org>
+Date:   Wed, 3 Nov 2021 16:55:08 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <1635342097-2726-4-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <91b184266e545efcc5969fe6661b50da82351119.camel@protonmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Srinivasa for the patches.
-
-On 27/10/2021 14:41, Srinivasa Rao Mandadapu wrote:
-> Update pin control support for SC7280 LPASS LPI.
+On 03/11/2021 05:42, Yassine Oudjana wrote:
+> On Wed, 2021-11-03 at 03:50 +0400, Dmitry Baryshkov wrote:
+>> On 24/10/2021 06:04, Bjorn Andersson wrote:
+>>> On Sun 26 Sep 14:06 CDT 2021, Yassine Oudjana wrote:
+>>>
+>>>> Fix a total overlap between zap_shader_region and slpi_region, and rename
+>>>> all regions to match the naming convention in other Qualcomm SoC device trees.
+>>>>
+>>>> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>>
+>>> FYI, I like this series, but I held off applying it because I wanted to
+>>> verify that the shuffling of the memory regions works on the existing
+>>> 8996 boards.
+>>>
+>>> Unfortunately it didn't work, either with or without the shuffling on
+>>> the db820c - and I've not found the time to figure out why that is. I
+>>> hope to get back to this shortly (or that someone else will figure it
+>>> out and provide a tested-by)
+>>
+>> I gave this a test too on my db820c. Usually the board MSS will crash
+>> after ~0.1 - 0.15 seconds after booting up, then during recovery the
+>> board will crash/reboot somewhere at the end of q6v5_mss_load() (and
+>> typically after successful q6v5_rmb_mba_wait() call.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> ---
->   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 40 ++++++++++++++++++++++++++++++++
->   1 file changed, 40 insertions(+)
+>> Occasionally (approximately 1 of 20) the MSS will not crash, presenting
+>> PDS service to the userspace. Even in this state it doesn't seem to be
+>> able to lock the gps location (but this might be related to the big UART
+>> mezzanine sitting on top of the board).
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> index 0bd0c16..17a05a6 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> @@ -122,6 +122,7 @@ static const struct pinctrl_pin_desc lpass_lpi_pins[] = {
->   	PINCTRL_PIN(11, "gpio11"),
->   	PINCTRL_PIN(12, "gpio12"),
->   	PINCTRL_PIN(13, "gpio13"),
-> +	PINCTRL_PIN(14, "gpio14"),
+> I've had MSS crash on xiaomi-scorpio too, but far less often. It seemed
+> like some sort of race condition, as it only happened when ADSP and MSS
+> were booted at the same time. To workaround this, I delayed loading of
+> the rmtfs service to leave some time between booting ADSP and MSS.
 
-I see your point in first patch making these names more generic, but 
-this is not really going to work, as the above line just added new pin 
-for sm8250 even though it really only has 0-13 pins.
+For the tests to get 1:20 I've disabled ADSP (and WiFi/BT) completely. 
+Without that I think I never got MSS to boot successfully. I think this 
+is some kind of power/regulators/clock with ADSP and MSS draining too 
+much power.
 
-I think it would be more clear if you could just make a dedicated 
-structures for sc7280. Simillar comments apply for other changes too.
+Note to myself: check rmtfs/partitions usage on db820c.
 
-Other than that the patch looks good to me.
-
---srini
-
->   };
->   
->   enum lpass_lpi_functions {
-> @@ -136,6 +137,7 @@ enum lpass_lpi_functions {
->   	LPI_MUX_i2s1_ws,
->   	LPI_MUX_i2s2_clk,
->   	LPI_MUX_i2s2_data,
-> +	LPI_MUX_sc7280_i2s2_data,
->   	LPI_MUX_i2s2_ws,
->   	LPI_MUX_qua_mi2s_data,
->   	LPI_MUX_qua_mi2s_sclk,
-> @@ -144,6 +146,7 @@ enum lpass_lpi_functions {
->   	LPI_MUX_swr_rx_data,
->   	LPI_MUX_swr_tx_clk,
->   	LPI_MUX_swr_tx_data,
-> +	LPI_MUX_sc7280_swr_tx_data,
->   	LPI_MUX_wsa_swr_clk,
->   	LPI_MUX_wsa_swr_data,
->   	LPI_MUX_gpio,
-> @@ -164,8 +167,11 @@ static const unsigned int gpio10_pins[] = { 10 };
->   static const unsigned int gpio11_pins[] = { 11 };
->   static const unsigned int gpio12_pins[] = { 12 };
->   static const unsigned int gpio13_pins[] = { 13 };
-> +static const unsigned int gpio14_pins[] = { 14 };
-> +
->   static const char * const swr_tx_clk_groups[] = { "gpio0" };
->   static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-> +static const char * const sc7280_swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
->   static const char * const swr_rx_clk_groups[] = { "gpio3" };
->   static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
->   static const char * const dmic1_clk_groups[] = { "gpio6" };
-> @@ -185,6 +191,7 @@ static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
->   static const char * const wsa_swr_clk_groups[] = { "gpio10" };
->   static const char * const wsa_swr_data_groups[] = { "gpio11" };
->   static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-> +static const char * const sc7280_i2s2_data_groups[] = { "gpio12", "gpio13" };
->   
->   static const struct lpi_pingroup sm8250_groups[] = {
->   	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-> @@ -203,6 +210,24 @@ static const struct lpi_pingroup sm8250_groups[] = {
->   	LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
->   };
->   
-> +static const struct lpi_pingroup sc7280_groups[] = {
-> +	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-> +	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-> +	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(5, 12, swr_rx_data, _, _, _),
-> +	LPI_PINGROUP(6, NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-> +	LPI_PINGROUP(7, NO_SLEW, dmic1_data, i2s1_ws, _, _),
-> +	LPI_PINGROUP(8, NO_SLEW, dmic2_clk, i2s1_data, _, _),
-> +	LPI_PINGROUP(9, NO_SLEW, dmic2_data, i2s1_data, _, _),
-> +	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-> +	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-> +	LPI_PINGROUP(12, NO_SLEW, dmic3_clk, sc7280_i2s2_data, _, _),
-> +	LPI_PINGROUP(13, NO_SLEW, dmic3_data, sc7280_i2s2_data, _, _),
-> +	LPI_PINGROUP(14, 6, sc7280_swr_tx_data, _, _, _),
-> +};
-> +
->   static const struct lpi_function lpass_functions[] = {
->   	LPI_FUNCTION(dmic1_clk),
->   	LPI_FUNCTION(dmic1_data),
-> @@ -215,6 +240,7 @@ static const struct lpi_function lpass_functions[] = {
->   	LPI_FUNCTION(i2s1_ws),
->   	LPI_FUNCTION(i2s2_clk),
->   	LPI_FUNCTION(i2s2_data),
-> +	LPI_FUNCTION(sc7280_i2s2_data),
->   	LPI_FUNCTION(i2s2_ws),
->   	LPI_FUNCTION(qua_mi2s_data),
->   	LPI_FUNCTION(qua_mi2s_sclk),
-> @@ -223,6 +249,7 @@ static const struct lpi_function lpass_functions[] = {
->   	LPI_FUNCTION(swr_rx_data),
->   	LPI_FUNCTION(swr_tx_clk),
->   	LPI_FUNCTION(swr_tx_data),
-> +	LPI_FUNCTION(sc7280_swr_tx_data),
->   	LPI_FUNCTION(wsa_swr_clk),
->   	LPI_FUNCTION(wsa_swr_data),
->   };
-> @@ -236,6 +263,15 @@ static struct lpi_pinctrl_variant_data sm8250_lpi_data = {
->   	.nfunctions = ARRAY_SIZE(lpass_functions),
->   };
->   
-> +static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
-> +	.pins = lpass_lpi_pins,
-> +	.npins = ARRAY_SIZE(lpass_lpi_pins),
-> +	.groups = sc7280_groups,
-> +	.ngroups = ARRAY_SIZE(sc7280_groups),
-> +	.functions = lpass_functions,
-> +	.nfunctions = ARRAY_SIZE(lpass_functions),
-> +};
-> +
->   static int lpi_gpio_read(struct lpi_pinctrl *state, unsigned int pin,
->   			 unsigned int addr)
->   {
-> @@ -677,6 +713,10 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
->   	       .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
->   	       .data = &sm8250_lpi_data,
->   	},
-> +	{
-> +	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
-> +	       .data = &sc7280_lpi_data,
-> +	},
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
 > 
+>>
+>> Unfortunately there seem to be no SLPI firmware for the db820c, so I can
+>> not test slpi.
+>>
+>> A notice regarding the patchset itself. It looks like pil_q6v5_mss.c
+>> driver misses mx and cx proxy power domains for the MSS_MSM8996 case.
+> 
+> I didn't notice that. I guess they stay on and MSS is able to boot
+> anyway. I'll add them similar to PATCH 2/5.
+
+Thanks!
+
+> 
+>>
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>> ---
+>>>>    .../dts/qcom/msm8996-sony-xperia-tone.dtsi    | 18 ++++--
+>>>>    .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  | 18 +++---
+>>>>    arch/arm64/boot/dts/qcom/msm8996.dtsi         | 63 ++++++++++---------
+>>>>    3 files changed, 55 insertions(+), 44 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+>>>> index 507396c4d23b..4c26e66f0610 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
+>>>> @@ -13,9 +13,10 @@
+>>>>    #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>>>>    #include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
+>>>>
+>>>> -/delete-node/ &slpi_region;
+>>>> -/delete-node/ &venus_region;
+>>>> -/delete-node/ &zap_shader_region;
+>>>> +/delete-node/ &adsp_mem;
+>>>> +/delete-node/ &slpi_mem;
+>>>> +/delete-node/ &venus_mem;
+>>>> +/delete-node/ &gpu_mem;
+>>>>
+>>>>    / {
+>>>>    	qcom,msm-id = <246 0x30001>; /* MSM8996 V3.1 (Final) */
+>>>> @@ -46,18 +47,23 @@ cont_splash_mem: memory@83401000 {
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		zap_shader_region: gpu@90400000 {
+>>>> +		adsp_mem: adsp@8ea00000 {
+>>>> +			reg = <0x0 0x8ea00000 0x0 0x1a00000>;
+>>>> +			no-map;
+>>>> +		};
+>>>> +
+>>>> +		gpu_mem: gpu@90400000 {
+>>>>    			compatible = "shared-dma-pool";
+>>>>    			reg = <0x0 0x90400000 0x0 0x2000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		slpi_region: memory@90500000 {
+>>>> +		slpi_mem: memory@90500000 {
+>>>>    			reg = <0 0x90500000 0 0xa00000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		venus_region: memory@90f00000 {
+>>>> +		venus_mem: memory@90f00000 {
+>>>>    			reg = <0 0x90f00000 0 0x500000>;
+>>>>    			no-map;
+>>>>    		};
+>>>> diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>>> index d239b01b8505..a5e7bccadba2 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+>>>> @@ -66,32 +66,32 @@ memory@88800000 {
+>>>>
+>>>>    		/* This platform has all PIL regions offset by 0x1400000 */
+>>>>    		/delete-node/ mpss@88800000;
+>>>> -		mpss_region: mpss@89c00000 {
+>>>> +		mpss_mem: mpss@89c00000 {
+>>>>    			reg = <0x0 0x89c00000 0x0 0x6200000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>>    		/delete-node/ adsp@8ea00000;
+>>>> -		adsp_region: adsp@8ea00000 {
+>>>> +		adsp_mem: adsp@8fe00000 {
+>>>>    			reg = <0x0 0x8fe00000 0x0 0x1b00000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		/delete-node/ slpi@90b00000;
+>>>> -		slpi_region: slpi@91900000 {
+>>>> +		/delete-node/ slpi@90500000;
+>>>> +		slpi_mem: slpi@91900000 {
+>>>>    			reg = <0x0 0x91900000 0x0 0xa00000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		/delete-node/ gpu@8f200000;
+>>>> -		zap_shader_region: gpu@92300000 {
+>>>> +		/delete-node/ gpu@90f00000;
+>>>> +		gpu_mem: gpu@92300000 {
+>>>>    			compatible = "shared-dma-pool";
+>>>>    			reg = <0x0 0x92300000 0x0 0x2000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>>    		/delete-node/ venus@91000000;
+>>>> -		venus_region: venus@90400000 {
+>>>> +		venus_mem: venus@92400000 {
+>>>>    			reg = <0x0 0x92400000 0x0 0x500000>;
+>>>>    			no-map;
+>>>>    		};
+>>>> @@ -107,7 +107,7 @@ ramoops@92900000 {
+>>>>    			pmsg-size = <0x40000>;
+>>>>    		};
+>>>>
+>>>> -		/delete-node/ rmtfs@86700000;
+>>>> +		/delete-node/ rmtfs;
+>>>>    		rmtfs@f6c00000 {
+>>>>    			compatible = "qcom,rmtfs-mem";
+>>>>    			reg = <0 0xf6c00000 0 0x200000>;
+>>>> @@ -118,7 +118,7 @@ rmtfs@f6c00000 {
+>>>>    		};
+>>>>
+>>>>    		/delete-node/ mba@91500000;
+>>>> -		mba_region: mba@f6f00000 {
+>>>> +		mba_mem: mba@f6f00000 {
+>>>>    			reg = <0x0 0xf6f00000 0x0 0x100000>;
+>>>>    			no-map;
+>>>>    		};
+>>>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>>> index eb3ec5ff46eb..1495fff6ffc9 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>>>> @@ -384,60 +384,65 @@ reserved-memory {
+>>>>    		#size-cells = <2>;
+>>>>    		ranges;
+>>>>
+>>>> -		mba_region: mba@91500000 {
+>>>> -			reg = <0x0 0x91500000 0x0 0x200000>;
+>>>> +		hyp_mem: memory@85800000 {
+>>>> +			reg = <0x0 0x85800000 0x0 0x600000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		slpi_region: slpi@90b00000 {
+>>>> -			reg = <0x0 0x90b00000 0x0 0xa00000>;
+>>>> +		xbl_mem: memory@85e00000 {
+>>>> +			reg = <0x0 0x85e00000 0x0 0x200000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		venus_region: venus@90400000 {
+>>>> -			reg = <0x0 0x90400000 0x0 0x700000>;
+>>>> +		smem_mem: smem-mem@86000000 {
+>>>> +			reg = <0x0 0x86000000 0x0 0x200000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		adsp_region: adsp@8ea00000 {
+>>>> -			reg = <0x0 0x8ea00000 0x0 0x1a00000>;
+>>>> +		tz_mem: memory@86200000 {
+>>>> +			reg = <0x0 0x86200000 0x0 0x2600000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		mpss_region: mpss@88800000 {
+>>>> -			reg = <0x0 0x88800000 0x0 0x6200000>;
+>>>> +		rmtfs_mem: rmtfs {
+>>>> +			compatible = "qcom,rmtfs-mem";
+>>>> +
+>>>> +			size = <0x0 0x200000>;
+>>>> +			alloc-ranges = <0x0 0xa0000000 0x0 0x2000000>;
+>>>>    			no-map;
+>>>> +
+>>>> +			qcom,client-id = <1>;
+>>>> +			qcom,vmid = <15>;
+>>>>    		};
+>>>>
+>>>> -		smem_mem: smem-mem@86000000 {
+>>>> -			reg = <0x0 0x86000000 0x0 0x200000>;
+>>>> +		mpss_mem: mpss@88800000 {
+>>>> +			reg = <0x0 0x88800000 0x0 0x6200000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		memory@85800000 {
+>>>> -			reg = <0x0 0x85800000 0x0 0x800000>;
+>>>> +		adsp_mem: adsp@8ea00000 {
+>>>> +			reg = <0x0 0x8ea00000 0x0 0x1b00000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		memory@86200000 {
+>>>> -			reg = <0x0 0x86200000 0x0 0x2600000>;
+>>>> +		slpi_mem: slpi@90500000 {
+>>>> +			reg = <0x0 0x90500000 0x0 0xa00000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>
+>>>> -		rmtfs@86700000 {
+>>>> -			compatible = "qcom,rmtfs-mem";
+>>>> -
+>>>> -			size = <0x0 0x200000>;
+>>>> -			alloc-ranges = <0x0 0xa0000000 0x0 0x2000000>;
+>>>> +		gpu_mem: gpu@90f00000 {
+>>>> +			compatible = "shared-dma-pool";
+>>>> +			reg = <0x0 0x90f00000 0x0 0x100000>;
+>>>>    			no-map;
+>>>> +		};
+>>>>
+>>>> -			qcom,client-id = <1>;
+>>>> -			qcom,vmid = <15>;
+>>>> +		venus_mem: venus@91000000 {
+>>>> +			reg = <0x0 0x91000000 0x0 0x500000>;
+>>>> +			no-map;
+>>>>    		};
+>>>>
+>>>> -		zap_shader_region: gpu@8f200000 {
+>>>> -			compatible = "shared-dma-pool";
+>>>> -			reg = <0x0 0x90b00000 0x0 0xa00000>;
+>>>> +		mba_mem: mba@91500000 {
+>>>> +			reg = <0x0 0x91500000 0x0 0x200000>;
+>>>>    			no-map;
+>>>>    		};
+>>>>    	};
+>>>> @@ -1013,7 +1018,7 @@ opp-133000000 {
+>>>>    			};
+>>>>
+>>>>    			zap-shader {
+>>>> -				memory-region = <&zap_shader_region>;
+>>>> +				memory-region = <&gpu_mem>;
+>>>>    			};
+>>>>    		};
+>>>>
+>>>> @@ -2001,7 +2006,7 @@ venus: video-codec@c00000 {
+>>>>    				 <&venus_smmu 0x2c>,
+>>>>    				 <&venus_smmu 0x2d>,
+>>>>    				 <&venus_smmu 0x31>;
+>>>> -			memory-region = <&venus_region>;
+>>>> +			memory-region = <&venus_mem>;
+>>>>    			status = "disabled";
+>>>>
+>>>>    			video-decoder {
+>>>> @@ -3008,7 +3013,7 @@ adsp_pil: remoteproc@9300000 {
+>>>>    			clocks = <&xo_board>;
+>>>>    			clock-names = "xo";
+>>>>
+>>>> -			memory-region = <&adsp_region>;
+>>>> +			memory-region = <&adsp_mem>;
+>>>>
+>>>>    			qcom,smem-states = <&smp2p_adsp_out 0>;
+>>>>    			qcom,smem-state-names = "stop";
+>>>> --
+>>>> 2.33.0
+>>>>
+>>>>
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
+> 
+> 
+> 
+
+
+-- 
+With best wishes
+Dmitry
