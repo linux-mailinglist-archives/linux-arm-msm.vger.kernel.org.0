@@ -2,64 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60274444CA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 01:34:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A2BE444CB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 01:43:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbhKDAhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 20:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54686 "EHLO
+        id S231220AbhKDAqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 20:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230198AbhKDAhI (ORCPT
+        with ESMTP id S230176AbhKDAqb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 20:37:08 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B41C061714
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 17:34:30 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id y8so6712964ljm.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 17:34:30 -0700 (PDT)
+        Wed, 3 Nov 2021 20:46:31 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746F0C061714
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 17:43:54 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id t11so6721532ljh.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 17:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=fkfgnJaDUY04rNIV6or1h0npcgBkYvs6ev3vQOc1YF8=;
-        b=ABG+aRHIXjpa0AddFi3FTUVOa4EtckWj5BNxOpbOmxbGBF6s7cZGz8cZhvbyxn0Fon
-         IzCmeKBxyH0DAYWJvvpYSyDI5BSu7qlrHyL94cWjM7pZXuingC2Fi9+Fz1oKVWdvb6F9
-         oD7zDZKBhlnh20m7K+7Y0eyermQoKAAf+z0G/52HQHC31sluTWwjihJE4ZJDH2wRgBRW
-         igi0VnD4l7yPp8YJKBxCamtb7iNjjN8ICx4FPFZLLZV/Rff24KbODnvc5EvebrHhzszX
-         /Wc0ZgnqWBAti81eGosrJPpX5UaYZoLC/3KC/8S9GfEOSPx3Gh0A6X9tdpbNMZiHo5nz
-         lpEQ==
+        bh=1eSkm1GpRtyX3va1o0mfl2NJ0JHmaWEpDja9I5uhN/U=;
+        b=D9UflifN8D661FpjdtNhGUGaB6sgzlPjJI3VTq2EcutIfnO1kqmqYa6Cmpkd3HLGRC
+         7L7Qf4uu8TM1EJ/NR7cf3tF3mn7lh2gLp2tSHcs48JsuDDNfN9aJhXql58ypfCMMm3lQ
+         xUWdLiKHkCw9n6IkIqac7xosLVmmHZr9j8XmLv1o8NAexZJ1wt75zhDF1OTMsGCbppwu
+         ocjsKHkuuXheFskd0oyaK83pkaDqM6+hLBLgcW8JeJ/4U7LCqT03GvEfuRE+fTrPe+Gh
+         aVAucvnfD8VHK8exLZ29ayVV7bpV65Bgc4XNge+UBKlvB+mgNncDWgZrst4ubSNhYUhe
+         YxBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=fkfgnJaDUY04rNIV6or1h0npcgBkYvs6ev3vQOc1YF8=;
-        b=fWBC1cXzE2mindFxEf6o8NkPaQCFywG3GUHmnw++MGa/19DOqPkCGLAkD9pM2zbmab
-         gjJboaY4vm9LERkYzPmqr1bZkheFmQ0axlu4aGVAo6gM0zQfHy/464m8AVwxEg5PvMtL
-         u5usWwnOB0sVuFEpXqh7Eng6L5LPbThQg6IaSnZq2TVZ6XPrS4bWnSBi7MBXFTnyfm+Z
-         skj/R/UC/OdMBaghGZUnH+zeneDmjzRdqMWbBgkVwunsqACZt+F/Y9LoQx7Qxbb65Nty
-         apwSz/Zkxel6Whx0dy0dMJApe6BpVt+jkwwlWvLuYhd4HMlG0tkAnsoCyEBdyeOIt4To
-         Ngwg==
-X-Gm-Message-State: AOAM532bqnZ+ryzgxE7xrJkyem/gbLnmhklvlnler+nVw+wEsW4uhpQ0
-        i4hxIJDV/2sEzgw/WW8j6swoHQ==
-X-Google-Smtp-Source: ABdhPJzCkR0IM+3ESKrRBralZgsMmASvHaJQoJHxxl87GrbiEH4Snc0/oybL5kI9s7tu9GjaAWf8/g==
-X-Received: by 2002:a2e:8447:: with SMTP id u7mr49489401ljh.179.1635986069265;
-        Wed, 03 Nov 2021 17:34:29 -0700 (PDT)
+        bh=1eSkm1GpRtyX3va1o0mfl2NJ0JHmaWEpDja9I5uhN/U=;
+        b=OU4NvhywYicshrKMWaJbyB63beVk3NGRgVAk0/yzEVS6hJTIE6bWrMqRRGAagFTKq3
+         MscKqisSVn/UJcqCcyH2uY3CMlGmhSw/frtwr4Ixk0o9gPHiB7NucSMiaul/+0n3Cb8y
+         vZQAt6oLDbiTnuHQLtT2msB/uokxXmob7JL0jQalu/LSWmj1Z/fZMOe9uhIcsng4zOqX
+         j49x3xF0pAj7gB3jihJeySJOzHet2fkaS+OAMLxZP9soUqHQ5nH9euC+o4S5vjNhqZnU
+         ufOv6tbFxskEyvBIJEvQ0yqwlOIjISr1fZDzQj5cz+eCVUc019Hc9sd8497Qb93Bl0tS
+         TLsA==
+X-Gm-Message-State: AOAM532groAgNLtg7eaIdze9NLAZppSK/PBLWtMi8/Mm/yeD3Ym+MvhL
+        Bx4gL30wwBesrKMzkUhDUudt7g==
+X-Google-Smtp-Source: ABdhPJxsOZl31izwRga4tPivLecWj5FqNk3eDeEBEhAvcZYzdQzS/VzZOhYf7RKt1ktSmFlP8j+oOQ==
+X-Received: by 2002:a2e:a603:: with SMTP id v3mr46056763ljp.228.1635986632871;
+        Wed, 03 Nov 2021 17:43:52 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f4sm312128lfr.43.2021.11.03.17.34.28
+        by smtp.gmail.com with ESMTPSA id v11sm334465ljh.56.2021.11.03.17.43.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Nov 2021 17:34:28 -0700 (PDT)
+        Wed, 03 Nov 2021 17:43:52 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/mdp5: drop vdd regulator
-Date:   Thu,  4 Nov 2021 03:34:28 +0300
-Message-Id: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] regulator: qcom_spmi: do no register unused regulators
+Date:   Thu,  4 Nov 2021 03:43:51 +0300
+Message-Id: <20211104004351.2206578-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,81 +65,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "vdd" regulator was used by the mdp5 driver only on downstream
-kernels, where the GDSC is represented as a regulator. On all current
-kernels the MDSS_GDSC is implemented as the power domain, removing the
-need for this regulator. Remove it from the mdp5 driver.
+Typically SPMI interface to PMIC regulators on Qualcomm platforms is
+used to supplement RPM interface in cases where direct control is
+required (e.g. for the APCC or GFX regulators). Registering all possible
+regulators is thus not required and may be potentially harmfull if
+somebody tries to setup those directly. Thus register only regulators
+that are really used in the device tree and ignore all unused
+regulators.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 24 ++---------------------
- 1 file changed, 2 insertions(+), 22 deletions(-)
+ drivers/regulator/qcom_spmi-regulator.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-index 2f4895bcb0b0..2ac8fd37c76b 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-@@ -16,8 +16,6 @@ struct mdp5_mdss {
- 
- 	void __iomem *mmio, *vbif;
- 
--	struct regulator *vdd;
--
- 	struct clk *ahb_clk;
- 	struct clk *axi_clk;
- 	struct clk *vsync_clk;
-@@ -189,8 +187,6 @@ static void mdp5_mdss_destroy(struct drm_device *dev)
- 	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
- 	mdp5_mdss->irqcontroller.domain = NULL;
- 
--	regulator_disable(mdp5_mdss->vdd);
--
- 	pm_runtime_disable(dev->dev);
- }
- 
-@@ -238,31 +234,17 @@ int mdp5_mdss_init(struct drm_device *dev)
- 		goto fail;
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 41424a3366d0..5e68c3829e50 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -2147,20 +2147,29 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 			dev_err(dev, "ERROR reading SAW regmap\n");
  	}
  
--	/* Regulator to enable GDSCs in downstream kernels */
--	mdp5_mdss->vdd = devm_regulator_get(dev->dev, "vdd");
--	if (IS_ERR(mdp5_mdss->vdd)) {
--		ret = PTR_ERR(mdp5_mdss->vdd);
--		goto fail;
--	}
+-	for (reg = match->data; reg->name; reg++) {
 -
--	ret = regulator_enable(mdp5_mdss->vdd);
--	if (ret) {
--		DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n",
--			ret);
--		goto fail;
--	}
--
- 	ret = devm_request_irq(dev->dev, platform_get_irq(pdev, 0),
- 			       mdss_irq, 0, "mdss_isr", mdp5_mdss);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "failed to init irq: %d\n", ret);
--		goto fail_irq;
-+		goto fail;
- 	}
++	for_each_child_of_node(node, reg_node) {
+ 		if (saw_regmap) {
+-			reg_node = of_get_child_by_name(node, reg->name);
+ 			reg_prop = of_find_property(reg_node, "qcom,saw-slave",
+ 						    &lenp);
+-			of_node_put(reg_node);
+ 			if (reg_prop)
+ 				continue;
+ 		}
  
- 	ret = mdss_irq_domain_init(mdp5_mdss);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "failed to init sub-block irqs: %d\n", ret);
--		goto fail_irq;
-+		goto fail;
- 	}
++		for (reg = match->data; reg->name; reg++) {
++			if (of_node_name_eq(reg_node, reg->name))
++				break;
++		}
++
++		if (!reg->name) {
++			dev_err(dev, "No regulator matches device node %pOF\n", reg_node);
++			continue;
++		}
++
+ 		vreg = devm_kzalloc(dev, sizeof(*vreg), GFP_KERNEL);
+-		if (!vreg)
++		if (!vreg) {
++			of_node_put(reg_node);
+ 			return -ENOMEM;
++		}
  
- 	mdp5_mdss->base.funcs = &mdss_funcs;
-@@ -271,8 +253,6 @@ int mdp5_mdss_init(struct drm_device *dev)
- 	pm_runtime_enable(dev->dev);
+ 		vreg->dev = dev;
+ 		vreg->base = reg->base;
+@@ -2211,6 +2220,7 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 		rdev = devm_regulator_register(dev, &vreg->desc, &config);
+ 		if (IS_ERR(rdev)) {
+ 			dev_err(dev, "failed to register %s\n", name);
++			of_node_put(reg_node);
+ 			return PTR_ERR(rdev);
+ 		}
  
- 	return 0;
--fail_irq:
--	regulator_disable(mdp5_mdss->vdd);
- fail:
- 	return ret;
- }
 -- 
 2.33.0
 
