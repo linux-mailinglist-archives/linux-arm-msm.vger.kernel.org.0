@@ -2,126 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F2679444CE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 02:12:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC9D3444D21
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 02:54:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231423AbhKDBOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 21:14:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231455AbhKDBOf (ORCPT
+        id S230198AbhKDB4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 21:56:54 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:18668 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231945AbhKDB4y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 21:14:35 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3F2C061714
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 18:11:58 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id u11so8766309lfs.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 18:11:58 -0700 (PDT)
+        Wed, 3 Nov 2021 21:56:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/aMvXOBVuDxAsSJ0JiTU0X5S+yUEp0VuD/6iPiLDe4w=;
-        b=Re/Kn8ZRQceQD3lgrGLsdcnRKNWGejLBWLOVh2KpBESephsqO+IJvUNZAoITWmxOgc
-         /bChYz7ljvGzO+x+RuobAdBSQgEOC1GSyT2yeO4YuIma3GjXanDFBEPiIwRRdxDWOqLO
-         eDo+3YFXCbGGLMsBAYXjiAQpkswYp2RfXBiUo6H73foMbgnn+7vvw2BHoD9oqlrUJ9oi
-         6xLvyLlah6leLj40VZbf6Ly04PbSrXmVYwLr2JF6K1co9c2//E1VrOuL4R+KM8aH2tT2
-         s84ARyMPZNlfZAct4r9qudwv6oxEhuiZqGmUMwVWxUB5Qv72S1oOeZewOfkVhX4720b6
-         E7CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/aMvXOBVuDxAsSJ0JiTU0X5S+yUEp0VuD/6iPiLDe4w=;
-        b=B4ns7rHBZ8SsquXxYF50PZ9nPrbyl2ep4KFKktmk3bveDilHV5nvHMqsJnyQZqPt6u
-         8wuM+16/CURmipvxZCKEkAF2jFzK5qmnE5mmUqtHtCNkMrHBpDbPZT1lEUyXvuhzGZkm
-         SbNvpUyToBQHgA8SuESVdBTnO8fB53uC1BqhxC5JKRW5yWdFBGzyAPMrRUroEWA9o8+/
-         ooA/Kc6y8wJvlzg2E9kvLpaCZr9+6hFxfumLPPWhdTPzj9w8PbZe54LMUd8N6hrdPqyP
-         A+ILb5nelDvJfOaP/3ZqfeQKbX8UV/rhfFg0PL9QMcpLm/+spObbyMQ+4x0v/rU8v12J
-         36/w==
-X-Gm-Message-State: AOAM531KKCoZZPy9/HPbFqCMNcTcijU1EcoHych/6cWPVGAGm7N8YWoU
-        66SDnxOpxw7kt1sLzud2fco+Xg==
-X-Google-Smtp-Source: ABdhPJxOyVv31u/8yJ/9LNK/9Lz94ZxKKOOgNfeX9MWjDS4qA9c3zCclKxfQLaqk0mTaDrKm2RXaJA==
-X-Received: by 2002:a05:6512:3401:: with SMTP id i1mr46815780lfr.336.1635988316671;
-        Wed, 03 Nov 2021 18:11:56 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b10sm28681ljj.112.2021.11.03.18.11.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Nov 2021 18:11:56 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH] clk: qcom: gcc-msm8996: Drop (again) gcc_aggre1_pnoc_ahb_clk
-Date:   Thu,  4 Nov 2021 04:11:55 +0300
-Message-Id: <20211104011155.2209654-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1635990857; x=1667526857;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=xHDRhxBwYvWNSiLaJE2QebAyd+xmjgZ4zT973gaed6A=;
+  b=yycPZc367/5yb5t19o+0AqfXwiO4UTtyPXv+Jdr852yuPTp5NwDC7oUm
+   FkTAanEV/iotPZavDUpcRjt8JgP8DWWyfMFgl8Dd0Y1pUiskR4GFO3ZlM
+   nNaadlE30KZvsCQklmEqOgt48sh3PzzSsIZSt+4ZGl+BVj2Bs3DJ8eqsB
+   g=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 03 Nov 2021 18:54:17 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2021 18:54:16 -0700
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Wed, 3 Nov 2021 18:54:16 -0700
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Wed, 3 Nov 2021
+ 18:54:13 -0700
+Message-ID: <8be3ee89-7fa9-4611-3fda-c152ca9fa444@quicinc.com>
+Date:   Thu, 4 Nov 2021 09:54:11 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH v1] dt-bindings: convert qcom,spmi-pmic-arb binding to
+ YAML format
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <collinsd@codeaurora.org>, <subbaram@codeaurora.org>
+References: <1635836275-8873-1-git-send-email-quic_fenglinw@quicinc.com>
+ <YYMLKCspjdyaKWUK@ripper>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <YYMLKCspjdyaKWUK@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The gcc_aggre1_pnoc_ahb_clk is crucial for the proper MSM8996/APQ8096
-functioning. If it gets disabled, several subsytems will stop working
-(including eMMC/SDCC and USB). There are no in-kernel users of this
-clock, so it is much simpler to remove from the kernel.
 
-The clock was first removed in the commit 9e60de1cf270 ("clk: qcom:
-Remove gcc_aggre1_pnoc_ahb_clk from msm8996") by Stephen Boyd, but got
-added back in the commit b567752144e3 ("clk: qcom: Add some missing gcc
-clks for msm8996") by Rajendra Nayak.
-
-Let's remove it again in hope that nobody adds it back.
-
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Rajendra Nayak <rnayak@codeaurora.org>
-Cc: Konrad Dybcio <konrad.dybcio@somainline.org>
-Fixes: b567752144e3 ("clk: qcom: Add some missing gcc clks for msm8996")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/gcc-msm8996.c | 15 ---------------
- 1 file changed, 15 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
-index 3c3a7ff04562..9b1674b28d45 100644
---- a/drivers/clk/qcom/gcc-msm8996.c
-+++ b/drivers/clk/qcom/gcc-msm8996.c
-@@ -2937,20 +2937,6 @@ static struct clk_branch gcc_smmu_aggre0_ahb_clk = {
- 	},
- };
- 
--static struct clk_branch gcc_aggre1_pnoc_ahb_clk = {
--	.halt_reg = 0x82014,
--	.clkr = {
--		.enable_reg = 0x82014,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "gcc_aggre1_pnoc_ahb_clk",
--			.parent_names = (const char *[]){ "periph_noc_clk_src" },
--			.num_parents = 1,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch gcc_aggre2_ufs_axi_clk = {
- 	.halt_reg = 0x83014,
- 	.clkr = {
-@@ -3474,7 +3460,6 @@ static struct clk_regmap *gcc_msm8996_clocks[] = {
- 	[GCC_AGGRE0_CNOC_AHB_CLK] = &gcc_aggre0_cnoc_ahb_clk.clkr,
- 	[GCC_SMMU_AGGRE0_AXI_CLK] = &gcc_smmu_aggre0_axi_clk.clkr,
- 	[GCC_SMMU_AGGRE0_AHB_CLK] = &gcc_smmu_aggre0_ahb_clk.clkr,
--	[GCC_AGGRE1_PNOC_AHB_CLK] = &gcc_aggre1_pnoc_ahb_clk.clkr,
- 	[GCC_AGGRE2_UFS_AXI_CLK] = &gcc_aggre2_ufs_axi_clk.clkr,
- 	[GCC_AGGRE2_USB3_AXI_CLK] = &gcc_aggre2_usb3_axi_clk.clkr,
- 	[GCC_QSPI_AHB_CLK] = &gcc_qspi_ahb_clk.clkr,
--- 
-2.33.0
-
+On 2021/11/4 6:20, Bjorn Andersson wrote:
+> On Mon 01 Nov 23:57 PDT 2021, Fenglin Wu wrote:
+> [..]
+>> diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>> new file mode 100644
+>> index 0000000..05bb114
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>> @@ -0,0 +1,122 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SPMI PMIC Arbiter
+>> +
+>> +maintainers:
+>> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
+>> +
+>> +description: |
+>> +  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
+>> +  controller with wrapping arbitration logic to allow for multiple
+>> +  on-chip devices to control a single SPMI master.
+>> +
+>> +  The PMIC Arbiter can also act as an interrupt controller, providing
+>> +  interrupts to slave devices.
+>> +
+>> +  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
+>> +  SPMI controller binding requirements for child nodes.
+>> +
+>> +properties:
+>> +  $nodename:
+>> +    pattern: "^qcom,spmi@.*"
+> Node names should never contain "qcom,". Seems the agreed upon node
+> named should be "spmi@.*".
+>
+> The rest looks like a reasonable conversion to me.
+>
+> [..]
+Thanks, I will update it in patch V2.
+>> +examples:
+>> +  - |
+>> +    qcom,spmi@fc4cf000 {
+> Regards,
+> Bjorn
