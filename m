@@ -2,75 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 699224459F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 19:46:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F30BC445A2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 20:02:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233834AbhKDSt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Nov 2021 14:49:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233757AbhKDStY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Nov 2021 14:49:24 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C9F4C061203
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Nov 2021 11:46:46 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id t11so8706228plq.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Nov 2021 11:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PorSLppZT3IedQU0Aiir1xp4SHeSb1PGuZKovfWyfMo=;
-        b=C6AYOPXp7GDQstXKhfY+qqe7bihiJvlo46H/bBrDRr5nb2tlWh1oLFYNUaUXAySyQI
-         MQ2Mb+ynV83Kl5cwf5b42/IzSP+02VBbsrN4e0K4G7L5A5b2JDxoAP0noBYBjWHlyuaJ
-         4mIf7A/jxmo15PFNXR/Gv7eDzmpnRBdsp9Xm4lo8fUx1gm8eg2PZ/4ho/zMa0WLdZYxP
-         6RfJMV2kWKj5kbtsqm7txzYlJU1v8HQLboR7DWx7zmr8uX7LfiKT+5cWcBS+ViGhjgH/
-         0wrSRn2HE1tnIbq9taGm+kFwx2u/3ZCt5ERDrsOLq1IvB3/iXodMRbHoKldR2olwjuRG
-         Pf8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PorSLppZT3IedQU0Aiir1xp4SHeSb1PGuZKovfWyfMo=;
-        b=blJOf/uvJeqQe/mvqN3VE27HiddqFQCazWpfb/0uOm/vJ3bTUDlYfS2Q6C5juKDflm
-         AR15TQlZjohoVMoNSgT/DiaLEm6tBUx0JmokE5dN400rxzUfNf+kYvL7CpWDa3Wvhmht
-         B+8Axl8KlyufXI5XUwdCz8iMIgwTKk6VJqGwD6bYhxI8kdLCIKzdDdaH3uZNOkxoVqVH
-         Yx9Jf1dPmB2Ew2T0SiylB2xOAPbn1CCwUdyWyqaa+1+cYvly/HSzpxnOtUo6ZrGchGGr
-         Ilv/RaYXMDtclHKZzFQjanUq7U3frOJn7E3PlZh7E32LP5dygqrKVU0Mq+0eAL8w7c7T
-         Q8QQ==
-X-Gm-Message-State: AOAM531C9VOrBK5JZCkVEFxe7+KXACDNYvenMftgrtLzYXNPdy4JBGeU
-        pWv7/YPMpRUjOz1T1eL7XHAJ23WEVsubO5z1o2V95w==
-X-Google-Smtp-Source: ABdhPJwVT/QSowoDtWEN2jsATxofev3CtcyomsTIjU0EabHehx7QAl/wAGopkNPrEbIm1a3otSFjmLDNu8h0dJBepJ8=
-X-Received: by 2002:a17:90a:3b02:: with SMTP id d2mr23648066pjc.159.1636051605807;
- Thu, 04 Nov 2021 11:46:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211104010548.1107405-1-benl@squareup.com> <20211104010548.1107405-3-benl@squareup.com>
-In-Reply-To: <20211104010548.1107405-3-benl@squareup.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 4 Nov 2021 19:57:27 +0100
-Message-ID: <CAMZdPi_piZp8nTP+TwxTw8_AE7F53st3X3d-gY2rvnN9-81D5Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] wcn36xx: fix RX BD rate mapping for 5GHz legacy rates
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Kalle Valo <kvalo@codeaurora.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        id S234174AbhKDTFX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Nov 2021 15:05:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45892 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234147AbhKDTFR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Nov 2021 15:05:17 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DB92961053;
+        Thu,  4 Nov 2021 19:02:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1636052559;
+        bh=zbv7Dzgj1Wsfp/gUJExbJvfRCyf5Qqe5D8kKFiCGqxI=;
+        h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+        b=TBuEo3R1O7GDP9ATs+c/QAG3gj/w4TlvcFz1AZufjmotHNVuDXjoN91//dh5a8rLi
+         W76jla8N1A7uWJsNj2jDulp689lqHAvfG3246+2cJpzAX+2A5Vcy65cn1no7gzDdN4
+         kJcOAANRPrAZFpq+BXITpv/+iqmSZfqksJ9msZP43XbN46/1NUCVY3PEhQCYWSF1/v
+         +FWerU8jNgXYJpRjXAXlMe2iiY0BjkBurrNPibG51WcZVE9gUv6szhZ3gfV4Q8vQr7
+         mMCqcuzzdxd8dh7c8RzXIl4K3lpRkSdVkprS+NMsqubPnP02lbaTAu7YKsSEFQBDAa
+         ieFgse+o1qsfA==
+Date:   Thu, 4 Nov 2021 12:02:37 -0700 (PDT)
+From:   Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To:     David Heidelberg <david@ixit.cz>
+cc:     Tom Lendacky <thomas.lendacky@amd.com>,
+        Brijesh Singh <brijeshkumar.singh@amd.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        ~okias/devicetree@lists.sr.ht, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, wcn36xx@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-kernel@lists.infradead.org, sstabellini@kernel.org
+Subject: Re: [PATCH] arm64: dts: drop legacy property #stream-id-cells
+In-Reply-To: <20211030103117.33264-1-david@ixit.cz>
+Message-ID: <alpine.DEB.2.22.394.2111041158220.284830@ubuntu-linux-20-04-desktop>
+References: <20211030103117.33264-1-david@ixit.cz>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 4 Nov 2021 at 02:06, Benjamin Li <benl@squareup.com> wrote:
->
-> The linear mapping between the BD rate field and the driver's 5GHz
-> legacy rates table (wcn_5ghz_rates) does not only apply for the latter
-> four rates -- it applies to all eight rates.
->
-> Fixes: 6ea131acea98 ("wcn36xx: Fix warning due to bad rate_idx")
-> Signed-off-by: Benjamin Li <benl@squareup.com>
+On Sat, 30 Oct 2021, David Heidelberg wrote:
+> Property #stream-id-cells is legacy leftover and isn't currently
+> documented nor used.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../boot/dts/amd/amd-seattle-xgbe-b.dtsi      |  2 --
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         |  1 -
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi         |  1 -
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi          |  1 -
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi          |  1 -
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi          |  1 -
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          |  1 -
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          |  1 -
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |  1 -
+>  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        | 28 -------------------
+>  10 files changed, 38 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/amd/amd-seattle-xgbe-b.dtsi b/arch/arm64/boot/dts/amd/amd-seattle-xgbe-b.dtsi
+> index d97498361ce3..3e9faace47f2 100644
+> --- a/arch/arm64/boot/dts/amd/amd-seattle-xgbe-b.dtsi
+> +++ b/arch/arm64/boot/dts/amd/amd-seattle-xgbe-b.dtsi
+> @@ -55,7 +55,6 @@ xgmac0: xgmac@e0700000 {
+>  		clocks = <&xgmacclk0_dma_250mhz>, <&xgmacclk0_ptp_250mhz>;
+>  		clock-names = "dma_clk", "ptp_clk";
+>  		phy-mode = "xgmii";
+> -		#stream-id-cells = <16>;
+>  		dma-coherent;
+>  	};
+>  
+> @@ -81,7 +80,6 @@ xgmac1: xgmac@e0900000 {
+>  		clocks = <&xgmacclk1_dma_250mhz>, <&xgmacclk1_ptp_250mhz>;
+>  		clock-names = "dma_clk", "ptp_clk";
+>  		phy-mode = "xgmii";
+> -		#stream-id-cells = <16>;
+>  		dma-coherent;
+>  	};
 
-Tested-by: Loic Poulain <loic.poulain@linaro.org>
+#stream-id-cells is used to parse the legacy mmu-masters property (which
+by the way Xen is still capable of parsing [1]).
+
+So #stream-id-cells should be present if mmu-masters is present.
+
+Looking at the patch and grepping for mmu-masters,
+amd-seattle-xgbe-b.dtsi is the only one that has mmu-masters. So I think
+this change to amd-seattle-xgbe-b.dtsi should be removed from the patch.
+Everything else is fine.
+
+
+[1] https://gitlab.com/xen-project/xen/-/blob/staging/xen/drivers/passthrough/arm/smmu.c#L2477
