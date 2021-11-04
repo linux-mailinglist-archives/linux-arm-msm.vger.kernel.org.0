@@ -2,138 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45A10444C9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 01:34:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60274444CA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 01:34:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230084AbhKDAgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 Nov 2021 20:36:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
+        id S230253AbhKDAhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 Nov 2021 20:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231206AbhKDAgb (ORCPT
+        with ESMTP id S230198AbhKDAhI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 Nov 2021 20:36:31 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB05C08ED9E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 17:29:54 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id k24so6693956ljg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 17:29:54 -0700 (PDT)
+        Wed, 3 Nov 2021 20:37:08 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B41C061714
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 Nov 2021 17:34:30 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id y8so6712964ljm.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Nov 2021 17:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Zkqig23M8IsP/fRu3AwBnptobBWJF7yS8RO3lyj9QcE=;
-        b=hl6IBdUJAD9FGqtkauBeE7REGASKjzI5QixhBfnz2Au1dpZvlDExt8F22qIOAoKYob
-         qvNM69+lBZVUZlL4NnwSdZo94n+gOKuMnk3Ht1+r5A03c08i4RqQaaR4/7X05askvkk4
-         hO95DtOUOEEEy6mRsyoR0sc1PihQWx9nNKcNlEQryhtfO4kCjBje4Z7vZgr0z5BPjYrz
-         wBMEA6gO/+4h1y1DJ7MCTeTgkwEXYxCcD0xEKSzOuP2vJMJ+7fMCBdVnOPzqHJ43DEnv
-         4Hc2vxfyzlMV1pPW/XVp5qQLlJesl7oSPJmtgpBkJjAKcDiPpSMPxzZLzv9UjkPrdb9/
-         A1JQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fkfgnJaDUY04rNIV6or1h0npcgBkYvs6ev3vQOc1YF8=;
+        b=ABG+aRHIXjpa0AddFi3FTUVOa4EtckWj5BNxOpbOmxbGBF6s7cZGz8cZhvbyxn0Fon
+         IzCmeKBxyH0DAYWJvvpYSyDI5BSu7qlrHyL94cWjM7pZXuingC2Fi9+Fz1oKVWdvb6F9
+         oD7zDZKBhlnh20m7K+7Y0eyermQoKAAf+z0G/52HQHC31sluTWwjihJE4ZJDH2wRgBRW
+         igi0VnD4l7yPp8YJKBxCamtb7iNjjN8ICx4FPFZLLZV/Rff24KbODnvc5EvebrHhzszX
+         /Wc0ZgnqWBAti81eGosrJPpX5UaYZoLC/3KC/8S9GfEOSPx3Gh0A6X9tdpbNMZiHo5nz
+         lpEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Zkqig23M8IsP/fRu3AwBnptobBWJF7yS8RO3lyj9QcE=;
-        b=sipm7pcSzl/dzXnnBSsPfTSpTi4IVVRXbaC11gct3kkeMTqmztE+JOva8gPCpmCxm3
-         EZsHJJnYfvzQLFzpAcBy/SH/xyO7yD4oVNg+RCoK6OChPnsrUnmPjf4nI/GSA0G7+JI0
-         csXqXlkoGq2aHJ8XZ8ilay4Bsb+AMRKyPx7eYmycwHjB9LgTGgpUpCO0WLGfIBHbJDun
-         v8kE6r6D0vgm7tgeeLdw+1/lCvlUk/LaV+OzMOdgP91kpBhd7KjX2UaJrB3wL+zSiS3m
-         vZ0Dyg1sVOyPvNx4W8/MRM/oAic2JXBpls8VljIHi8T+TJJJsgme3LzJ0VJqNHBw+WVk
-         mwNQ==
-X-Gm-Message-State: AOAM5314oRJkrjcQcvcNdWqtzXYcy+Oz4Br4qXIgzmhuzBUXPLmldmEI
-        YBVBTWemwh2Taw6Yy8laUuRFHostAF53vQ==
-X-Google-Smtp-Source: ABdhPJz3xvgGSw9czI1qHocVY83lpIzTvC6PS6oXax1aBOQIVphdS0Gj9LHjMUowFYi4kHGQmUM5eQ==
-X-Received: by 2002:a2e:9d09:: with SMTP id t9mr50493167lji.400.1635985793102;
-        Wed, 03 Nov 2021 17:29:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fkfgnJaDUY04rNIV6or1h0npcgBkYvs6ev3vQOc1YF8=;
+        b=fWBC1cXzE2mindFxEf6o8NkPaQCFywG3GUHmnw++MGa/19DOqPkCGLAkD9pM2zbmab
+         gjJboaY4vm9LERkYzPmqr1bZkheFmQ0axlu4aGVAo6gM0zQfHy/464m8AVwxEg5PvMtL
+         u5usWwnOB0sVuFEpXqh7Eng6L5LPbThQg6IaSnZq2TVZ6XPrS4bWnSBi7MBXFTnyfm+Z
+         skj/R/UC/OdMBaghGZUnH+zeneDmjzRdqMWbBgkVwunsqACZt+F/Y9LoQx7Qxbb65Nty
+         apwSz/Zkxel6Whx0dy0dMJApe6BpVt+jkwwlWvLuYhd4HMlG0tkAnsoCyEBdyeOIt4To
+         Ngwg==
+X-Gm-Message-State: AOAM532bqnZ+ryzgxE7xrJkyem/gbLnmhklvlnler+nVw+wEsW4uhpQ0
+        i4hxIJDV/2sEzgw/WW8j6swoHQ==
+X-Google-Smtp-Source: ABdhPJzCkR0IM+3ESKrRBralZgsMmASvHaJQoJHxxl87GrbiEH4Snc0/oybL5kI9s7tu9GjaAWf8/g==
+X-Received: by 2002:a2e:8447:: with SMTP id u7mr49489401ljh.179.1635986069265;
+        Wed, 03 Nov 2021 17:34:29 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 188sm329861ljf.71.2021.11.03.17.29.52
+        by smtp.gmail.com with ESMTPSA id f4sm312128lfr.43.2021.11.03.17.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Nov 2021 17:29:52 -0700 (PDT)
+        Wed, 03 Nov 2021 17:34:28 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH 5/5] arm64: dts: qcom: msm8996-sony-xperia-tone: fix SPMI regulators declaration
-Date:   Thu,  4 Nov 2021 03:29:49 +0300
-Message-Id: <20211104002949.2204727-5-dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/mdp5: drop vdd regulator
+Date:   Thu,  4 Nov 2021 03:34:28 +0300
+Message-Id: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211104002949.2204727-1-dmitry.baryshkov@linaro.org>
-References: <20211104002949.2204727-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Device tree for the Sony Xperia tone family of devices specifies
-S9+S10+S11 SAW regulator as a part of the pmi8994_spmi_regulators device
-tree node. However PMI8994 does not have these regulators, they are part
-of the PM8994 device. All other MSM8996-based devices list them in the
-pm8994_spmi_regulators device tree node. Move them accordingly.
+The "vdd" regulator was used by the mdp5 driver only on downstream
+kernels, where the GDSC is represented as a regulator. On all current
+kernels the MDSS_GDSC is implemented as the power domain, removing the
+need for this regulator. Remove it from the mdp5 driver.
 
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../dts/qcom/msm8996-sony-xperia-tone.dtsi    | 29 ++++++++++---------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 24 ++---------------------
+ 1 file changed, 2 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 4c26e66f0610..11acd9e31a75 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -595,34 +595,37 @@ pmi-gpio10-nc {
- 	};
- };
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+index 2f4895bcb0b0..2ac8fd37c76b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+@@ -16,8 +16,6 @@ struct mdp5_mdss {
  
--&pmi8994_spmi_regulators {
-+&pm8994_spmi_regulators {
- 	qcom,saw-reg = <&saw3>;
+ 	void __iomem *mmio, *vbif;
  
--	vdd_gfx:
--	pmi8994_s2: s2 {
--		/* Pinned to a high value for now to avoid random crashes. */
--		regulator-min-microvolt = <1015000>;
--		regulator-max-microvolt = <1015000>;
--		regulator-name = "vdd_gfx";
--		regulator-always-on;
--	};
+-	struct regulator *vdd;
 -
--	pmi8994_s9: s9 {
-+	pm8994_s9: s9 {
- 		qcom,saw-slave;
- 	};
+ 	struct clk *ahb_clk;
+ 	struct clk *axi_clk;
+ 	struct clk *vsync_clk;
+@@ -189,8 +187,6 @@ static void mdp5_mdss_destroy(struct drm_device *dev)
+ 	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
+ 	mdp5_mdss->irqcontroller.domain = NULL;
  
--	pmi8994_s10: s10 {
-+	pm8994_s10: s10 {
- 		qcom,saw-slave;
- 	};
+-	regulator_disable(mdp5_mdss->vdd);
+-
+ 	pm_runtime_disable(dev->dev);
+ }
  
--	pmi8994_s11: s11 {
-+	pm8994_s11: s11 {
- 		qcom,saw-leader;
-+		regulator-name = "vdd_apcc";
- 		regulator-always-on;
- 		regulator-min-microvolt = <470000>;
- 		regulator-max-microvolt = <1140000>;
- 	};
- };
+@@ -238,31 +234,17 @@ int mdp5_mdss_init(struct drm_device *dev)
+ 		goto fail;
+ 	}
  
-+&pmi8994_spmi_regulators {
-+	vdd_gfx:
-+	pmi8994_s2: s2 {
-+		/* Pinned to a high value for now to avoid random crashes. */
-+		regulator-min-microvolt = <1015000>;
-+		regulator-max-microvolt = <1015000>;
-+		regulator-name = "vdd_gfx";
-+		regulator-always-on;
-+	};
-+};
-+
- &pmi8994_wled {
- 	status = "okay";
- 	default-brightness = <512>;
+-	/* Regulator to enable GDSCs in downstream kernels */
+-	mdp5_mdss->vdd = devm_regulator_get(dev->dev, "vdd");
+-	if (IS_ERR(mdp5_mdss->vdd)) {
+-		ret = PTR_ERR(mdp5_mdss->vdd);
+-		goto fail;
+-	}
+-
+-	ret = regulator_enable(mdp5_mdss->vdd);
+-	if (ret) {
+-		DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n",
+-			ret);
+-		goto fail;
+-	}
+-
+ 	ret = devm_request_irq(dev->dev, platform_get_irq(pdev, 0),
+ 			       mdss_irq, 0, "mdss_isr", mdp5_mdss);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to init irq: %d\n", ret);
+-		goto fail_irq;
++		goto fail;
+ 	}
+ 
+ 	ret = mdss_irq_domain_init(mdp5_mdss);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to init sub-block irqs: %d\n", ret);
+-		goto fail_irq;
++		goto fail;
+ 	}
+ 
+ 	mdp5_mdss->base.funcs = &mdss_funcs;
+@@ -271,8 +253,6 @@ int mdp5_mdss_init(struct drm_device *dev)
+ 	pm_runtime_enable(dev->dev);
+ 
+ 	return 0;
+-fail_irq:
+-	regulator_disable(mdp5_mdss->vdd);
+ fail:
+ 	return ret;
+ }
 -- 
 2.33.0
 
