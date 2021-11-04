@@ -2,102 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40279445C1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 23:23:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EBA5445C66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Nov 2021 23:49:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232380AbhKDW00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Nov 2021 18:26:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232221AbhKDW00 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Nov 2021 18:26:26 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAFFC061714;
-        Thu,  4 Nov 2021 15:23:47 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id p18so9589445plf.13;
-        Thu, 04 Nov 2021 15:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SAjJe0L8rahemkypYUehC21SFtz7mEZThWWLPiWL/ro=;
-        b=NzCVs6lNdX69wDrb2nMBBzD34Y/tsJPVI6tZWsiJCOxvoDvtDSENn/huD6z7kv+08l
-         G9iOj0TeqIBrea+YwDGMeZ6jbbr6sTnh9mgSUQMWl+dW/IdmeFiNEmCgQ8Pqt1R0hQpq
-         3O7JgIBvUhfdd1u1H5GDMGH2lCWjEGfPO5IJ/juwztKXa1cTmKsq9t2Xi3PsbeTpQn7G
-         PBFafU3TixWAtSjq2EPHFSGH+7VcbMguCFwyUrOqDSYKOWOBKq1+Vby130DqEsBYIQZ2
-         BpFco6dKebNmDvklIAwbsYFRHGbf+QtFcJ0aNpdIKY1WTAgxy2h73o3bAx2X5ZgjbPuL
-         SZlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SAjJe0L8rahemkypYUehC21SFtz7mEZThWWLPiWL/ro=;
-        b=7+ve0Hl4duImEZLKOym26riL+dKyztpzF+aCu6YEXAjJp/sfvS2NeumCOqES9Cro8u
-         MoXYa0GfaxYrNFoJvmYVBYrBdlci9qk2ph0LJ01gHEoRCbFr/+P51L4gbLj8PI4NIVte
-         gpSH1uChxXriDzhvD7Qm3JYOTMxPQ6DV6i6C3zDZpyMf8ryZMMtnKo/ySZpCHWUvFLAk
-         RFDNc6exVJkK+aUleyznDzie4tt0D6KU5igrYRWNQ63P2pdZkNWOtM5xJxwoveamwI+T
-         //xLrzODchVpVA3uZLYcW3X8oB4Q6hZRUIPTdvI0wW6VH2GM5eUfvoPo1phUtuwD9z3j
-         oUcA==
-X-Gm-Message-State: AOAM531SZueqmx09NtOCWdnao7cafVHO84qMOH9st4MBm8/S/E2dGMIi
-        /Nnow2b8ZtnyYaYiHdWrkxk=
-X-Google-Smtp-Source: ABdhPJywWwxxya+abTTKcjBAKn/zhPdhspjq0C6veBnXpocuNuoJ+miPacjiMb70eXIDSP4U7I+1qA==
-X-Received: by 2002:a17:902:db01:b0:141:ea12:2176 with SMTP id m1-20020a170902db0100b00141ea122176mr28246520plx.44.1636064627091;
-        Thu, 04 Nov 2021 15:23:47 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id hg4sm8148128pjb.1.2021.11.04.15.23.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Nov 2021 15:23:45 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/devfreq: Fix OPP refcnt leak
-Date:   Thu,  4 Nov 2021 15:28:40 -0700
-Message-Id: <20211104222840.781314-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
+        id S232133AbhKDWwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Nov 2021 18:52:11 -0400
+Received: from mail.kernel.org ([198.145.29.99]:43410 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230000AbhKDWwK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Nov 2021 18:52:10 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D107E60F36;
+        Thu,  4 Nov 2021 22:49:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1636066172;
+        bh=kYqtI0mPMx4gcviSBi44P510ajI/enNAKDVG0kdjQLk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ik7xFatCo+8BVT1paXK/d2Hw/6DPTxNYNUskfzPUK0bHtlWZIAsVOtncSM1Bchtp3
+         WTUOFx4+OrOjkxocBiwZxbbQcmqcpjmThB6Y1BRjRBnkACoXWmMuf0cFgGH9XoFOgD
+         XFdXd2PvuVY2Jxa/xjRpeIMrQEUTAZfzy6NYr2T/tocBj+J6R6ogIWpLm9vZWLtjIG
+         Sju3HWHakRKW8lFwGpRuzcAozD8vG+5LpUpe0YWxnxUL51bHn+To34t6vpEnuEtxct
+         McT0/pXFcxRDGnY+DfJ3ymCPriTGdjaFOQy1ZJVIU6AC+ZXMcD2PDV84lIIeV3c4j2
+         Qo6AzIb/ftXYQ==
+Date:   Thu, 4 Nov 2021 15:49:16 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org, thara.gopinath@linaro.org,
+        asutoshd@codeaurora.org
+Subject: Re: [PATCH 0/4] Adds wrapped key support for inline storage
+ encryption
+Message-ID: <YYRjbCDhEt8Vh1xv@gmail.com>
+References: <20211103231840.115521-1-quic_gaurkash@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211103231840.115521-1-quic_gaurkash@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi Gaurav,
 
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Wed, Nov 03, 2021 at 04:18:36PM -0700, Gaurav Kashyap wrote:
+> This currently has 4 patches with another coming in shortly for MMC.
+> 
+> 1. Moves ICE functionality to a common library, so that different storage controllers can use it.
+> 2. Adds a SCM call for derive raw secret needed for wrapped keys.
+> 3. Adds a hardware key manager library needed for wrapped keys.
+> 4. Adds wrapped key support in ufs for storage encryption
+> 
+> Gaurav Kashyap (4):
+>   ufs: move ICE functionality to a common library
+>   qcom_scm: scm call for deriving a software secret
+>   soc: qcom: add HWKM library for storage encryption
+>   soc: qcom: add wrapped key support for ICE
+> 
+>  drivers/firmware/qcom_scm.c       |  61 +++++++
+>  drivers/firmware/qcom_scm.h       |   1 +
+>  drivers/scsi/ufs/ufs-qcom-ice.c   | 200 ++++++-----------------
+>  drivers/scsi/ufs/ufs-qcom.c       |   1 +
+>  drivers/scsi/ufs/ufs-qcom.h       |   5 +
+>  drivers/scsi/ufs/ufshcd-crypto.c  |  47 ++++--
+>  drivers/scsi/ufs/ufshcd.h         |   5 +
+>  drivers/soc/qcom/Kconfig          |  14 ++
+>  drivers/soc/qcom/Makefile         |   2 +
+>  drivers/soc/qcom/qti-ice-common.c | 215 +++++++++++++++++++++++++
+>  drivers/soc/qcom/qti-ice-hwkm.c   |  77 +++++++++
+>  drivers/soc/qcom/qti-ice-regs.h   | 257 ++++++++++++++++++++++++++++++
+>  include/linux/qcom_scm.h          |   5 +
+>  include/linux/qti-ice-common.h    |  37 +++++
+>  14 files changed, 766 insertions(+), 161 deletions(-)
+>  create mode 100644 drivers/soc/qcom/qti-ice-common.c
+>  create mode 100644 drivers/soc/qcom/qti-ice-hwkm.c
+>  create mode 100644 drivers/soc/qcom/qti-ice-regs.h
+>  create mode 100644 include/linux/qti-ice-common.h
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index d32b729b4616..9bf8600b6eea 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -20,8 +20,6 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
- 	struct dev_pm_opp *opp;
- 
--	opp = devfreq_recommended_opp(dev, freq, flags);
--
- 	/*
- 	 * If the GPU is idle, devfreq is not aware, so just ignore
- 	 * it's requests
-@@ -31,6 +29,8 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 		return 0;
- 	}
- 
-+	opp = devfreq_recommended_opp(dev, freq, flags);
-+
- 	if (IS_ERR(opp))
- 		return PTR_ERR(opp);
- 
--- 
-2.31.1
+Thanks for the patches!  These are on top of my patchset
+"[RFC PATCH v2 0/5] Support for hardware-wrapped inline encryption keys"
+(https://lore.kernel.org/linux-block/20210916174928.65529-1-ebiggers@kernel.org),
+right?  You should mention that in your cover letter, so that it's possible for
+people to apply your patches for reviewing or testing, and also to provide
+context about what this feature is and why it is important.
 
+As part of that, it would be helpful to specifically mention the documentation
+for hardware-wrapped keys in Documentation/block/inline-encryption.rst that I
+included in my patchset.  It provides a lot of background information that your
+patches are hard to understand without (at least your patches 2-4; your first
+patch isn't dependent on the hardware-wrapped keys feature).
+
+Can you include information about how your patches were tested?  That's really
+important to include.
+
+Please run './scripts/checkpatch.pl' on your patches, as recommended in
+Documentation/process/submitting-patches.rst.  It can catch a lot of issues.
+
+Please use the imperative tense, like "add wrapped key support" rather than
+"adds wrapped key support".
+
+I'll leave some more comments on the individual patches.
+
+- Eric
