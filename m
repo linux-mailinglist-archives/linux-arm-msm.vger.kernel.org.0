@@ -2,58 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48FB94468C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 20:12:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42A4F4468CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 20:18:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233212AbhKETOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Nov 2021 15:14:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        id S233256AbhKETVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Nov 2021 15:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233166AbhKETOn (ORCPT
+        with ESMTP id S233251AbhKETVH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Nov 2021 15:14:43 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E564C061205
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 12:12:03 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id gh1so7925998qvb.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 12:12:03 -0700 (PDT)
+        Fri, 5 Nov 2021 15:21:07 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0815C061205
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 12:18:27 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id b17so7932012qvl.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 12:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9VbAQ4CycpeCydCl+3e6Z9qMj0HfgIwpfUKF3TZpwTw=;
-        b=aHXSVZGBnFNVrscgu5YnLXxgZlLjwiiJ4V98kIwz5Rxoy7pm9zer1heuXbu5+Ph1Ul
-         1sT5roSP6pI8+Y4jLH9GLHNdS5thhtFuy0hg8f9F36vXi4nqZVsgGblT2z5Jh8BLxEKq
-         0eACSxvDJmzeG9r5XS5VCTojsT/Hhfqd+P+HENmA3YQOp39XgT9hWeMue1tsvBH1ild1
-         UKYp8ZHGZYIfN9ShZOS3Vj9sJgLs6+nTd4YFoeeJPiRg18VQp9tDHh0yWGlxj8WXSgOk
-         C/T5H5GeqWgMm53pSFqtY4qnZkbBhx56IQSho94dXqoRoelWHep2Ku5Hp1AEtHSkKXa1
-         /bVw==
+        bh=nMArXgyRFwIr/sExIAj6beitEUrgpBOeYC39dRrZA5I=;
+        b=AdQbRzdKfXwzzyLDgZX1CPfVluGPIImeOYdxUdUmoANKwSq3VVvIoI6kyaAnAr41G9
+         eTMia7SAgT3ntSLmMnLcARVktjoaB/URXjZczXxIX2Pdqe2ZslrTJVRQmNWClpL8qVc7
+         GN4c7/Y4RX54uVCw03hywLK5VA1muBsdKTKK4sii0WmCQTf2H4TKV/ZMVfRa7MPOPEVG
+         2NafwD/0nNIfv++HAVDmLCC5IsRosfK/J0dgzQunzRqeruyXGa31dblkvYtfnB020zME
+         dVUWUQ40aTvWgDngz9rc9/k8CfErRWkpKG3NnnVTcS5P8qeXI3ey09AFVq94lvQu1V5f
+         TDBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=9VbAQ4CycpeCydCl+3e6Z9qMj0HfgIwpfUKF3TZpwTw=;
-        b=5jXA4S+fZqlOYnkMwEWgQFENLkVawf9Ii2jB2l2dygkXElSATLQq5mj+wYJWZgF7N9
-         /KJkIWsxHdu3y4PzstHP//XFHzatYpV6N2dQriP56UT69qsnd11JPW4SOIzoJpk1dfSA
-         uoinb/C4VT5NXl4BksEbIwH+FQa+3uKYqnZwOzBlIYtH7JoBI6HWG1e8X1HT6Ek7ajKu
-         sGpRwQLCkn5xbiQvcB/U4Wob6VsxdOBJ/OEJv80czLX1421bMQ1CoLXO7FVTiUlCIYCJ
-         eElf6XZ5dNKlfHsq0qIm1DP/G6Tv41J8AF+apYTz+v6rF3dKnO/zOfZ7WqhLC68ls4r7
-         8mXQ==
-X-Gm-Message-State: AOAM531GOiCI4iAC0V6YSivnJkqhLQqb2hh+Wn4o9ypuVpJsgZKy/GzZ
-        9/qP4OpdZDA/RmGUoIxb+3lRXg==
-X-Google-Smtp-Source: ABdhPJxeJE+3UWThCzYmmNpsdqTsnDzvmHohmwQv5Qxqs7WZ8rCVolNpJVy0SVneSw7k8wlsXQZqUA==
-X-Received: by 2002:ad4:5965:: with SMTP id eq5mr1070840qvb.64.1636139522239;
-        Fri, 05 Nov 2021 12:12:02 -0700 (PDT)
+        bh=nMArXgyRFwIr/sExIAj6beitEUrgpBOeYC39dRrZA5I=;
+        b=XgjVJh2yV5QZAMv6UKP+je/WXLzEc8x1cvEwjWbAW2Zxl2ZKm7y+SwxJg5FDdHQMeG
+         6TdOx4TGcJ1OY9tTFKTjDZu9XfDW/QzvtuzEPjhhOAtE4qbufisPp6u2hn8K2loA/N5T
+         orIUB6engwBheb67svfVSTH4hMqLxMbxZz5fM4CLxnKyB8ZNFf4l7J3k2ks4WeMvS1Re
+         v7Qyo0OgMDiTyPOwGBpsMDuM2GH4cpR7vPQwgj9FHdWTh0PY6iOG9OSJ9Hr2FTvH1040
+         cN5Qp2wyq5kkqW2HWX6U19rCOmJaELhdWx3Pa7nlXH2wgCfxPr9y2f7QS9jKInX7QnUO
+         RqXQ==
+X-Gm-Message-State: AOAM532sFL3NN519kUZmSThKLnJCDuZ6j6mQf0n6RfAACT/4HnvYYdMs
+        14DnBUPWCLGb1L+Z5K2N+7iQkA==
+X-Google-Smtp-Source: ABdhPJwwN/1wpc/53ZbKLojNDqoWojpqgZ3ZfuRwqRFO27IFWzyS158WAM1g+eoCD7u2bFewNr246g==
+X-Received: by 2002:a05:6214:2429:: with SMTP id gy9mr10334015qvb.36.1636139906623;
+        Fri, 05 Nov 2021 12:18:26 -0700 (PDT)
 Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id p16sm5893021qtx.92.2021.11.05.12.12.01
+        by smtp.gmail.com with ESMTPSA id d203sm1001287qke.37.2021.11.05.12.18.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Nov 2021 12:12:01 -0700 (PDT)
-Subject: Re: [PATCH v3 4/5] cpufreq: qcom-cpufreq-hw: Use new thermal pressure
- update function
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
+        Fri, 05 Nov 2021 12:18:25 -0700 (PDT)
+Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
+ duplication
+To:     Steev Klimaszewski <steev@kali.org>,
+        Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
         will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
         gregkh@linuxfoundation.org, rafael@kernel.org,
@@ -61,88 +62,302 @@ Cc:     linux-arm-kernel@lists.infradead.org,
         daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
         bjorn.andersson@linaro.org, agross@kernel.org
 References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <20211103161020.26714-5-lukasz.luba@arm.com>
+ <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
+ <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
+ <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
 From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <c4a2618f-71ee-b688-6268-08256a8edf10@linaro.org>
-Date:   Fri, 5 Nov 2021 15:12:00 -0400
+Message-ID: <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
+Date:   Fri, 5 Nov 2021 15:18:25 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20211103161020.26714-5-lukasz.luba@arm.com>
+In-Reply-To: <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lukasz,
 
 
-On 11/3/21 12:10 PM, Lukasz Luba wrote:
-> Thermal pressure provides a new API, which allows to use CPU frequency
-> as an argument. That removes the need of local conversion to capacity.
-> Use this new API and remove old local conversion code.
+On 11/5/21 1:33 PM, Steev Klimaszewski wrote:
+> Hi,
 > 
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-> ---
->   drivers/cpufreq/qcom-cpufreq-hw.c | 15 +++++----------
->   1 file changed, 5 insertions(+), 10 deletions(-)
+> On 11/5/21 11:26 AM, Lukasz Luba wrote:
+>> Hi Steev,
+>>
+>> On 11/5/21 3:39 PM, Steev Klimaszewski wrote:
+>>> Hi Lukasz,
+>>>
+>>
+>> [snip]
+>>
+>>> I've been testing this patchset on the Lenovo Yoga C630, and today 
+>>> while compiling alacritty and running an apt-get full-upgrade, I 
+>>> found the following in dmesg output:
+>>
+>> Thank you for testing and sending feedback!
+>>
+>> Are you using a mainline kernel or you applied on some vendor production
+>> kernel this patch set? I need to exclude a different code base
+>> from the equation, especially to the arch_topology.c init code.
+>>
+> This is stabe 5.15.0 tree with ~72 (including your 6 patches on top 
+> (including the below as a patch).  You can find it at 
+> https://github.com/steev/linux/commits/linux-5.15.y - the vast majority 
+> are just various fixups for sdm845/sdm850 for the Lenovo Yoga (or crypto 
+> since I'd like to see the crypto unit working).
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 0138b2ec406d..425f351450ad 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -275,10 +275,10 @@ static unsigned int qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
->   
->   static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
->   {
-> -	unsigned long max_capacity, capacity, freq_hz, throttled_freq;
->   	struct cpufreq_policy *policy = data->policy;
->   	int cpu = cpumask_first(policy->cpus);
->   	struct device *dev = get_cpu_device(cpu);
-> +	unsigned long freq_hz, throttled_freq;
->   	struct dev_pm_opp *opp;
->   	unsigned int freq;
->   
-> @@ -295,17 +295,12 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
->   
->   	throttled_freq = freq_hz / HZ_PER_KHZ;
->   
-> -	/* Update thermal pressure */
-> -
-> -	max_capacity = arch_scale_cpu_capacity(cpu);
-> -	capacity = mult_frac(max_capacity, throttled_freq, policy->cpuinfo.max_freq);
-> -
->   	/* Don't pass boost capacity to scheduler */
-> -	if (capacity > max_capacity)
-> -		capacity = max_capacity;
+> I did grep through my logs and it appears that this started after I 
+> moved from v2 to v3 - I'd tested v2 and it didn't show this.
+> 
+> [snip]
+> 
+>> [snip]
+>>
+>> That's interesting why we hit this. I should have added info about
+>> those two values, which are compared.
+>>
+>> Could you make this change and try it again, please?
+>> We would know the problematic values, which triggered this.
+>> ---------------------8<-----------------------------------
+>> diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
+>> index db18d79065fe..0d8db0927041 100644
+>> --- a/drivers/base/arch_topology.c
+>> +++ b/drivers/base/arch_topology.c
+>> @@ -185,8 +185,11 @@ void topology_update_thermal_pressure(const 
+>> struct cpumask *cpus,
+>>         /* Convert to MHz scale which is used in 'freq_factor' */
+>>         capped_freq /= 1000;
+>>
+>> -       if (WARN_ON(max_freq < capped_freq))
+>> +       if (max_freq < capped_freq) {
+>> +               pr_warn("THERMAL_PRESSURE: max_freq (%lu) < 
+>> capped_freq (%lu) for CPUs [%*pbl]\n",
+>> +                       max_freq, capped_freq, cpumask_pr_args(cpus));
+>>                 return;
+>> +       }
+>>
+>>         capacity = mult_frac(capped_freq, max_capacity, max_freq);
+>>
+>> ------------------------------>8---------------------------
+> 
+> Applying this to the above kernel.. will test...
+> 
+> 
+>>
+>> Could you also dump for me the cpufreq and capacity sysfs content?
+>> $ grep . /sys/devices/system/cpu/cpu*/cpufreq/*
+> 
+> 
+> /sys/devices/system/cpu/cpu0/cpufreq/affected_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq:300000
+> /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq:1766400
+> /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq:300000
+> /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu0/cpufreq/related_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies:300000 403200 
+> 480000 576000 652800 748800 825600 902400 979200 1056000 1132800 1228800 
+> 1324800 1420800 1516800 1612800 1689600 1766400
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq:300000
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq:1766400
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq:300000
+> /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu1/cpufreq/affected_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_cur_freq:300000
+> /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_max_freq:1766400
+> /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_min_freq:300000
+> /sys/devices/system/cpu/cpu1/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu1/cpufreq/related_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_available_frequencies:300000 403200 
+> 480000 576000 652800 748800 825600 902400 979200 1056000 1132800 1228800 
+> 1324800 1420800 1516800 1612800 1689600 1766400
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq:300000
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq:1766400
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq:300000
+> /sys/devices/system/cpu/cpu1/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu2/cpufreq/affected_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu2/cpufreq/cpuinfo_cur_freq:300000
+> /sys/devices/system/cpu/cpu2/cpufreq/cpuinfo_max_freq:1766400
+> /sys/devices/system/cpu/cpu2/cpufreq/cpuinfo_min_freq:300000
+> /sys/devices/system/cpu/cpu2/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu2/cpufreq/related_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_available_frequencies:300000 403200 
+> 480000 576000 652800 748800 825600 902400 979200 1056000 1132800 1228800 
+> 1324800 1420800 1516800 1612800 1689600 1766400
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq:300000
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq:1766400
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq:300000
+> /sys/devices/system/cpu/cpu2/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu3/cpufreq/affected_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu3/cpufreq/cpuinfo_cur_freq:300000
+> /sys/devices/system/cpu/cpu3/cpufreq/cpuinfo_max_freq:1766400
+> /sys/devices/system/cpu/cpu3/cpufreq/cpuinfo_min_freq:300000
+> /sys/devices/system/cpu/cpu3/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu3/cpufreq/related_cpus:0 1 2 3
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_available_frequencies:300000 403200 
+> 480000 576000 652800 748800 825600 902400 979200 1056000 1132800 1228800 
+> 1324800 1420800 1516800 1612800 1689600 1766400
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq:300000
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq:1766400
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq:300000
+> /sys/devices/system/cpu/cpu3/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu4/cpufreq/affected_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu4/cpufreq/cpuinfo_cur_freq:1920000
+> /sys/devices/system/cpu/cpu4/cpufreq/cpuinfo_max_freq:2956800
+> /sys/devices/system/cpu/cpu4/cpufreq/cpuinfo_min_freq:825600
+> /sys/devices/system/cpu/cpu4/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu4/cpufreq/related_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies:825600 902400 
+> 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 1689600 
+> 1766400 1843200 1920000 1996800 2092800 2169600 2246400 2323200 2400000 
+> 2476800 2553600 2649600 2745600 2841600
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_boost_frequencies:2956800
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_cur_freq:1920000
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq:2841600
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq:825600
+> /sys/devices/system/cpu/cpu4/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu5/cpufreq/affected_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu5/cpufreq/cpuinfo_cur_freq:1996800
+> /sys/devices/system/cpu/cpu5/cpufreq/cpuinfo_max_freq:2956800
+> /sys/devices/system/cpu/cpu5/cpufreq/cpuinfo_min_freq:825600
+> /sys/devices/system/cpu/cpu5/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu5/cpufreq/related_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_available_frequencies:825600 902400 
+> 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 1689600 
+> 1766400 1843200 1920000 1996800 2092800 2169600 2246400 2323200 2400000 
+> 2476800 2553600 2649600 2745600 2841600
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_boost_frequencies:2956800
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_cur_freq:1996800
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq:2841600
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_min_freq:825600
+> /sys/devices/system/cpu/cpu5/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu6/cpufreq/affected_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu6/cpufreq/cpuinfo_cur_freq:1996800
+> /sys/devices/system/cpu/cpu6/cpufreq/cpuinfo_max_freq:2956800
+> /sys/devices/system/cpu/cpu6/cpufreq/cpuinfo_min_freq:825600
+> /sys/devices/system/cpu/cpu6/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu6/cpufreq/related_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_available_frequencies:825600 902400 
+> 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 1689600 
+> 1766400 1843200 1920000 1996800 2092800 2169600 2246400 2323200 2400000 
+> 2476800 2553600 2649600 2745600 2841600
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_boost_frequencies:2956800
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_cur_freq:1996800
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq:2841600
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq:825600
+> /sys/devices/system/cpu/cpu6/cpufreq/scaling_setspeed:<unsupported>
+> /sys/devices/system/cpu/cpu7/cpufreq/affected_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_cur_freq:1996800
+> /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_max_freq:2956800
+> /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_min_freq:825600
+> /sys/devices/system/cpu/cpu7/cpufreq/cpuinfo_transition_latency:0
+> /sys/devices/system/cpu/cpu7/cpufreq/related_cpus:4 5 6 7
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_available_frequencies:825600 902400 
+> 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 1689600 
+> 1766400 1843200 1920000 1996800 2092800 2169600 2246400 2323200 2400000 
+> 2476800 2553600 2649600 2745600 2841600
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_available_governors:ondemand conservative 
+> powersave userspace performance schedutil
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_boost_frequencies:2956800
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_cur_freq:1996800
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_driver:qcom-cpufreq-hw
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor:schedutil
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq:2841600
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq:825600
+> /sys/devices/system/cpu/cpu7/cpufreq/scaling_setspeed:<unsupported>
+> 
+> 
+>> $ grep . /sys/devices/system/cpu/cpu*/cpu_capacity
+> 
+> /sys/devices/system/cpu/cpu0/cpu_capacity:377
+> /sys/devices/system/cpu/cpu1/cpu_capacity:377
+> /sys/devices/system/cpu/cpu2/cpu_capacity:377
+> /sys/devices/system/cpu/cpu3/cpu_capacity:377
+> /sys/devices/system/cpu/cpu4/cpu_capacity:1024
+> /sys/devices/system/cpu/cpu5/cpu_capacity:1024
+> /sys/devices/system/cpu/cpu6/cpu_capacity:1024
+> /sys/devices/system/cpu/cpu7/cpu_capacity:1024
+> 
+> 
+> In taking a look at cpufreq-info, one thing I noticed is that even 
+> though I have 1 in /sys/devices/system/cpu/cpufreq/boost, I am *never* 
+> hitting the 2.96GHz now
+> 
+> cpufreq stats: 826 MHz:59.14%, 902 MHz:0.15%, 979 MHz:0.18%, 1.06 
+> GHz:0.11%, 1.21 GHz:0.49%, 1.29 GHz:0.26%, 1.36 GHz:0.12%, 1.46 
+> GHz:0.23%, 1.54 GHz:0.10%, 1.61 GHz:0.14%, 1.69 GHz:0.09%, 1.77 
+> GHz:0.28%, 1.84 GHz:0.64%, 1.92 GHz:0.23%, 2.00 GHz:0.05%, 2.09 
+> GHz:0.05%, 2.17 GHz:0.03%, 2.25 GHz:0.03%, 2.32 GHz:0.03%, 2.40 
+> GHz:0.03%, 2.48 GHz:0.02%, 2.55 GHz:0.02%, 2.65 GHz:0.03%, 2.75 
+> GHz:0.03%, 2.84 GHz:37.53%, 2.96 GHz:0.00%  (20854)
+> 
+> Aaaand it looks like that is part of the deal - with your patch from 
+> above applied, we get:
+> 
+> [   22.487268] THERMAL_PRESSURE: max_freq(2841) < capped_freq(2956) for 
+> CPUs [4-7]
+> [   22.487313] THERMAL_PRESSURE: max_freq(2841) < capped_freq(2956) for 
+> CPUs [4-7]
+> [   22.508642] THERMAL_PRESSURE: max_freq(2841) < capped_freq(2956) for 
+> CPUs [4-7]
+> [   22.552273] THERMAL_PRESSURE: max_freq(2841) < capped_freq(2956) for 
+> CPUs [4-7]
+> 
+> So, we're not able to hit boost frequencies with this applied?
 
-So, I think this should go into the common 
-topology_update_thermal_pressure in lieu of
+Hi Steve,
 
-+	if (WARN_ON(max_freq < capped_freq))
-+		return;
+Does your system have enough load to hit the boost frequencies ? I don't 
+think this patch should affect hitting boost frequencies as there is no 
+error being returned from topology_update_thermal_pressure.
 
-This will fix the issue Steev Klimaszewski has been reporting
-https://lore.kernel.org/linux-arm-kernel/3cba148a-7077-7b6b-f131-dc65045aa348@arm.com/
+The warning you are getting is because you have boost frequency enabled 
+and IIUC lmh enabled and thermal pressure framework bails out due to 
+boost_frequency being greater than what is available in per_cpu 
+freq_factor. This is because we do not recalculate freq_factor every 
+time boost is enabled / disabled. IIRC there were some discussions 
+around rebuilding scheduler domains and capacity with user space changes 
+to max frequency but it has never proceeded much. Till that point, I 
+think the right way, is to check whether the new capcity exceeds the 
+max_capacity of the cpu and if yes use max_capacity in lieu of 
+new_capacity to calculate thermal pressure.
 
+> 
+> Thank you for the fast response!
+> 
+> -- steev
+> 
 
 -- 
 Warm Regards
 Thara (She/Her/Hers)
-
-
-> +	if (throttled_freq > policy->cpuinfo.max_freq)
-> +		throttled_freq = policy->cpuinfo.max_freq;
->   
-> -	arch_set_thermal_pressure(policy->related_cpus,
-> -				  max_capacity - capacity);
-> +	/* Update thermal pressure */
-> +	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
->   
->   	/*
->   	 * In the unlikely case policy is unregistered do not enable
-> 
-
-
