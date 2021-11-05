@@ -2,103 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CB7D44634B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 13:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E177B446523
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 15:40:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232982AbhKEMWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Nov 2021 08:22:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
+        id S233220AbhKEOnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Nov 2021 10:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232988AbhKEMWh (ORCPT
+        with ESMTP id S233200AbhKEOnA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Nov 2021 08:22:37 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76BFBC061208
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 05:19:57 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id n29so1709466wra.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 05:19:57 -0700 (PDT)
+        Fri, 5 Nov 2021 10:43:00 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3BAC061208
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 07:40:20 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 131so23293490ybc.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 07:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=38elbz2IR5fkB4VA0CiF9D0wL/2ZT5UdV8oyiOM2Qtw=;
-        b=YLomm2FyDoSu9WMwGvizOLEjxt6utFt36oVByjGL6G0ZnccmJkoY+tbP3I6ufpw6XK
-         oJFKLAO/X+MCjBnDriw6tE8jge2w7dt8F/0ljvZ2wwUrvNm6xlEDAUP0NSF8+VVJhFsz
-         MG8IDpCZC+7IMBN6VA+WoiEt1h/WYO45tTol200KHlvQrpfAnFlFday0dfCm0esL/vnC
-         AfV49oNtF7Hs3WfY46pabYdoCkCkUYcAvN6Xeu2VbSJechsswrGpnvAK5qhvKBCkK50u
-         epoyv0Dbme9aJ1LOWtRxoXijrnT/oku6XaUHfJISY6Z1Vu6sUTvWPlIA79yvPkpVUKXL
-         l//Q==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=OcVKYMqD1OAPCy0gYs4jHd1iGD2P0eAuhSWYYDqPTRU=;
+        b=N1b3lJJtt5M01dNp8JbZ9wlxPEgavdHH7kOaEAEVfkbmSn74wy8b6CtEls49gMCxfh
+         oDGZ5S2CX5aqdtYS/rGJ8tdVLMloefoZ/CCMs69c5Kb3rKdKgY/JmI/wlQ7YVGSAo1Jp
+         5Qt1+k0XTxg8qqnZjudP9UAORBJ92sdLU0oIOua3DKAzZc88nDSmPYSD4mAu6mL5fz+A
+         fuhWIp6YLFhkUEgp8GwSRp/VpBCvhqCo9AmlKmC48JW3/NiESuiqszZq0mFPfTvkJwh4
+         riCGAZYjJ1QrH2zKvxrWUuE0yYwflu5v0OdhMQcrfBPvmhBMkbfhd95Vq43EqyQVkBZX
+         rfxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=38elbz2IR5fkB4VA0CiF9D0wL/2ZT5UdV8oyiOM2Qtw=;
-        b=n7VhxtNSFHeDLl/FqHvLX8TnlSguAyRmU2OwESsIm+63leg1ICfWlRPJMXi+qU5J8V
-         aecBnbAfgp9LVAtmoFpzOwjIloA+3kviZn9Fk6NeKAteAdTXIyILm5qTo6ktx43ocCAF
-         ggOZH6F8PYbOdNDUZ3jt0V7g8b3VQXUYBe+rvo3m5clQNDE/dt299pHYyncj5XpdpMgl
-         xny0lPB26LrnOOiGtIbYt0rnfLEJ6+56jViirRffVJ9B2aVAuMU+0HzXovfL/JsJ9YjV
-         eLd2ZSxULC6XM2hpwIO8KDuNmtJt+kmc70wtB+Yypcbny6s1HO5c2RcXaPAbPEzlAbZ3
-         qVQQ==
-X-Gm-Message-State: AOAM530in5LSLVUl7MkZ7VyBkKuAKOwIR8vaXINzF8itOFnm081qFmjB
-        cujqG7vHwQNAedpz/SF+mF0I0Q==
-X-Google-Smtp-Source: ABdhPJyUy/2kTmn7qjTbCcm7W10lj+MiO62QVIh+WhAE5bQoCEMxZzRkpBMjJsdeAk3WP6O66G20Mg==
-X-Received: by 2002:adf:ce0e:: with SMTP id p14mr52434993wrn.423.1636114796154;
-        Fri, 05 Nov 2021 05:19:56 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q84sm13961796wme.3.2021.11.05.05.19.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 05:19:55 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
-        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Cc:     loic.poulain@linaro.org, benl@squareup.com,
-        johannes@sipsolutions.net, bryan.odonoghue@linaro.org
-Subject: [PATCH v3 3/3] wcn36xx: Put DXE block into reset before freeing memory
-Date:   Fri,  5 Nov 2021 12:21:52 +0000
-Message-Id: <20211105122152.1580542-4-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211105122152.1580542-1-bryan.odonoghue@linaro.org>
-References: <20211105122152.1580542-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=OcVKYMqD1OAPCy0gYs4jHd1iGD2P0eAuhSWYYDqPTRU=;
+        b=gl6Ci4O6P15TbtEM1zTnFdzkkgDhGWn5r7bcRe6ch/b2FOyIO/A23vtHJ8frYWQ9J8
+         fnAv2GR243ktZyUsSDCWl6S5gU0dylNN5eoxg4xktdbNZmd17NOyMjXeqQhxKCaEA4h6
+         6cAUT9kFcXeRDyd8URxhdOSToyjkV94rGycktPu2G/7zOQYrJKI1MpUt++WSFXdKi6yL
+         dfnjrCImekveIGMW59vi2JNLi7Ed9qjTkPXH2ixK6MCrGJjucRbVrAFcm09j6vcHw9kV
+         EPJvGC+TQsA7Y96rXg3aNjQpFh+jaSxfqNqzV6ewve/kHoWq5qq4hHnOzTlVMfoAU0h/
+         SxOQ==
+X-Gm-Message-State: AOAM5327VFs5ZMCav2nO1SRNOnbAwgvjMbUfP/MrPrHtEObL/yNmImw0
+        216dIY4Gvr6Ba/xQA/l5bWne+4kthLl+2fBZKdk=
+X-Google-Smtp-Source: ABdhPJw05kKL8b9ZWN/t4Jx2+EAfxvLQNsj/AomruN/WudIelbMWFCdLaw94VW6EpEG3ndoa9x4pKPvIAyjPoawLw4M=
+X-Received: by 2002:a05:6902:1503:: with SMTP id q3mr7369459ybu.90.1636123219455;
+ Fri, 05 Nov 2021 07:40:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a05:7108:5153:0:0:0:0 with HTTP; Fri, 5 Nov 2021 07:40:19
+ -0700 (PDT)
+Reply-To: mrsaishag45@gmail.com
+From:   Mrs Aisha Al-Qaddafi <farahfaridaa11@gmail.com>
+Date:   Fri, 5 Nov 2021 07:40:19 -0700
+Message-ID: <CA+kR5Kc+-A+VFQg9TByOPT+SRxRAWE6FGPNrjuyqzPi-j5iA0A@mail.gmail.com>
+Subject: Dear Friend,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When deiniting the DXE hardware we should reset the block to ensure there
-is no spurious DMA write transaction from the downstream WCNSS to upstream
-MSM at a skbuff address we will have released.
+Hi Dear Friend,
+I came across your e-mail contact prior a private search while in need
+of your assistance. I am Aisha Al-Qaddafi, the only biological
+Daughter of Former President of Libya Col. Muammar Al-Qaddafi. Am a
+single Mother and a Widow with three Children.
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/net/wireless/ath/wcn36xx/dxe.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+I have investment funds worth Twenty Seven Million Five Hundred
+Thousand United State Dollar ($27.500.000.00 ) and i need a trusted
+investment Manager/Partner because of my current refugee status,
+however, I am interested in you for investment project assistance in
+your country, may be from there, we can build business relationship in
+the nearest future.
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
-index d6c951f7dec3b..4e9e13941c8f4 100644
---- a/drivers/net/wireless/ath/wcn36xx/dxe.c
-+++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -1044,6 +1044,8 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 
- void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
- {
-+	int reg_data = 0;
-+
- 	/* Disable channel interrupts */
- 	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_H);
- 	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_L);
-@@ -1059,6 +1061,10 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
- 		wcn->tx_ack_skb = NULL;
- 	}
- 
-+	/* Put the DXE block into reset before freeing memory */
-+	reg_data = WCN36XX_DXE_REG_RESET;
-+	wcn36xx_dxe_write_register(wcn, WCN36XX_DXE_REG_CSR_RESET, reg_data);
-+
- 	wcn36xx_dxe_ch_free_skbs(wcn, &wcn->dxe_rx_l_ch);
- 	wcn36xx_dxe_ch_free_skbs(wcn, &wcn->dxe_rx_h_ch);
- 
--- 
-2.33.0
+I am willing to negotiate investment/business profit sharing ratio
+with you base on the future investment earning profits.
+If you are willing to handle this project on my behalf kindly reply
+urgent to enable me provide you more information about the investment
+funds.
 
+Your Urgent Reply Will Be Appreciated
+Best Regards
+Mrs Aisha Al-Qaddafi
