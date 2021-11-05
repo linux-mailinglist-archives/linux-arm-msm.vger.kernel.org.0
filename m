@@ -2,642 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 461CA445D13
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 01:43:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6118F445D2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 02:06:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbhKEAqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Nov 2021 20:46:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41146 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbhKEAqZ (ORCPT
+        id S231215AbhKEBJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Nov 2021 21:09:32 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:15919 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231133AbhKEBJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Nov 2021 20:46:25 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 555F7C061714
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Nov 2021 17:43:46 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id t30so11185979wra.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Nov 2021 17:43:46 -0700 (PDT)
+        Thu, 4 Nov 2021 21:09:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=46lSqMQ5U5GubsJyl4QG88DLTs1nN3dK9JBk+cRXLPM=;
-        b=NzeDYl7EFjAOlCJPHQM0V6/+Quz2Z3GyM03FKZkUY4erL2wF39FRoY+RuEvksx49uc
-         0nm2CoFr357HDr7wOIvbc5lm5IoMg/ZEZ4a79IP09BIjRt3Dcb4m4m0DNANcl+myOAHO
-         /s5DmGX71AmAppuwLhsHlI7jBQ9M+Cw/K8mspDdU3RCgKznUFMT5Yh4tvEHqUE5GxzEn
-         y6+potktX3kg7QDFFgwPJ3J5oSEhonn+9vw/ctN1g+efvM7rs1jwx7ad0BNpAfy+4I/H
-         sQSUcnmmc0ZeHcRY7x1s6xhtoydAM+V7h1Fvb0y41maGYAaG2VO0bB6EjU5pjRT2rKIA
-         BKMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=46lSqMQ5U5GubsJyl4QG88DLTs1nN3dK9JBk+cRXLPM=;
-        b=w1w00TZoJKB96JiiExyAXWrPHPk6onUdVbsFEAtKqBAM8SYMilLsw1sjBtoOdI0a1H
-         KOGD85rh3OqsOPry6wIw5LHD7NDQmduwSURXbBgRWoRLL1M+LFSjAG43Ymjw+xhW4AuL
-         KA+nWVYzWJpW9BK/DgWKSSvCKzWhqDANaZYBpNwmro0awTT0vX1L/Z2BOvYYhE0ekkFg
-         0ZvuKynBmLUWmkFLhRQkHibnucaJPgVoNvoCeW6t0zuTgeRJyp2YXwmuFhqGCTw6lO0p
-         NrfRLzB8ISjCkc81Pr34bhwmNR046lw3QCL1O60/OBRlKvl8RnwNjR8s9eTNRWUUis2D
-         5uVw==
-X-Gm-Message-State: AOAM530WT3/oUEvzzLRa5FOUqkIcmKMMu/Nj9ohS8purgInbxf2/t6KG
-        DPvyPGLXj403X/R7SQezcPIicBOhI58=
-X-Google-Smtp-Source: ABdhPJz+WZrsv4iM7Rc2Z5xhFuq5xYEus3tvgBkqd6bktq9W3UnEzTFwqtLFpMKfvw533OsuFU0k/A==
-X-Received: by 2002:adf:ded0:: with SMTP id i16mr65144724wrn.335.1636073024727;
-        Thu, 04 Nov 2021 17:43:44 -0700 (PDT)
-Received: from dell5510.suse.de (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id s13sm10029880wmc.47.2021.11.04.17.43.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Nov 2021 17:43:44 -0700 (PDT)
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Petr Vorel <petr.vorel@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        newbyte@disroot.org
-Subject: [RFC PATCH 1/1] arm64: dts: qcom: msm8994-angler: Add sdhc{1,2} definitions
-Date:   Fri,  5 Nov 2021 01:43:36 +0100
-Message-Id: <20211105004336.29913-1-petr.vorel@gmail.com>
-X-Mailer: git-send-email 2.33.1
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636074413; x=1667610413;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=fXUzAmtlORo9GPNRcxy7NY5/rabltRVLJSlXVeirULg=;
+  b=nKbcAzdS0wwla0orFprZ2JS5OV4Ruht0yDiSkaflB94bxtCy+Eo0KNgf
+   KdGWDLnHH36VIHrz7vI3kRGRsUPgaF+CGwGiFTNqLnjeESSFVkjAeDKgk
+   4YGqT/Cy0us6eTfiL+NTFo2O3675Vj0Fu7703D/Xhpz9LPnfXnhOCfT8D
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Nov 2021 18:06:53 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2021 18:06:52 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Thu, 4 Nov 2021 18:06:52 -0700
+Received: from [10.38.242.149] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Thu, 4 Nov 2021
+ 18:06:50 -0700
+Message-ID: <4ac088d4-3e6a-c5f9-97da-85f741414281@quicinc.com>
+Date:   Thu, 4 Nov 2021 18:06:48 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.1
+Subject: Re: [Freedreno] [PATCH] drm/msm/mdp5: drop vdd regulator
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "David Airlie" <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>
+References: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
----
-Hi,
 
 
-this is should *not* be applied as it does not working (yet).
-
-I'm trying to enable sdhc for msm8994 angler, but setup is obviously
-wrong as device is not enabled. 
-
-I get just: sdhci_msm f98a4900.sdhci: Got CD GPIO
-
-Debugging with printing in the code I see problem in drivers/mmc/host/sdhci-msm.c:
-
-static int sdhci_msm_probe(struct platform_device *pdev)
-{
-	...
-	if (!msm_host->mci_removed) {
-		msm_host->core_mem = devm_platform_ioremap_resource(pdev, 1);
-		if (IS_ERR(msm_host->core_mem)) {
-			ret = PTR_ERR(msm_host->core_mem);
-			/* vorel: ret == -517 (-EPROBE_DEFER) several times till giving up */
-			goto clk_disable;
-		}
-	}
-
-Triggered in drivers/mmc/core/regulator.c
-
-/**
- * mmc_regulator_get_supply - try to get VMMC and VQMMC regulators for a host
- * @mmc: the host to regulate
- *
- * Returns 0 or errno. errno should be handled, it is either a critical error
- * or -EPROBE_DEFER. 0 means no critical error but it does not mean all
- * regulators have been found because they all are optional. If you require
- * certain regulators, you need to check separately in your driver if they got
- * populated after calling this function.
- */
-int mmc_regulator_get_supply(struct mmc_host *mmc)
-{
-	struct device *dev = mmc_dev(mmc);
-	int ret;
-
-	mmc->supply.vmmc = devm_regulator_get_optional(dev, "vmmc");
-	mmc->supply.vqmmc = devm_regulator_get_optional(dev, "vqmmc");
-
-	if (IS_ERR(mmc->supply.vmmc)) {
-		if (PTR_ERR(mmc->supply.vmmc) == -EPROBE_DEFER) {
-			return -EPROBE_DEFER; /* vorel: error here */
-		}
-		dev_dbg(dev, "No vmmc regulator found\n");
-		...
-
-Obviously it's something wrong with
-sdhc1
-+	vmmc-supply = <&pm8994_l20>;
-+	vqmmc-supply = <&pm8994_s4>;
-
-and/or sdhc2
-+	vmmc-supply = <&pm8994_l21>;
-+	vqmmc-supply = <&pm8994_l13>;
-
-Any idea what to check?
-
-Downstream kernel has msm8994.dtsi [1] (ignoring sdhc_3 which is
-disabled):
-
-	sdhc_1: sdhci@f9824900 {
-		compatible = "qcom,sdhci-msm";
-		reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
-		reg-names = "hc_mem", "core_mem";
-
-		interrupts = <0 123 0>, <0 138 0>;
-		interrupt-names = "hc_irq", "pwr_irq";
-
-		qcom,bus-width = <8>;
-		qcom,cpu-dma-latency-us = <301 70>;
-		qcom,cpu-affinity = "affine_cores";
-		qcom,cpu-affinity-mask = <0x0f 0xf0>;
-		qcom,wakeup-on-idle;
-
-		qcom,msm-bus,name = "sdhc1";
-		qcom,msm-bus,num-cases = <9>;
-		qcom,msm-bus,num-paths = <1>;
-		qcom,msm-bus,vectors-KBps = <78 512 0 0>, /* No vote */
-			<78 512 1600 3200>,       /* 400 KB/s*/
-			<78 512 80000 160000>,    /* 20 MB/s */
-			<78 512 100000 200000>,   /* 25 MB/s */
-			<78 512 200000 400000>,   /* 50 MB/s */
-			<78 512 400000 800000>,   /* 100 MB/s */
-			<78 512 400000 800000>,   /* 200 MB/s */
-			<78 512 400000 800000>,   /* 400 MB/s */
-			<78 512 2048000 4096000>; /* Max. bandwidth */
-		qcom,bus-bw-vectors-bps = <0 400000 20000000 25000000 50000000
-			100000000 200000000 400000000 4294967295>;
-
-		clock-names = "iface_clk", "core_clk";
-		clocks = <&clock_gcc clk_gcc_sdcc1_ahb_clk>,
-			 <&clock_gcc clk_gcc_sdcc1_apps_clk>;
-
-		status = "disabled";
-	};
-
-	sdhc_2: sdhci@f98a4900 {
-		compatible = "qcom,sdhci-msm";
-		reg = <0xf98a4900 0x11c>, <0xf98a4000 0x800>;
-		reg-names = "hc_mem", "core_mem";
-
-		interrupts = <0 125 0>, <0 221 0>;
-		interrupt-names = "hc_irq", "pwr_irq";
-
-		clock-names = "iface_clk", "core_clk";
-		clocks = <&clock_gcc clk_gcc_sdcc2_ahb_clk>,
-			 <&clock_gcc clk_gcc_sdcc2_apps_clk>;
-
-		qcom,bus-width = <4>;
-		qcom,cpu-dma-latency-us = <301 70>;
-		qcom,cpu-affinity = "affine_cores";
-		qcom,cpu-affinity-mask = <0x0f 0xf0>;
-		qcom,wakeup-on-idle;
-
-		qcom,msm-bus,name = "sdhc2";
-		qcom,msm-bus,num-cases = <8>;
-		qcom,msm-bus,num-paths = <1>;
-		qcom,msm-bus,vectors-KBps = <81 512 0 0>, /* No vote */
-				<81 512 1600 3200>,    /* 400 KB/s*/
-				<81 512 80000 160000>, /* 20 MB/s */
-				<81 512 100000 200000>, /* 25 MB/s */
-				<81 512 200000 400000>, /* 50 MB/s */
-				<81 512 400000 800000>, /* 100 MB/s */
-				<81 512 800000 800000>, /* 200 MB/s */
-				<81 512 2048000 4096000>; /* Max. bandwidth */
-		qcom,bus-bw-vectors-bps = <0 400000 20000000 25000000 50000000
-						100000000 200000000 4294967295>;
-
-		status = "disabled";
-	};
-
-With specific values for angler in msm8994-mtp.dtsi [2]:
-
-&sdhc_1 {
-	vdd-supply = <&pm8994_l20>;
-	qcom,vdd-always-on;
-	qcom,vdd-voltage-level = <2950000 2950000>;
-	qcom,vdd-current-level = <200 570000>;
-
-	vdd-io-supply = <&pm8994_s4>;
-	qcom,vdd-io-always-on;
-	qcom,vdd-io-voltage-level = <1800000 1800000>;
-	qcom,vdd-io-current-level = <200 325000>;
-
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
-
-	qcom,nonremovable;
-
-	qcom,clk-rates = <400000 20000000 25000000 50000000 100000000 192000000 384000000>;
-	qcom,bus-speed-mode = "HS400_1p8v", "HS200_1p8v", "DDR_1p8v";
-	status = "ok";
-};
-
-&sdhc_2 {
-	vdd-supply = <&pm8994_l21>;
-	qcom,vdd-voltage-level = <2950000 2950000>;
-	qcom,vdd-current-level = <200 800000>;
-
-	vdd-io-supply = <&pm8994_l13>;
-	qcom,vdd-io-voltage-level = <1800000 2950000>;
-	qcom,vdd-io-current-level = <200 22000>;
-
-	#address-cells = <0>;
-	interrupt-parent = <&sdhc_2>;
-	interrupts = <0 1 2>;
-	#interrupt-cells = <1>;
-	interrupt-map-mask = <0xffffffff>;
-	interrupt-map = <0 &intc 0 125 0
-			1 &intc 0 221 0
-			2 &pm8994_gpios 8 0x3>;
-	interrupt-names = "hc_irq", "pwr_irq", "status_irq";
-	cd-gpios = <&pm8994_gpios 8 0x1>;
-
-	pinctrl-names = "active", "sleep";
-	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
-	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
-
-	qcom,clk-rates = <400000 20000000 25000000 50000000 100000000 200000000>;
-	qcom,bus-speed-mode = "SDR12", "SDR25", "SDR50", "DDR50", "SDR104";
-	status = "ok";
-};
-
-Current mainline msm8994.dtsi defines sdhc* as:
-
-		sdhc1: sdhci@f9824900 {
-			compatible = "qcom,sdhci-msm-v4";
-			reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
-			reg-names = "hc_mem", "core_mem";
-
-			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-			interrupt-names = "hc_irq", "pwr_irq";
-
-			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-			         <&gcc GCC_SDCC1_AHB_CLK>,
-				 <&xo_board>;
-			clock-names = "core", "iface", "xo";
-
-			pinctrl-names = "default", "sleep";
-			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
-			pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
-
-			bus-width = <8>;
-			non-removable;
-			status = "disabled";
-		};
-
-		sdhc2: sdhci@f98a4900 {
-			compatible = "qcom,sdhci-msm-v4";
-			reg = <0xf98a4900 0x11c>, <0xf98a4000 0x800>;
-			reg-names = "hc_mem", "core_mem";
-
-			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
-				<GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
-			interrupt-names = "hc_irq", "pwr_irq";
-
-			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-				<&gcc GCC_SDCC2_AHB_CLK>,
-				<&xo_board>;
-			clock-names = "core", "iface", "xo";
-
-			pinctrl-names = "default", "sleep";
-			pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
-			pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
-
-			cd-gpios = <&tlmm 100 0>;
-			bus-width = <4>;
-			status = "disabled";
-		};
-
-=> reg values are the same as in downstream, cd-gpios is defined only
-for sdhc_2 (redefined for angler in downstream).
-
-I supppose qcom,vdd-io-voltage-level from downstream is mapped to
-regulator-min-microvolt and regulator-max-microvolt from correspondent regulator pm8994_*.
-How to map qcom,vdd-current-level (load levels for supply in low/high power mode)? I don't see it in
-bindings/regulator/regulator.yaml in mainline.
-
-Also, how to interpred (check) regulator-{min,max}-microvolt values?
-xxd /proc/device-tree/soc/qcom,rpm-smd/rpm-regulator-smpa3/regulator-s3/regulator-min-microvolt
-00000000: 0013 d620                                ...
-
-xxd /proc/device-tree/soc/sdhci@f9824900/vdd-io-supply
-00000000: 0000 003d                                ...=
-
-&sdhc_1 {
-	...
-	vdd-io-supply = <&pm8994_s4>;
-}
-
-pm8994_s3: regulator-s3 {
-	regulator-min-microvolt = <1300000>;
-	...
-}
-
-Thanks for any tip.
-
-Kind regards,
-Petr
-
-[1] https://android.googlesource.com/kernel/msm/+/android-msm-bullhead-3.10-marshmallow-dr/arch/arm/boot/dts/qcom/msm8994.dtsi#1096
-[2] https://android.googlesource.com/kernel/msm/+/android-msm-bullhead-3.10-marshmallow-dr/arch/arm/boot/dts/qcom/msm8994-mtp.dtsi#28
-
- .../boot/dts/qcom/msm8994-angler-rev-101.dts  | 283 ++++++++++++++++++
- 1 file changed, 283 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-index 0e3dd48f0dbf..c7de0dafe913 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-@@ -7,6 +7,9 @@
- /dts-v1/;
- 
- #include "msm8994.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- 
- /* Angler's firmware does not report where the memory is allocated */
- /delete-node/ &cont_splash_mem;
-@@ -41,3 +44,283 @@ serial@f991e000 {
- &tlmm {
- 	gpio-reserved-ranges = <85 4>;
- };
-+
-+/*
-+ * TODO remove duplicity with msm8992-bullhead-rev-101.dts
-+ * There are some todo inherited from it.
-+
-+ * FIXME: verify differences from msm8992-bullhead-rev-101.dts :
-+
-+   pm8994_l20: regulator-l20 {
-+   unique values:
-+	   qcom,init-current = <750>;
-+	   regulator-boot-on;
-+
-+   pm8994_l28: regulator-l28 {
-+   unique values:
-+   qcom,init-current = <45>;
-+   regulator-boot-on;
-+ */
-+&rpm_requests {
-+	pm8994_regulators: pm8994-regulators {
-+		compatible = "qcom,rpm-pm8994-regulators";
-+
-+		vdd_l1-supply = <&pm8994_s1>;
-+		vdd_l2_26_28-supply = <&pm8994_s3>;
-+		vdd_l3_11-supply = <&pm8994_s3>;
-+		vdd_l4_27_31-supply = <&pm8994_s3>;
-+		vdd_l5_7-supply = <&pm8994_s3>;
-+		vdd_l6_12_32-supply = <&pm8994_s5>;
-+		vdd_l8_16_30-supply = <&vph_pwr>;
-+		vdd_l9_10_18_22-supply = <&vph_pwr>;
-+		vdd_l13_19_23_24-supply = <&vph_pwr>;
-+		vdd_l14_15-supply = <&pm8994_s5>;
-+		vdd_l17_29-supply = <&vph_pwr>;
-+		vdd_l20_21-supply = <&vph_pwr>;
-+		vdd_l25-supply = <&pm8994_s5>;
-+		vdd_lvs1_2 = <&pm8994_s4>;
-+
-+		/* S1, S2, S6 and S12 are managed by RPMPD */
-+
-+		pm8994_s1: s1 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+		};
-+
-+		pm8994_s2: s2 {
-+			/* TODO */
-+		};
-+
-+		pm8994_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8994_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <325000>;
-+		};
-+
-+		pm8994_s5: s5 {
-+			regulator-min-microvolt = <2150000>;
-+			regulator-max-microvolt = <2150000>;
-+		};
-+
-+		pm8994_s7: s7 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		/* S8, S9, S10 and S11 - SPMI-managed VDD_APC */
-+
-+		pm8994_l1: l1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8994_l2: l2 {
-+			regulator-min-microvolt = <1250000>;
-+			regulator-max-microvolt = <1250000>;
-+		};
-+
-+		pm8994_l3: l3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8994_l4: l4 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		/* L5 is inaccessible from RPM */
-+
-+		pm8994_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		/* L7 is inaccessible from RPM */
-+
-+		pm8994_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l9: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l11: l11 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8994_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l13: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8994_l14: l14 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8994_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l16: l16 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2700000>;
-+		};
-+
-+		pm8994_l17: l17 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <2700000>;
-+		};
-+
-+		pm8994_l18: l18 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8994_l19: l19 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l20: l20 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-always-on;
-+			regulator-boot-on;
-+			regulator-allow-set-load;
-+			regulator-system-load = <570000>;
-+		};
-+
-+		pm8994_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8994_l22: l22 {
-+			regulator-min-microvolt = <3100000>;
-+			regulator-max-microvolt = <3100000>;
-+		};
-+
-+		pm8994_l23: l23 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8994_l24: l24 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3150000>;
-+		};
-+
-+		pm8994_l25: l25 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8994_l26: l26 {
-+			/* TODO from msm8992-bullhead-rev-101.dts: value from downstream
-+			regulator-min-microvolt = <987500>;
-+			fails to apply */
-+		};
-+
-+		pm8994_l27: l27 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+
-+		pm8994_l28: l28 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm8994_l29: l29 {
-+			/* TODO from msm8992-bullhead-rev-101.dts: Unsupported voltage range.
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			qcom,init-voltage = <2800000>;
-+			*/
-+		};
-+
-+		pm8994_l30: l30 {
-+			/* TODO from msm8992-bullhead-rev-101.dts: get this verified
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,init-voltage = <1800000>;
-+			*/
-+		};
-+
-+		pm8994_l31: l31 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			qcom,init-voltage = <1200000>;
-+			/* FIXME: verify
-+			qcom,init-current = <50>;
-+			regulator-boot-on;
-+			*/
-+		};
-+
-+		pm8994_l32: l32 {
-+			/* TODO from msm8992-bullhead-rev-101.dts: get this verified
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,init-voltage = <1800000>;
-+			*/
-+		};
-+	};
-+
-+	pmi8994_regulators: pmi8994-regulators {
-+		compatible = "qcom,rpm-pmi8994-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_bst_byp-supply = <&vph_pwr>;
-+
-+		pmi8994_s1: s1 {};
-+
-+		/* S2 & S3 - VDD_GFX */
-+
-+		pmi8994_bby: boost-bypass {};
-+	};
-+};
-+
-+&sdhc1 {
-+	status = "okay";
-+
-+
-+	/* downstream: qcom,bus-speed-mode = "HS400_1p8v", "HS200_1p8v", "DDR_1p8v"; */
-+	mmc-hs400-1_8v;
-+
-+	vmmc-supply = <&pm8994_l20>;
-+	vqmmc-supply = <&pm8994_s4>;
-+};
-+
-+&sdhc2 {
-+	status = "okay";
-+
-+	/* downstream: cd-gpios = <&pm8994_gpios 8 0x1>; */
-+	cd-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
-+
-+	vmmc-supply = <&pm8994_l21>;
-+	vqmmc-supply = <&pm8994_l13>;
-+};
--- 
-2.33.1
-
+On 11/3/2021 5:34 PM, Dmitry Baryshkov wrote:
+> The "vdd" regulator was used by the mdp5 driver only on downstream
+> kernels, where the GDSC is represented as a regulator. On all current
+> kernels the MDSS_GDSC is implemented as the power domain, removing the
+> need for this regulator. Remove it from the mdp5 driver.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 24 ++---------------------
+>   1 file changed, 2 insertions(+), 22 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> index 2f4895bcb0b0..2ac8fd37c76b 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> @@ -16,8 +16,6 @@ struct mdp5_mdss {
+>   
+>   	void __iomem *mmio, *vbif;
+>   
+> -	struct regulator *vdd;
+> -
+>   	struct clk *ahb_clk;
+>   	struct clk *axi_clk;
+>   	struct clk *vsync_clk;
+> @@ -189,8 +187,6 @@ static void mdp5_mdss_destroy(struct drm_device *dev)
+>   	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
+>   	mdp5_mdss->irqcontroller.domain = NULL;
+>   
+> -	regulator_disable(mdp5_mdss->vdd);
+> -
+>   	pm_runtime_disable(dev->dev);
+>   }
+>   
+> @@ -238,31 +234,17 @@ int mdp5_mdss_init(struct drm_device *dev)
+>   		goto fail;
+>   	}
+>   
+> -	/* Regulator to enable GDSCs in downstream kernels */
+> -	mdp5_mdss->vdd = devm_regulator_get(dev->dev, "vdd");
+> -	if (IS_ERR(mdp5_mdss->vdd)) {
+> -		ret = PTR_ERR(mdp5_mdss->vdd);
+> -		goto fail;
+> -	}
+> -
+> -	ret = regulator_enable(mdp5_mdss->vdd);
+> -	if (ret) {
+> -		DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n",
+> -			ret);
+> -		goto fail;
+> -	}
+> -
+>   	ret = devm_request_irq(dev->dev, platform_get_irq(pdev, 0),
+>   			       mdss_irq, 0, "mdss_isr", mdp5_mdss);
+>   	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "failed to init irq: %d\n", ret);
+> -		goto fail_irq;
+> +		goto fail;
+>   	}
+>   
+>   	ret = mdss_irq_domain_init(mdp5_mdss);
+>   	if (ret) {
+>   		DRM_DEV_ERROR(dev->dev, "failed to init sub-block irqs: %d\n", ret);
+> -		goto fail_irq;
+> +		goto fail;
+>   	}
+>   
+>   	mdp5_mdss->base.funcs = &mdss_funcs;
+> @@ -271,8 +253,6 @@ int mdp5_mdss_init(struct drm_device *dev)
+>   	pm_runtime_enable(dev->dev);
+>   
+>   	return 0;
+> -fail_irq:
+> -	regulator_disable(mdp5_mdss->vdd);
+>   fail:
+>   	return ret;
+>   }
+> 
