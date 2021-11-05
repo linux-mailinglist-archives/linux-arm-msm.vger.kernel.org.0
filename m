@@ -2,144 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6118F445D2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 02:06:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE209445D66
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 02:39:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231215AbhKEBJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Nov 2021 21:09:32 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:15919 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231133AbhKEBJc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Nov 2021 21:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1636074413; x=1667610413;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=fXUzAmtlORo9GPNRcxy7NY5/rabltRVLJSlXVeirULg=;
-  b=nKbcAzdS0wwla0orFprZ2JS5OV4Ruht0yDiSkaflB94bxtCy+Eo0KNgf
-   KdGWDLnHH36VIHrz7vI3kRGRsUPgaF+CGwGiFTNqLnjeESSFVkjAeDKgk
-   4YGqT/Cy0us6eTfiL+NTFo2O3675Vj0Fu7703D/Xhpz9LPnfXnhOCfT8D
-   8=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Nov 2021 18:06:53 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2021 18:06:52 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Thu, 4 Nov 2021 18:06:52 -0700
-Received: from [10.38.242.149] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Thu, 4 Nov 2021
- 18:06:50 -0700
-Message-ID: <4ac088d4-3e6a-c5f9-97da-85f741414281@quicinc.com>
-Date:   Thu, 4 Nov 2021 18:06:48 -0700
+        id S231388AbhKEBma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Nov 2021 21:42:30 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21]:40272 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230345AbhKEBma (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 4 Nov 2021 21:42:30 -0400
+X-Greylist: delayed 344 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Nov 2021 21:42:29 EDT
+Received: from localhost.localdomain (unknown [124.16.141.244])
+        by APP-01 (Coremail) with SMTP id qwCowACnPyD3iYRhJ0+SBg--.22237S2;
+        Fri, 05 Nov 2021 09:33:44 +0800 (CST)
+From:   Xu Wang <vulab@iscas.ac.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, amitk@kernel.org,
+        thara.gopinath@linaro.org, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] thermal/drivers/qcom/spmi-adc-tm5: Remove unnecessary print function dev_err()
+Date:   Fri,  5 Nov 2021 01:33:40 +0000
+Message-Id: <20211105013340.38300-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: [Freedreno] [PATCH] drm/msm/mdp5: drop vdd regulator
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-CC:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "David Airlie" <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        <freedreno@lists.freedesktop.org>
-References: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20211104003428.2205497-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowACnPyD3iYRhJ0+SBg--.22237S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZrWrWF45tw4DKr1xGryrtFb_yoW3ZwbEkr
+        18Xr4xJ3yFyrn0vw1rtr4akr9FyF4vvF4SgrsavF9Iy345Ja4DWFykAFykArWxZr40kryU
+        CFy3Wry3Gw1fZjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb4kYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+        6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+        8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
+        cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I
+        8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xv
+        F2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r
+        4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACI402YVCY1x02628vn2kI
+        c2xKxwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
+        v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
+        c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
+        0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_
+        Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU2rcTDU
+        UUU
+X-Originating-IP: [124.16.141.244]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCwcPA1z4kkBX0wABsz
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The print function dev_err() is redundant because
+platform_get_irq() already prints an error.
 
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+---
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-On 11/3/2021 5:34 PM, Dmitry Baryshkov wrote:
-> The "vdd" regulator was used by the mdp5 driver only on downstream
-> kernels, where the GDSC is represented as a regulator. On all current
-> kernels the MDSS_GDSC is implemented as the power domain, removing the
-> need for this regulator. Remove it from the mdp5 driver.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 24 ++---------------------
->   1 file changed, 2 insertions(+), 22 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-> index 2f4895bcb0b0..2ac8fd37c76b 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-> @@ -16,8 +16,6 @@ struct mdp5_mdss {
->   
->   	void __iomem *mmio, *vbif;
->   
-> -	struct regulator *vdd;
-> -
->   	struct clk *ahb_clk;
->   	struct clk *axi_clk;
->   	struct clk *vsync_clk;
-> @@ -189,8 +187,6 @@ static void mdp5_mdss_destroy(struct drm_device *dev)
->   	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
->   	mdp5_mdss->irqcontroller.domain = NULL;
->   
-> -	regulator_disable(mdp5_mdss->vdd);
-> -
->   	pm_runtime_disable(dev->dev);
->   }
->   
-> @@ -238,31 +234,17 @@ int mdp5_mdss_init(struct drm_device *dev)
->   		goto fail;
->   	}
->   
-> -	/* Regulator to enable GDSCs in downstream kernels */
-> -	mdp5_mdss->vdd = devm_regulator_get(dev->dev, "vdd");
-> -	if (IS_ERR(mdp5_mdss->vdd)) {
-> -		ret = PTR_ERR(mdp5_mdss->vdd);
-> -		goto fail;
-> -	}
-> -
-> -	ret = regulator_enable(mdp5_mdss->vdd);
-> -	if (ret) {
-> -		DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n",
-> -			ret);
-> -		goto fail;
-> -	}
-> -
->   	ret = devm_request_irq(dev->dev, platform_get_irq(pdev, 0),
->   			       mdss_irq, 0, "mdss_isr", mdp5_mdss);
->   	if (ret) {
->   		DRM_DEV_ERROR(dev->dev, "failed to init irq: %d\n", ret);
-> -		goto fail_irq;
-> +		goto fail;
->   	}
->   
->   	ret = mdss_irq_domain_init(mdp5_mdss);
->   	if (ret) {
->   		DRM_DEV_ERROR(dev->dev, "failed to init sub-block irqs: %d\n", ret);
-> -		goto fail_irq;
-> +		goto fail;
->   	}
->   
->   	mdp5_mdss->base.funcs = &mdss_funcs;
-> @@ -271,8 +253,6 @@ int mdp5_mdss_init(struct drm_device *dev)
->   	pm_runtime_enable(dev->dev);
->   
->   	return 0;
-> -fail_irq:
-> -	regulator_disable(mdp5_mdss->vdd);
->   fail:
->   	return ret;
->   }
-> 
+diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+index 824671cf494a..8492dd3bfed6 100644
+--- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
++++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+@@ -612,10 +612,8 @@ static int adc_tm5_probe(struct platform_device *pdev)
+ 	adc_tm->base = reg;
+ 
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		dev_err(dev, "get_irq failed: %d\n", irq);
++	if (irq < 0)
+ 		return irq;
+-	}
+ 
+ 	ret = adc_tm5_get_dt_data(adc_tm, node);
+ 	if (ret) {
+-- 
+2.25.1
+
