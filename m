@@ -2,80 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E177B446523
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 15:40:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 828D244652A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 15:41:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233220AbhKEOnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Nov 2021 10:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233200AbhKEOnA (ORCPT
+        id S233207AbhKEOo0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Nov 2021 10:44:26 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:36526 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233176AbhKEOo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Nov 2021 10:43:00 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3BAC061208
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 07:40:20 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 131so23293490ybc.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 07:40:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=OcVKYMqD1OAPCy0gYs4jHd1iGD2P0eAuhSWYYDqPTRU=;
-        b=N1b3lJJtt5M01dNp8JbZ9wlxPEgavdHH7kOaEAEVfkbmSn74wy8b6CtEls49gMCxfh
-         oDGZ5S2CX5aqdtYS/rGJ8tdVLMloefoZ/CCMs69c5Kb3rKdKgY/JmI/wlQ7YVGSAo1Jp
-         5Qt1+k0XTxg8qqnZjudP9UAORBJ92sdLU0oIOua3DKAzZc88nDSmPYSD4mAu6mL5fz+A
-         fuhWIp6YLFhkUEgp8GwSRp/VpBCvhqCo9AmlKmC48JW3/NiESuiqszZq0mFPfTvkJwh4
-         riCGAZYjJ1QrH2zKvxrWUuE0yYwflu5v0OdhMQcrfBPvmhBMkbfhd95Vq43EqyQVkBZX
-         rfxA==
+        Fri, 5 Nov 2021 10:44:26 -0400
+Received: by mail-ot1-f48.google.com with SMTP id r10-20020a056830448a00b0055ac7767f5eso13351079otv.3;
+        Fri, 05 Nov 2021 07:41:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=OcVKYMqD1OAPCy0gYs4jHd1iGD2P0eAuhSWYYDqPTRU=;
-        b=gl6Ci4O6P15TbtEM1zTnFdzkkgDhGWn5r7bcRe6ch/b2FOyIO/A23vtHJ8frYWQ9J8
-         fnAv2GR243ktZyUsSDCWl6S5gU0dylNN5eoxg4xktdbNZmd17NOyMjXeqQhxKCaEA4h6
-         6cAUT9kFcXeRDyd8URxhdOSToyjkV94rGycktPu2G/7zOQYrJKI1MpUt++WSFXdKi6yL
-         dfnjrCImekveIGMW59vi2JNLi7Ed9qjTkPXH2ixK6MCrGJjucRbVrAFcm09j6vcHw9kV
-         EPJvGC+TQsA7Y96rXg3aNjQpFh+jaSxfqNqzV6ewve/kHoWq5qq4hHnOzTlVMfoAU0h/
-         SxOQ==
-X-Gm-Message-State: AOAM5327VFs5ZMCav2nO1SRNOnbAwgvjMbUfP/MrPrHtEObL/yNmImw0
-        216dIY4Gvr6Ba/xQA/l5bWne+4kthLl+2fBZKdk=
-X-Google-Smtp-Source: ABdhPJw05kKL8b9ZWN/t4Jx2+EAfxvLQNsj/AomruN/WudIelbMWFCdLaw94VW6EpEG3ndoa9x4pKPvIAyjPoawLw4M=
-X-Received: by 2002:a05:6902:1503:: with SMTP id q3mr7369459ybu.90.1636123219455;
- Fri, 05 Nov 2021 07:40:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:7108:5153:0:0:0:0 with HTTP; Fri, 5 Nov 2021 07:40:19
- -0700 (PDT)
-Reply-To: mrsaishag45@gmail.com
-From:   Mrs Aisha Al-Qaddafi <farahfaridaa11@gmail.com>
-Date:   Fri, 5 Nov 2021 07:40:19 -0700
-Message-ID: <CA+kR5Kc+-A+VFQg9TByOPT+SRxRAWE6FGPNrjuyqzPi-j5iA0A@mail.gmail.com>
-Subject: Dear Friend,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=QkPN/CR5ZJh39sWRmtoFbT/FglcGFlHjZaWBOtBqClo=;
+        b=QHtrSJ35pmAMon1XrDp2IG3ryX2XP494N79GIuu0+934YOnKp8NXCjFW9x2mfA0XqJ
+         +d4cSefKjUnKFSiTwc6lxf5OdhisFde5QAY7rpuWYs1HDNmNr+n36Y6FiBE23FYhQBUo
+         L10Mjs9A9znAY2inHI+cF5DbAUFzmgNRecQghrreoGRZ4j4aAsAKMtu+23vrNKtFGyTE
+         68s4H/Qw6VhbNgMhzwG7bDfFVlEVrQzbPTTc1g3g13NYjBB06tZjkIijsEx92MCirrZe
+         7ObsEQjaygLSTmLyZA4XlOgOasg58MFUwzwlP1TdGCpX4uQUigDsF3MdtojZIIZ/y9Y9
+         oxhw==
+X-Gm-Message-State: AOAM531DzGPjSUd8jd7aRxR+KXg2ntmHBBZja6tCL/+O19SyHNgzXbRT
+        f4iDaXWhiif8pco0vSwFwQ==
+X-Google-Smtp-Source: ABdhPJyBfaghY/9QQkiJr9DXLe8cnBlDWm7hz0KaGjTRDyJ0LtZ9/XGdOhFFiiXvnZ98kvSH8oR3EQ==
+X-Received: by 2002:a9d:24ea:: with SMTP id z97mr21954698ota.64.1636123305984;
+        Fri, 05 Nov 2021 07:41:45 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id c8sm100416ooq.43.2021.11.05.07.41.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Nov 2021 07:41:45 -0700 (PDT)
+Received: (nullmailer pid 1321314 invoked by uid 1000);
+        Fri, 05 Nov 2021 14:41:44 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        heikki.krogerus@linux.intel.com, linux@roeck-us.net,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        wcheng@codeaurora.org, gregkh@linuxfoundation.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20211105033558.1573552-6-bryan.odonoghue@linaro.org>
+References: <20211105033558.1573552-1-bryan.odonoghue@linaro.org> <20211105033558.1573552-6-bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v3 5/7] dt-bindings: usb: Add Qualcomm PMIC TCPM YAML schema
+Date:   Fri, 05 Nov 2021 09:41:44 -0500
+Message-Id: <1636123304.802297.1321313.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dear Friend,
-I came across your e-mail contact prior a private search while in need
-of your assistance. I am Aisha Al-Qaddafi, the only biological
-Daughter of Former President of Libya Col. Muammar Al-Qaddafi. Am a
-single Mother and a Widow with three Children.
+On Fri, 05 Nov 2021 03:35:56 +0000, Bryan O'Donoghue wrote:
+> Add a YAML description for the pm8150b-tcpm driver. The pm8150b-tcpm
+> encapsulates a type-c block and a pdphy block into one block presented to
+> the tcpm Linux API.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/usb/qcom,pmic-tcpm.yaml          | 68 +++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/usb/qcom,pmic-tcpm.yaml
+> 
 
-I have investment funds worth Twenty Seven Million Five Hundred
-Thousand United State Dollar ($27.500.000.00 ) and i need a trusted
-investment Manager/Partner because of my current refugee status,
-however, I am interested in you for investment project assistance in
-your country, may be from there, we can build business relationship in
-the nearest future.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-I am willing to negotiate investment/business profit sharing ratio
-with you base on the future investment earning profits.
-If you are willing to handle this project on my behalf kindly reply
-urgent to enable me provide you more information about the investment
-funds.
+yamllint warnings/errors:
 
-Your Urgent Reply Will Be Appreciated
-Best Regards
-Mrs Aisha Al-Qaddafi
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/usb/qcom,pmic-tcpm.example.dt.yaml: pmic-tcpm: '#address-cells', '#size-cells', 'connector' do not match any of the regexes: 'pinctrl-[0-9]+'
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/usb/qcom,pmic-tcpm.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1551213
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
