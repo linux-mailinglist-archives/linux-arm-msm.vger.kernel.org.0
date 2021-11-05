@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3DF7446346
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 13:19:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0392E446348
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 13:19:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbhKEMWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Nov 2021 08:22:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54282 "EHLO
+        id S231908AbhKEMWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Nov 2021 08:22:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbhKEMWf (ORCPT
+        with ESMTP id S232982AbhKEMWg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Nov 2021 08:22:35 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB4BC061714
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 05:19:55 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id d3so13414017wrh.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 05:19:55 -0700 (PDT)
+        Fri, 5 Nov 2021 08:22:36 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E981C061205
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 05:19:56 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id n29so1709387wra.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 05:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ur1wrD2sIGIWoNcxmqfpjNRNAupi4pVF4IMCI+xTzz8=;
-        b=mdJwVfnKjKOGLKJboaz2Qs1lQzjp2XaxaHiSXLgeazk57B7GmQic+bL1DUi6/LBFiR
-         QsrXrAG30I+egL/jpoHm7xptSbWw0QnIh/evV0Hf9rfezJ5sp+i+nAxbPoVfZFH4mWMs
-         bbWuVwqezWhPS1lmbqKnNhBjeg/GrsLv7W1xGB31eEHlcXo75r3EfffoMmz6KdOUmIpg
-         842jK3rUXnvxk9E1pWnCPgBdJmAFC95eEe7potCAN33t0zliiGnf6M0hxqAAs34IL4qy
-         fegGGxXC/oUSHdEi16mZIpczpT4mxP+7wJyohDtySOgCSDAj3kuQwao1Kaad22TJSgVz
-         YIoQ==
+        bh=8KOl3+26PWtF7eprVNspEgh37KJEfd0Cl1bhXRCaoQk=;
+        b=Fk5P9qJblVgmJkEKkG4i0/n0/K/bPWb7XEOdVWaMfIKh7fx7l/ZvhRYdZ87OBwJ5ks
+         PUlzG22yXhv6L85FMduSDu85Ucz9jZq+SMmE3YOgxLdHADzVsLpP7hiZH7JMd4P4IpZT
+         NeYzUVAd3RT71k+O8V+VxlNAaGyfaCR46rJ9RR7JeUrCB1/wJPvUdowNP7wXQNR0YQiw
+         B2YngbiaRtjSJC0LYAYfHSeYaNtTCwMRcza8Wyj/ZHrheWIK3azFUAcpkFhPqCFK1HsF
+         SrPmUXi8NI2Dy1qdBzXRbdrMakbcK+uXB/Um6oxVtDa6VtmlMESljUqkMjJhJD1Y8I4v
+         XksA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ur1wrD2sIGIWoNcxmqfpjNRNAupi4pVF4IMCI+xTzz8=;
-        b=NGxDV7k2H4TstEKfxxaUNIvR0ajRpDbmMOyFOqhG4yMwMlX5Jwmp4cUCkbn2R1ridH
-         5rO3YXT/qWJ7nabBF4ewuJBbzqVOgq59S2Xux4qncTf4l75ehb05eGNf5vOzOEPxET7o
-         gJMsiprJXITeqVoxeOC+8bXKJlWFCcl1MSZjOMkz++9mu9fDD2yCY8gBptzOonqZzd6f
-         Fy4/75Ne2q0VYK6v+77BmDK9NVdB7kaoSaPueMpfBkaE7/i9paG0FcX3dc3nWlJO748U
-         LsdVue3+eD3nSDhalKMtdCrOsudc3QI8HLPi/DKuLZMqQhcWIrTegzBfv9COjeVrAbBl
-         fLjg==
-X-Gm-Message-State: AOAM530AtdQRBemWcFtNtacLQ1kFmMmN5Q1bDVCnYWOoBlUmh3f2neoQ
-        O30kVhe5dXJFySEoDpG2/zwyJg==
-X-Google-Smtp-Source: ABdhPJw+GcM3Z3Yc9rMcIpQ8AWH8llWUm+tlLfSgRuAVrTWSa29CCiWlkJGFQFsx6c7bFIvDqM6X6A==
-X-Received: by 2002:a05:6000:248:: with SMTP id m8mr53593561wrz.404.1636114794299;
-        Fri, 05 Nov 2021 05:19:54 -0700 (PDT)
+        bh=8KOl3+26PWtF7eprVNspEgh37KJEfd0Cl1bhXRCaoQk=;
+        b=xUsNrB5vZLejEJRwf6N9gerClSt3S+i7+5H9mCeBoiITPbNcCF/HuC0VMhxcdZPWWy
+         PocnA+lCmBYBbyA+SVeYGMxwysb2gxupbcPBWEMUcKQmLCt63l1skZUi1+T+S0qdvOkR
+         PB2RZSKwdkSNTvq7+9JTi0xi5JuNTFqCOWRpfWqtJv9U8yViF/kMaE004e3gXhmZq5Xg
+         HjYsc3tsTPoNRkq9lF+7f+HN03zt9ORgbRCMJTGpTwwnhOZBZkRFcHUouhquwEsuqqtZ
+         FVZdGMNlSxGKRuVopgtFXRGFLaXYSvMaLkpkrE5iVtZvRJM8seBm7HH5CBcyLCV4HfS7
+         XzFg==
+X-Gm-Message-State: AOAM530R+bAjP9qEpgvuRe43go7PKC6nDBHabyjW3QU/3AJZAODaaOyA
+        y8QDG2ArkwFPzK2AUya8c0fqMQ==
+X-Google-Smtp-Source: ABdhPJxQIueW7+eNhymd3zC/U5z2N6SeCbakz/ePf+jfk1cZEF1Jig0M9bUzoBCDDXrvPp9uZW01Ig==
+X-Received: by 2002:adf:d84c:: with SMTP id k12mr32019922wrl.24.1636114795242;
+        Fri, 05 Nov 2021 05:19:55 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id q84sm13961796wme.3.2021.11.05.05.19.53
+        by smtp.gmail.com with ESMTPSA id q84sm13961796wme.3.2021.11.05.05.19.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Nov 2021 05:19:53 -0700 (PDT)
+        Fri, 05 Nov 2021 05:19:54 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
         wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
 Cc:     loic.poulain@linaro.org, benl@squareup.com,
         johannes@sipsolutions.net, bryan.odonoghue@linaro.org
-Subject: [PATCH v3 1/3] wcn36xx: Fix DMA channel enable/disable cycle
-Date:   Fri,  5 Nov 2021 12:21:50 +0000
-Message-Id: <20211105122152.1580542-2-bryan.odonoghue@linaro.org>
+Subject: [PATCH v3 2/3] wcn36xx: Release DMA channel descriptor allocations
+Date:   Fri,  5 Nov 2021 12:21:51 +0000
+Message-Id: <20211105122152.1580542-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211105122152.1580542-1-bryan.odonoghue@linaro.org>
 References: <20211105122152.1580542-1-bryan.odonoghue@linaro.org>
@@ -65,116 +65,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Right now we have a broken sequence where we enable DMA channel interrupts
-which can be left enabled and never disabled if we hit an error path.
-
-Worse still when we unload the driver, the DMA channel interrupt bits are
-left intact. About the only saving grace here is that we do remember to
-disable the wcnss interrupt when unload the driver.
+When unloading the driver we are not releasing the DMA descriptors which we
+previously allocated.
 
 Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/net/wireless/ath/wcn36xx/dxe.c | 38 ++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/wcn36xx/dxe.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/wcn36xx/dxe.c b/drivers/net/wireless/ath/wcn36xx/dxe.c
-index fd627c9f3d409..d6c621518c7b8 100644
+index d6c621518c7b8..d6c951f7dec3b 100644
 --- a/drivers/net/wireless/ath/wcn36xx/dxe.c
 +++ b/drivers/net/wireless/ath/wcn36xx/dxe.c
-@@ -272,6 +272,21 @@ static int wcn36xx_dxe_enable_ch_int(struct wcn36xx *wcn, u16 wcn_ch)
- 	return 0;
+@@ -1061,4 +1061,9 @@ void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
+ 
+ 	wcn36xx_dxe_ch_free_skbs(wcn, &wcn->dxe_rx_l_ch);
+ 	wcn36xx_dxe_ch_free_skbs(wcn, &wcn->dxe_rx_h_ch);
++
++	wcn36xx_dxe_deinit_descs(wcn->dev, &wcn->dxe_tx_l_ch);
++	wcn36xx_dxe_deinit_descs(wcn->dev, &wcn->dxe_tx_h_ch);
++	wcn36xx_dxe_deinit_descs(wcn->dev, &wcn->dxe_rx_l_ch);
++	wcn36xx_dxe_deinit_descs(wcn->dev, &wcn->dxe_rx_h_ch);
  }
- 
-+static void wcn36xx_dxe_disable_ch_int(struct wcn36xx *wcn, u16 wcn_ch)
-+{
-+	int reg_data = 0;
-+
-+	wcn36xx_dxe_read_register(wcn,
-+				  WCN36XX_DXE_INT_MASK_REG,
-+				  &reg_data);
-+
-+	reg_data &= ~wcn_ch;
-+
-+	wcn36xx_dxe_write_register(wcn,
-+				   WCN36XX_DXE_INT_MASK_REG,
-+				   (int)reg_data);
-+}
-+
- static int wcn36xx_dxe_fill_skb(struct device *dev,
- 				struct wcn36xx_dxe_ctl *ctl,
- 				gfp_t gfp)
-@@ -916,7 +931,6 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 		WCN36XX_DXE_WQ_TX_L);
- 
- 	wcn36xx_dxe_read_register(wcn, WCN36XX_DXE_REG_CH_EN, &reg_data);
--	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_L);
- 
- 	/***************************************/
- 	/* Init descriptors for TX HIGH channel */
-@@ -940,9 +954,6 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 
- 	wcn36xx_dxe_read_register(wcn, WCN36XX_DXE_REG_CH_EN, &reg_data);
- 
--	/* Enable channel interrupts */
--	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_H);
--
- 	/***************************************/
- 	/* Init descriptors for RX LOW channel */
- 	/***************************************/
-@@ -952,7 +963,6 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 		goto out_err_rxl_ch;
- 	}
- 
--
- 	/* For RX we need to preallocated buffers */
- 	wcn36xx_dxe_ch_alloc_skb(wcn, &wcn->dxe_rx_l_ch);
- 
-@@ -975,9 +985,6 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 		WCN36XX_DXE_REG_CTL_RX_L,
- 		WCN36XX_DXE_CH_DEFAULT_CTL_RX_L);
- 
--	/* Enable channel interrupts */
--	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_L);
--
- 	/***************************************/
- 	/* Init descriptors for RX HIGH channel */
- 	/***************************************/
-@@ -1009,15 +1016,18 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 		WCN36XX_DXE_REG_CTL_RX_H,
- 		WCN36XX_DXE_CH_DEFAULT_CTL_RX_H);
- 
--	/* Enable channel interrupts */
--	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_H);
--
- 	ret = wcn36xx_dxe_request_irqs(wcn);
- 	if (ret < 0)
- 		goto out_err_irq;
- 
- 	timer_setup(&wcn->tx_ack_timer, wcn36xx_dxe_tx_timer, 0);
- 
-+	/* Enable channel interrupts */
-+	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_L);
-+	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_H);
-+	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_L);
-+	wcn36xx_dxe_enable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_H);
-+
- 	return 0;
- 
- out_err_irq:
-@@ -1034,6 +1044,12 @@ int wcn36xx_dxe_init(struct wcn36xx *wcn)
- 
- void wcn36xx_dxe_deinit(struct wcn36xx *wcn)
- {
-+	/* Disable channel interrupts */
-+	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_H);
-+	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_RX_L);
-+	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_H);
-+	wcn36xx_dxe_disable_ch_int(wcn, WCN36XX_INT_MASK_CHAN_TX_L);
-+
- 	free_irq(wcn->tx_irq, wcn);
- 	free_irq(wcn->rx_irq, wcn);
- 	del_timer(&wcn->tx_ack_timer);
 -- 
 2.33.0
 
