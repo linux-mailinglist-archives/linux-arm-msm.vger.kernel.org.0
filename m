@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80820445E4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 04:05:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35968445E4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 04:05:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230456AbhKEDH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 Nov 2021 23:07:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44272 "EHLO
+        id S232071AbhKEDIE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 Nov 2021 23:08:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbhKEDH7 (ORCPT
+        with ESMTP id S229782AbhKEDIE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 Nov 2021 23:07:59 -0400
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A9FCC061714
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Nov 2021 20:05:20 -0700 (PDT)
-Received: by mail-qv1-xf2a.google.com with SMTP id j9so6581697qvm.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Nov 2021 20:05:20 -0700 (PDT)
+        Thu, 4 Nov 2021 23:08:04 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3867EC061714
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 Nov 2021 20:05:25 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id bm28so7655641qkb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Nov 2021 20:05:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=poorly.run; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=p29jzjn+HciZTKz27UBXeqRtt6jrYIq3wM4tpoc5cfM=;
-        b=W3ZFF4OzpqXBx7l8s8Hp21cuwa2rPHqlccIfRMgsKQC+qqylzTSs/hsK4F2Npg1VIt
-         2842O751JM4bJ9qTmPqpV4GUNnyF13Gekwl+rtPUvk5UQqc99nFnAlm3bg4hn9DoTD8t
-         EEIQwJrTs3KHwK27wdfw5qmcNxNiYHyxLS5Afh+tYLjRMg4co/hsnJmPjugdVwy3Esl1
-         MrtINU1i/tOHKAMtBWuulTJfaodNBdTQdfSxGsONUIIE36s10MBM4EELYo5rXKfjQg3B
-         atwQFhGqGpsjcuij335zJpLoodi2ZmbrW81FOYf1t+TRbgUOz3BWp408+c59pQq164n8
-         Njmg==
+        bh=Xv7HG/Q+S/fL5JaTuonxECkNCYcwf+YUpIYNlE1OLuA=;
+        b=G0mnld0dMm0VxznH8Ud5Dg05i6jsVWo3+IaaczBhvKR6gHY7wCpK8tSO7uGIInKHVe
+         HOJsIx6IEPcx8Dq2No9Ya3LHXW3FYZ6k68YbPbKdwD/4GR44GQmpiVJR6kU6cgFgnUPe
+         E+UKZvmj4QoHwE5VbnPjOTaHqWp8ORsKnjL83f7PSh9S8EROPZuW8UMwXu9Eaqgohd4N
+         0TC4rakOzWnT9GhZ3nmkzXJQGZegSjliC0ifXn6Aru6lsUHlfyYHjmi69Ws5zWH8vC3l
+         AUCmSDtu6udS13HZ+N/JC4K4jV2kdJmQt0aiq5zdXRMoMiTPDNQd1jb6/BPXnW0JwHmM
+         JuUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=p29jzjn+HciZTKz27UBXeqRtt6jrYIq3wM4tpoc5cfM=;
-        b=yf6dsfERO7dpv6Mkb+f7kXdVVMXlsK9PAQEuxhew3yUebjuo5inSaOfN1FBF08n7DS
-         mUqoJuAhdu5sHqAmamTNusEyCCDtXZ3y801hQID3ew4cgSOS2nkXXf3H1uTBF/YZ+3f9
-         9r01IupvuKZr6Ecp3dkK0UpP7VYCqZXTcy5/hgYyxDM0WXn+yvHMSNb0Ea6M2ZZlAPzc
-         kKAinInpQaBcYYnTHFXFEHvO57MSBvHRh3EFXCr5FmjOhMgQd2jHKdRX/ryawW3OHORi
-         lZNfyIbxgeI5JiRtGf10KFSWjSVpKanVHxgYjssR408UHWcaQ8GVQdIntwTuLcYW11ya
-         STkA==
-X-Gm-Message-State: AOAM530Wx21qpdMgL76MhHX0r9dK1FQd4nDc6kmyGq3SzCYERxsY/y+r
-        Gme33wqhmv0eVmAe4yUZAt/9jg==
-X-Google-Smtp-Source: ABdhPJxjpqaOuejmdoVnBRmMROAdccqiWmk/TA4c8Co84JjNZbbGXmcOjN0wLslqkbGBCU5dnpp3gw==
-X-Received: by 2002:a05:6214:f09:: with SMTP id gw9mr21017353qvb.36.1636081519728;
-        Thu, 04 Nov 2021 20:05:19 -0700 (PDT)
+        bh=Xv7HG/Q+S/fL5JaTuonxECkNCYcwf+YUpIYNlE1OLuA=;
+        b=LsH98UaBL622GZ2zCqJPDmOO8zCwGVoRuaGw0Ydc/mU5moZUS6Ap+MZ9igA+6VVAR1
+         C25xU3VUr1GwZpfC98Bd5dKv0RzsvfLmL8fPPVflkPbRzncS3BuOwZ0Axb+MHlTKmYtt
+         FMWAOsd+K599ZaoAjJ0r2yOwOyJftxX9aaCoTypP8Nezj0497hAVbxWAVywZJItHZJjB
+         jaslb/0RFN3/2AAL7RCord/1l18fmqbbM4DfPxISZ0B9UDPEHZZ8bBsEopTGw6KTw+cZ
+         gtMp/F+VJzluwXLnY+0E9QNFjskJ8SEgA/eEvEYSq4CmTaE0YltKDFQhcHowpt6KZrls
+         IX+w==
+X-Gm-Message-State: AOAM533ExpYquQbiD0XSPSSDOlAXhIa9eZJh5LX8Bk/v1l7AYgFRuMdA
+        K5/dXDQsQDsfaDHTyEh8Pwc/Xg==
+X-Google-Smtp-Source: ABdhPJygzG95k4Zn6GZwVmYDW+120k0m+f9VXzNWsZgmBSDaREhsbJgYBcWCqYqOZQVrTTNxxcr6Pw==
+X-Received: by 2002:a05:620a:20d9:: with SMTP id f25mr12159152qka.54.1636081524408;
+        Thu, 04 Nov 2021 20:05:24 -0700 (PDT)
 Received: from localhost ([167.100.64.199])
-        by smtp.gmail.com with ESMTPSA id s18sm5475605qtw.33.2021.11.04.20.05.19
+        by smtp.gmail.com with ESMTPSA id bq30sm5052740qkb.6.2021.11.04.20.05.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Nov 2021 20:05:19 -0700 (PDT)
+        Thu, 04 Nov 2021 20:05:24 -0700 (PDT)
 From:   Sean Paul <sean@poorly.run>
 To:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
@@ -58,9 +58,9 @@ Cc:     bjorn.andersson@linaro.org, swboyd@chromium.org,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 08/14] drm/msm/dpu_kms: Re-order dpu includes
-Date:   Thu,  4 Nov 2021 23:04:25 -0400
-Message-Id: <20211105030434.2828845-9-sean@poorly.run>
+Subject: [PATCH v4 09/14] drm/msm/dpu: Remove useless checks in dpu_encoder
+Date:   Thu,  4 Nov 2021 23:04:26 -0400
+Message-Id: <20211105030434.2828845-10-sean@poorly.run>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211105030434.2828845-1-sean@poorly.run>
 References: <20211105030434.2828845-1-sean@poorly.run>
@@ -72,15 +72,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Sean Paul <seanpaul@chromium.org>
 
-Make includes alphabetical in dpu_kms.c
+A couple more useless checks to remove in dpu_encoder.
 
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-9-sean@poorly.run #v1
-Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-9-sean@poorly.run #v2
-Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-9-sean@poorly.run #v3
+Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-10-sean@poorly.run #v1
+Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-10-sean@poorly.run #v2
+Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-10-sean@poorly.run #v3
 
 Changes in v2:
 -None
@@ -89,32 +89,39 @@ Changes in v3:
 Changes in v4:
 -None
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index a15b26428280..66b7df7daa6a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -21,14 +21,14 @@
- #include "msm_gem.h"
- #include "disp/msm_disp_snapshot.h"
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index e7ee4cfb8461..cc57c615be67 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1148,10 +1148,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+ 	struct msm_drm_private *priv;
+ 	struct drm_display_mode *cur_mode = NULL;
  
--#include "dpu_kms.h"
- #include "dpu_core_irq.h"
-+#include "dpu_crtc.h"
-+#include "dpu_encoder.h"
- #include "dpu_formats.h"
- #include "dpu_hw_vbif.h"
--#include "dpu_vbif.h"
--#include "dpu_encoder.h"
-+#include "dpu_kms.h"
- #include "dpu_plane.h"
--#include "dpu_crtc.h"
-+#include "dpu_vbif.h"
+-	if (!drm_enc) {
+-		DPU_ERROR("invalid encoder\n");
+-		return;
+-	}
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
  
- #define CREATE_TRACE_POINTS
- #include "dpu_trace.h"
+ 	mutex_lock(&dpu_enc->enc_lock);
+@@ -1197,14 +1193,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	struct msm_drm_private *priv;
+ 	int i = 0;
+ 
+-	if (!drm_enc) {
+-		DPU_ERROR("invalid encoder\n");
+-		return;
+-	} else if (!drm_enc->dev) {
+-		DPU_ERROR("invalid dev\n");
+-		return;
+-	}
+-
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
+ 	DPU_DEBUG_ENC(dpu_enc, "\n");
+ 
 -- 
 Sean Paul, Software Engineer, Google / Chromium OS
 
