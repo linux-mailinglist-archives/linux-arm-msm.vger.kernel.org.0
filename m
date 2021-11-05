@@ -2,476 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27CA7446AFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 23:44:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B06F446B01
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Nov 2021 23:46:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232039AbhKEWqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 Nov 2021 18:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54210 "EHLO
+        id S232676AbhKEWtI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 Nov 2021 18:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231987AbhKEWqq (ORCPT
+        with ESMTP id S232660AbhKEWtI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 Nov 2021 18:46:46 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA118C061714
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 15:44:06 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id l7-20020a0568302b0700b0055ae988dcc8so12036831otv.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 15:44:06 -0700 (PDT)
+        Fri, 5 Nov 2021 18:49:08 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64795C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 Nov 2021 15:46:28 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id v40-20020a056830092800b0055591caa9c6so15247529ott.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Nov 2021 15:46:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=+WX8Ony+rRiGfeMOlVgg9laRVvN7WFcLCFVygK2AEnE=;
-        b=QbVTFIJZJMrtiAe6KF2JqYWumFuDKH2NxHcB2Jtw1loSJNYi148ey23obYE046cgeC
-         gFvhJBHztlnrRf+Kfegn8O/XpvCaNpiWi421RMGqBaBF7bJd41spIxBWc3CYLCoz/wNz
-         ftc4g/+eooT3Ym3eazQRrGnZ8TcyeIu3nPGGQ=
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hp5yDR8Prvk1XOLHiJfiiyB7kBL9249Yo9SKWwYcurc=;
+        b=fGfqNbnk2ABvhMLmmytPWqSyXS3vqgLp/RW8uAetdm0Cf3iesPucRqyyvJNF7r0Q0p
+         llJgco8xvycR18ObUR7xkFgLtHf4wCvKrFgsafbzEthUpZ2QrQ/bIeJT8GfvqlEedjcv
+         iKwKJ2Q5F24ztUUhf4RvV7kl+3mahObZwskzURGwwjWy2+VkB1O/U6QYXpe19uBU2TST
+         IFocwXviedARStv0DlCnQR7Ik0ADeMCPrwLR26FdfnDyOunBFQiDG7XMQn5jELVyOcZ2
+         +TtaLKkUegCepqXB+bWAFRHFUaaC+DKjYWDZOCBvv1B3TVOAnSrRUMoPxThIH98QGRmE
+         9Dgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+WX8Ony+rRiGfeMOlVgg9laRVvN7WFcLCFVygK2AEnE=;
-        b=wG0AZpxqRFq/Vf1Al0kYp0JX2EqsMxkgquRnS6fX009aQx+XTYoj5a/BrchwILt1Um
-         XE8Q6ze2KeU/+IPJ9njWnwcR0zGpJNxlN8ct1B7NeMbtlRwsyKZ8f2ytZ2NcZEtr4p5G
-         pi2twgW61QVhRDxsfPtGs+bGBF0XC6cETwHuOm0gzMMI1YpS026VZmf4592JUTi1nyOQ
-         aUKgPOYtH5xhzo/y35oNl7MSmeFA4shbr9x+hhgHknkGF/2elJ7mDromvFWLz+A5nCLn
-         DZGMFvHcA4/EwT3PiyQvBc+35lz4gKCgfLb5sO+Gi9uumhawelOVUc3ILwnMJ4119ZDq
-         ds8w==
-X-Gm-Message-State: AOAM533dnQWWmSlAD43oUXFaVXSjSf4mi9uCfKFVXgkKm9WaFDJ3WMS9
-        qCSzzMxE9FFtca4xBKZFKj+jPyKZT0wfnaZfyky8NblS4Z8=
-X-Google-Smtp-Source: ABdhPJy5xtmakYuQMULnA/0aJZJjq029xQeh+lo87oQLv/bbhjKimEDS3qiZ+v4gGJEf0Z6HeNUDVsH99zbYKaa1qws=
-X-Received: by 2002:a9d:6e16:: with SMTP id e22mr46901158otr.77.1636152245892;
- Fri, 05 Nov 2021 15:44:05 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 5 Nov 2021 15:44:05 -0700
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hp5yDR8Prvk1XOLHiJfiiyB7kBL9249Yo9SKWwYcurc=;
+        b=XAkicvNOPLLJU/H3cTfuTYN7Zi7Ivii1yPVX8xWkObFx3gGMZETS09eJGQzH2ox3gs
+         9VSKRB9YZK3nphIUhBPx0ArnOsm2XfvoPU2FcSk8b/PYo9eUTGQUIpyrYr+mDZQsvNqt
+         bZ3AK4FlNxlJOC1np4TvAYxVbCnhuydpUmqHxumlELAkcnnpWowqLo2xrOogqSUR3uv1
+         izMci4NY0NBP6E3PTEzOcDsnQjqwWcm3rrIQV/l5jxexYDaWijAkUIcEZ4VJPt897DMC
+         fVZI/SlpVHQkBneUCmbKwV41w2OGapJrmUoKUr4S2AFDVS2X3mZdOhQWaZJFJhgcOLz6
+         xasQ==
+X-Gm-Message-State: AOAM532IHn69I8fjWPiStTWxtOeorhdjdC0IGd1Kygg7OLwMPKLTPvQ6
+        cP8IboUdNM03C/9ANY3aiKZhdA==
+X-Google-Smtp-Source: ABdhPJyEJdiMXWfm/UqxBA2WDu4DzGeeV0uKlRlzpuKENRl1YQIIQp1eeo/rNJm6rSb5svD8o3XdZg==
+X-Received: by 2002:a05:6830:4009:: with SMTP id h9mr45877669ots.186.1636152387820;
+        Fri, 05 Nov 2021 15:46:27 -0700 (PDT)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id i11sm2991821oof.36.2021.11.05.15.46.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Nov 2021 15:46:27 -0700 (PDT)
+Message-ID: <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
+Date:   Fri, 5 Nov 2021 17:46:25 -0500
 MIME-Version: 1.0
-In-Reply-To: <1636133291-10551-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1636133291-10551-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 5 Nov 2021 15:44:05 -0700
-Message-ID: <CAE-0n50=x8Ca3gXKy=TZZxMB1ciDXCCkAxCsgBPjJ-M8vw-yzw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: do not initialize phy until plugin interrupt received
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
+ duplication
+Content-Language: en-US
+To:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org
+References: <20211103161020.26714-1-lukasz.luba@arm.com>
+ <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
+ <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
+ <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
+ <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
+ <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
+ <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-11-05 10:28:11)
-> From: Kuogee Hsieh <khsieh@codeaurora.org>
->
-> Combo phy supports both USB and DP simultaneously. There may has a
-> possible conflict during phy initialization phase between USB and
-> DP driver which may cause USB phy timeout when USB tries to power
-> up its phy. This patch has the DP driver not initialize its phy
-> during DP driver initialization phase. Instead DP driver only enable
-> required regulators and clocks so that it is able to receive HPD
-> interrupts after completion of initialization phase. DP driver will
-> initialize its phy when HPD plug-in interrupt received.
-> This patch also provides a positive side effects which balance regulator
-> enable count since regulator only enabled at initialize phase and resume
-> and disabled at followed suspend.
->
 
-Any Fixes: tag?
+> [snip]
+> Hi,
+>
+> So IIUC the below logs correctly, you are never hitting boost 
+> frequency (with or without this patch series). Is that correct ?
+>
+> w.r.t temperature , how are you measuring it? Do you have LMh enabled 
+> or are you using tsens to mitigate cpu temperature ?
 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 97 ++++++++++++++++++++++---------------
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  9 ++--
->  drivers/gpu/drm/msm/dp/dp_display.c | 71 ++++++++++++++++++++-------
->  3 files changed, 119 insertions(+), 58 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 7ec155d..e0e5dc9 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1364,7 +1364,41 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
->         return ret;
->  }
->
-> -int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
-> +void dp_ctrl_irq_enable(struct dp_ctrl *dp_ctrl, bool flip)
-> +{
-> +       struct dp_ctrl_private *ctrl;
-> +
-> +       if (!dp_ctrl) {
-> +               DRM_ERROR("Invalid input data\n");
-> +               return;
-> +       }
-> +
-> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> +
-> +       ctrl->dp_ctrl.orientation = flip;
-> +
-> +       dp_catalog_ctrl_reset(ctrl->catalog);
-> +
-> +       dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
-> +}
-> +
-> +void dp_ctrl_irq_disable(struct dp_ctrl *dp_ctrl)
-> +{
-> +       struct dp_ctrl_private *ctrl;
-> +
-> +       if (!dp_ctrl) {
 
-Please lets stop adding NULL pointer checks. They should be pushed as
-high as possible in the call chain so that we don't need them down deep
-in the driver.
+Hi,
 
-> +               DRM_ERROR("Invalid input data\n");
-> +               return;
-> +       }
-> +
-> +       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> +
-> +       dp_catalog_ctrl_reset(ctrl->catalog);
-> +
-> +       dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-> +}
-> +
-> +void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
->  {
->         struct dp_ctrl_private *ctrl;
->         struct dp_io *dp_io;
-> @@ -1372,34 +1406,24 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
->
->         if (!dp_ctrl) {
->                 DRM_ERROR("Invalid input data\n");
-> -               return -EINVAL;
-> +               return;
->         }
->
->         ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
->         dp_io = &ctrl->parser->io;
->         phy = dp_io->phy;
->
-> -       ctrl->dp_ctrl.orientation = flip;
-> -
-> -       if (reset)
-> -               dp_catalog_ctrl_reset(ctrl->catalog);
-> +       DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
+I was wrong - it does indeed go boost with the patchset applied, it's 
+just that it doesn't boost up to 2.96GHz very often at all. As noted by 
+the 0.03% when i ran it while compiling zellij; I reapplied the patches 
+(and the 6th patch from Lukasz's email) and after boot, 2.96GHz was 
+showing at 0.39%.
 
-Use %p instead of casting to a u32.
+Most tools that read the cpu frequency don't really seem to be well 
+suited for big.LITTLE, and seem to throw an average of the speed, so 
+cpufreq-info was the best I have.  We're apparently supposed to be using 
+cpupower these days, but it doesn't seem to know anything about arm64 
+devices.
 
->
-> -       DRM_DEBUG_DP("flip=%d\n", flip);
->         dp_catalog_ctrl_phy_reset(ctrl->catalog);
->         phy_init(phy);
-> -       dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
->
-> -       return 0;
-> +       DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
->  }
->
-> -/**
-> - * dp_ctrl_host_deinit() - Uninitialize DP controller
-> - * @dp_ctrl: Display Port Driver data
-> - *
-> - * Perform required steps to uninitialize DP controller
-> - * and its resources.
-> - */
-> -void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
-> +void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl)
->  {
->         struct dp_ctrl_private *ctrl;
->         struct dp_io *dp_io;
-> @@ -1414,10 +1438,14 @@ void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
->         dp_io = &ctrl->parser->io;
->         phy = dp_io->phy;
->
-> -       dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-> +       DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> +
-> +       dp_catalog_ctrl_phy_reset(ctrl->catalog);
->         phy_exit(phy);
->
-> -       DRM_DEBUG_DP("Host deinitialized successfully\n");
-> +       DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
->  }
->
->  static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
-> @@ -1895,8 +1923,14 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
->                 return ret;
->         }
->
-> +       DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> +
->         phy_power_off(phy);
->
-> +       DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> +
->         /* aux channel down, reinit phy */
->         phy_exit(phy);
->         phy_init(phy);
-> @@ -1905,23 +1939,6 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
->         return ret;
->  }
->
-> -void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
-> -{
-> -       struct dp_ctrl_private *ctrl;
-> -       struct dp_io *dp_io;
-> -       struct phy *phy;
-> -
-> -       ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-> -       dp_io = &ctrl->parser->io;
-> -       phy = dp_io->phy;
-> -
-> -       dp_catalog_ctrl_reset(ctrl->catalog);
-> -
-> -       phy_exit(phy);
-> -
-> -       DRM_DEBUG_DP("DP off phy done\n");
-> -}
-> -
->  int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
->  {
->         struct dp_ctrl_private *ctrl;
-> @@ -1949,10 +1966,14 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
->                 DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
->         }
->
-> +       DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> +
->         phy_power_off(phy);
-> -       phy_exit(phy);
->
-> -       DRM_DEBUG_DP("DP off done\n");
-> +       DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-> +               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> +
+Temperature wise, I'm just getting from the sensors, and I am using LMh.
 
-These debug prints make it really hard to see what's actually changing.
-Can you please add them after making the fix in a different patch? So
-first patch fixes the problem, and the second patch adds more logging to
-track the counts for each phy pointer.
+Now, I have to admit, while I've thrown a patch here or there, I'm not 
+exactly a kernel developer, just enough knowledge to be somewhat 
+dangerous and know how to backport things.  In my mind, and my line of 
+thinking, I would expect with boost enabled, that the cpu would boost up 
+to that as often as possible, not require a specific workload to 
+actually hit it.  But then again, I would expect multiple compilation 
+jobs to be one of the workloads that would?
 
->         return ret;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 2363a2d..c1e4b1b 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -19,12 +19,9 @@ struct dp_ctrl {
->         u32 pixel_rate;
->  };
->
-> -int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-> -void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
-> -void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);
->  int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
->  void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-> @@ -34,4 +31,10 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
->                         struct dp_power *power, struct dp_catalog *catalog,
->                         struct dp_parser *parser);
->
-> +void dp_ctrl_irq_enable(struct dp_ctrl *dp_ctrl, bool flip);
+So I think, the part about never hitting 2.96GHz can be dismissed, and 
+was simply my lack of knowledge about the cpufreq-info tool's averages.  
+It does seem however to rarely ever hit 2.96GHz and I would actually 
+expect it to hit it far more often.
 
-This just looks odd. Why does irq enable care about flip? Is there a
-better name for this function?
-
-> +void dp_ctrl_irq_disable(struct dp_ctrl *dp_ctrl);
-> +void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl);
-> +void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl);
-> +void dp_ctrl_irq_phy_exit(struct dp_ctrl *dp_ctrl);
-> +
->  #endif /* _DP_CTRL_H_ */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e41dd40..17d2d5c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -84,6 +84,7 @@ struct dp_display_private {
->
->         /* state variables */
->         bool core_initialized;
-> +       bool phy_initialized;
->         bool hpd_irq_on;
->         bool audio_supported;
->
-> @@ -387,7 +388,7 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->         return rc;
->  }
->
-> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
-> +static void dp_display_host_init(struct dp_display_private *dp)
->  {
->         bool flip = false;
->
-> @@ -400,12 +401,37 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
->         if (dp->usbpd->orientation == ORIENTATION_CC2)
->                 flip = true;
->
-> -       dp_power_init(dp->power, flip);
-> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
-> +       dp_power_init(dp->power, false);
-> +       dp_ctrl_irq_enable(dp->ctrl, flip);
-> +
-> +       if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
-
-Can we get a comment here why it's safe to initialize the phy for eDP
-but not for DP? And maybe a pointer to where the phy is initialized for
-DP?
-
-> +               dp_ctrl_phy_init(dp->ctrl);
-> +
->         dp_aux_init(dp->aux);
->         dp->core_initialized = true;
->  }
->
-> +static void dp_display_host_phy_init(struct dp_display_private *dp)
-> +{
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
-> +       if (dp->phy_initialized == false) {
-
-The preferred style is
-
-	if (!dp->phy_initialized)
-
-> +               dp_ctrl_phy_init(dp->ctrl);
-> +               dp->phy_initialized = true;
-> +       }
-> +}
-> +
-> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
-> +{
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
-> +
-> +       if (dp->phy_initialized == true) {
-> +               dp_ctrl_phy_exit(dp->ctrl);
-> +               dp->phy_initialized = false;
-> +       }
-> +}
-> +
->  static void dp_display_host_deinit(struct dp_display_private *dp)
->  {
->         if (!dp->core_initialized) {
-> @@ -413,7 +439,7 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
->                 return;
->         }
->
-> -       dp_ctrl_host_deinit(dp->ctrl);
-> +       dp_ctrl_irq_disable(dp->ctrl);
->         dp_aux_deinit(dp->aux);
->         dp_power_deinit(dp->power);
->
-> @@ -424,7 +450,7 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
->  {
->         struct dp_display_private *dp = dev_get_dp_display_private(dev);
->
-> -       dp_display_host_init(dp, true);
-> +       dp_display_host_phy_init(dp);
->
->         return dp_display_process_hpd_high(dp);
->  }
-> @@ -551,7 +577,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
->                 dp->hpd_state = ST_DISCONNECTED;
->
->                 if (ret == -ECONNRESET) { /* cable unplugged */
-> -                       dp->core_initialized = false;
-> +                       dp->phy_initialized = false;
->                 }
->
->         } else {
-> @@ -623,9 +649,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->         if (state == ST_DISCONNECTED) {
->                 /* triggered by irq_hdp with sink_count = 0 */
->                 if (dp->link->sink_count == 0) {
-> -                       dp_ctrl_off_phy(dp->ctrl);
-> +                       dp_display_host_phy_exit(dp);
->                         hpd->hpd_high = 0;
-> -                       dp->core_initialized = false;
->                 }
->                 mutex_unlock(&dp->event_mutex);
->                 return 0;
-> @@ -716,7 +741,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
->
->         ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
->         if (ret == -ECONNRESET) { /* cable unplugged */
-> -               dp->core_initialized = false;
-> +               dp->phy_initialized = false;
->         }
->         DRM_DEBUG_DP("hpd_state=%d\n", state);
->
-> @@ -918,12 +943,19 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
->
->         dp_display->audio_enabled = false;
->
-> -       /* triggered by irq_hpd with sink_count = 0 */
->         if (dp->link->sink_count == 0) {
-> +               /*
-> +                * irq_hpd with sink_count = 0
-> +                * hdmi unplugged out of dongle
-> +                */
->                 dp_ctrl_off_link_stream(dp->ctrl);
->         } else {
-> +               /*
-> +                * unplugged interrupt
-> +                * dongle unplugged out of DUT
-> +                */
->                 dp_ctrl_off(dp->ctrl);
-> -               dp->core_initialized = false;
-> +               dp_display_host_phy_exit(dp);
->         }
->
->         dp_power_panel_on(dp->power, false);
-> @@ -1059,7 +1091,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
->  static void dp_display_config_hpd(struct dp_display_private *dp)
->  {
->
-> -       dp_display_host_init(dp, true);
-> +       dp_display_host_init(dp);
->         dp_catalog_ctrl_hpd_config(dp->catalog);
->
->         /* Enable interrupt first time
-> @@ -1338,7 +1370,7 @@ static int dp_pm_resume(struct device *dev)
->         dp->hpd_state = ST_DISCONNECTED;
->
->         /* turn on dp ctrl/phy */
-> -       dp_display_host_init(dp, true);
-> +       dp_display_host_init(dp);
->
->         dp_catalog_ctrl_hpd_config(dp->catalog);
->
-> @@ -1346,12 +1378,15 @@ static int dp_pm_resume(struct device *dev)
->          * set sink to normal operation mode -- D0
->          * before dpcd read
-
-Does this comment still apply?
-
->          */
-> -       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-> -
->         if (dp_catalog_link_is_connected(dp->catalog)) {
-> +               dp_display_host_phy_init(dp);
-> +
-> +               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->                 sink_count = drm_dp_read_sink_count(dp->aux);
->                 if (sink_count < 0)
->                         sink_count = 0;
-> +
-> +               dp_display_host_phy_exit(dp);
->         }
->
->         dp->link->sink_count = sink_count;
