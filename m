@@ -2,110 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8829A446F33
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Nov 2021 18:08:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D845446F4F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Nov 2021 18:21:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbhKFRLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 Nov 2021 13:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
+        id S234000AbhKFRXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 Nov 2021 13:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234649AbhKFRLS (ORCPT
+        with ESMTP id S230219AbhKFRXu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 Nov 2021 13:11:18 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82BEEC06120A
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Nov 2021 10:08:36 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 13so2609717ljj.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Nov 2021 10:08:36 -0700 (PDT)
+        Sat, 6 Nov 2021 13:23:50 -0400
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E358C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 Nov 2021 10:21:09 -0700 (PDT)
+Received: by mail-oi1-x22e.google.com with SMTP id bh10so1958075oib.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Nov 2021 10:21:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Ra1BXH1mMvzlfwLf58YXxvKpl4xCKYL2+7bQMH4f4Ic=;
-        b=hWfhd4WqhxVia6qAP5I/BmZbVOUE4pK+zqJjZHKsaLaUfg5wRZf7VAOYoW/DeaPqAA
-         gc68u2rfPx+J1au61skDN471TEkBm39v0Sp01b1mrfY7jDE2u3eDqoc37e02iaf3qrVN
-         BIZjwVIDunb9dZnZ8y+JhLR+fGnd7J0o13cd7FT14GsIIwXWB38mzTaWSKtKJnc2Wjff
-         AqHvCsPwNEDWma0kf6/quSSzd5pCCVvBCBOzQsQZ3jE2r+H25jsXmbgPXeCArRwwh9RL
-         QcG2HfR0NqNDcCq7gz1iNCUqdiB1yoiiRAvYaihkFnPEU0W9g34okj6Znl+VtRoJ7r0t
-         fmLQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vTSLEwZ2lTdgm04aqi8C+KVIKM9ISYcIdJi5xTJQmDQ=;
+        b=TM7HT/3kUvCVkyIyxqrla2bPoXwiNaUgVa/rkdmDjclsBlQ+MF4cgYeM/LlxxQn+u+
+         Upxm0KHjHAlzeiGcjmD3wX0/bO2011j3SFBKR+42KzRtu3rUHR486mXtat3EwEIQLY5O
+         xB5EJZNBvZHyQap3cH0THKAk/lKVH3CLTC/c2HSCGZBqt6vc6Dn//I+0ydBVp/BrFWgv
+         8KpLjGyF3Ozozmncwwdp2w9H5NjqlVxTFPofh5Hfo7RiO99fV3XnkB2PN8voK5dB71ik
+         jlwRhUwFz+mvHuqzHdqZI64R6e/1wCRhpaOuvqeibUZLnmp+SQ9JSFe6+Mz0OQxOzpUU
+         7nvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Ra1BXH1mMvzlfwLf58YXxvKpl4xCKYL2+7bQMH4f4Ic=;
-        b=T25FvPNXuabjNFeTCcukIjRz/CFziBxJOJ1RIVJwfHfE0+Nhw3aQAt8FTl1jo/5sg4
-         GN7I3l7p97Go0qkj3wtWN2y3V51RsplcfDw4iznBcZTXEQq0fnlAJdeXTW68YOZDf45a
-         HZtBNyE168UTYqldZff3bDUptP6haP5Q4+QxyAeSP9jhihWCcW2eSNmwVDUU11uFN9Qk
-         mOAhdgrgLHdYd9PNWY+04bGnZDkvReCcCHG2SnBKianPQ7MpkRynlUKPr/YU6f/7ZJZK
-         vzksyIGBGfHgAaEM2Qn/qBOvyoY+5ao7Gl042u6Ybn8Pv0vi7rC69ohYrOcTR3dPCGYQ
-         JFXQ==
-X-Gm-Message-State: AOAM532GE4KY7j+LSMJl2ysn9xm7xrj5MhgLsZY50PpGcyGMq9kBa9ZT
-        gF+jubiGmKTrKGqqUX8/jqZwbbnBgcjTL2KO
-X-Google-Smtp-Source: ABdhPJxFRw4c4lV8pU6p+Q3c3cW6wkyhE3Zgn4ouE51tUvxu3ICTcvN9+7ZPfxD0MjrJoWTxBpwxmg==
-X-Received: by 2002:a2e:91d4:: with SMTP id u20mr3210304ljg.92.1636218514622;
-        Sat, 06 Nov 2021 10:08:34 -0700 (PDT)
-Received: from [192.168.1.102] (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
-        by smtp.gmail.com with ESMTPSA id u9sm1212394lfo.87.2021.11.06.10.08.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Nov 2021 10:08:34 -0700 (PDT)
-Subject: Re: [PATCH] pinctrl: qcom: sm8350: Correct UFS and SDC offsets
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211104170835.1993686-1-bjorn.andersson@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <51217da2-958d-124e-c84d-27b1432e0f37@linaro.org>
-Date:   Sat, 6 Nov 2021 19:08:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        bh=vTSLEwZ2lTdgm04aqi8C+KVIKM9ISYcIdJi5xTJQmDQ=;
+        b=1u/ccCRzwEiuOZtkVWTi+vpAXM3IPMG/0ysI137Di6mvizuhlVZBQEl+esV3IhyMj/
+         dOpI0gm+/lhKcl78Y/4sDHuuqq9c8ann434iNOQnYJhwiRITfznjNl25QjpwYc/eZLK7
+         JXmjosjkwJ80Ez5rc0M277GCdH88pqaOrlTi3x5KISNIIaGwwFCb1XXF6huDZnyqOmnN
+         nJIQbzVWipqfAC2gEPmpVka3prIHzOJsTiV64YUwOaDkiBOI8MrbKrXC7fAGkb/HnMmJ
+         1kLc11BhClC7+HM9itczTlCFiJ0bWRfzGKaCpjJ2ztG+2ccjfmv6Os/Iheugf8O0/52a
+         T9+w==
+X-Gm-Message-State: AOAM532R/8aZwvi3KYYjRPPxzMAgD8NrIhSwtj4Ri6SVZw0+1NvqOUbZ
+        ACC37MXrehIJmiMNcFmDbVUSCA==
+X-Google-Smtp-Source: ABdhPJwqV+YJ+7OmqgyefLnoB9WNSGrGUryYUqJWPS8f6XLyzo2xKmxNbd/mkUmHKL02UYGvTeOrxw==
+X-Received: by 2002:a05:6808:1897:: with SMTP id bi23mr6223384oib.111.1636219268707;
+        Sat, 06 Nov 2021 10:21:08 -0700 (PDT)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 64sm3905304otm.37.2021.11.06.10.21.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Nov 2021 10:21:08 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dp: Drop now unused hpd_high member
+Date:   Sat,  6 Nov 2021 10:22:46 -0700
+Message-Id: <20211106172246.2597431-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-In-Reply-To: <20211104170835.1993686-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/4/21 7:08 PM, Bjorn Andersson wrote:
-> The downstream TLMM binding covers a group of TLMM-related hardware
-> blocks, but the upstream binding only captures the particular block
-> related to controlling the TLMM pins from an OS. In the translation of
-> the driver from downstream, the offset of 0x100000 was lost for the UFS
-> and SDC pingroups.
-> 
-> Fixes: d5d348a3271f ("pinctrl: qcom: Add SM8350 pinctrl driver")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   drivers/pinctrl/qcom/pinctrl-sm8350.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> index 4d8f8636c2b3..1c042d39380c 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> @@ -1597,10 +1597,10 @@ static const struct msm_pingroup sm8350_groups[] = {
->   	[200] = PINGROUP(200, qdss_gpio, _, _, _, _, _, _, _, _),
->   	[201] = PINGROUP(201, _, _, _, _, _, _, _, _, _),
->   	[202] = PINGROUP(202, _, _, _, _, _, _, _, _, _),
-> -	[203] = UFS_RESET(ufs_reset, 0x1d8000),
-> -	[204] = SDC_PINGROUP(sdc2_clk, 0x1cf000, 14, 6),
-> -	[205] = SDC_PINGROUP(sdc2_cmd, 0x1cf000, 11, 3),
-> -	[206] = SDC_PINGROUP(sdc2_data, 0x1cf000, 9, 0),
-> +	[203] = UFS_RESET(ufs_reset, 0xd8000),
-> +	[204] = SDC_PINGROUP(sdc2_clk, 0xcf000, 14, 6),
-> +	[205] = SDC_PINGROUP(sdc2_cmd, 0xcf000, 11, 3),
-> +	[206] = SDC_PINGROUP(sdc2_data, 0xcf000, 9, 0),
->   };
->   
->   static const struct msm_gpio_wakeirq_map sm8350_pdc_map[] = {
-> 
+Since '8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon
+Chipsets")' the hpd_high member of struct dp_usbpd has been write-only.
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Let's clean up the code a little bit by removing the writes as well.
 
---
-Best wishes,
-Vladimir
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 6 ------
+ drivers/gpu/drm/msm/dp/dp_hpd.c     | 2 --
+ drivers/gpu/drm/msm/dp/dp_hpd.h     | 2 --
+ 3 files changed, 10 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index aba8aa47ed76..70177c0d6a37 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -522,11 +522,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 
+ 	dp->hpd_state = ST_CONNECT_PENDING;
+ 
+-	hpd->hpd_high = 1;
+-
+ 	ret = dp_display_usbpd_configure_cb(&dp->pdev->dev);
+ 	if (ret) {	/* link train failed */
+-		hpd->hpd_high = 0;
+ 		dp->hpd_state = ST_DISCONNECTED;
+ 
+ 		if (ret == -ECONNRESET) { /* cable unplugged */
+@@ -603,7 +600,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 		/* triggered by irq_hdp with sink_count = 0 */
+ 		if (dp->link->sink_count == 0) {
+ 			dp_ctrl_off_phy(dp->ctrl);
+-			hpd->hpd_high = 0;
+ 			dp->core_initialized = false;
+ 		}
+ 		mutex_unlock(&dp->event_mutex);
+@@ -627,8 +623,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	/* disable HPD plug interrupts */
+ 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
+ 
+-	hpd->hpd_high = 0;
+-
+ 	/*
+ 	 * We don't need separate work for disconnect as
+ 	 * connect/attention interrupts are disabled
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
+index e1c90fa47411..db98a1d431eb 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.c
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.c
+@@ -32,8 +32,6 @@ int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
+ 	hpd_priv = container_of(dp_usbpd, struct dp_hpd_private,
+ 					dp_usbpd);
+ 
+-	dp_usbpd->hpd_high = hpd;
+-
+ 	if (!hpd_priv->dp_cb || !hpd_priv->dp_cb->configure
+ 				|| !hpd_priv->dp_cb->disconnect) {
+ 		pr_err("hpd dp_cb not initialized\n");
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
+index 5bc5bb64680f..8feec5aa5027 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.h
++++ b/drivers/gpu/drm/msm/dp/dp_hpd.h
+@@ -26,7 +26,6 @@ enum plug_orientation {
+  * @multi_func: multi-function preferred
+  * @usb_config_req: request to switch to usb
+  * @exit_dp_mode: request exit from displayport mode
+- * @hpd_high: Hot Plug Detect signal is high.
+  * @hpd_irq: Change in the status since last message
+  * @alt_mode_cfg_done: bool to specify alt mode status
+  * @debug_en: bool to specify debug mode
+@@ -39,7 +38,6 @@ struct dp_usbpd {
+ 	bool multi_func;
+ 	bool usb_config_req;
+ 	bool exit_dp_mode;
+-	bool hpd_high;
+ 	bool hpd_irq;
+ 	bool alt_mode_cfg_done;
+ 	bool debug_en;
+-- 
+2.33.1
+
