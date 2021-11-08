@@ -2,112 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D84AD448076
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 14:45:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 698434480B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 15:00:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240062AbhKHNrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 08:47:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59036 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240082AbhKHNrs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 08:47:48 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D92EC061714
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 05:45:04 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id b13so15864837plg.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 05:45:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2SsoXlIEyA7M7oMepGUCAXbufcXq3sSqZoUCUyAHvCU=;
-        b=Rh/WDrUBEdWGDRXKQdDay5CItIX8kUAL6HHZo+Hww1b90kKjzsmnbBn76HYmrpHWdB
-         sTmCcBcsq0tOjjuXma4yCbzBK+JqFFi/kflvJ71ZFEsWf/RRN0WKrsyjzQxPZI2agQ41
-         xnt2De17E5PDNaAHT+M+rAeqd1ZQZ/lr0LDB8eLJ39p35sWpDZW2hM5Bfi28vzcesfuL
-         J3KKVqkhJd258VIX4cRJQoRDT5c1rN7OSev/PnHfGI/nFhuNeq5j2arRajVOUpj+KNq9
-         xwcH2edrXgALRMnjGlTHbqHPz5iKpEd5mCUjLYWMPLqnn7ZJLduC28Ia9R9pKh+EvgQW
-         gYcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2SsoXlIEyA7M7oMepGUCAXbufcXq3sSqZoUCUyAHvCU=;
-        b=O7Fh+C3HMJ+/xIG0CC+orwQ3H61A+UGFqQ+ZGsBpILUN2EkWkDjbywosLD2xT1rAwK
-         i6q5eOhHx4ChLS8JkejcPrTdMn1GAngV265vjJ3ySrkCbhWELzm7K9b46l52v5W7/1HZ
-         LVC+bbCw++NSPC+chLWkSb7A69KM0GMtSKB4EBIRZU5cFTtgIEknbzKbkdDIW9Yoqs3V
-         gQ/qymiVduL2YkMPo34jrUHaG6jnu9zWnulooRolB87+vJ298R3GfYkaV0TxgnkY+23V
-         TV3mkSamnpfqRnyklSUewtpyxFUxIBy689ghTz2lYVKa/mpmsJA/pcFtkmW+Y4akep9+
-         Epxg==
-X-Gm-Message-State: AOAM531rOlUauGWfNGhB+k+2K3r2IdzquMp+DR5KaKL7SKIEYr5gbIOI
-        a4NH19pD0941xfqFM5D624DCxw==
-X-Google-Smtp-Source: ABdhPJzJ13KWDy70wNVqIrlae8ZGm1C9RGa6I9/T0uTLRxiD6Fvr7g3RJZ2By3Zvj3XwBsK3VgvibQ==
-X-Received: by 2002:a17:90a:db89:: with SMTP id h9mr51675447pjv.71.1636379103605;
-        Mon, 08 Nov 2021 05:45:03 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id m184sm3693974pga.61.2021.11.08.05.45.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 05:45:03 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH 3/3] soc: qcom: rpmpd: Add QCM2290 support
-Date:   Mon,  8 Nov 2021 21:44:42 +0800
-Message-Id: <20211108134442.30051-4-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211108134442.30051-1-shawn.guo@linaro.org>
-References: <20211108134442.30051-1-shawn.guo@linaro.org>
+        id S235988AbhKHODa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 09:03:30 -0500
+Received: from mail.kernel.org ([198.145.29.99]:55560 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235902AbhKHOD3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Nov 2021 09:03:29 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3752A61361;
+        Mon,  8 Nov 2021 14:00:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1636380045;
+        bh=izUyU11zdeMT/aRwDCiBBWYzJdGvltLhmfBSK2Tce+0=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=mEWEk1uA14JZDV8wdYpw/taS+kSP+ss3RukHOzmvdL3U3cnmDlLnR0NUm7oPUYrvv
+         QQMvYEAGyrJuqUW62s8r27UJBSVIuOtj22tcDqtNHvY7WqoLuyqY3x1i+0SoIYRAdo
+         VTNKNq5L+s/mK6mlNDX+0XOUcUkdPglUAwrbusN8bCZbCeGE3U9ZA97LMo1zy5LIe8
+         rt9zE6z8rm2CqSbe3iA4gqO64gyqdmFch1czd1RCJAtKdfMVp87gn0iFt8BpRLJJj8
+         YR9D3xq06mXyKN3qSFiyEM1g1hehhfjlcvIcMgjCxprX4Kt8wENKjZmfqTVa56tGnp
+         29EdGu0AqyVew==
+Received: by mail-ed1-f54.google.com with SMTP id o8so62775226edc.3;
+        Mon, 08 Nov 2021 06:00:45 -0800 (PST)
+X-Gm-Message-State: AOAM530k1bFzBSu9ogLVwBD7UJGOHpo7TQyP5jM9N4aAORvkat+tQBf7
+        nEjxZ59WwTI3xOiPDZagvuMkLSmGKYG31HHSHg==
+X-Google-Smtp-Source: ABdhPJz1YCKek/SoIOKWCmTzcAVXHyiGtNhZcHIUPo0/ukWjKFdSzT5KKPUakqks2jia4+yz0wIt1WJJDG5tCLUAVtA=
+X-Received: by 2002:a05:6402:350e:: with SMTP id b14mr55082191edd.271.1636380042836;
+ Mon, 08 Nov 2021 06:00:42 -0800 (PST)
+MIME-Version: 1.0
+References: <1635519876-7112-1-git-send-email-srivasam@codeaurora.org>
+ <1635519876-7112-2-git-send-email-srivasam@codeaurora.org>
+ <CAE-0n53ok5muZ8nhpsigsw3w_qx_TSxGSdm7pf9nbb+s4K+HiQ@mail.gmail.com>
+ <0cf52203-249a-2f6c-6106-888631ac85fa@codeaurora.org> <CAL_JsqLxJ4HYUEcdCu-5EiakXe9e3yueOdxRa24K2r04F1Zqeg@mail.gmail.com>
+ <b1f2280a-b349-6862-c6e1-f74a5584c9bc@codeaurora.org>
+In-Reply-To: <b1f2280a-b349-6862-c6e1-f74a5584c9bc@codeaurora.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Mon, 8 Nov 2021 08:00:31 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqL--zFvm=TWN2b2f4XJC3VigNwRq9gyf2PcAAVoiM8A4A@mail.gmail.com>
+Message-ID: <CAL_JsqL--zFvm=TWN2b2f4XJC3VigNwRq9gyf2PcAAVoiM8A4A@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine
+ machine bindings
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        "Gross, Andy" <agross@kernel.org>,
+        Linux-ALSA <alsa-devel@alsa-project.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Patrick Lai <plai@codeaurora.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Takashi Iwai <tiwai@suse.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCM2290 has the same RPM power domains as SM6115.  Add QCM2290
-support by reusing SM6115 power domains.
+On Mon, Nov 8, 2021 at 1:35 AM Srinivasa Rao Mandadapu
+<srivasam@codeaurora.org> wrote:
+>
+>
+> On 11/6/2021 7:00 AM, Rob Herring wrote:
+> Thanks for Your time Rob!!!
+> > On Tue, Nov 2, 2021 at 5:57 AM Srinivasa Rao Mandadapu
+> > <srivasam@codeaurora.org> wrote:
+> >>
+> >> On 10/30/2021 12:37 AM, Stephen Boyd wrote:
+> >> Thanks for Your time Stephen!!!
+> >>> Quoting Srinivasa Rao Mandadapu (2021-10-29 08:04:35)
+> >>>> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+> >>>> new file mode 100644
+> >>>> index 0000000..3a781c8
+> >>>> --- /dev/null
+> >>>> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+> >>>> @@ -0,0 +1,170 @@
+> >>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >>>> +%YAML 1.2
+> >>>> +---
+> >>>> +$id: http://devicetree.org/schemas/sound/google,sc7280-herobrine.yaml#
+> >>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>>> +
+> >>>> +title: Google SC7280-Herobrine ASoC sound card driver
+> >>>> +
+> >>>> +maintainers:
+> >>>> +  - Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> >>>> +  - Judy Hsiao <judyhsiao@chromium.org>
+> >>>> +
+> >>>> +description:
+> >>>> +  This binding describes the SC7280 sound card which uses LPASS for audio.
+> >>>> +
+> >>>> +properties:
+> >>>> +  compatible:
+> >>>> +    enum:
+> >>>> +      - google,sc7280-herobrine
+> >>>> +
+> >>>> +  audio-routing:
+> >>>> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> >>>> +    description:
+> >>>> +      A list of the connections between audio components. Each entry is a
+> >>>> +      pair of strings, the first being the connection's sink, the second
+> >>>> +      being the connection's source.
+> >>>> +
+> >>>> +  model:
+> >>>> +    $ref: /schemas/types.yaml#/definitions/string
+> >>>> +    description: User specified audio sound card name
+> >>>> +
+> >>>> +  "#address-cells":
+> >>>> +    const: 1
+> >>>> +
+> >>>> +  "#size-cells":
+> >>>> +    const: 0
+> >>>> +
+> >>>> +patternProperties:
+> >>>> +  "^dai-link@[0-9a-f]$":
+> >>>> +    description:
+> >>>> +      Each subnode represents a dai link. Subnodes of each dai links would be
+> >>>> +      cpu/codec dais.
+> >>>> +
+> >>>> +    type: object
+> >>>> +
+> >>>> +    properties:
+> >>>> +      link-name:
+> >>>> +        description: Indicates dai-link name and PCM stream name.
+> >>>> +        $ref: /schemas/types.yaml#/definitions/string
+> >>>> +        maxItems: 1
+> >>>> +
+> >>>> +      reg:
+> >>>> +        maxItems: 1
+> >>>> +        description: dai link address.
+> >>>> +
+> >>>> +      cpu:
+> >>>> +        description: Holds subnode which indicates cpu dai.
+> >>>> +        type: object
+> >>>> +        properties:
+> >>>> +          sound-dai: true
+> >>> Is sound-dai required? And additionalProperties is false? I think we
+> >>> need that yet again.
+> >> Okay. Will mark additionalPropertiesas true.
+> > 'additiionalProperties: true' is almost never right. It's generally
+> > only correct for schemas that are incomplete collections of
+> > properties.
+> >
+> > Rob
+>
+> As per Stephen Suggestion. thought it's a solution.
+>
+> The sound-dai required here, and same is fallowed in SC7180 machine
+> driver bindings.
+>
+> Could You please suggest better approach on this?
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/soc/qcom/rpmpd.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Exactly what Stephen said, add:
 
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 3e7905854eb9..36b2381039e6 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -395,6 +395,23 @@ static const struct rpmpd_desc sm6115_desc = {
- 	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
- };
- 
-+static struct rpmpd *qcm2290_rpmpds[] = {
-+	[QCM2290_VDDCX] = &sm6115_vddcx,
-+	[QCM2290_VDDCX_AO] = &sm6115_vddcx_ao,
-+	[QCM2290_VDDCX_VFL] = &sm6115_vddcx_vfl,
-+	[QCM2290_VDDMX] = &sm6115_vddmx,
-+	[QCM2290_VDDMX_AO] = &sm6115_vddmx_ao,
-+	[QCM2290_VDDMX_VFL] = &sm6115_vddmx_vfl,
-+	[QCM2290_VDD_LPI_CX] = &sm6115_vdd_lpi_cx,
-+	[QCM2290_VDD_LPI_MX] = &sm6115_vdd_lpi_mx,
-+};
-+
-+static const struct rpmpd_desc qcm2290_desc = {
-+	.rpmpds = qcm2290_rpmpds,
-+	.num_pds = ARRAY_SIZE(qcm2290_rpmpds),
-+	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
-+};
-+
- static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
- 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
-@@ -404,6 +421,7 @@ static const struct of_device_id rpmpd_match_table[] = {
- 	{ .compatible = "qcom,msm8994-rpmpd", .data = &msm8994_desc },
- 	{ .compatible = "qcom,msm8996-rpmpd", .data = &msm8996_desc },
- 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
-+	{ .compatible = "qcom,qcm2290-rpmpd", .data = &qcm2290_desc },
- 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
- 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
- 	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
--- 
-2.17.1
+required:
+  - sound-dai
 
+additionalProperties: false
