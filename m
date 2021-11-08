@@ -2,167 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3416E449816
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 16:23:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E198E4499E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 17:31:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231776AbhKHPZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 10:25:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238994AbhKHPZ3 (ORCPT
+        id S238768AbhKHQek (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 11:34:40 -0500
+Received: from relay10.mail.gandi.net ([217.70.178.230]:54253 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230299AbhKHQej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 10:25:29 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC8D7C061570
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 07:22:44 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id n66so4480819oia.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 07:22:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=g/Jzi4/bsCpORi3XVmLRvQb2/I7DBGZkp7KCpuyf5T4=;
-        b=mwH7FrqfQHnXKY5/RCDBKF2ggnIJcEyODdypMgivJ6eQLdASF6Hwkjw3j5vZk9kv0j
-         EGZnIsoaH/xgkRkINylGmDaZMfPtv07Jq6XIvgIctnr/nRWCHbl2sUHKp/7FYlI+/cF+
-         P2V07ztnCG2SdGzcI26Gd24RsTx8znOcyNBH/jePoOI5JDZPAXFDs+PfgixGFeCt70o7
-         98mL+hZWz4UGgFtzGH9I8ZXm9vivkR1XFZcuQ7ZDu/lw3rRiQdKVurksZ7gzDlynnSts
-         alGl5qGDn8/MyKSfW+/q4YxhmzspH2JzpAyaLSkEDyjgPGPt7LtlxCW9Xr9l8UGlYZRc
-         PEhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=g/Jzi4/bsCpORi3XVmLRvQb2/I7DBGZkp7KCpuyf5T4=;
-        b=Kme7QgErpuDPplYxc/PE1hBkmTH20rOF8l9cswUgaGm4Jk+B2Jx8X9mB3ktfqo7DIL
-         jaUBrCI/7f8Rpcd4L+NC1p6SAYLGkxoS0qOU6yiL9MKuAYOafZ2Y8bKB9SJV5ZuUZ61Y
-         n2LIZrkyOuhrynGEHX8N3TQUxx2vzh3kBAGY5JYoHhVpTRIGeD34efgqUfi4j7BjWK7+
-         0lTgxayKuAGHxr4huMCOOO2r0W+0EzfnDTcNtm2QI8y9GhJE35OeQbv3pW7rP+uvcCZ9
-         6mxP49Db4CzhiRqfeHofCCIYrL5oHwX3R5j3OUvmSvs1+7Xgj4GQ7Qmy98pytDRm+H+D
-         xmbA==
-X-Gm-Message-State: AOAM532GAsiFboCJydy0r0MCEHoYZtDJGXecMmQKIBvFPEdg2Kx+ot33
-        lvoMrCUUvyoAhEctzzgV/9cIsg==
-X-Google-Smtp-Source: ABdhPJyA6CRh1gldV9oc+Y86Ziq8FBRBvK1+8E1GkBSCwavEQvBLlT9jJop8RTiuLa1QL65Gd4rWOA==
-X-Received: by 2002:a05:6808:d53:: with SMTP id w19mr23526832oik.19.1636384964280;
-        Mon, 08 Nov 2021 07:22:44 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id e2sm5524291ooh.40.2021.11.08.07.22.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Nov 2021 07:22:43 -0800 (PST)
-Message-ID: <eac00041-a1b8-0780-931d-52249d538800@kali.org>
-Date:   Mon, 8 Nov 2021 09:22:42 -0600
+        Mon, 8 Nov 2021 11:34:39 -0500
+Received: (Authenticated sender: thomas.perrot@bootlin.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 3E641240009;
+        Mon,  8 Nov 2021 16:31:53 +0000 (UTC)
+Message-ID: <d787fb8d6588ba5e05232fc5809d4cbd80117ebf.camel@bootlin.com>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+From:   Thomas Perrot <thomas.perrot@bootlin.com>
+To:     Aleksander Morgado <aleksander@aleksander.es>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Date:   Mon, 08 Nov 2021 17:31:51 +0100
+In-Reply-To: <CAAP7ucJ6a+r6b6C4C51ov6O8sepYmut2uc7sXDqFOOdJruW6nQ@mail.gmail.com>
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+         <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
+         <CAAP7ucJ6a+r6b6C4C51ov6O8sepYmut2uc7sXDqFOOdJruW6nQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+        protocol="application/pgp-signature"; boundary="=-kCwyP7KUw2sJuhRQXZAE"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
- duplication
-Content-Language: en-US
-To:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
- <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
- <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
- <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
- <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
- <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
- <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
- <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-> Hi Steev,
->
-> So this depends on the cpufreq governor you are using. By-default arm 
-> systems have sched-util governor enabled. This means you will scale up 
-> to boost depending on cpu load and not always. If you want to ensure 
-> you are always hitting boost frequency, you should enable performance 
-> governor for cpufreq and try.
->
-> Also since the defconfig has by default CPU_FREQ_STAT enabled, you 
-> should be able to get statistics out of cpufreq to see the time spent 
-> by a cpu in each frequency. I think cpufreq-info -s should give you 
-> this info. If not, you can explicitly get it for each cpu from
->
-> cat /sys/devices/system/cpu/cpu<X>/cpufreq/stats/time_in_state
->
-> Regarding temperature, if you have applied all the patches in the 
-> sdm845 LMh series and have LMh enabled, cpu throttling starts around 
-> 95 degree C.
->
-Hi Thara,
+--=-kCwyP7KUw2sJuhRQXZAE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Indeed, I ended up finding the time_in_state when I was doing more 
-digging after my last mail.  I do have the sdm845 LMh series and LMh 
-enabled, however I don't think I've ever seen my system go above 90C here.
+Hi Aleksander,
 
-So a quick look, and... we are simply almost never getting the 2.95GHz 
-at all, regardless of workload.  I saw Lukasz response as well about the 
-math possibly being wrong, but I haven't had a chance.
+On Mon, 2021-11-08 at 16:11 +0100, Aleksander Morgado wrote:
+> Hey Thomas,
+>=20
+> Reviving an old email :)
+>=20
+> > On our setup, using i.MX6DL based board and a PCIe Sierra Wireless
+> > EM9190 module, running Yocto and Linux 5.13, we don't have much
+> > success
+> > for the moment, qmi and mbim commands very often end in timeout.
+> >=20
+> > Otherwise, when responses are received, we also can observe strange
+> > things: unexpected messages, response to previous commands or queue
+> > buffer issue.
+> >=20
+>=20
+> Once all my boot reliability issues seem solved, I've also started to
+> notice what you mean here. If I run a normal ModemManager build with
+> both QMI and MBIM enabled, MM will try to probe both the QMI and MBIM
+> ports. When that happens, I have no idea why, the modem gets in some
+> weird state with commands timing out and what not. Maybe it's because
+> we're using both ports at the same time, maybe it's because we run
+> QMI
+> on both the QMI and MBIM ports, no idea, the only thing I know is
+> that
+> if you choose to use either one or the other, the whole setup is
+> fully
+> stable.
+>=20
+> E.g. I'm right now testing my build after compiling ModemManager
+> using
+> --without-mbim (so QMI only), and I have absolutely no error.=C2=A0
 
-Regarding the time in state - I went with policy4 instead of per cpu 
-(for brevity sake) and it's here:
+That's very good news!
 
-c630:~$ cat /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-825600 225037
-902400 92
-979200 205
-1056000 96
-1209600 902
-1286400 386
-1363200 396
-1459200 217
-1536000 101
-1612800 75
-1689600 95
-1766400 130
-1843200 255
-1920000 318
-1996800 92
-2092800 87
-2169600 66
-2246400 60
-2323200 58
-2400000 54
-2476800 47
-2553600 50
-2649600 69
-2745600 58
-2841600 54619
-2956800 5
+> Another
+> option if you don't want to rebuild MM is to flag the MBIM or the QMI
+> port as ID_MM_PORT_IGNORE with udev rules, which is very likely what
+> I'll end up doing in upstream ModemManager to have a proper default.
+>=20
+> I was thinking in preparing and sending for review the EM91xx entry
+> for drivers/bus/mhi/pci_generic.c, but it's mostly based on what you
+> suggested in the Sierra Wireless forum, so not sure if you'd like to
+> send it yourself here?=C2=A0
 
-So we spend *very* little time in 2.96GHz and this is after almost 14 
-hours of uptime on the C630.  By comparison, on a Pinebook Pro where 
-I've added in 2GHz as a boost frequency :
+I can send it myself here, and I add you as developer if you'd like ?
 
-pinebook-pro:~$ cat 
-/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-408000 16084466
-600000 27212
-816000 32487
-1008000 11331
-1200000 13268
-1416000 75078
-1608000 18392
-1800000 207266
-2016000 648612
+Best regards,
+Thomas
 
-With the Pinebook Pro, which doesn't even come close to getting to 95C, 
-we spend a lot more time in 2GHz.
+> The only changes I did w.r.t. what you
+> suggested are setting sideband_wake to false, and listing the
+> PCI_DEVICE_SUB() before the more generic PCI_DEVICE() one.
+>=20
 
--- steev
+--=20
+Thomas Perrot, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com
+
+
+--=-kCwyP7KUw2sJuhRQXZAE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmGJUPcACgkQn8ALBXH+
+Cu1CJQv9E6Q27xwT0xo4D1nUdL48AVcZ/oV5c6f+XKmON+GA/B85ITu28DR0eQ8+
+MDbNYSWM5KR+WDGZcsTBBu3vxzrkElx6oCRfGceOVQgF8I3jzo0LR//SDFV/1zOO
+nPlBkca5Rxs7h0Gws/GVNlNAJksnxv9MOCqxukghCurUOvXJ6D3rQh3i9un7v6XT
+Xalc/9Vin5aTQxOzxNNSc+Tw3U4hMczPeEjpNGgc1yTt+MlypTrQ95PybwpeK/ob
+m07OuRnwMJZnKYZ+b9zYuRiwpzWGVmhhwRz715xW42vttHXjU54IWM5chBB9lrTb
+NFSTDdN5kQzxzbYD7r+1Y+IXaa1ZZgBbSf0rTGAiFDcx+YjOsN7DX+U1fN7hgmjW
+RTz+bPmvxwGc/iyfRSILLdWfn3frJ+oND1vfqxbLOQIBI/FTkwnAOHeuZv+MUhCT
+WZfotopQy+85Mrju1UHRdxR2Xo9/4M2MYCM/fihIsIsFCvvUfoKbSPWsuPzTVJ6O
+hD81RRJ7
+=Jlm2
+-----END PGP SIGNATURE-----
+
+--=-kCwyP7KUw2sJuhRQXZAE--
 
