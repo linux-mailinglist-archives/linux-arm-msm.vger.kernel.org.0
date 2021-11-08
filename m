@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF4D9449AF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 18:42:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64249449B18
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 18:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236704AbhKHRot (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 12:44:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56946 "EHLO
+        id S234146AbhKHRwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 12:52:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236668AbhKHRor (ORCPT
+        with ESMTP id S232524AbhKHRwu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 12:44:47 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA01BC061570
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 09:42:02 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id g184so15815206pgc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 09:42:02 -0800 (PST)
+        Mon, 8 Nov 2021 12:52:50 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC584C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 09:50:05 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id 127so16785788pfu.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 09:50:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=EnIJwxmNa0x7pf7LGo/bEAx4wU18K4eSu1l9NYLvfDo=;
-        b=ny8gfZ8QcojE5hEkgD9kHFXY0PTyNb8itrZETCnbig69rmjw1knw49E0o0QuY0oNSK
-         paV0qrFEvHUF4qqHBAA6m+y/JgwcjeQ+LLcIqW4Xc9cO4XUdUsdT2UzCC51Nu4SVh9Kp
-         58vqFD6WVHMedEmybDgiF3j5cyF3L6Qmb3E2IFNOQbDr0FD5cKJ6MJ5WqeAAfLy/E5p3
-         jANh4nc/Sy2LnPMOqk9EVbITkOREy//FGTmztRUDxeed0MBQpw7pXav24JSEkhUQhcMa
-         EpP5ZFgZWPsWDH9dC1+jaZwvGmvJXm+HHyA0nJE3UoJGWDjsRZ+WGx+96Ce/dXg1UEUI
-         6sxA==
+        bh=eRQf1Z1iL0SZkrNMLt9RYnFCV5P9RcLr043ZTAOoan4=;
+        b=pJaxEgPVmIAaCbq0f1cTgJOC1wryIGSHFrAAjNLWptHJOQ4WeJ3fXNevlU26CEORgL
+         5ISTC0N1AwDClt6UOHob1ELuXpTajCZTCmfBQmH/9tF0Ai+KHwBtCkLslmBZsqkwzctb
+         idzm9LORDMZ9v7M6EbsG3ZJ+2VPHo/IB/NvZjEJm354edfHaDObE99lAn8JfRIHipZs9
+         EkdtauLdeAG1cS4C3HAO0OJt2dtrrw7goXXHcZx5Y0mp0YS/NlI5xyUFcUxd+QsNjJSO
+         GnghzeEkyuEPHoCz+2i0u8cKW7HV1FlwiQL9HdBZ+T67hKBktyUEcfhHdlRwQ0wzZf2M
+         7ctQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=EnIJwxmNa0x7pf7LGo/bEAx4wU18K4eSu1l9NYLvfDo=;
-        b=6BvcnaQZREyrxyESZ67lygWDkpOFgo+wpiG2s6d2hzTS90ouFzb+gJQxXFCaAmdJVS
-         ZzbG2iszmpkWixYFD83t1inD/6JsH7Q/48acYJZ3Rm1fIlYun1UDqZR+77Ct4y9B7hwl
-         bdN8J7m7CeLEgrohAoc7GRlZbvK7cQrYr+RC5FjVbJ1u5VQPKIBa9nE7rrgGktiLj7CF
-         5jzeEmRAHKg0yB99+VlQv7Qy6vSH2ozLXa6mcLxX6gqR8oOkGKHz8RaGkaN02aibQVmZ
-         o73RfSWU6Z1k55Wqm9gOMymkHfbRVTByp0SmzKvo5ItyDhMY67Slpaa0YPYNGZWt+5W/
-         pXww==
-X-Gm-Message-State: AOAM5326PJ78NmEWbaEhh1VjEcASZ7Zih7p/3NIJ8sg+xqVN3ZyV2+Av
-        pzwy4uLqe0oqDGQ5mQQ52HZojRZ2291g
-X-Google-Smtp-Source: ABdhPJzNGTaXBntg242TJpgcqBieHwJUJhrigvr4K1ppIHlMlYfkRzCFug2BiwJY7f1l47UKLFqgiw==
-X-Received: by 2002:a05:6a00:1511:b0:492:61fe:9fa6 with SMTP id q17-20020a056a00151100b0049261fe9fa6mr880423pfu.57.1636393322348;
-        Mon, 08 Nov 2021 09:42:02 -0800 (PST)
+        bh=eRQf1Z1iL0SZkrNMLt9RYnFCV5P9RcLr043ZTAOoan4=;
+        b=uOf28Z2KUOAxzobM3tkyXVDqt7qS0/k+AYehZezMnIofFQES9vThWLBgUUfHgq8M3v
+         srlDShdgHTIrAWBoWC5L6xiNSewsHNl5emvAKqEMHx+bdmAi9lMeJcj5ab+JADujeoKm
+         ZN25R9/WZvDYpwusdjxSq/oS8bBOxl79vH6js4XZ5hwIewDKCmWT3aI5l+6m2ZYvSbXO
+         DKqxxUmjN7Rl/uyRyE87pfFIkzV7dpNbu1QKhsp82GgFTycUZE099QAPQ1+NlT8gwRHC
+         a/gxpsdHPJ3yRPSFvaJ8y5qp9DBZbLzg/+y/daaZjy7bS6P9qGNWs6gCRVUukDzi9WL8
+         aLTg==
+X-Gm-Message-State: AOAM530ipnf2dJuHJd7kZQQ1Lj+oXfdJeBSBPlxPUVTxkSiHlVMeuVYh
+        1NUVOzhrUbnz0ygD8K4bx3fB
+X-Google-Smtp-Source: ABdhPJzc8FA4o6rnqK6SPXG0uwHo+AZeAOdvu+n5kGberFP29ERlH2Rz8asBVPjFz5IPr3yZGJSbMQ==
+X-Received: by 2002:a63:fe15:: with SMTP id p21mr862776pgh.477.1636393805324;
+        Mon, 08 Nov 2021 09:50:05 -0800 (PST)
 Received: from localhost.localdomain ([117.202.191.159])
-        by smtp.gmail.com with ESMTPSA id v10sm4388120pfg.162.2021.11.08.09.41.58
+        by smtp.gmail.com with ESMTPSA id p2sm16941pja.55.2021.11.08.09.50.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 09:42:01 -0800 (PST)
+        Mon, 08 Nov 2021 09:50:04 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     mhi@lists.linux.dev
 Cc:     aleksander@aleksander.es, loic.poulain@linaro.org,
@@ -56,9 +56,9 @@ Cc:     aleksander@aleksander.es, loic.poulain@linaro.org,
         linux-arm-msm@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         stable@vger.kernel.org
-Subject: [PATCH] bus: mhi: Fix race while handling SYS_ERR at power up
-Date:   Mon,  8 Nov 2021 23:11:42 +0530
-Message-Id: <20211108174142.52835-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] bus: mhi: Fix race while handling SYS_ERR at power up
+Date:   Mon,  8 Nov 2021 23:19:54 +0530
+Message-Id: <20211108174954.60569-1-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -87,14 +87,27 @@ Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
 Reported-by: Aleksander Morgado <aleksander@aleksander.es>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/core/pm.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+
+Changes in v2:
+
+* Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
+
+ drivers/bus/mhi/core/pm.c | 32 ++++++++++----------------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index fb99e3727155..ec5f11166820 100644
+index fb99e3727155..3c347fe9b10d 100644
 --- a/drivers/bus/mhi/core/pm.c
 +++ b/drivers/bus/mhi/core/pm.c
-@@ -1055,10 +1055,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+@@ -1038,7 +1038,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+ 	enum mhi_ee_type current_ee;
+ 	enum dev_st_transition next_state;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+-	u32 val;
+ 	int ret;
+ 
+ 	dev_info(dev, "Requested to power ON\n");
+@@ -1055,10 +1054,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  	mutex_lock(&mhi_cntrl->pm_mutex);
  	mhi_cntrl->pm_state = MHI_PM_DISABLE;
  
@@ -105,7 +118,7 @@ index fb99e3727155..ec5f11166820 100644
  	/* Setup BHI INTVEC */
  	write_lock_irq(&mhi_cntrl->pm_lock);
  	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-@@ -1072,7 +1068,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+@@ -1072,7 +1067,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  		dev_err(dev, "%s is not a valid EE for power on\n",
  			TO_MHI_EXEC_STR(current_ee));
  		ret = -EIO;
@@ -114,33 +127,33 @@ index fb99e3727155..ec5f11166820 100644
  	}
  
  	state = mhi_get_mhi_state(mhi_cntrl);
-@@ -1082,19 +1078,18 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+@@ -1081,20 +1076,12 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+ 
  	if (state == MHI_STATE_SYS_ERR) {
  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 		ret = wait_event_timeout(mhi_cntrl->state_event,
+-		ret = wait_event_timeout(mhi_cntrl->state_event,
 -				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
 -					mhi_read_reg_field(mhi_cntrl,
 -							   mhi_cntrl->regs,
 -							   MHICTRL,
 -							   MHICTRL_RESET_MASK,
 -							   MHICTRL_RESET_SHIFT,
-+					 mhi_read_reg_field(mhi_cntrl,
-+							    mhi_cntrl->regs,
-+							    MHICTRL,
-+							    MHICTRL_RESET_MASK,
-+							    MHICTRL_RESET_SHIFT,
- 							   &val) ||
- 					!val,
- 				msecs_to_jiffies(mhi_cntrl->timeout_ms));
- 		if (!ret) {
- 			ret = -EIO;
+-							   &val) ||
+-					!val,
+-				msecs_to_jiffies(mhi_cntrl->timeout_ms));
+-		if (!ret) {
+-			ret = -EIO;
++		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
++				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
++				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
++		if (ret) {
  			dev_info(dev, "Failed to reset MHI due to syserr state\n");
 -			goto error_async_power_up;
 +			goto error_setup_irq;
  		}
  
  		/*
-@@ -1104,6 +1099,10 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+@@ -1104,6 +1091,10 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
  	}
  
@@ -151,7 +164,7 @@ index fb99e3727155..ec5f11166820 100644
  	/* Transition to next state */
  	next_state = MHI_IN_PBL(current_ee) ?
  		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
-@@ -1116,9 +1115,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+@@ -1116,9 +1107,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
  
  	return 0;
  
