@@ -2,195 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D74449BF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 19:47:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2618449C19
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 19:58:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236061AbhKHSuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 13:50:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43606 "EHLO
+        id S236426AbhKHTBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 14:01:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236043AbhKHSt6 (ORCPT
+        with ESMTP id S236402AbhKHTBb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 13:49:58 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158B8C061570
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 10:47:13 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id u74so7949893oie.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 10:47:13 -0800 (PST)
+        Mon, 8 Nov 2021 14:01:31 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21F2C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 10:58:46 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id a20-20020a1c7f14000000b003231d13ee3cso12460wmd.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 10:58:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0vw8s287M6V5tUEsTJntxMeh19bFdVrXBNKNoghHXao=;
-        b=ywlYUfVasoalbTydcYohciaaAH8wfFvqWJ/gT+CCOCjU1tjYJY9d259VD/iG+WAxeX
-         UzBNkbA2iiR9m8NWFAMtNtDcOwUzOKyw02Nz+HbwkU4xOvYN6WYbrTknog4XZgC1gU6N
-         D6giWibXnftdvgv4qAuJRkcE14pOBcSCHyPlF9zx11QEMMaUohAOmZ6J/S0kBh+MWJxj
-         SgEuTOs8PuLKfdynmN/2WLZPXkgMwXWOJW39pQfCeub5zfek+jztC7kuTbhXq5pKXzOn
-         RFKgyqpnfnhXXmFJyWqAY2X+OMc/Pw/8yYj2Bz5hM+lwfTxbGv9N+/i3ZdYk51soUuGr
-         fWXA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=mvanPmq6qXs9DzVRtgUSTOUmzu/gL8E/gxL2zjoZAoU=;
+        b=Jds43h1kcT0VaWp4h+zpSpszb21LxvCV1SXv0QtYW632/7pjGTHS9SNVSvTaAx2Q+G
+         DVWRLPvvmg9dwSKlglNJMzrZdEa1/yZxnkkdlKz8kw/mplyH57mAQjski9ge4ccQ+VIh
+         mGAd4Gns0D3nGK+YS5/5UJ71KHYvWXWVIi7BJ+46RdcW5+LCXVc76jDqKSiAYmYLxeXo
+         MmYhnrSc4wN+l04t54J9a8RSCb4OBeB+9upEeZZhV4FDslrK74tdEoGTtWJHkhvGSyjJ
+         yFzqN3I+KMUqiS4K+T0kliU37AgO3wwgAX/QgIJLqmkMZEJ60q98+txE/Z/JPyjhxIVU
+         g9Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0vw8s287M6V5tUEsTJntxMeh19bFdVrXBNKNoghHXao=;
-        b=IXJBiaFveIP696cWjc/3ObA3cHrr6qLRt8ioZ0y0V9UtbGU6IP6c9612RIwREge5hm
-         8FBf6KezgPIJD/z5WMB0YbQzCqsaL7oqMjfp/VjC9LtekUpWjRt2j7kadEItMkohPMtH
-         a7mhC+XxoUIVQLGBYh0fiOPEpW8Nm1Yk06D2+iehXC6No4cNRbf9lA8zRaD+fFMErGi7
-         bemEjGLZQtPO0oPQoyd68khlfAISTXAVlwAnkWMHHtfcP2UWeohar4iXfnROrIC1LvAt
-         JKppjjG+CV04YRg6ggz/QD2fvQqTAu1EalKeyjG1TML2u2/hgBmB34vtRDCMPRtDv8+M
-         EJ2A==
-X-Gm-Message-State: AOAM531AkzW6kw6eDu13zK0IekFCKaamv/5bzwRt7TC9d10etqAJXEgX
-        QjSNpBvad+bvrTmOdHmjZiueug==
-X-Google-Smtp-Source: ABdhPJwztpHYHCOdNId1sZbWWKDiOQRdMs7lgaadW6QKrlShBESNVaqndOmityyif7Tg18o9uOBktQ==
-X-Received: by 2002:a54:4401:: with SMTP id k1mr349239oiw.143.1636397232392;
-        Mon, 08 Nov 2021 10:47:12 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w29sm5245219ooe.25.2021.11.08.10.47.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 10:47:11 -0800 (PST)
-Date:   Mon, 8 Nov 2021 10:48:47 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jarrett Schultz <jaschultzms@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <balbi@kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: Re: [PATCH v2 1/5] dt-bindings: platform: microsoft: Document
- surface xbl
-Message-ID: <YYlxD7TuNzFlWokq@ripper>
-References: <20211108164449.3036210-1-jaschultz@microsoft.com>
- <20211108164449.3036210-2-jaschultz@microsoft.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=mvanPmq6qXs9DzVRtgUSTOUmzu/gL8E/gxL2zjoZAoU=;
+        b=3aOiS0upGD0mHGLBBLf+KimIr0UsonAxXCQFYlkfLsuErfYHWbzRVgyBRaGcJllt26
+         bQ8+9/b4A4VIo0ozddLYYxM9Ug6kA+9GncqIJkU2Dh8H/Y0Srp+/biZj8bOb4EUlBtTA
+         HlidIm97qkcr/G7FozSkpn1WzZEgU+CWpX2SI7rG+mt4eJoHoM2RZLxUNfVgrskUTbn3
+         686som/oHmUYbRT1fZIDHXMyz0R1VNAavp315oJVJ9tNb3DiKWQJV/ElANOK1Wp2qc2z
+         KPDBAcKH5vzy+M0CCBYxl6npM36ywO5l88tR/MkzjxItIx1yzb7IZO2dzF1EPfQvLVTA
+         HcCA==
+X-Gm-Message-State: AOAM531ipuMVGdxDKuNhvSfff7l7ZNgCq3i1+DH7MZjc9BQkWhW/61l4
+        AA1zagA+P6J2RMxS/0HeuYsUGA==
+X-Google-Smtp-Source: ABdhPJy+WfzdWMT9C4MVN8FRQQCs9fEop+vwYbJy6qQ1Bg3YyCSw0l/qrHIAzGl8b7gPViVms8uv1w==
+X-Received: by 2002:a05:600c:1d01:: with SMTP id l1mr602978wms.44.1636397925431;
+        Mon, 08 Nov 2021 10:58:45 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id n184sm208627wme.2.2021.11.08.10.58.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Nov 2021 10:58:44 -0800 (PST)
+Message-ID: <60841bf0-f5ea-314f-34c6-822a8812000d@linaro.org>
+Date:   Mon, 8 Nov 2021 19:00:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211108164449.3036210-2-jaschultz@microsoft.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH v3 5/7] dt-bindings: usb: Add Qualcomm PMIC TCPM YAML
+ schema
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, bjorn.andersson@linaro.org,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, wcheng@codeaurora.org
+References: <20211105033558.1573552-1-bryan.odonoghue@linaro.org>
+ <20211105033558.1573552-6-bryan.odonoghue@linaro.org>
+ <YYlaqTYhe4hbXhFf@robh.at.kernel.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <YYlaqTYhe4hbXhFf@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 08 Nov 08:44 PST 2021, Jarrett Schultz wrote:
+On 08/11/2021 17:13, Rob Herring wrote:
+> Looks like the h/w is all part of a
+> PMIC, so it should be part of the PMIC binding and probably merged with
+> one of the nodes these phandles point to.
 
-> Introduce yaml for surface xbl driver.
-> 
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
-> 
-> ---
-> 
-> Changes in v2:
->  - Removed json-schema dependence
->  - Elaborated on description of driver
->  - Updated example
-> 
-> ---
-> 
->  .../platform/microsoft/surface-xbl.yaml       | 57 +++++++++++++++++++
->  MAINTAINERS                                   |  7 +++
->  2 files changed, 64 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> new file mode 100644
-> index 000000000000..09f806f373bd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> @@ -0,0 +1,57 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/platform/microsoft/surface-xbl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Surface Extensible Bootloader for Microsoft Surface Duo
-> +
-> +maintainers:
-> +  - Jarrett Schultz <jaschultzMS@gmail.com>
-> +
-> +description: |
-> +  Exposes the following device information to user space via sysfs -
+Not sure I really follow you here.
 
-The devicetree should describe the hardware, or in this case the imem
-region. User space, sysfs etc are concepts of one possible consumer of
-this information and should not be part of the binding.
+The existing PMIC dts arch/arm64/boot/dts/qcom/pm8150b.dtsi has:
 
-It might make sense to update this description to still document what's
-to be found in the memory region though.
+pm8150b_gpios: gpio@c000 {
+     compatible = "qcom,pm8150b-gpio";
+}
+Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
 
-> +    * board_id
-> +    * battery_present
-> +    * hw_init_retries
-> +    * is_customer_mode
-> +    * is_act_mode
-> +    * pmic_reset_reason
-> +    * touch_fw_version
-> +    * ocp_error_location
-> +  See sysfs documentation for more information.
-> +
-> +properties:
-> +  compatible:
-> +    const: microsoft,sm8150-surface-duo-xbl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +unevaluatedProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
+and
 
-I believe interrupts is a leftover...
+pm8150b_adc_tm: adc-tm@3500 {
+     compatible = "qcom,spmi-adc-tm5";
+};
+Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
 
-> +
-> +examples:
-> +  - |
-> +    xbl@146bfa94 {
-> +      compatible = "microsoft,sm8150-surface-duo-xbl";
-> +      reg = <0x00 0x146bfa94 0x00 0x100>;
+to which I'm adding :
 
-The example is compiled with #address-cells == #size-cells = <1>, so
-you should omit the extra 0 in both address and size, in both examples.
+pm8150b_typec: typec@1500 {
+     compatible = "qcom,pm8150b-typec";
+};
 
-Regards,
-Bjorn
+Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
 
-> +    };
-> +  - |
-> +    imem@146bf000 {
-> +      compatible = "simple-mfd";
-> +      reg = <0x0 0x146bf000 0x0 0x1000>;
-> +      ranges = <0x0 0x0 0x146bf000 0x1000>;
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <1>;
-> +
-> +      xbl@a94 {
-> +        compatible = "microsoft,sm8150-surface-duo-xbl";
-> +        reg = <0xa94 0x100>;
-> +      };
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index eeb4c70b3d5b..8643546f8fab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -12423,6 +12423,13 @@ F:	Documentation/driver-api/surface_aggregator/clients/dtx.rst
->  F:	drivers/platform/surface/surface_dtx.c
->  F:	include/uapi/linux/surface_aggregator/dtx.h
->  
-> +MICROSOFT SURFACE DUO XBL DRIVER
-> +M:	Jarrett Schultz <jaschultz@microsoft.com>
-> +L:	linux-arm-msm@vger.kernel.org
-> +L:	platform-driver-x86@vger.kernel.org
-> +S:	Supported
-> +F:	Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> +
->  MICROSOFT SURFACE GPE LID SUPPORT DRIVER
->  M:	Maximilian Luz <luzmaximilian@gmail.com>
->  L:	platform-driver-x86@vger.kernel.org
-> -- 
-> 2.25.1
-> 
+pm8150b_pdphy: pdphy@1700 {
+     compatible = "qcom,pm8150b-pdphy";
+};
+
+Documentation/devicetree/bindings/usb/qcom,pmic-pdphy.yaml
