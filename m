@@ -2,226 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2A1F4480B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 15:01:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BBDA448103
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 15:11:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240162AbhKHOEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 09:04:20 -0500
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:49416 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235902AbhKHOET (ORCPT
+        id S238837AbhKHOOY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 09:14:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36976 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237043AbhKHOOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 09:04:19 -0500
-Received: from pps.filterd (m0046668.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1A8DGOhU021040;
-        Mon, 8 Nov 2021 15:01:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=selector1;
- bh=G26Ve/HFn2wXHMnOpCOEz7WG0SiuPkgmMHKdcZnpApE=;
- b=G4XywgKF/KG2XlKQbaQVfawPeH/cbo6DwsjHG0n0WssAvgqltnKMYtp4cp7TKYJL8SJ2
- mJZYqF+EWm+uFOM8HZqO4JGOFrbjDxTjar8PaPlHxy2P8e5SU+yXnopYq69GXgo+tVbI
- pCZpnmDxBUyo4YADduhRSumo4EjS8TJ9t7SGOp4cRmkcPMibG2rRJuBzK5IaT1Y+lXIC
- yB+H+vakNEHBNkxLSi8XJWS38ZCMulJZ6zKnb1a8wR0H2dNDiJJ//AVNCAZxVnxR77PB
- Rz7Ial5i0D2ZSGweiSkcFLCjRUfA7E502AMxdc/Rw8PRdx9xzAgbSp3djJNX6alSYIgo fQ== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3c709q26am-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 08 Nov 2021 15:01:33 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 79D4710002A;
-        Mon,  8 Nov 2021 15:01:32 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 698A322D19D;
-        Mon,  8 Nov 2021 15:01:32 +0100 (CET)
-Received: from localhost (10.75.127.48) by SFHDAG2NODE2.st.com (10.75.127.5)
- with Microsoft SMTP Server (TLS) id 15.0.1497.18; Mon, 8 Nov 2021 15:01:32
- +0100
-From:   Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>, <arnaud.pouliquen@foss.st.com>
-Subject: [PATCH] rpmsg: Fix documentation return formatting
-Date:   Mon, 8 Nov 2021 15:01:26 +0100
-Message-ID: <20211108140126.3530-1-arnaud.pouliquen@foss.st.com>
-X-Mailer: git-send-email 2.17.1
+        Mon, 8 Nov 2021 09:14:24 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88949C061570
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 06:11:39 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id 193so3773430qkh.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 06:11:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7pApxpdYsXub2Klb9AGksL2WOu4t7V/pprHcy+kutRA=;
+        b=gxurOgF0ZED/icjZMZbuA+q+02/HP2WNpNCS6vBO+97Y93C2rS0IDh9CHrdHxYlavI
+         z7IUjHhqEY+DQ+o3corur9IdfZjHEc5OK7KYR3cMWkZPqGhHR0Bmzs1AXgNPnfBjRVAx
+         MnWN1sbQ9vltyIhKJ6VGIkjXaOL0XoDan7TxaGypnmRP4z3ynz2I78CG3jEebiJw0qKd
+         MJPGKcXyThiVdU4sw92I5NDYCMKpFPxSR5FRDYq9fKG02EeKAV5Qb+HZNVQP+3CbSxpL
+         fUcj2/4jii0pUwKzUKjxgijWVQd6FD7LsBKd4sV4gcDDQyT8gZs2PRPsLkpSmb1S1Rx0
+         mdTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7pApxpdYsXub2Klb9AGksL2WOu4t7V/pprHcy+kutRA=;
+        b=u3tvD/c0Py3UHD4rVA219XgPPnDZo/h9aMRdfE9R+wtM1aTvVG5mmNHh71LYDDyOoo
+         pUHgifMh6PX6Rw4NA61Dwu57c3lD7rHW8VPzo1OucFEB5Z1/CxFLNN1VFQEwEm1Nncrb
+         lvAJCKpSESAq+uIaOnoc3ck2HVM8wZW554dJdA5w1rYTwVUZjNwUdd6VB5nRjulaTWI1
+         3/GYJvS/IrSR8RZCNd4WwWqmc1o0ysZPniTtFEC7ChLzERWl3FJPud3pzj4wO0zpH/8f
+         7ul/K3fcD2sroAMKfNsHw7+KVVozWo6HDWXN8ADeRRdAtwuA+nYQrF2W3GbrIsph/Jo4
+         djPA==
+X-Gm-Message-State: AOAM5322vGjjPuvBitRPnDg/bFfj6flf9vVH28ZDExdxfL70kGK71mR5
+        nSMD7Q0LHrzyeUaqheJurS0BgA==
+X-Google-Smtp-Source: ABdhPJww1CfOR1qBIq+Iby3R1s0yC0dwZpJoshYTS3+Ya+kObszITj3xlfXOuVgHLE/v423f2KK9xg==
+X-Received: by 2002:a05:620a:319d:: with SMTP id bi29mr5038172qkb.92.1636380698435;
+        Mon, 08 Nov 2021 06:11:38 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id w11sm6302444qtk.62.2021.11.08.06.11.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Nov 2021 06:11:38 -0800 (PST)
+Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
+ duplication
+To:     Steev Klimaszewski <steev@kali.org>,
+        Lukasz Luba <lukasz.luba@arm.com>
+Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org
+References: <20211103161020.26714-1-lukasz.luba@arm.com>
+ <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
+ <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
+ <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
+ <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
+ <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
+ <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
+ <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
+Date:   Mon, 8 Nov 2021 09:11:37 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.75.127.48]
-X-ClientProxiedBy: SFHDAG1NODE2.st.com (10.75.127.2) To SFHDAG2NODE2.st.com
- (10.75.127.5)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-11-08_05,2021-11-08_01,2020-04-07_01
+In-Reply-To: <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-kernel documentation specification:
-"The return value, if any, should be described in a dedicated section
-named Return."
 
-Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
----
- drivers/rpmsg/qcom_glink_native.c |  2 +-
- drivers/rpmsg/qcom_smd.c          |  2 +-
- drivers/rpmsg/rpmsg_core.c        | 24 ++++++++++++------------
- drivers/rpmsg/virtio_rpmsg_bus.c  |  2 +-
- 4 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 3f377a795b33..1030cfa80e04 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -427,7 +427,7 @@ static void qcom_glink_handle_intent_req_ack(struct qcom_glink *glink,
-  * Allocates a local channel id and sends a RPM_CMD_OPEN message to the remote.
-  * Will return with refcount held, regardless of outcome.
-  *
-- * Returns 0 on success, negative errno otherwise.
-+ * Return: 0 on success, negative errno otherwise.
-  */
- static int qcom_glink_send_open_req(struct qcom_glink *glink,
- 				    struct glink_channel *channel)
-diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-index 8da1b5cb31b3..540e027f08c4 100644
---- a/drivers/rpmsg/qcom_smd.c
-+++ b/drivers/rpmsg/qcom_smd.c
-@@ -1467,7 +1467,7 @@ ATTRIBUTE_GROUPS(qcom_smd_edge);
-  * @parent:    parent device for the edge
-  * @node:      device_node describing the edge
-  *
-- * Returns an edge reference, or negative ERR_PTR() on failure.
-+ * Return: an edge reference, or negative ERR_PTR() on failure.
-  */
- struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
- 					     struct device_node *node)
-diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-index d3eb60059ef1..f031b2b1b21c 100644
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -26,7 +26,7 @@
-  * @rpdev: rpmsg device
-  * @chinfo: channel_info to bind
-  *
-- * Returns a pointer to the new rpmsg device on success, or NULL on error.
-+ * Return: a pointer to the new rpmsg device on success, or NULL on error.
-  */
- struct rpmsg_device *rpmsg_create_channel(struct rpmsg_device *rpdev,
- 					  struct rpmsg_channel_info *chinfo)
-@@ -48,7 +48,7 @@ EXPORT_SYMBOL(rpmsg_create_channel);
-  * @rpdev: rpmsg device
-  * @chinfo: channel_info to bind
-  *
-- * Returns 0 on success or an appropriate error value.
-+ * Return: 0 on success or an appropriate error value.
-  */
- int rpmsg_release_channel(struct rpmsg_device *rpdev,
- 			  struct rpmsg_channel_info *chinfo)
-@@ -102,7 +102,7 @@ EXPORT_SYMBOL(rpmsg_release_channel);
-  * dynamically assign them an available rpmsg address (drivers should have
-  * a very good reason why not to always use RPMSG_ADDR_ANY here).
-  *
-- * Returns a pointer to the endpoint on success, or NULL on error.
-+ * Return: a pointer to the endpoint on success, or NULL on error.
-  */
- struct rpmsg_endpoint *rpmsg_create_ept(struct rpmsg_device *rpdev,
- 					rpmsg_rx_cb_t cb, void *priv,
-@@ -146,7 +146,7 @@ EXPORT_SYMBOL(rpmsg_destroy_ept);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_send(struct rpmsg_endpoint *ept, void *data, int len)
- {
-@@ -175,7 +175,7 @@ EXPORT_SYMBOL(rpmsg_send);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
- {
-@@ -206,7 +206,7 @@ EXPORT_SYMBOL(rpmsg_sendto);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_send_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
- 			  void *data, int len)
-@@ -235,7 +235,7 @@ EXPORT_SYMBOL(rpmsg_send_offchannel);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_trysend(struct rpmsg_endpoint *ept, void *data, int len)
- {
-@@ -263,7 +263,7 @@ EXPORT_SYMBOL(rpmsg_trysend);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
- {
-@@ -282,7 +282,7 @@ EXPORT_SYMBOL(rpmsg_trysendto);
-  * @filp:	file for poll_wait()
-  * @wait:	poll_table for poll_wait()
-  *
-- * Returns mask representing the current state of the endpoint's send buffers
-+ * Return: mask representing the current state of the endpoint's send buffers
-  */
- __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
- 			poll_table *wait)
-@@ -313,7 +313,7 @@ EXPORT_SYMBOL(rpmsg_poll);
-  *
-  * Can only be called from process context (for now).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
- 			     void *data, int len)
-@@ -623,7 +623,7 @@ EXPORT_SYMBOL(rpmsg_unregister_device);
-  * @rpdrv: pointer to a struct rpmsg_driver
-  * @owner: owning module/driver
-  *
-- * Returns 0 on success, and an appropriate error value on failure.
-+ * Return: 0 on success, and an appropriate error value on failure.
-  */
- int __register_rpmsg_driver(struct rpmsg_driver *rpdrv, struct module *owner)
- {
-@@ -637,7 +637,7 @@ EXPORT_SYMBOL(__register_rpmsg_driver);
-  * unregister_rpmsg_driver() - unregister an rpmsg driver from the rpmsg bus
-  * @rpdrv: pointer to a struct rpmsg_driver
-  *
-- * Returns 0 on success, and an appropriate error value on failure.
-+ * Return: 0 on success, and an appropriate error value on failure.
-  */
- void unregister_rpmsg_driver(struct rpmsg_driver *rpdrv)
- {
-diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-index 9c112aa65040..c37451512835 100644
---- a/drivers/rpmsg/virtio_rpmsg_bus.c
-+++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-@@ -547,7 +547,7 @@ static void rpmsg_downref_sleepers(struct virtproc_info *vrp)
-  * should use the appropriate rpmsg_{try}send{to, _offchannel} API
-  * (see include/linux/rpmsg.h).
-  *
-- * Returns 0 on success and an appropriate error value on failure.
-+ * Return: 0 on success and an appropriate error value on failure.
-  */
- static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
- 				     u32 src, u32 dst,
+On 11/5/21 6:46 PM, Steev Klimaszewski wrote:
+> 
+>> [snip]
+>> Hi,
+>>
+>> So IIUC the below logs correctly, you are never hitting boost 
+>> frequency (with or without this patch series). Is that correct ?
+>>
+>> w.r.t temperature , how are you measuring it? Do you have LMh enabled 
+>> or are you using tsens to mitigate cpu temperature ?
+> 
+> 
+> Hi,
+> 
+> I was wrong - it does indeed go boost with the patchset applied, it's 
+> just that it doesn't boost up to 2.96GHz very often at all. As noted by 
+> the 0.03% when i ran it while compiling zellij; I reapplied the patches 
+> (and the 6th patch from Lukasz's email) and after boot, 2.96GHz was 
+> showing at 0.39%.
+> 
+> Most tools that read the cpu frequency don't really seem to be well 
+> suited for big.LITTLE, and seem to throw an average of the speed, so 
+> cpufreq-info was the best I have.  We're apparently supposed to be using 
+> cpupower these days, but it doesn't seem to know anything about arm64 
+> devices.
+> 
+> Temperature wise, I'm just getting from the sensors, and I am using LMh.
+> 
+> Now, I have to admit, while I've thrown a patch here or there, I'm not 
+> exactly a kernel developer, just enough knowledge to be somewhat 
+> dangerous and know how to backport things.  In my mind, and my line of 
+> thinking, I would expect with boost enabled, that the cpu would boost up 
+> to that as often as possible, not require a specific workload to 
+> actually hit it.  But then again, I would expect multiple compilation 
+> jobs to be one of the workloads that would?
+
+Hi Steev,
+
+So this depends on the cpufreq governor you are using. By-default arm 
+systems have sched-util governor enabled. This means you will scale up 
+to boost depending on cpu load and not always. If you want to ensure you 
+are always hitting boost frequency, you should enable performance 
+governor for cpufreq and try.
+
+Also since the defconfig has by default CPU_FREQ_STAT enabled, you 
+should be able to get statistics out of cpufreq to see the time spent by 
+a cpu in each frequency. I think cpufreq-info -s should give you this 
+info. If not, you can explicitly get it for each cpu from
+
+cat /sys/devices/system/cpu/cpu<X>/cpufreq/stats/time_in_state
+
+Regarding temperature, if you have applied all the patches in the sdm845 
+LMh series and have LMh enabled, cpu throttling starts around 95 degree C.
+
+> 
+> So I think, the part about never hitting 2.96GHz can be dismissed, and 
+> was simply my lack of knowledge about the cpufreq-info tool's averages. 
+> It does seem however to rarely ever hit 2.96GHz and I would actually 
+> expect it to hit it far more often.
+> 
+
 -- 
-2.17.1
-
+Warm Regards
+Thara (She/Her/Hers)
