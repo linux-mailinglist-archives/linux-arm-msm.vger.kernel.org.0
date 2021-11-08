@@ -2,178 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64249449B18
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 18:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A02D8449B23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 18:55:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234146AbhKHRwv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 12:52:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
+        id S229654AbhKHR63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 12:58:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232524AbhKHRwu (ORCPT
+        with ESMTP id S230474AbhKHR62 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 12:52:50 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC584C061714
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 09:50:05 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id 127so16785788pfu.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 09:50:05 -0800 (PST)
+        Mon, 8 Nov 2021 12:58:28 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E264C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 Nov 2021 09:55:43 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id u74so7702275oie.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Nov 2021 09:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eRQf1Z1iL0SZkrNMLt9RYnFCV5P9RcLr043ZTAOoan4=;
-        b=pJaxEgPVmIAaCbq0f1cTgJOC1wryIGSHFrAAjNLWptHJOQ4WeJ3fXNevlU26CEORgL
-         5ISTC0N1AwDClt6UOHob1ELuXpTajCZTCmfBQmH/9tF0Ai+KHwBtCkLslmBZsqkwzctb
-         idzm9LORDMZ9v7M6EbsG3ZJ+2VPHo/IB/NvZjEJm354edfHaDObE99lAn8JfRIHipZs9
-         EkdtauLdeAG1cS4C3HAO0OJt2dtrrw7goXXHcZx5Y0mp0YS/NlI5xyUFcUxd+QsNjJSO
-         GnghzeEkyuEPHoCz+2i0u8cKW7HV1FlwiQL9HdBZ+T67hKBktyUEcfhHdlRwQ0wzZf2M
-         7ctQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LhWfz+5JE21inJr4S250OgcbtsWmt4NJR6DvKNs5YBk=;
+        b=NLZ/NWmaut34l69Gi0IMn3FhSPoI8MJxyT511eGKct44ivuZgMwua7hT0tOyLsDZUP
+         TrgDXxUaUA7ChA+L3cFnC1wxXZ9OKrp2DAiclSjd/0dAqPiEQUMxdLhwh7TJBeW62J0y
+         sxa7L/gO7PUUgBqELeaWYWMpjfyrDPN5orMWbR0tgee7qH946wvFrwRkNxmCE20baibN
+         k+IRalaydJaBo+7hWaDZNjCRUOsSOX8GaiuqRGVUZ8nIAxdWVmPEL4ubW46Kx7KoptLH
+         NXfufoYJtTJtYYpAQh2ZV1xuOG4OC8fEO2gNDc7SVhOr6lUM1CgDwpMx+e8MVxkv1JSD
+         yRuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=eRQf1Z1iL0SZkrNMLt9RYnFCV5P9RcLr043ZTAOoan4=;
-        b=uOf28Z2KUOAxzobM3tkyXVDqt7qS0/k+AYehZezMnIofFQES9vThWLBgUUfHgq8M3v
-         srlDShdgHTIrAWBoWC5L6xiNSewsHNl5emvAKqEMHx+bdmAi9lMeJcj5ab+JADujeoKm
-         ZN25R9/WZvDYpwusdjxSq/oS8bBOxl79vH6js4XZ5hwIewDKCmWT3aI5l+6m2ZYvSbXO
-         DKqxxUmjN7Rl/uyRyE87pfFIkzV7dpNbu1QKhsp82GgFTycUZE099QAPQ1+NlT8gwRHC
-         a/gxpsdHPJ3yRPSFvaJ8y5qp9DBZbLzg/+y/daaZjy7bS6P9qGNWs6gCRVUukDzi9WL8
-         aLTg==
-X-Gm-Message-State: AOAM530ipnf2dJuHJd7kZQQ1Lj+oXfdJeBSBPlxPUVTxkSiHlVMeuVYh
-        1NUVOzhrUbnz0ygD8K4bx3fB
-X-Google-Smtp-Source: ABdhPJzc8FA4o6rnqK6SPXG0uwHo+AZeAOdvu+n5kGberFP29ERlH2Rz8asBVPjFz5IPr3yZGJSbMQ==
-X-Received: by 2002:a63:fe15:: with SMTP id p21mr862776pgh.477.1636393805324;
-        Mon, 08 Nov 2021 09:50:05 -0800 (PST)
-Received: from localhost.localdomain ([117.202.191.159])
-        by smtp.gmail.com with ESMTPSA id p2sm16941pja.55.2021.11.08.09.50.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LhWfz+5JE21inJr4S250OgcbtsWmt4NJR6DvKNs5YBk=;
+        b=DdNL+sqKcSeffmmsPLz9Liz+kZTwBw+B8CClBMIimWbC6uMY6+UROuxRPDd/kmOt59
+         SEB7rBhtkL2+SGgkkNTXgar5g/GxYGaodBpmZXYZcYM/HoPNGX/D2QAJz7rP+nbfNa7a
+         Z9sN8mjGpMlpSmZ289ctSSXMvlXQ7sySOUHj+mijigkY3ctTGpdlyTN2SrC2efHe0MD+
+         pcnf0hunWkBhqNcBkciUAUAd0/2tQBfgyN4IGI2Ui1HC9xGvSzRtKgWUYbLyc6iC5Gko
+         jknWzo3oqEKqPA5g2TwoVZQuHuk9vpdjVrYD33Yy9+/h4IOww439kaBZnGVV84KrdzvZ
+         3w9A==
+X-Gm-Message-State: AOAM532tI4D1CmPrAbZJG8HWbiD/uQ05V8PFY+BjEM0OBnmaP3Vr8R3s
+        +CVRbeH2nE1Fh/Qe1/9rtcnFIQ==
+X-Google-Smtp-Source: ABdhPJz9eQvKIrPc8ta+sw34+CJDdEJVNU0OWR59hAmfrup/u3GDs03M3CvU50HHVxV7g2TUwoHwZA==
+X-Received: by 2002:a05:6808:128d:: with SMTP id a13mr98463oiw.29.1636394142851;
+        Mon, 08 Nov 2021 09:55:42 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c16sm6822645oiw.31.2021.11.08.09.55.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Nov 2021 09:50:04 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     aleksander@aleksander.es, loic.poulain@linaro.org,
-        thomas.perrot@bootlin.com, hemantk@codeaurora.org,
-        bbhatt@codeaurora.org, quic_jhugo@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        stable@vger.kernel.org
-Subject: [PATCH v2] bus: mhi: Fix race while handling SYS_ERR at power up
-Date:   Mon,  8 Nov 2021 23:19:54 +0530
-Message-Id: <20211108174954.60569-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Mon, 08 Nov 2021 09:55:42 -0800 (PST)
+Date:   Mon, 8 Nov 2021 09:57:19 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     iommu@lists.linux-foundation.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Eric Anholt <eric@anholt.net>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Fix TTBR0 read
+Message-ID: <YYlk/2VZCzX6tokf@ripper>
+References: <20211108171724.470973-1-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211108171724.470973-1-robdclark@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some devices tend to trigger SYS_ERR interrupt while the host handling
-SYS_ERR state of the device during power up. This creates a race
-condition and causes a failure in booting up the device.
+On Mon 08 Nov 09:17 PST 2021, Rob Clark wrote:
 
-The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
-handling in mhi_async_power_up(). Once the host detects that the device
-is in SYS_ERR state, it issues MHI_RESET and waits for the device to
-process the reset request. During this time, the device triggers SYS_ERR
-interrupt to the host and host starts handling SYS_ERR execution.
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> It is a 64b register, lets not lose the upper bits.
+> 
+> Fixes: ab5df7b953d8 ("iommu/arm-smmu-qcom: Add an adreno-smmu-priv callback to get pagefault info")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-So by the time the device has completed reset, host starts SYS_ERR
-handling. This causes the race condition and the modem fails to boot.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Hence, register the IRQ handler only after handling the SYS_ERR check
-to avoid getting spurious IRQs from the device.
+Regards,
+Bjorn
 
-Cc: stable@vger.kernel.org
-Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
-Reported-by: Aleksander Morgado <aleksander@aleksander.es>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
-
-Changes in v2:
-
-* Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
-
- drivers/bus/mhi/core/pm.c | 32 ++++++++++----------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index fb99e3727155..3c347fe9b10d 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -1038,7 +1038,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 	enum mhi_ee_type current_ee;
- 	enum dev_st_transition next_state;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
--	u32 val;
- 	int ret;
- 
- 	dev_info(dev, "Requested to power ON\n");
-@@ -1055,10 +1054,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 	mutex_lock(&mhi_cntrl->pm_mutex);
- 	mhi_cntrl->pm_state = MHI_PM_DISABLE;
- 
--	ret = mhi_init_irq_setup(mhi_cntrl);
--	if (ret)
--		goto error_setup_irq;
--
- 	/* Setup BHI INTVEC */
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-@@ -1072,7 +1067,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "%s is not a valid EE for power on\n",
- 			TO_MHI_EXEC_STR(current_ee));
- 		ret = -EIO;
--		goto error_async_power_up;
-+		goto error_setup_irq;
- 	}
- 
- 	state = mhi_get_mhi_state(mhi_cntrl);
-@@ -1081,20 +1076,12 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	if (state == MHI_STATE_SYS_ERR) {
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
--		ret = wait_event_timeout(mhi_cntrl->state_event,
--				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
--					mhi_read_reg_field(mhi_cntrl,
--							   mhi_cntrl->regs,
--							   MHICTRL,
--							   MHICTRL_RESET_MASK,
--							   MHICTRL_RESET_SHIFT,
--							   &val) ||
--					!val,
--				msecs_to_jiffies(mhi_cntrl->timeout_ms));
--		if (!ret) {
--			ret = -EIO;
-+		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-+				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
-+				 msecs_to_jiffies(mhi_cntrl->timeout_ms));
-+		if (ret) {
- 			dev_info(dev, "Failed to reset MHI due to syserr state\n");
--			goto error_async_power_up;
-+			goto error_setup_irq;
- 		}
- 
- 		/*
-@@ -1104,6 +1091,10 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
- 	}
- 
-+	ret = mhi_init_irq_setup(mhi_cntrl);
-+	if (ret)
-+		goto error_setup_irq;
-+
- 	/* Transition to next state */
- 	next_state = MHI_IN_PBL(current_ee) ?
- 		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
-@@ -1116,9 +1107,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	return 0;
- 
--error_async_power_up:
--	mhi_deinit_free_irq(mhi_cntrl);
--
- error_setup_irq:
- 	mhi_cntrl->pm_state = MHI_PM_DISABLE;
- 	mutex_unlock(&mhi_cntrl->pm_mutex);
--- 
-2.25.1
-
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 55690af1b25d..c998960495b4 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -51,7 +51,7 @@ static void qcom_adreno_smmu_get_fault_info(const void *cookie,
+>  	info->fsynr1 = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_FSYNR1);
+>  	info->far = arm_smmu_cb_readq(smmu, cfg->cbndx, ARM_SMMU_CB_FAR);
+>  	info->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(cfg->cbndx));
+> -	info->ttbr0 = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_TTBR0);
+> +	info->ttbr0 = arm_smmu_cb_readq(smmu, cfg->cbndx, ARM_SMMU_CB_TTBR0);
+>  	info->contextidr = arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_CONTEXTIDR);
+>  }
+>  
+> -- 
+> 2.31.1
+> 
