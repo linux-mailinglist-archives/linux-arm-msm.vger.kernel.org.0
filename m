@@ -2,111 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6E17447E30
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 11:44:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF14E447EEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 12:31:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233424AbhKHKrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 05:47:07 -0500
-Received: from foss.arm.com ([217.140.110.172]:48720 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229754AbhKHKrH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 05:47:07 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CDB6DD6E;
-        Mon,  8 Nov 2021 02:44:22 -0800 (PST)
-Received: from [10.57.27.158] (unknown [10.57.27.158])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D8E4D3F800;
-        Mon,  8 Nov 2021 02:44:18 -0800 (PST)
-Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
- duplication
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
- <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
- <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
- <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
- <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
- <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
- <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <7bd9aa9f-1d1f-ea12-57ba-adf5d69cbbfb@arm.com>
-Date:   Mon, 8 Nov 2021 10:44:16 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S237860AbhKHLeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 06:34:23 -0500
+Received: from mail-m975.mail.163.com ([123.126.97.5]:32880 "EHLO
+        mail-m975.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237827AbhKHLeX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Nov 2021 06:34:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=L49DN
+        1odcur1s+IvrPWjh1ERz+utZbxsieOkqObf7w0=; b=CncDmYxYqgFsq0Tu+TXKt
+        Bt1J7BurpEupusHquZpNxFWh/cCnxpvWmQEK9QQOMLRaE8QtgsV3yXLdeXMhrwI9
+        HFp5sKEYfZwJrBnHQjAJ77ckS2PNO0/YBDAHZdBfzQMP7mhSea60sepzp887ubM+
+        JMQGGSeiwJrXbTooRPsiLg=
+Received: from localhost.localdomain (unknown [112.97.56.72])
+        by smtp5 (Coremail) with SMTP id HdxpCgCXS_mRColhfHpdIw--.24226S2;
+        Mon, 08 Nov 2021 19:31:30 +0800 (CST)
+From:   Slark Xiao <slark_xiao@163.com>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH] bus: mhi: pci_generic: Fix device recovery failed issue
+Date:   Mon,  8 Nov 2021 19:31:27 +0800
+Message-Id: <20211108113127.3938-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: HdxpCgCXS_mRColhfHpdIw--.24226S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZFWfJFyfJF1xKw17Ary5Arb_yoWrJrW3pF
+        10gayjkr4rA3yjya1DJw4rCF1jkasxJrWUWrs3Kw1Dt3WxJ34q93s0gF45u3s0kr97Xa4F
+        vw1qyrWvqF1UtaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UKeHkUUUUU=
+X-Originating-IP: [112.97.56.72]
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDRNFZFaEFz17swAAsP
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+  For Foxconn T99W175 device(sdx55 platform) in some host
+platform, it would be unavailable once the host execute
+ the err handler.
+ After checking, it's caused by the delay time too short to
+get a successful reset.
 
+  Please see my test evidence as bewlow(BTW, I add some
+extra test logs in function mhi_pci_reset_prepare and
+mhi_pci_reset_done):
+  When MHI_POST_RESET_DELAY_MS equals to 500ms:
+   Nov  4 14:30:03 jbd-ThinkEdge kernel: [  146.222477] mhi mhi0: Device MHI is not in valid state
+   Nov  4 14:30:03 jbd-ThinkEdge kernel: [  146.222628] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare reset
+   Nov  4 14:30:03 jbd-ThinkEdge kernel: [  146.222631] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare mhi_soc_reset
+   Nov  4 14:30:03 jbd-ThinkEdge kernel: [  146.222632] mhi mhi0:  mhi_soc_reset write soc to reset
+   Nov  4 14:30:05 jbd-ThinkEdge kernel: [  147.839993] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_done
+   Nov  4 14:30:05 jbd-ThinkEdge kernel: [  147.902063] mhi-pci-generic 0000:2d:00.0: reset failed
 
-On 11/5/21 10:46 PM, Steev Klimaszewski wrote:
-> 
->> [snip]
->> Hi,
->>
->> So IIUC the below logs correctly, you are never hitting boost 
->> frequency (with or without this patch series). Is that correct ?
->>
->> w.r.t temperature , how are you measuring it? Do you have LMh enabled 
->> or are you using tsens to mitigate cpu temperature ?
-> 
-> 
-> Hi,
-> 
-> I was wrong - it does indeed go boost with the patchset applied, it's 
-> just that it doesn't boost up to 2.96GHz very often at all. As noted by 
-> the 0.03% when i ran it while compiling zellij; I reapplied the patches 
-> (and the 6th patch from Lukasz's email) and after boot, 2.96GHz was 
-> showing at 0.39%.
-> 
-> Most tools that read the cpu frequency don't really seem to be well 
-> suited for big.LITTLE, and seem to throw an average of the speed, so 
-> cpufreq-info was the best I have.  We're apparently supposed to be using 
-> cpupower these days, but it doesn't seem to know anything about arm64 
-> devices.
-> 
-> Temperature wise, I'm just getting from the sensors, and I am using LMh.
-> 
-> Now, I have to admit, while I've thrown a patch here or there, I'm not 
-> exactly a kernel developer, just enough knowledge to be somewhat 
-> dangerous and know how to backport things.  In my mind, and my line of 
-> thinking, I would expect with boost enabled, that the cpu would boost up 
-> to that as often as possible, not require a specific workload to 
-> actually hit it.  But then again, I would expect multiple compilation 
-> jobs to be one of the workloads that would?
-> 
-> So I think, the part about never hitting 2.96GHz can be dismissed, and 
-> was simply my lack of knowledge about the cpufreq-info tool's averages. 
-> It does seem however to rarely ever hit 2.96GHz and I would actually 
-> expect it to hit it far more often.
-> 
+  When MHI_POST_RESET_DELAY_MS equals to 1000ms or 1500ms:
+   Nov  4 19:07:26 jbd-ThinkEdge kernel: [  157.067857] mhi mhi0: Device MHI is not in valid state
+   Nov  4 19:07:26 jbd-ThinkEdge kernel: [  157.068029] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare reset
+   Nov  4 19:07:26 jbd-ThinkEdge kernel: [  157.068032] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare mhi_soc_reset
+   Nov  4 19:07:26 jbd-ThinkEdge kernel: [  157.068034] mhi mhi0:  mhi_soc_reset write soc to reset
+   Nov  4 19:07:29 jbd-ThinkEdge kernel: [  159.607006] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_done
+   Nov  4 19:07:29 jbd-ThinkEdge kernel: [  159.607152] mhi mhi0: Requested to power ON
+   Nov  4 19:07:51 jbd-ThinkEdge kernel: [  181.302872] mhi mhi0: Failed to reset MHI due to syserr state
+   Nov  4 19:07:51 jbd-ThinkEdge kernel: [  181.303011] mhi-pci-generic 0000:2d:00.0: failed to power up MHI controller
 
-Thank you for the logs and re-testing it with the debug changes.
-That's valuable information. I'll work on it today.
+  When MHI_POST_RESET_DELAY_MS equals to 2000ms:
+   Nov  4 17:51:08 jbd-ThinkEdge kernel: [  147.180527] mhi mhi0: Failed to transition from PM state: Linkdown or Error Fatal Detect to: SYS ERROR Process
+   Nov  4 17:51:08 jbd-ThinkEdge kernel: [  147.180535] mhi mhi0: Device MHI is not in valid state
+   Nov  4 17:51:08 jbd-ThinkEdge kernel: [  147.180722] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare reset
+   Nov  4 17:51:08 jbd-ThinkEdge kernel: [  147.180725] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_prepare mhi_soc_reset
+   Nov  4 17:51:08 jbd-ThinkEdge kernel: [  147.180727] mhi mhi0:  mhi_soc_reset write soc to reset
+   Nov  4 17:51:11 jbd-ThinkEdge kernel: [  150.230787] mhi-pci-generic 0000:2d:00.0: mhi_pci_reset_done
+   Nov  4 17:51:11 jbd-ThinkEdge kernel: [  150.230928] mhi mhi0: Requested to power ON
+   Nov  4 17:51:11 jbd-ThinkEdge kernel: [  150.231173] mhi mhi0: Power on setup success
+   Nov  4 17:51:14 jbd-ThinkEdge kernel: [  153.254747] mhi mhi0: Wait for device to enter SBL or Mission mode
 
-Regarding the 'boost' frequency, as you observed, it's hard to
-measure it properly. Normally when you use the frequency governor
-'schedutil' (which is your case), you need a high utilization workload
-to request highest frequency. The task scheduler does this calculation
-and then asks for the frequency.
-I'll spend more time trying to understand how this Qcom driver and HW
-handles it. The patch set itself should not block it.
+  I also tried big data like 3000, and it worked as well.
+  500ms may not be enough for all support mhi device. We shall
+increase it to 2000ms at least.
 
-I'll get back to you soon.
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/pci_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regards,
-Lukasz
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 59a4896a8030..4c577a731709 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -20,7 +20,7 @@
+ 
+ #define MHI_PCI_DEFAULT_BAR_NUM 0
+ 
+-#define MHI_POST_RESET_DELAY_MS 500
++#define MHI_POST_RESET_DELAY_MS 2000
+ 
+ #define HEALTH_CHECK_PERIOD (HZ * 2)
+ 
+-- 
+2.25.1
+
