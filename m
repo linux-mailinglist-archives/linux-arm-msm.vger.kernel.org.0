@@ -2,114 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A353447FED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 13:56:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0309A44802D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Nov 2021 14:21:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239728AbhKHM6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 Nov 2021 07:58:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238770AbhKHM6y (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 Nov 2021 07:58:54 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EF6DC061570;
-        Mon,  8 Nov 2021 04:56:09 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id u11so36005905lfs.1;
-        Mon, 08 Nov 2021 04:56:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:to:cc:references
-         :from:in-reply-to:content-transfer-encoding;
-        bh=PRd8lrxK2rGzfhR6xd0y8MjCqwkrKOfPHO6ZfywRVnA=;
-        b=KIjeh7QgeVG9IpChI3cODLKL7UX3sRTcSUrfu1VjTjxWd6YTQAFs6DgtTlKD7+of3X
-         9qMnCmd3G/Bt9S7g5nJxrnVSWenaSxcPt46EVzFkksOkPT+ivtxwJsXvEBkbzZG7fK05
-         HE7lP5HBKUmNNGvsl9LfE/gMIWTahWcnIaFDKReCt9zL8CvsEoAHXnWTB7h6ttVb0WoR
-         XSARKLikLYEgkQ+//uJKF+z0rXT1ojfCfGvvweo3RyKuULukZfbD2jSQQaV7Zhpebk0T
-         KEGP/iIwjhoiC2dmNmgF4Mvj6mik13Wugtm+z/pFDmZoxny84TPnPsiwgHR1lAAK6Cdl
-         wBVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :to:cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PRd8lrxK2rGzfhR6xd0y8MjCqwkrKOfPHO6ZfywRVnA=;
-        b=XPfqB9w++7ge0Zx0vV+AwOQ/Xxn26fMzzYaQNiAAJFxu0YQbifteCUG/d9BAdK7WJx
-         VV0imlIgnMEWn/A6L7AcHA2nRs9T2oKMx5Pw4Q1+BR4Rw/R4C6puCm3QEchMnva3ovJm
-         S9Zwv3d7OJQ1xkqtoRz7WsS7LIPE5rEx+A0o3SaV5mWGryC0l1kudDHRAUCe9IsEDIrz
-         4a4Nlcivope1xwfbKGmkbmYaFFBXJkK2S6e6zRz/Kl8hUD/KwY1kjrTWn3G+SZeA75bM
-         aH1G+babFZ3y1BUDFxNn/Der9NpVk6DluOLTo2Frr7SPyeZKdqNACjWqeuYjgmnnRVh/
-         7viQ==
-X-Gm-Message-State: AOAM532JAnk8eb47SLNDHek9qA8btJmy4n07y/WZqpAB7R15roHpjN+B
-        eYB9svtlapuECI49Uc7IfJ4=
-X-Google-Smtp-Source: ABdhPJz7b6AZzlifUaTMcQ3b65Sq/qgU3cFwHYqUyJ59VbtU0fc+lnXUT5NA+/1RzJQGcwUqsnEFjg==
-X-Received: by 2002:a05:6512:40c:: with SMTP id u12mr21130431lfk.473.1636376168038;
-        Mon, 08 Nov 2021 04:56:08 -0800 (PST)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl. [194.29.137.1])
-        by smtp.gmail.com with ESMTPSA id w40sm1809126lfu.48.2021.11.08.04.56.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Nov 2021 04:56:07 -0800 (PST)
-Message-ID: <06a286d6-b675-3322-79f2-1127935794b9@gmail.com>
-Date:   Mon, 8 Nov 2021 13:56:07 +0100
+        id S239888AbhKHNYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 Nov 2021 08:24:21 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:42444 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236259AbhKHNYU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 8 Nov 2021 08:24:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1636377696; h=Date: Message-ID: Cc: To: References:
+ In-Reply-To: From: Subject: Content-Transfer-Encoding: MIME-Version:
+ Content-Type: Sender; bh=TfjOXO8nzh/hp5f9S4qe4MUirXMncj1/dfFWSJOXehw=;
+ b=tLkMO+c8GzaRZ/nnJr14cmDLTPg5RM71YkzLZBMNu/Q2wsHyhYZ/4yzAJALM4wrGOv+XlDvo
+ vTxhrnQBxxkWJFiuj7cgfqFJ1SDCcNaNaI07HAfo66Px1gP2K7+V2H+mvveAL6OkmYFoCOgX
+ 36qTH3Z88ADB5xeKGDbhwxN33io=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6189245a6b778b5a1992bc91 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 08 Nov 2021 13:21:30
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6EE5AC43616; Mon,  8 Nov 2021 13:21:30 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        MISSING_DATE,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki.adurom.net (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BECCAC4338F;
+        Mon,  8 Nov 2021 13:21:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org BECCAC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH v2 6/7] arm64: dts: qcom: sdm660-xiaomi-lavender: Enable
- Simple Framebuffer
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, martin.botka@somainline.org,
-        marijn.suijten@somainline.org, paul.bouchara@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        Caleb Connolly <caleb@connolly.tech>
-References: <20211108050336.3404559-1-danct12@riseup.net>
- <20211108050336.3404559-7-danct12@riseup.net>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20211108050336.3404559-7-danct12@riseup.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 1/3] wcn36xx: Fix DMA channel enable/disable cycle
+From:   Kalle Valo <kvalo@codeaurora.org>
+In-Reply-To: <20211105122152.1580542-2-bryan.odonoghue@linaro.org>
+References: <20211105122152.1580542-2-bryan.odonoghue@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-wireless@vger.kernel.org, wcn36xx@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
+        benl@squareup.com, johannes@sipsolutions.net,
+        bryan.odonoghue@linaro.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
+Message-ID: <163637768555.12783.6992853094190522078.kvalo@codeaurora.org>
+Date:   Mon,  8 Nov 2021 13:21:30 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
 
-On 08/11/2021 06:03, Dang Huynh wrote:
-> This lets the user sees the framebuffer console.
->
-> Reviewed-by: Caleb Connolly <caleb@connolly.tech>
-> Reviewed-by: Martin Botka <martin.botka@somainline.org>
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
->   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> index 8fd4d1732d94..122b487f197b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> @@ -23,7 +23,21 @@ aliases {
->   	};
->   
->   	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
->   		stdout-path = "serial0:115200n8";
-> +
-> +		framebuffer0: framebuffer@9d400000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0 0x9d400000 0 (1080 * 2340 * 4)>;
-> +			width = <1080>;
-> +			height = <2340>;
-> +			stride = <(1080 * 4)>;
-> +			format = "a8r8g8b8";
-> +			status= "okay";
+> Right now we have a broken sequence where we enable DMA channel interrupts
+> which can be left enabled and never disabled if we hit an error path.
+> 
+> Worse still when we unload the driver, the DMA channel interrupt bits are
+> left intact. About the only saving grace here is that we do remember to
+> disable the wcnss interrupt when unload the driver.
+> 
+> Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
 
-This line is redundant.
+3 patches applied to ath-next branch of ath.git, thanks.
 
+89dcb1da611d wcn36xx: Fix DMA channel enable/disable cycle
+3652096e5263 wcn36xx: Release DMA channel descriptor allocations
+ed04ea76e69e wcn36xx: Put DXE block into reset before freeing memory
 
-Konrad
+-- 
+https://patchwork.kernel.org/project/linux-wireless/patch/20211105122152.1580542-2-bryan.odonoghue@linaro.org/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
