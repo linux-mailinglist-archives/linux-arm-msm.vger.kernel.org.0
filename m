@@ -2,117 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9146244B10E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 17:22:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 685BF44B111
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 17:22:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237447AbhKIQZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 11:25:06 -0500
-Received: from foss.arm.com ([217.140.110.172]:35694 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234118AbhKIQZF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 11:25:05 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 049CAED1;
-        Tue,  9 Nov 2021 08:22:19 -0800 (PST)
-Received: from [10.57.26.224] (unknown [10.57.26.224])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 03C113F800;
-        Tue,  9 Nov 2021 08:22:14 -0800 (PST)
-Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
- duplication
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
- <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
- <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
- <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
- <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
- <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
- <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
- <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
- <eac00041-a1b8-0780-931d-52249d538800@kali.org>
- <2c54dbbd-2ecb-fb76-fa9f-9752f429c20e@linaro.org>
- <97e93876-d654-0a89-dce1-6fe1189345e2@kali.org>
- <d83a5c25-2eae-3626-f78a-e42915076556@arm.com>
- <ac3f1771-0516-48dd-ee4d-5752e0433472@kali.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <19ecab72-4a2f-1f4a-b999-d3967a4a1a76@arm.com>
-Date:   Tue, 9 Nov 2021 16:22:12 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S238703AbhKIQZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 11:25:23 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:17281 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238397AbhKIQZX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 11:25:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636474957; x=1668010957;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=arA5NuLJ5w1GwDIRETabm4JkNQQtn8VKJ8rknKRj7tQ=;
+  b=tUEz+xggtXFmVp97lOJAA+hJaiSjYaIuP7SQD1+cS8qxLDKtvHapuLnP
+   BwJsAXq1Ly1tM4e456tpxCu70oxO5WPAIXDia972njxkTurWkU9YuFTPR
+   YbgtQ8Qawg9JOqsNAJo2sUbbUC3V9SSZ5EQy6w+FIXlFgCO7DYff38HK2
+   s=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Nov 2021 08:22:36 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 08:22:36 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Tue, 9 Nov 2021 08:22:36 -0800
+Received: from [10.50.19.148] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Tue, 9 Nov 2021
+ 08:22:30 -0800
+Message-ID: <f7c665b9-dc17-5a7f-de80-9fa0605721fc@quicinc.com>
+Date:   Tue, 9 Nov 2021 21:52:26 +0530
 MIME-Version: 1.0
-In-Reply-To: <ac3f1771-0516-48dd-ee4d-5752e0433472@kali.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv3 3/3] dynamic_debug: Add a flag for dynamic event tracing
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+To:     Steven Rostedt <rostedt@goodmis.org>
+CC:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>, Marc Zyngier <maz@kernel.org>,
+        <gregkh@linuxfoundation.org>, <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>
+References: <cover.1636452784.git.quic_saipraka@quicinc.com>
+ <3706af20bc64a320ff8f3ff8950738b988f4bdf5.1636452784.git.quic_saipraka@quicinc.com>
+ <20211109104941.2d50eafc@gandalf.local.home>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20211109104941.2d50eafc@gandalf.local.home>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Steve,
 
-
-On 11/9/21 3:46 PM, Steev Klimaszewski wrote:
-> 
-> On 11/9/21 2:29 AM, Lukasz Luba wrote:
->> Hi Steev,
+On 11/9/2021 9:19 PM, Steven Rostedt wrote:
+> On Tue, 9 Nov 2021 17:38:21 +0530
+> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+>
+>> Debugging a specific driver or subsystem can be a lot easier if we can
+>> trace events specific to that driver or subsystem. This type of
+>> filtering can be achieved using existing dynamic debug library which
+>> provides a way to filter based on files, functions and modules.
 >>
->> That's interesting what you've done with Rockchip RK3399.
->> I would like to reproduce your experiment on my RockPI 4B v1.3.
->> Could you tell me how you to add this boost frequency that you have
->> mentioned in some previous emails?
+>> Using this, provide an additional flag 'e' to filter event tracing to
+>> specified input.
 >>
->> I want to have similar setup to yours and I'll check all the subsystems
->> involved in the decision making process for triggering this boost freq.
+>> For example, tracing all MMIO read/write can be overwhelming and of no
+>> use when debugging a specific driver or a subsystem. So switch to
+>> dynamic event tracing for register accesses.
 >>
->> Thank you for your support.
+>> Example: Tracing register accesses for all drivers in drivers/soc/qcom/*
+>> and the trace output is given below:
 >>
->> Regards,
->> Lukasz
-> 
-> 
-> Hi Lukasz,
-> 
-> It was actually something that Armbian had been doing as an overlay for 
-> their setup, and I thought, why does it need to be an overlay, when we 
-> could simply hide it behind turbo-mode so that if users want to 
-> overclock, they simply echo 1 and if it's unstable or cooling/power 
-> isn't enough, they can echo 0 or leave it off (boost defaults to off) - 
-> so that being said:
-> 
-> I apply this patch 
-> https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/patches/pinebook-pro/pbp-5.14/rk3399-opp-overclock-2GHz-turbo-mode.patch 
-> which adds the 1.5GHz for little cores and 2GHz for the big to the 
-> rk3399 dtsi
-> 
-> To enable at boot time, I simply have "echo 1 > 
-> /sys/devices/system/cpu/cpufreq/boost" in my /etc/rc.local  And to 
-> disable, simply echo 0 in there (it defaults to 0 so it's off and most 
-> users won't know it exists.)
-> 
-> I'm pretty sure this is "abusing" turbo-mode, but it works well enough...
-> 
-> Hope that helps,
-> 
+>>    # dyndbg="file drivers/soc/qcom/* +e" trace_event=rwmmio
+>>      or
+>>    # echo "file drivers/soc/qcom/* +e" > /sys/kernel/debug/dynamic_debug/control
+>>    # cat /sys/kernel/debug/tracing/trace
+> FYI, it's best to use /sys/kernel/tracing, as the debug/tracing is only
+> there for backward compatibility.
 
-Yes, that help. Thank you for the info.
-I'll play a bit with this boosting and try to figure out
-the mechanisms.
+Ah I see, will correct it.
 
-For the $subject patch set, I'm going to send v4, since
-it's not affecting the boost usage. The newly introduced
-interface must handle these boost frequency values and not
-simply ignore them with also printing a warning.
-They are valid frequencies and we should just put 0 to
-the thermal pressure in such cases.
 
-Regards,
-Lukasz
+>>      rwmmio_read: rpmh_rsc_probe+0x35c/0x410 readl addr=0xffff80001071000c
+>>      rwmmio_read: rpmh_rsc_probe+0x3d0/0x410 readl addr=0xffff800010710004
+>>      rwmmio_write: rpmh_rsc_probe+0x3b0/0x410 writel addr=0xffff800010710d00 val=0x3
+>>      rwmmio_write: write_tcs_cmd+0x6c/0x78 writel addr=0xffff800010710d30 val=0x10108
+> I'd much rather have a module name or something attached to the event that
+> ca be filtered on via the trace event filters, than having it determined by
+> some side effect done in another directory.
+
+I presume we don't have CALLER_MODULENAME0,1,2.. like CALLER_ADDR0,1,2 
+without which we
+cannot insert the module name to this trace event since MMIO accessors 
+are defined in low level
+arch headers and we won't get any useful module information from where 
+these accessors are
+called. The function name and the offset is good enough to identify the 
+exact line and module after
+post-processing with tools like GDB, objdump, so I feel we can keep the 
+trace event fields limited?
+
+Thanks,
+Sai
+
+>
+> -- Steve
+
 
