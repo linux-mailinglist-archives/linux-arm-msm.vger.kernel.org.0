@@ -2,205 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8880644AF3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 15:12:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A34244B09C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 16:46:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236854AbhKIOP2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 09:15:28 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:18027 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231169AbhKIOPZ (ORCPT
+        id S235890AbhKIPtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 10:49:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46284 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229955AbhKIPtM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 09:15:25 -0500
+        Tue, 9 Nov 2021 10:49:12 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F94AC061766
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 07:46:26 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso10105223ots.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 07:46:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1636467159; x=1668003159;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=JkI/y9JuBpAiKQPsRnt22jDEDVpaoyvjrRNwSo020qs=;
-  b=OEgQrXTxONemovrP+LeuXt+YafcD1ZbPdJKMjDqXgut653JosQLNt+tE
-   rSOX2ZKfOj6wZI/S0gARa2ieu8ub0Bb2xt6vL/k+A3hzT3J9VYcHK8Et6
-   QYjE6X5CB2CubUN9w0vQPAxMf0aSYv5ki/A7TTTeyMfMDMHg2s0USa6zl
-   Y=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Nov 2021 06:12:39 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 06:12:38 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Tue, 9 Nov 2021 06:12:38 -0800
-Received: from [10.50.19.148] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Tue, 9 Nov 2021
- 06:12:32 -0800
-Message-ID: <90505edb-3569-aa6b-68e6-1de9972cce47@quicinc.com>
-Date:   Tue, 9 Nov 2021 19:42:27 +0530
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Nhd1cXLoARHfuxijxW1CC8tXdTo48PjAHCwKpZq0Ohs=;
+        b=IKxmNKTX0BIWoiJVskOWy25AW2N8zqTy4fIP0lluheBJPb6RR1HGWEcAHuwHK3XXKN
+         nQFDNMBxdgoBMZ+zfGlDzEFGyZVsZFTU9hhONQ+Yn+3HIgl0qlMdLyRHuMbYRYDyHf0v
+         TiDtEXaMz3rSGQLrg8ez3XZs+rszck4hArdyX5U0D3YELE4JsUMpnh5JJ7C3/CuyMs/r
+         54vcG13G//Zju+1iQhAWmTogb8mWB7XfGblWrJFFMT7PO6hka0efOdxIxJyTvnHYMAGS
+         qlphXdeiSYmFj9I6WwLQA+3zxKXUo8CMUH4gpUxzADZIsjcahm5O12FMBbotMKTxiXRb
+         Yg0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Nhd1cXLoARHfuxijxW1CC8tXdTo48PjAHCwKpZq0Ohs=;
+        b=x44l7la/QmLQxHNH28wtnUkc63lut5/lxV77OmMJuR4QrflgEokjYe2MI1dg9acpfe
+         TJ5zEATI+P3tYgyyeIpCdUjGWPYO4qxsW63tKUcGPgY027eLeCvMBmRd2VPSBAlxcklD
+         GIpcHvRWgblVAYOA97A0QoXI7As0QkDZ+cS9+ALeavbm4ub5EGXDJQplkGCcEyEy3TOx
+         stNM7iAGYB7XKZd/AYDtGUnmufEOAYmvAI//4WPS3ZcVwONlGnACScrGwDLFP/aO+b0q
+         w0Nun9wZk8fqPMkMW035AWt57ltu9sB6MZjVeWjRIb4Um8w9MRLbWPr0pTnlQFRYY2GF
+         zCIA==
+X-Gm-Message-State: AOAM533OHAG2nvnkR9ObJAYo1OLUbErUqC4cgwFRgnu7K91AmERSIFQq
+        pnPr1AvCBILs/rJz3MvGVy7NvQ==
+X-Google-Smtp-Source: ABdhPJwMddWy/2opZdv1H0HcP66DI5B4SNXuxuecEiT10xIXb7rTcbNEsMS/6lJop5oEBqi3iRisPA==
+X-Received: by 2002:a9d:6f09:: with SMTP id n9mr6847374otq.357.1636472785577;
+        Tue, 09 Nov 2021 07:46:25 -0800 (PST)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id v66sm7430632oib.18.2021.11.09.07.46.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Nov 2021 07:46:25 -0800 (PST)
+Message-ID: <ac3f1771-0516-48dd-ee4d-5752e0433472@kali.org>
+Date:   Tue, 9 Nov 2021 09:46:23 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv3 1/3] tracing: Add register read/write tracing support
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
+ duplication
 Content-Language: en-US
-To:     Steven Rostedt <rostedt@goodmis.org>
-CC:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <quic_psodagud@quicinc.com>, Marc Zyngier <maz@kernel.org>,
-        <gregkh@linuxfoundation.org>, <arnd@arndb.de>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-References: <cover.1636452784.git.quic_saipraka@quicinc.com>
- <d127fdaf198f5766ffe021430cf848e64b4fdf84.1636452784.git.quic_saipraka@quicinc.com>
- <20211109085410.349edffa@gandalf.local.home>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20211109085410.349edffa@gandalf.local.home>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org
+References: <20211103161020.26714-1-lukasz.luba@arm.com>
+ <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
+ <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
+ <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
+ <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
+ <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
+ <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
+ <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
+ <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
+ <eac00041-a1b8-0780-931d-52249d538800@kali.org>
+ <2c54dbbd-2ecb-fb76-fa9f-9752f429c20e@linaro.org>
+ <97e93876-d654-0a89-dce1-6fe1189345e2@kali.org>
+ <d83a5c25-2eae-3626-f78a-e42915076556@arm.com>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <d83a5c25-2eae-3626-f78a-e42915076556@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steve,
 
-On 11/9/2021 7:24 PM, Steven Rostedt wrote:
-> On Tue, 9 Nov 2021 17:38:19 +0530
-> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+On 11/9/21 2:29 AM, Lukasz Luba wrote:
+> Hi Steev,
 >
->> From: Prasad Sodagudi <psodagud@codeaurora.org>
->>
->> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
->> are typically used to read/write from/to memory mapped registers
->> and can cause hangs or some undefined behaviour in following few
->> cases,
->>
->> * If the access to the register space is unclocked, for example: if
->>    there is an access to multimedia(MM) block registers without MM
->>    clocks.
->>
->> * If the register space is protected and not set to be accessible from
->>    non-secure world, for example: only EL3 (EL: Exception level) access
->>    is allowed and any EL2/EL1 access is forbidden.
->>
->> * If xPU(memory/register protection units) is controlling access to
->>    certain memory/register space for specific clients.
->>
->> and more...
->>
->> Such cases usually results in instant reboot/SErrors/NOC or interconnect
->> hangs and tracing these register accesses can be very helpful to debug
->> such issues during initial development stages and also in later stages.
->>
->> So use ftrace trace events to log such MMIO register accesses which
->> provides rich feature set such as early enablement of trace events,
->> filtering capability, dumping ftrace logs on console and many more.
->>
->> Sample output:
->>
->> rwmmio_read: gic_peek_irq+0xd0/0xd8 readl addr=0xffff800010040104
->> rwmmio_write: gic_poke_irq+0xe4/0xf0 writel addr=0xffff800010040184 val=0x40
->> rwmmio_read: gic_do_wait_for_rwp+0x54/0x90 readl addr=0xffff800010040000
->> rwmmio_write: gic_set_affinity+0x1bc/0x1e8 writeq addr=0xffff800010046130 val=0x500
->>
->> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
->> [saiprakash: Rewrote commit msg and trace event field edits]
->> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
->> ---
->>   include/trace/events/rwmmio.h  | 61 ++++++++++++++++++++++++++++++++++
->>   kernel/trace/Kconfig           |  7 ++++
->>   kernel/trace/Makefile          |  1 +
->>   kernel/trace/trace_readwrite.c | 28 ++++++++++++++++
->>   4 files changed, 97 insertions(+)
->>   create mode 100644 include/trace/events/rwmmio.h
->>   create mode 100644 kernel/trace/trace_readwrite.c
->>
->> diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
->> new file mode 100644
->> index 000000000000..cb5261a559f8
->> --- /dev/null
->> +++ b/include/trace/events/rwmmio.h
->> @@ -0,0 +1,61 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +#undef TRACE_SYSTEM
->> +#define TRACE_SYSTEM rwmmio
->> +
->> +#if !defined(_TRACE_MMIO_H) || defined(TRACE_HEADER_MULTI_READ)
->> +#define _TRACE_MMIO_H
->> +
->> +#include <linux/tracepoint.h>
->> +
->> +TRACE_EVENT(rwmmio_write,
->> +
->> +	TP_PROTO(unsigned long fn, const char *width, u64 val, volatile void __iomem *addr),
->> +
->> +	TP_ARGS(fn, width, val, addr),
->> +
->> +	TP_STRUCT__entry(
->> +		__field(u64, fn)
->> +		__string(width, width)
->> +		__field(u64, val)
->> +		__field(u64, addr)
-> For better space usage, move the __string to the end. Each of the u64
-> fields will take up 8 bytes, and the __string only takes up 4 (it's a 2
-> byte offset and 2 byte length, where the actual string lies at the end of
-> the event). Many archs will leave a 4 byte "hole" between the __string()
-> field and the u64 val field. If __string is at the end, it will go nicely
-> with the actual string that will be appended behind it.
-
-Thanks for the informative suggestion, will make the change for the next 
-version.
+> That's interesting what you've done with Rockchip RK3399.
+> I would like to reproduce your experiment on my RockPI 4B v1.3.
+> Could you tell me how you to add this boost frequency that you have
+> mentioned in some previous emails?
+>
+> I want to have similar setup to yours and I'll check all the subsystems
+> involved in the decision making process for triggering this boost freq.
+>
+> Thank you for your support.
+>
+> Regards,
+> Lukasz
 
 
->> +	),
->> +
->> +	TP_fast_assign(
->> +		__entry->fn = fn;
->> +		__assign_str(width, width);
->> +		__entry->val = val;
->> +		__entry->addr = (u64)addr;
->> +	),
->> +
->> +	TP_printk("%pS %s addr=%#llx val=%#llx",
->> +		(void *)__entry->fn, __get_str(width), __entry->addr, __entry->val)
->> +);
->> +
->> +TRACE_EVENT(rwmmio_read,
->> +
->> +	TP_PROTO(unsigned long fn, const char *width, const volatile void __iomem *addr),
->> +
->> +	TP_ARGS(fn, width, addr),
->> +
->> +	TP_STRUCT__entry(
->> +		__field(u64, fn)
->> +		__string(width, width)
->> +		__field(u64, addr)
-> Same here.
+Hi Lukasz,
 
-Sure, will make the change.
+It was actually something that Armbian had been doing as an overlay for 
+their setup, and I thought, why does it need to be an overlay, when we 
+could simply hide it behind turbo-mode so that if users want to 
+overclock, they simply echo 1 and if it's unstable or cooling/power 
+isn't enough, they can echo 0 or leave it off (boost defaults to off) - 
+so that being said:
 
+I apply this patch 
+https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/patches/pinebook-pro/pbp-5.14/rk3399-opp-overclock-2GHz-turbo-mode.patch 
+which adds the 1.5GHz for little cores and 2GHz for the big to the 
+rk3399 dtsi
 
->> +	),
->> +
->> +	TP_fast_assign(
->> +		__entry->fn = fn;
->> +		__assign_str(width, width);
->> +		__entry->addr = (u64)addr;
->> +	),
->> +
->> +	TP_printk("%pS %s addr=%#llx",
->> +		 (void *)__entry->fn, __get_str(width), __entry->addr)
->> +);
->> +
-> -- Steve
+To enable at boot time, I simply have "echo 1 > 
+/sys/devices/system/cpu/cpufreq/boost" in my /etc/rc.local  And to 
+disable, simply echo 0 in there (it defaults to 0 so it's off and most 
+users won't know it exists.)
 
-Thanks,
+I'm pretty sure this is "abusing" turbo-mode, but it works well enough...
 
-Sai
+Hope that helps,
+
+-- steev
 
