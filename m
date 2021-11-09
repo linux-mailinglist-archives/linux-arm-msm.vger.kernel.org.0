@@ -2,124 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64A7B44A9A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 09:46:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25A1344AAA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 10:37:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242837AbhKIIte (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 03:49:34 -0500
-Received: from foss.arm.com ([217.140.110.172]:58496 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242854AbhKIItd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 03:49:33 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A81E42B;
-        Tue,  9 Nov 2021 00:46:47 -0800 (PST)
-Received: from [10.57.26.224] (unknown [10.57.26.224])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BB0953F7F5;
-        Tue,  9 Nov 2021 00:46:43 -0800 (PST)
-Subject: Re: [PATCH v3 4/5] cpufreq: qcom-cpufreq-hw: Use new thermal pressure
- update function
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org,
-        Steev Klimaszewski <steev@kali.org>
-References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <20211103161020.26714-5-lukasz.luba@arm.com>
- <c4a2618f-71ee-b688-6268-08256a8edf10@linaro.org>
- <02468805-f626-1f61-7f7f-73ed7dfad034@arm.com>
- <af73cc0a-4dd2-832f-13b0-08807df64ce2@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <e4907877-6cfe-57fe-74b4-6d4efeb1d25a@arm.com>
-Date:   Tue, 9 Nov 2021 08:46:41 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <af73cc0a-4dd2-832f-13b0-08807df64ce2@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S243264AbhKIJkT convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Tue, 9 Nov 2021 04:40:19 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:50659 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241297AbhKIJkS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 04:40:18 -0500
+Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 7280ECED1E;
+        Tue,  9 Nov 2021 10:37:31 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Subject: Re: [PATCH v3] Bluetooth: btusb: re-definition for board_id in struct
+  qca_version
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
+Date:   Tue, 9 Nov 2021 10:37:31 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <8E687716-E810-4A46-B010-A08BB261D2FF@holtmann.org>
+References: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
+To:     tjiang@codeaurora.org
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Tim,
 
-
-On 11/8/21 9:23 PM, Thara Gopinath wrote:
+> As qc btsoc will using big-endian for boardID, so align host with it.
 > 
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> On 11/8/21 9:12 AM, Lukasz Luba wrote:
-> ...snip
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 46d892bbde62..a51b1d641043 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -2883,7 +2883,7 @@ struct qca_version {
+> 	__le32	rom_version;
+> 	__le32	patch_version;
+> 	__le32	ram_version;
+> -	__le16	board_id;
+> +	__u8	board_id[2];
+> 	__le16	flag;
+> 	__u8	reserved[4];
+> } __packed;
+> @@ -3072,7 +3072,7 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
+> 	u16 flag = le16_to_cpu(ver->flag);
 > 
->>>
->>>
->>
->> Well, I think the issue is broader. Look at the code which
->> calculate this 'capacity'. It's just a multiplication & division:
->>
->> max_capacity = arch_scale_cpu_capacity(cpu); // =1024 in our case
->> capacity = mult_frac(max_capacity, throttled_freq,
->>          policy->cpuinfo.max_freq);
->>
->> In the reported by Steev output from sysfs cpufreq we know
->> that the value of 'policy->cpuinfo.max_freq' is:
->> /sys/devices/system/cpu/cpu5/cpufreq/cpuinfo_max_freq:2956800
->>
->> so when we put the values to the equation we get:
->> capacity = 1024 * 2956800 / 2956800; // =1024
->> The 'capacity' will be always <= 1024 and this check won't
->> be triggered:
->>
->> /* Don't pass boost capacity to scheduler */
->> if (capacity > max_capacity)
->>      capacity = max_capacity;
->>
->>
->> IIUC you original code, you don't want to have this boost
->> frequency to be treated as 1024 capacity. The reason is because
->> the whole capacity machinery in arch_topology.c is calculated based
->> on max freq value = 2841600,
->> so the max capacity 1024 would be pinned to that frequency
->> (according to Steeve's log:
->> [   22.552273] THERMAL_PRESSURE: max_freq(2841) < capped_freq(2956) 
->> for CPUs [4-7] )
+> 	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> -		u16 board_id = le16_to_cpu(ver->board_id);
+> +		u16 board_id = (ver->board_id[0] << 8) + ver->board_id[1];
+> 		const char *variant;
 > 
-> Hi Lukasz,
-> 
-> Yes you are right in that I was using policy->cpuinfo.max_freq where as 
-> I should have used freq_factor. So now that you are using freq_factor, 
-> it makes sense to cap the capacity at the max capacity calulated by the 
-> scheduler.
-> 
-> I agree that the problem is complex because at some point we should look 
-> at rebuilding the topology based on changes to policy->cpuinfo.max_freq.
-> 
+> 		switch (le32_to_cpu(ver->ram_version)) {
 
-I probably cannot fix your driver easily right now. What I can do and is
-actually required for this new API arch_update_thermal_pressure() is to
-accept boost frequencies (values which are higher that 'freq_factor')
-without triggering a warning and just setting the thermal pressure to 0
-(since we are told that the frequency capping is completely removed even
-for boost values).
+explain to me why I would merge this. The commit message is sparse even after I asked to explain things.
 
-The next step would be to perform longer investigation how the boost
-frequencies are accepted then triggered/used by scheduler and other
-involved machinery.
+I am also not merging this handwaving endian handling. Define it is be16 or le16 and clearly state what it is. If Qualcomm screwed up the memory layout of their NVM, then say that.
 
-I've asked Steev for help with setting up this Rockchip RK3399 new boost
-frequency which actually is used. I want to understand why that platform
-is able to use the boost freq and this Qcom SoC is not able to use it.
+Regards
 
-I agree with you that at some point we might need to try rebuilding the
-topology information based on these policy->cpuinfo.max_freq changes.
+Marcel
 
-I hope it would take only a few steps to fix these issues completely,
-without destroying a lot of existing code...
-
-Regards,
-Lukasz
