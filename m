@@ -2,90 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26F8C44AB76
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 11:26:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35B5144AB7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 11:29:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245310AbhKIK3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 05:29:17 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:32727 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239354AbhKIK3Q (ORCPT
+        id S243381AbhKIKce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 05:32:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58748 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242874AbhKIKcd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 05:29:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1636453586;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=RiExFva19iXpcbPI5dAYFzRkXGmUkKhn82LlovdHwDo=;
-    b=FBVBdfyvQYtX6+LPASWG4S84/a1D4AJY+5Xo18NJumgpGW1aUEGBqs0CXCnLHsfc9t
-    0ZrfkeT5JYp7G2u7OS6+AfJdDMEwxw/TP2OC4SRmJqfdOn8A6l4Ys9ntDqJPI2NPHK2a
-    1Jn/9k2FTU+Wl7spuKVaTleM0TjRcEEjQCyWLydiRu0NrUXFrIiwtyRLD+CpqPfyjGW5
-    WgqOWY7Js7S7zUURkojmWoX4VD5EL+mDz1/Shxa3o9EylF1/bCbHJVOIdCrcMTUPQhwL
-    /dzdfBZKz3cLXA1fgKch6PnHV8x4FmQFSmTSP6hDNWDbGDSXSyO2RIbp++GSgvuu4q8K
-    Yb2w==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK86+6Y="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.34.1 SBL|AUTH)
-    with ESMTPSA id Q0a97bxA9AQPXZ3
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 9 Nov 2021 11:26:25 +0100 (CET)
-Date:   Tue, 9 Nov 2021 11:26:21 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Tue, 9 Nov 2021 05:32:33 -0500
+Received: from michel.telenet-ops.be (michel.telenet-ops.be [IPv6:2a02:1800:110:4::f00:18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C5B2C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 02:29:47 -0800 (PST)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:9dc9:efd5:4c6f:baa9])
+        by michel.telenet-ops.be with bizsmtp
+        id GAVj260011LAWtA06AVjgj; Tue, 09 Nov 2021 11:29:45 +0100
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mkONq-00BCpC-OF; Tue, 09 Nov 2021 11:29:42 +0100
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mkONq-00E7Ix-7b; Tue, 09 Nov 2021 11:29:42 +0100
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] clk: qcom: smd-rpm: Report enable state to framework
-Message-ID: <YYpMzau3CWRQYlkJ@gerhold.net>
-References: <20211109022558.14529-1-shawn.guo@linaro.org>
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v2] bindings: media: venus: Drop redundant maxItems for power-domain-names
+Date:   Tue,  9 Nov 2021 11:29:41 +0100
+Message-Id: <d94924e1bd00f396f2106f04d4a2bb839cf5f071.1636453406.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211109022558.14529-1-shawn.guo@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
+make dt_binding_check:
 
-On Tue, Nov 09, 2021 at 10:25:55AM +0800, Shawn Guo wrote:
-> Currently the enable state of smd-rpm clocks are not properly reported
-> back to framework due to missing .is_enabled and .is_prepared hooks.
-> This causes a couple of issues.
-> 
-> - All those unused clocks are not voted for off, because framework has
->   no knowledge that they are unused.  It becomes a problem for vlow
->   power mode support, as we do not have every single RPM clock claimed
->   and voted for off by client devices, and rely on clock framework to
->   disable those unused RPM clocks.
-> 
+    Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
+    warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+    Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: properties:power-domain-names: {'required': ['maxItems']} is not allowed for {'minItems': 2, 'maxItems': 3, 'items': [{'const': 'venus'}, {'const': 'vcodec0'}, {'const': 'cx'}]}
+	   hint: "maxItems" is not needed with an "items" list
+	   from schema $id: http://devicetree.org/meta-schemas/items.yaml#
 
-I posted a similar patch a bit more than a year ago [1]. Back then one
-of the concerns was that we might disable critical clocks just because
-they have no driver using it actively. For example, not all of the
-platforms using clk-smd-rpm already have an interconnect driver.
-Disabling the interconnect related clocks will almost certainly make the
-device lock up completely. (I tried it back then, it definitely does...)
+Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+v2:
+  - Add Acked-by,
+  - s/bogus/redundant/,
+  - Include full error message.
+---
+ Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-I proposed adding CLK_IGNORE_UNUSED for the interconnect related clocks
-back then [2] which would allow disabling most of the clocks at least.
-Stephen Boyd had an alternative proposal to instead move the
-interconnect related clocks completely out of clk-smd-rpm [3].
-But I'm still unsure how this would work in a backwards compatible way. [4]
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+index fa54c560e0bde3cb..e2874683b4d5faf3 100644
+--- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+@@ -30,7 +30,6 @@ properties:
+ 
+   power-domain-names:
+     minItems: 2
+-    maxItems: 3
+     items:
+       - const: venus
+       - const: vcodec0
+-- 
+2.25.1
 
-Since your patches are more or less identical I'm afraid the same
-concerns still need to be solved somehow. :)
-
-Thanks,
-Stephan
-
-[1]: https://lore.kernel.org/linux-arm-msm/20200817140908.185976-1-stephan@gerhold.net/
-[2]: https://lore.kernel.org/linux-arm-msm/20200818080738.GA46574@gerhold.net/
-[3]: https://lore.kernel.org/linux-arm-msm/159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com/
-[4]: https://lore.kernel.org/linux-arm-msm/20200821064857.GA905@gerhold.net/
