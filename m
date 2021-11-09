@@ -2,76 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE51044B526
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 23:09:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E39A44B52D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 23:12:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237070AbhKIWML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 17:12:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
+        id S236589AbhKIWPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 17:15:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236824AbhKIWML (ORCPT
+        with ESMTP id S229879AbhKIWPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 17:12:11 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF5BC061766
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 14:09:24 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id o4so1331878oia.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 14:09:24 -0800 (PST)
+        Tue, 9 Nov 2021 17:15:07 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC6CBC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 14:12:20 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id w6-20020a9d77c6000000b0055e804fa524so896752otl.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 14:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=DPT5pWa6cT8nw3Zv9xh5xFmmq85YU9JvkFn3DJbbeno=;
-        b=Eepl0E0INMovuY9E/5rpog6e/jKCyo5Mf5NMvqE+gygcSEWSSwfak8b9jRvDyxJIwV
-         XbsyCcK/RVQDnUuh1ed6cRQNrYmeYfIzc4Rcw8U4qaSagdxJ5nO9ylDvR6Gpksurt6KS
-         5RZ3DEDXQvUcXuCz53c1nTjSQHHOQOSASdlQI=
+        bh=q4dY+M8nyiFAt4remZo3SHhwNRe5f+ykJVrEzZX13ZY=;
+        b=dUVV+iZ7gYosXBMozkc7vKB1RNOH5oYuxH+4ETASHmsxotjE4SMaeLcPuNuZo3YgLS
+         VKqrYcvpOjHVanfYHo2JDTh9TG9fBjUwC/5YUeev8lYij4oN6Dvhmr9g993TWSjfRQXA
+         y/Ob41ctB8Ez3blzsLaMRml0A4mz13rP97ljM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=DPT5pWa6cT8nw3Zv9xh5xFmmq85YU9JvkFn3DJbbeno=;
-        b=UlKouM2XvJgYy0wDMXU7hAxZsSMvjaZcWek5iuf33BANGLaX4vLOx/s73Egwy3QAhy
-         JooklAdbFadwNM83JdsRcEiVjgMx/yJBE6cl0NHFQYXrcv6PZIIZIFYwfDvY6WKD4nrw
-         TJUOmjELZY61JD85Tv82p6dSAIK0SeMKyI8iVthXGNhM/6tVYXxKdJsb2uz3UjwaQPSi
-         RVr6wkjwVycnrFaFlrDJmAIV9dE6LvThNNac9EuBbCGfF/GZhiPyl22LmiXldEUp8as2
-         Ul6QNJO3S61ID4UtVC+QKr5OgRMkg+QXbhLAoNASal9AL2X1W90hfikBljc+TgKiJb+C
-         O65A==
-X-Gm-Message-State: AOAM53106u/mc4q8fQ0Ydxasun4G/qaMJlnZwUnj6siz1f8MtLSDWZc2
-        fSi7gPHyHJgpdCzn+BJkXqLS6a2ujGKRNVRoeMt2/YIia/Q=
-X-Google-Smtp-Source: ABdhPJyq+WHaMv+pQAv1iUIqLn4EAtyzQnLJaulAUyKW2RUle/i+EGbpt/SBpZiLkLkmUM3ZrpMeVk6x9TtFHDQkxCA=
-X-Received: by 2002:a05:6808:211f:: with SMTP id r31mr8942621oiw.64.1636495764284;
- Tue, 09 Nov 2021 14:09:24 -0800 (PST)
+        bh=q4dY+M8nyiFAt4remZo3SHhwNRe5f+ykJVrEzZX13ZY=;
+        b=Sd3l2yPEgHXABAQGY8/PyE5mamQjujGDCOUX61KtQdn8LlXetdPE+a1MoFdopB/SQt
+         llVlWkgYff4uvQgiGjlGaHM3mqPeteyYZzHcxdKFNLRXketMS/tkctNIJDLejaORgNQ7
+         FkxALa6RqtdlPKqmBzUcx7fwhdpgJkq5+SOA1zi8h78q58Csrxd7Tf88dx43CsbSEV44
+         MD6g/uKQs5MurmiWc1UZcdD1d5Q10Kubvw8RF7oK7F7UD65b3ulNjx+dw2sL8eat0+jZ
+         AhK2svPoC8gzzB+FiZnz5z8ivEuaVsnMLLwGJ0oaddq2b+Do0gYeAkbM1VsqzbYss/QC
+         pZ4Q==
+X-Gm-Message-State: AOAM533Qe15ko29lDwegjsR/jabXLsAWyDdDSptGyMccQae2MqwpYcDc
+        Ue6gY6sgCMqppVitKxaJvVk2whj4b8zRY6eIzmHt/A==
+X-Google-Smtp-Source: ABdhPJzCxZIvzxfRWv/IW1ZG0J6NJo3QJ4ZuZGIuMdYHfvlxdSbDBBsE6NHiPmYbpRrVGi/S+/NGsMIcLCSrzc29ITI=
+X-Received: by 2002:a9d:2f42:: with SMTP id h60mr8342701otb.159.1636495940269;
+ Tue, 09 Nov 2021 14:12:20 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 9 Nov 2021 22:09:23 +0000
+ HTTPREST; Tue, 9 Nov 2021 22:12:19 +0000
 MIME-Version: 1.0
-In-Reply-To: <20211106172246.2597431-1-bjorn.andersson@linaro.org>
-References: <20211106172246.2597431-1-bjorn.andersson@linaro.org>
+In-Reply-To: <1636451248-18889-1-git-send-email-quic_mkrishn@quicinc.com>
+References: <1636451248-18889-1-git-send-email-quic_mkrishn@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 9 Nov 2021 22:09:23 +0000
-Message-ID: <CAE-0n51evrWUseEKRbdsfx9nLHuv5YdS89OE3X5Ffs+LLN-35w@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: Drop now unused hpd_high member
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Date:   Tue, 9 Nov 2021 22:12:19 +0000
+Message-ID: <CAE-0n50a5LWpi1JoY=BpwPokpuzYC2c3RXv86Ob_azmdCOkgyw@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm: use compatible lists to find mdp node
+To:     Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_kalyant@quicinc.com, robdclark@gmail.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-11-06 10:22:46)
-> Since '8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon
-> Chipsets")' the hpd_high member of struct dp_usbpd has been write-only.
+Quoting Krishna Manikandan (2021-11-09 01:47:28)
+> In the current implementation, substring comparison
+> using device node name is used to find mdp node
+> during driver probe. Use compatible string list instead
+> of node name to get mdp node from the parent mdss node.
 >
-> Let's clean up the code a little bit by removing the writes as well.
+> Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
 >
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Changes in v2:
+>   - Use compatible lists instead of duplicate string
+>     check (Stephen Boyd)
+>
+> Changes in v3:
+>   - Use match tables to find the mdp node (Stephen Boyd)
 > ---
+
+With the export symbol dropped
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
