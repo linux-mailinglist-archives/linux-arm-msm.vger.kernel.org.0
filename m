@@ -2,84 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B8944AC4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 12:08:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 020C744AD28
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 13:09:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245564AbhKILLX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 06:11:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241787AbhKILLX (ORCPT
+        id S236689AbhKIML4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 07:11:56 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:58703 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231910AbhKIMLz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 06:11:23 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97AB8C061766
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 03:08:37 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id x19-20020a9d7053000000b0055c8b39420bso9703128otj.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 03:08:37 -0800 (PST)
+        Tue, 9 Nov 2021 07:11:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4+G3Lrbcy0EyO7hdvkch+Sv/6pjlgWUWMyGebQReyzg=;
-        b=xhHXwnxjwwSmY1SZZZ+GTy0PcDo+hQfjVaBgfbi+9YB3SH1FJvtAIu07roe/OvDeYX
-         oClayepzt4EfDQzdn6RT19t4bi49JFwMWVsWz9IZ4zZY+MNfAZJFnBEDgIOoKHtx1aXP
-         zlGLz5mBEpZBlHPzJmTanj3B0n7jX4w8UGxZRK2BfgIDthB3CiTEET5D7SZEXpz6SJcO
-         vM1eUj8nFaeJ026QX2tUuo7HjplPA/p1qprEKR+xJSj6byKyNRu5pHmHuYoGXQhN9th1
-         yjVgJiGV7nC8lA6jf+SBUQL/jKGeB7Aq4Dg+OTMNKHcISQL+rnkSp1jZ8alcMt2wVL6o
-         Qx8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4+G3Lrbcy0EyO7hdvkch+Sv/6pjlgWUWMyGebQReyzg=;
-        b=HAy0NciLxtmxhYS/AQ33joD4F2PasAwlUj6BnXE5GnggkKnqofdZMjZtrluejxI/fU
-         RJR+ET9glvSegFjolWFhxLyOE0ElxATd9ChJooNa22zLDS0iY+c9rN2a2LRjjgb2zO1Q
-         16ET5LgZwCsT93mcODVA0NPghARvAXlNq/EJqWtmGd73+BAXunSk9l3haWWN7jEmHlqy
-         JfvbM9OFImYcoEGskhR0FeDxlIKwjkR4WZPF76EoC16Q/eaj4xY8rrEk9GEdJfMG/p/l
-         4xRKXjhdpJUkzElklvdpSTkrHqursaSzB68dK1aZ+7ONPky7quARYOqRu5CXPnptYKoF
-         vhsw==
-X-Gm-Message-State: AOAM533m3/JJmFX0SQfB7baaVUwzhCv3AFH2+2h/3JohAzfjWAsmULxu
-        rOIJKTRj6MlhHMK5Rs4VzrPMB5cGEr32P8SSv0CQ2Q==
-X-Google-Smtp-Source: ABdhPJxnfHg55h3LAurq3eK4N+Gzju+eUBJuOMAZrQ9cyTGkqZ6aXrm0I+nlIynOiCWVZH9L28ayNM0pQyDUNxJARLo=
-X-Received: by 2002:a05:6830:2809:: with SMTP id w9mr5139316otu.237.1636456117012;
- Tue, 09 Nov 2021 03:08:37 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636459750; x=1667995750;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=1+MdvvHM1pA3v3NcEb9pr7yhUwI/tZNQsP5FUiK4NgE=;
+  b=I+4Go57aZ1K+MoG21t6l+SNblOCMhhRPHhMNlbicuuuHqjTpNYnXdtek
+   3F0b/9GfwmvuEVtiY8Ypb0id1ZDTnF95YLjsTIyT3WC0ag7ADM3zbj/DJ
+   cd63GwJry1twR7w5ritlx4D4slgpfLjwnjHYOWEuBAMAX9tfVfbjqG9x3
+   I=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 09 Nov 2021 04:09:10 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 04:09:09 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Tue, 9 Nov 2021 04:09:08 -0800
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Tue, 9 Nov 2021 04:09:03 -0800
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Will Deacon <will@kernel.org>, <rostedt@goodmis.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>
+CC:     Marc Zyngier <maz@kernel.org>, <gregkh@linuxfoundation.org>,
+        <arnd@arndb.de>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
+Subject: [PATCHv3 0/3] tracing/rwmmio/arm64: Add support to trace register reads/writes
+Date:   Tue, 9 Nov 2021 17:38:18 +0530
+Message-ID: <cover.1636452784.git.quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-References: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211102034115.1946036-1-bjorn.andersson@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 9 Nov 2021 12:08:25 +0100
-Message-ID: <CACRpkdatWHsP+b8uxj8-ekMsn9rfVPSm7muBNG09PBU-RH2oEA@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sdm845: Enable dual edge errata
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 2, 2021 at 4:41 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+are typically used to read/write from/to memory mapped registers
+and can cause hangs or some undefined behaviour in following cases,
 
-> It has been observed that dual edge triggered wakeirq GPIOs on SDM845
-> doesn't trigger interrupts on the falling edge.
->
-> Enabling wakeirq_dual_edge_errata for SDM845 indicates that the PDC in
-> SDM845 suffers from the same problem described, and worked around, by
-> Doug in 'c3c0c2e18d94 ("pinctrl: qcom: Handle broken/missing PDC dual
-> edge IRQs on sc7180")', so enable the workaround for SDM845 as well.
->
-> The specific problem seen without this is that gpio-keys does not detect
-> the falling edge of the LID gpio on the Lenovo Yoga C630 and as such
-> consistently reports the LID as closed.
->
-> Fixes: e35a6ae0eb3a ("pinctrl/msm: Setup GPIO chip in hierarchy")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+* If the access to the register space is unclocked, for example: if
+  there is an access to multimedia(MM) block registers without MM
+  clocks.
 
-Patch applied for fixes!
+* If the register space is protected and not set to be accessible from
+  non-secure world, for example: only EL3 (EL: Exception level) access
+  is allowed and any EL2/EL1 access is forbidden.
 
-Yours,
-Linus Walleij
+* If xPU(memory/register protection units) is controlling access to
+  certain memory/register space for specific clients.
+
+and more...
+
+Such cases usually results in instant reboot/SErrors/NOC or interconnect
+hangs and tracing these register accesses can be very helpful to debug
+such issues during initial development stages and also in later stages.
+
+So use ftrace trace events to log such MMIO register accesses which
+provides rich feature set such as early enablement of trace events,
+filtering capability, dumping ftrace logs on console and many more.
+
+Sample output:
+
+rwmmio_read: gic_peek_irq+0xd0/0xd8 readl addr=0xffff800010040104
+rwmmio_write: gic_poke_irq+0xe4/0xf0 writel addr=0xffff800010040184 val=0x40
+rwmmio_read: gic_do_wait_for_rwp+0x54/0x90 readl addr=0xffff800010040000
+rwmmio_write: gic_set_affinity+0x1bc/0x1e8 writeq addr=0xffff800010046130 val=0x500
+
+In addition to this, provide dynamic debug support to filter out unwanted
+logs and limit trace to only specific files or directories since there can be
+aweful lot of register trace events and we will be interested only in specific
+drivers or subsystems which we will be working on. So introduce a new flag "e"
+to filter these event tracing to specified input.
+
+Example: Tracing register accesses for all drivers in drivers/soc/qcom/*
+and the trace output is given below:
+
+ # dyndbg="file drivers/soc/qcom/* +e" trace_event=rwmmio
+   or
+ # echo "file drivers/soc/qcom/* +e" > /sys/kernel/debug/dynamic_debug/control
+ # cat /sys/kernel/debug/tracing/trace
+   rwmmio_read: rpmh_rsc_probe+0x35c/0x410 readl addr=0xffff80001071000c
+   rwmmio_read: rpmh_rsc_probe+0x3d0/0x410 readl addr=0xffff800010710004
+   rwmmio_write: rpmh_rsc_probe+0x3b0/0x410 writel addr=0xffff800010710d00 val=0x3
+   rwmmio_write: write_tcs_cmd+0x6c/0x78 writel addr=0xffff800010710d30 val=0x10108
+
+This series is a follow-up for the series [1] and a recent series [2] making use
+of both.
+
+[1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
+[2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
+
+Changes in v3:
+ * Create a generic mmio header for instrumented version (Earlier suggested in [1]
+   by Will Deacon and recently [2] by Greg to have a generic version first).
+ * Add dynamic debug support to filter out traces which can be very useful for targeted
+   debugging specific to subsystems or drivers.
+ * Few modifications to the rwmmio trace event fields to include the mmio width and print
+   addresses in hex.
+ * Rewrote commit msg to explain some more about usecases.
+
+Prasad Sodagudi (1):
+  tracing: Add register read and write tracing support
+
+Sai Prakash Ranjan (2):
+  arm64/io: Add a header for mmio access instrumentation
+  dynamic_debug: Add a flag for dynamic event tracing
+
+ arch/arm64/include/asm/io.h       | 25 +++-----
+ arch/arm64/kvm/hyp/nvhe/Makefile  |  2 +-
+ include/linux/dynamic_debug.h     |  1 +
+ include/linux/mmio-instrumented.h | 95 +++++++++++++++++++++++++++++++
+ include/trace/events/rwmmio.h     | 61 ++++++++++++++++++++
+ kernel/trace/Kconfig              |  7 +++
+ kernel/trace/Makefile             |  1 +
+ kernel/trace/trace_readwrite.c    | 28 +++++++++
+ lib/dynamic_debug.c               |  1 +
+ 9 files changed, 204 insertions(+), 17 deletions(-)
+ create mode 100644 include/linux/mmio-instrumented.h
+ create mode 100644 include/trace/events/rwmmio.h
+ create mode 100644 kernel/trace/trace_readwrite.c
+
+-- 
+2.29.0
+
