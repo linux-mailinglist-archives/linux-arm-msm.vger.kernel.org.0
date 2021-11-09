@@ -2,78 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B1A344B4E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 22:51:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE51044B526
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 23:09:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243999AbhKIVxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 16:53:54 -0500
-Received: from mail.kernel.org ([198.145.29.99]:58626 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241983AbhKIVxy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 16:53:54 -0500
-Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 7C5B361178;
-        Tue,  9 Nov 2021 21:51:06 +0000 (UTC)
-Date:   Tue, 9 Nov 2021 16:51:04 -0500
-From:   Steven Rostedt <rostedt@goodmis.org>
-To:     Jason Baron <jbaron@akamai.com>
-Cc:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        quic_psodagud@quicinc.com, Marc Zyngier <maz@kernel.org>,
-        gregkh@linuxfoundation.org, arnd@arndb.de,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, mingo@redhat.com,
-        jim.cromie@gmail.com, seanpaul@chromium.org
-Subject: Re: [PATCHv3 3/3] dynamic_debug: Add a flag for dynamic event
- tracing
-Message-ID: <20211109165104.176b4cf9@gandalf.local.home>
-In-Reply-To: <e037f449-9784-c78e-431d-43f035a9f49f@akamai.com>
-References: <cover.1636452784.git.quic_saipraka@quicinc.com>
-        <3706af20bc64a320ff8f3ff8950738b988f4bdf5.1636452784.git.quic_saipraka@quicinc.com>
-        <20211109104941.2d50eafc@gandalf.local.home>
-        <f7c665b9-dc17-5a7f-de80-9fa0605721fc@quicinc.com>
-        <20211109115951.1c2b5228@gandalf.local.home>
-        <264b77dd-5509-60f9-248c-a93135b01aa9@quicinc.com>
-        <20211109124046.2a772bcb@gandalf.local.home>
-        <c5715db5-965b-c1f5-3e99-04caec3d4f2c@quicinc.com>
-        <e037f449-9784-c78e-431d-43f035a9f49f@akamai.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        id S237070AbhKIWML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 17:12:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236824AbhKIWML (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 17:12:11 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF5BC061766
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 14:09:24 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id o4so1331878oia.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 14:09:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=DPT5pWa6cT8nw3Zv9xh5xFmmq85YU9JvkFn3DJbbeno=;
+        b=Eepl0E0INMovuY9E/5rpog6e/jKCyo5Mf5NMvqE+gygcSEWSSwfak8b9jRvDyxJIwV
+         XbsyCcK/RVQDnUuh1ed6cRQNrYmeYfIzc4Rcw8U4qaSagdxJ5nO9ylDvR6Gpksurt6KS
+         5RZ3DEDXQvUcXuCz53c1nTjSQHHOQOSASdlQI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=DPT5pWa6cT8nw3Zv9xh5xFmmq85YU9JvkFn3DJbbeno=;
+        b=UlKouM2XvJgYy0wDMXU7hAxZsSMvjaZcWek5iuf33BANGLaX4vLOx/s73Egwy3QAhy
+         JooklAdbFadwNM83JdsRcEiVjgMx/yJBE6cl0NHFQYXrcv6PZIIZIFYwfDvY6WKD4nrw
+         TJUOmjELZY61JD85Tv82p6dSAIK0SeMKyI8iVthXGNhM/6tVYXxKdJsb2uz3UjwaQPSi
+         RVr6wkjwVycnrFaFlrDJmAIV9dE6LvThNNac9EuBbCGfF/GZhiPyl22LmiXldEUp8as2
+         Ul6QNJO3S61ID4UtVC+QKr5OgRMkg+QXbhLAoNASal9AL2X1W90hfikBljc+TgKiJb+C
+         O65A==
+X-Gm-Message-State: AOAM53106u/mc4q8fQ0Ydxasun4G/qaMJlnZwUnj6siz1f8MtLSDWZc2
+        fSi7gPHyHJgpdCzn+BJkXqLS6a2ujGKRNVRoeMt2/YIia/Q=
+X-Google-Smtp-Source: ABdhPJyq+WHaMv+pQAv1iUIqLn4EAtyzQnLJaulAUyKW2RUle/i+EGbpt/SBpZiLkLkmUM3ZrpMeVk6x9TtFHDQkxCA=
+X-Received: by 2002:a05:6808:211f:: with SMTP id r31mr8942621oiw.64.1636495764284;
+ Tue, 09 Nov 2021 14:09:24 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Nov 2021 22:09:23 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20211106172246.2597431-1-bjorn.andersson@linaro.org>
+References: <20211106172246.2597431-1-bjorn.andersson@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 9 Nov 2021 22:09:23 +0000
+Message-ID: <CAE-0n51evrWUseEKRbdsfx9nLHuv5YdS89OE3X5Ffs+LLN-35w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: Drop now unused hpd_high member
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Kuogee Hsieh <khsieh@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 9 Nov 2021 16:42:48 -0500
-Jason Baron <jbaron@akamai.com> wrote:
+Quoting Bjorn Andersson (2021-11-06 10:22:46)
+> Since '8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon
+> Chipsets")' the hpd_high member of struct dp_usbpd has been write-only.
+>
+> Let's clean up the code a little bit by removing the writes as well.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 
-> Yeah there is a 'parallel' thread about adding the tracing ring buffer as
-> a 'back end' to the dynamic debug stuff over here:
-> https://lore.kernel.org/lkml/20211105192637.2370737-9-jim.cromie@gmail.com/
-
-As the maintainer of tracefs, why am I not Cc'd on that thread :-(
-
-I'll have to look at that thread later (no time now).
-
-> 
-> The attempt there is more generic but I realize now that it is adding the
-> tracing to an 'instance' which is specific to dynamic debug which is
-> being created via: trace_array_get_by_name(). I would prefer to just have
-> it print to the 'main' trace buffer such that it's easier to read,
-> although I guess they could still be consolidated via timestamps.
-> Hmmm...I think there was a previous proposal to just add a single
-> tracepoint (that takes a string) to the dynamic debug layer that could be
-> called if a dynamic debug site is enabled for trace buffer output. Would
-> that satisfy the ftrace level filtering requirements that you are looking
-> for?
-
-What we are looking at there is to pass the dynamic debug descriptor to the
-trace event filtering logic, where you could filter on information passed
-to it. For example, on a specific file if a trace event is called by
-several different files or modules.
-
--- Steve
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
