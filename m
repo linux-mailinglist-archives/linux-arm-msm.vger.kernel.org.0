@@ -2,177 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49F4D44AEAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 14:23:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DFF5C44AF12
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 14:54:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234142AbhKIN0k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 08:26:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42184 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbhKIN0k (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 08:26:40 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D12C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 05:23:54 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id n15so1313524qta.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 05:23:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0DLOTiy6uZY8gn6Kg56dLhNVby+whfyfkmUWkLQ+UOA=;
-        b=f8pVbfVtU3/8Nlsv80NbQejsTjrSvwbHd+l3a81MOru4mYEVYBqz0mSC6JdLqmKQTB
-         /vnbji78y6ZeGFXlWOwg45m5JuCR5r8KfUjjj0AKi/c7LyAasT8E7TH69Ff4mofhe8uc
-         6B9/raP1Wv8x4/57E/wDz1hS3mHcwWGrpd927pvnFBCClMpXNxdehbZaeGVwCKbHEfte
-         bepk/oR4z7+8X+cnmYIXpfjLIzSs6DKfJO6pXWynlecutd/1P1GGu5at1UUXoAwi3Rmx
-         qcd2ylczNGOxNbiNbZ7Nzz2WGyW2msrH9dCoecEqqHbvqGWXw7Ja2AZfEoWtwsHttlW4
-         WC3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0DLOTiy6uZY8gn6Kg56dLhNVby+whfyfkmUWkLQ+UOA=;
-        b=KMSHQwJE7Uk3kcmoco60/PEyGyrF3tfH8OTP2oKbrldtBNMFoB0eidUrIkQjHhGG77
-         5neVeEgWRMqwhRVMktcXX0tpG2Ct95DnqCbwK0pCVufAra2K2kx94E0dvxVkTYU4WjGo
-         DFnH7BRVCiTko2U4eFRuiIVtTMyUVw30Byex8qTakWtKyb3Wd5vGX79klE/UTPEHp4wr
-         S7K9v0NO9rL8h9dn1TI95Ek+jXfMqvs+hLAYukzwVr7KEbk6nn6/EiAguFBIUnVNDuWp
-         5ovBI6PR9dqLzmDwqp7LU/IanNhpiq9CrHoixyxVweR2PA4qpr7YaNdBKIV+x3gqubV0
-         ON4A==
-X-Gm-Message-State: AOAM530dXYvll+KPSbKT9LfwhEtwKX4gaVKry2Dz4HO5IGkKq1j7V1Ww
-        Advd621YXRKZ4fLhJ7B5DzMiKifBVVOy0/mHgCqs2Q==
-X-Google-Smtp-Source: ABdhPJxHnSv1ag1UA5YDSEU6aEzZr4vb+6lgWQ1FhKR8ZuYwYjGVbuwc6M+VdPn4JgyJsr8SfH25i8l+XgtGybnggEs=
-X-Received: by 2002:ac8:57cb:: with SMTP id w11mr8208764qta.285.1636464233688;
- Tue, 09 Nov 2021 05:23:53 -0800 (PST)
+        id S235997AbhKIN5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 08:57:00 -0500
+Received: from mail.kernel.org ([198.145.29.99]:47456 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235963AbhKIN47 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 08:56:59 -0500
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6F175610A2;
+        Tue,  9 Nov 2021 13:54:12 +0000 (UTC)
+Date:   Tue, 9 Nov 2021 08:54:10 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>, Marc Zyngier <maz@kernel.org>,
+        <gregkh@linuxfoundation.org>, <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>,
+        "Prasad Sodagudi" <psodagud@codeaurora.org>
+Subject: Re: [PATCHv3 1/3] tracing: Add register read/write tracing support
+Message-ID: <20211109085410.349edffa@gandalf.local.home>
+In-Reply-To: <d127fdaf198f5766ffe021430cf848e64b4fdf84.1636452784.git.quic_saipraka@quicinc.com>
+References: <cover.1636452784.git.quic_saipraka@quicinc.com>
+        <d127fdaf198f5766ffe021430cf848e64b4fdf84.1636452784.git.quic_saipraka@quicinc.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <1636451248-18889-1-git-send-email-quic_mkrishn@quicinc.com>
-In-Reply-To: <1636451248-18889-1-git-send-email-quic_mkrishn@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 9 Nov 2021 16:23:42 +0300
-Message-ID: <CAA8EJppuuuY+Oksjv8_U80icK-mr5gjgix6DCnyoMDBwHf4A5w@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/msm: use compatible lists to find mdp node
-To:     Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_kalyant@quicinc.com, robdclark@gmail.com, swboyd@chromium.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 9 Nov 2021 at 12:47, Krishna Manikandan
-<quic_mkrishn@quicinc.com> wrote:
->
-> In the current implementation, substring comparison
-> using device node name is used to find mdp node
-> during driver probe. Use compatible string list instead
-> of node name to get mdp node from the parent mdss node.
->
-> Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
->
-> Changes in v2:
->   - Use compatible lists instead of duplicate string
->     check (Stephen Boyd)
->
-> Changes in v3:
->   - Use match tables to find the mdp node (Stephen Boyd)
+On Tue, 9 Nov 2021 17:38:19 +0530
+Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
+> 
+> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+> are typically used to read/write from/to memory mapped registers
+> and can cause hangs or some undefined behaviour in following few
+> cases,
+> 
+> * If the access to the register space is unclocked, for example: if
+>   there is an access to multimedia(MM) block registers without MM
+>   clocks.
+> 
+> * If the register space is protected and not set to be accessible from
+>   non-secure world, for example: only EL3 (EL: Exception level) access
+>   is allowed and any EL2/EL1 access is forbidden.
+> 
+> * If xPU(memory/register protection units) is controlling access to
+>   certain memory/register space for specific clients.
+> 
+> and more...
+> 
+> Such cases usually results in instant reboot/SErrors/NOC or interconnect
+> hangs and tracing these register accesses can be very helpful to debug
+> such issues during initial development stages and also in later stages.
+> 
+> So use ftrace trace events to log such MMIO register accesses which
+> provides rich feature set such as early enablement of trace events,
+> filtering capability, dumping ftrace logs on console and many more.
+> 
+> Sample output:
+> 
+> rwmmio_read: gic_peek_irq+0xd0/0xd8 readl addr=0xffff800010040104
+> rwmmio_write: gic_poke_irq+0xe4/0xf0 writel addr=0xffff800010040184 val=0x40
+> rwmmio_read: gic_do_wait_for_rwp+0x54/0x90 readl addr=0xffff800010040000
+> rwmmio_write: gic_set_affinity+0x1bc/0x1e8 writeq addr=0xffff800010046130 val=0x500
+> 
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> [saiprakash: Rewrote commit msg and trace event field edits]
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 3 ++-
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 3 ++-
->  drivers/gpu/drm/msm/msm_drv.c            | 7 ++++---
->  drivers/gpu/drm/msm/msm_kms.h            | 3 +++
->  4 files changed, 11 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index ad247c0..c778b6d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1273,7 +1273,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
->                                 pm_runtime_force_resume)
->  };
->
-> -static const struct of_device_id dpu_dt_match[] = {
-> +const struct of_device_id dpu_dt_match[] = {
->         { .compatible = "qcom,sdm845-dpu", },
->         { .compatible = "qcom,sc7180-dpu", },
->         { .compatible = "qcom,sc7280-dpu", },
-> @@ -1282,6 +1282,7 @@ static const struct of_device_id dpu_dt_match[] = {
->         {}
->  };
->  MODULE_DEVICE_TABLE(of, dpu_dt_match);
-> +EXPORT_SYMBOL(dpu_dt_match);
-
-There is no need to export these symbols, as they will be used within
-the module.
-
->
->  static struct platform_driver dpu_driver = {
->         .probe = dpu_dev_probe,
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> index 7b24224..8b97008 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-> @@ -1031,13 +1031,14 @@ static const struct dev_pm_ops mdp5_pm_ops = {
->         SET_RUNTIME_PM_OPS(mdp5_runtime_suspend, mdp5_runtime_resume, NULL)
->  };
->
-> -static const struct of_device_id mdp5_dt_match[] = {
-> +const struct of_device_id mdp5_dt_match[] = {
->         { .compatible = "qcom,mdp5", },
->         /* to support downstream DT files */
->         { .compatible = "qcom,mdss_mdp", },
->         {}
->  };
->  MODULE_DEVICE_TABLE(of, mdp5_dt_match);
-> +EXPORT_SYMBOL(mdp5_dt_match);
->
->  static struct platform_driver mdp5_driver = {
->         .probe = mdp5_dev_probe,
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 7936e8d..445788f 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -1277,9 +1277,10 @@ static int add_components_mdp(struct device *mdp_dev,
->         return 0;
->  }
->
-> -static int compare_name_mdp(struct device *dev, void *data)
-> +static int find_mdp_node(struct device *dev, void *data)
->  {
-> -       return (strstr(dev_name(dev), "mdp") != NULL);
-> +       return of_match_node(dpu_dt_match, dev->of_node) ||
-> +               of_match_node(mdp5_dt_match, dev->of_node);
->  }
->
->  static int add_display_components(struct platform_device *pdev,
-> @@ -1304,7 +1305,7 @@ static int add_display_components(struct platform_device *pdev,
->                         return ret;
->                 }
->
-> -               mdp_dev = device_find_child(dev, NULL, compare_name_mdp);
-> +               mdp_dev = device_find_child(dev, NULL, find_mdp_node);
->                 if (!mdp_dev) {
->                         DRM_DEV_ERROR(dev, "failed to find MDSS MDP node\n");
->                         of_platform_depopulate(dev);
-> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> index 6a42b81..8b132c8 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.h
-> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> @@ -198,6 +198,9 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev);
->  struct msm_kms *mdp5_kms_init(struct drm_device *dev);
->  struct msm_kms *dpu_kms_init(struct drm_device *dev);
->
-> +extern const struct of_device_id dpu_dt_match[];
-> +extern const struct of_device_id mdp5_dt_match[];
+>  include/trace/events/rwmmio.h  | 61 ++++++++++++++++++++++++++++++++++
+>  kernel/trace/Kconfig           |  7 ++++
+>  kernel/trace/Makefile          |  1 +
+>  kernel/trace/trace_readwrite.c | 28 ++++++++++++++++
+>  4 files changed, 97 insertions(+)
+>  create mode 100644 include/trace/events/rwmmio.h
+>  create mode 100644 kernel/trace/trace_readwrite.c
+> 
+> diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
+> new file mode 100644
+> index 000000000000..cb5261a559f8
+> --- /dev/null
+> +++ b/include/trace/events/rwmmio.h
+> @@ -0,0 +1,61 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM rwmmio
 > +
->  struct msm_mdss_funcs {
->         int (*enable)(struct msm_mdss *mdss);
->         int (*disable)(struct msm_mdss *mdss);
-> --
-> 2.7.4
->
+> +#if !defined(_TRACE_MMIO_H) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _TRACE_MMIO_H
+> +
+> +#include <linux/tracepoint.h>
+> +
+> +TRACE_EVENT(rwmmio_write,
+> +
+> +	TP_PROTO(unsigned long fn, const char *width, u64 val, volatile void __iomem *addr),
+> +
+> +	TP_ARGS(fn, width, val, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(u64, fn)
+> +		__string(width, width)
+> +		__field(u64, val)
+> +		__field(u64, addr)
 
+For better space usage, move the __string to the end. Each of the u64
+fields will take up 8 bytes, and the __string only takes up 4 (it's a 2
+byte offset and 2 byte length, where the actual string lies at the end of
+the event). Many archs will leave a 4 byte "hole" between the __string()
+field and the u64 val field. If __string is at the end, it will go nicely
+with the actual string that will be appended behind it.
 
--- 
-With best wishes
-Dmitry
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->fn = fn;
+> +		__assign_str(width, width);
+> +		__entry->val = val;
+> +		__entry->addr = (u64)addr;
+> +	),
+> +
+> +	TP_printk("%pS %s addr=%#llx val=%#llx",
+> +		(void *)__entry->fn, __get_str(width), __entry->addr, __entry->val)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_read,
+> +
+> +	TP_PROTO(unsigned long fn, const char *width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(fn, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(u64, fn)
+> +		__string(width, width)
+> +		__field(u64, addr)
+
+Same here.
+
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->fn = fn;
+> +		__assign_str(width, width);
+> +		__entry->addr = (u64)addr;
+> +	),
+> +
+> +	TP_printk("%pS %s addr=%#llx",
+> +		 (void *)__entry->fn, __get_str(width), __entry->addr)
+> +);
+> +
+
+-- Steve
