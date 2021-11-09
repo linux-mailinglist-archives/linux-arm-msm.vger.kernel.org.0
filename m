@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5919A44AD2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 13:09:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1EE644AD2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 13:09:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239253AbhKIMMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 07:12:02 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:18507 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239237AbhKIMMC (ORCPT
+        id S239382AbhKIMMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 07:12:08 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:20356 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240222AbhKIMMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 07:12:02 -0500
+        Tue, 9 Nov 2021 07:12:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1636459756; x=1667995756;
+  t=1636459762; x=1667995762;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=obBQXVkM0WWKYo8La3SxX6cusWUwv133/rdShvGShE4=;
-  b=U8wM0Kgs0mIaQewFqSD7Gys8jEPC+gJl5wOB/2F28gVP1u7Pi7CsVVzL
-   Yvd5qgoVbOG8++qvc9cmMC1lJBkzilHiGoicbuBFiW+zOSR5QapZBkvtB
-   zLy22xgj33mPlQOTDufIIj9upghK8AiIFESJRYy+0lQXHYAkHkRY9QCL1
-   4=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Nov 2021 04:09:16 -0800
+  bh=AhalZ2ElEN0Eilo/nkli9YxbnM6fCGadtQFWjS5fWjs=;
+  b=P5kFHQ2lf8t30+Lkvf9+TzzVmcuoP7wLHLaoaZZ85PSCOZWx00D98FMw
+   UwsHg7xxpj4TvuC8Wap35VRWOdPSJ38Y9ECHpUzQWBbwFdkoaduCwX0Ti
+   sQ/P31scVcWvqvehSpMxz2esCQ5tSZE5uZ/aKhdg/dEDjZm7DMeawTQ/P
+   E=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 09 Nov 2021 04:09:22 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 04:09:15 -0800
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 04:09:22 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Tue, 9 Nov 2021 04:09:15 -0800
+ Tue, 9 Nov 2021 04:09:21 -0800
 Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Tue, 9 Nov 2021 04:09:10 -0800
+ Tue, 9 Nov 2021 04:09:17 -0800
 From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 To:     Will Deacon <will@kernel.org>, <rostedt@goodmis.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
@@ -43,11 +43,10 @@ CC:     Marc Zyngier <maz@kernel.org>, <gregkh@linuxfoundation.org>,
         <arnd@arndb.de>, <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>,
-        "Prasad Sodagudi" <psodagud@codeaurora.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Subject: [PATCHv3 1/3] tracing: Add register read/write tracing support
-Date:   Tue, 9 Nov 2021 17:38:19 +0530
-Message-ID: <d127fdaf198f5766ffe021430cf848e64b4fdf84.1636452784.git.quic_saipraka@quicinc.com>
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
+Subject: [PATCHv3 2/3] arm64/io: Add a header for mmio access instrumentation
+Date:   Tue, 9 Nov 2021 17:38:20 +0530
+Message-ID: <28340d5aa8857a187f5918661cb5b6c47e714826.1636452784.git.quic_saipraka@quicinc.com>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <cover.1636452784.git.quic_saipraka@quicinc.com>
 References: <cover.1636452784.git.quic_saipraka@quicinc.com>
@@ -61,183 +60,211 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Prasad Sodagudi <psodagud@codeaurora.org>
+The new generic header mmio-instrumented.h will keep arch code clean
+and separate from instrumented version which traces mmio register
+accesses. This instrumented header is generic and can be used by other
+architectures as well. Also add a generic flag (__DISABLE_TRACE_MMIO__)
+which is used to disable MMIO tracing in nVHE and if required can be
+used to disable tracing for specific drivers.
 
-Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-are typically used to read/write from/to memory mapped registers
-and can cause hangs or some undefined behaviour in following few
-cases,
-
-* If the access to the register space is unclocked, for example: if
-  there is an access to multimedia(MM) block registers without MM
-  clocks.
-
-* If the register space is protected and not set to be accessible from
-  non-secure world, for example: only EL3 (EL: Exception level) access
-  is allowed and any EL2/EL1 access is forbidden.
-
-* If xPU(memory/register protection units) is controlling access to
-  certain memory/register space for specific clients.
-
-and more...
-
-Such cases usually results in instant reboot/SErrors/NOC or interconnect
-hangs and tracing these register accesses can be very helpful to debug
-such issues during initial development stages and also in later stages.
-
-So use ftrace trace events to log such MMIO register accesses which
-provides rich feature set such as early enablement of trace events,
-filtering capability, dumping ftrace logs on console and many more.
-
-Sample output:
-
-rwmmio_read: gic_peek_irq+0xd0/0xd8 readl addr=0xffff800010040104
-rwmmio_write: gic_poke_irq+0xe4/0xf0 writel addr=0xffff800010040184 val=0x40
-rwmmio_read: gic_do_wait_for_rwp+0x54/0x90 readl addr=0xffff800010040000
-rwmmio_write: gic_set_affinity+0x1bc/0x1e8 writeq addr=0xffff800010046130 val=0x500
-
-Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-[saiprakash: Rewrote commit msg and trace event field edits]
 Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 ---
- include/trace/events/rwmmio.h  | 61 ++++++++++++++++++++++++++++++++++
- kernel/trace/Kconfig           |  7 ++++
- kernel/trace/Makefile          |  1 +
- kernel/trace/trace_readwrite.c | 28 ++++++++++++++++
- 4 files changed, 97 insertions(+)
- create mode 100644 include/trace/events/rwmmio.h
- create mode 100644 kernel/trace/trace_readwrite.c
 
-diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
+I did look at Will's suggestion to move these logging to high level
+accessors but that will miss several thousands of raw mmio accessors
+being already used by several drivers.
+
+$ git grep __raw_read* | wc -l
+  2530
+$ git grep __raw_write* | wc -l 
+  3392
+
+Also moving them to high level accessors like readl/writel would mean
+requirement of separate logging for relaxed versions of those apis.
+
+So in order to avoid all those extra hooks, I have kept the logging
+in low-level arch code but separated out instrumentation to another
+header as previously suggested by Will in initial version few years
+back [1] to look at atomic instrumentation code.
+
+[1] https://lore.kernel.org/lkml/20180807165713.GJ21809@arm.com/
+
+---
+ arch/arm64/include/asm/io.h       | 25 ++++-------
+ arch/arm64/kvm/hyp/nvhe/Makefile  |  2 +-
+ include/linux/mmio-instrumented.h | 70 +++++++++++++++++++++++++++++++
+ 3 files changed, 80 insertions(+), 17 deletions(-)
+ create mode 100644 include/linux/mmio-instrumented.h
+
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index 7fd836bea7eb..a635aaaf81b9 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -10,6 +10,7 @@
+ 
+ #include <linux/types.h>
+ #include <linux/pgtable.h>
++#include <linux/mmio-instrumented.h>
+ 
+ #include <asm/byteorder.h>
+ #include <asm/barrier.h>
+@@ -21,32 +22,27 @@
+ /*
+  * Generic IO read/write.  These perform native-endian accesses.
+  */
+-#define __raw_writeb __raw_writeb
+-static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
++static inline void arch_raw_writeb(u8 val, volatile void __iomem *addr)
+ {
+ 	asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
+ }
+ 
+-#define __raw_writew __raw_writew
+-static inline void __raw_writew(u16 val, volatile void __iomem *addr)
++static inline void arch_raw_writew(u16 val, volatile void __iomem *addr)
+ {
+ 	asm volatile("strh %w0, [%1]" : : "rZ" (val), "r" (addr));
+ }
+ 
+-#define __raw_writel __raw_writel
+-static __always_inline void __raw_writel(u32 val, volatile void __iomem *addr)
++static __always_inline void arch_raw_writel(u32 val, volatile void __iomem *addr)
+ {
+ 	asm volatile("str %w0, [%1]" : : "rZ" (val), "r" (addr));
+ }
+ 
+-#define __raw_writeq __raw_writeq
+-static inline void __raw_writeq(u64 val, volatile void __iomem *addr)
++static inline void arch_raw_writeq(u64 val, volatile void __iomem *addr)
+ {
+ 	asm volatile("str %x0, [%1]" : : "rZ" (val), "r" (addr));
+ }
+ 
+-#define __raw_readb __raw_readb
+-static inline u8 __raw_readb(const volatile void __iomem *addr)
++static inline u8 arch_raw_readb(const volatile void __iomem *addr)
+ {
+ 	u8 val;
+ 	asm volatile(ALTERNATIVE("ldrb %w0, [%1]",
+@@ -56,8 +52,7 @@ static inline u8 __raw_readb(const volatile void __iomem *addr)
+ 	return val;
+ }
+ 
+-#define __raw_readw __raw_readw
+-static inline u16 __raw_readw(const volatile void __iomem *addr)
++static inline u16 arch_raw_readw(const volatile void __iomem *addr)
+ {
+ 	u16 val;
+ 
+@@ -68,8 +63,7 @@ static inline u16 __raw_readw(const volatile void __iomem *addr)
+ 	return val;
+ }
+ 
+-#define __raw_readl __raw_readl
+-static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
++static __always_inline u32 arch_raw_readl(const volatile void __iomem *addr)
+ {
+ 	u32 val;
+ 	asm volatile(ALTERNATIVE("ldr %w0, [%1]",
+@@ -79,8 +73,7 @@ static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
+ 	return val;
+ }
+ 
+-#define __raw_readq __raw_readq
+-static inline u64 __raw_readq(const volatile void __iomem *addr)
++static inline u64 arch_raw_readq(const volatile void __iomem *addr)
+ {
+ 	u64 val;
+ 	asm volatile(ALTERNATIVE("ldr %0, [%1]",
+diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+index c3c11974fa3b..ff56d2165ea9 100644
+--- a/arch/arm64/kvm/hyp/nvhe/Makefile
++++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+@@ -4,7 +4,7 @@
+ #
+ 
+ asflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
+-ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
++ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS -D__DISABLE_TRACE_MMIO__
+ 
+ hostprogs := gen-hyprel
+ HOST_EXTRACFLAGS += -I$(objtree)/include
+diff --git a/include/linux/mmio-instrumented.h b/include/linux/mmio-instrumented.h
 new file mode 100644
-index 000000000000..cb5261a559f8
+index 000000000000..4304224f3be4
 --- /dev/null
-+++ b/include/trace/events/rwmmio.h
-@@ -0,0 +1,61 @@
++++ b/include/linux/mmio-instrumented.h
+@@ -0,0 +1,70 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
 + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM rwmmio
 +
-+#if !defined(_TRACE_MMIO_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_MMIO_H
++#ifndef _LINUX_MMIO_INSTRUMENTED_H
++#define _LINUX_MMIO_INSTRUMENTED_H
 +
-+#include <linux/tracepoint.h>
++#include <linux/tracepoint-defs.h>
 +
-+TRACE_EVENT(rwmmio_write,
-+
-+	TP_PROTO(unsigned long fn, const char *width, u64 val, volatile void __iomem *addr),
-+
-+	TP_ARGS(fn, width, val, addr),
-+
-+	TP_STRUCT__entry(
-+		__field(u64, fn)
-+		__string(width, width)
-+		__field(u64, val)
-+		__field(u64, addr)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->fn = fn;
-+		__assign_str(width, width);
-+		__entry->val = val;
-+		__entry->addr = (u64)addr;
-+	),
-+
-+	TP_printk("%pS %s addr=%#llx val=%#llx",
-+		(void *)__entry->fn, __get_str(width), __entry->addr, __entry->val)
-+);
-+
-+TRACE_EVENT(rwmmio_read,
-+
-+	TP_PROTO(unsigned long fn, const char *width, const volatile void __iomem *addr),
-+
-+	TP_ARGS(fn, width, addr),
-+
-+	TP_STRUCT__entry(
-+		__field(u64, fn)
-+		__string(width, width)
-+		__field(u64, addr)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->fn = fn;
-+		__assign_str(width, width);
-+		__entry->addr = (u64)addr;
-+	),
-+
-+	TP_printk("%pS %s addr=%#llx",
-+		 (void *)__entry->fn, __get_str(width), __entry->addr)
-+);
-+
-+#endif /* _TRACE_MMIO_H */
-+
-+#include <trace/define_trace.h>
-diff --git a/kernel/trace/Kconfig b/kernel/trace/Kconfig
-index 420ff4bc67fd..9f55bcc51de1 100644
---- a/kernel/trace/Kconfig
-+++ b/kernel/trace/Kconfig
-@@ -95,6 +95,13 @@ config RING_BUFFER_ALLOW_SWAP
- 	 Allow the use of ring_buffer_swap_cpu.
- 	 Adds a very slight overhead to tracing when enabled.
- 
-+config TRACE_MMIO_ACCESS
-+	bool "Register read/write tracing"
-+	depends on TRACING
-+	help
-+	  Create tracepoints for MMIO read/write operations. These trace events
-+	  can be used for logging all MMIO read/write operations.
-+
- config PREEMPTIRQ_TRACEPOINTS
- 	bool
- 	depends on TRACE_PREEMPT_TOGGLE || TRACE_IRQFLAGS
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index bedc5caceec7..a3d16e1a5abd 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -99,5 +99,6 @@ obj-$(CONFIG_BOOTTIME_TRACING) += trace_boot.o
- obj-$(CONFIG_FTRACE_RECORD_RECURSION) += trace_recursion_record.o
- 
- obj-$(CONFIG_TRACEPOINT_BENCHMARK) += trace_benchmark.o
-+obj-$(CONFIG_TRACE_MMIO_ACCESS) += trace_readwrite.o
- 
- libftrace-y := ftrace.o
-diff --git a/kernel/trace/trace_readwrite.c b/kernel/trace/trace_readwrite.c
-new file mode 100644
-index 000000000000..8fccb64a8c32
---- /dev/null
-+++ b/kernel/trace/trace_readwrite.c
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0-only
 +/*
-+ * Register read and write tracepoints
-+ *
-+ * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Tracepoint and MMIO logging symbols should not be visible at EL2(HYP) as
++ * there is no way to execute them and any such MMIO access from EL2 will
++ * explode instantly (Words of Marc Zyngier). So introduce a generic flag
++ * __DISABLE_TRACE_MMIO__ to disable MMIO tracing in nVHE and other drivers
++ * if required.
 + */
++#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
++DECLARE_TRACEPOINT(rwmmio_write);
++DECLARE_TRACEPOINT(rwmmio_read);
 +
-+#include <linux/ftrace.h>
-+#include <linux/module.h>
++void log_write_mmio(const char *width, u64 val, volatile void __iomem *addr);
++void log_read_mmio(const char *width, const volatile void __iomem *addr);
 +
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/rwmmio.h>
++#define __raw_write(v, a, _l)	({				\
++	volatile void __iomem *_a = (a);			\
++	if (tracepoint_enabled(rwmmio_write))			\
++		log_write_mmio(__stringify(write##_l), v, _a);	\
++	arch_raw_write##_l((v), _a);				\
++	})
 +
-+#ifdef CONFIG_TRACE_MMIO_ACCESS
-+void log_write_mmio(const char *width, u64 val, volatile void __iomem *addr)
-+{
-+	trace_rwmmio_write(CALLER_ADDR0, width, val, addr);
-+}
-+EXPORT_SYMBOL_GPL(log_write_mmio);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
++#define __raw_writeb(v, a)	__raw_write((v), a, b)
++#define __raw_writew(v, a)	__raw_write((v), a, w)
++#define __raw_writel(v, a)	__raw_write((v), a, l)
++#define __raw_writeq(v, a)	__raw_write((v), a, q)
 +
-+void log_read_mmio(const char *width, const volatile void __iomem *addr)
-+{
-+	trace_rwmmio_read(CALLER_ADDR0, width, addr);
-+}
-+EXPORT_SYMBOL_GPL(log_read_mmio);
-+EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
++#define __raw_read(a, _l, _t)    ({				\
++	_t __a;							\
++	const volatile void __iomem *_a = (a);			\
++	if (tracepoint_enabled(rwmmio_read))			\
++		log_read_mmio(__stringify(read##_l), _a);	\
++	__a = arch_raw_read##_l(_a);				\
++	__a;							\
++	})
++
++#define __raw_readb(a)		__raw_read((a), b, u8)
++#define __raw_readw(a)		__raw_read((a), w, u16)
++#define __raw_readl(a)		__raw_read((a), l, u32)
++#define __raw_readq(a)		__raw_read((a), q, u64)
++
++#else
++
++#define __raw_writeb(v, a)	arch_raw_writeb(v, a)
++#define __raw_writew(v, a)	arch_raw_writew(v, a)
++#define __raw_writel(v, a)	arch_raw_writel(v, a)
++#define __raw_writeq(v, a)	arch_raw_writeq(v, a)
++
++#define __raw_readb(a)		arch_raw_readb(a)
++#define __raw_readw(a)		arch_raw_readw(a)
++#define __raw_readl(a)		arch_raw_readl(a)
++#define __raw_readq(a)		arch_raw_readq(a)
++
++static inline void log_write_mmio(const char *width, u64 val,
++				  volatile void __iomem *addr) {}
++static inline void log_read_mmio(const char *width,
++				 const volatile void __iomem *addr) {}
++
 +#endif /* CONFIG_TRACE_MMIO_ACCESS */
++
++#endif /* _LINUX_MMIO_INSTRUMENTED_H */
 -- 
 2.29.0
 
