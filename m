@@ -2,132 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A34244B09C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 16:46:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7843C44B0AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 16:49:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235890AbhKIPtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 10:49:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbhKIPtM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 10:49:12 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F94AC061766
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 Nov 2021 07:46:26 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso10105223ots.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Nov 2021 07:46:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Nhd1cXLoARHfuxijxW1CC8tXdTo48PjAHCwKpZq0Ohs=;
-        b=IKxmNKTX0BIWoiJVskOWy25AW2N8zqTy4fIP0lluheBJPb6RR1HGWEcAHuwHK3XXKN
-         nQFDNMBxdgoBMZ+zfGlDzEFGyZVsZFTU9hhONQ+Yn+3HIgl0qlMdLyRHuMbYRYDyHf0v
-         TiDtEXaMz3rSGQLrg8ez3XZs+rszck4hArdyX5U0D3YELE4JsUMpnh5JJ7C3/CuyMs/r
-         54vcG13G//Zju+1iQhAWmTogb8mWB7XfGblWrJFFMT7PO6hka0efOdxIxJyTvnHYMAGS
-         qlphXdeiSYmFj9I6WwLQA+3zxKXUo8CMUH4gpUxzADZIsjcahm5O12FMBbotMKTxiXRb
-         Yg0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Nhd1cXLoARHfuxijxW1CC8tXdTo48PjAHCwKpZq0Ohs=;
-        b=x44l7la/QmLQxHNH28wtnUkc63lut5/lxV77OmMJuR4QrflgEokjYe2MI1dg9acpfe
-         TJ5zEATI+P3tYgyyeIpCdUjGWPYO4qxsW63tKUcGPgY027eLeCvMBmRd2VPSBAlxcklD
-         GIpcHvRWgblVAYOA97A0QoXI7As0QkDZ+cS9+ALeavbm4ub5EGXDJQplkGCcEyEy3TOx
-         stNM7iAGYB7XKZd/AYDtGUnmufEOAYmvAI//4WPS3ZcVwONlGnACScrGwDLFP/aO+b0q
-         w0Nun9wZk8fqPMkMW035AWt57ltu9sB6MZjVeWjRIb4Um8w9MRLbWPr0pTnlQFRYY2GF
-         zCIA==
-X-Gm-Message-State: AOAM533OHAG2nvnkR9ObJAYo1OLUbErUqC4cgwFRgnu7K91AmERSIFQq
-        pnPr1AvCBILs/rJz3MvGVy7NvQ==
-X-Google-Smtp-Source: ABdhPJwMddWy/2opZdv1H0HcP66DI5B4SNXuxuecEiT10xIXb7rTcbNEsMS/6lJop5oEBqi3iRisPA==
-X-Received: by 2002:a9d:6f09:: with SMTP id n9mr6847374otq.357.1636472785577;
-        Tue, 09 Nov 2021 07:46:25 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id v66sm7430632oib.18.2021.11.09.07.46.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Nov 2021 07:46:25 -0800 (PST)
-Message-ID: <ac3f1771-0516-48dd-ee4d-5752e0433472@kali.org>
-Date:   Tue, 9 Nov 2021 09:46:23 -0600
+        id S236659AbhKIPwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 10:52:31 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45092 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236482AbhKIPwa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 10:52:30 -0500
+Received: from gandalf.local.home (cpe-66-24-58-225.stny.res.rr.com [66.24.58.225])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 6EFA961186;
+        Tue,  9 Nov 2021 15:49:43 +0000 (UTC)
+Date:   Tue, 9 Nov 2021 10:49:41 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>, Marc Zyngier <maz@kernel.org>,
+        <gregkh@linuxfoundation.org>, <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mingo@redhat.com>, <jbaron@akamai.com>, <jim.cromie@gmail.com>
+Subject: Re: [PATCHv3 3/3] dynamic_debug: Add a flag for dynamic event
+ tracing
+Message-ID: <20211109104941.2d50eafc@gandalf.local.home>
+In-Reply-To: <3706af20bc64a320ff8f3ff8950738b988f4bdf5.1636452784.git.quic_saipraka@quicinc.com>
+References: <cover.1636452784.git.quic_saipraka@quicinc.com>
+        <3706af20bc64a320ff8f3ff8950738b988f4bdf5.1636452784.git.quic_saipraka@quicinc.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH v3 0/5] Refactor thermal pressure update to avoid code
- duplication
-Content-Language: en-US
-To:     Lukasz Luba <lukasz.luba@arm.com>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211103161020.26714-1-lukasz.luba@arm.com>
- <c7b526f0-2c26-0cfc-910b-3521c6a6ef51@kali.org>
- <3cba148a-7077-7b6b-f131-dc65045aa348@arm.com>
- <9d533b6e-a81c-e823-fa6f-61fdea92fa65@kali.org>
- <74ea027b-b213-42b8-0f7d-275f3b84712e@linaro.org>
- <74603569-2ff1-999e-9618-79261fdb0ee4@kali.org>
- <b7e76c2a-ceac-500a-ff75-535a3f0d51d6@linaro.org>
- <f955a2aa-f788-00db-1ed8-dc9c7a1b2572@kali.org>
- <59054c90-c1cd-85bf-406e-579df668d7b4@linaro.org>
- <eac00041-a1b8-0780-931d-52249d538800@kali.org>
- <2c54dbbd-2ecb-fb76-fa9f-9752f429c20e@linaro.org>
- <97e93876-d654-0a89-dce1-6fe1189345e2@kali.org>
- <d83a5c25-2eae-3626-f78a-e42915076556@arm.com>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <d83a5c25-2eae-3626-f78a-e42915076556@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 9 Nov 2021 17:38:21 +0530
+Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
 
-On 11/9/21 2:29 AM, Lukasz Luba wrote:
-> Hi Steev,
->
-> That's interesting what you've done with Rockchip RK3399.
-> I would like to reproduce your experiment on my RockPI 4B v1.3.
-> Could you tell me how you to add this boost frequency that you have
-> mentioned in some previous emails?
->
-> I want to have similar setup to yours and I'll check all the subsystems
-> involved in the decision making process for triggering this boost freq.
->
-> Thank you for your support.
->
-> Regards,
-> Lukasz
+> Debugging a specific driver or subsystem can be a lot easier if we can
+> trace events specific to that driver or subsystem. This type of
+> filtering can be achieved using existing dynamic debug library which
+> provides a way to filter based on files, functions and modules.
+> 
+> Using this, provide an additional flag 'e' to filter event tracing to
+> specified input.
+> 
+> For example, tracing all MMIO read/write can be overwhelming and of no
+> use when debugging a specific driver or a subsystem. So switch to
+> dynamic event tracing for register accesses.
+> 
+> Example: Tracing register accesses for all drivers in drivers/soc/qcom/*
+> and the trace output is given below:
+> 
+>   # dyndbg="file drivers/soc/qcom/* +e" trace_event=rwmmio
+>     or
+>   # echo "file drivers/soc/qcom/* +e" > /sys/kernel/debug/dynamic_debug/control
+>   # cat /sys/kernel/debug/tracing/trace
 
+FYI, it's best to use /sys/kernel/tracing, as the debug/tracing is only
+there for backward compatibility.
 
-Hi Lukasz,
+>     rwmmio_read: rpmh_rsc_probe+0x35c/0x410 readl addr=0xffff80001071000c
+>     rwmmio_read: rpmh_rsc_probe+0x3d0/0x410 readl addr=0xffff800010710004
+>     rwmmio_write: rpmh_rsc_probe+0x3b0/0x410 writel addr=0xffff800010710d00 val=0x3
+>     rwmmio_write: write_tcs_cmd+0x6c/0x78 writel addr=0xffff800010710d30 val=0x10108
 
-It was actually something that Armbian had been doing as an overlay for 
-their setup, and I thought, why does it need to be an overlay, when we 
-could simply hide it behind turbo-mode so that if users want to 
-overclock, they simply echo 1 and if it's unstable or cooling/power 
-isn't enough, they can echo 0 or leave it off (boost defaults to off) - 
-so that being said:
+I'd much rather have a module name or something attached to the event that
+ca be filtered on via the trace event filters, than having it determined by
+some side effect done in another directory.
 
-I apply this patch 
-https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/patches/pinebook-pro/pbp-5.14/rk3399-opp-overclock-2GHz-turbo-mode.patch 
-which adds the 1.5GHz for little cores and 2GHz for the big to the 
-rk3399 dtsi
-
-To enable at boot time, I simply have "echo 1 > 
-/sys/devices/system/cpu/cpufreq/boost" in my /etc/rc.local  And to 
-disable, simply echo 0 in there (it defaults to 0 so it's off and most 
-users won't know it exists.)
-
-I'm pretty sure this is "abusing" turbo-mode, but it works well enough...
-
-Hope that helps,
-
--- steev
-
+-- Steve
