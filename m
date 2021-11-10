@@ -2,104 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CBA6444C0BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 13:05:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35E8344C0CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 13:07:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231175AbhKJMIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 07:08:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
+        id S231634AbhKJMK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 07:10:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbhKJMIH (ORCPT
+        with ESMTP id S231592AbhKJMKZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 07:08:07 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B461C061764;
-        Wed, 10 Nov 2021 04:05:20 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so1492613pjb.4;
-        Wed, 10 Nov 2021 04:05:20 -0800 (PST)
+        Wed, 10 Nov 2021 07:10:25 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B19C061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 04:07:38 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id nh10-20020a17090b364a00b001a69adad5ebso1497991pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 04:07:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SmZpl8+j/iKc0sB5URMOhtFVFzKAZretNZR5phX8V54=;
-        b=AaiaX03JzpUeQ855h1+dV9l4+ukSmXVfDTYDUIvRLiaosXsME3ilMxt6JVmhe3eg0D
-         hEI8vZ/w0nFcav9KXmHFLiYPNUYV9Iq790h1ZUCk3NxUlH46TZhg9ttbXmTf9XQmlYya
-         BKo3z3+De7+ajAo6ETVtdZjNKkdFyOauMMbR/stun+H8uoTsNuTF9JdnQG/2XrQ0wblS
-         nvpjiL0Pbcbpw5iuPJFkMcBYjSRXGXqj/gV7LZO+Xe31ATHqy8NYxRjGo14yRul/841d
-         dPgJWb1g9WtsHZyDJff21j+hMeiOrF77u40X6gZQpYjiZ4BKiva4FqCa4QEwFIfdmzw6
-         80jA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=8rRp4mt0YjhP7Pw1VHZ7lqEaPAtaRzgAK3M7/sT4H5c=;
+        b=Ccochr5bIhiZaZAQs2NdVrtS68+qrZ5EXk6TfkfgmGcO5XLJIwsJZBJehcoZEAk0Np
+         aiZ0liAGf88wfukqv7TLiNaGIhom8CANSs11D+ScQu7hdUZ/vcMYjrf4Y+fbV8W40iR1
+         UigIuz5jkx3tJM7wN9wiLT+wDS20P7jSHRqasNqjvipziwRLgXYnEreM3UD0KgqFNQux
+         oQMtMom/qFBn/wux6f3yLtzc+rDY1GS5rm5Wwfl5ttr/YC3gGl/ih5m1Wiz6I77YCuxG
+         TH0YEgvXE8PyzAOgGDav9vyHF0Oi1bFgBoEnrEUkIjEk2YjUiTAQysi/qFtiyd8nFarm
+         a+kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SmZpl8+j/iKc0sB5URMOhtFVFzKAZretNZR5phX8V54=;
-        b=7wSfUem2mrlu9eWcKxRktODMEkxCEQn6rgMQWGUoWfY35j5Ag3Y4mAGzlluRANicBh
-         D1z8Dadwar0ZsPNX4LQz6YWBtvRfnbd2cvCLBuERD9KDURQgrL5V/BX3mFv1ad7zhOfb
-         H2R3965KyQrGYV2N0+KUS9TRSZzweZiVRntSnXrD9dS4tknCEptngHckz75ROp3oSPU1
-         PIYYreYKcGI4mu5jTloKYANNYs2DHn6R7O07CRm5WU378HQGl79bzZhSgojiequB7GF4
-         PgkZ6dOvGssmOiwClQ9DjqJdTmon7WcsGfKJj2I2o6CAKBGGYazl0YscrM/mdmxziqdk
-         OZRQ==
-X-Gm-Message-State: AOAM532MPJmbkCSnmosaH5V3BhgXCrYf/1DRk6AV835HBq9UGfXlEJ7J
-        E3NX18zXq+1I+feeU/NH0Sc=
-X-Google-Smtp-Source: ABdhPJxp1tSXAzZDWhWtzwlC+WpFHm5YVQ6u/yn2MK4ACIYuoQeY9VzDPTcS+qoyy0lkfOpDtimAVA==
-X-Received: by 2002:a17:902:e294:b0:143:86a8:c56d with SMTP id o20-20020a170902e29400b0014386a8c56dmr2079842plc.22.1636545919705;
-        Wed, 10 Nov 2021 04:05:19 -0800 (PST)
-Received: from localhost.localdomain ([193.203.214.57])
-        by smtp.gmail.com with ESMTPSA id on6sm7070697pjb.47.2021.11.10.04.05.17
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=8rRp4mt0YjhP7Pw1VHZ7lqEaPAtaRzgAK3M7/sT4H5c=;
+        b=2/L7rd7GRzqLYY4tHtN4ie2EyAvsfWmWcdpvoagzLanx+jqWdBRuEFqELPK2UVr2ZF
+         MGC6/5aHkxYfR0/SNxJSNoH/rPRHWwXsWlY3g/ivWZSfIQ21+9R4vbGe78rqFSrg+/uq
+         zahqodJrMbDbWV3W1O2ejwTQYmeJUs/+D+G5UkZngMs0tl5ghgQ+kGA9NGzAg4MC1Rby
+         6PHcJ/qWII38rMWTvBbJMUhJoIsuisNwUZ+AQRGGrgS8EXr7ve2AGe7U9UcNrr0LgqMD
+         PNQysak/2jsFdV+y6xzI/JOjs6RfaFry9oB5hdvVR6vJ79hzcoLjB4AzHzbKeJ+k2wk/
+         V41g==
+X-Gm-Message-State: AOAM531RcTVQGaVxjNV9cDoqRtsTEt+6Q++z0TVj1aV1oswsAem/+cNq
+        vQXGo0C0Rc7H0GPKHE7cH8kj1A==
+X-Google-Smtp-Source: ABdhPJzssEF1wgqVETKPrumL9GFeiX2PGWcV2MJgPs6EMbsDH3gWOTZJb62ALRHwD4BK31j2dNy+tQ==
+X-Received: by 2002:a17:902:b593:b0:12d:7aa5:de2d with SMTP id a19-20020a170902b59300b0012d7aa5de2dmr15353076pls.31.1636546057736;
+        Wed, 10 Nov 2021 04:07:37 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id g9sm8377914pfc.182.2021.11.10.04.07.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 04:05:19 -0800 (PST)
-From:   cgel.zte@gmail.com
-X-Google-Original-From: deng.changcheng@zte.com.cn
-To:     robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        swboyd@chromium.org, abhinavk@codeaurora.org,
-        deng.changcheng@zte.com.cn, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Zeal Robot <zealci@zte.com.cn>
-Subject: [PATCH linux-next] drm/msm/dp: remove unneeded variable
-Date:   Wed, 10 Nov 2021 12:05:12 +0000
-Message-Id: <20211110120512.150940-1-deng.changcheng@zte.com.cn>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 10 Nov 2021 04:07:37 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH 0/6] Add QCM2290 interconnect support
+Date:   Wed, 10 Nov 2021 20:07:10 +0800
+Message-Id: <20211110120716.6401-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Changcheng Deng <deng.changcheng@zte.com.cn>
+The series begins with a separate cleanup on icc-rpm, followed by a few
+prep changes for QCM2290 support, and then adds bindings and
+interconnect driver for QCM2290 platform. 
 
-Fix the following coccicheck review:
-./drivers/gpu/drm/msm/dp/dp_debug.c: Unneeded variable
+Shawn Guo (6):
+  interconnect: icc-rpm: Use NOC_QOS_MODE_INVALID for qos_mode check
+  interconnect: icc-rpm: Define ICC device type
+  interconnect: icc-rpm: Add QNOC type QoS support
+  interconnect: icc-rpm: Support child NoC device probe
+  dt-bindings: interconnect: Add Qualcomm QCM2290 NoC support
+  interconnect: qcom: Add QCM2290 driver support
 
-Remove unneeded variable used to store return value.
+ .../bindings/interconnect/qcom,qcm2290.yaml   |  117 ++
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/icc-rpm.c           |   56 +-
+ drivers/interconnect/qcom/icc-rpm.h           |   14 +-
+ drivers/interconnect/qcom/msm8916.c           |    4 +-
+ drivers/interconnect/qcom/msm8939.c           |    5 +-
+ drivers/interconnect/qcom/qcm2290.c           | 1363 +++++++++++++++++
+ drivers/interconnect/qcom/sdm660.c            |    7 +-
+ .../dt-bindings/interconnect/qcom,qcm2290.h   |   94 ++
+ 10 files changed, 1658 insertions(+), 13 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+ create mode 100644 drivers/interconnect/qcom/qcm2290.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
----
- drivers/gpu/drm/msm/dp/dp_debug.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index 2f6247e80e9d..c5c75273d1e5 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -365,7 +365,6 @@ static const struct file_operations test_active_fops = {
- 
- static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
- {
--	int rc = 0;
- 	struct dp_debug_private *debug = container_of(dp_debug,
- 			struct dp_debug_private, dp_debug);
- 
-@@ -386,7 +385,7 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
- 
- 	debug->root = minor->debugfs_root;
- 
--	return rc;
-+	return 0;
- }
- 
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
 -- 
-2.25.1
+2.17.1
 
