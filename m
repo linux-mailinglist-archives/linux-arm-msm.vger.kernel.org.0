@@ -2,139 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F83644BF16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 11:52:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03B1C44BF5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 11:59:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbhKJKzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 05:55:00 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:7113 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbhKJKyz (ORCPT
+        id S231344AbhKJLC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 06:02:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50154 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231175AbhKJLC2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 05:54:55 -0500
+        Wed, 10 Nov 2021 06:02:28 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B702FC0613F5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 02:59:41 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id k4so2639166plx.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 02:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1636541528; x=1668077528;
-  h=from:to:cc:subject:date:message-id;
-  bh=7eOsYE5izuBmNzAggjLUvcDK8FJX7OQxEj2Tbgxn/kE=;
-  b=IGImXSvKExTJ83ypUhzhLTVNfm3Xq9ET+1RtIpTSGL4c0Ezp5UMPSvGX
-   t3FMN1BBhkAvLgKdlY450LnksFFbssDtiGb5rDEo7gzGRG65aSxKkMWJp
-   CvfhCoMzalRFBq1eaM97LcNcYq7Ea8yHwTseiDPZEFN9skeWuTKM1d27K
-   A=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 10 Nov 2021 02:52:05 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Nov 2021 02:52:02 -0800
-X-QCInternal: smtphost
-Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Nov 2021 16:21:49 +0530
-Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
-        id B6DAC221C5; Wed, 10 Nov 2021 16:21:48 +0530 (IST)
-From:   Krishna Manikandan <quic_mkrishn@quicinc.com>
-To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        quic_kalyant@quicinc.com, robdclark@gmail.com, swboyd@chromium.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        dmitry.baryshkov@linaro.org
-Subject: [PATCH v4] drm/msm: use compatible lists to find mdp node
-Date:   Wed, 10 Nov 2021 16:21:47 +0530
-Message-Id: <1636541507-5144-1-git-send-email-quic_mkrishn@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ivExlr+ZHhxGz2pIDkKmpQf/RoryVkuEzBBKkgF+HMs=;
+        b=Bzpbn7SceepRLuLkqFR40e4H7SzQYDpC2iTZW/f6OsKuLqbGRr/Icwcc9pFwTc/WT8
+         uGgbohpoRCOLORBjk2npB9BKxT/kq9vqqRaeJ6+mtUT53PXp4M09cQyEyX7RH7X42MhC
+         LkK2FD5FH4CSwJncopb5dwDg1JtPZKdO+oIpRESwg33CUyRaThkAXqcIpQ2nVzbnsI3o
+         VtzUuHoZ7kBNvcYXbtML1r9zw2yWkvApbNVCjzAvi3Ggm9dHOES+NJbaOLibF+WtXBXB
+         7AH0yD47BYRAZh9HF0cShXwIpCNuiljGo7TeCH94WbuzdynSto+gLNusP94mTJ6+2F87
+         OSAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ivExlr+ZHhxGz2pIDkKmpQf/RoryVkuEzBBKkgF+HMs=;
+        b=GNkV7bZYPkJdD3t6h10Io+VIUN/71TipvdOz+YFOmz/e/siIrJPuYSaXBrV+MoR93x
+         UT1osHCvTWUOP11yV+bXNuLmyGB3jhn0hwZcEW5RfhiY2ZeODovT70K9JwJ6xG1WVrgX
+         ax82o3SeeLO2hUo8oXmOV1kA6atyRX+hNCWSyLU+GwvWKizxMdPmMnz6eNZRLfs+EcTD
+         6kljVNe9qOyaS1Bks4aIPfy/7c479VRFp8tQBOUO0lcXcD6dDDmJH00cy9weNdS13Hjy
+         SZh2oM3sQis65j1LMbilqlMdN4hPJqH6pVrAyrM8aqZE44EWtFxqS2GbZ7BX+8h6WS4C
+         elrA==
+X-Gm-Message-State: AOAM531N/0j/2A5eU2c53kStPPETif3OwhStvEHwmZ+H8g31BjCiEoLa
+        SBmebn1q4vYExaCKpDi1NMr/wD+H7YpikQ==
+X-Google-Smtp-Source: ABdhPJwuI+oenFLr4BXNTSV5M4QNJx3LAHgpyNPB06rLVvtQV+UOG5/waLJlMmb9jM8QQREIjcRinQ==
+X-Received: by 2002:a17:90a:d3c3:: with SMTP id d3mr15771831pjw.209.1636541981059;
+        Wed, 10 Nov 2021 02:59:41 -0800 (PST)
+Received: from localhost.name ([122.161.52.143])
+        by smtp.gmail.com with ESMTPSA id e11sm5585282pjl.20.2021.11.10.02.59.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 02:59:40 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org, herbert@gondor.apana.org.au,
+        davem@davemloft.net, stephan@gerhold.net,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH v5 00/22] Enable Qualcomm Crypto Engine on sm8150 & sm8250
+Date:   Wed, 10 Nov 2021 16:29:00 +0530
+Message-Id: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the current implementation, substring comparison
-using device node name is used to find mdp node
-during driver probe. Use compatible string list instead
-of node name to get mdp node from the parent mdss node.
+Changes since v4:
+=================
+- v4 for sm8250 can be seen here: https://lore.kernel.org/linux-arm-msm/20211013105541.68045-1-bhupesh.sharma@linaro.org/
+- v1 for sm8150 qce enablement can be seen here: https://lore.kernel.org/linux-arm-msm/20211013165823.88123-1-bhupesh.sharma@linaro.org/
+- Merged the sm8150 and sm8250 enablement patches in the same patchset,
+  as per suggestions from Bjorn.
+- Dropped a couple of patches from v4, as these have been picked by
+  Bjorn already via his tree.
+- Addressed review comments from Vladimir, Thara and Rob.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v4 patchset.
 
-Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Changes since v3:
+=================
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20210519143700.27392-1-bhupesh.sharma@linaro.org/
+- Dropped a couple of patches from v3, on basis of the review comments:
+   ~ [PATCH 13/17] crypto: qce: core: Make clocks optional
+   ~ [PATCH 15/17] crypto: qce: Convert the device found dev_dbg() to dev_info()
+- Addressed review comments from Thara, Rob and Stephan Gerhold.
+- Collect Reviewed-by from Rob and Thara on some of the patches from the
+  v3 patchset.
 
-Changes in v2:
-  - Use compatible lists instead of duplicate string
-    check (Stephen Boyd)
+Changes since v2:
+=================
+- v2 can be seen here: https://lore.kernel.org/dmaengine/20210505213731.538612-1-bhupesh.sharma@linaro.org/
+- Drop a couple of patches from v1, which tried to address the defered
+  probing of qce driver in case bam dma driver is not yet probed.
+  Replace it instead with a single (simpler) patch [PATCH 16/17].
+- Convert bam dma and qce crypto dt-bindings to YAML.
+- Addressed review comments from Thara, Bjorn, Vinod and Rob.
 
-Changes in v3:
-  - Use match tables to find the mdp node (Stephen Boyd)
+Changes since v1:
+=================
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20210310052503.3618486-1-bhupesh.sharma@linaro.org/ 
+- v1 did not work well as reported earlier by Dmitry, so v2 contains the following
+  changes/fixes:
+  ~ Enable the interconnect path b/w BAM DMA and main memory first
+    before trying to access the BAM DMA registers.
+  ~ Enable the interconnect path b/w qce crytpo and main memory first
+    before trying to access the qce crypto registers.
+  ~ Make sure to document the required and optional properties for both
+    BAM DMA and qce crypto drivers.
+  ~ Add a few debug related print messages in case the qce crypto driver
+    passes or fails to probe.
+  ~ Convert the qce crypto driver probe to a defered one in case the BAM DMA
+    or the interconnect driver(s) (needed on specific Qualcomm parts) are not
+    yet probed.
 
-Changes in v4:
-  - Drop EXPORT_SYMBOL (Dmitry Baryshkov)
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 2 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 2 +-
- drivers/gpu/drm/msm/msm_drv.c            | 7 ++++---
- drivers/gpu/drm/msm/msm_kms.h            | 3 +++
- 4 files changed, 9 insertions(+), 5 deletions(-)
+Qualcomm crypto engine is also available on sm8150 and sm8250 SoCs.
+The qce block supports hardware accelerated algorithms for encryption
+and authentication. It also provides support for aes, des, 3des
+encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+authentication algorithms.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index ad247c0..8cbdf0d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1273,7 +1273,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
- 				pm_runtime_force_resume)
- };
- 
--static const struct of_device_id dpu_dt_match[] = {
-+const struct of_device_id dpu_dt_match[] = {
- 	{ .compatible = "qcom,sdm845-dpu", },
- 	{ .compatible = "qcom,sc7180-dpu", },
- 	{ .compatible = "qcom,sc7280-dpu", },
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 7b24224..dcbc8dc 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -1031,7 +1031,7 @@ static const struct dev_pm_ops mdp5_pm_ops = {
- 	SET_RUNTIME_PM_OPS(mdp5_runtime_suspend, mdp5_runtime_resume, NULL)
- };
- 
--static const struct of_device_id mdp5_dt_match[] = {
-+const struct of_device_id mdp5_dt_match[] = {
- 	{ .compatible = "qcom,mdp5", },
- 	/* to support downstream DT files */
- 	{ .compatible = "qcom,mdss_mdp", },
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 7936e8d..445788f 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1277,9 +1277,10 @@ static int add_components_mdp(struct device *mdp_dev,
- 	return 0;
- }
- 
--static int compare_name_mdp(struct device *dev, void *data)
-+static int find_mdp_node(struct device *dev, void *data)
- {
--	return (strstr(dev_name(dev), "mdp") != NULL);
-+	return of_match_node(dpu_dt_match, dev->of_node) ||
-+		of_match_node(mdp5_dt_match, dev->of_node);
- }
- 
- static int add_display_components(struct platform_device *pdev,
-@@ -1304,7 +1305,7 @@ static int add_display_components(struct platform_device *pdev,
- 			return ret;
- 		}
- 
--		mdp_dev = device_find_child(dev, NULL, compare_name_mdp);
-+		mdp_dev = device_find_child(dev, NULL, find_mdp_node);
- 		if (!mdp_dev) {
- 			DRM_DEV_ERROR(dev, "failed to find MDSS MDP node\n");
- 			of_platform_depopulate(dev);
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 6a42b81..8b132c8 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -198,6 +198,9 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev);
- struct msm_kms *mdp5_kms_init(struct drm_device *dev);
- struct msm_kms *dpu_kms_init(struct drm_device *dev);
- 
-+extern const struct of_device_id dpu_dt_match[];
-+extern const struct of_device_id mdp5_dt_match[];
-+
- struct msm_mdss_funcs {
- 	int (*enable)(struct msm_mdss *mdss);
- 	int (*disable)(struct msm_mdss *mdss);
+Tested the enabled crypto algorithms with cryptsetup test utilities
+on sm8150-mtp, sa8155p-adp, sm8250-mtp and RB5 boards (see [1]) and
+also with crypto self-tests, including the fuzz tests
+ (CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y).
+
+[1]. https://linux.die.net/man/8/cryptsetup
+
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+
+Bhupesh Sharma (19):
+  arm64: dts: qcom: msm8996: Fix qcom,controlled-remotely property
+  arm64: dts: qcom: msm8996: Fix 'dma' nodes in dts
+  dt-bindings: qcom-bam: Convert binding to YAML
+  dt-bindings: qcom-bam: Add 'interconnects' & 'interconnect-names' to
+    optional properties
+  dt-bindings: qcom-bam: Add 'iommus' to optional properties
+  dt-bindings: qcom-bam: Add "powered remotely" mode
+  dt-bindings: qcom-qce: Convert bindings to yaml
+  dt-bindings: qcom-qce: Add 'interconnects' and 'interconnect-names'
+  dt-bindings: qcom-qce: Move 'clocks' to optional properties
+  dt-bindings: qcom-qce: Add 'iommus' to optional properties
+  dt-bindings: crypto : Add new compatible strings for qcom-qce
+  arm64/dts: qcom: Use new compatibles for crypto nodes
+  crypto: qce: Add new compatibles for qce crypto driver
+  crypto: qce: Print a failure msg in case probe() fails
+  crypto: qce: Defer probing if BAM dma channel is not yet initialized
+  crypto: qce: Add 'sm8250-qce' compatible string check
+  crypto: qce: Add 'sm8150-qce' compatible string check
+  arm64/dts: qcom: sm8250: Add dt entries to support crypto engine.
+  arm64/dts: qcom: sm8150: Add dt entries to support crypto engine.
+
+Thara Gopinath (3):
+  dma: qcom: bam_dma: Add support to initialize interconnect path
+  crypto: qce: core: Add support to initialize interconnect path
+  crypto: qce: core: Make clocks optional
+
+ .../devicetree/bindings/crypto/qcom-qce.txt   |  25 ----
+ .../devicetree/bindings/crypto/qcom-qce.yaml  |  90 ++++++++++++++
+ .../devicetree/bindings/dma/qcom_bam_dma.txt  |  50 --------
+ .../devicetree/bindings/dma/qcom_bam_dma.yaml | 115 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   4 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  28 +++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  28 +++++
+ drivers/crypto/qce/core.c                     |  66 +++++++---
+ drivers/crypto/qce/core.h                     |   1 +
+ drivers/dma/qcom/bam_dma.c                    |  11 ++
+ 12 files changed, 326 insertions(+), 96 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.txt
+ create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+ delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+ create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+
 -- 
-2.7.4
+2.31.1
 
