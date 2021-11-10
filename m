@@ -2,224 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2341644BE4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 11:12:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F83644BF16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 11:52:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231151AbhKJKPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 05:15:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39190 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbhKJKPV (ORCPT
+        id S230455AbhKJKzA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 05:55:00 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:7113 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231259AbhKJKyz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 05:15:21 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2540C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 02:12:33 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id g14so8470693edz.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 02:12:33 -0800 (PST)
+        Wed, 10 Nov 2021 05:54:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=iwrQkGdUPhk+QMSVvZiSAulM37+6icUvxRn7kPKP+hw=;
-        b=uP3euyDDsU9oS9V9jaeqz+9kbCdTk2b/bFUScZCBdkhwnGVOlDfYzb9X/NVGZbY5Wl
-         dzsUhlwUCbR0xRdiDe5bVaBSGfoOxxxYmuZgoMofeTGxL8EkJWBqm/Y6ZgyZ4y0xzrWQ
-         aYoBHmP0/93iceTpdPCoh04IMRytqrdWYPkLs5T/5pPvyCuTAxF3Um+SuZd9l6c8NdBb
-         kA4xuXl3TnWRmCEnL9IcJZssNfTE0uACotqi4UmIe0/vkjDwxs9QnLMGRFNssKy+2t8A
-         Z8X33Y5Wlam0kkD7Q9H8rHYgCxy5imrrxEbBI5rwbH/8QNA3JIHG8ne0wDSj8igRMWLp
-         al1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=iwrQkGdUPhk+QMSVvZiSAulM37+6icUvxRn7kPKP+hw=;
-        b=ZOrMaClXcRI/NKQLISo7dTXGotAin4y5tfTqxAQGHi6ofGacM5/y8W3DLWqpdJP5ut
-         Img8RnEWRbNnwioPSYArJOnE8KjZwpYuyQqa5ed83w12X4+vzqd05Xcq9RaljjnoZAdp
-         9cTIiTMX5VgJ7wpI9r0SwlX9pC8yGdoepV8Pd8+cMi8dQDwBaVO58LkUzUn/Tz9amYoB
-         qm1v0jJuMwp7Jxqkc8Gx9bd1dvlYCyfbHvO9kpNx20SHP8ajEDiiKperay47IviDC0El
-         U/dN+10ZMwSsE01IzXhY3+y8Y+d6tfYHHUsRKL0lrUbGCU2Cj6OIUYFDkfCHK9qWWAmL
-         pzaQ==
-X-Gm-Message-State: AOAM530gb747No8AyaqMS3kHtbbiaSgFgOkBVcOtJiJrnUYL44ySORuI
-        kNK1IbQgVLjVPL5s5BtaCiYu/g==
-X-Google-Smtp-Source: ABdhPJyFMAADT0iNvQneqnoq3jXcfQ9exfItDCCBzjODGF6El21zfS6VYYeAkF3SXF3XSP6ZcoJNwg==
-X-Received: by 2002:a05:6402:42c8:: with SMTP id i8mr20478536edc.60.1636539152289;
-        Wed, 10 Nov 2021 02:12:32 -0800 (PST)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id r19sm12287575edt.54.2021.11.10.02.12.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Nov 2021 02:12:31 -0800 (PST)
-Subject: Re: [PATCH] ASoC: codecs: MBHC: Add support for special headset
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1635938324-17763-1-git-send-email-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <8422a82f-5aa7-2458-8080-87f330fa63ea@linaro.org>
-Date:   Wed, 10 Nov 2021 10:12:30 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-MIME-Version: 1.0
-In-Reply-To: <1635938324-17763-1-git-send-email-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636541528; x=1668077528;
+  h=from:to:cc:subject:date:message-id;
+  bh=7eOsYE5izuBmNzAggjLUvcDK8FJX7OQxEj2Tbgxn/kE=;
+  b=IGImXSvKExTJ83ypUhzhLTVNfm3Xq9ET+1RtIpTSGL4c0Ezp5UMPSvGX
+   t3FMN1BBhkAvLgKdlY450LnksFFbssDtiGb5rDEo7gzGRG65aSxKkMWJp
+   CvfhCoMzalRFBq1eaM97LcNcYq7Ea8yHwTseiDPZEFN9skeWuTKM1d27K
+   A=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 10 Nov 2021 02:52:05 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Nov 2021 02:52:02 -0800
+X-QCInternal: smtphost
+Received: from mkrishn-linux.qualcomm.com ([10.204.66.35])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Nov 2021 16:21:49 +0530
+Received: by mkrishn-linux.qualcomm.com (Postfix, from userid 438394)
+        id B6DAC221C5; Wed, 10 Nov 2021 16:21:48 +0530 (IST)
+From:   Krishna Manikandan <quic_mkrishn@quicinc.com>
+To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        quic_kalyant@quicinc.com, robdclark@gmail.com, swboyd@chromium.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        dmitry.baryshkov@linaro.org
+Subject: [PATCH v4] drm/msm: use compatible lists to find mdp node
+Date:   Wed, 10 Nov 2021 16:21:47 +0530
+Message-Id: <1636541507-5144-1-git-send-email-quic_mkrishn@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for adding this support.
+In the current implementation, substring comparison
+using device node name is used to find mdp node
+during driver probe. Use compatible string list instead
+of node name to get mdp node from the parent mdss node.
 
-few minor nits,
+Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-On 03/11/2021 11:18, Srinivasa Rao Mandadapu wrote:
-> Update MBHC driver to support special headset such as apple
-> and huwawei headsets.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> ---
->   sound/soc/codecs/wcd-mbhc-v2.c | 78 +++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 74 insertions(+), 4 deletions(-)
-> 
-> diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
-> index 405128c..3b4cd39 100644
-> --- a/sound/soc/codecs/wcd-mbhc-v2.c
-> +++ b/sound/soc/codecs/wcd-mbhc-v2.c
-> @@ -1022,6 +1022,57 @@ static int wcd_mbhc_get_plug_from_adc(struct wcd_mbhc *mbhc, int adc_result)
->   	return plug_type;
->   }
->   
-> +static int wcd_mbhc_get_spl_hs_thres(struct wcd_mbhc *mbhc)
-> +{
-> +	int hs_threshold, micbias_mv;
-> +
-> +	micbias_mv = wcd_mbhc_get_micbias(mbhc);
-> +	if (mbhc->cfg->hs_thr && mbhc->cfg->micb_mv != WCD_MBHC_ADC_MICBIAS_MV) {
-> +		if (mbhc->cfg->micb_mv == micbias_mv)
-> +			hs_threshold = mbhc->cfg->hs_thr;
-> +		else
-> +			hs_threshold = (mbhc->cfg->hs_thr * micbias_mv) /
-> +								mbhc->cfg->micb_mv;
+Changes in v2:
+  - Use compatible lists instead of duplicate string
+    check (Stephen Boyd)
 
-You should consider using 100 chars per line, so that reading is much easy.
+Changes in v3:
+  - Use match tables to find the mdp node (Stephen Boyd)
 
-> +	} else {
-> +		hs_threshold = ((WCD_MBHC_ADC_HS_THRESHOLD_MV * micbias_mv) /
-> +							WCD_MBHC_ADC_MICBIAS_MV);
-> +	}
-> +	return hs_threshold;
-> +}
-> +
-> +static bool wcd_mbhc_check_for_spl_headset(struct wcd_mbhc *mbhc)
-> +{
-> +	bool is_spl_hs = false;
-> +	int output_mv, hs_threshold, hph_threshold;
-> +
-> +	if (!mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic)
-> +		return false;
-> +
-> +	/* Bump up MIC_BIAS2 to 2.7V */
-> +	mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(mbhc->component, MIC_BIAS_2, true);
-> +	usleep_range(10000, 10100);
-> +
-> +	output_mv = wcd_measure_adc_once(mbhc, MUX_CTL_IN2P);
-> +	hs_threshold = wcd_mbhc_get_spl_hs_thres(mbhc);
-> +	hph_threshold = wcd_mbhc_adc_get_hph_thres(mbhc);
-> +
-> +	if (output_mv > hs_threshold || output_mv < hph_threshold) {
-> +		if (mbhc->force_linein == true)
-> +			is_spl_hs = false;
-> +	} else {
-> +		is_spl_hs = true;
-> +	}
-> +
-> +	/* Back MIC_BIAS2 to 1.8v if the type is not special headset */
-> +	if (!is_spl_hs) {
-> +		mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(mbhc->component, MIC_BIAS_2, false);
-> +		/* Add 10ms delay for micbias to settle */
-> +		usleep_range(10000, 10100);
-> +	}
-> +
-> +	return is_spl_hs;
-> +}
-> +
->   static void wcd_correct_swch_plug(struct work_struct *work)
->   {
->   	struct wcd_mbhc *mbhc;
-> @@ -1029,12 +1080,14 @@ static void wcd_correct_swch_plug(struct work_struct *work)
->   	enum wcd_mbhc_plug_type plug_type = MBHC_PLUG_TYPE_INVALID;
->   	unsigned long timeout;
->   	int pt_gnd_mic_swap_cnt = 0;
-> -	int output_mv, cross_conn, hs_threshold, try = 0;
-> +	int output_mv, cross_conn, hs_threshold, try = 0, micbias_mv;
-> +	bool is_spl_hs = false;
->   	bool is_pa_on;
->   
->   	mbhc = container_of(work, struct wcd_mbhc, correct_plug_swch);
->   	component = mbhc->component;
->   
-> +	micbias_mv = wcd_mbhc_get_micbias(mbhc);
->   	hs_threshold = wcd_mbhc_adc_get_hs_thres(mbhc);
->   
->   	/* Mask ADC COMPLETE interrupt */
-> @@ -1097,6 +1150,18 @@ static void wcd_correct_swch_plug(struct work_struct *work)
->   		plug_type = wcd_mbhc_get_plug_from_adc(mbhc, output_mv);
->   		is_pa_on = wcd_mbhc_read_field(mbhc, WCD_MBHC_HPH_PA_EN);
->   
-> +
-unnecessary extra new line here.
+Changes in v4:
+  - Drop EXPORT_SYMBOL (Dmitry Baryshkov)
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 2 +-
+ drivers/gpu/drm/msm/msm_drv.c            | 7 ++++---
+ drivers/gpu/drm/msm/msm_kms.h            | 3 +++
+ 4 files changed, 9 insertions(+), 5 deletions(-)
 
-> +		if ((output_mv > hs_threshold) &&
-> +		    (!is_spl_hs)) {
-wrap to 100 chars and unneccessary brackets around the conditions.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index ad247c0..8cbdf0d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -1273,7 +1273,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
+ 				pm_runtime_force_resume)
+ };
+ 
+-static const struct of_device_id dpu_dt_match[] = {
++const struct of_device_id dpu_dt_match[] = {
+ 	{ .compatible = "qcom,sdm845-dpu", },
+ 	{ .compatible = "qcom,sc7180-dpu", },
+ 	{ .compatible = "qcom,sc7280-dpu", },
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 7b24224..dcbc8dc 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -1031,7 +1031,7 @@ static const struct dev_pm_ops mdp5_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(mdp5_runtime_suspend, mdp5_runtime_resume, NULL)
+ };
+ 
+-static const struct of_device_id mdp5_dt_match[] = {
++const struct of_device_id mdp5_dt_match[] = {
+ 	{ .compatible = "qcom,mdp5", },
+ 	/* to support downstream DT files */
+ 	{ .compatible = "qcom,mdss_mdp", },
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 7936e8d..445788f 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1277,9 +1277,10 @@ static int add_components_mdp(struct device *mdp_dev,
+ 	return 0;
+ }
+ 
+-static int compare_name_mdp(struct device *dev, void *data)
++static int find_mdp_node(struct device *dev, void *data)
+ {
+-	return (strstr(dev_name(dev), "mdp") != NULL);
++	return of_match_node(dpu_dt_match, dev->of_node) ||
++		of_match_node(mdp5_dt_match, dev->of_node);
+ }
+ 
+ static int add_display_components(struct platform_device *pdev,
+@@ -1304,7 +1305,7 @@ static int add_display_components(struct platform_device *pdev,
+ 			return ret;
+ 		}
+ 
+-		mdp_dev = device_find_child(dev, NULL, compare_name_mdp);
++		mdp_dev = device_find_child(dev, NULL, find_mdp_node);
+ 		if (!mdp_dev) {
+ 			DRM_DEV_ERROR(dev, "failed to find MDSS MDP node\n");
+ 			of_platform_depopulate(dev);
+diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+index 6a42b81..8b132c8 100644
+--- a/drivers/gpu/drm/msm/msm_kms.h
++++ b/drivers/gpu/drm/msm/msm_kms.h
+@@ -198,6 +198,9 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev);
+ struct msm_kms *mdp5_kms_init(struct drm_device *dev);
+ struct msm_kms *dpu_kms_init(struct drm_device *dev);
+ 
++extern const struct of_device_id dpu_dt_match[];
++extern const struct of_device_id mdp5_dt_match[];
++
+ struct msm_mdss_funcs {
+ 	int (*enable)(struct msm_mdss *mdss);
+ 	int (*disable)(struct msm_mdss *mdss);
+-- 
+2.7.4
 
-With those fixed
-
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
-
-> +			is_spl_hs = wcd_mbhc_check_for_spl_headset(mbhc);
-> +			output_mv = wcd_measure_adc_once(mbhc, MUX_CTL_IN2P);
-> +
-> +			if (is_spl_hs) {
-> +				hs_threshold = (hs_threshold * wcd_mbhc_get_micbias(mbhc)) /
-> +									micbias_mv; > +			}
-> +		}
-> +
->   		if ((output_mv <= hs_threshold) && !is_pa_on) {
->   			/* Check for cross connection*/
->   			cross_conn = wcd_check_cross_conn(mbhc);
-> @@ -1122,14 +1187,19 @@ static void wcd_correct_swch_plug(struct work_struct *work)
->   			}
->   		}
->   
-> -		if (output_mv > hs_threshold) /* cable is extension cable */
-> +		/* cable is extension cable */
-> +		if (output_mv > hs_threshold || mbhc->force_linein == true)
->   			plug_type = MBHC_PLUG_TYPE_HIGH_HPH;
->   	}
->   
->   	wcd_mbhc_bcs_enable(mbhc, plug_type, true);
->   
-> -	if (plug_type == MBHC_PLUG_TYPE_HIGH_HPH)
-> -		wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_ISRC_EN, 1);
-> +	if (plug_type == MBHC_PLUG_TYPE_HIGH_HPH) {
-> +		if (is_spl_hs)
-> +			plug_type = MBHC_PLUG_TYPE_HEADSET;
-> +		else
-> +			wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_ISRC_EN, 1);
-> +	}
->   
->   	wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_MODE, 0);
->   	wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_EN, 0);
-> 
