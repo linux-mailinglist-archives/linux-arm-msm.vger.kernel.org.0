@@ -2,153 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 845C344C8FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 20:34:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25BD444C946
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 20:44:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232490AbhKJThH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 14:37:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55164 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230388AbhKJThH (ORCPT
+        id S233217AbhKJTr0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 14:47:26 -0500
+Received: from mail-oi1-f182.google.com ([209.85.167.182]:42974 "EHLO
+        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233352AbhKJTrO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 14:37:07 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54408C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 11:34:19 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id y7so4005823plp.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 11:34:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rJHh7eaoz0rtcELxkvF4zn32urxXqVSFngW+4w2Rf1M=;
-        b=ggo+wNiLpDV4HHVswfBVwjZWHVRwN5LJPcalbUOFWVu2vONM7Gc4p9hUv3qjOc/k4d
-         1JORW4pmS0ObxFh50/8lVekzBekj5VaHNWn6O2mShfZT+FJoWWrbLaIj68Mzk6YZUQIG
-         BCDQrOwq8mlrpQH2MSxaZNS2aTsk6/OnnOnU4=
+        Wed, 10 Nov 2021 14:47:14 -0500
+Received: by mail-oi1-f182.google.com with SMTP id n66so7243201oia.9;
+        Wed, 10 Nov 2021 11:44:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rJHh7eaoz0rtcELxkvF4zn32urxXqVSFngW+4w2Rf1M=;
-        b=l0+2Gp8Z+aPWyEyd9AN6Om6Wv9oTSRbTZJ4FsYWBexVt5tELpIE9EN4YNawEcfE+8a
-         n0rjhZnRtdkn7xb58JfTcVpuM1kYcqqhTKKNSG8GJWR8nQJs74vxvL9Tiexe0wUgW75u
-         ZEybH6lP4L4i6k6sn4ZhXRbEpw4QSyASLcZ9TsPu90mnhTRcLeE/vvjP5qlx/8G7fYfn
-         kElufn7nSmfQtqZ7F7kUFbPGyYw8WHg9ogSrwzc71GcbpjPH+xnqvvwRM5SeQiNqCMV/
-         kJbgqJWADB7liQSqxYMiPSOPdxwtBbFK9r8qvMantfqmjyxQio7prgsOJn54vJphSLAN
-         l7Ww==
-X-Gm-Message-State: AOAM5328laYEwzBK92/0+R7gJ2csOV59HQvp/vl+FeOPVzH3Qh0NLaiC
-        BkF4rFT1ul7BxxMzU+CGHUuVRNFP98qV9StA
-X-Google-Smtp-Source: ABdhPJzlHwHz24c2zSNl5Hhws4WdVA+lO8Bb7anT7lg2ow9nWr7ZPTW+kv06o3GES2gBTLH2T01e9Q==
-X-Received: by 2002:a17:903:408c:b0:142:45a9:672c with SMTP id z12-20020a170903408c00b0014245a9672cmr1542283plc.7.1636572847553;
-        Wed, 10 Nov 2021 11:34:07 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6e36:1327:faf4:fa6a])
-        by smtp.gmail.com with ESMTPSA id d7sm437006pfj.91.2021.11.10.11.34.06
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=PWYGAVGAa4OmQjHBrfYueh1qVok7v9Q7bchlBqeE0Is=;
+        b=q+VWBQhPNtv81R0awcP6wjA6rCBV1bYxIrCz3Kt9Arma5C5O4dPynvBpDzVJphh+lQ
+         /2uIxLK5BesRXDvXBFBAGj2X+QJ/clEPnqGu0qqKafcDNfyF5KVhVBJX5eIS5TecxDk/
+         S6YcHeeBQ5l+cA5u1uD3hsBLKH4w1cHi2cRYpgMDr7IL2xTjetTkSwd3Ud02vG6jNXtp
+         P1v8WkwmQxWTg5+Es9K+234yynWdQiNwwl2qaen1wzBvsMrhzDUE6+n/svC4iakuqQ/P
+         KYlpb2bSLiYA0mQLb5qrjoSJRsO7MTBdjx+6dOyjNG79+SFu6/BuhXXSdbQDY5RUMF91
+         z3Kw==
+X-Gm-Message-State: AOAM53206cFAlTC666uoge4Buh40++SJsLZrfHeh7cvpYasZJOYPqvZc
+        IoB1W9P1s3DIhPBkek+fRg==
+X-Google-Smtp-Source: ABdhPJx5hf7+JaWUtnKl1lTMYWOOqV0Ndfp17JshlWQb6ln0RW7bmree3bBTV0pVVk8UJ71HplKHhg==
+X-Received: by 2002:a05:6808:1641:: with SMTP id az1mr14582249oib.67.1636573465825;
+        Wed, 10 Nov 2021 11:44:25 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id n189sm94013oif.33.2021.11.10.11.44.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 11:34:07 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Fix mmap to include VM_IO and VM_DONTDUMP
-Date:   Wed, 10 Nov 2021 11:33:42 -0800
-Message-Id: <20211110113334.1.I1687e716adb2df746da58b508db3f25423c40b27@changeid>
-X-Mailer: git-send-email 2.34.0.rc1.387.gb447b232ab-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 10 Nov 2021 11:44:25 -0800 (PST)
+Received: (nullmailer pid 1783739 invoked by uid 1000);
+        Wed, 10 Nov 2021 19:44:20 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20211110120716.6401-6-shawn.guo@linaro.org>
+References: <20211110120716.6401-1-shawn.guo@linaro.org> <20211110120716.6401-6-shawn.guo@linaro.org>
+Subject: Re: [PATCH 5/6] dt-bindings: interconnect: Add Qualcomm QCM2290 NoC support
+Date:   Wed, 10 Nov 2021 13:44:20 -0600
+Message-Id: <1636573460.901134.1783738.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit 510410bfc034 ("drm/msm: Implement mmap as GEM object
-function") we switched to a new/cleaner method of doing things. That's
-good, but we missed a little bit.
+On Wed, 10 Nov 2021 20:07:15 +0800, Shawn Guo wrote:
+> Add bindings for Qualcomm QCM2290 Network-On-Chip interconnect devices.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  .../bindings/interconnect/qcom,qcm2290.yaml   | 117 ++++++++++++++++++
+>  .../dt-bindings/interconnect/qcom,qcm2290.h   |  94 ++++++++++++++
+>  2 files changed, 211 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
+> 
 
-Before that commit, we used to _first_ run through the
-drm_gem_mmap_obj() case where `obj->funcs->mmap()` was NULL. That meant
-that we ran:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-  vma->vm_flags |= VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP;
-  vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
-  vma->vm_page_prot = pgprot_decrypted(vma->vm_page_prot);
+yamllint warnings/errors:
 
-...and _then_ we modified those mappings with our own. Now that
-`obj->funcs->mmap()` is no longer NULL we don't run the default
-code. It looks like the fact that the vm_flags got VM_IO / VM_DONTDUMP
-was important because we're now getting crashes on Chromebooks that
-use ARC++ while logging out. Specifically a crash that looks like this
-(this is on a 5.10 kernel w/ relevant backports but also seen on a
-5.15 kernel):
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/interconnect/qcom,qcm2290.example.dts:20:18: fatal error: dt-bindings/clock/qcom,gcc-qcm2290.h: No such file or directory
+   20 |         #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/interconnect/qcom,qcm2290.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1441: dt_binding_check] Error 2
 
-  Unable to handle kernel paging request at virtual address ffffffc008000000
-  Mem abort info:
-    ESR = 0x96000006
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-  Data abort info:
-    ISV = 0, ISS = 0x00000006
-    CM = 0, WnR = 0
-  swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000008293d000
-  [ffffffc008000000] pgd=00000001002b3003, p4d=00000001002b3003,
-                     pud=00000001002b3003, pmd=0000000000000000
-  Internal error: Oops: 96000006 [#1] PREEMPT SMP
-  [...]
-  CPU: 7 PID: 15734 Comm: crash_dump64 Tainted: G W 5.10.67 #1 [...]
-  Hardware name: Qualcomm Technologies, Inc. sc7280 IDP SKU2 platform (DT)
-  pstate: 80400009 (Nzcv daif +PAN -UAO -TCO BTYPE=--)
-  pc : __arch_copy_to_user+0xc0/0x30c
-  lr : copyout+0xac/0x14c
-  [...]
-  Call trace:
-   __arch_copy_to_user+0xc0/0x30c
-   copy_page_to_iter+0x1a0/0x294
-   process_vm_rw_core+0x240/0x408
-   process_vm_rw+0x110/0x16c
-   __arm64_sys_process_vm_readv+0x30/0x3c
-   el0_svc_common+0xf8/0x250
-   do_el0_svc+0x30/0x80
-   el0_svc+0x10/0x1c
-   el0_sync_handler+0x78/0x108
-   el0_sync+0x184/0x1c0
-  Code: f8408423 f80008c3 910020c6 36100082 (b8404423)
+doc reference errors (make refcheckdocs):
 
-Let's add the two flags back in.
+See https://patchwork.ozlabs.org/patch/1553401
 
-While we're at it, the fact that we aren't running the default means
-that we _don't_ need to clear out VM_PFNMAP, so remove that and save
-an instruction.
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-NOTE: it was confirmed that VM_IO was the important flag to fix the
-problem I was seeing, but adding back VM_DONTDUMP seems like a sane
-thing to do so I'm doing that too.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Fixes: 510410bfc034 ("drm/msm: Implement mmap as GEM object function")
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+pip3 install dtschema --upgrade
 
- drivers/gpu/drm/msm/msm_gem.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 6b03e00cc5f2..ae18bfb22502 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -1056,8 +1056,7 @@ static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
- {
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
--	vma->vm_flags &= ~VM_PFNMAP;
--	vma->vm_flags |= VM_MIXEDMAP | VM_DONTEXPAND;
-+	vma->vm_flags |= VM_IO | VM_MIXEDMAP | VM_DONTEXPAND | VM_DONTDUMP;
- 	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
- 
- 	return 0;
--- 
-2.34.0.rc1.387.gb447b232ab-goog
+Please check and re-submit.
 
