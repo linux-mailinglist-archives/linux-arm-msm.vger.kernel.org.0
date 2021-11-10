@@ -2,417 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B288144C561
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 17:50:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D09844C5AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 18:03:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232038AbhKJQw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 11:52:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46192 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232022AbhKJQwz (ORCPT
+        id S232475AbhKJRGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 12:06:40 -0500
+Received: from linux.microsoft.com ([13.77.154.182]:43418 "EHLO
+        linux.microsoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232499AbhKJRGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 11:52:55 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95898C061766;
-        Wed, 10 Nov 2021 08:50:07 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id u18so5138379wrg.5;
-        Wed, 10 Nov 2021 08:50:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eR4jNFzMGlAgEWXem5yydSyKU3CgC5+uZrpi0np/BnQ=;
-        b=ZYQUsMDqqIb3S5lvoSokg+PHpbVHP3e01n/9MbjlRUiyS4zKcZwHcA0eLG5qD6ryCa
-         FVLFqSu6dd8q1IGyziMgbaPbzd92M0F2vx/NwLglYpSSDfHh2fn622kvhYwfCShAMPuz
-         ePdlD2tkxP5pqIDC95YiN9VhtcOJ3DZ2vG5t0lCuqjV4U2U+wIk8/AczlFYpOv+jaT4v
-         8Y4/Js2QUntPaBQtJyipYtDIuvw2T1mO3B9jDUissSaq6xFLu2Uwn4uYMPggVZm0/3Fe
-         DLYocrbLBAT0aPvu+MxbIYzW+eP8/d4WHtJxxmaXxoTavg6VpaAHoz3cjMBAST9+vyNm
-         9A9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eR4jNFzMGlAgEWXem5yydSyKU3CgC5+uZrpi0np/BnQ=;
-        b=W2AFdvOxwCG0rcfVazj0326N2JSI4otFzyy4RTY2GG/eMPQPTLyA5pxgFSHPZigDJz
-         WKN4eXqFCe48tscOzKqgyGC7R0zw6I5XT3B6eM+DiaiLVt4IS4ek0+r6PGwCjTsaAM8g
-         6lYPw11+J+NSQPsUVCNO8BY908WEhMc8BMuq+bUxyXQRwJ+FozvwoAlqlOpSXejx5xPS
-         B3s5zkme2JfdPHRytDb4t7sPcyKG0Rmjeom2Lw5Djsn61stYNfyLcV/eW+tA6pGIMQlv
-         rnMj8nYcsnfpXE1mC3RA8RsaJ6uf6PnrmJy69+eWpJ/pc7AKrTxhvazbBkGTbn0jIU+k
-         BZoA==
-X-Gm-Message-State: AOAM533Ge0ARetGs+oUydC841toQdm4vuYd8Yra5HVbMDbRaFNOJynUO
-        lv3xXHL1EiyF8y4NfRs82suBqc7oHvTFBpitAuA=
-X-Google-Smtp-Source: ABdhPJwVuDS+zysjF5ok8TtxlNYkrrfY22PLS/0jF/6GPm4eWx86xHtk/lOCfL8BHHHpd+cCwwcxLN0nfz6rsacY3LM=
-X-Received: by 2002:a05:6000:1acd:: with SMTP id i13mr512528wry.398.1636563005724;
- Wed, 10 Nov 2021 08:50:05 -0800 (PST)
+        Wed, 10 Nov 2021 12:06:38 -0500
+Received: from thelio.attlocal.net (107-203-255-60.lightspeed.sntcca.sbcglobal.net [107.203.255.60])
+        by linux.microsoft.com (Postfix) with ESMTPSA id E564E20ABAF3;
+        Wed, 10 Nov 2021 09:03:50 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E564E20ABAF3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+        s=default; t=1636563831;
+        bh=danwvFIhHXOB5xYfFeriGn3Oz9LTqo/fv3l06x5g7ws=;
+        h=From:To:Cc:Subject:Date:From;
+        b=jYFwIwRK+BCCWkVO48T1/ipQIbmtq/OL4Gq2I2mrUkaWyw4uVS/1qA7Y5NuJg2yUg
+         H4bV/YgQVEDDrv+9lBGg7bHKULcpvjQW57ZYpP+tobGAFZlD5SZMQqkpPGmwIW0/4L
+         l8JlzDCN6X8wogydoeJzFuCCIw3GDK0EKTSlYla0=
+From:   Katherine Perez <kaperez@linux.microsoft.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [RFC PATCH 0/4] arm64: dts: sm8150: display support for Microsoft Surface Duo
+Date:   Wed, 10 Nov 2021 09:03:26 -0800
+Message-Id: <20211110170330.1789509-1-kaperez@linux.microsoft.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-References: <20210728010632.2633470-1-robdclark@gmail.com> <20210728010632.2633470-8-robdclark@gmail.com>
- <e9e50cad-2341-cb25-ef84-0d61a2cb7469@codeaurora.org>
-In-Reply-To: <e9e50cad-2341-cb25-ef84-0d61a2cb7469@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 10 Nov 2021 08:55:04 -0800
-Message-ID: <CAF6AEGvTyy-MCv6wdkpPyohLwUg4U_2ACT0gsXRG2z6iOYQ+Tg@mail.gmail.com>
-Subject: Re: [PATCH v4 07/13] drm/msm: Track "seqno" fences by idr
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 10, 2021 at 7:28 AM Akhil P Oommen <akhilpo@codeaurora.org> wro=
-te:
->
-> On 7/28/2021 6:36 AM, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Previously the (non-fd) fence returned from submit ioctl was a raw
-> > seqno, which is scoped to the ring.  But from UABI standpoint, the
-> > ioctls related to seqno fences all specify a submitqueue.  We can
-> > take advantage of that to replace the seqno fences with a cyclic idr
-> > handle.
-> >
-> > This is in preperation for moving to drm scheduler, at which point
-> > the submit ioctl will return after queuing the submit job to the
-> > scheduler, but before the submit is written into the ring (and
-> > therefore before a ring seqno has been assigned).  Which means we
-> > need to replace the dma_fence that userspace may need to wait on
-> > with a scheduler fence.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > Acked-by: Christian K=C3=B6nig <christian.koenig@amd.com>
-> > ---
-> >   drivers/gpu/drm/msm/msm_drv.c         | 30 +++++++++++++++++--
-> >   drivers/gpu/drm/msm/msm_fence.c       | 42 --------------------------=
--
-> >   drivers/gpu/drm/msm/msm_fence.h       |  3 --
-> >   drivers/gpu/drm/msm/msm_gem.h         |  1 +
-> >   drivers/gpu/drm/msm/msm_gem_submit.c  | 23 ++++++++++++++-
-> >   drivers/gpu/drm/msm/msm_gpu.h         |  5 ++++
-> >   drivers/gpu/drm/msm/msm_submitqueue.c |  5 ++++
-> >   7 files changed, 61 insertions(+), 48 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
-v.c
-> > index 9b8fa2ad0d84..1594ae39d54f 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -911,6 +911,7 @@ static int msm_ioctl_wait_fence(struct drm_device *=
-dev, void *data,
-> >       ktime_t timeout =3D to_ktime(args->timeout);
-> >       struct msm_gpu_submitqueue *queue;
-> >       struct msm_gpu *gpu =3D priv->gpu;
-> > +     struct dma_fence *fence;
-> >       int ret;
-> >
-> >       if (args->pad) {
-> > @@ -925,10 +926,35 @@ static int msm_ioctl_wait_fence(struct drm_device=
- *dev, void *data,
-> >       if (!queue)
-> >               return -ENOENT;
-> >
-> > -     ret =3D msm_wait_fence(gpu->rb[queue->prio]->fctx, args->fence, &=
-timeout,
-> > -             true);
-> > +     /*
-> > +      * Map submitqueue scoped "seqno" (which is actually an idr key)
-> > +      * back to underlying dma-fence
-> > +      *
-> > +      * The fence is removed from the fence_idr when the submit is
-> > +      * retired, so if the fence is not found it means there is nothin=
-g
-> > +      * to wait for
-> > +      */
-> > +     ret =3D mutex_lock_interruptible(&queue->lock);
-> > +     if (ret)
-> > +             return ret;
-> > +     fence =3D idr_find(&queue->fence_idr, args->fence);
-> > +     if (fence)
-> > +             fence =3D dma_fence_get_rcu(fence);
-> > +     mutex_unlock(&queue->lock);
-> > +
-> > +     if (!fence)
-> > +             return 0;
-> >
-> > +     ret =3D dma_fence_wait_timeout(fence, true, timeout_to_jiffies(&t=
-imeout));
-> > +     if (ret =3D=3D 0) {
-> > +             ret =3D -ETIMEDOUT;
-> > +     } else if (ret !=3D -ERESTARTSYS) {
-> > +             ret =3D 0;
-> > +     }
-> > +
-> > +     dma_fence_put(fence);
-> >       msm_submitqueue_put(queue);
-> > +
-> >       return ret;
-> >   }
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_=
-fence.c
-> > index b92a9091a1e2..f2cece542c3f 100644
-> > --- a/drivers/gpu/drm/msm/msm_fence.c
-> > +++ b/drivers/gpu/drm/msm/msm_fence.c
-> > @@ -24,7 +24,6 @@ msm_fence_context_alloc(struct drm_device *dev, volat=
-ile uint32_t *fenceptr,
-> >       strncpy(fctx->name, name, sizeof(fctx->name));
-> >       fctx->context =3D dma_fence_context_alloc(1);
-> >       fctx->fenceptr =3D fenceptr;
-> > -     init_waitqueue_head(&fctx->event);
-> >       spin_lock_init(&fctx->spinlock);
-> >
-> >       return fctx;
-> > @@ -45,53 +44,12 @@ static inline bool fence_completed(struct msm_fence=
-_context *fctx, uint32_t fenc
-> >               (int32_t)(*fctx->fenceptr - fence) >=3D 0;
-> >   }
-> >
-> > -/* legacy path for WAIT_FENCE ioctl: */
-> > -int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
-> > -             ktime_t *timeout, bool interruptible)
-> > -{
-> > -     int ret;
-> > -
-> > -     if (fence > fctx->last_fence) {
-> > -             DRM_ERROR_RATELIMITED("%s: waiting on invalid fence: %u (=
-of %u)\n",
-> > -                             fctx->name, fence, fctx->last_fence);
-> > -             return -EINVAL;
->
-> Rob, we changed this pre-existing behaviour in this patch. Now, when
-> userspace tries to wait on a future fence, we don't return an error.
->
-> I just want to check if this was accidental or not?
+Hi Bjorn and Vinod,
 
-Hmm, perhaps we should do this to restore the previous behavior:
+I'm trying to enable the display subsystem on SM8150 but am having
+trouble enabling the DISP_CC_MDSS_AHB_CLK. Trace shows "disp_cc_mdss_ahb_clk
+status stuck at off". Do you have any pointers on enabling this clock?
 
--------------
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 73e827641024..3dd6da56eae6 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1000,8 +1000,12 @@ static int msm_ioctl_wait_fence(struct
-drm_device *dev, void *data,
-                fence =3D dma_fence_get_rcu(fence);
-        mutex_unlock(&queue->lock);
+[    2.478418] platform ae94000.dsi: Fixing up cyclic dependency with
+ae00000.mdss:mdp@ae010000
+[    2.478832] platform ae94400.dsi-phy: Fixing up cyclic dependency
+with af00000.clock-controller
+[    2.479134] msm_dsi_phy ae94400.dsi-phy: [drm:dsi_phy_driver_probe
+[msm]] *ERROR* dsi_phy_driver_probe: Unable to get ahb clk
+[    2.480919] disp_cc-sm8250 af00000.clock-controller: supply mmcx not
+found, using dummy regulator
+[    2.487023] ath10k_snoc 18800000.wifi: supply vdd-3.3-ch1 not found,
+using dummy regulator
+[    2.498954] platform ae96000.dsi: Fixing up cyclic dependency with
+ae00000.mdss:mdp@ae010000
+[    2.513953] ------------[ cut here ]------------
+[    2.536309] disp_cc_mdss_ahb_clk status stuck at 'off'
+[    2.536320] WARNING: CPU: 6 PID: 76 at drivers/clk/qcom/clk-branch.c:91 clk_branch_wait+0x14c/0x164
+[    2.536329] Modules linked in: ath10k_snoc msm(+) ath10k_core gpu_sched crct10dif_ce ath drm_kms_helper qcom_spmi_adc5 qcom_vadc_common mac80211 syscopyarea qrtr libarc4 sysfillrect qcom_pon sysimgblt rtc_pm8xxx qcom_spmi_temp_alarm fb_sys_fops i2c_qcom_geni(+) drm cfg80211 rfkill phy_qcom_qmp ufs_qcom icc_osm_l3 qcom_q6v5_pas qcom_pil_info qcom_wdt qcom_q6v5 qcom_sysmon qcom_common qcom_glink_smem qmi_helpers
+[    2.549572]  mdt_loader qnoc_sm8150 socinfo rmtfs_mem
+[    2.549577] CPU: 6 PID: 76 Comm: kworker/u16:2 Not tainted 5.15.0 #17
+[    3.095528] Hardware name: Microsoft Surface Duo (DT)
+[    3.100721] Workqueue: events_unbound deferred_probe_work_func
+[    3.106713] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    3.113857] pc : clk_branch_wait+0x14c/0x164
+[    3.118238] lr : clk_branch_wait+0x14c/0x164
+[    3.122620] sp : ffff80001078ba40
+[    3.126030] x29: ffff80001078ba40 x28: 0000000000000000 x27: ffff65e6008e2100
+[    3.133348] x26: ffffb8630ec8e278 x25: ffff65e60005e005 x24: ffffb8630ebc0f98
+[    3.140665] x23: ffffb8630e234dd8 x22: 0000000000000001 x21: ffffb8630d5b8b60
+[    3.147983] x20: 0000000000000000 x19: ffffb8630eb5e7b8 x18: 0000000000000030
+[    3.155301] x17: 2e726f74616c7567 x16: ffffb8630d5a3800 x15: ffffffffffffffff
+[    3.162619] x14: 0000000000000000 x13: 6f27207461206b63 x12: 7574732073757461
+[    3.169937] x11: 77705f313439386d x10: 0000000000000027 x9 : ffffb8630cf974bc
+[    3.177256] x8 : 0000000000000027 x7 : 0000000000000002 x6 : 0000000000000027
+[    3.184573] x5 : ffff65e6f93cc9a8 x4 : ffff80001078b890 x3 : 0000000000000001
+[    3.191891] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff65e600851d80
+[    3.199209] Call trace:
+[    3.201722]  clk_branch_wait+0x14c/0x164
+[    3.205748]  clk_branch2_enable+0x3c/0x60
+[    3.209869]  clk_core_enable+0x78/0x220
+[    3.213809]  clk_enable+0x38/0x60
+[    3.217219]  dsi_phy_enable_resource+0x98/0xac [msm]
+[    3.222387]  dsi_phy_driver_probe+0x29c/0x4f8 [msm]
+[    3.227453]  platform_probe+0x74/0xe4
+[    3.231218]  really_probe.part.0+0xa4/0x328
+[    3.235512]  __driver_probe_device+0xa0/0x150
+[    3.239990]  driver_probe_device+0x4c/0x164
+[    3.244285]  __device_attach_driver+0xc0/0x128
+[    3.248850]  bus_for_each_drv+0x84/0xe0
+[    3.252788]  __device_attach+0xe0/0x188
+[    3.256727]  device_initial_probe+0x20/0x2c
+[    3.261020]  bus_probe_device+0xa8/0xbc
+[    3.264958]  deferred_probe_work_func+0x90/0xc8
+[    3.269609]  process_one_work+0x1f4/0x43c
+[    3.273734]  worker_thread+0x78/0x4f0
+[    3.277500]  kthread+0x154/0x160
+[    3.280813]  ret_from_fork+0x10/0x20
+[    3.284482] ---[ end trace 734ed75908fc6b0e ]---
 
--       if (!fence)
--               return 0;
-+       if (!fence) {
-+               struct msm_fence_context *fctx =3D gpu->rb[queue->ring_nr]-=
->fctx;
-+               DRM_ERROR_RATELIMITED("%s: waiting on invalid fence:
-%u (of %u)\n",
-+                                     fctx->name, fence, fctx->last_fence);
-+               return -EINVAL;
-+       }
+Best,
+Katherine
 
-        ret =3D dma_fence_wait_timeout(fence, true, timeout_to_jiffies(&tim=
-eout));
-        if (ret =3D=3D 0) {
--------------
+Katherine Perez (4):
+  arm64: dts: qcom: sm8150: add dispcc node
+  arm64: dts: qcom: sm8150: add display nodes
+  arm64: dts: qcom: sm8150: add DSI display nodes
+  arm64: dts: qcom: sm8150: display support for Microsoft Surface Duo
 
-BR,
--R
+ .../dts/qcom/sm8150-microsoft-surface-duo.dts |  26 ++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 292 ++++++++++++++++++
+ 2 files changed, 318 insertions(+)
 
-> -Akhil.
->
-> > -     }
-> > -
-> > -     if (!timeout) {
-> > -             /* no-wait: */
-> > -             ret =3D fence_completed(fctx, fence) ? 0 : -EBUSY;
-> > -     } else {
-> > -             unsigned long remaining_jiffies =3D timeout_to_jiffies(ti=
-meout);
-> > -
-> > -             if (interruptible)
-> > -                     ret =3D wait_event_interruptible_timeout(fctx->ev=
-ent,
-> > -                             fence_completed(fctx, fence),
-> > -                             remaining_jiffies);
-> > -             else
-> > -                     ret =3D wait_event_timeout(fctx->event,
-> > -                             fence_completed(fctx, fence),
-> > -                             remaining_jiffies);
-> > -
-> > -             if (ret =3D=3D 0) {
-> > -                     DBG("timeout waiting for fence: %u (completed: %u=
-)",
-> > -                                     fence, fctx->completed_fence);
-> > -                     ret =3D -ETIMEDOUT;
-> > -             } else if (ret !=3D -ERESTARTSYS) {
-> > -                     ret =3D 0;
-> > -             }
-> > -     }
-> > -
-> > -     return ret;
-> > -}
-> > -
-> >   /* called from workqueue */
-> >   void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
-> >   {
-> >       spin_lock(&fctx->spinlock);
-> >       fctx->completed_fence =3D max(fence, fctx->completed_fence);
-> >       spin_unlock(&fctx->spinlock);
-> > -
-> > -     wake_up_all(&fctx->event);
-> >   }
-> >
-> >   struct msm_fence {
-> > diff --git a/drivers/gpu/drm/msm/msm_fence.h b/drivers/gpu/drm/msm/msm_=
-fence.h
-> > index 6ab97062ff1a..4783db528bcc 100644
-> > --- a/drivers/gpu/drm/msm/msm_fence.h
-> > +++ b/drivers/gpu/drm/msm/msm_fence.h
-> > @@ -49,7 +49,6 @@ struct msm_fence_context {
-> >        */
-> >       volatile uint32_t *fenceptr;
-> >
-> > -     wait_queue_head_t event;
-> >       spinlock_t spinlock;
-> >   };
-> >
-> > @@ -57,8 +56,6 @@ struct msm_fence_context * msm_fence_context_alloc(st=
-ruct drm_device *dev,
-> >               volatile uint32_t *fenceptr, const char *name);
-> >   void msm_fence_context_free(struct msm_fence_context *fctx);
-> >
-> > -int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
-> > -             ktime_t *timeout, bool interruptible);
-> >   void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)=
-;
-> >
-> >   struct dma_fence * msm_fence_alloc(struct msm_fence_context *fctx);
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_ge=
-m.h
-> > index da3af702a6c8..e0579abda5b9 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.h
-> > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> > @@ -320,6 +320,7 @@ struct msm_gem_submit {
-> >       struct ww_acquire_ctx ticket;
-> >       uint32_t seqno;         /* Sequence number of the submit on the r=
-ing */
-> >       struct dma_fence *fence;
-> > +     int fence_id;       /* key into queue->fence_idr */
-> >       struct msm_gpu_submitqueue *queue;
-> >       struct pid *pid;    /* submitting process */
-> >       bool fault_dumped;  /* Limit devcoredump dumping to one per submi=
-t */
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm=
-/msm_gem_submit.c
-> > index 4f02fa3c78f9..f6f595aae2c5 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > @@ -68,7 +68,14 @@ void __msm_gem_submit_destroy(struct kref *kref)
-> >                       container_of(kref, struct msm_gem_submit, ref);
-> >       unsigned i;
-> >
-> > +     if (submit->fence_id) {
-> > +             mutex_lock(&submit->queue->lock);
-> > +             idr_remove(&submit->queue->fence_idr, submit->fence_id);
-> > +             mutex_unlock(&submit->queue->lock);
-> > +     }
-> > +
-> >       dma_fence_put(submit->fence);
-> > +
-> >       put_pid(submit->pid);
-> >       msm_submitqueue_put(submit->queue);
-> >
-> > @@ -872,6 +879,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, v=
-oid *data,
-> >               goto out;
-> >       }
-> >
-> > +     /*
-> > +      * Allocate an id which can be used by WAIT_FENCE ioctl to map ba=
-ck
-> > +      * to the underlying fence.
-> > +      */
-> > +     mutex_lock(&queue->lock);
-> > +     submit->fence_id =3D idr_alloc_cyclic(&queue->fence_idr,
-> > +                     submit->fence, 0, INT_MAX, GFP_KERNEL);
-> > +     mutex_unlock(&queue->lock);
-> > +     if (submit->fence_id < 0) {
-> > +             ret =3D submit->fence_id =3D 0;
-> > +             submit->fence_id =3D 0;
-> > +             goto out;
-> > +     }
-> > +
-> >       if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> >               struct sync_file *sync_file =3D sync_file_create(submit->=
-fence);
-> >               if (!sync_file) {
-> > @@ -886,7 +907,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, vo=
-id *data,
-> >
-> >       msm_gpu_submit(gpu, submit);
-> >
-> > -     args->fence =3D submit->fence->seqno;
-> > +     args->fence =3D submit->fence_id;
-> >
-> >       msm_reset_syncobjs(syncobjs_to_reset, args->nr_in_syncobjs);
-> >       msm_process_post_deps(post_deps, args->nr_out_syncobjs,
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gp=
-u.h
-> > index 96efcb31e502..579627252540 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.h
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> > @@ -263,6 +263,9 @@ struct msm_gpu_perfcntr {
-> >    *             which set of pgtables do submits jobs associated with =
-the
-> >    *             submitqueue use)
-> >    * @node:      node in the context's list of submitqueues
-> > + * @fence_idr: maps fence-id to dma_fence for userspace visible fence
-> > + *             seqno, protected by submitqueue lock
-> > + * @lock:      submitqueue lock
-> >    * @ref:       reference count
-> >    */
-> >   struct msm_gpu_submitqueue {
-> > @@ -272,6 +275,8 @@ struct msm_gpu_submitqueue {
-> >       int faults;
-> >       struct msm_file_private *ctx;
-> >       struct list_head node;
-> > +     struct idr fence_idr;
-> > +     struct mutex lock;
-> >       struct kref ref;
-> >   };
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/ms=
-m/msm_submitqueue.c
-> > index 9e9fec61d629..66f8d0fb38b0 100644
-> > --- a/drivers/gpu/drm/msm/msm_submitqueue.c
-> > +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-> > @@ -12,6 +12,8 @@ void msm_submitqueue_destroy(struct kref *kref)
-> >       struct msm_gpu_submitqueue *queue =3D container_of(kref,
-> >               struct msm_gpu_submitqueue, ref);
-> >
-> > +     idr_destroy(&queue->fence_idr);
-> > +
-> >       msm_file_private_put(queue->ctx);
-> >
-> >       kfree(queue);
-> > @@ -89,6 +91,9 @@ int msm_submitqueue_create(struct drm_device *drm, st=
-ruct msm_file_private *ctx,
-> >       if (id)
-> >               *id =3D queue->id;
-> >
-> > +     idr_init(&queue->fence_idr);
-> > +     mutex_init(&queue->lock);
-> > +
-> >       list_add_tail(&queue->node, &ctx->submitqueues);
-> >
-> >       write_unlock(&ctx->queuelock);
-> >
->
+--
+2.31.1
+
