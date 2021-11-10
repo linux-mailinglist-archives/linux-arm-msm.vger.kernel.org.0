@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C210244C6D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 19:37:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1E4D44C6D3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 19:37:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231822AbhKJSkC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 13:40:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41998 "EHLO
+        id S231858AbhKJSkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 13:40:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbhKJSkB (ORCPT
+        with ESMTP id S230344AbhKJSkE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 13:40:01 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CD87C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 10:37:14 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id gf14-20020a17090ac7ce00b001a7a2a0b5c3so2402352pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 10:37:14 -0800 (PST)
+        Wed, 10 Nov 2021 13:40:04 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69859C061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 10:37:16 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id m14so3418813pfc.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 10:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2+xJGkDBOZWGJP8Vgj9Jp4xfje1A4o6RI5urEpWgzbc=;
-        b=POSYxwthV40B4oPaCCUOmLsXN+bkOOj5luV8WPGnOwcKFJH7XmStdBa7hIZCnhE35M
-         m8KeEdg0F/DZl/2AcW2zNqFA/WmjlGl+EzfDadZXiSzRv+f62ydKlgZVXMnGeP7B0q/0
-         qn7OC8fWTY3cV3bQjNn0WEwFV86MyM2vUG0MtzRTwVQMf4yiPGJ/UcImQ6Nh5oLx20LF
-         U7alp77/7r9C+Dw7CRVJq1kEdLQtCDgUfdZjPW/j2r+qZ2pZz1O4BTdRYkcEMSFy9CE6
-         pz2sL9QodxoAdlbQ/q5CRKbyAw0c+9PJasstVR7/j0pq87I6Pk8Y2eDKicCs0FG2mx+d
-         tsKA==
+        bh=t3qjeN7nQHDCrUu/1XJMOvEO/irEkBC8LSoLfwIe2GU=;
+        b=KHYe1NUbIFDk+9+LyNQaVOZCwd3haWjrspu70mGxvXTBWE2CYSXkWdNnM+uba+LAuK
+         nEqoNA6AynluJ7f54eI8lda1l6j2w0mYypkSKHNAXBxPATgqVdm8nRg2CQi12FgZKpNp
+         uAThmVAYdTgoVOzvnWAm/wK6OzKNdE9HMMHDDfFFbVaiZcklKjhC8/MXra1r99v98ooy
+         PLCfCgqVBG+vShPCwQYqLMOaU0SPiMy4rxSDHo+C0v8+2rZjaJnWy285anDvtI5h3T97
+         bJ/QmFpdsHsJTU+aOXMLRQQYhN+U3qkI7khRCPR0/1lzBRsXKPVcWrtVgt8fKl6hvqg6
+         wQ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2+xJGkDBOZWGJP8Vgj9Jp4xfje1A4o6RI5urEpWgzbc=;
-        b=Dacw1ZdIQ2h1o5gZT5N/TfZn0/nC9QJ1g6ehov1m+uRxbXGQ7TSr5qD0eNWPPU4LgT
-         ka8qDDaCmR3SEpqBZmDAWAnQ1H3Q2O72dCjFKYA1iZKHDApeZ9aOUBdwwCBp5m3S7Xmb
-         5vN86Nju1ChkXONMZcG9dRusMng4qsVOoFTqTeXBtGDjWKUWMBd6QWb1EpRC8v4lfaoh
-         p9TgfM4LKp3epv3VMN7bofCUZNRtrizLiRH/b8Nk+0GvwnCnMJWQhHtJxqvm990xtPiN
-         +R3khKvrSTO/QuaTrbYN6uCFhwN550AoKKZHCbeoUj9lAMohuLKHlqF6Gsscnwvo+cZJ
-         cm9A==
-X-Gm-Message-State: AOAM5308AenWIsVQkCFRZl5kr6idS7KwWHBXLr3G00MXlMBRBVMiatky
-        RQCowMVBQ7lpYNyg23dsGHM=
-X-Google-Smtp-Source: ABdhPJzf/mXj4Id0c7pAt2/KmLlvRR7a+LV5cOtkXqUfQgWScfNayHuTN8O0oBBlwuNQOSSSSB+WZA==
-X-Received: by 2002:a17:903:31d3:b0:142:5da6:299e with SMTP id v19-20020a17090331d300b001425da6299emr1164708ple.30.1636569433639;
-        Wed, 10 Nov 2021 10:37:13 -0800 (PST)
+        bh=t3qjeN7nQHDCrUu/1XJMOvEO/irEkBC8LSoLfwIe2GU=;
+        b=EhMV2TvU/lo/RsMcv4KLZ1LSUHdoyzBQnNCq48wYkehdTo1YyHqSbUJRkLEE5AtZH+
+         oDpmLHZqZ6LStoVj1q36Ubp6aTsdgkuX8D8Ims/7hC8gatOs+YkQmsfCtX1V1FlCdBAp
+         3dw/Jxxq3Ih1bP+ufUCg0AD5Y+LLV2/AkozYJD6Uaehxu7tVUTyWNDAnTzVtYuSUGMP2
+         jC24KJHnLM5NlbqFFqV3qGANBHR1YJaYPTUE8RcYYAUl6XGroerMNs/ph5eZVfNXzdTY
+         WT42hKakHYK35gFQ+AxecH0IDYVEAcZv6HSZb2cKbVqgOwonFXKfm2J0BcDNh/nUL1qB
+         uFYA==
+X-Gm-Message-State: AOAM530xtjzJH8ZoOfMoETNQdD8J2FruiX03YBDwdPCsdK/mNJ5LGYkz
+        yHnMsSkWlruGc0foCaQvF7Y=
+X-Google-Smtp-Source: ABdhPJzUinsvJx3to0HU8QgUG4aPfd2PZL3wheA2B24UVCPQqzGzRS1Cc3lRuJ/oCWRb9nEDSgmiNw==
+X-Received: by 2002:a05:6a00:1482:b0:49f:d9af:27dc with SMTP id v2-20020a056a00148200b0049fd9af27dcmr1111587pfu.9.1636569435848;
+        Wed, 10 Nov 2021 10:37:15 -0800 (PST)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id e24sm374715pfn.8.2021.11.10.10.37.12
+        by smtp.gmail.com with ESMTPSA id e10sm390763pfv.140.2021.11.10.10.37.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 10:37:12 -0800 (PST)
+        Wed, 10 Nov 2021 10:37:14 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     igt-dev@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -55,13 +55,14 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Jordan Crouse <jordan@cosmicpenguin.net>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>
-Subject: [PATCH igt v2 2/3] msm: Add helper for cmdstream building and submission
-Date:   Wed, 10 Nov 2021 10:42:12 -0800
-Message-Id: <20211110184213.649787-3-robdclark@gmail.com>
+Subject: [PATCH igt v2 3/3] msm: Add recovery tests
+Date:   Wed, 10 Nov 2021 10:42:13 -0800
+Message-Id: <20211110184213.649787-4-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211110184213.649787-1-robdclark@gmail.com>
 References: <20211110184213.649787-1-robdclark@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -69,220 +70,224 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-A pretty minimal subset compared to what a full gallium driver would
-need, but OTOH for igt tests we should only need to emit fairly basic
-command stream.
+Add tests to exercise:
+
+1. sw hangcheck timeout
+2. gpu fault (hang) recovery
+3. iova fault recovery
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- lib/igt_msm.c | 102 ++++++++++++++++++++++++++++++++++++++++++++++++++
- lib/igt_msm.h |  48 ++++++++++++++++++++++++
- 2 files changed, 150 insertions(+)
+ lib/igt_msm.h        |   3 +
+ tests/meson.build    |   1 +
+ tests/msm_recovery.c | 172 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 176 insertions(+)
+ create mode 100644 tests/msm_recovery.c
 
-diff --git a/lib/igt_msm.c b/lib/igt_msm.c
-index b9534164..e9cf588f 100644
---- a/lib/igt_msm.c
-+++ b/lib/igt_msm.c
-@@ -91,6 +91,19 @@ igt_msm_dev_close(struct msm_device *dev)
- 	free(dev);
- }
- 
-+static uint64_t
-+get_iova(struct msm_bo *bo)
-+{
-+	struct drm_msm_gem_info req = {
-+			.handle = bo->handle,
-+			.info = MSM_INFO_GET_IOVA,
-+	};
-+
-+	do_ioctl(bo->dev->fd, DRM_IOCTL_MSM_GEM_INFO, &req);
-+
-+	return req.value;
-+}
-+
- /**
-  * igt_msm_bo_new:
-  * @dev: the device to allocate the BO from
-@@ -115,6 +128,7 @@ igt_msm_bo_new(struct msm_device *dev, size_t size, uint32_t flags)
- 	do_ioctl(dev->fd, DRM_IOCTL_MSM_GEM_NEW, &req);
- 
- 	bo->handle = req.handle;
-+	bo->iova = get_iova(bo);
- 
- 	return bo;
- }
-@@ -209,3 +223,91 @@ igt_msm_pipe_close(struct msm_pipe *pipe)
- 	do_ioctl(pipe->dev->fd, DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE, &pipe->submitqueue_id);
- 	free(pipe);
- }
-+
-+/**
-+ * igt_msm_cmd_new:
-+ * @pipe: the submitqueue to submit cmdstream against
-+ * @size: the size of requested cmdstream buffer
-+ */
-+struct msm_cmd *
-+igt_msm_cmd_new(struct msm_pipe *pipe, size_t size)
-+{
-+	struct msm_cmd *cmd = calloc(1, sizeof(*cmd));
-+
-+	cmd->pipe = pipe;
-+	cmd->cmdstream_bo = igt_msm_bo_new(pipe->dev, size, MSM_BO_WC);
-+	cmd->cur = igt_msm_bo_map(cmd->cmdstream_bo);
-+
-+	__igt_msm_append_bo(cmd, cmd->cmdstream_bo);
-+
-+	return cmd;
-+}
-+
-+static uint32_t
-+cmdstream_size(struct msm_cmd *cmd)
-+{
-+	uint8_t *start = igt_msm_bo_map(cmd->cmdstream_bo);
-+	return (uint8_t *)cmd->cur - start;
-+}
-+
-+/**
-+ * igt_msm_cmd_submit:
-+ * @cmd: the command stream object to submit
-+ *
-+ * Returns dma-fence fd
-+ */
-+int
-+igt_msm_cmd_submit(struct msm_cmd *cmd)
-+{
-+	struct drm_msm_gem_submit_bo bos[cmd->nr_bos];
-+	struct drm_msm_gem_submit_cmd cmds[] = {
-+		[0] = {
-+			.type       = MSM_SUBMIT_CMD_BUF,
-+			.submit_idx = 0,
-+			.size       = cmdstream_size(cmd),
-+		},
-+	};
-+	struct drm_msm_gem_submit req = {
-+			.flags   = cmd->pipe->pipe | MSM_SUBMIT_FENCE_FD_OUT,
-+			.queueid = cmd->pipe->submitqueue_id,
-+			.nr_cmds = ARRAY_SIZE(cmds),
-+			.cmds    = VOID2U64(cmds),
-+			.nr_bos  = ARRAY_SIZE(bos),
-+			.bos     = VOID2U64(bos),
-+	};
-+
-+	for (unsigned i = 0; i < cmd->nr_bos; i++) {
-+		bos[i] = (struct drm_msm_gem_submit_bo) {
-+			.handle  = cmd->bos[i]->handle,
-+			.flags   = MSM_SUBMIT_BO_READ | MSM_SUBMIT_BO_WRITE,
-+		};
-+	}
-+
-+	do_ioctl(cmd->pipe->dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req);
-+
-+	return req.fence_fd;
-+}
-+
-+void
-+__igt_msm_append_bo(struct msm_cmd *cmd, struct msm_bo *bo)
-+{
-+	for (unsigned i = 0; i < cmd->nr_bos; i++)
-+		if (cmd->bos[i] == bo)
-+			return;
-+
-+	assert((cmd->nr_bos + 1) < ARRAY_SIZE(cmd->bos));
-+	cmd->bos[cmd->nr_bos++] = bo;
-+}
-+
-+/**
-+ * igt_msm_cmd_free:
-+ * @cmd: the command stream object to free
-+ *
-+ * Free a command stream object
-+ */
-+void
-+igt_msm_cmd_free(struct msm_cmd *cmd)
-+{
-+	igt_msm_bo_free(cmd->cmdstream_bo);
-+	free(cmd);
-+}
 diff --git a/lib/igt_msm.h b/lib/igt_msm.h
-index 99a099c1..1a66c806 100644
+index 1a66c806..421d23ed 100644
 --- a/lib/igt_msm.h
 +++ b/lib/igt_msm.h
-@@ -24,6 +24,8 @@
- #ifndef IGT_MSM_H
- #define IGT_MSM_H
+@@ -97,6 +97,9 @@ enum adreno_pm4_packet_type {
  
-+#include "ioctl_wrappers.h"
-+
- #include "msm_drm.h"
- 
- /**
-@@ -47,6 +49,7 @@ void igt_msm_dev_close(struct msm_device *dev);
-  * @handle: the BO's GEM handle
-  * @size: the BO's size
-  * @map: the BO's memory mapping (if mapped)
-+ * @iova: the BO's GPU address
-  *
-  * Helper wrapper for a GEM buffer object.
-  */
-@@ -55,6 +58,7 @@ struct msm_bo {
- 	int handle;
- 	uint32_t size;
- 	void *map;
-+	uint64_t iova;
+ enum adreno_pm4_type3_packets {
+ 	CP_NOP = 16,
++	CP_WAIT_MEM_GTE = 20,
++	CP_WAIT_REG_MEM = 60,
++	CP_MEM_WRITE = 61,
  };
  
- struct msm_bo *igt_msm_bo_new(struct msm_device *dev, size_t size, uint32_t flags);
-@@ -136,6 +140,50 @@ pm4_pkt7_hdr(uint8_t opcode, uint16_t cnt)
- 			((pm4_odd_parity_bit(opcode) << 23));
- }
- 
-+/**
-+ * msm_cmd:
-+ * @pipe: the submitqueue to submit cmdstream against
-+ * @cmdstream_bo: the backing cmdstream buffer object
-+ * @cur: pointer to current position in cmdstream
+ static inline unsigned
+diff --git a/tests/meson.build b/tests/meson.build
+index 0af3e03a..166e3494 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -60,6 +60,7 @@ test_progs = [
+ 	'kms_vrr',
+ 	'kms_writeback',
+ 	'meta_test',
++	'msm_recovery',
+ 	'msm_submit',
+ 	'panfrost_get_param',
+ 	'panfrost_gem_new',
+diff --git a/tests/msm_recovery.c b/tests/msm_recovery.c
+new file mode 100644
+index 00000000..b71326b8
+--- /dev/null
++++ b/tests/msm_recovery.c
+@@ -0,0 +1,172 @@
++/*
++ * Copyright © 2021 Google, Inc.
 + *
-+ * Helper for building cmdstream and cmdstream submission
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice (including the next
++ * paragraph) shall be included in all copies or substantial portions of the
++ * Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
++ * IN THE SOFTWARE.
 + */
-+struct msm_cmd {
-+	struct msm_pipe *pipe;
-+	struct msm_bo *cmdstream_bo;
-+	uint32_t *cur;
-+	uint32_t nr_bos;
-+	struct msm_bo *bos[8];
-+};
 +
-+struct msm_cmd *igt_msm_cmd_new(struct msm_pipe *pipe, size_t size);
-+int igt_msm_cmd_submit(struct msm_cmd *cmd);
-+void igt_msm_cmd_free(struct msm_cmd *cmd);
++#include <sys/poll.h>
 +
-+static inline void
-+msm_cmd_emit(struct msm_cmd *cmd, uint32_t dword)
++#include "igt.h"
++#include "igt_msm.h"
++
++static struct msm_device *dev;
++static struct msm_bo *scratch_bo;
++static uint32_t *scratch;
++
++/*
++ * Helpers for cmdstream packet building:
++ */
++
++static void
++wait_mem_gte(struct msm_cmd *cmd, uint32_t offset_dwords, uint32_t ref)
 +{
-+	*(cmd->cur++) = dword;
++	msm_cmd_pkt7(cmd, CP_WAIT_MEM_GTE, 4);
++	msm_cmd_emit(cmd, 0);                              /* RESERVED */
++	msm_cmd_bo  (cmd, scratch_bo, offset_dwords * 4);  /* POLL_ADDR_LO/HI */
++	msm_cmd_emit(cmd, ref);                            /* REF */
 +}
 +
-+static inline void
-+msm_cmd_pkt7(struct msm_cmd *cmd, uint8_t opcode, uint16_t cnt)
++static void
++mem_write(struct msm_cmd *cmd, uint32_t offset_dwords, uint32_t val)
 +{
-+	msm_cmd_emit(cmd, pm4_pkt7_hdr(opcode, cnt));
++	msm_cmd_pkt7(cmd, CP_MEM_WRITE, 3);
++	msm_cmd_bo  (cmd, scratch_bo, offset_dwords * 4);  /* ADDR_LO/HI */
++	msm_cmd_emit(cmd, val);                            /* VAL */
 +}
 +
-+void __igt_msm_append_bo(struct msm_cmd *cmd, struct msm_bo *bo);
-+
-+static inline void
-+msm_cmd_bo(struct msm_cmd *cmd, struct msm_bo *bo, uint32_t offset)
++/*
++ * Helper to wait on a fence-fd:
++ */
++static void
++wait_and_close(int fence_fd)
 +{
-+	uint64_t addr = bo->iova + offset;
-+
-+	__igt_msm_append_bo(cmd, bo);
-+	msm_cmd_emit(cmd, lower_32_bits(addr));
-+	msm_cmd_emit(cmd, upper_32_bits(addr));
++	poll(&(struct pollfd){fence_fd, POLLIN}, 1, -1);
++	close(fence_fd);
 +}
 +
- #define U642VOID(x) ((void *)(uintptr_t)(x))
- #define VOID2U64(x) ((uint64_t)(uintptr_t)(x))
- 
++/*
++ * Helper for hang tests.  Emits multiple submits, with one in the middle
++ * that triggers a fault, and confirms that the submits before and after
++ * the faulting one execute properly, ie. that the driver properly manages
++ * to recover and re-queue the submits after the faulting submit;
++ */
++static void
++do_hang_test(struct msm_pipe *pipe)
++{
++	struct msm_cmd *cmds[16];
++	int fence_fds[ARRAY_SIZE(cmds)];
++
++	memset(scratch, 0, 0x1000);
++
++	for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
++		struct msm_cmd *cmd = igt_msm_cmd_new(pipe, 0x1000);
++
++		cmds[i] = cmd;
++
++		/*
++		 * Emit a packet to wait for scratch[0] to be >= 1
++		 *
++		 * This lets us force the GPU to wait until all the cmdstream is
++		 * queued up.
++		 */
++		wait_mem_gte(cmd, 0, 1);
++
++		if (i == 10) {
++			msm_cmd_emit(cmd, 0xdeaddead);
++		}
++
++		/* Emit a packet to write scratch[1+i] = 2+i: */
++		mem_write(cmd, 1+i, 2+i);
++	}
++
++	for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
++		fence_fds[i] = igt_msm_cmd_submit(cmds[i]);
++	}
++
++	usleep(10000);
++
++	/* Let the WAIT_MEM_GTE complete: */
++	scratch[0] = 1;
++
++	for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
++		wait_and_close(fence_fds[i]);
++		igt_msm_cmd_free(cmds[i]);
++		if (i == 10)
++			continue;
++		igt_assert_eq(scratch[1+i], 2+i);
++	}
++}
++
++/*
++ * Tests for drm/msm hangcheck, recovery, and fault handling
++ */
++
++igt_main
++{
++	static struct msm_pipe *pipe = NULL;
++
++	igt_fixture {
++		dev = igt_msm_dev_open();
++		pipe = igt_msm_pipe_open(dev, 0);
++		scratch_bo = igt_msm_bo_new(dev, 0x1000, MSM_BO_WC);
++		scratch = igt_msm_bo_map(scratch_bo);
++	}
++
++	igt_describe("Test sw hangcheck handling");
++	igt_subtest("hangcheck") {
++		igt_require(dev->gen >= 6);
++
++		/* Disable hw hang detection to force fallback to sw hangcheck: */
++		igt_debugfs_write(dev->fd, "disable_err_irq", "Y");
++
++		do_hang_test(pipe);
++
++		igt_debugfs_write(dev->fd, "disable_err_irq", "N");
++	}
++
++	igt_describe("Test hw fault handling");
++	igt_subtest("gpu-fault") {
++		igt_require(dev->gen >= 6);
++
++		do_hang_test(pipe);
++	}
++
++	igt_describe("Test iova fault handling");
++	igt_subtest("iova-fault") {
++		struct msm_cmd *cmd;
++
++		igt_require(dev->gen >= 6);
++
++		cmd = igt_msm_cmd_new(pipe, 0x1000);
++
++		msm_cmd_pkt7(cmd, CP_MEM_WRITE, 3);
++		msm_cmd_emit(cmd, 0xdeaddead);           /* ADDR_LO */
++		msm_cmd_emit(cmd, 0x1);                  /* ADDR_HI */
++		msm_cmd_emit(cmd, 0x123);                /* VAL */
++
++		wait_and_close(igt_msm_cmd_submit(cmd));
++	}
++
++	igt_fixture {
++		igt_msm_bo_free(scratch_bo);
++		igt_msm_pipe_close(pipe);
++		igt_msm_dev_close(dev);
++	}
++}
 -- 
 2.31.1
 
