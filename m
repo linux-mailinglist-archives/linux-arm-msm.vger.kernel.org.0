@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC8B44BF87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 12:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35E6D44BF8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 12:01:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231788AbhKJLDi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 06:03:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50358 "EHLO
+        id S231804AbhKJLDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 06:03:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231778AbhKJLDT (ORCPT
+        with ESMTP id S231709AbhKJLD3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 06:03:19 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988C7C06120D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 03:00:27 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id r28so1976354pga.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 03:00:27 -0800 (PST)
+        Wed, 10 Nov 2021 06:03:29 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB781C061225
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 03:00:32 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id u11so2711553plf.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 03:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7Eecmho/J6Agff4bcpW3b3Dj2ZtsofOUgkrIvTWiN8c=;
-        b=leAvj1mXLG0HHHpuqJnYx4iiChlD88CZNwcnrsMCfsebweYhh7+0cGtjUPp2+2Xg91
-         itLpKUAmWtnIVRMCe/7gpXX17rZJmMSk67gsHRGP+i4Md3B3cBtFZS3JOQuyYMjtmjLo
-         sj4LpG3ZNcqvU8fawzrzltxb81kcAz0udI9Pm1TkjMzRz9fUHT8xpD2y1RiPJXELCBO5
-         qX9CSqiQ2zTbMtli+tWsLOnDtm4h97/2IDZqQ+LKwulNix3Km7Nf4QKedfxfzFE0Z+yg
-         57QDQdVlQOeG8IvYmaVYw8bSV99q6D3UZdQokfweNzCbYzHDfPoAUW85x6zTrazzixa3
-         h+iQ==
+        bh=54tdVliIWNsHoxLvT29lfSVXNZQfROhZR/ww4Z9gmDs=;
+        b=pBlsYdbzcAF2OMaaiRBWhvf27TxuDH/EbI7XqtEdLDgSUDDZ9tRpcMW0KRvxECHqr4
+         VPrD1Qz65SwFtF4R3Z+SgdCK9cMqmclKQHEKIMYWklIoh1zd3LPtJUJlaImALZcmrlAV
+         /9j0iSVdJ0kDUmqkXO8E74beY/Xss7p6QYSyYm79Muh11SwfFPWhyrym7G/TkpKjT0vt
+         xdyloJoryMFbILTC8ha8Mb5EeOIRTMl8ME8e737YakFzeUD6K4JGCWNY8547FIEAkG6c
+         XEkBsk7ivGB+APV/iDPjnXiAQpmKPI/vGmoSeQreuBRSJteW+OZMlhS9yPowTzzi1vG1
+         WfTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7Eecmho/J6Agff4bcpW3b3Dj2ZtsofOUgkrIvTWiN8c=;
-        b=CwX9LRJThezqPcfhcg4mBJRnA70Xor6gR0+Xo0wMJk0Ucz1Ei95xc65Sfqg6BNNDtl
-         3XKD/Jk+qR/NG8bNwQvd5Fuy92w8cZCbtecvUYkDuXLVld2Lg/FZLxAg1W5NZ+VWI3By
-         WuNvah/cJ74K8Zi4VQojOZRprQLJQwPcDhYSuMrxoh7cuZ9LK2R1JjpFajmtkjrnoPtp
-         003vy/2laYaNfFAWnRy4l9SkQ0yF12qWk7gTR078UMxCZWegs46kNha3QQISCWkltchj
-         /UeBel0/4Zjbr+T25d9AgXAbEeyf0npPTT7OObvFePTKqjmTjPbjZIA0MakWbKOkB47O
-         2lDg==
-X-Gm-Message-State: AOAM532lpyL8mW6tLDmb2eCUpENLDHFiD8CHrXRdperCSv6mZjoU1cNu
-        jsScZRO/pVjHJQIsl3b0+3wjqmUZrkJJOg==
-X-Google-Smtp-Source: ABdhPJxviW6mvmO0Bz+ZTQMwv+gsFrpAJRqvbJUVly9WWffJckKn5XGCguRKyP28KHPeCjFmGfFF1g==
-X-Received: by 2002:a05:6a00:b49:b0:49f:cc01:10ff with SMTP id p9-20020a056a000b4900b0049fcc0110ffmr15448827pfo.42.1636542026926;
-        Wed, 10 Nov 2021 03:00:26 -0800 (PST)
+        bh=54tdVliIWNsHoxLvT29lfSVXNZQfROhZR/ww4Z9gmDs=;
+        b=F/4ZQjaK0DRjgLna29uS2LCIyVwpjgSZveLGBB1CfVQPioqlHIVREeCepyROY3Nuy5
+         1O4483AMfp+ppEySCMDDh/TfijfPA0zEVuioI+sKs5U/Sj0qswsKdNM16tbTS2Q9j78S
+         9/tXkfE/85x/R5fzlNRT1xnlFTzUtcop70Gb/Z7NWA7g1xCS9SBjeGDcTw2gSXYtMDzT
+         R43/JJ8siZ4POaqh5pMTwoWuU/zmAXJkLKCjd/HAlMpllbs0iKESYEQNSing6XX4DBU6
+         RYXbhJZTrdM5ejS5pCzdqffO17pTGYTGOkYcitb8RMWwW/MEGPJxQ7FXa0xQHULW6Jea
+         waQQ==
+X-Gm-Message-State: AOAM530gXIGP5ZYFoQuMTfJV4JSSjUhrM0d/+zSeW80t757uUL5Ezc1e
+        vLpL01bZj2XF7wB3rpGATzsr6Z7OQP/xRg==
+X-Google-Smtp-Source: ABdhPJx3NHUP62WpCyEovHay7pM3+NqDoM66ogl6ACc4C7Im2L9Z/Zo7FBb4lh5Wh2JLmJD0EppiwQ==
+X-Received: by 2002:a17:90b:38c9:: with SMTP id nn9mr15751456pjb.241.1636542032065;
+        Wed, 10 Nov 2021 03:00:32 -0800 (PST)
 Received: from localhost.name ([122.161.52.143])
-        by smtp.gmail.com with ESMTPSA id e11sm5585282pjl.20.2021.11.10.03.00.22
+        by smtp.gmail.com with ESMTPSA id e11sm5585282pjl.20.2021.11.10.03.00.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Nov 2021 03:00:26 -0800 (PST)
+        Wed, 10 Nov 2021 03:00:31 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -55,10 +55,11 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         robh+dt@kernel.org, agross@kernel.org, herbert@gondor.apana.org.au,
         davem@davemloft.net, stephan@gerhold.net,
         Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v5 09/22] dt-bindings: qcom-qce: Move 'clocks' to optional properties
-Date:   Wed, 10 Nov 2021 16:29:09 +0530
-Message-Id: <20211110105922.217895-10-bhupesh.sharma@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v5 10/22] dt-bindings: qcom-qce: Add 'iommus' to optional properties
+Date:   Wed, 10 Nov 2021 16:29:10 +0530
+Message-Id: <20211110105922.217895-11-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
 References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
@@ -68,47 +69,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCom QCE block on some SoCs like ipq6018 don't
-require clock as the required property, so the properties
-'clocks' and 'clock-names' can be moved instead in the dt-bindings
-to the 'optional' properties section.
+Add the missing optional property - 'iommus' to the
+device-tree binding documentation for qcom-qce crypto IP.
 
-Otherwise, running 'make dtbs_check' leads to the following
-errors:
-
-dma-controller@7984000: clock-names:0: 'bam_clk' was expected
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-
-dma-controller@7984000: clock-names: Additional items are not allowed ('bam_clk' was unexpected)
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-
-dma-controller@7984000: clock-names: ['iface_clk', 'bam_clk'] is too long
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
-
-dma-controller@7984000: clocks: [[9, 138], [9, 137]] is too long
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+This property describes the phandle(s) to apps_smmu node with sid mask.
 
 Cc: Thara Gopinath <thara.gopinath@linaro.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 2 --
- 1 file changed, 2 deletions(-)
+ .../devicetree/bindings/crypto/qcom-qce.yaml          | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-index 30deaa0fa93d..f35bdb9ee7a8 100644
+index f35bdb9ee7a8..efe349e66ae7 100644
 --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
 +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-@@ -53,8 +53,6 @@ properties:
- required:
-   - compatible
-   - reg
--  - clocks
--  - clock-names
-   - dmas
-   - dma-names
+@@ -32,6 +32,12 @@ properties:
+       - const: bus
+       - const: core
  
++  iommus:
++    minItems: 1
++    maxItems: 8
++    description: |
++      phandle to apps_smmu node with sid mask.
++
+   interconnects:
+     maxItems: 1
+     description:
+@@ -70,4 +76,9 @@ examples:
+         clock-names = "iface", "bus", "core";
+         dmas = <&cryptobam 2>, <&cryptobam 3>;
+         dma-names = "rx", "tx";
++        iommus = <&apps_smmu 0x584 0x0011>,
++                 <&apps_smmu 0x586 0x0011>,
++                 <&apps_smmu 0x594 0x0011>,
++                 <&apps_smmu 0x596 0x0011>;
++
+     };
 -- 
 2.31.1
 
