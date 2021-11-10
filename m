@@ -2,182 +2,364 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3E9544B8F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Nov 2021 23:47:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 179A744B99E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 01:31:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243179AbhKIWuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 Nov 2021 17:50:13 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:58009 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242214AbhKIWsz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 Nov 2021 17:48:55 -0500
+        id S231132AbhKJAdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 Nov 2021 19:33:43 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:61599 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230484AbhKJAdm (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 9 Nov 2021 19:33:42 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1636497967; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1636504256; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=v9VczQnFx9xswdyxP7IiTRh0CLZMg/o04Xjcgs+tOZg=;
- b=eOlkCxCPWn5JCgkiPkxpCly3ImHXfYjlv0Bp/168CJetAmxzTdSrQs4txF1zdrhmTS8NAAlk
- Y4cZRDPH9U8yiXUn649/9rJAL9Q7wU3254FfBvtBdEfV7bMeRyr5mi7xfTjdrbuLCcjOLIWW
- 7TB6qtYprjdKryvK9u87gewvtfI=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ MIME-Version: Sender; bh=riQLO85yIpD4XnF2cVveAsrWXW/y1r+/wm2BI5Zf3UQ=;
+ b=gTgqv8P6v7Q3hgVtNl+j7mdqz58Z5stz8OcQJyQ3ssRUMh/pfoMaYTgDR1m3BkKaPIBWWPeW
+ Z1sZU7v1rjIGnW6NFI9ajBpbwgpyPVxbEcftuvViQ/opF0ZKG9/SlSxKWIvQEL2gr+L9dbiK
+ Kd/WNzy8HdX76Xxjuzff6UXPwTU=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 618afa2f332b6b6db47227ed (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 09 Nov 2021 22:46:07
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 618b12a2facd20d795ba067d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 10 Nov 2021 00:30:26
  GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 44DD0C37A20; Tue,  9 Nov 2021 22:46:06 +0000 (UTC)
+        id DB42AC4361A; Wed, 10 Nov 2021 00:30:25 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F11E3C359EE;
-        Tue,  9 Nov 2021 22:46:01 +0000 (UTC)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A7F31C4360C;
+        Wed, 10 Nov 2021 00:30:23 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 09 Nov 2021 14:46:01 -0800
-From:   khsieh@codeaurora.org
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: Avoid unpowered AUX xfers that caused crashes
-In-Reply-To: <20211109100403.1.I4e23470d681f7efe37e2e7f1a6466e15e9bb1d72@changeid>
-References: <20211109100403.1.I4e23470d681f7efe37e2e7f1a6466e15e9bb1d72@changeid>
-Message-ID: <bc63c12983fd05bfb97e9a2ce00b0bd6@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
+Date:   Tue, 09 Nov 2021 16:30:23 -0800
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH v2 17/22] drm/msm/dpu: add support for SSPP
+ allocation to RM
+In-Reply-To: <20210705012115.4179824-18-dmitry.baryshkov@linaro.org>
+References: <20210705012115.4179824-1-dmitry.baryshkov@linaro.org>
+ <20210705012115.4179824-18-dmitry.baryshkov@linaro.org>
+Message-ID: <7e23a6de417871cfbdc8cd30ec439939@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-11-09 10:04, Douglas Anderson wrote:
-> If you happened to try to access `/dev/drm_dp_aux` devices provided by
-> the MSM DP AUX driver too early at bootup you could go boom. Let's
-> avoid that by only allowing AUX transfers when the controller is
-> powered up.
+On 2021-07-04 18:21, Dmitry Baryshkov wrote:
+> Add support for handling and allocting SSPP blocks through the resource
+> manager. Handling code is not converted to use it though.
 > 
-> Specifically the crash that was seen (on Chrome OS 5.4 tree with
-> relevant backports):
->   Kernel panic - not syncing: Asynchronous SError Interrupt
->   CPU: 0 PID: 3131 Comm: fwupd Not tainted 5.4.144-16620-g28af11b73efb 
-> #1
->   Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
->   Call trace:
->    dump_backtrace+0x0/0x14c
->    show_stack+0x20/0x2c
->    dump_stack+0xac/0x124
->    panic+0x150/0x390
->    nmi_panic+0x80/0x94
->    arm64_serror_panic+0x78/0x84
->    do_serror+0x0/0x118
->    do_serror+0xa4/0x118
->    el1_error+0xbc/0x160
->    dp_catalog_aux_write_data+0x1c/0x3c
->    dp_aux_cmd_fifo_tx+0xf0/0x1b0
->    dp_aux_transfer+0x1b0/0x2bc
->    drm_dp_dpcd_access+0x8c/0x11c
->    drm_dp_dpcd_read+0x64/0x10c
->    auxdev_read_iter+0xd4/0x1c4
-> 
-> I did a little bit of tracing and found that:
-> * We register the AUX device very early at bootup.
-> * Power isn't actually turned on for my system until
->   hpd_event_thread() -> dp_display_host_init() -> dp_power_init()
-> * You can see that dp_power_init() calls dp_aux_init() which is where
->   we start allowing AUX channel requests to go through.
-> 
-> In general this patch is a bit of a bandaid but at least it gets us
-> out of the current state where userspace acting at the wrong time can
-> fully crash the system.
-> * I think the more proper fix (which requires quite a bit more
->   changes) is to power stuff on while an AUX transfer is
->   happening. This is like the solution we did for ti-sn65dsi86. This
->   might be required for us to move to populating the panel via the
->   DP-AUX bus.
-> * Another fix considered was to dynamically register / unregister. I
->   tried that at <https://crrev.com/c/3169431/3> but it got
->   ugly. Currently there's a bug where the pm_runtime() state isn't
->   tracked properly and that causes us to just keep registering more
->   and more.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Conceptually this is identical to the previous attempt from QC on this:
+
+https://patchwork.kernel.org/project/dri-devel/patch/1529499020-8499-5-git-send-email-skolluku@codeaurora.org/
+
+So I wanted to get your comments on the foll questions:
+
+1) Originally the idea was that to add 4K support to DPU, we will expand 
+on top of your series.
+ From our prior discussion on why the previous QC attempt was not taken 
+over to add multirect support, the reason
+was that it removed mutirect support which is was actually the end goal 
+of this series. The end goal of the previous
+attempt was to add 4K support hence looks like multirect was given lower 
+priority and removed that time and not added
+back.
+
+But overall idea is the same which is to allocate hw sspps for drm 
+planes to suit the requirement needed in the dpu_rm.
+
+So to add 4K support on top of this series, we would just have to tweak 
+dpu_rm_get_sspp to allocate 2x hw sspps right?
+
+
+2) If the sspps are going to be iterated over a loop potentially every 
+frame in the atomic check, wouldnt there be
+a performance hit due to this?
+
+> +retry_loop:
+> +	for (i = 0; i < ARRAY_SIZE(rm->sspp_blks) && pipe == SSPP_NONE; i++) 
+> {
+
+This is where some help from usermode will help to optimize number of 
+atomic_checks coming in.
+If usermode tries atomic_checks too many times there can be potential 
+glitches with this. Is that something
+factored into this design?
+
+
+
 > ---
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 10 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 18 ++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 81 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  6 ++
+>  5 files changed, 104 insertions(+), 12 deletions(-)
 > 
->  drivers/gpu/drm/msm/dp/dp_aux.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index 00098e33391e..c5ac8defa073 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -387,6 +387,16 @@ struct dpu_hw_pipe {
+>  	struct dpu_hw_sspp_ops ops;
+>  };
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c 
-> b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index eb40d8413bca..6d36f63c3338 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -33,6 +33,7 @@ struct dp_aux_private {
->  	bool read;
->  	bool no_send_addr;
->  	bool no_send_stop;
-> +	bool initted;
->  	u32 offset;
->  	u32 segment;
+> +/**
+> + * to_dpu_hw_pipe - convert base object dpu_hw_base to container
+> + * @hw: Pointer to base hardware block
+> + * return: Pointer to hardware block container
+> + */
+> +static inline struct dpu_hw_pipe *to_dpu_hw_pipe(struct dpu_hw_blk 
+> *hw)
+> +{
+> +	return container_of(hw, struct dpu_hw_pipe, base);
+> +}
+> +
+>  /**
+>   * dpu_hw_sspp_init - initializes the sspp hw driver object.
+>   * Should be called once before accessing every pipe.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index ab65c817eb42..04a2ab548f54 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -159,6 +159,7 @@ struct dpu_global_state {
+>  	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+>  	uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
+>  	uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
+> +	uint32_t pipe_to_plane_id[SSPP_MAX - SSPP_NONE];
+>  };
 > 
-> @@ -331,6 +332,10 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux 
-> *dp_aux,
+>  struct dpu_global_state
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 3850f2714bf3..61008e8afb0a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1234,8 +1234,6 @@ static void dpu_plane_destroy(struct drm_plane 
+> *plane)
+>  		/* this will destroy the states as well */
+>  		drm_plane_cleanup(plane);
+> 
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+> -
+>  		kfree(pdpu);
+>  	}
+>  }
+> @@ -1389,14 +1387,13 @@ struct drm_plane *dpu_plane_init(struct 
+> drm_device *dev,
+>  	pdpu->pipe = pipe;
+> 
+>  	/* initialize underlying h/w driver */
+> -	pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, kms->catalog);
+> -	if (IS_ERR(pdpu->pipe_hw)) {
+> -		DPU_ERROR("[%u]SSPP init failed\n", pipe);
+> -		ret = PTR_ERR(pdpu->pipe_hw);
+> +	if (!kms->rm.sspp_blks[pipe - SSPP_NONE])
+>  		goto clean_plane;
+> -	} else if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+> +	pdpu->pipe_hw = to_dpu_hw_pipe(kms->rm.sspp_blks[pipe - SSPP_NONE]);
+> +
+> +	if (!pdpu->pipe_hw->cap || !pdpu->pipe_hw->cap->sblk) {
+>  		DPU_ERROR("[%u]SSPP init returned invalid cfg\n", pipe);
+> -		goto clean_sspp;
+> +		goto clean_plane;
 >  	}
 > 
->  	mutex_lock(&aux->mutex);
-> +	if (!aux->initted) {
-> +		ret = -EIO;
-> +		goto exit;
+>  	format_list = pdpu->pipe_hw->cap->sblk->format_list;
+> @@ -1406,7 +1403,7 @@ struct drm_plane *dpu_plane_init(struct 
+> drm_device *dev,
+>  				format_list, num_formats,
+>  				supported_format_modifiers, type, NULL);
+>  	if (ret)
+> -		goto clean_sspp;
+> +		goto clean_plane;
+> 
+>  	pdpu->catalog = kms->catalog;
+> 
+> @@ -1432,9 +1429,6 @@ struct drm_plane *dpu_plane_init(struct 
+> drm_device *dev,
+>  					pipe, plane->base.id);
+>  	return plane;
+> 
+> -clean_sspp:
+> -	if (pdpu && pdpu->pipe_hw)
+> -		dpu_hw_sspp_destroy(pdpu->pipe_hw);
+>  clean_plane:
+>  	kfree(pdpu);
+>  	return ERR_PTR(ret);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index f9c83d6e427a..21c9e513f1f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -8,6 +8,7 @@
+>  #include "dpu_hw_lm.h"
+>  #include "dpu_hw_ctl.h"
+>  #include "dpu_hw_pingpong.h"
+> +#include "dpu_hw_sspp.h"
+>  #include "dpu_hw_intf.h"
+>  #include "dpu_hw_dspp.h"
+>  #include "dpu_hw_merge3d.h"
+> @@ -35,6 +36,14 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>  {
+>  	int i;
+> 
+> +	for (i = 0; i < ARRAY_SIZE(rm->sspp_blks); i++) {
+> +		struct dpu_hw_pipe *hw;
+> +
+> +		if (rm->sspp_blks[i]) {
+> +			hw = to_dpu_hw_pipe(rm->sspp_blks[i]);
+> +			dpu_hw_sspp_destroy(hw);
+> +		}
 > +	}
+>  	for (i = 0; i < ARRAY_SIZE(rm->pingpong_blks); i++) {
+>  		struct dpu_hw_pingpong *hw;
 > 
->  	dp_aux_update_offset_and_segment(aux, msg);
->  	dp_aux_transfer_helper(aux, msg, true);
-> @@ -380,6 +385,8 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux 
-> *dp_aux,
+> @@ -166,6 +175,24 @@ int dpu_rm_init(struct dpu_rm *rm,
+>  		rm->pingpong_blks[pp->id - PINGPONG_0] = &hw->base;
 >  	}
 > 
->  	aux->cmd_busy = false;
+> +	for (i = 0; i < cat->sspp_count; i++) {
+> +		struct dpu_hw_pipe *hw;
+> +		const struct dpu_sspp_cfg *sspp = &cat->sspp[i];
 > +
-> +exit:
->  	mutex_unlock(&aux->mutex);
-> 
->  	return ret;
-> @@ -431,8 +438,13 @@ void dp_aux_init(struct drm_dp_aux *dp_aux)
-> 
->  	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-> 
-> +	mutex_lock(&aux->mutex);
+> +		if (sspp->id <= SSPP_NONE || sspp->id >= SSPP_MAX) {
+> +			DPU_ERROR("skip sspp %d with invalid id\n", sspp->id);
+> +			continue;
+> +		}
+> +		hw = dpu_hw_sspp_init(sspp->id, mmio, cat);
+> +		if (IS_ERR_OR_NULL(hw)) {
+> +			rc = PTR_ERR(hw);
+> +			DPU_ERROR("failed sspp object creation: err %d\n",
+> +				rc);
+> +			goto fail;
+> +		}
+> +		rm->sspp_blks[sspp->id - SSPP_NONE] = &hw->base;
+> +	}
 > +
->  	dp_catalog_aux_enable(aux->catalog, true);
->  	aux->retry_cnt = 0;
-> +	aux->initted = true;
-> +
-> +	mutex_unlock(&aux->mutex);
+>  	for (i = 0; i < cat->intf_count; i++) {
+>  		struct dpu_hw_intf *hw;
+>  		const struct dpu_intf_cfg *intf = &cat->intf[i];
+> @@ -660,3 +687,57 @@ int dpu_rm_get_assigned_resources(struct dpu_rm 
+> *rm,
+> 
+>  	return num_blks;
 >  }
-> 
->  void dp_aux_deinit(struct drm_dp_aux *dp_aux)
-> @@ -441,7 +453,12 @@ void dp_aux_deinit(struct drm_dp_aux *dp_aux)
-> 
->  	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-> 
-> +	mutex_lock(&aux->mutex);
 > +
-> +	aux->initted = false;
->  	dp_catalog_aux_enable(aux->catalog, false);
+> +enum dpu_sspp dpu_rm_get_sspp(struct dpu_rm *rm, struct
+> dpu_global_state *global_state, uint32_t plane_id, bool yuv, bool
+> scale)
+> +{
+> +	int i;
+> +	enum dpu_sspp pipe = SSPP_NONE;
+> +	struct dpu_hw_pipe *pipe_hw;
+> +	bool retry = false;
 > +
-> +	mutex_unlock(&aux->mutex);
->  }
-> 
->  int dp_aux_register(struct drm_dp_aux *dp_aux)
+> +retry_loop:
+> +	for (i = 0; i < ARRAY_SIZE(rm->sspp_blks) && pipe == SSPP_NONE; i++) 
+> {
+> +		if (!rm->sspp_blks[i])
+> +			continue;
+> +		if (reserved_by_other(global_state->pipe_to_plane_id, i, plane_id))
+> +			continue;
+> +
+> +		pipe_hw = to_dpu_hw_pipe(rm->sspp_blks[i]);
+> +
+> +		/* skip incompatible planes */
+> +		if (scale && !(pipe_hw->cap->features & DPU_SSPP_SCALER))
+> +			continue;
+> +
+> +		if (yuv && (!(pipe_hw->cap->features & DPU_SSPP_SCALER) ||
+> +			    !(pipe_hw->cap->features & DPU_SSPP_CSC_ANY)))
+> +			continue;
+> +
+> +		/* For non-yuv, non-scaled planes try to find simple (DMA)
+> +		 * plane, fallback to VIG on a second try.
+> +		 *
+> +		 * This way we'd leave VIG pipes to be later used for YUV formats.
+> +		 */
+> +
+> +		if (!scale && !yuv && !retry &&
+> +		    (pipe_hw->cap->features & (DPU_SSPP_SCALER | DPU_SSPP_CSC_ANY)))
+> +			continue;
+> +
+> +		pipe = i + SSPP_NONE;
+> +	};
+> +
+> +	if (!scale && !yuv && !retry && pipe == SSPP_NONE) {
+> +		retry = true;
+> +		goto retry_loop;
+> +	}
+> +
+> +	if (pipe != SSPP_NONE)
+> +		global_state->pipe_to_plane_id[pipe - SSPP_NONE] = plane_id;
+> +
+> +	return pipe;
+> +}
+> +
+> +void dpu_rm_release_sspp(struct dpu_rm *rm, struct dpu_global_state
+> *global_state, uint32_t plane_id)
+> +{
+> +	_dpu_rm_clear_mapping(global_state->pipe_to_plane_id,
+> +			ARRAY_SIZE(global_state->pipe_to_plane_id), plane_id);
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> index 1f12c8d5b8aa..b759fe39f6d6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> @@ -16,6 +16,7 @@ struct dpu_global_state;
+>  /**
+>   * struct dpu_rm - DPU dynamic hardware resource manager
+>   * @pingpong_blks: array of pingpong hardware resources
+> + * @sspp_blks: array of sspp hardware resources
+>   * @mixer_blks: array of layer mixer hardware resources
+>   * @ctl_blks: array of ctl hardware resources
+>   * @intf_blks: array of intf hardware resources
+> @@ -25,6 +26,7 @@ struct dpu_global_state;
+>   */
+>  struct dpu_rm {
+>  	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
+> +	struct dpu_hw_blk *sspp_blks[SSPP_MAX - SSPP_NONE];
+>  	struct dpu_hw_blk *mixer_blks[LM_MAX - LM_0];
+>  	struct dpu_hw_blk *ctl_blks[CTL_MAX - CTL_0];
+>  	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
+> @@ -88,5 +90,9 @@ void dpu_rm_release(struct dpu_global_state 
+> *global_state,
+>  int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>  	struct dpu_global_state *global_state, uint32_t enc_id,
+>  	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+> +
+> +enum dpu_sspp dpu_rm_get_sspp(struct dpu_rm *rm, struct
+> dpu_global_state *global_state, uint32_t plane_id, bool yuv, bool
+> scale);
+> +void dpu_rm_release_sspp(struct dpu_rm *rm, struct dpu_global_state
+> *global_state, uint32_t plane_id);
+> +
+>  #endif /* __DPU_RM_H__ */
