@@ -2,128 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 824F644C081
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 13:00:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CBA6444C0BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Nov 2021 13:05:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231836AbhKJMCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 07:02:50 -0500
-Received: from mga11.intel.com ([192.55.52.93]:31538 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231837AbhKJMCp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 07:02:45 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10163"; a="230119275"
-X-IronPort-AV: E=Sophos;i="5.87,223,1631602800"; 
-   d="scan'208";a="230119275"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2021 03:59:57 -0800
-X-IronPort-AV: E=Sophos;i="5.87,223,1631602800"; 
-   d="scan'208";a="602181096"
-Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.72.185])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2021 03:59:55 -0800
-Received: from platvala by thrakatuluk with local (Exim 4.94)
-        (envelope-from <petri.latvala@intel.com>)
-        id 1mkmFZ-0006OP-BJ; Wed, 10 Nov 2021 13:58:45 +0200
-Date:   Wed, 10 Nov 2021 13:58:45 +0200
-From:   Petri Latvala <petri.latvala@intel.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     igt-dev@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>
-Subject: Re: [igt-dev] [PATCH igt 1/3] lib/igt_debugfs: Add helper for
- writing debugfs files
-Message-ID: <YYuz9dMFO4g/shU4@platvala-desk.ger.corp.intel.com>
-References: <20211109180905.590773-1-robdclark@gmail.com>
- <20211109180905.590773-2-robdclark@gmail.com>
+        id S231175AbhKJMIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 07:08:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231131AbhKJMIH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Nov 2021 07:08:07 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B461C061764;
+        Wed, 10 Nov 2021 04:05:20 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so1492613pjb.4;
+        Wed, 10 Nov 2021 04:05:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SmZpl8+j/iKc0sB5URMOhtFVFzKAZretNZR5phX8V54=;
+        b=AaiaX03JzpUeQ855h1+dV9l4+ukSmXVfDTYDUIvRLiaosXsME3ilMxt6JVmhe3eg0D
+         hEI8vZ/w0nFcav9KXmHFLiYPNUYV9Iq790h1ZUCk3NxUlH46TZhg9ttbXmTf9XQmlYya
+         BKo3z3+De7+ajAo6ETVtdZjNKkdFyOauMMbR/stun+H8uoTsNuTF9JdnQG/2XrQ0wblS
+         nvpjiL0Pbcbpw5iuPJFkMcBYjSRXGXqj/gV7LZO+Xe31ATHqy8NYxRjGo14yRul/841d
+         dPgJWb1g9WtsHZyDJff21j+hMeiOrF77u40X6gZQpYjiZ4BKiva4FqCa4QEwFIfdmzw6
+         80jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SmZpl8+j/iKc0sB5URMOhtFVFzKAZretNZR5phX8V54=;
+        b=7wSfUem2mrlu9eWcKxRktODMEkxCEQn6rgMQWGUoWfY35j5Ag3Y4mAGzlluRANicBh
+         D1z8Dadwar0ZsPNX4LQz6YWBtvRfnbd2cvCLBuERD9KDURQgrL5V/BX3mFv1ad7zhOfb
+         H2R3965KyQrGYV2N0+KUS9TRSZzweZiVRntSnXrD9dS4tknCEptngHckz75ROp3oSPU1
+         PIYYreYKcGI4mu5jTloKYANNYs2DHn6R7O07CRm5WU378HQGl79bzZhSgojiequB7GF4
+         PgkZ6dOvGssmOiwClQ9DjqJdTmon7WcsGfKJj2I2o6CAKBGGYazl0YscrM/mdmxziqdk
+         OZRQ==
+X-Gm-Message-State: AOAM532MPJmbkCSnmosaH5V3BhgXCrYf/1DRk6AV835HBq9UGfXlEJ7J
+        E3NX18zXq+1I+feeU/NH0Sc=
+X-Google-Smtp-Source: ABdhPJxp1tSXAzZDWhWtzwlC+WpFHm5YVQ6u/yn2MK4ACIYuoQeY9VzDPTcS+qoyy0lkfOpDtimAVA==
+X-Received: by 2002:a17:902:e294:b0:143:86a8:c56d with SMTP id o20-20020a170902e29400b0014386a8c56dmr2079842plc.22.1636545919705;
+        Wed, 10 Nov 2021 04:05:19 -0800 (PST)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id on6sm7070697pjb.47.2021.11.10.04.05.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 04:05:19 -0800 (PST)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: deng.changcheng@zte.com.cn
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org, abhinavk@codeaurora.org,
+        deng.changcheng@zte.com.cn, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH linux-next] drm/msm/dp: remove unneeded variable
+Date:   Wed, 10 Nov 2021 12:05:12 +0000
+Message-Id: <20211110120512.150940-1-deng.changcheng@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211109180905.590773-2-robdclark@gmail.com>
-X-Patchwork-Hint: comment
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 09, 2021 at 10:09:03AM -0800, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  lib/igt_debugfs.c | 16 ++++++++++++++++
->  lib/igt_debugfs.h | 12 ++++++++++++
->  2 files changed, 28 insertions(+)
-> 
-> diff --git a/lib/igt_debugfs.c b/lib/igt_debugfs.c
-> index a5bb95ca..39431068 100644
-> --- a/lib/igt_debugfs.c
-> +++ b/lib/igt_debugfs.c
-> @@ -351,6 +351,22 @@ void __igt_debugfs_read(int fd, const char *filename, char *buf, int size)
->  	close(dir);
->  }
->  
-> +/**
-> + * __igt_debugfs_write:
-> + * @filename: file name
-> + * @buf: buffer to be written to the debugfs file
-> + * @size: size of the buffer
+From: Changcheng Deng <deng.changcheng@zte.com.cn>
 
-I see that we have this mistake in __igt_debugfs_read already but no
-reason to repeat mistakes: Also document the fd parameter.
+Fix the following coccicheck review:
+./drivers/gpu/drm/msm/dp/dp_debug.c: Unneeded variable
 
+Remove unneeded variable used to store return value.
 
-> + *
-> + * This function opens the debugfs file, writes it, then closes the file.
-> + */
-> +void __igt_debugfs_write(int fd, const char *filename, const char *buf, int size)
-> +{
-> +	int dir = igt_debugfs_dir(fd);
-> +
-> +	igt_sysfs_write(dir, filename, buf, size);
-> +	close(dir);
-> +}
-> +
->  /**
->   * igt_debugfs_search:
->   * @filename: file name
-> diff --git a/lib/igt_debugfs.h b/lib/igt_debugfs.h
-> index d43ba6c6..249eb56a 100644
-> --- a/lib/igt_debugfs.h
-> +++ b/lib/igt_debugfs.h
-> @@ -40,6 +40,7 @@ int igt_debugfs_pipe_dir(int device, int pipe, int mode);
->  
->  int igt_debugfs_open(int fd, const char *filename, int mode);
->  void __igt_debugfs_read(int fd, const char *filename, char *buf, int size);
-> +void __igt_debugfs_write(int fd, const char *filename, const char *buf, int size);
->  int igt_debugfs_simple_read(int dir, const char *filename, char *buf, int size);
->  bool igt_debugfs_search(int fd, const char *filename, const char *substring);
->  
-> @@ -54,6 +55,17 @@ bool igt_debugfs_search(int fd, const char *filename, const char *substring);
->  #define igt_debugfs_read(fd, filename, buf) \
->  		__igt_debugfs_read(fd, (filename), (buf), sizeof(buf))
->  
-> +/**
-> + * igt_debugfs_write:
-> + * @filename: name of the debugfs file
-> + * @buf: buffer to be written to the debugfs file
-> + *
-> + * This is just a convenience wrapper for __igt_debugfs_read. See its
-> + * documentation.
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+---
+ drivers/gpu/drm/msm/dp/dp_debug.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Same here regarding the fd parameter as above. Also copypaste mistake
-with s/debugfs_read/debugfs_write/.
-
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+index 2f6247e80e9d..c5c75273d1e5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_debug.c
++++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+@@ -365,7 +365,6 @@ static const struct file_operations test_active_fops = {
+ 
+ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ {
+-	int rc = 0;
+ 	struct dp_debug_private *debug = container_of(dp_debug,
+ 			struct dp_debug_private, dp_debug);
+ 
+@@ -386,7 +385,7 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ 
+ 	debug->root = minor->debugfs_root;
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
 -- 
-Petri Latvala
+2.25.1
 
-
-> + */
-> +#define igt_debugfs_write(fd, filename, buf) \
-> +		__igt_debugfs_write(fd, (filename), (buf), sizeof(buf))
-> +
->  /*
->   * Pipe CRC
->   */
-> -- 
-> 2.31.1
-> 
