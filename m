@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FAD744D04C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 04:18:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29F4144D050
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 04:18:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233064AbhKKDUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 22:20:31 -0500
-Received: from mx1.riseup.net ([198.252.153.129]:59000 "EHLO mx1.riseup.net"
+        id S233592AbhKKDUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 22:20:40 -0500
+Received: from mx1.riseup.net ([198.252.153.129]:34124 "EHLO mx1.riseup.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232799AbhKKDU3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 22:20:29 -0500
+        id S233306AbhKKDUd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 10 Nov 2021 22:20:33 -0500
 Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
          client-signature RSA-PSS (2048 bits) client-digest SHA256)
         (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 4HqRjc3kWrzF4mW;
-        Wed, 10 Nov 2021 19:17:40 -0800 (PST)
+        by mx1.riseup.net (Postfix) with ESMTPS id 4HqRjg6ZrQzDyKY;
+        Wed, 10 Nov 2021 19:17:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1636600660; bh=MpgI30sbqsmhgOb2wAZVGaCamJzY5tWBYSozOdcFyHU=;
+        t=1636600664; bh=TTY9e8+tLz6bAHkA4/m+3pQrSMljSr4gAxpZh5sUHtY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=q1dnxi+IF+h8zmwikRMnXLbOjEBm332iU1P5UMuiquVf4cEgWtsw0hwiZ9vCjXrWN
-         XnVcsGXVZVoQbmT05N3BGCZc0qr/49wfr3kQprgw+uUfeYU/A16oz3YJrWsucGk5fe
-         +/Zfv0f/GNb+7DrnetEbi3r8G7hSsx9OLlP9LvUk=
-X-Riseup-User-ID: 6DC39C03D19EEADB7351C8E3E54ED413D0D0D00C907110C227F46FB53441DC24
+        b=FceAHeKMZyy5c29Tn1d49miIHqoEWifvJvyxnUmOn4salsYyzzJ6evZqC2reSZMO/
+         Z0ZX35V6aEk5608Nyykn0fLUrzxKtIC1cdm1QMwCOnaxwwsbEpGuwQ5JTUxlTClEQl
+         65Z/dIQAvOVSj5EWXFmxeQBRfQNviiKcGA1Fjhw0=
+X-Riseup-User-ID: F51ED192DB77A9AA1626900D723A59EF81DFEDF932FD0004E1F940A4E518E09A
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews1.riseup.net (Postfix) with ESMTPSA id 4HqRjY2x7Zz5vVT;
-        Wed, 10 Nov 2021 19:17:37 -0800 (PST)
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4HqRjc60hYz5vVT;
+        Wed, 10 Nov 2021 19:17:40 -0800 (PST)
 From:   Dang Huynh <danct12@riseup.net>
 To:     Dang Huynh <danct12@riseup.net>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -38,9 +38,9 @@ Cc:     Andy Gross <agross@kernel.org>,
         Caleb Connolly <caleb@connolly.tech>,
         Martin Botka <martin.botka@somainline.org>,
         Konrad Dybcio <konradybcio@gmail.com>
-Subject: [PATCH v3 5/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add volume up button
-Date:   Thu, 11 Nov 2021 10:16:32 +0700
-Message-Id: <20211111031635.3839947-6-danct12@riseup.net>
+Subject: [PATCH v3 6/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD
+Date:   Thu, 11 Nov 2021 10:16:33 +0700
+Message-Id: <20211111031635.3839947-7-danct12@riseup.net>
 In-Reply-To: <20211111031635.3839947-1-danct12@riseup.net>
 References: <20211111031635.3839947-1-danct12@riseup.net>
 MIME-Version: 1.0
@@ -49,49 +49,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This enables the volume up key.
+This commit enable the SD card slot and internal MMC.
 
 Reviewed-by: Caleb Connolly <caleb@connolly.tech>
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
-Reviewed-by: Konrad Dybcio <konradybcio@gmail.com>
 Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
- .../boot/dts/qcom/sdm660-xiaomi-lavender.dts      | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-index 729b71407c36..456562cb6028 100644
+index 456562cb6028..8de3e111f427 100644
 --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -9,6 +9,9 @@
- #include "sdm660.dtsi"
- #include "pm660.dtsi"
- #include "pm660l.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
- 
- / {
- 	model = "Xiaomi Redmi Note 7";
-@@ -33,6 +36,18 @@ vph_pwr: vph-pwr-regulator {
- 		regulator-boot-on;
+@@ -361,6 +361,25 @@ vreg_l19a_3p3: l19 {
  	};
+ };
  
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		input-name = "gpio-keys";
++&sdhc_1 {
++	status = "okay";
++	supports-cqe;
 +
-+		volup {
-+			label = "Volume Up";
-+			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
++	mmc-hs200-1_8v;
++	mmc-hs400-1_8v;
++	mmc-hs400-enhanced-strobe;
 +
- 	reserved-memory {
- 		#address-cells = <2>;
- 		#size-cells = <2>;
++	vmmc-supply = <&vreg_l4b_2p95>;
++	vqmmc-supply = <&vreg_l8a_1p8>;
++};
++
++&sdhc_2 {
++	status = "okay";
++
++	vmmc-supply = <&vreg_l5b_2p95>;
++	vqmmc-supply = <&vreg_l2b_2p95>;
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <8 4>;
+ };
 -- 
 2.33.1
 
