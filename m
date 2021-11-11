@@ -2,122 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C701044CE56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 01:28:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EFDF44CEC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 02:25:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231352AbhKKAb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 19:31:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38176 "EHLO
+        id S232767AbhKKB14 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 20:27:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbhKKAb2 (ORCPT
+        with ESMTP id S232528AbhKKB14 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 19:31:28 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690EFC061767
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 16:28:40 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id h11so8632352ljk.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 16:28:40 -0800 (PST)
+        Wed, 10 Nov 2021 20:27:56 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E05EEC061766
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 17:25:07 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id n15-20020a17090a160f00b001a75089daa3so3355003pja.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 17:25:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GCOj+BlvfKYSuqLtbvE4odReGkR+x7ddg+lGcbsxXNo=;
-        b=I4PiIjQQw4yYoL5Zu7lCoXuFFIkSMbgIeUa2km18W/NP5MUDe6/qO4wxfMPlfC6+NR
-         WITLXGH4RecuQkk87lm89WlTtkbKkUjhePhwUzFBh7SumXaclw5OXxDrMQDOxM8EGxNf
-         J6Gix0eaJwbicM89BLmNhknqhpVtIr8Ube/j9182EZd8t+/8nGWTfdBcD81X6X5iGkD2
-         G3u528VqLoivfjd/v41rorFoVdYBDiHiwHeFAsb1B7ZL7dS90WUpmyHlbl3ip/Mk7qYX
-         EfXJ6x2PACKrqORBaIVzZHTghmKDAUfYAYwrvsMcVl/Ba41x+2V/+RpDN3cjMfQYkCRq
-         18fw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nWbslJ60ZPCanj2HYtzA6ZLWxe4Hhp7nGp3LzxZFt38=;
+        b=IXFXRaZfJ4nCndxstxP8bxiKUWIm4Wt4A6H5xsMg4TiWsNfFAA+vZ5KkIO9UACPT63
+         ifosOGyAyEBSysgvuM4SmXBxYsfqeQUzEychsoFuIR2FsiYsbyq6rCMgHwIMlwoycKS2
+         M5BiNXgtnhe+0A23d6bpVAFiW18+D6ftwvk84dJYq3CgLAPuNe5WOJ0/Y2x9VFEoZa/6
+         NEiBvIRIwlAcTIpoZFROZA7jaiPkgaxXAYzJtdpwWbixo/3cHR56jL08ho8Ut6dub+pe
+         bUf/FUPgYZvpmFRi3+Mir8XOENzazvNgN0xGnCJOkgOE4khmoYR5wEFdreIJCG/sx0e0
+         NzLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GCOj+BlvfKYSuqLtbvE4odReGkR+x7ddg+lGcbsxXNo=;
-        b=0RD0qrbPeUzONJNc625S3ilcbZmMNRyBp7U7Ho6t5x7TLYa+DM8uFk6YL2O4ergsRF
-         EYDbSk0BWAWasxuru5HTfN7T2WcsLv2XK3wPVb5PGIyelfQ/c+Y2+ZRDz6T6JzSCQ6ma
-         89i2a9wDiiHvUw9epEXdgn/3/+WuZQhXeAMjrzlS89ryl79jhPzyOBixLtGX/czHlLAK
-         9rHksnUb5UB6t+18oi3yiWVZm4zS7cc0Zft/OHs11AO0YfSYPe+3vJLB6CZD8UoyN5jz
-         u/He3d8FOFRIu9w95xhJG7tiT1PWoJlTI0kdqubupGRuZE7chF2qmmwvwDF9nz8+VvFb
-         AI3g==
-X-Gm-Message-State: AOAM533Adu7bu5hP7ForZTW9zIHpmr4WJaKuiYTYumVOKUW1WwpM4nb/
-        bx0rzdwu/9u7S8or9UujKUUv1GLsHqeQC6L1fBpdNA==
-X-Google-Smtp-Source: ABdhPJw2IeInRMNWDtqc21Dd9YVDXzYuOF1rzMxUeYINwuJKSe/nAHpHAyNZ2VJTjAd6BjYlK0kwF4xc5+rBEc50uWQ=
-X-Received: by 2002:a2e:95d3:: with SMTP id y19mr3128383ljh.175.1636590518733;
- Wed, 10 Nov 2021 16:28:38 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nWbslJ60ZPCanj2HYtzA6ZLWxe4Hhp7nGp3LzxZFt38=;
+        b=DLMozYhepHq1NoZBWGtMNoEYsn3aMh6Bpoh0q8Y4gMDwVGx4/330hr5DdfN6A/eiqu
+         lxqM9pb7ZmxRQbaJIQprr7LV0guTUNOcu1OBAVrfJfDCzX/CSczej4dzgD/ckIyBpl3F
+         qsC4RsDDEmZ3T8tsxkuBB7d2bggGYPW0WVajyB3FIwEd2vXAeyYwRAG52lyD1WpNkBRL
+         SGooydLGXPOCMlIimaXx27K5HbG0ax0PceqFrjSG79xIoaVWIUUxC1ETf6sDYBY8Wp2y
+         1qFUXEAKkkc76tI7j2hox8QJzeEAzhG1VbUwnvApnYbRM2TldTKmG74JY7Z/9K5t3OrU
+         tSXw==
+X-Gm-Message-State: AOAM532YW222WCEgqPxLXDQMpL6DueqExyoifT4aJNApiNMsNeoeqJNH
+        xSCLhVyGmJSxCi052EXzI+gGC4n9KlyxJw==
+X-Google-Smtp-Source: ABdhPJyr75OcvjSZSdThMZRuLnUhVC6TaRHanJoEKMxWRqcV4KBA3sK7U08wDtERoltIKWx03tuShA==
+X-Received: by 2002:a17:90a:5b:: with SMTP id 27mr4084014pjb.148.1636593907401;
+        Wed, 10 Nov 2021 17:25:07 -0800 (PST)
+Received: from localhost ([223.226.77.81])
+        by smtp.gmail.com with ESMTPSA id h134sm823053pfe.67.2021.11.10.17.25.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Nov 2021 17:25:06 -0800 (PST)
+Date:   Thu, 11 Nov 2021 06:55:03 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-hw: Fix exposed stack contents
+Message-ID: <20211111012503.rmz2kvcdzmht5rnw@vireshk-i7>
+References: <20211110152745.1868099-1-vladimir.zapolskiy@linaro.org>
+ <YYvn1CJBrWprEKCD@ripper>
 MIME-Version: 1.0
-References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
-In-Reply-To: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Wed, 10 Nov 2021 16:28:26 -0800
-Message-ID: <CALAqxLVd6F4RXy-H1y=mPR42RxXYr+0iDGws__k3DZSZD-22qg@mail.gmail.com>
-Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
- and enc/dec
-To:     Tadeusz Struk <tadeusz.struk@linaro.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YYvn1CJBrWprEKCD@ripper>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 2:48 PM Tadeusz Struk <tadeusz.struk@linaro.org> wrote:
->
-> Venus video encode/decode hardware driver consists of three modules.
-> The parent module venus-core, and two sub modules venus-enc and venus-dec.
-> The venus-core module allocates a common structure that is used by the
-> enc/dec modules, loads the firmware, and performs some common hardware
-> initialization. Since the three modules are loaded one after the other,
-> and their probe functions can run in parallel it is possible that
-> the venc_probe and vdec_probe functions can finish before the core
-> venus_probe function, which then can fail when, for example it
-> fails to load the firmware. In this case the subsequent call to venc_open
-> causes an Oops as it tries to dereference already uninitialized structures
-> through dev->parent and the system crashes in __pm_runtime_resume() as in
-> the trace below:
->
-> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
-> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
-> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
-> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
-> [   26.290326][  T485] Call trace:
-> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
-> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
-> [   26.290335][  T485]  v4l2_open+0x184/0x294
-> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
-> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
-> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
-> [   26.290352][  T485]  do_filp_open+0xb8/0x168
-> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
-> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
-> [   26.290359][  T485]  invoke_syscall+0x60/0x170
-> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
-> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
-> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
-> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
-> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
-> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
-> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
->
-> This can be fixed by synchronizing the three probe functions and
-> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
-> returns success.
->
-> Changes in v2:
-> - Change locking from mutex_lock to mutex_trylock
->   in venc_probe and vdec_probe to avoid potential deadlock.
->
-> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+On 10-11-21, 07:40, Bjorn Andersson wrote:
+> On Wed 10 Nov 07:27 PST 2021, Vladimir Zapolskiy wrote:
+> 
+> > On irq request it is improper to pass its designated name, which is
+> > allocated on stack, because the irq name string is not copied, thus
+> > there is a risk of leaking partial stack contents to userspace.
+> > 
+> > Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> 
+> This was already proposed and reviewed at:
+> 
+> https://lore.kernel.org/all/20210901084732.943248-1-ardb@kernel.org/
+> 
+> Could Ard's patch please be picked up by the maintainers, preferably
+> with above Fixes added, so we get this backported onto v5.15 stable...
 
-Just wanted to ping folks on this patch, as it does resolve a frequent
-crash that we see on db845c/RB3 and RB5 hardware, so it would be nice
-to see it land & backported to -stable.
+It never reached any of the PM guys unfortunately.
 
-thanks
--john
+Ard, can you please repost it again ?
+
+-- 
+viresh
