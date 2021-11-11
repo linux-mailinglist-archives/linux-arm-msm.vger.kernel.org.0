@@ -2,89 +2,347 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4158644DA90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 17:36:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ADEF44DAAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 17:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233966AbhKKQi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Nov 2021 11:38:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57792 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233128AbhKKQi6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Nov 2021 11:38:58 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB8EC061767
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Nov 2021 08:36:09 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id y5so6062015pfb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Nov 2021 08:36:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LfjMdYTkRtSg9vqoefxU1BZpX0CO1104WkyQpurjrWY=;
-        b=WXNvcv8XRto1O+lXQtJsWd0YOaNuqJ/LuV3eNp7Z7t2ZYyqYsvtoxaHh0SGvGISwzP
-         9xu/dFAVIEvyVBTYEwgWvt97MKxW0KqNpvOml79QxD/j4pHEHiwggPwZD8dvAPCLAZ7v
-         0ma860WdIZOrw531taynzpHpq71Mnq3kBp+Gw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LfjMdYTkRtSg9vqoefxU1BZpX0CO1104WkyQpurjrWY=;
-        b=4NxtM+OHHZK9j0xyB6c8g6koH3E792krmMTVto1B03PhzPC7v/Nmxq+uiq97kpWgoD
-         gR+IcorioP0+4wtkNP3hSIm5zGVQZg/aJzoz80Rxl3pRFlw97gMPpDiOeXbde949X355
-         wCYoyv+Al5F90Xna7GvSdEXGdNMhtmbdDnldrWytNHUYbj8hbssObF8t+KroVlfO1Ghi
-         mvj+IP1L0bUQPZJjh2DeOdLCqRXa3BDZPrHrHNMBQ/1rsVwy7oIiqplCEQ1NZNFjWqtR
-         TxN28kBeJ5nAZvu5BNYu2DSs+1JVNaBPxjee08kX2JdfLRA+aDrmT477q1WxC62Rn+LH
-         3vNA==
-X-Gm-Message-State: AOAM532yT5MB6Mqyt9mdT1MF0F8A1oCLAtohentQfZ2h/tuh/TtEZb78
-        Vp8p4/KzGHSBINwosl69pSTQBQ==
-X-Google-Smtp-Source: ABdhPJyf1ScnuC6QULfERaqTkSjsGJR+nT428EdPFKuVJCeg6JM6CMlZ66KTcnmUC2NJEIiCfnANLg==
-X-Received: by 2002:a63:d313:: with SMTP id b19mr5387847pgg.64.1636648568804;
-        Thu, 11 Nov 2021 08:36:08 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:c0a9:ac53:7829:6af7])
-        by smtp.gmail.com with UTF8SMTPSA id v13sm4085560pfu.38.2021.11.11.08.36.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Nov 2021 08:36:08 -0800 (PST)
-Date:   Thu, 11 Nov 2021 08:36:07 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: Re: [PATCH 1/3][RESEND] cpufreq: qcom-cpufreq-hw: Avoid stack buffer
- for IRQ name
-Message-ID: <YY1Gd7qfRRU2UJ6h@google.com>
-References: <20211111154808.2024808-1-vladimir.zapolskiy@linaro.org>
- <20211111154808.2024808-2-vladimir.zapolskiy@linaro.org>
+        id S233987AbhKKQrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 11:47:49 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:60722 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233867AbhKKQrr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Nov 2021 11:47:47 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1636649098; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
+ Message-ID: Sender; bh=//ebf0pTl7FqUfYkQSfNfcnD3tef4Up1ihIo7rYioHA=; b=nm9bouR2ghUrlHArflSjIa59hZ3ci15TjpMJ9NsvZ9heuqZt8mC2WLNu3/mKK0IdVeuJWthR
+ rwuSD8Y7mVgBXjDfRjJfbgGLUxPBCyvm2OjXOteibvMnBJlSSligUw5VegZLE+Yivm81ICkl
+ 82EGKW23ptu38c8ELSoNqW9Hjjo=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 618d487cf6c5b6c8d5c62c8a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 11 Nov 2021 16:44:44
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C8A3BC4338F; Thu, 11 Nov 2021 16:44:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-6.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.16] (unknown [117.210.184.103])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 74C4DC4338F;
+        Thu, 11 Nov 2021 16:44:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 74C4DC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Message-ID: <1aa5b508-d225-1dbc-63ab-0958ac94c18a@codeaurora.org>
+Date:   Thu, 11 Nov 2021 22:14:31 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211111154808.2024808-2-vladimir.zapolskiy@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH 2/5] drm/msm: Drop priv->lastctx
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20211109181117.591148-1-robdclark@gmail.com>
+ <20211109181117.591148-3-robdclark@gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+In-Reply-To: <20211109181117.591148-3-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 11, 2021 at 05:48:06PM +0200, Vladimir Zapolskiy wrote:
-> From: Ard Biesheuvel <ardb@kernel.org>
+On 11/9/2021 11:41 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Registering an IRQ requires the string buffer containing the name to
-> remain allocated, as the name is not copied into another buffer.
+> cur_ctx_seqno already does the same thing, but handles the edge cases
+> where a refcnt'd context can live after lastclose.  So let's not have
+> two ways to do the same thing.
 > 
-> So let's add a irq_name field to the data struct instead, which is
-> guaranteed to have the appropriate lifetime.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a2xx_gpu.c |  3 +--
+>   drivers/gpu/drm/msm/adreno/a3xx_gpu.c |  3 +--
+>   drivers/gpu/drm/msm/adreno/a4xx_gpu.c |  3 +--
+>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  8 +++-----
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  9 +++------
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h | 10 ----------
+>   drivers/gpu/drm/msm/msm_drv.c         |  6 ------
+>   drivers/gpu/drm/msm/msm_drv.h         |  2 +-
+>   drivers/gpu/drm/msm/msm_gpu.c         |  2 +-
+>   drivers/gpu/drm/msm/msm_gpu.h         | 11 +++++++++++
+>   10 files changed, 22 insertions(+), 35 deletions(-)
 > 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
-> Tested-by: Steev Klimaszewski <steev@kali.org>
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> index bdc989183c64..22e8295a5e2b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+> @@ -12,7 +12,6 @@ static bool a2xx_idle(struct msm_gpu *gpu);
+>   
+>   static void a2xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct msm_ringbuffer *ring = submit->ring;
+>   	unsigned int i;
+>   
+> @@ -23,7 +22,7 @@ static void a2xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>   			/* ignore if there has not been a ctx switch: */
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> index 8fb847c174ff..2e481e2692ba 100644
+> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> @@ -30,7 +30,6 @@ static bool a3xx_idle(struct msm_gpu *gpu);
+>   
+>   static void a3xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct msm_ringbuffer *ring = submit->ring;
+>   	unsigned int i;
+>   
+> @@ -41,7 +40,7 @@ static void a3xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>   			/* ignore if there has not been a ctx switch: */
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> index a96ee79cc5e0..c5524d6e8705 100644
+> --- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+> @@ -24,7 +24,6 @@ static bool a4xx_idle(struct msm_gpu *gpu);
+>   
+>   static void a4xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct msm_ringbuffer *ring = submit->ring;
+>   	unsigned int i;
+>   
+> @@ -35,7 +34,7 @@ static void a4xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+>   			/* ignore if there has not been a ctx switch: */
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index 5e2750eb3810..6163990a4d09 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -65,7 +65,6 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>   
+>   static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct msm_ringbuffer *ring = submit->ring;
+>   	struct msm_gem_object *obj;
+>   	uint32_t *ptr, dwords;
+> @@ -76,7 +75,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
+>   		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> @@ -126,12 +125,11 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+>   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>   	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct msm_ringbuffer *ring = submit->ring;
+>   	unsigned int i, ibs = 0;
+>   
+>   	if (IS_ENABLED(CONFIG_DRM_MSM_GPU_SUDO) && submit->in_rb) {
+> -		priv->lastctx = NULL;
+> +		gpu->cur_ctx_seqno = 0;
+>   		a5xx_submit_in_rb(gpu, submit);
+>   		return;
+>   	}
+> @@ -166,7 +164,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 33da25b81615..3d2da81cb2c9 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -106,7 +106,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+>   	u32 asid;
+>   	u64 memptr = rbmemptr(ring, ttbr0);
+>   
+> -	if (ctx->seqno == a6xx_gpu->cur_ctx_seqno)
+> +	if (ctx->seqno == a6xx_gpu->base.base.cur_ctx_seqno)
+>   		return;
+>   
+>   	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
+> @@ -138,14 +138,11 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+>   
+>   	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
+>   	OUT_RING(ring, 0x31);
+> -
+> -	a6xx_gpu->cur_ctx_seqno = ctx->seqno;
+>   }
+>   
+>   static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   {
+>   	unsigned int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+>   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>   	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>   	struct msm_ringbuffer *ring = submit->ring;
+> @@ -177,7 +174,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
+>   			break;
+>   		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
+> -			if (priv->lastctx == submit->queue->ctx)
+> +			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
+>   				break;
+>   			fallthrough;
+>   		case MSM_SUBMIT_CMD_BUF:
+> @@ -1081,7 +1078,7 @@ static int hw_init(struct msm_gpu *gpu)
+>   	/* Always come up on rb 0 */
+>   	a6xx_gpu->cur_ring = gpu->rb[0];
+>   
+> -	a6xx_gpu->cur_ctx_seqno = 0;
+> +	gpu->cur_ctx_seqno = 0;
+>   
+>   	/* Enable the SQE_to start the CP engine */
+>   	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 1);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index 8e5527c881b1..86e0a7c3fe6d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -20,16 +20,6 @@ struct a6xx_gpu {
+>   
+>   	struct msm_ringbuffer *cur_ring;
+>   
+> -	/**
+> -	 * cur_ctx_seqno:
+> -	 *
+> -	 * The ctx->seqno value of the context with current pgtables
+> -	 * installed.  Tracked by seqno rather than pointer value to
+> -	 * avoid dangling pointers, and cases where a ctx can be freed
+> -	 * and a new one created with the same address.
+> -	 */
+> -	int cur_ctx_seqno;
+> -
+>   	struct a6xx_gmu gmu;
+>   
+>   	struct drm_gem_object *shadow_bo;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 7936e8d498dd..73e827641024 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -752,14 +752,8 @@ static void context_close(struct msm_file_private *ctx)
+>   
+>   static void msm_postclose(struct drm_device *dev, struct drm_file *file)
+>   {
+> -	struct msm_drm_private *priv = dev->dev_private;
+>   	struct msm_file_private *ctx = file->driver_priv;
+>   
+> -	mutex_lock(&dev->struct_mutex);
+> -	if (ctx == priv->lastctx)
+> -		priv->lastctx = NULL;
+> -	mutex_unlock(&dev->struct_mutex);
+> -
+>   	context_close(ctx);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 69952b239384..2943c21d9aac 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -164,7 +164,7 @@ struct msm_drm_private {
+>   
+>   	/* when we have more than one 'msm_gpu' these need to be an array: */
+>   	struct msm_gpu *gpu;
+> -	struct msm_file_private *lastctx;
+> +
+>   	/* gpu is only set on open(), but we need this info earlier */
+>   	bool is_a2xx;
+>   	bool has_cached_coherent;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 2c46cd968ac4..3dfc58e6498f 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -763,7 +763,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   	mutex_unlock(&gpu->active_lock);
+>   
+>   	gpu->funcs->submit(gpu, submit);
+> -	priv->lastctx = submit->queue->ctx;
+> +	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
+>   
+>   	hangcheck_timer_reset(gpu);
+>   }
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 59870095ea41..623ee416c568 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -144,6 +144,17 @@ struct msm_gpu {
+>   	struct msm_ringbuffer *rb[MSM_GPU_MAX_RINGS];
+>   	int nr_rings;
+>   
+> +	/**
+> +	 * cur_ctx_seqno:
+> +	 *
+> +	 * The ctx->seqno value of the last context to submit rendering,
+> +	 * and the one with current pgtables installed (for generations
+> +	 * that support per-context pgtables).  Tracked by seqno rather
+> +	 * than pointer value to avoid dangling pointers, and cases where
+> +	 * a ctx can be freed and a new one created with the same address.
+> +	 */
+> +	int cur_ctx_seqno;
+> +
+>   	/*
+>   	 * List of GEM active objects on this gpu.  Protected by
+>   	 * msm_drm_private::mm_lock
+> 
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Akhil P Oommen <akhilpo@codeaurora.org>
+
+-Akhil.
