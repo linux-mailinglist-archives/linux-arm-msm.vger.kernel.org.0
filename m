@@ -2,67 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6717D44CF06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 02:36:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE03F44CFED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 03:16:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233109AbhKKBjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 20:39:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53008 "EHLO
+        id S233738AbhKKCTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 Nov 2021 21:19:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233414AbhKKBiv (ORCPT
+        with ESMTP id S233590AbhKKCTk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 20:38:51 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2610FC0797B4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 17:35:43 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id v138so11075023ybb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Nov 2021 17:35:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/yJJ1eLjVEBxlbbxBTFqS43d212h+YIqOC0povopvFQ=;
-        b=e1saD3h8ZTiJz1WPc393lhDIWAvFZtOWzP/1iIN1KdicX4+NrvRlvNT+3PrCl1GqMN
-         hcyRC8y01agFcLW5+tsWKem8XisbU3NfgOVZTXj+yM8hm783rPU/i/YuMOt9WJM1GE4/
-         JRXGoJXzKJizIUuyrjE1Imm5mvbvZzUfUnW1ilSzedfFOByO23CsotOGz9ho9UMOpmPB
-         I35hgpS1ccJyAsx8SK8mX+7lwpZDhh/s7p2JF/JACrgRoEUXPKCti/8Mke+cScvETWuN
-         /H3UoZ8xmLIIfMcXfhtyxis8wgN5U5+dx/bvbJ1ofktMXKhL3cY0XXO1GPMja8d0F/uW
-         PaWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/yJJ1eLjVEBxlbbxBTFqS43d212h+YIqOC0povopvFQ=;
-        b=WmdnT27NR+VqSqo0spidv5NcynThqkqZu9FRbZUDUfOmaPpw2k9AjVX9jHuD1369Ni
-         2yMJcQMATUBFpULRvAD4WpjIjQUL7fOm+g2bpWyqYlOgb5yS1wECmTJXV2QwnDzC36YX
-         RPwMrAyq3097kUuqO1Q3KkfigybHwZ3TeosBaMSeEG1X+vMbG/1M1qcGOeIJwK0adKuS
-         i7B9t02c2NfQdNg8K0hFbkfDIvLADbESukaovHhmMPTI3hnBYCiD2p5NZeJh0arZC/7V
-         amHcFAEkvqtzAi7cx4EDogLGn1KnHDQnkDokFAggYi8XR5tcs76SCnMVuMl3JOIuCLAa
-         JuOg==
-X-Gm-Message-State: AOAM531Vf+w3CzgGm4cwTNzO03ipJ8CFDLfF9q8BPAzASBRVJrbIuvPC
-        ke91CChNHl3QwCiBLA5dJITI79vUBZfapj0yjZs=
-X-Google-Smtp-Source: ABdhPJwSvDsl6dRjntKMicOLsqdOi/dG2sfAv7B/U6vR9uOw26VAk/4zCWUkhL/n3HO29hhdK1BtX8sl0L4QCQV/QNc=
-X-Received: by 2002:a25:b20f:: with SMTP id i15mr3989503ybj.539.1636594542572;
- Wed, 10 Nov 2021 17:35:42 -0800 (PST)
+        Wed, 10 Nov 2021 21:19:40 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D58CC061766;
+        Wed, 10 Nov 2021 18:16:52 -0800 (PST)
+Received: from [192.168.1.101] (83.6.165.118.neoplus.adsl.tpnet.pl [83.6.165.118])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5AE0A3F6B4;
+        Thu, 11 Nov 2021 03:16:47 +0100 (CET)
+Message-ID: <fe19d7e6-8d31-a157-65d0-da53095485ea@somainline.org>
+Date:   Thu, 11 Nov 2021 03:16:44 +0100
 MIME-Version: 1.0
-Received: by 2002:a05:7010:5d89:b0:1df:17ca:e9e5 with HTTP; Wed, 10 Nov 2021
- 17:35:42 -0800 (PST)
-Reply-To: mrsambamalick@gmail.com
-From:   MR MALICK <aiolaras@gmail.com>
-Date:   Thu, 11 Nov 2021 02:35:42 +0100
-Message-ID: <CAKPiy1pxkL9E+t6fr2OcMGeiHjuYbwx6xEB+HwOuJAUpiUddcw@mail.gmail.com>
-Subject: NOTIFICATION
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH] arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C
+ / XZ3 (Tama platform)
+Content-Language: en-US
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211106191437.84943-1-konrad.dybcio@somainline.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20211106191437.84943-1-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-LOTTO WINNING AWARD,;,
 
-Your email won 2.6 million dollars, Contact Barrister Marcel Cremer
-through his email here ( cremerrsolicitors@gmail.com) to claim your
-winning fund with your details as follows, your full name, your
-country, your home address and your phone number.
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> new file mode 100644
+> index 000000000000..6b088675f4b9
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> @@ -0,0 +1,442 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
+> + */
+> +
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sdm845.dtsi"
+> +#include "pm8005.dtsi"
+> +#include "pm8998.dtsi"
+> +#include "pmi8998.dtsi"
+> +
+> +/ {
+> +	qcom,msm-id = <321 0x20001>; /* SDM845 v2.1 */
+> +	qcom,board-id = <8 0>;
+> +
+> +	gpio-keys {
 
-Regards,,
-Mr.  Malick Samba.
+Whooops! It seems that I totally forgot to add a compatible to gpio-keys.. Could that be fixed when applying if the patch is otherwise good? Should it not be the case, I'll surely fix that in the next revision..
+
+
+> +		cam-focus {
+> +			label = "cam_focus";
+> +			gpios = <&pm8998_gpio 2 GPIO_ACTIVE_LOW>;
+> +			linux,code = <KEY_CAMERA_FOCUS>;
+> +			debounce-interval = <15>;
+> +			gpio-key,wakeup;
+> +		};
+> +
+
+
+Konrad
+
