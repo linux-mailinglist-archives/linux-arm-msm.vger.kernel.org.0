@@ -2,82 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C7B044DD6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 23:00:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 191A944DD73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 23:02:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbhKKWDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Nov 2021 17:03:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45908 "EHLO
+        id S229868AbhKKWFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 17:05:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbhKKWDU (ORCPT
+        with ESMTP id S229520AbhKKWFD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Nov 2021 17:03:20 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF371C061766
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Nov 2021 14:00:30 -0800 (PST)
-Received: from [192.168.1.101] (83.6.165.118.neoplus.adsl.tpnet.pl [83.6.165.118])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 2D4BC20393;
-        Thu, 11 Nov 2021 23:00:29 +0100 (CET)
-Message-ID: <8867e80e-fe7f-8a83-bea4-9da4901a5224@somainline.org>
-Date:   Thu, 11 Nov 2021 23:00:26 +0100
+        Thu, 11 Nov 2021 17:05:03 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9BFC061766;
+        Thu, 11 Nov 2021 14:02:13 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id e144so8797210iof.3;
+        Thu, 11 Nov 2021 14:02:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W0un44DHPF22aIu/HzLHma+ZAGuW3yhyQnyzoD6Bo4g=;
+        b=LsPGof+zsUFAVyeeuWMR8rDTyfXXZteC5O6U+uTIqDG0dmpHnvGSBPuAE1Ep3ZGjoW
+         chAGE5CJEECetg8w7TPZ9khCi6BMRIm7GKcd1UyTczg6lyrFUh7T0faa2dorBtfoL/9/
+         DyZ9CJkdT6dhVy7VCoCY9/i48ts1cglC4+tmIzGcNFRSIFuBEPzszCz3oWOdQeA0Spf2
+         gI8eaCja1joJdIaJpOkex4VaUgHkEqYV97oNWr2xlwOR4afIFCcQfklfQy3q+JJNRP7f
+         YGLb7AlgVFuo8MkeYYAL1JkIQmrsokF73vh1bMsmN+VZns84uzuRAZHWeUxNZ13CzOhw
+         Ca1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=W0un44DHPF22aIu/HzLHma+ZAGuW3yhyQnyzoD6Bo4g=;
+        b=Kia6ADlDQ8XJ3q78OHnY1IMI4xwC/rVzwyDRImZ0fSuHcyjUr0tqarK1OZ3Unpndct
+         GdenLl372G4oqEkp3Z0gHMYlF76wmueEg2NBrsFzWuyjzYxXnyBNacpajXowDxYrRAOD
+         mbG66awKHLmVtgJMzPg/3fKhf1gzaFrvpYKVW8EkwoKPQGfhZsZf4uKLVGo3VdjFfPM+
+         eneWrBLetvpRvizTse1aN97pb9n7Sn+nfWAZ+eSv0NRSqo9wdI8O2hFiV+0CVKz07Un5
+         FAmIqyQxaSbyFTU9lL2+tSs8mG0AcsDy2ORnALqWV+cnTMDTGEfoHiWyKyvM9Ll+KWDB
+         CkHQ==
+X-Gm-Message-State: AOAM531qf+C3uQS+pNKrvKu90Y+XjKi5Fvh6tNB7ewbbEX7XhWwmLv+q
+        8MIG/we6mpZ3VZ4nCMXwjLc=
+X-Google-Smtp-Source: ABdhPJzs6rZ8CI3ZcO3tiNDiGEXL5v28XlBw3PrkhFHmmi3ZAJA4is7Z6XBwGrA6mAdZC8h8pl/vGw==
+X-Received: by 2002:a05:6638:2402:: with SMTP id z2mr1084436jat.122.1636668132873;
+        Thu, 11 Nov 2021 14:02:12 -0800 (PST)
+Received: from frodo.. (c-24-9-77-57.hsd1.co.comcast.net. [24.9.77.57])
+        by smtp.googlemail.com with ESMTPSA id t5sm2612315ilp.8.2021.11.11.14.02.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Nov 2021 14:02:12 -0800 (PST)
+From:   Jim Cromie <jim.cromie@gmail.com>
+To:     jbaron@akamai.com, gregkh@linuxfoundation.org, robdclark@gmail.com,
+        sean@poorly.run, daniel.vetter@ffwll.ch, seanpaul@chromium.org,
+        lyude@redhat.com, linux-kernel@vger.kernel.org,
+        rostedt@goodmis.org, mathieu.desnoyers@efficios.com,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        intel-gvt-dev@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org
+Cc:     quic_saipraka@quicinc.com, will@kernel.org,
+        catalin.marinas@arm.com, quic_psodagud@quicinc.com, maz@kernel.org,
+        arnd@arndb.de, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, mingo@redhat.com,
+        jim.cromie@gmail.com
+Subject: [PATCH v10 00/10 RESEND] use DYNAMIC_DEBUG to implement DRM.debug & DRM.trace
+Date:   Thu, 11 Nov 2021 15:01:56 -0700
+Message-Id: <20211111220206.121610-1-jim.cromie@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [RFC PATCH 2/4] arm64: dts: qcom: sm8150: add display nodes
-Content-Language: en-US
-To:     Katherine Perez <kaperez@linux.microsoft.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org
-References: <20211110170330.1789509-1-kaperez@linux.microsoft.com>
- <20211110170330.1789509-3-kaperez@linux.microsoft.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20211110170330.1789509-3-kaperez@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Jason, Greg, DRM-everyone, everyone,
 
-On 10.11.2021 18:03, Katherine Perez wrote:
-> Add MDSS and MDP nodes to sm8150.
->
-> Signed-off-by: Katherine Perez <kaperez@linux.microsoft.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 92 ++++++++++++++++++++++++++++
->  1 file changed, 92 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index ee40af469fab..38dbc39103ba 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -3261,6 +3261,98 @@ camnoc_virt: interconnect@ac00000 {
->  			qcom,bcm-voters = <&apps_bcm_voter>;
->  	
+resend to add more people, after rebasing on master to pick up
+306589856399 drm/print: Add deprecation notes to DRM_...() functions
 
-[...]
+This patchset has 3 separate but related parts:
+
+1. DEFINE_DYNAMIC_DEBUG_BITGRPS macro [patch 1/10]
+
+   Declares DRM.debug style bitmap, bits control pr_debugs by matching formats
+   Adds callback to translate bits to $cmd > dynamic_debug/control
+   This could obsolete EXPORT(dynamic_debug_exec_queries) not included.
+
+   /* anticipated_usage */
+   static struct dyndbg_desc drm_categories_map[] = {
+   	  [0] = { DRM_DBG_CAT_CORE },
+	  [1] = { DRM_DBG_CAT_DRIVER },
+	  [2] = { DRM_DBG_CAT_KMS },
+	  [3] = { DRM_DBG_CAT_PRIME }, ... };
+
+   DEFINE_DYNAMIC_DEBUG_BITGRPS(debug, __drm_debug,
+				" bits control drm.debug categories ",
+				drm_categories_map);
+
+   Please consider this patch for -next/now/current:
+   - new interface, new code, no users to break
+   - allows DRM folks to consider in earnest.
+   - api bikeshedding to do ?
+     struct dyndbg_desc isnt that great a name, others too probably.
+
+2. use (1) to reimplement drm.debug [patches 3-7]:
+
+   1st in amdgpu & i915 to control existing pr_debugs by their formats
+   POC for (1)
+   then in drm-print, for all drm.debug API users
+   has kernel-footprint impact:
+      amdgpu has ~3k pr_debugs.  (120kb callsite data)
+      i915.ko has ~2k  
+
+   avoids drm_debug_enabled(), gives NOOP savings & new flexibility.
+   changes drm.debug categories from enum to format-prefix-string
+   alters in-log format to include the format-prefix-string
+   Daniel Vetter liked this at -v3
+   https://lore.kernel.org/lkml/YPbPvm%2FxcBlTK1wq@phenom.ffwll.local/
+   Im sure Ive (still) missed stuff.
 
 
-> +
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +						  <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-> +				assigned-clock-rates = <460000000>,
-> +						       <19200000>;
-> +
+3. separately, Sean Paul proposed: drm.trace to mirror drm.debug to tracefs
+   https://patchwork.freedesktop.org/series/78133/
 
-I'm not sure if assigning F_MAX is a good idea, but it proobably won't hurt, given we have an OPP table?
+He argues:
+   tracefs is fast/lightweight compared to syslog
+   independent selection (of drm categories) to tracefs
+       gives tailored traffic w.o flooding syslog
+
+ISTM he's correct.  So it follows that write-to-tracefs is also a good
+feature for dyndbg, where its then available for all pr_debug users,
+including all of drm, on a per-site basis, via echo +T >control.  (iff
+CONFIG_TRACING).
+
+So basically, I borg'd his:
+   [patch 14/14] drm/print: Add tracefs support to the drm logging helpers
+
+Then I added a T flag, so it can be toggled from shell:
+
+   # turn on all drm's pr_debug --> tracefs
+   echo module drm +T > /proc/dynamic_debug/control
+
+It appears to just work: (RFC)
+
+The instance name is a placeholder, per-module subdirs kinda fits the
+tracefs pattern, but full mod/file-basename/function/line feels like
+overkill, mod/basename-func.line would flatten it nicely. RFC.
 
 
-Besides that,
+[root@gandalf dyndbg-tracefs]# pwd
+/sys/kernel/tracing/instances/dyndbg-tracefs
+[root@gandalf dyndbg-tracefs]# echo 1 > /sys/module/drm/parameters/trace
+[root@gandalf dyndbg-tracefs]# head -n16 trace | sed -e 's/^#//'
+ tracer: nop
+
+ entries-in-buffer/entries-written: 405/405   #P:24
+
+                                _-----=> irqs-off
+                               / _----=> need-resched
+                              | / _---=> hardirq/softirq
+                              || / _--=> preempt-depth
+                              ||| / _-=> migrate-disable
+                              |||| /     delay
+           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+              | |         |   |||||     |         |
+           <...>-2254    [000] .....  7040.894352: __dynamic_pr_debug: drm:core: comm="gnome-shel:cs0" pid=2254, dev=0xe200, auth=1, AMDGPU_CS
+           <...>-2207    [015] .....  7040.894654: __dynamic_pr_debug: drm:core: comm="gnome-shell" pid=2207, dev=0xe200, auth=1, DRM_IOCTL_MODE_ADDFB2
+           <...>-2207    [015] .....  7040.995403: __dynamic_pr_debug: drm:core: comm="gnome-shell" pid=2207, dev=0xe200, auth=1, DRM_IOCTL_MODE_RMFB
+           <...>-2207    [015] .....  7040.995413: __dynamic_pr_debug: drm:core: OBJ ID: 121 (2)
+
+This is the pr-debug doing most of that logging: (from dynamic_debug/control)
+
+  drivers/gpu/drm/drm_ioctl.c:866 [drm]drm_ioctl =T "drm:core: comm=\042%s\042 pid=%d, dev=0x%lx, auth=%d, %s\012"
+
+Turning on decoration flags changes the trace:
+
+  echo module drm format drm:core: +mflt > /proc/dynamic_debug/control 
+
+           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+              | |         |   |||||     |         |
+           <...>-2254    [003] ..... 15980.936660: __dynamic_pr_debug: [2254] drm:drm_ioctl:866: drm:core: comm="gnome-shel:cs0" pid=2254, dev=0xe200, auth=1, AMDGPU_CS
+           <...>-2207    [015] ..... 15980.936966: __dynamic_pr_debug: [2207] drm:drm_ioctl:866: drm:core: comm="gnome-shell" pid=2207, dev=0xe200, auth=1, DRM_IOCTL_MODE_ADDFB2
+           <...>-2207    [015] ..... 15981.037727: __dynamic_pr_debug: [2207] drm:drm_ioctl:866: drm:core: comm="gnome-shell" pid=2207, dev=0xe200, auth=1, DRM_IOCTL_MODE_RMFB
+           <...>-2207    [015] ..... 15981.037739: __dynamic_pr_debug: [2207] drm:drm_mode_object_put:195: drm:core: OBJ ID: 124 (2)
+           <...>-2207    [015] ..... 15981.037742: __dynamic_pr_debug: [2207] drm:drm_mode_object_put:195: drm:core: OBJ ID: 124 (1)
+
+The FUNCTION could stand tweaking (to match the callsite in the
+control file, cited above), or perhaps replaced by the 'mfl'
+decorations; the 't' flag is redundant for trace. Meh.
+
+SELFTEST
+
+A previous version of this patchset added test_dynamic_debug.ko, but
+it relied upon code I ripped out when I made tracefs available by
+default (without modules having to register 1st).  So it fails 10/29
+tests, which counted +T sites executed, via side effect.
+
+TODO: userspace selftest
+
+  # to set expected tracing activity
+  echo module test_dynamic_debug function do_debugging +T > control
+
+  # run do_debugging function (todo: add sysfs knob) 
+  echo 2 > /sys/module/test-dynamic-debug/parameters/run_me
+
+If thats wrapped in the right trace_on, trace_pipe, etc incantations,
+the +T enabled pr_debugs in do_debugging() can be counted, compared
+against expectations, and passed or failed.
+
+change since v9:
+. patch confict against drm-misc resolved
+. s/CATEGORIES/BITGRPS/ in 1/10 - keep name generic: bitmap + groups
+. CATEGORIES is drm term, use it there only
+. fix api friction wrt drm.trace knob
+  2 separate macros: DEFINE_DYNAMIC_DEBUG_{LOG,TRACE}_GROUPS - JBaron
+
+v9: https://patchwork.freedesktop.org/series/96327/
+v8: https://patchwork.freedesktop.org/series/93914/
+    https://lore.kernel.org/lkml/20210915163957.2949166-1-jim.cromie@gmail.com/
+
+The major change since v8 is that +T now works for all users, if
+CONFIG_TRACING=y, otherwise it complains/errors.
+
+SUMMARY
+
+- drm as dyndbg user adds almost 9k callsites to kernel running this patchset
+  substantial footprint
+  substantial source of pr-debug-trace events (not all, but some useful)
+
+[jimc@gandalf wk-next]$ wc /proc/dynamic_debug/control 
+8927 71062 1099699 /proc/dynamic_debug/control
+[jimc@gandalf wk-next]$ uname -a
+Linux gandalf 5.15.0-rh2-12144-g5d5db04dfb0c #3 SMP PREEMPT Thu Nov 11 10:5
+
+- pr_debug as event provider
+  using exported trace_array_printk 
+  cheap with JUMP_LABEL
+  precise, ad-hoc or organized callsite enablement
+  callsite descriptor is in its interface, so are VARARGS
+  inspectable, extensible wo api churn,
+  iff trace_array_printk can do it.
 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Jim Cromie (10):
+  dyndbg: add DEFINE_DYNAMIC_DEBUG_BITGRPS macro and callbacks
+  drm: fix doc grammar
+  amdgpu: use dyndbg.BITGRPS to control existing pr_debugs
+  i915/gvt: trim spaces from pr_debug "gvt: core:" prefixes
+  i915/gvt: use dyndbg.BITGRPS for existing pr_debugs
+  drm_print: add choice to use dynamic debug in drm-debug
+  drm_print: instrument drm_debug_enabled
+  dyndbg: add print-to-tracefs, selftest with it - RFC
+  dyndbg: create DEFINE_DYNAMIC_DEBUG_LOG|TRACE_GROUPS
+  drm: use DEFINE_DYNAMIC_DEBUG_TRACE_GROUPS in 3 places
 
+ .../admin-guide/dynamic-debug-howto.rst       |   7 +-
+ MAINTAINERS                                   |   1 +
+ drivers/gpu/drm/Kconfig                       |  26 ++
+ drivers/gpu/drm/Makefile                      |   2 +
+ drivers/gpu/drm/amd/amdgpu/Makefile           |   2 +
+ .../gpu/drm/amd/display/dc/core/dc_debug.c    |  55 ++++-
+ drivers/gpu/drm/drm_print.c                   |  62 +++--
+ drivers/gpu/drm/i915/Makefile                 |   2 +
+ drivers/gpu/drm/i915/gvt/debug.h              |  18 +-
+ drivers/gpu/drm/i915/intel_gvt.c              |  47 ++++
+ include/drm/drm_drv.h                         |   2 +-
+ include/drm/drm_print.h                       | 182 +++++++++++---
+ include/linux/dynamic_debug.h                 |  88 ++++++-
+ lib/Kconfig.debug                             |  11 +
+ lib/Makefile                                  |   1 +
+ lib/dynamic_debug.c                           | 203 ++++++++++++++--
+ lib/test_dynamic_debug.c                      | 222 ++++++++++++++++++
+ 17 files changed, 843 insertions(+), 88 deletions(-)
+ create mode 100644 lib/test_dynamic_debug.c
 
-Konrad
-
+-- 
+2.31.1
 
