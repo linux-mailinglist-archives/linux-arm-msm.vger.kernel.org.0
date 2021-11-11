@@ -2,154 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAF9B44DDB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 23:03:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 086A344DDFD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 23:56:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234389AbhKKWFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Nov 2021 17:05:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
+        id S229839AbhKKW7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 17:59:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234393AbhKKWFd (ORCPT
+        with ESMTP id S229652AbhKKW7f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Nov 2021 17:05:33 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3AEC061203;
-        Thu, 11 Nov 2021 14:02:43 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id m9so8864839iop.0;
-        Thu, 11 Nov 2021 14:02:43 -0800 (PST)
+        Thu, 11 Nov 2021 17:59:35 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11378C061766;
+        Thu, 11 Nov 2021 14:56:46 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so5576443pju.3;
+        Thu, 11 Nov 2021 14:56:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vpU+SSLFFT68FpBw2vFN+h9yffUizferjvptZotty9E=;
-        b=PXwPCeebAKMhIluHtIjmrJ7zxCYSLLRcDFNABTvSwcImCglpOyAocqa5WoM6YWBLLo
-         JOH9rNgGyrzOfQ5x2t5MUzaNvgmNniIzUEnlDPtn4dq4E41wnSs4UH1LJhwYTCSZ1jnM
-         AGO8F/BNrMciuOhBJ4PWmuN3LAfOu1xQ6iPIG8FxvdoFieu7H9fJLtIan541L0rqoA1i
-         oSm2lAt/uYuKQqu1XVqMD/1szRxKbnFFkSJ9stahaR3wbTa2Tm+qH/+HFcIpOC6rVHGw
-         2cmxHJr5VJ92VP7WrqA9PptOX9f1ARBj2qieuH1nGyRFBD18j51rOSeRsez3zPMRpDRo
-         LVJQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Us4tGKVuy84GQN/3zBQwXhskHA7JZIC6EUBgOL1w6LM=;
+        b=efuXP0kyqAYesmA+FSLFpubdX/c6qq23Hf/aM+tpQqgSbfL2LWu3oA3620a6/Rg3ki
+         WS54KTtFwQNDIkkghAWVKXrI5t3WxV6Op1bamA57H3Qs8toELsakj+F6yFh6ofKgNrTR
+         mRp5dQOF8h6b2+Zt72msBfW/43H+6WR1ZaVew4Elq6DTuvtuG/KWTvgz3u8kjG4HgjOE
+         UGx51XrMP5mV/yzkQcxWGQJA+HqFguzlYauCcl5fi2Yy37uppUGSfkfFtVmtC9K0ap2n
+         P8geBzbGT/teHyVtFYpfyv6ZdsycGViqVkcxc74VI9oPbyZ968Wf92ch6HiuIW11EVMS
+         gfZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vpU+SSLFFT68FpBw2vFN+h9yffUizferjvptZotty9E=;
-        b=EWcYs9so4qSeveFtePxKooX6sfiTbCdBOg1lkZCwZXSsE8si4Aqvr4k2dXBZH9mI3v
-         4r6GIqcv4asJRozN85z42nMJNtbxKHOH61o0FukFVZrOXc1ApGGWaVh/GAR/65HZLpIy
-         iw0i/oBJl/N3MuPN3D4zHsQYNPF8LCH8tLj32gcfpbDyeWvS3Fprvt3fMZFSidl6dHrT
-         jl4w6uCW28vlpaH4czWI1yn+xF+2SXhS5Jyagmrg3HevFX4Dqdy8lgO1GrpRrUHhMRON
-         fjTzZ9OzZ9fI7lyIPocbgZHL2VCwc2BOuCTi3SlJHYx5IMEbOdXpCt2mVDDWiQiBjiZ0
-         TPJg==
-X-Gm-Message-State: AOAM531vXgu+0PkOewwcfIQlqDCTO9H4wTwOkuLLupwimleeLCBY3oyY
-        36qXrsfMjEs6k74mh/k1SZc=
-X-Google-Smtp-Source: ABdhPJxxj67R7bRoywrgZoZMCh5rlt/jJbjUlBYigfEjiF9DP1SCPjJkC7fRk7xYRcebAho0F9tTQQ==
-X-Received: by 2002:a02:ceb9:: with SMTP id z25mr7777239jaq.121.1636668163065;
-        Thu, 11 Nov 2021 14:02:43 -0800 (PST)
-Received: from frodo.. (c-24-9-77-57.hsd1.co.comcast.net. [24.9.77.57])
-        by smtp.googlemail.com with ESMTPSA id t5sm2612315ilp.8.2021.11.11.14.02.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Us4tGKVuy84GQN/3zBQwXhskHA7JZIC6EUBgOL1w6LM=;
+        b=MNhjt8/43zgJqzGHKCwJGds8fyOqBPq7J13pc8MveyIuxq7pPgUGjO4kUMrnBkMzm1
+         VqQYj0tX1zsLpCWDux5Esqu/KrbMBZGl5WP+FaloCXpb3MwqymOisgWFY0OxE3wrn+Cg
+         tTeZ4z5MQCBZSr0RbKWGjj3c63130IWCrJg7naBvVUwgs6xFENqn10jHTa4a3B62H55Q
+         0dnG7kfxpjz6gxyw5S2XEi96ctxtLgQtW1Ab9caclg1QutZoYVgC637kKBgdgOmnhSXa
+         4h25/6MhyowzY0Woup+gCxWqXn+cNI530cM/aKTUZNHhvT1nq+TPl7CEAV+w32o1jnzb
+         vafQ==
+X-Gm-Message-State: AOAM531PpncBS0Ok+KBSb+eJCiyBMOZQBYxriI6Dn/ks8TanBKSajNJ4
+        eunR/VKr5zDW2lfROc/tZFnjXesw/mU=
+X-Google-Smtp-Source: ABdhPJxzLoUDpGbeEKgMeFQIidYBUmjLSz1CcxOTtPlDb8kswpEAqycoskD1Agwh8sdTasjwF0AJDg==
+X-Received: by 2002:a17:902:9888:b0:142:8731:4b55 with SMTP id s8-20020a170902988800b0014287314b55mr2988189plp.51.1636671405481;
+        Thu, 11 Nov 2021 14:56:45 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id 4sm3047418pgj.63.2021.11.11.14.56.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Nov 2021 14:02:42 -0800 (PST)
-From:   Jim Cromie <jim.cromie@gmail.com>
-To:     jbaron@akamai.com, gregkh@linuxfoundation.org, robdclark@gmail.com,
-        sean@poorly.run, daniel.vetter@ffwll.ch, seanpaul@chromium.org,
-        lyude@redhat.com, linux-kernel@vger.kernel.org,
-        rostedt@goodmis.org, mathieu.desnoyers@efficios.com,
-        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        intel-gvt-dev@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org
-Cc:     quic_saipraka@quicinc.com, will@kernel.org,
-        catalin.marinas@arm.com, quic_psodagud@quicinc.com, maz@kernel.org,
-        arnd@arndb.de, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, mingo@redhat.com,
-        jim.cromie@gmail.com
-Subject: [PATCH v10 10/10] drm: use DEFINE_DYNAMIC_DEBUG_TRACE_GROUPS in 3 places
-Date:   Thu, 11 Nov 2021 15:02:06 -0700
-Message-Id: <20211111220206.121610-11-jim.cromie@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211111220206.121610-1-jim.cromie@gmail.com>
-References: <20211111220206.121610-1-jim.cromie@gmail.com>
+        Thu, 11 Nov 2021 14:56:44 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        kernel test robot <lkp@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Make a6xx_gpu_set_freq() static
+Date:   Thu, 11 Nov 2021 15:01:49 -0800
+Message-Id: <20211111230151.765228-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-add sysfs knobs to enable modules' pr_debug()s ---> tracefs
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_debug.c |  8 ++++++++
- drivers/gpu/drm/drm_print.c                    | 13 ++++++++++---
- drivers/gpu/drm/i915/intel_gvt.c               | 15 ++++++++++++---
- 3 files changed, 30 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_debug.c b/drivers/gpu/drm/amd/display/dc/core/dc_debug.c
-index e49a755c6a69..58c56c1708e7 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_debug.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_debug.c
-@@ -80,6 +80,14 @@ DEFINE_DYNAMIC_DEBUG_LOG_GROUPS(debug_dc, __debug_dc,
- 				DC_DYNDBG_BITMAP_DESC(debug_dc),
- 				amdgpu_bitmap);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 8a2af3a27e33..dcde5eff931d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1641,7 +1641,7 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+ 	return (unsigned long)busy_time;
+ }
  
-+#if defined(CONFIG_TRACING)
-+
-+unsigned long __trace_dc;
-+EXPORT_SYMBOL(__trace_dc);
-+DEFINE_DYNAMIC_DEBUG_LOG_GROUPS(trace_dc, __trace_dc,
-+				DC_DYNDBG_BITMAP_DESC(trace_dc),
-+				amdgpu_bitmap);
-+#endif
- #endif
- 
- #define DC_LOGGER_INIT(logger)
-diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-index d5e0ffad467b..ee20e9c14ce9 100644
---- a/drivers/gpu/drm/drm_print.c
-+++ b/drivers/gpu/drm/drm_print.c
-@@ -72,9 +72,16 @@ static struct dyndbg_bitdesc drm_dyndbg_bitmap[] = {
- 	[8] = { DRM_DBG_CAT_DP },
- 	[9] = { DRM_DBG_CAT_DRMRES }
- };
--DEFINE_DYNAMIC_DEBUG_BITGRPS(debug, __drm_debug, DRM_DEBUG_DESC,
--			     drm_dyndbg_bitmap);
--
-+DEFINE_DYNAMIC_DEBUG_LOG_GROUPS(debug, __drm_debug, DRM_DEBUG_DESC,
-+				drm_dyndbg_bitmap);
-+
-+#ifdef CONFIG_TRACING
-+struct trace_array *trace_arr;
-+unsigned long __drm_trace;
-+EXPORT_SYMBOL(__drm_trace);
-+DEFINE_DYNAMIC_DEBUG_TRACE_GROUPS(trace, __drm_trace, DRM_DEBUG_DESC,
-+				  drm_dyndbg_bitmap);
-+#endif
- #endif
- 
- void __drm_puts_coredump(struct drm_printer *p, const char *str)
-diff --git a/drivers/gpu/drm/i915/intel_gvt.c b/drivers/gpu/drm/i915/intel_gvt.c
-index efaac5777873..84348d4aedf6 100644
---- a/drivers/gpu/drm/i915/intel_gvt.c
-+++ b/drivers/gpu/drm/i915/intel_gvt.c
-@@ -195,8 +195,17 @@ static struct dyndbg_bitdesc i915_dyndbg_bitmap[] = {
- 	help_(7, "gvt:render:")						\
- 	help_(8, "gvt:sched:")
- 
--DEFINE_DYNAMIC_DEBUG_BITGRPS(debug_gvt, __gvt_debug,
--			     I915_GVT_CATEGORIES(debug_gvt),
--			     i915_dyndbg_bitmap);
-+DEFINE_DYNAMIC_DEBUG_LOG_GROUPS(debug_gvt, __gvt_debug,
-+				I915_GVT_CATEGORIES(debug_gvt),
-+				i915_dyndbg_bitmap);
- 
-+#if defined(CONFIG_TRACING)
-+
-+unsigned long __gvt_trace;
-+EXPORT_SYMBOL(__gvt_trace);
-+DEFINE_DYNAMIC_DEBUG_TRACE_GROUPS(trace_gvt, __gvt_trace,
-+				  I915_GVT_CATEGORIES(trace_gvt),
-+				  i915_dyndbg_bitmap);
-+
-+#endif
- #endif
+-void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
++static void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
+ {
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
 -- 
 2.31.1
 
