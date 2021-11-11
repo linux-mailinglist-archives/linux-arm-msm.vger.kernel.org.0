@@ -2,112 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E88244D057
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 04:18:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30D6644D3E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Nov 2021 10:19:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233451AbhKKDUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 Nov 2021 22:20:44 -0500
-Received: from mx1.riseup.net ([198.252.153.129]:38564 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233488AbhKKDUk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 Nov 2021 22:20:40 -0500
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 4HqRjp6K0nzF4mX;
-        Wed, 10 Nov 2021 19:17:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1636600670; bh=rJOs4g7bozgwSUa7JZjdMB+XtSwhjDCNlVWpVg72aWc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=paaB4IG4j/C7kHdtFEBYm+xHxe+BBUGWloQk876gC/0fWd9OYJolI1tQ2x2BqZC8c
-         fbRFCB4d4N2yqx2Smv3Vbfnt/e5b62ZRlOoZKKWcpVGajRxO4i40KMCBLz8qF50Q3M
-         H6mbnSShAX8e0r5/FiZVJQlj3gqtzbewM+JRgcTA=
-X-Riseup-User-ID: 0B43D6D9C3711605E8FEDC38747C0B88BEA6669E54E02F47FA8820D4F5B9F74C
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews1.riseup.net (Postfix) with ESMTPSA id 4HqRjl5TtBz5vVT;
-        Wed, 10 Nov 2021 19:17:47 -0800 (PST)
-From:   Dang Huynh <danct12@riseup.net>
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S232347AbhKKJV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 04:21:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232516AbhKKJVx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 11 Nov 2021 04:21:53 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEC19C06127A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Nov 2021 01:19:03 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id 200so4693769pga.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Nov 2021 01:19:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=W4oON9tVLzbGnMHdSvx5FpIn6WtCPoheg0Qx9WxWbPQ=;
+        b=LEI+Zjqvo5YR46BDk0UGfF0Z206KbIE5NfmIdD1sEs38gVeU/TXLHux/kPRlEhpwpm
+         CKnJNdTqjFVmVY7fu07F4vbbKnEpeJ2Bj16hCjCBZzOwas3FwxaISJe+xwjqMQMK5s+y
+         pn5aWxgxZxZi8BHfshdRinyy3kjTyvS01GXAK/49RSSdNZf/MtmU9QfX2oAXmZwfe/hu
+         UdzVBaFmyiNiYcmCL5HKtRanaJEGwvJsntBRkhIKEoM9iXFteOmnIX1xqzYBMHfQZN+8
+         ubPkn+Q3+swfnbA88+4LlBqwA0ms/McQxqxEuCObiQiZfQLL7SMnHiyPBRvgKD4NsMoV
+         x85Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=W4oON9tVLzbGnMHdSvx5FpIn6WtCPoheg0Qx9WxWbPQ=;
+        b=bR/juV1/N3Z1c6KuVgK4ZhacMC6QIPCLIebPGajDxYW/M3RnMzVE5oLTn+z40MREdw
+         jWCPZs5NESnjm+Rl9npCgGLh8hop4U8MeyiC2ySfPhaHoE03rgk3eFT3/9Wta+lXzN1C
+         X5Xs3w9ick6MYaCg/kf+HUK00lsnQpBgUOb7Z2fw/ns8hsoO6x434v6WcaKMpb5ZUOI3
+         iiIqHD1b8Fkj8s29zkSSOwCZStHSYdagqIJKGzd/s3LbPHJ64RfLPJbpIZOMmqzA7uIe
+         JUwivIvelQVyRMc3oJ7a1Ct3Djl5+pTy1ATMdrk6Wun/6o+WH0yR1PiX/BnXNBY5qEWS
+         NRMw==
+X-Gm-Message-State: AOAM533Pa/Q/ss2B3TNt7EY+RGTKCpM5vWtRErp5C633nPRUOwqTAPNG
+        GcGYhuo/4DXq5dq3QIMw9rYYSA==
+X-Google-Smtp-Source: ABdhPJyAgSAhmt4zPqV47R/uN2HyIfaw0kvLLeTkHktBsw5JQz044Jif9nZJrLioItZgzYZiwiQepQ==
+X-Received: by 2002:a62:1c0e:0:b0:4a0:3492:37b5 with SMTP id c14-20020a621c0e000000b004a0349237b5mr5425509pfc.33.1636622343312;
+        Thu, 11 Nov 2021 01:19:03 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id u10sm2240141pfh.49.2021.11.11.01.19.00
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 11 Nov 2021 01:19:02 -0800 (PST)
+Date:   Thu, 11 Nov 2021 17:18:56 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-kernel@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alexey Min <alexey.min@gmail.com>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Martin Botka <martin.botka@somainline.org>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: [PATCH v3 8/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB
-Date:   Thu, 11 Nov 2021 10:16:35 +0700
-Message-Id: <20211111031635.3839947-9-danct12@riseup.net>
-In-Reply-To: <20211111031635.3839947-1-danct12@riseup.net>
-References: <20211111031635.3839947-1-danct12@riseup.net>
+        Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH 5/6] dt-bindings: interconnect: Add Qualcomm QCM2290 NoC
+ support
+Message-ID: <20211111091855.GK7231@dragon>
+References: <20211110120716.6401-1-shawn.guo@linaro.org>
+ <20211110120716.6401-6-shawn.guo@linaro.org>
+ <1636573460.901134.1783738.nullmailer@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1636573460.901134.1783738.nullmailer@robh.at.kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Alexey Min <alexey.min@gmail.com>
+On Wed, Nov 10, 2021 at 01:44:20PM -0600, Rob Herring wrote:
+> On Wed, 10 Nov 2021 20:07:15 +0800, Shawn Guo wrote:
+> > Add bindings for Qualcomm QCM2290 Network-On-Chip interconnect devices.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> >  .../bindings/interconnect/qcom,qcm2290.yaml   | 117 ++++++++++++++++++
+> >  .../dt-bindings/interconnect/qcom,qcm2290.h   |  94 ++++++++++++++
+> >  2 files changed, 211 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+> >  create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
+> > 
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/interconnect/qcom,qcm2290.example.dts:20:18: fatal error: dt-bindings/clock/qcom,gcc-qcm2290.h: No such file or directory
+>    20 |         #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
+>       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Enable and configure DWC3 and QUSB2 PHY to enable USB
-functionality on the Redmi Note 7.
+Thanks for the report!
 
-Signed-off-by: Alexey Min <alexey.min@gmail.com>
-Co-developed-by: Dang Huynh <danct12@riseup.net>
-Signed-off-by: Dang Huynh <danct12@riseup.net>
----
- .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+The header has just landed on mainline tree.  But the binding actually
+doesn't need to include it.  I will drop it for the next posting.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-index 712392545c2e..bf7f334b0b5c 100644
---- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-@@ -80,6 +80,15 @@ framebuffer_mem: memory@9d400000 {
- 			no-map;
- 		};
- 	};
-+
-+	/*
-+	 * Until we hook up type-c detection, we
-+	 * have to stick with this. But it works.
-+	 */
-+	extcon_usb: extcon-usb {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
-+	};
- };
- 
- &blsp1_uart2 {
-@@ -96,6 +105,13 @@ &pon_resin {
- 	linux,code = <KEY_VOLUMEDOWN>;
- };
- 
-+&qusb2phy {
-+	status = "okay";
-+
-+	vdd-supply = <&vreg_l1b_0p925>;
-+	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
-+};
-+
- &rpm_requests {
- 	pm660l-regulators {
- 		compatible = "qcom,rpm-pm660l-regulators";
-@@ -401,3 +417,12 @@ &sdhc_2 {
- &tlmm {
- 	gpio-reserved-ranges = <8 4>;
- };
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+	extcon = <&extcon_usb>;
-+};
--- 
-2.33.1
-
+Shawn
