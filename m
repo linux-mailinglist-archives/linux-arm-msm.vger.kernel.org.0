@@ -2,100 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E506444E7D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 14:48:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 166EA44E881
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 15:19:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234909AbhKLNva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Nov 2021 08:51:30 -0500
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:46861 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231617AbhKLNva (ORCPT
+        id S235222AbhKLOWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Nov 2021 09:22:14 -0500
+Received: from relay01.th.seeweb.it ([5.144.164.162]:50901 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235293AbhKLOWN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Nov 2021 08:51:30 -0500
-Received: by mail-ot1-f41.google.com with SMTP id b5-20020a9d60c5000000b0055c6349ff22so13871770otk.13;
-        Fri, 12 Nov 2021 05:48:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=MqM1y+YyYOZCCqAxeMTnppzeftxX5GadFE8PpETstQk=;
-        b=VvdKT5RiB1rL45ljyF9U/qY50nKYegM+3Ej6asXzrMsucShMMltJMEtOuYnh/EgJ6o
-         XbtYBTaT/AT1kvg1cLe8O9KTYBHxJPiWqTXlMSXRbjofg0z9KJb8oL51yNQxqPQRJD/O
-         SqJeZmed3sf5FZOnHigeRXwLIEzOI4pZ1bzd/STop5NMvBIjBHrwSi+ZjxHL+0zVlXJ5
-         f5tFW98YTY0zInPyyqGbHBU+IeSOJolBg/Zk8Qcyezyr9hu/xLBD1hterLjUI9xFMNbl
-         eX/iYRow4e5xNgOLrZYmAy0FjfhWdP/j41mW0VRbvMg4xTaWZBGMjjs6gvfT4n8ONowf
-         aAKg==
-X-Gm-Message-State: AOAM533kAVRcs16qZ47ExUsQeLBWWXvdJRcjxrbx1sOmpG65XZ6765bZ
-        jmkkBq+kk4pfd6znNGvzxQ==
-X-Google-Smtp-Source: ABdhPJxMVssZ8GmZ4oyCj7qLbWiswb6ULyqp0gFSp8x4aT8SgTVHOb+uEQAR4Lz0Y9THSP8wpIy+RQ==
-X-Received: by 2002:a05:6830:4cf:: with SMTP id s15mr12600373otd.219.1636724919387;
-        Fri, 12 Nov 2021 05:48:39 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id t13sm1499376oiw.30.2021.11.12.05.48.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 05:48:38 -0800 (PST)
-Received: (nullmailer pid 2463364 invoked by uid 1000);
-        Fri, 12 Nov 2021 13:48:37 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, sboyd@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, maz@kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        tglx@linutronix.de, collinsd@codeaurora.org,
-        subbaram@codeaurora.org
-In-Reply-To: <1636691059-4305-12-git-send-email-quic_fenglinw@quicinc.com>
-References: <1636691059-4305-1-git-send-email-quic_fenglinw@quicinc.com> <1636691059-4305-12-git-send-email-quic_fenglinw@quicinc.com>
-Subject: Re: [RESEND PATCH v2 11/11] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-Date:   Fri, 12 Nov 2021 07:48:37 -0600
-Message-Id: <1636724917.088909.2463363.nullmailer@robh.at.kernel.org>
+        Fri, 12 Nov 2021 09:22:13 -0500
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id CD8CB1F633;
+        Fri, 12 Nov 2021 15:19:18 +0100 (CET)
+Date:   Fri, 12 Nov 2021 15:19:17 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
+Subject: Re: [RESEND PATCH v2 05/13] backlight: qcom-wled: Override default
+ length with qcom,enabled-strings
+Message-ID: <20211112141917.akufukmeyz5enjg3@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>, Bryan Wu <cooloney@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org
+References: <20211112002706.453289-1-marijn.suijten@somainline.org>
+ <20211112002706.453289-6-marijn.suijten@somainline.org>
+ <20211112121238.kb3kkt6xzv5so26j@maple.lan>
+ <20211112124522.g7e3m7l2oxxxobof@SoMainline.org>
+ <20211112132336.z2x4bzrfqr4u3jol@maple.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211112132336.z2x4bzrfqr4u3jol@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 12 Nov 2021 12:24:19 +0800, Fenglin Wu wrote:
-> Convert the SPMI PMIC arbiter documentation to JSON/yaml.
+On 2021-11-12 13:23:36, Daniel Thompson wrote:
+> On Fri, Nov 12, 2021 at 01:45:22PM +0100, Marijn Suijten wrote:
+> > On 2021-11-12 12:12:38, Daniel Thompson wrote:
+> > > On Fri, Nov 12, 2021 at 01:26:58AM +0100, Marijn Suijten wrote:
+> > > > The length of qcom,enabled-strings as property array is enough to
+> > > > determine the number of strings to be enabled, without needing to set
+> > > > qcom,num-strings to override the default number of strings when less
+> > > > than the default (which is also the maxium) is provided in DT.
+> > > > 
+> > > > Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
+> > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > > > ---
+> > > >  drivers/video/backlight/qcom-wled.c | 2 ++
+> > > >  1 file changed, 2 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> > > > index c5232478a343..9bfbf601762a 100644
+> > > > --- a/drivers/video/backlight/qcom-wled.c
+> > > > +++ b/drivers/video/backlight/qcom-wled.c
+> > > > @@ -1518,6 +1518,8 @@ static int wled_configure(struct wled *wled)
+> > > >  				return -EINVAL;
+> > > >  			}
+> > > >  		}
+> > > > +
+> > > > +		cfg->num_strings = string_len;
+> > > 
+> > > I still don't really understand why this wants to be a separate patch.
+> > 
+> > I'm viewing this as a separate issue, and this makes it easier to
+> > document the change in a loose commit.
+> > 
+> > > The warning text emitted by the previous patch (whatever text we agree
+> > > on) will be nonsense until this patch is applied.
+> > > 
+> > > If this patch cannot appear before the warning is introduces then there
+> > > is no correct order for patches 4 and 5 (which implies they should be the
+> > > same patch).
+> > 
+> > Agreed, this is a weird way of doing things in v2 - the error message is
+> > printed yet the length of qcom,enabled-strings is always ignored before
+> > this patch.
+> > 
+> > If we were to reorder patch 5 before patch 4 that should also
+> > temporarily move `cfg->num_strings = cfg->num_strings + 1;` right below
+> > this `if` so that `qcom,num-strings` remains the definitive way to
+> > set/override length.  That's doable, and makes it easier to read patch 4
+> > as that bit of code will be replaced by of_property_read_u32 on that
+> > exact line.  Let me know which method you prefer.
 > 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
->  .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
->  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 122 +++++++++++++++++++++
->  2 files changed, 122 insertions(+), 67 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-> 
+> Personally I would just squash them together. There are no redundant
+> values in the DT that could be fixed until we can use the string_len
+> to set num_strings.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Reordering this patch before patch 4 in the way described above should
+allow just that, except that no warnings will be given for ambiguity
+until patch 4 is applied after that - which is weird given that that
+patch only intends the off-by-one error.  Perhaps we should keep the
+order as it is, but add the ambiguity warning in this patch instead.
 
-yamllint warnings/errors:
+That means we have one patch to fix the off-by-one first, and another
+that allows qcom,num-strings to provide a default for num_strings.  I
+guess that's better to keep separated?
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml: properties:interrupt-names: 'const' should not be valid under {'enum': ['const', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'minimum', 'maximum', 'multipleOf', 'pattern']}
-	hint: Scalar and array keywords cannot be mixed
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml: properties:reg-names: {'minItems': 3, 'maxItems': 5, 'items': [{'const': 'core'}, {'const': 'intr'}, {'const': 'cnfg'}, {'const': 'chnls'}, {'const': 'obsrvr'}]} should not be valid under {'required': ['maxItems']}
-	hint: "maxItems" is not needed with an "items" list
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml: ignoring, error in schema: properties: interrupt-names
-warning: no schema found in file: ./Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.example.dt.yaml: spmi@fc4cf000: reg: [[4232900608, 4096], [4232884224, 4096], [4232880128, 4096]] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/spmi.yaml
-Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.example.dt.yaml:0:0: /example-0/spmi@fc4cf000: failed to match any schema with compatible: ['qcom,spmi-pmic-arb']
-
-doc reference errors (make refcheckdocs):
-Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt: Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-
-See https://patchwork.ozlabs.org/patch/1554141
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+- Marijn
