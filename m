@@ -2,175 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E68C44E915
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 15:39:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F40C44E998
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 16:09:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235157AbhKLOmT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Nov 2021 09:42:19 -0500
-Received: from mail-ot1-f47.google.com ([209.85.210.47]:45870 "EHLO
-        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235197AbhKLOmQ (ORCPT
+        id S229710AbhKLPMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Nov 2021 10:12:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229509AbhKLPMV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Nov 2021 09:42:16 -0500
-Received: by mail-ot1-f47.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso6994972otf.12;
-        Fri, 12 Nov 2021 06:39:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=B6njGCOtAPdSNAuOe7swnVsW9oevSWDdaggrotGskeo=;
-        b=TJlypDzU95i4mocSVb0wvRQ5JPUWEaTkufTZoG7Aimq+/ghlSyvb+3NpSDyJL9Am/h
-         x2+C3GpB5S81OOmEH12rhaUoSWkgxQmNRVE0W8dCUnDMiBK4n/nip4RkwL3N/mZ1wquA
-         FXG4ttsF0Pg/X9jAZGnMLk58aE5nzNJqAhSkhji4fRS/QQp5+3aHYa+ZHvXWeVfggUly
-         7tBDvX3JeCMmrkRBTR7syhJzAIjfgMR1nVi0L/vSlYMRLfAvtFplLdrfq7QxE5DAcfv+
-         CxiRBOk+MoRLy6pXqPdZ1vfROYeUstbVcYIkUOWAeWdD3yXvScaUHzgfC+m9fwkKOHPI
-         o0Sg==
-X-Gm-Message-State: AOAM530SYBMePfvUzsIYCM0XvriQ2WYZkWCbUXiDN/6yDSuSH49QUEIX
-        cTB8W7en9HP52xkZSJstJA==
-X-Google-Smtp-Source: ABdhPJy2mKElAbOQoGe6LCLJxhUph8grG9DKPpaNJvjDqBm7dGdTlzYH+4C8eQ/v1DQl+h1S1uKjQw==
-X-Received: by 2002:a9d:6e0d:: with SMTP id e13mr13236285otr.10.1636727965575;
-        Fri, 12 Nov 2021 06:39:25 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id y9sm1092440oon.8.2021.11.12.06.39.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 06:39:25 -0800 (PST)
-Received: (nullmailer pid 2679482 invoked by uid 1000);
-        Fri, 12 Nov 2021 14:39:24 -0000
-Date:   Fri, 12 Nov 2021 08:39:24 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Jarrett Schultz <jaschultzms@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <mgross@linux.intel.com>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <balbi@kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: Re: [PATCH v2 1/5] dt-bindings: platform: microsoft: Document
- surface xbl
-Message-ID: <YY58nB3XjEbTFBzT@robh.at.kernel.org>
-References: <20211108164449.3036210-1-jaschultz@microsoft.com>
- <20211108164449.3036210-2-jaschultz@microsoft.com>
+        Fri, 12 Nov 2021 10:12:21 -0500
+Received: from mx0b-00190b01.pphosted.com (mx0b-00190b01.pphosted.com [IPv6:2620:100:9005:57f::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4155C061766;
+        Fri, 12 Nov 2021 07:09:30 -0800 (PST)
+Received: from pps.filterd (m0122331.ppops.net [127.0.0.1])
+        by mx0b-00190b01.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1ACCV105004786;
+        Fri, 12 Nov 2021 15:08:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=jan2016.eng;
+ bh=Tc1oqeLZzfNhAszq2bpTX2swrtLZAsuMR3FfV9S+7XQ=;
+ b=greD1YrC0B++LQXw2t40C+Al8yoOF4w3jDAlVOkGmQQr/WSHw8hE7xbeRoNazshoypPL
+ 5nEgSPPbrQ1Glm4HrH5thJPAvj8Vs8536O+/wM/1i0d/zKHaab12n1Ho10Pm/BjCDirl
+ Nt4ML1KC8V3Gjh1s7w0MWIkECUMODFCP+Pvf9VdIzIqjnVgMqR7k4UtAzHBlYVOSJa+e
+ 0CrTMzx0QRdmRNzfF07wcdcIy7k77/c8q/cUAv80+vfCY3WfB6gmm6H+Q+rjwYqiDZCS
+ NaWBtC9h0tLa9xDjXpAJOuQhY+jZ8J+IUgT2eyYXiO+9QgvTf/hZFeyNVpuGH9pqMRWM Jw== 
+Received: from prod-mail-ppoint7 (a72-247-45-33.deploy.static.akamaitechnologies.com [72.247.45.33] (may be forged))
+        by mx0b-00190b01.pphosted.com (PPS) with ESMTPS id 3c9rbgaw4g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 Nov 2021 15:08:44 +0000
+Received: from pps.filterd (prod-mail-ppoint7.akamai.com [127.0.0.1])
+        by prod-mail-ppoint7.akamai.com (8.16.1.2/8.16.1.2) with SMTP id 1ACF45Mu022259;
+        Fri, 12 Nov 2021 10:08:44 -0500
+Received: from prod-mail-relay18.dfw02.corp.akamai.com ([172.27.165.172])
+        by prod-mail-ppoint7.akamai.com with ESMTP id 3c7tffmun3-1;
+        Fri, 12 Nov 2021 10:08:43 -0500
+Received: from [0.0.0.0] (unknown [172.27.119.138])
+        by prod-mail-relay18.dfw02.corp.akamai.com (Postfix) with ESMTP id 24FAB57B;
+        Fri, 12 Nov 2021 15:08:42 +0000 (GMT)
+Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with it
+ - RFC
+To:     Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        Jim Cromie <jim.cromie@gmail.com>
+Cc:     gregkh@linuxfoundation.org, robdclark@gmail.com, sean@poorly.run,
+        daniel.vetter@ffwll.ch, seanpaul@chromium.org, lyude@redhat.com,
+        linux-kernel@vger.kernel.org, rostedt@goodmis.org,
+        mathieu.desnoyers@efficios.com, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, intel-gvt-dev@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, quic_saipraka@quicinc.com,
+        will@kernel.org, catalin.marinas@arm.com,
+        quic_psodagud@quicinc.com, maz@kernel.org, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, mingo@redhat.com
+References: <20211111220206.121610-1-jim.cromie@gmail.com>
+ <20211111220206.121610-9-jim.cromie@gmail.com>
+ <20211112114953.GA1381@axis.com>
+From:   Jason Baron <jbaron@akamai.com>
+Message-ID: <f3914fa9-8b22-d54e-3f77-d998e74094b9@akamai.com>
+Date:   Fri, 12 Nov 2021 10:08:41 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211108164449.3036210-2-jaschultz@microsoft.com>
+In-Reply-To: <20211112114953.GA1381@axis.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.425,18.0.790
+ definitions=2021-11-12_05:2021-11-11,2021-11-12 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ adultscore=0 spamscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2111120086
+X-Proofpoint-GUID: uhHmDAKu5ii3jEYUIQwvrN1aMKrmTEYA
+X-Proofpoint-ORIG-GUID: uhHmDAKu5ii3jEYUIQwvrN1aMKrmTEYA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-11-12_05,2021-11-12_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 lowpriorityscore=0
+ adultscore=0 impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 clxscore=1011 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
+ definitions=main-2111120086
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 08, 2021 at 08:44:45AM -0800, Jarrett Schultz wrote:
-> Introduce yaml for surface xbl driver.
+On 11/12/21 6:49 AM, Vincent Whitchurch wrote:
+> On Thu, Nov 11, 2021 at 03:02:04PM -0700, Jim Cromie wrote:
+>> Sean Paul proposed, in:
+>> https://urldefense.com/v3/__https://patchwork.freedesktop.org/series/78133/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdrewRA8Dki4A$ 
+>> drm/trace: Mirror DRM debug logs to tracefs
+>>
+>> His patchset's objective is to be able to independently steer some of
+>> the drm.debug stream to an alternate tracing destination, by splitting
+>> drm_debug_enabled() into syslog & trace flavors, and enabling them
+>> separately.  2 advantages were identified:
+>>
+>> 1- syslog is heavyweight, tracefs is much lighter
+>> 2- separate selection of enabled categories means less traffic
+>>
+>> Dynamic-Debug can do 2nd exceedingly well:
+>>
+>> A- all work is behind jump-label's NOOP, zero off cost.
+>> B- exact site selectivity, precisely the useful traffic.
+>>    can tailor enabled set interactively, at shell.
+>>
+>> Since the tracefs interface is effective for drm (the threads suggest
+>> so), adding that interface to dynamic-debug has real potential for
+>> everyone including drm.
+>>
+>> if CONFIG_TRACING:
+>>
+>> Grab Sean's trace_init/cleanup code, use it to provide tracefs
+>> available by default to all pr_debugs.  This will likely need some
+>> further per-module treatment; perhaps something reflecting hierarchy
+>> of module,file,function,line, maybe with a tuned flattening.
+>>
+>> endif CONFIG_TRACING
+>>
+>> Add a new +T flag to enable tracing, independent of +p, and add and
+>> use 3 macros: dyndbg_site_is_enabled/logging/tracing(), to encapsulate
+>> the flag checks.  Existing code treats T like other flags.
 > 
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+> I posted a patchset a while ago to do something very similar, but that
+> got stalled for some reason and I unfortunately didn't follow it up:
+> 
+>  https://urldefense.com/v3/__https://lore.kernel.org/lkml/20200825153338.17061-1-vincent.whitchurch@axis.com/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdrewRGytKHPg$ 
+> 
+> A key difference between that patchset and this patch (besides that
+> small fact that I used +x instead of +T) was that my patchset allowed
+> the dyndbg trace to be emitted to the main buffer and did not force them
+> to be in an instance-specific buffer.
 
-Author and Sob emails need to match.
+Yes, I agree I'd prefer that we print here to the 'main' buffer - it seems to keep things simpler and easier to combine the output from different
+sources as you mentioned.
+
+Thanks,
+
+-Jason
 
 > 
-> ---
+> That feature is quite important at least for my use case since I often
+> use dyndbg combined with function tracing, and the latter doesn't work
+> on non-main instances according to Documentation/trace/ftrace.rst.
 > 
-> Changes in v2:
->  - Removed json-schema dependence
->  - Elaborated on description of driver
->  - Updated example
+> For example, here's a random example of a bootargs from one of my recent
+> debugging sessions:
 > 
-> ---
-> 
->  .../platform/microsoft/surface-xbl.yaml       | 57 +++++++++++++++++++
->  MAINTAINERS                                   |  7 +++
->  2 files changed, 64 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> new file mode 100644
-> index 000000000000..09f806f373bd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> @@ -0,0 +1,57 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/platform/microsoft/surface-xbl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Surface Extensible Bootloader for Microsoft Surface Duo
-> +
-> +maintainers:
-> +  - Jarrett Schultz <jaschultzMS@gmail.com>
-> +
-> +description: |
-> +  Exposes the following device information to user space via sysfs -
-
-What's sysfs? :) Linux details don't go in bindings.
-
-> +    * board_id
-> +    * battery_present
-> +    * hw_init_retries
-> +    * is_customer_mode
-> +    * is_act_mode
-> +    * pmic_reset_reason
-> +    * touch_fw_version
-> +    * ocp_error_location
-> +  See sysfs documentation for more information.
-> +
-> +properties:
-> +  compatible:
-> +    const: microsoft,sm8150-surface-duo-xbl
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +unevaluatedProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +examples:
-> +  - |
-> +    xbl@146bfa94 {
-> +      compatible = "microsoft,sm8150-surface-duo-xbl";
-> +      reg = <0x00 0x146bfa94 0x00 0x100>;
-> +    };
-> +  - |
-> +    imem@146bf000 {
-> +      compatible = "simple-mfd";
-
-'simple-mfd' needs a specific compatible for the block.
-
-> +      reg = <0x0 0x146bf000 0x0 0x1000>;
-> +      ranges = <0x0 0x0 0x146bf000 0x1000>;
-> +
-> +      #address-cells = <1>;
-> +      #size-cells = <1>;
-> +
-> +      xbl@a94 {
-> +        compatible = "microsoft,sm8150-surface-duo-xbl";
-> +        reg = <0xa94 0x100>;
-> +      };
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index eeb4c70b3d5b..8643546f8fab 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -12423,6 +12423,13 @@ F:	Documentation/driver-api/surface_aggregator/clients/dtx.rst
->  F:	drivers/platform/surface/surface_dtx.c
->  F:	include/uapi/linux/surface_aggregator/dtx.h
->  
-> +MICROSOFT SURFACE DUO XBL DRIVER
-> +M:	Jarrett Schultz <jaschultz@microsoft.com>
-> +L:	linux-arm-msm@vger.kernel.org
-> +L:	platform-driver-x86@vger.kernel.org
-> +S:	Supported
-> +F:	Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-> +
->  MICROSOFT SURFACE GPE LID SUPPORT DRIVER
->  M:	Maximilian Luz <luzmaximilian@gmail.com>
->  L:	platform-driver-x86@vger.kernel.org
-> -- 
-> 2.25.1
-> 
+>  trace_event=printk:* ftrace_filter=_mmc*,mmc*,sd*,dw_mci*,mci*
+>  ftrace=function trace_buf_size=20M dyndbg="file drivers/mmc/* +x"
 > 
