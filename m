@@ -2,47 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC3C44E107
+	by mail.lfdr.de (Postfix) with ESMTP id 90CDF44E108
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 05:25:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbhKLE2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Nov 2021 23:28:03 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:54457 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229770AbhKLE2A (ORCPT
+        id S234584AbhKLE2E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 23:28:04 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:36799 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230403AbhKLE2D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Nov 2021 23:28:00 -0500
+        Thu, 11 Nov 2021 23:28:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1636691110; x=1668227110;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=U74oTn3YiWljquhRYz897S7wfraIcS+MTY2aLMzvIv8=;
-  b=in5KELDg+jowxzZ4wEcKD2t8CuPI6z2mZ+Gbs7gZLNCGgty4rdFlZ/fH
-   AU5DdX71PZWZL2vdtq9jtHokPaIwB5Z0AlTQj7WtomzB39wsWe3lERiVF
-   HuIP+GfIyITmUci54esGJ0m+WA/KPVsJXWtM4CHse3S5brhTuwzTICxI1
+  t=1636691114; x=1668227114;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version;
+  bh=cdkFVgjDJ8+uVmfLIwHM3XZjlTGoRIvGrQjqko0zAxI=;
+  b=ZhYYg6IY0WM1MpjvEoGqqtmd/NKAK8z3RCwoNWB/V7IbsUhr0wWFsjMe
+   WgivkKN40oujpVFzZ5+dltZ01LH3AKXB1LhmB1ScrDuh/hCZGw1ju2rAa
+   XVO7aSE7lUSlpgDWwwc8vFjDCA7UXM//72f1DSeTKdoYhdjPVe7iHtku6
    4=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 11 Nov 2021 20:25:10 -0800
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Nov 2021 20:25:13 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2021 20:25:09 -0800
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2021 20:25:12 -0800
 Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Thu, 11 Nov 2021 20:25:09 -0800
+ Thu, 11 Nov 2021 20:25:12 -0800
 Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 11 Nov 2021 20:25:06 -0800
+ 15.2.922.19; Thu, 11 Nov 2021 20:25:09 -0800
 From:   Fenglin Wu <quic_fenglinw@quicinc.com>
 To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <sboyd@kernel.org>
 CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>, <maz@kernel.org>
-Subject: [RESEND PATCH v2 00/11] A bunch of fix and optimization patches in spmi-pmic-arb.c
-Date:   Fri, 12 Nov 2021 12:24:08 +0800
-Message-ID: <1636691059-4305-1-git-send-email-quic_fenglinw@quicinc.com>
+        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>,
+        <maz@kernel.org>, Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+Subject: [RESEND PATCH v2 01/11] spmi: pmic-arb: handle spurious interrupt
+Date:   Fri, 12 Nov 2021 12:24:09 +0800
+Message-ID: <1636691059-4305-2-git-send-email-quic_fenglinw@quicinc.com>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1636691059-4305-1-git-send-email-quic_fenglinw@quicinc.com>
+References: <1636691059-4305-1-git-send-email-quic_fenglinw@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
@@ -52,48 +56,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change series includes some fixes and optimizations in spmi-pmic-arb.c.
-Following changes are made in v2 patches comparing to v1:
-  In [v2 01/11], added code to handle spurious interrupt.
-  In [v2 03/11], adressed minor comments to update the code logic.
-  In [v2 04/11], minor update to detect spurious interrupt.
-  In [v2 05/11], added Fixes tag.
-  In [v2 07/11], added Fixes tag and updated commit text to explain the problem.
-  In [v2 08/11], added binding change to make interrupt properties as optional.
-  In [v2 09/11], updated to check presence of "interrupt-controller" property.
-  In [v2 11/11], convert spmi-pmic-arb binding to YAML format.
+From: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
 
-Abhijeet Dharmapurikar (1):
-  spmi: pmic-arb: handle spurious interrupt
+Call handle_bad_irq() for handling spurious interrupt. While at it,
+add an error print in cleanup_irq() for any spurious interrupt which
+is fired but not having interrupt handler registered.
 
-Ashay Jaiswal (1):
-  spmi: pmic-arb: add support to dispatch interrupt based on IRQ status
+Signed-off-by: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+Signed-off-by: David Collins <collinsd@codeaurora.org>
+Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+---
+ drivers/spmi/spmi-pmic-arb.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-David Collins (6):
-  spmi: pmic-arb: check apid against limits before calling irq handler
-  spmi: pmic-arb: correct duplicate APID to PPID mapping logic
-  spmi: pmic-arb: block access for invalid PMIC arbiter v5 SPMI writes
-  bindings: spmi: spmi-pmic-arb: mark interrupt properties as optional
-  spmi: pmic-arb: make interrupt support optional
-  spmi: pmic-arb: increase SPMI transaction timeout delay
-
-Fenglin Wu (1):
-  dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-
-Subbaraman Narayanamurthy (1):
-  spmi: pmic-arb: do not ack and clear peripheral interrupts in
-    cleanup_irq
-
-Yimin Peng (1):
-  spmi: pmic-arb: clear unexpected interrupt trigger type
-
- .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  65 ---------
- .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 122 +++++++++++++++++
- drivers/spmi/spmi-pmic-arb.c                       | 148 +++++++++++++++------
- 3 files changed, 227 insertions(+), 108 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index bbbd311..da629cc 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -489,6 +489,8 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
+ 	u8 per = ppid & 0xFF;
+ 	u8 irq_mask = BIT(id);
+ 
++	dev_err_ratelimited(&pmic_arb->spmic->dev, "%s apid=%d sid=0x%x per=0x%x irq=%d\n",
++			__func__, apid, sid, per, id);
+ 	writel_relaxed(irq_mask, pmic_arb->ver_ops->irq_clear(pmic_arb, apid));
+ 
+ 	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, sid,
+@@ -502,10 +504,10 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
+ 				irq_mask, ppid);
+ }
+ 
+-static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
++static int periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
+ {
+ 	unsigned int irq;
+-	u32 status, id;
++	u32 status, id, handled = 0;
+ 	u8 sid = (pmic_arb->apid_data[apid].ppid >> 8) & 0xF;
+ 	u8 per = pmic_arb->apid_data[apid].ppid & 0xFF;
+ 
+@@ -520,7 +522,10 @@ static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
+ 			continue;
+ 		}
+ 		generic_handle_irq(irq);
++		handled++;
+ 	}
++
++	return (handled) ? 0 : -EINVAL;
+ }
+ 
+ static void pmic_arb_chained_irq(struct irq_desc *desc)
+@@ -531,7 +536,7 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+ 	int first = pmic_arb->min_apid >> 5;
+ 	int last = pmic_arb->max_apid >> 5;
+ 	u8 ee = pmic_arb->ee;
+-	u32 status, enable;
++	u32 status, enable, handled = 0;
+ 	int i, id, apid;
+ 
+ 	chained_irq_enter(chip, desc);
+@@ -546,10 +551,14 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+ 			enable = readl_relaxed(
+ 					ver_ops->acc_enable(pmic_arb, apid));
+ 			if (enable & SPMI_PIC_ACC_ENABLE_BIT)
+-				periph_interrupt(pmic_arb, apid);
++				if (periph_interrupt(pmic_arb, apid) == 0)
++					handled++;
+ 		}
+ 	}
+ 
++	if (handled == 0)
++		handle_bad_irq(desc);
++
+ 	chained_irq_exit(chip, desc);
+ }
+ 
 -- 
 2.7.4
 
