@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C62DC44E61B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 13:08:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE11C44E627
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 13:12:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234776AbhKLMLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Nov 2021 07:11:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36966 "EHLO
+        id S234927AbhKLMPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Nov 2021 07:15:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbhKLMLe (ORCPT
+        with ESMTP id S234818AbhKLMPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Nov 2021 07:11:34 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52815C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 04:08:43 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id i5so15159674wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 04:08:43 -0800 (PST)
+        Fri, 12 Nov 2021 07:15:33 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CCAC06127A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 04:12:42 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id u1so15095075wru.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 04:12:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=otZ0McVJ5SiYRqP7yOEzIbw/1AxWwGOspMcAdakaeds=;
-        b=LQvnnW/sBfmRpWNRpou+Po67N6Z73lHiWzAUWeL56rM8KZQ3wcMuaQRgL4/GQOgHAr
-         NR1N8PTQ7wPb9IWjzJE/t1++yyiwBNJyVLj/9x1KLhsENhmeUAOwV23X9xgrxu9dlZlK
-         seKCNreAhLBnz43Fg9g9UkKZpJNfC9Ft9GORMdYh4HJwBa0vHgHlHtAlp4EhcTk/OdNy
-         wRWINay5dRtLg7UIlQbAA7oPswjbqMCoX1c9wJB1r0beZvHgeuw/9uWDWc9AgbQOUVuV
-         ksKKfkkdm5ZXqiFm2hH26ZX6Uf503hnuuVwow3sJy2yfebYMkBaHDCTwrwEvvfjVLwkv
-         qmSA==
+        bh=5L2Z7i/0CCqj4qb/ptThJtLoV5s4peBITQWmOlmcr4w=;
+        b=K6OPlt8n0su7sJba65ho82L+iscKRWX0PKA21FHR/DlVVcSdPnmjXAFbHnU6uaULW1
+         S82bMEO6xvtuLAg5bZqiEOYmdUR2KM0upRnbx9vNPNvpgb4RSj58EUseN4AVjIRAkB5L
+         MDGyD3qJDE4+KMUPiG4LtYCpirRCVvNnIUx/CHqYDaZ2MzeST1RZvG0xGbgaeUetOJdg
+         hXc7fK0QTM0uNneghNMvOB4I3qVsNqTmJjOO2kEcGkKxDsEfxjYx5stvsVraiFayFLq8
+         v0ciAQUv3amurEpu9TuZOZw+c5Zmq82M2ibXCzqqpJeZpJS9T4sYc/BibbUJORlVcYY/
+         8o+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=otZ0McVJ5SiYRqP7yOEzIbw/1AxWwGOspMcAdakaeds=;
-        b=IzNbReaB8O0xRKbLtod4kUxw+QC2J611uCPvrUqdznj4d5suVAYq8P6WNe9pZuRLyO
-         GHyl0cKl/gVOIfGww0lolcpUET4LGzikEh+qtpr3OT11cGvBenAs6tiAb6QtyLcnUa8W
-         00HfP4oRQyrugyQlULF77DFiarOqwZeef1wwAgWiJgy1Lof2qmRrsQiUheMv6Zfsjsv4
-         kfbwE3fET3c7R5Jjg06kATlPRtp7aoKEYTrQAtD2WcCeIhJIZsdYbtR9oMAD4knbyg5n
-         N9MgRj26F0iLgqg51PKsEIQMMQibhpoupvDuJTjFnKe9AKLxeArwstagnL3KwVXWwc44
-         IOxg==
-X-Gm-Message-State: AOAM531bAL3EO9HDNC6tcV2kqaAmaymlVEs+HWSLh/xo+j/8f3EdFG3O
-        pUDt+efm3UXMCV8dLD4OSc5PQw==
-X-Google-Smtp-Source: ABdhPJxBlMEeY7j5TABoz1gcsiHhfYOgh3JsBIzuuI4vMpGemDgBxW2s1QNyVKfFDMXNmN/UEcWvGA==
-X-Received: by 2002:a5d:6e8c:: with SMTP id k12mr17741380wrz.401.1636718921903;
-        Fri, 12 Nov 2021 04:08:41 -0800 (PST)
+        bh=5L2Z7i/0CCqj4qb/ptThJtLoV5s4peBITQWmOlmcr4w=;
+        b=yRKmgGCl3xHdmw7rhug7QwigJAHi1owGb8KeT8QB8wZcXDNwOX+SH1ojvRlW0ngoBG
+         ZZF1iouhzbU7naDS8ALFYm2u/PkZtxTcACTghz36XwQgdc2zeA+2zxjHMCMgM0iHCs5K
+         25fN/k5j4+P1F7GWLoyRZfdB5cWXHAMEHPQOc1coo4rEAXr1G4VaBvE46WWKGwq4+XrL
+         VBKlD+mg1TCy9f3R9FmhPFdJc0i2kbwNRtIlV1kqAgBwbUFlfa0tw1ZLU5vtPPFzn0Hd
+         V13q2EQjFbdv975ghShNia8uAusOkpWC4c+tJocdVz7gRdcIRn4SuOfzWadJeRCc2KH+
+         KCdg==
+X-Gm-Message-State: AOAM533oIBbhCrxLG/qqdZt4NosLq1EFkvpkF/oZ1Y1imn2rfn9eQGK9
+        j9iynS8uYTTGdLYDn8c1A+58LA==
+X-Google-Smtp-Source: ABdhPJwSoDj507/aCQM/WzT+a0qkAA0exwa5MasbTkeo/oIGwJwB/uRaHhbTrB74j5Xw2jPJcG/3dg==
+X-Received: by 2002:a5d:548d:: with SMTP id h13mr17640686wrv.30.1636719161128;
+        Fri, 12 Nov 2021 04:12:41 -0800 (PST)
 Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id 126sm11086997wmz.28.2021.11.12.04.08.40
+        by smtp.gmail.com with ESMTPSA id g13sm5234966wmk.37.2021.11.12.04.12.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Nov 2021 04:08:41 -0800 (PST)
-Date:   Fri, 12 Nov 2021 12:08:39 +0000
+        Fri, 12 Nov 2021 04:12:40 -0800 (PST)
+Date:   Fri, 12 Nov 2021 12:12:38 +0000
 From:   Daniel Thompson <daniel.thompson@linaro.org>
 To:     Marijn Suijten <marijn.suijten@somainline.org>
 Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
@@ -66,80 +66,52 @@ Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Kiran Gunda <kgunda@codeaurora.org>,
         Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-        Courtney Cavin <courtney.cavin@sonymobile.com>
-Subject: Re: [RESEND PATCH v2 04/13] backlight: qcom-wled: Fix off-by-one
- maximum with default num_strings
-Message-ID: <20211112120839.i6g747vewg6bkyk7@maple.lan>
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
+Subject: Re: [RESEND PATCH v2 05/13] backlight: qcom-wled: Override default
+ length with qcom,enabled-strings
+Message-ID: <20211112121238.kb3kkt6xzv5so26j@maple.lan>
 References: <20211112002706.453289-1-marijn.suijten@somainline.org>
- <20211112002706.453289-5-marijn.suijten@somainline.org>
+ <20211112002706.453289-6-marijn.suijten@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211112002706.453289-5-marijn.suijten@somainline.org>
+In-Reply-To: <20211112002706.453289-6-marijn.suijten@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 12, 2021 at 01:26:57AM +0100, Marijn Suijten wrote:
-> When not specifying num-strings in the DT the default is used, but +1 is
-> added to it which turns WLED3 into 4 and WLED4/5 into 5 strings instead
-> of 3 and 4 respectively, causing out-of-bounds reads and register
-> read/writes.  This +1 exists for a deficiency in the DT parsing code,
-> and is simply omitted entirely - solving this oob issue - by parsing the
-> property separately much like qcom,enabled-strings.
+On Fri, Nov 12, 2021 at 01:26:58AM +0100, Marijn Suijten wrote:
+> The length of qcom,enabled-strings as property array is enough to
+> determine the number of strings to be enabled, without needing to set
+> qcom,num-strings to override the default number of strings when less
+> than the default (which is also the maxium) is provided in DT.
 > 
-> This also allows more stringent checks on the maximum value when
-> qcom,enabled-strings is provided in the DT.  Note that num-strings is
-> parsed after enabled-strings to give it final sign-off over the length,
-> which DT currently utilizes to get around an incorrect fixed read of
-> four elements from that array (has been addressed in a prior patch).
-> 
-> Fixes: 93c64f1ea1e8 ("leds: add Qualcomm PM8941 WLED driver")
+> Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
->  drivers/video/backlight/qcom-wled.c | 51 +++++++++++------------------
->  1 file changed, 19 insertions(+), 32 deletions(-)
+>  drivers/video/backlight/qcom-wled.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-> index 977cd75827d7..c5232478a343 100644
+> index c5232478a343..9bfbf601762a 100644
 > --- a/drivers/video/backlight/qcom-wled.c
 > +++ b/drivers/video/backlight/qcom-wled.c
-> @@ -1552,6 +1520,25 @@ static int wled_configure(struct wled *wled)
+> @@ -1518,6 +1518,8 @@ static int wled_configure(struct wled *wled)
+>  				return -EINVAL;
+>  			}
 >  		}
->  	}
-> 
-> +	rc = of_property_read_u32(dev->of_node, "qcom,num-strings", &val);
-> +	if (!rc) {
-> +		if (val < 1 || val > wled->max_string_count) {
-> +			dev_err(dev, "qcom,num-strings must be between 1 and %d\n",
-> +				wled->max_string_count);
-> +			return -EINVAL;
-> +		}
 > +
-> +		if (string_len > 0) {
-> +			dev_warn(dev, "qcom,num-strings and qcom,enabled-strings are ambiguous\n");
+> +		cfg->num_strings = string_len;
 
-This warning occurs even when there is no ambiguity.
+I still don't really understand why this wants to be a separate patch.
 
-This could be:
+The warning text emitted by the previous patch (whatever text we agree
+on) will be nonsense until this patch is applied.
 
-	if (string_len > 0 && val != string_len)
-
-The warning should also be below the error message on the next if statement.
-Combined these changes allows us to give a much more helpful and assertive
-warning message:
-
-qcom,num-strings mis-matches and will partially override
-qcom,enabled-strings (remove qcom,num-strings?)
-
-
-> +			if (val > string_len) {
-> +				dev_err(dev, "qcom,num-strings exceeds qcom,enabled-strings\n");
-> +				return -EINVAL;
-> +			}
-> +		}
+If this patch cannot appear before the warning is introduces then there
+is no correct order for patches 4 and 5 (which implies they should be the
+same patch).
 
 
 Daniel.
