@@ -2,83 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A851344E100
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 05:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CC3C44E107
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 05:25:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230486AbhKLE0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 Nov 2021 23:26:05 -0500
-Received: from mail-oi1-f178.google.com ([209.85.167.178]:35429 "EHLO
-        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbhKLE0C (ORCPT
+        id S230031AbhKLE2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 Nov 2021 23:28:03 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:54457 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229770AbhKLE2A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 Nov 2021 23:26:02 -0500
-Received: by mail-oi1-f178.google.com with SMTP id m6so15715882oim.2;
-        Thu, 11 Nov 2021 20:23:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3dQq4I227MVmj/mJuu+x0SuENW4zynmTgvI5Gd45HxM=;
-        b=sS6Xfq7c7Es2WQVooq/kt8OYlDov7W5D2LeBKgb3EVTQw+iUsizCL4pFv3audF3JV6
-         HdgvZZD1EobnxJvDvGXfsZa9o36+yvGLNSO552FlDURJ4MFNCQtSVvQ5IyrGR7nn3iXK
-         CP/6y8fOQvurITMfDhHLpsnXEAp7SFGyCThifmt1msgkczlTXxhYxkbnKKghrM8ETLn/
-         10XDjtD/xXhT1CRW7XIGIZB9vcXWzN4f+WdStLWfVIpA0wpLVZDFPbJtnvGkSQjUyp6e
-         C2n1l1D7tqfZN+eV2SgHnpG1EX65fBVkb+eCB5Ksz/73PbnzNvbE424Np4cnnsET45Ca
-         k3pQ==
-X-Gm-Message-State: AOAM531saJ5vZ0A2vmSACowscANXm6hTmqLTqcS6ZWyPDpjfTtUkmqc1
-        AVAqUrODcmSifub49qc37pV89bdY9Q==
-X-Google-Smtp-Source: ABdhPJz047OAXv4R/Qs0MJ3SGiM6kjGIUNixhPWX42NYZTZDp+UDQEOZ/D6LcVgz05Pk6hIlKsaB2g==
-X-Received: by 2002:aca:2b0f:: with SMTP id i15mr24664974oik.114.1636690991895;
-        Thu, 11 Nov 2021 20:23:11 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id x16sm1013240ott.8.2021.11.11.20.23.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Nov 2021 20:23:11 -0800 (PST)
-Received: (nullmailer pid 761481 invoked by uid 1000);
-        Fri, 12 Nov 2021 04:23:10 -0000
-Date:   Thu, 11 Nov 2021 22:23:10 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Geert Uytterhoeven <geert+renesas@glider.be>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-media@vger.kernel.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: Re: [PATCH v2] bindings: media: venus: Drop redundant maxItems for
- power-domain-names
-Message-ID: <YY3sLvysqWlB4f9Q@robh.at.kernel.org>
-References: <d94924e1bd00f396f2106f04d4a2bb839cf5f071.1636453406.git.geert+renesas@glider.be>
+        Thu, 11 Nov 2021 23:28:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636691110; x=1668227110;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=U74oTn3YiWljquhRYz897S7wfraIcS+MTY2aLMzvIv8=;
+  b=in5KELDg+jowxzZ4wEcKD2t8CuPI6z2mZ+Gbs7gZLNCGgty4rdFlZ/fH
+   AU5DdX71PZWZL2vdtq9jtHokPaIwB5Z0AlTQj7WtomzB39wsWe3lERiVF
+   HuIP+GfIyITmUci54esGJ0m+WA/KPVsJXWtM4CHse3S5brhTuwzTICxI1
+   4=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 11 Nov 2021 20:25:10 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2021 20:25:09 -0800
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Thu, 11 Nov 2021 20:25:09 -0800
+Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 11 Nov 2021 20:25:06 -0800
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>, <maz@kernel.org>
+Subject: [RESEND PATCH v2 00/11] A bunch of fix and optimization patches in spmi-pmic-arb.c
+Date:   Fri, 12 Nov 2021 12:24:08 +0800
+Message-ID: <1636691059-4305-1-git-send-email-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d94924e1bd00f396f2106f04d4a2bb839cf5f071.1636453406.git.geert+renesas@glider.be>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 09 Nov 2021 11:29:41 +0100, Geert Uytterhoeven wrote:
-> make dt_binding_check:
-> 
->     Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: ignoring, error in schema: properties: power-domain-names
->     warning: no schema found in file: Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
->     Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml: properties:power-domain-names: {'required': ['maxItems']} is not allowed for {'minItems': 2, 'maxItems': 3, 'items': [{'const': 'venus'}, {'const': 'vcodec0'}, {'const': 'cx'}]}
-> 	   hint: "maxItems" is not needed with an "items" list
-> 	   from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> 
-> Fixes: e48b839b6699c226 ("media: dt-bindings: media: venus: Add sc7280 dt schema")
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
-> v2:
->   - Add Acked-by,
->   - s/bogus/redundant/,
->   - Include full error message.
-> ---
->  Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 -
->  1 file changed, 1 deletion(-)
-> 
+This change series includes some fixes and optimizations in spmi-pmic-arb.c.
+Following changes are made in v2 patches comparing to v1:
+  In [v2 01/11], added code to handle spurious interrupt.
+  In [v2 03/11], adressed minor comments to update the code logic.
+  In [v2 04/11], minor update to detect spurious interrupt.
+  In [v2 05/11], added Fixes tag.
+  In [v2 07/11], added Fixes tag and updated commit text to explain the problem.
+  In [v2 08/11], added binding change to make interrupt properties as optional.
+  In [v2 09/11], updated to check presence of "interrupt-controller" property.
+  In [v2 11/11], convert spmi-pmic-arb binding to YAML format.
 
-Applied, thanks!
+Abhijeet Dharmapurikar (1):
+  spmi: pmic-arb: handle spurious interrupt
+
+Ashay Jaiswal (1):
+  spmi: pmic-arb: add support to dispatch interrupt based on IRQ status
+
+David Collins (6):
+  spmi: pmic-arb: check apid against limits before calling irq handler
+  spmi: pmic-arb: correct duplicate APID to PPID mapping logic
+  spmi: pmic-arb: block access for invalid PMIC arbiter v5 SPMI writes
+  bindings: spmi: spmi-pmic-arb: mark interrupt properties as optional
+  spmi: pmic-arb: make interrupt support optional
+  spmi: pmic-arb: increase SPMI transaction timeout delay
+
+Fenglin Wu (1):
+  dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
+
+Subbaraman Narayanamurthy (1):
+  spmi: pmic-arb: do not ack and clear peripheral interrupts in
+    cleanup_irq
+
+Yimin Peng (1):
+  spmi: pmic-arb: clear unexpected interrupt trigger type
+
+ .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  65 ---------
+ .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 122 +++++++++++++++++
+ drivers/spmi/spmi-pmic-arb.c                       | 148 +++++++++++++++------
+ 3 files changed, 227 insertions(+), 108 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+ create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+
+-- 
+2.7.4
+
