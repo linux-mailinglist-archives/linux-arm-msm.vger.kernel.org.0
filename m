@@ -2,252 +2,327 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFCFE44E361
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 09:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43AF244E467
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Nov 2021 11:12:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234614AbhKLIo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Nov 2021 03:44:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46412 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230464AbhKLIo2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Nov 2021 03:44:28 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCBFC0613F5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 00:41:37 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id t11so17191872ljh.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 00:41:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KSvh8KHURgcTWBUPLFGeUVbHkUcifiQEm231yb6rUOY=;
-        b=NleVtWuk62GXAJjJrUq02jk+Gr5WmM1bLmjYP7c7/TX6pJBdt+sqQopvdBupkmRg/D
-         1QfudTRXchnCaWeTiOlulJMZ8INr10wm/6wlhkjbcGTH4WEvx3zBtD1hQB9gBtRK+hoO
-         D90hzxybgEEwuo7muw76g7xx5KH9giphB57ClH0SCgDpGQPbUvAzs2OFTXm3XehKQWP0
-         FOJJmhjuYy4MdJfKABz65098e1DlZbUPz+jJ7tT2cL0pgwgZM6pGS21cE6Ys0Rp3YH3t
-         6wid9ZoOKIwKD+uB73bPSFIWVMz1hIYYidWIGZ1yTRP1vEpfMHG32sVqiIOUJd8CkVRx
-         4uKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KSvh8KHURgcTWBUPLFGeUVbHkUcifiQEm231yb6rUOY=;
-        b=nngJjmT9aPQTwE7ZFn2w84VDIqIA5yx+14XXKLF7ncD0Lb9meSWFIj6zSz4hGHFB4+
-         o/OHDY1nV9ZHhBOW/YbBVey+dZPqOe6wj6Hgl/rwhGQBgwfQ6Ece+GEWwLhbf42RqOdT
-         sIiePt5tHhDWeNStLRGgO9AL9WpvF1zdf32JPWG4MpUJ+G6IEikTFiZMRMj2s1Yil/As
-         TBb4Zpb9YeVzOy/GElPB5F6hkexaixSqiooaMc3RJPykDRylE9ROQ92q6cw6qUHjCvuM
-         Xn5Hubr/frPHkkolVRkCVRPTys80+N3OScvoI6AX3gUCpUw+EAPjSkRVJpR/dLSzTgwY
-         jSpA==
-X-Gm-Message-State: AOAM530Gf7oMN6WsG9JWBcwTohBHGFoP2lUBeWYIuVOr8Bu2zSiBCqSj
-        zrQHPY7VYsjOB5ft776yk+lWwA==
-X-Google-Smtp-Source: ABdhPJwYIYHt0nETzLe2m5+mUUUYLsl1K/l9nQR6iRE2rIUsmmq137aFYlqk6RVONXzULw7w/aL9Sw==
-X-Received: by 2002:a2e:8895:: with SMTP id k21mr13833225lji.331.1636706495681;
-        Fri, 12 Nov 2021 00:41:35 -0800 (PST)
-Received: from [192.168.1.102] (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
-        by smtp.gmail.com with ESMTPSA id t23sm503290lfg.63.2021.11.12.00.41.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Nov 2021 00:41:35 -0800 (PST)
-Subject: Re: [PATCH v5 03/22] dt-bindings: qcom-bam: Convert binding to YAML
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
-Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
- <20211110105922.217895-4-bhupesh.sharma@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <dd8cfa0d-0128-84a9-b2e5-b994a2bbd4cf@linaro.org>
-Date:   Fri, 12 Nov 2021 10:41:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S234675AbhKLKOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Nov 2021 05:14:50 -0500
+Received: from mga02.intel.com ([134.134.136.20]:34499 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234656AbhKLKOu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 12 Nov 2021 05:14:50 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10165"; a="220320315"
+X-IronPort-AV: E=Sophos;i="5.87,229,1631602800"; 
+   d="scan'208";a="220320315"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2021 02:11:59 -0800
+X-IronPort-AV: E=Sophos;i="5.87,229,1631602800"; 
+   d="scan'208";a="492945584"
+Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.72.185])
+  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2021 02:11:57 -0800
+Received: from platvala by thrakatuluk with local (Exim 4.94)
+        (envelope-from <petri.latvala@intel.com>)
+        id 1mlTWD-0002at-9V; Fri, 12 Nov 2021 12:10:49 +0200
+Date:   Fri, 12 Nov 2021 12:10:49 +0200
+From:   Petri Latvala <petri.latvala@intel.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     igt-dev@lists.freedesktop.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH igt v2 3/3] msm: Add recovery tests
+Message-ID: <YY49qR9ZqHCxbMSh@platvala-desk.ger.corp.intel.com>
+References: <20211110184213.649787-1-robdclark@gmail.com>
+ <20211110184213.649787-4-robdclark@gmail.com>
+ <CAF6AEGsh4ow448Y5xtt2rnX=zcFCQvqk9Mf59AB_ifmw9mm0Lw@mail.gmail.com>
+ <YY0IrRC0ZtkQvxJd@platvala-desk.ger.corp.intel.com>
+ <CAF6AEGtn+Y_nQj6GYQrhc+8RyR+NNc5778DsMUrtqPsvetanzQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20211110105922.217895-4-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGtn+Y_nQj6GYQrhc+8RyR+NNc5778DsMUrtqPsvetanzQ@mail.gmail.com>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhupesh,
-
-On 11/10/21 12:59 PM, Bhupesh Sharma wrote:
-> Convert Qualcomm BAM DMA devicetree binding to YAML.
+On Thu, Nov 11, 2021 at 09:35:16AM -0800, Rob Clark wrote:
+> On Thu, Nov 11, 2021 at 4:13 AM Petri Latvala <petri.latvala@intel.com> wrote:
+> >
+> > On Wed, Nov 10, 2021 at 11:00:41AM -0800, Rob Clark wrote:
+> > > On Wed, Nov 10, 2021 at 10:37 AM Rob Clark <robdclark@gmail.com> wrote:
+> > > >
+> > > > From: Rob Clark <robdclark@chromium.org>
+> > > >
+> > > > Add tests to exercise:
+> > > >
+> > > > 1. sw hangcheck timeout
+> > > > 2. gpu fault (hang) recovery
+> > > > 3. iova fault recovery
+> > > >
+> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > ---
+> > > >  lib/igt_msm.h        |   3 +
+> > > >  tests/meson.build    |   1 +
+> > > >  tests/msm_recovery.c | 172 +++++++++++++++++++++++++++++++++++++++++++
+> > > >  3 files changed, 176 insertions(+)
+> > > >  create mode 100644 tests/msm_recovery.c
+> > > >
+> > > > diff --git a/lib/igt_msm.h b/lib/igt_msm.h
+> > > > index 1a66c806..421d23ed 100644
+> > > > --- a/lib/igt_msm.h
+> > > > +++ b/lib/igt_msm.h
+> > > > @@ -97,6 +97,9 @@ enum adreno_pm4_packet_type {
+> > > >
+> > > >  enum adreno_pm4_type3_packets {
+> > > >         CP_NOP = 16,
+> > > > +       CP_WAIT_MEM_GTE = 20,
+> > > > +       CP_WAIT_REG_MEM = 60,
+> > > > +       CP_MEM_WRITE = 61,
+> > > >  };
+> > > >
+> > > >  static inline unsigned
+> > > > diff --git a/tests/meson.build b/tests/meson.build
+> > > > index 0af3e03a..166e3494 100644
+> > > > --- a/tests/meson.build
+> > > > +++ b/tests/meson.build
+> > > > @@ -60,6 +60,7 @@ test_progs = [
+> > > >         'kms_vrr',
+> > > >         'kms_writeback',
+> > > >         'meta_test',
+> > > > +       'msm_recovery',
+> > > >         'msm_submit',
+> > > >         'panfrost_get_param',
+> > > >         'panfrost_gem_new',
+> > > > diff --git a/tests/msm_recovery.c b/tests/msm_recovery.c
+> > > > new file mode 100644
+> > > > index 00000000..b71326b8
+> > > > --- /dev/null
+> > > > +++ b/tests/msm_recovery.c
+> > > > @@ -0,0 +1,172 @@
+> > > > +/*
+> > > > + * Copyright © 2021 Google, Inc.
+> > > > + *
+> > > > + * Permission is hereby granted, free of charge, to any person obtaining a
+> > > > + * copy of this software and associated documentation files (the "Software"),
+> > > > + * to deal in the Software without restriction, including without limitation
+> > > > + * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+> > > > + * and/or sell copies of the Software, and to permit persons to whom the
+> > > > + * Software is furnished to do so, subject to the following conditions:
+> > > > + *
+> > > > + * The above copyright notice and this permission notice (including the next
+> > > > + * paragraph) shall be included in all copies or substantial portions of the
+> > > > + * Software.
+> > > > + *
+> > > > + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> > > > + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> > > > + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+> > > > + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> > > > + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+> > > > + * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+> > > > + * IN THE SOFTWARE.
+> > > > + */
+> > > > +
+> > > > +#include <sys/poll.h>
+> > > > +
+> > > > +#include "igt.h"
+> > > > +#include "igt_msm.h"
+> > > > +
+> > > > +static struct msm_device *dev;
+> > > > +static struct msm_bo *scratch_bo;
+> > > > +static uint32_t *scratch;
+> > > > +
+> > > > +/*
+> > > > + * Helpers for cmdstream packet building:
+> > > > + */
+> > > > +
+> > > > +static void
+> > > > +wait_mem_gte(struct msm_cmd *cmd, uint32_t offset_dwords, uint32_t ref)
+> > > > +{
+> > > > +       msm_cmd_pkt7(cmd, CP_WAIT_MEM_GTE, 4);
+> > > > +       msm_cmd_emit(cmd, 0);                              /* RESERVED */
+> > > > +       msm_cmd_bo  (cmd, scratch_bo, offset_dwords * 4);  /* POLL_ADDR_LO/HI */
+> > > > +       msm_cmd_emit(cmd, ref);                            /* REF */
+> > > > +}
+> > > > +
+> > > > +static void
+> > > > +mem_write(struct msm_cmd *cmd, uint32_t offset_dwords, uint32_t val)
+> > > > +{
+> > > > +       msm_cmd_pkt7(cmd, CP_MEM_WRITE, 3);
+> > > > +       msm_cmd_bo  (cmd, scratch_bo, offset_dwords * 4);  /* ADDR_LO/HI */
+> > > > +       msm_cmd_emit(cmd, val);                            /* VAL */
+> > > > +}
+> > > > +
+> > > > +/*
+> > > > + * Helper to wait on a fence-fd:
+> > > > + */
+> > > > +static void
+> > > > +wait_and_close(int fence_fd)
+> > > > +{
+> > > > +       poll(&(struct pollfd){fence_fd, POLLIN}, 1, -1);
+> > > > +       close(fence_fd);
+> > > > +}
+> > > > +
+> > > > +/*
+> > > > + * Helper for hang tests.  Emits multiple submits, with one in the middle
+> > > > + * that triggers a fault, and confirms that the submits before and after
+> > > > + * the faulting one execute properly, ie. that the driver properly manages
+> > > > + * to recover and re-queue the submits after the faulting submit;
+> > > > + */
+> > > > +static void
+> > > > +do_hang_test(struct msm_pipe *pipe)
+> > > > +{
+> > > > +       struct msm_cmd *cmds[16];
+> > > > +       int fence_fds[ARRAY_SIZE(cmds)];
+> > > > +
+> > > > +       memset(scratch, 0, 0x1000);
+> > > > +
+> > > > +       for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
+> > > > +               struct msm_cmd *cmd = igt_msm_cmd_new(pipe, 0x1000);
+> > > > +
+> > > > +               cmds[i] = cmd;
+> > > > +
+> > > > +               /*
+> > > > +                * Emit a packet to wait for scratch[0] to be >= 1
+> > > > +                *
+> > > > +                * This lets us force the GPU to wait until all the cmdstream is
+> > > > +                * queued up.
+> > > > +                */
+> > > > +               wait_mem_gte(cmd, 0, 1);
+> > > > +
+> > > > +               if (i == 10) {
+> > > > +                       msm_cmd_emit(cmd, 0xdeaddead);
+> > > > +               }
+> > > > +
+> > > > +               /* Emit a packet to write scratch[1+i] = 2+i: */
+> > > > +               mem_write(cmd, 1+i, 2+i);
+> > > > +       }
+> > > > +
+> > > > +       for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
+> > > > +               fence_fds[i] = igt_msm_cmd_submit(cmds[i]);
+> > > > +       }
+> > > > +
+> > > > +       usleep(10000);
+> > > > +
+> > > > +       /* Let the WAIT_MEM_GTE complete: */
+> > > > +       scratch[0] = 1;
+> > > > +
+> > > > +       for (unsigned i = 0; i < ARRAY_SIZE(cmds); i++) {
+> > > > +               wait_and_close(fence_fds[i]);
+> > > > +               igt_msm_cmd_free(cmds[i]);
+> > > > +               if (i == 10)
+> > > > +                       continue;
+> > > > +               igt_assert_eq(scratch[1+i], 2+i);
+> > > > +       }
+> > > > +}
+> > > > +
+> > > > +/*
+> > > > + * Tests for drm/msm hangcheck, recovery, and fault handling
+> > > > + */
+> > > > +
+> > > > +igt_main
+> > > > +{
+> > > > +       static struct msm_pipe *pipe = NULL;
+> > > > +
+> > > > +       igt_fixture {
+> > > > +               dev = igt_msm_dev_open();
+> > > > +               pipe = igt_msm_pipe_open(dev, 0);
+> > > > +               scratch_bo = igt_msm_bo_new(dev, 0x1000, MSM_BO_WC);
+> > > > +               scratch = igt_msm_bo_map(scratch_bo);
+> > > > +       }
+> > > > +
+> > > > +       igt_describe("Test sw hangcheck handling");
+> > > > +       igt_subtest("hangcheck") {
+> > > > +               igt_require(dev->gen >= 6);
+> > > > +
+> > > > +               /* Disable hw hang detection to force fallback to sw hangcheck: */
+> > > > +               igt_debugfs_write(dev->fd, "disable_err_irq", "Y");
+> > >
+> > > note that this depends on [1].. not sure if there is any constraint
+> > > about landing igt tests before some debugfs they depend on lands
+> > > upstream on the kernel side?
+> > >
+> > > [1] https://patchwork.freedesktop.org/patch/462625/?series=96725&rev=1
+> >
+> > The usual ordering dependency of kernel vs userspace, where both sides
+> > are reviewed and ready to go before anything lands. But then the
+> > actual merging with IGT is not so strict, IGT can go in first as long
+> > as there's a consensus that the required kernel changes are going in
+> > in finite time.
+> >
+> > That said, IGT is supposed to do the right thing for kernels some time
+> > back, especially LTS kernels, so this test needs to properly handle
+> > the debugfs file missing regardless of merging order.
+> >
+> > Some kind of igt_require check for the debugfs file takes care of
+> > that.
+> >
 > 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->   .../devicetree/bindings/dma/qcom_bam_dma.txt  | 50 ----------
->   .../devicetree/bindings/dma/qcom_bam_dma.yaml | 91 +++++++++++++++++++
->   2 files changed, 91 insertions(+), 50 deletions(-)
->   delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
->   create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> deleted file mode 100644
-> index cf5b9e44432c..000000000000
-> --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> +++ /dev/null
-> @@ -1,50 +0,0 @@
-> -QCOM BAM DMA controller
-> -
-> -Required properties:
-> -- compatible: must be one of the following:
-> - * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
-> - * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
-> - * "qcom,bam-v1.7.0" for MSM8916
-> -- reg: Address range for DMA registers
-> -- interrupts: Should contain the one interrupt shared by all channels
-> -- #dma-cells: must be <1>, the cell in the dmas property of the client device
-> -  represents the channel number
-> -- clocks: required clock
-> -- clock-names: must contain "bam_clk" entry
-> -- qcom,ee : indicates the active Execution Environment identifier (0-7) used in
-> -  the secure world.
-> -- qcom,controlled-remotely : optional, indicates that the bam is controlled by
-> -  remote proccessor i.e. execution environment.
-> -- num-channels : optional, indicates supported number of DMA channels in a
-> -  remotely controlled bam.
-> -- qcom,num-ees : optional, indicates supported number of Execution Environments
-> -  in a remotely controlled bam.
-> -
-> -Example:
-> -
-> -	uart-bam: dma@f9984000 = {
-> -		compatible = "qcom,bam-v1.4.0";
-> -		reg = <0xf9984000 0x15000>;
-> -		interrupts = <0 94 0>;
-> -		clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
-> -		clock-names = "bam_clk";
-> -		#dma-cells = <1>;
-> -		qcom,ee = <0>;
-> -	};
-> -
-> -DMA clients must use the format described in the dma.txt file, using a two cell
-> -specifier for each channel.
-> -
-> -Example:
-> -	serial@f991e000 {
-> -		compatible = "qcom,msm-uart";
-> -		reg = <0xf991e000 0x1000>
-> -			<0xf9944000 0x19000>;
-> -		interrupts = <0 108 0>;
-> -		clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
-> -			<&gcc GCC_BLSP1_AHB_CLK>;
-> -		clock-names = "core", "iface";
-> -
-> -		dmas = <&uart-bam 0>, <&uart-bam 1>;
-> -		dma-names = "rx", "tx";
-> -	};
-> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> new file mode 100644
-> index 000000000000..3ca222bd10bd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> @@ -0,0 +1,91 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/qcom_bam_dma.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: QCOM BAM DMA controller binding
-> +
-> +maintainers:
-> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> +
-> +description: |
-> +  This document defines the binding for the BAM DMA controller
-> +  found on Qualcomm parts.
-> +
-> +allOf:
-> +  - $ref: "dma-controller.yaml#"
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,bam-v1.3.0 # for APQ8064, IPQ8064 and MSM8960
-> +      - qcom,bam-v1.4.0 # for MSM8974, APQ8074 and APQ8084
-> +      - qcom,bam-v1.7.0 # for MSM8916
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: bam_clk
-> +
-> +  interrupts:
-> +    minItems: 1
-> +    maxItems: 31
-> +
-> +  num-channels:
-> +    maximum: 31
-> +    description:
-> +      Indicates supported number of DMA channels in a remotely controlled bam.
-> +
-> +  "#dma-cells":
-> +    const: 1
-> +    description: The single cell represents the channel index.
-> +
-> +  qcom,ee:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 0
-> +    maximum: 7
-> +    description:
-> +      Indicates the active Execution Environment identifier (0-7)
-> +      used in the secure world.
-> +
-> +  qcom,controlled-remotely:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description:
-> +      Indicates that the bam is controlled by remote proccessor i.e.
-> +      execution environment.
-> +
-> +  qcom,num-ees:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 0
-> +    maximum: 31
-> +    default: 2
-> +    description:
-> +      Indicates supported number of Execution Environments in a
-> +      remotely controlled bam.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - "#dma-cells"
-> +  - qcom,ee
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
-> +    dma-controller@f9984000 {
-> +        compatible = "qcom,bam-v1.4.0";
-> +        reg = <0xf9984000 0x15000>;
-> +        interrupts = <0 94 0>;
-> +        clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
-> +        clock-names = "bam_clk";
-> +        #dma-cells = <1>;
-> +        qcom,ee = <0>;
-> +    };
-> 
+> Hmm, unless I'm overlooking something, I guess we need a helper to
+> check for the existence of a debugfs file?
 
-this change should be rebased on top of the upstream commit 37aef53f5cc ("dt-bindings:
-dmaengine: bam_dma: Add "powered remotely" mode"), which adds 'qcom,powered-remotely'
-property description.
+Yeah =(
 
---
-Best wishes,
-Vladimir
+Unless the file supports reading.
+
+
+-- 
+Petri Latvala
+
+
+> 
+> BR,
+> -R
+> 
+> >
+> > --
+> > Petri Latvala
+> >
+> >
+> >
+> >
+> > >
+> > > BR,
+> > > -R
+> > >
+> > > > +
+> > > > +               do_hang_test(pipe);
+> > > > +
+> > > > +               igt_debugfs_write(dev->fd, "disable_err_irq", "N");
+> > > > +       }
+> > > > +
+> > > > +       igt_describe("Test hw fault handling");
+> > > > +       igt_subtest("gpu-fault") {
+> > > > +               igt_require(dev->gen >= 6);
+> > > > +
+> > > > +               do_hang_test(pipe);
+> > > > +       }
+> > > > +
+> > > > +       igt_describe("Test iova fault handling");
+> > > > +       igt_subtest("iova-fault") {
+> > > > +               struct msm_cmd *cmd;
+> > > > +
+> > > > +               igt_require(dev->gen >= 6);
+> > > > +
+> > > > +               cmd = igt_msm_cmd_new(pipe, 0x1000);
+> > > > +
+> > > > +               msm_cmd_pkt7(cmd, CP_MEM_WRITE, 3);
+> > > > +               msm_cmd_emit(cmd, 0xdeaddead);           /* ADDR_LO */
+> > > > +               msm_cmd_emit(cmd, 0x1);                  /* ADDR_HI */
+> > > > +               msm_cmd_emit(cmd, 0x123);                /* VAL */
+> > > > +
+> > > > +               wait_and_close(igt_msm_cmd_submit(cmd));
+> > > > +       }
+> > > > +
+> > > > +       igt_fixture {
+> > > > +               igt_msm_bo_free(scratch_bo);
+> > > > +               igt_msm_pipe_close(pipe);
+> > > > +               igt_msm_dev_close(dev);
+> > > > +       }
+> > > > +}
+> > > > --
+> > > > 2.31.1
+> > > >
