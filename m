@@ -2,152 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA7A944F4AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Nov 2021 19:55:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1C8144F4C1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Nov 2021 20:13:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236006AbhKMS6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Nov 2021 13:58:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49358 "EHLO
+        id S236009AbhKMTQP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Nov 2021 14:16:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbhKMS6a (ORCPT
+        with ESMTP id S233692AbhKMTQP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Nov 2021 13:58:30 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD480C061767
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 10:55:37 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id m6so25139141oim.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 10:55:37 -0800 (PST)
+        Sat, 13 Nov 2021 14:16:15 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915E4C061766
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 11:13:22 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id o83so25115930oif.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 11:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=aEaoQk4S2VEKJUWN86163Buqvqi3IEqLz/+vozzoOP4=;
-        b=TW/Ad79WaYF4EY3jQBBipTw3TfDqUwRUflKXpjIunx6UOui1ILIWRVQBUhVDCCm/et
-         +tJBp2SGpjrFmHJVw//MrMWKsGahuwAeSyNkqlV24EZt9YSwUi0Qpnn4+W3DIZERjNPb
-         ubrqU5qqTw4VP2j86wlzb188PRvKcudMgRncMNJXWtcfvQXm6Bk68/EA8Hyq5sH98mBi
-         NcAcCxW8G/JCVcJtC4kRIbgqkra0IbefUiCqN4eIovjHQfJUE2y6Dnr8AjOyQwkbp5Ys
-         Pwp/LitZ939vqRYOBD70ru9jttzvsR8sWt49Qcjr7tueohKYxD7rSnWQ84hSXUUjFBT1
-         POyQ==
+        bh=VX9u57ND9eVK+gTaCNiN80rSb5UrqPdKqsespFT8p5E=;
+        b=cL66v3koUCiHVwtGlyUC95j/M4cAp5NUs3TJK3Fl9emWWbiHwS01dRp+MApY+ReS6F
+         eVNgDxjf8LODFMBYP6ig4D4w49D3tQIM1KwqpUkHXuE8IYzYSKgoSz9GytD8d5wW6MXc
+         AsjHIca9Wv6ahS+froBZVUMHz2JSyvSgxvLEekKH7iYKxCklwTT7wgaQbk6fb0lhyOlC
+         uBnNwK8xcRSOotXddZjgyLo+7lL71tXzR/J9EI0PFZ6XriqgY7zWBnKplg8BqFoNs0yF
+         ZC0WjEK4eDOKUHNe6+vCp1GuHb7ZkJtajlNs32IpQifqaFqQes3NDXhdZRd3PPjHftvg
+         fhRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=aEaoQk4S2VEKJUWN86163Buqvqi3IEqLz/+vozzoOP4=;
-        b=QhU4phigqCOppWj33BBfZJgjnoum+AvNRy5yLxFHvLkcRrDkYq1vOzIfSpR2v5ofuO
-         Gc8CcjCdhB7t3QZCi565nRH3Qsii/T5GthTH1A9c36TRwZWLPRPSqk4zWC+z7IpFP/vq
-         JYHxoxVtLcY5XjF92THBVVQtS/cGxYD8/l/qMMOiHw2Or1YxvFhsq1a2L9LoLXgc56cS
-         KIEAfeCse+XtBl5u567OppMAG7qTPtST/VoUX2iGD008ejnSXbRvkA5wx5cyC7cIzPXA
-         GK6Nyp1Dby/Qcl1TlF5Sq2Es9ObQ1Vud/tYYVDISwSJGMpMp4b/bhLewg9L7NSJXO3KF
-         kc0Q==
-X-Gm-Message-State: AOAM532a9DNXq9+HA6g1DibQ0Xf9s+UQozxOAYB9EuHxJaAeDpNSO7t9
-        CJ6dZtkDsmQ6dXdralF/jHIFVA==
-X-Google-Smtp-Source: ABdhPJxPEAu48dyuGhj2JUv8X/eJPmCFi7hIHbunZ2UyNUnWMWOO3GwDSrehXn9dqGOnXR99HpouBQ==
-X-Received: by 2002:aca:b386:: with SMTP id c128mr35777005oif.161.1636829737116;
-        Sat, 13 Nov 2021 10:55:37 -0800 (PST)
+        bh=VX9u57ND9eVK+gTaCNiN80rSb5UrqPdKqsespFT8p5E=;
+        b=v59ls5B7DqWPk7CiPHznMNvLdLnGccaVSPsTL+AFx01bPF2W+YHBqYyGIh0fE/E6f+
+         yQvscF41WAa8hDznaiyRP3ob89J3l4A3A2AbJn2I8dt1A93Z1LD/e49lVBq2iaVYp4yV
+         tStKADTEi3p0mAarX9SuLh8pr4DhFTSBRSJsf/1Lf+MMwRb0bGFv2jkXBlVdsOc8lu8e
+         FCEfJtC60qfSC16gq5+dJ/meFl2xYQkyBrJGTTA3Macg4H3X/OxsGQudAn8yLRfJwfdG
+         sHAr9yxiwezX9gnzMUf4IN1dQRNPvYmwzJXBRbvhnv6GsMOIlh/azF3vK1nmPavR73BY
+         XczA==
+X-Gm-Message-State: AOAM532e/qevJ+LGwpF5qANucia6SWkX/vIuKKos389fmnnd9t/3ojM3
+        HWGEGHKFOgXRe8snMnS4NaalW6HJ3nhspg==
+X-Google-Smtp-Source: ABdhPJxEb43QBIsiGI+QjTsHJYPHDG8L4nisFz66waqXIwZHTBKNufbppOOM4duDBS8P33eOlaosrw==
+X-Received: by 2002:aca:be54:: with SMTP id o81mr34259607oif.64.1636830801950;
+        Sat, 13 Nov 2021 11:13:21 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s2sm589548otr.69.2021.11.13.10.55.36
+        by smtp.gmail.com with ESMTPSA id d25sm2023262oti.9.2021.11.13.11.13.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Nov 2021 10:55:36 -0800 (PST)
-Date:   Sat, 13 Nov 2021 12:55:32 -0600
+        Sat, 13 Nov 2021 11:13:21 -0800 (PST)
+Date:   Sat, 13 Nov 2021 13:13:16 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: Re: [PATCH 1/3][RESEND] cpufreq: qcom-cpufreq-hw: Avoid stack buffer
- for IRQ name
-Message-ID: <YZAKJKEN5VejME5Z@builder.lan>
-References: <20211111154808.2024808-1-vladimir.zapolskiy@linaro.org>
- <20211111154808.2024808-2-vladimir.zapolskiy@linaro.org>
- <3711b990-a00a-9fce-0e08-657070d0a990@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>
+Subject: Re: [PATCH v5 03/22] dt-bindings: qcom-bam: Convert binding to YAML
+Message-ID: <YZAOTCQ0yIJUJTYO@builder.lan>
+References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
+ <20211110105922.217895-4-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3711b990-a00a-9fce-0e08-657070d0a990@linaro.org>
+In-Reply-To: <20211110105922.217895-4-bhupesh.sharma@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 12 Nov 14:16 CST 2021, Dmitry Baryshkov wrote:
+On Wed 10 Nov 04:59 CST 2021, Bhupesh Sharma wrote:
 
-> On 11/11/2021 18:48, Vladimir Zapolskiy wrote:
-> > From: Ard Biesheuvel <ardb@kernel.org>
-> > 
-> > Registering an IRQ requires the string buffer containing the name to
-> > remain allocated, as the name is not copied into another buffer.
-> > 
-> > So let's add a irq_name field to the data struct instead, which is
-> > guaranteed to have the appropriate lifetime.
-> > 
-> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> > Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
-> > Tested-by: Steev Klimaszewski <steev@kali.org>
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > ---
-> > vzapolskiy: rebased, added all collected tags and resend the change from Ard
-> > 
-> >   drivers/cpufreq/qcom-cpufreq-hw.c | 8 ++++----
-> >   1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > index a2be0df7e174..3b5835336658 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > @@ -46,6 +46,7 @@ struct qcom_cpufreq_data {
-> >   	 */
-> >   	struct mutex throttle_lock;
-> >   	int throttle_irq;
-> > +	char irq_name[15];
-> >   	bool cancel_throttle;
-> >   	struct delayed_work throttle_work;
-> >   	struct cpufreq_policy *policy;
-> > @@ -375,7 +376,6 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
-> >   {
-> >   	struct qcom_cpufreq_data *data = policy->driver_data;
-> >   	struct platform_device *pdev = cpufreq_get_driver_data();
-> > -	char irq_name[15];
-> >   	int ret;
-> >   	/*
-> > @@ -392,11 +392,11 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
-> >   	mutex_init(&data->throttle_lock);
-> >   	INIT_DEFERRABLE_WORK(&data->throttle_work, qcom_lmh_dcvs_poll);
-> > -	snprintf(irq_name, sizeof(irq_name), "dcvsh-irq-%u", policy->cpu);
-> > +	snprintf(data->irq_name, sizeof(data->irq_name), "dcvsh-irq-%u", policy->cpu);
+> Convert Qualcomm BAM DMA devicetree binding to YAML.
 > 
-> It might be easier to use devm_kasprintf() here.
+> Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  .../devicetree/bindings/dma/qcom_bam_dma.txt  | 50 ----------
+>  .../devicetree/bindings/dma/qcom_bam_dma.yaml | 91 +++++++++++++++++++
+>  2 files changed, 91 insertions(+), 50 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+>  create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> deleted file mode 100644
+> index cf5b9e44432c..000000000000
+> --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> +++ /dev/null
+> @@ -1,50 +0,0 @@
+> -QCOM BAM DMA controller
+> -
+> -Required properties:
+> -- compatible: must be one of the following:
+> - * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
+> - * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
+> - * "qcom,bam-v1.7.0" for MSM8916
+> -- reg: Address range for DMA registers
+> -- interrupts: Should contain the one interrupt shared by all channels
+> -- #dma-cells: must be <1>, the cell in the dmas property of the client device
+> -  represents the channel number
+> -- clocks: required clock
+> -- clock-names: must contain "bam_clk" entry
+> -- qcom,ee : indicates the active Execution Environment identifier (0-7) used in
+> -  the secure world.
+> -- qcom,controlled-remotely : optional, indicates that the bam is controlled by
+> -  remote proccessor i.e. execution environment.
+> -- num-channels : optional, indicates supported number of DMA channels in a
+> -  remotely controlled bam.
+> -- qcom,num-ees : optional, indicates supported number of Execution Environments
+> -  in a remotely controlled bam.
+> -
+> -Example:
+> -
+> -	uart-bam: dma@f9984000 = {
+> -		compatible = "qcom,bam-v1.4.0";
+> -		reg = <0xf9984000 0x15000>;
+> -		interrupts = <0 94 0>;
+> -		clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
+> -		clock-names = "bam_clk";
+> -		#dma-cells = <1>;
+> -		qcom,ee = <0>;
+> -	};
+> -
+> -DMA clients must use the format described in the dma.txt file, using a two cell
+> -specifier for each channel.
+> -
+> -Example:
+> -	serial@f991e000 {
+> -		compatible = "qcom,msm-uart";
+> -		reg = <0xf991e000 0x1000>
+> -			<0xf9944000 0x19000>;
+> -		interrupts = <0 108 0>;
+> -		clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
+> -			<&gcc GCC_BLSP1_AHB_CLK>;
+> -		clock-names = "core", "iface";
+> -
+> -		dmas = <&uart-bam 0>, <&uart-bam 1>;
+> -		dma-names = "rx", "tx";
+> -	};
+> diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> new file mode 100644
+> index 000000000000..3ca222bd10bd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> @@ -0,0 +1,91 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/qcom_bam_dma.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: QCOM BAM DMA controller binding
+> +
+> +maintainers:
+> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> +
+> +description: |
+> +  This document defines the binding for the BAM DMA controller
+> +  found on Qualcomm parts.
+> +
+> +allOf:
+> +  - $ref: "dma-controller.yaml#"
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,bam-v1.3.0 # for APQ8064, IPQ8064 and MSM8960
+> +      - qcom,bam-v1.4.0 # for MSM8974, APQ8074 and APQ8084
+> +      - qcom,bam-v1.7.0 # for MSM8916
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: bam_clk
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    maxItems: 31
 
-Yes, in itself that would be nice. But this function might be called > 1
-times per device, in which case we would end up with N unused copies of
-the string on the heap, until the device is removed.
+The old binding uses the wording "the one interrupt" and at least the
+Linux implementation indicates that there's only a single interrupt.
 
-I'm working on some patches where these things are allocated at probe
-time, with those in place it makes more sense to just devm_kasprintf()
-this and "forget" about the pointer.
+So I think this should just be maxItems: 1
+
+> +
+> +  num-channels:
+> +    maximum: 31
+> +    description:
+> +      Indicates supported number of DMA channels in a remotely controlled bam.
+> +
+> +  "#dma-cells":
+> +    const: 1
+> +    description: The single cell represents the channel index.
+> +
+> +  qcom,ee:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 7
+> +    description:
+> +      Indicates the active Execution Environment identifier (0-7)
+> +      used in the secure world.
+> +
+> +  qcom,controlled-remotely:
+> +    $ref: /schemas/types.yaml#/definitions/flag
+> +    description:
+> +      Indicates that the bam is controlled by remote proccessor i.e.
+> +      execution environment.
+> +
+> +  qcom,num-ees:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 31
+> +    default: 2
+> +    description:
+> +      Indicates supported number of Execution Environments in a
+> +      remotely controlled bam.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - "#dma-cells"
+> +  - qcom,ee
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+> +    dma-controller@f9984000 {
+> +        compatible = "qcom,bam-v1.4.0";
+> +        reg = <0xf9984000 0x15000>;
+> +        interrupts = <0 94 0>;
+
+While the txt->yaml conversion should retain the original content, I
+think it's okay to fix this line up while you're at it; and make it:
+
+	interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
 
 Regards,
 Bjorn
 
-> >   	ret = request_threaded_irq(data->throttle_irq, NULL, qcom_lmh_dcvs_handle_irq,
-> > -				   IRQF_ONESHOT, irq_name, data);
-> > +				   IRQF_ONESHOT, data->irq_name, data);
-> >   	if (ret) {
-> > -		dev_err(&pdev->dev, "Error registering %s: %d\n", irq_name, ret);
-> > +		dev_err(&pdev->dev, "Error registering %s: %d\n", data->irq_name, ret);
-> >   		return 0;
-> >   	}
-> > 
-> 
-> 
+> +        clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
+> +        clock-names = "bam_clk";
+> +        #dma-cells = <1>;
+> +        qcom,ee = <0>;
+> +    };
 > -- 
-> With best wishes
-> Dmitry
+> 2.31.1
+> 
