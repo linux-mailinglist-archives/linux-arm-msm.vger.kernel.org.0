@@ -2,89 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BB0544EFE5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Nov 2021 00:03:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10C8F44F0B8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Nov 2021 03:02:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233116AbhKLXGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 Nov 2021 18:06:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45452 "EHLO
+        id S233171AbhKMCFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 Nov 2021 21:05:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231776AbhKLXGM (ORCPT
+        with ESMTP id S233513AbhKMCFj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 Nov 2021 18:06:12 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E0AC061767
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 15:03:20 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id t30so18069126wra.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 15:03:20 -0800 (PST)
+        Fri, 12 Nov 2021 21:05:39 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DED3DC0613F5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 18:02:47 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id e9so21920215ljl.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Nov 2021 18:02:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dCpjDXFOFZqLtbOzTQIk6/6cDmr7++hUg3HtVfNMbEk=;
-        b=MYN6q+1BGpoB2XoBPXGKdiJwgjvB2mfqiwnyV5oqdwfWwWvOfQWwyD1lla9DxlJ5LU
-         DLZSf8WWZ+czQdex2kRfn/yAbOxx645Nm9eGTbMtYPOj0P6NygEQVyoF9EWT1/atCmu+
-         t2z+mZaJnV1FyKRXeDqOJmbWbANZxA0Mu5TDWo+erBYSgrZ0s+h7z7XVUL4DwHi3K3L7
-         Tqt20xihGRivgtYH3mBsiJN9cQ9DewVIvHZDPD8xIvzoreFcyX1j8pPa9EkxKIheYFL1
-         8eH7RKNiuxDmMXxKSH1TcoRHmkNb+iSTD8Hn91oMgTfb7AyUS3qahP9yL5xc3VG91ChU
-         AvLg==
+        d=snejp.pl; s=gmail;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2iGO71on63/LBV4+V6rXPmECeBXzrpOVOk0VbOEmQkM=;
+        b=Z+XMlXS8tibXv5AQJYE37X01NbN8LVqtLnu8NxqopAXH7wUSGRnHAUjMk/Xl66gLt0
+         /4jxMigxQtDyCVEOHH+HqwzaxyapiU+VGgc7NXp4YQmtqaXh00Vyvr8WBPmSoSoS8Xn+
+         DDmavL9kUdukD2R7d2MQhi3wTaCU9KSaely3QUIJilekR75TbdC2DjbM8XeF5NAS3GpZ
+         rJ1nUW0CWsMX+ht+J3K9KuPqWAzaiqAjSfv+rn1n3uMeDtl4ovCIuSnHQVjNwL1WC6EA
+         Hxbu5oPds02nsoq0/gAqZWyUPzzDtcOrbatyHRh48RZ1AbDd9WWpehOip0flDNsLzcoD
+         6dEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=dCpjDXFOFZqLtbOzTQIk6/6cDmr7++hUg3HtVfNMbEk=;
-        b=g1Kwv5iGWyFdzj50xrlPsRQBo0yV7zdjXJXWgnwqoX+6q5+DPKLsUmDE6YxBDc8Tme
-         yrc1JKqpt5uZNNEjTGFHaSbdZye0YRBz3wyjzLVlgR61R1yE0jiJvni+lHOXFw0whNcr
-         HI585BhxtmsmCCRGpD2/AcGOI4cpWOlnBXT3Vknq6cFj230EYsYxwdKWyySKwwSkkndK
-         focEWQBHw0K++gRr5EUmcsFj01ybgwG7zTXaIeqbytQOdOUiwc5vtzn1Y5plFxJnz4kx
-         7JEbtLoigbUBpuLVMghRj9lU/xTkZQ2ynAne9BKhoLtmcxvBhBZ17Yh39hYW5NqlSCV9
-         mQ3w==
-X-Gm-Message-State: AOAM532HFMQ2AygdXxjHNhxQmp+LvF4S/BwOv3ZVrNTZfULv5KMqui4i
-        vAIEkb2VpFpKBVMnnWpiK+LRwg==
-X-Google-Smtp-Source: ABdhPJwifE+82ngNTeiIycVB2T0xpNr78gzko1WzfFUKqPfUuG49rD4VwvhdjtGM4prOXsr4Gqo8PA==
-X-Received: by 2002:a5d:5651:: with SMTP id j17mr22884802wrw.166.1636758199399;
-        Fri, 12 Nov 2021 15:03:19 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id z7sm12531139wmi.33.2021.11.12.15.03.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Nov 2021 15:03:18 -0800 (PST)
-Message-ID: <07f52f4b-c733-87e6-7158-32de50172fdf@linaro.org>
-Date:   Fri, 12 Nov 2021 23:05:20 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH v3 5/7] dt-bindings: usb: Add Qualcomm PMIC TCPM YAML
- schema
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Guenter Roeck <linux@roeck-us.net>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        bh=2iGO71on63/LBV4+V6rXPmECeBXzrpOVOk0VbOEmQkM=;
+        b=2pvWtWCYgKNzmwKJGfTru6imHv0Yi6IstKkfSchLCum7XOlMjP9QynOocHZnF1QK6P
+         eWsfx4ZWDeiEm0RTUaHc1mLVk1bnX5tgimM2bu0y4UNpFIG8eBtsHnpStXh2BsGYv4sS
+         4n/NA/D5sUzfXSWxWWK0Z8PvZSe/SvbQ5VPdi+h/jEWMVq6WRQRIcXGYViukmbd8UAYc
+         +8JWI/4G+5zo7tVv9p8fvDSyeYR4IHbueJwnmO2lV7dXg1pbU/LGWp7g+xQu/SM0tXLH
+         x45uTD7LIhEL3JGYnvxGlwVa+2+mFV9YsWf6sxAa3pdPrcLRQiR2j/wMpNqtlMf35L7h
+         y8ZA==
+X-Gm-Message-State: AOAM530NpTD/0S3l7JozdbOieyPCyyc5AijpxUsY1mnNH2n1ORxOhErM
+        G6ygf8jfS49SHJw+zvws87hKIQ==
+X-Google-Smtp-Source: ABdhPJztdtW06NfPhsVRQ0uv0GsFyBFCTeBNWfpaGQudrt/u1Ud/EW1oLbH0ge7kHcdlsOlmMgsiag==
+X-Received: by 2002:a05:651c:1543:: with SMTP id y3mr20179876ljp.436.1636768965984;
+        Fri, 12 Nov 2021 18:02:45 -0800 (PST)
+Received: from PackardBell ([82.160.139.10])
+        by smtp.googlemail.com with ESMTPSA id j20sm686185ljg.104.2021.11.12.18.02.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Nov 2021 18:02:45 -0800 (PST)
+Received: from localhost (PackardBell [local])
+        by PackardBell (OpenSMTPD) with ESMTPA id 66928ea7;
+        Sat, 13 Nov 2021 02:02:43 +0000 (UTC)
+From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
-References: <20211105033558.1573552-1-bryan.odonoghue@linaro.org>
- <20211105033558.1573552-6-bryan.odonoghue@linaro.org>
- <YYlaqTYhe4hbXhFf@robh.at.kernel.org>
- <60841bf0-f5ea-314f-34c6-822a8812000d@linaro.org>
- <CAL_JsqKtesGfaJ+81jaWzB1kD_qXeehv7hrvXh3x=cpo15Ny-g@mail.gmail.com>
- <4195f05a-e926-246c-5276-ec38750909cb@linaro.org>
- <YY7p7jviA3ZG05gL@robh.at.kernel.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <YY7p7jviA3ZG05gL@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Subject: [PATCH 1/2] dt-bindings: clock: Add support for the MSM8226 mmcc
+Date:   Sat, 13 Nov 2021 02:58:43 +0100
+Message-Id: <20211113015844.92762-1-bartosz.dudziak@snejp.pl>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/11/2021 22:25, Rob Herring wrote:
-> Your other option is instantiate your own device from the virtual
-> driver's initcall based on presence of the 2 nodes above.
+Document the multimedia clock controller found on MSM8226.
 
-This sounds a little bit more like what I'd like to do, I'll investigate it.
-
+Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
 ---
-bod
+ Documentation/devicetree/bindings/clock/qcom,mmcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+index 68fdc3d49..4b79e89fd 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,mmcc.yaml
+@@ -19,6 +19,7 @@ properties:
+     enum:
+       - qcom,mmcc-apq8064
+       - qcom,mmcc-apq8084
++      - qcom,mmcc-msm8226
+       - qcom,mmcc-msm8660
+       - qcom,mmcc-msm8960
+       - qcom,mmcc-msm8974
+-- 
+2.25.1
+
