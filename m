@@ -2,19 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7FF244F5F0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 02:28:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CF2844F5F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 02:28:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236070AbhKNBa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Nov 2021 20:30:59 -0500
-Received: from relay06.th.seeweb.it ([5.144.164.167]:58337 "EHLO
-        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229988AbhKNBa6 (ORCPT
+        id S236127AbhKNBbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Nov 2021 20:31:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49156 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236109AbhKNBbB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Nov 2021 20:30:58 -0500
+        Sat, 13 Nov 2021 20:31:01 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDEFC061714;
+        Sat, 13 Nov 2021 17:28:07 -0800 (PST)
 Received: from localhost.localdomain (83.6.165.118.neoplus.adsl.tpnet.pl [83.6.165.118])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 34B6A3EE3F;
-        Sun, 14 Nov 2021 02:28:02 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 81E323EE52;
+        Sun, 14 Nov 2021 02:28:03 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -24,69 +27,50 @@ Cc:     martin.botka@somainline.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 01/16] arm64: dts: qcom: sm8350: Move gpio.h inclusion to SoC DTSI
-Date:   Sun, 14 Nov 2021 02:27:40 +0100
-Message-Id: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 02/16] arm64: dts: qcom: sm8350: Add missing QUPv3 ID2
+Date:   Sun, 14 Nov 2021 02:27:41 +0100
+Message-Id: <20211114012755.112226-2-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Almost any board that boots and has a way to interact with it
-(say for the rare cases of just-pstore or let's-rely-on-bootloader-setup)
-needs to set some GPIOs, so it makes no sense to include gpio.h separately
-each time. Hence move it to SoC DTSI.
+Add the missing third QUPv3 master node.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 1 -
- arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 1 -
- arch/arm64/boot/dts/qcom/sm8350.dtsi    | 1 +
- 3 files changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index be062377c936..1e5e9405d8b1 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -5,7 +5,6 @@
- 
- /dts-v1/;
- 
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8350.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-index 06eedbe52c42..122c282a62df 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-@@ -5,7 +5,6 @@
- 
- /dts-v1/;
- 
--#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8350.dtsi"
- #include "pm8350.dtsi"
 diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index d134280e2939..ee183f00dbaf 100644
+index ee183f00dbaf..6cfe1f38dae9 100644
 --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -6,6 +6,7 @@
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,gcc-sm8350.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interconnect/qcom,sm8350.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
+@@ -597,6 +597,18 @@ ipcc: mailbox@408000 {
+ 			#mbox-cells = <2>;
+ 		};
+ 
++		qupv3_id_2: geniqup@8c0000 {
++			compatible = "qcom,geni-se-qup";
++			reg = <0x0 0x008c0000 0x0 0x6000>;
++			clock-names = "m-ahb", "s-ahb";
++			clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
++				 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			status = "disabled";
++		};
++
+ 		qupv3_id_0: geniqup@9c0000 {
+ 			compatible = "qcom,geni-se-qup";
+ 			reg = <0x0 0x009c0000 0x0 0x6000>;
 -- 
 2.33.1
 
