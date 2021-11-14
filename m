@@ -2,103 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16F1E44F7EF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 13:46:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F87344FB53
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 20:50:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234722AbhKNMtj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Nov 2021 07:49:39 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:34346 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230186AbhKNMth (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Nov 2021 07:49:37 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1636894003; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=mC3LjhRSX3c0QTWBp0qcXjBnbouZr3462yGwYzm+tFU=; b=fiM+yUwgIkUpmAsB9/Nh2OLgQdXn3+gCih8OuwEb+2MGuaNHSWbwbYJFMXQ0hzX0d4k6t1Dq
- Fk1/t5FiNXVgmZd/oDpkwu1Ba8W4Fas4B5DDVEyECRDqU26KBS2YeKtgjSIo11XW2j1iTRCh
- KaPa+t9/JsumJQ0cxIh7XruHFHQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 61910527c48ba48884f0b040 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 14 Nov 2021 12:46:31
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4AAB1C4360D; Sun, 14 Nov 2021 12:46:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.104] (unknown [183.195.15.125])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 09536C4338F;
-        Sun, 14 Nov 2021 12:46:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 09536C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v1] Bluetooth: hci_h4: Fix padding calculation error
- within h4_recv_buf()
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        Zijun Hu <quic_zijuhu@quicinc.com>
-References: <1636546159-8339-1-git-send-email-zijuhu@codeaurora.org>
-From:   Zijun Hu <zijuhu@codeaurora.org>
-Message-ID: <97e8c186-3c4f-a3ff-8389-e15ea476280e@codeaurora.org>
-Date:   Sun, 14 Nov 2021 20:46:25 +0800
+        id S236388AbhKNTxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Nov 2021 14:53:37 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:57382 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236510AbhKNTuL (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 14 Nov 2021 14:50:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1636919238; x=1668455238;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=4C0I4YERPpT7n947dVQeZpCOPyoTOARzQaqepHDnkYg=;
+  b=YjXEuOTw1x8Ug7tpQirsfNWPFF1E8wHnR2T1vl9Q04YRzgtmduq0qzNh
+   p45i4mS6ctD9aYi7+5KXc38Dr4Za0OjCJdk9AVCxSHOpLmZHFX4/h0Ecx
+   wWRUeEwhFTLy6gfTZXKVeY1bi5zvFbzL5+DnPiGIfaWAHEsffv8bY9yZ1
+   Y=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 14 Nov 2021 11:47:13 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Nov 2021 11:47:11 -0800
+Received: from [10.110.80.240] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 14 Nov
+ 2021 11:47:12 -0800
+Subject: Re: [PATCH 13/16] arm64: dts: qcom: Add support for Xperia 1 III / 5
+ III
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+CC:     <martin.botka@somainline.org>,
+        <angelogioacchino.delregno@somainline.org>,
+        <marijn.suijten@somainline.org>, <jamipkettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+ <20211114012755.112226-13-konrad.dybcio@somainline.org>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+Message-ID: <51341a10-c0a5-079e-b7f1-159d42211bf3@quicinc.com>
+Date:   Sun, 14 Nov 2021 11:47:13 -0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <1636546159-8339-1-git-send-email-zijuhu@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20211114012755.112226-13-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-could you please code review for this patch?
+Hi Konrad,
 
-On 11/10/2021 8:09 PM, Zijun Hu wrote:
-> From: Zijun Hu <quic_zijuhu@quicinc.com>
+On 11/13/2021 5:27 PM, Konrad Dybcio wrote:
 > 
-> it is erroneous to calculate padding by subtracting length of type
-> indication from skb->len, it will cause data analysis error for
-> alignment which is greater than 1, so fixed by adding length of type
-> indication with skb->len.
+> Then, you need to flash it on the device and get rid of all the
+> vendor_boot/dtbo mess:
 > 
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
->  drivers/bluetooth/hci_h4.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> fastboot flash boot boot.img-sony-xperia-pdx215
+> fastboot erase vendor_boot
+> fastboot flash dtbo emptydtbo.img
+> fastboot reboot
 > 
-> diff --git a/drivers/bluetooth/hci_h4.c b/drivers/bluetooth/hci_h4.c
-> index 4b3b14a34794..1d0cdf023243 100644
-> --- a/drivers/bluetooth/hci_h4.c
-> +++ b/drivers/bluetooth/hci_h4.c
-> @@ -252,7 +252,7 @@ struct sk_buff *h4_recv_buf(struct hci_dev *hdev, struct sk_buff *skb,
->  			}
->  
->  			if (!dlen) {
-> -				hu->padding = (skb->len - 1) % alignment;
-> +				hu->padding = (skb->len + 1) % alignment;
->  				hu->padding = (alignment - hu->padding) % alignment;
->  
->  				/* No more data, complete frame */
-> @@ -260,7 +260,7 @@ struct sk_buff *h4_recv_buf(struct hci_dev *hdev, struct sk_buff *skb,
->  				skb = NULL;
->  			}
->  		} else {
-> -			hu->padding = (skb->len - 1) % alignment;
-> +			hu->padding = (skb->len + 1) % alignment;
->  			hu->padding = (alignment - hu->padding) % alignment;
->  
->  			/* Complete frame */
-> 
+> Where emptydtbo.img is a tiny file that consists of 2 bytes (all zeroes), doing
+> a "fastboot erase" won't cut it, the bootloader will go crazy and things will
+> fall apart when it tries to overlay random bytes from an empty partition onto a
+> perfectly good appended DTB.
+
+
+I will check on this part and see if we can make simpler support 
+fastboot erase dtbo without the extra emptydtbo.
+
+---Trilok Soni
+
+
