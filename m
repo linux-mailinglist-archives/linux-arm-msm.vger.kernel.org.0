@@ -2,19 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFCBB44F606
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 02:28:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4651E44F60D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 02:29:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236161AbhKNBbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Nov 2021 20:31:11 -0500
-Received: from relay07.th.seeweb.it ([5.144.164.168]:43441 "EHLO
-        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235100AbhKNBbH (ORCPT
+        id S236193AbhKNBbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Nov 2021 20:31:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236189AbhKNBbJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Nov 2021 20:31:07 -0500
+        Sat, 13 Nov 2021 20:31:09 -0500
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF362C061206;
+        Sat, 13 Nov 2021 17:28:14 -0800 (PST)
 Received: from localhost.localdomain (83.6.165.118.neoplus.adsl.tpnet.pl [83.6.165.118])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 7E13C3EE65;
-        Sun, 14 Nov 2021 02:28:11 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id A14EF3EE6C;
+        Sun, 14 Nov 2021 02:28:12 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +29,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 09/16] arm64: dts: qcom: sm8350: Set up WRAP0 QUPs
-Date:   Sun, 14 Nov 2021 02:27:48 +0100
-Message-Id: <20211114012755.112226-9-konrad.dybcio@somainline.org>
+Subject: [PATCH 10/16] arm64: dts: qcom: sm8350: Set up WRAP1 QUPs
+Date:   Sun, 14 Nov 2021 02:27:49 +0100
+Message-Id: <20211114012755.112226-10-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211114012755.112226-1-konrad.dybcio@somainline.org>
 References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
@@ -38,22 +41,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set up I2C&SPI hosts and UARTs connected to WRAP0 and their respective pins.
+Set up I2C&SPI hosts and UARTs connected to WRAP1 and their respective pins.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 287 +++++++++++++++++++++++++++
- 1 file changed, 287 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 213 +++++++++++++++++++++++++--
+ 1 file changed, 202 insertions(+), 11 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 3d0d80e61405..4b864fcb04e0 100644
+index 4b864fcb04e0..033d3984d572 100644
 --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -619,6 +619,25 @@ ipcc: mailbox@408000 {
- 			#mbox-cells = <2>;
+@@ -638,6 +638,25 @@ opp-100000000 {
+ 			};
  		};
  
-+		qup_opp_table_100mhz: qup-100mhz-opp-table {
++		qup_opp_table_120mhz: qup-120mhz-opp-table {
 +			compatible = "operating-points-v2";
 +
 +			opp-50000000 {
@@ -66,8 +69,8 @@ index 3d0d80e61405..4b864fcb04e0 100644
 +				required-opps = <&rpmhpd_opp_low_svs>;
 +			};
 +
-+			opp-100000000 {
-+				opp-hz = /bits/ 64 <100000000>;
++			opp-120000000 {
++				opp-hz = /bits/ 64 <120000000>;
 +				required-opps = <&rpmhpd_opp_svs>;
 +			};
 +		};
@@ -75,29 +78,55 @@ index 3d0d80e61405..4b864fcb04e0 100644
  		qupv3_id_2: geniqup@8c0000 {
  			compatible = "qcom,geni-se-qup";
  			reg = <0x0 0x008c0000 0x0 0x6000>;
-@@ -642,6 +661,84 @@ qupv3_id_0: geniqup@9c0000 {
+@@ -898,18 +917,161 @@ qupv3_id_1: geniqup@ac0000 {
  			ranges;
  			status = "disabled";
  
-+			i2c0: i2c@980000 {
++			i2c8: i2c@a80000 {
 +				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00980000 0 0x4000>;
++				reg = <0 0x00a80000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
 +				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c0_default>;
-+				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-0 = <&qup_i2c8_default>;
++				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
 +				#address-cells = <1>;
 +				#size-cells = <0>;
 +				status = "disabled";
 +			};
 +
-+			spi0: spi@980000 {
++			spi8: spi@a80000 {
 +				compatible = "qcom,geni-spi";
-+				reg = <0 0x00980000 0 0x4000>;
++				reg = <0 0x00a80000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-+				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
++				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&rpmhpd SM8350_CX>;
++				operating-points-v2 = <&qup_opp_table_120mhz>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++
++			i2c9: i2c@a84000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x00a84000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_i2c9_default>;
++				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++
++			spi9: spi@a84000 {
++				compatible = "qcom,geni-spi";
++				reg = <0 0x00a84000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
++				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
 +				power-domains = <&rpmhpd SM8350_CX>;
 +				operating-points-v2 = <&qup_opp_table_100mhz>;
 +				#address-cells = <1>;
@@ -105,25 +134,25 @@ index 3d0d80e61405..4b864fcb04e0 100644
 +				status = "disabled";
 +			};
 +
-+			i2c1: i2c@984000 {
++			i2c10: i2c@a88000 {
 +				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00984000 0 0x4000>;
++				reg = <0 0x00a88000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
 +				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c1_default>;
-+				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-0 = <&qup_i2c10_default>;
++				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
 +				#address-cells = <1>;
 +				#size-cells = <0>;
 +				status = "disabled";
 +			};
 +
-+			spi1: spi@984000 {
++			spi10: spi@a88000 {
 +				compatible = "qcom,geni-spi";
-+				reg = <0 0x00984000 0 0x4000>;
++				reg = <0 0x00a88000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
-+				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
++				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
 +				power-domains = <&rpmhpd SM8350_CX>;
 +				operating-points-v2 = <&qup_opp_table_100mhz>;
 +				#address-cells = <1>;
@@ -131,25 +160,25 @@ index 3d0d80e61405..4b864fcb04e0 100644
 +				status = "disabled";
 +			};
 +
-+			i2c2: i2c@988000 {
++			i2c11: i2c@a8c000 {
 +				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00988000 0 0x4000>;
++				reg = <0 0x00a8c000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
 +				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c2_default>;
-+				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-0 = <&qup_i2c11_default>;
++				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
 +				#address-cells = <1>;
 +				#size-cells = <0>;
 +				status = "disabled";
 +			};
 +
-+			spi2: spi@988000 {
++			spi11: spi@a8c000 {
 +				compatible = "qcom,geni-spi";
-+				reg = <0 0x00988000 0 0x4000>;
++				reg = <0 0x00a8c000 0 0x4000>;
 +				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-+				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
++				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
 +				power-domains = <&rpmhpd SM8350_CX>;
 +				operating-points-v2 = <&qup_opp_table_100mhz>;
 +				#address-cells = <1>;
@@ -157,213 +186,118 @@ index 3d0d80e61405..4b864fcb04e0 100644
 +				status = "disabled";
 +			};
 +
- 			uart2: serial@98c000 {
- 				compatible = "qcom,geni-debug-uart";
- 				reg = <0 0x0098c000 0 0x4000>;
-@@ -650,6 +747,140 @@ uart2: serial@98c000 {
++			i2c12: i2c@a90000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x00a90000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_i2c12_default>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++
++			spi12: spi@a90000 {
++				compatible = "qcom,geni-spi";
++				reg = <0 0x00a90000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&rpmhpd SM8350_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++
+ 			i2c13: i2c@a94000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0 0x00a94000 0 0x4000>;
+ 				clock-names = "se";
+ 				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
  				pinctrl-names = "default";
- 				pinctrl-0 = <&qup_uart3_default_state>;
- 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			/* QUP no. 3 seems to be strictly SPI-only */
-+
-+			spi3: spi@98c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x0098c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
-+				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c4: i2c@990000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00990000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c4_default>;
-+				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			spi4: spi@990000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x00990000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-+				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c5: i2c@994000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00994000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c5_default>;
-+				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			spi5: spi@994000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x00994000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-+				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c6: i2c@998000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00998000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c6_default>;
-+				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			spi6: spi@998000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x00998000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-+				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			uart6: serial@998000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0 0x00998000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart6_default>;
-+				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
-+				status = "disabled";
-+			};
-+
-+			i2c7: i2c@99c000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x0099c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c7_default>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			spi7: spi@99c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x0099c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SM8350_CX>;
-+				operating-points-v2 = <&qup_opp_table_100mhz>;
+-				pinctrl-0 = <&qup_i2c13_default_state>;
++				pinctrl-0 = <&qup_i2c13_default>;
+ 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
  				#address-cells = <1>;
  				#size-cells = <0>;
  				status = "disabled";
-@@ -1017,6 +1248,62 @@ tx {
- 				};
+ 			};
++
++			spi13: spi@a94000 {
++				compatible = "qcom,geni-spi";
++				reg = <0 0x00a94000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
++				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&rpmhpd SM8350_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
+@@ -1304,17 +1466,46 @@ qup_i2c7_default: qup-i2c7-default {
+ 				bias-disable;
  			};
  
-+			qup_uart6_default: qup-uart6-default {
-+				pins = "gpio30", "gpio31";
-+				function = "qup6";
+-			qup_i2c13_default_state: qup-i2c13-default-state {
+-				mux {
+-					pins = "gpio0", "gpio1";
+-					function = "qup13";
+-				};
++			qup_i2c8_default: qup-i2c8-default {
++				pins = "gpio36", "gpio37";
++				function = "qup8";
 +				drive-strength = <2>;
-+				bias-disable;
++				bias-pull-up;
 +			};
-+
-+			qup_i2c0_default: qup-i2c0-default {
-+				pins = "gpio4", "gpio5";
-+				function = "qup0";
+ 
+-				config {
+-					pins = "gpio0", "gpio1";
+-					drive-strength = <2>;
+-					bias-pull-up;
+-				};
++			qup_i2c9_default: qup-i2c9-default {
++				pins = "gpio40", "gpio41";
++				function = "qup9";
 +				drive-strength = <2>;
 +				bias-pull-up;
 +			};
 +
-+			qup_i2c1_default: qup-i2c1-default {
-+				pins = "gpio8", "gpio9";
-+				function = "qup1";
++			qup_i2c10_default: qup-i2c10-default {
++				pins = "gpio44", "gpio45";
++				function = "qup10";
 +				drive-strength = <2>;
 +				bias-pull-up;
 +			};
 +
-+			qup_i2c2_default: qup-i2c2-default {
-+				pins = "gpio12", "gpio13";
-+				function = "qup2";
++			qup_i2c11_default: qup-i2c11-default {
++				pins = "gpio48", "gpio49";
++				function = "qup11";
 +				drive-strength = <2>;
 +				bias-pull-up;
 +			};
 +
-+			qup_i2c4_default: qup-i2c4-default {
-+				pins = "gpio20", "gpio21";
-+				function = "qup4";
++			qup_i2c12_default: qup-i2c12-default {
++				pins = "gpio52", "gpio53";
++				function = "qup12";
 +				drive-strength = <2>;
 +				bias-pull-up;
 +			};
 +
-+			qup_i2c5_default: qup-i2c5-default {
-+				pins = "gpio24", "gpio25";
-+				function = "qup5";
++			qup_i2c13_default: qup-i2c13-default {
++				pins = "gpio0", "gpio1";
++				function = "qup13";
 +				drive-strength = <2>;
 +				bias-pull-up;
-+			};
-+
-+			qup_i2c6_default: qup-i2c6-default {
-+				pins = "gpio28", "gpio29";
-+				function = "qup6";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			qup_i2c7_default: qup-i2c7-default {
-+				pins = "gpio32", "gpio33";
-+				function = "qup7";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c13_default_state: qup-i2c13-default-state {
- 				mux {
- 					pins = "gpio0", "gpio1";
+ 			};
+ 		};
+ 
 -- 
 2.33.1
 
