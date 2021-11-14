@@ -2,130 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07EF144F573
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Nov 2021 22:23:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7FF244F5F0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Nov 2021 02:28:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236065AbhKMV0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 Nov 2021 16:26:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236035AbhKMV0M (ORCPT
+        id S236070AbhKNBa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 Nov 2021 20:30:59 -0500
+Received: from relay06.th.seeweb.it ([5.144.164.167]:58337 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229988AbhKNBa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 Nov 2021 16:26:12 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C24C061200
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 13:23:19 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so19014842otg.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Nov 2021 13:23:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PgwFOxRbye665HPAHu5pKtfz1gVh/X9N9qhHERxK7Qc=;
-        b=EhbkkVpKZ33C5U5LivBDvf64Xhlyt7NJtaOhq3LItqpkZZykiL+hKkW62GcXstACoa
-         idT4ZaSM++SZPQxJFr6LOnvqsNNiCT72YF/By9JBbd+4DvNP0MdB80govrtvPZSRvOM/
-         CXWU3y3duhKVC8HwoWO1+KXZEytz16tr81kJlyd7En+ZJDhsvcLPwWBWGVmJrPZ1HvPa
-         me8ltNq/EUkVt0Ku2z36uAoLw1png1IxQz7c9CfQHv5DQNeBayO1JHKqbfNn1uUM5YAA
-         0fquAI0VbVnERcVre4k9iUrP527i8GblEraGmXUVd0oot7N2XkMf5YuDVqdDf1V0vnNg
-         njsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PgwFOxRbye665HPAHu5pKtfz1gVh/X9N9qhHERxK7Qc=;
-        b=UkndV/mcznQGdi9HpLC3AjqkBoIKlfUcbiF0z97BEBHZz8RSgq1LxsFyKye6Hxn5a3
-         TtAXbkoMvD8i++NPp6YOSHWOCl4J1xnvmuAnJqXOqHLr2Zd1lZIeOy7CJvrJ5WtttNo5
-         qmQXNg6MchspHRhbJFqfaRUdgToNze8o3dOGtj9u4Cy6LH1Ag8MIOnxXm2/8HU+SuDxy
-         tT+Ur/xspXP5mZukcd6TB3yaILhF0LflEvQDzkjIgm0/cvzKnrxBPmWhk+WoZH/OIvLA
-         IU6Uf7BHR5JK6aNiL41rf9CTtLy7KwgqnnKS42GnW3s9FtuhMhRHjsEiVVBibfzfqnhk
-         s3DQ==
-X-Gm-Message-State: AOAM532Mx5k16GXJAHjKGx4RcK+ZQJqNcC9PKmw6hL1+xPG/F0ZsoIr7
-        TbxNGeBY0Q69+aQDjCw6rY5jgw==
-X-Google-Smtp-Source: ABdhPJw/WPzsbdAMiyWODFphyNDeI0fEqz0ppcNwT1aOcGe67xBZg3TpAzzUGNGDnVJN8+jOm3P55g==
-X-Received: by 2002:a9d:f63:: with SMTP id 90mr17065550ott.268.1636838598630;
-        Sat, 13 Nov 2021 13:23:18 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s205sm2179463oie.37.2021.11.13.13.23.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Nov 2021 13:23:18 -0800 (PST)
-Date:   Sat, 13 Nov 2021 15:23:13 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v5 10/22] dt-bindings: qcom-qce: Add 'iommus' to optional
- properties
-Message-ID: <YZAswXhDql3v2JqA@builder.lan>
-References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
- <20211110105922.217895-11-bhupesh.sharma@linaro.org>
+        Sat, 13 Nov 2021 20:30:58 -0500
+Received: from localhost.localdomain (83.6.165.118.neoplus.adsl.tpnet.pl [83.6.165.118])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 34B6A3EE3F;
+        Sun, 14 Nov 2021 02:28:02 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 01/16] arm64: dts: qcom: sm8350: Move gpio.h inclusion to SoC DTSI
+Date:   Sun, 14 Nov 2021 02:27:40 +0100
+Message-Id: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211110105922.217895-11-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 10 Nov 04:59 CST 2021, Bhupesh Sharma wrote:
+Almost any board that boots and has a way to interact with it
+(say for the rare cases of just-pstore or let's-rely-on-bootloader-setup)
+needs to set some GPIOs, so it makes no sense to include gpio.h separately
+each time. Hence move it to SoC DTSI.
 
-> Add the missing optional property - 'iommus' to the
-> device-tree binding documentation for qcom-qce crypto IP.
-> 
-> This property describes the phandle(s) to apps_smmu node with sid mask.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 1 -
+ arch/arm64/boot/dts/qcom/sm8350-mtp.dts | 1 -
+ arch/arm64/boot/dts/qcom/sm8350.dtsi    | 1 +
+ 3 files changed, 1 insertion(+), 2 deletions(-)
 
-"This property describes the iommu streams for crypto pipes" or
-something along those lines - depending on what those streams actually
-represent.
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+index be062377c936..1e5e9405d8b1 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+@@ -5,7 +5,6 @@
+ 
+ /dts-v1/;
+ 
+-#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8350.dtsi"
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
+index 06eedbe52c42..122c282a62df 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
+@@ -5,7 +5,6 @@
+ 
+ /dts-v1/;
+ 
+-#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include "sm8350.dtsi"
+ #include "pm8350.dtsi"
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index d134280e2939..ee183f00dbaf 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -6,6 +6,7 @@
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-sm8350.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interconnect/qcom,sm8350.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+-- 
+2.33.1
 
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../devicetree/bindings/crypto/qcom-qce.yaml          | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> index f35bdb9ee7a8..efe349e66ae7 100644
-> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> @@ -32,6 +32,12 @@ properties:
->        - const: bus
->        - const: core
->  
-> +  iommus:
-> +    minItems: 1
-> +    maxItems: 8
-> +    description: |
-
-No need for the '|' here...
-
-> +      phandle to apps_smmu node with sid mask.
-> +
->    interconnects:
->      maxItems: 1
->      description:
-> @@ -70,4 +76,9 @@ examples:
->          clock-names = "iface", "bus", "core";
->          dmas = <&cryptobam 2>, <&cryptobam 3>;
->          dma-names = "rx", "tx";
-> +        iommus = <&apps_smmu 0x584 0x0011>,
-> +                 <&apps_smmu 0x586 0x0011>,
-> +                 <&apps_smmu 0x594 0x0011>,
-> +                 <&apps_smmu 0x596 0x0011>;
-> +
-
-Extra empty line here.
-
-Regards,
-Bjorn
-
->      };
-> -- 
-> 2.31.1
-> 
