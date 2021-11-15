@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4E16451D01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 01:20:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4DF0451AC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 00:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349644AbhKPAXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 19:23:03 -0500
-Received: from relay02.th.seeweb.it ([5.144.164.163]:58135 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351863AbhKOUi7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 15:38:59 -0500
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8A5D320151;
-        Mon, 15 Nov 2021 21:35:12 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
-Subject: [PATCH v3 8/9] backlight: qcom-wled: Remove unnecessary double whitespace
-Date:   Mon, 15 Nov 2021 21:34:58 +0100
-Message-Id: <20211115203459.1634079-9-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211115203459.1634079-1-marijn.suijten@somainline.org>
-References: <20211115203459.1634079-1-marijn.suijten@somainline.org>
+        id S1343964AbhKOXnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 18:43:09 -0500
+Received: from mail.kernel.org ([198.145.29.99]:45366 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1351738AbhKOXlA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Nov 2021 18:41:00 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3AA5C63257;
+        Mon, 15 Nov 2021 23:35:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637019305;
+        bh=pPWGsdSRc3ah+Za5nl35yZ+jRecYwDbqdAFCvmivTqQ=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=YLfrj8o20Wo/XsGDGyxXCbPKBjuMweX+vvptZPnj8vt7RC9yL9b6x/Wbsf5Bsh0Uz
+         1J0WKO2v9qBsglUnc9qzoaATUhWOJclaFGE8EfGFdFHaqXeMwzOcDAkS7VHEsVqEP/
+         T0X2+1TWd00UQM5tzzwr/ov/HRnMtmCHTNpE+k73jc6x5kKnAnCDCc46SjbvcLvNxa
+         JQHxTyrrJJTXZD9sMpfMsMMV6uqYUKxgCeC/+QuJfdXZ7RW/o526saQA80/xORbHcS
+         NjTPiWdewyfaAJw+wTxVb0soDVZFXmpvlDg+Fqa2yP6InumhzndQz9zrFSY9EsbT5u
+         rAyTkKLQIP7Ag==
+From:   Mark Brown <broonie@kernel.org>
+To:     swboyd@chromium.org, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        perex@perex.cz, lgirdwood@gmail.com, alsa-devel@alsa-project.org,
+        plai@codeaurora.org, robh+dt@kernel.org, rohitkr@codeaurora.org,
+        judyhsiao@chromium.org, linux-kernel@vger.kernel.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        tiwai@suse.com, bgoswami@codeaurora.org, agross@kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+In-Reply-To: <1635938324-17763-1-git-send-email-srivasam@codeaurora.org>
+References: <1635938324-17763-1-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH] ASoC: codecs: MBHC: Add support for special headset
+Message-Id: <163701930197.675370.7604536221667945815.b4-ty@kernel.org>
+Date:   Mon, 15 Nov 2021 23:35:01 +0000
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove redundant spaces inside for loop conditions.  No other double
-spaces were found that are not part of indentation with `[^\s]  `.
+On Wed, 3 Nov 2021 16:48:44 +0530, Srinivasa Rao Mandadapu wrote:
+> Update MBHC driver to support special headset such as apple
+> and huwawei headsets.
+> 
+> 
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
----
- drivers/video/backlight/qcom-wled.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Applied to
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index f975c1f6398b..e2a78f4a9668 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -235,7 +235,7 @@ static int wled3_set_brightness(struct wled *wled, u16 brightness)
- 
- 	v = cpu_to_le16(brightness & WLED3_SINK_REG_BRIGHT_MAX);
- 
--	for (i = 0;  i < wled->cfg.num_strings; ++i) {
-+	for (i = 0; i < wled->cfg.num_strings; ++i) {
- 		rc = regmap_bulk_write(wled->regmap, wled->ctrl_addr +
- 				       WLED3_SINK_REG_BRIGHT(i),
- 				       &v, sizeof(v));
-@@ -258,7 +258,7 @@ static int wled4_set_brightness(struct wled *wled, u16 brightness)
- 
- 	v = cpu_to_le16(brightness & WLED3_SINK_REG_BRIGHT_MAX);
- 
--	for (i = 0;  i < wled->cfg.num_strings; ++i) {
-+	for (i = 0; i < wled->cfg.num_strings; ++i) {
- 		rc = regmap_bulk_write(wled->regmap, wled->sink_addr +
- 				       WLED4_SINK_REG_BRIGHT(i),
- 				       &v, sizeof(v));
--- 
-2.33.1
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
+
+[1/1] ASoC: codecs: MBHC: Add support for special headset
+      commit: 3c8a3ad4019126f06016ab0128dde11817502f52
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
