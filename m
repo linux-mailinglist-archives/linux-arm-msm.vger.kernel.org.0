@@ -2,184 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 823684501D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 10:56:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E3314501F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 11:04:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbhKOJ71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 04:59:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49376 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237514AbhKOJ7O (ORCPT
+        id S236726AbhKOKHu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 05:07:50 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:52740 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237055AbhKOKHt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 04:59:14 -0500
-Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A27AC061204;
-        Mon, 15 Nov 2021 01:56:09 -0800 (PST)
-Received: by mail-ua1-x92c.google.com with SMTP id l24so29295184uak.2;
-        Mon, 15 Nov 2021 01:56:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gsBk71NedBBsVpsWIk4ACHvjoj+bC3+VIVEUbcpO8IA=;
-        b=ehc21nRzLc8i1U+EqW4HnjY+RWjGWh14ZBLj7yNPUxl816A1Dbell6St7S/yW4X/vv
-         tt7qOOmMMY85WSc7GghoYpJGJ9xgEBBUokeqlapvAJX5EFUnaN1rvUlEUeE8epbheu5B
-         bWVKVRopMxxBfMWO9giRCidfYfZ56vuyGO7o4CSsyVdRcdOlFmosB/G0CBJUF76Dwi9T
-         Bi5dKD3S2Ixk/FkU0QqBfwiiGLH1DDHTmYGg0Ci2mql4cvEo0wmrzkz2B7tgBgY5liPS
-         E361qlo75lRj9Ddb/VA9aIMjLtX6LX3ck8/h22UNs9feaHP2NMM+vvRDoJtlPCwrDlmi
-         9GJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gsBk71NedBBsVpsWIk4ACHvjoj+bC3+VIVEUbcpO8IA=;
-        b=g9QRdlJYHhz/vngbCGzB5W2OuGxvOHghG2/0qcXbWTtnsLc39XX43Pf0ynqoCdDpj+
-         aINeAnK8NsK1TYTUG1rrXsLvVonXj0brbuIwjuQB7BupBnEV2F/YBHTMx4Yk0W1QG53u
-         szkng+m6XBdBycV8wxJBWzGcbyz1mrltM6vMf9L9f1HSVSOAgqEyi2C5d0c3xJ5trQ8j
-         5bD+6pZXYYhTKzeNqcs0uYAuAo8U4fcV61AHxJ9EhBnZowOCsQeSygjVW4JhCaquM9ms
-         OHt8uEEXZowB84W8QUd6OxQ8vnliqHpvWPnuO2PGLxXYHoeNMG6f3E2y1jubYN+xggh2
-         bZrg==
-X-Gm-Message-State: AOAM530uLdzZbHLDycS40695dYt8VMKUjQHA9AHo6d8uvlubUZrsCyJQ
-        SMWar6g7j9tEzW+w6uda6ISpWDJgAuhnQeTvemA=
-X-Google-Smtp-Source: ABdhPJz6ESqhwfmkhVT1QvVuW/9wYB2eiEui3t3htInxrDx0SkRrPjrQEm+aetErjkG15iM6y1caYpqVdHJBHexZMiA=
-X-Received: by 2002:ab0:6883:: with SMTP id t3mr56751869uar.66.1636970168537;
- Mon, 15 Nov 2021 01:56:08 -0800 (PST)
+        Mon, 15 Nov 2021 05:07:49 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1636970694; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=crfvnZ73pTs5AL0O4MfeWfUlxKWWxzYybZTh0XOLHTg=;
+ b=p2m03v4aSjdnTwk4KWA+JabPxYTOPd4Nq/OOAHosHQuc+r5glnPOTsqzgZxL+jr7HuFmxS0w
+ qJJ0jmMFLIcO5S62p67rtMCdQINExnLgUqEj8k39hO1oYl+AU8IT97EvQ0mOV3QIa2qD506M
+ oncj+objSQ6DXl520G1xhxO17Xo=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 619230c5b3d5cb1f55d20fec (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Nov 2021 10:04:53
+ GMT
+Sender: tjiang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5FC8AC4360D; Mon, 15 Nov 2021 10:04:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: tjiang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF3BEC4338F;
+        Mon, 15 Nov 2021 10:04:52 +0000 (UTC)
 MIME-Version: 1.0
-References: <20211115085403.360194-1-arnd@kernel.org> <20211115085403.360194-11-arnd@kernel.org>
-In-Reply-To: <20211115085403.360194-11-arnd@kernel.org>
-From:   Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Date:   Mon, 15 Nov 2021 10:55:56 +0100
-Message-ID: <CAMhs-H98kPNqH491+X0Mp81Ng++v1aQ=97XSHEhs+vx3g8W_4A@mail.gmail.com>
-Subject: Re: [PATCH 10/11] staging: ralink-gdma: stop using slave_id config
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Andy Gross <agross@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Scott Branden <sbranden@broadcom.com>,
-        Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
-        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-serial@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Mon, 15 Nov 2021 18:04:52 +0800
+From:   tjiang@codeaurora.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
+Subject: Re: [PATCH v3] Bluetooth: btusb: re-definition for board_id in struct
+ qca_version
+In-Reply-To: <8E687716-E810-4A46-B010-A08BB261D2FF@holtmann.org>
+References: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
+ <8E687716-E810-4A46-B010-A08BB261D2FF@holtmann.org>
+Message-ID: <96d03a2b0bd50da90a20990c42a814d9@codeaurora.org>
+X-Sender: tjiang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+Hi Marcel:
+   the following is the explanation from qc btsoc team:
 
-On Mon, Nov 15, 2021 at 9:55 AM Arnd Bergmann <arnd@kernel.org> wrote:
->
-> From: Arnd Bergmann <arnd@arndb.de>
->
-> Picking the connection between a DMA controller and its attached device
-> is done through devicetree using the "dmas" property, which is implemented
-> by the gdma driver, but it also allows overriding the "req" configuration
-> with the slave_id field, as it was done in some linux-2.6 era drivers.
->
-> There is no driver in the tree that sets these values, so stop
-> interpreting them before anything accidentally starts relying on it.
-> Rename the field in the channel from "slave_id" to "req" to better match
-> the purpose and the naming in the hardware.
->
-> If any driver actually starts using this DMA engine, it may be necessary
-> to implement a .xlate callback that sets this field at probe time.
->
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  drivers/staging/ralink-gdma/ralink-gdma.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
+The board ID should be split into two bytes.
+The 1st byte is chip ID, and the 2nd byte is platform ID.
+For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID.
+Currently we have several platforms, and platform IDs are continuously 
+added.
+We would not distinguish different chips if we get these mixed up.
+Platform ID:
+•             0x00 is for Mobile
+•             0x01 is for X86( ID # from 257)
+•             0x02 is for Automotive(ID# from 513 )
+•             0x03 is for Consumer electronic( ID# from 769)
+…
 
-This driver has been already deleted from the staging tree. See [0].
 
-Best regards,
-    Sergio Paracuellos
+regards.
+tim
 
-[0]: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging.git/commit/?h=staging-testing&id=5bfc10690c6c590a972be014ed8595e77e1e2dea
 
->
-> diff --git a/drivers/staging/ralink-gdma/ralink-gdma.c b/drivers/staging/ralink-gdma/ralink-gdma.c
-> index b5229bc6eae5..f00240e62e1b 100644
-> --- a/drivers/staging/ralink-gdma/ralink-gdma.c
-> +++ b/drivers/staging/ralink-gdma/ralink-gdma.c
-> @@ -106,7 +106,7 @@ struct gdma_dma_desc {
->  struct gdma_dmaengine_chan {
->         struct virt_dma_chan vchan;
->         unsigned int id;
-> -       unsigned int slave_id;
-> +       unsigned int req;
->
->         dma_addr_t fifo_addr;
->         enum gdma_dma_transfer_size burst_size;
-> @@ -194,7 +194,6 @@ static int gdma_dma_config(struct dma_chan *c,
->                         dev_err(dma_dev->ddev.dev, "only support 4 byte buswidth\n");
->                         return -EINVAL;
->                 }
-> -               chan->slave_id = config->slave_id;
->                 chan->fifo_addr = config->dst_addr;
->                 chan->burst_size = gdma_dma_maxburst(config->dst_maxburst);
->                 break;
-> @@ -203,7 +202,6 @@ static int gdma_dma_config(struct dma_chan *c,
->                         dev_err(dma_dev->ddev.dev, "only support 4 byte buswidth\n");
->                         return -EINVAL;
->                 }
-> -               chan->slave_id = config->slave_id;
->                 chan->fifo_addr = config->src_addr;
->                 chan->burst_size = gdma_dma_maxburst(config->src_maxburst);
->                 break;
-> @@ -288,12 +286,12 @@ static int rt305x_gdma_start_transfer(struct gdma_dmaengine_chan *chan)
->                 dst_addr = chan->fifo_addr;
->                 ctrl0 = GDMA_REG_CTRL0_DST_ADDR_FIXED |
->                         (8 << GDMA_RT305X_CTRL0_SRC_REQ_SHIFT) |
-> -                       (chan->slave_id << GDMA_RT305X_CTRL0_DST_REQ_SHIFT);
-> +                       (chan->req << GDMA_RT305X_CTRL0_DST_REQ_SHIFT);
->         } else if (chan->desc->direction == DMA_DEV_TO_MEM) {
->                 src_addr = chan->fifo_addr;
->                 dst_addr = sg->dst_addr;
->                 ctrl0 = GDMA_REG_CTRL0_SRC_ADDR_FIXED |
-> -                       (chan->slave_id << GDMA_RT305X_CTRL0_SRC_REQ_SHIFT) |
-> +                       (chan->req << GDMA_RT305X_CTRL0_SRC_REQ_SHIFT) |
->                         (8 << GDMA_RT305X_CTRL0_DST_REQ_SHIFT);
->         } else if (chan->desc->direction == DMA_MEM_TO_MEM) {
->                 /*
-> @@ -365,12 +363,12 @@ static int rt3883_gdma_start_transfer(struct gdma_dmaengine_chan *chan)
->                 dst_addr = chan->fifo_addr;
->                 ctrl0 = GDMA_REG_CTRL0_DST_ADDR_FIXED;
->                 ctrl1 = (32 << GDMA_REG_CTRL1_SRC_REQ_SHIFT) |
-> -                       (chan->slave_id << GDMA_REG_CTRL1_DST_REQ_SHIFT);
-> +                       (chan->req << GDMA_REG_CTRL1_DST_REQ_SHIFT);
->         } else if (chan->desc->direction == DMA_DEV_TO_MEM) {
->                 src_addr = chan->fifo_addr;
->                 dst_addr = sg->dst_addr;
->                 ctrl0 = GDMA_REG_CTRL0_SRC_ADDR_FIXED;
-> -               ctrl1 = (chan->slave_id << GDMA_REG_CTRL1_SRC_REQ_SHIFT) |
-> +               ctrl1 = (chan->req << GDMA_REG_CTRL1_SRC_REQ_SHIFT) |
->                         (32 << GDMA_REG_CTRL1_DST_REQ_SHIFT) |
->                         GDMA_REG_CTRL1_COHERENT;
->         } else if (chan->desc->direction == DMA_MEM_TO_MEM) {
-> --
-> 2.30.2
->
->
+
+On 2021-11-09 17:37, Marcel Holtmann wrote:
+> Hi Tim,
+> 
+>> As qc btsoc will using big-endian for boardID, so align host with it.
+>> 
+>> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+>> ---
+>> drivers/bluetooth/btusb.c | 4 ++--
+>> 1 file changed, 2 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+>> index 46d892bbde62..a51b1d641043 100644
+>> --- a/drivers/bluetooth/btusb.c
+>> +++ b/drivers/bluetooth/btusb.c
+>> @@ -2883,7 +2883,7 @@ struct qca_version {
+>> 	__le32	rom_version;
+>> 	__le32	patch_version;
+>> 	__le32	ram_version;
+>> -	__le16	board_id;
+>> +	__u8	board_id[2];
+>> 	__le16	flag;
+>> 	__u8	reserved[4];
+>> } __packed;
+>> @@ -3072,7 +3072,7 @@ static void btusb_generate_qca_nvm_name(char 
+>> *fwname, size_t max_size,
+>> 	u16 flag = le16_to_cpu(ver->flag);
+>> 
+>> 	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+>> -		u16 board_id = le16_to_cpu(ver->board_id);
+>> +		u16 board_id = (ver->board_id[0] << 8) + ver->board_id[1];
+>> 		const char *variant;
+>> 
+>> 		switch (le32_to_cpu(ver->ram_version)) {
+> 
+> explain to me why I would merge this. The commit message is sparse
+> even after I asked to explain things.
+> 
+> I am also not merging this handwaving endian handling. Define it is
+> be16 or le16 and clearly state what it is. If Qualcomm screwed up the
+> memory layout of their NVM, then say that.
+> 
+> Regards
+> 
+> Marcel
