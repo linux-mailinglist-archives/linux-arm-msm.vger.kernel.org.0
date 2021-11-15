@@ -2,132 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10874451E3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 01:32:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3543A451C9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 01:18:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352431AbhKPAfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 19:35:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36734 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344527AbhKOTY4 (ORCPT
+        id S242558AbhKPAVo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 19:21:44 -0500
+Received: from relay02.th.seeweb.it ([5.144.164.163]:37499 "EHLO
+        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351852AbhKOUjI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 14:24:56 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29DDCC05D6E3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 10:34:14 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id r26so36692107oiw.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 10:34:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JwKaMGX//1jqQPgDQEKIqD6sj+mcxEeOUNB16V+QNig=;
-        b=DFT6UQaUnkLeIQWICHLYL168uKkR+5z/D503YvheavNu5LiGXarxG6M4vUb/yuUeFD
-         wBeAd1dgB4RTBrkHKWNx5vHplM5nGYRvGK6EK2v8gYF/BgYKF5TAeSn9oTYU2G9Rg6ry
-         z2c4r2xISK/Vtm2nhmfSxW68yTnYiaYpGTGqkDNwXAqZgA8XmgltvNZukUt+9DrFjMuD
-         r73Q4hkk7eD/v5RIcYrP/VSaMyRINws5XEqPvF3FmAvUzyfwJb0zkbwxkf2cMnq2YAGs
-         CGRKPgVnuTvg6vm0+59+1YVaYaJ+91+pWkyulqApmmQzKhQUNbWlmiqQm3Q0bV+wPvMf
-         llQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JwKaMGX//1jqQPgDQEKIqD6sj+mcxEeOUNB16V+QNig=;
-        b=GvByIQr5VZ22Tj9/7N573gyz34/7HGCnmwPpOTDTIfkOJ6Bz3yeXiMGGEUOKr8U1cn
-         gc+xqscpdbjya5eYKKD3+MBiqvHJyBDHwaMrAjV6BNWqGRE0++qp207t0RsHArd381Sr
-         aog1ZQoKtpQTVMmOVwkQSmRnxfHcXbeEKxVrPUJK/jnbxv4pk3jd33a9+xkwVN/J52sL
-         pZiEKE87yQGfiH2LxtMlFDTLwhi18h68YkL62qOoOXBaojJWN4Ve6ScqKkBq7S+7AUH2
-         dnXbgnc3D7fDs6Fr2AWI6r+v4wf2eqvj46Z3qmpI2M4EIqq7IZ5DdNPYwyQD7pgCi1kl
-         bhKg==
-X-Gm-Message-State: AOAM532B/G+76VourE1avTdPau4lZKPChVNQroGbG0G1klJWP0oJIwE7
-        tl264t+AOmUcE0TXO+4wQ+Y65w==
-X-Google-Smtp-Source: ABdhPJxgGwtHSE6Ow+bkBcfir6vTaVoPAfAiPVhu0Xx/3q9Ecwchi5RX5V5eKCac1+SsR9K0YPHcGQ==
-X-Received: by 2002:a54:4f1d:: with SMTP id e29mr47401177oiy.179.1637001253519;
-        Mon, 15 Nov 2021 10:34:13 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o2sm2821311oik.11.2021.11.15.10.34.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 10:34:13 -0800 (PST)
-Date:   Mon, 15 Nov 2021 12:34:08 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>
-Subject: Re: [PATCH v5 21/22] arm64/dts: qcom: sm8250: Add dt entries to
- support crypto engine.
-Message-ID: <YZKoIA7kPHDaFoQK@builder.lan>
-References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
- <20211110105922.217895-22-bhupesh.sharma@linaro.org>
+        Mon, 15 Nov 2021 15:39:08 -0500
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C7CE8200D2;
+        Mon, 15 Nov 2021 21:35:08 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        Courtney Cavin <courtney.cavin@sonymobile.com>
+Subject: [PATCH v3 4/9] backlight: qcom-wled: Fix off-by-one maximum with default num_strings
+Date:   Mon, 15 Nov 2021 21:34:54 +0100
+Message-Id: <20211115203459.1634079-5-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211115203459.1634079-1-marijn.suijten@somainline.org>
+References: <20211115203459.1634079-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211110105922.217895-22-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 10 Nov 04:59 CST 2021, Bhupesh Sharma wrote:
+When not specifying num-strings in the DT the default is used, but +1 is
+added to it which turns WLED3 into 4 and WLED4/5 into 5 strings instead
+of 3 and 4 respectively, causing out-of-bounds reads and register
+read/writes.  This +1 exists for a deficiency in the DT parsing code,
+and is simply omitted entirely - solving this oob issue - by parsing the
+property separately much like qcom,enabled-strings.
 
-> Add crypto engine (CE) and CE BAM related nodes and definitions to
-> "sm8250.dtsi".
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 6f6129b39c9c..691c28066cec 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -4104,6 +4104,34 @@ cpufreq_hw: cpufreq@18591000 {
->  
->  			#freq-domain-cells = <1>;
->  		};
-> +
-> +		cryptobam: dma-controller@1dc4000 {
-> +			compatible = "qcom,bam-v1.7.0";
-> +			reg = <0 0x01dc4000 0 0x24000>;
+This also enables more stringent checks on the maximum value when
+qcom,enabled-strings is provided in the DT, by parsing num-strings after
+enabled-strings to allow it to check against (and in a subsequent patch
+override) the length of enabled-strings: it is invalid to set
+num-strings higher than that.
+The DT currently utilizes it to get around an incorrect fixed read of
+four elements from that array (has been addressed in a prior patch) by
+setting a lower num-strings where desired.
 
-Please keep nodes under /soc sorted by address.
+Fixes: 93c64f1ea1e8 ("leds: add Qualcomm PM8941 WLED driver")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ drivers/video/backlight/qcom-wled.c | 48 ++++++++++-------------------
+ 1 file changed, 16 insertions(+), 32 deletions(-)
 
-Thanks,
-Bjorn
+diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+index 9d883e702134..ab10910971e9 100644
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1255,21 +1255,6 @@ static const struct wled_var_cfg wled5_ovp_cfg = {
+ 	.size = 16,
+ };
+ 
+-static u32 wled3_num_strings_values_fn(u32 idx)
+-{
+-	return idx + 1;
+-}
+-
+-static const struct wled_var_cfg wled3_num_strings_cfg = {
+-	.fn = wled3_num_strings_values_fn,
+-	.size = 3,
+-};
+-
+-static const struct wled_var_cfg wled4_num_strings_cfg = {
+-	.fn = wled3_num_strings_values_fn,
+-	.size = 4,
+-};
+-
+ static u32 wled3_switch_freq_values_fn(u32 idx)
+ {
+ 	return 19200 / (2 * (1 + idx));
+@@ -1343,11 +1328,6 @@ static int wled_configure(struct wled *wled)
+ 			.val_ptr = &cfg->switch_freq,
+ 			.cfg = &wled3_switch_freq_cfg,
+ 		},
+-		{
+-			.name = "qcom,num-strings",
+-			.val_ptr = &cfg->num_strings,
+-			.cfg = &wled3_num_strings_cfg,
+-		},
+ 	};
+ 
+ 	const struct wled_u32_opts wled4_opts[] = {
+@@ -1371,11 +1351,6 @@ static int wled_configure(struct wled *wled)
+ 			.val_ptr = &cfg->switch_freq,
+ 			.cfg = &wled3_switch_freq_cfg,
+ 		},
+-		{
+-			.name = "qcom,num-strings",
+-			.val_ptr = &cfg->num_strings,
+-			.cfg = &wled4_num_strings_cfg,
+-		},
+ 	};
+ 
+ 	const struct wled_u32_opts wled5_opts[] = {
+@@ -1399,11 +1374,6 @@ static int wled_configure(struct wled *wled)
+ 			.val_ptr = &cfg->switch_freq,
+ 			.cfg = &wled3_switch_freq_cfg,
+ 		},
+-		{
+-			.name = "qcom,num-strings",
+-			.val_ptr = &cfg->num_strings,
+-			.cfg = &wled4_num_strings_cfg,
+-		},
+ 		{
+ 			.name = "qcom,modulator-sel",
+ 			.val_ptr = &cfg->mod_sel,
+@@ -1522,8 +1492,6 @@ static int wled_configure(struct wled *wled)
+ 			*bool_opts[i].val_ptr = true;
+ 	}
+ 
+-	cfg->num_strings = cfg->num_strings + 1;
+-
+ 	string_len = of_property_count_elems_of_size(dev->of_node,
+ 						     "qcom,enabled-strings",
+ 						     sizeof(u32));
+@@ -1554,6 +1522,22 @@ static int wled_configure(struct wled *wled)
+ 		}
+ 	}
+ 
++	rc = of_property_read_u32(dev->of_node, "qcom,num-strings", &val);
++	if (!rc) {
++		if (val < 1 || val > wled->max_string_count) {
++			dev_err(dev, "qcom,num-strings must be between 1 and %d\n",
++				wled->max_string_count);
++			return -EINVAL;
++		}
++
++		if (string_len > 0 && val > string_len) {
++			dev_err(dev, "qcom,num-strings exceeds qcom,enabled-strings\n");
++			return -EINVAL;
++		}
++
++		cfg->num_strings = val;
++	}
++
+ 	return 0;
+ }
+ 
+-- 
+2.33.1
 
-> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +			#dma-cells = <1>;
-> +			qcom,ee = <0>;
-> +			qcom,controlled-remotely;
-> +			iommus = <&apps_smmu 0x584 0x0011>,
-> +				 <&apps_smmu 0x586 0x0011>,
-> +				 <&apps_smmu 0x594 0x0011>,
-> +				 <&apps_smmu 0x596 0x0011>;
-> +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
-> +			interconnect-names = "memory";
-> +		};
-> +
-> +		crypto: crypto@1dfa000 {
-> +			compatible = "qcom,sm8250-qce";
-> +			reg = <0 0x01dfa000 0 0x6000>;
-> +			dmas = <&cryptobam 4>, <&cryptobam 5>;
-> +			dma-names = "rx", "tx";
-> +			iommus = <&apps_smmu 0x584 0x0011>,
-> +				 <&apps_smmu 0x586 0x0011>,
-> +				 <&apps_smmu 0x594 0x0011>,
-> +				 <&apps_smmu 0x596 0x0011>;
-> +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
-> +			interconnect-names = "memory";
-> +		};
->  	};
->  
->  	timer {
-> -- 
-> 2.31.1
-> 
