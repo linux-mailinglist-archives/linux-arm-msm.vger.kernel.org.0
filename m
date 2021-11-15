@@ -2,38 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 852A8450D8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 18:56:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A965450E71
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 19:12:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238647AbhKOR7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 12:59:31 -0500
-Received: from mail.kernel.org ([198.145.29.99]:40766 "EHLO mail.kernel.org"
+        id S239318AbhKOSPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 13:15:15 -0500
+Received: from mail.kernel.org ([198.145.29.99]:49940 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238514AbhKOR5o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 12:57:44 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4D34363338;
-        Mon, 15 Nov 2021 17:35:05 +0000 (UTC)
+        id S240254AbhKOSH2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Nov 2021 13:07:28 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B182E63260;
+        Mon, 15 Nov 2021 17:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1636997706;
-        bh=InDIuwgQh4vUsiFge5+CnfWvrotgyR5Ayivqc4GkCt4=;
+        s=korg; t=1636998242;
+        bh=RHZhCKqopg0/kn8Ha4aSCuMewYbiJVQjlJ6xHIGv4iA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DiuQ5JUgwrNcoygA/Mvy2oyNTYrHy4y3xQz8HKly4EpRw9FtxFtJV1AiAmCHL/X4/
-         mF2bCyQc0hlTXOdR5h4uYr6ul5o40E/uSxGPQv+qdBshRReaa+OW23e7RGE4bkpRTd
-         EUzYXpM8KiSvQw4EquUbqnSM/jMuqFI1tffQC/WA=
+        b=KGC/8EV2//Z7eNJWJxfUD01LJ/dhasKzVy8al2ddwjzlZZjQC9XyYZf4XMO9mEowu
+         1vvnMkPW3/L2Kllm25pt25zfSMWhul3/1vvC/dcvDi/326KhXIpLUvgnGiJn+nlTTr
+         yCya7XaxCqqEEQoqyVzeRR+iv945gNYBgvspGwiU=
 From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To:     linux-kernel@vger.kernel.org
 Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Tim Gardner <tim.gardner@canonical.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
+        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
         Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/575] drm/msm: prevent NULL dereference in msm_gpu_crashstate_capture()
-Date:   Mon, 15 Nov 2021 17:59:03 +0100
-Message-Id: <20211115165351.254216719@linuxfoundation.org>
+Subject: [PATCH 5.10 440/575] soc: qcom: rpmhpd: Provide some missing struct member descriptions
+Date:   Mon, 15 Nov 2021 18:02:45 +0100
+Message-Id: <20211115165358.980948642@linuxfoundation.org>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211115165343.579890274@linuxfoundation.org>
 References: <20211115165343.579890274@linuxfoundation.org>
@@ -45,52 +41,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Tim Gardner <tim.gardner@canonical.com>
+From: Lee Jones <lee.jones@linaro.org>
 
-[ Upstream commit b220c154832c5cd0df34cbcbcc19d7135c16e823 ]
+[ Upstream commit 5d16af6a921f5a4e7038671be5478cba4b7cfe81 ]
 
-Coverity complains of a possible NULL dereference:
+Fixes the following W=1 kernel build warning(s):
 
-CID 120718 (#1 of 1): Dereference null return value (NULL_RETURNS)
-23. dereference: Dereferencing a pointer that might be NULL state->bos when
-    calling msm_gpu_crashstate_get_bo. [show details]
-301                        msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
-302                                submit->bos[i].iova, submit->bos[i].flags);
+ drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'parent' not described in 'rpmhpd'
+ drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'corner' not described in 'rpmhpd'
+ drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'active_corner' not described in 'rpmhpd'
 
-Fix this by employing the same state->bos NULL check as is used in the next
-for loop.
-
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20210929162554.14295-1-tim.gardner@canonical.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Link: https://lore.kernel.org/r/20201103152838.1290217-22-lee.jones@linaro.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/rpmhpd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 55d16489d0f3f..90c26da109026 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -376,7 +376,7 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 		state->bos = kcalloc(nr,
- 			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
- 
--		for (i = 0; i < submit->nr_bos; i++) {
-+		for (i = 0; state->bos && i < submit->nr_bos; i++) {
- 			if (should_dump(submit, i)) {
- 				msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
- 					submit->bos[i].iova, submit->bos[i].flags);
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index c8b584d0c8fb4..e7cb40144f9b1 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -24,9 +24,12 @@
+  * struct rpmhpd - top level RPMh power domain resource data structure
+  * @dev:		rpmh power domain controller device
+  * @pd:			generic_pm_domain corrresponding to the power domain
++ * @parent:		generic_pm_domain corrresponding to the parent's power domain
+  * @peer:		A peer power domain in case Active only Voting is
+  *			supported
+  * @active_only:	True if it represents an Active only peer
++ * @corner:		current corner
++ * @active_corner:	current active corner
+  * @level:		An array of level (vlvl) to corner (hlvl) mappings
+  *			derived from cmd-db
+  * @level_count:	Number of levels supported by the power domain. max
 -- 
 2.33.0
 
