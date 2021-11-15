@@ -2,76 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C50344FE83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 07:00:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7A8A44FE8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 07:05:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbhKOGDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 01:03:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52554 "EHLO
+        id S230070AbhKOGID (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 01:08:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbhKOGDp (ORCPT
+        with ESMTP id S229935AbhKOGIC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 01:03:45 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C01C061767
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 22:00:49 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id z2-20020a9d71c2000000b0055c6a7d08b8so25667927otj.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 22:00:49 -0800 (PST)
+        Mon, 15 Nov 2021 01:08:02 -0500
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E778BC061767
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 22:05:07 -0800 (PST)
+Received: by mail-oo1-xc2c.google.com with SMTP id b31-20020a4a98e2000000b002bce352296cso5519131ooj.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 22:05:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Q0hjuIitrFb02fXcc+qwu0/Ao0P1TR8wWUugB4S5eBU=;
-        b=EPYAkJSYsA8WdUmfCLmL+m364i7HEJTfI84eVqPuEmyhu8fQFa4trzbIRKLnh3I+O+
-         1yI5rSDAJcF08/ZC1qms0z+OXm9HynWJ1Hjy0gE5ERSkW7up0sFoiyqBc6vASFWIX7ys
-         dJgtJoWn5R01rWfdWmdG9WGXX3rMoGqVCRQxn5cs/WZY53TUBHJJVwZpvlk/5ZkJx03i
-         2g/TdcIYIjl0JR3VZQ8PwaMDn2DcHM9yZqtTkfmkWadjKw1tXP23XlPDREdwtkthONYA
-         e9ATGJimtIYN1SvS2i/As6uyhusLbtC50ejafJA0y4Kfz2cWinuqdxBMdlfRNeHGcF97
-         4Gtg==
+        bh=YcL98dcYP0M2jStnva8J9nz+JoDlg+B8cM6xTQH4RCQ=;
+        b=dc0GvEaEwe22fG8jKGnx1MzaNk0hPiJuSY/aH0zd969M6SxekXRsIPnuhSJPGUj2tO
+         c80PUSwnfb9d3U7dsE82NNBtmlcWLF9iNrAYIRa60UcZ0xNS3MTDiekjEowFN1cOF/Ou
+         1H7cBeouxC6Zpgwg6LuUSc+pGUhYLFjf2B3H1ElO/CXxlv8GHCA4JTcEv5RDWgtzB/vO
+         RemWEg/fMEp+TpWtroIFDncRWDPSnL3U/5KQX3acU/g9j6jX539N3wicz9Qc3adK5qy0
+         c3iu7Ve2aJfQprUEfONHMko/o1FGO88rKMV9iunCCCxcoFUvfGTEiHbmkzqrvCbPuemV
+         FKZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Q0hjuIitrFb02fXcc+qwu0/Ao0P1TR8wWUugB4S5eBU=;
-        b=lHA/tCgDN5XVrIEzhiyNg7CdUNEr4i6JBbYfujQqaZE0jLZWO+I9BQhvWlarsZ0ji+
-         NinnTmlmDKWhmlMNGQHczBrrs/B1M3KS7Niv7Wfxm78PW6n3tTqEbRTRYye2/eNi+v5b
-         H3MAq9UtqDf/NxO++krFPDnD+YMPM610P4i+SG8pbvNUUloxu6WSmcGzX5a8PxEaDu0+
-         Lv8KizXT2z7HK66pHNt5cBEkqWt47/4Vn1JmYP9+Hh1cbvV9aVaCh/O45avQr0Qy5MrC
-         R7+WVbM2UhZVi6BT7aAfKx/2ze5HSk5Kd4GULgKsAFVkIGrwvqqhdRCKk4DGXrrbHF1R
-         ovYA==
-X-Gm-Message-State: AOAM5331yvt3Y21/qREQOzcRmZbCcs9SICWoLzhqRd1PpDlF1G2y8VGa
-        mt6Kgc19wsas2qUU45etLUUTN4i+/2Ox/E4ZovvyNiGO8VXeqw==
-X-Google-Smtp-Source: ABdhPJyUbpj16P4csxyRQ9MSohPpXCQmDqHM5JN8smKtj7SiicwjKN9ibLjXA6Pg7pY8eci39b32XWXEeV1kkXjBHfc=
-X-Received: by 2002:a05:6830:44a1:: with SMTP id r33mr23418807otv.162.1636956049231;
- Sun, 14 Nov 2021 22:00:49 -0800 (PST)
+        bh=YcL98dcYP0M2jStnva8J9nz+JoDlg+B8cM6xTQH4RCQ=;
+        b=i4kVJYZjDpZvsPKceP6MjRIEzFQ/QgvLRnzjQjDD0Y+/lv9REVYb6CBlpQ9objhh90
+         spTkEWoY0rmex6Tqf4khIz5vr3Le6Zr6cED6tOpePQCtNxZB+IXAYg+PY5awigypLbyp
+         NcktIy2IAp2MM+RCgywtWjJhuwqj0q3X+jWMLCZYN6w8Tq6dYaL28+kunp5ecREHGOWW
+         6VW6gRgHeUt+W65kPDS98hYb8kC7QkRZFjL1glGFYCjomyqXpA3ukDYCHQVE37SpKo+Z
+         BIOMVOZdWu8bRKzyKv6COZ9Up3L3WF1b+WDIrrJCBypA49aRn0YT0BoedoltN5XHNP9p
+         yWOA==
+X-Gm-Message-State: AOAM532v9q+CT6O63HbR/M94WuV5rCvX2uuxIwu2oD1wG/35JejhAMdX
+        uoDBLuvqGZaQMnG43UkGALAwzSYNs+yX/1as1Fngbw==
+X-Google-Smtp-Source: ABdhPJy2e88x2dTWGeoIROKmY2ssRaLj47rFk3JxO0UxewJexSUFIh7d7O86pYVMHaBaVufQ9xcStyzMZjIc2Ltdprc=
+X-Received: by 2002:a4a:ea84:: with SMTP id r4mr18628390ooh.13.1636956306909;
+ Sun, 14 Nov 2021 22:05:06 -0800 (PST)
 MIME-Version: 1.0
 References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
- <20211110105922.217895-4-bhupesh.sharma@linaro.org> <dd8cfa0d-0128-84a9-b2e5-b994a2bbd4cf@linaro.org>
-In-Reply-To: <dd8cfa0d-0128-84a9-b2e5-b994a2bbd4cf@linaro.org>
+ <20211110105922.217895-4-bhupesh.sharma@linaro.org> <1636573460.935618.1783742.nullmailer@robh.at.kernel.org>
+In-Reply-To: <1636573460.935618.1783742.nullmailer@robh.at.kernel.org>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Mon, 15 Nov 2021 11:30:38 +0530
-Message-ID: <CAH=2Ntw6N6kgMv125ALZ1J3F-Cd6jUaT_OEJJ=92+78=xhWbzA@mail.gmail.com>
+Date:   Mon, 15 Nov 2021 11:34:56 +0530
+Message-ID: <CAH=2NtycQ7B40Q4oLQDa-65r5riAiCdCGLx6fkLBQS5P-dQSsw@mail.gmail.com>
 Subject: Re: [PATCH v5 03/22] dt-bindings: qcom-bam: Convert binding to YAML
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        stephan@gerhold.net, Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, herbert@gondor.apana.org.au,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        stephan@gerhold.net, bhupesh.linux@gmail.com, davem@davemloft.net,
+        linux-crypto@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vladimir,
+Hi Rob,
 
-On Fri, 12 Nov 2021 at 14:11, Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
+On Thu, 11 Nov 2021 at 01:14, Rob Herring <robh@kernel.org> wrote:
 >
-> Hi Bhupesh,
->
-> On 11/10/21 12:59 PM, Bhupesh Sharma wrote:
+> On Wed, 10 Nov 2021 16:29:03 +0530, Bhupesh Sharma wrote:
 > > Convert Qualcomm BAM DMA devicetree binding to YAML.
 > >
 > > Cc: Thara Gopinath <thara.gopinath@linaro.org>
@@ -79,179 +77,190 @@ On Fri, 12 Nov 2021 at 14:11, Vladimir Zapolskiy
 > > Cc: Rob Herring <robh+dt@kernel.org>
 > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > > ---
-> >   .../devicetree/bindings/dma/qcom_bam_dma.txt  | 50 ----------
-> >   .../devicetree/bindings/dma/qcom_bam_dma.yaml | 91 +++++++++++++++++++
-> >   2 files changed, 91 insertions(+), 50 deletions(-)
-> >   delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> >   create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> > deleted file mode 100644
-> > index cf5b9e44432c..000000000000
-> > --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> > +++ /dev/null
-> > @@ -1,50 +0,0 @@
-> > -QCOM BAM DMA controller
-> > -
-> > -Required properties:
-> > -- compatible: must be one of the following:
-> > - * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
-> > - * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
-> > - * "qcom,bam-v1.7.0" for MSM8916
-> > -- reg: Address range for DMA registers
-> > -- interrupts: Should contain the one interrupt shared by all channels
-> > -- #dma-cells: must be <1>, the cell in the dmas property of the client device
-> > -  represents the channel number
-> > -- clocks: required clock
-> > -- clock-names: must contain "bam_clk" entry
-> > -- qcom,ee : indicates the active Execution Environment identifier (0-7) used in
-> > -  the secure world.
-> > -- qcom,controlled-remotely : optional, indicates that the bam is controlled by
-> > -  remote proccessor i.e. execution environment.
-> > -- num-channels : optional, indicates supported number of DMA channels in a
-> > -  remotely controlled bam.
-> > -- qcom,num-ees : optional, indicates supported number of Execution Environments
-> > -  in a remotely controlled bam.
-> > -
-> > -Example:
-> > -
-> > -     uart-bam: dma@f9984000 = {
-> > -             compatible = "qcom,bam-v1.4.0";
-> > -             reg = <0xf9984000 0x15000>;
-> > -             interrupts = <0 94 0>;
-> > -             clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
-> > -             clock-names = "bam_clk";
-> > -             #dma-cells = <1>;
-> > -             qcom,ee = <0>;
-> > -     };
-> > -
-> > -DMA clients must use the format described in the dma.txt file, using a two cell
-> > -specifier for each channel.
-> > -
-> > -Example:
-> > -     serial@f991e000 {
-> > -             compatible = "qcom,msm-uart";
-> > -             reg = <0xf991e000 0x1000>
-> > -                     <0xf9944000 0x19000>;
-> > -             interrupts = <0 108 0>;
-> > -             clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
-> > -                     <&gcc GCC_BLSP1_AHB_CLK>;
-> > -             clock-names = "core", "iface";
-> > -
-> > -             dmas = <&uart-bam 0>, <&uart-bam 1>;
-> > -             dma-names = "rx", "tx";
-> > -     };
-> > diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> > new file mode 100644
-> > index 000000000000..3ca222bd10bd
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
-> > @@ -0,0 +1,91 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/dma/qcom_bam_dma.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: QCOM BAM DMA controller binding
-> > +
-> > +maintainers:
-> > +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > +
-> > +description: |
-> > +  This document defines the binding for the BAM DMA controller
-> > +  found on Qualcomm parts.
-> > +
-> > +allOf:
-> > +  - $ref: "dma-controller.yaml#"
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,bam-v1.3.0 # for APQ8064, IPQ8064 and MSM8960
-> > +      - qcom,bam-v1.4.0 # for MSM8974, APQ8074 and APQ8084
-> > +      - qcom,bam-v1.7.0 # for MSM8916
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    const: bam_clk
-> > +
-> > +  interrupts:
-> > +    minItems: 1
-> > +    maxItems: 31
-> > +
-> > +  num-channels:
-> > +    maximum: 31
-> > +    description:
-> > +      Indicates supported number of DMA channels in a remotely controlled bam.
-> > +
-> > +  "#dma-cells":
-> > +    const: 1
-> > +    description: The single cell represents the channel index.
-> > +
-> > +  qcom,ee:
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > +    minimum: 0
-> > +    maximum: 7
-> > +    description:
-> > +      Indicates the active Execution Environment identifier (0-7)
-> > +      used in the secure world.
-> > +
-> > +  qcom,controlled-remotely:
-> > +    $ref: /schemas/types.yaml#/definitions/flag
-> > +    description:
-> > +      Indicates that the bam is controlled by remote proccessor i.e.
-> > +      execution environment.
-> > +
-> > +  qcom,num-ees:
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > +    minimum: 0
-> > +    maximum: 31
-> > +    default: 2
-> > +    description:
-> > +      Indicates supported number of Execution Environments in a
-> > +      remotely controlled bam.
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - interrupts
-> > +  - "#dma-cells"
-> > +  - qcom,ee
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,gcc-msm8974.h>
-> > +    dma-controller@f9984000 {
-> > +        compatible = "qcom,bam-v1.4.0";
-> > +        reg = <0xf9984000 0x15000>;
-> > +        interrupts = <0 94 0>;
-> > +        clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
-> > +        clock-names = "bam_clk";
-> > +        #dma-cells = <1>;
-> > +        qcom,ee = <0>;
-> > +    };
+> >  .../devicetree/bindings/dma/qcom_bam_dma.txt  | 50 ----------
+> >  .../devicetree/bindings/dma/qcom_bam_dma.yaml | 91 +++++++++++++++++++
+> >  2 files changed, 91 insertions(+), 50 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> >  create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
 > >
 >
-> this change should be rebased on top of the upstream commit 37aef53f5cc ("dt-bindings:
-> dmaengine: bam_dma: Add "powered remotely" mode"), which adds 'qcom,powered-remotely'
-> property description.
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
+>
+> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+> This will change in the future.
+>
+> Full log is available here: https://patchwork.ozlabs.org/patch/1553369
+>
+>
+> dma@12142000: $nodename:0: 'dma@12142000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+>
+> dma@12182000: $nodename:0: 'dma@12182000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq8064-ap148.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq8064-rb3011.dt.yaml
+>         arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+>
+> dma@121c2000: $nodename:0: 'dma@121c2000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+>
+> dma@12402000: $nodename:0: 'dma@12402000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+>         arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq8064-ap148.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq8064-rb3011.dt.yaml
+>
+> dma@1dc4000: $nodename:0: 'dma@1dc4000' does not match '^dma-controller(@.*)?$'
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+>
+> dma@1dc4000: 'iommus' does not match any of the regexes: 'pinctrl-[0-9]+'
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+>
+> dma@1dc4000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+>
+> dma@704000: $nodename:0: 'dma@704000' does not match '^dma-controller(@.*)?$'
+>         arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
+>         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
+>         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
+>
+> dma@704000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
+>         arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
+>         arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
+>         arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
+>
+> dma@7544000: $nodename:0: 'dma@7544000' does not match '^dma-controller(@.*)?$'
+>         arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+>         arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>
+> dma@7584000: $nodename:0: 'dma@7584000' does not match '^dma-controller(@.*)?$'
+>         arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+>         arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+>
+> dma@7884000: $nodename:0: 'dma@7884000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
+>
+> dma@7984000: $nodename:0: 'dma@7984000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
+>
+> dma@8e04000: $nodename:0: 'dma@8e04000' does not match '^dma-controller(@.*)?$'
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac-bit.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-ap120c-ac.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4018-jalapeno.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk01.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dt.yaml
+>         arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dt.yaml
+>
+> dma@c184000: $nodename:0: 'dma@c184000' does not match '^dma-controller(@.*)?$'
+>         arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dt.yaml
+>         arch/arm64/boot/dts/qcom/msm8998-oneplus-dumpling.dt.yaml
+>
+> dma-controller@17184000: 'iommus' does not match any of the regexes: 'pinctrl-[0-9]+'
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+>         arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+>
+> dma-controller@704000: 'qcom,config-pipe-trust-reg' does not match any of the regexes: 'pinctrl-[0-9]+'
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+>
+> dma-controller@704000: qcom,controlled-remotely: 'oneOf' conditional failed, one must be fixed:
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+>
+> dma-controller@7984000: clock-names:0: 'bam_clk' was expected
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+>
+> dma-controller@7984000: clock-names: Additional items are not allowed ('bam_clk' was unexpected)
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+>
+> dma-controller@7984000: clock-names: ['iface_clk', 'bam_clk'] is too long
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+>
+> dma-controller@7984000: clocks: [[9, 138], [9, 137]] is too long
+>         arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
 
-Indeed. Seems there was some confusion, as we had earlier agreed that
-Stephan's change would be part of my v5 series (see [1]), but I see
-that the change has anyway being picked up for Linus's tree (in the
-.txt version of the bindings).
+As noted with v4 review as well, all the errors reported above are
+fixed via other patches in this patchset, for e.g.:
 
-No problem, I will fix the same in v6.
-
-[1]. https://www.spinics.net/lists/linux-arm-msm/msg97143.html
+[PATCH v5 01/22] arm64: dts: qcom: msm8996: Fix
+qcom,controlled-remotely property
+[PATCH v5 02/22] arm64: dts: qcom: msm8996: Fix 'dma' nodes in dts
+[PATCH v5 04/22] dt-bindings: qcom-bam: Add 'interconnects' &
+'interconnect-names' to optional properties
+[PATCH v5 05/22] dt-bindings: qcom-bam: Add 'iommus' to optional properties
 
 Regards,
 Bhupesh
