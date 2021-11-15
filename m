@@ -2,119 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2069145152B
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA1A45152C
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 21:25:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233136AbhKOU06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 15:26:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346045AbhKOT3u (ORCPT
+        id S1347017AbhKOU1D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 15:27:03 -0500
+Received: from relay07.th.seeweb.it ([5.144.164.168]:55071 "EHLO
+        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348043AbhKOTuQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 14:29:50 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB9DC0431A8;
-        Mon, 15 Nov 2021 11:10:07 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id y8so9814755plg.1;
-        Mon, 15 Nov 2021 11:10:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wDPmToaijo7T8aT7P3r6ZMwp5FJI2KCyBAGlYq2w7rM=;
-        b=GIj9RXpkj2vA7zWzxBfBHgX2mUUcT2tHWP7cd9ldly7w/kWE3EVuQTmR4sPppk8hvr
-         ZA0yMGzW6BMQXiTqouLTjq3xDhBjBeUOeSh35Y9wWL3gNA762y6FFDg9u//0W0btd4oj
-         P9jk347dxLqAsPPpt1LAuBg7wevVo0BcGLDcoTU6ZNrwUphgopDtLcdusTp1j8wUB2z0
-         YYsbIinNv+fNrmtFfALxooXQTac7w+LFpzZs8j3wAq0jjODamZ6Qq/2G9aULQ6ol8NWY
-         CnmvF5GfqljRTjPOstArmUL22CEq4o5HS5RT4YSCDCzQlWx6PZRVKsr1BHMHUjIZYTbp
-         okyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=wDPmToaijo7T8aT7P3r6ZMwp5FJI2KCyBAGlYq2w7rM=;
-        b=z5iD/GvMwAPBvlmhqrCtVRN42w4gVyyzVCpWPWiV8oIKURwS6yFvTSyUJdZgmSaGDb
-         cyQbk4uzSri2ykzYtnrYm9fp88HXR/bxKNlxPRH+SX3wV/9on6YvHXgerVkZjS5dGsF0
-         SW59XGKeYZ9rF5B0SuaN/A/tkXCDxmuIPuxKNL0UikeO87q1Q6VE+4GImmgKRzTH6vyS
-         Qg5fEUnCetpH2Zecsq1V59OE0x8wuJ8V4QPjpdDImhIt8P9lLKwfQ4/Njd5+rnlWG8Xj
-         k4sh1fqJPYKzv4H0fi24arjktTNoZxM4sGC0FUiKQxw2SgANTlBMZHBdWf9TEzJ7S2nK
-         fWcw==
-X-Gm-Message-State: AOAM532DuxaBoVzg400lViCdOFNgPOaylcR4AU83byBH6fE2wsmmJwkh
-        tOk104RrSgiOi11ATaqcOgo=
-X-Google-Smtp-Source: ABdhPJxkm0vEo2QPlPHnBhYa9RjtVtcJzMkuQtas1V0GtkWxUBLy59cyWKkt8W1adHeYtcjmRyK4ww==
-X-Received: by 2002:a17:90b:17cc:: with SMTP id me12mr52788431pjb.141.1637003407408;
-        Mon, 15 Nov 2021 11:10:07 -0800 (PST)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id i19sm15550492pfu.119.2021.11.15.11.10.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 11:10:06 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Mon, 15 Nov 2021 14:50:16 -0500
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D97583EEFB;
+        Mon, 15 Nov 2021 20:46:53 +0100 (CET)
+Date:   Mon, 15 Nov 2021 20:46:52 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/adreno: Name the shadow buffer
-Date:   Mon, 15 Nov 2021 11:15:10 -0800
-Message-Id: <20211115191514.310472-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.33.1
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        Courtney Cavin <courtney.cavin@sonymobile.com>
+Subject: Re: [RESEND PATCH v2 04/13] backlight: qcom-wled: Fix off-by-one
+ maximum with default num_strings
+Message-ID: <20211115194652.c4g2mg4budf4lkct@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>, Bryan Wu <cooloney@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-fbdev@vger.kernel.org,
+        Courtney Cavin <courtney.cavin@sonymobile.com>
+References: <20211112002706.453289-1-marijn.suijten@somainline.org>
+ <20211112002706.453289-5-marijn.suijten@somainline.org>
+ <20211112120839.i6g747vewg6bkyk7@maple.lan>
+ <20211112123501.pz5e6g7gavlinung@SoMainline.org>
+ <20211112214337.r5xrpeyjgdygzc3n@SoMainline.org>
+ <20211115112327.tklic3fggrv5mzjt@maple.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211115112327.tklic3fggrv5mzjt@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 2021-11-15 11:23:27, Daniel Thompson wrote:
+> On Fri, Nov 12, 2021 at 10:43:37PM +0100, Marijn Suijten wrote:
+> > On 2021-11-12 13:35:03, Marijn Suijten wrote:
+> > > On 2021-11-12 12:08:39, Daniel Thompson wrote:
+> > > > On Fri, Nov 12, 2021 at 01:26:57AM +0100, Marijn Suijten wrote:
+> > > > > When not specifying num-strings in the DT the default is used, but +1 is
+> > > > > added to it which turns WLED3 into 4 and WLED4/5 into 5 strings instead
+> > > > > of 3 and 4 respectively, causing out-of-bounds reads and register
+> > > > > read/writes.  This +1 exists for a deficiency in the DT parsing code,
+> > > > > and is simply omitted entirely - solving this oob issue - by parsing the
+> > > > > property separately much like qcom,enabled-strings.
+> > > > > 
+> > > > > This also allows more stringent checks on the maximum value when
+> > > > > qcom,enabled-strings is provided in the DT.  Note that num-strings is
+> > > > > parsed after enabled-strings to give it final sign-off over the length,
+> > > > > which DT currently utilizes to get around an incorrect fixed read of
+> > > > > four elements from that array (has been addressed in a prior patch).
+> > > > > 
+> > > > > Fixes: 93c64f1ea1e8 ("leds: add Qualcomm PM8941 WLED driver")
+> > > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > > Reviewed-By: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > > > > ---
+> > > > >  drivers/video/backlight/qcom-wled.c | 51 +++++++++++------------------
+> > > > >  1 file changed, 19 insertions(+), 32 deletions(-)
+> > > > > 
+> > > > > diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> > > > > index 977cd75827d7..c5232478a343 100644
+> > > > > --- a/drivers/video/backlight/qcom-wled.c
+> > > > > +++ b/drivers/video/backlight/qcom-wled.c
+> > > > > @@ -1552,6 +1520,25 @@ static int wled_configure(struct wled *wled)
+> > > > >  		}
+> > > > >  	}
+> > > > > 
+> > > > > +	rc = of_property_read_u32(dev->of_node, "qcom,num-strings", &val);
+> > > > > +	if (!rc) {
+> > > > > +		if (val < 1 || val > wled->max_string_count) {
+> > > > > +			dev_err(dev, "qcom,num-strings must be between 1 and %d\n",
+> > > > > +				wled->max_string_count);
+> > > > > +			return -EINVAL;
+> > > > > +		}
+> > > > > +
+> > > > > +		if (string_len > 0) {
+> > > > > +			dev_warn(dev, "qcom,num-strings and qcom,enabled-strings are ambiguous\n");
+> > > > 
+> > > > The warning should also be below the error message on the next if statement.
+> > > 
+> > > Agreed.
+> > 
+> > Thinking about this again while reworking the patches, I initially put
+> > this above the error to make DT writers aware.  There's no point telling
+> > them that their values are out of sync (num-strings >
+> > len(enabled-strings)), when they "shouldn't even" (don't need to) set
+> > both in the first place.  They might needlessly fix the discrepancy, see
+> > the driver finally probe (working backlight) and carry on without
+> > noticing this warning that now appears.
+> > 
+> > Sorry for bringing this back up, but I'm curious about your opinion.
+> 
+> With a more helpful warning about how to fix then I think it is OK to
+> have both the warning and the error.
 
-This was the one GPU related kernel buffer which was not given a debug
-name.  Let's fix that.
+Thanks - I presume the message we settled upon last time is helpful
+enough:
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 2 ++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
- 2 files changed, 4 insertions(+)
+    Only one of qcom,num-strings or qcom,enabled-strings should be set
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index ec8e043c9d38..a95977e8ad98 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -925,6 +925,8 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
- 
- 			if (IS_ERR(a5xx_gpu->shadow))
- 				return PTR_ERR(a5xx_gpu->shadow);
-+
-+			msm_gem_object_set_name(a5xx_gpu->shadow_bo, "shadow");
- 		}
- 
- 		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index dcde5eff931d..c6e7e7ca0482 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1068,6 +1068,8 @@ static int hw_init(struct msm_gpu *gpu)
- 
- 			if (IS_ERR(a6xx_gpu->shadow))
- 				return PTR_ERR(a6xx_gpu->shadow);
-+
-+			msm_gem_object_set_name(a6xx_gpu->shadow_bo, "shadow");
- 		}
- 
- 		gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR_LO,
--- 
-2.33.1
+I'll respin this, together with this warning reordered into the next
+commit, and using __le16 for the cpu_to_le16 output.
 
+- Marijn
