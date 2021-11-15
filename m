@@ -2,162 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56ACB45097A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 17:20:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 915DC4509BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 17:33:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232376AbhKOQXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 11:23:19 -0500
-Received: from mail-ua1-f49.google.com ([209.85.222.49]:37822 "EHLO
-        mail-ua1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236711AbhKOQWn (ORCPT
+        id S232307AbhKOQgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 11:36:05 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:17652 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229926AbhKOQgE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 11:22:43 -0500
-Received: by mail-ua1-f49.google.com with SMTP id o1so3163658uap.4;
-        Mon, 15 Nov 2021 08:19:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=efm7nTUMt8rzsLA3IdyOYKyQXeHPPTB88YQ7l3tEZPU=;
-        b=j1ePCDZz9pjRoBSjFPBK36Zkij+CB1qkYiXTY2Q3Wp4RBzYIuPpueipNAr4BDIT5Ge
-         3SycT+nqt7zu8Fk7R5Gsrzw3syS3NENcAds96Vs2uthWNWG1lUnYXFYPMLVOriSKm7ca
-         /m9xHDv/Y8S9zaBhSZIN9F7jjCjVmUd2HX20FhAeUcHNY6K4x23cQ0Fy2U+wZn7rlyrv
-         RGgEOs+EcSJ3vxim8f+x87mPJ6aOU1OpyknXNv4zcV+W618oqCRqL3Lj3sVGTbPLyZ0L
-         PIAxEBQTYGtMEFARIzBxLlYvhfg7JQBmYsnHjf7ZB2xN3/ljNIgblRXnJoM85m7VyW7V
-         e6/Q==
-X-Gm-Message-State: AOAM533Z+HIGAeIaX6iMf1CQvBtK2FuYsmKT2NsJnLTwyy62NRaCvM/D
-        9JZqAwRUF2yE+MgaldzM9xMECe64xCuRWQ==
-X-Google-Smtp-Source: ABdhPJylBZXFwAq5a1NpYaCzYAYvfTy5mBiEIMoNMxzm+3uw7hyEvmc0grXVvV36HYTiF4V1kFvcrw==
-X-Received: by 2002:ab0:3d13:: with SMTP id f19mr80563uax.30.1636993184203;
-        Mon, 15 Nov 2021 08:19:44 -0800 (PST)
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com. [209.85.221.182])
-        by smtp.gmail.com with ESMTPSA id s10sm8696109vkf.9.2021.11.15.08.19.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Nov 2021 08:19:44 -0800 (PST)
-Received: by mail-vk1-f182.google.com with SMTP id j1so2079248vkr.1;
-        Mon, 15 Nov 2021 08:19:44 -0800 (PST)
-X-Received: by 2002:a1f:f24f:: with SMTP id q76mr60850690vkh.11.1636992782095;
- Mon, 15 Nov 2021 08:13:02 -0800 (PST)
+        Mon, 15 Nov 2021 11:36:04 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1636993989; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=ZYfsU0xjbXrPXTd7HBWhKtTgS/cxAjUcw8AixupPPrs=;
+ b=djP/3/klqqo7Uz/ReS7TT573vQkpi5lJ30n/FhaM0PO+a2xPKhL00DxoVr0GrsWO4xNNXZI+
+ HGQUU+qaWCEi0Xf+kFHZXQmQMeVh2QmWmEiRy8Sv8fMusPi9Jkj+0LN9XBrGnRd3Vg/LoyQS
+ Oi9UVlOa2hj/kWUL88KqRCzqaQ8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 61928bc4b3d5cb1f55cc7b83 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Nov 2021 16:33:08
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 75522C4361A; Mon, 15 Nov 2021 16:33:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FC4DC4338F;
+        Mon, 15 Nov 2021 16:33:07 +0000 (UTC)
 MIME-Version: 1.0
-References: <20211115155105.3797527-1-geert@linux-m68k.org>
-In-Reply-To: <20211115155105.3797527-1-geert@linux-m68k.org>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Mon, 15 Nov 2021 17:12:50 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUCsyUxaEf1Lz7+jMnur4ECwK+JoXQqmOCkRKqXdb1hTQ@mail.gmail.com>
-Message-ID: <CAMuHMdUCsyUxaEf1Lz7+jMnur4ECwK+JoXQqmOCkRKqXdb1hTQ@mail.gmail.com>
-Subject: Re: Build regressions/improvements in v5.16-rc1
-To:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Cc:     Nick Terrell <terrelln@fb.com>, Rob Clark <robdclark@gmail.com>,
-        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        Helge Deller <deller@gmx.de>,
-        Anton Altaparmakov <anton@tuxera.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Stan Skowronek <stan@corellium.com>,
-        Hector Martin <marcan@marcan.st>,
-        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-        =?UTF-8?Q?Andr=C3=A9_Almeida?= <andrealmeid@collabora.com>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Parisc List <linux-parisc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        linux-ntfs-dev@lists.sourceforge.net,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-        kasan-dev <kasan-dev@googlegroups.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 15 Nov 2021 08:33:07 -0800
+From:   khsieh@codeaurora.org
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org,
+        quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, quic_mkrishn@quicinc.com,
+        quic_kalyant@quicinc.coml, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add Display Port node
+In-Reply-To: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
+Message-ID: <473499ed0710598c59a507815ad11aa4@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 15, 2021 at 4:54 PM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
-> Below is the list of build error/warning regressions/improvements in
-> v5.16-rc1[1] compared to v5.15[2].
->
-> Summarized:
->   - build errors: +20/-13
->   - build warnings: +3/-28
->
-> Happy fixing! ;-)
->
-> Thanks to the linux-next team for providing the build service.
->
-> [1] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/fa55b7dcdc43c1aa1ba12bca9d2dd4318c2a0dbf/ (all 90 configs)
-> [2] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/8bb7eca972ad531c9b149c0a51ab43a417385813/ (all 90 configs)
->
->
-> *** ERRORS ***
->
-> 20 error regressions:
->   + /kisskb/src/arch/parisc/include/asm/jump_label.h: error: expected ':' before '__stringify':  => 33:4, 18:4
->   + /kisskb/src/arch/parisc/include/asm/jump_label.h: error: label 'l_yes' defined but not used [-Werror=unused-label]:  => 38:1, 23:1
+On 2021-11-02 16:44, Kuogee Hsieh wrote:
+> From: Kuogee Hsieh <khsieh@codeaurora.org>
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
 
-    due to static_branch_likely() in crypto/api.c
+Anyone has comments on this patch?
 
-parisc-allmodconfig
-
->   + /kisskb/src/drivers/gpu/drm/msm/msm_drv.h: error: "COND" redefined [-Werror]:  => 531
->   + /kisskb/src/lib/zstd/compress/zstd_double_fast.c: error: the frame size of 3252 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 47:1
->   + /kisskb/src/lib/zstd/compress/zstd_double_fast.c: error: the frame size of 3360 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 499:1
->   + /kisskb/src/lib/zstd/compress/zstd_double_fast.c: error: the frame size of 5344 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 334:1
->   + /kisskb/src/lib/zstd/compress/zstd_double_fast.c: error: the frame size of 5380 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 354:1
->   + /kisskb/src/lib/zstd/compress/zstd_fast.c: error: the frame size of 1824 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 372:1
->   + /kisskb/src/lib/zstd/compress/zstd_fast.c: error: the frame size of 2224 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 204:1
->   + /kisskb/src/lib/zstd/compress/zstd_fast.c: error: the frame size of 3800 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]:  => 476:1
-
-parisc-allmodconfig
-
->   + /kisskb/src/fs/ntfs/aops.c: error: the frame size of 2240 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 1311:1
->   + /kisskb/src/fs/ntfs/aops.c: error: the frame size of 2304 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 1311:1
->   + /kisskb/src/fs/ntfs/aops.c: error: the frame size of 2320 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 1311:1
-
-powerpc-allmodconfig
-
->   + /kisskb/src/include/linux/compiler_types.h: error: call to '__compiletime_assert_366' declared with attribute error: FIELD_PREP: value too large for the field:  => 335:38
-
-    in drivers/pinctrl/pinctrl-apple-gpio.c
-
-arm64-allmodconfig (gcc8)
-
->   + /kisskb/src/include/linux/fortify-string.h: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter):  => 263:25, 277:17
-
-    in lib/test_kasan.c
-
-s390-all{mod,yes}config
-arm64-allmodconfig (gcc11)
-
->   + error: modpost: "mips_cm_is64" [drivers/pci/controller/pcie-mt7621.ko] undefined!:  => N/A
->   + error: modpost: "mips_cm_lock_other" [drivers/pci/controller/pcie-mt7621.ko] undefined!:  => N/A
->   + error: modpost: "mips_cm_unlock_other" [drivers/pci/controller/pcie-mt7621.ko] undefined!:  => N/A
->   + error: modpost: "mips_cpc_base" [drivers/pci/controller/pcie-mt7621.ko] undefined!:  => N/A
->   + error: modpost: "mips_gcr_base" [drivers/pci/controller/pcie-mt7621.ko] undefined!:  => N/A
-
-mips-allmodconfig
-
-> 3 warning regressions:
->   + <stdin>: warning: #warning syscall futex_waitv not implemented [-Wcpp]:  => 1559:2
-
-powerpc, m68k, mips, s390, parisc (and probably more)
-
->   + arch/m68k/configs/multi_defconfig: warning: symbol value 'm' invalid for MCTP:  => 322
->   + arch/m68k/configs/sun3_defconfig: warning: symbol value 'm' invalid for MCTP:  => 295
-
-Yeah, that happens when symbols are changed from tristate to bool...
-Will be fixed in 5.17-rc1, with the next defconfig refresh.
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> 
+> Changes in v2:
+> -- move fixes of dp_phy reg property to other patch
+> 
+> Changes in v3:
+> -- delete "qcom,sc7180-dp" from msm_dp node
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 89 
+> +++++++++++++++++++++++++++++++++++-
+>  1 file changed, 87 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index fb2f1506..4414abc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2709,8 +2709,8 @@
+>  				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+>  				 <&dsi_phy 0>,
+>  				 <&dsi_phy 1>,
+> -				 <0>,
+> -				 <0>,
+> +			  	 <&dp_phy 0>,
+> +			  	 <&dp_phy 1>,
+>  				 <&edp_phy 0>,
+>  				 <&edp_phy 1>;
+>  			clock-names = "bi_tcxo",
+> @@ -2807,6 +2807,13 @@
+>  							remote-endpoint = <&edp_in>;
+>  						};
+>  					};
+> +
+> +					port@2 {
+> +                                                reg = <2>;
+> +                                                dpu_intf0_out: 
+> endpoint {
+> +
+> remote-endpoint = <&dp_in>;
+> +                                                };
+> +                                        };
+>  				};
+> 
+>  				mdp_opp_table: opp-table {
+> @@ -3018,6 +3025,78 @@
+> 
+>  				status = "disabled";
+>  			};
+> +
+> +			msm_dp: displayport-controller@ae90000 {
+> +				status = "disabled";
+> +				compatible = "qcom,sc7280-dp";
+> +
+> +				reg = <0 0x0ae90000 0 0x1400>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <12>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+> +				clock-names =	"core_iface",
+> +						"core_aux",
+> +						"ctrl_link",
+> +						"ctrl_link_iface",
+> +						"stream_pixel";
+> +				#clock-cells = <1>;
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> +				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> +				phys = <&dp_phy>;
+> +				phy-names = "dp";
+> +
+> +				operating-points-v2 = <&dp_opp_table>;
+> +				power-domains = <&rpmhpd SC7280_CX>;
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +					port@0 {
+> +						reg = <0>;
+> +						dp_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						dp_out: endpoint { };
+> +					};
+> +				};
+> +
+> +				dp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+>  		};
+> 
+>  		pdc: interrupt-controller@b220000 {
+> @@ -3120,6 +3199,12 @@
+>  				bias-pull-up;
+>  			};
+> 
+> +			dp_hot_plug_det: dp-hot-plug-det {
+> +				pins = "gpio47";
+> +				function = "dp_hot";
+> +				bias-disable;
+> +                        };
+> +
+>  			qspi_clk: qspi-clk {
+>  				pins = "gpio14";
+>  				function = "qspi_clk";
