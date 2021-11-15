@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45FE144FD42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 03:50:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5100144FD51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 04:02:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbhKOCxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 Nov 2021 21:53:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39142 "EHLO
+        id S229790AbhKODE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 Nov 2021 22:04:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbhKOCxo (ORCPT
+        with ESMTP id S229730AbhKODE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 Nov 2021 21:53:44 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91F4C061767
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 18:50:49 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id y7so13326208plp.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 18:50:49 -0800 (PST)
+        Sun, 14 Nov 2021 22:04:56 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C83DC061767
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 19:02:01 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so12003157pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Nov 2021 19:02:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=huaqin-corp-partner-google-com.20210112.gappssmtp.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=xTQKF545WIEv8NdbUMDtNn/xAn3UO8csU7nGyHdHUKs=;
-        b=xnwL9CgNsexzlT2llqqeRccotpktnnLwncyi8BsuXEvL21WSAQOjVVkxXGSuHuPgrY
-         n5VviS+yG3tw+yMa3OVTG769loAkPMngx5z9F6SsQVf33kJysqfOEM6kEr9rugBe0eVu
-         zo/uFKJisuhzpN1Nxe4YsCgLvmYTuukgGz4v/iVJB6bgL5lSwGK4pXF3WUOy6NyVh+Uy
-         Bx3ASqLyiQPNw/5BXuEY4XHIbUX+SqDy4a5veOoXw87UUM1mb6T1zl7yMFmwCVlq9CGW
-         Eiiqhu1fgjVIwG8BiHAU6A+b3S84H4KY9DtCHDTAoxbCG7j76a4qoOYktGCYEBwpITIV
-         3dRQ==
+        b=KTR1gjsiglaMRgP/7eQtLxW0PKTm6j+UrgdfSMdVyf7zz5QsSkvRO0Zh3L04t5aPeO
+         nJhDNMyRqxCwH/qujK9VJtoSWsqgwGHf2BxFuebhcUFY8qnixgSlBoV370HLRDviuI8m
+         YtsfHcyV9Vop6JlS9+9zCbsro5QqtCrto6mbGgEN7AFf1X9z4s+Dea45FHxVpfnUn3Kn
+         DA20xb0AzDeinywAb0sOy1+SIjPEk6kf2IOxI6npkegNKeYjrF8PdHmTemxuDwIx0Nud
+         SkUYy3OfjHSpdYI+95gPACxbzZ2DQQ3q0fd1bY73bjH/IVNhAlUJ4V3jZC2dM1pcZFPy
+         a57Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=xTQKF545WIEv8NdbUMDtNn/xAn3UO8csU7nGyHdHUKs=;
-        b=QtOAw31oULSFGUDEiPESvDIZ/EQAbEdKLrG/JPeYLwtneabX80VSwT1gnDyL+vafbF
-         rnl+CpcHBMgVi2LswaD9TCqJeoWN0zWkWsauDFllq3O19xire/w8M9bHmH6OmkB4cpvJ
-         W2lkVWh3jDMdl5KdrpWjoT86NqC90tPeMFa9UCqVBeKxC+7qrS4RhNfZSkkDKMDrzyQA
-         GRXeoMwrxaujWW2GiMp4O5RVpz7SKnnEOKJ95CwR+hVeLYTOVixtTooFUVZxNLFStXou
-         2krs4LxIXnpM3kaE2G+VuY0hhXr2+aSckD4HIrivSdIgMJEdAv8LELcBzZaqfV36ZdQk
-         X6GQ==
-X-Gm-Message-State: AOAM530TvnVwoBAtZu/SVxfB2IgSaf9VDdRUV7UIb7hTLwWlPAL5n+9A
-        CBmFAq5OMkvD4CZ4PgeKu23kiA==
-X-Google-Smtp-Source: ABdhPJz9lnphc4vhvYMArsSyNpyQN3UcfLrSJp3rtQA5c7BraubLe7ZY6GUT5ZRY0J+4cnlnvi776A==
-X-Received: by 2002:a17:902:e88a:b0:141:dfde:eed7 with SMTP id w10-20020a170902e88a00b00141dfdeeed7mr31667800plg.17.1636944649180;
-        Sun, 14 Nov 2021 18:50:49 -0800 (PST)
+        b=sgvS5Z6Yw1wKYIUKRaRUQmFHKG2xrbUJQLqoFbju4vJYzSjgMw6uiYP1U2dqKPI5Dz
+         GFiPGTmOCPVLh0VIZik9x4gJUBcMTOf99FjVmwjEnUuzjlRoIl8s0EhZzvmKZs6qZh0u
+         EInntONQYnRVQ9FhMRJjelkD7N7lwbqnfEjNohhhSKTWdouB3rAmjYHYBAf7yDXhoYAt
+         9LRfuVe8Hn8aqEBrR7ZNOubf+WabIlSsVN+y31zHAl6Z28sbfVrf2t2z7XtQttl42QtG
+         WO7/44lo+P3o6A0bnW8dXHacr1nJ9Bel8lMrxJz63Db6E7OKEQ5SaNf7r91XfZ6e7qM7
+         t43A==
+X-Gm-Message-State: AOAM533Jbke2KtMFQdN2RDFli1vVSIjG47UM14qQy9lOqeRiJyZgu5w7
+        p/qayWIhV7sWpd0TvSvKMaYVOg==
+X-Google-Smtp-Source: ABdhPJwQ0EOqOL31j8Wqhc+LAHhYt2fcvFgI4lRQO2/c0y7AoYkzEsYOUhxC2qY3akhJL5KNWYw2aA==
+X-Received: by 2002:a17:90a:9294:: with SMTP id n20mr41537292pjo.69.1636945320760;
+        Sun, 14 Nov 2021 19:02:00 -0800 (PST)
 Received: from yc.huaqin.com ([101.78.151.214])
-        by smtp.gmail.com with ESMTPSA id p19sm14817056pfo.92.2021.11.14.18.50.47
+        by smtp.gmail.com with ESMTPSA id hg4sm16696068pjb.1.2021.11.14.19.01.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Nov 2021 18:50:48 -0800 (PST)
+        Sun, 14 Nov 2021 19:02:00 -0800 (PST)
 From:   yangcong <yangcong5@huaqin.corp-partner.google.com>
 To:     dianders@chromium.org, philipchen@chromium.org, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org, swboyd@chromium.org
 Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         yangcong <yangcong5@huaqin.corp-partner.google.com>
-Subject: [PATCH] FROMLIST: arm64: dts: sc7180: Fix ps8640 power sequence for Homestar rev4
-Date:   Mon, 15 Nov 2021 10:50:34 +0800
-Message-Id: <20211115025034.8603-1-yangcong5@huaqin.corp-partner.google.com>
+Subject: [PATCH] arm64: dts: sc7180: Fix ps8640 power sequence for Homestar rev4
+Date:   Mon, 15 Nov 2021 11:01:55 +0800
+Message-Id: <20211115030155.9395-1-yangcong5@huaqin.corp-partner.google.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
