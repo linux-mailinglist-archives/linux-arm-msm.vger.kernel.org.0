@@ -2,176 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDF8345166A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 22:21:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 562F545166B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 22:21:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347952AbhKOVXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 16:23:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56262 "EHLO
+        id S1347983AbhKOVXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 16:23:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353126AbhKOUzD (ORCPT
+        with ESMTP id S1348755AbhKOVIz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 15:55:03 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E17C02C456;
-        Mon, 15 Nov 2021 12:35:27 -0800 (PST)
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7E01D20181;
-        Mon, 15 Nov 2021 21:35:13 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
-Subject: [PATCH v3 9/9] backlight: qcom-wled: Respect enabled-strings in set_brightness
-Date:   Mon, 15 Nov 2021 21:34:59 +0100
-Message-Id: <20211115203459.1634079-10-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211115203459.1634079-1-marijn.suijten@somainline.org>
-References: <20211115203459.1634079-1-marijn.suijten@somainline.org>
+        Mon, 15 Nov 2021 16:08:55 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50A1EC0432DE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 12:57:24 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id v2so12225026qve.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 12:57:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BPT9XAU/7JpIm6Qep/HBtxJcXg28nk1b69xhCAPgyow=;
+        b=Zdm/AfV8kEFGTw/aIHwCkvhXjDEGegV0JkdM5cSpODOMM3belmA7Ovd3CYd4jdBez8
+         Gbl3UTa/utmJlMlP69itLjU2qp38ek5YYc5i7KR8LG4sRQcaher2u5Xt2wfnyqG8VJNT
+         6TRiLwDAisTck8FnbrKkI4+UCXoRJa7neLKzUe68+7gKXzR6koKht7fKbmKBGdEzoGW5
+         BOazMuedWQ/eEvLMgEaa4+1LgbBIZtNXVqzVYUjzUSV+pGtNCtNp74qSBezXyv7qEJNH
+         Dw/CV8WkYcpNgjhn6PBH2L6aEsiXjzq1yY0v6/nCrOruYvg+NxojjKtpNt/2tBfLjGZU
+         s5qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BPT9XAU/7JpIm6Qep/HBtxJcXg28nk1b69xhCAPgyow=;
+        b=6xa3DYEgMl+CkJrJcfKCpK3nGHU90IxWtJ2axjtkRMDvhex2qHKdyDmbk0K8fdaa5C
+         ifXDQHVvOYy/xSyqn7tJ+NWE4FysKWU+XjTpNUZMwoe7Gfj7W4E3/cNbxf+mN1ZPlRcj
+         4P56XDJbk//iCv0vWXBXOJXhhxfUXhZcHgJI1l7+VmM/HQrkP58cE1Ifge6P9tsE4DbU
+         E0yWPOesTUosqiqP4XP30/CRUqhhISjy5Vg8puW8xhQxaq+ZjouNU2Xa05mxjc1TxxUq
+         Woe9kIhAGYc6ugJynVex8jE9Qm0eHgf86mKMAuinK00XnPV+nFfAkfmSxBf2qi51Ii+y
+         Pw6g==
+X-Gm-Message-State: AOAM530/RtOWX3fKRhDtzNi+jtwQWE0Plu3CBB86y2ZYs9ybVm0f+Yq4
+        NrnoSN9bfq1aih2NHvKSq9RnAg==
+X-Google-Smtp-Source: ABdhPJwO58ELEc1T0JPvckGTGCiJeBdgLLOXwJ+Jnu7Y5B2iMNp3qAvobyqkr2sjk4jHtmbo2g/6Bw==
+X-Received: by 2002:ad4:5f4c:: with SMTP id p12mr40675290qvg.33.1637009843477;
+        Mon, 15 Nov 2021 12:57:23 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id j21sm6870072qkk.27.2021.11.15.12.57.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Nov 2021 12:57:22 -0800 (PST)
+Subject: Re: [PATCH v4 4/5] cpufreq: qcom-cpufreq-hw: Use new thermal pressure
+ update function
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, steev@kali.org,
+        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
+        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
+        rafael@kernel.org, viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org
+References: <20211109195714.7750-1-lukasz.luba@arm.com>
+ <20211109195714.7750-5-lukasz.luba@arm.com>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <02a848c8-a672-f3df-7144-979a9df71fcb@linaro.org>
+Date:   Mon, 15 Nov 2021 15:57:21 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211109195714.7750-5-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The hardware is capable of controlling any non-contiguous sequence of
-LEDs specified in the DT using qcom,enabled-strings as u32
-array, and this also follows from the DT-bindings documentation.  The
-numbers specified in this array represent indices of the LED strings
-that are to be enabled and disabled.
 
-Its value is appropriately used to setup and enable string modules, but
-completely disregarded in the set_brightness paths which only iterate
-over the number of strings linearly.
-Take an example where only string 2 is enabled with
-qcom,enabled_strings=<2>: this string is appropriately enabled but
-subsequent brightness changes would have only touched the zero'th
-brightness register because num_strings is 1 here.  This is simply
-addressed by looking up the string for this index in the enabled_strings
-array just like the other codepaths that iterate over num_strings.
 
-Likewise enabled_strings is now also used in the autodetection path for
-consistent behaviour: when a list of strings is specified in DT only
-those strings will be probed for autodetection, analogous to how the
-number of strings that need to be probed is already bound by
-qcom,num-strings.  After all autodetection uses the set_brightness
-helpers to set an initial value, which could otherwise end up changing
-brightness on a different set of strings.
+On 11/9/21 2:57 PM, Lukasz Luba wrote:
+> Thermal pressure provides a new API, which allows to use CPU frequency
+> as an argument. That removes the need of local conversion to capacity.
+> Use this new API and remove old local conversion code.
+> 
+> The new arch_update_thermal_pressure() also accepts boost frequencies,
+> which solves issue in the driver code with wrong reduced capacity
+> calculation. The reduced capacity was calculated wrongly due to
+> 'policy->cpuinfo.max_freq' used as a divider. The value present there was
+> actually the boost frequency. Thus, even a normal maximum frequency value
+> which corresponds to max CPU capacity (arch_scale_cpu_capacity(cpu_id))
+> is not able to remove the capping.
 
-Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
-Fixes: 03b2b5e86986 ("backlight: qcom-wled: Add support for WLED4 peripheral")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
----
- drivers/video/backlight/qcom-wled.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+Yes, although cpuinfo.max_freq does not reflect the boost frequency 
+unless boost is enabled atleast once. I have sent a patch to fix this. 
+But I agree that using cpuinfo.max_freq has issues you have mentioned in 
+this patch if boost is enabled once.
 
-diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
-index e2a78f4a9668..306bcc6ccb92 100644
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -237,7 +237,7 @@ static int wled3_set_brightness(struct wled *wled, u16 brightness)
- 
- 	for (i = 0; i < wled->cfg.num_strings; ++i) {
- 		rc = regmap_bulk_write(wled->regmap, wled->ctrl_addr +
--				       WLED3_SINK_REG_BRIGHT(i),
-+				       WLED3_SINK_REG_BRIGHT(wled->cfg.enabled_strings[i]),
- 				       &v, sizeof(v));
- 		if (rc < 0)
- 			return rc;
-@@ -260,7 +260,7 @@ static int wled4_set_brightness(struct wled *wled, u16 brightness)
- 
- 	for (i = 0; i < wled->cfg.num_strings; ++i) {
- 		rc = regmap_bulk_write(wled->regmap, wled->sink_addr +
--				       WLED4_SINK_REG_BRIGHT(i),
-+				       WLED4_SINK_REG_BRIGHT(wled->cfg.enabled_strings[i]),
- 				       &v, sizeof(v));
- 		if (rc < 0)
- 			return rc;
-@@ -571,7 +571,7 @@ static irqreturn_t wled_short_irq_handler(int irq, void *_wled)
- 
- static void wled_auto_string_detection(struct wled *wled)
- {
--	int rc = 0, i, delay_time_us;
-+	int rc = 0, i, j, delay_time_us;
- 	u32 sink_config = 0;
- 	u8 sink_test = 0, sink_valid = 0, val;
- 	bool fault_set;
-@@ -618,14 +618,15 @@ static void wled_auto_string_detection(struct wled *wled)
- 
- 	/* Iterate through the strings one by one */
- 	for (i = 0; i < wled->cfg.num_strings; i++) {
--		sink_test = BIT((WLED4_SINK_REG_CURR_SINK_SHFT + i));
-+		j = wled->cfg.enabled_strings[i];
-+		sink_test = BIT((WLED4_SINK_REG_CURR_SINK_SHFT + j));
- 
- 		/* Enable feedback control */
- 		rc = regmap_write(wled->regmap, wled->ctrl_addr +
--				  WLED3_CTRL_REG_FEEDBACK_CONTROL, i + 1);
-+				  WLED3_CTRL_REG_FEEDBACK_CONTROL, j + 1);
- 		if (rc < 0) {
- 			dev_err(wled->dev, "Failed to enable feedback for SINK %d rc = %d\n",
--				i + 1, rc);
-+				j + 1, rc);
- 			goto failed_detect;
- 		}
- 
-@@ -634,7 +635,7 @@ static void wled_auto_string_detection(struct wled *wled)
- 				  WLED4_SINK_REG_CURR_SINK, sink_test);
- 		if (rc < 0) {
- 			dev_err(wled->dev, "Failed to configure SINK %d rc=%d\n",
--				i + 1, rc);
-+				j + 1, rc);
- 			goto failed_detect;
- 		}
- 
-@@ -661,7 +662,7 @@ static void wled_auto_string_detection(struct wled *wled)
- 
- 		if (fault_set)
- 			dev_dbg(wled->dev, "WLED OVP fault detected with SINK %d\n",
--				i + 1);
-+				j + 1);
- 		else
- 			sink_valid |= sink_test;
- 
-@@ -701,15 +702,16 @@ static void wled_auto_string_detection(struct wled *wled)
- 	/* Enable valid sinks */
- 	if (wled->version == 4) {
- 		for (i = 0; i < wled->cfg.num_strings; i++) {
-+			j = wled->cfg.enabled_strings[i];
- 			if (sink_config &
--			    BIT(WLED4_SINK_REG_CURR_SINK_SHFT + i))
-+			    BIT(WLED4_SINK_REG_CURR_SINK_SHFT + j))
- 				val = WLED4_SINK_REG_STR_MOD_MASK;
- 			else
- 				/* Disable modulator_en for unused sink */
- 				val = 0;
- 
- 			rc = regmap_write(wled->regmap, wled->sink_addr +
--					  WLED4_SINK_REG_STR_MOD_EN(i), val);
-+					  WLED4_SINK_REG_STR_MOD_EN(j), val);
- 			if (rc < 0) {
- 				dev_err(wled->dev, "Failed to configure MODULATOR_EN rc=%d\n",
- 					rc);
+So, for this patch
+
+Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
+
+Warm Regards
+Thara (She/Her/Hers)
+> 
+> The second side effect which is solved is that the reduced frequency wasn't
+> properly translated into the right reduced capacity,
+> e.g.
+> boost frequency = 3000MHz (stored in policy->cpuinfo.max_freq)
+> max normal frequency = 2500MHz (which is 1024 capacity)
+> 2nd highest frequency = 2000MHz (which translates to 819 capacity)
+> 
+> Then in a scenario when the 'throttled_freq' max allowed frequency was
+> 2000MHz the driver translated it into 682 capacity:
+> capacity = 1024 * 2000 / 3000 = 682
+> Then set the pressure value bigger than actually applied by the HW:
+> max_capacity - capacity => 1024 - 682 = 342 (<- thermal pressure)
+> Which was causing higher throttling and misleading task scheduler
+> about available CPU capacity.
+> A proper calculation in such case should be:
+> capacity = 1024 * 2000 / 2500 = 819
+> 1024 - 819 = 205 (<- thermal pressure)
+> 
+> This patch relies on the new arch_update_thermal_pressure() handling
+> correctly such use case (with boost frequencies).
+> 
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
+>   drivers/cpufreq/qcom-cpufreq-hw.c | 15 +++------------
+>   1 file changed, 3 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 0138b2ec406d..248135e5087e 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -275,10 +275,10 @@ static unsigned int qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
+>   
+>   static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>   {
+> -	unsigned long max_capacity, capacity, freq_hz, throttled_freq;
+>   	struct cpufreq_policy *policy = data->policy;
+>   	int cpu = cpumask_first(policy->cpus);
+>   	struct device *dev = get_cpu_device(cpu);
+> +	unsigned long freq_hz, throttled_freq;
+>   	struct dev_pm_opp *opp;
+>   	unsigned int freq;
+>   
+> @@ -295,17 +295,8 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>   
+>   	throttled_freq = freq_hz / HZ_PER_KHZ;
+>   
+> -	/* Update thermal pressure */
+> -
+> -	max_capacity = arch_scale_cpu_capacity(cpu);
+> -	capacity = mult_frac(max_capacity, throttled_freq, policy->cpuinfo.max_freq);
+> -
+> -	/* Don't pass boost capacity to scheduler */
+> -	if (capacity > max_capacity)
+> -		capacity = max_capacity;
+> -
+> -	arch_set_thermal_pressure(policy->related_cpus,
+> -				  max_capacity - capacity);
+> +	/* Update thermal pressure (the boost frequencies are accepted) */
+> +	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+>   
+>   	/*
+>   	 * In the unlikely case policy is unregistered do not enable
+> 
+
 -- 
-2.33.1
 
