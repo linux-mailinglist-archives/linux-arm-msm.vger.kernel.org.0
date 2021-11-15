@@ -2,86 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A965450E71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 19:12:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35F02450C2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 18:32:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239318AbhKOSPP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 13:15:15 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49940 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240254AbhKOSH2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 13:07:28 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B182E63260;
-        Mon, 15 Nov 2021 17:44:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1636998242;
-        bh=RHZhCKqopg0/kn8Ha4aSCuMewYbiJVQjlJ6xHIGv4iA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KGC/8EV2//Z7eNJWJxfUD01LJ/dhasKzVy8al2ddwjzlZZjQC9XyYZf4XMO9mEowu
-         1vvnMkPW3/L2Kllm25pt25zfSMWhul3/1vvC/dcvDi/326KhXIpLUvgnGiJn+nlTTr
-         yCya7XaxCqqEEQoqyVzeRR+iv945gNYBgvspGwiU=
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        stable@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 440/575] soc: qcom: rpmhpd: Provide some missing struct member descriptions
-Date:   Mon, 15 Nov 2021 18:02:45 +0100
-Message-Id: <20211115165358.980948642@linuxfoundation.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211115165343.579890274@linuxfoundation.org>
-References: <20211115165343.579890274@linuxfoundation.org>
-User-Agent: quilt/0.66
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S237138AbhKORfQ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 12:35:16 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:44385 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238129AbhKORdY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Nov 2021 12:33:24 -0500
+Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
+        by mail.holtmann.org (Postfix) with ESMTPSA id DED95CED38;
+        Mon, 15 Nov 2021 18:30:27 +0100 (CET)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Subject: Re: [PATCH v3] Bluetooth: btusb: re-definition for board_id in struct
+ qca_version
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <96d03a2b0bd50da90a20990c42a814d9@codeaurora.org>
+Date:   Mon, 15 Nov 2021 18:30:27 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <1593EED1-5745-49D1-B17A-F4C553F28644@holtmann.org>
+References: <305e41a55a4c117da86f786c374a57dc@codeaurora.org>
+ <8E687716-E810-4A46-B010-A08BB261D2FF@holtmann.org>
+ <96d03a2b0bd50da90a20990c42a814d9@codeaurora.org>
+To:     tjiang@codeaurora.org
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Lee Jones <lee.jones@linaro.org>
+Hi Tim,
 
-[ Upstream commit 5d16af6a921f5a4e7038671be5478cba4b7cfe81 ]
+>  the following is the explanation from qc btsoc team:
+> 
+> The board ID should be split into two bytes.
+> The 1st byte is chip ID, and the 2nd byte is platform ID.
+> For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID.
+> Currently we have several platforms, and platform IDs are continuously added.
+> We would not distinguish different chips if we get these mixed up.
+> Platform ID:
+> •             0x00 is for Mobile
+> •             0x01 is for X86( ID # from 257)
+> •             0x02 is for Automotive(ID# from 513 )
+> •             0x03 is for Consumer electronic( ID# from 769)
+> …
 
-Fixes the following W=1 kernel build warning(s):
+then use u8 chip_id and u8 platform_id in the data structure and add description like above when you combine chip_id and platform_id into board_id.
 
- drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'parent' not described in 'rpmhpd'
- drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'corner' not described in 'rpmhpd'
- drivers/soc/qcom/rpmhpd.c:52: warning: Function parameter or member 'active_corner' not described in 'rpmhpd'
+Regards
 
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Lee Jones <lee.jones@linaro.org>
-Link: https://lore.kernel.org/r/20201103152838.1290217-22-lee.jones@linaro.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/soc/qcom/rpmhpd.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index c8b584d0c8fb4..e7cb40144f9b1 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -24,9 +24,12 @@
-  * struct rpmhpd - top level RPMh power domain resource data structure
-  * @dev:		rpmh power domain controller device
-  * @pd:			generic_pm_domain corrresponding to the power domain
-+ * @parent:		generic_pm_domain corrresponding to the parent's power domain
-  * @peer:		A peer power domain in case Active only Voting is
-  *			supported
-  * @active_only:	True if it represents an Active only peer
-+ * @corner:		current corner
-+ * @active_corner:	current active corner
-  * @level:		An array of level (vlvl) to corner (hlvl) mappings
-  *			derived from cmd-db
-  * @level_count:	Number of levels supported by the power domain. max
--- 
-2.33.0
-
-
+Marcel
 
