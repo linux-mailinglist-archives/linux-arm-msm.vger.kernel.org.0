@@ -2,209 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 915DC4509BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 17:33:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD5484509E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Nov 2021 17:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232307AbhKOQgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 11:36:05 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:17652 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229926AbhKOQgE (ORCPT
+        id S231706AbhKOQru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 11:47:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230438AbhKOQro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 11:36:04 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1636993989; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ZYfsU0xjbXrPXTd7HBWhKtTgS/cxAjUcw8AixupPPrs=;
- b=djP/3/klqqo7Uz/ReS7TT573vQkpi5lJ30n/FhaM0PO+a2xPKhL00DxoVr0GrsWO4xNNXZI+
- HGQUU+qaWCEi0Xf+kFHZXQmQMeVh2QmWmEiRy8Sv8fMusPi9Jkj+0LN9XBrGnRd3Vg/LoyQS
- Oi9UVlOa2hj/kWUL88KqRCzqaQ8=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 61928bc4b3d5cb1f55cc7b83 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 15 Nov 2021 16:33:08
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 75522C4361A; Mon, 15 Nov 2021 16:33:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FC4DC4338F;
-        Mon, 15 Nov 2021 16:33:07 +0000 (UTC)
+        Mon, 15 Nov 2021 11:47:44 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BF3C061767
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 08:44:43 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id t30so31909832wra.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 08:44:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ebmLJNm972HwzSUFY9uX5jVcx5/iRccpx4YVQ/Ccmok=;
+        b=g0iqrBMJQyEnc9qSvvS/XvHhd4djVrsEvm98CX1l0gQprLyW37oWizStTVfu+JpU4j
+         1snhgegTeq2Go6+vBUOrpXihNI10YMbkcvvXaEwefmt0nfKCUqM6py3tUZZT1Yz+ysvt
+         RtY0+uWnRT0CdzccrmRVIVXM3cI2M0sPczP6vvdlmzk8FrzjyEthEg9YPZL+bo2ajWHS
+         EIUTacEpVfIuOn/rHjnvRUH4nNnMrd2RlGND++F7kkjRGZrkroOEqdM26t6d1RsdGwrK
+         OgfAqIsE5ct/iU3rWgdDMBkLWE8Ys1mZWvoN7azO5tlcvifNOBh4n+QQwZMY/xUjR6Uj
+         4KlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ebmLJNm972HwzSUFY9uX5jVcx5/iRccpx4YVQ/Ccmok=;
+        b=iVCKOehRoS9aX+pRUdC+vEZge52AF1iaSeyxtIZLhtWxlm5MpneoHo0t2bCSk0r25M
+         yzByJDu2KpPkOlWE8MaYX7Vn4246epxMQyGMnKH3uvzYhX18YuxDMIE3qd+SM6QCgjtk
+         R8UPpLkIyvpba1ZkRsL951AXI3LSxGAWuPJK+v3mQBVXo0bSdV3jM2cG6FNgEWOI0qyP
+         Ox08d+y+xkhN3L8AktOO6zRNPsqLGcE1l7JlncfG6+PC/4d2QVD9QkHXvMb8mqJQpntm
+         mqLHAAo74ex0Y2G57N+GTYgh4Ah5F7LkVLEoicP+IH0pMjbM/xh6inDmCxyOv+mLfTIG
+         Sxsg==
+X-Gm-Message-State: AOAM5326iiz7UeqKCUgQ+TOYbq01qspIKhb/uwnzlOcW+6wKC8mjrPrh
+        JEWIETJus1HkgunCt9NeXZiDvg==
+X-Google-Smtp-Source: ABdhPJwPwppatgTfARevG5qj57LzkviHyAEVrbH6osVFyFMK9ugSZOG8qsD/QNJudQxR5pXFv4wYIw==
+X-Received: by 2002:adf:e810:: with SMTP id o16mr394870wrm.359.1636994681553;
+        Mon, 15 Nov 2021 08:44:41 -0800 (PST)
+Received: from elver.google.com ([2a00:79e0:15:13:6385:6bd0:4ede:d8c6])
+        by smtp.gmail.com with ESMTPSA id 126sm19916816wmz.28.2021.11.15.08.44.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Nov 2021 08:44:40 -0800 (PST)
+Date:   Mon, 15 Nov 2021 17:44:33 +0100
+From:   Marco Elver <elver@google.com>
+To:     Kees Cook <keescook@chromium.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Nick Terrell <terrelln@fb.com>,
+        Rob Clark <robdclark@gmail.com>,
+        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>,
+        Anton Altaparmakov <anton@tuxera.com>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Stan Skowronek <stan@corellium.com>,
+        Hector Martin <marcan@marcan.st>,
+        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+        =?iso-8859-1?Q?Andr=E9?= Almeida <andrealmeid@collabora.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Parisc List <linux-parisc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-ntfs-dev@lists.sourceforge.net,
+        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
+        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+        linux-pci <linux-pci@vger.kernel.org>,
+        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        kasan-dev <kasan-dev@googlegroups.com>
+Subject: Re: Build regressions/improvements in v5.16-rc1
+Message-ID: <YZKOce4XhAU49+Yn@elver.google.com>
+References: <20211115155105.3797527-1-geert@linux-m68k.org>
+ <CAMuHMdUCsyUxaEf1Lz7+jMnur4ECwK+JoXQqmOCkRKqXdb1hTQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 15 Nov 2021 08:33:07 -0800
-From:   khsieh@codeaurora.org
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, quic_mkrishn@quicinc.com,
-        quic_kalyant@quicinc.coml, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add Display Port node
-In-Reply-To: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
-Message-ID: <473499ed0710598c59a507815ad11aa4@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMuHMdUCsyUxaEf1Lz7+jMnur4ECwK+JoXQqmOCkRKqXdb1hTQ@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-11-02 16:44, Kuogee Hsieh wrote:
-> From: Kuogee Hsieh <khsieh@codeaurora.org>
+On Mon, Nov 15, 2021 at 05:12PM +0100, Geert Uytterhoeven wrote:
+[...]
+> >   + /kisskb/src/include/linux/fortify-string.h: error: call to '__read_overflow' declared with attribute error: detected read beyond size of object (1st parameter):  => 263:25, 277:17
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
+>     in lib/test_kasan.c
+> 
+> s390-all{mod,yes}config
+> arm64-allmodconfig (gcc11)
 
-Anyone has comments on this patch?
+Kees, wasn't that what [1] was meant to fix?
+[1] https://lkml.kernel.org/r/20211006181544.1670992-1-keescook@chromium.org
 
-> 
-> Changes in v2:
-> -- move fixes of dp_phy reg property to other patch
-> 
-> Changes in v3:
-> -- delete "qcom,sc7180-dp" from msm_dp node
-> 
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 89 
-> +++++++++++++++++++++++++++++++++++-
->  1 file changed, 87 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index fb2f1506..4414abc 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2709,8 +2709,8 @@
->  				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
->  				 <&dsi_phy 0>,
->  				 <&dsi_phy 1>,
-> -				 <0>,
-> -				 <0>,
-> +			  	 <&dp_phy 0>,
-> +			  	 <&dp_phy 1>,
->  				 <&edp_phy 0>,
->  				 <&edp_phy 1>;
->  			clock-names = "bi_tcxo",
-> @@ -2807,6 +2807,13 @@
->  							remote-endpoint = <&edp_in>;
->  						};
->  					};
-> +
-> +					port@2 {
-> +                                                reg = <2>;
-> +                                                dpu_intf0_out: 
-> endpoint {
-> +
-> remote-endpoint = <&dp_in>;
-> +                                                };
-> +                                        };
->  				};
-> 
->  				mdp_opp_table: opp-table {
-> @@ -3018,6 +3025,78 @@
-> 
->  				status = "disabled";
->  			};
-> +
-> +			msm_dp: displayport-controller@ae90000 {
-> +				status = "disabled";
-> +				compatible = "qcom,sc7280-dp";
-> +
-> +				reg = <0 0x0ae90000 0 0x1400>;
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <12>;
-> +
-> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-> +				clock-names =	"core_iface",
-> +						"core_aux",
-> +						"ctrl_link",
-> +						"ctrl_link_iface",
-> +						"stream_pixel";
-> +				#clock-cells = <1>;
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-> +						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-> +				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-> +				phys = <&dp_phy>;
-> +				phy-names = "dp";
-> +
-> +				operating-points-v2 = <&dp_opp_table>;
-> +				power-domains = <&rpmhpd SC7280_CX>;
-> +
-> +				#sound-dai-cells = <0>;
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +					port@0 {
-> +						reg = <0>;
-> +						dp_in: endpoint {
-> +							remote-endpoint = <&dpu_intf0_out>;
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +						dp_out: endpoint { };
-> +					};
-> +				};
-> +
-> +				dp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-160000000 {
-> +						opp-hz = /bits/ 64 <160000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
-> +
-> +					opp-270000000 {
-> +						opp-hz = /bits/ 64 <270000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-540000000 {
-> +						opp-hz = /bits/ 64 <540000000>;
-> +						required-opps = <&rpmhpd_opp_svs_l1>;
-> +					};
-> +
-> +					opp-810000000 {
-> +						opp-hz = /bits/ 64 <810000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +				};
-> +			};
->  		};
-> 
->  		pdc: interrupt-controller@b220000 {
-> @@ -3120,6 +3199,12 @@
->  				bias-pull-up;
->  			};
-> 
-> +			dp_hot_plug_det: dp-hot-plug-det {
-> +				pins = "gpio47";
-> +				function = "dp_hot";
-> +				bias-disable;
-> +                        };
-> +
->  			qspi_clk: qspi-clk {
->  				pins = "gpio14";
->  				function = "qspi_clk";
+Thanks,
+-- Marco
