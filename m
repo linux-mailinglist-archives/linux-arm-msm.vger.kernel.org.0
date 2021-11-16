@@ -2,196 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D89834529E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 06:38:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12C47452A3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 07:00:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235445AbhKPFlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 00:41:39 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:63582 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235394AbhKPFlX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 00:41:23 -0500
+        id S239030AbhKPGCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 01:02:55 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:45923 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240435AbhKPGCR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Nov 2021 01:02:17 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637041105; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=SaTYdbUbC53cmoeEtQ4HCeyZDMEWJ9SkQ4sPD6/YcOs=; b=AEVlCjACH2iNUDD+kz8ePiopxKbQ6Xg0CljUj0xljAsZMT7N/5ivFvR2u6/D/pro9Cjr399Q
- JtHGTS4/eL5oITrPcNx5ckHD+OSXlabIjYEq6zdb7M9BQwX82t3HcMB5H+4tH2hbMdLi8UiR
- JLgm09y7Y5QZsOGPP5q3GPpm3ek=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1637042347; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
+ Message-ID: Sender; bh=mfaGGc9Z/93V1SAUCYag5AJsRAW8ssnfhJC7pEfuuos=; b=cHGJi47osK7gxakWhZNhjLITLevEvqm00MawKvXC8utn++00Vzn48bn+HztGEx06khRmW4zW
+ vh/7IAXMRBGKRwhuh0tE3uXIo1O0AESAmB6BgpWbgurUUwdLEzRJK0ThhDRiU9uA04/cWPcz
+ pEs9l9L3kIhiaUSxB2Ki7AoEJes=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 619343d14db4233966d67ca5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Nov 2021 05:38:25
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 619348abb3d5cb1f556601c9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Nov 2021 05:59:07
  GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 0E023C43460; Tue, 16 Nov 2021 05:38:25 +0000 (UTC)
+        id 17AB3C43460; Tue, 16 Nov 2021 05:59:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-4.3 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.1.5] (unknown [59.89.226.177])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 80CDDC43616;
-        Tue, 16 Nov 2021 05:38:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 80CDDC43616
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47E4FC4338F;
+        Tue, 16 Nov 2021 05:58:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 47E4FC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org,
-        linus.walleij@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH v3 2/2] pinctrl: qcom: sc7280: Add egpio support
-Date:   Tue, 16 Nov 2021 11:08:04 +0530
-Message-Id: <1637041084-3299-2-git-send-email-rnayak@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637041084-3299-1-git-send-email-rnayak@codeaurora.org>
-References: <1637041084-3299-1-git-send-email-rnayak@codeaurora.org>
+Message-ID: <32e0798f-37b5-e255-7e1d-fab3af4858b0@codeaurora.org>
+Date:   Tue, 16 Nov 2021 11:28:57 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH 2/2] drm/msm: Restore error return on invalid fence
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>, Sean Paul <sean@poorly.run>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>
+References: <20211111192457.747899-1-robdclark@gmail.com>
+ <20211111192457.747899-3-robdclark@gmail.com>
+ <36c9f669-c2d2-8a63-db96-31165caeeffb@codeaurora.org>
+ <CAF6AEGvMf2pQO9LmUanOGzWgU34=gO3ZPPH=6dea=AvfavWTVg@mail.gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+In-Reply-To: <CAF6AEGvMf2pQO9LmUanOGzWgU34=gO3ZPPH=6dea=AvfavWTVg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-sc7280 supports the egpio feature, GPIOs ranging from 144 to 174
-(31 GPIOs) support it, we define gpio_func to 9, which
-is an unused function for all these pins on sc7280.
+On 11/15/2021 10:26 PM, Rob Clark wrote:
+> On Mon, Nov 15, 2021 at 6:43 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>>
+>> On 11/12/2021 12:54 AM, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> When converting to use an idr to map userspace fence seqno values back
+>>> to a dma_fence, we lost the error return when userspace passes seqno
+>>> that is larger than the last submitted fence.  Restore this check.
+>>>
+>>> Reported-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>>> Fixes: a61acbbe9cf8 ("drm/msm: Track "seqno" fences by idr")
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>> Note: I will rebase "drm/msm: Handle fence rollover" on top of this,
+>>> to simplify backporting this patch to stable kernels
+>>>
+>>>    drivers/gpu/drm/msm/msm_drv.c        | 6 ++++++
+>>>    drivers/gpu/drm/msm/msm_gem_submit.c | 1 +
+>>>    drivers/gpu/drm/msm/msm_gpu.h        | 3 +++
+>>>    3 files changed, 10 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>>> index cb14d997c174..56500eb5219e 100644
+>>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>>> @@ -967,6 +967,12 @@ static int wait_fence(struct msm_gpu_submitqueue *queue, uint32_t fence_id,
+>>>        struct dma_fence *fence;
+>>>        int ret;
+>>>
+>>> +     if (fence_id > queue->last_fence) {
+>>
+>> But fence_id can wrap around and then this check won't be valid.
+> 
+> that is correct, but see my note about rebasing "drm/msm: Handle fence
+> rollover" on top of this patch, so this patch could be more easily
+> cherry-picked to stable/lts branches
+> 
+> BR,
+> -R
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-sc7280.c | 75 ++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 31 deletions(-)
+Missed that. Thanks.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-index 9017ede..31df55c 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-@@ -43,6 +43,8 @@
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-+		.egpio_enable = 12,		\
-+		.egpio_present = 11,		\
- 		.oe_bit = 9,			\
- 		.in_bit = 0,			\
- 		.out_bit = 1,			\
-@@ -520,6 +522,7 @@ enum sc7280_functions {
- 	msm_mux_dp_lcd,
- 	msm_mux_edp_hot,
- 	msm_mux_edp_lcd,
-+	msm_mux_egpio,
- 	msm_mux_gcc_gp1,
- 	msm_mux_gcc_gp2,
- 	msm_mux_gcc_gp3,
-@@ -658,6 +661,14 @@ static const char * const gpio_groups[] = {
- 	"gpio165", "gpio166", "gpio167", "gpio168", "gpio169", "gpio170",
- 	"gpio171", "gpio172", "gpio173", "gpio174",
- };
-+static const char * const egpio_groups[] = {
-+	"gpio144", "gpio145", "gpio146", "gpio147", "gpio148", "gpio149",
-+	"gpio150", "gpio151", "gpio152", "gpio153", "gpio154", "gpio155",
-+	"gpio156", "gpio157", "gpio158", "gpio159", "gpio160", "gpio161",
-+	"gpio162", "gpio163", "gpio164", "gpio165", "gpio166", "gpio167",
-+	"gpio168", "gpio169", "gpio170", "gpio171", "gpio172", "gpio173",
-+	"gpio174",
-+};
- static const char * const atest_char_groups[] = {
- 	"gpio81",
- };
-@@ -1150,6 +1161,7 @@ static const struct msm_function sc7280_functions[] = {
- 	FUNCTION(dp_lcd),
- 	FUNCTION(edp_hot),
- 	FUNCTION(edp_lcd),
-+	FUNCTION(egpio),
- 	FUNCTION(gcc_gp1),
- 	FUNCTION(gcc_gp2),
- 	FUNCTION(gcc_gp3),
-@@ -1408,37 +1420,37 @@ static const struct msm_pingroup sc7280_groups[] = {
- 	[141] = PINGROUP(141, _, _, _, _, _, _, _, _, _),
- 	[142] = PINGROUP(142, _, _, _, _, _, _, _, _, _),
- 	[143] = PINGROUP(143, _, _, _, _, _, _, _, _, _),
--	[144] = PINGROUP(144, _, _, _, _, _, _, _, _, _),
--	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, _),
--	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, _),
--	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, _),
--	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, _),
--	[149] = PINGROUP(149, _, _, _, _, _, _, _, _, _),
--	[150] = PINGROUP(150, qdss, _, _, _, _, _, _, _, _),
--	[151] = PINGROUP(151, qdss, _, _, _, _, _, _, _, _),
--	[152] = PINGROUP(152, qdss, _, _, _, _, _, _, _, _),
--	[153] = PINGROUP(153, qdss, _, _, _, _, _, _, _, _),
--	[154] = PINGROUP(154, _, _, _, _, _, _, _, _, _),
--	[155] = PINGROUP(155, _, _, _, _, _, _, _, _, _),
--	[156] = PINGROUP(156, qdss_cti, _, _, _, _, _, _, _, _),
--	[157] = PINGROUP(157, qdss_cti, _, _, _, _, _, _, _, _),
--	[158] = PINGROUP(158, _, _, _, _, _, _, _, _, _),
--	[159] = PINGROUP(159, _, _, _, _, _, _, _, _, _),
--	[160] = PINGROUP(160, _, _, _, _, _, _, _, _, _),
--	[161] = PINGROUP(161, _, _, _, _, _, _, _, _, _),
--	[162] = PINGROUP(162, _, _, _, _, _, _, _, _, _),
--	[163] = PINGROUP(163, _, _, _, _, _, _, _, _, _),
--	[164] = PINGROUP(164, _, _, _, _, _, _, _, _, _),
--	[165] = PINGROUP(165, qdss_cti, _, _, _, _, _, _, _, _),
--	[166] = PINGROUP(166, qdss_cti, _, _, _, _, _, _, _, _),
--	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, _),
--	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, _),
--	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, _),
--	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, _),
--	[171] = PINGROUP(171, qdss, _, _, _, _, _, _, _, _),
--	[172] = PINGROUP(172, qdss, _, _, _, _, _, _, _, _),
--	[173] = PINGROUP(173, qdss, _, _, _, _, _, _, _, _),
--	[174] = PINGROUP(174, qdss, _, _, _, _, _, _, _, _),
-+	[144] = PINGROUP(144, _, _, _, _, _, _, _, _, egpio),
-+	[145] = PINGROUP(145, _, _, _, _, _, _, _, _, egpio),
-+	[146] = PINGROUP(146, _, _, _, _, _, _, _, _, egpio),
-+	[147] = PINGROUP(147, _, _, _, _, _, _, _, _, egpio),
-+	[148] = PINGROUP(148, _, _, _, _, _, _, _, _, egpio),
-+	[149] = PINGROUP(149, _, _, _, _, _, _, _, _, egpio),
-+	[150] = PINGROUP(150, qdss, _, _, _, _, _, _, _, egpio),
-+	[151] = PINGROUP(151, qdss, _, _, _, _, _, _, _, egpio),
-+	[152] = PINGROUP(152, qdss, _, _, _, _, _, _, _, egpio),
-+	[153] = PINGROUP(153, qdss, _, _, _, _, _, _, _, egpio),
-+	[154] = PINGROUP(154, _, _, _, _, _, _, _, _, egpio),
-+	[155] = PINGROUP(155, _, _, _, _, _, _, _, _, egpio),
-+	[156] = PINGROUP(156, qdss_cti, _, _, _, _, _, _, _, egpio),
-+	[157] = PINGROUP(157, qdss_cti, _, _, _, _, _, _, _, egpio),
-+	[158] = PINGROUP(158, _, _, _, _, _, _, _, _, egpio),
-+	[159] = PINGROUP(159, _, _, _, _, _, _, _, _, egpio),
-+	[160] = PINGROUP(160, _, _, _, _, _, _, _, _, egpio),
-+	[161] = PINGROUP(161, _, _, _, _, _, _, _, _, egpio),
-+	[162] = PINGROUP(162, _, _, _, _, _, _, _, _, egpio),
-+	[163] = PINGROUP(163, _, _, _, _, _, _, _, _, egpio),
-+	[164] = PINGROUP(164, _, _, _, _, _, _, _, _, egpio),
-+	[165] = PINGROUP(165, qdss_cti, _, _, _, _, _, _, _, egpio),
-+	[166] = PINGROUP(166, qdss_cti, _, _, _, _, _, _, _, egpio),
-+	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, egpio),
-+	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, egpio),
-+	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, egpio),
-+	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, egpio),
-+	[171] = PINGROUP(171, qdss, _, _, _, _, _, _, _, egpio),
-+	[172] = PINGROUP(172, qdss, _, _, _, _, _, _, _, egpio),
-+	[173] = PINGROUP(173, qdss, _, _, _, _, _, _, _, egpio),
-+	[174] = PINGROUP(174, qdss, _, _, _, _, _, _, _, egpio),
- 	[175] = UFS_RESET(ufs_reset, 0xbe000),
- 	[176] = SDC_QDSD_PINGROUP(sdc1_rclk, 0xb3004, 0, 6),
- 	[177] = SDC_QDSD_PINGROUP(sdc1_clk, 0xb3000, 13, 6),
-@@ -1481,6 +1493,7 @@ static const struct msm_pinctrl_soc_data sc7280_pinctrl = {
- 	.ngpios = 176,
- 	.wakeirq_map = sc7280_pdc_map,
- 	.nwakeirq_map = ARRAY_SIZE(sc7280_pdc_map),
-+	.egpio_func = 9,
- };
- 
- static int sc7280_pinctrl_probe(struct platform_device *pdev)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Reviewed-by: Akhil P Oommen <akhilpo@codeaurora.org>
+
+-Akhil.
+> 
+>> -Akhil.
+>>
+>>> +             DRM_ERROR_RATELIMITED("waiting on invalid fence: %u (of %u)\n",
+>>> +                                   fence_id, queue->last_fence);
+>>> +             return -EINVAL;
+>>> +     }
+>>> +
+>>>        /*
+>>>         * Map submitqueue scoped "seqno" (which is actually an idr key)
+>>>         * back to underlying dma-fence
+>>> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> index 151d19e4453c..a38f23be497d 100644
+>>> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+>>> @@ -911,6 +911,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>>>        drm_sched_entity_push_job(&submit->base, queue->entity);
+>>>
+>>>        args->fence = submit->fence_id;
+>>> +     queue->last_fence = submit->fence_id;
+>>>
+>>>        msm_reset_syncobjs(syncobjs_to_reset, args->nr_in_syncobjs);
+>>>        msm_process_post_deps(post_deps, args->nr_out_syncobjs,
+>>> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+>>> index bd4e0024033e..e73a5bb03544 100644
+>>> --- a/drivers/gpu/drm/msm/msm_gpu.h
+>>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+>>> @@ -376,6 +376,8 @@ static inline int msm_gpu_convert_priority(struct msm_gpu *gpu, int prio,
+>>>     * @ring_nr:   the ringbuffer used by this submitqueue, which is determined
+>>>     *             by the submitqueue's priority
+>>>     * @faults:    the number of GPU hangs associated with this submitqueue
+>>> + * @last_fence: the sequence number of the last allocated fence (for error
+>>> + *             checking)
+>>>     * @ctx:       the per-drm_file context associated with the submitqueue (ie.
+>>>     *             which set of pgtables do submits jobs associated with the
+>>>     *             submitqueue use)
+>>> @@ -391,6 +393,7 @@ struct msm_gpu_submitqueue {
+>>>        u32 flags;
+>>>        u32 ring_nr;
+>>>        int faults;
+>>> +     uint32_t last_fence;
+>>>        struct msm_file_private *ctx;
+>>>        struct list_head node;
+>>>        struct idr fence_idr;
+>>>
+>>
 
