@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABC734529C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 06:28:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 665F14529E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 06:38:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234245AbhKPFbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 00:31:23 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:43795 "EHLO m43-7.mailgun.net"
+        id S235458AbhKPFlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 00:41:42 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:34235 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234155AbhKPFaD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 00:30:03 -0500
+        id S235393AbhKPFlX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Nov 2021 00:41:23 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637040426; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=Z5drDPiwGucdW3HzWu3F8slFIRETp3f9VoOX/bn1KQ0=; b=UiLDTsOii7b+24B0Mw2yLZzUizcVgYN031JTgJQJMxWdFQJuxC0QPlqtFJ5c0oCnhA/eZW5Q
- palVYKnUP8eBwfzI5/+uS4jPe3HM6t43YbvDsrviGUBV6odwhkCIp1pwxiZzlBdfMs4JQUG0
- kFnRGEaWAzhNivdvR9lXjCFzgN4=
+ s=smtp; t=1637041103; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rnRezh1dn/Uc+3/SygoVMHA3pQwrOPcij5LNbizx4ss=; b=mJfkQQUZ7jDGcYPS+XsW7881ngOmU9EiGYz+X7TTCHobopwKEHveDUZcNvlI3zd7Vz0GlgXk
+ 6vG8nZeUCs5Qiks1H70M0fKnyqKHQHsw5xKjxiWQ6PZNde420Q9YydeZn79+9gDmlIwfdrY+
+ 9xjhaQuQ5SVQCXNKcSCjJ0JSMnc=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 61934129b3d5cb1f555c308b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Nov 2021 05:27:05
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 619343ced8e58e6de19f4547 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Nov 2021 05:38:22
  GMT
 Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 830B4C4338F; Tue, 16 Nov 2021 05:27:05 +0000 (UTC)
+        id BAB94C43617; Tue, 16 Nov 2021 05:38:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,88 +36,120 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C3AEC43460;
-        Tue, 16 Nov 2021 05:27:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 4C3AEC43460
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E447EC4360D;
+        Tue, 16 Nov 2021 05:38:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E447EC4360D
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH 2/2] soc: qcom: rpmhpd: Make mx as a parent of cx only for sdm845
-Date:   Tue, 16 Nov 2021 10:56:22 +0530
-Message-Id: <1637040382-22987-2-git-send-email-rnayak@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, psodagud@codeaurora.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v3 1/2] pinctrl: qcom: Add egpio feature support
+Date:   Tue, 16 Nov 2021 11:08:03 +0530
+Message-Id: <1637041084-3299-1-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637040382-22987-1-git-send-email-rnayak@codeaurora.org>
-References: <1637040382-22987-1-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The requirement to specify the active + sleep and active-only MX power
-domains as the parents of the corresponding CX power domains is applicable
-only on the sdm845 SoC. With the same struct definition reused for all the
-SoCs this condition was wrongly applied to all those SoCs as well, which
-isn't needed. Define new sdm845 specific structures to manage this
-dependency and remove the parent assignements from the common structure.
+From: Prasad Sodagudi <psodagud@codeaurora.org>
 
+egpio is a scheme which allows special power Island Domain IOs
+(LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+TLMM functions with Island Domain functions.
+With this scheme, an IO can be controlled both by the cpu running
+linux and the Island processor. This provides great flexibility to
+re-purpose the Island IOs for regular TLMM usecases.
+
+2 new bits are added to ctl_reg, egpio_present is a read only bit
+which shows if egpio feature is available or not on a given gpio.
+egpio_enable is the read/write bit and only effective if egpio_present
+is 1. Once its set, the Island IO is controlled from Chip TLMM.
+egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
+
+To support this we add a new function 'egpio' which can be used to
+set the egpio_enable to 0, for any other TLMM controlled functions
+we set the egpio_enable to 1.
+
+Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 ---
- drivers/soc/qcom/rpmhpd.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 15 +++++++++++++--
+ drivers/pinctrl/qcom/pinctrl-msm.h | 10 ++++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index c71481d..12d8ce9 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -108,7 +108,6 @@ static struct rpmhpd cx_ao;
- static struct rpmhpd cx = {
- 	.pd = { .name = "cx", },
- 	.peer = &cx_ao,
--	.parent = &mx.pd,
- 	.res_name = "cx.lvl",
- };
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 8476a8a..ae09e2d 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -185,6 +185,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	unsigned int irq = irq_find_mapping(gc->irq.domain, group);
+ 	struct irq_data *d = irq_get_irq_data(irq);
+ 	unsigned int gpio_func = pctrl->soc->gpio_func;
++	unsigned int egpio_func = pctrl->soc->egpio_func;
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
+ 	u32 val, mask;
+@@ -218,8 +219,18 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	raw_spin_lock_irqsave(&pctrl->lock, flags);
  
-@@ -116,7 +115,6 @@ static struct rpmhpd cx_ao = {
- 	.pd = { .name = "cx_ao", },
- 	.active_only = true,
- 	.peer = &cx,
--	.parent = &mx_ao.pd,
- 	.res_name = "cx.lvl",
- };
- 
-@@ -149,12 +147,28 @@ static struct rpmhpd mxc_ao = {
- };
- 
- /* SDM845 RPMH powerdomains */
-+static struct rpmhpd sdm845_cx_ao;
-+static struct rpmhpd sdm845_cx = {
-+	.pd = { .name = "cx", },
-+	.peer = &sdm845_cx_ao,
-+	.parent = &mx.pd,
-+	.res_name = "cx.lvl",
-+};
+ 	val = msm_readl_ctl(pctrl, g);
+-	val &= ~mask;
+-	val |= i << g->mux_bit;
 +
-+static struct rpmhpd sdm845_cx_ao = {
-+	.pd = { .name = "cx_ao", },
-+	.active_only = true,
-+	.peer = &sdm845_cx,
-+	.parent = &mx_ao.pd,
-+	.res_name = "cx.lvl",
-+};
++	if (egpio_func && i == egpio_func) {
++		if (val & BIT(g->egpio_present))
++			val &= ~BIT(g->egpio_enable);
++	} else {
++		val &= ~mask;
++		val |= i << g->mux_bit;
++		/* Claim ownership of pin if egpio capable */
++		if (egpio_func && val & BIT(g->egpio_present))
++			val |= BIT(g->egpio_enable);
++	}
 +
- static struct rpmhpd *sdm845_rpmhpds[] = {
- 	[SDM845_EBI] = &ebi,
- 	[SDM845_MX] = &mx,
- 	[SDM845_MX_AO] = &mx_ao,
--	[SDM845_CX] = &cx,
--	[SDM845_CX_AO] = &cx_ao,
-+	[SDM845_CX] = &sdm845_cx,
-+	[SDM845_CX_AO] = &sdm845_cx_ao,
- 	[SDM845_LMX] = &lmx,
- 	[SDM845_LCX] = &lcx,
- 	[SDM845_GFX] = &gfx,
+ 	msm_writel_ctl(val, pctrl, g);
+ 
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index e31a516..dd0d949 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -77,6 +77,8 @@ struct msm_pingroup {
+ 	unsigned drv_bit:5;
+ 
+ 	unsigned od_bit:5;
++	unsigned egpio_enable:5;
++	unsigned egpio_present:5;
+ 	unsigned oe_bit:5;
+ 	unsigned in_bit:5;
+ 	unsigned out_bit:5;
+@@ -119,6 +121,13 @@ struct msm_gpio_wakeirq_map {
+  *                            to be aware that their parent can't handle dual
+  *                            edge interrupts.
+  * @gpio_func: Which function number is GPIO (usually 0).
++ * @egpio_func: If non-zero then this SoC supports eGPIO. Even though in
++ *              hardware this is a mux 1-level above the TLMM, we'll treat
++ *              it as if this is just another mux state of the TLMM. Since
++ *              it doesn't really map to hardware, we'll allocate a virtual
++ *              function number for eGPIO and any time we see that function
++ *              number used we'll treat it as a request to mux away from
++ *              our TLMM towards another owner.
+  */
+ struct msm_pinctrl_soc_data {
+ 	const struct pinctrl_pin_desc *pins;
+@@ -136,6 +145,7 @@ struct msm_pinctrl_soc_data {
+ 	unsigned int nwakeirq_map;
+ 	bool wakeirq_dual_edge_errata;
+ 	unsigned int gpio_func;
++	unsigned int egpio_func;
+ };
+ 
+ extern const struct dev_pm_ops msm_pinctrl_dev_pm_ops;
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
