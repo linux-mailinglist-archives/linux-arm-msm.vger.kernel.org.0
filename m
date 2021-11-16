@@ -2,164 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54D754535C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 16:28:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 082754535DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 16:33:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238133AbhKPPag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 10:30:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
+        id S238311AbhKPPfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 10:35:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238134AbhKPPad (ORCPT
+        with ESMTP id S238304AbhKPPe6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 10:30:33 -0500
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63C0C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:27:35 -0800 (PST)
-Received: by mail-qv1-xf2e.google.com with SMTP id bu11so14070799qvb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:27:35 -0800 (PST)
+        Tue, 16 Nov 2021 10:34:58 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D0AC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:32:01 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id i9so20909819qki.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aIR+6SGDsBIdvPmIidBVFrt2gkfBA8dAwyBdKNZqHWw=;
-        b=XdAq18HqT3EbhBXUlxrtfVFuucegkjZpFGAHqIihs50oSdNtQ6OtlkfjqUkt8Jn5I8
-         nzcWUYJALeVwCDOjAJKF+duSnwblNR+u39AuwLi17ZJ4XJUYUy6V6k3XJ/y/ejcNzRls
-         +8/orDG4K+ljPKryCqwqblcJ+N2Irb7XrQxZK9mFgUDN3WNy0ZdUf74VhD/k84omYfl0
-         iZROc1uFpGIoZcU7KE1mEzZ65/dVX/U2rHicw2MXcxWs6BbPY20Xj5GS6bHs0SK48Gha
-         ipR1sx3sCjJtDa2ZVbRCwo/pEmQmwHzGMbv27Bq5hPsIEkjTAcQ8VDelYcKqA2qxQ/NU
-         ToqQ==
+        bh=mF1aWu0JjOzyky5t42jJsAVlkltphNeGZXNSFiIsSXY=;
+        b=zo5BPGFpXF7PyojCnvUNbK9IEYkLv6Li9fwVBTAIectWMlVmUgDTpCFhW+O0mfKWSD
+         WzZrdBgb9rrlcs43MKa8FNU2G9Lr48o24jlyWxptW1FB0aFrh1Gz0ww38i7gGVsIf0s4
+         RxA3wav5s79zJlp6X14CxAP/jHQhVDXlAWnTTw/Skb1dBmWgE6gIfnzf7tMXmtgpiKUA
+         8/tT/gMSW/cO5Y6CakCqBGp+hf97wdVIDVrn43rWZ9Qxj0tWfK51vm/UtoGjzGmWtqlJ
+         qL/T130SgshZJGWchYERRxidEifVDDFTGlpWiayVDF7XGOIohDw5upSxx0aOdfOMzZtR
+         TxDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=aIR+6SGDsBIdvPmIidBVFrt2gkfBA8dAwyBdKNZqHWw=;
-        b=ex4L3qnesFTY6hIH3ZT24dOmWN7QRZTYRtcM5mlIHuRUYcMZHreRkmnTZq4mWVo+SK
-         6nfCseWgOl0W0NtCVaCtz6hkbwKhsY6pVmdVkH3433tAg5VmyzaQkaKCrw+JY08Uktjp
-         72hSIu2uMFOBmfuMKfQJjOsaIxaOeNfVGYq4qQ5GXYGN9QcS4Qa/53EBNQZ1RqnEDKzE
-         zIOYuHbnvY9D99Xyaxa4WMcpIx50SA3Tk64aauNqPNrFI39JiqXJuy37IVfn44XdVpKM
-         Kbgnpj22LqP7rD9dY+12Pozv44i40wMOomSNqvruHhnf/Hh+wBunnyC6xg4TDp+2/f3a
-         f/hw==
-X-Gm-Message-State: AOAM530Mf/sbz90VPbqPeqezxgxPNHKOqx6By1LZG1GKaoTFB7AF7pB6
-        qbTf4HDq3E/j/Do3RxeEhct8CEPyc40PFA==
-X-Google-Smtp-Source: ABdhPJzPGtn8z2/uvb42fjIpYlSwhf/BFtetEKiM5RTkPesV1zDtM7BTk53pbcVTRx78B2tpvRp/PQ==
-X-Received: by 2002:a05:6214:29c3:: with SMTP id gh3mr19606948qvb.30.1637076454395;
-        Tue, 16 Nov 2021 07:27:34 -0800 (PST)
+        bh=mF1aWu0JjOzyky5t42jJsAVlkltphNeGZXNSFiIsSXY=;
+        b=k302XEdeEzG0rSSsSjB0Ql0Ld67nKvzV5oKHBzvs1cgfhQIQVZYr/m1HCT1cw4FOdl
+         4SA25zOYVpuNh97LV6h8LlZgfebbL4uISJF6JtQdJD3NXE2k4/jABZN11HmAn6SxTJM+
+         1hXdOr40bX2n4ZulFYiAAhxq2q7Lp9UJJOwT7+KcRWedkdNK3vsJXfFU0Pdxh9Smv6Uo
+         umu9TB28E584GZPr+M926LI6ijFYoooa/+TRgKDwlLbtqHxeWT5QlwUbrssdpIOQ/y0J
+         NBc5MZvvvxK5rQ5/2oPYfUaAVxbnIjNvsUJQig5YpVZX2hB3eRe0a2BjFzJ2QxjFFcik
+         2s7Q==
+X-Gm-Message-State: AOAM531XIF4C7A4hAQXLYpHSOGSSLfLN6Cs3OFOPc3qLyn4utuwEa57r
+        8CibP32J4rjJXkEwY+4NA7xbfFu+mrPceA==
+X-Google-Smtp-Source: ABdhPJzEeWsZmjQlzDlo9QmEf9qz1BasxVxQ5ozXbJznB2YN5rA4FXCJFv1ThHdM1E7oXsUbFIkF9A==
+X-Received: by 2002:a37:bc01:: with SMTP id m1mr6759398qkf.28.1637076720456;
+        Tue, 16 Nov 2021 07:32:00 -0800 (PST)
 Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id c13sm9524138qtx.51.2021.11.16.07.27.33
+        by smtp.gmail.com with ESMTPSA id p18sm5038012qtk.54.2021.11.16.07.31.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Nov 2021 07:27:33 -0800 (PST)
+        Tue, 16 Nov 2021 07:31:59 -0800 (PST)
 Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
  correct max frequency.
-To:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>
-Cc:     rafael@kernel.org, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     Steev Klimaszewski <steev@kali.org>, rafael@kernel.org,
+        viresh.kumar@linaro.org, bjorn.andersson@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
 References: <20211115195011.52999-1-thara.gopinath@linaro.org>
  <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
- <20211116035935.wmazontuznhys6qu@vireshk-i7>
 From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <fd153d84-411a-c843-eab9-2dc66940a3d3@linaro.org>
-Date:   Tue, 16 Nov 2021 10:27:33 -0500
+Message-ID: <1ceb5a9b-817b-a9ef-c378-be3bd0f7ff17@linaro.org>
+Date:   Tue, 16 Nov 2021 10:31:59 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20211116035935.wmazontuznhys6qu@vireshk-i7>
+In-Reply-To: <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Steev,
 
+Thanks for testing this.
 
-On 11/15/21 10:59 PM, Viresh Kumar wrote:
-> On 15-11-21, 19:23, Steev Klimaszewski wrote:
->> Hi Thara,
+On 11/15/21 8:23 PM, Steev Klimaszewski wrote:
+
+--- snip
 >>
->> On 11/15/21 1:50 PM, Thara Gopinath wrote:
->>> cpuinfo.max_freq reflects the maximum supported frequency of cpus in a
->>> cpufreq policy. When cpus support boost frequency and if boost is disabled
->>> during boot up (which is the default), cpuinfo.max_freq does not reflect
->>> boost frequency as the maximum supported frequency till boost is explicitly
->>> enabled via sysfs interface later. This also means that policy reports two
->>> different cpuinfo.max_freq before and after turning on boost.  Fix this by
->>> separating out setting of policy->max and cpuinfo.max_freq in
->>> cpufreq_frequency_table_cpuinfo.
->>>
->>> e.g. of the problem. Qualcomm sdm845 supports boost frequency for gold
->>> cluster (cpus 4-7). After boot up (boost disabled),
->>>
->>> 1.  cat /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2649600
->>> <- This is wrong because boost frequency is
->>>
->>> 2.  echo 1 > /sys/devices/system/cpu/cpufreq/boost  <- Enable boost cat
->>> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
->>> max freq reflects boost freq.
->>>
->>> 3.  echo 0 > /sys/devices/system/cpu/cpufreq/boost <- Disable boost cat
->>> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
->>> Discrepancy with step 1 as in both cases boost is disabled.
->>>
->>> Note that the other way to fix this is to set cpuinfo.max_freq in Soc
->>> cpufreq driver during initialization. Fixing it in
->>> cpufreq_frequency_table_cpuinfo seems more generic solution
->>>
->>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->>> ---
->>>    drivers/cpufreq/freq_table.c | 8 ++++++--
->>>    1 file changed, 6 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
->>> index 67e56cf638ef..6784f94124df 100644
->>> --- a/drivers/cpufreq/freq_table.c
->>> +++ b/drivers/cpufreq/freq_table.c
->>> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
->>>    	struct cpufreq_frequency_table *pos;
->>>    	unsigned int min_freq = ~0;
->>>    	unsigned int max_freq = 0;
->>> +	unsigned int cpuinfo_max_freq = 0;
->>>    	unsigned int freq;
->>>    	cpufreq_for_each_valid_entry(pos, table) {
->>>    		freq = pos->frequency;
->>> +		if (freq > cpuinfo_max_freq)
->>> +			cpuinfo_max_freq = freq;
->>> +
->>>    		if (!cpufreq_boost_enabled()
->>>    		    && (pos->flags & CPUFREQ_BOOST_FREQ))
->>>    			continue;
->>> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
->>>    	 * If the driver has set its own cpuinfo.max_freq above max_freq, leave
->>>    	 * it as is.
->>>    	 */
->>> -	if (policy->cpuinfo.max_freq < max_freq)
->>> -		policy->max = policy->cpuinfo.max_freq = max_freq;
->>> +	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
->>> +		policy->cpuinfo.max_freq = cpuinfo_max_freq;
+>> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
+>> index 67e56cf638ef..6784f94124df 100644
+>> --- a/drivers/cpufreq/freq_table.c
+>> +++ b/drivers/cpufreq/freq_table.c
+>> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct 
+>> cpufreq_policy *policy,
+>>       struct cpufreq_frequency_table *pos;
+>>       unsigned int min_freq = ~0;
+>>       unsigned int max_freq = 0;
+>> +    unsigned int cpuinfo_max_freq = 0;
+>>       unsigned int freq;
+>>       cpufreq_for_each_valid_entry(pos, table) {
+>>           freq = pos->frequency;
+>> +        if (freq > cpuinfo_max_freq)
+>> +            cpuinfo_max_freq = freq;
+>> +
+>>           if (!cpufreq_boost_enabled()
+>>               && (pos->flags & CPUFREQ_BOOST_FREQ))
+>>               continue;
+>> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct 
+>> cpufreq_policy *policy,
+>>        * If the driver has set its own cpuinfo.max_freq above 
+>> max_freq, leave
+>>        * it as is.
+>>        */
+>> -    if (policy->cpuinfo.max_freq < max_freq)
+>> -        policy->max = policy->cpuinfo.max_freq = max_freq;
+>> +    if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
+>> +        policy->cpuinfo.max_freq = cpuinfo_max_freq;
+>>       if (policy->min == ~0)
+>>           return -EINVAL;
 > 
-> You need to keep the check of policy->max here and update policy->max,
-> else you will never run at boost freq. I think this is what Steev
-> reported as well ?
+> 
+> Something still isn't quite right...
+> 
+> The setup is that I have an rc.local of
+> 
+> #!/bin/sh
+> 
+> echo 1 > /sys/devices/system/cpu/cpufreq/boost
+> 
+> exit 0
+> 
+> 
+> After booting and logging in:
+> 
+> steev@limitless:~$ cat 
+> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+> 825600 2499
+> <snip>
+> 2649600 38
+> 2745600 31
+> 2841600 1473
+> 2956800 0
 
-Hi Viresh,
-	policy->max is unconditionally set to max_freq in the line before "if 
-(policy->cpuinfo.max_freq < max_freq)". So this is not the issue Steev 
-is reporting.
-	policy->max = max_freq
+Did you try debugging this ? As in did you read back boost and 
+cpuinfo_max_freq at this point to ensure that everything is as expected ?
 
-
-> 
-> So basically something like this:
-> 
-> 	if (policy->max < max_freq)
-> 		policy->max = max_freq;
-> 
-> 	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
-> 		policy->cpuinfo.max_freq = cpuinfo_max_freq;
-> 
 
 -- 
 Warm Regards
 Thara (She/Her/Hers)
+> 
+> After running a "cargo build --release" in an alacritty git checkout:
+> 
+> teev@limitless:~$ cat 
+> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+> 825600 11220
+> <snip>
+> 2649600 41
+> 2745600 35
+> 2841600 3065
+> 2956800 0
+> 
+> 
+> however...
+> 
+> If I then
+> 
+> steev@limitless:~$ echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
+> [sudo] password for steev:
+> 0
+> steev@limitless:~$ echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost
+> 1
+> 
+> and run the build again...
+> 
+> steev@limitless:~$ cat 
+> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+> 825600 21386
+> <snip>
+> 2649600 45
+> 2745600 38
+> 2841600 3326
+> 2956800 4815
+> 
+> As a workaround, I attempted to jiggle it 1-0-1 in rc.local, however 
+> that ends up giving
+> 
+> steev@limitless:~$ cat 
+> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+> 825600 2902
+> <snip>
+> 2649600 36
+> 2745600 36
+> 2841600 6050
+> 2956800 13
+> 
+> And it doesn't go up, I even tried adding a sleep of 1 second between 
+> the echo 1/0/1 lines and while 2956800 goes up to 28 (but never uses it) 
+> it seems like, unless I do it manually once I've logged in, which I'm 
+> assuming is a lot slower than waiting 1 second between them, it's not 
+> quite giving us 2956800 "easily".
+> 
+> If the email wasn't clear, please let me know! I tried to explain as 
+> best I could what I am seeing here.
+> 
+> -- steev
+> 
+
