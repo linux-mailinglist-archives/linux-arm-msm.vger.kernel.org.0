@@ -2,78 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82DC9452CCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 09:31:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E52FA452CDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 09:34:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231977AbhKPIdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 03:33:31 -0500
-Received: from foss.arm.com ([217.140.110.172]:41626 "EHLO foss.arm.com"
+        id S232242AbhKPIgE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 03:36:04 -0500
+Received: from mail.kernel.org ([198.145.29.99]:41854 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231863AbhKPId2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 03:33:28 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7D7D4D6E;
-        Tue, 16 Nov 2021 00:30:31 -0800 (PST)
-Received: from [10.57.28.207] (unknown [10.57.28.207])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7E2053F5A1;
-        Tue, 16 Nov 2021 00:30:27 -0800 (PST)
-Subject: Re: [PATCH v4 4/5] cpufreq: qcom-cpufreq-hw: Use new thermal pressure
- update function
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, steev@kali.org,
-        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
-        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211109195714.7750-1-lukasz.luba@arm.com>
- <20211109195714.7750-5-lukasz.luba@arm.com>
- <02a848c8-a672-f3df-7144-979a9df71fcb@linaro.org>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <8239b35e-8f51-e36c-96c6-4e5d986eebf9@arm.com>
-Date:   Tue, 16 Nov 2021 08:30:25 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S232144AbhKPIgE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Nov 2021 03:36:04 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 62A8761104;
+        Tue, 16 Nov 2021 08:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637051587;
+        bh=815Kbc3zKvskUedozJdeNakdfBrmFEPbGS+tpaXNMZc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mkuN+v2TSJerwZ+iWmj0Yo1rMAqQxzk8uDXNs7HbZ5J01h7rJXQhpykk3zFr1sZtj
+         2tvUy4zq4W9MyKdmQDsU2e07RqdQ1k0iK7WKSNZFdSbHSttE8W296Ls0+U+mCzPNmk
+         A5mDsIc+V7YWW85j0m3Q/G/qWWv3xS/uEJqcxb1BJv3i77heJQFFEKbOSKJiMsb3pE
+         vGX1ifcc5SREMLFGJYZGtS4z9An2ZjCG8mraLuZ76ipBZoq4hpfuQwA+4D+AUn2Jxg
+         z7iTPpPwO2zMVS51DfB8kpbtrNyBAdYH0Fd6MIt4J4YQYamsCvQ582XBRh7vC2jBPl
+         Zy772gTBbSR/w==
+Date:   Tue, 16 Nov 2021 14:03:02 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     quic_vamslank@quicinc.com
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        tglx@linutronix.de, maz@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, manivannan.sadhasivam@linaro.org,
+        kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v4 3/6] clk: qcom: Add SDX65 GCC support
+Message-ID: <YZNsvjwp0/AX0Hdo@matsya>
+References: <cover.1637047731.git.quic_vamslank@quicinc.com>
+ <b61d16ad890bcf07057f8fbd83dfffaf9812cda6.1637047731.git.quic_vamslank@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <02a848c8-a672-f3df-7144-979a9df71fcb@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b61d16ad890bcf07057f8fbd83dfffaf9812cda6.1637047731.git.quic_vamslank@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 15-11-21, 23:38, quic_vamslank@quicinc.com wrote:
+> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> 
+> Add Global Clock Controller (GCC) support for SDX65 SoCs from Qualcomm.
+> 
+> Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> Reported-by: kernel test robot <lkp@intel.com>
 
+Missing support reported ??
 
-On 11/15/21 8:57 PM, Thara Gopinath wrote:
-> 
-> 
-> On 11/9/21 2:57 PM, Lukasz Luba wrote:
->> Thermal pressure provides a new API, which allows to use CPU frequency
->> as an argument. That removes the need of local conversion to capacity.
->> Use this new API and remove old local conversion code.
->>
->> The new arch_update_thermal_pressure() also accepts boost frequencies,
->> which solves issue in the driver code with wrong reduced capacity
->> calculation. The reduced capacity was calculated wrongly due to
->> 'policy->cpuinfo.max_freq' used as a divider. The value present there was
->> actually the boost frequency. Thus, even a normal maximum frequency value
->> which corresponds to max CPU capacity (arch_scale_cpu_capacity(cpu_id))
->> is not able to remove the capping.
-> 
-> Yes, although cpuinfo.max_freq does not reflect the boost frequency 
-> unless boost is enabled atleast once. I have sent a patch to fix this. 
-> But I agree that using cpuinfo.max_freq has issues you have mentioned in 
-> this patch if boost is enabled once.
-> 
-> So, for this patch
-> 
-> Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
+> +static struct clk_branch gcc_ahb_pcie_link_clk = {
+> +	.halt_reg = 0x2e004,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x2e004,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_ahb_pcie_link_clk",
+> +			.flags = CLK_IS_CRITICAL,
+> +			.ops = &clk_branch2_ops,
+> +		},
 
-Thank you for the review!
+If this clk is critical then why model in linux, enable directly in probe
+and leave it...?
 
-> 
-> Warm Regards
-> Thara (She/Her/Hers)
+> +static struct clk_branch gcc_pcie_0_clkref_en = {
+> +	.halt_reg = 0x88004,
+> +	.halt_check = BRANCH_HALT_DELAY,
+
+Why delay, add a comment at least for that
+
+> +	.clkr = {
+> +		.enable_reg = 0x88004,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_pcie_0_clkref_en",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_pcie_aux_clk = {
+> +	.halt_reg = 0x43034,
+> +	.halt_check = BRANCH_HALT_DELAY,
+
+Here too
+
+> +static struct clk_branch gcc_pcie_mstr_axi_clk = {
+> +	.halt_reg = 0x43024,
+> +	.halt_check = BRANCH_HALT_VOTED,
+> +	.hwcg_reg = 0x43024,
+> +	.hwcg_bit = 1,
+> +	.clkr = {
+> +		.enable_reg = 0x6d010,
+> +		.enable_mask = BIT(1),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_pcie_mstr_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_pcie_pipe_clk = {
+> +	.halt_reg = 0x4303c,
+> +	.halt_check = BRANCH_HALT_DELAY,
+
+here as well and few more places I guess
+
+> +static struct clk_branch gcc_xo_pcie_link_clk = {
+> +	.halt_reg = 0x2e008,
+> +	.halt_check = BRANCH_HALT,
+> +	.hwcg_reg = 0x2e008,
+> +	.hwcg_bit = 1,
+> +	.clkr = {
+> +		.enable_reg = 0x2e008,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_xo_pcie_link_clk",
+> +			.flags = CLK_IS_CRITICAL,
+
+Here as well
+-- 
+~Vinod
