@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A205C452B5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 08:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FEBA452C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 08:47:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229712AbhKPHMo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 02:12:44 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:36751 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230081AbhKPHMc (ORCPT
+        id S231472AbhKPHup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 02:50:45 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:22136 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230441AbhKPHup (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 02:12:32 -0500
+        Tue, 16 Nov 2021 02:50:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637046576; x=1668582576;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=cNmbT8/rJgG7bxdZj/1w3/CE2sIkSDiX/FJADzDXwos=;
-  b=rOd5TyTC08bE991gy8PBKN20gcciR0nrX/fg0YDj5wJ6B9DYlgPfj1v4
-   QYJzlJ9LdnIxWSJaGhUwy+AKZLXWR7lrTS9CR4NM3+5odKEMDlzZnvlW5
-   Ih+PC6ATMIi8BE+isc6ijk7gZRCaoQW8j1VCdnG8NGX/MnQCy8SIP/eNU
-   8=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Nov 2021 23:08:26 -0800
+  t=1637048868; x=1668584868;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=wUi+LmWmWt7N0qIv/AFSpcpNjrr6d2HeC8ik8bKgGfI=;
+  b=TZx7Q2qoO3u2atYYhP8h0kzmfhzvZIgyARL9wJVYRFwXNt8CN7lDJbra
+   W21xiatuLiJqtEOSv27RdKtSiQI9CnQ9//zMhoPb3Gw/oWES3+nl8t5J0
+   7uLBTjQtjsEk7TWKErB9rKZ9uxNnkuile/OKszesDtCHfk9uxdpEuGHZm
+   s=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 15 Nov 2021 23:47:46 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2021 23:08:26 -0800
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2021 23:38:32 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 15 Nov 2021 23:08:11 -0800
-Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
+ 15.2.922.19; Mon, 15 Nov 2021 23:38:27 -0800
+Received: from hu-vamslank-sd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 15 Nov 2021 23:08:07 -0800
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_kalyant@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <dianders@chromium.org>,
-        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>
-Subject: [PATCH v1 3/3] phy: qcom: Program SSC only if supported by sink
-Date:   Tue, 16 Nov 2021 12:37:38 +0530
-Message-ID: <1637046458-20607-4-git-send-email-quic_sbillaka@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637046458-20607-1-git-send-email-quic_sbillaka@quicinc.com>
-References: <1637046458-20607-1-git-send-email-quic_sbillaka@quicinc.com>
+ 15.2.922.19; Mon, 15 Nov 2021 23:38:26 -0800
+From:   <quic_vamslank@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <tglx@linutronix.de>, <maz@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+Subject: [PATCH v4 0/6] Add Pdc, GCC and RPMh clock support for SDX65 
+Date:   Mon, 15 Nov 2021 23:38:06 -0800
+Message-ID: <cover.1637047731.git.quic_vamslank@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
@@ -58,34 +57,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some legacy eDP sinks may not support SSC. The support for SSC is
-indicated through an opts flag from the controller driver. This
-change will enable SSC only if the sink supports it.
+From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
----
- drivers/phy/qualcomm/phy-qcom-edp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Hello,
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-index 6d9404d..06ba609 100644
---- a/drivers/phy/qualcomm/phy-qcom-edp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-@@ -335,9 +335,11 @@ static int qcom_edp_phy_power_on(struct phy *phy)
- 	writel(0x00, edp->tx0 + TXn_LANE_MODE_1);
- 	writel(0x00, edp->tx1 + TXn_LANE_MODE_1);
- 
--	ret = qcom_edp_configure_ssc(edp);
--	if (ret)
--		return ret;
-+	if (edp->dp_opts.ssc) {
-+		ret = qcom_edp_configure_ssc(edp);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = qcom_edp_configure_pll(edp);
- 	if (ret)
+Changes from v3:
+ - Fixed DTbindings and unused varaibles errors reported by kernel test bot
+ - Rebased on top of v5.16-rc1 
+
+Changes from v2:
+ - Addressed Taniya Das and Vinod Koul's comments related to adding LUCID_EVO
+   PLL type and rpmh support patches
+ - Collected Rob's Acked-by for the dt-bindings patches
+
+Changes from v1:
+ - Addressed Bjorn's comments related to the GCC support patch
+ - Collected Bjorn's and Rob's Reviewed-by for the dt-bindings patches
+
+This patch series adds bindings and device driver changes for GCC, pdc and RPMh
+clock support for SDX65 Platform.
+
+Thanks,
+Vamsi
+
+ .../bindings/clock/qcom,gcc-sdx65.yaml        |   78 +
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ .../interrupt-controller/qcom,pdc.txt         |    1 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |  171 ++
+ drivers/clk/qcom/clk-alpha-pll.h              |    3 +
+ drivers/clk/qcom/clk-rpmh.c                   |   25 +
+ drivers/clk/qcom/gcc-sdx65.c                  | 1589 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sdx65.h    |  122 ++
+ 10 files changed, 1999 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sdx65.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx65.h
+
+
+base-commit: 8ab774587903771821b59471cc723bba6d893942
 -- 
-2.7.4
+2.33.1
 
