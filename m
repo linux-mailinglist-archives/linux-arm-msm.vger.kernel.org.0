@@ -2,210 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 144374537FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 17:45:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BD8745386E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 18:22:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235330AbhKPQr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 11:47:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43602 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233055AbhKPQry (ORCPT
+        id S237228AbhKPRZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 12:25:02 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:61191 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235906AbhKPRZB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 11:47:54 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D05C061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 08:44:57 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id x19-20020a9d7053000000b0055c8b39420bso34592494otj.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 08:44:57 -0800 (PST)
+        Tue, 16 Nov 2021 12:25:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=tBCEcBxxkWy7DtwDVDc+qef8W0JepmcD0E+LVB3BosQ=;
-        b=Uy90Om181KxRRdPVFAqEwVY1cQErtUa8EITCgxvivESLVtXtTY1e6G03vaKkZpXfAk
-         Bdz35QrEzbnFIqeQ59a6CYd51XM/lt3QvKnl25xUf7dudnhJ0EzHbvAnPY2Z6W3Ljvyl
-         ArJYd2gSQ2HXeWK/MgRecHlg2D3dTpr/zKKqfIhWqrpqcDJJZzMKq5ihyYFe6LDGt+rL
-         DcXWX8tqPMBFXgpeERjpUCwZbRiRxMZRIU982X2jRs/p2UoLKgFY9kcXzuNa19fptvqS
-         iSRYYhg3HHgxZCF7zZvtvvlDJFx/soipskVRgyZvgMt6AawwLl+Bt2urDSkLjGi8tj5a
-         thMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=tBCEcBxxkWy7DtwDVDc+qef8W0JepmcD0E+LVB3BosQ=;
-        b=rnU1UnqekLriITdHli4DR1fvl/C+TWMUaCWtNoxLwxGMCmBUS5B6WxuFYUhU8thi7J
-         eLXTOIkoLVNbuioV+MIjXb4UxyUlheRq9Yda+udG9yiQHl2wr56+HzFHMSBDNVFMt9F9
-         sM/g2eJc9Bv+2tqC+BSxCLYEKAhfPWqbWqgc8Nmmw2EUfhkFXdx3a0aX7FYLH9hVKqLW
-         oSnIDOezWFhnQ1Vgh0uxpvQxX3hrLfdLA/o3sYAKmv4YFp2mL1+ikXM+KD9inzRbkUWi
-         zkRM2msziTGoSeSqZDc+QQMalmi86QGifrpGZhKhi2wNK5vHlnO8MJoixCPRL/nc4uTo
-         btig==
-X-Gm-Message-State: AOAM5339H/5Ew+uvui8dXhxjMCqzIEkEouuvch013woaOjM+EtHvLywU
-        GH0LLW1qKn2m3GcfAQKHUqwTkg==
-X-Google-Smtp-Source: ABdhPJwGySCvqYJmNIr1doWrqDUI7oorpeACdpXaga0AWv2+EbVhTLdYBgOcu969qUsx8hQjFE/GYw==
-X-Received: by 2002:a9d:5d0b:: with SMTP id b11mr7232399oti.213.1637081096451;
-        Tue, 16 Nov 2021 08:44:56 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id bi20sm4426252oib.29.2021.11.16.08.44.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Nov 2021 08:44:56 -0800 (PST)
-Message-ID: <19991c37-4d05-b464-128b-8e7a767970b1@kali.org>
-Date:   Tue, 16 Nov 2021 10:44:54 -0600
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637083324; x=1668619324;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=3urSEVEYlMPzHLoHIKUm64Js447AfDkp9eo4nrLiwKM=;
+  b=l3SK8KT8QzZ3cVt6IitplkCWlDL3Ben5YV3b6MF/o4XT7QPiEbFeotFp
+   VI/YFGOnX2d5tQMvbDMY2R4fDFGWhn9E2WTYJHyMZQ8bSR+/Oh2G8hrPs
+   mQFr7ajVcKKEvidoLC8Bml+mCJVCGqJIIjDkwjlZf+XcidA182Dzsvo8I
+   8=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Nov 2021 09:22:04 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2021 09:22:03 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 16 Nov 2021 09:22:03 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 16 Nov 2021 09:22:02 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4] drm/msm/dp:  employ bridge mechanism for display enable and disable
+Date:   Tue, 16 Nov 2021 09:21:54 -0800
+Message-ID: <1637083314-29973-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
- correct max frequency.
-Content-Language: en-US
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>, rafael@kernel.org,
-        viresh.kumar@linaro.org, bjorn.andersson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211115195011.52999-1-thara.gopinath@linaro.org>
- <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
- <1ceb5a9b-817b-a9ef-c378-be3bd0f7ff17@linaro.org>
- <7b440c0f-57eb-e367-bcc7-91c731d360d5@kali.org>
-In-Reply-To: <7b440c0f-57eb-e367-bcc7-91c731d360d5@kali.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently the msm_dp_*** functions implement the same sequence which would
+happen when drm_bridge is used. hence get rid of this intermediate layer
+and align with the drm_bridge usage to avoid customized implementation.
 
-On 11/16/21 10:15 AM, Steev Klimaszewski wrote:
->
-> On 11/16/21 9:31 AM, Thara Gopinath wrote:
->> Hi Steev,
->>
->> Thanks for testing this.
->>
->> On 11/15/21 8:23 PM, Steev Klimaszewski wrote:
->>
->> --- snip
->>>>
->>>> diff --git a/drivers/cpufreq/freq_table.c 
->>>> b/drivers/cpufreq/freq_table.c
->>>> index 67e56cf638ef..6784f94124df 100644
->>>> --- a/drivers/cpufreq/freq_table.c
->>>> +++ b/drivers/cpufreq/freq_table.c
->>>> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct 
->>>> cpufreq_policy *policy,
->>>>       struct cpufreq_frequency_table *pos;
->>>>       unsigned int min_freq = ~0;
->>>>       unsigned int max_freq = 0;
->>>> +    unsigned int cpuinfo_max_freq = 0;
->>>>       unsigned int freq;
->>>>       cpufreq_for_each_valid_entry(pos, table) {
->>>>           freq = pos->frequency;
->>>> +        if (freq > cpuinfo_max_freq)
->>>> +            cpuinfo_max_freq = freq;
->>>> +
->>>>           if (!cpufreq_boost_enabled()
->>>>               && (pos->flags & CPUFREQ_BOOST_FREQ))
->>>>               continue;
->>>> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct 
->>>> cpufreq_policy *policy,
->>>>        * If the driver has set its own cpuinfo.max_freq above 
->>>> max_freq, leave
->>>>        * it as is.
->>>>        */
->>>> -    if (policy->cpuinfo.max_freq < max_freq)
->>>> -        policy->max = policy->cpuinfo.max_freq = max_freq;
->>>> +    if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
->>>> +        policy->cpuinfo.max_freq = cpuinfo_max_freq;
->>>>       if (policy->min == ~0)
->>>>           return -EINVAL;
->>>
->>>
->>> Something still isn't quite right...
->>>
->>> The setup is that I have an rc.local of
->>>
->>> #!/bin/sh
->>>
->>> echo 1 > /sys/devices/system/cpu/cpufreq/boost
->>>
->>> exit 0
->>>
->>>
->>> After booting and logging in:
->>>
->>> steev@limitless:~$ cat 
->>> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
->>> 825600 2499
->>> <snip>
->>> 2649600 38
->>> 2745600 31
->>> 2841600 1473
->>> 2956800 0
->>
->> Did you try debugging this ? As in did you read back boost and 
->> cpuinfo_max_freq at this point to ensure that everything is as 
->> expected ?
->>
->>
-> Hi Thara,
->
-> I did - sorry I forgot to mention that boost does show 1 for enabled 
-> and cpuinfo_max_freq is set to 2956800.  However, scaling_max_freq is 
-> still listed as 2841600 and scaling_available_frequencies still shows 
-> 2841600 as the max available. scaling_boost_freqencies does also list 
-> 2956800.
->
-> steev@limitless:~$ grep . /sys/devices/system/cpu/cpufreq/policy4/*
-> /sys/devices/system/cpu/cpufreq/policy4/affected_cpus:4 5 6 7
-> grep: /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_cur_freq: 
-> Permission denied
-> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq:2956800
-> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_min_freq:825600
-> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_transition_latency:0
-> /sys/devices/system/cpu/cpufreq/policy4/related_cpus:4 5 6 7
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_available_frequencies:825600 
-> 902400 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 
-> 1689600 1766400 1843200 1920000 1996800 2092800 2169600 2246400 
-> 2323200 2400000 2476800 2553600 2649600 2745600 2841600
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_available_governors:ondemand 
-> conservative powersave userspace performance schedutil
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_boost_frequencies:2956800
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq:1920000
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_driver:qcom-cpufreq-hw
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_governor:schedutil
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq:2841600
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq:825600
-> /sys/devices/system/cpu/cpufreq/policy4/scaling_setspeed:<unsupported>
->
-Once it does start working (e.g. I've run echo 0 to turn off boost, and 
-then echo 1 to turn it back one)
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-steev@limitless:~$ grep . /sys/devices/system/cpu/cpufreq/policy4/*
-/sys/devices/system/cpu/cpufreq/policy4/affected_cpus:4 5 6 7
-grep: /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_cur_freq: 
-Permission denied
-/sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq:2956800
-/sys/devices/system/cpu/cpufreq/policy4/cpuinfo_min_freq:825600
-/sys/devices/system/cpu/cpufreq/policy4/cpuinfo_transition_latency:0
-/sys/devices/system/cpu/cpufreq/policy4/related_cpus:4 5 6 7
-/sys/devices/system/cpu/cpufreq/policy4/scaling_available_frequencies:825600 
-902400 979200 1056000 1209600 1286400 1363200 1459200 1536000 1612800 
-1689600 1766400 1843200 1920000 1996800 2092800 2169600 2246400 2323200 
-2400000 2476800 2553600 2649600 2745600 2841600
-/sys/devices/system/cpu/cpufreq/policy4/scaling_available_governors:ondemand 
-conservative powersave userspace performance schedutil
-/sys/devices/system/cpu/cpufreq/policy4/scaling_boost_frequencies:2956800
-/sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq:1920000
-/sys/devices/system/cpu/cpufreq/policy4/scaling_driver:qcom-cpufreq-hw
-/sys/devices/system/cpu/cpufreq/policy4/scaling_governor:schedutil
-/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq:2956800
-/sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq:825600
-/sys/devices/system/cpu/cpufreq/policy4/scaling_setspeed:<unsupported>
+Changes in v2:
+-- revise commit text
+-- rename dp_bridge to msm_dp_bridge
+-- delete empty functions
 
+Changes in v3:
+-- replace kzalloc() with devm_kzalloc()
+-- replace __dp_display_enable() with dp_display_enable()
+-- replace __dp_display_disable() with dp_display_disable()
 
-Notice that the scaling_max_freq is now 2956800 instead of 2841600 when 
-it isn't working.
+Changes in v4:
+-- msm_dp_bridge_init() called from msm_dp_modeset_init() same as dsi
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 21 -------
+ drivers/gpu/drm/msm/dp/dp_display.c         | 16 +++++-
+ drivers/gpu/drm/msm/dp/dp_display.h         |  1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c             | 86 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h               | 18 ++++--
+ 5 files changed, 115 insertions(+), 27 deletions(-)
 
-Sorry for forgetting and sending another mail :(
-
--- steev
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 31050aa..c4e08c4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1003,9 +1003,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+ 
+ 	trace_dpu_enc_mode_set(DRMID(drm_enc));
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
+-		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
+-
+ 	list_for_each_entry(conn_iter, connector_list, head)
+ 		if (conn_iter->encoder == drm_enc)
+ 			conn = conn_iter;
+@@ -1181,14 +1178,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+ 
+ 	_dpu_encoder_virt_enable_helper(drm_enc);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
+-		if (ret) {
+-			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
+-				ret);
+-			goto out;
+-		}
+-	}
+ 	dpu_enc->enabled = true;
+ 
+ out:
+@@ -1214,11 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	/* wait for idle */
+ 	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
+-	}
+-
+ 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+ 
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+@@ -1243,11 +1227,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 
+ 	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
+-	}
+-
+ 	mutex_unlock(&dpu_enc->enc_lock);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 2f113ff..89a8d43 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1571,6 +1571,18 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 	}
+ 
+ 	priv->connectors[priv->num_connectors++] = dp_display->connector;
++
++	dp_display->bridge = msm_dp_bridge_init(dp_display, dev, encoder);
++	if (IS_ERR(dp_display->bridge)) {
++		ret = PTR_ERR(dp_display->bridge);
++		DRM_DEV_ERROR(dev->dev,
++			"failed to create dp bridge: %d\n", ret);
++		dp_display->bridge = NULL;
++		return ret;
++	}
++
++	priv->bridges[priv->num_bridges++] = dp_display->bridge;
++
+ 	return 0;
+ }
+ 
+@@ -1674,8 +1686,8 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ }
+ 
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
+ {
+ 	struct dp_display_private *dp_display;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 76f45f9..2237e80 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -13,6 +13,7 @@
+ struct msm_dp {
+ 	struct drm_device *drm_dev;
+ 	struct device *codec_dev;
++	struct drm_bridge *bridge;
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	struct drm_panel *drm_panel;
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index f33e315..4c42d8a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -5,12 +5,21 @@
+ 
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_atomic.h>
++#include <drm/drm_bridge.h>
+ #include <drm/drm_crtc.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+ #include "dp_drm.h"
+ 
++
++struct msm_dp_bridge {
++	struct drm_bridge bridge;
++	struct msm_dp *dp_display;
++};
++
++#define to_dp_display(x)     container_of((x), struct msm_dp_bridge, bridge)
++
+ struct dp_connector {
+ 	struct drm_connector base;
+ 	struct msm_dp *dp_display;
+@@ -162,3 +171,80 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+ 
+ 	return connector;
+ }
++
++static int dp_bridge_attach(struct drm_bridge *drm_bridge,
++				enum drm_bridge_attach_flags flags)
++{
++	return 0;
++}
++
++static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_mode_set(dp_display, drm_bridge->encoder, mode, adjusted_mode);
++}
++
++static void dp_bridge_enable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_enable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_disable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_pre_disable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_disable(dp_display, drm_bridge->encoder);
++}
++
++static const struct drm_bridge_funcs dp_bridge_ops = {
++	.attach       = dp_bridge_attach,
++	.mode_fixup   = NULL,
++	.pre_enable   = NULL,
++	.enable       = dp_bridge_enable,
++	.disable      = dp_bridge_disable,
++	.post_disable = dp_bridge_post_disable,
++	.mode_set     = dp_bridge_mode_set,
++};
++
++struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++			struct drm_encoder *encoder)
++{
++	int rc;
++	struct msm_dp_bridge *dp_bridge;
++	struct drm_bridge *bridge;
++
++	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
++	if (!dp_bridge)
++		return ERR_PTR(-ENOMEM);
++
++	dp_bridge->dp_display = dp_display;
++
++	bridge = &dp_bridge->bridge;
++	bridge->funcs = &dp_bridge_ops;
++	bridge->encoder = encoder;
++
++	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
++	if (rc) {
++		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
++		kfree(dp_bridge);
++		return ERR_PTR(rc);
++	}
++
++	return bridge;
++}
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 4bb797e..27c0dd7 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -388,8 +388,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode);
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode);
++
++struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display,
++					struct drm_device *dev,
++					struct drm_encoder *encoder);
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+ 
+@@ -426,9 +430,15 @@ static inline int msm_dp_display_pre_disable(struct msm_dp *dp,
+ }
+ static inline void msm_dp_display_mode_set(struct msm_dp *dp,
+ 				struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
++{
++}
++static inline int msm_dp_bridge_init(struct msm_dp *dp_display,
++				struct drm_device *dev,
++				struct drm_encoder *encoder)
+ {
++	return -EINVAL;
+ }
+ 
+ static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
