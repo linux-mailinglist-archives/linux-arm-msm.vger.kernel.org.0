@@ -2,200 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 082754535DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 16:33:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55C9A4535B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 16:24:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238311AbhKPPfC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 10:35:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
+        id S238157AbhKPP1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 10:27:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238304AbhKPPe6 (ORCPT
+        with ESMTP id S238104AbhKPP1H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 10:34:58 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D0AC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:32:01 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id i9so20909819qki.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:32:01 -0800 (PST)
+        Tue, 16 Nov 2021 10:27:07 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AECC6C061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:24:09 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id d27so38374131wrb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:24:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mF1aWu0JjOzyky5t42jJsAVlkltphNeGZXNSFiIsSXY=;
-        b=zo5BPGFpXF7PyojCnvUNbK9IEYkLv6Li9fwVBTAIectWMlVmUgDTpCFhW+O0mfKWSD
-         WzZrdBgb9rrlcs43MKa8FNU2G9Lr48o24jlyWxptW1FB0aFrh1Gz0ww38i7gGVsIf0s4
-         RxA3wav5s79zJlp6X14CxAP/jHQhVDXlAWnTTw/Skb1dBmWgE6gIfnzf7tMXmtgpiKUA
-         8/tT/gMSW/cO5Y6CakCqBGp+hf97wdVIDVrn43rWZ9Qxj0tWfK51vm/UtoGjzGmWtqlJ
-         qL/T130SgshZJGWchYERRxidEifVDDFTGlpWiayVDF7XGOIohDw5upSxx0aOdfOMzZtR
-         TxDA==
+        h=from:to:cc:subject:date:message-id;
+        bh=Hb8StdvkhuwqjYrqbshLfc0V2nPtAGB1TlClikG+/W4=;
+        b=kpgkmj9vddqDwV3u7YsBA/AtAr3+HZscJ0U59XnhXILqqXkV64ZffvqX45ZJM2lnO8
+         qtI9eArOnpdLw6XqRwz/P0mRsg5xp1a77F3i2Hd79L4kkpcIog4OTcxX1/X/0EYSgGDG
+         4EeixZwH5SoQbaEcFQkYB4rJXtBHfgjLwLAVDENd2BJggEyOziuhDqdthgybHXWMvhUO
+         Nbfpojd2GbCqySHHbBzOE9++E3uAWfg696bahtCUuXhO+oMqYBpwGLFV7rMpyPOzUWQx
+         o7KqNUpP+Zr5luZK9wPx1uXxsrMIB9JFWh4dMoufywtAGW37+DQCFo5LUoH8Aixc5Vjl
+         UeFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mF1aWu0JjOzyky5t42jJsAVlkltphNeGZXNSFiIsSXY=;
-        b=k302XEdeEzG0rSSsSjB0Ql0Ld67nKvzV5oKHBzvs1cgfhQIQVZYr/m1HCT1cw4FOdl
-         4SA25zOYVpuNh97LV6h8LlZgfebbL4uISJF6JtQdJD3NXE2k4/jABZN11HmAn6SxTJM+
-         1hXdOr40bX2n4ZulFYiAAhxq2q7Lp9UJJOwT7+KcRWedkdNK3vsJXfFU0Pdxh9Smv6Uo
-         umu9TB28E584GZPr+M926LI6ijFYoooa/+TRgKDwlLbtqHxeWT5QlwUbrssdpIOQ/y0J
-         NBc5MZvvvxK5rQ5/2oPYfUaAVxbnIjNvsUJQig5YpVZX2hB3eRe0a2BjFzJ2QxjFFcik
-         2s7Q==
-X-Gm-Message-State: AOAM531XIF4C7A4hAQXLYpHSOGSSLfLN6Cs3OFOPc3qLyn4utuwEa57r
-        8CibP32J4rjJXkEwY+4NA7xbfFu+mrPceA==
-X-Google-Smtp-Source: ABdhPJzEeWsZmjQlzDlo9QmEf9qz1BasxVxQ5ozXbJznB2YN5rA4FXCJFv1ThHdM1E7oXsUbFIkF9A==
-X-Received: by 2002:a37:bc01:: with SMTP id m1mr6759398qkf.28.1637076720456;
-        Tue, 16 Nov 2021 07:32:00 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id p18sm5038012qtk.54.2021.11.16.07.31.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Nov 2021 07:31:59 -0800 (PST)
-Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
- correct max frequency.
-To:     Steev Klimaszewski <steev@kali.org>, rafael@kernel.org,
-        viresh.kumar@linaro.org, bjorn.andersson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211115195011.52999-1-thara.gopinath@linaro.org>
- <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <1ceb5a9b-817b-a9ef-c378-be3bd0f7ff17@linaro.org>
-Date:   Tue, 16 Nov 2021 10:31:59 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Hb8StdvkhuwqjYrqbshLfc0V2nPtAGB1TlClikG+/W4=;
+        b=w5lxcMiv6cAW5S/+w8l11bYlKJ7Miac7L7GnKXYXsVLAikZ2GfRhx5v89yzmilVs5u
+         N3QCMOc3hg/zoag7RtzJNB8IZA958zyjw+ObBeKWYHzbcRKJQ6MYBOkTKmy7CmeRjzHp
+         Jvk/oXqOBwiGN6w5H4eqUPHRTT88kOU2g3RI9pfUmOa+tXJekEk2isKeO9vrBeFhkqtY
+         ZYIBgWf5dQyOadfZ73az8kFYZ9aVPLUkjEk5J9psZwIXEj693qq2bi8Xi5h5eJMz7cOa
+         VG10a3IsfhabRDRyNkY9PnaWMa6vDeE8CPtAqk3+v/rlk4HvON3oRPQVHUD33yddbzFO
+         Wp3A==
+X-Gm-Message-State: AOAM531tFHnGLO/r9Fsx28Cf0V3f4vfo+E3HrQRMY9qIpmsZ6r+6RsPZ
+        7HX+29txI628y+gdU8SOq+kX2w==
+X-Google-Smtp-Source: ABdhPJyx9E3jDaIaXCPSmT4h//ywS47dRwiYotz2zbdJMKuGHIZfXaLDRQeruZg/yFH8qRjzzTaEJg==
+X-Received: by 2002:a05:6000:252:: with SMTP id m18mr10258797wrz.117.1637076248101;
+        Tue, 16 Nov 2021 07:24:08 -0800 (PST)
+Received: from localhost.localdomain ([88.160.176.23])
+        by smtp.gmail.com with ESMTPSA id u23sm18847352wru.21.2021.11.16.07.24.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Nov 2021 07:24:07 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     agross@kernel.org, linus.walleij@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        shawn.guo@linaro.org, bjorn.andersson@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/2] pinctrl: spmi-gpio: Add support for PM2250
+Date:   Tue, 16 Nov 2021 16:35:14 +0100
+Message-Id: <1637076915-3280-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steev,
+PM2250, commonly combined with QCM2290, provides ten SPMI GPIOs.
 
-Thanks for testing this.
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 11/15/21 8:23 PM, Steev Klimaszewski wrote:
-
---- snip
->>
->> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
->> index 67e56cf638ef..6784f94124df 100644
->> --- a/drivers/cpufreq/freq_table.c
->> +++ b/drivers/cpufreq/freq_table.c
->> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct 
->> cpufreq_policy *policy,
->>       struct cpufreq_frequency_table *pos;
->>       unsigned int min_freq = ~0;
->>       unsigned int max_freq = 0;
->> +    unsigned int cpuinfo_max_freq = 0;
->>       unsigned int freq;
->>       cpufreq_for_each_valid_entry(pos, table) {
->>           freq = pos->frequency;
->> +        if (freq > cpuinfo_max_freq)
->> +            cpuinfo_max_freq = freq;
->> +
->>           if (!cpufreq_boost_enabled()
->>               && (pos->flags & CPUFREQ_BOOST_FREQ))
->>               continue;
->> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct 
->> cpufreq_policy *policy,
->>        * If the driver has set its own cpuinfo.max_freq above 
->> max_freq, leave
->>        * it as is.
->>        */
->> -    if (policy->cpuinfo.max_freq < max_freq)
->> -        policy->max = policy->cpuinfo.max_freq = max_freq;
->> +    if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
->> +        policy->cpuinfo.max_freq = cpuinfo_max_freq;
->>       if (policy->min == ~0)
->>           return -EINVAL;
-> 
-> 
-> Something still isn't quite right...
-> 
-> The setup is that I have an rc.local of
-> 
-> #!/bin/sh
-> 
-> echo 1 > /sys/devices/system/cpu/cpufreq/boost
-> 
-> exit 0
-> 
-> 
-> After booting and logging in:
-> 
-> steev@limitless:~$ cat 
-> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-> 825600 2499
-> <snip>
-> 2649600 38
-> 2745600 31
-> 2841600 1473
-> 2956800 0
-
-Did you try debugging this ? As in did you read back boost and 
-cpuinfo_max_freq at this point to ensure that everything is as expected ?
-
-
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index 5283d5e..a1a8a48 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1141,6 +1141,7 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id pmic_gpio_of_match[] = {
++	{ .compatible = "qcom,pm2250-gpio", .data = (void *) 10 },
+ 	/* pm660 has 13 GPIOs with holes on 1, 5, 6, 7, 8 and 10 */
+ 	{ .compatible = "qcom,pm660-gpio", .data = (void *) 13 },
+ 	/* pm660l has 12 GPIOs with holes on 1, 2, 10, 11 and 12 */
 -- 
-Warm Regards
-Thara (She/Her/Hers)
-> 
-> After running a "cargo build --release" in an alacritty git checkout:
-> 
-> teev@limitless:~$ cat 
-> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-> 825600 11220
-> <snip>
-> 2649600 41
-> 2745600 35
-> 2841600 3065
-> 2956800 0
-> 
-> 
-> however...
-> 
-> If I then
-> 
-> steev@limitless:~$ echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
-> [sudo] password for steev:
-> 0
-> steev@limitless:~$ echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost
-> 1
-> 
-> and run the build again...
-> 
-> steev@limitless:~$ cat 
-> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-> 825600 21386
-> <snip>
-> 2649600 45
-> 2745600 38
-> 2841600 3326
-> 2956800 4815
-> 
-> As a workaround, I attempted to jiggle it 1-0-1 in rc.local, however 
-> that ends up giving
-> 
-> steev@limitless:~$ cat 
-> /sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-> 825600 2902
-> <snip>
-> 2649600 36
-> 2745600 36
-> 2841600 6050
-> 2956800 13
-> 
-> And it doesn't go up, I even tried adding a sleep of 1 second between 
-> the echo 1/0/1 lines and while 2956800 goes up to 28 (but never uses it) 
-> it seems like, unless I do it manually once I've logged in, which I'm 
-> assuming is a lot slower than waiting 1 second between them, it's not 
-> quite giving us 2956800 "easily".
-> 
-> If the email wasn't clear, please let me know! I tried to explain as 
-> best I could what I am seeing here.
-> 
-> -- steev
-> 
+2.7.4
 
