@@ -2,93 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CA394528DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 04:58:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E9B845291C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 05:26:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237307AbhKPEB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 23:01:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37420 "EHLO
+        id S239557AbhKPE2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 23:28:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237355AbhKPEBW (ORCPT
+        with ESMTP id S240442AbhKPE2F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 23:01:22 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5201AC1F14FE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:43:24 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id u74so38523016oie.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:43:24 -0800 (PST)
+        Mon, 15 Nov 2021 23:28:05 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CBDC04EF94
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 17:23:53 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso30611201ots.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 17:23:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=AR+MJXQt1hZ4ak+KffeN9j/qO8HcFtJTxsTibtq8SN0=;
-        b=OcKmfLQ8A9BF4S3di4lz4OZXJGUTA4mbSUlF7s+b0wJ+grSJIRm0i7Ca1yMgwNY2g8
-         70uW5S/5kzyfc1VQ8Ov++7/+Wf/wwIurMBsGC3VDQ7uOz30vQJ8ca0/iDQhvQA8YU7oX
-         rWRos7i6GY4nzLNbDZkm+x0eFcNMhKjkB3BMY=
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nTaWvWeeIvOoP/P3B+BmghLZFxSmkp20dJxrE1Em0B0=;
+        b=hODih3i3lk4StlS/Iqc9FkpsXI0426vZgUigkUppIJ4xA80HH4bgJh9Ia+jK/m7Gg5
+         nKSgUCupmGcAKhN0ut2ZSlQfDLqO1twd1Fh2a0xwLWlPNhaZ68snOokozoxW18EuHLXN
+         jC4dVkKbXfauv6PlYfl48LQiFXg3RJNAw/Hhp2r5te5HcMcwP3lbJq4ejF+O3shJdhXB
+         7izOz0ACJo8MdLGLnGU04Y+uFEFiWZg7ra7vDWfH4t3YSVjJwf+0fHXrVy/6/etATcWX
+         zFtDab3mneymYKABGNJuL1HHqc06t0gcgJqlBddYqJi65A8N1P1ieGOfbdmI0O/LaIhr
+         Kfyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=AR+MJXQt1hZ4ak+KffeN9j/qO8HcFtJTxsTibtq8SN0=;
-        b=sVhj8CAsihp2TGK4ZMQoZ/Zo4ojNMC6LoXyS337NuZ7B5liAdi1MHOl/g6zi+p4EGY
-         1d3c3h5T+Ybb+Sn/MIv6cu65sL14RJ3G00fi6gSxPnI0sTClrBXqEdaQTqJ9qOl0OtHW
-         26ptmQTuCbQq4/GlH+ij5cEyTLHyTJ6B3gcbimk9xP2MixBdV8Mi92l00T+Utb/yor9i
-         bZt6E01QzISXyX3/lg2Ykju+MmneaiR5XMQp2Lim6MyAZOtierbVH+aPbGuxHp8kEQ4+
-         za9aqx9GBnRHx/uiku82fEiFYemSJ5kSWNoB9MMOpEYz085ozr0AOCjkMY5cDSpMcJpj
-         56gQ==
-X-Gm-Message-State: AOAM532gSf0bqoMFCbwHfkbcjJRAJIr5AuNfT+GnjJ6EvHIl2FTvb7pz
-        xiJyzMSQi5BeJyOq9CShmVv21hKUtALPu9ksV/Aipw==
-X-Google-Smtp-Source: ABdhPJz9z5atxroq/GjxihboHlC2x5PboGmywHnjxtnAjxqEQZyoBJQEvr8K/IKhil58m74mic8cKR+6S4n+PtT7tBE=
-X-Received: by 2002:aca:2319:: with SMTP id e25mr49152738oie.164.1637023403674;
- Mon, 15 Nov 2021 16:43:23 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 15 Nov 2021 16:43:23 -0800
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nTaWvWeeIvOoP/P3B+BmghLZFxSmkp20dJxrE1Em0B0=;
+        b=5Pu/viXp4OGMR/RjZtJCq/yuBMSiTmlkdNtyqJg2kEp9L8Rh2wt+oUB+wuj1V4JflV
+         mkeDnR1dBt23G62U1Gn1uvaMaIifaj1o1/631RxNO2FhAysfmw8cWtsnGIchIB408WCs
+         pNorZ+p5w4QzWf4xMyK2t3LV5oRYIx466E55523BI9H0LINpw/f3UvOLe0IFREZoxW7g
+         Yr5m7zb3FMXdBBYl/y4IfTeTKZyyWcLuu1mHz7WOvU+HfwiWoaEmkY4VdWfFDUecGRoA
+         ovilDDHDxVZvEs/kzkFrpm+qoCr1R9VKgBJm+f+s5efudiJlrPW6XrIFTFGOoH5IuEMH
+         hdWw==
+X-Gm-Message-State: AOAM531sh+6p7Re3WsEIv0qtszzPOwICAQBQh+mdg/qHjhPVZXi6Xf4K
+        2b3HBMhFG5PJDeLx1IWIfzJppw==
+X-Google-Smtp-Source: ABdhPJzKVuOebXxy3RD99OR/9h+EwRvdqloC8YuBYE87p9xUODg5mFOHBn1LO5G0RHJpomFtr8JGOA==
+X-Received: by 2002:a05:6830:1cc:: with SMTP id r12mr2845768ota.76.1637025832711;
+        Mon, 15 Nov 2021 17:23:52 -0800 (PST)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id l23sm3302357oti.16.2021.11.15.17.23.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Nov 2021 17:23:52 -0800 (PST)
+Message-ID: <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
+Date:   Mon, 15 Nov 2021 19:23:50 -0600
 MIME-Version: 1.0
-In-Reply-To: <20211110120512.150940-1-deng.changcheng@zte.com.cn>
-References: <20211110120512.150940-1-deng.changcheng@zte.com.cn>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 15 Nov 2021 16:43:23 -0800
-Message-ID: <CAE-0n50=P06ByQrG0FixVK4cGW--Vgt6uwGsLUu792SPhqzqXQ@mail.gmail.com>
-Subject: Re: [PATCH linux-next] drm/msm/dp: remove unneeded variable
-To:     cgel.zte@gmail.com, robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        abhinavk@codeaurora.org, deng.changcheng@zte.com.cn,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Zeal Robot <zealci@zte.com.cn>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.3.0
+Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
+ correct max frequency.
+Content-Language: en-US
+To:     Thara Gopinath <thara.gopinath@linaro.org>, rafael@kernel.org,
+        viresh.kumar@linaro.org, bjorn.andersson@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20211115195011.52999-1-thara.gopinath@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20211115195011.52999-1-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting cgel.zte@gmail.com (2021-11-10 04:05:12)
-> From: Changcheng Deng <deng.changcheng@zte.com.cn>
+Hi Thara,
+
+On 11/15/21 1:50 PM, Thara Gopinath wrote:
+> cpuinfo.max_freq reflects the maximum supported frequency of cpus in a
+> cpufreq policy. When cpus support boost frequency and if boost is disabled
+> during boot up (which is the default), cpuinfo.max_freq does not reflect
+> boost frequency as the maximum supported frequency till boost is explicitly
+> enabled via sysfs interface later. This also means that policy reports two
+> different cpuinfo.max_freq before and after turning on boost.  Fix this by
+> separating out setting of policy->max and cpuinfo.max_freq in
+> cpufreq_frequency_table_cpuinfo.
 >
-> Fix the following coccicheck review:
-> ./drivers/gpu/drm/msm/dp/dp_debug.c: Unneeded variable
+> e.g. of the problem. Qualcomm sdm845 supports boost frequency for gold
+> cluster (cpus 4-7). After boot up (boost disabled),
 >
-> Remove unneeded variable used to store return value.
+> 1.  cat /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2649600
+> <- This is wrong because boost frequency is
 >
-> Reported-by: Zeal Robot <zealci@zte.com.cn>
-> Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+> 2.  echo 1 > /sys/devices/system/cpu/cpufreq/boost  <- Enable boost cat
+> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
+> max freq reflects boost freq.
+>
+> 3.  echo 0 > /sys/devices/system/cpu/cpufreq/boost <- Disable boost cat
+> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
+> Discrepancy with step 1 as in both cases boost is disabled.
+>
+> Note that the other way to fix this is to set cpuinfo.max_freq in Soc
+> cpufreq driver during initialization. Fixing it in
+> cpufreq_frequency_table_cpuinfo seems more generic solution
+>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_debug.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>   drivers/cpufreq/freq_table.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-> index 2f6247e80e9d..c5c75273d1e5 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_debug.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-> @@ -365,7 +365,6 @@ static const struct file_operations test_active_fops = {
->
->  static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
+> index 67e56cf638ef..6784f94124df 100644
+> --- a/drivers/cpufreq/freq_table.c
+> +++ b/drivers/cpufreq/freq_table.c
+> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
+>   	struct cpufreq_frequency_table *pos;
+>   	unsigned int min_freq = ~0;
+>   	unsigned int max_freq = 0;
+> +	unsigned int cpuinfo_max_freq = 0;
+>   	unsigned int freq;
+>   
+>   	cpufreq_for_each_valid_entry(pos, table) {
+>   		freq = pos->frequency;
+>   
+> +		if (freq > cpuinfo_max_freq)
+> +			cpuinfo_max_freq = freq;
+> +
+>   		if (!cpufreq_boost_enabled()
+>   		    && (pos->flags & CPUFREQ_BOOST_FREQ))
+>   			continue;
+> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
+>   	 * If the driver has set its own cpuinfo.max_freq above max_freq, leave
+>   	 * it as is.
+>   	 */
+> -	if (policy->cpuinfo.max_freq < max_freq)
+> -		policy->max = policy->cpuinfo.max_freq = max_freq;
+> +	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
+> +		policy->cpuinfo.max_freq = cpuinfo_max_freq;
+>   
+>   	if (policy->min == ~0)
+>   		return -EINVAL;
 
-Would be nice to make it void as well and then cleanup the caller. Can
-you do that too?
 
->  {
-> -       int rc = 0;
->         struct dp_debug_private *debug = container_of(dp_debug,
->                         struct dp_debug_private, dp_debug);
->
+Something still isn't quite right...
+
+The setup is that I have an rc.local of
+
+#!/bin/sh
+
+echo 1 > /sys/devices/system/cpu/cpufreq/boost
+
+exit 0
+
+
+After booting and logging in:
+
+steev@limitless:~$ cat 
+/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+825600 2499
+<snip>
+2649600 38
+2745600 31
+2841600 1473
+2956800 0
+
+After running a "cargo build --release" in an alacritty git checkout:
+
+teev@limitless:~$ cat 
+/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+825600 11220
+<snip>
+2649600 41
+2745600 35
+2841600 3065
+2956800 0
+
+
+however...
+
+If I then
+
+steev@limitless:~$ echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
+[sudo] password for steev:
+0
+steev@limitless:~$ echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost
+1
+
+and run the build again...
+
+steev@limitless:~$ cat 
+/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+825600 21386
+<snip>
+2649600 45
+2745600 38
+2841600 3326
+2956800 4815
+
+As a workaround, I attempted to jiggle it 1-0-1 in rc.local, however 
+that ends up giving
+
+steev@limitless:~$ cat 
+/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
+825600 2902
+<snip>
+2649600 36
+2745600 36
+2841600 6050
+2956800 13
+
+And it doesn't go up, I even tried adding a sleep of 1 second between 
+the echo 1/0/1 lines and while 2956800 goes up to 28 (but never uses it) 
+it seems like, unless I do it manually once I've logged in, which I'm 
+assuming is a lot slower than waiting 1 second between them, it's not 
+quite giving us 2956800 "easily".
+
+If the email wasn't clear, please let me know! I tried to explain as 
+best I could what I am seeing here.
+
+-- steev
+
