@@ -2,118 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C99445396C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 19:32:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0A054539D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 20:06:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239481AbhKPSeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 13:34:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239482AbhKPSeG (ORCPT
+        id S239560AbhKPTJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 14:09:08 -0500
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:44668 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239519AbhKPTJH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 13:34:06 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CA8C061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 10:31:09 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id x9so113114ilu.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 10:31:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1EViyUHQdSut6g+RY4rG3RX+9KMNh10G4tRFHz9NG9E=;
-        b=BPlylCR84zbphWWF7YUzdn4WkJmgNf/MrOQz/jFWkfQ9bdYeyGwjDpcFolSsS3egOe
-         8X/fCkqeL2w5C4MYsBNhuj/7w/970bRxMisig2Bd3UUXBUHNRAA7a6/Ow3S4dkSEsswr
-         dk630OUIqnhLds9oSGFMgYz8tM0D4JR8gRkKLuaMISRSh282560nfqfSSf6Muiaa3EKK
-         de6oUD6qfQdBZYk+S/n4AeYIfoVt+xAbPphoDbukYetQD/dnNeGcMi15nTm4BXgaTbyu
-         H8/e/qZ/n6+EudcD8Jox7vFxLYdohLimBZYEa9C2tVX0dMEmOgpUzTpTkFGYvdt0YmJ2
-         XGeA==
+        Tue, 16 Nov 2021 14:09:07 -0500
+Received: by mail-oi1-f170.google.com with SMTP id be32so600329oib.11;
+        Tue, 16 Nov 2021 11:06:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1EViyUHQdSut6g+RY4rG3RX+9KMNh10G4tRFHz9NG9E=;
-        b=BursTTNP1ztWfhW5T7VePB2vzgVofBOo+tk9XcXRGSvvf3FSChM9g8K/v6jqYHherI
-         57FE97C/54lOkvOfksm1knrn6bEvrMM88vhW+dw8Audj0t3B9UnSotQ6TuUG0PjrKKJx
-         GL3urNi1MTjNcFpeCaa94WjDgSUhIRMrGabn8QnYLUFUoDF1oGGCFNUZiZWZQjh7LPP0
-         lQ8+X6mGPiAS7XPitK1EmD4XhV+ihXJ2AGwkN+7zo8z1DqBcNnH6B0ZhvU/9v20eyQ+n
-         hyPKTbRDrNooLxIlxkBNnY11Rqjv3qUDVbE6mNxJgSirWyp5BMqQkuZuhjaIv18e1fBB
-         W5bQ==
-X-Gm-Message-State: AOAM530FWn04HOiRNzL3kJU4WUKMXwhmpetSAvWW+fnbnep/Dwfphlk7
-        4Uw1focp9R8LrUTM1hlC9kAygMQI8wxpjEELw+fbsQ==
-X-Google-Smtp-Source: ABdhPJzOKDJ98X1OJQtFLiL6PuZPZvNI9s+5gIkGORkhTGagdy3QHFC93lEmQFbr1bq8pi3PmWdmQK2SEkSuhCUfKaE=
-X-Received: by 2002:a05:6e02:1445:: with SMTP id p5mr5940397ilo.105.1637087469025;
- Tue, 16 Nov 2021 10:31:09 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=b97lnIo7l9dscemuWNWaZ11+qmGpj4P8mDyidolcjwc=;
+        b=TMo5hptKDllBjDIBwiZJqY364zcxX7TW6e7Uq/3KR0tqD53wU0Rboj9dBR0FZJql/H
+         123DgwKaKMmNH+B05dLZPbC/kB73fhzvGdJodK890hmwm+ALnP8MofOIdYGk+OVVk4qR
+         UdPbO/DWRT/7r+f8HmbN4sbU7Ko9/YD/9puNEYDMrNWSba3J3MYPvl0f0/9li4vQ30x3
+         Lu22YRIQRyTU7nqt11uGRzbseTcgh3+b/DtQsBkNw1qWNpHF73McYAZtlEnPaCMx5akA
+         L2fyJlbhGG/9sDn9cPrD/zVtijV9KwaZ6NxmcTjJNSZ92D7JLBfQzgltDIJSGGRouKMm
+         dThQ==
+X-Gm-Message-State: AOAM533f2H90YNsrwyJsyBskIUAXqlqwaTE1TZKRwlz3R8MhN+zhFE0m
+        6wPzdOBN+ockCaGl0Wxl4ycQnpqQxti1kC0k8xA=
+X-Google-Smtp-Source: ABdhPJyozLbc3vIApJTMuDo4WIf+a5LG05VNDbN52nIfaopuGylGH1TZXNSCfxuoyP4G9Jdb0o3NmfhTK2Y6sDoHnHg=
+X-Received: by 2002:a05:6808:14c2:: with SMTP id f2mr8530897oiw.154.1637089570259;
+ Tue, 16 Nov 2021 11:06:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20211116155545.473311-1-robdclark@gmail.com>
-In-Reply-To: <20211116155545.473311-1-robdclark@gmail.com>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Wed, 17 Nov 2021 00:00:33 +0530
-Message-ID: <CAMi1Hd0qzu1t6QeZCNgSoTrScZL0_XQnZUPkQ5y7D+oV49GREw@mail.gmail.com>
-Subject: Re: [PATCH] drm/scheduler: fix drm_sched_job_add_implicit_dependencies
- harder
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        open list <linux-kernel@vger.kernel.org>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+In-Reply-To: <20211115201010.68567-1-thara.gopinath@linaro.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Tue, 16 Nov 2021 20:05:59 +0100
+Message-ID: <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate freq_factor
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 Nov 2021 at 21:21, Rob Clark <robdclark@gmail.com> wrote:
+On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+<thara.gopinath@linaro.org> wrote:
 >
-> From: Rob Clark <robdclark@chromium.org>
->
-> drm_sched_job_add_dependency() could drop the last ref, so we need to do
-> the dma_fence_get() first.
->
+> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+> we don't consider boost frequencies while calculating cpu capacities, use
+> policy->max to populate the freq_factor during boot up.
 
-It fixed the splats I saw on RB5 (sm8250 | A650). Thanks.
+I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-
-> Cc: Christian K=C3=B6nig <christian.koenig@amd.com>
-> Fixes: 9c2ba265352a drm/scheduler: ("use new iterator in drm_sched_job_ad=
-d_implicit_dependencies v2")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > ---
-> Applies on top of "drm/scheduler: fix drm_sched_job_add_implicit_dependen=
-cies"
-> but I don't think that has a stable commit sha yet.
+>  drivers/base/arch_topology.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->  drivers/gpu/drm/scheduler/sched_main.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
+> index 43407665918f..df818b439bc3 100644
+> --- a/drivers/base/arch_topology.c
+> +++ b/drivers/base/arch_topology.c
+> @@ -334,7 +334,7 @@ init_cpu_capacity_callback(struct notifier_block *nb,
+>         cpumask_andnot(cpus_to_visit, cpus_to_visit, policy->related_cpus);
 >
-> diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/sch=
-eduler/sched_main.c
-> index 94fe51b3caa2..f91fb31ab7a7 100644
-> --- a/drivers/gpu/drm/scheduler/sched_main.c
-> +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> @@ -704,12 +704,13 @@ int drm_sched_job_add_implicit_dependencies(struct =
-drm_sched_job *job,
->         int ret;
+>         for_each_cpu(cpu, policy->related_cpus)
+> -               per_cpu(freq_factor, cpu) = policy->cpuinfo.max_freq / 1000;
+> +               per_cpu(freq_factor, cpu) = policy->max / 1000;
 >
->         dma_resv_for_each_fence(&cursor, obj->resv, write, fence) {
-> -               ret =3D drm_sched_job_add_dependency(job, fence);
-> -               if (ret)
-> -                       return ret;
-> -
->                 /* Make sure to grab an additional ref on the added fence=
- */
->                 dma_fence_get(fence);
-> +               ret =3D drm_sched_job_add_dependency(job, fence);
-> +               if (ret) {
-> +                       dma_fence_put(fence);
-> +                       return ret;
-> +               }
->         }
->         return 0;
->  }
+>         if (cpumask_empty(cpus_to_visit)) {
+>                 topology_normalize_cpu_scale();
 > --
-> 2.33.1
+> 2.25.1
 >
