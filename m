@@ -2,58 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4D4745334B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 14:55:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54D754535C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 16:28:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236914AbhKPN5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 08:57:46 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:58587 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236921AbhKPN5Y (ORCPT
+        id S238133AbhKPPag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 10:30:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53322 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238134AbhKPPad (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 08:57:24 -0500
-Received: from smtpclient.apple (p4fefc15c.dip0.t-ipconnect.de [79.239.193.92])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 78BC6CECD7;
-        Tue, 16 Nov 2021 14:54:25 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [PATCH v2] Bluetooth: hci_h4: Fix padding calculation error
- within h4_recv_buf()
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1637052698-14326-1-git-send-email-zijuhu@codeaurora.org>
-Date:   Tue, 16 Nov 2021 14:54:24 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        Zijun Hu <quic_zijuhu@quicinc.com>
+        Tue, 16 Nov 2021 10:30:33 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63C0C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:27:35 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id bu11so14070799qvb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 07:27:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=aIR+6SGDsBIdvPmIidBVFrt2gkfBA8dAwyBdKNZqHWw=;
+        b=XdAq18HqT3EbhBXUlxrtfVFuucegkjZpFGAHqIihs50oSdNtQ6OtlkfjqUkt8Jn5I8
+         nzcWUYJALeVwCDOjAJKF+duSnwblNR+u39AuwLi17ZJ4XJUYUy6V6k3XJ/y/ejcNzRls
+         +8/orDG4K+ljPKryCqwqblcJ+N2Irb7XrQxZK9mFgUDN3WNy0ZdUf74VhD/k84omYfl0
+         iZROc1uFpGIoZcU7KE1mEzZ65/dVX/U2rHicw2MXcxWs6BbPY20Xj5GS6bHs0SK48Gha
+         ipR1sx3sCjJtDa2ZVbRCwo/pEmQmwHzGMbv27Bq5hPsIEkjTAcQ8VDelYcKqA2qxQ/NU
+         ToqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=aIR+6SGDsBIdvPmIidBVFrt2gkfBA8dAwyBdKNZqHWw=;
+        b=ex4L3qnesFTY6hIH3ZT24dOmWN7QRZTYRtcM5mlIHuRUYcMZHreRkmnTZq4mWVo+SK
+         6nfCseWgOl0W0NtCVaCtz6hkbwKhsY6pVmdVkH3433tAg5VmyzaQkaKCrw+JY08Uktjp
+         72hSIu2uMFOBmfuMKfQJjOsaIxaOeNfVGYq4qQ5GXYGN9QcS4Qa/53EBNQZ1RqnEDKzE
+         zIOYuHbnvY9D99Xyaxa4WMcpIx50SA3Tk64aauNqPNrFI39JiqXJuy37IVfn44XdVpKM
+         Kbgnpj22LqP7rD9dY+12Pozv44i40wMOomSNqvruHhnf/Hh+wBunnyC6xg4TDp+2/f3a
+         f/hw==
+X-Gm-Message-State: AOAM530Mf/sbz90VPbqPeqezxgxPNHKOqx6By1LZG1GKaoTFB7AF7pB6
+        qbTf4HDq3E/j/Do3RxeEhct8CEPyc40PFA==
+X-Google-Smtp-Source: ABdhPJzPGtn8z2/uvb42fjIpYlSwhf/BFtetEKiM5RTkPesV1zDtM7BTk53pbcVTRx78B2tpvRp/PQ==
+X-Received: by 2002:a05:6214:29c3:: with SMTP id gh3mr19606948qvb.30.1637076454395;
+        Tue, 16 Nov 2021 07:27:34 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id c13sm9524138qtx.51.2021.11.16.07.27.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Nov 2021 07:27:33 -0800 (PST)
+Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
+ correct max frequency.
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Cc:     rafael@kernel.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20211115195011.52999-1-thara.gopinath@linaro.org>
+ <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
+ <20211116035935.wmazontuznhys6qu@vireshk-i7>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <fd153d84-411a-c843-eab9-2dc66940a3d3@linaro.org>
+Date:   Tue, 16 Nov 2021 10:27:33 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20211116035935.wmazontuznhys6qu@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Message-Id: <6935AD40-7060-4A42-9DB6-74DEB6516D6D@holtmann.org>
-References: <1637052698-14326-1-git-send-email-zijuhu@codeaurora.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
 
-> it is erroneous to calculate padding by subtracting length of type
-> indication from skb->len, it will cause data analysis error for
-> alignment which is greater than 1, so fixed by adding length of type
-> indication with skb->len.
+
+On 11/15/21 10:59 PM, Viresh Kumar wrote:
+> On 15-11-21, 19:23, Steev Klimaszewski wrote:
+>> Hi Thara,
+>>
+>> On 11/15/21 1:50 PM, Thara Gopinath wrote:
+>>> cpuinfo.max_freq reflects the maximum supported frequency of cpus in a
+>>> cpufreq policy. When cpus support boost frequency and if boost is disabled
+>>> during boot up (which is the default), cpuinfo.max_freq does not reflect
+>>> boost frequency as the maximum supported frequency till boost is explicitly
+>>> enabled via sysfs interface later. This also means that policy reports two
+>>> different cpuinfo.max_freq before and after turning on boost.  Fix this by
+>>> separating out setting of policy->max and cpuinfo.max_freq in
+>>> cpufreq_frequency_table_cpuinfo.
+>>>
+>>> e.g. of the problem. Qualcomm sdm845 supports boost frequency for gold
+>>> cluster (cpus 4-7). After boot up (boost disabled),
+>>>
+>>> 1.  cat /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2649600
+>>> <- This is wrong because boost frequency is
+>>>
+>>> 2.  echo 1 > /sys/devices/system/cpu/cpufreq/boost  <- Enable boost cat
+>>> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
+>>> max freq reflects boost freq.
+>>>
+>>> 3.  echo 0 > /sys/devices/system/cpu/cpufreq/boost <- Disable boost cat
+>>> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
+>>> Discrepancy with step 1 as in both cases boost is disabled.
+>>>
+>>> Note that the other way to fix this is to set cpuinfo.max_freq in Soc
+>>> cpufreq driver during initialization. Fixing it in
+>>> cpufreq_frequency_table_cpuinfo seems more generic solution
+>>>
+>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>>> ---
+>>>    drivers/cpufreq/freq_table.c | 8 ++++++--
+>>>    1 file changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
+>>> index 67e56cf638ef..6784f94124df 100644
+>>> --- a/drivers/cpufreq/freq_table.c
+>>> +++ b/drivers/cpufreq/freq_table.c
+>>> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
+>>>    	struct cpufreq_frequency_table *pos;
+>>>    	unsigned int min_freq = ~0;
+>>>    	unsigned int max_freq = 0;
+>>> +	unsigned int cpuinfo_max_freq = 0;
+>>>    	unsigned int freq;
+>>>    	cpufreq_for_each_valid_entry(pos, table) {
+>>>    		freq = pos->frequency;
+>>> +		if (freq > cpuinfo_max_freq)
+>>> +			cpuinfo_max_freq = freq;
+>>> +
+>>>    		if (!cpufreq_boost_enabled()
+>>>    		    && (pos->flags & CPUFREQ_BOOST_FREQ))
+>>>    			continue;
+>>> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
+>>>    	 * If the driver has set its own cpuinfo.max_freq above max_freq, leave
+>>>    	 * it as is.
+>>>    	 */
+>>> -	if (policy->cpuinfo.max_freq < max_freq)
+>>> -		policy->max = policy->cpuinfo.max_freq = max_freq;
+>>> +	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
+>>> +		policy->cpuinfo.max_freq = cpuinfo_max_freq;
 > 
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
-> drivers/bluetooth/hci_h4.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
+> You need to keep the check of policy->max here and update policy->max,
+> else you will never run at boost freq. I think this is what Steev
+> reported as well ?
 
-patch has been applied to bluetooth-next tree.
+Hi Viresh,
+	policy->max is unconditionally set to max_freq in the line before "if 
+(policy->cpuinfo.max_freq < max_freq)". So this is not the issue Steev 
+is reporting.
+	policy->max = max_freq
 
-Regards
 
-Marcel
+> 
+> So basically something like this:
+> 
+> 	if (policy->max < max_freq)
+> 		policy->max = max_freq;
+> 
+> 	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
+> 		policy->cpuinfo.max_freq = cpuinfo_max_freq;
+> 
 
+-- 
+Warm Regards
+Thara (She/Her/Hers)
