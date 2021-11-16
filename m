@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAA0F4528BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 04:50:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 258C94528BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 04:50:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235316AbhKPDxg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S235320AbhKPDxg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 15 Nov 2021 22:53:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34874 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235248AbhKPDxd (ORCPT
+        with ESMTP id S235240AbhKPDxd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 15 Nov 2021 22:53:33 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C849FC06BAAF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:25:31 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id g28so16004644pgg.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:25:31 -0800 (PST)
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B12C06BAB0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:25:33 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id j6-20020a17090a588600b001a78a5ce46aso703354pji.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 16:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ovgz+c/G4HmT8RdtVZtP0zl3x+vOpNV/x6Tplf+zGMI=;
-        b=jexPYtw+rlIyvblwu9Cd9zDPVKoA+4AUoLuy9gcaxmaUcXuhzuKrYP23OF/jnHs9B6
-         Yh29WTXm0JehaeaPlnjxNzqImEZP/E1LxMwEZsw70KAHqHB2/HO6N/ivq46uQGjriwne
-         wUXiHhmaIqRRllqLFDyuRgfgflTLqfMzpKwvbjVVn9A1fLG80LPtLZyJociuctNcKsD3
-         byvU0d1yLwSu7IZXMFUVCQtKaiwuQNxyixG6U36ZB/sFPWCOUihBdcXTE2i+jNHTsTPg
-         wT/wajfbPCnNrtlf1I+vfVPooz2TltuPOV2aq0xkQ/fYdC2tXZFs0DNTspb5XQgFAt8o
-         npcA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0cWfKAdFJ4mdWHeu2WC++67okKwtJARd96rOv9nvD7w=;
+        b=E701PV7xGxk61nRt5kwxw3AsTdUhK9SxGWkr7TyIlnEgODBOHJiuPZp1Bz38b//frS
+         1axNFGEXXdgfr7Ou8SCzqENXtFjqTzc+WFNmQMMXX1/ZpOX7HXQUVXAVoA5y81csOG54
+         2vkeKBMjTFxWNZjXuyF3awX77wAt5NbGdCXfFJakKqI7RxYB3bf0JctcXCslpyiEEyzk
+         9ZoWTeotZyL7aUnbx4BmCjDaaJxNQlsKE/1GdjQMacd5floZCntHvaeBNzIWtWr523sD
+         qk52krRWsbCeXtbmkrhVi1vo+nRBPwnJg74WTVE95VFJgTtF1+OlMpCfCZum/WMXFqGU
+         64VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Ovgz+c/G4HmT8RdtVZtP0zl3x+vOpNV/x6Tplf+zGMI=;
-        b=ZkUfDgqcAKyNpOLZi7rqWP+QvZDcPe7tKterKmIugw5P0jxZQwcX1vaTWR08Cejvvh
-         7vWSZl2AZZv354CqizQnSp38iH7BNeD16zp5uTzHZMK+zyM2VaO3isaiigX9YVoOZK2x
-         FIQFV9k5K9BfzhxQcYvxz0VGV5oNJO4FTw98rpqPcFRR1/CWTnIV/pdNbnibvhcZhdE6
-         08m9RKbJLLprOETttFFQKiIDf1MhdRjvxsPkATccEEKlcLDUm7cOetN6uwtGfefTZaLa
-         c/9Rg2vyK+bjAXAwR57mINUU0zqVuSW+6FndeRNFfvf7LnccyIstvqGBnBqVqB68vv8s
-         Ea5A==
-X-Gm-Message-State: AOAM531kdLZGFYDDK/LLqPjAk9RatD2XQJFtKx+jxRwbKhIu8P0DrAdT
-        n/ctlMpBgHFPjfXgO6Vxuyg=
-X-Google-Smtp-Source: ABdhPJzqE0JSEFJhEcbnhbY5Sqk2LUEFII9yecnh0tfle2h9jmn0ZO5etbyYJoebmgR3UIZaO8UFHg==
-X-Received: by 2002:a63:384:: with SMTP id 126mr2072546pgd.33.1637022331235;
-        Mon, 15 Nov 2021 16:25:31 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0cWfKAdFJ4mdWHeu2WC++67okKwtJARd96rOv9nvD7w=;
+        b=4U/nF0f7AzVRvelTrmawB3U12HyRoEDxQWNPfVkkCGJFDNMXcoe/nPQpCuCLJpfIqm
+         5WdFwuiSyRktlh3dZDgF/SOGtEceW72/0VElVM5gwQ30/GHHYYDyUEibl4e0SpEanrZB
+         6pxxz9dq5fMncJQrO45O+td94Cd/gyc2cH1t+4tIAewqXdcIigXC2QYjde+oIWfDQ0h4
+         ymmdvTR2+ofo0nxV/jWXPvMkiL4YmCQdgOw5xruLpQ6diAgJUJFyfJKSkT4+zORhzeQ3
+         a7SaJ6YsCTScrguLdWy97Z8lD5oBoAWIH50INxc0rwvi1W6MDzDvzjuDlepxtjlAjAt3
+         HzYw==
+X-Gm-Message-State: AOAM5328ORofpL9k1EUxkf++0YtxQVIaxxLlc1GmHW4OWU1JXVR0NzLm
+        rGyI5lubB9qcuG0E/5PDCCy6JvBQrOU=
+X-Google-Smtp-Source: ABdhPJwgoaSEHpETkim2RcaPsr9RBZ98eZRJNpnskLL/lGTxEQXcRKgLPFjQRxJGqZ8KH9nrt1Q9HQ==
+X-Received: by 2002:a17:90a:ca81:: with SMTP id y1mr68773894pjt.231.1637022333273;
+        Mon, 15 Nov 2021 16:25:33 -0800 (PST)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id e13sm13093792pgb.8.2021.11.15.16.25.29
+        by smtp.gmail.com with ESMTPSA id j9sm11888906pgt.54.2021.11.15.16.25.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Nov 2021 16:25:30 -0800 (PST)
+        Mon, 15 Nov 2021 16:25:32 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     igt-dev@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -55,10 +55,12 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Jordan Crouse <jordan@cosmicpenguin.net>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>
-Subject: [PATCH igt v3 0/4] msm: Add tests for gpu fault handling
-Date:   Mon, 15 Nov 2021 16:30:38 -0800
-Message-Id: <20211116003042.439107-1-robdclark@gmail.com>
+Subject: [PATCH igt v3 1/4] lib/igt_debugfs: Add helper for writing debugfs files
+Date:   Mon, 15 Nov 2021 16:30:39 -0800
+Message-Id: <20211116003042.439107-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211116003042.439107-1-robdclark@gmail.com>
+References: <20211116003042.439107-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -67,31 +69,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-The first patch adds a easy way to write debugfs files (needed to
-disable hw fault detection, so we can test the sw timeout fallback).
-The second adds some helpers for cmdstream building.  And the third
-adds the new tests.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Petri Latvala <petri.latvala@intel.com>
+---
+ lib/igt_debugfs.c | 17 +++++++++++++++++
+ lib/igt_debugfs.h | 13 +++++++++++++
+ 2 files changed, 30 insertions(+)
 
-v2: Fix headerdoc comments in first patch
-v3: Add helper to detect debugfs files and updated last patch
-    to skip the one sub-test that depends on new debugfs when
-    running on older kernels
-
-Rob Clark (4):
-  lib/igt_debugfs: Add helper for writing debugfs files
-  lib/igt_debugfs: Add helper for detecting debugfs files
-  msm: Add helper for cmdstream building and submission
-  msm: Add recovery tests
-
- lib/igt_debugfs.c    |  38 ++++++++++
- lib/igt_debugfs.h    |  14 ++++
- lib/igt_msm.c        | 102 +++++++++++++++++++++++++
- lib/igt_msm.h        |  51 +++++++++++++
- tests/meson.build    |   1 +
- tests/msm_recovery.c | 174 +++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 380 insertions(+)
- create mode 100644 tests/msm_recovery.c
-
+diff --git a/lib/igt_debugfs.c b/lib/igt_debugfs.c
+index a5bb95ca..dd6f2995 100644
+--- a/lib/igt_debugfs.c
++++ b/lib/igt_debugfs.c
+@@ -351,6 +351,23 @@ void __igt_debugfs_read(int fd, const char *filename, char *buf, int size)
+ 	close(dir);
+ }
+ 
++/**
++ * __igt_debugfs_write:
++ * @fd: the drm device file fd
++ * @filename: file name
++ * @buf: buffer to be written to the debugfs file
++ * @size: size of the buffer
++ *
++ * This function opens the debugfs file, writes it, then closes the file.
++ */
++void __igt_debugfs_write(int fd, const char *filename, const char *buf, int size)
++{
++	int dir = igt_debugfs_dir(fd);
++
++	igt_sysfs_write(dir, filename, buf, size);
++	close(dir);
++}
++
+ /**
+  * igt_debugfs_search:
+  * @filename: file name
+diff --git a/lib/igt_debugfs.h b/lib/igt_debugfs.h
+index d43ba6c6..b4867681 100644
+--- a/lib/igt_debugfs.h
++++ b/lib/igt_debugfs.h
+@@ -40,6 +40,7 @@ int igt_debugfs_pipe_dir(int device, int pipe, int mode);
+ 
+ int igt_debugfs_open(int fd, const char *filename, int mode);
+ void __igt_debugfs_read(int fd, const char *filename, char *buf, int size);
++void __igt_debugfs_write(int fd, const char *filename, const char *buf, int size);
+ int igt_debugfs_simple_read(int dir, const char *filename, char *buf, int size);
+ bool igt_debugfs_search(int fd, const char *filename, const char *substring);
+ 
+@@ -54,6 +55,18 @@ bool igt_debugfs_search(int fd, const char *filename, const char *substring);
+ #define igt_debugfs_read(fd, filename, buf) \
+ 		__igt_debugfs_read(fd, (filename), (buf), sizeof(buf))
+ 
++/**
++ * igt_debugfs_write:
++ * @fd: the drm device file fd
++ * @filename: name of the debugfs file
++ * @buf: buffer to be written to the debugfs file
++ *
++ * This is just a convenience wrapper for __igt_debugfs_write. See its
++ * documentation.
++ */
++#define igt_debugfs_write(fd, filename, buf) \
++		__igt_debugfs_write(fd, (filename), (buf), sizeof(buf))
++
+ /*
+  * Pipe CRC
+  */
 -- 
 2.33.1
 
