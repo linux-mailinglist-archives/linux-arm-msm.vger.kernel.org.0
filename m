@@ -2,94 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38AA8452F7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 11:51:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDA16452FAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 12:02:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234322AbhKPKx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 05:53:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45992 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234424AbhKPKxT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 05:53:19 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38113C061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 02:50:22 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id u18so36672017wrg.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 02:50:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YLjmal7Qhx8zErQnGRhLc7RANFy4u7WCe+8FEMhJTbs=;
-        b=dacm7WhqtNBedETvp0LAUUsEyRWrxMZM+SRcyVDnJVZl1AMKFUTH72uWlBByUYPng5
-         n1q0cxOE1CDXrGZJQNhGM5wpneARTd3DysnVTsBRzNQ0vG00om+VrE0L6YWsIahvpU3V
-         zvD/hw11mbRV0BKntrJ2wuMkiayPuwSSr9QvPma80SYsQ+vUMgYmhVFND6VfUqlh1wHU
-         lR31ZqQ9NwDT8mtDsHu/8fva5ydx42rC5+detqmPVB8uPH8Q9lgN3tnVaJMyJh2tg1qY
-         JXcdMlYYIA9KaWcyiRbdmXuGOdZ7IbSoCbpFyR89XVFhlZ45vwL1fjaYvBBEtLJ1dgZH
-         uLLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YLjmal7Qhx8zErQnGRhLc7RANFy4u7WCe+8FEMhJTbs=;
-        b=BwXrn9Kh3UK1HRZpLRGnlJ6UHaI2HvKAH8nbqEtIn4OCnUGzSykkuCuutR6bXLphw0
-         VG8x7m6VtxfNRpEc1iRlrzvOzX7wmJ/GTpiW9c/ap9PXIb0GMIOjdl2dk1x+YiBGoe+z
-         rCt7ximOpZe2bGVyMmlLnOmaqAfaGC25Ea5998pqtl3AE/VpiPSef62XzYN6LxdqtHr7
-         yJOp19wjE3fGLrz7cJLwlJjrgKDC8zN1ZllID4VkkLGF/F3aEdlStYkyrY6j+N7pPNbG
-         BgQVKB/ZwABFYmI6yir5n2uLr//FXdLkk5eMdnt+wfRmNJBMxL2NZKHE6yNdZVXX6Kwl
-         nSpw==
-X-Gm-Message-State: AOAM532GzruBTyeKx3CI4OpJfckRusCec3q9WSuIxbsDWlwl8VWdEoKY
-        zsJ+NLKJTfAapLvfztn/bNHLdQ==
-X-Google-Smtp-Source: ABdhPJy+0eTYhJpxKeuQFu6opCFTs1aBuZF6B/EVcetH7tvQySS8Mg/YUeKxHvLw9FUpnF/1RLNzag==
-X-Received: by 2002:adf:f947:: with SMTP id q7mr7970820wrr.260.1637059820814;
-        Tue, 16 Nov 2021 02:50:20 -0800 (PST)
-Received: from srini-hackbox.lan (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.gmail.com with ESMTPSA id c6sm2579684wmq.46.2021.11.16.02.50.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 02:50:20 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     vkoul@kernel.org
-Cc:     yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] soundwire: qcom: remove redundant version number read
-Date:   Tue, 16 Nov 2021 10:50:17 +0000
-Message-Id: <20211116105017.12010-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S234465AbhKPLFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 06:05:01 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:49925 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234545AbhKPLFB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 Nov 2021 06:05:01 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637060522; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Wt/HjrcdB9QYwp3Rr18jUECoJIJBfzCHQYUTqCg6wzA=; b=coArI5jvraSCk9JLTIiZtwJZEn3JeO/ybQU4N2OjqXP6v8Mif+iqnnnrOKs2xTd2ddawpATW
+ H0dtS3BqOIRUDDOs07/IkHkXsxzdpn5+3x05WXwGmZEg7dtgRBCRGAsq9KNNpMsAWPNDsbJQ
+ orUxQfJhPEbnXVB6VMjzg5+07x8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61938fa94db4233966bb7417 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 16 Nov 2021 11:02:01
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 65B6CC43618; Tue, 16 Nov 2021 11:02:01 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14EA0C4338F;
+        Tue, 16 Nov 2021 11:01:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 14EA0C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     swboyd@chromium.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org,
+        robh+dt@kernel.org, mka@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com, bhelgaas@google.com
+Cc:     Prasad Malisetty <pmaliset@codeaurora.org>
+Subject: [PATCH v3 0/2] Add PCIe clock DT entries for SC7280
+Date:   Tue, 16 Nov 2021 16:31:45 +0530
+Message-Id: <1637060508-30375-1-git-send-email-pmaliset@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Controller version is already available in struct qcom_swrm_ctrl, Just make use
-of it instead of reading this again.
+Changes Added in v3:
+	
+	* Seperated v2 patch as two patches. One patch is for 
+	  Fixing incorrect clock name and another patch is for
+	  Adding PCIe clock handle for SC7280.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- drivers/soundwire/qcom.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+	* Added fixes patch for interrup-map parent address cells 
+	  For SC7280.
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index a317bea2d42d..46995bb382eb 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1156,11 +1156,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
- 	ret = of_property_read_u8_array(np, "qcom,ports-block-pack-mode",
- 					bp_mode, nports);
- 	if (ret) {
--		u32 version;
--
--		ctrl->reg_read(ctrl, SWRM_COMP_HW_VERSION, &version);
--
--		if (version <= 0x01030000)
-+		if (ctrl->version <= 0x01030000)
- 			memset(bp_mode, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
- 		else
- 			return ret;
+Prasad Malisetty (2):
+  arm64: dts: qcom: sc7280: Fix incorrect clock name
+  arm64: dts: qcom: sc7280: Add pcie clock support
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
 -- 
-2.21.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
