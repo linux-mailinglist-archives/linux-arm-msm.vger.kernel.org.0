@@ -2,217 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E9B845291C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 05:26:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94D3845289C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Nov 2021 04:35:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239557AbhKPE2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 Nov 2021 23:28:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42570 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240442AbhKPE2F (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 Nov 2021 23:28:05 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CBDC04EF94
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 17:23:53 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso30611201ots.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Nov 2021 17:23:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=nTaWvWeeIvOoP/P3B+BmghLZFxSmkp20dJxrE1Em0B0=;
-        b=hODih3i3lk4StlS/Iqc9FkpsXI0426vZgUigkUppIJ4xA80HH4bgJh9Ia+jK/m7Gg5
-         nKSgUCupmGcAKhN0ut2ZSlQfDLqO1twd1Fh2a0xwLWlPNhaZ68snOokozoxW18EuHLXN
-         jC4dVkKbXfauv6PlYfl48LQiFXg3RJNAw/Hhp2r5te5HcMcwP3lbJq4ejF+O3shJdhXB
-         7izOz0ACJo8MdLGLnGU04Y+uFEFiWZg7ra7vDWfH4t3YSVjJwf+0fHXrVy/6/etATcWX
-         zFtDab3mneymYKABGNJuL1HHqc06t0gcgJqlBddYqJi65A8N1P1ieGOfbdmI0O/LaIhr
-         Kfyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=nTaWvWeeIvOoP/P3B+BmghLZFxSmkp20dJxrE1Em0B0=;
-        b=5Pu/viXp4OGMR/RjZtJCq/yuBMSiTmlkdNtyqJg2kEp9L8Rh2wt+oUB+wuj1V4JflV
-         mkeDnR1dBt23G62U1Gn1uvaMaIifaj1o1/631RxNO2FhAysfmw8cWtsnGIchIB408WCs
-         pNorZ+p5w4QzWf4xMyK2t3LV5oRYIx466E55523BI9H0LINpw/f3UvOLe0IFREZoxW7g
-         Yr5m7zb3FMXdBBYl/y4IfTeTKZyyWcLuu1mHz7WOvU+HfwiWoaEmkY4VdWfFDUecGRoA
-         ovilDDHDxVZvEs/kzkFrpm+qoCr1R9VKgBJm+f+s5efudiJlrPW6XrIFTFGOoH5IuEMH
-         hdWw==
-X-Gm-Message-State: AOAM531sh+6p7Re3WsEIv0qtszzPOwICAQBQh+mdg/qHjhPVZXi6Xf4K
-        2b3HBMhFG5PJDeLx1IWIfzJppw==
-X-Google-Smtp-Source: ABdhPJzKVuOebXxy3RD99OR/9h+EwRvdqloC8YuBYE87p9xUODg5mFOHBn1LO5G0RHJpomFtr8JGOA==
-X-Received: by 2002:a05:6830:1cc:: with SMTP id r12mr2845768ota.76.1637025832711;
-        Mon, 15 Nov 2021 17:23:52 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id l23sm3302357oti.16.2021.11.15.17.23.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Nov 2021 17:23:52 -0800 (PST)
-Message-ID: <5ae2c644-4743-c62c-b17c-96945a0e6a01@kali.org>
-Date:   Mon, 15 Nov 2021 19:23:50 -0600
+        id S231844AbhKPDiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 Nov 2021 22:38:50 -0500
+Received: from mail.kernel.org ([198.145.29.99]:48222 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243413AbhKPDgi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 15 Nov 2021 22:36:38 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7FDF061B96;
+        Tue, 16 Nov 2021 03:33:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637033621;
+        bh=a63BQ+UbbewYa7etCzcJu01H6LWMaaONj8uLDMFqxww=;
+        h=From:To:Cc:Subject:Date:From;
+        b=sg9kGJ1mDg8Mwq4LdD6gLu7ZRJeiORLwaVZXoc+PhVNlzIyDqIInGkmo1cWFoRCu6
+         9RkFmO1/4c4wdUOZqNbzEd/jmSxnESwF2KXxIy39TctSbepxs42rUoFdX+vY2Y/5//
+         vivQS+nxYpkANpuDo+uoh+MryW4CidK30Ir6TdJy70bP/Y11MMmySgcn+3JyA1ptJy
+         CziNQMK9zDq3HsC7lA/G2aSJ9ypejd6nRhA9IY2K2aWsUul/MoLOOy3T2sxj+wSzFL
+         Av+EH/1VrNDQ72BW2+2kg6rP8Iec9OwNcDpXS+Z0xBMVUx2VNhP7SFK4isE2JezdRt
+         qhlhwwXDDoJLw==
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, kernel-team@android.com,
+        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Subject: [RFC PATCH v4 0/3] Support for hardware-wrapped inline encryption keys
+Date:   Mon, 15 Nov 2021 19:32:37 -0800
+Message-Id: <20211116033240.39001-1-ebiggers@kernel.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.0
-Subject: Re: [PATCH] cpufreq: freq_table: Initialize cpuinfo.max_freq to
- correct max frequency.
-Content-Language: en-US
-To:     Thara Gopinath <thara.gopinath@linaro.org>, rafael@kernel.org,
-        viresh.kumar@linaro.org, bjorn.andersson@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211115195011.52999-1-thara.gopinath@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20211115195011.52999-1-thara.gopinath@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thara,
+[ NOTE: this patchset isn't ready for merging yet because the UFS or
+  eMMC driver changes needed for this feature to work end-to-end aren't
+  yet complete.  Currently, SM8350 (Snapdragon 888) is the only
+  upstream-supported platform with hardware that supports this feature.
+  The corresponding driver support for SM8350 is being worked on at
+  https://lore.kernel.org/linux-scsi/20211103231840.115521-1-quic_gaurkash@quicinc.com/T/#u ]
 
-On 11/15/21 1:50 PM, Thara Gopinath wrote:
-> cpuinfo.max_freq reflects the maximum supported frequency of cpus in a
-> cpufreq policy. When cpus support boost frequency and if boost is disabled
-> during boot up (which is the default), cpuinfo.max_freq does not reflect
-> boost frequency as the maximum supported frequency till boost is explicitly
-> enabled via sysfs interface later. This also means that policy reports two
-> different cpuinfo.max_freq before and after turning on boost.  Fix this by
-> separating out setting of policy->max and cpuinfo.max_freq in
-> cpufreq_frequency_table_cpuinfo.
->
-> e.g. of the problem. Qualcomm sdm845 supports boost frequency for gold
-> cluster (cpus 4-7). After boot up (boost disabled),
->
-> 1.  cat /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2649600
-> <- This is wrong because boost frequency is
->
-> 2.  echo 1 > /sys/devices/system/cpu/cpufreq/boost  <- Enable boost cat
-> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
-> max freq reflects boost freq.
->
-> 3.  echo 0 > /sys/devices/system/cpu/cpufreq/boost <- Disable boost cat
-> /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq 2803200	<-
-> Discrepancy with step 1 as in both cases boost is disabled.
->
-> Note that the other way to fix this is to set cpuinfo.max_freq in Soc
-> cpufreq driver during initialization. Fixing it in
-> cpufreq_frequency_table_cpuinfo seems more generic solution
->
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
->   drivers/cpufreq/freq_table.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
-> index 67e56cf638ef..6784f94124df 100644
-> --- a/drivers/cpufreq/freq_table.c
-> +++ b/drivers/cpufreq/freq_table.c
-> @@ -35,11 +35,15 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
->   	struct cpufreq_frequency_table *pos;
->   	unsigned int min_freq = ~0;
->   	unsigned int max_freq = 0;
-> +	unsigned int cpuinfo_max_freq = 0;
->   	unsigned int freq;
->   
->   	cpufreq_for_each_valid_entry(pos, table) {
->   		freq = pos->frequency;
->   
-> +		if (freq > cpuinfo_max_freq)
-> +			cpuinfo_max_freq = freq;
-> +
->   		if (!cpufreq_boost_enabled()
->   		    && (pos->flags & CPUFREQ_BOOST_FREQ))
->   			continue;
-> @@ -57,8 +61,8 @@ int cpufreq_frequency_table_cpuinfo(struct cpufreq_policy *policy,
->   	 * If the driver has set its own cpuinfo.max_freq above max_freq, leave
->   	 * it as is.
->   	 */
-> -	if (policy->cpuinfo.max_freq < max_freq)
-> -		policy->max = policy->cpuinfo.max_freq = max_freq;
-> +	if (policy->cpuinfo.max_freq < cpuinfo_max_freq)
-> +		policy->cpuinfo.max_freq = cpuinfo_max_freq;
->   
->   	if (policy->min == ~0)
->   		return -EINVAL;
+This patchset adds framework-level support (i.e., block and fscrypt
+support) for hardware-wrapped keys when the inline encryption hardware
+supports them.  Hardware-wrapped keys are inline encryption keys that
+are wrapped (encrypted) by a key internal to the hardware.  Except at
+initial unlocking time, the wrapping key is an ephemeral, per-boot key.
+Hardware-wrapped keys can only be unwrapped (decrypted) by the hardware,
+e.g. when a key is programmed into a keyslot.  They are never visible to
+software in raw form, except optionally during key generation (the
+hardware supports importing keys as well as generating keys itself).
 
+This feature protects the encryption keys from read-only compromises of
+kernel memory, such as that which can occur during a cold boot attack.
+It does this without limiting the number of keys that can be used, as
+would be the case with solutions that didn't use key wrapping.
 
-Something still isn't quite right...
+The kernel changes to support this feature basically consist of changes
+to blk-crypto to allow a blk_crypto_key to be hardware-wrapped and to
+allow storage drivers to support hardware-wrapped keys, new block device
+ioctls for creating and preparing hardware-wrapped keys, and changes to
+fscrypt to allow the fscrypt master keys to be hardware-wrapped.
 
-The setup is that I have an rc.local of
+For full details, see the individual patches, especially the detailed
+documentation they add to Documentation/block/inline-encryption.rst and
+Documentation/filesystems/fscrypt.rst.
 
-#!/bin/sh
+This patchset is organized as follows:
 
-echo 1 > /sys/devices/system/cpu/cpufreq/boost
+- Patch 1 adds the block support and documentation, excluding the ioctls
+  needed to get a key ready to be used in the first place.
 
-exit 0
+- Patch 2 adds new block device ioctls for creating and preparing
+  hardware-wrapped keys.
 
+- Patch 3 adds the fscrypt support and documentation.
 
-After booting and logging in:
+This patchset is based on v5.16-rc1.  It can also be retrieved from tag
+"wrapped-keys-v4" of https://git.kernel.org/pub/scm/fs/fscrypt/fscrypt.git
 
-steev@limitless:~$ cat 
-/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-825600 2499
-<snip>
-2649600 38
-2745600 31
-2841600 1473
-2956800 0
+Changed v3 => v4:
+    - Rebased onto v5.16-rc1 and dropped a few bits that were upstreamed.
+    - Updated cover letter to link to Gaurav's UFS driver patchset.
 
-After running a "cargo build --release" in an alacritty git checkout:
+Changed v2 => v3:
+    - Dropped some fscrypt cleanups that were applied.
+    - Rebased on top of the latest linux-block and fscrypt branches.
+    - Minor cleanups.
 
-teev@limitless:~$ cat 
-/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-825600 11220
-<snip>
-2649600 41
-2745600 35
-2841600 3065
-2956800 0
+Changed v1 => v2:
+    - Added new ioctls for creating and preparing hardware-wrapped keys.
+    - Rebased onto my patchset which renames blk_keyslot_manager to
+      blk_crypto_profile.
 
+Eric Biggers (3):
+  block: add basic hardware-wrapped key support
+  block: add ioctls to create and prepare hardware-wrapped keys
+  fscrypt: add support for hardware-wrapped keys
 
-however...
+ Documentation/block/inline-encryption.rst | 238 +++++++++++++++++++++-
+ Documentation/filesystems/fscrypt.rst     | 154 ++++++++++++--
+ block/blk-crypto-fallback.c               |   5 +-
+ block/blk-crypto-internal.h               |  10 +
+ block/blk-crypto-profile.c                |  97 +++++++++
+ block/blk-crypto.c                        | 158 +++++++++++++-
+ block/ioctl.c                             |   4 +
+ drivers/md/dm-table.c                     |   1 +
+ drivers/mmc/host/cqhci-crypto.c           |   2 +
+ drivers/scsi/ufs/ufshcd-crypto.c          |   1 +
+ fs/crypto/fscrypt_private.h               |  72 ++++++-
+ fs/crypto/hkdf.c                          |   4 +-
+ fs/crypto/inline_crypt.c                  |  64 +++++-
+ fs/crypto/keyring.c                       | 119 ++++++++---
+ fs/crypto/keysetup.c                      |  71 ++++++-
+ fs/crypto/keysetup_v1.c                   |   5 +-
+ fs/crypto/policy.c                        |  11 +-
+ include/linux/blk-crypto-profile.h        |  80 ++++++++
+ include/linux/blk-crypto.h                |  70 ++++++-
+ include/uapi/linux/fs.h                   |  19 ++
+ include/uapi/linux/fscrypt.h              |   7 +-
+ 21 files changed, 1099 insertions(+), 93 deletions(-)
 
-If I then
-
-steev@limitless:~$ echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
-[sudo] password for steev:
-0
-steev@limitless:~$ echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost
-1
-
-and run the build again...
-
-steev@limitless:~$ cat 
-/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-825600 21386
-<snip>
-2649600 45
-2745600 38
-2841600 3326
-2956800 4815
-
-As a workaround, I attempted to jiggle it 1-0-1 in rc.local, however 
-that ends up giving
-
-steev@limitless:~$ cat 
-/sys/devices/system/cpu/cpufreq/policy4/stats/time_in_state
-825600 2902
-<snip>
-2649600 36
-2745600 36
-2841600 6050
-2956800 13
-
-And it doesn't go up, I even tried adding a sleep of 1 second between 
-the echo 1/0/1 lines and while 2956800 goes up to 28 (but never uses it) 
-it seems like, unless I do it manually once I've logged in, which I'm 
-assuming is a lot slower than waiting 1 second between them, it's not 
-quite giving us 2956800 "easily".
-
-If the email wasn't clear, please let me know! I tried to explain as 
-best I could what I am seeing here.
-
--- steev
+base-commit: fa55b7dcdc43c1aa1ba12bca9d2dd4318c2a0dbf
+-- 
+2.33.1
 
