@@ -2,181 +2,395 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C86F4541CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 08:27:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA67454204
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 08:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231547AbhKQHaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 02:30:08 -0500
-Received: from mail-co1nam11on2083.outbound.protection.outlook.com ([40.107.220.83]:12896
-        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230013AbhKQHaH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 02:30:07 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hU+/w8rMMg2/k6m6liSSam6eHgEO856r50X0Pkntr7MAVyjtvrv+7zMFr+rh2aT+qUrLP5e9wY6MKLrILr4gHfbLJJ3Xp/6udk3l66bn+Rm40a9+b0Hha4FSaipH4O10j1tTSZe9PRrYOrHuDRuxVaXHJvvPfWJpQT4dU+9lNMgR8sE28mql/r4gf/4Vu5iJFCWNqzvQXs6G02QLnkGfhGpp75/lPrTZbUNc5fbskCktkFzdq71Tn2UNU7izfgX99jept3oL92QxXx6XUNvY8Ov2CQy2LZh2CMFuaoXVJ7dMqtHcZyfKu1eHWmoF8DqkgW/I5FfiETyJ2S/n/8TQcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eTkelNhqh22+gg73K3EvpHonwyepi9Oz+AhA6vaGCgQ=;
- b=JnGXG1kmq1BKi+bnfpjj10AVud/d3DDaPyykHelroBXLYPM8TAmFs0U9xcNyiBjTfLrvY3pkRp0bANmWUPOlIJ3HsPDR+y0jnruCK58SPacfuopmUHR35hAQvjziv2+3yvx+wQ5m491bvhjKhUwkojR5nxBXaegFeKFr3ZgNtO8bCPERmGH/Lz5G1JNazeR9PczCFnW9MU1wSStpmiiuudNs3GgJohVRHISliSBnmItkSTeyrUnMH9bs8gYurnuH4S2pwp5LtTEu064eLCEhZg5PvVTQguyeqlVimAhXBh1+NcJvT9QBoNdYVNGCK2fF3SKIM2S4F/Qpo60CM5ezHw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eTkelNhqh22+gg73K3EvpHonwyepi9Oz+AhA6vaGCgQ=;
- b=jwSV6hhJsXP5WEclce5U9FhwEDQfaVH4f8dRBpZVgXhPH9Xp6Jb81GvRVqoWIwAN/vkju8rr9m068CT9dNr5+VsO7ZnYGTVCjId/8TI8B9VxFtOs8EFV6ZsqEw0BNkAc/R+4CvKZnmiW7APp/h7jO3/NVF54IzQ1QVOMwLIf6ks=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MWHPR1201MB0192.namprd12.prod.outlook.com
- (2603:10b6:301:5a::14) by MW3PR12MB4442.namprd12.prod.outlook.com
- (2603:10b6:303:55::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4690.20; Wed, 17 Nov
- 2021 07:27:08 +0000
-Received: from MWHPR1201MB0192.namprd12.prod.outlook.com
- ([fe80::2d02:26e7:a2d0:3769]) by MWHPR1201MB0192.namprd12.prod.outlook.com
- ([fe80::2d02:26e7:a2d0:3769%5]) with mapi id 15.20.4690.027; Wed, 17 Nov 2021
- 07:27:08 +0000
-Subject: Re: [PATCH] drm/scheduler: fix
- drm_sched_job_add_implicit_dependencies harder
-To:     Amit Pundir <amit.pundir@linaro.org>,
-        Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20211116155545.473311-1-robdclark@gmail.com>
- <CAMi1Hd0qzu1t6QeZCNgSoTrScZL0_XQnZUPkQ5y7D+oV49GREw@mail.gmail.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-Message-ID: <c7741be3-43ec-307b-f5bd-3d19725df76c@amd.com>
-Date:   Wed, 17 Nov 2021 08:27:00 +0100
+        id S231596AbhKQHr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 02:47:57 -0500
+Received: from mga04.intel.com ([192.55.52.120]:13823 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229973AbhKQHr5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 02:47:57 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10170"; a="232620910"
+X-IronPort-AV: E=Sophos;i="5.87,240,1631602800"; 
+   d="scan'208";a="232620910"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2021 23:44:59 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,240,1631602800"; 
+   d="scan'208";a="506806782"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
+  by orsmga008.jf.intel.com with ESMTP; 16 Nov 2021 23:44:54 -0800
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat sysfs
+ entry
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        riteshh@codeaurora.org, asutoshd@quicinc.com,
+        ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     stummala@codeaurora.org, vbadigan@codeaurora.org,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        sartgarg@codeaurora.org, nitirawa@codeaurora.org,
+        sayalil@codeaurora.org
+References: <1637130012-21846-1-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <c90754b9-37bb-7b4e-4130-05f62b2881fd@intel.com>
+Date:   Wed, 17 Nov 2021 09:44:53 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-In-Reply-To: <CAMi1Hd0qzu1t6QeZCNgSoTrScZL0_XQnZUPkQ5y7D+oV49GREw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-ClientProxiedBy: AM6P194CA0074.EURP194.PROD.OUTLOOK.COM
- (2603:10a6:209:8f::15) To MWHPR1201MB0192.namprd12.prod.outlook.com
- (2603:10b6:301:5a::14)
+ Firefox/78.0 Thunderbird/78.13.0
 MIME-Version: 1.0
-Received: from [IPv6:2a02:908:1252:fb60:f3bc:62c7:d104:fb77] (2a02:908:1252:fb60:f3bc:62c7:d104:fb77) by AM6P194CA0074.EURP194.PROD.OUTLOOK.COM (2603:10a6:209:8f::15) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Wed, 17 Nov 2021 07:27:05 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 2e50c0e7-0310-48e7-369d-08d9a99ba954
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4442:
-X-Microsoft-Antispam-PRVS: <MW3PR12MB44425982DC180FF9F090BA58839A9@MW3PR12MB4442.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4502;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: R0iE5HxHgvN/nwVJ8dZ+vvoW90z2xB3aHvgMkjyzamDWXCTncXvLm8KRIkAkDjGsoA53Q1tpPeKhE2BojN/Qv/OIlrlxmAJc4bdYbmgv5ietf1ANHDBpnpvmGsP0d3dFqERawNdymfBwjJO7vvCvroT0CtcmH6y18Vnk+y875eJIfVMKfI++zT0u2/z1iACkSmFupnxX/IgNlMmyYFZ2ZpYG4QPt8YbcP9OGLMXzKuBmLXJsAL9c8aTQ+xnp0R8j9gCjjBXDLHXQW1wYFrJ5BQo4vKX6nCwZibuluL4Y65Iq+HpJrI7JGbw86CEjJYSkVK3cQ75OKdvOw4wCHFMZ2FAgMRT1WBg+v470zFe09ivVaHbeEq8hxWnHVZ5UoYWrhlP8dSW+dDrK97KZKVRdWtXtvDSOqNtiM8WMei6AIaUKKtPcIpwi0ocb2vKDmQ4pJ2bl2vGfOMXmaoFB1tsuBSqNKWx8SZPxj+gTtO69UG9RW1ewCmsn0CY+68sszNE5ELUJFYlNPvGwuOnahphvwD6ZJq+u7SlxBP/Q75YHgP+xovvV9625Unpo9sfdEMzWxT2jeLEOHHWxVpd0RF3ay5EV7YE+tXAuUOJimqaWhYYogc7Q0f14wcQnG0Pzg7Arnf0afmQOh8HYFsrxpOLxfSZwp04jxZzAEhVuRCL/SgfdqlNnBSZEg9LffsTVqriqT00uxk1BtxZYW8dzmpxpG0GxfYp+Lus0HRGlQ7iTxApW+P4iZhnF/xHrTHTSwuxU8Y3IHDA061oU8BpyexFWxNjKttAu8VnjIwuyPlJK09E=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1201MB0192.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(38100700002)(66556008)(31696002)(83380400001)(66476007)(110136005)(316002)(66946007)(2616005)(8936002)(54906003)(4326008)(8676002)(186003)(6666004)(6486002)(86362001)(5660300002)(36756003)(31686004)(2906002)(508600001)(34023003)(148693002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dWk2Tk9yR3N3bm9rQjRxbTlMTlM3NC94anY2YUJCUUdtZ1RacXJISWdlN1VB?=
- =?utf-8?B?cXgyV1ovZWkwWkRrZGMvanZGSEhHUlVzak9QTFBxZThWK3F4djhFdEt5NDNq?=
- =?utf-8?B?VlVLQkJMTExPUkQ5TzJIU1hna3Y2U1RDUzFzbjNacGNRekpyWEdpK3IvMDdE?=
- =?utf-8?B?OFFobm1OOVJERGlmeHgrREVrUXJRaFd0ZDNSbGpVeDlvV0pySWg1T01KTU1J?=
- =?utf-8?B?NkZxdndrNG9PUG94NEpUWTdUd0FUZXk5ZG9jMlk1RGMxTGVBQkhsS1AxcnZW?=
- =?utf-8?B?S0cxTDVUU2VGN0trZzBtS0UxUjZmQkNwdnJKRGY4bkgxcWtNZCtUZk9GZTZs?=
- =?utf-8?B?d0V4SkpUOU85enhWUnB0QVA4eWpNVFA5R1lBTjhQelVIMC9hL1FzY2tKZ2F3?=
- =?utf-8?B?SlM2dlNwL2lTcFZkNmZMZzlCZFJkNjlwYVIremlmbFNIVmNIdjV0dWptSFVo?=
- =?utf-8?B?SlBRQXR6Umx1dE14b1k1NVFYWUtRS3p6WjQwQ2Q2aUNGSXI3cVRQUXlITUpL?=
- =?utf-8?B?VWR6Z05kNWVmcnlreEg0T3hnSGlrUVp0S085d2RYUVBBRmZ4azVKaXhpWVNZ?=
- =?utf-8?B?ZFU0U3VkMDlpSyszNllYZ20wa2oxZ1dCSHFQVHpkTEljN1F5a0o5amRZbTd5?=
- =?utf-8?B?MGdaMUxLWFVtVlVMQXQwM01rOGNrT3EydWRPNnptSkJmWjlKekJmTEIycmNu?=
- =?utf-8?B?RFB1NnZaNmJLbUgyaDJ3bCtqd2tON2lkT1drKzV0UDNEQmxFREJGS3VqQmRr?=
- =?utf-8?B?UG5Hb1NuSVRORksrdHJBQ296TmpLMUFRcnRySDh3K2RFa0tjbzRBZlVINTJi?=
- =?utf-8?B?UjBsYVIxNFlTdTZlYlpHSlZZSWczSkxwVmViK3BDR0lSeXNyVXdva0Jwdk1Z?=
- =?utf-8?B?K000cDIyNCtkME1xQ0tTZjlMTENpV2xQczhYczk4Q2FHQ2pnWUN1cTBWWkM3?=
- =?utf-8?B?TGpkMk9KSkZLdHVTdXBiT0hQNGs4bWpzZmtCSFI1T25oTytwSXpSeEhYMjAz?=
- =?utf-8?B?V2x0SWRSL2Z1dFFyVlVpNllhLzdlOUhFUytBSy9vQWVRSkJkYkhvUjNiVnR6?=
- =?utf-8?B?OGFQekhCdWhyQ05tR2g0MUpuOVYzZ05lUGY5Y0pnZElMMDJ2anc0RmhWWWM2?=
- =?utf-8?B?R0Q1NUY3Vjk1NzArekEvY1J6ZGU1Tkp4Y3lzb3V5eTdrV1R5c0ZRM3pNWjFn?=
- =?utf-8?B?bHJ0K2ZNNlVFN2hTS01Yamp1MkxuWXFhNkltemhaNGZxcm1lcjlSU3BIV2RH?=
- =?utf-8?B?bFFlV2R0RFZtcEd0S2IySDYvTkdoU1o1bWRyNXM1TnhUT09kNzNJS1dyQjlx?=
- =?utf-8?B?dFZKV2dQNVU5N3g1MkhpNllpMEU2cndFSXBqSGRtNDllM3Q1QUlKL3lLVWxI?=
- =?utf-8?B?bWl1TFdHd1VVWnBpWXFYMXRCekx5aDVwRkdkc3AvM3o0K3RsU3JubkFJVllx?=
- =?utf-8?B?NzdDNVdGbHhMV0lReTVJK0pQUTlySHptTGZCbjAwa3BGTWZmRVJpNmhUZytJ?=
- =?utf-8?B?UzlkSlVVQWpnY2hXS3V1ZFNNOThFT1llNUI0M3ArSHlwaTRBTVhrem1pTjlD?=
- =?utf-8?B?MmdMSDNHT3MyYTE3RDZwLzNhUS9reCtLQUViYjU2Wnd5RXRPc2dDZ3JUQ0hN?=
- =?utf-8?B?U0M3NUFjWEI5YXAxa3BSWGdkcDArMUZZTVdiQWd0cnhkUVZ3ZkpRWmpTWUxS?=
- =?utf-8?B?NjhEaHhuUzRMYWxqS1J6Y25kMWo0N0Y4WGoyMGxEcy9vdUwyT0hJRy9hV21C?=
- =?utf-8?B?eDBxYVpoN3graHErbzNWN2ltN3ljcGdXWmlDb2VkbUJIZlMxZGQvYVZ5V1Jx?=
- =?utf-8?B?TUZZS3dZMmhrSEpFbjMxdjRBMTRxSURBUFJad0k1dDMzeFlBNFVwbzJGRS9B?=
- =?utf-8?B?U2svR1RtRmZvY3hKZnpyVjRlWGR3Z0V3NlR5YkJIZGVNWUQ3cmN4dFZ3TTBk?=
- =?utf-8?B?ZG1PamFBNys1YXhPMlFzbEMzOVhuYjBnQU9WWDFuUDJtVTE3b012MVVqdmI0?=
- =?utf-8?B?bDZNTE1ZcmhIN2J5Ri9uL29aY1VyOFo5RUFIdUxJZzNIT3dYWGVGbGpEdjR0?=
- =?utf-8?B?amU3b1pQS1M3Q0JnZ0Zid1FZTVM2M1VpVGtraXNNOWxLc3dZSnlwMG5MbVdp?=
- =?utf-8?B?U0plM2pCNDl1RmE3bnBwaFROL242WVVUT1ZNRkNDSitPZzYycjBOQklacTJT?=
- =?utf-8?Q?E4Y4AOv2Kp+Z3R2a0kplHEQ=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e50c0e7-0310-48e7-369d-08d9a99ba954
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR1201MB0192.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2021 07:27:07.9587
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WCGCtZwZanYenr3/oMfRZDnkRjZ3+x6GEgzwYGAYzN0d/OGvezkslBoDiT2FpvvN
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4442
+In-Reply-To: <1637130012-21846-1-git-send-email-quic_c_sbhanu@quicinc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 16.11.21 um 19:30 schrieb Amit Pundir:
-> On Tue, 16 Nov 2021 at 21:21, Rob Clark <robdclark@gmail.com> wrote:
->> From: Rob Clark <robdclark@chromium.org>
->>
->> drm_sched_job_add_dependency() could drop the last ref, so we need to do
->> the dma_fence_get() first.
->>
-> It fixed the splats I saw on RB5 (sm8250 | A650). Thanks.
->
-> Tested-by: Amit Pundir <amit.pundir@linaro.org>
+On 17/11/2021 08:20, Shaik Sajida Bhanu wrote:
+> Add sysfs entry to query eMMC and SD card errors statistics.
+> This feature is useful for debug and testing.
 
-I've added my rb, pushed this with the original fix to drm-misc-fixes 
-and cleaned up the obvious fallout between drm-misc-fixes and 
-drm-misc-next in drm-tip.
+Did you consider making it part of cqhci.c so that all drivers using
+cqhci could benefit?
 
-Thanks for the help and sorry for the noise,
-Christian.
-
->
->> Cc: Christian König <christian.koenig@amd.com>
->> Fixes: 9c2ba265352a drm/scheduler: ("use new iterator in drm_sched_job_add_implicit_dependencies v2")
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->> ---
->> Applies on top of "drm/scheduler: fix drm_sched_job_add_implicit_dependencies"
->> but I don't think that has a stable commit sha yet.
->>
->>   drivers/gpu/drm/scheduler/sched_main.c | 9 +++++----
->>   1 file changed, 5 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
->> index 94fe51b3caa2..f91fb31ab7a7 100644
->> --- a/drivers/gpu/drm/scheduler/sched_main.c
->> +++ b/drivers/gpu/drm/scheduler/sched_main.c
->> @@ -704,12 +704,13 @@ int drm_sched_job_add_implicit_dependencies(struct drm_sched_job *job,
->>          int ret;
->>
->>          dma_resv_for_each_fence(&cursor, obj->resv, write, fence) {
->> -               ret = drm_sched_job_add_dependency(job, fence);
->> -               if (ret)
->> -                       return ret;
->> -
->>                  /* Make sure to grab an additional ref on the added fence */
->>                  dma_fence_get(fence);
->> +               ret = drm_sched_job_add_dependency(job, fence);
->> +               if (ret) {
->> +                       dma_fence_put(fence);
->> +                       return ret;
->> +               }
->>          }
->>          return 0;
->>   }
->> --
->> 2.33.1
->>
+> 
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> ---
+>  drivers/mmc/host/cqhci.h     |   1 +
+>  drivers/mmc/host/sdhci-msm.c | 192 +++++++++++++++++++++++++++++++++++++++++++
+>  drivers/mmc/host/sdhci.c     |  17 ++++
+>  drivers/mmc/host/sdhci.h     |   1 +
+>  include/linux/mmc/host.h     |   1 +
+>  5 files changed, 212 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
+> index ba9387e..f72a1d6 100644
+> --- a/drivers/mmc/host/cqhci.h
+> +++ b/drivers/mmc/host/cqhci.h
+> @@ -286,6 +286,7 @@ struct cqhci_host_ops {
+>  				 u64 *data);
+>  	void (*pre_enable)(struct mmc_host *mmc);
+>  	void (*post_disable)(struct mmc_host *mmc);
+> +	void (*err_stats)(struct mmc_host *mmc, unsigned long flags);
+>  #ifdef CONFIG_MMC_CRYPTO
+>  	int (*program_key)(struct cqhci_host *cq_host,
+>  			   const union cqhci_crypto_cfg_entry *cfg, int slot);
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 50c71e0..e1dcd2d 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -242,6 +242,23 @@ struct sdhci_msm_variant_ops {
+>  			u32 offset);
+>  };
+>  
+> +enum {
+> +	MMC_ERR_CMD_TIMEOUT,
+> +	MMC_ERR_CMD_CRC,
+> +	MMC_ERR_DAT_TIMEOUT,
+> +	MMC_ERR_DAT_CRC,
+> +	MMC_ERR_AUTO_CMD,
+> +	MMC_ERR_ADMA,
+> +	MMC_ERR_TUNING,
+> +	MMC_ERR_CMDQ_RED,
+> +	MMC_ERR_CMDQ_GCE,
+> +	MMC_ERR_CMDQ_ICCE,
+> +	MMC_ERR_REQ_TIMEOUT,
+> +	MMC_ERR_CMDQ_REQ_TIMEOUT,
+> +	MMC_ERR_ICE_CFG,
+> +	MMC_ERR_MAX,
+> +};
+> +
+>  /*
+>   * From V5, register spaces have changed. Wrap this info in a structure
+>   * and choose the data_structure based on version info mentioned in DT.
+> @@ -285,6 +302,8 @@ struct sdhci_msm_host {
+>  	u32 dll_config;
+>  	u32 ddr_config;
+>  	bool vqmmc_enabled;
+> +	bool err_occurred;
+> +	u32  err_stats[MMC_ERR_MAX];
+>  };
+>  
+>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+> @@ -2106,9 +2125,20 @@ static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *c
+>  		host->data_timeout = 22LL * NSEC_PER_SEC;
+>  }
+>  
+> +void sdhci_msm_cqe_err_stats(struct mmc_host *mmc, unsigned long flags)
+> +{
+> +	struct sdhci_host *host = mmc_priv(mmc);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +
+> +	if (flags & BIT(0))
+> +		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]++;
+> +}
+> +
+>  static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+>  	.enable		= sdhci_msm_cqe_enable,
+>  	.disable	= sdhci_msm_cqe_disable,
+> +	.err_stats	= sdhci_msm_cqe_err_stats,
+>  #ifdef CONFIG_MMC_CRYPTO
+>  	.program_key	= sdhci_msm_program_key,
+>  #endif
+> @@ -2403,6 +2433,46 @@ static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+>  		readl_relaxed(host->ioaddr +
+>  			msm_offset->core_vendor_spec_func2),
+>  		readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3));
+> +	msm_host->err_occurred = true;
+> +}
+> +
+> +void sdhci_msm_err_stats(struct sdhci_host *host, u32 intmask)
+> +{
+> +	int command;
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +
+> +	if (!msm_host->err_occurred)
+> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT] = 0;
+> +
+> +	if (host && host->mmc && host->mmc->timer) {
+> +		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]++;
+> +		host->mmc->timer = false;
+> +	}
+> +
+> +	if (intmask & SDHCI_INT_CRC) {
+> +		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
+> +		if (command != MMC_SEND_TUNING_BLOCK ||
+> +		    command != MMC_SEND_TUNING_BLOCK_HS200)
+> +			msm_host->err_stats[MMC_ERR_CMD_CRC]++;
+> +	} else if ((intmask & SDHCI_INT_TIMEOUT) ||
+> +		(intmask & SDHCI_INT_DATA_TIMEOUT))
+> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]++;
+> +	else if (intmask & SDHCI_INT_DATA_CRC) {
+> +		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
+> +		if (command != MMC_SEND_TUNING_BLOCK ||
+> +		    command != MMC_SEND_TUNING_BLOCK_HS200)
+> +			msm_host->err_stats[MMC_ERR_DAT_CRC]++;
+> +	} else if (intmask & SDHCI_INT_DATA_TIMEOUT)
+> +		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]++;
+> +	else if (intmask & CQHCI_IS_RED)
+> +		msm_host->err_stats[MMC_ERR_CMDQ_RED]++;
+> +	else if (intmask & CQHCI_IS_GCE)
+> +		msm_host->err_stats[MMC_ERR_CMDQ_GCE]++;
+> +	else if (intmask & CQHCI_IS_ICCE)
+> +		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]++;
+> +	else if (intmask & SDHCI_INT_ADMA_ERROR)
+> +		msm_host->err_stats[MMC_ERR_ADMA]++;
+>  }
+>  
+>  static const struct sdhci_msm_variant_ops mci_var_ops = {
+> @@ -2456,6 +2526,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
+>  	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
+>  	.set_power = sdhci_set_power_noreg,
+>  	.set_timeout = sdhci_msm_set_timeout,
+> +	.err_stats = sdhci_msm_err_stats,
+>  };
+>  
+>  static const struct sdhci_pltfm_data sdhci_msm_pdata = {
+> @@ -2482,6 +2553,125 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>  }
+>  
+> +static ssize_t err_state_show(struct device *dev,
+> +			struct device_attribute *attr, char *buf)
+> +{
+> +	struct sdhci_host *host = dev_get_drvdata(dev);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +
+> +	if (!host || !host->mmc)
+> +		return -EINVAL;
+> +
+> +	return scnprintf(buf, PAGE_SIZE, "%d\n", !!msm_host->err_occurred);
+> +}
+> +
+> +static ssize_t err_state_store(struct device *dev,
+> +				struct device_attribute *attr,
+> +				const char *buf, size_t count)
+> +{
+> +	struct sdhci_host *host = dev_get_drvdata(dev);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	unsigned int val;
+> +
+> +	if (kstrtouint(buf, 0, &val))
+> +		return -EINVAL;
+> +	if (!host || !host->mmc)
+> +		return -EINVAL;
+> +
+> +	msm_host->err_occurred = !!val;
+> +	if (!val)
+> +		memset(msm_host->err_stats, 0, sizeof(msm_host->err_stats));
+> +
+> +	return count;
+> +}
+> +static DEVICE_ATTR_RW(err_state);
+> +
+> +static ssize_t err_stats_show(struct device *dev,
+> +				struct device_attribute *attr, char *buf)
+> +{
+> +	struct sdhci_host *host = dev_get_drvdata(dev);
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	char tmp[100];
+> +
+> +	if (!host || !host->mmc)
+> +		return -EINVAL;
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Command Timeout Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]);
+> +	strlcpy(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Command CRC Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMD_CRC]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Data Timeout Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Data CRC Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_DAT_CRC]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Auto-Cmd Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_ADMA]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# ADMA Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_ADMA]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Tuning Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_TUNING]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# CMDQ RED Errors: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMDQ_RED]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# CMDQ GCE Errors: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMDQ_GCE]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# CMDQ ICCE Errors: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# CMDQ Request Timedout: %d\n",
+> +		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	scnprintf(tmp, sizeof(tmp), "# Request Timedout Error: %d\n",
+> +		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]);
+> +	strlcat(buf, tmp, PAGE_SIZE);
+> +
+> +	return strlen(buf);
+> +}
+> +static DEVICE_ATTR_RO(err_stats);
+> +
+> +static struct attribute *sdhci_msm_sysfs_attrs[] = {
+> +	&dev_attr_err_state.attr,
+> +	&dev_attr_err_stats.attr,
+> +	NULL
+> +};
+> +
+> +static const struct attribute_group sdhci_msm_sysfs_group = {
+> +	.name = "qcom",
+> +	.attrs = sdhci_msm_sysfs_attrs,
+> +};
+> +
+> +static int sdhci_msm_init_sysfs(struct platform_device *pdev)
+> +{
+> +	int ret;
+> +
+> +	ret = sysfs_create_group(&pdev->dev.kobj, &sdhci_msm_sysfs_group);
+> +	if (ret)
+> +		dev_err(&pdev->dev, "%s: Failed sdhci_msm sysfs group err=%d\n",
+> +			__func__, ret);
+> +	return ret;
+> +}
+>  
+>  static int sdhci_msm_probe(struct platform_device *pdev)
+>  {
+> @@ -2734,6 +2924,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto pm_runtime_disable;
+>  
+> +	sdhci_msm_init_sysfs(pdev);
+> +
+>  	pm_runtime_mark_last_busy(&pdev->dev);
+>  	pm_runtime_put_autosuspend(&pdev->dev);
+>  
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 07c6da1..f82a3eff 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -3159,6 +3159,13 @@ static void sdhci_timeout_timer(struct timer_list *t)
+>  	spin_lock_irqsave(&host->lock, flags);
+>  
+>  	if (host->cmd && !sdhci_data_line_cmd(host->cmd)) {
+> +		if (host->ops->err_stats) {
+> +			u32 intmask;
+> +
+> +			host->mmc->timer = true;
+> +			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+> +			host->ops->err_stats(host, intmask);
+> +		}
+>  		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
+>  		       mmc_hostname(host->mmc));
+>  		sdhci_dumpregs(host);
+> @@ -3181,6 +3188,13 @@ static void sdhci_timeout_data_timer(struct timer_list *t)
+>  
+>  	if (host->data || host->data_cmd ||
+>  	    (host->cmd && sdhci_data_line_cmd(host->cmd))) {
+> +		if (host->ops->err_stats) {
+> +			u32 intmask;
+> +
+> +			host->mmc->timer = true;
+> +			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+> +			host->ops->err_stats(host, intmask);
+> +		}
+>  		pr_err("%s: Timeout waiting for hardware interrupt.\n",
+>  		       mmc_hostname(host->mmc));
+>  		sdhci_dumpregs(host);
+> @@ -3466,6 +3480,9 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
+>  	}
+>  
+>  	intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+> +	if (host->ops->err_stats)
+> +		host->ops->err_stats(host, intmask);
+> +
+>  	if (!intmask || intmask == 0xffffffff) {
+>  		result = IRQ_NONE;
+>  		goto out;
+> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
+> index d7929d7..a1546b3 100644
+> --- a/drivers/mmc/host/sdhci.h
+> +++ b/drivers/mmc/host/sdhci.h
+> @@ -658,6 +658,7 @@ struct sdhci_ops {
+>  	void	(*request_done)(struct sdhci_host *host,
+>  				struct mmc_request *mrq);
+>  	void    (*dump_vendor_regs)(struct sdhci_host *host);
+> +	void	(*err_stats)(struct sdhci_host *host, u32 intmask);
+>  };
+>  
+>  #ifdef CONFIG_MMC_SDHCI_IO_ACCESSORS
+> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+> index 7afb57c..33186ff 100644
+> --- a/include/linux/mmc/host.h
+> +++ b/include/linux/mmc/host.h
+> @@ -492,6 +492,7 @@ struct mmc_host {
+>  	int			cqe_qdepth;
+>  	bool			cqe_enabled;
+>  	bool			cqe_on;
+> +	bool                    timer;
+>  
+>  	/* Inline encryption support */
+>  #ifdef CONFIG_MMC_CRYPTO
+> 
 
