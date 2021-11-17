@@ -2,121 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9359C4542AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 09:30:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98AD145435A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 10:13:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234544AbhKQIdq convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 03:33:46 -0500
-Received: from mail-qt1-f169.google.com ([209.85.160.169]:34729 "EHLO
-        mail-qt1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbhKQIdp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 03:33:45 -0500
-Received: by mail-qt1-f169.google.com with SMTP id o17so1924109qtk.1;
-        Wed, 17 Nov 2021 00:30:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pLki4VXVNEgH7BpAr7thCy6liKqtc8dZxgXibG/LDtU=;
-        b=IUpfMS2Qsw+4vmn7I+udpusUuBdphjjcAJKehe7ijbqvhkYnwm6cTNdca+Cm0+0ma0
-         xHD7AGKnQOaEiCs6xqSWURkkNCEsyjFfW5BS+qXXbqRwqmicLNGkp26r99JMfFSCO/3k
-         0bWFazjujRDAHYFZe81Zf9uHbmyFG8cifydbv07Sd9hppAYW34M6QwmE5KICuNyBOc1b
-         uaRJUYDVmVWNYnHKQUaNc9sX2Jn2J5I6VMJVbOUUi0zfxBoozVHwbFXJ/iQhxxdP0nJI
-         UUZ2M0IUONMJ7yEaDyGm9GjG4M1JgiuAegMgBQl0bzAe7JH80skTE+4MB5PXQv0AtrMH
-         PE+w==
-X-Gm-Message-State: AOAM533Gmfbt9PLCNrSukClwWshSIsB1Zv0j1Rff2FGOwSGUU7Ob7m8A
-        uDSnap65Q1tmO3hQD/OtlyUl2r4Dhpxyxg==
-X-Google-Smtp-Source: ABdhPJwoFVUouk9QlvygqIYHdaUI5uPa2eT+UDuhCZpvADfGS5ohUE9j9fFTF1CGKB45SU6JCVVhbA==
-X-Received: by 2002:a05:622a:178c:: with SMTP id s12mr14701908qtk.156.1637137846345;
-        Wed, 17 Nov 2021 00:30:46 -0800 (PST)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com. [209.85.219.170])
-        by smtp.gmail.com with ESMTPSA id j20sm5550905qtj.43.2021.11.17.00.30.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Nov 2021 00:30:46 -0800 (PST)
-Received: by mail-yb1-f170.google.com with SMTP id n2so746118yba.2;
-        Wed, 17 Nov 2021 00:30:46 -0800 (PST)
-X-Received: by 2002:a9f:2431:: with SMTP id 46mr20823663uaq.114.1637137464301;
- Wed, 17 Nov 2021 00:24:24 -0800 (PST)
-MIME-Version: 1.0
-References: <20211115155105.3797527-1-geert@linux-m68k.org>
- <CAMuHMdUCsyUxaEf1Lz7+jMnur4ECwK+JoXQqmOCkRKqXdb1hTQ@mail.gmail.com>
- <fcdead1c-2e26-b8ca-9914-4b3718d8f6d4@gmx.de> <480CE37B-FE60-44EE-B9D2-59A88FDFE809@fb.com>
- <78b2d093-e06c-ba04-9890-69f948bfb937@infradead.org> <B57193D6-1FD4-45D3-8045-8D2DE691E24E@fb.com>
-In-Reply-To: <B57193D6-1FD4-45D3-8045-8D2DE691E24E@fb.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 17 Nov 2021 09:24:12 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdWgGz5FSidaGpp8YRRSnJfwdP4-wOkXdVx+mydXnMAXHQ@mail.gmail.com>
-Message-ID: <CAMuHMdWgGz5FSidaGpp8YRRSnJfwdP4-wOkXdVx+mydXnMAXHQ@mail.gmail.com>
-Subject: Re: Build regressions/improvements in v5.16-rc1
-To:     Nick Terrell <terrelln@fb.com>
-Cc:     Randy Dunlap <rdunlap@infradead.org>, Helge Deller <deller@gmx.de>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        Anton Altaparmakov <anton@tuxera.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Stan Skowronek <stan@corellium.com>,
-        Hector Martin <marcan@marcan.st>,
-        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-        =?UTF-8?Q?Andr=C3=A9_Almeida?= <andrealmeid@collabora.com>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Parisc List <linux-parisc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        "linux-ntfs-dev@lists.sourceforge.net" 
-        <linux-ntfs-dev@lists.sourceforge.net>,
-        linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-        "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-        kasan-dev <kasan-dev@googlegroups.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+        id S234851AbhKQJQh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 04:16:37 -0500
+Received: from mail.kernel.org ([198.145.29.99]:53652 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234864AbhKQJQ3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 04:16:29 -0500
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 32E2563214;
+        Wed, 17 Nov 2021 09:13:31 +0000 (UTC)
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1mnH0T-00624e-5Z; Wed, 17 Nov 2021 09:13:29 +0000
+Date:   Wed, 17 Nov 2021 09:13:28 +0000
+Message-ID: <871r3f87rb.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] arm64: cpufeature: fix CPU features mismatch message
+In-Reply-To: <20211116215922.2021550-1-dmitry.baryshkov@linaro.org>
+References: <20211116215922.2021550-1-dmitry.baryshkov@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: dmitry.baryshkov@linaro.org, catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Nick,
+On Tue, 16 Nov 2021 21:59:22 +0000,
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> 
+> Fix cpp magic involved in ARM64_FTR_REG/ARM64_FTR_REG_OVERRIDE macros.
+> Currently ARM64_FTR_REG parameters are expanded early, resulting in
+> cryptic debug messages:
+> 
+> [    0.071123] CPU features: SANITY CHECK: Unexpected variation in (((3) << 19) | ((0) << 16) | ((0) << 12) | ((7) << 8) | ((0) << 5)). Boot CPU: 0x00022200101022, CPU4: 0x00022200101122
+> 
+> Make ARM64_FTR_REG to be expanded before parameters, resulting in proper
+> debug log:
+> 
+> [    0.071163] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR0_EL1. Boot CPU: 0x00022200101022, CPU4: 0x00022200101122
+> 
+> Fixes: 8f266a5d878a ("arm64: cpufeature: Add global feature override facility")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/kernel/cpufeature.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+> index 6ec7036ef7e1..72e3e3819eb4 100644
+> --- a/arch/arm64/kernel/cpufeature.c
+> +++ b/arch/arm64/kernel/cpufeature.c
+> @@ -573,15 +573,17 @@ static const struct arm64_ftr_bits ftr_raz[] = {
+>  	ARM64_FTR_END,
+>  };
+>  
+> -#define ARM64_FTR_REG_OVERRIDE(id, table, ovr) {		\
+> +#define __ARM64_FTR_REG(id, _name, table, ovr) {		\
+>  		.sys_id = id,					\
+>  		.reg = 	&(struct arm64_ftr_reg){		\
+> -			.name = #id,				\
+> +			.name = _name,				\
+>  			.override = (ovr),			\
+>  			.ftr_bits = &((table)[0]),		\
+>  	}}
+>  
+> -#define ARM64_FTR_REG(id, table) ARM64_FTR_REG_OVERRIDE(id, table, &no_override)
+> +#define ARM64_FTR_REG_OVERRIDE(id, table, ovr) __ARM64_FTR_REG(id, #id, table, ovr)
+> +
+> +#define ARM64_FTR_REG(id, table) __ARM64_FTR_REG(id, #id, table, &no_override)
+>  
+>  struct arm64_ftr_override __ro_after_init id_aa64mmfr1_override;
+>  struct arm64_ftr_override __ro_after_init id_aa64pfr1_override;
 
-On Wed, Nov 17, 2021 at 3:20 AM Nick Terrell <terrelln@fb.com> wrote:
-> > On Nov 16, 2021, at 6:05 PM, Randy Dunlap <rdunlap@infradead.org> wrote:
-> > On 11/16/21 5:59 PM, Nick Terrell wrote:
-> >> I’ll send the PR to Linus tomorrow. I’ve been informed that it
-> >> isn't strictly necessary to send the patches to the mailing list
-> >> for bug fixes, but its already done, so I’ll wait and see if there
-> >> is any feedback.
-> >
-> > IMO several (or many more) people would disagree with that.
-> >
-> > "strictly?"  OK, it's probably possible that almost any patch
-> > could be merged without being on a mailing list, but it's not
-> > desirable (except in the case of "security" patches).
->
-> Good to know! Thanks for the advice, I wasn’t really sure what
-> the best practice is for sending patches to your own tree, as I
-> didn't see anything about it in the maintainer guide.
+Please see commit 9dc232a8ab18 ("arm64: arm64_ftr_reg->name may not be
+a human-readable string").
 
-All patches must be sent to public mailing lists for review.
-You might get away with not doing that for a simple and trivial fix,
-but be prepared to end up on people's "special" lists if you did get
-it wrong.
+	M.
 
-We are Legion. We do not forgive. We do not forget ;-)
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+-- 
+Without deviation from the norm, progress is not possible.
