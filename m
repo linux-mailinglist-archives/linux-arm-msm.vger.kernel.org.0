@@ -2,131 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C830454CAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 18:59:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE103454D87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 19:57:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbhKQSCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 13:02:15 -0500
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:44906 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbhKQSCP (ORCPT
+        id S236388AbhKQTAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 14:00:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236462AbhKQTAP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 13:02:15 -0500
-Received: by mail-ot1-f51.google.com with SMTP id u18-20020a9d7212000000b00560cb1dc10bso6080027otj.11;
-        Wed, 17 Nov 2021 09:59:16 -0800 (PST)
+        Wed, 17 Nov 2021 14:00:15 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBB7C061767
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 10:57:16 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id h12-20020a056830034c00b0055c8458126fso6503909ote.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 10:57:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=J0Ee9uS/yNgK0Q38kRm9WiYIRO1wJYHsfH9qjA2K+7w=;
+        b=kzHn6zBkFHRDLpiKcjHC6wdwdCAsiEWlU1A5ga8fIQG/NkKrfuEM8UZ3GubHSyljZi
+         dlmvBmBNnQT9teK9HvVXlqZvz+6UVAeg1BFSrCcJUtplhufu5Op8acDCURafV1GBgdfU
+         z1u1DnUZ8YuocgW5tefkx3WD5X6RKKxK4xOsVED+2Lzq87RbE6PuwJONo8w2o6CS+WxH
+         Zlo2jgIXcZRhHnYTxS3GURFTCVj5NmhUGUAd3ZaCaDItviXTrhJSz34JvZj0aP2CYB4o
+         sxtCxhNc/0Lnv3GnEHGqPMy42lbkh/09Dx+kOwc6UKyIoGh0FDOH8Le4th2dj5XVWYVf
+         dZtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aoxl3U29QPybXdTn3lCAkC7wxqpVbVrgb5RkC9VtBC8=;
-        b=0EwGqwdSgelFkUmigHBTGFrVKd7SP5DmbxsMrZM5rqAcx8TSDD4InqXG2ZizZn1qNC
-         8GNQLqS47of8gsALGTyWkeQnYgeoovIx8CpIIso5gtXj9JUYy1lfWgBL/uV4zZa0poPZ
-         /c34hOeEIFG2PZv1OGh+Fx9KHqDLZG+tqqjqMENRPNqbwB7C1HZBCCYFtU7A3D+lqjC6
-         UDZ2YSTF41CDBlzfIIGkCrKyIYYGlotWoNXPA5oC6YpqOhgfoOLXEMyJCGU/MBaqzkhT
-         UGFD6naa3SS/Hf5egwH12qvRgV7AYuOScfksILtXlW75a8ENheDhfBEXleLSJtXPuXzd
-         vbRA==
-X-Gm-Message-State: AOAM531k0eByW1jDiGdIbtTLLNA1c+6dUxk8vdAKqYy3AKgtiW9zAVVD
-        ejaKhc+QyXAqbget1wyKfQOyp5W4LRqWZouKzFe3SiD3slo=
-X-Google-Smtp-Source: ABdhPJxgrNHEcIl1QbZvbdkU44kPdvatZwekdY2SihVSNjlbfys7UZ3YEy61+fdkmJjVlMfC6Ap5ScQ6f/pN8aOYGAY=
-X-Received: by 2002:a9d:a64:: with SMTP id 91mr15229416otg.198.1637171956227;
- Wed, 17 Nov 2021 09:59:16 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=J0Ee9uS/yNgK0Q38kRm9WiYIRO1wJYHsfH9qjA2K+7w=;
+        b=gy1KoqZ57dybpd1OSu1z9NhCnY0SrrmWz14lSTWIRvaxMGeIPLg4jTAWPaW6bnI0QG
+         lW2Mte6CsA+MHP/HI1kE4MU5v6DYeaVeaGfLLlfcuYzI8XAqj/HW4Bli8rw2eemBPLkw
+         OnIhtX7/7d7QId0sDIOcPE+7VWALaEXolMOBEJI1m7jcRzhtt84SqfW63HWBmi9IxUvV
+         /nwOIcqI/ud7XUKh2u6IjboXpmW9SSvs7SVTSvkEtZveywl8fnGdPA6pMUC/xVQgjkxU
+         LKxhiuuVV/uc32pLx0xlHlTWQFt1x9vYtxLrudRoRjFw99FcaHZU9y7V1b6M/6Bxf42z
+         9XIQ==
+X-Gm-Message-State: AOAM5320+8JwsEHDIR4ysSDX9PMg6rM60HBX//6lqlpWzhpUED5Vtdsm
+        IbtPruVNw4SE9kTadHYlJtnkOQ==
+X-Google-Smtp-Source: ABdhPJynSXjZcC1ekGOZbGSEKHkQCV4LlmAj0G8v/H9dQsgtSOa6o3k4RrWaDEeFL6ED7RfR1PFFkA==
+X-Received: by 2002:a9d:7dca:: with SMTP id k10mr15971598otn.274.1637175435285;
+        Wed, 17 Nov 2021 10:57:15 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a13sm150174oiy.9.2021.11.17.10.57.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 10:57:14 -0800 (PST)
+Date:   Wed, 17 Nov 2021 12:57:12 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     vkoul@kernel.org, agross@kernel.org, ohad@wizery.com,
+        mathieu.poirier@linaro.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: qcom: pas: Add missing power-domain "mxc"
+ for CDSP
+Message-ID: <YZVQiG5ChGFHwquA@builder.lan>
+References: <1624559605-29847-1-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-References: <20211115201010.68567-1-thara.gopinath@linaro.org>
- <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
- <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com> <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
- <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
-In-Reply-To: <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Wed, 17 Nov 2021 18:59:05 +0100
-Message-ID: <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
-Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate freq_factor
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1624559605-29847-1-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
-<thara.gopinath@linaro.org> wrote:
->
-> Hi,
->
-> On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
-> > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
-> >>
-> >> Hi Rafael,
-> >>
-> >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
-> >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
-> >>> <thara.gopinath@linaro.org> wrote:
-> >>>>
-> >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
-> >>>> we don't consider boost frequencies while calculating cpu capacities, use
-> >>>> policy->max to populate the freq_factor during boot up.
-> >>>
-> >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
-> >>
-> >> Agree it's tricky how we treat the boost frequencies and also combine
-> >> them with thermal pressure.
-> >> We probably would have consider these design bits:
-> >> 1. Should thermal pressure include boost frequency?
-> >
-> > Well, I guess so.
-> >
-> > Running at a boost frequency certainly increases thermal pressure.
-> >
-> >> 2. Should max capacity 1024 be a boost frequency so scheduler
-> >>      would see it explicitly?
-> >
-> > That's what it is now if cpuinfo.max_freq is a boost frequency.
-> >
-> >> - if no, then schedutil could still request boost freq thanks to
-> >>     map_util_perf() where we add 25% to the util and then
-> >>     map_util_freq() would return a boost freq when util was > 1024
-> >>
-> >>
-> >> I can see in schedutil only one place when cpuinfo.max_freq is used:
-> >> get_next_freq(). If the value stored in there is a boost,
-> >> then don't we get a higher freq value for the same util?
-> >
-> > Yes. we do, which basically is my point.
-> >
-> > The schedutil's response is proportional to cpuinfo.max_freq and that
-> > needs to be taken into account for the results to be consistent.
->
-> So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
-> frequency of a cpu, irrespective of whether boost is enabled or not.
-> Where as policy->max is the currently available maximum cpu frequency
-> which can be equal to cpuinfo.max_freq or lower (depending on whether
-> boost is enabled, whether there is a constraint on policy->max placed by
-> thermal etc).
+On Thu 24 Jun 13:33 CDT 2021, Sibi Sankar wrote:
 
-It may also depend on the limit set by user space.
+> Add missing power-domain "mxc" required by CDSP PAS remoteproc on SM8350
+> SoC.
+> 
+> Fixes: e8b4e9a21af7 ("remoteproc: qcom: pas: Add SM8350 PAS remoteprocs")
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Cc: stable@vger.kernel.org
+> ---
+> 
+> The device tree and pas documentation lists mcx as a required pd for cdsp.
+> Looks like it was missed while adding the proxy pds in the pas driver.
+> Bjorn/Vinod you'll need to test this patch before picking it up.
+> 
 
-> So in this case isn't it better for schedutil to consider
-> policy->max instead of cpuinfo.max ?
+At least on the HDK mxc seems to be optional given the current system
+state, but I don't see any regressions so let's land this before we put
+the system in a state where it would matter.
 
-Not really.
+Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-In that case setting policy->max to 1/2 of cpuinfo.max_freq would
-cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
-which would be rather unexpected.
+Regards,
+Bjorn
 
-policy->max is a cap, not the current maximum capacity.
-
-> Like you mentioned above same
-> utilization will relate to different frequencies depending on the
-> maximum frequency.
-
-Which is not how it is expected (and defined) to work, though.
-
-If you really want to play with the current maximum capacity, you need
-to change it whenever boost is disabled or enabled - and there is a
-mechanism for updating cpufinfo.max_freq in such cases.
+>  drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index b921fc26cd04..ad20065dbdea 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -661,6 +661,7 @@ static const struct adsp_data sm8350_cdsp_resource = {
+>  	},
+>  	.proxy_pd_names = (char*[]){
+>  		"cx",
+> +		"mxc",
+>  		NULL
+>  	},
+>  	.ssr_name = "cdsp",
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
