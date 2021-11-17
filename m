@@ -2,146 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 00E7345491A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 15:46:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E70B9454993
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 16:08:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238730AbhKQOtl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 09:49:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32816 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233199AbhKQOtl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 09:49:41 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7739C061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 06:46:42 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id bf8so6886568oib.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 06:46:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=MlZnU/mGa3t8lFvT3gWebiTE3OHE/PLCtEsn2Vv+mPw=;
-        b=RNPNdP/ZchqxGv5kfs4KJaIs4f+O7DXWbmfzZnIGd9VcOApT8XZ1tksur5sa8YzQns
-         WVcx+957h7dvMmX6HZJq5MpQFZEN3//yhp1H5ybREYVnkz9Q65kJy/ppu/8aJmy7QkBN
-         /pGhx4ZJVWJI+DDhedk//CLeez0lijqTM39HeJUVVUrajxRkaGat9X9WLnX7/3KEWDf1
-         2mtCL1eyQgaih1Z9KN0tb9WKVogpqkmglaSyh7Vs1aaLc0xQBjL28SLNtPKZnLBD29VL
-         ADtrRrRylbTnxCithgv6e1QXoaBGCYMW2YI8J0Ayxis8BLhP6WwzeWi36baqsYw2VYIH
-         YPUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MlZnU/mGa3t8lFvT3gWebiTE3OHE/PLCtEsn2Vv+mPw=;
-        b=hDpVQTHiAIvrdmPlWFGBNCbCIoBC+BNYd3o5NbZ1YURo2cGLnfoarKg4XBT676tNqG
-         B39DvscCdhqDKX1StLfK8XnJQpSAXproFciRq6+7mVdlGbm2kwxpQPiXwYCid9d5c5WA
-         AUX8kbe4Xon45JPqJCTEr8HhOfVW7A8Df2NIi28VKcP+zn6Ue4wd8ju5A/8YxH8ohcY9
-         BU7iXqZojSvfXQc4h+9E/ACGFVMbNQa1SfPg07a49cc5vyMbgRZ0Z60iiWDFeJZlsIDK
-         LtGAEXoq1ViYsWgho6p+k/sptURlhWU4Au4/SoufCc2VNpXd3UYXION0cWHdQNSU1kbm
-         rPHQ==
-X-Gm-Message-State: AOAM532E9PQ46EH2SLKDGHp6NjdEgZcQ3RmiUHOfNVUdnEjwNSXm8dSE
-        rVzDdtI2Oam+V4/q9151+AkiqBkF6KF9PQ==
-X-Google-Smtp-Source: ABdhPJzNJ1c3j1QrYQ6hswoWgZsbAxfMIhLMnSz+G5oGHs7cPZ3gxJCBPpFdTHzWw16MsNIibs02Yw==
-X-Received: by 2002:a05:6808:220f:: with SMTP id bd15mr219628oib.12.1637160402013;
-        Wed, 17 Nov 2021 06:46:42 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j20sm8874ota.76.2021.11.17.06.46.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 06:46:41 -0800 (PST)
-Date:   Wed, 17 Nov 2021 08:46:38 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom: Don't memcpy_toio more than is provided
-Message-ID: <YZUVzkGykrIQS2oG@builder.lan>
-References: <20211117065454.4142936-1-swboyd@chromium.org>
+        id S231993AbhKQPLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 10:11:08 -0500
+Received: from foss.arm.com ([217.140.110.172]:58506 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231697AbhKQPLH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 10:11:07 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6CFBE1FB;
+        Wed, 17 Nov 2021 07:08:08 -0800 (PST)
+Received: from [10.57.24.78] (unknown [10.57.24.78])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BAD593F5A1;
+        Wed, 17 Nov 2021 07:08:06 -0800 (PST)
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
+ freq_factor
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+ <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+ <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
+ <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <7f077790-da4c-35b8-0eea-cbdc630f9d2a@arm.com>
+Date:   Wed, 17 Nov 2021 15:08:04 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211117065454.4142936-1-swboyd@chromium.org>
+In-Reply-To: <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 17 Nov 00:54 CST 2021, Stephen Boyd wrote:
 
-> If the string passed into qcom_pil_info_store() isn't as long as
-> PIL_RELOC_NAME_LEN we'll try to copy the string assuming the length is
-> PIL_RELOC_NAME_LEN to the io space and go beyond the bounds of the
-> string. Let's only copy as many byes as the string is long, ignoring the
-> NUL terminator.
-> 
-> This fixes the following KASAN error:
-> 
->  BUG: KASAN: global-out-of-bounds in __memcpy_toio+0x124/0x140
->  Read of size 1 at addr ffffffd35086e386 by task rmtfs/2392
-> 
->  CPU: 2 PID: 2392 Comm: rmtfs Tainted: G        W         5.16.0-rc1-lockdep+ #10
->  Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
->  Call trace:
->   dump_backtrace+0x0/0x410
->   show_stack+0x24/0x30
->   dump_stack_lvl+0x7c/0xa0
->   print_address_description+0x78/0x2bc
->   kasan_report+0x160/0x1a0
->   __asan_report_load1_noabort+0x44/0x50
->   __memcpy_toio+0x124/0x140
->   qcom_pil_info_store+0x298/0x358 [qcom_pil_info]
->   q6v5_start+0xdf0/0x12e0 [qcom_q6v5_mss]
->   rproc_start+0x178/0x3a0
->   rproc_boot+0x5f0/0xb90
->   state_store+0x78/0x1bc
->   dev_attr_store+0x70/0x90
->   sysfs_kf_write+0xf4/0x118
->   kernfs_fop_write_iter+0x208/0x300
->   vfs_write+0x55c/0x804
->   ksys_pwrite64+0xc8/0x134
->   __arm64_compat_sys_aarch32_pwrite64+0xc4/0xdc
->   invoke_syscall+0x78/0x20c
->   el0_svc_common+0x11c/0x1f0
->   do_el0_svc_compat+0x50/0x60
->   el0_svc_compat+0x5c/0xec
->   el0t_32_sync_handler+0xc0/0xf0
->   el0t_32_sync+0x1a4/0x1a8
-> 
->  The buggy address belongs to the variable:
->   .str.59+0x6/0xffffffffffffec80 [qcom_q6v5_mss]
-> 
->  Memory state around the buggy address:
->   ffffffd35086e280: 00 00 00 00 02 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
->   ffffffd35086e300: 00 02 f9 f9 f9 f9 f9 f9 00 00 00 06 f9 f9 f9 f9
->  >ffffffd35086e380: 06 f9 f9 f9 05 f9 f9 f9 00 00 00 00 00 06 f9 f9
->                     ^
->   ffffffd35086e400: f9 f9 f9 f9 01 f9 f9 f9 04 f9 f9 f9 00 00 01 f9
->   ffffffd35086e480: f9 f9 f9 f9 00 00 00 00 00 00 00 01 f9 f9 f9 f9
-> 
-> Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 11/17/21 12:49 PM, Rafael J. Wysocki wrote:
+> On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
+>>
+>> Hi Rafael,
+>>
+>> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
+>>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+>>> <thara.gopinath@linaro.org> wrote:
+>>>>
+>>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+>>>> we don't consider boost frequencies while calculating cpu capacities, use
+>>>> policy->max to populate the freq_factor during boot up.
+>>>
+>>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
+>>
+>> Agree it's tricky how we treat the boost frequencies and also combine
+>> them with thermal pressure.
+>> We probably would have consider these design bits:
+>> 1. Should thermal pressure include boost frequency?
+> 
+> Well, I guess so.
+> 
+> Running at a boost frequency certainly increases thermal pressure.
+> 
+>> 2. Should max capacity 1024 be a boost frequency so scheduler
+>>      would see it explicitly?
+> 
+> That's what it is now if cpuinfo.max_freq is a boost frequency.
+> 
+>> - if no, then schedutil could still request boost freq thanks to
+>>     map_util_perf() where we add 25% to the util and then
+>>     map_util_freq() would return a boost freq when util was > 1024
+>>
+>>
+>> I can see in schedutil only one place when cpuinfo.max_freq is used:
+>> get_next_freq(). If the value stored in there is a boost,
+>> then don't we get a higher freq value for the same util?
+> 
+> Yes. we do, which basically is my point.
+> 
+> The schedutil's response is proportional to cpuinfo.max_freq and that
+> needs to be taken into account for the results to be consistent.
+> 
 
-Thanks,
-Bjorn
+This boost thing wasn't an issue for us, because we didn't have
+platforms which come with it (till recently). I've checked that you have
+quite a few CPUs which support huge boost freq, e.g. 5GHz vs. 3.6GHz
+nominal max freq [1]. Am I reading this correctly as kernel boost freq?
+Do you represent this 5GHz as 1024 capacity?
+ From this schedutil get_next_freq() I would guess yes.
 
-> ---
->  drivers/remoteproc/qcom_pil_info.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-> index 7c007dd7b200..aca21560e20b 100644
-> --- a/drivers/remoteproc/qcom_pil_info.c
-> +++ b/drivers/remoteproc/qcom_pil_info.c
-> @@ -104,7 +104,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
->  	return -ENOMEM;
->  
->  found_unused:
-> -	memcpy_toio(entry, image, PIL_RELOC_NAME_LEN);
-> +	memcpy_toio(entry, image, strnlen(image, PIL_RELOC_NAME_LEN));
->  found_existing:
->  	/* Use two writel() as base is only aligned to 4 bytes on odd entries */
->  	writel(base, entry + PIL_RELOC_NAME_LEN);
-> 
-> base-commit: fa55b7dcdc43c1aa1ba12bca9d2dd4318c2a0dbf
-> -- 
-> https://chromeos.dev
-> 
+I cannot find if you use thermal pressure, could you help me with this,
+please?
+
+
+[1] 
+https://ark.intel.com/content/www/us/en/ark/products/186605/intel-core-i99900k-processor-16m-cache-up-to-5-00-ghz.html
