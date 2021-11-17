@@ -2,76 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A3EEB454119
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:44:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7B2545411F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:46:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233803AbhKQGrk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 01:47:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34696 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbhKQGrj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 01:47:39 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96DD1C061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:44:41 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso3004454otr.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:44:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=4KLLnT3lbE++1zW9IFNlDp63h9Sm/+5C3hvYnuVhVto=;
-        b=Pou//tJ+XTHrkeW/AllQYZpDimofzYxEc7jVKrltzTA3GjLP7+nyqqdUg7UgoOcl0P
-         NeahRDIxD6QXIcKG5oT/GnvwX2bYABXdVEn8lxIwicbPnLhKrhPeq8CxOAxtQwleVefn
-         o33v1ohDjye4Z3ztHsH0vrGjImvOhvUoqvRRM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=4KLLnT3lbE++1zW9IFNlDp63h9Sm/+5C3hvYnuVhVto=;
-        b=KeDPFsYe/Pc4Bm2oGZ/vrYDYVzPXMgneUfsKtM8P3YkptQnOxHmUkduGES/LqiXlzu
-         OHlCXR2jxJ2frqxmy6xOtkLVUOUS2YE8bahE7BSZLDGa5YsgfBL8nv6/p1d2C/3fRzTK
-         dNGuwZluEJ9KJp3mOEWh5/tDAUifiBlUsjxkeFE/EtBvKB5YGmk4+Pa4Dk4Qu5LzV+nd
-         PptfPRl7daEtdRHxm0KQFkNxxO3FIBn47lo7n5rB0Wx4/e7J/rt+vf4rS8cm2hVd2/pk
-         wJ2TFDOyD1pE8qxrXeBsna9MgG9Gfj7spSIBMYIXcbPniC4SQ/eCDRH2HFIwLq4K5vYp
-         vQMA==
-X-Gm-Message-State: AOAM533rXUYW8B9IEe+TLaTtQvGUKNDhXzdm9YfvqWv73fN+/IQX8DZl
-        bzP6ZM3hYKVV24uxxIsuOoVCLFXghE0yWD4BLyOctw==
-X-Google-Smtp-Source: ABdhPJzyXkbDI3NrFOfsZtutYyMeBpAr8cH2dtM4PqNy4KOdAZHLaC2NYpVU1JLU58nPIOoLn0OLZ322dDNO0JgsrYU=
-X-Received: by 2002:a9d:7655:: with SMTP id o21mr11601317otl.126.1637131480911;
- Tue, 16 Nov 2021 22:44:40 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 16 Nov 2021 22:44:40 -0800
+        id S231387AbhKQGtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 01:49:10 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57368 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230437AbhKQGtJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 01:49:09 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D7A8161BD3;
+        Wed, 17 Nov 2021 06:46:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637131571;
+        bh=y2OiJMPQRyc+lScL3rg3mfbNG2sQH2Dbv4lfz+zJFpI=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=VDflQugwP/UdxV6VvW6jdFnDGTrIvWCG2qT4ibSrctcea/+iU8mqdtlw/JDibgUoZ
+         BwE7WL7XfJf3WOnd7dPz4z7iRs7yJL4llHkzEbfRpp+kzIakbLJ9QhShz6UFSS4Y8P
+         hy9o2/tMp+QdL8jVNoXz7HGUS5h4pH6C6bIl3h4pn+Lkn/IonAaR7JFkp7MAz5WJXH
+         8zFmUweL5imMoCtR1aLoqZQyJNeE5c+XoTCqdCNm5AFY7XdD9NgLcjfGDywntI2fiJ
+         JcGI3fEdfiZcemij0uEBgbcw8V5PUonZDoTtC9Hk34pI/vhTrI/5zw2ed8GtltmfUE
+         tzQFD/NtBl8Ag==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1637046458-20607-4-git-send-email-quic_sbillaka@quicinc.com>
-References: <1637046458-20607-1-git-send-email-quic_sbillaka@quicinc.com> <1637046458-20607-4-git-send-email-quic_sbillaka@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20211103234410.1352424-1-bjorn.andersson@linaro.org>
+References: <20211103234410.1352424-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v4 1/2] dt-bindings: phy: Introduce Qualcomm eDP PHY binding
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Date:   Tue, 16 Nov 2021 22:46:09 -0800
 User-Agent: alot/0.9.1
-Date:   Tue, 16 Nov 2021 22:44:40 -0800
-Message-ID: <CAE-0n50jpAq7jynEL5opHJd06zThUaWVzLvc_zidi-qYUxiwcQ@mail.gmail.com>
-Subject: Re: [PATCH v1 3/3] phy: qcom: Program SSC only if supported by sink
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     robdclark@gmail.com, seanpaul@chromium.org,
-        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
-        dianders@chromium.org, quic_khsieh@quicinc.com,
-        quic_mkrishn@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <20211117064610.D7A8161BD3@mail.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2021-11-15 23:07:38)
-> Some legacy eDP sinks may not support SSC. The support for SSC is
-> indicated through an opts flag from the controller driver. This
-> change will enable SSC only if the sink supports it.
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Quoting Bjorn Andersson (2021-11-03 16:44:09)
+> Introduce a binding for the eDP PHY hardware block found in several
+> different Qualcomm platforms.
+>=20
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-
-I suppose as long as the existing user has already chosen to set the
-opts in the controller driver then this is fine.
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
