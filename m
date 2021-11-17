@@ -2,392 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8DEF4540CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:20:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB2914540D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:21:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231643AbhKQGXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 01:23:42 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:42418 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230013AbhKQGXl (ORCPT
+        id S233568AbhKQGYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 01:24:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57560 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230013AbhKQGYC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 01:23:41 -0500
+        Wed, 17 Nov 2021 01:24:02 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B64AC061570
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:21:04 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id z2-20020a9d71c2000000b0055c6a7d08b8so2882315otj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637130044; x=1668666044;
-  h=from:to:cc:subject:date:message-id;
-  bh=cQC2gqTOt0M1biGbtCU4VCCPiigZPnUqscVbZwXu1Ds=;
-  b=lH7TIFS0k5RdhW09jBPAwCd5ECV3gmWT47TxJOQXPORnLop7ls9pIMtr
-   SsSBr5mCmZEvxbeoofxlLzlcQ0c2yB4GeR7kgcuSrqznh6owtTL6O2PAv
-   fxdwtT5oh3uG0p7q+3ECxplmFNACsaW9ha4e1+GbR0eQKokwTM6g08sqH
-   M=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 16 Nov 2021 22:20:44 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Nov 2021 22:20:41 -0800
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 17 Nov 2021 11:50:22 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 5B04E4C5C; Wed, 17 Nov 2021 11:50:20 +0530 (IST)
-From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-To:     adrian.hunter@intel.com, riteshh@codeaurora.org,
-        asutoshd@quicinc.com, ulf.hansson@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     stummala@codeaurora.org, vbadigan@codeaurora.org,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        sartgarg@codeaurora.org, nitirawa@codeaurora.org,
-        sayalil@codeaurora.org,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Subject: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat sysfs entry
-Date:   Wed, 17 Nov 2021 11:50:12 +0530
-Message-Id: <1637130012-21846-1-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=02STHSCJ+jlfTWifoEAhvcHaf43ykG6Mrv7Wewp8ywE=;
+        b=ts+ssPefBnK/b0xWWGyuIHXzQvtf0bKkDpcKwhHFgCAOipm9TZROyc5ycNCt79uxos
+         7bc/7L8DdLy6AXP2HysL6ftcAx9in+/YQDC2IO1ckXG2c5GIhwUB4oe1ZgGnj7zomIiF
+         DLWEllyBlxgcgDr7FS1D/WMLD3eJZtaIgT7TnYIQXFv67Tyjt8gG/B8YzprE/HmF4tj8
+         pT8zicMULnJARBOTf3Nt8JDUQ72vbq5ZeHjX/NnEX/2EX1sidEnivE/WfaTp8AwqlHvi
+         51OY1/2ysPEZzxANAPd9nuDV2yRVtS3gcqQj/nG9GcSO8qUi6DkpnQnKFMIeGN1S4SWt
+         /BMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=02STHSCJ+jlfTWifoEAhvcHaf43ykG6Mrv7Wewp8ywE=;
+        b=zsirsSQBxdQnV8DQRcj/ttr8B5Zv4Zs+ppdGxQWl7Mypa1hfUqPkzcsPxm75yi9c34
+         WV7TpRNA4XM60R0NJuUfZzeXmLHnU0WDm4fZ/zABrg9tFlG9F4q8yIwloRPLkI7dU3r1
+         HYqQpOIH9KDgYwqdiLtLtQZFx1zTDPFNqYZjvtCemzHr5ZQp1JQRLqDmw52d8Lok22Xg
+         Y9NmvipboUbhMX9pJEwgC/fR8fqMiCuP+9TtacYQvCflAQJCs0nYmymkWpC+fO1mQdFv
+         eJSjNZm/bi85YxwLgCttN1YGoZEzfZe3lfAZLdkUyfjNYH9YwdbbG6jenxV5yIfPjpZ+
+         fy9Q==
+X-Gm-Message-State: AOAM530UvBp2j8L99WLYwgc2xXt9pen/07AUHUDVqnJzZIwMM00pnSuZ
+        6zJmBjNIFvpcS18rT0qy4gl9nw==
+X-Google-Smtp-Source: ABdhPJyosdYfUTLZJbq491fRXwcpGZHjZtnVxZZx9dDPfScH/FG3mEvQ3JbD4RMslrC2fwzcxo7amQ==
+X-Received: by 2002:a9d:6304:: with SMTP id q4mr10991214otk.290.1637130063455;
+        Tue, 16 Nov 2021 22:21:03 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id h14sm4128983ots.22.2021.11.16.22.21.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Nov 2021 22:21:03 -0800 (PST)
+Date:   Wed, 17 Nov 2021 00:20:58 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Katherine Perez <kaperez@linux.microsoft.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 0/4] arm64: dts: qcom: sm8150: display support for
+ Microsoft Surface Duo
+Message-ID: <YZSfSgz/ALWTfLQ5@builder.lan>
+References: <20211117013516.4111383-1-kaperez@linux.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211117013516.4111383-1-kaperez@linux.microsoft.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sysfs entry to query eMMC and SD card errors statistics.
-This feature is useful for debug and testing.
+On Tue 16 Nov 19:35 CST 2021, Katherine Perez wrote:
 
-Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
----
- drivers/mmc/host/cqhci.h     |   1 +
- drivers/mmc/host/sdhci-msm.c | 192 +++++++++++++++++++++++++++++++++++++++++++
- drivers/mmc/host/sdhci.c     |  17 ++++
- drivers/mmc/host/sdhci.h     |   1 +
- include/linux/mmc/host.h     |   1 +
- 5 files changed, 212 insertions(+)
+> Hi Bjorn and Vinod,
+> 
+> I'm trying to enable the display subsystem on SM8150 but am having
+> trouble enabling the DISP_CC_MDSS_AHB_CLK. Trace shows "disp_cc_mdss_ahb_clk
+> status stuck at off". Do you have any pointers on enabling this clock?
+> 
 
-diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
-index ba9387e..f72a1d6 100644
---- a/drivers/mmc/host/cqhci.h
-+++ b/drivers/mmc/host/cqhci.h
-@@ -286,6 +286,7 @@ struct cqhci_host_ops {
- 				 u64 *data);
- 	void (*pre_enable)(struct mmc_host *mmc);
- 	void (*post_disable)(struct mmc_host *mmc);
-+	void (*err_stats)(struct mmc_host *mmc, unsigned long flags);
- #ifdef CONFIG_MMC_CRYPTO
- 	int (*program_key)(struct cqhci_host *cq_host,
- 			   const union cqhci_crypto_cfg_entry *cfg, int slot);
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 50c71e0..e1dcd2d 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -242,6 +242,23 @@ struct sdhci_msm_variant_ops {
- 			u32 offset);
- };
- 
-+enum {
-+	MMC_ERR_CMD_TIMEOUT,
-+	MMC_ERR_CMD_CRC,
-+	MMC_ERR_DAT_TIMEOUT,
-+	MMC_ERR_DAT_CRC,
-+	MMC_ERR_AUTO_CMD,
-+	MMC_ERR_ADMA,
-+	MMC_ERR_TUNING,
-+	MMC_ERR_CMDQ_RED,
-+	MMC_ERR_CMDQ_GCE,
-+	MMC_ERR_CMDQ_ICCE,
-+	MMC_ERR_REQ_TIMEOUT,
-+	MMC_ERR_CMDQ_REQ_TIMEOUT,
-+	MMC_ERR_ICE_CFG,
-+	MMC_ERR_MAX,
-+};
-+
- /*
-  * From V5, register spaces have changed. Wrap this info in a structure
-  * and choose the data_structure based on version info mentioned in DT.
-@@ -285,6 +302,8 @@ struct sdhci_msm_host {
- 	u32 dll_config;
- 	u32 ddr_config;
- 	bool vqmmc_enabled;
-+	bool err_occurred;
-+	u32  err_stats[MMC_ERR_MAX];
- };
- 
- static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
-@@ -2106,9 +2125,20 @@ static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *c
- 		host->data_timeout = 22LL * NSEC_PER_SEC;
- }
- 
-+void sdhci_msm_cqe_err_stats(struct mmc_host *mmc, unsigned long flags)
-+{
-+	struct sdhci_host *host = mmc_priv(mmc);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+
-+	if (flags & BIT(0))
-+		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]++;
-+}
-+
- static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
- 	.enable		= sdhci_msm_cqe_enable,
- 	.disable	= sdhci_msm_cqe_disable,
-+	.err_stats	= sdhci_msm_cqe_err_stats,
- #ifdef CONFIG_MMC_CRYPTO
- 	.program_key	= sdhci_msm_program_key,
- #endif
-@@ -2403,6 +2433,46 @@ static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
- 		readl_relaxed(host->ioaddr +
- 			msm_offset->core_vendor_spec_func2),
- 		readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3));
-+	msm_host->err_occurred = true;
-+}
-+
-+void sdhci_msm_err_stats(struct sdhci_host *host, u32 intmask)
-+{
-+	int command;
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+
-+	if (!msm_host->err_occurred)
-+		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT] = 0;
-+
-+	if (host && host->mmc && host->mmc->timer) {
-+		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]++;
-+		host->mmc->timer = false;
-+	}
-+
-+	if (intmask & SDHCI_INT_CRC) {
-+		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
-+		if (command != MMC_SEND_TUNING_BLOCK ||
-+		    command != MMC_SEND_TUNING_BLOCK_HS200)
-+			msm_host->err_stats[MMC_ERR_CMD_CRC]++;
-+	} else if ((intmask & SDHCI_INT_TIMEOUT) ||
-+		(intmask & SDHCI_INT_DATA_TIMEOUT))
-+		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]++;
-+	else if (intmask & SDHCI_INT_DATA_CRC) {
-+		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
-+		if (command != MMC_SEND_TUNING_BLOCK ||
-+		    command != MMC_SEND_TUNING_BLOCK_HS200)
-+			msm_host->err_stats[MMC_ERR_DAT_CRC]++;
-+	} else if (intmask & SDHCI_INT_DATA_TIMEOUT)
-+		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]++;
-+	else if (intmask & CQHCI_IS_RED)
-+		msm_host->err_stats[MMC_ERR_CMDQ_RED]++;
-+	else if (intmask & CQHCI_IS_GCE)
-+		msm_host->err_stats[MMC_ERR_CMDQ_GCE]++;
-+	else if (intmask & CQHCI_IS_ICCE)
-+		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]++;
-+	else if (intmask & SDHCI_INT_ADMA_ERROR)
-+		msm_host->err_stats[MMC_ERR_ADMA]++;
- }
- 
- static const struct sdhci_msm_variant_ops mci_var_ops = {
-@@ -2456,6 +2526,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
- 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
- 	.set_power = sdhci_set_power_noreg,
- 	.set_timeout = sdhci_msm_set_timeout,
-+	.err_stats = sdhci_msm_err_stats,
- };
- 
- static const struct sdhci_pltfm_data sdhci_msm_pdata = {
-@@ -2482,6 +2553,125 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
- 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
- }
- 
-+static ssize_t err_state_show(struct device *dev,
-+			struct device_attribute *attr, char *buf)
-+{
-+	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+
-+	if (!host || !host->mmc)
-+		return -EINVAL;
-+
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", !!msm_host->err_occurred);
-+}
-+
-+static ssize_t err_state_store(struct device *dev,
-+				struct device_attribute *attr,
-+				const char *buf, size_t count)
-+{
-+	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	unsigned int val;
-+
-+	if (kstrtouint(buf, 0, &val))
-+		return -EINVAL;
-+	if (!host || !host->mmc)
-+		return -EINVAL;
-+
-+	msm_host->err_occurred = !!val;
-+	if (!val)
-+		memset(msm_host->err_stats, 0, sizeof(msm_host->err_stats));
-+
-+	return count;
-+}
-+static DEVICE_ATTR_RW(err_state);
-+
-+static ssize_t err_stats_show(struct device *dev,
-+				struct device_attribute *attr, char *buf)
-+{
-+	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	char tmp[100];
-+
-+	if (!host || !host->mmc)
-+		return -EINVAL;
-+
-+	scnprintf(tmp, sizeof(tmp), "# Command Timeout Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]);
-+	strlcpy(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Command CRC Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMD_CRC]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Data Timeout Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Data CRC Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_DAT_CRC]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Auto-Cmd Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_ADMA]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# ADMA Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_ADMA]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Tuning Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_TUNING]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# CMDQ RED Errors: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMDQ_RED]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# CMDQ GCE Errors: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMDQ_GCE]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# CMDQ ICCE Errors: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# CMDQ Request Timedout: %d\n",
-+		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	scnprintf(tmp, sizeof(tmp), "# Request Timedout Error: %d\n",
-+		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]);
-+	strlcat(buf, tmp, PAGE_SIZE);
-+
-+	return strlen(buf);
-+}
-+static DEVICE_ATTR_RO(err_stats);
-+
-+static struct attribute *sdhci_msm_sysfs_attrs[] = {
-+	&dev_attr_err_state.attr,
-+	&dev_attr_err_stats.attr,
-+	NULL
-+};
-+
-+static const struct attribute_group sdhci_msm_sysfs_group = {
-+	.name = "qcom",
-+	.attrs = sdhci_msm_sysfs_attrs,
-+};
-+
-+static int sdhci_msm_init_sysfs(struct platform_device *pdev)
-+{
-+	int ret;
-+
-+	ret = sysfs_create_group(&pdev->dev.kobj, &sdhci_msm_sysfs_group);
-+	if (ret)
-+		dev_err(&pdev->dev, "%s: Failed sdhci_msm sysfs group err=%d\n",
-+			__func__, ret);
-+	return ret;
-+}
- 
- static int sdhci_msm_probe(struct platform_device *pdev)
- {
-@@ -2734,6 +2924,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto pm_runtime_disable;
- 
-+	sdhci_msm_init_sysfs(pdev);
-+
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 07c6da1..f82a3eff 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3159,6 +3159,13 @@ static void sdhci_timeout_timer(struct timer_list *t)
- 	spin_lock_irqsave(&host->lock, flags);
- 
- 	if (host->cmd && !sdhci_data_line_cmd(host->cmd)) {
-+		if (host->ops->err_stats) {
-+			u32 intmask;
-+
-+			host->mmc->timer = true;
-+			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
-+			host->ops->err_stats(host, intmask);
-+		}
- 		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
- 		       mmc_hostname(host->mmc));
- 		sdhci_dumpregs(host);
-@@ -3181,6 +3188,13 @@ static void sdhci_timeout_data_timer(struct timer_list *t)
- 
- 	if (host->data || host->data_cmd ||
- 	    (host->cmd && sdhci_data_line_cmd(host->cmd))) {
-+		if (host->ops->err_stats) {
-+			u32 intmask;
-+
-+			host->mmc->timer = true;
-+			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
-+			host->ops->err_stats(host, intmask);
-+		}
- 		pr_err("%s: Timeout waiting for hardware interrupt.\n",
- 		       mmc_hostname(host->mmc));
- 		sdhci_dumpregs(host);
-@@ -3466,6 +3480,9 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
- 	}
- 
- 	intmask = sdhci_readl(host, SDHCI_INT_STATUS);
-+	if (host->ops->err_stats)
-+		host->ops->err_stats(host, intmask);
-+
- 	if (!intmask || intmask == 0xffffffff) {
- 		result = IRQ_NONE;
- 		goto out;
-diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h
-index d7929d7..a1546b3 100644
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -658,6 +658,7 @@ struct sdhci_ops {
- 	void	(*request_done)(struct sdhci_host *host,
- 				struct mmc_request *mrq);
- 	void    (*dump_vendor_regs)(struct sdhci_host *host);
-+	void	(*err_stats)(struct sdhci_host *host, u32 intmask);
- };
- 
- #ifdef CONFIG_MMC_SDHCI_IO_ACCESSORS
-diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-index 7afb57c..33186ff 100644
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -492,6 +492,7 @@ struct mmc_host {
- 	int			cqe_qdepth;
- 	bool			cqe_enabled;
- 	bool			cqe_on;
-+	bool                    timer;
- 
- 	/* Inline encryption support */
- #ifdef CONFIG_MMC_CRYPTO
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+Hi Katherine,
 
+This looks quite similar to an issue I'm chasing the past few days on
+the sc8180x platform (which is derived from sm8150).
+
+The problem seems to come down to the fact that we're not holding the
+MMCX power-domain at a high enough performance_state through the boot
+process and in contrast with other platforms these two are stricter in
+their requirements.
+
+For these platforms, the essence of the solution is that we need to hold
+MMCX at nominal as long as there's display clocks ticking at high speed,
+unfortunately there doesn't seem to be any quick way to achieve this -
+so I now have a handful of patches that fix various aspects of this
+issue, but not something reliable enough to post just yet.
+
+Regards,
+Bjorn
+
+> msm_dsi_phy ae94400.dsi-phy: [drm:dsi_phy_driver_probe [msm]] *ERROR* dsi_phy_driver_probe: Unable to get ahb clk
+> disp_cc-sm8250 af00000.clock-controller: supply mmcx not found, using dummy regulator
+> platform ae96000.dsi: Fixing up cyclic dependency with ae00000.mdss:mdp@ae010000
+> ------------[ cut here ]------------
+> disp_cc_mdss_ahb_clk status stuck at 'off'
+> WARNING: CPU: 6 PID: 76 at drivers/clk/qcom/clk-branch.c:91 clk_branch_wait+0x14c/0x164
+> CPU: 6 PID: 76 Comm: kworker/u16:2 Not tainted 5.15.0 #17
+> Hardware name: Microsoft Surface Duo (DT)
+> Workqueue: events_unbound deferred_probe_work_func
+> pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> pc : clk_branch_wait+0x14c/0x164
+> lr : clk_branch_wait+0x14c/0x164
+> sp : ffff80001078ba40
+> x29: ffff80001078ba40 x28: 0000000000000000 x27: ffff65e6008e2100
+> x26: ffffb8630ec8e278 x25: ffff65e60005e005 x24: ffffb8630ebc0f98
+> x23: ffffb8630e234dd8 x22: 0000000000000001 x21: ffffb8630d5b8b60
+> x20: 0000000000000000 x19: ffffb8630eb5e7b8 x18: 0000000000000030
+> x17: 2e726f74616c7567 x16: ffffb8630d5a3800 x15: ffffffffffffffff
+> x14: 0000000000000000 x13: 6f27207461206b63 x12: 7574732073757461
+> x11: 77705f313439386d x10: 0000000000000027 x9 : ffffb8630cf974bc
+> x8 : 0000000000000027 x7 : 0000000000000002 x6 : 0000000000000027
+> x5 : ffff65e6f93cc9a8 x4 : ffff80001078b890 x3 : 0000000000000001
+> x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff65e600851d80
+> Call trace:
+>  clk_branch_wait+0x14c/0x164
+>  clk_branch2_enable+0x3c/0x60
+>  clk_core_enable+0x78/0x220
+>  clk_enable+0x38/0x60
+>  dsi_phy_enable_resource+0x98/0xac [msm]
+>  dsi_phy_driver_probe+0x29c/0x4f8 [msm]
+>  platform_probe+0x74/0xe4
+>  really_probe.part.0+0xa4/0x328
+>  __driver_probe_device+0xa0/0x150
+>  driver_probe_device+0x4c/0x164
+>  __device_attach_driver+0xc0/0x128
+>  bus_for_each_drv+0x84/0xe0
+>  __device_attach+0xe0/0x188
+>  device_initial_probe+0x20/0x2c
+>  bus_probe_device+0xa8/0xbc
+>  deferred_probe_work_func+0x90/0xc8
+>  process_one_work+0x1f4/0x43c
+>  worker_thread+0x78/0x4f0
+>  kthread+0x154/0x160
+>  ret_from_fork+0x10/0x20
+> ---[ end trace 734ed75908fc6b0e ]---
+> 
+> Katherine Perez (4):
+>   arm64: dts: qcom: sm8150: add dispcc node
+>   arm64: dts: qcom: sm8150: add display nodes
+>   arm64: dts: qcom: sm8150: add DSI display nodes
+>   arm64: dts: qcom: sm8150: display support for Microsoft Surface Duo
+> 
+>  .../dts/qcom/sm8150-microsoft-surface-duo.dts |  26 ++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi          | 292 ++++++++++++++++++
+>  2 files changed, 318 insertions(+)
+> 
+> --
+> 2.31.1
+> 
