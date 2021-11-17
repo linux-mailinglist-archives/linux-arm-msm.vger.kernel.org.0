@@ -2,137 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 316D9454572
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 12:14:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7219A454586
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 12:22:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236684AbhKQLQP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 06:16:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236683AbhKQLQP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 06:16:15 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F20E1C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 03:13:16 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id c32so6568550lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 03:13:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EXIbkKZxAkyHyjuCL6JqGRGmyvREvEfhZ6nYCklz6yU=;
-        b=HZrPnu20pO3jcpFidPz7JXjJNNGkS2LVTyW5C88qzkXMY7qKzGysIErgVFQtHAfegr
-         5r1M5qZM5yhxoEP73rUhrZmKwKiwn1xvo8r92Y724kkzDcKwZw59YJVjUJvALXcLVrtR
-         BT+RsVHrJc9qlchE/yvI2ra4s/J3PFndGaE6GC0qNNU522Q2VIZMbVzz/Ap9RKtieG3M
-         KDNCZ3Qm2UJLS3cC0eJgutzln/6j5WL//67pSwzeU2crCzKSY6twjjLBNDzkYjp8sEIs
-         PJ3rSkcAromGlHhbPm93WFhr0vpNOOEe1B3ka0oh+E+HJ/5NssGQIfrZEHQP7wgMxB24
-         ywqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=EXIbkKZxAkyHyjuCL6JqGRGmyvREvEfhZ6nYCklz6yU=;
-        b=KjoAWs1VkVDcUHGYz66VcA8hlylTVjj81xl3tZZavMt0osyW5Fs8rP4Nmmp96TxVa/
-         Fu14Bzqz8sfA4ofucAg3+agFV/G4R0zomiTX1/dQda6gtWd9uu2cMkGxyRQuEWO6oroA
-         yV7wMUED/Cp+RErNhtDJjcOxYDHPDRC8HYzwMCVVNZVeYsJKNtUcQb4gxcSYjuwOolhq
-         TtV+LnkLuLo3Im1Evk3oRx1hwFm61/tgYfJTJY/hf0OlKvgDWDiaqXfJ5MrS0iIMJef2
-         XTfZvryjsnxWctabi60TeNBvRwFBPhcVVic7URKaG14CJ548vdXOBacols6Yo7m9Z7al
-         Cqgw==
-X-Gm-Message-State: AOAM533FQdtgC/KrPWNxmWHBScGUjcCULTLQ3CuXeHNlQJAyw+wMo2En
-        UQjRUeUO73rSi+dk84WCdcNZ4w==
-X-Google-Smtp-Source: ABdhPJzXSzaUqHCF4jDisIbbluy18P4t2feSH/0R6ctMUI3qwffeGAUXVdXDgxtwN/T2ssWYulsMTA==
-X-Received: by 2002:a05:6512:1520:: with SMTP id bq32mr14468705lfb.232.1637147595246;
-        Wed, 17 Nov 2021 03:13:15 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f23sm2345057ljg.90.2021.11.17.03.13.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 03:13:14 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        id S234545AbhKQLYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 06:24:15 -0500
+Received: from foss.arm.com ([217.140.110.172]:55460 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232294AbhKQLYP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 06:24:15 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C75401FB;
+        Wed, 17 Nov 2021 03:21:16 -0800 (PST)
+Received: from [192.168.178.2] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8BED83F70D;
+        Wed, 17 Nov 2021 03:21:15 -0800 (PST)
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
+ freq_factor
+To:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: [PATCH v2] clk: qcom: regmap-mux: fix parent clock lookup
-Date:   Wed, 17 Nov 2021 14:13:14 +0300
-Message-Id: <20211117111314.543781-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+ <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+From:   Dietmar Eggemann <dietmar.eggemann@arm.com>
+Message-ID: <16542a14-9023-5164-62de-fe999d89a350@arm.com>
+Date:   Wed, 17 Nov 2021 12:21:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function mux_get_parent() uses qcom_find_src_index() to find the
-parent clock index, which is incorrect: qcom_find_src_index() uses src
-enum for the lookup, while mux_get_parent() should use cfg field (which
-corresponds to the register value). Add qcom_find_cfg_index() function
-doing this kind of lookup and use it for mux parent lookup.
+On 16.11.21 20:05, Rafael J. Wysocki wrote:
+> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+> <thara.gopinath@linaro.org> wrote:
+>>
+>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+>> we don't consider boost frequencies while calculating cpu capacities, use
+>> policy->max to populate the freq_factor during boot up.
+> 
+> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
 
-Fixes: df964016490b ("clk: qcom: add parent map for regmap mux")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
-Changes since v1:
- - Added stable cc tag instead of manually Cc'ing the list.
----
- drivers/clk/qcom/clk-regmap-mux.c |  2 +-
- drivers/clk/qcom/common.c         | 12 ++++++++++++
- drivers/clk/qcom/common.h         |  2 ++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+Same question here. There is this:
 
-diff --git a/drivers/clk/qcom/clk-regmap-mux.c b/drivers/clk/qcom/clk-regmap-mux.c
-index b2d00b451963..45d9cca28064 100644
---- a/drivers/clk/qcom/clk-regmap-mux.c
-+++ b/drivers/clk/qcom/clk-regmap-mux.c
-@@ -28,7 +28,7 @@ static u8 mux_get_parent(struct clk_hw *hw)
- 	val &= mask;
- 
- 	if (mux->parent_map)
--		return qcom_find_src_index(hw, mux->parent_map, val);
-+		return qcom_find_cfg_index(hw, mux->parent_map, val);
- 
- 	return val;
- }
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index 60d2a78d1395..2af04fc4abfa 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -69,6 +69,18 @@ int qcom_find_src_index(struct clk_hw *hw, const struct parent_map *map, u8 src)
- }
- EXPORT_SYMBOL_GPL(qcom_find_src_index);
- 
-+int qcom_find_cfg_index(struct clk_hw *hw, const struct parent_map *map, u8 cfg)
-+{
-+	int i, num_parents = clk_hw_get_num_parents(hw);
-+
-+	for (i = 0; i < num_parents; i++)
-+		if (cfg == map[i].cfg)
-+			return i;
-+
-+	return -ENOENT;
-+}
-+EXPORT_SYMBOL_GPL(qcom_find_cfg_index);
-+
- struct regmap *
- qcom_cc_map(struct platform_device *pdev, const struct qcom_cc_desc *desc)
- {
-diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-index bb39a7e106d8..9c8f7b798d9f 100644
---- a/drivers/clk/qcom/common.h
-+++ b/drivers/clk/qcom/common.h
-@@ -49,6 +49,8 @@ extern void
- qcom_pll_set_fsm_mode(struct regmap *m, u32 reg, u8 bias_count, u8 lock_count);
- extern int qcom_find_src_index(struct clk_hw *hw, const struct parent_map *map,
- 			       u8 src);
-+extern int qcom_find_cfg_index(struct clk_hw *hw, const struct parent_map *map,
-+			       u8 cfg);
- 
- extern int qcom_cc_register_board_clk(struct device *dev, const char *path,
- 				      const char *name, unsigned long rate);
--- 
-2.33.0
+  capacity = (freq / freq_max) * arch_scale_cpu_capacity()
 
+in cpufreq_set_cur_state() [drivers/thermal/cpufreq_cooling.c]
+
+where freq_max is `cpufreq_cdev->policy->cpuinfo.max_freq`
+
+And this is then used to calc the PELT thermal pressure.
+
+> 
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>  drivers/base/arch_topology.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
+>> index 43407665918f..df818b439bc3 100644
+>> --- a/drivers/base/arch_topology.c
+>> +++ b/drivers/base/arch_topology.c
+>> @@ -334,7 +334,7 @@ init_cpu_capacity_callback(struct notifier_block *nb,
+>>         cpumask_andnot(cpus_to_visit, cpus_to_visit, policy->related_cpus);
+>>
+>>         for_each_cpu(cpu, policy->related_cpus)
+>> -               per_cpu(freq_factor, cpu) = policy->cpuinfo.max_freq / 1000;
+>> +               per_cpu(freq_factor, cpu) = policy->max / 1000;
+>>
+>>         if (cpumask_empty(cpus_to_visit)) {
+>>                 topology_normalize_cpu_scale();
+>> --
+>> 2.25.1
+>>
