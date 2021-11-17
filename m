@@ -2,69 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33E3F45452C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 11:46:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C94A2454568
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 12:11:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236531AbhKQKt0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 05:49:26 -0500
-Received: from foss.arm.com ([217.140.110.172]:55172 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231777AbhKQKt0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 05:49:26 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8D07AD6E;
-        Wed, 17 Nov 2021 02:46:27 -0800 (PST)
-Received: from [10.57.24.78] (unknown [10.57.24.78])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6F2C93F70D;
-        Wed, 17 Nov 2021 02:46:25 -0800 (PST)
-Subject: Re: Re: [PATCH] base: arch_topology: Use policy->max to calculate
- freq_factor
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20211115201010.68567-1-thara.gopinath@linaro.org>
- <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
-Date:   Wed, 17 Nov 2021 10:46:23 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S236672AbhKQLOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 06:14:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233710AbhKQLOw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 17 Nov 2021 06:14:52 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3F2C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 03:11:53 -0800 (PST)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 060EB3F63B;
+        Wed, 17 Nov 2021 12:11:49 +0100 (CET)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/devfreq: Insert missing null check in msm_devfreq_idle
+Date:   Wed, 17 Nov 2021 12:11:34 +0100
+Message-Id: <20211117111134.315709-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.34.0
 MIME-Version: 1.0
-In-Reply-To: <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafael,
+msm_devfreq_init only initializes the idle_work hrtimer when it succeeds
+to create a devfreq instance (devfreq support is optional), yet
+msm_devfreq_idle is called unconditionally from retire_submit and queues
+work on it.  We're seeing:
 
-On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
-> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
-> <thara.gopinath@linaro.org> wrote:
->>
->> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
->> we don't consider boost frequencies while calculating cpu capacities, use
->> policy->max to populate the freq_factor during boot up.
-> 
-> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
+    [    2.005265] adreno 1c00000.gpu: [drm:msm_devfreq_init] *ERROR* Couldn't initialize GPU devfreq
 
-Agree it's tricky how we treat the boost frequencies and also combine
-them with thermal pressure.
-We probably would have consider these design bits:
-1. Should thermal pressure include boost frequency?
-2. Should max capacity 1024 be a boost frequency so scheduler
-    would see it explicitly?
-- if no, then schedutil could still request boost freq thanks to
-   map_util_perf() where we add 25% to the util and then
-   map_util_freq() would return a boost freq when util was > 1024
+Followed by a pagefault in:
 
+    [   16.650316] pc : hrtimer_start_range_ns+0x64/0x360
+    [   16.650336] lr : msm_hrtimer_queue_work+0x18/0x2c
 
-I can see in schedutil only one place when cpuinfo.max_freq is used:
-get_next_freq(). If the value stored in there is a boost,
-then don't we get a higher freq value for the same util?
+Moments later.  Just like msm_devfreq_active, check if the devfreq
+instance is not NULL before proceeding.
+
+Fixes: 658f4c829688 ("drm/msm/devfreq: Add 1ms delay before clamping freq")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index 8b7473f69cb8..ae3309ff96e4 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -227,6 +227,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+ {
+ 	struct msm_gpu_devfreq *df = &gpu->devfreq;
+
++	if (!df->devfreq)
++		return;
++
+ 	msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
+ 			       HRTIMER_MODE_ABS);
+ }
+--
+2.34.0
+
