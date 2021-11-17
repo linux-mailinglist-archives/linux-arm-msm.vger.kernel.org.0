@@ -2,107 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 752B14540FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:39:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10A89454101
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 07:40:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233699AbhKQGmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 01:42:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33448 "EHLO
+        id S233730AbhKQGnO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 01:43:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233696AbhKQGmh (ORCPT
+        with ESMTP id S233770AbhKQGnM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 01:42:37 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B61B5C061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:39:39 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id bj13so4257442oib.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:39:39 -0800 (PST)
+        Wed, 17 Nov 2021 01:43:12 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F01C061570
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:40:14 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id u74so4182438oie.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 22:40:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=uaBnlFHJNu65iA6uEhxPYlb/03NsUwHMSkh0xmYjPh4=;
-        b=asm29ox26MwSTUQG2YFYhV+q2GmCwLFcMHPBgvAwwXk8B1Hw2DiIPNjwdVj8frXPUS
-         tw8aWGkod53MhdMhE85xkgkkYR3/JUhP5JoNPpCgyyXhZqIIhbD9iWSz/DcOxFm367Ja
-         8ndWn2h2VZ41tqUwP1spyvhOU9i6s9ulWiDiU=
+         :subject:to:cc:content-transfer-encoding;
+        bh=sTIAMjYbIgPw9BtP6BK0EtEhZfFJG39339XpbTQz4q8=;
+        b=A0tibesQgJVPgiCl6aeIuALbSS6lrs8f6fPC/c+D8Wf1ORiIDWJ+s1ln7Shzh1GpRD
+         ro3/eplCp9UgHmCgISTLEFDSSv+2L/qNZBmCOztatF3fMnZQRQs/fCX/uDFgzO+5BbFn
+         7jbYp3FaKRjgdElxiI9IpgGIo3racyC4WLSiI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=uaBnlFHJNu65iA6uEhxPYlb/03NsUwHMSkh0xmYjPh4=;
-        b=p6X+2+imsHX3ZDXsm08qK1BXZVcdg3AYyctqn2H0r2NR8pCYqYvUgTzLaa09E7Qih2
-         eKbX6dPGxCDB+M2sQ1qpsqCWdrKV+HrxSyhZWZCpKbX0zo7MO7Nc/ENhjHrkzG+iaXGK
-         SHFu2tE1UFmefrpOUAB6amOCbpQ50sr/+5vAa5+aj8wHD3y1AWmUwiLs2ubJGdfjTHf8
-         LHKdH9a33VCFrd0lTSPTA/PRhPiUTqWx+nArPS5g46Sbfcnnewyoe3HhovW0cji1jRpn
-         ldizgyiXwJ+JdSUB+Q5jlaCtGx2e5/vytzFayVSAyiFzYlqeF2V7Gg+f9l+b/DCMciPe
-         BRsw==
-X-Gm-Message-State: AOAM532msNtpu5B3SD8YQG4+KnSt4wQv1XKygpy1bvs5hCOmccXc1ViE
-        yccIsS0s0MlKGVJg/bG73krWR5suJI1CgB4CmxNVCw==
-X-Google-Smtp-Source: ABdhPJyBHQWaotdsn7Iy2GutsTjMnAVJWzUw5o7uB8itcXEeqVjdmLxnB/uP+e7Kaz12lP4ZnNA9eyDHEqWpLU9BZW8=
-X-Received: by 2002:aca:2319:: with SMTP id e25mr58625412oie.164.1637131178953;
- Tue, 16 Nov 2021 22:39:38 -0800 (PST)
+         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=sTIAMjYbIgPw9BtP6BK0EtEhZfFJG39339XpbTQz4q8=;
+        b=effAjY1dT6OLWbMtUcKLDVRPNQwX/SkV3mesfaEvWor4GxN5g5aC/OFEqRi9iFtxdz
+         t1docwOVyLXmsUp7QTEUtvsc6ZP2c84CWzDInDn5bWqma91rDzyQ1RCp6xRPtwa9ZRg4
+         Zz17mt9Dx+7+xA9NVmMcQeoAlbYsqucSYx+G7S218rkuYX13UOjPz2EuEM3K5/Y2CyUS
+         me7CF09i8BpB/nO22xEk7WRDs56ednjf1uK/tTKfB9Ofakuh1s1yL/wjxh8K/EId57/R
+         IsAE3UW700sTdMyz4An4xRl+UrgxmEplC87N4nZ88TBJp9irYO6JIx3V1cAZAipxKKj4
+         o3+A==
+X-Gm-Message-State: AOAM532IeVGtAm+YTD/mkk1X5rwAKzQhnxU/S3mZnPD+EkmhtFH/9l/e
+        jdrfhcBijmMBjUz6b2AMkFNqLnf/4yCnz78OQzW0dQ==
+X-Google-Smtp-Source: ABdhPJwL9sejHW2saSeYc0Y8yMtZq0mvyD1HM5tD4KfGOegNHF0M+D7BAXpiycc0GG7yCK/vgooZobtV5T5yDPezdgU=
+X-Received: by 2002:a54:4506:: with SMTP id l6mr58766242oil.32.1637131214191;
+ Tue, 16 Nov 2021 22:40:14 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 16 Nov 2021 22:39:38 -0800
+ HTTPREST; Tue, 16 Nov 2021 22:40:13 -0800
 MIME-Version: 1.0
-In-Reply-To: <000101d7db7c$d2ef1330$78cd3990$@codeaurora.org>
-References: <1635860673-12146-1-git-send-email-pillair@codeaurora.org>
- <1635860673-12146-4-git-send-email-pillair@codeaurora.org>
- <CAE-0n53PSDzj9owjeaB1bGQ5=255=Q_djEvcQGtZzRxMRMhe1g@mail.gmail.com> <000101d7db7c$d2ef1330$78cd3990$@codeaurora.org>
+In-Reply-To: <88a5219e-c82a-87fa-6af3-578238d6027b@quicinc.com>
+References: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n53ArJSYEAtLbc5dFrPspKhi3Kv=hpu=wS1TMsOWcmz6pw@mail.gmail.com> <88a5219e-c82a-87fa-6af3-578238d6027b@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 16 Nov 2021 22:39:38 -0800
-Message-ID: <CAE-0n502Wi+oLnzbjZ4TVe1y98=rL2ML9E5FSKaBfcEmWP+W9A@mail.gmail.com>
-Subject: RE: [PATCH v8 3/3] remoteproc: qcom: q6v5_wpss: Add support for
- sc7280 WPSS
-To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
-        ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sibis@codeaurora.org, mpubbise@codeaurora.org, kuabhs@chromium.org
+Date:   Tue, 16 Nov 2021 22:40:13 -0800
+Message-ID: <CAE-0n53cbEAXgE6+9b+pqxGFayhB-2evhnzQatfoCc2h1r5VmA@mail.gmail.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add Display Port node
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, quic_mkrishn@quicinc.com,
+        quic_kalyant@quicinc.coml, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kuogee Hsieh <khsieh@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-11-16 22:31:51)
+Quoting Kuogee Hsieh (2021-11-16 08:43:38)
 >
+> On 11/15/2021 3:39 PM, Stephen Boyd wrote:
 >
-> > -----Original Message-----
-> > From: Stephen Boyd <swboyd@chromium.org>
-> > Sent: Wednesday, November 17, 2021 4:25 AM
-> > To: Rakesh Pillai <pillair@codeaurora.org>; agross@kernel.org;
-> > bjorn.andersson@linaro.org; mathieu.poirier@linaro.org; ohad@wizery.com;
-> > p.zabel@pengutronix.de; robh+dt@kernel.org
-> > Cc: linux-arm-msm@vger.kernel.org; linux-remoteproc@vger.kernel.org;
-> > devicetree@vger.kernel.org; linux-kernel@vger.kernel.org;
-> > sibis@codeaurora.org; mpubbise@codeaurora.org; kuabhs@chromium.org
-> > Subject: Re: [PATCH v8 3/3] remoteproc: qcom: q6v5_wpss: Add support for
-> > sc7280 WPSS
-> >
-> > Quoting Rakesh Pillai (2021-11-02 06:44:33)
-> > > @@ -457,7 +608,13 @@ static int adsp_probe(struct platform_device
-> > *pdev)
-> > >         if (ret)
-> > >                 goto free_rproc;
-> > >
-> > > -       pm_runtime_enable(adsp->dev);
-> > > +       ret = qcom_rproc_pds_attach(adsp->dev, adsp->proxy_pds,
-> > > +                                   desc->proxy_pd_names);
-> > > +       if (ret < 0) {
-> > > +               dev_err(&pdev->dev, "Failed to attach proxy power domains\n");
-> > > +               goto free_rproc;
-> > > +       }
-> > > +       adsp->proxy_pd_count = ret;
-> >
-> > Can we check this against the define so that we don't have more than the
-> > fixed number of power domains and try to access elements beyond the
-> > length of the array?
+>     Quoting Kuogee Hsieh (2021-11-02 16:44:33)
 >
-> The number of entries populated in the "proxy_pds" array depends on the "desc->proxy_pd_names", which is statically
-> initialized for each remoteproc. Hence there will not be any out of bound access for this array.
+>         From: Kuogee Hsieh <khsieh@codeaurora.org>
+>
+>         Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>         ---
+>
+>     What tree is this based on? I don't see edp_phy upstream for sc7280
+>
+> this patch is depend on=C2=A0 --> [PATCH v2 4/4] arm64: dts: qcom: sc7280=
+: add edp
+> display dt nodes
+>
+> it had completed reviewed.
+>
+> https://mail.codeaurora.org/?_task=3Dmail&_caps=3D
+> pdf%3D1%2Cflash%3D0%2Ctiff%3D0%2Cwebp%3D1&_uid=3D1789&_mbox=3DINBOX&_acti=
+on=3Dshow
 >
 
-Sure nothing is wrong today but it's a potential problem in the future
-if someone adds more elements to proxy_pd_names than proxy_pds can hold.
-Please prevent that from happening by writing stricter code.
+That email link doesn't work for anyone besides you.
