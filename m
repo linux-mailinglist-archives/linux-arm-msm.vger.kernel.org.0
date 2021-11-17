@@ -2,137 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B3180453ECE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 04:09:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C089B453F2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 04:53:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbhKQDMe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 Nov 2021 22:12:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbhKQDMd (ORCPT
+        id S230255AbhKQD42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 Nov 2021 22:56:28 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:59257 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229614AbhKQD41 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 Nov 2021 22:12:33 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E543EC061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 19:09:35 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id w33-20020a17090a6ba400b001a722a06212so3486594pjj.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Nov 2021 19:09:35 -0800 (PST)
+        Tue, 16 Nov 2021 22:56:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VmvoAeCR/cKpJy/KpIWyHW81p5clb62jAM8yRialPxQ=;
-        b=oFgww1crxVsH/qa57ET49g0LduNTCft2RWnzvOSTkxtJ9WZSxBR0ap7dD7ziGHqYgW
-         BwIwaHyKN2BbF1is/Z//5ShHQMTZKIch5suEfGBBkZNQPNn+k7JRUEZhYU3iny2mEN6Y
-         t4+cuRhc975g9+wbMR7nuy+YWQ3DVMH/kklcc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VmvoAeCR/cKpJy/KpIWyHW81p5clb62jAM8yRialPxQ=;
-        b=JpNRoOFecXqQkU50ZzkUi50agDKxBBb3uaUwt+8zrX2V0kCw5t4xafVvE2C2eelVu/
-         Y6AuxYboIl+N9LtsOAyiJ35HYuIqoL8fxEynd3nxiMPMC1RquNiNQlVH2XCUwl1thuYc
-         Fwr18skAyiknVXvlLOGAv3khL9W23zYLyCts8lcuvsra+0L98p/Z1F8TO3+pne9AziQu
-         wiy1CMXUPY4HNVqJ3v/wHT/t6X9xFBVlxwZ3Ph8s5VLExTtWCBv2VpW0Bx/oQqK8/2qy
-         Rg0dH/4x2mV9l0nexo2+7QGMOj8opaFSapds8JCr/V6pZi2goIkehQRzciVT+znX4ehF
-         oGQA==
-X-Gm-Message-State: AOAM5311PT9NGNxq5N+Bl9Le2A6YsymjggRs0dATemn0ZmS1bJFKi+yL
-        BdZvow+4titwE/S0mfUe4X1kkPGF9tqGQg==
-X-Google-Smtp-Source: ABdhPJynfDNe4qWqH8XSUQUD1rfM+xr+HUqXvJyGSGhPIm9fjkLSWuvgf0RE+Y2w+jUwtgPQdEDeXQ==
-X-Received: by 2002:a17:902:6a8a:b0:143:905f:aec7 with SMTP id n10-20020a1709026a8a00b00143905faec7mr52238085plk.8.1637118575504;
-        Tue, 16 Nov 2021 19:09:35 -0800 (PST)
-Received: from google.com ([2620:15c:202:201:bcd2:b839:9ed:baea])
-        by smtp.gmail.com with ESMTPSA id v13sm21743523pfu.38.2021.11.16.19.09.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Nov 2021 19:09:34 -0800 (PST)
-Date:   Tue, 16 Nov 2021 19:09:32 -0800
-From:   Brian Norris <briannorris@chromium.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v9 2/5] usb: dwc3: core: Host wake up support from system
- suspend
-Message-ID: <YZRybAkx1YLiVvfl@google.com>
-References: <1635753224-23975-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635753224-23975-3-git-send-email-quic_c_sanm@quicinc.com>
- <YZRMoNEZTy8XimIx@google.com>
- <YZRXZs5B08SaBqMx@google.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637121210; x=1668657210;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YpFFyrVBixhIrVGxoVbbIeyzmBiBcprUca+jmMqdR+g=;
+  b=jE5yqUQTpbcPaq1JRbPcSjAeZIZZopRUW/8vfm8jxUKYt1eWJRc6/qrN
+   3v2KtwgeIRajh8tUO2uKLHB7ltcVt6wQwPFnZk87rtU1rztAAiOuEgMsZ
+   JpBoyGH9pNUklQGjocgOYrXuAj38sAS79NOJ/M3aTj3po8mKaw2iGwZnc
+   0=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 16 Nov 2021 19:53:30 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2021 19:53:29 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 16 Nov 2021 19:53:28 -0800
+Received: from [10.50.9.167] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 16 Nov
+ 2021 19:53:25 -0800
+Message-ID: <57b4acb7-7038-8943-03c8-6540735345a6@quicinc.com>
+Date:   Wed, 17 Nov 2021 09:23:21 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YZRXZs5B08SaBqMx@google.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access
+ instrumentation
+Content-Language: en-US
+To:     Steven Rostedt <rostedt@goodmis.org>
+CC:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>, Marc Zyngier <maz@kernel.org>,
+        <gregkh@linuxfoundation.org>, <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mingo@redhat.com>
+References: <cover.1636973694.git.quic_saipraka@quicinc.com>
+ <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
+ <20211116174027.14015dff@gandalf.local.home>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <20211116174027.14015dff@gandalf.local.home>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 05:14:14PM -0800, Matthias Kaehlcke wrote:
-> On Tue, Nov 16, 2021 at 04:28:16PM -0800, Brian Norris wrote:
-> > On Mon, Nov 01, 2021 at 01:23:41PM +0530, Sandeep Maheswaram wrote:
-> > > +		if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
-> > 
-> > I still find it odd to use device_may_wakeup(), since that's something
-> > controlled by user space (sysfs) and doesn't fully factor in hardware
-> > support. But that's what xhci-plat.c is doing, so I guess I see why
-> > you're imitating it...
-> > ...still, feels wrong to me. But so does a lot of how dwc3 works.
-> 
-> device_may_wakeup() actually factors in hardware support, at least if the
-> driver does the right thing (TM).
+Hi Steve,
 
-Well in theory, maybe. But the latter half of the sentence is the key :)
+On 11/17/2021 4:10 AM, Steven Rostedt wrote:
+> On Mon, 15 Nov 2021 17:03:30 +0530
+> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
+>
+>> The new generic header mmio-instrumented.h will keep arch code clean
+>> and separate from instrumented version which traces mmio register
+>> accesses. This instrumented header is generic and can be used by other
+>> architectures as well. Also add a generic flag (__DISABLE_TRACE_MMIO__)
+>> which is used to disable MMIO tracing in nVHE and if required can be
+>> used to disable tracing for specific drivers.
+>>
+>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+>> ---
+>>   arch/arm64/include/asm/io.h       | 25 ++++-------
+>>   arch/arm64/kvm/hyp/nvhe/Makefile  |  2 +-
+>>   include/linux/mmio-instrumented.h | 70 +++++++++++++++++++++++++++++++
+>>   3 files changed, 80 insertions(+), 17 deletions(-)
+>>   create mode 100644 include/linux/mmio-instrumented.h
+>>
+>> diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+>> index 7fd836bea7eb..a635aaaf81b9 100644
+>> --- a/arch/arm64/include/asm/io.h
+>> +++ b/arch/arm64/include/asm/io.h
+>> @@ -10,6 +10,7 @@
+>>   
+>>   #include <linux/types.h>
+>>   #include <linux/pgtable.h>
+>> +#include <linux/mmio-instrumented.h>
+>>   
+>>   #include <asm/byteorder.h>
+>>   #include <asm/barrier.h>
+>> @@ -21,32 +22,27 @@
+>>   /*
+>>    * Generic IO read/write.  These perform native-endian accesses.
+>>    */
+>> -#define __raw_writeb __raw_writeb
+>> -static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
+>> +static inline void arch_raw_writeb(u8 val, volatile void __iomem *addr)
+>>   {
+>>   	asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
+>>   }
+>>   
+>> -#define __raw_writew __raw_writew
+>> -static inline void __raw_writew(u16 val, volatile void __iomem *addr)
+>> +static inline void arch_raw_writew(u16 val, volatile void __iomem *addr)
+>>   {
+>>   	asm volatile("strh %w0, [%1]" : : "rZ" (val), "r" (addr));
+>>   }
+>>   
+>> -#define __raw_writel __raw_writel
+>> -static __always_inline void __raw_writel(u32 val, volatile void __iomem *addr)
+>> +static __always_inline void arch_raw_writel(u32 val, volatile void __iomem *addr)
+>>   {
+>>   	asm volatile("str %w0, [%1]" : : "rZ" (val), "r" (addr));
+>>   }
+>>   
+>> -#define __raw_writeq __raw_writeq
+>> -static inline void __raw_writeq(u64 val, volatile void __iomem *addr)
+>> +static inline void arch_raw_writeq(u64 val, volatile void __iomem *addr)
+>>   {
+>>   	asm volatile("str %x0, [%1]" : : "rZ" (val), "r" (addr));
+>>   }
+>>   
+>> -#define __raw_readb __raw_readb
+>> -static inline u8 __raw_readb(const volatile void __iomem *addr)
+>> +static inline u8 arch_raw_readb(const volatile void __iomem *addr)
+>>   {
+>>   	u8 val;
+>>   	asm volatile(ALTERNATIVE("ldrb %w0, [%1]",
+>> @@ -56,8 +52,7 @@ static inline u8 __raw_readb(const volatile void __iomem *addr)
+>>   	return val;
+>>   }
+>>   
+>> -#define __raw_readw __raw_readw
+>> -static inline u16 __raw_readw(const volatile void __iomem *addr)
+>> +static inline u16 arch_raw_readw(const volatile void __iomem *addr)
+>>   {
+>>   	u16 val;
+>>   
+>> @@ -68,8 +63,7 @@ static inline u16 __raw_readw(const volatile void __iomem *addr)
+>>   	return val;
+>>   }
+>>   
+>> -#define __raw_readl __raw_readl
+>> -static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
+>> +static __always_inline u32 arch_raw_readl(const volatile void __iomem *addr)
+>>   {
+>>   	u32 val;
+>>   	asm volatile(ALTERNATIVE("ldr %w0, [%1]",
+>> @@ -79,8 +73,7 @@ static __always_inline u32 __raw_readl(const volatile void __iomem *addr)
+>>   	return val;
+>>   }
+>>   
+>> -#define __raw_readq __raw_readq
+>> -static inline u64 __raw_readq(const volatile void __iomem *addr)
+>> +static inline u64 arch_raw_readq(const volatile void __iomem *addr)
+> Shouldn't the above be done as a separate patch and handle other
+> architectures that implement __raw_read/write*()?
 
-In particular, xhci-plat does the Wrong Thing before this series:
+Will do it as a separate patch in the next version, but can't add for 
+other architectures yet
+as I have no way to test it except compile test and are better left 
+since there are certain things
+which are specific to certain archs, for example on arm64, we cannot 
+enable MMIO tracing for
+arm64 NVHE EL2 (HYP) mode, these things are better known by the 
+corresponding arch experts.
+So the idea of this patch series is to provide a generic instrumentation 
+facility which can be easily
+adopted by other architectures as well with initial support for ARM64 
+just like any other new
+feature starting with support for 1/2 archs.
 
-	device_set_wakeup_capable(&pdev->dev, true);
+>
+>>   {
+>>   	u64 val;
+>>   	asm volatile(ALTERNATIVE("ldr %0, [%1]",
+>> diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+>> index c3c11974fa3b..ff56d2165ea9 100644
+>> --- a/arch/arm64/kvm/hyp/nvhe/Makefile
+>> +++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+>> @@ -4,7 +4,7 @@
+>>   #
+>>   
+>>   asflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
+>> -ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
+>> +ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS -D__DISABLE_TRACE_MMIO__
+>>   
+>>   hostprogs := gen-hyprel
+>>   HOST_EXTRACFLAGS += -I$(objtree)/include
+>> diff --git a/include/linux/mmio-instrumented.h b/include/linux/mmio-instrumented.h
+>> new file mode 100644
+>> index 000000000000..99979c025cc1
+>> --- /dev/null
+>> +++ b/include/linux/mmio-instrumented.h
+>> @@ -0,0 +1,70 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef _LINUX_MMIO_INSTRUMENTED_H
+>> +#define _LINUX_MMIO_INSTRUMENTED_H
+>> +
+>> +#include <linux/tracepoint-defs.h>
+>> +
+>> +/*
+>> + * Tracepoint and MMIO logging symbols should not be visible at EL2(HYP) as
+>> + * there is no way to execute them and any such MMIO access from EL2 will
+>> + * explode instantly (Words of Marc Zyngier). So introduce a generic flag
+>> + * __DISABLE_TRACE_MMIO__ to disable MMIO tracing in nVHE and other drivers
+>> + * if required.
+>> + */
+>> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+>> +DECLARE_TRACEPOINT(rwmmio_write);
+>> +DECLARE_TRACEPOINT(rwmmio_read);
+>> +
+>> +void log_write_mmio(const char *width, volatile void __iomem *addr);
+>> +void log_read_mmio(const char *width, const volatile void __iomem *addr);
+>> +
+>> +#define __raw_write(v, a, _l)	({				\
+>> +	volatile void __iomem *_a = (a);			\
+>> +	if (tracepoint_enabled(rwmmio_write))			\
+>> +		log_write_mmio(__stringify(write##_l), _a);	\
+>> +	arch_raw_write##_l((v), _a);				\
+>> +	})
+>> +
+>> +#define __raw_writeb(v, a)	__raw_write((v), a, b)
+>> +#define __raw_writew(v, a)	__raw_write((v), a, w)
+>> +#define __raw_writel(v, a)	__raw_write((v), a, l)
+>> +#define __raw_writeq(v, a)	__raw_write((v), a, q)
+>> +
+>> +#define __raw_read(a, _l, _t)    ({				\
+>> +	_t __a;							\
+>> +	const volatile void __iomem *_a = (a);			\
+>> +	if (tracepoint_enabled(rwmmio_read))			\
+>> +		log_read_mmio(__stringify(read##_l), _a);	\
+>> +	__a = arch_raw_read##_l(_a);				\
+>> +	__a;							\
+>> +	})
+>> +
+>> +#define __raw_readb(a)		__raw_read((a), b, u8)
+>> +#define __raw_readw(a)		__raw_read((a), w, u16)
+>> +#define __raw_readl(a)		__raw_read((a), l, u32)
+>> +#define __raw_readq(a)		__raw_read((a), q, u64)
+>> +
+>> +#else
+>> +
+>> +#define __raw_writeb(v, a)	arch_raw_writeb(v, a)
+>> +#define __raw_writew(v, a)	arch_raw_writew(v, a)
+>> +#define __raw_writel(v, a)	arch_raw_writel(v, a)
+>> +#define __raw_writeq(v, a)	arch_raw_writeq(v, a)
+>> +
+>> +#define __raw_readb(a)		arch_raw_readb(a)
+>> +#define __raw_readw(a)		arch_raw_readw(a)
+>> +#define __raw_readl(a)		arch_raw_readl(a)
+>> +#define __raw_readq(a)		arch_raw_readq(a)
+>> +
+>> +static inline void log_write_mmio(const char *width,
+>> +				  volatile void __iomem *addr) {}
+>> +static inline void log_read_mmio(const char *width,
+>> +				 const volatile void __iomem *addr) {}
+> The rest from a tracing point of view looks fine, and for that part:
+>
+> Reviewed-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+>
+> -- Steve
+>
+Thanks, would you be able to review Patch1 touching trace directory in 
+case it has missed your queue?
 
-i.e., it doesn't factor any "capability" in at all; it just assumes it.
+-Sai
 
-And per your thoughts below, it's still Wrong after this series.
+>> +
+>> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
+>> +
+>> +#endif /* _LINUX_MMIO_INSTRUMENTED_H */
 
-> The (current) implementation is:
-> 
-> static inline bool device_may_wakeup(struct device *dev)
-> {
-> 	return dev->power.can_wakeup && !!dev->power.wakeup;
-> }
-> 
-> '.can_wakeup' should describe the hardware capability to wake up and the
-> other flag whether wakeup is enabled (which can be altered by userspace).
-> 
-> What this series currently does with the .can_wakeup flag is still wrong
-> though IMO. Patch "[1/5] usb: host: xhci: plat: Add suspend quirk for dwc3
-> controller" [1] dynamically sets the flag with a value that depends on what
-> is connected to the bus, so it doesn't specify any longer whether the
-> hardware supports wakeup or not.
-> 
-> [1] https://patchwork.kernel.org/project/linux-usb/patch/1635753224-23975-2-git-send-email-quic_c_sanm@quicinc.com/
 
-I'm not sure either your patch nor Sandeep's patch really get at the
-heart of my problem here, which is that neither dwc3 nor xhci-plat are
-trying to reflect wakeup capability of the host controller at all. (And
-if the host controller doesn't suppor wakeup, it doesn't really matter
-what any of its children think.) It seems that
-drivers/usb/dwc3/dwc3-imx8mp.c is the only one that actually sets the
-correct wakeup flag at the level that we _really_ know what's up -- the
-platform/"glue" driver.
-
-Maybe we need to do a little of both: teach the glue drivers (e.g.,
-dwc3-qcom.c) to reflect their wakeup capability properly, and then look
-at *that* capability (as well as any children, recursively, but only if
-the glue driver supports it) when trying to make wakeup decisions.
-
-It still feels wrong that there are 3 separate "can wakeup"
-determinations for the host controller though: 1 dwc3-{glue}, 1
-dwc3(core), and 1 xhci-plat. But maybe we have to hold our noses on that
-one.
-
-Brian
