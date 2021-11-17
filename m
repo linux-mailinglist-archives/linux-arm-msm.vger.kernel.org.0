@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C41C0454651
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 13:21:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 347C6454684
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Nov 2021 13:42:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233656AbhKQMYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 07:24:51 -0500
-Received: from relay08.th.seeweb.it ([5.144.164.169]:43655 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbhKQMYu (ORCPT
+        id S236591AbhKQMpJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 07:45:09 -0500
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.167]:32246 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233710AbhKQMpI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 07:24:50 -0500
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8DC503F5D7;
-        Wed, 17 Nov 2021 13:21:50 +0100 (CET)
-Message-ID: <f1c7a135-b74a-ea98-b7e0-8602fa7a92b7@somainline.org>
-Date:   Wed, 17 Nov 2021 13:21:48 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.1
-Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: llcc-qcom: Add SM8350
- compatible and defines
-To:     Stephen Boyd <swboyd@chromium.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
+        Wed, 17 Nov 2021 07:45:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1637152923;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=7Or6MpTJDXx+AWXB1R7vN3QqEV2HePA4Ja4lU2/nA60=;
+    b=hJU92DDJaeTWtncjkLuCia/ghdWzlNgsyZA+cMDZrk1uoyxBNFygIyVhsWo8UqxwpJ
+    Kt0VWxfpgmMTB75DT+iiQasm0/dR99preC6+KUxhn7tiQ8znkvUfrWLKSDKWchW9A+RJ
+    IKvBJfH3tSn39mmQMHaJiSi0rovxaj5MWfWevG8/37l9mtvNuEgB6fHfLqgwdxUMAcTo
+    3j1nMpXw+RaqFf4VRMM2W0nmDUsjV87omh6lg6XOXSU4hsxloc2Oh5HY4jaZPwZwP31v
+    GANKfATrEmQP3I6ZlXkvz6VJil1CnbkB7TH0xHhcDgOGXL/0QdQYDP29roXXWCJQYEEx
+    AllA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK85lg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.34.5 SBL|AUTH)
+    with ESMTPSA id j05669xAHCg2lad
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 17 Nov 2021 13:42:02 +0100 (CET)
+Date:   Wed, 17 Nov 2021 13:41:57 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
         angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Souradeep Chowdhury <schowdhu@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211114012940.112864-1-konrad.dybcio@somainline.org>
- <CAE-0n52MkOx8KC4jSmEHMhmk8sDDf0YNMWhvH-g=Y=OJvA-+1w@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <CAE-0n52MkOx8KC4jSmEHMhmk8sDDf0YNMWhvH-g=Y=OJvA-+1w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: msm8916: Remove clock-lanes
+ property from &camss node
+Message-ID: <YZT4lddeEJAOkIc4@gerhold.net>
+References: <20211117113800.260741-1-robert.foss@linaro.org>
+ <20211117113800.260741-4-robert.foss@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211117113800.260741-4-robert.foss@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Robert,
 
-On 17/11/2021 07:56, Stephen Boyd wrote:
-> Quoting Konrad Dybcio (2021-11-13 17:29:38)
->> Document the compatible string for SM8350 and add required defines to the
->> binding.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> ---
->>   Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 1 +
->>   include/linux/soc/qcom/llcc-qcom.h                       | 4 ++++
-> Why is this include file part of this patch. Shouldn't it be in the next
-> patch?
->
-Right, out of habit I treated it as if it was a part of dt-bindings, when it
+small nitpick: The subject would be more clear with
+"arm64: dts: qcom: apq8016-sbc: ..." instead of "msm8916: ..." like in
+your sdm845-db845c patch, since only apq8016-sbc is modified.
 
-isn't. Thanks for spotting that.
+On Wed, Nov 17, 2021 at 12:37:59PM +0100, Robert Foss wrote:
+> The clock-lanes property is no longer used as it is not programmable by
+> the CSIPHY hardware block of Qcom ISPs and should be removed.
+> 
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 2 --
 
+Can you rebase this on 5.16-rc1? All of apq8016-sbc.dtsi is now in
+apq8016-sbc.dts (the extra dtsi did not have any good use).
 
-Konrad
-
+Thanks,
+Stephan
