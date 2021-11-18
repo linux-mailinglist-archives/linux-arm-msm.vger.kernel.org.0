@@ -2,242 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 416324561A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 18:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28DFF4561AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 18:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231446AbhKRRls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 12:41:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59864 "EHLO
+        id S234170AbhKRRow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 12:44:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231410AbhKRRlr (ORCPT
+        with ESMTP id S234163AbhKRRov (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 12:41:47 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA604C061748
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 09:38:47 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so8814186pju.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 09:38:47 -0800 (PST)
+        Thu, 18 Nov 2021 12:44:51 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4FE2C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 09:41:50 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id m24so5869288pls.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 09:41:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=uZZaIGV1J6dR0MYTZzEkI8MN4x5huF5mh8UM/JBFaIE=;
-        b=LfzDXNKilx+XBoNwP82vKixjCJd4LNp979P9/zj9MO1twBuu2i7DdX18C9hOFJly2a
-         uxVpRXMxVUqjvkpBRdnTJnTHn62sRCYGQYrVE8uDSpX9Y/qyH4Qfsicvztk3V9lb4OVm
-         bJQB4Y2a2aQRDAdU28kYsx31IGa7CnZB9BG9hlMGh0G5lL40wXH4HgJB+r6lid3YReeD
-         7UGqa+obJHljiZYYArzBJS7Cs+8UAEX4xHs8jsRXeO03k0QdOju0hhLwv8t1pKjf1Za5
-         K5cHbxHzMy2RmFZ5QwLTR+1RtOC2oPJcWmXeZvmlkzh1OnAhkxDjCH1QTvvjhEprgwDf
-         UYeQ==
+        bh=8ciIRwy+yxvWn2LwEQWDIz+C3VSCgM6erWfnwc1pCQE=;
+        b=Po2980MK3nArAg5kgUQyTvOoghzp/so1mpxQqFmgkHfEuiVm8w/dsmqAfsmBEK0PsS
+         t8cSYt5UI3z/+ZqDacYoUWritLHHkVDbZ9H8o9dp/O9FE2zwEefIwO2aYxWPBOIDi0K+
+         Q6hRyiEXWNyugSaBdzEw/qLSH/sOZJ2SYBgfg+OKWsSQamHGH9lENraxerysU0vcMk+Q
+         gndcskSMDwvdRTBfqcZ/DzJsMtzISsqSBCwYI5CaincTsqedpUpjUlPSNAVWCz32JR6l
+         sapZEjrhakrT/HOKweuJvuRS6yVR6zqLJ7XwBGb7SQS30043DmQ13cwyhGCRWf9lL4m9
+         Y6mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=uZZaIGV1J6dR0MYTZzEkI8MN4x5huF5mh8UM/JBFaIE=;
-        b=ytcXudbMTZpArTLMlPuw1i5MG5zxg2puLqDk/UkDkgudK6dgGgP2VLC89Lwuih960H
-         Ee/N00tZcLpwjBKrc571bBwGkZqLkcSTNt6LGJClyRI2owzcO1EAIWsGQE3hzWSaJWVr
-         H8jnzBvMZXHNAbTk+G5KOlOOP7yAG+fmuA8nRhkumkpnzDGuIj3HtXg/FYXsbtvBhPQo
-         CDwHpqs7n7hcGZs15h8lkp1ztthjXX0hUHfVQjJkSpFv/Kp1feX7ZnlmlVDqNYVKqo/u
-         E2x5DPaN2R1O10nwwahRjMbV9BKOsJ4wcO7UZE4jZixNIENQPz+FU3zK+YjBRHBv9Mzg
-         i4eA==
-X-Gm-Message-State: AOAM531XxaOYtd0NdgI2LvI33SToLB0800saV7PsYc6hOdXce3CkaEB2
-        LjbUueuEE49bF6dVSF5La0bU4TX142/vBA==
-X-Google-Smtp-Source: ABdhPJzIafSm7+krxOYZpZqmelZlXgg5zMDtaTi/0mKeXEfnRV5VWipg3LI4IxuHr/MrdiMYHqgelw==
-X-Received: by 2002:a17:902:82c9:b0:142:401f:dc9 with SMTP id u9-20020a17090282c900b00142401f0dc9mr68884457plz.43.1637257126770;
-        Thu, 18 Nov 2021 09:38:46 -0800 (PST)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id j9sm223909pgt.54.2021.11.18.09.38.44
+        bh=8ciIRwy+yxvWn2LwEQWDIz+C3VSCgM6erWfnwc1pCQE=;
+        b=q4cQ/DqAPhyjE3AkUxAxkh4AuAQgramGPs59LkJaHJICJ6FYCzIa3ghAuspgWXlWFf
+         jP7VrECRRUk/EEZ1zmstlUgRPIkowFTWUreGtiygCoaO+VPx1sP76z/0CtHmpasqhnQd
+         rc428cK6GZTT8WRcI7k+r8aVtgfucT33oGHznFt039lutKnX9YKgMlSx/AI7EqxifdZx
+         6k1Dw8GmBbhfA+t/83rQjwj0qzLEX0YarXhRZWGrN5Mcw6YEOaT7x1uk66hP34Ar+T++
+         pcU7qguabY9aqTUZLLYxZl0NERLD4nMihjOdWfpkO/nc8dr9EQ32XM9UTtJE9KSPQFuh
+         RDrQ==
+X-Gm-Message-State: AOAM530afBOocppHgERpAE+aQNrjbNfl54glL3/kkF6oEoiglY6h7Ll1
+        BbKDyVM0Km3+XPx0wUfrQZyh
+X-Google-Smtp-Source: ABdhPJz4ckUHzppPNRFH93bqoC4QHvF8HTUl6iWPtRcLKk0HfikDz9RyuU6wf05bW3QmHIX+Gogc6A==
+X-Received: by 2002:a17:90a:a396:: with SMTP id x22mr12624056pjp.14.1637257310302;
+        Thu, 18 Nov 2021 09:41:50 -0800 (PST)
+Received: from thinkpad ([117.202.188.63])
+        by smtp.gmail.com with ESMTPSA id h6sm271494pfh.82.2021.11.18.09.41.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 09:38:45 -0800 (PST)
-Date:   Thu, 18 Nov 2021 10:38:42 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] rpmsg: Fix documentation return formatting
-Message-ID: <20211118173842.GD2530497@p14s>
-References: <20211108140126.3530-1-arnaud.pouliquen@foss.st.com>
+        Thu, 18 Nov 2021 09:41:49 -0800 (PST)
+Date:   Thu, 18 Nov 2021 23:11:45 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, ath11k@lists.infradead.org,
+        linux-wireless@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        regressions@lists.linux.dev, mhi <mhi@lists.linux.dev>
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+Message-ID: <20211118174145.GA31300@thinkpad>
+References: <871r5p0x2u.fsf@codeaurora.org>
+ <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+ <877df6tlnq.fsf@codeaurora.org>
+ <CAMZdPi8P7YZPhPir+WfS3cY_a7He1m2Pq2uqBhczPdEeoNRb0Q@mail.gmail.com>
+ <87a6jl9ndo.fsf@codeaurora.org>
+ <87ee8hgqni.fsf@codeaurora.org>
+ <20211021100305.GD7580@workstation>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211108140126.3530-1-arnaud.pouliquen@foss.st.com>
+In-Reply-To: <20211021100305.GD7580@workstation>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 08, 2021 at 03:01:26PM +0100, Arnaud Pouliquen wrote:
-> kernel documentation specification:
-> "The return value, if any, should be described in a dedicated section
-> named Return."
+On Thu, Oct 21, 2021 at 03:33:05PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Oct 19, 2021 at 03:12:01PM +0300, Kalle Valo wrote:
+> > Kalle Valo <kvalo@codeaurora.org> writes:
+> > 
+> > > (adding the new mhi list, yay)
+> > >
+> > > Hi Loic,
+> > >
+> > > Loic Poulain <loic.poulain@linaro.org> writes:
+> > >
+> > >>> Loic Poulain <loic.poulain@linaro.org> writes:
+> > >>>
+> > >>> > On Thu, 16 Sept 2021 at 10:00, Kalle Valo <kvalo@codeaurora.org> wrote:
+> > >>>
+> > >>> >> At the moment I'm running my tests with commit 020d3b26c07a reverted and
+> > >>> >> everything works without problems. Is there a simple way to fix this? Or
+> > >>> >> maybe we should just revert the commit? Commit log and kernel logs from
+> > >>> >> a failing case below.
+> > >>> >
+> > >>> > Do you have log of success case?
+> > >>>
+> > >>> A log from a successful case in the end of email, using v5.15-rc1 plus
+> > >>> revert of commit 020d3b26c07abe27.
+> > >>>
+> > >>> > To me, the device loses power, that is why MHI resuming is failing.
+> > >>> > Normally the device should be properly recovered/reinitialized. Before
+> > >>> > that patch the power loss was simply not detected (or handled at
+> > >>> > higher stack level).
+> > >>>
+> > >>> Currently in ath11k we always keep the firmware running when in suspend,
+> > >>> this is a workaround due to problems between mac80211 and MHI stack.
+> > >>> IIRC the problem was something related MHI creating struct device during
+> > >>> resume or something like that.
+> > >>
+> > >> Could you give a try with the attached patch? It should solve your
+> > >> issue without breaking modem support.
+> > >
+> > > Sorry for taking so long, but I now tested your patch on top of
+> > > v5.15-rc3 and, as expected, everything works as before with QCA6390 on
+> > > NUC x86 testbox.
+> > >
+> > > Tested-by: Kalle Valo <kvalo@codeaurora.org>
+> > 
+> > I doubt we will find enough time to fully debug this mhi issue anytime
+> > soon. Can we commit Loic's patch so that this regression is resolved?
+> > 
 > 
-> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> ---
->  drivers/rpmsg/qcom_glink_native.c |  2 +-
->  drivers/rpmsg/qcom_smd.c          |  2 +-
->  drivers/rpmsg/rpmsg_core.c        | 24 ++++++++++++------------
->  drivers/rpmsg/virtio_rpmsg_bus.c  |  2 +-
->  4 files changed, 15 insertions(+), 15 deletions(-)
+> Sorry no :( Eventhough Loic's patch is working, I want to understand the
+> issue properly so that we could add a proper fix or patch the firmware
+> if possible.
+> 
+> Let's try to get the debug logs as I requested.
+> 
 
-I have applied this set.  There is a few more instances in drivers/remoteproc
-that could be fixed the same way.
+I'm able to reproduce the issue on my NUC. I'm still investigating on how to
+properly fix this issue. Expect a patch soon.
 
 Thanks,
-Mathieu
+Mani 
 
+> Thanks,
+> Mani
 > 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 3f377a795b33..1030cfa80e04 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -427,7 +427,7 @@ static void qcom_glink_handle_intent_req_ack(struct qcom_glink *glink,
->   * Allocates a local channel id and sends a RPM_CMD_OPEN message to the remote.
->   * Will return with refcount held, regardless of outcome.
->   *
-> - * Returns 0 on success, negative errno otherwise.
-> + * Return: 0 on success, negative errno otherwise.
->   */
->  static int qcom_glink_send_open_req(struct qcom_glink *glink,
->  				    struct glink_channel *channel)
-> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> index 8da1b5cb31b3..540e027f08c4 100644
-> --- a/drivers/rpmsg/qcom_smd.c
-> +++ b/drivers/rpmsg/qcom_smd.c
-> @@ -1467,7 +1467,7 @@ ATTRIBUTE_GROUPS(qcom_smd_edge);
->   * @parent:    parent device for the edge
->   * @node:      device_node describing the edge
->   *
-> - * Returns an edge reference, or negative ERR_PTR() on failure.
-> + * Return: an edge reference, or negative ERR_PTR() on failure.
->   */
->  struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
->  					     struct device_node *node)
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index d3eb60059ef1..f031b2b1b21c 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -26,7 +26,7 @@
->   * @rpdev: rpmsg device
->   * @chinfo: channel_info to bind
->   *
-> - * Returns a pointer to the new rpmsg device on success, or NULL on error.
-> + * Return: a pointer to the new rpmsg device on success, or NULL on error.
->   */
->  struct rpmsg_device *rpmsg_create_channel(struct rpmsg_device *rpdev,
->  					  struct rpmsg_channel_info *chinfo)
-> @@ -48,7 +48,7 @@ EXPORT_SYMBOL(rpmsg_create_channel);
->   * @rpdev: rpmsg device
->   * @chinfo: channel_info to bind
->   *
-> - * Returns 0 on success or an appropriate error value.
-> + * Return: 0 on success or an appropriate error value.
->   */
->  int rpmsg_release_channel(struct rpmsg_device *rpdev,
->  			  struct rpmsg_channel_info *chinfo)
-> @@ -102,7 +102,7 @@ EXPORT_SYMBOL(rpmsg_release_channel);
->   * dynamically assign them an available rpmsg address (drivers should have
->   * a very good reason why not to always use RPMSG_ADDR_ANY here).
->   *
-> - * Returns a pointer to the endpoint on success, or NULL on error.
-> + * Return: a pointer to the endpoint on success, or NULL on error.
->   */
->  struct rpmsg_endpoint *rpmsg_create_ept(struct rpmsg_device *rpdev,
->  					rpmsg_rx_cb_t cb, void *priv,
-> @@ -146,7 +146,7 @@ EXPORT_SYMBOL(rpmsg_destroy_ept);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_send(struct rpmsg_endpoint *ept, void *data, int len)
->  {
-> @@ -175,7 +175,7 @@ EXPORT_SYMBOL(rpmsg_send);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
->  {
-> @@ -206,7 +206,7 @@ EXPORT_SYMBOL(rpmsg_sendto);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_send_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  			  void *data, int len)
-> @@ -235,7 +235,7 @@ EXPORT_SYMBOL(rpmsg_send_offchannel);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_trysend(struct rpmsg_endpoint *ept, void *data, int len)
->  {
-> @@ -263,7 +263,7 @@ EXPORT_SYMBOL(rpmsg_trysend);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
->  {
-> @@ -282,7 +282,7 @@ EXPORT_SYMBOL(rpmsg_trysendto);
->   * @filp:	file for poll_wait()
->   * @wait:	poll_table for poll_wait()
->   *
-> - * Returns mask representing the current state of the endpoint's send buffers
-> + * Return: mask representing the current state of the endpoint's send buffers
->   */
->  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->  			poll_table *wait)
-> @@ -313,7 +313,7 @@ EXPORT_SYMBOL(rpmsg_poll);
->   *
->   * Can only be called from process context (for now).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  			     void *data, int len)
-> @@ -623,7 +623,7 @@ EXPORT_SYMBOL(rpmsg_unregister_device);
->   * @rpdrv: pointer to a struct rpmsg_driver
->   * @owner: owning module/driver
->   *
-> - * Returns 0 on success, and an appropriate error value on failure.
-> + * Return: 0 on success, and an appropriate error value on failure.
->   */
->  int __register_rpmsg_driver(struct rpmsg_driver *rpdrv, struct module *owner)
->  {
-> @@ -637,7 +637,7 @@ EXPORT_SYMBOL(__register_rpmsg_driver);
->   * unregister_rpmsg_driver() - unregister an rpmsg driver from the rpmsg bus
->   * @rpdrv: pointer to a struct rpmsg_driver
->   *
-> - * Returns 0 on success, and an appropriate error value on failure.
-> + * Return: 0 on success, and an appropriate error value on failure.
->   */
->  void unregister_rpmsg_driver(struct rpmsg_driver *rpdrv)
->  {
-> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
-> index 9c112aa65040..c37451512835 100644
-> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
-> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
-> @@ -547,7 +547,7 @@ static void rpmsg_downref_sleepers(struct virtproc_info *vrp)
->   * should use the appropriate rpmsg_{try}send{to, _offchannel} API
->   * (see include/linux/rpmsg.h).
->   *
-> - * Returns 0 on success and an appropriate error value on failure.
-> + * Return: 0 on success and an appropriate error value on failure.
->   */
->  static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
->  				     u32 src, u32 dst,
-> -- 
-> 2.17.1
-> 
+> > At the moment I'm doing all my regression testing with commit
+> > 020d3b26c07abe27 reverted. That's a risk, I would prefer to do my
+> > testing without any hacks.
+> > 
+> > -- 
+> > https://patchwork.kernel.org/project/linux-wireless/list/
+> > 
+> > https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
