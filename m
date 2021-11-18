@@ -2,292 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2D1A455BF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 13:51:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BFA5455D02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 14:51:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344825AbhKRMyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 07:54:13 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:60415 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344908AbhKRMwW (ORCPT
+        id S231740AbhKRNx7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 08:53:59 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:31017 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231620AbhKRNx6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 07:52:22 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637239762; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=OsUZiYrKLNspuyvnbTr1LHXpWac1qZEaRljmpgojjss=; b=etdJx4gQ4lzSf0B7nWxGFeBnUypEccWdtrBxMurervQWy6s0o+OsD9xqx6jXoROtZZ/cDKlG
- elXPfHR+ceUwIzZhNWalqKlOlJn2tEVHqW5BSdXRESKhFYY+T6jRmWQwrPOVd5NUOcQ8gm9D
- KU6Zpgm8Nh1daX6L6ugDP+RJGFk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 61964bd2b920912d575925b8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Nov 2021 12:49:21
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 07715C43639; Thu, 18 Nov 2021 12:49:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 30ECFC4361A;
-        Thu, 18 Nov 2021 12:49:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 30ECFC4361A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: [PATCH v5 04/10] ASoC: qcom: Add lpass CPU driver for codec dma control
-Date:   Thu, 18 Nov 2021 18:18:28 +0530
-Message-Id: <1637239714-11211-5-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637239714-11211-1-git-send-email-srivasam@codeaurora.org>
-References: <1637239714-11211-1-git-send-email-srivasam@codeaurora.org>
+        Thu, 18 Nov 2021 08:53:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637243458; x=1668779458;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=CJR1fG+YuzhuLB13jNgULGuZOsS9eMa1X46m29OB0Jc=;
+  b=UlkDNl3PvICGB2KcQTblpE2caVQvshmPnltZoGDD4/9mZZmvWptFTgvk
+   tkaaGWf0Y7jgJ1cmrdJ9AG/oKDVvYLv63bo0mjniikqABM7gZCa+++pYk
+   RUqgBsxMk8AaeiJ/pi6gUBvWhkv0YzNVLvZL15k2JMbNCy45gQc0Mn+Lj
+   s=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 18 Nov 2021 05:50:57 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2021 05:50:56 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 18 Nov 2021 05:50:56 -0800
+Received: from [10.216.52.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 18 Nov
+ 2021 05:50:51 -0800
+Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: sc7280: Add pm8008 regulators
+ support for sc7280-idp
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, <collinsd@codeurora.org>,
+        <subbaram@codeaurora.org>, Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, Lee Jones <lee.jones@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1635434072-32055-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1635434072-32055-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53kp5M6LG2iwaJeysQDrJD1AvcctEd6xjVdTXs5ddhu2w@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <66f2eb4b-eb63-1d21-46da-c78085d3ae92@quicinc.com>
+Date:   Thu, 18 Nov 2021 19:20:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+In-Reply-To: <CAE-0n53kp5M6LG2iwaJeysQDrJD1AvcctEd6xjVdTXs5ddhu2w@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add lpass cpu driver to support audio over codec dma for
-ADSP bypass usecase.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
----
- sound/soc/qcom/lpass-cdc-dma.c | 195 +++++++++++++++++++++++++++++++++++++++++
- sound/soc/qcom/lpass.h         |   1 +
- 2 files changed, 196 insertions(+)
- create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
-
-diff --git a/sound/soc/qcom/lpass-cdc-dma.c b/sound/soc/qcom/lpass-cdc-dma.c
-new file mode 100644
-index 0000000..f5bfda9
---- /dev/null
-+++ b/sound/soc/qcom/lpass-cdc-dma.c
-@@ -0,0 +1,195 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2021 The Linux Foundation. All rights reserved.
-+ *
-+ * lpass-cdc-dma.c -- ALSA SoC WCD -CPU DAI driver for QTi LPASS WCD
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/module.h>
-+#include <sound/soc.h>
-+#include <sound/soc-dai.h>
-+
-+#include "lpass-lpaif-reg.h"
-+#include "lpass.h"
-+
-+static void __get_dmactl_handle(struct snd_pcm_substream *substream, struct snd_soc_dai *dai,
-+					struct lpaif_dmactl **dmactl, int *id)
-+{
-+	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct snd_pcm_runtime *rt = substream->runtime;
-+	struct lpass_pcm_data *pcm_data = rt->private_data;
-+	struct lpass_variant *v = drvdata->variant;
-+	int dir = substream->stream;
-+	unsigned int dai_id = cpu_dai->driver->id;
-+
-+	if (dir == SNDRV_PCM_STREAM_PLAYBACK) {
-+		*dmactl = drvdata->rxtx_rd_dmactl;
-+		*id = pcm_data->dma_ch;
-+	} else {
-+		if (dai_id == LPASS_CDC_DMA_TX3) {
-+			*dmactl = drvdata->rxtx_wr_dmactl;
-+			*id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
-+		} else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
-+			*dmactl = drvdata->va_wr_dmactl;
-+			*id = pcm_data->dma_ch - v->va_wrdma_channel_start;
-+		}
-+	}
-+}
-+
-+static int __lpass_platform_codec_intf_init(struct snd_soc_dai *dai,
-+					 struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
-+	struct lpaif_dmactl *dmactl;
-+	int dir = substream->stream;
-+	int ret, id, codec_intf;
-+	unsigned int dai_id = cpu_dai->driver->id;
-+
-+	if (dir == SNDRV_PCM_STREAM_PLAYBACK)
-+		codec_intf = LPASS_CDC_DMA_RX0_INTERFACE;
-+	else
-+		codec_intf = LPASS_CDC_DMA_INTERFACE(dai_id);
-+
-+	__get_dmactl_handle(substream, dai, &dmactl, &id);
-+
-+	ret = regmap_fields_write(dmactl->codec_intf, id, codec_intf);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_intf reg field: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(dmactl->codec_fs_sel, id, 0x0);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_fs_sel reg field: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(dmactl->codec_fs_delay, id, 0x0);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_fs_delay reg field: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(dmactl->codec_pack, id, 0x1);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_pack reg field: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(dmactl->codec_enable, id, LPAIF_DMACTL_ENABLE_ON);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_enable reg field: %d\n", ret);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static int lpass_wcd_daiops_startup(struct snd_pcm_substream *substream,
-+		struct snd_soc_dai *dai)
-+{
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	int ret;
-+
-+	ret = clk_bulk_prepare_enable(drvdata->cdc_num_clks, drvdata->cdc_clks);
-+	if (ret) {
-+		dev_err(dai->dev, "error in enabling cdc dma clks: %d\n", ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void lpass_wcd_daiops_shutdown(struct snd_pcm_substream *substream,
-+		struct snd_soc_dai *dai)
-+{
-+	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+
-+	clk_bulk_disable_unprepare(drvdata->cdc_num_clks, drvdata->cdc_clks);
-+}
-+
-+static int lpass_wcd_daiops_hw_params(struct snd_pcm_substream *substream,
-+		struct snd_pcm_hw_params *params, struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
-+	struct lpaif_dmactl *dmactl;
-+	unsigned int ret, regval;
-+	unsigned int channels = params_channels(params);
-+	int id;
-+
-+	__get_dmactl_handle(substream, dai, &dmactl, &id);
-+
-+	switch (channels) {
-+	case 1:
-+		regval = LPASS_CDC_DMA_INTF_ONE_CHANNEL;
-+		break;
-+	case 2:
-+		regval = LPASS_CDC_DMA_INTF_TWO_CHANNEL;
-+		break;
-+	case 4:
-+		regval = LPASS_CDC_DMA_INTF_FOUR_CHANNEL;
-+		break;
-+	case 6:
-+		regval = LPASS_CDC_DMA_INTF_SIX_CHANNEL;
-+		break;
-+	case 8:
-+		regval = LPASS_CDC_DMA_INTF_EIGHT_CHANNEL;
-+		break;
-+	default:
-+		dev_err(soc_runtime->dev, "invalid PCM config\n");
-+		return -EINVAL;
-+	}
-+
-+	ret = regmap_fields_write(dmactl->codec_channel, id, regval);
-+	if (ret) {
-+		dev_err(soc_runtime->dev,
-+			"error writing to dmactl codec_channel reg field: %d\n", ret);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static int lpass_wcd_daiops_trigger(struct snd_pcm_substream *substream,
-+		int cmd, struct snd_soc_dai *dai)
-+{
-+	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
-+	struct lpaif_dmactl *dmactl;
-+	int ret = 0, id;
-+
-+	__get_dmactl_handle(substream, dai, &dmactl, &id);
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		__lpass_platform_codec_intf_init(dai, substream);
-+		break;
-+	case SNDRV_PCM_TRIGGER_STOP:
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		ret = regmap_fields_write(dmactl->codec_enable, id, LPAIF_DMACTL_ENABLE_OFF);
-+		if (ret) {
-+			dev_err(soc_runtime->dev,
-+				"error writing to dmactl codec_enable reg: %d\n", ret);
-+			return ret;
-+		}
-+
-+		break;
-+	}
-+	return ret;
-+}
-+
-+const struct snd_soc_dai_ops asoc_qcom_lpass_wcd_dai_ops = {
-+	.startup	= lpass_wcd_daiops_startup,
-+	.shutdown	= lpass_wcd_daiops_shutdown,
-+	.hw_params	= lpass_wcd_daiops_hw_params,
-+	.trigger	= lpass_wcd_daiops_trigger,
-+};
-+EXPORT_SYMBOL_GPL(asoc_qcom_lpass_wcd_dai_ops);
-+
-+MODULE_DESCRIPTION("QTi LPASS CDC DMA Driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-index b068534..f912425 100644
---- a/sound/soc/qcom/lpass.h
-+++ b/sound/soc/qcom/lpass.h
-@@ -414,5 +414,6 @@ int asoc_qcom_lpass_cpu_dai_probe(struct snd_soc_dai *dai);
- extern const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops;
- int lpass_cpu_pcm_new(struct snd_soc_pcm_runtime *rtd,
- 				struct snd_soc_dai *dai);
-+extern const struct snd_soc_dai_ops asoc_qcom_lpass_wcd_dai_ops;
- 
- #endif /* __LPASS_H__ */
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+On 10/29/2021 2:10 AM, Stephen Boyd wrote:
+> Quoting Satya Priya (2021-10-28 08:14:32)
+>> Add pm8008 regulators support for sc7280 idp.
+>>
+>> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+>> ---
+>> Changes in V2:
+>>   - As per Stephen's comments, replaced '_' with '-' for node names.
+>>
+>> Changes in V3:
+>>   - Changed the regulator node names as l1, l2 etc
+>>   - Changed "pm8008-regulators" to "regulators"
+>>   - Changed "qcom,min-dropout-voltage" to "regulator-min-dropout-voltage-microvolt"
+>>
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 103 +++++++++++++++++++++++++++++++
+>>   1 file changed, 103 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index d623d71..493575b 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -309,6 +309,97 @@
+>>          };
+>>   };
+>>
+>> +&i2c1 {
+>> +       #address-cells = <1>;
+>> +       #size-cells = <0>;
+>> +       status = "okay";
+>> +
+>> +       pm8008_chip: pm8008@8 {
+> If this is going to be copy/pasted wherever devices that use pm8008 live
+> then it's probably better to make a new file like we do for other pmics.
+Sounds good, I'll do that.
+> Maybe something like
+>
+> &pm8008_i2c {
+> 	<All the generic stuff in here like reg properties and
+> 	address/size cells and compatible>
+> };
+>
+> and then have each board set the min/max voltages and min dropout
+> properties. Then we can include the pm8008.dtsi file after defining
+> which i2c bus it lives on.
+>
+> pm8008_i2c: i2c5 { };
+> #include "pm8008.dtsi"
+>
+> ...
+>
+>
+> &pm8008_l1 {
+> 	regulator-min-microvolt = <...>;
+> 	...
+> };
+>
+>> +               compatible = "qcom,pm8008";
+>> +               reg = <0x8>;
+>> +               #address-cells = <1>;
+>> +               #size-cells = <0>;
+>> +
+>> +               pinctrl-names = "default";
+>> +               pinctrl-0 = <&pm8008_active>;
+>> +       };
+>> +
+>> +       pm8008_ldo: pm8008@9 {
+>> +               compatible = "qcom,pm8008";
+>> +               reg = <0x9>;
+>> +               #address-cells = <1>;
+>> +               #size-cells = <0>;
+>> +
+>> +               regulators {
+>> +                       compatible = "qcom,pm8008-regulator";
+>> +                       #address-cells = <1>;
+>> +                       #size-cells = <0>;
+>> +
+>> +                       vdd_l1_l2-supply = <&vreg_s8b_1p2>;
+>> +                       vdd_l3_l4-supply = <&vreg_s1b_1p8>;
+>> +                       vdd_l5-supply = <&vreg_bob>;
+>> +                       vdd_l6-supply = <&vreg_bob>;
+>> +                       vdd_l7-supply = <&vreg_bob>;
+>> +
+>> +                       pm8008_l1: l1@4000 {
+>> +                               reg = <0x4000>;
+>> +                               regulator-name = "pm8008_l1";
+>> +                               regulator-min-microvolt = <950000>;
+>> +                               regulator-max-microvolt = <1300000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <96000>;
+>> +                       };
+>> +
+>> +                       pm8008_l2: l2@4100 {
+>> +                               reg = <0x4100>;
+>> +                               regulator-name = "pm8008_l2";
+>> +                               regulator-min-microvolt = <950000>;
+>> +                               regulator-max-microvolt = <1250000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <24000>;
+>> +                       };
+>> +
+>> +                       pm8008_l3: l3@4200 {
+>> +                               reg = <0x4200>;
+>> +                               regulator-name = "pm8008_l3";
+>> +                               regulator-min-microvolt = <1650000>;
+>> +                               regulator-max-microvolt = <3000000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <224000>;
+>> +                       };
+>> +
+>> +                       pm8008_l4: l4@4300 {
+>> +                               reg = <0x4300>;
+>> +                               regulator-name = "pm8008_l4";
+>> +                               regulator-min-microvolt = <1504000>;
+>> +                               regulator-max-microvolt = <1600000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <0>;
+>> +                       };
+>> +
+>> +                       pm8008_l5: l5@4400 {
+>> +                               reg = <0x4400>;
+>> +                               regulator-name = "pm8008_l5";
+>> +                               regulator-min-microvolt = <2600000>;
+>> +                               regulator-max-microvolt = <3000000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <104000>;
+>> +                       };
+>> +
+>> +                       pm8008_l6: l6@4500 {
+>> +                               reg = <0x4500>;
+>> +                               regulator-name = "pm8008_l6";
+>> +                               regulator-min-microvolt = <2600000>;
+>> +                               regulator-max-microvolt = <3000000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <112000>;
+>> +                       };
+>> +
+>> +                       pm8008_l7: l7@4600 {
+>> +                               reg = <0x4600>;
+>> +                               regulator-name = "pm8008_l7";
+>> +                               regulator-min-microvolt = <3000000>;
+>> +                               regulator-max-microvolt = <3544000>;
+>> +                               regulator-min-dropout-voltage-microvolt = <96000>;
+>> +                       };
+>> +               };
+>> +       };
+>> +};
+>> +
+>>   &qfprom {
+>>          vcc-supply = <&vreg_l1c_1p8>;
+>>   };
+>> @@ -437,6 +528,18 @@
+>>          };
+>>   };
+>>
+>> +&pm8350c_gpios {
+>> +       pm8008-reset {
+> Why is it a subnode of a subnode? Shouldn't it be pm8008-active
+> directly underneath pm8350c_gpios?
+Right, I'll remove the subnode pm8008-reset.
+>> +               pm8008_active: pm8008-active {
+>> +                       pins = "gpio4";
+>> +                       function = "normal";
+>> +                       bias-disable;
+>> +                       output-high;
+>> +                       power-source = <0>;
+>> +               };
+>> +       };
+>> +};
+>> +
+>>   &qspi_cs0 {
+>>          bias-disable;
+>>   };
