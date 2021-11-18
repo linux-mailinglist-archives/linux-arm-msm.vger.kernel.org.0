@@ -2,102 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77061455959
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 11:46:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49F9D455970
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 11:51:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245756AbhKRKtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 05:49:17 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:25345 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245753AbhKRKtL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 05:49:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1637232364;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=pC5o60YUkoMsBuPVxLeGITzGH28aHnuOd4z40O4VA3U=;
-    b=m+yS//D5VyJT9xk9rgEzC8zWapycpdqbSr5rQcmcBbb+ofvn9Tp/DEIHVib/Tsf6B7
-    EPxTZjlyzIIIYnjV4HClYtGunsC5252eYIpxyTrt71WR1P8v0F+CuvArZ5DKmDRQIico
-    14CtZ2gV/PtXkOtnoWKjhIVTUprRfczj42roO5fNwEijyTs3nu5T337UM7WdDOJ8guZp
-    TmgoD9nD4NCN5IQ1xou5b4hOq16XPL5PEbN8FxbziU7Tsfr3EOIRYPnTyO2WeLodOV7l
-    ptaFP8N+q4+ZSeBepLoinaCFAiUA2qzz6XBBX1pkOsNkx6/StlAYfPA59h2irvA5kouI
-    uZsA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw7/aY="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.34.5 AUTH)
-    with ESMTPSA id j05669xAIAk1s2m
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 18 Nov 2021 11:46:01 +0100 (CET)
-Date:   Thu, 18 Nov 2021 11:45:58 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH 2/3] soc: qcom: stats: Add fixed sleep stats offset for
- older RPM firmwares
-Message-ID: <YZYu5scy/fAetKaH@gerhold.net>
-References: <20211018110803.32777-1-stephan@gerhold.net>
- <20211018110803.32777-3-stephan@gerhold.net>
- <YZWlyiY0FH489cYz@builder.lan>
+        id S1343557AbhKRKyg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 05:54:36 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:48837 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1343535AbhKRKyS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 05:54:18 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637232679; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=5k+Vd3sGwqSJp8FP3QGkz1tM793VxNS0bm6nEdBfGzE=; b=Sm4qlhchgPoM6zwCbGqmugTxQYC6qAGuJZ5cyjl3GpGpxSezb7imaiWxPh1oWt4aP1bulGID
+ 74frjZFZhT/rXsNY3pErzIAhRBKkzqQmEUUQbDQ0l9IGoyxU7HAMnrePRl5ZyzqUTTP2g9SJ
+ P3+kyGg0AOziaI7rl0Z8hzG5SNA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 61963026638a2f4d611d3629 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 18 Nov 2021 10:51:18
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7A700C4361C; Thu, 18 Nov 2021 10:51:17 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.242.143.72] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9C66BC43460;
+        Thu, 18 Nov 2021 10:51:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9C66BC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v2] ASoC: codecs: MBHC: Add support for special headset
+To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
+        robh+dt@kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1636960288-27537-1-git-send-email-srivasam@codeaurora.org>
+ <CAE-0n52n7nscLfqt8-7+UmXdEh2suDNC-ywPRUZL8FdPONbhZQ@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <38575d20-8e3f-2ba2-800d-e4b9b8ee0b68@codeaurora.org>
+Date:   Thu, 18 Nov 2021 16:21:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YZWlyiY0FH489cYz@builder.lan>
+In-Reply-To: <CAE-0n52n7nscLfqt8-7+UmXdEh2suDNC-ywPRUZL8FdPONbhZQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 07:00:58PM -0600, Bjorn Andersson wrote:
-> On Mon 18 Oct 06:08 CDT 2021, Stephan Gerhold wrote:
-> 
-> > Not all RPM firmware versions have the dynamic sleep stats offset
-> > available. Older versions use a fixed offset of 0xdba0.
-> > 
-> > Add support for this using a new qcom,rpm-legacy-stats compatible
-> > that can be used for older SoCs like MSM8916.
-> > 
-> > Suggested-by: Maulik Shah <mkshah@codeaurora.org>
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> >  drivers/soc/qcom/qcom_stats.c | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-> > index 817505bd99b5..67728de718fd 100644
-> > --- a/drivers/soc/qcom/qcom_stats.c
-> > +++ b/drivers/soc/qcom/qcom_stats.c
-> > @@ -237,6 +237,15 @@ static const struct stats_config rpm_data = {
-> >  	.subsystem_stats_in_smem = false,
-> >  };
-> >  
-> > +/* Older RPM firmwares have the stats at a fixed offset instead */
-> > +static const struct stats_config rpm_legacy_data = {
-> > +	.stats_offset = 0xdba0,
-> > +	.num_records = 2,
-> > +	.appended_stats_avail = true,
-> > +	.dynamic_offset = false,
-> > +	.subsystem_stats_in_smem = false,
-> > +};
-> 
-> Is this the only variation that existed back in the "legacy" days? Will
-> we end up with multiple "legacy" variants?
-> 
 
-I think most old platforms that are still somewhat maintained use 0xdba0
-(e.g. MSM8916, MSM8974, APQ8084, MSM8226).
-I found a different offset for APQ8064, MSM8960, but they also seem to
-use a different stats format ("v1" instead of "v2") which is not
-currently supported by the qcom_stats driver here.
+On 11/16/2021 5:06 AM, Stephen Boyd wrote:
+Thanks for Your time Stephen!!!
+As this patch is already accepted, will post your review comments as 
+additional patch.
+> Quoting Srinivasa Rao Mandadapu (2021-11-14 23:11:28)
+>> diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
+>> index 405128c..d6545e4 100644
+>> --- a/sound/soc/codecs/wcd-mbhc-v2.c
+>> +++ b/sound/soc/codecs/wcd-mbhc-v2.c
+>> @@ -1022,6 +1022,56 @@ static int wcd_mbhc_get_plug_from_adc(struct wcd_mbhc *mbhc, int adc_result)
+>>          return plug_type;
+>>   }
+>>
+>> +static int wcd_mbhc_get_spl_hs_thres(struct wcd_mbhc *mbhc)
+>> +{
+>> +       int hs_threshold, micbias_mv;
+>> +
+>> +       micbias_mv = wcd_mbhc_get_micbias(mbhc);
+>> +       if (mbhc->cfg->hs_thr && mbhc->cfg->micb_mv != WCD_MBHC_ADC_MICBIAS_MV) {
+>> +               if (mbhc->cfg->micb_mv == micbias_mv)
+>> +                       hs_threshold = mbhc->cfg->hs_thr;
+>> +               else
+>> +                       hs_threshold = (mbhc->cfg->hs_thr * micbias_mv) / mbhc->cfg->micb_mv;
+>> +       } else {
+>> +               hs_threshold = ((WCD_MBHC_ADC_HS_THRESHOLD_MV * micbias_mv) /
+>> +                                                       WCD_MBHC_ADC_MICBIAS_MV);
+>> +       }
+>> +       return hs_threshold;
+>> +}
+>> +
+>> +static bool wcd_mbhc_check_for_spl_headset(struct wcd_mbhc *mbhc)
+>> +{
+>> +       bool is_spl_hs = false;
+>> +       int output_mv, hs_threshold, hph_threshold;
+>> +
+>> +       if (!mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic)
+>> +               return false;
+>> +
+>> +       /* Bump up MIC_BIAS2 to 2.7V */
+>> +       mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(mbhc->component, MIC_BIAS_2, true);
+>> +       usleep_range(10000, 10100);
+>> +
+>> +       output_mv = wcd_measure_adc_once(mbhc, MUX_CTL_IN2P);
+>> +       hs_threshold = wcd_mbhc_get_spl_hs_thres(mbhc);
+>> +       hph_threshold = wcd_mbhc_adc_get_hph_thres(mbhc);
+>> +
+>> +       if (output_mv > hs_threshold || output_mv < hph_threshold) {
+>> +               if (mbhc->force_linein == true)
+> Just 'if (mbhc->force_linein)'
+>
+> Also, if this is false, then false is set above. So checking for
+> mbhc->force_linein is useless.
+Okay. Will check and do changes.
+>
+>> +                       is_spl_hs = false;
+>> +       } else {
+>> +               is_spl_hs = true;
+>> +       }
+>> +
+>> +       /* Back MIC_BIAS2 to 1.8v if the type is not special headset */
+>> +       if (!is_spl_hs) {
+>> +               mbhc->mbhc_cb->mbhc_micb_ctrl_thr_mic(mbhc->component, MIC_BIAS_2, false);
+>> +               /* Add 10ms delay for micbias to settle */
+>> +               usleep_range(10000, 10100);
+>> +       }
+>> +
+>> +       return is_spl_hs;
+>> +}
+>> +
+>>   static void wcd_correct_swch_plug(struct work_struct *work)
+>>   {
+>>          struct wcd_mbhc *mbhc;
+>> @@ -1029,12 +1079,14 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+>>          enum wcd_mbhc_plug_type plug_type = MBHC_PLUG_TYPE_INVALID;
+>>          unsigned long timeout;
+>>          int pt_gnd_mic_swap_cnt = 0;
+>> -       int output_mv, cross_conn, hs_threshold, try = 0;
+>> +       int output_mv, cross_conn, hs_threshold, try = 0, micbias_mv;
+>> +       bool is_spl_hs = false;
+>>          bool is_pa_on;
+>>
+>>          mbhc = container_of(work, struct wcd_mbhc, correct_plug_swch);
+>>          component = mbhc->component;
+>>
+>> +       micbias_mv = wcd_mbhc_get_micbias(mbhc);
+>>          hs_threshold = wcd_mbhc_adc_get_hs_thres(mbhc);
+>>
+>>          /* Mask ADC COMPLETE interrupt */
+>> @@ -1097,6 +1149,16 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+>>                  plug_type = wcd_mbhc_get_plug_from_adc(mbhc, output_mv);
+>>                  is_pa_on = wcd_mbhc_read_field(mbhc, WCD_MBHC_HPH_PA_EN);
+>>
+>> +               if ((output_mv > hs_threshold) && (!is_spl_hs)) {
+> Please drop useless parenthesis
+Okay.
+>
+>> +                       is_spl_hs = wcd_mbhc_check_for_spl_headset(mbhc);
+>> +                       output_mv = wcd_measure_adc_once(mbhc, MUX_CTL_IN2P);
+>> +
+>> +                       if (is_spl_hs) {
+>> +                               hs_threshold = (hs_threshold * wcd_mbhc_get_micbias(mbhc)) /
+>> +                                                                       micbias_mv;
+> Same. It may be good to split it to two assignments to clarify
+> overflow/underflow.
+Okay.
+>
+>> +                       }
+>> +               }
+>> +
+>>                  if ((output_mv <= hs_threshold) && !is_pa_on) {
+>>                          /* Check for cross connection*/
+>>                          cross_conn = wcd_check_cross_conn(mbhc);
+>> @@ -1122,14 +1184,19 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+>>                          }
+>>                  }
+>>
+>> -               if (output_mv > hs_threshold) /* cable is extension cable */
+>> +               /* cable is extension cable */
+>> +               if (output_mv > hs_threshold || mbhc->force_linein == true)
+> Drop the == true please.
+Okay.
+>
+>>                          plug_type = MBHC_PLUG_TYPE_HIGH_HPH;
+>>          }
+>>
+>>          wcd_mbhc_bcs_enable(mbhc, plug_type, true);
+>>
+>> -       if (plug_type == MBHC_PLUG_TYPE_HIGH_HPH)
+>> -               wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_ISRC_EN, 1);
+>> +       if (plug_type == MBHC_PLUG_TYPE_HIGH_HPH) {
+>> +               if (is_spl_hs)
+>> +                       plug_type = MBHC_PLUG_TYPE_HEADSET;
+>> +               else
+>> +                       wcd_mbhc_write_field(mbhc, WCD_MBHC_ELECT_ISRC_EN, 1);
+>> +       }
+>>
+>>          wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_MODE, 0);
+>>          wcd_mbhc_write_field(mbhc, WCD_MBHC_ADC_EN, 0);
 
-I guess I could add SoC-specific compatibles if you prefer (e.g.
-"qcom,rpm-stats-msm8916"), or do you have any other suggestion?
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Thanks,
-Stephan
