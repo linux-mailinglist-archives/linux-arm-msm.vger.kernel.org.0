@@ -2,99 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2366B455D25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 14:58:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC235455D2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 14:59:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231915AbhKROBZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 09:01:25 -0500
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:33785 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231620AbhKROBZ (ORCPT
+        id S231986AbhKROCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 09:02:09 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:36787 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231848AbhKROCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 09:01:25 -0500
-Received: by mail-ot1-f43.google.com with SMTP id h12-20020a056830034c00b0055c8458126fso11155662ote.0;
-        Thu, 18 Nov 2021 05:58:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=WmMfhkzPjWTKlEZ9yIh2W7NHeFSMUgJDMyPJqo/TBCY=;
-        b=z+52wmb0eCrhn3TG40GOvPaE+QAUJSBSl6goVgKe/6bhu5pIWygvddA4jQcGNF5AcT
-         eCmeEqVGwwDei8iWHzwQV2O96qRRYkBrdjfdI5CukidmaZg5D674rIvuor8JGyzviTKK
-         fhAhOAr4fl/EqI+AK2Y534yngpg92NoO1WyCsgG3QGN7gqmvpR1kMirncVvkr22tEAMb
-         ap5iAkXphCy+gRyhaFVHBJjRbNmne7xPHEc3nkocJ8j8sORirYz+HMVspRvJyIAtVv1P
-         KyTaJYMdc/NJk5TFh1jJEa6OyL5uvYNELgtw03pvXQxOG4+D3PiegK5b3WoOe5NtAU3x
-         6faA==
-X-Gm-Message-State: AOAM531hbGolQ0ysBki/+cC4YXvQiBbUchc2NYukDA5S+7MU3DhPGZK5
-        rBaTvF8kXWc45eAhDcLs+w==
-X-Google-Smtp-Source: ABdhPJzWykudMzngz7+fYsbqh9ICTA5Q5lY0M4wTA9me0nH9FEPyMXguhDFWK2e4MNPzw3UyklnkQw==
-X-Received: by 2002:a9d:7a42:: with SMTP id z2mr21463015otm.362.1637243903121;
-        Thu, 18 Nov 2021 05:58:23 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id q33sm522530ooh.16.2021.11.18.05.58.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 05:58:22 -0800 (PST)
-Received: (nullmailer pid 998654 invoked by uid 1000);
-        Thu, 18 Nov 2021 13:58:21 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, bjorn.andersson@linaro.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        plai@codeaurora.org, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        lgirdwood@gmail.com, broonie@kernel.org, judyhsiao@chromium.org,
-        bgoswami@codeaurora.org, perex@perex.cz
-In-Reply-To: <1637239506-9387-2-git-send-email-srivasam@codeaurora.org>
-References: <1637239506-9387-1-git-send-email-srivasam@codeaurora.org> <1637239506-9387-2-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v6 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine machine bindings
-Date:   Thu, 18 Nov 2021 07:58:21 -0600
-Message-Id: <1637243901.366064.998653.nullmailer@robh.at.kernel.org>
+        Thu, 18 Nov 2021 09:02:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637243947; x=1668779947;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=SHRzlI9IOqhVEUvv8yRyRNjixW4+joD+VQ66SbP/hoo=;
+  b=WFAYNj+1bWHmZrrUzfA1JA2woQ9L4mraM3zcEvllAje3n928kAnnmdnD
+   6L7y6X/0wA9k9qqtI8dA1RKZwa+sPxP1yRZ1oUEXhcs+ZDg9Exfrazz2e
+   ywpf9P+kHInmvhkp4xfI09K5qwyqIPqd8IbQorcFl7XHaHdYFNJDVenWl
+   0=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 18 Nov 2021 05:59:07 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2021 05:59:06 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 18 Nov 2021 05:59:06 -0800
+Received: from [10.216.52.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 18 Nov
+ 2021 05:59:02 -0800
+Subject: Re: [PATCH V3 1/4] regulator: dt-bindings: Add pm8008 regulator
+ bindings
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>, <subbaram@codeaurora.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, Lee Jones <lee.jones@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1635434072-32055-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1635434072-32055-2-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53G4dwj6yLV6G3VehzzKLW-A5q8v=Ld6RFS7QXm5TjsOA@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <292d03f6-9575-b3d9-4f0e-014e6284f515@quicinc.com>
+Date:   Thu, 18 Nov 2021 19:28:59 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+In-Reply-To: <CAE-0n53G4dwj6yLV6G3VehzzKLW-A5q8v=Ld6RFS7QXm5TjsOA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Nov 2021 18:15:05 +0530, Srinivasa Rao Mandadapu wrote:
-> Add devicetree bindings documentation file for sc7280 sound card
-> registration.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
->  .../bindings/sound/google,sc7280-herobrine.yaml    | 171 +++++++++++++++++++++
->  1 file changed, 171 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml: sound: dai-link@0: 'sound-dai' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml: sound: dai-link@1: 'sound-dai' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml: sound: dai-link@2: 'sound-dai' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml: sound: dai-link@3: 'sound-dai' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml: sound: dai-link@5: 'sound-dai' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1556613
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+On 10/29/2021 1:36 AM, Stephen Boyd wrote:
+> Quoting Satya Priya (2021-10-28 08:14:29)
+>> diff --git a/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
+>> new file mode 100644
+>> index 0000000..cc624d1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
+>> @@ -0,0 +1,74 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/regulator/qcom,pm8008-regulator.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. PM8008 Regulator bindings
+>> +
+>> +maintainers:
+>> +  - Satya Priya <skakit@codeaurora.org>
+>> +
+>> +description:
+>> +  Qualcomm Technologies, Inc. PM8008 is an I2C controlled PMIC
+>> +  containing 7 LDO regulators.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,pm8008-regulator
+> Maybe qcom,pm8008-regulators because there's more than one?
+Okay
+>> +
+>> +  "#address-cells":
+>> +    const: 1
+>> +
+>> +  "#size-cells":
+>> +    const: 0
+>> +
+>> +  vdd_l1_l2-supply:
+>> +    description: Input supply phandle of ldo1 and ldo2 regulators.
+>> +
+>> +  vdd_l3_l4-supply:
+>> +    description: Input supply phandle of ldo3 and ldo4 regulators.
+>> +
+>> +  vdd_l5-supply:
+>> +    description: Input supply phandle of ldo5 regulator.
+>> +
+>> +  vdd_l6-supply:
+>> +    description: Input supply phandle of ldo6 regulator.
+>> +
+>> +  vdd_l7-supply:
+>> +    description: Input supply phandle of ldo7 regulator.
+>> +
+>> +patternProperties:
+>> +  "^l[1-7]@[0-9a-f]+$":
+>> +    type: object
+>> +
+>> +    $ref: "regulator.yaml#"
+>> +
+>> +    description: PM8008 regulator peripherals of PM8008 regulator device
+>> +
+>> +    properties:
+>> +      reg:
+>> +        maxItems: 1
+>> +        description: Base address of the regulator.
+>> +
+>> +      regulator-name: true
+>> +
+>> +      regulator-min-dropout-voltage-microvolt:
+> This needs to move to regulator.yaml in a separate patch.
+Okay
+>> +        description:
+>> +          Specifies the minimum voltage in microvolts that the parent
+>> +          supply regulator must output, above the output of this
+>> +          regulator.
+>> +
