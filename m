@@ -2,251 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0178C456256
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 19:27:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 384D64562B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 19:43:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbhKRSar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 13:30:47 -0500
-Received: from mx07-00178001.pphosted.com ([185.132.182.106]:44674 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232621AbhKRSaq (ORCPT
+        id S231542AbhKRSqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 13:46:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231391AbhKRSqC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 13:30:46 -0500
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1AIEiEYM004075;
-        Thu, 18 Nov 2021 19:27:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=kST35QHjE3V0REnjYkLa0vwE23IVL2b0RQCX7EBoynA=;
- b=oEaPmG8F8JO1826F/HlvpvHz7+GUiQkwTbDqOPeWTu85GZDcCL8TObMrHc2Y2Ua4kG66
- DhTD/zqna5jIqkPq1o1ONpHVgp7zJG/DXtLNrj0Hm7Ln/dtqN97n8/X0hnjkndKzFVyu
- jgJAJlOneiM5P+jCmUFbJAne07ENbmXXY/bKUIAHIH0XB4MnoEbnHHt2HTqafsgxTwPw
- GDlOV/GGkTs30HiNqBNQAHQgaux3O+9/29+0FFamLJm0deAB/ddaWxm5DEpgsP4vmhAP
- q6qsZJMu10hu8Op9qZJyFhBPKXwn0ftQkIO/GXoIHlin6VSXcDcuAyefTEMOtiByOkMD Yg== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3cdm1n3byv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 Nov 2021 19:27:42 +0100
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 433F010002A;
-        Thu, 18 Nov 2021 19:27:41 +0100 (CET)
-Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 2859523DCAB;
-        Thu, 18 Nov 2021 19:27:41 +0100 (CET)
-Received: from lmecxl0889.lme.st.com (10.75.127.44) by SFHDAG2NODE2.st.com
- (10.75.127.5) with Microsoft SMTP Server (TLS) id 15.0.1497.26; Thu, 18 Nov
- 2021 19:27:40 +0100
-Subject: Re: [PATCH] rpmsg: Fix documentation return formatting
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20211108140126.3530-1-arnaud.pouliquen@foss.st.com>
- <20211118173842.GD2530497@p14s>
-From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
-Message-ID: <dbd7ee08-4893-4065-9c27-8c40d9fbef58@foss.st.com>
-Date:   Thu, 18 Nov 2021 19:27:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Thu, 18 Nov 2021 13:46:02 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF43FC06173E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:43:01 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id x131so6900992pfc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:43:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=G1EliypIjbcEW6Z/ACxlA6Dj3vusWb8JvXLauTtA8Ec=;
+        b=V9/M+IhlXdHtPJLjRhHrJbqffe02jTBUk7q5gB83KwHpUfj5QsJbsdlm5bz3sseFcU
+         oS17QB0ghrBpj+QsgVZFjFeloINmuY+zbug5uCrkkEgT5e6Y7kabv3EraLL+joLtPaMN
+         kA8ov8LmyVfvTOTHSgKCIK0Lw0rxgHcPfl8Zo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=G1EliypIjbcEW6Z/ACxlA6Dj3vusWb8JvXLauTtA8Ec=;
+        b=545Alw31KYn8L7sa4GaSr8mqOaERmgcwtIqKcrur81Gwa1avVw/EpWkDsSZbnO5zJH
+         0O8Vsv/qoacxfPDu1Y250uNLHAoVZyb87+VlrH/1lfG3VEdvJvmb7tMTxc05fSdGDe+z
+         vB3sUFQ6CetLvcJhUxVzQyRuncRYqqQ0Bs5W0FO98CtttZylHOaRg2Buu/tQwTJmEtI/
+         5tr7DAn0MkuJErFsaRQHyvgyJif6womBH/kf3Iv/SWcnHe2sFFYZ7Ii0VLC3QYAI212C
+         BBCxvAGM7AgkK/LBswTqdlN+VEkRE5HXOPSdSiI0iLY2v+Xd5mSb9xDmOu8JuIz1gNtd
+         bmnA==
+X-Gm-Message-State: AOAM532mbuQwaoa42ykIcwHF0fLai17qG0lCL+BNPzioHzAMs/hTTW2N
+        hgv2NFcVeJE7OQBqUiSQJQ4mmw==
+X-Google-Smtp-Source: ABdhPJyjhcSmjkykFR9rtVJUgw5bfN+1UgOk97VaGwkkIZiiD0BiGOV4YRXSRFWZWEBsG+gxTFspJw==
+X-Received: by 2002:a63:80c6:: with SMTP id j189mr12585818pgd.200.1637260981486;
+        Thu, 18 Nov 2021 10:43:01 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:8ceb:c68a:21af:bebe])
+        by smtp.gmail.com with UTF8SMTPSA id f21sm352939pfc.85.2021.11.18.10.43.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Nov 2021 10:43:01 -0800 (PST)
+Date:   Thu, 18 Nov 2021 10:43:00 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Peter Chen <peter.chen@kernel.org>, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, Roger Quadros <rogerq@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v17 4/7] arm64: dts: qcom: sc7180-trogdor: Add nodes for
+ onboard USB hub
+Message-ID: <YZaetDjIyFZPuO6J@google.com>
+References: <20211116200739.924401-1-mka@chromium.org>
+ <20211116120642.v17.4.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
+ <CAD=FV=WK3uHJTehMxWiA56L5Ly8UqjmCKnJtXBut2aOYEV6C4g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20211118173842.GD2530497@p14s>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.44]
-X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG2NODE2.st.com
- (10.75.127.5)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-11-18_12,2021-11-17_01,2020-04-07_01
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=WK3uHJTehMxWiA56L5Ly8UqjmCKnJtXBut2aOYEV6C4g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/18/21 6:38 PM, Mathieu Poirier wrote:
-> On Mon, Nov 08, 2021 at 03:01:26PM +0100, Arnaud Pouliquen wrote:
->> kernel documentation specification:
->> "The return value, if any, should be described in a dedicated section
->> named Return."
->>
->> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
->> ---
->>  drivers/rpmsg/qcom_glink_native.c |  2 +-
->>  drivers/rpmsg/qcom_smd.c          |  2 +-
->>  drivers/rpmsg/rpmsg_core.c        | 24 ++++++++++++------------
->>  drivers/rpmsg/virtio_rpmsg_bus.c  |  2 +-
->>  4 files changed, 15 insertions(+), 15 deletions(-)
+On Wed, Nov 17, 2021 at 04:03:10PM -0800, Doug Anderson wrote:
+> Hi,
 > 
-> I have applied this set.  There is a few more instances in drivers/remoteproc
-> that could be fixed the same way.
-
-If nobody fix this before, I will address it when preparing the V2 for my
-series on remoteproc virtio restructuring.
-
-Thanks,
-Arnaud
-
+> On Tue, Nov 16, 2021 at 12:07 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> >
+> > Add nodes for the onboard USB hub on trogdor devices. Remove the
+> > 'always-on' property from the hub regulator, since the regulator
+> > is now managed by the onboard_usb_hub driver.
+> >
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> >
+> > Changes in v17:
+> > - none
+> >
+> > Changes in v16:
+> > - none
+> >
+> > Changes in v15:
+> > - none
+> >
+> > Changes in v14:
+> > - none
+> >
+> > Changes in v13:
+> > - none
+> >
+> > Changes in v12:
+> > - none
+> >
+> > Changes in v11:
+> > - rebased on qcom/arm64-for-5.14 (with the rest of the series)
+> >
+> > Changes in v10:
+> > - keep 'regulator-boot-on' property
+> > - updated commit message
+> >
+> > Changes in v9:
+> > - none
+> >
+> > Changes in v8:
+> > - none
+> >
+> > Changes in v7:
+> > - rebased on qcom/arm64-for-5.13 (with the rest of the series)
+> >
+> > Changes in v6:
+> > - added 'companion-hub' entry to both USB devices
+> > - added 'vdd-supply' also to hub@2
+> >
+> > Changes in v5:
+> > - patch added to the series
+> >
+> >  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++-----------
+> >  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++-------
+> >  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++-----------
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 19 ++++++++++++++++++-
+> >  4 files changed, 39 insertions(+), 30 deletions(-)
 > 
-> Thanks,
-> Mathieu
-> 
->>
->> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
->> index 3f377a795b33..1030cfa80e04 100644
->> --- a/drivers/rpmsg/qcom_glink_native.c
->> +++ b/drivers/rpmsg/qcom_glink_native.c
->> @@ -427,7 +427,7 @@ static void qcom_glink_handle_intent_req_ack(struct qcom_glink *glink,
->>   * Allocates a local channel id and sends a RPM_CMD_OPEN message to the remote.
->>   * Will return with refcount held, regardless of outcome.
->>   *
->> - * Returns 0 on success, negative errno otherwise.
->> + * Return: 0 on success, negative errno otherwise.
->>   */
->>  static int qcom_glink_send_open_req(struct qcom_glink *glink,
->>  				    struct glink_channel *channel)
->> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
->> index 8da1b5cb31b3..540e027f08c4 100644
->> --- a/drivers/rpmsg/qcom_smd.c
->> +++ b/drivers/rpmsg/qcom_smd.c
->> @@ -1467,7 +1467,7 @@ ATTRIBUTE_GROUPS(qcom_smd_edge);
->>   * @parent:    parent device for the edge
->>   * @node:      device_node describing the edge
->>   *
->> - * Returns an edge reference, or negative ERR_PTR() on failure.
->> + * Return: an edge reference, or negative ERR_PTR() on failure.
->>   */
->>  struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
->>  					     struct device_node *node)
->> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
->> index d3eb60059ef1..f031b2b1b21c 100644
->> --- a/drivers/rpmsg/rpmsg_core.c
->> +++ b/drivers/rpmsg/rpmsg_core.c
->> @@ -26,7 +26,7 @@
->>   * @rpdev: rpmsg device
->>   * @chinfo: channel_info to bind
->>   *
->> - * Returns a pointer to the new rpmsg device on success, or NULL on error.
->> + * Return: a pointer to the new rpmsg device on success, or NULL on error.
->>   */
->>  struct rpmsg_device *rpmsg_create_channel(struct rpmsg_device *rpdev,
->>  					  struct rpmsg_channel_info *chinfo)
->> @@ -48,7 +48,7 @@ EXPORT_SYMBOL(rpmsg_create_channel);
->>   * @rpdev: rpmsg device
->>   * @chinfo: channel_info to bind
->>   *
->> - * Returns 0 on success or an appropriate error value.
->> + * Return: 0 on success or an appropriate error value.
->>   */
->>  int rpmsg_release_channel(struct rpmsg_device *rpdev,
->>  			  struct rpmsg_channel_info *chinfo)
->> @@ -102,7 +102,7 @@ EXPORT_SYMBOL(rpmsg_release_channel);
->>   * dynamically assign them an available rpmsg address (drivers should have
->>   * a very good reason why not to always use RPMSG_ADDR_ANY here).
->>   *
->> - * Returns a pointer to the endpoint on success, or NULL on error.
->> + * Return: a pointer to the endpoint on success, or NULL on error.
->>   */
->>  struct rpmsg_endpoint *rpmsg_create_ept(struct rpmsg_device *rpdev,
->>  					rpmsg_rx_cb_t cb, void *priv,
->> @@ -146,7 +146,7 @@ EXPORT_SYMBOL(rpmsg_destroy_ept);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_send(struct rpmsg_endpoint *ept, void *data, int len)
->>  {
->> @@ -175,7 +175,7 @@ EXPORT_SYMBOL(rpmsg_send);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
->>  {
->> @@ -206,7 +206,7 @@ EXPORT_SYMBOL(rpmsg_sendto);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_send_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>  			  void *data, int len)
->> @@ -235,7 +235,7 @@ EXPORT_SYMBOL(rpmsg_send_offchannel);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_trysend(struct rpmsg_endpoint *ept, void *data, int len)
->>  {
->> @@ -263,7 +263,7 @@ EXPORT_SYMBOL(rpmsg_trysend);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
->>  {
->> @@ -282,7 +282,7 @@ EXPORT_SYMBOL(rpmsg_trysendto);
->>   * @filp:	file for poll_wait()
->>   * @wait:	poll_table for poll_wait()
->>   *
->> - * Returns mask representing the current state of the endpoint's send buffers
->> + * Return: mask representing the current state of the endpoint's send buffers
->>   */
->>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->>  			poll_table *wait)
->> @@ -313,7 +313,7 @@ EXPORT_SYMBOL(rpmsg_poll);
->>   *
->>   * Can only be called from process context (for now).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->>  			     void *data, int len)
->> @@ -623,7 +623,7 @@ EXPORT_SYMBOL(rpmsg_unregister_device);
->>   * @rpdrv: pointer to a struct rpmsg_driver
->>   * @owner: owning module/driver
->>   *
->> - * Returns 0 on success, and an appropriate error value on failure.
->> + * Return: 0 on success, and an appropriate error value on failure.
->>   */
->>  int __register_rpmsg_driver(struct rpmsg_driver *rpdrv, struct module *owner)
->>  {
->> @@ -637,7 +637,7 @@ EXPORT_SYMBOL(__register_rpmsg_driver);
->>   * unregister_rpmsg_driver() - unregister an rpmsg driver from the rpmsg bus
->>   * @rpdrv: pointer to a struct rpmsg_driver
->>   *
->> - * Returns 0 on success, and an appropriate error value on failure.
->> + * Return: 0 on success, and an appropriate error value on failure.
->>   */
->>  void unregister_rpmsg_driver(struct rpmsg_driver *rpdrv)
->>  {
->> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
->> index 9c112aa65040..c37451512835 100644
->> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
->> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
->> @@ -547,7 +547,7 @@ static void rpmsg_downref_sleepers(struct virtproc_info *vrp)
->>   * should use the appropriate rpmsg_{try}send{to, _offchannel} API
->>   * (see include/linux/rpmsg.h).
->>   *
->> - * Returns 0 on success and an appropriate error value on failure.
->> + * Return: 0 on success and an appropriate error value on failure.
->>   */
->>  static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
->>  				     u32 src, u32 dst,
->> -- 
->> 2.17.1
->>
+> sc7180-trogdor-pompom-r1.dts is missing? It seems to need similar
+> fixups to the early lazor/trogdor borads.
+
+ack, also needs to be done for pompom rev1, thanks for pointing that out!
