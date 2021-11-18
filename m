@@ -2,120 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBE2645654F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 23:04:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54EB2456692
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 00:52:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229472AbhKRWHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 17:07:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35926 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230330AbhKRWHO (ORCPT
+        id S233384AbhKRXz1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 18:55:27 -0500
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:42911 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233280AbhKRXz0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 17:07:14 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C14C061748
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 14:04:14 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id b1so32867510lfs.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 14:04:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=L0AvJo2aJBbrB3dZVIskeL0rHyePfIbTkm816pl2LgU=;
-        b=znUbm10k4Aj1WViktuUfGcUCMGRUEEb5lB4X2U7OAC1UrIkIsvEGjCJfbSQwLOS8Qa
-         EuCUqx/jIRkIkNsgje5bVdyU7qA0iAkt31OHVhAHkVYSIpSBLtbgbehvX7JwrGCMg2kG
-         svx1jVtlFdR071C2+bQHY8iWEnjz0l/8kQNtq7lfKlEQuhfRbz2XXWc2/3n2XWuos1vf
-         C36d+pT/ceIWns2awlPncj5rA1ytJN5V8vXH8OF6iNiojQnl309WaHoAb6Lb+afWoUEk
-         n/+cgG3mPvqaP7Lc3yz8ZaDs0qaDO7r8Mg99byOpUFdghymUDSIgepoDPpWPNMCocqnD
-         Fd4g==
+        Thu, 18 Nov 2021 18:55:26 -0500
+Received: by mail-oi1-f176.google.com with SMTP id n66so17942637oia.9;
+        Thu, 18 Nov 2021 15:52:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=L0AvJo2aJBbrB3dZVIskeL0rHyePfIbTkm816pl2LgU=;
-        b=rG33Arehd99bThKmoC3ZITr5U/374HTt6V0HbeUB4vVQg5AxTH4D9tPSRDbzap5Fvd
-         hYfQBGeigKmAPP3OxbLSX9RgC0nwNJez/JyO99dn02RQvpUcnt92LPn35qsrCo2tuQmc
-         1C2PqaVxyWg7PDMZMKYToaPkPeuTiEub5D9GV88MTQ3SmpBeD9o+KohqRXfmz0DToGK2
-         /qSxJIKLF9Jmg7sNKruakVRKOaijv7gBtUI7zyICr4gcNlB596Kt/AWbdT2rBGlxuntd
-         9cmi5wB7EER2vBbGiNr5lNJSV0+fvXzybTu2mkM6T4MCnhgvagTsf8M10suQPmtZrcks
-         C5rA==
-X-Gm-Message-State: AOAM531/B6lkWAocWr82ivWwBB3xtrV3KbG17/9JPsxWqlS9vY83JigU
-        xcQ732t9JH+/ImGCqKwWDfWliA==
-X-Google-Smtp-Source: ABdhPJzxAEkNvGMDQNYy2kP/IaqUK5twgUN5jc36G/89hitn46O6fpu1RKLzKdxGzUMWIO4YRsheJg==
-X-Received: by 2002:a05:6512:38c4:: with SMTP id p4mr18851005lft.248.1637273052220;
-        Thu, 18 Nov 2021 14:04:12 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t5sm153021lfd.80.2021.11.18.14.04.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Nov 2021 14:04:11 -0800 (PST)
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: pm8998: Add ADC Thermal Monitor
- node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>
-Cc:     Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
- <20210923212311.2877048-4-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <4335a136-35a5-48b4-5b3c-cf094a8241b0@linaro.org>
-Date:   Fri, 19 Nov 2021 01:04:11 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mdlZbMN9TOaMLBnrcnl83d3wKAwscGmZJDPaDKwPea0=;
+        b=OtZknKWNR/c3LrGxNmLARy8+wmja84t3eOyiD0X7Qac35UQG6dluicYvjEr9LEIc0u
+         NR5GZB+rB8Zn+/wrynrStcf080i0rJOOcVXB1UUV1WcvJsa7sXdkUUUNI9kU/mBqdRi+
+         Tzyd3dCQraNyGAe1ur0bATH1RfEwjw8xo9btnZTkJQWYw0a5CeR2l03RyVgNnLb3y4Kp
+         hBlMmEgSEltuzkmkbdFEu8QXzvBjKUhOsOzmltiK3RBQinU+Mevn8acZq9tPsoMSHnYk
+         ROutTOWCVqvxjX//1e5TnpcaHaredUcG0ya2dMxox+e5IqahG0F5uczOgO1/FIe5XR3m
+         D9/A==
+X-Gm-Message-State: AOAM533RfIZJ1mZWWNlysdIDAjwDon3NRSvp0eavyDq9uq8ckcqmyEAS
+        y5T1pSscM+Er80gIWJRXHy4wfI2ksg==
+X-Google-Smtp-Source: ABdhPJzMwGaxhd/IUYj4isXqiHLxIuWpR77lKuVhs+KlheqZ0MneavY6HFVTEKdkMIaLbomXOkG8qg==
+X-Received: by 2002:a54:4701:: with SMTP id k1mr903999oik.37.1637279545284;
+        Thu, 18 Nov 2021 15:52:25 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id n6sm165204otj.78.2021.11.18.15.52.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Nov 2021 15:52:24 -0800 (PST)
+Received: (nullmailer pid 2018987 invoked by uid 1000);
+        Thu, 18 Nov 2021 23:52:23 -0000
+Date:   Thu, 18 Nov 2021 17:52:23 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     agross@kernel.org, davem@davemloft.net,
+        linux-crypto@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        robh+dt@kernel.org, Thara Gopinath <thara.gopinath@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        herbert@gondor.apana.org.au, stephan@gerhold.net,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com
+Subject: Re: [PATCH v5 04/22] dt-bindings: qcom-bam: Add 'interconnects' &
+ 'interconnect-names' to optional properties
+Message-ID: <YZbnNzd9a2lPA+N8@robh.at.kernel.org>
+References: <20211110105922.217895-1-bhupesh.sharma@linaro.org>
+ <20211110105922.217895-5-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20210923212311.2877048-4-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211110105922.217895-5-bhupesh.sharma@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/09/2021 00:23, Bjorn Andersson wrote:
-> Add a node for the ADC Thermal Monitor found in the PM8998 PMIC. This is
-> used to connect thermal zones with ADC channels.
+On Wed, 10 Nov 2021 16:29:04 +0530, Bhupesh Sharma wrote:
+> Add new optional properties - 'interconnects' and
+> 'interconnect-names' to the device-tree binding documentation for
+> qcom-bam DMA IP.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> These properties describe the interconnect path between bam and main
+> memory and the interconnect type respectively.
+> 
+> Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
-> 
-> Changes since v1:
-> - New patch
-> 
->   arch/arm64/boot/dts/qcom/pm8998.dtsi | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8998.dtsi b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-> index 6f5bb6b37ec2..d09f2954b6f9 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8998.dtsi
-> @@ -84,6 +84,16 @@ adc-chan@6 {
->   			};
->   		};
->   
-> +		pm8998_adc_tm: adc-tm@3400 {
-> +			compatible = "qcom,spmi-adc-tm-hc";
-> +			reg = <0x3400>;
-> +			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
-> +			#thermal-sensor-cells = <1>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			status = "disabled";
-> +		};
-> +
->   		rtc@6000 {
->   			compatible = "qcom,pm8941-rtc";
->   			reg = <0x6000>, <0x6100>;
+>  Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
-
--- 
-With best wishes
-Dmitry
+Acked-by: Rob Herring <robh@kernel.org>
