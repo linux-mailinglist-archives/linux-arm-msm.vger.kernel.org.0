@@ -2,42 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BC3D456324
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 20:06:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE2A456328
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 20:06:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232825AbhKRTJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 14:09:18 -0500
-Received: from mail.kernel.org ([198.145.29.99]:57178 "EHLO mail.kernel.org"
+        id S233071AbhKRTJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 14:09:28 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57374 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232799AbhKRTJS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 14:09:18 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A3EC161B04;
-        Thu, 18 Nov 2021 19:06:13 +0000 (UTC)
+        id S233774AbhKRTJ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 14:09:27 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7DBC361B1B;
+        Thu, 18 Nov 2021 19:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637262377;
-        bh=lrQXLGoucITfjQn5uVEsfBONwOxznfVVuvtAaJyD/90=;
+        s=k20201202; t=1637262386;
+        bh=ErQ/nsV6NGKXfTi3u48vwQs0bvmwyCa4rQaBQ2Jkz4o=;
         h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=P1ePkJJCikKeYrGJ/a8zd/euNU1R/RZLpiajZIAyjotJoWtkIoEdFyqz3rt43uffd
-         Q94vWeDzVpGL5xCu6Ky5XjPgP25JVVOWVRl6PoXr++vTyogK6zdIhACbwnDU24e+pP
-         VXrobUniflyQIx3ZFqiWrmEU5KrETj/5QkpgPRvO93+JoNCB2DSb4scGTqE/l0XPwS
-         nfsKCZ5W3QMyUGWB+31MFpzwgCQ/hhBA+RVMM4ZIptWBJRhiAfDQIQZx1zaNV9cqUh
-         hBEMejqNHtDnRuh9FnySLY4J5PMRyj+WhtIc1Xa0Y6kR9pAP6txJGVq+Xa+m3kgw/u
-         NqUcbYf+bCGLg==
+        b=e7j+my+k/2CbBU/sWB65orjTqPIZfGW1c8PIva2DmHN2yMkgLy1EI6bwNEKWDM6l6
+         2/hVkdqusZcNgUNOa3YRcA7JyRh+sj1hUTV5fm0a3WnMJkS1WbYkMVlyfVGknn6WmJ
+         LHCSgciQcGCImTBtsyJaXYy8isNwP5zb5y5LT3i7K5D3rmY4O5C223Qj8ajv6/zpwE
+         IZai55qFKB9mkQed3Ps9VUeVhyAu/Y263pUD78FfXxOktw5BPO5Mou7hiF3WEBQ8St
+         Cl6DhlHpBOGz2B8ZuR3ObeGK60jkZBozWnOCK/CgcoP/3Y4dO+gwl8sLDkd6N7M+ji
+         Rh39ibhYAdY4w==
 From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
-        rohitkr@codeaurora.org, alsa-devel@alsa-project.org,
-        perex@perex.cz, agross@kernel.org, srinivas.kandagatla@linaro.org,
-        swboyd@chromium.org, plai@codeaurora.org, judyhsiao@chromium.org,
-        robh+dt@kernel.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, tiwai@suse.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-In-Reply-To: <1637234411-554-1-git-send-email-srivasam@codeaurora.org>
-References: <1637234411-554-1-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH] ASoC: codecs: MBHC: Remove useless condition check
-Message-Id: <163726237329.96213.5010626132541741636.b4-ty@kernel.org>
-Date:   Thu, 18 Nov 2021 19:06:13 +0000
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20211117133110.2682631-1-vkoul@kernel.org>
+References: <20211117133110.2682631-1-vkoul@kernel.org>
+Subject: Re: [PATCH 1/3] spi: qcom: geni: remove unused defines
+Message-Id: <163726238525.96493.17735171365340037570.b4-ty@kernel.org>
+Date:   Thu, 18 Nov 2021 19:06:25 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -45,20 +42,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Nov 2021 16:50:11 +0530, Srinivasa Rao Mandadapu wrote:
-> Remove redundant conditional check and clean code in special
-> headset support functions.
+On Wed, 17 Nov 2021 19:01:08 +0530, Vinod Koul wrote:
+> Commit b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+> added GPI support but also added unused defines, so remove them
 > 
 > 
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
-[1/1] ASoC: codecs: MBHC: Remove useless condition check
-      commit: b38892b5b85ae54b7b867313996f967122ede42e
+[1/3] spi: qcom: geni: remove unused defines
+      commit: 61f6e38ae8b6cbe140cfd320b3003a52147edef0
+[2/3] spi: qcom: geni: set the error code for gpi transfer
+      (no commit info)
+[3/3] spi: qcom: geni: handle timeout for gpi mode
+      (no commit info)
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
