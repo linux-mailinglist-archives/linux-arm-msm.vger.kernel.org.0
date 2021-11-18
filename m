@@ -2,162 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40055455B21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 13:02:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E6B2455B26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 13:03:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344453AbhKRMFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 07:05:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37966 "EHLO
+        id S1344477AbhKRMGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 07:06:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344448AbhKRMFR (ORCPT
+        with ESMTP id S1344475AbhKRMGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 07:05:17 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E60C061764
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 04:02:17 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id g28so5143399pgg.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 04:02:17 -0800 (PST)
+        Thu, 18 Nov 2021 07:06:37 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74B03C061570
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 04:03:35 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id gb13-20020a17090b060d00b001a674e2c4a8so5475099pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 04:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=S6zyLf4rBaZQHFYnVQfrG1Mvv/HRfSpfyvWGKM/XzYg=;
-        b=P2nN368L6rLcbt9PTv3AyuLdtHYgJVGGz9hqPXtXjedDpNbhA9YgeOXz0PW6AjvWli
-         HoyNmBbQIWGB6UHGFvJ5CJ05RTuGGwPlospE/BP4nnDE1izWq/jJdTglX1yhMWpxb3Ww
-         pVMNUJemr7OJnneQ89WIDMHdYHaBCCsIBxTELF+1IqGUZLyqy3LFPb9nBh+S0p/bj/3E
-         Wb2a8XcdE7fE6jTsTTuqgpF1oj9EKzIx9VUHAAXkL+kxq4a4kdE5Wc0g5oRbhOyER47p
-         DDsUDcHwtBIKkpNWnrPCH0sNioMwVHP5jhQ7Vqmr+HFeUbnwON6e3+e5VauFRbOY9aqJ
-         jQ8w==
+        bh=YI1Lh1+u9y2Rdr5uc1zvo5rFFoVd9BpEe5RkTQkaRgk=;
+        b=KOp8Ene37x19VH16WN233yfPR54BHDHYa4nb0L5nnvxvqubFe6QxQWhRSmpkMbif8s
+         V+3b6m72vpyuv0BwIv20K2pcuOREx/enp1DIkzPg45sf8nOiledNOaxMgZoKhMiPzsb1
+         YxueZ5VqrcZNRefvmUMg9kYOs/ilnbBA+xXQloVPEFCnI+6OOE5rS91wfnJXeqHB3N9k
+         mmU341jzl1j48f8W4C+gBJmjP1pGCeP3oBIl4c8TJSy62CZ1/dLtJmCkwVP6c7Fiws8m
+         Dyyd/l/kFcV5rl7HByK1ZbXJ3wpEbCCnr1abtQG0q25z5RBJEjW0ezDv0fCoyANw0PU5
+         mzLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=S6zyLf4rBaZQHFYnVQfrG1Mvv/HRfSpfyvWGKM/XzYg=;
-        b=UPzq1agNbhLUFa/vFXpQKj6c+oVaZnaCmB8UqpFmECUTVd1G4se8SvkMM1QqvFBc9Z
-         eKrAFWX57f22E++VzZElGcgPVxmmdXrAYroILp6doJV+1CwEq8YT536pJFYGkPMLRjHO
-         Om4VLj9u7KQ01bkeRKTAT4yDfTArJOFLv/HfVD0YlaMsCIv746wbr28yVZITTDxX2LiX
-         jbhMPnW6C7HeLJr0YGV5c0ptCiYix1gDHAC5+1owju0geP9a0Fl+QnNrC6LBJ5PA5ktK
-         8IkBR0GnVKXvtBUvaeADmjAIJLPa8vESiANR6QuhUB3v2s4Ah6jVGviKWp6YpJMJtRbn
-         yTkg==
-X-Gm-Message-State: AOAM5315dY8eXKCpm//sPOvrV0Iu5D4YD0er3+CQx1rtxsiyewKKEjhz
-        xRV4X4G3Is2ozxhli7ZuHues/WKwRpY1+PCu63Tm1A==
-X-Google-Smtp-Source: ABdhPJzIk5ARWMCyxIM7UA8/c8E4fXz2CCO9geupDGEnPu7eWFyHCGAnsQtT4n3uGz3Ae+L3QmPGJk/7TNuPntJUhqo=
-X-Received: by 2002:aa7:9903:0:b0:49f:e368:4fc3 with SMTP id
- z3-20020aa79903000000b0049fe3684fc3mr14719769pff.1.1637236935054; Thu, 18 Nov
- 2021 04:02:15 -0800 (PST)
+        bh=YI1Lh1+u9y2Rdr5uc1zvo5rFFoVd9BpEe5RkTQkaRgk=;
+        b=t9wEjvEdwVackjyD7OC5E4xST50W67AkTFt0rUjeur1oczWGYbKgiqGW01q0KZ6sry
+         /+8gxente5bg39Egj9Tt5bnMUnsLDsqwPiGuni50gG+KoLdbL2FmWgI8tN8YXByMVncF
+         bIMAtrwQP18Qy9cj4MK4iihdfpTdxoumb1MpvOjgyAHcP5KdoT1uEfqTgUDN4KEb0Klg
+         djs+pB/lUPD4We+xjvG3m10LiBRQPUHBOn5lpfBxZ1+ejSn2qvQs4s6IZO567nZsAHkp
+         feC56pbOiEPlXIkq3ApQlSvAz6z9gpX9+9/fyj6yI1JStvd4YXFGH8oM6tBEQFZQaTOm
+         ZymA==
+X-Gm-Message-State: AOAM530afS36ircjO5gOaU3Pz2QRP2b4s293Zm8yYdaT6ZD6e0KSKGue
+        L6+ZdhMgGbe74ESOP2/k1sxV5ytFxKrVfGpjTWMIDg==
+X-Google-Smtp-Source: ABdhPJw6Gr+Smw+R053iYguuCDSumjKjHrfO8w2JPvCxw/fo3NTdSoxbKbNhybeZ7l+yAfiOSe1QU4ydx1fHuauJw0M=
+X-Received: by 2002:a17:90b:4a05:: with SMTP id kk5mr9826965pjb.232.1637237014885;
+ Thu, 18 Nov 2021 04:03:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20211111161542.3936425-1-bryan.odonoghue@linaro.org> <20211111161542.3936425-19-bryan.odonoghue@linaro.org>
-In-Reply-To: <20211111161542.3936425-19-bryan.odonoghue@linaro.org>
+References: <20211117113800.260741-1-robert.foss@linaro.org>
+ <20211117113800.260741-4-robert.foss@linaro.org> <YZT4lddeEJAOkIc4@gerhold.net>
+In-Reply-To: <YZT4lddeEJAOkIc4@gerhold.net>
 From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 18 Nov 2021 13:02:04 +0100
-Message-ID: <CAG3jFyuW4dKutvxB8vt=5keaGtJmNUO3tAViE+0Kve-HUoM8YQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH 18/18] media: camss: Do vfe_get/vfe_put for csid on sm8250
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        mchehab@kernel.org, jgrahsl@snap.com, hfink@snap.com
+Date:   Thu, 18 Nov 2021 13:03:23 +0100
+Message-ID: <CAG3jFyuja1OYcSK6VCoRCwQ-O_CPU8eB_mzcH-y6azNAXosrew@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: msm8916: Remove clock-lanes
+ property from &camss node
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, todor.too@gmail.com,
+        mchehab@kernel.org, robh+dt@kernel.org,
+        angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bryan,
+Thanks Stephan.
 
-On Thu, 11 Nov 2021 at 17:14, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
+On Wed, 17 Nov 2021 at 13:42, Stephan Gerhold <stephan@gerhold.net> wrote:
 >
-> The sm8250 CAMSS CSID depends on the VFE it is attached to being powered on
-> and clocked prior to taking the CSID out of reset.
+> Hi Robert,
 >
-> It is possible to open just the CSID subdev from libcamera and attempt to
-> bring the CSID block up.
->
-> If we do not first bring up the VFE the CSID will fail to come out of
-> reset.
+> small nitpick: The subject would be more clear with
+> "arm64: dts: qcom: apq8016-sbc: ..." instead of "msm8916: ..." like in
+> your sdm845-db845c patch, since only apq8016-sbc is modified.
 
-I think the same thing is possible for all Gen2/Titan based camss
-architectures, and this fix should  be enabled for CAMSS_845 too.
-
-With that fixed, please add my r-b.
-
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Will do.
 
 >
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  drivers/media/platform/qcom/camss/camss-csid.c | 12 +++++++++++-
->  drivers/media/platform/qcom/camss/camss-vfe.c  |  4 ++--
->  drivers/media/platform/qcom/camss/camss-vfe.h  |  3 +++
->  3 files changed, 16 insertions(+), 3 deletions(-)
+> On Wed, Nov 17, 2021 at 12:37:59PM +0100, Robert Foss wrote:
+> > The clock-lanes property is no longer used as it is not programmable by
+> > the CSIPHY hardware block of Qcom ISPs and should be removed.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 2 --
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 9ef6fbbeeddf..e6835b92695b 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -156,10 +156,18 @@ static int csid_set_clock_rates(struct csid_device *csid)
->  static int csid_set_power(struct v4l2_subdev *sd, int on)
->  {
->         struct csid_device *csid = v4l2_get_subdevdata(sd);
-> -       struct device *dev = csid->camss->dev;
-> +       struct camss *camss = csid->camss;
-> +       struct device *dev = camss->dev;
-> +       struct vfe_device *vfe = &camss->vfe[csid->id];
->         int ret;
+> Can you rebase this on 5.16-rc1? All of apq8016-sbc.dtsi is now in
+> apq8016-sbc.dts (the extra dtsi did not have any good use).
+
+Ack.
+
 >
->         if (on) {
-> +               if (camss->version == CAMSS_8250) {
-> +                       ret = vfe_get(vfe);
-> +                       if (ret < 0)
-> +                               return ret;
-> +               }
-> +
->                 ret = pm_runtime_resume_and_get(dev);
->                 if (ret < 0)
->                         return ret;
-> @@ -204,6 +212,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->                 camss_disable_clocks(csid->nclocks, csid->clock);
->                 ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
->                 pm_runtime_put_sync(dev);
-> +               if (camss->version == CAMSS_8250)
-> +                       vfe_put(vfe);
->         }
->
->         return ret;
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index 5b5fe620914d..703ea39f1262 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -575,7 +575,7 @@ static int vfe_check_clock_rates(struct vfe_device *vfe)
->   *
->   * Return 0 on success or a negative error code otherwise
->   */
-> -static int vfe_get(struct vfe_device *vfe)
-> +int vfe_get(struct vfe_device *vfe)
->  {
->         int ret;
->
-> @@ -637,7 +637,7 @@ static int vfe_get(struct vfe_device *vfe)
->   * vfe_put - Power down VFE module
->   * @vfe: VFE Device
->   */
-> -static void vfe_put(struct vfe_device *vfe)
-> +void vfe_put(struct vfe_device *vfe)
->  {
->         mutex_lock(&vfe->power_lock);
->
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index 6500474a749e..0eba04eb9b77 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -203,4 +203,7 @@ extern const struct vfe_hw_ops vfe_ops_4_8;
->  extern const struct vfe_hw_ops vfe_ops_170;
->  extern const struct vfe_hw_ops vfe_ops_480;
->
-> +int vfe_get(struct vfe_device *vfe);
-> +void vfe_put(struct vfe_device *vfe);
-> +
->  #endif /* QC_MSM_CAMSS_VFE_H */
-> --
-> 2.33.0
->
+> Thanks,
+> Stephan
