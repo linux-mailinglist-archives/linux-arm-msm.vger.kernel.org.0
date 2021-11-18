@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE16F455243
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 02:36:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1CC9455245
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 02:36:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242283AbhKRBjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 20:39:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39428 "EHLO
+        id S242290AbhKRBj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 20:39:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242276AbhKRBjC (ORCPT
+        with ESMTP id S242289AbhKRBj2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 20:39:02 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E009C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:36:03 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id h12-20020a056830034c00b0055c8458126fso8167008ote.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:36:03 -0800 (PST)
+        Wed, 17 Nov 2021 20:39:28 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1EE6C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:36:28 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so8096366otg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=AhzHSZs+Qa8irjDJBSbiDerC3r5X5aUFn4Yh1dCXuiY=;
-        b=fPJFCZrZDYPW7rI9Lm6fPh6QD9XgZHl/s8q8VHTXo8fvTuTF/mA6Ndahnnbd8JvErR
-         oVZwdNm7tdDMQOib5lM5Bw3J+3AU16knFPb1jZjnTc53YrtC3NsHAgsNh9vqiMfE2aab
-         YXpfsz+2BW8yaNsheds+mEGYgXxqj2nhxej88=
+        bh=9klc8dAWLIAubPklXVyh2fWbEFTP2hyfnLgaBXBCupk=;
+        b=gm/ER4diKPKHKzcanyuOyKFEAaBC80UL4emy4g9pwIdas+tID4z4DofaLSACBAdJWJ
+         6eRAFc9WkfAGEDe7dAvKWPMYK/nsGr8bKEGuynfyPQdM/1DXAxHU3WdSFGUPBq688mE8
+         r8dsWUGLcqGMnGoiENXgHzTSocHtwot/CugYM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=AhzHSZs+Qa8irjDJBSbiDerC3r5X5aUFn4Yh1dCXuiY=;
-        b=FpNaSMLNjmN3YjsTq8o16R85+SbB27K3O6hKoMBIIZOFta+pxaCEMhKwoiNyhPWkLu
-         JdkioXwXztGWw4jRNtqnNxsXILHcRrxqD8EEZgVXjBNTkyl+nAZwtUvWngIhiSgWGkGp
-         rOJF5LPxMkHFyHLT+YMPrIhD+YCS2C4xGy8G3P3AYNCTIts7DuJN++3mfXPBqbEjxU6u
-         sPI+v92YrkhYRyf1vx0/oJXsuK7DbUgE2rE2dfnzt0eia4Y60ytCf4vOg/51bZS37SsL
-         yuH+/pXZw3EGs+UJvN8istIF3tK54TdULquPeeN8HpOSEilspF9sAP/edli7dAZmI+wL
-         1dLw==
-X-Gm-Message-State: AOAM531XJIkXMO8LVLHREx6JDzzdELV7W7pVI9LgMKczarz3E6TMIOsT
-        Bbft3aI1mSf5ChnvuJn2mZ1JYjkJlqEqCUElONyYvg==
-X-Google-Smtp-Source: ABdhPJxA6UsC92g8SAKBgSzoBtfVLdpNY2c/dKRjkWuxetjJ+zee2Xo61LDyLtogfQRcPKmnnkvJPqcfailm/WkSPBY=
-X-Received: by 2002:a9d:70ce:: with SMTP id w14mr17764642otj.77.1637199362910;
- Wed, 17 Nov 2021 17:36:02 -0800 (PST)
+        bh=9klc8dAWLIAubPklXVyh2fWbEFTP2hyfnLgaBXBCupk=;
+        b=t1hCqgYdbMvRiCzH0Cg5ZMNsDfHvvKXRXMzouNhTqDa1qB52QXIGjtCROW80MSupGi
+         JNvUmdRoA1aEFY46SKzFLfKg9Cphlunx1NkKslu7vi5CHByHhlUQM2TVy9V7YhWeRMBw
+         NqfToFtvWXQQhuhjWgJZgee4sgPfBNa8L1JwCTAonYmXuuXWWDQXZTK53UakjkbDcXzA
+         N4v1qfFDB0w1BDN4QrawmmU5Wny+sVd8Q4ljKrXUvQ+WWabOviPnIManrvjsGWZomHPx
+         gUzMR0b3xY0JMw+C4bnmkdpb7P1tgWI4iBBzSCTZN2t4RcJZSgQxzyet09fq+tiEFqr3
+         VQmA==
+X-Gm-Message-State: AOAM531a2kLXdyrPQC6n3i4mHQ6igI2vyd5Br72ffJmMIpnG05nzALSy
+        d+ElrmNXKulSAW1YCT6tFksruhbjPkp3/xTWiz04PQ==
+X-Google-Smtp-Source: ABdhPJxKd82uGdEAMk68vFffNMn/X25qk2e/DsVmbx5gTcvbt9QWX11Tks6gt8LfLbpB/OZhMEehjVPDGZs8hMou7WU=
+X-Received: by 2002:a9d:2243:: with SMTP id o61mr5815934ota.126.1637199388369;
+ Wed, 17 Nov 2021 17:36:28 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 17 Nov 2021 17:36:02 -0800
+ HTTPREST; Wed, 17 Nov 2021 17:36:28 -0800
 MIME-Version: 1.0
-In-Reply-To: <20211118010453.843286-1-robdclark@gmail.com>
-References: <20211118010453.843286-1-robdclark@gmail.com>
+In-Reply-To: <20211118010453.843286-2-robdclark@gmail.com>
+References: <20211118010453.843286-1-robdclark@gmail.com> <20211118010453.843286-2-robdclark@gmail.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Wed, 17 Nov 2021 17:36:02 -0800
-Message-ID: <CAE-0n50rwKPLubV3TENkZABUGHjdiQ=fAB2XtH6rkKuF68QK1g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: rt5682: Fix crash due to out of scope stack vars
+Date:   Wed, 17 Nov 2021 17:36:27 -0800
+Message-ID: <CAE-0n52AAfNqYP5MM1CUntkM15ftskuPVRNyCbBdCbp8mFHL2Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: rt5682s: Fix crash due to out of scope stack vars
 To:     Rob Clark <robdclark@gmail.com>, alsa-devel@alsa-project.org
 Cc:     Derek Fang <derek.fang@realtek.com>, linux-arm-msm@vger.kernel.org,
         Rob Clark <robdclark@chromium.org>,
@@ -64,7 +64,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2021-11-17 17:04:52)
+Quoting Rob Clark (2021-11-17 17:04:53)
 > From: Rob Clark <robdclark@chromium.org>
 >
 > Move the declaration of temporary arrays to somewhere that won't go out
@@ -73,7 +73,7 @@ Quoting Rob Clark (2021-11-17 17:04:52)
 >
 > Fixes a crash seen with gcc version 11.2.1 20210728 (Red Hat 11.2.1-1)
 >
-> Fixes: edbd24ea1e5c ("ASoC: rt5682: Drop usage of __clk_get_name()")
+> Fixes: bdd229ab26be ("ASoC: rt5682s: Add driver for ALC5682I-VS codec")
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
 
