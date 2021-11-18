@@ -2,142 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 384D64562B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 19:43:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BC3D456324
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 20:06:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbhKRSqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 13:46:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231391AbhKRSqC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 13:46:02 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF43FC06173E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:43:01 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id x131so6900992pfc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:43:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G1EliypIjbcEW6Z/ACxlA6Dj3vusWb8JvXLauTtA8Ec=;
-        b=V9/M+IhlXdHtPJLjRhHrJbqffe02jTBUk7q5gB83KwHpUfj5QsJbsdlm5bz3sseFcU
-         oS17QB0ghrBpj+QsgVZFjFeloINmuY+zbug5uCrkkEgT5e6Y7kabv3EraLL+joLtPaMN
-         kA8ov8LmyVfvTOTHSgKCIK0Lw0rxgHcPfl8Zo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G1EliypIjbcEW6Z/ACxlA6Dj3vusWb8JvXLauTtA8Ec=;
-        b=545Alw31KYn8L7sa4GaSr8mqOaERmgcwtIqKcrur81Gwa1avVw/EpWkDsSZbnO5zJH
-         0O8Vsv/qoacxfPDu1Y250uNLHAoVZyb87+VlrH/1lfG3VEdvJvmb7tMTxc05fSdGDe+z
-         vB3sUFQ6CetLvcJhUxVzQyRuncRYqqQ0Bs5W0FO98CtttZylHOaRg2Buu/tQwTJmEtI/
-         5tr7DAn0MkuJErFsaRQHyvgyJif6womBH/kf3Iv/SWcnHe2sFFYZ7Ii0VLC3QYAI212C
-         BBCxvAGM7AgkK/LBswTqdlN+VEkRE5HXOPSdSiI0iLY2v+Xd5mSb9xDmOu8JuIz1gNtd
-         bmnA==
-X-Gm-Message-State: AOAM532mbuQwaoa42ykIcwHF0fLai17qG0lCL+BNPzioHzAMs/hTTW2N
-        hgv2NFcVeJE7OQBqUiSQJQ4mmw==
-X-Google-Smtp-Source: ABdhPJyjhcSmjkykFR9rtVJUgw5bfN+1UgOk97VaGwkkIZiiD0BiGOV4YRXSRFWZWEBsG+gxTFspJw==
-X-Received: by 2002:a63:80c6:: with SMTP id j189mr12585818pgd.200.1637260981486;
-        Thu, 18 Nov 2021 10:43:01 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:8ceb:c68a:21af:bebe])
-        by smtp.gmail.com with UTF8SMTPSA id f21sm352939pfc.85.2021.11.18.10.43.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Nov 2021 10:43:01 -0800 (PST)
-Date:   Thu, 18 Nov 2021 10:43:00 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Peter Chen <peter.chen@kernel.org>, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, Roger Quadros <rogerq@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v17 4/7] arm64: dts: qcom: sc7180-trogdor: Add nodes for
- onboard USB hub
-Message-ID: <YZaetDjIyFZPuO6J@google.com>
-References: <20211116200739.924401-1-mka@chromium.org>
- <20211116120642.v17.4.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
- <CAD=FV=WK3uHJTehMxWiA56L5Ly8UqjmCKnJtXBut2aOYEV6C4g@mail.gmail.com>
+        id S232825AbhKRTJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 14:09:18 -0500
+Received: from mail.kernel.org ([198.145.29.99]:57178 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232799AbhKRTJS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 14:09:18 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A3EC161B04;
+        Thu, 18 Nov 2021 19:06:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637262377;
+        bh=lrQXLGoucITfjQn5uVEsfBONwOxznfVVuvtAaJyD/90=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=P1ePkJJCikKeYrGJ/a8zd/euNU1R/RZLpiajZIAyjotJoWtkIoEdFyqz3rt43uffd
+         Q94vWeDzVpGL5xCu6Ky5XjPgP25JVVOWVRl6PoXr++vTyogK6zdIhACbwnDU24e+pP
+         VXrobUniflyQIx3ZFqiWrmEU5KrETj/5QkpgPRvO93+JoNCB2DSb4scGTqE/l0XPwS
+         nfsKCZ5W3QMyUGWB+31MFpzwgCQ/hhBA+RVMM4ZIptWBJRhiAfDQIQZx1zaNV9cqUh
+         hBEMejqNHtDnRuh9FnySLY4J5PMRyj+WhtIc1Xa0Y6kR9pAP6txJGVq+Xa+m3kgw/u
+         NqUcbYf+bCGLg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        rohitkr@codeaurora.org, alsa-devel@alsa-project.org,
+        perex@perex.cz, agross@kernel.org, srinivas.kandagatla@linaro.org,
+        swboyd@chromium.org, plai@codeaurora.org, judyhsiao@chromium.org,
+        robh+dt@kernel.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, tiwai@suse.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+In-Reply-To: <1637234411-554-1-git-send-email-srivasam@codeaurora.org>
+References: <1637234411-554-1-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH] ASoC: codecs: MBHC: Remove useless condition check
+Message-Id: <163726237329.96213.5010626132541741636.b4-ty@kernel.org>
+Date:   Thu, 18 Nov 2021 19:06:13 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=WK3uHJTehMxWiA56L5Ly8UqjmCKnJtXBut2aOYEV6C4g@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 04:03:10PM -0800, Doug Anderson wrote:
-> Hi,
+On Thu, 18 Nov 2021 16:50:11 +0530, Srinivasa Rao Mandadapu wrote:
+> Remove redundant conditional check and clean code in special
+> headset support functions.
 > 
-> On Tue, Nov 16, 2021 at 12:07 PM Matthias Kaehlcke <mka@chromium.org> wrote:
-> >
-> > Add nodes for the onboard USB hub on trogdor devices. Remove the
-> > 'always-on' property from the hub regulator, since the regulator
-> > is now managed by the onboard_usb_hub driver.
-> >
-> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > ---
-> >
-> > Changes in v17:
-> > - none
-> >
-> > Changes in v16:
-> > - none
-> >
-> > Changes in v15:
-> > - none
-> >
-> > Changes in v14:
-> > - none
-> >
-> > Changes in v13:
-> > - none
-> >
-> > Changes in v12:
-> > - none
-> >
-> > Changes in v11:
-> > - rebased on qcom/arm64-for-5.14 (with the rest of the series)
-> >
-> > Changes in v10:
-> > - keep 'regulator-boot-on' property
-> > - updated commit message
-> >
-> > Changes in v9:
-> > - none
-> >
-> > Changes in v8:
-> > - none
-> >
-> > Changes in v7:
-> > - rebased on qcom/arm64-for-5.13 (with the rest of the series)
-> >
-> > Changes in v6:
-> > - added 'companion-hub' entry to both USB devices
-> > - added 'vdd-supply' also to hub@2
-> >
-> > Changes in v5:
-> > - patch added to the series
-> >
-> >  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++-----------
-> >  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++-------
-> >  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++-----------
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 19 ++++++++++++++++++-
-> >  4 files changed, 39 insertions(+), 30 deletions(-)
 > 
-> sc7180-trogdor-pompom-r1.dts is missing? It seems to need similar
-> fixups to the early lazor/trogdor borads.
 
-ack, also needs to be done for pompom rev1, thanks for pointing that out!
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: codecs: MBHC: Remove useless condition check
+      commit: b38892b5b85ae54b7b867313996f967122ede42e
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
