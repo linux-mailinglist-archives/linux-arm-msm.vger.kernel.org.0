@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B77704554B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 07:19:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53AA44554BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 07:21:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243028AbhKRGWX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 01:22:23 -0500
-Received: from mail.kernel.org ([198.145.29.99]:52632 "EHLO mail.kernel.org"
+        id S243030AbhKRGYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 01:24:36 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52904 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242003AbhKRGWW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 01:22:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 717F061B3A;
-        Thu, 18 Nov 2021 06:19:21 +0000 (UTC)
+        id S229786AbhKRGYf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 01:24:35 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C540D61B54;
+        Thu, 18 Nov 2021 06:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637216363;
-        bh=IS/+ZFzUMaT6WnHfrvP61djs6+uOU3Thi6+OOrX6y9I=;
+        s=k20201202; t=1637216495;
+        bh=IRuFzsFf19AqONTE+uVQRsqiYqHe9IwjZU/qJgXcwxs=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jw8mt9Wex57ua/Nfs6bQZZyrnQdes9vg/lzI/3x6eFACuep211fwGYZeCbNyI84Ba
-         KZmYSYgQ3BVVTnfuV7g62atSQOypbKrk22fVmNbdeoRAhl0WkEyHG/mMOE7VPa8qr5
-         lkYpowLDocMnWXLC25UaEuKMtBG9GdOyA6NeaIbNnkHvj5AscM32zGx7tEbBkPp4w3
-         qMinzCeKtqF7+L0cWSi4+UYQDoct+bFF3brd3HAKSheZLuHxWzDvxXLxx+vRuWGdFH
-         KG30D/s4KR3oVSxMVnhl/t65C3lZa50vzb70S01Lmvmec+Jwiqus3ykNbXYIs9BwUl
-         NXNNE2/MBe6MA==
-Date:   Thu, 18 Nov 2021 11:49:17 +0530
+        b=kDyzuQgHNYwM3z57J4gsFI0YFtMxVGmH64XITfy3JbWgg2W3RHMR6U51pSXDTOc4n
+         eePHbFEJ5AkEaD6CrhPLNHfYyeUveUJDyTsW0jK8IW5/WrDzhnJhPnQ6zQXP/GXRXO
+         Qn9FMfSeLvufz2hCY9AxJWAalUz7i9GEcoxmoQ//9YVOPp0AZ+FZyOBqRZ9rBKYerp
+         VrNgKPppcf5mqQTYztjB6ZGZx1RufeP10rBTUt0lGWh5WugGDKkpZ+bRJRhVk+4ozT
+         J+xMhH8n/Pq+MscWx0u1sAH0cK1mZp22uvcLoBd19bOF0pEvajAcly/AD3tqC0Utsl
+         brxEUFCfuKNWA==
+Date:   Thu, 18 Nov 2021 11:51:29 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Slark Xiao <slark_xiao@163.com>
 Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: pci_generic: Fix device recovery failed issue
-Message-ID: <20211118061917.GF6461@thinkpad>
+Message-ID: <20211118062129.GG6461@thinkpad>
 References: <20211108113127.3938-1-slark_xiao@163.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -84,7 +84,7 @@ On Mon, Nov 08, 2021 at 07:31:27PM +0800, Slark Xiao wrote:
 > 
 > Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
