@@ -2,167 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20964455502
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 07:59:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3849455866
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 10:57:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241847AbhKRHCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 02:02:40 -0500
-Received: from mail-mw2nam08on2045.outbound.protection.outlook.com ([40.107.101.45]:39450
-        "EHLO NAM04-MW2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S238258AbhKRHCj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 02:02:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YDoOc+88VcCGGWbn8/yfmcHeNcRhjI0OGmeS64zR2+KXy2z+7AbfTRDxH7ImnnLf69ux9IivhytBzObRTZUA7AYZ0mqd8Nr8a3RlGYKDyv58ps+IfK6OUA7W1Ow9FNxi+zZ48aPcZRb70YptT1J/u4qPRRmpTT7FSdF/eiY6QE2KM4c0SfUxzzy9ukyXKPNPVrHB1ZKJlezXqLN9gCLUgw3QlOqKFaGbXh5mKYWdWBTrJ5+oDiF9YcNzpO6HlK0oR/Qae/CFMOgehunhwR++N2btjR7UQ+DD2ziw5XjV/fNsV4xWkOASeqTNTKmLM5an3MKI3IAHf78rNKt5s/2fng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ho6imcWi2ghSObNuUeUgk9TUehbiceKWImEos//YPhQ=;
- b=Ps24WoW0Ao1ePhBc1x+cK0Ig4kwZaQWlZQneAvOqi1N49URiZz63OwgYluLj90BiJcMLTg5CT6PdpGzrxTn6JnbkOeymmv7ZiK7hN/VmgH1md7hTLoF5MxH2d5KY3I8Cew5qniNuOKrfCplhrebyh2Q56ngwBf8DE3PbcOxaO2qT4FaljgeodO2aCxG0m905aVOQe8ZbUsTEmzIRREvjxfpf5yVD4KBEbq7ggY6SpFkaEmBvOmLHFCnGY8HZvTCq+WMRQDkCex2WRcIzjo0IfAv3xANAD6PiHukBjQWVIuNSftO4nVRLDCZ1mrEPnDWT4QUSuClQ4Dg164urJqf8Jg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ho6imcWi2ghSObNuUeUgk9TUehbiceKWImEos//YPhQ=;
- b=vWIeu2q1cnQb9Bz7DojnTunWP+ofe43xDuKjlmZJEqdQklR73/PsQaaLhOxjHGAXsGZZD5q/jikw100S4Nt31FxTPjgNM94K4IjEj9vTl7EmnQk8c/cP62IQqMHWOIFCvtSXrh1pVXBkY0qMRcHEczhmow/Uyz8ln43beiBiRLs=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MWHPR1201MB0192.namprd12.prod.outlook.com
- (2603:10b6:301:5a::14) by MW2PR12MB2492.namprd12.prod.outlook.com
- (2603:10b6:907:8::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4690.27; Thu, 18 Nov
- 2021 06:59:38 +0000
-Received: from MWHPR1201MB0192.namprd12.prod.outlook.com
- ([fe80::2d02:26e7:a2d0:3769]) by MWHPR1201MB0192.namprd12.prod.outlook.com
- ([fe80::2d02:26e7:a2d0:3769%5]) with mapi id 15.20.4690.027; Thu, 18 Nov 2021
- 06:59:38 +0000
-Subject: Re: [PATCH] drm/scheduler: fix
- drm_sched_job_add_implicit_dependencies harder
-To:     Rob Clark <robdclark@gmail.com>,
-        Steev Klimaszewski <steev@kali.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20211116155545.473311-1-robdclark@gmail.com>
- <CAMi1Hd0qzu1t6QeZCNgSoTrScZL0_XQnZUPkQ5y7D+oV49GREw@mail.gmail.com>
- <c7741be3-43ec-307b-f5bd-3d19725df76c@amd.com>
- <0336e09d-59c4-3155-434a-0b04fda15bb6@kali.org>
- <CAF6AEGs1hmS7hNC+OOvy=eHjvYhk=GLFX5T9iHWO=PUvGxNyDg@mail.gmail.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-Message-ID: <c34a3580-044e-d43d-6e38-2c6e44ac4788@amd.com>
-Date:   Thu, 18 Nov 2021 07:59:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-In-Reply-To: <CAF6AEGs1hmS7hNC+OOvy=eHjvYhk=GLFX5T9iHWO=PUvGxNyDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-ClientProxiedBy: AS9PR04CA0084.eurprd04.prod.outlook.com
- (2603:10a6:20b:48b::26) To MWHPR1201MB0192.namprd12.prod.outlook.com
- (2603:10b6:301:5a::14)
+        id S245337AbhKRJ75 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 04:59:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245349AbhKRJ7E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 04:59:04 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A531CC061766
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 01:56:03 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id x15so24488747edv.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 01:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Xu5C790ZoAg97VGCg1XhQWVDBmDf+6a36FlNr4a3o/M=;
+        b=ynBCFY5uD4ULQ9b/5BK8N5p8NyESaZmBpT5PNxk9FhOvrN3r77IYXiXYuYim4xVME1
+         t+k0rV7mkqae5K8ojii4uRFtclgDlvxj2m/q6OQtwh9V7kLhaQeNRR/mKHZMEI3yHjpq
+         Qui0gTFLBC2a4WbUyVM/Ynu/v/Rdy1S6fQfBiTQH1i1Zq3kXiLfWK0yVDUvJMQAGR6yC
+         WM3MiQelyyFak9ymmcYM7VmH7UUFjmZcU6tVzLsjRuVrDFkqDFNE5aV2TmNPAW9gaRzx
+         aWrehN6NKuXCR46SvqdaWBpVox7ECBeKRLfU1yT2EpNiO4FX6//lYQMq64iKutnhWqvN
+         Yo4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Xu5C790ZoAg97VGCg1XhQWVDBmDf+6a36FlNr4a3o/M=;
+        b=zbtnDjD0W5llYUuv0pPUI0326SraC0N3t9in8t2ocRoO/MnExnWzUoldaP9L6QOMA6
+         483SgqhYCqpEvVlL7tXTnPBqqAOTDGuU6vBSXQ0p/HwL2VSuIsdWT/5yi3LwaYRujKFW
+         4Pmob2/HKT9sgjU1yQoEFijwAPohQkbdsF70DiJNhGpB/bmsqhcZEZsV5q5es2M/OM19
+         gEpY7wX9Vdhp7WsDO2D9MCY8gKUE+7ezEOs6kzeCjy+bNmON6E/dMJX2pTj/8culSCQ3
+         L55FlHMRcAms1JnbSkkSGh7td9kbUkp8TlyEYN/qjspStbXZ1JPQwmnN6eOnrta3SZEm
+         iC7Q==
+X-Gm-Message-State: AOAM530JBLvu9yRMS8xtAqSNNa2xahGqGjerFHX4JFqf3Tyw6YCSxh8C
+        qp+2c27/Hb7CamEun2bUoGKmUn1++SmpsTo8GXEBAw==
+X-Google-Smtp-Source: ABdhPJytdcmXOpm+1R0BZ5kIZ7mJHWmMMAKGNTUwWOBwbaIAUJQfq3/Rmp56rV4+ydwCFBd0unEvoNAfl2QvdEnvDrw=
+X-Received: by 2002:a17:907:720d:: with SMTP id dr13mr32411152ejc.153.1637229362213;
+ Thu, 18 Nov 2021 01:56:02 -0800 (PST)
 MIME-Version: 1.0
-Received: from [192.168.178.21] (87.176.183.123) by AS9PR04CA0084.eurprd04.prod.outlook.com (2603:10a6:20b:48b::26) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4713.19 via Frontend Transport; Thu, 18 Nov 2021 06:59:35 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: d851d427-008b-4f5f-9b58-08d9aa60fc67
-X-MS-TrafficTypeDiagnostic: MW2PR12MB2492:
-X-Microsoft-Antispam-PRVS: <MW2PR12MB2492AC88F5942AC379353F02839B9@MW2PR12MB2492.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: PKJhnkICKqrzxYzgbGrDPvOVnA/nOh5h8dzOxJu+PoOaz1SzTzxB3J+lEivqlyftzF0Pg63N8b4pMzOG77ZEYky1B+0y/LlXVKKEA7BlXcn7s4PUByEhhjqH833GqSE/Q7+Ei4ikq9kPt4U3nSUjL1RT8z0NxbjMLDanVt3CeK7Upj4iNoKVa/xbR83wzHk3KmdOJSw7fUNlsdGeh32AqK7cme/xxN9NzhuQD/HgRjtbXSujX9OXBuq9QSDkcMrXb5fXVwgABh+0F/GsVBkinmEnjYlgPDylVovlbnOBCAv21GF4cXWxqWlXxjzlB5/qgopJDGsN9ihZmSUwjyi2UOBC1b+w06wqQB7ot+MQWXJyHJnM68l+gIvSNLWOmz7gMM0TPgr18owyL3l13GHpVYboagtyFG/UaLIQLFZ4Gvv1tukUfMMk5oETttst26sUw+TH6TbHK24fm8kJsHupNQMYZTaOJalLHX5ytrqaX5AxY+SSMS8PesA3/okqPQ1yc7KNcPMB3yLYCaX+TlBceqWD5Log320c0HYTlDnpWPnW406JKMs6NQG7MqOqQ7Q/2Dbj1X31ibeGHNPwR8hQAjYeJgZdI1cT1gV/Oa4rCjC7XL357PuyTdD5jlfsy+0y1DBM/VCoFwIi7mav1Rf+HESdROUAW++e4wlhYiLR26nS1goWXc0jecSIb2mFiLqPnHo2N8eG55yAVYMv2WHdxRyWr8aPe1paqWG4LuEczPudDhak/dbdXQLXxT+O8m/4OyXB9sOvR63s4Ro7xa0wxzKQ1ug++9cfwnjiuw0Jqnk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1201MB0192.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(66476007)(8676002)(4326008)(26005)(31696002)(2906002)(186003)(86362001)(508600001)(31686004)(38100700002)(36756003)(6666004)(66556008)(8936002)(53546011)(54906003)(956004)(2616005)(66946007)(5660300002)(110136005)(316002)(16576012)(6486002)(34023003)(148693002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cmtuLzhhN3kxbHlCSm1uTnYwTXhyVkxzWkEwODBZeS9QL3V1WlhjeHJPS1Fj?=
- =?utf-8?B?MXRSV3pxK2dlcGRnT3pvLzhUUEV5d0gxWTRRVE1DQ2M1SE5meGpQQXU3aVlW?=
- =?utf-8?B?b2Z1REpqQU9GRi9rQ2hsZUZPWTROeUQzVEF6aU1iRGRFeXN6T1B2UTgrZFhq?=
- =?utf-8?B?c0JDMDNaRWN2NnFyRlVYMzQrNzJOdnZNWUpzTFpWSEpVcEFPQXV0ZHFMWjhK?=
- =?utf-8?B?ODVlWTR6bUZCME1SenJZNEZDZUZMWXd6ZUdPazBRSTRLU0xCS2JyVzIrd0FZ?=
- =?utf-8?B?TWtKNllQclVTR1ZyM3R0QXVwbnFXekpaRGZ0UEVMMWR5cGVhdGcySm9Za1dU?=
- =?utf-8?B?Vkc2MEw5dyswTDRRUzYvSS8wVHpYTEEvblgxN1FDR3JIVFUrVmpaNm5ReUw3?=
- =?utf-8?B?aDlDajZWcE42SkVzcmtMWkZUc2JtdEtUWU02U245ZFRId0EvMmlSclh5REpX?=
- =?utf-8?B?dGRsZC83NVlsYzRuNDRxalBBVGRUaXVaYzFPTzJUVEwvYjB3NXU0T2pJN1JE?=
- =?utf-8?B?Um9SYm1pdjU0d1dabk5YMTBIWlZwa001SVdIbE5JcEp3bUpWanBhNWd2Q2Rx?=
- =?utf-8?B?bGttMjRCUGRYWk55VXVCcXNaVVBSU3U1azJtb3l5V0ZlRGFHRTZhQ3JKYWE5?=
- =?utf-8?B?bFRjL1ZENllMTGs3b1UzT3ZFT2ZPUkFUMWloSUFoVHdJd2NySEZSVE0rei8y?=
- =?utf-8?B?eDhrQzZJWS93SHg3Y3ZwKysyWGJ5M001bTZVWitGZ2p4VXRyVHk2dmJnblRE?=
- =?utf-8?B?U0ZMdEorYTl5SWRHWVkwSEVRNGJucEFMdEZmZUZPSkQzb3pHRFVwS0dBQmxC?=
- =?utf-8?B?VUVkc2p5ekxUSU03S3dDUWZFKzVYUWlUTWRhUUlmYWZld3FpdS9RR25ScFFM?=
- =?utf-8?B?TDNEdnViTm8reEw0TWREREtrc2x5ZmFSQ2hoOWlkN2h0RElQVUt2L3hHRXlE?=
- =?utf-8?B?dlJZbnFoeCtpREMxS283NW5rTVhXSVNKMjlHOGF1Y0tDWHZkcGNlTUwyQ3Jm?=
- =?utf-8?B?dFJhcEVQMlNxcW13SW1RU3h4enY3enN5bHhHeFh4WU4xUlJSRVlGMmtjdW1P?=
- =?utf-8?B?dVNoMEZVaVlDdW1JWitmblJ6UVpVNHE0NGM5N2Z3TUtJTmRuRlA0QVkzSXk5?=
- =?utf-8?B?dVF1UFAzczlFNmIrR2s4eENnRDhRTnhWSmd1eG9rbmY2ekhaMWxKcUFUUjBC?=
- =?utf-8?B?OW5ZSkxOcXBNdlBzbGlhelpSRUd2NlMxQkc1dDlOWXNkR3lZOXJSZmJBdUFi?=
- =?utf-8?B?VzhVVWhFeHREMUdnSE9tNFJBMzY1TXJ2K0xGSi9td2NOTFdpWCtEMWtCQXJB?=
- =?utf-8?B?Q1Q0eHFneTFYWlJNRVhPRWVSRCtyMEQ1WWdtV3hRREE5V3dlWDVnZFRBKy85?=
- =?utf-8?B?QmJrdm1lZG40UzBJaWdQdXZLem14dCtHajd3UDNhWEd3bDVvRnVscWhyalRQ?=
- =?utf-8?B?akZGSmFGN202RVpaeU4yd01LVHZVd2o0eHBTR1Q4UlNHNVM5QXNPZ2tpV0s3?=
- =?utf-8?B?R0pEZHR4NjRVa2FkZHArMXc3TG8xMWF1Zkx6MTFuaWxVa29Gd2QzNTAxcU9O?=
- =?utf-8?B?eU84YXF0TTJLQnd2SUd3ZzJsV0x3YlhKRVlWWVBZYjQyRTNIUitJUTVZVUpB?=
- =?utf-8?B?QWY4bzVUMHlYSHpLZjZrNzNQayttK2lFWFdmZzBhSVR3TWNsdkphMEh4aTJI?=
- =?utf-8?B?WlZzSTAxdUFPU2g2eExlQlRtRXZVRVIxWExMMlh3NFoxVXp5K2hhVStiR0Yv?=
- =?utf-8?B?RFkzQjRuVXZVRWNZbmh3dTRDZmxtNEJORFFtaitmNkQyeDlmM1NXVFNZWDZE?=
- =?utf-8?B?azNVM21kMW1nMWNoamJaM0J2eU96SkNZZFVTSWFISTRHWWVSYVF0ZFA1OW9v?=
- =?utf-8?B?K0ZtamxaV1VycHhDeTc5Z0x5VmF2WjVSdnEvdkhiQzd3T0IydzZTVFVpbFBL?=
- =?utf-8?B?TlovSGlWQjAwSDBKQnVKeHk3N1RpRnNTclV6YmJ1R0VBeFJJc2t1djlHSy9W?=
- =?utf-8?B?THY0R2I5aER1aXBzdjNrUEhkNGprZHM0eEI1WVhjdzZWdlY5OHp0ekk2eXkz?=
- =?utf-8?B?T1R1dUF0UHpoaDNFR05OVGVDTEVJSDJEQjBOc01LRENXa0ducVlzb2xPWEU1?=
- =?utf-8?Q?/ddw=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d851d427-008b-4f5f-9b58-08d9aa60fc67
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR1201MB0192.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2021 06:59:38.0245
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Rh5oZ5reA5hZgyQHqap8wRkYUc7AhBsD0ik+WFYQOA+nw07jECzzl9SZlVdJe1Ky
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR12MB2492
+References: <20211118055726.13107-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20211118055726.13107-1-manivannan.sadhasivam@linaro.org>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Thu, 18 Nov 2021 10:55:51 +0100
+Message-ID: <CAAP7ucJoOTOqFnNpJcQmxF=A0TOB8TtCCng-2q9pNkddRTbpuw@mail.gmail.com>
+Subject: Re: [PATCH v3] bus: mhi: Fix race while handling SYS_ERR at power up
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mhi@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
+        Thomas Perrot <thomas.perrot@bootlin.com>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>, quic_jhugo@quicinc.com,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        stable <stable@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 18.11.21 um 04:09 schrieb Rob Clark:
-> On Wed, Nov 17, 2021 at 5:23 PM Steev Klimaszewski <steev@kali.org> wrote:
->>
->> On 11/17/21 1:27 AM, Christian König wrote:
->>> Am 16.11.21 um 19:30 schrieb Amit Pundir:
->>>> On Tue, 16 Nov 2021 at 21:21, Rob Clark <robdclark@gmail.com> wrote:
->>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>
->>>>> drm_sched_job_add_dependency() could drop the last ref, so we need
->>>>> to do
->>>>> the dma_fence_get() first.
->>>>>
->>>> It fixed the splats I saw on RB5 (sm8250 | A650). Thanks.
->>>>
->>>> Tested-by: Amit Pundir <amit.pundir@linaro.org>
->>> I've added my rb, pushed this with the original fix to drm-misc-fixes
->>> and cleaned up the obvious fallout between drm-misc-fixes and
->>> drm-misc-next in drm-tip.
->>>
->>> Thanks for the help and sorry for the noise,
->>> Christian.
->>>
->> I've run into this splat on the Lenovo Yoga C630 on 5.16-rc1 - are these
->> 2 patches (which fix it) going to be heading to 5.16 or were they
->> targeted at 5.17?
-> these should be for v5.16
+Hey Mani,
 
-Yeah, they are already queued up for -rc2.
-
-Regards,
-Christian.
-
+On Thu, Nov 18, 2021 at 6:57 AM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
 >
-> BR,
-> -R
+> Some devices tend to trigger SYS_ERR interrupt while the host handling
+> SYS_ERR state of the device during power up. This creates a race
+> condition and causes a failure in booting up the device.
+>
+> The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
+> handling in mhi_async_power_up(). Once the host detects that the device
+> is in SYS_ERR state, it issues MHI_RESET and waits for the device to
+> process the reset request. During this time, the device triggers SYS_ERR
+> interrupt to the host and host starts handling SYS_ERR execution.
+>
+> So by the time the device has completed reset, host starts SYS_ERR
+> handling. This causes the race condition and the modem fails to boot.
+>
+> Hence, register the IRQ handler only after handling the SYS_ERR check
+> to avoid getting spurious IRQs from the device.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
+> Reported-by: Aleksander Morgado <aleksander@aleksander.es>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>
+> Changes in v3:
+>
+> * Moved BHI_INTVEC setup after irq setup
+> * Used interval_us as the delay for the polling API
+>
+> Changes in v2:
+>
+> * Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
+>
 
+I tried this v3 patch and I'm not sure if it's working properly in my
+setup; not all boots are successfully bringing the modem up.
+
+Once I installed it, I kept having this kind of logs on every boot:
+[    7.030407] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+0x600000000-0x600000fff 64bit]
+[    7.038984] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+[    7.045814] mhi-pci-generic 0000:01:00.0: using shared MSI
+[    7.052191] mhi mhi0: Requested to power ON
+[    7.168042] mhi mhi0: Power on setup success
+[    7.168141] mhi mhi0: Wait for device to enter SBL or Mission mode
+[   15.687938] mhi-pci-generic 0000:01:00.0: failed to suspend device: -16
+
+I didn't have debug logs enabled in that build, so I created a new one
+with them enabled, and... these are the logs I'm getting now (not the
+same ones as above, not sure why):
+
+// Cold boots fail (tried several times)
+[    7.033370] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
+[    7.040558] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+0x600000000-0x600000fff 64bit]
+[    7.049105] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+[    7.055923] mhi-pci-generic 0000:01:00.0: using shared MSI
+[    7.062130] mhi mhi0: Requested to power ON
+[    7.066351] mhi mhi0: Attempting power on with EE: PASS THROUGH,
+state: SYS ERROR
+[   20.572010] mhi mhi0: Power on setup success
+[   20.576412] mhi mhi0: Handling state transition: PBL
+[   55.139820] mhi mhi0: Device failed to enter MHI Ready
+[   55.144978] mhi mhi0: MHI did not enter READY state
+[   55.149876] mhi mhi0: Handling state transition: DISABLE
+[   55.155203] mhi mhi0: Processing disable transition with PM state:
+Firmware Download Error
+[   55.163482] mhi mhi0: Triggering MHI Reset in device
+[   89.727820] mhi mhi0: Device failed to clear MHI Reset
+[   89.732975] mhi mhi0: Waiting for all pending event ring processing
+to complete
+[   89.740316] mhi mhi0: Waiting for all pending threads to complete
+[   89.746422] mhi mhi0: Reset all active channels and remove MHI devices
+[   89.752963] mhi mhi0: Resetting EV CTXT and CMD CTXT
+[   89.757940] mhi mhi0: Error moving from PM state: Firmware Download
+Error to: DISABLE
+[   89.765785] mhi mhi0: Exiting with PM state: Firmware Download
+Error, MHI state: RESET
+[   89.773793] mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+[   89.781067] mhi-pci-generic: probe of 0000:01:00.0 failed with error -110
+
+// Warm reboots afterwards seem to go ok (tried several times)
+[    7.072762] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
+[    7.079942] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+0x600000000-0x600000fff 64bit]
+[    7.088505] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+[    7.095331] mhi-pci-generic 0000:01:00.0: using shared MSI
+[    7.101628] mhi mhi0: Requested to power ON
+[    7.105859] mhi mhi0: Attempting power on with EE: PASS THROUGH,
+state: SYS ERROR
+[    7.224053] mhi mhi0: Power on setup success
+[    7.228373] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
+MISSION MODE state: READY
+[    7.236878] mhi mhi0: Handling state transition: PBL
+[    7.241871] mhi mhi0: Device in READY State
+[    7.246118] mhi mhi0: Initializing MHI registers
+[    7.250775] mhi mhi0: Wait for device to enter SBL or Mission mode
+[   15.418147] mhi mhi0: local ee: MISSION MODE state: READY device
+ee: MISSION MODE state: READY
+[   16.025027] mhi mhi0: State change event to state: M0
+[   16.025041] mhi mhi0: local ee: MISSION MODE state: READY device
+ee: MISSION MODE state: M0
+[   16.038500] mhi mhi0: Received EE event: MISSION MODE
+[   16.038505] mhi mhi0: local ee: MISSION MODE state: M0 device ee:
+MISSION MODE state: M0
+[   16.051671] mhi mhi0: Handling state transition: MISSION MODE
+[   16.057434] mhi mhi0: Processing Mission Mode transition
+[   16.063780] mhi_net mhi0_IP_HW0: 100: Updating channel state to: START
+[   16.197073] mhi mhi0: local ee: MISSION MODE state: M0 device ee:
+MISSION MODE state: M0
+[   16.201196] mhi_net mhi0_IP_HW0: 100: Channel state change to START
+successful
+[   16.212565] mhi_net mhi0_IP_HW0: 101: Updating channel state to: START
+[   16.362262] mhi mhi0: local ee: MISSION MODE state: M0 device ee:
+MISSION MODE state: M0
+[   16.362268] mhi_net mhi0_IP_HW0: 101: Channel state change to START
+successful
+[   18.860081] mhi mhi0: Allowing M3 transition
+[   18.864380] mhi mhi0: Waiting for M3 completion
+[   19.080218] mhi mhi0: State change event to state: M3
+[   19.080228] mhi mhi0: local ee: MISSION MODE state: M0 device ee:
+MISSION MODE state: M3
+[   21.899049] mhi_wwan_ctrl mhi0_DUN: 32: Updating channel state to: START
+[   21.924031] mhi mhi0: Entered with PM state: M3, MHI state: M3
+[   21.952174] mhi mhi0: State change event to state: M0
+[   21.952193] mhi mhi0: local ee: MISSION MODE state: M3 device ee:
+MISSION MODE state: M0
+[   21.967549] mhi mhi0: local ee: MISSION MODE state: M0 device ee:
+MISSION MODE state: M0
+[   21.967553] mhi_wwan_ctrl mhi0_DUN: 32: Channel state change to
+START successful
+
+I didn't try the v1 or v2 patches (sorry!), so not sure if the issues
+come in this last iteration or in an earlier one. Do you want me to
+try with v1 and v2 as well?
+
+The patch that was working very reliably (100%) for me was the "bus:
+mhi: Register IRQ handler after SYS_ERR check during power up" one,
+which you attached here:
+https://www.spinics.net/lists/linux-arm-msm/msg97646.html
+
+-- 
+Aleksander
+https://aleksander.es
