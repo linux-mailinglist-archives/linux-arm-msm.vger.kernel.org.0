@@ -2,121 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75500455232
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 02:27:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4913545523D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 02:33:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242250AbhKRBaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 Nov 2021 20:30:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37482 "EHLO
+        id S242269AbhKRBgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 Nov 2021 20:36:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232650AbhKRBae (ORCPT
+        with ESMTP id S232181AbhKRBgv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 Nov 2021 20:30:34 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38C3C061570
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:27:34 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id w6-20020a9d77c6000000b0055e804fa524so8052520otl.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:27:34 -0800 (PST)
+        Wed, 17 Nov 2021 20:36:51 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04840C061570
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:33:52 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id z2-20020a9d71c2000000b0055c6a7d08b8so8092692otj.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 17:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=n0EG0wxQQFhd4AUlvRdDhNWG+upjiwjEUUPztW03B/4=;
-        b=tT0ETGqWKy/g7bOjyPzsJ6HT0u9n9mH6FzFuZndcFq95EGg2MnJTokiCIYqyIzeQ6k
-         I1exM+3VN+kWAaUDBumSiyIV78P5EOQnAZXKD8b7pEuO0RXVGZW88hRZArCcNV6/RhkY
-         2IG67Vhr4xHZxrEDIE1BIpMKQoePFLhV66m6yDZbRb1Jv6WOG405zV7sdiwzZOfaNfBH
-         u8AJZ0FGT4e7ByR76PrRWnshko7XqFTvssWQ4krdr7CJg9pT4+tpSZt61SlVaHZgKeYB
-         QbgUuatlLVTX1Ixh9CMApyw/DxNl/ay6kdkbpil4y383oUYbBPfqG0IUrr2ybHdLIvCN
-         87SQ==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=4b4P2TJUsQmMD7ulO5jskW7J+R4EF/1H7E16Fc7M+tk=;
+        b=lwE1jNkaQ6vRIYJfuDg1xVkUFcf6I9dfnMdqvFzcLVB9aZRng6kzelTHzd9M2GegQt
+         G+F6eYa/CXyot083R2bqXE1ZITf+EOHFfCrAuPGKm/iEJlaxBPzElDYHm+wER3E6nXcv
+         QqgCD+3QH3rqwWIYqnDlyqizIZB5ODklXHB1yl8yC6wzlvc85IfV/gHa3pF6niOkuPOg
+         HxMcizZ2Ly8ANIpX0OR0kYfl6gDnFmnCMPC947Qy90+zQ8QQMVjy1EhgvgLtTeaMoSgo
+         VYorYBk3LxsAqqIAPOzJccXh6uOrl33XCXnN9hkWcP+AhMTXGa4aeeXa+9V73FGNO9bi
+         PRZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=n0EG0wxQQFhd4AUlvRdDhNWG+upjiwjEUUPztW03B/4=;
-        b=HrUB8RKiBTmFmxDVZTEsNqUiLF064eGfjkHtVqmg22csXPjV6a15snKUtYzy3wuDwQ
-         yC4CGP0QrbKIOR6RX4R6gi9UPvHeIqy2+HUFl+POB3rz7i5fOKjcbcEeIdQw37JBF+P9
-         wxYng/BRQHAD/a/M+SRbfnDAro14x8/SIx1eiEkleKWywPMX5LKaoygQYZrKU6x9ovYm
-         8IFfR68j7h0LDlBFQSHlCsJO3+yian0CbsLM0MeOd51uAawXHrSe4C25GLw7F9+6cVlp
-         6oYY4ZlvRampJfOIK3EN9wecho7xMt9fPgolmre+lbLl+fD28GiRW9doVLVaNUEbVOAS
-         vgOg==
-X-Gm-Message-State: AOAM533cTbFz3TfVMcGA7jlSBHe+gzXdGsX/Tqj3FgsEtDyPFovgRWsV
-        fjksIsJ+1QegJg6cINrogEvY7g==
-X-Google-Smtp-Source: ABdhPJyYZgQXNu+wa3yw/ABK8HCMoaf2k8Z60xP3yAK067s5DOYNirIuFppduq7TcNoh+gKP1GYOxQ==
-X-Received: by 2002:a9d:63d8:: with SMTP id e24mr17325094otl.345.1637198854147;
-        Wed, 17 Nov 2021 17:27:34 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=4b4P2TJUsQmMD7ulO5jskW7J+R4EF/1H7E16Fc7M+tk=;
+        b=bzxIWZZEtFECruuGNt+waBSJCGihwEzW9sb+OZJd7aWmwPTXZ1rF1DtuxTgW76Sapr
+         qAqnsfyhl7h8ytl8ykqjzCjPhr/ceu3lQV4baUn7+ywxCbZF7ffe23nAhSJFvpWlV4CF
+         8DhR0tqlYTx7CfBo/V420gKlUUk5CwKBzHjEGz+U+ydrWK/NXTNKYCvNsWyfg0/1Yrf2
+         kYDmDQsX03qaEEGrn0ufn0Era2xiv1zLNaF99jXVAjpaB2Bj7ufc37CXhFVjvXe/GWD+
+         nA8n4OkmWc4hqVwTvvTCUuQfV7Z6waCXGdIkhSDjnXgtAljokH4iBzUQIPGpfJVYLBZ0
+         /uRQ==
+X-Gm-Message-State: AOAM532tKckqv7F4T7Nks/OuAjn+K8/4eoxUWtp1ZCr3IqYn+c2iYY7Z
+        aH9ov1afyd5D/waL5c23Q8HO9g==
+X-Google-Smtp-Source: ABdhPJyAP0uCLZL43+mhZCRInEmazFHlxnQ7X8cjmMuZqDA2VCVNiYRJvwQ9Jffhy6a/v8ncNhEAsA==
+X-Received: by 2002:a05:6830:1358:: with SMTP id r24mr18065620otq.8.1637199231021;
+        Wed, 17 Nov 2021 17:33:51 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v19sm313562ott.13.2021.11.17.17.27.33
+        by smtp.gmail.com with ESMTPSA id t14sm329745oth.81.2021.11.17.17.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Nov 2021 17:27:33 -0800 (PST)
-Date:   Wed, 17 Nov 2021 19:27:28 -0600
+        Wed, 17 Nov 2021 17:33:50 -0800 (PST)
+Date:   Wed, 17 Nov 2021 19:33:48 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Christian Lamparter <chunkeey@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Pavel Kubelun <be.dissent@gmail.com>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: fix sleep clock
-Message-ID: <YZWsAN+bWkmiHkM6@builder.lan>
-References: <20211031155650.487158-1-chunkeey@gmail.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        devicetree@vger.kernel.org, robdclark@gmail.com,
+        robh+dt@kernel.org, sean@poorly.run, vkoul@kernel.org,
+        quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, quic_mkrishn@quicinc.com,
+        quic_kalyant@quicinc.coml, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add Display Port node
+Message-ID: <YZWtfGNPAGtHOXZ+@builder.lan>
+References: <1635896673-5841-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n53ArJSYEAtLbc5dFrPspKhi3Kv=hpu=wS1TMsOWcmz6pw@mail.gmail.com>
+ <88a5219e-c82a-87fa-6af3-578238d6027b@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20211031155650.487158-1-chunkeey@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <88a5219e-c82a-87fa-6af3-578238d6027b@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 31 Oct 10:56 CDT 2021, Christian Lamparter wrote:
+On Tue 16 Nov 10:43 CST 2021, Kuogee Hsieh wrote:
 
-> From: Pavel Kubelun <be.dissent@gmail.com>
 > 
-> It seems like sleep_clk was copied from ipq806x.
-> Fix ipq40xx sleep_clk to the value QSDK defines.
+> On 11/15/2021 3:39 PM, Stephen Boyd wrote:
+> > Quoting Kuogee Hsieh (2021-11-02 16:44:33)
+> > > From: Kuogee Hsieh<khsieh@codeaurora.org>
+> > > 
+> > > Signed-off-by: Kuogee Hsieh<quic_khsieh@quicinc.com>
+> > > ---
+> > What tree is this based on? I don't see edp_phy upstream for sc7280
 > 
-> Also rename the sleep clock node like the GCC driver names it.
+> this patch is depend on  --> [PATCH v2 4/4] arm64: dts: qcom: sc7280: add
+> edp display dt nodes
 > 
-> Link: https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-msm/commit/?id=d92ec59973484acc86dd24b67f10f8911b4b4b7d
-> Link: https://patchwork.kernel.org/comment/22721613/
-> Signed-off-by: Pavel Kubelun <be.dissent@gmail.com>
-> Signed-off-by: Christian Lamparter <chunkeey@gmail.com> (resend)
-> ---
->  arch/arm/boot/dts/qcom-ipq4019.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> index 7a181352b306..ed40bef91e45 100644
-> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
-> @@ -144,9 +144,9 @@ pmu {
->  	};
->  
->  	clocks {
-> -		sleep_clk: sleep_clk {
-> +		sleep_clk: gcc_sleep_clk_src {
 
-Underscore is not a valid character in node names, so it should named
-something like sleep-clk.
+But there's a v3 of 3 patches in the patchworks queue, unfortunately I
+don't have this in my inbox. Not sure why, but looking at
+lore.kernel.org, you didn't use get_maintainers...
 
-It would be nice if the clock driver was converted to using parent_data
-and fw_name and a clocks reference in the gcc node to &sleep_clk, but if
-you need something that works with the current implementation then
+Also why are the patches Reported-by: kernel test robot <lkp@intel.com>?
 
-  clock-output-names = "gcc_sleep_clk_src";
-
-is your friend.
+Did lkp tell you that you where missing edp support? ;)
 
 
-But please do consider converting the gcc-ipq4019.c to acquire "xo" and
-"sleep_clk" using parent_data instead.
+Could you please resubmit the 4 patches together?
 
 Regards,
 Bjorn
 
->  			compatible = "fixed-clock";
-> -			clock-frequency = <32768>;
-> +			clock-frequency = <32000>;
->  			#clock-cells = <0>;
->  		};
->  
-> -- 
-> 2.33.1
+> it had completed reviewed.
 > 
+> https://mail.codeaurora.org/?_task=mail&_caps=pdf%3D1%2Cflash%3D0%2Ctiff%3D0%2Cwebp%3D1&_uid=1789&_mbox=INBOX&_action=show
+> 
+> 
+> > 
+> > Otherwise, looks good to me.
+> > 
+> > Reviewed-by: Stephen Boyd<swboyd@chromium.org>
