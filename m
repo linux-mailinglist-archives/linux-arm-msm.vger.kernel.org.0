@@ -2,243 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4ECC455F56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 16:24:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BB10455F66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 16:25:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231574AbhKRP11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 10:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230205AbhKRP11 (ORCPT
+        id S231947AbhKRP2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 10:28:07 -0500
+Received: from mout.kundenserver.de ([212.227.17.10]:40495 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231773AbhKRP2G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 10:27:27 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE3C8C061574;
-        Thu, 18 Nov 2021 07:24:26 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id z34so27855451lfu.8;
-        Thu, 18 Nov 2021 07:24:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version;
-        bh=pzh5IjYgObINcry+O6M/Q2PxAiMvzwxpKCnEyr3LdYc=;
-        b=hPfOZHsEzDKILKAGYid8ZwEPGyv19A0EBcNfCJEnLDVIskvG2UlxJeVSQ6fEVzBdhb
-         zpv1uxJGDM8ONvhmUAsmOiS0OtvrvC8sXUMZw9FxjMxUk1mxkQaHSz5zOY2uMzR6tl5n
-         n+SaUDZgFRYLx3rMcyx4GIorZ+iEoSO2PavQuVDoQTWxDSZKmf9Aq8IHZd/7DDnQfrrO
-         NLxvjbEl9AGHnZ2Ig6N8aE4xZUmeA5IPuJ1Zr/OAvAS5tvfBho/Ol0FA1oFYW0oGxYIC
-         GBcVyHig8HX4MPHq3pcbuCW34F1pOQyT3N0ZPmDy+5HBI/d4J+TBYK0z7s6HBvdc5/i2
-         KIEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version;
-        bh=pzh5IjYgObINcry+O6M/Q2PxAiMvzwxpKCnEyr3LdYc=;
-        b=YgeAxvO1c81jVU9Pg70mzjtonVbPO8qED5WRLI3bn7VNtpxZYjrEigBVjHpHvlP1a4
-         J1YxRi6RtiXFDZqFWdTjAHNHMEpphsKoM+IwpoL+F9h71F7dNBcPQeoC/zsIVOO8Ea0c
-         GvcDvK5HqySwtXEna5qtRRjJnyXKdAOXa8goE9AI9QQFtC1X7E57fKa2eEvZLR+JVBPB
-         08g+PlHAe7mrph/4AFUFrrBrCdYzghlYiclSE0EDyyUVo67VgPv2sErwhpp9qs1JWjn2
-         FyLgRXI+fFAIDzEzjFb7g00izEZH1J3ULuQlgJUSL+LBsSoz+KIVIZ2QKBmCBxe3+Tc9
-         t3OQ==
-X-Gm-Message-State: AOAM532FCQhglQeUugRizChipJxsK5dEYOk7sImIC4hYWVF7BscOuG6Q
-        uoeO4glWAQ2uky60l7gOcMA=
-X-Google-Smtp-Source: ABdhPJy3/sQIR0aJ/r5EpvjSkCxDlGZfuWEHw/qFNXw1+fpF6mIUzQZYEYTiXhGXji0/pC4ViQ99Cw==
-X-Received: by 2002:a2e:a175:: with SMTP id u21mr18195173ljl.284.1637249065180;
-        Thu, 18 Nov 2021 07:24:25 -0800 (PST)
-Received: from eldfell ([194.136.85.206])
-        by smtp.gmail.com with ESMTPSA id r25sm19436lfi.166.2021.11.18.07.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Nov 2021 07:24:24 -0800 (PST)
-Date:   Thu, 18 Nov 2021 17:24:01 +0200
-From:   Pekka Paalanen <ppaalanen@gmail.com>
-To:     Jason Baron <jbaron@akamai.com>, seanpaul@chromium.org,
-        sean@poorly.run
-Cc:     Vincent Whitchurch <vincent.whitchurch@axis.com>,
-        Jim Cromie <jim.cromie@gmail.com>, quic_saipraka@quicinc.com,
-        catalin.marinas@arm.com, dri-devel@lists.freedesktop.org,
-        will@kernel.org, maz@kernel.org, amd-gfx@lists.freedesktop.org,
-        mingo@redhat.com, daniel.vetter@ffwll.ch, arnd@arndb.de,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        rostedt@goodmis.org, intel-gvt-dev@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, quic_psodagud@quicinc.com,
-        mathieu.desnoyers@efficios.com
-Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with
- it - RFC
-Message-ID: <20211118172401.0b4d722e@eldfell>
-In-Reply-To: <f87b7076-47e6-89b1-aaf9-b67aa6713e01@akamai.com>
-References: <20211111220206.121610-1-jim.cromie@gmail.com>
-        <20211111220206.121610-9-jim.cromie@gmail.com>
-        <20211112114953.GA1381@axis.com>
-        <f3914fa9-8b22-d54e-3f77-d998e74094b9@akamai.com>
-        <20211116104631.195cbd0b@eldfell>
-        <f87b7076-47e6-89b1-aaf9-b67aa6713e01@akamai.com>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+        Thu, 18 Nov 2021 10:28:06 -0500
+Received: from mail-wm1-f47.google.com ([209.85.128.47]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1Mi23L-1mAWqO1xuT-00e8Sy; Thu, 18 Nov 2021 16:25:05 +0100
+Received: by mail-wm1-f47.google.com with SMTP id i12so5678723wmq.4;
+        Thu, 18 Nov 2021 07:25:05 -0800 (PST)
+X-Gm-Message-State: AOAM53356mLbbBGrg5CGTEW6/JtNW3ZzuZHktYM46l8J2sf4ICSOvhNj
+        vWFNpqX024aMJCheGm26NduAWE22L3JnK2ko2js=
+X-Google-Smtp-Source: ABdhPJzCDc7U/om5VTrFzVpeYf+uqPA8EYXDoIatLLdGVXoJx5jqS+K6FZ7sUawNFCuFbFVHiLDr/9z+YsGN7/9johY=
+X-Received: by 2002:a05:600c:6d2:: with SMTP id b18mr11167951wmn.98.1637249105074;
+ Thu, 18 Nov 2021 07:25:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/L=/5XSamIvBp+./DRBXXIxC";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+References: <cover.1636973694.git.quic_saipraka@quicinc.com> <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
+In-Reply-To: <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Thu, 18 Nov 2021 16:24:48 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
+Message-ID: <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
+Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access instrumentation
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        quic_psodagud@quicinc.com, Marc Zyngier <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Ingo Molnar <mingo@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:lkA5frvhWsdtogVokqZiCDKtivzgxSKDMsRrmNlpUQgO+z2trOt
+ RqHaEfD1bTQCbXIKT7IrKjyit7Vw3hz3/CPL58Bv2oRtWjW108NPHZaVd2vmxwFPgurp3Bi
+ J7EYa5jZAW8YQBJMwP3IYVtzMShL6gbFXQTx9bANscQ4avTxNJPFA6F1s7YAYnsFcEeRWGJ
+ ca0uphHEY5YqITojhzsVg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:M2QPeqVcQjw=:Ne2Kxlsv1gHEqOwQVVxVr7
+ M03OPsbON1U4/FRjFlWL/3K5NnHcndaFrcoKo27ahBDHlH2/HDnakiBIMf5gTK6JDLdZ3mImE
+ Nzo2jjuDPQr4NNOaRt3pLyTi+vjIarqJRg77F7RGDfisaeCA8RAN/ivGXfzNlLf8+3cFwr3Sx
+ lHs7W5B0naCJkgH+QukFt4TnoqR2KUuW/lTbyPtbpra6fMsZmHwVenXgY+19r1GG530KFCash
+ CcGmkTLk6U4KYwmGnTjk233foyFg8ifcJTrG2qncfzFSMnWle/auA3JWi0gTzGYzISd2oZecK
+ 3hWUx2zA0drOJ9tXAq6Gim37DbuZhCW7R5yPOxz4DmboIn3PfK8xPRULXyKl7qxlgVoYH56h9
+ Sh7H30hUVaFkAuN8HBfFeD91RxOI2WuL7ZEtxNkzCyHG7ugFpHfbF8cxI6u1kR2GE9JrpSpjD
+ 9fMoIvUyr2fhV1QPMsHRkpf+EAuxsyQjrE7pcIIS2uLQ5PZ8wHv6VWVSB4WgQ6hqzdpbu5WQb
+ 3gufiSCWVbGuIBuJMV5tX4nvtFvDJDeXKPGsSkrudPhgr9SfxKh70YYd51VgvJ0TtjkzfyGWx
+ V597EJxq7ps03+f4skXUC7dif5xrw+eeOVlDrsUHoTVbkKJeuusXK/Bq/WEi09VukqqpPG/PY
+ H659msrRmxn04auAeObwQoyS0hvs7I9DSLYmvDQzFA6ug7ORxOexU53sdYPpx34GRnXyZ3JMo
+ k9u4JdS4oPfG/6crd2EsweniuepjXVNXPIO3gWQpSA0LVdENgW2KbITxkq19k8WtA1ssWvKqm
+ QbaaYVR/+EU/SRP6R5OFPt4O5Km0Z/R+hgi/sZT3npBSadyLIM=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---Sig_/L=/5XSamIvBp+./DRBXXIxC
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 15, 2021 at 12:33 PM Sai Prakash Ranjan
+<quic_saipraka@quicinc.com> wrote:
+>  /*
+>   * Generic IO read/write.  These perform native-endian accesses.
+>   */
+> -#define __raw_writeb __raw_writeb
+> -static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
+> +static inline void arch_raw_writeb(u8 val, volatile void __iomem *addr)
+>  {
+>         asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
+>  }
 
-On Thu, 18 Nov 2021 09:29:27 -0500
-Jason Baron <jbaron@akamai.com> wrote:
+Woundn't removing the #define here will break the logic in
+include/asm-generic/io.h,
+making it fall back to the pointer-dereference version for the actual access?
 
-> On 11/16/21 3:46 AM, Pekka Paalanen wrote:
-> > On Fri, 12 Nov 2021 10:08:41 -0500
-> > Jason Baron <jbaron@akamai.com> wrote:
-> >  =20
-> >> On 11/12/21 6:49 AM, Vincent Whitchurch wrote: =20
-> >>> On Thu, Nov 11, 2021 at 03:02:04PM -0700, Jim Cromie wrote:   =20
-> >>>> Sean Paul proposed, in:
-> >>>> https://urldefense.com/v3/__https://patchwork.freedesktop.org/series=
-/78133/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdrew=
-RA8Dki4A$=20
-> >>>> drm/trace: Mirror DRM debug logs to tracefs
-> >>>>
-> >>>> His patchset's objective is to be able to independently steer some of
-> >>>> the drm.debug stream to an alternate tracing destination, by splitti=
-ng
-> >>>> drm_debug_enabled() into syslog & trace flavors, and enabling them
-> >>>> separately.  2 advantages were identified:
-> >>>>
-> >>>> 1- syslog is heavyweight, tracefs is much lighter
-> >>>> 2- separate selection of enabled categories means less traffic
-> >>>>
-> >>>> Dynamic-Debug can do 2nd exceedingly well:
-> >>>>
-> >>>> A- all work is behind jump-label's NOOP, zero off cost.
-> >>>> B- exact site selectivity, precisely the useful traffic.
-> >>>>    can tailor enabled set interactively, at shell.
-> >>>>
-> >>>> Since the tracefs interface is effective for drm (the threads suggest
-> >>>> so), adding that interface to dynamic-debug has real potential for
-> >>>> everyone including drm.
-> >>>>
-> >>>> if CONFIG_TRACING:
-> >>>>
-> >>>> Grab Sean's trace_init/cleanup code, use it to provide tracefs
-> >>>> available by default to all pr_debugs.  This will likely need some
-> >>>> further per-module treatment; perhaps something reflecting hierarchy
-> >>>> of module,file,function,line, maybe with a tuned flattening.
-> >>>>
-> >>>> endif CONFIG_TRACING
-> >>>>
-> >>>> Add a new +T flag to enable tracing, independent of +p, and add and
-> >>>> use 3 macros: dyndbg_site_is_enabled/logging/tracing(), to encapsula=
-te
-> >>>> the flag checks.  Existing code treats T like other flags.   =20
-> >>>
-> >>> I posted a patchset a while ago to do something very similar, but that
-> >>> got stalled for some reason and I unfortunately didn't follow it up:
-> >>>
-> >>>  https://urldefense.com/v3/__https://lore.kernel.org/lkml/20200825153=
-338.17061-1-vincent.whitchurch@axis.com/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjl=
-N5aBIomzJR1an3YWXM6KXs0EftVMQdrewRGytKHPg$=20
-> >>>
-> >>> A key difference between that patchset and this patch (besides that
-> >>> small fact that I used +x instead of +T) was that my patchset allowed
-> >>> the dyndbg trace to be emitted to the main buffer and did not force t=
-hem
-> >>> to be in an instance-specific buffer.   =20
-> >>
-> >> Yes, I agree I'd prefer that we print here to the 'main' buffer - it
-> >> seems to keep things simpler and easier to combine the output from
-> >> different sources as you mentioned. =20
-> >=20
-> > Hi,
-> >=20
-> > I'm not quite sure I understand this discussion, but I would like to
-> > remind you all of what Sean's original work is about:
-> >=20
-> > Userspace configures DRM tracing into a flight recorder buffer (I guess
-> > this is what you refer to "instance-specific buffer").
-> >=20
-> > Userspace runs happily for months, and then hits a problem: a failure
-> > in the DRM sub-system most likely, e.g. an ioctl that should never
-> > fail, failed. Userspace handles that failure by dumping the flight
-> > recorder buffer into a file and saving or sending a bug report. The
-> > flight recorder contents give a log of all relevant DRM in-kernel
-> > actions leading to the unexpected failure to help developers debug it.
-> >=20
-> > I don't mind if one can additionally send the flight recorder stream to
-> > the main buffer, but I do want the separate flight recorder buffer to
-> > be an option so that a) unrelated things cannot flood the interesting
-> > bits out of it, and b) the scope of collected information is relevant.
-> >=20
-> > The very reason for this work is problems that are very difficult to
-> > reproduce in practice, either because the problem itself is triggered
-> > very rarely and randomly, or because the end users of the system have
-> > either no knowledge or no access to reconfigure debug logging and then
-> > reproduce the problem with good debug logs.
-> >=20
-> > Thank you very much for pushing this work forward!
-> >=20
-> >  =20
->=20
-> So I think Vincent (earlier in the thread) was saying that he finds it
-> very helpful have dynamic debug output go to the 'main' trace buffer,
-> while you seem to be saying you'd prefer it just go to dynamic debug
-> specific trace buffer.
+> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+> +DECLARE_TRACEPOINT(rwmmio_write);
+> +DECLARE_TRACEPOINT(rwmmio_read);
+> +
+> +void log_write_mmio(const char *width, volatile void __iomem *addr);
+> +void log_read_mmio(const char *width, const volatile void __iomem *addr);
+> +
+> +#define __raw_write(v, a, _l)  ({                              \
+> +       volatile void __iomem *_a = (a);                        \
+> +       if (tracepoint_enabled(rwmmio_write))                   \
+> +               log_write_mmio(__stringify(write##_l), _a);     \
+> +       arch_raw_write##_l((v), _a);                            \
+> +       })
 
-Seems like we have different use cases: traditional debugging, and
-in-production flight recorder for problem reporting. I'm not surprised
-if they need different treatment.
+This feels like it's getting too big to be inlined. Have you considered
+integrating this with the lib/logic_iomem.c infrastructure instead?
 
-> So we certainly can have dynamic output potentially go to both places -
-> although I think this would mean two tracepoints? But I really wonder
-> if we really need a separate tracing buffer for dynamic debug when
-> what goes to the 'main' buffer can be controlled and filtered to avoid
-> your concern around a 'flood'?
+That already provides a way to override MMIO areas, and it lets you do
+the logging from a single place rather than having it duplicated in every
+single caller. It also provides a way of filtering it based on the ioremap()
+call.
 
-If the DRM tracing goes into the main buffer, then systems in
-production cannot have any other sub-system traced in a similar
-fashion. To me it would feel very arrogant to say that to make use of
-DRM flight recording, you cannot trace much or anything else.
-
-The very purpose of the flight recorder is run in production all the
-time, not in a special debugging session.
-
-There is also the question of access and contents of the trace buffer.
-Ultimately, if automatic bug reports are enabled in a system, the
-contents of the trace buffer would be sent as-is to some bug tracking
-system. If there is a chance to put non-DRM stuff in the trace buffer,
-that could be a security problem.
-
-My use case is Weston. When Weston encounters an unexpected problem in
-production, something should automatically capture the DRM flight
-recorder contents and save it alongside the Weston log. Would be really
-nice if Weston itself could do that, but I suspect it is going to need
-root privileges so it needs some helper daemon.
-
-Maybe Sean can reiterate their use case more?
-
-
-Thanks,
-pq
-
---Sig_/L=/5XSamIvBp+./DRBXXIxC
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmGWcBEACgkQI1/ltBGq
-qqf+VQ/+JdvSTGIK4+CE0NH/WkM6qbXZB4OOq1Q8yJ6Y0Q9aISykp6UuoACj1mJO
-9Hj/8/LNHrwLuGfFQOb0vv9gTGigXEJonlDp2m6KTn8jID1Oac5d5EHS+KQZuFBz
-FYq9X949ow/bTPKv9au/a2TTNKva5KHr9STx7RfAbRByrtsnSXbEOGqQlYKPrYT8
-/ywuIhrPzmZ05PO4zSPDpoBib3yuDq4YnSOVeU62OJATtE5KLD3besw9xFyO5r1s
-bTXel7JvebhUKqCEeNJ2QScB+K3CQVnvfs47HYBZcKQrDVZgDmKWFuYhTEvLZ6vt
-Z+gogMZklPkJe2fAeFofMrhrwCDyDB/3xGouICrZsqKFRJt5OgvEbI4cbpmzJuVJ
-jScbGMUe13L/ROLIkkd4qRvCyZ/gVYSfbv7zGg2cQdHM2vrbHcVC/E2N45pyy8GI
-34rfBdRM9IMi1kuHgWSvMHkhuumzUwRQ1dMNIF3WcExAu59jdMPkid3Zr0DHdqS6
-oKUAForHYShHu4HlOiObbH9ro8ZICfYiwVuXMOjCQTyz0DudqrnVPPFC1Su+dIlm
-tfo4ZybVTMgMcQkIbke0HeUky5s39jF3KqmJ539CCc9VS2hv9n0k6pczQ8kzk27V
-y2vqoqzo5FWYuW5/PlO8Rei3pMjPjkk8dsqTkRd0lh7wPKnMEiI=
-=6BEY
------END PGP SIGNATURE-----
-
---Sig_/L=/5XSamIvBp+./DRBXXIxC--
+        Arnd
