@@ -2,75 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 070F0455410
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 06:08:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B5BE455457
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 06:36:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242305AbhKRFLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 00:11:19 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43444 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230098AbhKRFLS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 00:11:18 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id F1CEE61AA9;
-        Thu, 18 Nov 2021 05:08:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637212098;
-        bh=AJWU8II3chMGfgiPuUgkM+PMkJkkFjjM0oWipoiSUwc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dMe/ScO+ZzeJm5s7Re9TyVkuRZKQWcslO9FcS/oXoYGOmLrU8MZc7nMqQEHm13HnE
-         bVgCUL+ZCYIgbwvTWZHAFWpcLT62nZO0RycFn7vijaGAy07vskihYv0FQiOtUjD4kA
-         RM9CCQ9dGZd1AVoGqsgz0almR6FpadnTEW+9SpMswikYOCj/sP4+GLv1LQ5SmdTJmt
-         Rj9SxVD3zWMgHS2l4JEU4EfBrbsqabn2QF4A8LAMeILbMN9gkFjs2JhWkDfD4sqgyU
-         brgWzFl21US5XmcvgXXvUPNS5tLLAbw9I3Pvjz7ADwuCg/vv6abSegI1gfjLQdllSy
-         sNyRj6Ji3+G+Q==
-Date:   Thu, 18 Nov 2021 10:38:14 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-        kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v4 3/6] clk: qcom: Add SDX65 GCC support
-Message-ID: <YZXfvkZ0H+CeBfuQ@matsya>
-References: <cover.1637047731.git.quic_vamslank@quicinc.com>
- <b61d16ad890bcf07057f8fbd83dfffaf9812cda6.1637047731.git.quic_vamslank@quicinc.com>
- <YZNsvjwp0/AX0Hdo@matsya>
- <20211118015117.GA18984@quicinc.com>
- <YZXZEhV6Jp3LOjmH@matsya>
- <20211118050437.GA22466@quicinc.com>
+        id S243127AbhKRFjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 00:39:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36078 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243124AbhKRFjj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 00:39:39 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DC12C061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 21:36:39 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id j5-20020a17090a318500b001a6c749e697so5904617pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Nov 2021 21:36:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=FbuwZKVsrv5z7nlTKq0LmNN6MMfMZu2th2nFb15pjzA=;
+        b=AJUetIn2CxkX08LKpKBMbWWeacA13Lk76/yK4b1UDaXe3SDbJXzRC0WRkh/mYB7AJ6
+         Fztb6W0vWtUdWmcue+S2/u3OO40kSeo+bEQYj3UgAsmZdIDzjT/vXrQ/59W++PqY9zLk
+         Z/nFvCwYvKMtgwYN2s1+rAv6b6KYa+fXwPiUNHqPin2YMU4MaKF7udhcpBvSIBBDnHtN
+         wb3C8WCAnvC0EHJ+E0zhQC488oAng3rttbyDCedLuqv8opqhZOVGZa91CQrR/uXvYCd9
+         MkEOYeuXCtjxGBKzNWEPlse8RDLDC8aBM+zUc1D593k7SOgOfafW42rQXw1kuWA6NwC5
+         U4Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=FbuwZKVsrv5z7nlTKq0LmNN6MMfMZu2th2nFb15pjzA=;
+        b=YX2tzcaJttpNJPoMX7v+v1jwoj0r+cyM8tMXBcmVPQhshiS/Y1vBYeGT904LjOh3H0
+         tEkQ3+zbCRIUX50B6s+JWVu6exYO35nUcxzkR36XurAPeXrwwsP2t56fDPXIrqUBrxn7
+         EnGHi/lkwzJ6y+Bj4KAMezIl7h6AvfIPBpYhs258s8EPjyFErnxSW5YT0UjlXrid3dz7
+         XaQO4+/r1izh8tpXxwcyVlueRXLpJomHT+IhU2Ay5z63DDslpnOqypvs9hGfO80/+p+C
+         d3x/nr3alaNpos0STRoqfO4pxMx8SEx44sXZjS72eJQ5432KnmJCx4oybxHtV8UwG19P
+         cZUQ==
+X-Gm-Message-State: AOAM531zAHuTjzT382YAEC1RrdPLT+UDZeLFk2x6T+1+b6VcN9nzDJj+
+        WIM3UhszpHyHXQsSmAcAhRK5
+X-Google-Smtp-Source: ABdhPJxGM6F34J820TI7ruuMkReQsl49kgk0My/vvRDdqnNnCHdcQRqtX9s+CNtgoMxxIK8wd+LXFg==
+X-Received: by 2002:a17:90a:c58f:: with SMTP id l15mr7054840pjt.168.1637213798998;
+        Wed, 17 Nov 2021 21:36:38 -0800 (PST)
+Received: from thinkpad ([117.202.188.63])
+        by smtp.gmail.com with ESMTPSA id w5sm1519177pfu.219.2021.11.17.21.36.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Nov 2021 21:36:38 -0800 (PST)
+Date:   Thu, 18 Nov 2021 11:06:33 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        aleksander@aleksander.es, loic.poulain@linaro.org,
+        thomas.perrot@bootlin.com, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: Fix race while handling SYS_ERR at power up
+Message-ID: <20211118053633.GA6461@thinkpad>
+References: <20211108174954.60569-1-manivannan.sadhasivam@linaro.org>
+ <51338f3b-4c85-17b6-971b-44a50d59a262@codeaurora.org>
+ <c6fd34ff-7f19-2ab1-ee3c-f6be178bf9a2@quicinc.com>
+ <53240ad1-06e0-fdec-c8f6-33a83e6ae2af@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20211118050437.GA22466@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <53240ad1-06e0-fdec-c8f6-33a83e6ae2af@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-11-21, 21:04, Vamsi Krishna Lanka wrote:
-> On Thu, Nov 18, 2021 at 10:09:46AM +0530, Vinod Koul wrote:
-> > On 17-11-21, 17:51, Vamsi Krishna Lanka wrote:
-> > > On Tue, Nov 16, 2021 at 02:03:02PM +0530, Vinod Koul wrote:
-> > > > On 15-11-21, 23:38, quic_vamslank@quicinc.com wrote:
-> > > > > From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-> > > > > 
-> > > > > Add Global Clock Controller (GCC) support for SDX65 SoCs from Qualcomm.
-> > > > > 
-> > > > > Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-> > > > > Reported-by: kernel test robot <lkp@intel.com>
-> > > > 
-> > > > Missing support reported ??
-> > > 
-> > > Not mising support but it reported to delete unused varaibles and after
-> > > the fix mentioned to add the reported tag.
-> > 
-> > I think it does not make sense here, you may add a note in changelog
-> > that you fixed issues reported by kbot
+On Wed, Nov 17, 2021 at 12:20:34PM -0800, Hemant Kumar wrote:
 > 
-> I mentioned that in the cover letter and thought that is sufficient.
+> 
+> On 11/17/2021 9:24 AM, Jeffrey Hugo wrote:
+> > On 11/8/2021 12:06 PM, Hemant Kumar wrote:
+> > > Adding same comment in v2
+> > > On 11/8/2021 9:49 AM, Manivannan Sadhasivam wrote:
+> > > > Some devices tend to trigger SYS_ERR interrupt while the host handling
+> > > > SYS_ERR state of the device during power up. This creates a race
+> > > > condition and causes a failure in booting up the device.
+> > > > 
+> > > > The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
+> > > > handling in mhi_async_power_up(). Once the host detects that the device
+> > > > is in SYS_ERR state, it issues MHI_RESET and waits for the device to
+> > > > process the reset request. During this time, the device triggers SYS_ERR
+> > > Device is not triggering the SYS_ERR interrupt, interrupt was
+> > > triggered due to MHI RESET was getting cleared by device.
+> > 
+> > Shouldn't the device state be RESET and not SYS_ERR at that point?
+> > 
+> > The device will enter SYS_ERR (and trigger an interrupt for that).  Host
+> > issues MHI_RESET.  Device is expected to clear SYS_ERR and enter the
+> > RESET state.  Then the device clears MHI_RESET.  Device can then trigger
+> > an interrupt to signal the state change (per the updated spec).
+> Dmesg log was showing first sys err was triggered by device, as part of sys
+> error handling host was setting MHI_RESET and expecting to get BHI Intvec.
+> When BHI intvec was triggered by device, host handled it by checking the MHI
+> status register. MHi status was still showing SYS_ERR being set (which was
+> supposed to get cleared after host issuing MHI RESET). Due to that host side
+> bhi intvec threaded handler took diff path to handle sys error again. This
+> is what we are trying to avoid as we think for some reason device is not
+> behaving as per spec and either setting sys err again or not clearing it by
+> the time bhi intvec (for reset clear) is handled by host.
 
-Yes that should be.
+If you look at the initial log shared by Aleksander you can see that there was
+no IRQ from device until the host resets the device during powerup.
 
--- 
-~Vinod
+[    7.060730] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
+[    7.067906] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
+0x600000000-0x600000fff 64bit]
+[    7.076455] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+[    7.083277] mhi-pci-generic 0000:01:00.0: using shared MSI
+[    7.089508] mhi mhi0: Requested to power ON
+[    7.094080] mhi mhi0: Attempting power on with EE: PASS THROUGH,
+state: SYS ERROR
+[    7.180371] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
+PASS THROUGH state: SYS ERROR
+
+So once the host detects that the device is in SYS_ERR state (might have
+happended during the warm reboot and the device went to a bad state), host
+resets the device.
+
+I'm going by the powerup scenario and in that case, the commit description is
+valid.
+
+Thanks,
+Mani
+
+> > 
+> > I was going to add my reviewed-by, but I'm confused by your comment.
+> > 
+> [..]
+> 
+> Thanks,
+> Hemant
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a
+> Linux Foundation Collaborative Project
