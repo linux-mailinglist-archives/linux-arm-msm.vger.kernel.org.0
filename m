@@ -2,135 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF3D4455D7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 15:08:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32969455E0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 15:30:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232515AbhKROLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 09:11:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
+        id S232724AbhKROdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 09:33:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232460AbhKROLG (ORCPT
+        with ESMTP id S229606AbhKROdw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 09:11:06 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863E9C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 06:08:06 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id t6so6433853qkg.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 06:08:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=PGT3zZBITe/LWXQCMhqSdshUMMzhyWhRVp97Kizl7zw=;
-        b=ve7v04KxgBj3+YWB/sPKKYeAwhPuff5ROtGzgYXp8XRFG3VZ3AhF2q18SafpzoZLbn
-         dkyAebe1GvnHzsocxknJGYYHyrSLotXmR5Zf3rU7emsqtw4mVOlx6hW0hyo2YTiQjvDI
-         5UThyYavtHhA87j2BwDULh0AOcCpVH4mCnhxraECqHP9tYFfYW8hVi/yOY/8HAlsLDjh
-         oiUyzW99HKQ0k9KN+h+VTnjY4DbTLrL/ak6N3gqPbbfgWw5DhZ4tqHuoelqsTM0yZwsk
-         1lxc/HV/S2cFWMxetPnpmJ2X5Zpfk8lCadurL1UDaHE8KHU+D+dbpY+R/n2kxxB7Wufo
-         UeqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=PGT3zZBITe/LWXQCMhqSdshUMMzhyWhRVp97Kizl7zw=;
-        b=D1nua50iE6L/zzfQdXAUprd+qaCzYEa/vaDkr3tWVK4dFgQ1yM44Spwek6zskGUtsa
-         ywQv4B2XdFn4XFHQS0BPQCw3LtACp6WmOrGBqjg+ujh9h7DGWSggOuFK0Z+aXfBxvStF
-         sOXLCkecAob8FDZe6Oj+yhHPtgnqSzQUtU5a56KBUXrvS+pVxv1I+Nsp75tNLhXiNl53
-         7ZcxMr22F+kzuCp5v9DTnyQSC+hzKWnDMVHZKX6f/Y7OC4z3LCgBF4NENGnzbR3OoJ7T
-         90sbAxLYJl7kJ2qFqok4FrBNaMwPgMyrlDreMul/7Asb+IE97aEQiN9a1rmOyWQ/EDuJ
-         LF0Q==
-X-Gm-Message-State: AOAM533VfZl97wmZLpMS4veScuPq1CE9KYXuHY1jUjqx0uUgZZzZtSCm
-        vY64E3TRoAUQCkn/JKTpe2RJ/w==
-X-Google-Smtp-Source: ABdhPJySk9up+d6zujaC7A6Ap/eUcdJjJDvIzKooJVC8PYjF52/J+133C9wbmnSLJLlTkhBGWZ2mQg==
-X-Received: by 2002:a05:620a:a45:: with SMTP id j5mr21033392qka.392.1637244485660;
-        Thu, 18 Nov 2021 06:08:05 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id n18sm1503314qtk.9.2021.11.18.06.08.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Nov 2021 06:08:05 -0800 (PST)
-Subject: Re: [PATCH] cpufreq: qcom-hw: Use optional irq API
-To:     Stephen Boyd <swboyd@chromium.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20211117020346.4088302-1-swboyd@chromium.org>
- <76b103ec-7034-e6c1-1ab4-174cf16f9fc8@linaro.org>
- <CAE-0n53HNSRTdADO1dbQTyLafyajUTatMq5tsLeNDLQ4g95YpA@mail.gmail.com>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <f1038a3e-57fb-ec01-26a0-452a11dfcf3a@linaro.org>
-Date:   Thu, 18 Nov 2021 09:08:04 -0500
+        Thu, 18 Nov 2021 09:33:52 -0500
+Received: from mx0b-00190b01.pphosted.com (mx0b-00190b01.pphosted.com [IPv6:2620:100:9005:57f::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61BEFC061574;
+        Thu, 18 Nov 2021 06:30:52 -0800 (PST)
+Received: from pps.filterd (m0050096.ppops.net [127.0.0.1])
+        by m0050096.ppops.net-00190b01. (8.16.1.2/8.16.1.2) with ESMTP id 1AIBKkIv005884;
+        Thu, 18 Nov 2021 14:30:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=jan2016.eng;
+ bh=EEv+FO0y2LcqM6PtDCyOArBwCLcxVvnGTnV08q5cqI8=;
+ b=Idci0ujFpG3jtuCOuphPhIyMPpDzd5jCyJYZOmtKJTGkLCERXkSH3wcbAMdk9gVmJm+H
+ YDbEK+jUygH6ci5qP1UHTxs+AxWiIrRHPsHDGuYOqJvp+457GfAT7AZOFEIVIvanYWvZ
+ cy/J+/X7EA5rFT8quo9FuATXp5KPGLhk7F6+C66o8jZb2RKBRgzmOidWTJfvfw5Vw23j
+ ZWq2uaYUaAVOCPqPY1jM1krTTcTUl20PWIcGAdh+XCIfkjIGr8HYmIrK0xxPVpDxTyK0
+ a6EOxiUmF1MrznpM4CZAj+iypwVjkAkumF4V9snAwT6Lulcrv1OvRFd8OGypNmyE+JfZ 9g== 
+Received: from prod-mail-ppoint8 (a72-247-45-34.deploy.static.akamaitechnologies.com [72.247.45.34] (may be forged))
+        by m0050096.ppops.net-00190b01. (PPS) with ESMTPS id 3cdnvjuq7y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 Nov 2021 14:30:05 +0000
+Received: from pps.filterd (prod-mail-ppoint8.akamai.com [127.0.0.1])
+        by prod-mail-ppoint8.akamai.com (8.16.1.2/8.16.1.2) with SMTP id 1AIEK558022965;
+        Thu, 18 Nov 2021 09:29:29 -0500
+Received: from prod-mail-relay18.dfw02.corp.akamai.com ([172.27.165.172])
+        by prod-mail-ppoint8.akamai.com with ESMTP id 3ccjst50g6-1;
+        Thu, 18 Nov 2021 09:29:29 -0500
+Received: from [0.0.0.0] (unknown [172.27.119.138])
+        by prod-mail-relay18.dfw02.corp.akamai.com (Postfix) with ESMTP id 2366F3DA;
+        Thu, 18 Nov 2021 14:29:28 +0000 (GMT)
+Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with it
+ - RFC
+To:     Pekka Paalanen <ppaalanen@gmail.com>
+Cc:     Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        Jim Cromie <jim.cromie@gmail.com>, quic_saipraka@quicinc.com,
+        catalin.marinas@arm.com, dri-devel@lists.freedesktop.org,
+        will@kernel.org, maz@kernel.org, amd-gfx@lists.freedesktop.org,
+        mingo@redhat.com, daniel.vetter@ffwll.ch, arnd@arndb.de,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        rostedt@goodmis.org, seanpaul@chromium.org,
+        intel-gvt-dev@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, sean@poorly.run,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        quic_psodagud@quicinc.com, mathieu.desnoyers@efficios.com
+References: <20211111220206.121610-1-jim.cromie@gmail.com>
+ <20211111220206.121610-9-jim.cromie@gmail.com>
+ <20211112114953.GA1381@axis.com>
+ <f3914fa9-8b22-d54e-3f77-d998e74094b9@akamai.com>
+ <20211116104631.195cbd0b@eldfell>
+From:   Jason Baron <jbaron@akamai.com>
+Message-ID: <f87b7076-47e6-89b1-aaf9-b67aa6713e01@akamai.com>
+Date:   Thu, 18 Nov 2021 09:29:27 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n53HNSRTdADO1dbQTyLafyajUTatMq5tsLeNDLQ4g95YpA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20211116104631.195cbd0b@eldfell>
+Content-Type: text/plain; charset=windows-1252
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.425,18.0.790
+ definitions=2021-11-18_12:2021-11-17,2021-11-18 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
+ definitions=main-2111180080
+X-Proofpoint-ORIG-GUID: PZH91yPu5Slhl0tBH1YNzfOEtC8OZPwU
+X-Proofpoint-GUID: PZH91yPu5Slhl0tBH1YNzfOEtC8OZPwU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-11-18_12,2021-11-17_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 lowpriorityscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ mlxscore=0 phishscore=0 malwarescore=0 clxscore=1011 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
+ definitions=main-2111180081
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/17/21 11:32 PM, Stephen Boyd wrote:
-> Quoting Thara Gopinath (2021-11-17 18:55:17)
->> Hello Stephen,
->>
->> Thanks for the patch
->>
->> On 11/16/21 9:03 PM, Stephen Boyd wrote:
->>> Use platform_get_irq_optional() to avoid a noisy error message when the
->>> irq isn't specified. The irq is definitely optional given that we only
->>> care about errors that are -EPROBE_DEFER here.
->>>
->>> Cc: Thara Gopinath <thara.gopinath@linaro.org>
->>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>> ---
->>>    drivers/cpufreq/qcom-cpufreq-hw.c | 8 +++++---
->>>    1 file changed, 5 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
->>> index a2be0df7e174..b442d4983a22 100644
->>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->>> @@ -382,9 +382,11 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
->>>         * Look for LMh interrupt. If no interrupt line is specified /
->>>         * if there is an error, allow cpufreq to be enabled as usual.
->>>         */
->>> -     data->throttle_irq = platform_get_irq(pdev, index);
->>> -     if (data->throttle_irq <= 0)
->>> -             return data->throttle_irq == -EPROBE_DEFER ? -EPROBE_DEFER : 0;
->>> +     data->throttle_irq = platform_get_irq_optional(pdev, index);
->>> +     if (data->throttle_irq == -ENXIO)
->>> +             return 0;
->>> +     if (data->throttle_irq < 0)
->>> +             return data->throttle_irq;
->>
->> Here the idea is to return only -EPROBE_DEFER error. Else return a 0 ,
->> so that cpufreq is enabled even if lmh interrupt is inaccessible. The
->> above check returns errors other than -EPROBE_DEFER as well. So I would
->> say make irq optional and keep the below check
->>
->> if (data->throttle_irq <= 0)
->>          return data->throttle_irq == -EPROBE_DEFER ? -EPROBE_DEFER : 0;
+On 11/16/21 3:46 AM, Pekka Paalanen wrote:
+> On Fri, 12 Nov 2021 10:08:41 -0500
+> Jason Baron <jbaron@akamai.com> wrote:
 > 
-> I'd like to catch other errors, for example, DT has an irq specified
-> that is outside the range of irqs available. If the DT is correct, then
-> it will either have a valid irq and this will return a >= 0 value or
-> nothing will be specified and we'll get back -ENXIO now. Do you have
-> some scenario where my patch fails to work?
-
-Exactly. Like in the scenario you mentioned above, I do not want cpufreq 
-to be disabled. This interrupt is a throttle notification interrupt. The 
-action taken on basis of this is to send thermal pressure signal to 
-scheduler so that scheduler places tasks better. Even if the dt has 
-messed up this interrupt, I think cpufreq should still be enabled. May 
-be we can print a warn and still return 0 to enable cpufreq.
-
+>> On 11/12/21 6:49 AM, Vincent Whitchurch wrote:
+>>> On Thu, Nov 11, 2021 at 03:02:04PM -0700, Jim Cromie wrote:  
+>>>> Sean Paul proposed, in:
+>>>> https://urldefense.com/v3/__https://patchwork.freedesktop.org/series/78133/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdrewRA8Dki4A$ 
+>>>> drm/trace: Mirror DRM debug logs to tracefs
+>>>>
+>>>> His patchset's objective is to be able to independently steer some of
+>>>> the drm.debug stream to an alternate tracing destination, by splitting
+>>>> drm_debug_enabled() into syslog & trace flavors, and enabling them
+>>>> separately.  2 advantages were identified:
+>>>>
+>>>> 1- syslog is heavyweight, tracefs is much lighter
+>>>> 2- separate selection of enabled categories means less traffic
+>>>>
+>>>> Dynamic-Debug can do 2nd exceedingly well:
+>>>>
+>>>> A- all work is behind jump-label's NOOP, zero off cost.
+>>>> B- exact site selectivity, precisely the useful traffic.
+>>>>    can tailor enabled set interactively, at shell.
+>>>>
+>>>> Since the tracefs interface is effective for drm (the threads suggest
+>>>> so), adding that interface to dynamic-debug has real potential for
+>>>> everyone including drm.
+>>>>
+>>>> if CONFIG_TRACING:
+>>>>
+>>>> Grab Sean's trace_init/cleanup code, use it to provide tracefs
+>>>> available by default to all pr_debugs.  This will likely need some
+>>>> further per-module treatment; perhaps something reflecting hierarchy
+>>>> of module,file,function,line, maybe with a tuned flattening.
+>>>>
+>>>> endif CONFIG_TRACING
+>>>>
+>>>> Add a new +T flag to enable tracing, independent of +p, and add and
+>>>> use 3 macros: dyndbg_site_is_enabled/logging/tracing(), to encapsulate
+>>>> the flag checks.  Existing code treats T like other flags.  
+>>>
+>>> I posted a patchset a while ago to do something very similar, but that
+>>> got stalled for some reason and I unfortunately didn't follow it up:
+>>>
+>>>  https://urldefense.com/v3/__https://lore.kernel.org/lkml/20200825153338.17061-1-vincent.whitchurch@axis.com/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdrewRGytKHPg$ 
+>>>
+>>> A key difference between that patchset and this patch (besides that
+>>> small fact that I used +x instead of +T) was that my patchset allowed
+>>> the dyndbg trace to be emitted to the main buffer and did not force them
+>>> to be in an instance-specific buffer.  
+>>
+>> Yes, I agree I'd prefer that we print here to the 'main' buffer - it
+>> seems to keep things simpler and easier to combine the output from
+>> different sources as you mentioned.
+> 
+> Hi,
+> 
+> I'm not quite sure I understand this discussion, but I would like to
+> remind you all of what Sean's original work is about:
+> 
+> Userspace configures DRM tracing into a flight recorder buffer (I guess
+> this is what you refer to "instance-specific buffer").
+> 
+> Userspace runs happily for months, and then hits a problem: a failure
+> in the DRM sub-system most likely, e.g. an ioctl that should never
+> fail, failed. Userspace handles that failure by dumping the flight
+> recorder buffer into a file and saving or sending a bug report. The
+> flight recorder contents give a log of all relevant DRM in-kernel
+> actions leading to the unexpected failure to help developers debug it.
+> 
+> I don't mind if one can additionally send the flight recorder stream to
+> the main buffer, but I do want the separate flight recorder buffer to
+> be an option so that a) unrelated things cannot flood the interesting
+> bits out of it, and b) the scope of collected information is relevant.
+> 
+> The very reason for this work is problems that are very difficult to
+> reproduce in practice, either because the problem itself is triggered
+> very rarely and randomly, or because the end users of the system have
+> either no knowledge or no access to reconfigure debug logging and then
+> reproduce the problem with good debug logs.
+> 
+> Thank you very much for pushing this work forward!
+> 
 > 
 
--- 
-Warm Regards
-Thara (She/Her/Hers)
+So I think Vincent (earlier in the thread) was saying that he finds it
+very helpful have dynamic debug output go to the 'main' trace buffer,
+while you seem to be saying you'd prefer it just go to dynamic debug
+specific trace buffer.
+
+So we certainly can have dynamic output potentially go to both places -
+although I think this would mean two tracepoints? But I really wonder
+if we really need a separate tracing buffer for dynamic debug when
+what goes to the 'main' buffer can be controlled and filtered to avoid
+your concern around a 'flood'?
+
+Thanks,
+
+-Jason
+
