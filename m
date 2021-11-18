@@ -2,213 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82B5F45624E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 19:26:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0178C456256
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 19:27:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232509AbhKRS3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 13:29:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231620AbhKRS3S (ORCPT
+        id S232672AbhKRSar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 Nov 2021 13:30:47 -0500
+Received: from mx07-00178001.pphosted.com ([185.132.182.106]:44674 "EHLO
+        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232621AbhKRSaq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 13:29:18 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77ADC06173E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:26:17 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id m24so5974949pls.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Nov 2021 10:26:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=28eshNjNO/qxhONwqlc26zChfwY3CikV/8tFwgmOtR0=;
-        b=Oek9boK3Bv3JYZp2UyX5KMXFCE+9KCcnJIf8eIBBYosgxl8iEKPWR0ubjC3UgDvpz3
-         kFQj1rIbFzgbyetJ+D2lmSEXgSQrd7G8fde1hP+1CIrq0S2X3MG/ijKRIUUUPmHIet/q
-         CdWVKayeGpNOhWyRJh4z5KH6RJ+ql/OsPL6Ng=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=28eshNjNO/qxhONwqlc26zChfwY3CikV/8tFwgmOtR0=;
-        b=Lp8uFRMyCGZ6PBZwb7usQH9OzVTHkpl0ltiNwHIUCEqAs0SFi/9T+JKRpVLGWDVwUc
-         ssBjfLsG+5NBBUgrwqmSO3M6Hq06g42hBGax2qv8jdTAe5f2lNBqjpERQZEjJHpU5x+7
-         4wmkOhCVLsfZ7zFKKfpZmQKQCNd72WUoBiK29eGVFOAp2zLpCbiSmcSyJVXW7njeTIb7
-         cwDBPibejwdi6Yxe2+C1/xCYR4nQVBCo/WGgsKjpOBYbZ6Al0R64ef6bVl9y+rDoYXLf
-         0YWySW2JAA3x8r6H0i/GO/xm+dowqPe0FcN/KMFCv1ntQ2rztl7E7b2X4/ylSZV+HrL2
-         BA0A==
-X-Gm-Message-State: AOAM533ZT7Lq715Pa58DY91xQWKfzye/UcTO93msM22FwpcPFKECR7u2
-        XUjkH39cnyIWstGXThDC9pPm/A==
-X-Google-Smtp-Source: ABdhPJxvq7TUug8fknfOWltBhQxa5BXskabfCjfusbTfBkJyfkoVs+Q2jr8FjBJ+VnBXkyORpITOrA==
-X-Received: by 2002:a17:90a:e005:: with SMTP id u5mr12560743pjy.17.1637259977228;
-        Thu, 18 Nov 2021 10:26:17 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:8ceb:c68a:21af:bebe])
-        by smtp.gmail.com with UTF8SMTPSA id h186sm302596pfg.59.2021.11.18.10.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Nov 2021 10:26:16 -0800 (PST)
-Date:   Thu, 18 Nov 2021 10:26:16 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org
-Subject: Re: [PATCH 1/2] soc: qcom: rpmhpd: Rename rpmhpd struct names
-Message-ID: <YZaayLSMa8ivu40Z@google.com>
-References: <1637040382-22987-1-git-send-email-rnayak@codeaurora.org>
+        Thu, 18 Nov 2021 13:30:46 -0500
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1AIEiEYM004075;
+        Thu, 18 Nov 2021 19:27:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=kST35QHjE3V0REnjYkLa0vwE23IVL2b0RQCX7EBoynA=;
+ b=oEaPmG8F8JO1826F/HlvpvHz7+GUiQkwTbDqOPeWTu85GZDcCL8TObMrHc2Y2Ua4kG66
+ DhTD/zqna5jIqkPq1o1ONpHVgp7zJG/DXtLNrj0Hm7Ln/dtqN97n8/X0hnjkndKzFVyu
+ jgJAJlOneiM5P+jCmUFbJAne07ENbmXXY/bKUIAHIH0XB4MnoEbnHHt2HTqafsgxTwPw
+ GDlOV/GGkTs30HiNqBNQAHQgaux3O+9/29+0FFamLJm0deAB/ddaWxm5DEpgsP4vmhAP
+ q6qsZJMu10hu8Op9qZJyFhBPKXwn0ftQkIO/GXoIHlin6VSXcDcuAyefTEMOtiByOkMD Yg== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3cdm1n3byv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 Nov 2021 19:27:42 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 433F010002A;
+        Thu, 18 Nov 2021 19:27:41 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 2859523DCAB;
+        Thu, 18 Nov 2021 19:27:41 +0100 (CET)
+Received: from lmecxl0889.lme.st.com (10.75.127.44) by SFHDAG2NODE2.st.com
+ (10.75.127.5) with Microsoft SMTP Server (TLS) id 15.0.1497.26; Thu, 18 Nov
+ 2021 19:27:40 +0100
+Subject: Re: [PATCH] rpmsg: Fix documentation return formatting
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20211108140126.3530-1-arnaud.pouliquen@foss.st.com>
+ <20211118173842.GD2530497@p14s>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Message-ID: <dbd7ee08-4893-4065-9c27-8c40d9fbef58@foss.st.com>
+Date:   Thu, 18 Nov 2021 19:27:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1637040382-22987-1-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <20211118173842.GD2530497@p14s>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.44]
+X-ClientProxiedBy: SFHDAG1NODE3.st.com (10.75.127.3) To SFHDAG2NODE2.st.com
+ (10.75.127.5)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
+ definitions=2021-11-18_12,2021-11-17_01,2020-04-07_01
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 10:56:21AM +0530, Rajendra Nayak wrote:
-> The rpmhpd structs were named with a SoC-name prefix, but then
-> they got reused across multiple SoC families making things confusing.
-> Rename all the struct names to remove SoC-name prefixes.
-> No other functional change as part of this patch.
+
+
+On 11/18/21 6:38 PM, Mathieu Poirier wrote:
+> On Mon, Nov 08, 2021 at 03:01:26PM +0100, Arnaud Pouliquen wrote:
+>> kernel documentation specification:
+>> "The return value, if any, should be described in a dedicated section
+>> named Return."
+>>
+>> Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+>> ---
+>>  drivers/rpmsg/qcom_glink_native.c |  2 +-
+>>  drivers/rpmsg/qcom_smd.c          |  2 +-
+>>  drivers/rpmsg/rpmsg_core.c        | 24 ++++++++++++------------
+>>  drivers/rpmsg/virtio_rpmsg_bus.c  |  2 +-
+>>  4 files changed, 15 insertions(+), 15 deletions(-)
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  drivers/soc/qcom/rpmhpd.c | 255 +++++++++++++++++++++++-----------------------
->  1 file changed, 128 insertions(+), 127 deletions(-)
+> I have applied this set.  There is a few more instances in drivers/remoteproc
+> that could be fixed the same way.
+
+If nobody fix this before, I will address it when preparing the V2 for my
+series on remoteproc virtio restructuring.
+
+Thanks,
+Arnaud
+
 > 
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index 1118345..c71481d 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -63,73 +63,102 @@ struct rpmhpd_desc {
->  
->  static DEFINE_MUTEX(rpmhpd_lock);
->  
-> -/* SDM845 RPMH powerdomains */
-> +/* RPMH powerdomains */
->  
-> -static struct rpmhpd sdm845_ebi = {
-> +static struct rpmhpd ebi = {
->  	.pd = { .name = "ebi", },
->  	.res_name = "ebi.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_lmx = {
-> +static struct rpmhpd lmx = {
->  	.pd = { .name = "lmx", },
->  	.res_name = "lmx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_lcx = {
-> +static struct rpmhpd lcx = {
->  	.pd = { .name = "lcx", },
->  	.res_name = "lcx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_gfx = {
-> +static struct rpmhpd gfx = {
->  	.pd = { .name = "gfx", },
->  	.res_name = "gfx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_mss = {
-> +static struct rpmhpd mss = {
->  	.pd = { .name = "mss", },
->  	.res_name = "mss.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_mx_ao;
-> -static struct rpmhpd sdm845_mx = {
-> +static struct rpmhpd mx_ao;
-> +static struct rpmhpd mx = {
->  	.pd = { .name = "mx", },
-> -	.peer = &sdm845_mx_ao,
-> +	.peer = &mx_ao,
->  	.res_name = "mx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_mx_ao = {
-> +static struct rpmhpd mx_ao = {
->  	.pd = { .name = "mx_ao", },
->  	.active_only = true,
-> -	.peer = &sdm845_mx,
-> +	.peer = &mx,
->  	.res_name = "mx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_cx_ao;
-> -static struct rpmhpd sdm845_cx = {
-> +static struct rpmhpd cx_ao;
-> +static struct rpmhpd cx = {
->  	.pd = { .name = "cx", },
-> -	.peer = &sdm845_cx_ao,
-> -	.parent = &sdm845_mx.pd,
-> +	.peer = &cx_ao,
-> +	.parent = &mx.pd,
->  	.res_name = "cx.lvl",
->  };
->  
-> -static struct rpmhpd sdm845_cx_ao = {
-> +static struct rpmhpd cx_ao = {
->  	.pd = { .name = "cx_ao", },
->  	.active_only = true,
-> -	.peer = &sdm845_cx,
-> -	.parent = &sdm845_mx_ao.pd,
-> +	.peer = &cx,
-> +	.parent = &mx_ao.pd,
->  	.res_name = "cx.lvl",
->  };
->  
-> +static struct rpmhpd mmcx_ao;
-> +static struct rpmhpd mmcx = {
-> +	.pd = { .name = "mmcx", },
-> +	.peer = &mmcx_ao,
-> +	.res_name = "mmcx.lvl",
-> +};
-> +
-> +static struct rpmhpd mmcx_ao = {
-> +	.pd = { .name = "mmcx_ao", },
-> +	.active_only = true,
-> +	.peer = &mmcx,
-> +	.res_name = "mmcx.lvl",
-> +};
-> +
-> +static struct rpmhpd mxc_ao;
-> +static struct rpmhpd mxc = {
-> +	.pd = { .name = "mxc", },
-> +	.peer = &mxc_ao,
-> +	.res_name = "mxc.lvl",
-> +};
-> +
-> +static struct rpmhpd mxc_ao = {
-> +	.pd = { .name = "mxc_ao", },
-> +	.active_only = true,
-> +	.peer = &mxc,
-> +	.res_name = "mxc.lvl",
-> +};
-> +
-> +/* SDM845 RPMH powerdomains */
->  static struct rpmhpd *sdm845_rpmhpds[] = {
-> -	[SDM845_EBI] = &sdm845_ebi,
-> -	[SDM845_MX] = &sdm845_mx,
-> -	[SDM845_MX_AO] = &sdm845_mx_ao,
-> -	[SDM845_CX] = &sdm845_cx,
-> -	[SDM845_CX_AO] = &sdm845_cx_ao,
-> -	[SDM845_LMX] = &sdm845_lmx,
-> -	[SDM845_LCX] = &sdm845_lcx,
-> -	[SDM845_GFX] = &sdm845_gfx,
-> -	[SDM845_MSS] = &sdm845_mss,
-> +	[SDM845_EBI] = &ebi,
-> +	[SDM845_MX] = &mx,
-> +	[SDM845_MX_AO] = &mx_ao,
-> +	[SDM845_CX] = &cx,
-> +	[SDM845_CX_AO] = &cx_ao,
-> +	[SDM845_LMX] = &lmx,
-> +	[SDM845_LCX] = &lcx,
-> +	[SDM845_GFX] = &gfx,
-> +	[SDM845_MSS] = &mss,
->  };
-
-nit: some PD lists are ordered alphabetically, others aren't, since you are
-already changing them you could use alphabetical order for all of them.
-
-Just a nit though, the change generally looks good to me, so:
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Thanks,
+> Mathieu
+> 
+>>
+>> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+>> index 3f377a795b33..1030cfa80e04 100644
+>> --- a/drivers/rpmsg/qcom_glink_native.c
+>> +++ b/drivers/rpmsg/qcom_glink_native.c
+>> @@ -427,7 +427,7 @@ static void qcom_glink_handle_intent_req_ack(struct qcom_glink *glink,
+>>   * Allocates a local channel id and sends a RPM_CMD_OPEN message to the remote.
+>>   * Will return with refcount held, regardless of outcome.
+>>   *
+>> - * Returns 0 on success, negative errno otherwise.
+>> + * Return: 0 on success, negative errno otherwise.
+>>   */
+>>  static int qcom_glink_send_open_req(struct qcom_glink *glink,
+>>  				    struct glink_channel *channel)
+>> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+>> index 8da1b5cb31b3..540e027f08c4 100644
+>> --- a/drivers/rpmsg/qcom_smd.c
+>> +++ b/drivers/rpmsg/qcom_smd.c
+>> @@ -1467,7 +1467,7 @@ ATTRIBUTE_GROUPS(qcom_smd_edge);
+>>   * @parent:    parent device for the edge
+>>   * @node:      device_node describing the edge
+>>   *
+>> - * Returns an edge reference, or negative ERR_PTR() on failure.
+>> + * Return: an edge reference, or negative ERR_PTR() on failure.
+>>   */
+>>  struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
+>>  					     struct device_node *node)
+>> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+>> index d3eb60059ef1..f031b2b1b21c 100644
+>> --- a/drivers/rpmsg/rpmsg_core.c
+>> +++ b/drivers/rpmsg/rpmsg_core.c
+>> @@ -26,7 +26,7 @@
+>>   * @rpdev: rpmsg device
+>>   * @chinfo: channel_info to bind
+>>   *
+>> - * Returns a pointer to the new rpmsg device on success, or NULL on error.
+>> + * Return: a pointer to the new rpmsg device on success, or NULL on error.
+>>   */
+>>  struct rpmsg_device *rpmsg_create_channel(struct rpmsg_device *rpdev,
+>>  					  struct rpmsg_channel_info *chinfo)
+>> @@ -48,7 +48,7 @@ EXPORT_SYMBOL(rpmsg_create_channel);
+>>   * @rpdev: rpmsg device
+>>   * @chinfo: channel_info to bind
+>>   *
+>> - * Returns 0 on success or an appropriate error value.
+>> + * Return: 0 on success or an appropriate error value.
+>>   */
+>>  int rpmsg_release_channel(struct rpmsg_device *rpdev,
+>>  			  struct rpmsg_channel_info *chinfo)
+>> @@ -102,7 +102,7 @@ EXPORT_SYMBOL(rpmsg_release_channel);
+>>   * dynamically assign them an available rpmsg address (drivers should have
+>>   * a very good reason why not to always use RPMSG_ADDR_ANY here).
+>>   *
+>> - * Returns a pointer to the endpoint on success, or NULL on error.
+>> + * Return: a pointer to the endpoint on success, or NULL on error.
+>>   */
+>>  struct rpmsg_endpoint *rpmsg_create_ept(struct rpmsg_device *rpdev,
+>>  					rpmsg_rx_cb_t cb, void *priv,
+>> @@ -146,7 +146,7 @@ EXPORT_SYMBOL(rpmsg_destroy_ept);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_send(struct rpmsg_endpoint *ept, void *data, int len)
+>>  {
+>> @@ -175,7 +175,7 @@ EXPORT_SYMBOL(rpmsg_send);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_sendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+>>  {
+>> @@ -206,7 +206,7 @@ EXPORT_SYMBOL(rpmsg_sendto);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_send_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>  			  void *data, int len)
+>> @@ -235,7 +235,7 @@ EXPORT_SYMBOL(rpmsg_send_offchannel);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_trysend(struct rpmsg_endpoint *ept, void *data, int len)
+>>  {
+>> @@ -263,7 +263,7 @@ EXPORT_SYMBOL(rpmsg_trysend);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_trysendto(struct rpmsg_endpoint *ept, void *data, int len, u32 dst)
+>>  {
+>> @@ -282,7 +282,7 @@ EXPORT_SYMBOL(rpmsg_trysendto);
+>>   * @filp:	file for poll_wait()
+>>   * @wait:	poll_table for poll_wait()
+>>   *
+>> - * Returns mask representing the current state of the endpoint's send buffers
+>> + * Return: mask representing the current state of the endpoint's send buffers
+>>   */
+>>  __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
+>>  			poll_table *wait)
+>> @@ -313,7 +313,7 @@ EXPORT_SYMBOL(rpmsg_poll);
+>>   *
+>>   * Can only be called from process context (for now).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+>>  			     void *data, int len)
+>> @@ -623,7 +623,7 @@ EXPORT_SYMBOL(rpmsg_unregister_device);
+>>   * @rpdrv: pointer to a struct rpmsg_driver
+>>   * @owner: owning module/driver
+>>   *
+>> - * Returns 0 on success, and an appropriate error value on failure.
+>> + * Return: 0 on success, and an appropriate error value on failure.
+>>   */
+>>  int __register_rpmsg_driver(struct rpmsg_driver *rpdrv, struct module *owner)
+>>  {
+>> @@ -637,7 +637,7 @@ EXPORT_SYMBOL(__register_rpmsg_driver);
+>>   * unregister_rpmsg_driver() - unregister an rpmsg driver from the rpmsg bus
+>>   * @rpdrv: pointer to a struct rpmsg_driver
+>>   *
+>> - * Returns 0 on success, and an appropriate error value on failure.
+>> + * Return: 0 on success, and an appropriate error value on failure.
+>>   */
+>>  void unregister_rpmsg_driver(struct rpmsg_driver *rpdrv)
+>>  {
+>> diff --git a/drivers/rpmsg/virtio_rpmsg_bus.c b/drivers/rpmsg/virtio_rpmsg_bus.c
+>> index 9c112aa65040..c37451512835 100644
+>> --- a/drivers/rpmsg/virtio_rpmsg_bus.c
+>> +++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+>> @@ -547,7 +547,7 @@ static void rpmsg_downref_sleepers(struct virtproc_info *vrp)
+>>   * should use the appropriate rpmsg_{try}send{to, _offchannel} API
+>>   * (see include/linux/rpmsg.h).
+>>   *
+>> - * Returns 0 on success and an appropriate error value on failure.
+>> + * Return: 0 on success and an appropriate error value on failure.
+>>   */
+>>  static int rpmsg_send_offchannel_raw(struct rpmsg_device *rpdev,
+>>  				     u32 src, u32 dst,
+>> -- 
+>> 2.17.1
+>>
