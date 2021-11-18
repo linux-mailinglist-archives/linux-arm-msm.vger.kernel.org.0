@@ -2,34 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E79C94564B5
+	by mail.lfdr.de (Postfix) with ESMTP id 7AD574564B4
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Nov 2021 22:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233417AbhKRVF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233526AbhKRVF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 18 Nov 2021 16:05:56 -0500
-Received: from mail.z3ntu.xyz ([128.199.32.197]:36954 "EHLO mail.z3ntu.xyz"
+Received: from mail.z3ntu.xyz ([128.199.32.197]:36964 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233205AbhKRVFy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 16:05:54 -0500
+        id S233319AbhKRVFz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 18 Nov 2021 16:05:55 -0500
 Received: from localhost.localdomain (ip-213-127-109-54.ip.prioritytelecom.net [213.127.109.54])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id E727BCAD7C;
-        Thu, 18 Nov 2021 21:02:52 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 6427BCADFE;
+        Thu, 18 Nov 2021 21:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1637269373; bh=MiE+Odw8LejlaQe/AOr6z4tZi+RYMHJyotf1y9D3uqw=;
+        t=1637269373; bh=hVhf8M1vf/Y7SjzoLmES1H4b9X86FBqukDCU7O27VBg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=IcSTjBOWb7q6k3OqTHaaeaM76bFQsd5Eko9oMEsoEbcE+ONdmW8dcEv1mtYmut/nX
-         frOqtsby94KkulZ4DZ460Aa5eQBjv+PucvUXlMaEl71J4wHqfRtX5t+oz9VDjr4lqz
-         kkkUw5Wxgwd6jooEmWQ3RHCg+LHyIl+wFmNB7uNY=
+        b=sNAnKr46DkWHRcjSZ88Z0LG2AXaerQPLd7LkLWjypugwTiOUZ0aSG/3v0yk7Sskcz
+         JKX7CoeMzhUo1TAElTagDyYbm1fIcMcozA17/HL2S52HPC7kQLfkpZQgONGEPvrX1F
+         kc+PETY67XiMrQ/RDqnETj6qjvnCJw0c1Gom7M3s=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 4/7] ARM: dts: qcom: apq8026-lg-lenok: configure SMBB charger
-Date:   Thu, 18 Nov 2021 22:02:07 +0100
-Message-Id: <20211118210210.160895-4-luca@z3ntu.xyz>
+Subject: [PATCH 5/7] dt-bindings: phy: qcom,usb-hs-phy: add MSM8226 compatible
+Date:   Thu, 18 Nov 2021 22:02:08 +0100
+Message-Id: <20211118210210.160895-5-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.34.0
 In-Reply-To: <20211118210210.160895-1-luca@z3ntu.xyz>
 References: <20211118210210.160895-1-luca@z3ntu.xyz>
@@ -39,34 +42,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the SMBB charger according to the downstream kernel, some
-values are rounded according to driver warnings.
+Add a compatible for MSM8226 which also uses the USB HS PHY.
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index b19522ad91a0..4e7a596d6101 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -209,6 +209,15 @@ &sdhc_1 {
- 	pinctrl-0 = <&sdhc1_pin_a>;
- };
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
+index b3b75c1e6285..6814dccb390c 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
+@@ -9,6 +9,7 @@ PROPERTIES
+                 following:
  
-+&smbb {
-+	qcom,fast-charge-safe-current = <450000>;
-+	qcom,fast-charge-current-limit = <400000>;
-+	qcom,fast-charge-safe-voltage = <4350000>;
-+	qcom,fast-charge-high-threshold-voltage = <4350000>;
-+	qcom,auto-recharge-threshold-voltage = <4240000>;
-+	qcom,minimum-input-voltage = <4450000>;
-+};
-+
- &tlmm {
- 	sdhc1_pin_a: sdhc1-pin-active {
- 		clk {
+                         "qcom,usb-hs-phy-apq8064"
++                        "qcom,usb-hs-phy-msm8226"
+                         "qcom,usb-hs-phy-msm8916"
+                         "qcom,usb-hs-phy-msm8974"
+ 
 -- 
 2.34.0
 
