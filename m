@@ -2,116 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA5A245718E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 16:20:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECAB9457293
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 17:14:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233116AbhKSPXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Nov 2021 10:23:52 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:43782 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230064AbhKSPXv (ORCPT
+        id S236334AbhKSQR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Nov 2021 11:17:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231173AbhKSQRz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Nov 2021 10:23:51 -0500
+        Fri, 19 Nov 2021 11:17:55 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FBFC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Nov 2021 08:14:53 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id 133so9034076wme.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Nov 2021 08:14:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637335250; x=1668871250;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Mt3C3Hu5WtObbim4daMDmr125MdIPSYL7I7jQTBfW5E=;
-  b=B4qqhWrnjZ5qmOz7COmzzdD+75qHXCH9YVPLgGE5L/8zQ4CnovTKYG5l
-   SgTj2oLjywWtteU6e+CYmhiWj4GGXIkt5CgrC1e67FaKO90mSnkSV+bUo
-   wRGwTiBvh3isEo7Gf/dPfQPfzgP2mFS3rvxaAxsvLQQFqQsMIEU86msCQ
-   Y=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Nov 2021 07:20:49 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2021 07:20:49 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 19 Nov 2021 07:20:48 -0800
-Received: from [10.50.57.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 19 Nov
- 2021 07:20:02 -0800
-Message-ID: <440b7e8b-a15b-c394-9797-65226717b1d4@quicinc.com>
-Date:   Fri, 19 Nov 2021 20:49:53 +0530
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UcqY3TV76OxNe1xu4n8DKFERXvuTUA0Ucfm9ueomvFM=;
+        b=MHhVidxEBzBTALz/eMu3IOohwSk9E6Mdp3oIwEzXnNbjVXnitIiPqqQlBCS2/ZRFsp
+         Liwgi2UtlyjggwA7g/Ev4awfC/AYqmE3DcWz+ka3uhEUn62vEr6J0lAdR952KtJz38CY
+         OO0EsbPviPQVV0tFtht59BHVHC22ZHBtN8M1/BZYi00SRlB9+49NTjvoR3ogCAJy/NQx
+         jzOlUXOon2WqsSTKLRCF7AT93tUIMR7XbUdZGLfqB5alQg7g1sL0qGkBMD2MGaeeME8b
+         oPzljj2V1ZJKN02jj2IQwi+/H5PjyaNsxoLaZiMXnVQQtaKAKdD20e+yUd7+3EUw9/Qx
+         iKTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UcqY3TV76OxNe1xu4n8DKFERXvuTUA0Ucfm9ueomvFM=;
+        b=Kdf8JNl5rcemhJuUrvGVNq/8qs74uhfly4rYztLqLpkUNqrXovUQbk2iAdUMaE14LK
+         6HY7hMW0j/E4iKN9+UeE9bfMRBSSlQdKMJvnJh8bIt9RrrJpopih+gEnf2nhfinLHyB1
+         HGTBt7nzug3gqXdgrkx1R8470pdFYRZUPWTgPXm+l7h5zhzepG9MZZBudDFN8D/BT4YL
+         gNh0W7q7pPsi8FCWSiWPIC04vb3CCZhXMGet/K7ZfXxV/Hme9MSCrRu64AgWn02NisZE
+         2Mdx4hlpFARvwkdgPTSKzoE5QUtIAdzq/3I0CQsg0A5hZag6Fy5jaNNQ0AusCsifFveq
+         gYgQ==
+X-Gm-Message-State: AOAM530JfG1Hy+eILE1logQv6IToNeN3t5XhLCzjKKzI4s2XDslmw/Ql
+        DVHbLyCNXhajdpbsY59Djj7a55ulnJBlZPeUzfQ=
+X-Google-Smtp-Source: ABdhPJztRHw/IXsl/jzRJwmq6CaBP2pBkI2TX2vFR+YvDgcR5py+7U8KVWDGTo1h0iavOJPh4SuhT7zbJbHPCOJGVcQ=
+X-Received: by 2002:a05:600c:1d01:: with SMTP id l1mr1036483wms.44.1637338492141;
+ Fri, 19 Nov 2021 08:14:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv4 1/2] tracing: Add register read/write tracing support
-Content-Language: en-US
-To:     Marc Zyngier <maz@kernel.org>
-CC:     Will Deacon <will@kernel.org>, <rostedt@goodmis.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <quic_psodagud@quicinc.com>, <gregkh@linuxfoundation.org>,
-        <arnd@arndb.de>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mingo@redhat.com>, Prasad Sodagudi <psodagud@codeaurora.org>
-References: <cover.1636973694.git.quic_saipraka@quicinc.com>
- <4bd519d008cac6b319be7c5ce144e741f7210031.1636973694.git.quic_saipraka@quicinc.com>
- <87bl2g6z2v.wl-maz@kernel.org>
- <6148397c-0565-d1ca-2f53-d15adcb9b6b8@quicinc.com>
- <878rxk6xhg.wl-maz@kernel.org>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <878rxk6xhg.wl-maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20211116003042.439107-1-robdclark@gmail.com> <YZeQlGUMhb0RLiU1@platvala-desk.ger.corp.intel.com>
+In-Reply-To: <YZeQlGUMhb0RLiU1@platvala-desk.ger.corp.intel.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 19 Nov 2021 08:19:56 -0800
+Message-ID: <CAF6AEGsKq7g8ngyVngZpLBeZ+-XavguaCUnNNbptdv0pA3v=XQ@mail.gmail.com>
+Subject: Re: [PATCH igt v3 0/4] msm: Add tests for gpu fault handling
+To:     Petri Latvala <petri.latvala@intel.com>
+Cc:     igt-dev@lists.freedesktop.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/19/2021 7:47 PM, Marc Zyngier wrote:
-> On Fri, 19 Nov 2021 14:07:09 +0000,
-> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
->> On 11/19/2021 7:13 PM, Marc Zyngier wrote:
->>> On Mon, 15 Nov 2021 11:33:29 +0000,
->>> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
->>>> From: Prasad Sodagudi <psodagud@codeaurora.org>
->>>>
-> [...]
+On Fri, Nov 19, 2021 at 3:56 AM Petri Latvala <petri.latvala@intel.com> wrote:
 >
->>>> Reason why we wouldn't need value along with mmio write log is
->>>> that value can be easily deduced from the caller_name+offset which is
->>>> printed already by the rwmmio trace events which gives the exact
->>>> location of mmio writes and the value is easily known from the driver.
->>> That's a very narrow view of what can be written in an MMIO
->>> registers. We write dynamic values at all times, and if we are able to
->>> trace MMIO writes, then the value written out must be part of the trace.
->>>
->>> I'd rather you try and get to the bottom of this issue rather than
->>> paper over it.
->>>
->>> Thanks,
->>>
->>> 	M.
->>>
->> Sure, idea was to put it out in the open if anyone has any idea as
->> to what might be happening there since the version where directly
->> instrumenting the raw read/write accessors in arm64/asm/io.h was
->> working fine casting doubts if this has to do something with
->> inlining as Arnd mentioned before.
-> Yup. I wouldn't be surprised if MMIO accessors were getting directly
-> inlined at the wrong location and creating havoc. For example:
+> On Mon, Nov 15, 2021 at 04:30:38PM -0800, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > The first patch adds a easy way to write debugfs files (needed to
+> > disable hw fault detection, so we can test the sw timeout fallback).
+> > The second adds some helpers for cmdstream building.  And the third
+> > adds the new tests.
+> >
+> > v2: Fix headerdoc comments in first patch
+> > v3: Add helper to detect debugfs files and updated last patch
+> >     to skip the one sub-test that depends on new debugfs when
+> >     running on older kernels
+> >
+> > Rob Clark (4):
+> >   lib/igt_debugfs: Add helper for writing debugfs files
+> >   lib/igt_debugfs: Add helper for detecting debugfs files
+> >   msm: Add helper for cmdstream building and submission
+> >   msm: Add recovery tests
 >
-> 	writel(readl(addr1) | 1, addr2);
+> For patches 3+4, in case you're waiting for this:
+> Acked-by: Petri Latvala <petri.latvala@intel.com>
 >
-> If you're not careful about capturing the result of the read rather
-> than the read itself, you can end-up with something really funky. No
-> idea if that's what is happening, but a disassembly of the generated
-> code could tell you.
->
-> 	M.
+> For the record, msm-specific test case changes don't need to wait for
+> review (see single contributor exception in CONTRIBUTING.md).
 >
 
-I did that initially (compare the disassembly in working and non-working 
-case) but didn't find
-anything noticeable, maybe I need to look some more. Thanks for the 
-suggestion.
+Thanks, I was actually just waiting until I had time to start putting
+together msm-next for v5.17, and pull in the patch that added the
+debugfs which the recovery tests use (which should hopefully be in
+next few days)
 
-Thanks,
-Sai
+BR,
+-R
