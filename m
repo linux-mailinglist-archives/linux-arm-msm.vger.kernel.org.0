@@ -2,121 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 887584568ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 05:06:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F750456992
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 06:25:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232804AbhKSEJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 Nov 2021 23:09:49 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:7611 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232490AbhKSEJt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 Nov 2021 23:09:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637294808; x=1668830808;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=mc3p1/vze472QUPd1K/un9kqoXLEtMTgCLIFsF/85cI=;
-  b=WZna3OQk4pmvxilg/5ZgNSO1X/Gk/4qm7tiuG/nX1YfBaVgHiJ9WUERb
-   DsPGSICKtjRNAQL9m8sUJvu6kef2DIzR+prxbALy2G3frshHS/bOnWxSn
-   CuCgJLJTUQN7bvuNSaiCmnwddCXiNWlE4Wa3+PRIkjWxXR7CwYoRB43TB
-   Q=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Nov 2021 20:06:47 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2021 20:06:46 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 18 Nov 2021 20:06:46 -0800
-Received: from [10.50.58.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 18 Nov
- 2021 20:06:42 -0800
-Message-ID: <b07e339c-530d-683c-c626-14b73b42e72a@quicinc.com>
-Date:   Fri, 19 Nov 2021 09:36:39 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access
- instrumentation
-Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>
-CC:     Will Deacon <will@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <quic_psodagud@quicinc.com>, "Marc Zyngier" <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ingo Molnar <mingo@redhat.com>
-References: <cover.1636973694.git.quic_saipraka@quicinc.com>
- <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
- <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        id S231831AbhKSF2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Nov 2021 00:28:02 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:30391 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231710AbhKSF2C (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 19 Nov 2021 00:28:02 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637299501; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=KeNlUN1kOzojCN6MDQ84nn/gSfO1ZkzDS1NP2BQaIEs=; b=a3R/UOdgr3lRlXidIgy7hthnLuj6csvIUd8yZq0tmHAOByASzKUWuURVdO5iF/OYJtUAGjhj
+ gNyhIYjCOUkYFjbcqE30lCn/MJM7e40KXC5pOE5gtRIjRWuCQxpmhLR7sVYG5NhYuwRKbv7N
+ iA1AQJNcgr7y8MrpGaYiPYFxvBk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6197352c1e1d2f52334939a5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Nov 2021 05:25:00
+ GMT
+Sender: pillair=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 35AF5C43618; Fri, 19 Nov 2021 05:25:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0D0C8C4338F;
+        Fri, 19 Nov 2021 05:24:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 0D0C8C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        swboyd@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v7] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+Date:   Fri, 19 Nov 2021 10:54:48 +0530
+Message-Id: <1637299488-22336-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
+Add the WPSS remoteproc node in dts for
+PIL loading.
 
-On 11/18/2021 8:54 PM, Arnd Bergmann wrote:
-> On Mon, Nov 15, 2021 at 12:33 PM Sai Prakash Ranjan
-> <quic_saipraka@quicinc.com> wrote:
->>   /*
->>    * Generic IO read/write.  These perform native-endian accesses.
->>    */
->> -#define __raw_writeb __raw_writeb
->> -static inline void __raw_writeb(u8 val, volatile void __iomem *addr)
->> +static inline void arch_raw_writeb(u8 val, volatile void __iomem *addr)
->>   {
->>          asm volatile("strb %w0, [%1]" : : "rZ" (val), "r" (addr));
->>   }
-> Woundn't removing the #define here will break the logic in
-> include/asm-generic/io.h,
-> making it fall back to the pointer-dereference version for the actual access?
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+---
+Changes from v6:
+- Swap the oder of two properties in wpss_mem reserved memory
 
-#defines for these are added in mmio-instrumented.h header which is 
-included in
-arm64/asm/io.h, so it won't break the logic by falling back to 
-pointer-dereference.
+Changes from v5:
+- Update the clock names
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 56 +++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+)
 
->> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
->> +DECLARE_TRACEPOINT(rwmmio_write);
->> +DECLARE_TRACEPOINT(rwmmio_read);
->> +
->> +void log_write_mmio(const char *width, volatile void __iomem *addr);
->> +void log_read_mmio(const char *width, const volatile void __iomem *addr);
->> +
->> +#define __raw_write(v, a, _l)  ({                              \
->> +       volatile void __iomem *_a = (a);                        \
->> +       if (tracepoint_enabled(rwmmio_write))                   \
->> +               log_write_mmio(__stringify(write##_l), _a);     \
->> +       arch_raw_write##_l((v), _a);                            \
->> +       })
-> This feels like it's getting too big to be inlined. Have you considered
-> integrating this with the lib/logic_iomem.c infrastructure instead?
->
-> That already provides a way to override MMIO areas, and it lets you do
-> the logging from a single place rather than having it duplicated in every
-> single caller. It also provides a way of filtering it based on the ioremap()
-> call.
->
-
-Thanks for the suggestion, will look at the logic_iomem.c and see if it 
-fits our
-usecase.
-
-Thanks,
-Sai
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 9b991ba..ddab150 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -80,3 +80,7 @@
+ 		qcom,pre-scaling = <1 1>;
+ 	};
+ };
++
++&remoteproc_wpss {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 365a2e0..dd93f13 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -134,6 +134,11 @@
+ 			no-map;
+ 		};
+ 
++		wpss_mem: memory@9ae00000 {
++			reg = <0x0 0x9ae00000 0x0 0x1900000>;
++			no-map;
++		};
++
+ 		rmtfs_mem: memory@9c900000 {
+ 			compatible = "qcom,rmtfs-mem";
+ 			reg = <0x0 0x9c900000 0x0 0x280000>;
+@@ -2598,6 +2603,57 @@
+ 			status = "disabled";
+ 		};
+ 
++		remoteproc_wpss: remoteproc@8a00000 {
++			compatible = "qcom,sc7280-wpss-pil";
++			reg = <0 0x08a00000 0 0x10000>;
++
++			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
++
++			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++				 <&gcc GCC_WPSS_AHB_CLK>,
++				 <&gcc GCC_WPSS_RSCP_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "ahb_bdg", "ahb",
++				      "rscp", "xo";
++
++			power-domains = <&rpmhpd SC7280_CX>,
++					<&rpmhpd SC7280_MX>;
++			power-domain-names = "cx", "mx";
++
++			memory-region = <&wpss_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&wpss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++			reset-names = "restart", "pdc_sync";
++
++			qcom,halt-regs = <&tcsr_mutex 0x37000>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_WPSS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "wpss";
++				qcom,remote-pid = <13>;
++			};
++		};
++
+ 		dc_noc: interconnect@90e0000 {
+ 			reg = <0 0x090e0000 0 0x5080>;
+ 			compatible = "qcom,sc7280-dc-noc";
+-- 
+2.7.4
 
