@@ -2,139 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DC094569B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 06:26:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CCDF4569FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Nov 2021 07:12:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232196AbhKSF2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 Nov 2021 00:28:14 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:63525 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231752AbhKSF2N (ORCPT
+        id S233119AbhKSGO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 Nov 2021 01:14:57 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:15185 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231279AbhKSGO5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 Nov 2021 00:28:13 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637299512; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=Y6ORcJ/iVAeVC11+p/N6i64GLnQ9MUTHmqnbpbXYcik=; b=Cg8NAhNAEFz9fav1xdTb5O2wceAg1//AeOgX+FPrSBY9DXpJdyhtZUyznkPiZUMWX+brNMQO
- xbeHrq6sTqlUTutE5ETM5/3niYaCuF0Mw2nZ3lnVGf5JJ1rY+ABdY0W4JemXrbSJjRZW5rUZ
- VdrgV5U2L7cLuSaUNLdSi5vYBZM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 61973538665450d43a81a426 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 19 Nov 2021 05:25:12
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 97015C43618; Fri, 19 Nov 2021 05:25:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from PILLAIR1 (unknown [49.205.244.232])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 96AA0C4360C;
-        Fri, 19 Nov 2021 05:25:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 96AA0C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   "Rakesh Pillai" <pillair@codeaurora.org>
-To:     "'Stephen Boyd'" <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-Cc:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sibis@codeaurora.org>,
-        <mpubbise@codeaurora.org>, <kuabhs@chromium.org>
-References: <1637251016-21923-1-git-send-email-pillair@codeaurora.org> <CAE-0n51Z7qimY3k5qCYO5vAJ6o_skfUZL8xYpWN8a+2ThNVUGw@mail.gmail.com>
-In-Reply-To: <CAE-0n51Z7qimY3k5qCYO5vAJ6o_skfUZL8xYpWN8a+2ThNVUGw@mail.gmail.com>
-Subject: RE: [PATCH v6] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
-Date:   Fri, 19 Nov 2021 10:55:04 +0530
-Message-ID: <002701d7dd05$d252b690$76f823b0$@codeaurora.org>
+        Fri, 19 Nov 2021 01:14:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637302316; x=1668838316;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=yLibkCwwOUozNYKaIqem4036qsuB24KpYkk7La8iVcw=;
+  b=gFTFh2Fzu08BjgnLNISikjqYI8K+YN9HXZfTaAKUFHqoMYPk6be0wBvN
+   cICOPcMiNUKTXQvmOqpLqJSFdDRoLmj4f8TMfpxG7FV6Q2hGrlnucnqI8
+   pnBGHjpwKw8kUgBkdhihylleZUFRd8lkPT2i1jXvSR0/Qfka+hEwkoDoY
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 18 Nov 2021 22:11:55 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2021 22:11:53 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 18 Nov 2021 22:11:52 -0800
+Received: from hu-vamslank-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 18 Nov 2021 22:11:52 -0800
+From:   <quic_vamslank@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <tglx@linutronix.de>, <maz@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+Subject: [PATCH v5 0/6] Add Pdc, GCC and RPMh clock support for SDX65 
+Date:   Thu, 18 Nov 2021 22:11:32 -0800
+Message-ID: <cover.1637302009.git.quic_vamslank@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQH/i79kdRymrv4IW6PKFp/g5AMsTgFcupF9q7AN/ZA=
-Content-Language: en-us
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 
+Hello,
 
-> -----Original Message-----
-> From: Stephen Boyd <swboyd@chromium.org>
-> Sent: Friday, November 19, 2021 6:22 AM
-> To: Rakesh Pillai <pillair@codeaurora.org>; agross@kernel.org;
-> bjorn.andersson@linaro.org; robh+dt@kernel.org
-> Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; sibis@codeaurora.org; mpubbise@codeaurora.org;
-> kuabhs@chromium.org
-> Subject: Re: [PATCH v6] arm64: dts: qcom: sc7280: Add WPSS remoteproc
-> node
-> 
-> Quoting Rakesh Pillai (2021-11-18 07:56:56)
-> > Add the WPSS remoteproc node in dts for PIL loading.
-> >
-> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> > ---
-> > Changes from v5:
-> > - Update the clock names
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
-> >  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 56
-> +++++++++++++++++++++++++++++++++
-> >  2 files changed, 60 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> > b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> > index 9b991ba..ddab150 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> > @@ -80,3 +80,7 @@
-> >                 qcom,pre-scaling = <1 1>;
-> >         };
-> >  };
-> > +
-> > +&remoteproc_wpss {
-> > +       status = "okay";
-> > +};
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > index 365a2e0..76c2a90 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -134,6 +134,11 @@
-> >                         no-map;
-> >                 };
-> >
-> > +               wpss_mem: memory@9ae00000 {
-> > +                       no-map;
-> > +                       reg = <0x0 0x9ae00000 0x0 0x1900000>;
-> 
-> Almost always reg comes first. Please swap the order of these two
-> properties.
+Changes from v4:
+ - Fixed comments from vinod koul on Clock Alpha PLL and GCC driver support patches
+ - Addressed Rob's comments related to GCC dt-binding patch  
+ - Collected Vinod Koul's Reviewed-by for the dt-bindings patches
 
-Hi Stephen,
-I have fixed this and sent v7 for the DTSI change.
+Changes from v3:
+ - Fixed DTbindings and unused variables errors reported by kernel test bot
+ - Rebased on top of v5.16-rc1
+
+Changes from v2:
+ - Addressed Taniya Das and Vinod Koul's comments related to adding LUCID_EVO
+   PLL type and rpmh support patches
+ - Collected Rob's Acked-by for the dt-bindings patches
+
+Changes from v1:
+ - Addressed Bjorn's comments related to the GCC support patch
+ - Collected Bjorn's and Rob's Reviewed-by for the dt-bindings patches
+
+This patch series adds bindings and device driver changes for GCC, pdc and RPMh
+clock support for SDX65 Platform.
 
 Thanks,
-Rakesh Pillai
+Vamsi
+
+Vamsi Krishna Lanka (3):
+  clk: qcom: Add LUCID_EVO PLL type for SDX65
+  clk: qcom: Add SDX65 GCC support
+  dt-bindings: clock: Introduce pdc bindings for SDX65
+
+ .../bindings/clock/qcom,gcc-sdx65.yaml        |   80 +
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ .../interrupt-controller/qcom,pdc.txt         |    1 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |  204 ++-
+ drivers/clk/qcom/clk-alpha-pll.h              |    3 +
+ drivers/clk/qcom/clk-rpmh.c                   |   25 +
+ drivers/clk/qcom/gcc-sdx65.c                  | 1603 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sdx65.h    |  122 ++
+ 10 files changed, 2022 insertions(+), 26 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sdx65.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx65.h
 
 
-> 
-> > +               };
-> > +
-> >                 rmtfs_mem: memory@9c900000 {
-> >                         compatible = "qcom,rmtfs-mem";
-> >                         reg = <0x0 0x9c900000 0x0 0x280000>;
-> 
-> Otherwise
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+base-commit: 4c388a8e740d3235a194f330c8ef327deef710f6
+-- 
+2.33.1
 
