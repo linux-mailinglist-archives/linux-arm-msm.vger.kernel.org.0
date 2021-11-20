@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 177424580AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 22:51:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15F054580AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 22:51:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbhKTVyf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 16:54:35 -0500
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:56278 "EHLO
+        id S231161AbhKTVyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 16:54:55 -0500
+Received: from mail-0301.mail-europe.com ([188.165.51.139]:55947 "EHLO
         mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhKTVyf (ORCPT
+        with ESMTP id S229917AbhKTVyz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 16:54:35 -0500
-Date:   Sat, 20 Nov 2021 21:51:21 +0000
+        Sat, 20 Nov 2021 16:54:55 -0500
+Date:   Sat, 20 Nov 2021 21:51:44 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1637445088;
-        bh=SPe6OtIz0ecyROsOPGQ9CPUUkcrEwVx42ibPqQRCE1Q=;
+        s=protonmail; t=1637445108;
+        bh=JFHH1UueL7vKFVIDUpqqk8gvpvagyJtjaQOnjoF0n+o=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=QR+cnMZ7Lr2S2CBM+G+5IaElHNoQLZ3ENRFItuhzsti/U6x36aQt9+ILvnZQN9neR
-         Qr9ly4dN4G2pQ+LuGoCZ8lxDYSaH3/IQQ+wcfAlFn1oJsfrqs26xbd1BegFK+olM9g
-         DaZfeehTYnEmr250VxJyUGs0O/14G/LDw7Ywg26o=
+        b=Yr12p34ExGgvX4tiS5MnG69/oSRnwJIqtxZrFItNARfLGbAoDs0HLOzJLoa9NW4LC
+         prbFdJuaH18cYNlDSzzS7sTrgeBQZqh7mk5YCJABhWiNf3VfziCVL9/2HIvgOhhOCn
+         8efsg9oOyFIUyoLbkcCk8jtmrjyX1Tc6DepTH8fA=
 To:     Dang Huynh <danct12@riseup.net>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -28,12 +28,13 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Alexey Min <alexey.min@gmail.com>,
         Martin Botka <martin.botka@somainline.org>,
-        Konrad Dybcio <konradybcio@gmail.com>
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v4 6/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add eMMC and SD
-Message-ID: <668450a6-35c9-b60c-a8f2-b7e86f701182@connolly.tech>
-In-Reply-To: <20211120214227.779742-7-danct12@riseup.net>
-References: <20211120214227.779742-1-danct12@riseup.net> <20211120214227.779742-7-danct12@riseup.net>
+Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Enable Simple Framebuffer
+Message-ID: <0863db0f-c3ed-1b68-2478-982302dc7942@connolly.tech>
+In-Reply-To: <20211120214227.779742-8-danct12@riseup.net>
+References: <20211120214227.779742-1-danct12@riseup.net> <20211120214227.779742-8-danct12@riseup.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -49,44 +50,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 20/11/2021 21:42, Dang Huynh wrote:
-> This commit enable the SD card slot and internal MMC.
+> This lets the user sees the framebuffer console.
 >
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > Signed-off-by: Dang Huynh <danct12@riseup.net>
 > ---
->   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
+>   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts   | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/a=
 rm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> index c7bdf4c28be4..d30cdc6c160a 100644
+> index d30cdc6c160a..45e58714af71 100644
 > --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
 > +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> @@ -330,6 +330,25 @@ vreg_l19a_3p3: l19 {
+> @@ -22,7 +22,20 @@ aliases {
+>   =09};
+>
+>   =09chosen {
+> +=09=09#address-cells =3D <2>;
+> +=09=09#size-cells =3D <2>;
+> +=09=09ranges;
+> +
+>   =09=09stdout-path =3D "serial0:115200n8";
+> +
+> +=09=09framebuffer0: framebuffer@9d400000 {
+> +=09=09=09compatible =3D "simple-framebuffer";
+> +=09=09=09reg =3D <0 0x9d400000 0 (1080 * 2340 * 4)>;
+> +=09=09=09width =3D <1080>;
+> +=09=09=09height =3D <2340>;
+> +=09=09=09stride =3D <(1080 * 4)>;
+> +=09=09=09format =3D "a8r8g8b8";
+> +=09=09};
+>   =09};
+>
+>   =09vph_pwr: vph-pwr-regulator {
+> @@ -60,6 +73,11 @@ ramoops@a0000000 {
+>   =09=09=09ftrace-size =3D <0x0>;
+>   =09=09=09pmsg-size =3D <0x20000>;
+>   =09=09};
+> +
+> +=09=09framebuffer_mem: memory@9d400000 {
+> +=09=09=09reg =3D <0x0 0x9d400000 0x0 0x23ff000>;
+> +=09=09=09no-map;
+> +=09=09};
 >   =09};
 >   };
 >
-> +&sdhc_1 {
-> +=09status =3D "okay";
-> +=09supports-cqe;
-> +
-> +=09mmc-hs200-1_8v;
-> +=09mmc-hs400-1_8v;
-> +=09mmc-hs400-enhanced-strobe;
-> +
-> +=09vmmc-supply =3D <&vreg_l4b_2p95>;
-> +=09vqmmc-supply =3D <&vreg_l8a_1p8>;
-> +};
-> +
-> +&sdhc_2 {
-> +=09status =3D "okay";
-> +
-> +=09vmmc-supply =3D <&vreg_l5b_2p95>;
-> +=09vqmmc-supply =3D <&vreg_l2b_2p95>;
-> +};
-> +
->   &tlmm {
->   =09gpio-reserved-ranges =3D <8 4>;
->   };
 > --
 > 2.33.1
 >
