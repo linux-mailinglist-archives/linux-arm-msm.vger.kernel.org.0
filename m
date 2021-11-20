@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15F054580AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 22:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 845D34580BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 22:56:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbhKTVyz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 16:54:55 -0500
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:55947 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbhKTVyz (ORCPT
+        id S232060AbhKTV7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 16:59:44 -0500
+Received: from mail-4022.proton.ch ([185.70.40.22]:22140 "EHLO
+        mail-4022.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229880AbhKTV7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 16:54:55 -0500
-Date:   Sat, 20 Nov 2021 21:51:44 +0000
+        Sat, 20 Nov 2021 16:59:44 -0500
+Date:   Sat, 20 Nov 2021 21:56:33 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1637445108;
-        bh=JFHH1UueL7vKFVIDUpqqk8gvpvagyJtjaQOnjoF0n+o=;
+        s=protonmail; t=1637445398;
+        bh=NE69VuQ2AFtUVf1PAPgUv1e/DDEsYZGhxd6gfXS2xA0=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=Yr12p34ExGgvX4tiS5MnG69/oSRnwJIqtxZrFItNARfLGbAoDs0HLOzJLoa9NW4LC
-         prbFdJuaH18cYNlDSzzS7sTrgeBQZqh7mk5YCJABhWiNf3VfziCVL9/2HIvgOhhOCn
-         8efsg9oOyFIUyoLbkcCk8jtmrjyX1Tc6DepTH8fA=
+        b=qNRF84xg4A7HQgG5h6IBlJGpAzCaiQi71+vcHdOOKcqWuT5nlYaaBN6/jhwYx4vzL
+         lB4iIHEaNoJZDwuGFX/dqqJJy7HbWsdVwtNr9eWI0A8fG4+S+ygAhrvZlVKCCBOWof
+         FviOseVygl4aWXT01vQw1PpDLjVWsMRDV3PgKW2g=
 To:     Dang Huynh <danct12@riseup.net>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -31,10 +31,10 @@ Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konradybcio@gmail.com>,
         Konrad Dybcio <konrad.dybcio@somainline.org>
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Enable Simple Framebuffer
-Message-ID: <0863db0f-c3ed-1b68-2478-982302dc7942@connolly.tech>
-In-Reply-To: <20211120214227.779742-8-danct12@riseup.net>
-References: <20211120214227.779742-1-danct12@riseup.net> <20211120214227.779742-8-danct12@riseup.net>
+Subject: Re: [PATCH v4 8/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB
+Message-ID: <7431c057-7e56-e38b-eb3a-66971c5c5dbb@connolly.tech>
+In-Reply-To: <20211120214227.779742-9-danct12@riseup.net>
+References: <20211120214227.779742-1-danct12@riseup.net> <20211120214227.779742-9-danct12@riseup.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -50,57 +50,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 20/11/2021 21:42, Dang Huynh wrote:
-> This lets the user sees the framebuffer console.
+> From: Alexey Min <alexey.min@gmail.com>
 >
+> Enable and configure DWC3 and QUSB2 PHY to enable USB
+> functionality on the Redmi Note 7.
+>
+> Signed-off-by: Alexey Min <alexey.min@gmail.com>
+> Co-developed-by: Dang Huynh <danct12@riseup.net>
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > Signed-off-by: Dang Huynh <danct12@riseup.net>
 > ---
->   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts   | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+>   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 25 +++++++++++++++++++
+>   1 file changed, 25 insertions(+)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/a=
 rm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> index d30cdc6c160a..45e58714af71 100644
+> index 45e58714af71..6cdd9f7c864b 100644
 > --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
 > +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> @@ -22,7 +22,20 @@ aliases {
->   =09};
->
->   =09chosen {
-> +=09=09#address-cells =3D <2>;
-> +=09=09#size-cells =3D <2>;
-> +=09=09ranges;
-> +
->   =09=09stdout-path =3D "serial0:115200n8";
-> +
-> +=09=09framebuffer0: framebuffer@9d400000 {
-> +=09=09=09compatible =3D "simple-framebuffer";
-> +=09=09=09reg =3D <0 0x9d400000 0 (1080 * 2340 * 4)>;
-> +=09=09=09width =3D <1080>;
-> +=09=09=09height =3D <2340>;
-> +=09=09=09stride =3D <(1080 * 4)>;
-> +=09=09=09format =3D "a8r8g8b8";
-> +=09=09};
->   =09};
->
->   =09vph_pwr: vph-pwr-regulator {
-> @@ -60,6 +73,11 @@ ramoops@a0000000 {
->   =09=09=09ftrace-size =3D <0x0>;
->   =09=09=09pmsg-size =3D <0x20000>;
+> @@ -79,6 +79,15 @@ framebuffer_mem: memory@9d400000 {
+>   =09=09=09no-map;
 >   =09=09};
-> +
-> +=09=09framebuffer_mem: memory@9d400000 {
-> +=09=09=09reg =3D <0x0 0x9d400000 0x0 0x23ff000>;
-> +=09=09=09no-map;
-> +=09=09};
 >   =09};
+> +
+> +=09/*
+> +=09 * Until we hook up type-c detection, we
+> +=09 * have to stick with this. But it works.
+> +=09 */
+> +=09extcon_usb: extcon-usb {
+> +=09=09compatible =3D "linux,extcon-usb-gpio";
+> +=09=09id-gpio =3D <&tlmm 58 GPIO_ACTIVE_HIGH>;
+> +=09};
 >   };
 >
+>   &blsp1_uart2 {
+> @@ -95,6 +104,13 @@ &pon_resin {
+>   =09linux,code =3D <KEY_VOLUMEDOWN>;
+>   };
+>
+> +&qusb2phy {
+> +=09status =3D "okay";
+> +
+> +=09vdd-supply =3D <&vreg_l1b_0p925>;
+> +=09vdda-phy-dpdm-supply =3D <&vreg_l7b_3p125>;
+> +};
+> +
+>   &rpm_requests {
+>   =09pm660l-regulators {
+>   =09=09compatible =3D "qcom,rpm-pm660l-regulators";
+> @@ -370,3 +386,12 @@ &sdhc_2 {
+>   &tlmm {
+>   =09gpio-reserved-ranges =3D <8 4>;
+>   };
+> +
+> +&usb3 {
+> +=09status =3D "okay";
+> +};
+> +
+> +&usb3_dwc3 {
+> +=09dr_mode =3D "peripheral";
+> +=09extcon =3D <&extcon_usb>;
+> +};
 > --
 > 2.33.1
 >
 
-Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+Reviewed-by: Caleb Connolly <caleb@connolly>
 
 --
 Kind Regards,
