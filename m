@@ -2,122 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 845D34580BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 22:56:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C0D44580C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 23:11:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbhKTV7o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 16:59:44 -0500
-Received: from mail-4022.proton.ch ([185.70.40.22]:22140 "EHLO
-        mail-4022.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbhKTV7o (ORCPT
+        id S234568AbhKTWOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 17:14:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234536AbhKTWOL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 16:59:44 -0500
-Date:   Sat, 20 Nov 2021 21:56:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1637445398;
-        bh=NE69VuQ2AFtUVf1PAPgUv1e/DDEsYZGhxd6gfXS2xA0=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=qNRF84xg4A7HQgG5h6IBlJGpAzCaiQi71+vcHdOOKcqWuT5nlYaaBN6/jhwYx4vzL
-         lB4iIHEaNoJZDwuGFX/dqqJJy7HbWsdVwtNr9eWI0A8fG4+S+ygAhrvZlVKCCBOWof
-         FviOseVygl4aWXT01vQw1PpDLjVWsMRDV3PgKW2g=
-To:     Dang Huynh <danct12@riseup.net>
-From:   Caleb Connolly <caleb@connolly.tech>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Alexey Min <alexey.min@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: Re: [PATCH v4 8/8] arm64: dts: qcom: sdm660-xiaomi-lavender: Add USB
-Message-ID: <7431c057-7e56-e38b-eb3a-66971c5c5dbb@connolly.tech>
-In-Reply-To: <20211120214227.779742-9-danct12@riseup.net>
-References: <20211120214227.779742-1-danct12@riseup.net> <20211120214227.779742-9-danct12@riseup.net>
+        Sat, 20 Nov 2021 17:14:11 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27C69C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 14:11:07 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id t30so24824285wra.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 14:11:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nX1VQc7JGS93PsTXgzyizvFwr9rOPMi0Bz54dHw9UwY=;
+        b=jCzMLBI4pgx1hBWR0vR348kxlEBjdPw6WBTEannHEFs2XgVyx1YDlmubrw7JHCbDn1
+         /zo3JeIbZtHpyULaTCOQGi3Sq4zTs18qKN2/4HhgHYtDfdSbYkGhC//WMWpyovwsUFq+
+         PpAeeKp5Na4VHOMGYNrgZcybdaJrnnZW1LsOJLySf+j/pfbh8ZC8zAnVqf9P1D4rhD8y
+         c6DIVRCCS9F3Q/ygLNeQ0/uoLzEw3YlCzT+9vLjC3PdPf0Fd7lp9/ukveQMaJD6loTNa
+         ReWkseznPc8a5zG6/IM1y0MfmGZXTxDEn83ZOo9yhiAQyQJuSAWk9CQmVmh47l6fyjMm
+         8jBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nX1VQc7JGS93PsTXgzyizvFwr9rOPMi0Bz54dHw9UwY=;
+        b=12HscV0MHnIC1ClIAkICGTf6RZviIjA3m7oBN5/TdC4iU/Mj/eO/yyHBVTMnkv8xMo
+         jpj0SjfaQzs0DT+AjwcmQZasO1pJOsCR3CYKPHBI+8BZzW7a26nc7xZc+ltlH4dzovt9
+         Ue4nxJYYEnleDP6TE5sJzZixiEX1ssP18QVmltuM8BxFcNTEIWno8GjwDCqXslvTFB0H
+         Ao9gB5P6kxzRmK2jK37O0OI0HiPhT8PB8MWjZrDpBhMeMpoaa+2IKv7mjY4cvoOz0fUy
+         KYh7p5BEKl1cynUVOAImmpeTbhGh5hXz7mIg7K/4YsFXhhUKO4exqSQWH0lm7EnPgcq7
+         eSng==
+X-Gm-Message-State: AOAM530yLKC8s8A+wUyjhVtJ20f1hwaxcxRQa/CvaFgCieNdZs0ze2Zl
+        Do25oGJfAtT1xn7K+LzH2GSqP5L/e8w=
+X-Google-Smtp-Source: ABdhPJxMyADAlzh+/XtHM//pRW9Sta3BxtjybnHUV9bT8ZDN1yntFNvGxHxjzXLCcL/NRqOuiDa+QA==
+X-Received: by 2002:adf:dd87:: with SMTP id x7mr21398993wrl.158.1637446265534;
+        Sat, 20 Nov 2021 14:11:05 -0800 (PST)
+Received: from debian64.daheim (p4fd09ac4.dip0.t-ipconnect.de. [79.208.154.196])
+        by smtp.gmail.com with ESMTPSA id e12sm4817570wrq.20.2021.11.20.14.11.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Nov 2021 14:11:05 -0800 (PST)
+Received: from localhost.daheim ([127.0.0.1])
+        by debian64.daheim with esmtp (Exim 4.95)
+        (envelope-from <chunkeey@gmail.com>)
+        id 1moYZc-000Bil-RN;
+        Sat, 20 Nov 2021 23:11:04 +0100
+Message-ID: <3c73ee75-f588-f598-3942-de0c1738b722@gmail.com>
+Date:   Sat, 20 Nov 2021 23:11:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: fix sleep clock
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Pavel Kubelun <be.dissent@gmail.com>,
+        Andy Gross <agross@kernel.org>
+References: <20211031155650.487158-1-chunkeey@gmail.com>
+ <YZWsAN+bWkmiHkM6@builder.lan>
+From:   Christian Lamparter <chunkeey@gmail.com>
+In-Reply-To: <YZWsAN+bWkmiHkM6@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On 18/11/2021 02:27, Bjorn Andersson wrote:
+> On Sun 31 Oct 10:56 CDT 2021, Christian Lamparter wrote:
+> 
+>> From: Pavel Kubelun <be.dissent@gmail.com>
+>>
+>> It seems like sleep_clk was copied from ipq806x.
+>> Fix ipq40xx sleep_clk to the value QSDK defines.
+>>
+>> Also rename the sleep clock node like the GCC driver names it.
+>>
+>> Link: https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-msm/commit/?id=d92ec59973484acc86dd24b67f10f8911b4b4b7d
+>> Link: https://patchwork.kernel.org/comment/22721613/
+>> Signed-off-by: Pavel Kubelun <be.dissent@gmail.com>
+>> Signed-off-by: Christian Lamparter <chunkeey@gmail.com> (resend)
+>> ---
+>>   arch/arm/boot/dts/qcom-ipq4019.dtsi | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+>> index 7a181352b306..ed40bef91e45 100644
+>> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
+>> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+>> @@ -144,9 +144,9 @@ pmu {
+>>   	};
+>>   
+>>   	clocks {
+>> -		sleep_clk: sleep_clk {
+>> +		sleep_clk: gcc_sleep_clk_src {
+> 
+> Underscore is not a valid character in node names, so it should named
+> something like sleep-clk.
 
 
-On 20/11/2021 21:42, Dang Huynh wrote:
-> From: Alexey Min <alexey.min@gmail.com>
->
-> Enable and configure DWC3 and QUSB2 PHY to enable USB
-> functionality on the Redmi Note 7.
->
-> Signed-off-by: Alexey Min <alexey.min@gmail.com>
-> Co-developed-by: Dang Huynh <danct12@riseup.net>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
->   .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  | 25 +++++++++++++++++++
->   1 file changed, 25 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/a=
-rm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> index 45e58714af71..6cdd9f7c864b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> @@ -79,6 +79,15 @@ framebuffer_mem: memory@9d400000 {
->   =09=09=09no-map;
->   =09=09};
->   =09};
-> +
-> +=09/*
-> +=09 * Until we hook up type-c detection, we
-> +=09 * have to stick with this. But it works.
-> +=09 */
-> +=09extcon_usb: extcon-usb {
-> +=09=09compatible =3D "linux,extcon-usb-gpio";
-> +=09=09id-gpio =3D <&tlmm 58 GPIO_ACTIVE_HIGH>;
-> +=09};
->   };
->
->   &blsp1_uart2 {
-> @@ -95,6 +104,13 @@ &pon_resin {
->   =09linux,code =3D <KEY_VOLUMEDOWN>;
->   };
->
-> +&qusb2phy {
-> +=09status =3D "okay";
-> +
-> +=09vdd-supply =3D <&vreg_l1b_0p925>;
-> +=09vdda-phy-dpdm-supply =3D <&vreg_l7b_3p125>;
-> +};
-> +
->   &rpm_requests {
->   =09pm660l-regulators {
->   =09=09compatible =3D "qcom,rpm-pm660l-regulators";
-> @@ -370,3 +386,12 @@ &sdhc_2 {
->   &tlmm {
->   =09gpio-reserved-ranges =3D <8 4>;
->   };
-> +
-> +&usb3 {
-> +=09status =3D "okay";
-> +};
-> +
-> +&usb3_dwc3 {
-> +=09dr_mode =3D "peripheral";
-> +=09extcon =3D <&extcon_usb>;
-> +};
-> --
-> 2.33.1
+Ok, this is a bit awkward. The current DeviceTree Specification 0.3v list
+the "underscore" in "Table 2.1: Valid characters for node names". (Page 7)
+<https://github.com/devicetree-org/devicetree-specification/releases/download/v0.3/devicetree-specification-v0.3.pdf>
+
+But...
+> It would be nice if the clock driver was converted to using parent_data
+> and fw_name and a clocks reference in the gcc node to &sleep_clk, but if
+> you need something that works with the current implementation then
+> 
+>    clock-output-names = "gcc_sleep_clk_src"; >
+> is your friend.
+> 
+> 
+> But please do consider converting the gcc-ipq4019.c to acquire "xo" and
+> "sleep_clk" using parent_data instead.
 >
 
-Reviewed-by: Caleb Connolly <caleb@connolly>
 
---
-Kind Regards,
-Caleb
+Yes, I think this could be done. Next month around the seasonal holidays,
+I do think there will be some free time to run this on the IPQ40xx devices
+that would otherwise be blinking away lonely at the office. (Pavel's patch
+has been here so long that I knew it is "working".)
 
+So the next series will be:
+- change this patch to just fix the clock-frequency value.
+- another new patch that updates gcc-ipq4019.c code
+   replace all the parent_name with "xo" and "gcc_sleep_clk_src"
+   with parent_data + fw_name (in the same way in which
+   gcc-ipq6018.c seems to be doing it).
+
+Is there anything I missed?
+
+(I could throw in the sleep_clk -> sleep(-clk) change as well.
+But I'll need find a justification for replacing "_" vs "-" there,
+since I can't really lean on the Device-Tree spec since it
+proclamates that the underscore is a "valid character"?!)
+
+Thanks,
+Christian
