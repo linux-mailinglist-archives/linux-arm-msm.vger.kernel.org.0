@@ -2,86 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40AF9457EE9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 16:26:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC81E457FF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Nov 2021 19:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237487AbhKTP3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 10:29:08 -0500
-Received: from mail.kernel.org ([198.145.29.99]:41470 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230038AbhKTP3I (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 10:29:08 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E5B5B60EB6;
-        Sat, 20 Nov 2021 15:26:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637421964;
-        bh=sL04+7/Tziaw15CHiE2bty/Bv6qeql7yB4oQSwHL8Rw=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=N35/MX+Bk5IfQeZQiu16BeV4YuD31Ephij5WJvzDmZ2G+K+MjYa+HWqb1ahmMn5Hb
-         8nTHe95BsmdqkyFWylC9DLYJd5w68+maTSegSteQm994SJN2V2euBCo7o5awfS7MX1
-         1EqL1r1uDdGsdYVLkB0LepzAMd/DMg1DnO37cYnq/TOnx6T6gg4l1tr4VYZFrfdNBr
-         fu07uKG0PLQcKTAn5J7IOkR76pmhpIN6NdZJHm5NPKAY2SAGobyGEmgVfnmJURZZPl
-         Ncx/4o043Jc/OWEbZSwAM5dDl3KRkS71kl4wzNRFF/bIFRAmgFMC+aeEM6/O5rxXi9
-         UVuYgRSm1FojA==
-Date:   Sat, 20 Nov 2021 07:26:02 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Peter Chen <peter.chen@kernel.org>
-Cc:     bpf@vger.kernel.org, axboe@kernel.dk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@linux.ie, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, yuq825@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, christian.koenig@amd.com, ray.huang@amd.com,
-        sgoutham@marvell.com, gakula@marvell.com, sbhatta@marvell.com,
-        hkelam@marvell.com, jingoohan1@gmail.com,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, krzysztof.kozlowski@canonical.com,
-        mani@kernel.org, pawell@cadence.com, rogerq@kernel.org,
-        a-govindraju@ti.com, gregkh@linuxfoundation.org, ast@kernel.org,
-        daniel@iogearbox.net, andrii@kernel.org, kafai@fb.com,
-        songliubraving@fb.com, yhs@fb.com, john.fastabend@gmail.com,
-        kpsingh@kernel.org, sj@kernel.org, akpm@linux-foundation.org,
-        thomas.hellstrom@linux.intel.com, matthew.auld@intel.com,
-        colin.king@intel.com, geert@linux-m68k.org,
-        linux-block@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-mm@kvack.org
-Subject: Re: [PATCH bpf] treewide: add missing includes masked by cgroup ->
- bpf dependency
-Message-ID: <20211120072602.22f9e722@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20211120073011.GA36650@Peter>
-References: <20211120035253.72074-1-kuba@kernel.org>
-        <20211120073011.GA36650@Peter>
+        id S237800AbhKTSGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 13:06:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhKTSGI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 20 Nov 2021 13:06:08 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D273AC061574;
+        Sat, 20 Nov 2021 10:03:04 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id a9so24156979wrr.8;
+        Sat, 20 Nov 2021 10:03:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h+uDZ8B0+FIrUaufpROus9M3fzWHj1TqAl6ALRsgs/E=;
+        b=Q6CcTalyhJMl2dU/MAJyRRlblfIlEttDPBMil8TaLI4h7opkrbYU5tzyoXt1F0ZrHY
+         o+Lz9MruepobD7dYWDgnj1BPPsY7L6VtnjiXonzpU5khi3onjforwR5JZ+hnS63yuXwo
+         xMe1IdyqZQHrQUW3uSlrw9Zp3G+C8KKcF7vXfTWhiLduh1vbq/8nu5iiK8dN9h/7Vz79
+         3+/Kh47F7V8utZJTPPokfjUYtw3zbMXSpzn9A0GoI00r74BEpSEHpBwli543CMQkoC6L
+         JhZigBri8wRRz487LTX/+PKbAMP8pzNfjs9NBcGrtsvzYVQ/4byKleJqKdmzmNaHHlux
+         obEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h+uDZ8B0+FIrUaufpROus9M3fzWHj1TqAl6ALRsgs/E=;
+        b=0h4yognnneYBLn/we4WCbIhBdYcQ3HnZprr35xiip7akxZp1Ma6Cp9tZwSco3lVIi9
+         sxmw0SvPgS+UM+XUK/pweVcZZOaZR07KD+w/eZyJ+AaTD4ZiBa7JNb4sCu6mlCZPVplG
+         p0cKWVqtGWg86ajkKuH0+MgYKbX+urqfOjhtlX4CyAuEhhKU+u+lEkVA9lkjgc+ysiQE
+         87GbTP97R0bQa22Hs3ljeo/xKizAymWPnd74NCRUeXz2c7v/YI3NA3D3VYOpGuQx40Dh
+         eVUv0osaXbOwPRPCLmFoTrIioS+UI78CI2YKsUole4pO93ycul0uBvgU/oO2Jy2JIuP8
+         NLTg==
+X-Gm-Message-State: AOAM5319AYWf7JEY9zUBvlbcZlYQcG/4XGjpQ7QLOTocNP0YmHEhGTE9
+        dOZ3OPX5o3kyEWsLVTehjslOc6Sh1dOHilKTaCTvM9tb
+X-Google-Smtp-Source: ABdhPJwwyY+STeb0nl/i0vQ3mmaky2ZZuZ4AgHjsdhPpIv2/FoV9tz401ElWhB2WZA0pL56egYeBhMACEWBqwxbnln8=
+X-Received: by 2002:a05:6000:1862:: with SMTP id d2mr19504472wri.251.1637431383136;
+ Sat, 20 Nov 2021 10:03:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20211119225157.984706-1-robdclark@gmail.com> <20211119225157.984706-2-robdclark@gmail.com>
+ <CAD=FV=UraStftJyUDHp5=iKoh4tnCQiTgBZJBNF3-q=HDZUPZw@mail.gmail.com>
+In-Reply-To: <CAD=FV=UraStftJyUDHp5=iKoh4tnCQiTgBZJBNF3-q=HDZUPZw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 20 Nov 2021 10:08:07 -0800
+Message-ID: <CAF6AEGvU7nbdbKCRcXUEnrWmp7xJfSJxmwzQP2LwW_UzuS0Zjw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] drm/msm/gpu: Respect PM QoS constraints
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 20 Nov 2021 15:30:11 +0800 Peter Chen wrote:
-> > diff --git a/drivers/usb/cdns3/host.c b/drivers/usb/cdns3/host.c
-> > index 84dadfa726aa..9643b905e2d8 100644
-> > --- a/drivers/usb/cdns3/host.c
-> > +++ b/drivers/usb/cdns3/host.c
-> > @@ -10,6 +10,7 @@
-> >   */
-> > =20
-> >  #include <linux/platform_device.h>
-> > +#include <linux/slab.h> =20
->=20
-> Should be "#include <linux/module.h>"?
+On Fri, Nov 19, 2021 at 4:21 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Fri, Nov 19, 2021 at 2:47 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > +void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
+> > +{
+> > +       struct msm_gpu_devfreq *df = &gpu->devfreq;
+> > +       unsigned long freq;
+> > +
+> > +       freq = get_freq(gpu);
+> > +       freq *= factor;
+> > +       freq /= HZ_PER_KHZ;
+>
+> Should it do the divide first? I don't know for sure, but it feels
+> like GPU frequency could conceivably be near-ish the u32 overflow? (~4
+> GHz). Better to be safe and do the / 1000 first?
+>
 
-Why? Different files are missing different includes, this one needs
-slab.h:
+It looks like on 8998 we have some GPU OPPs that are not integer # of
+KHz.. although that would not change the integer math result unless
+factor > 10.
 
-../drivers/usb/cdns3/host.c: In function =E2=80=98__cdns_host_init=E2=80=99:
-../drivers/usb/cdns3/host.c:86:2: error: implicit declaration of function =
-=E2=80=98kfree=E2=80=99; did you mean =E2=80=98vfree=E2=80=99? [-Werror=3Di=
-mplicit-function-declaration]
-  kfree(cdns->xhci_plat_data);
-  ^~~~~
-  vfree
+We are a bit aways for 32b overflow (highest freq for current things
+is 825MHz, but I guess we could see things closer to 1GHz in the
+future.. generally GPUs aren't clocked nearly as high as CPUs.. slow
+but wide, and all that).. but maybe this should just be 64b math
+instead to be safe?
+
+>
+> > @@ -201,26 +217,14 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
+> >         struct msm_gpu_devfreq *df = container_of(work,
+> >                         struct msm_gpu_devfreq, idle_work.work);
+> >         struct msm_gpu *gpu = container_of(df, struct msm_gpu, devfreq);
+> > -       unsigned long idle_freq, target_freq = 0;
+> >
+> >         if (!df->devfreq)
+> >                 return;
+>
+> Why does the msm_devfreq_idle_work() need a check for "!df->devfreq"
+> but the boost work doesn't? Maybe you don't need it anymore now that
+> you're not reaching into the mutex? ...or maybe the boost work does
+> need it?
+>
+> ...and if "df->devfreq" is NULL then doesn't it mean that
+> msm_hrtimer_work_init() was never called? That seems bad...
+
+Looks like 658f4c829688 ("drm/msm/devfreq: Add 1ms delay before
+clamping freq") was badly rebased on top of efb8a170a367 ("drm/msm:
+Fix devfreq NULL pointer dereference on a3xx").. I'll send a separate
+patch to fix that
+
+BR,
+-R
