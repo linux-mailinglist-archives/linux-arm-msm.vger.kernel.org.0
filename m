@@ -2,62 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86713458119
+	by mail.lfdr.de (Postfix) with ESMTP id 3C766458118
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 00:56:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237849AbhKTX7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 18:59:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49088 "EHLO
+        id S237862AbhKTX7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 18:59:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237768AbhKTX64 (ORCPT
+        with ESMTP id S237797AbhKTX66 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 18:58:56 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E0EC06173E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 15:55:52 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id h16-20020a9d7990000000b0055c7ae44dd2so22758816otm.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 15:55:52 -0800 (PST)
+        Sat, 20 Nov 2021 18:58:58 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE905C061748
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 15:55:54 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id b5-20020a9d60c5000000b0055c6349ff22so22723573otk.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 15:55:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=lRyDgQhOd/ltJVzT23Z2jbf6M0giTa3yBgAnJ8ZBKwc=;
-        b=OppVzNlNs1kge6a4STbHbopzetkTnWILN99dxTo91wNadCPCD+qA+etu0groGlhhun
-         d2k6QckrXRnFGZfrFioOtA6GTL50Fqg4Fs73uNK4tusiU+Ex63NRQTj8f7euoJfzkr0b
-         ZRD1TRs5Xi+q8FszHIIKV63xfqHgka0Ez9V8LDCzLJcgmy2j4wueipUJG4n70nhAmzqx
-         OflN43ZUDuLUZmHV9Hn30dqWunK6J1ue6LORbAd+WJGOc5MwwhqyRoyFQQ4qx2cT9ORE
-         IASCu+OfpodsnkecPy7rGjKJ2S97c4hwke4fH/WqTHDGgsD1HO0lQ65euH8wwWYC99/T
-         3nfg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8hKM6Vb2bmJvC0MfZh97W4lzDqklqLa6H+im7OWinkY=;
+        b=VfY5LWFbKW1QNCPnrML4BSBp4jT8y9UOOEHK7KONJA0DkIPS2ueEgZn/MMlvnBSE6h
+         0B/+6VWL1o2RA7eAq+0O4PmPGbSg63zzvgAN24W/ItSrRcu5C21JQwwHIcdKwYM7Xl0w
+         h/QqfeJQP9oCndxt+oM8pr5KpvVgfw4ab+GYUQEYpb89ydWnINDrSYlQ1xPZkP06bMum
+         jivu9GvT0NL6S9Vxqnfqk8+PCg6WLR+ynMy/zNl8eN11NmpIwbVbT2QTrMOTfSeYiVwd
+         aX+aMiUZ0q1yebJtmoXS18d86hRtziwCloMuQ9rVoW4fRO+jW1cVJmZ8Vt2qzWk6cQnO
+         6UAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lRyDgQhOd/ltJVzT23Z2jbf6M0giTa3yBgAnJ8ZBKwc=;
-        b=4FIF1t6LYunritmz74VSXyeJPu1q/4Yl9vAFxxJJM3nOvxJBbIa3JnoAFJsjyK3QWW
-         CRHV85SxxXnIbNDm0Ve1WxsUeK8VYQDteUuW6pFtRLyh/P04naFvvmznv7AgY+LTEneQ
-         /5uTQKky1tR1IEfqsgSX7nPrJhSDLOuOMB4JY2GH3JFfLT+MtONB3S1roiJV61Av+vfV
-         Y+ujTHcBmTEzXijDJC1Cf3Xpsth4nEvX9gbnAYZ+lbZ9qYDhWUjVH8ycaPcV4+t80uMr
-         5EJYa8Qae9buYx+9gx/AIeo+mS/U+1AQNGi9n3lofrewZSUHIPpsII1r7zAKcuv3srwQ
-         6lOQ==
-X-Gm-Message-State: AOAM533NASX9hUuBxDYcIvksgWlhe4Wjc40e5sdhA76ib3r8DLOv2EbN
-        w1nyIGOz08A2qmbOYqnfFtngzfYLumdC4w==
-X-Google-Smtp-Source: ABdhPJyt/Dw/tn9oCsObV3pkyxAGnQ6CB9dlk/dvTGhpz0lxaQcoqgJpXaIqa+mA2Huf2nEGUraYGA==
-X-Received: by 2002:a05:6830:232e:: with SMTP id q14mr14799756otg.133.1637452551828;
-        Sat, 20 Nov 2021 15:55:51 -0800 (PST)
+        bh=8hKM6Vb2bmJvC0MfZh97W4lzDqklqLa6H+im7OWinkY=;
+        b=USy+TjAhrrmPYUaajkxNI3y7h4YgbCZgKJ/tLzbHtqMS6pwowkUkMXHoB+tJ928FGx
+         1viTIJYcPV0lRjQjoxK0L3lGCEzuDLDNX7qRlAovf/XNNhclTv+LwKoInkgS9WJchcQ2
+         g5WyIuFLXghqfFHR05tFCx7f1v/kzrkK65WbNE668iPwEj3Z2jTCOmC3DrQRGlukrAU1
+         32XD3bNQlmNDrqaO8b3fM1SrncBhY/g0XDzPBjFFrfHKUK6JyJeUc+eOyA5Cwfh/gXJe
+         2+6rqIxkJrWbq8B1AMzYynPH91+T+A6qkZyjms2NyUqDZnIyIY6BsRmlMpXu1ToVLYfg
+         39sA==
+X-Gm-Message-State: AOAM5313ELqcuL6M2TPg0f/g3VbSg1We6cT4Y8q+7vKtBCGnYp5wh5IQ
+        XYidwHLVSeZ3h2FFMAu/qtffbw==
+X-Google-Smtp-Source: ABdhPJyar5Yxc4omNy+AqlQ6sg8tNEbwMNnQmxmpiNZmGi+YAsI/0P9COQ2CIec59trQ/mw74dx7UA==
+X-Received: by 2002:a9d:63cd:: with SMTP id e13mr14318562otl.351.1637452552779;
+        Sat, 20 Nov 2021 15:55:52 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
         by smtp.gmail.com with ESMTPSA id o26sm828474otj.14.2021.11.20.15.55.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Nov 2021 15:55:51 -0800 (PST)
+        Sat, 20 Nov 2021 15:55:52 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Robert Marko <robimarko@gmail.com>,
-        robh+dt@kernel.org, agross@kernel.org
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: ipq8074: add MDIO bus
-Date:   Sat, 20 Nov 2021 17:55:28 -0600
-Message-Id: <163745250540.1078332.4349681413991254316.b4-ty@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: Re: [PATCH 0/3] Add QCM2290 RPM power domain support
+Date:   Sat, 20 Nov 2021 17:55:29 -0600
+Message-Id: <163745250542.1078332.7687819142361245824.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211007115846.26255-1-robimarko@gmail.com>
-References: <20211007115846.26255-1-robimarko@gmail.com>
+In-Reply-To: <20211108134442.30051-1-shawn.guo@linaro.org>
+References: <20211108134442.30051-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -65,16 +68,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Oct 2021 13:58:46 +0200, Robert Marko wrote:
-> IPQ8074 uses an IPQ4019 compatible MDIO controller that is already
-> supported in the kernel, so add the DT node in order to use it.
+On Mon, 8 Nov 2021 21:44:39 +0800, Shawn Guo wrote:
+> The first patch is a separate cleanup, and the rest two add RPM power
+> domain support for QCM2290.
 > 
+> Shawn Guo (3):
+>   soc: qcom: rpmpd: Drop unused res_name from struct rpmpd
+>   dt-bindings: power: rpmpd: Add QCM2290 support
+>   soc: qcom: rpmpd: Add QCM2290 support
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: ipq8074: add MDIO bus
-      commit: d201f67714a302b12ad3d78b982963342939629c
+[1/3] soc: qcom: rpmpd: Drop unused res_name from struct rpmpd
+      commit: 7ba9dd0d04a8af868bc0785d79bde4ac0240328f
+[2/3] dt-bindings: power: rpmpd: Add QCM2290 support
+      commit: 2475fcfbe4e383d586c5a58711e436d83a2bdfe6
+[3/3] soc: qcom: rpmpd: Add QCM2290 support
+      commit: 1cd3921aa95ebf4a6d1f93fb736449441c530aa1
 
 Best regards,
 -- 
