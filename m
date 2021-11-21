@@ -2,129 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3514D458167
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 01:38:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21D95458178
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 03:21:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236712AbhKUAlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 19:41:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232469AbhKUAlR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 19:41:17 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89030C06173E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 16:38:10 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id e17-20020a4a8291000000b002c5ee0645e7so5092083oog.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 16:38:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Tn9dMzIKu+ibK/KdrE/W8IVEn4E4fjI9mXQYWJsCk88=;
-        b=iF1PX9ZgYCiyA3YNcueQeuDUmHPZ474YKh7mUqa7JDoaO/GyGC09M66xoPBO0VZ+ij
-         iv+pF4gZPnp8qwcO148FMNRM03ZZPwWuZfL+0P3QXEmczFUhzB63H8/iENu5KMG8hA/k
-         /SdU8m5Fl0fthrBmhtzUB24ws3NZ/UHBogM4LNRRkREzbk/HecZjuxD4FjeuzEQB1Zgt
-         NL9UC4TODH10SWcGL0H5H5lvndaAedg16u0+azDLJyhsDHtc4hI8Ht1tEhY4F+fX4p3j
-         qTr1t42D35QNq9k5Y8NpcRXmowo7s7GmFstiQLVKXzbFQNgam/VLMMOaQsUb5URbRc77
-         5aXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Tn9dMzIKu+ibK/KdrE/W8IVEn4E4fjI9mXQYWJsCk88=;
-        b=qhgLhKl5fj8trf27+PoQsF4gdOZHZp3o3qVmfnkxi9qxLYZHWMiIvrB8JXqrwadc5u
-         dC08YQm7haYWeaaxGUUS3ow/voZp29ft7Ak/ebY88kSGsy7/lh0rVpOVLRn+xTjDFE6n
-         c3FzOPPpp6lBK0AcOHF6phnAqJxBPioGQUDI4zd6x20bwpdv3jo1EKWlqD5dWNeZ8WFZ
-         U7pF3YwNDrsRk5BlSkpLAvLP9NtbDKk2Kr7daHCWc/GtizrIKK8NjsrjnNVgCiCVm7aB
-         iwhp1mHS123rZnuohlQTfmDXos/LpLx4VdbTU/w2draGIvhEG8YgXTW/eYl9DHnP4Eur
-         B5cw==
-X-Gm-Message-State: AOAM531vHBn42oJCK/AvV3K3Xho44v8zr/5/MtOiHj2t74pMEZ4Vo2pY
-        8dZDpKYNI+44BpkaE34w2329iA==
-X-Google-Smtp-Source: ABdhPJxIoHejU0c8j1lIrQZztowra82H18yHBeXtKud/4RL6yZ4W5TyMj/ZPNmdbNupeaFPxnbSBMQ==
-X-Received: by 2002:a4a:e7c3:: with SMTP id y3mr24837489oov.75.1637455089886;
-        Sat, 20 Nov 2021 16:38:09 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c3sm1023639oiw.8.2021.11.20.16.38.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Nov 2021 16:38:09 -0800 (PST)
-Date:   Sat, 20 Nov 2021 16:39:55 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: Re: [PATCH v2 2/3] soc: qcom: stats: Add fixed sleep stats offset
- for older RPM firmwares
-Message-ID: <YZmVW9zqgsycfd+F@ripper>
-References: <20211119213953.31970-1-stephan@gerhold.net>
- <20211119213953.31970-3-stephan@gerhold.net>
+        id S232500AbhKUCYM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 21:24:12 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38692 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231827AbhKUCYM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 20 Nov 2021 21:24:12 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 69B466008E;
+        Sun, 21 Nov 2021 02:21:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637461266;
+        bh=UCzrbM2fD+0HR8OTJ7bvKM6jrnWGIk1QV2RUx+6+AcA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FfnIEeglJ9iE1+Wx5hFdSxZpOkvthyDqWEDkBw4C1Vd6ZtaZf+8fR4cr43d08z7dA
+         qcRRdvOY8CW8F17K4HbW6cJjr16Txh7jeyBnYADlO1yuTRhW0R/weewwrnJ68hFKG7
+         jPeEveZVC6QAPjyRgxVmvfgUyx1q35NqXxgHciXYmvpu9L06qqEQ+XoDO8oJihks9W
+         +8rtWRYyyz7ni5kVSl8g1CbBxxaN8lGlCMnJaZ+z3kikfg30k036wL3o35OFuP6WK0
+         /65KBwUqpvJcx5cC5FCxVyLAhw3OHPbBdaFRj+Gn+30cLlYG2Ln2ElZ3A8vAAvechV
+         IWP+EDosvx0XA==
+Date:   Sun, 21 Nov 2021 10:20:57 +0800
+From:   Shawn Guo <shawnguo@kernel.org>
+To:     Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Cc:     linux-kernel@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Martin Kepplinger <martink@posteo.de>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lucas Stach <dev@lynxeye.de>, Angus Ainslie <angus@akkea.ca>,
+        Guido Gunther <agx@sigxcpu.org>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Johan Jonker <jbx6244@gmail.com>,
+        Eddie Cai <eddie.cai.linux@gmail.com>,
+        Shunqian Zheng <zhengsq@rock-chips.com>,
+        Brian Norris <briannorris@chromium.org>,
+        Dan Johansen <strit@manjaro.org>,
+        Simon South <simon@simonsouth.net>,
+        Matthias Brugger <mbrugger@suse.com>
+Subject: Re: [PATCH 2/4] arm64: dts: freescale: add 'chassis-type' property
+Message-ID: <20211121022056.GD31998@dragon>
+References: <20211016102025.23346-1-arnaud.ferraris@collabora.com>
+ <20211016102025.23346-3-arnaud.ferraris@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211119213953.31970-3-stephan@gerhold.net>
+In-Reply-To: <20211016102025.23346-3-arnaud.ferraris@collabora.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 19 Nov 13:39 PST 2021, Stephan Gerhold wrote:
-
-> Not all RPM firmware versions have the dynamic sleep stats offset
-> available. Most older versions use a fixed offset of 0xdba0.
-> Add support for this using new SoC-specific compatibles for APQ8084,
-> MSM8226, MSM8916 and MSM8974.
+On Sat, Oct 16, 2021 at 12:20:23PM +0200, Arnaud Ferraris wrote:
+> A new 'chassis-type' root node property has recently been approved for
+> the device-tree specification, in order to provide a simple way for
+> userspace to detect the device form factor and adjust their behavior
+> accordingly.
 > 
-> Even older SoCs seem to use a different offset and stats format.
-> If needed those could be supported in the future by adding separate
-> compatibles for those with a different stats_config.
+> This patch fills in this property for end-user devices (such as laptops,
+> smartphones and tablets) based on NXP ARM64 processors.
 > 
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> ---
-> Changes in v2:
->   - Use SoC-specific compatibles instead of qcom,rpm-legacy-stats
-> ---
->  drivers/soc/qcom/qcom_stats.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-> index 131d24caabf8..d6bfd1bbdc2a 100644
-> --- a/drivers/soc/qcom/qcom_stats.c
-> +++ b/drivers/soc/qcom/qcom_stats.c
-> @@ -237,6 +237,15 @@ static const struct stats_config rpm_data = {
->  	.subsystem_stats_in_smem = false,
->  };
->  
-> +/* Older RPM firmwares have the stats at a fixed offset instead */
-> +static const struct stats_config rpm_data_dba0 = {
-> +	.stats_offset = 0xdba0,
-> +	.num_records = 2,
-> +	.appended_stats_avail = true,
-> +	.dynamic_offset = false,
-> +	.subsystem_stats_in_smem = false,
-> +};
-> +
->  static const struct stats_config rpmh_data = {
->  	.stats_offset = 0x48,
->  	.num_records = 3,
-> @@ -246,6 +255,10 @@ static const struct stats_config rpmh_data = {
->  };
->  
->  static const struct of_device_id qcom_stats_table[] = {
-> +	{ .compatible = "qcom,apq8084-rpm-stats", .data = &rpm_data_dba0 },
-> +	{ .compatible = "qcom,msm8226-rpm-stats", .data = &rpm_data_dba0 },
-> +	{ .compatible = "qcom,msm8916-rpm-stats", .data = &rpm_data_dba0 },
-> +	{ .compatible = "qcom,msm8974-rpm-stats", .data = &rpm_data_dba0 },
->  	{ .compatible = "qcom,rpm-stats", .data = &rpm_data },
->  	{ .compatible = "qcom,rpmh-stats", .data = &rpmh_data },
->  	{ }
-> -- 
-> 2.34.0
-> 
+Applied, thanks.
