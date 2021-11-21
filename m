@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 198E44586C6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 23:49:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C12C7458704
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 00:21:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234221AbhKUWwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 Nov 2021 17:52:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34888 "EHLO
+        id S230090AbhKUXYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 Nov 2021 18:24:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231975AbhKUWwp (ORCPT
+        with ESMTP id S229920AbhKUXYa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 Nov 2021 17:52:45 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F57C061714
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Nov 2021 14:49:40 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id t23so34170354oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Nov 2021 14:49:40 -0800 (PST)
+        Sun, 21 Nov 2021 18:24:30 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7617FC06173E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Nov 2021 15:21:23 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id 47-20020a9d0332000000b005798ac20d72so7676654otv.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Nov 2021 15:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=X99/qOPdJ+WUbWBBOwNYpUmngjvM1PDWHkQjo0ad32Y=;
-        b=Q44svvAiadlk8aMSRveyGTPXRA5oCYbxFmT+IhIUTIN2fwuIw52DehmCszaMmv5M7t
-         mo1dASbLVJt1oJ5uYp5n+1c/QqzKMbyE/hmBiNoxaEufxzhfelf5KD2Z8d9M5inU4S9y
-         FuERCfwcJdOG0DZbzcbVXCE5/f/5K+0kk6Q1q0Ast4WisWpKmjB5mvyrrkVcHnaeT4hS
-         1i20p3nA5Xsk5zB5b7tazj+rpqTz/yMPuIawvy1D9eTl/Cum/pPAbzKERJAo2sGeu7uc
-         /PBtXxWpdWAhP+DwcgjeeZFk3iiwZGM8JT7MWqhygcvPtbAfM5/icS9l1cBkeJSBxsNO
-         FIXg==
+        bh=/h9j+VohNLyIgef0fdgxHddKdl2XvTPyEkgWayghi4w=;
+        b=v0jEuVRIAiBdxpvfqAJDWpd3PVQ3hH1sW2ZiMhzZbekRIOfkm8S4YoknYa/ngAcMO4
+         6ewyTDV64dLIlE1hvvsU8E8k+tf/gwfKum9MC4eIRvNbwzoYIvhUfGeQr/ac9bNkmKAi
+         TlvgU4kDY9sql5silScA/QiB3hdOmPTJ5MwlKd0ZNCiMizxjrBsTr3dHsVOCUF2AFUxi
+         8NJI0sPnAhjrMMZSz5xOsGvpwMQQCi29eIn+dDCU+c7Bci/Aha98qs6iVuPbKQM2fznt
+         QhyPL2LZD44RjAx0oharIUzvA7jYIdlYcGX9M39Gb7XdfbeaT5RhEIi8l0sr3nzdc/tl
+         lDpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=X99/qOPdJ+WUbWBBOwNYpUmngjvM1PDWHkQjo0ad32Y=;
-        b=s+GPXGUfDcATqeXGPQ+/jod6PBrb49yz2RY+lKFMmtpk38qnEZR6SkE8m1SDOZE/hT
-         ZfXEaJCvKyWSucpaQT4HmjV/OoHBtuOE6VT0lbg9hYci20OITQkTgVCa5H1WI6jORMUZ
-         q1/qmVgNqsGvjME496RBUj22cKx8Mr8y/NUcFg86ah56hd8NL5mzoEIv2w0L7C5jPofh
-         xF11a3sWrdk7XtFY/4QsUGvlFdwHptdS2TtShbIl8SS2uEAQAY0ro3pX5g0GTd9wqC2b
-         Ze3JTukGp4X5uV2sOaxM07LmSbrQQlHNEAYKnggrigCnPhXTDOgTGrS3B2u/Ht7QBSeI
-         MBpA==
-X-Gm-Message-State: AOAM533EyonWHmxDvps8P6h0gYLCkmwepdLUyb9uB2NhbjbYiyFPi8kk
-        OFTp0GriEkNmUjwdA6kedLPvqVDWBICtkRFv1wdZnw==
-X-Google-Smtp-Source: ABdhPJwgaKcMuYgYCnXAWZszLJBD35nrr/psdZgwCLa+EINWN49QQKsj71cxw3YkXzLW9+ZE2BbOlleDjfZ50bFaefI=
-X-Received: by 2002:aca:120f:: with SMTP id 15mr16999633ois.132.1637534979818;
- Sun, 21 Nov 2021 14:49:39 -0800 (PST)
+        bh=/h9j+VohNLyIgef0fdgxHddKdl2XvTPyEkgWayghi4w=;
+        b=vwW6jxabeEwL8sxQKjm++r3q3BqKc8djld3nkNQ91HWepXGIl5CXb5lQ2M/8lykdCm
+         x4JdLrVJmss8MzxfzfCm0xO95oC8TXksy20EpJswuAs69Lw53MZmQ87ODyK0MDHtihFx
+         5vHfyz2qrx8TfhNnjgfiZJq+PlN1EEqqKFqny5YWm95yloWvxEharN0YJFSAeQZd0p0G
+         PubVRtavvCShrsx++HWSkgt7XigIclv5ELo1CxBfhVGn/2e/G9jE4IPM5mwFuI6sFsSp
+         G0TsldPdUzJ82NQMfpxUzGEnCHfKoHyCmSy4VZWTofLcrhqr+uPRwhvUtNTYQudtPms/
+         441A==
+X-Gm-Message-State: AOAM530utdN4D6FGYTKjFbSPIhYbSEp8qul66SppwHtinxeoyYBIYCk9
+        zixqs49aS5fuU0PjeTX9HyhXRng1ieXxKCxZwQlrIA==
+X-Google-Smtp-Source: ABdhPJw3DT1NKCGNYyVT8P//H748Ne9pjIKj8dMw7dLTJAXIwlTvzJvEJCcKUCLCX9Vku7LTpXvU09bW30xfB9yqs3I=
+X-Received: by 2002:a9d:74d0:: with SMTP id a16mr19960895otl.237.1637536882884;
+ Sun, 21 Nov 2021 15:21:22 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1637048107.git.quic_vamslank@quicinc.com>
-In-Reply-To: <cover.1637048107.git.quic_vamslank@quicinc.com>
+References: <20211112115342.17100-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20211112115342.17100-1-konrad.dybcio@somainline.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sun, 21 Nov 2021 23:49:28 +0100
-Message-ID: <CACRpkdY7h2ff8Td_iV03Bq2F=UcSOJj5W+5zB+UAA8uWK8z12w@mail.gmail.com>
-Subject: Re: [PATCH v4 0/2] Add pinctrl support for SDX65
-To:     quic_vamslank@quicinc.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+Date:   Mon, 22 Nov 2021 00:21:11 +0100
+Message-ID: <CACRpkdYMNDGhR6aKyyhW+YLOoNYLQOoQ=vh=qwY2C2AJR3Qd9w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom,pmic-gpio: Add
+ compatible for PM8019
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 16, 2021 at 8:40 AM <quic_vamslank@quicinc.com> wrote:
+On Fri, Nov 12, 2021 at 12:53 PM Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
 
-> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> Add pmic-gpio compatible string for pm8019 pmic.
 >
-> Hello,
->
-> Changes from v3:
->  - Addressed comments, fixed dt_binding check errors and collected reviewed
->    by from Bjorn
->  - Rebased on top of v5.16-rc1
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-This v4 patch set applied for v5.17!
+Patch applied for v5.17!
 
 Yours,
 Linus Walleij
