@@ -2,122 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C26F545814F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 01:21:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A2DD458165
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Nov 2021 01:37:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236607AbhKUAYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 Nov 2021 19:24:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54662 "EHLO
+        id S233946AbhKUAk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 Nov 2021 19:40:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236552AbhKUAYF (ORCPT
+        with ESMTP id S232469AbhKUAk5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 Nov 2021 19:24:05 -0500
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40DD8C06173E;
-        Sat, 20 Nov 2021 16:21:00 -0800 (PST)
-Received: from localhost.localdomain (83.6.168.18.neoplus.adsl.tpnet.pl [83.6.168.18])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 4CD7C1F8D0;
-        Sun, 21 Nov 2021 01:20:57 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] soc: qcom: llcc: Add configuration data for SM8350
-Date:   Sun, 21 Nov 2021 01:20:46 +0100
-Message-Id: <20211121002050.36977-2-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211121002050.36977-1-konrad.dybcio@somainline.org>
-References: <20211121002050.36977-1-konrad.dybcio@somainline.org>
+        Sat, 20 Nov 2021 19:40:57 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D725C06173E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 16:37:53 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id bj13so29734223oib.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Nov 2021 16:37:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5VKCOuUsIsBCMyP4tx8hkXna4i3u2mIRI6h11/hs8kI=;
+        b=oYUR+Z8gAiYWl1SG0Lx26Sl7qwQ8LbY3O0bGLj5PgJ2Jr23B2RU7q3BynVGFd+pUEZ
+         nElKFa7Fn9A/Mr3qehJ3ujCkTtR63vOUEMz58w0yH+8vQihWdqZ9KY1Y3BbI5/Dg0eFY
+         wbdYGR4i16+YGcVVnbmPczS+wk+nXERGZXrBdVKJCutR0Mku8L02qOZmltKGcE20gS/Q
+         H8eUOf0KAM/OHc4QeW07xwRLcT3mzRujGyZg4GMf+ekSJrR1Pd5MmHUCbBMvmq+kvul2
+         37U77owPmO35JulHXvTRt+RZuqavUfWzTzDEcLVljkldvpwrElB8oajjlyT4ZesCIz3u
+         zmjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5VKCOuUsIsBCMyP4tx8hkXna4i3u2mIRI6h11/hs8kI=;
+        b=hQNBJ3qLa7fjC4sqI6bcHNhySCc1EVqfOknE6w6GPeuOzDo0a+JzTkMETxQrDKEEnG
+         aKlvlTzkC4Mfij3NKtbbXkk8YVKlyzWIG0BULL94aVDmumbzcQC+oZfweT50HmvNRrHI
+         PN55YpyXNGvws5tZJNoi287xKdjbtKfHkMvNexxKBIBgF4wBTvf+tbamDniZ56GCArwg
+         1jviTwwQwTIoXP2+2goAoHtrwS9K6cPGVJeVrnU4UXjGzY6XEj/F/juU43WqNDa6VxQp
+         GHubT583aYfKE7CVdQ5T6VsCNf9IB7GRHFL/+1BaUgWvV+JNkTUNKeWRd09ohNuC/cjO
+         k6KA==
+X-Gm-Message-State: AOAM531e61detsYXdL4a6NYwz0RzHITQ1HSLMa309uMAlAB3U4MeUy1Q
+        3tKxFvy1HhDKrPh34fhBiMqzSQ==
+X-Google-Smtp-Source: ABdhPJwn7W4OOFP+NzH/pExMf1vizWjgFtUTuF88Qck+521CtcSM6dROg7l8uLT5cn86jQEqSuSaFg==
+X-Received: by 2002:aca:230b:: with SMTP id e11mr10560925oie.22.1637455072570;
+        Sat, 20 Nov 2021 16:37:52 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x17sm802729oot.30.2021.11.20.16.37.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Nov 2021 16:37:52 -0800 (PST)
+Date:   Sat, 20 Nov 2021 16:39:38 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: soc: qcom: stats: Document
+ compatibles with fixed offset
+Message-ID: <YZmVSgVzUigHzrdt@ripper>
+References: <20211119213953.31970-1-stephan@gerhold.net>
+ <20211119213953.31970-2-stephan@gerhold.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211119213953.31970-2-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LLCC configuration data for SM8350 SoC.
+On Fri 19 Nov 13:39 PST 2021, Stephan Gerhold wrote:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
-Changes since v1:
-- Move the .h defines here
+> Document additional compatibles that can be used similarly to qcom,rpm-stats
+> for older RPM firmware versions that have the sleep stats at a fixed offset
+> rather than a dynamic one. The exact offset might vary depending on the SoC
+> so use SoC-specific compatible names to avoid confusion.
+> 
 
- drivers/soc/qcom/llcc-qcom.c       | 28 ++++++++++++++++++++++++++++
- include/linux/soc/qcom/llcc-qcom.h |  4 ++++
- 2 files changed, 32 insertions(+)
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 6bf2f1d1f2c5..ec52f29c8867 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -195,6 +195,28 @@ static const struct llcc_slice_config sm8250_data[] =  {
- 	{ LLCC_WRCACHE, 31, 256,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
- };
- 
-+static const struct llcc_slice_config sm8350_data[] =  {
-+	{ LLCC_CPUSS,    1, 3072,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 1 },
-+	{ LLCC_VIDSC0,   2, 512,   3, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_AUDIO,    6, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 0 },
-+	{ LLCC_MDMHPGRW, 7, 1024,  3, 0, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_MODHW,    9, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_CMPT,     10, 3072, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_GPUHTW,   11, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_GPU,      12, 1024, 1, 0, 0xfff, 0x0, 0, 0, 0, 1, 1, 0 },
-+	{ LLCC_MMUHWT,   13, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
-+	{ LLCC_DISP,     16, 3072, 2, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_MDMPNG,   21, 1024, 0, 1, 0xf,   0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_AUDHW,    22, 1024, 1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_CVP,      28, 512,  3, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_MODPE,    29, 256,  1, 1, 0xf,   0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_APTCM,    30, 1024, 3, 1, 0x0,   0x1, 1, 0, 0, 0, 1, 0 },
-+	{ LLCC_WRCACHE,  31, 512,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
-+	{ LLCC_CVPFW,    17, 512,  1, 0, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_CPUSS1,   3, 1024,  1, 1, 0xfff, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_CPUHWT,   5, 512,   1, 1, 0xfff, 0x0, 0, 0, 0, 0, 0, 1 },
-+};
-+
- static const struct qcom_llcc_config sc7180_cfg = {
- 	.sct_data	= sc7180_data,
- 	.size		= ARRAY_SIZE(sc7180_data),
-@@ -228,6 +250,11 @@ static const struct qcom_llcc_config sm8250_cfg = {
- 	.size           = ARRAY_SIZE(sm8250_data),
- };
- 
-+static const struct qcom_llcc_config sm8350_cfg = {
-+	.sct_data       = sm8350_data,
-+	.size           = ARRAY_SIZE(sm8350_data),
-+};
-+
- static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
- 
- /**
-@@ -644,6 +671,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
- 	{ .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfg },
- 	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
- 	{ .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
-+	{ .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfg },
- 	{ }
- };
- 
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 437c9df13229..bf8b749b44e1 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -33,6 +33,10 @@
- #define LLCC_MODPE       29
- #define LLCC_APTCM       30
- #define LLCC_WRCACHE     31
-+#define LLCC_CVPFW       32
-+#define LLCC_CPUSS1      33
-+#define LLCC_CPUHWT      36
-+
- 
- /**
-  * struct llcc_slice_desc - Cache slice descriptor
--- 
-2.33.1
+Regards,
+Bjorn
 
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+> Changes in v2:
+>   - Use SoC-specific compatibles instead of qcom,rpm-legacy-stats
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> index 99dff7d73b7e..473adca4e973 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
+> @@ -21,6 +21,11 @@ properties:
+>      enum:
+>        - qcom,rpmh-stats
+>        - qcom,rpm-stats
+> +      # For older RPM firmware versions with fixed offset for the sleep stats
+> +      - qcom,apq8084-rpm-stats
+> +      - qcom,msm8226-rpm-stats
+> +      - qcom,msm8916-rpm-stats
+> +      - qcom,msm8974-rpm-stats
+>  
+>    reg:
+>      maxItems: 1
+> -- 
+> 2.34.0
+> 
