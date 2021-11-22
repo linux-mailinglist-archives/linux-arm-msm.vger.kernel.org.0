@@ -2,112 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0B40459078
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 15:45:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D0664590AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 15:59:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238837AbhKVOs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 09:48:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236031AbhKVOs7 (ORCPT
+        id S239555AbhKVPCs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 10:02:48 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:28754 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234298AbhKVPCs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 09:48:59 -0500
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3A8C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 06:45:52 -0800 (PST)
-Received: by mail-ua1-x935.google.com with SMTP id b17so37110748uas.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 06:45:52 -0800 (PST)
+        Mon, 22 Nov 2021 10:02:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=xCBZRYi+bGHER588588xzQrbxsR/bQEqYg58BWZ0DSo=;
-        b=HZepQrvXfClAMCwhuic6yztXJQeJtfpgoZWbNyUKtdA5zxTQaxtv2YyLLynBiy/aPE
-         kbWMhVngltaM644PP0JsYncKtWLCbuPC6xpmNlRV0ILD3Bi2k6FWEM7J1+aOumLCZQJ3
-         EefjTvXBNZd9oSQJCkMNPt1Af5x2L1qZC2iOI+8azI9TAtgTq12BN3sBs89Tva8dfcOC
-         BSP3hff8jysf7FYSFoC/HHkQrjrM2gzIHddA+9/yUf54VHXiVaBrjyg7Rg+GkcLu4eEE
-         03UQutCm52KsCqTQAOqtq12k2c0UhifRhQQ0RKJmBfWJ31OwAbLNA9DACEVT2/+S9z8+
-         Ftmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=xCBZRYi+bGHER588588xzQrbxsR/bQEqYg58BWZ0DSo=;
-        b=VZWLYw7r9ZvHm8aqEFzqBZLxxVnn5N2yWJ6W2xoStGpc1a64f7+LC3qQ8cKMVgks8z
-         6QPJAIQ0LED9B43jlC27xJUQhBXIz0ezhiXK/tyIT2dKOawL5LHCBvk9LeBlVgTum29P
-         nkiqsY4g6zPyHPZGKgcmT0fv9GhRDlw5rgmEGH4rM2vCH9HkhXrvvkuMBTw65VXR72G6
-         nVQjeMcZ4J9qOJ71qqD08n7owA3pkPUUVJV1bpcWe3QBjJuzFKwA+6FpOFV3STnM7zT9
-         fRnHFTdk03q8dYeS1bPuYrRAkCaSXoK4JBeRyWLhQFxMwlQhu9qn/7BtiqNkY02b8nER
-         6v1Q==
-X-Gm-Message-State: AOAM533qHoiW8P+UYBjawgJYIBVtFFT8kkQo/T0FsSXK9llHjwTPr+ZM
-        RkE3J85DrgwQ1K3dXiv20hWaNVdIGFqaD+mp20A=
-X-Google-Smtp-Source: ABdhPJxmRNLpW3pLIn51vVnKhQN+c26QjLD7ltFAZgDj8LSVkwpyLiVItVg0CbgxJz9vCcwG6Pvhsq/Ys+Ds9TjLSbM=
-X-Received: by 2002:a67:c181:: with SMTP id h1mr130695037vsj.3.1637592351780;
- Mon, 22 Nov 2021 06:45:51 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637593182; x=1669129182;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=A95SZUiBMQnSyLdP9iK6Je7MDarxoRjVsAbo3E7jjkc=;
+  b=oDUdnExkh4PnHsqDkRblvVs8sWAgjXkEqoku4ccgcdV40WJAbPOTcAAl
+   zOpvSBybnYU33E1kV7Uawo3q5kN9lBVVV0KSh/Z7mt/I7tEtDAsGp7lG4
+   gzHDD1HXeSP91Cdq3UygyYFG2fP3PJ7EoRlnfAQNpJUPnLpKmdvqBf4a5
+   w=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Nov 2021 06:59:41 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2021 06:59:41 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 22 Nov 2021 06:59:41 -0800
+Received: from [10.50.17.71] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 22 Nov
+ 2021 06:59:09 -0800
+Message-ID: <4ed41054-3868-d5e2-9958-56250b7f9be0@quicinc.com>
+Date:   Mon, 22 Nov 2021 20:29:05 +0530
 MIME-Version: 1.0
-Sender: justicethomson10@gmail.com
-Received: by 2002:ab0:7026:0:0:0:0:0 with HTTP; Mon, 22 Nov 2021 06:45:50
- -0800 (PST)
-From:   rukkyibrahimwarlord <rukkyibrahimwarlord@gmail.com>
-Date:   Mon, 22 Nov 2021 06:45:50 -0800
-X-Google-Sender-Auth: Q66Upe6KflaNfRwQ2G4nN5nEYZw
-Message-ID: <CALBp_VP1V71uM15pewDtJEGGWm4Ye=8zWBV=qpvY7NPR2V54oQ@mail.gmail.com>
-Subject: I NEED YOUR URGENT RESPOND.
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access
+ instrumentation
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     Will Deacon <will@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        <quic_psodagud@quicinc.com>, "Marc Zyngier" <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Ingo Molnar <mingo@redhat.com>
+References: <cover.1636973694.git.quic_saipraka@quicinc.com>
+ <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
+ <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
+ <b07e339c-530d-683c-c626-14b73b42e72a@quicinc.com>
+ <1609f1f7-6f61-6e17-d907-c526f09bffe5@quicinc.com>
+ <CAK8P3a1KxJFwgock3XiRDZYzT=5PZ=Hsh_8uFv9heoa1rwNqtA@mail.gmail.com>
+ <9ef8b483-f15f-eda8-d430-2d01e6cad70e@quicinc.com>
+ <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dearest
+On 11/22/2021 8:00 PM, Arnd Bergmann wrote:
+> On Mon, Nov 22, 2021 at 3:19 PM Sai Prakash Ranjan
+> <quic_saipraka@quicinc.com> wrote:
+>> On 11/22/2021 7:29 PM, Arnd Bergmann wrote:
+>>> I think this would be a lot less confusing to readers, as it is implemented
+>>> exactly in the place that has the normal definition, and it can also have
+>>> somewhat more logical semantics by only instrumenting the
+>>> normal/relaxed/ioport accessors but not the __raw_* versions that
+>>> are meant to be little more than a pointer dereference.
+>> But how is this different from logic in atomic-instrumented.h which also
+>> has asm-generic version?
+>> Initial review few years back mentioned about having something similar
+>> to atomic instrumentation
+>> and hence it was implemented with the similar approach keeping
+>> instrumentation out of arch specific details.
+> This is only a cosmetic difference. I usually prefer fewer indirections,
+> and I like the way that include/asm-generic/io.h only has all the
+> normal 'static inline' definitions spelled out, and calling the __raw_*
+> versions. Your version adds an extra layer with the arch_raw_readl(),
+> which I'd prefer to avoid.
 
-I know this message will come to you as a surprise since we haven't
-known or come across each other before considering the fact that I
-sourced your email contact through the Internet in search of a trusted
-person who can assist me.
+I'm ok with your preference as long as we have some way to log these 
+MMIO accesses.
 
-I am Miss Rukky Warlord Ibrahim Coulibaly, 24 years old female from
-the Republic of Ivory Coast,West Africa ,am the Daughter of Late Chief
-Sgt.Warlord Ibrahim Coulibaly (a.k.a General IB ). My late father was
-a well known Ivory Coast militia leader . He died on Thursday 28 April
-2011 following a fight with the Republican Forces of Ivory
-Coast(FRCI). I am constrained to contact you because of the
-maltreatment which I am receiving from my step mother.
+>> And if we do move this instrumentation to asm-generic/io.h, how will
+>> that be executed since
+>> the arch specifc read{b,w,l,q} overrides this generic version?
+> As I understand it, your version also requires architecture specific 
+> changes, so that would be the same: it only works for architectures 
+> that get the definition of readl()/readl_relaxed()/inl()/... from 
+> include/asm-generic/io.h and only override the __raw version. Arnd
 
-She planned to take away all my late father's treasury and properties
-from me since the unexpected death of my beloved Father. Meanwhile I
-wanted to travel to Europe, but she hid away my international passport
-and other valuable documents. Luckily she did not discover where I
-kept my father's File which contained important documents. Now I am
-presently staying in the Mission in Burkina Faso.
+Sorry, I didn't get this part, so  I am trying this on ARM64:
 
-I am seeking a long term relationship and investment assistance. My
-father of blessed memory deposited the sum of US$ 27.5 Million in one
-bank in Burkina Faso with my name as the next of kin. I had contacted
-the Bank to clear the deposit but the Branch Manager told me that
-being a refugee, my status according to the local law does not
-authorize me to carry out the operation. However, he advised me to
-provide a trustee who will stand on my behalf. I had wanted to inform
-my stepmother about this deposit but I am afraid that she will not
-offer me anything after the release of the money.
+arm64/include/asm/io.h has read{b,l,w,q} defined.
+include/asm-generic/io.h has below:
+   #ifndef readl
+   #define readl readl
+   static inline u32 readl(const volatile void __iomem *addr)
 
-Therefore, I decided to seek your help in transferring the money into
-your bank account while I will relocate to your country and settle
-down with you. As you indicated your interest to help me I will give
-you the account number and the contact of the bank where my late
-beloved father deposited the money with my name as the next of kin. It
-is my intention to compensate you with 40% of the total money for your
-assistance and the balance shall be my investment in any profitable
-venture which you will recommend to me as i have no any idea about
-foreign investment.Please all communications should be through this
-email address for confidential purposes.(rukkyibrahimwarlord@gmail.com
-)
+and we include asm-generic/io.h in arm64/include/asm/io.h at the end 
+after the definitions for arm64 mmio accesors.
+So arch implementation here overrides generic ones as I see it, am I 
+missing something? I even confirmed this
+with some trace_printk to generic and arch specific definitions of readl 
+and I see arch specific ones being called.
 
-
-Thanks a lot in anticipation of your quick response. I will give you
-details in my massage after receiving your acceptance mail to help me
-,
-
-Yours sincerely
-Miss Rukky Warlord Ibrahim Coulibaly
-(rukkyibrahimwarlord@gmail.com
-)
+Thanks,
+Sai
