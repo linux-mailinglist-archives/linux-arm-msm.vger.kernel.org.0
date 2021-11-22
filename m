@@ -2,197 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CDC3458D6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 12:29:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06417458DB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 12:47:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234364AbhKVLcl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 06:32:41 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:17899 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233849AbhKVLck (ORCPT
+        id S239309AbhKVLuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 06:50:04 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:48631 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239304AbhKVLuE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 06:32:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637580574; x=1669116574;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=nSu5tgaREMa9CS+SE9DuIqXG3zrVziZoM1K1+YEFTlM=;
-  b=b/SPkKs+NV+Q37ArRlpN2sA+no97KZbUF1l8fWNi5Ol5byUL8ZdwRyFr
-   1JcHYGQ96fhWxlEDkuZqdM5sKtZFkQ3r/62aF9sXGdMloMjE/b1WTcCa1
-   x1DEnSolNP5QkUXC3Qkr4VHW13ZGVQ/KfANSJRCwByeEQFP7+NzpN8eh/
-   k=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Nov 2021 03:29:34 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2021 03:29:33 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 22 Nov 2021 03:29:33 -0800
-Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 22 Nov 2021 03:29:27 -0800
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-CC:     Kuogee Hsieh <khsieh@codeaurora.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_kalyant@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <dianders@chromium.org>, <quic_khsieh@quicinc.com>,
-        <quic_mkrishn@quicinc.com>, <quic_sbillaka@quicinc.com>
-Subject: [PATCH v4 4/4] arm64: dts: qcom: sc7280: Add Display Port node
-Date:   Mon, 22 Nov 2021 16:59:15 +0530
-Message-ID: <1637580555-1079-1-git-send-email-quic_sbillaka@quicinc.com>
+        Mon, 22 Nov 2021 06:50:04 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637581618; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ZUDvFPbBnLqQUOEhZHSfxSn7mRT8gBANa7FnKL+byww=; b=J2koorky6PudYyALFOETkr3lMwqc4sN8Z0P9Im+G0SnIbKcrhvWQajg9QrUshjGifeTQEDEA
+ jcOJRFWxSA8gimCYsD5PmBJpCYgACKJoryQqWx0F8lH76LTv25Dvma6Hc5IBk02cV+lHy1AI
+ SsZ37+bMAPMuV9UoXnw/xnrnuM0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 619b83316bacc185a557e047 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 22 Nov 2021 11:46:57
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C9080C43635; Mon, 22 Nov 2021 11:46:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 996A8C4338F;
+        Mon, 22 Nov 2021 11:46:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 996A8C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        Venkata Prasad Potturu <potturu@codeaurora.org>
+Subject: [PATCH v5 05/10] ASoC: qcom: Add helper function to get dma control and lpaif handle
+Date:   Mon, 22 Nov 2021 17:16:34 +0530
+Message-Id: <1637581599-24120-1-git-send-email-srivasam@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Kuogee Hsieh <khsieh@codeaurora.org>
+Add support function to get dma control and lpaif handle to avoid
+repeated code in platform driver
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 ---
+ sound/soc/qcom/lpass-platform.c | 90 ++++++++++++++++++++---------------------
+ 1 file changed, 43 insertions(+), 47 deletions(-)
 
-Changes in v4:
-    - Add the patch to display DT change series (Bjorn Andersson)
-    - Remove the trailing whitespaces
-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 90 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 88 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 5ad500e..0b2ffd5 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2693,8 +2693,8 @@
- 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
- 				 <&dsi_phy 0>,
- 				 <&dsi_phy 1>,
--				 <0>,
--				 <0>,
-+				 <&dp_phy 0>,
-+				 <&dp_phy 1>,
- 				 <&edp_phy 0>,
- 				 <&edp_phy 1>;
- 			clock-names = "bi_tcxo",
-@@ -2791,6 +2791,13 @@
- 							remote-endpoint = <&edp_in>;
- 						};
- 					};
-+
-+					port@2 {
-+                                                reg = <2>;
-+                                                dpu_intf0_out: endpoint {
-+                                                        remote-endpoint = <&dp_in>;
-+                                                };
-+                                        };
- 				};
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index a44162c..59c0884 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -177,6 +177,44 @@ static int lpass_platform_pcmops_close(struct snd_soc_component *component,
+ 	return 0;
+ }
  
- 				mdp_opp_table: opp-table {
-@@ -3002,6 +3009,79 @@
++static void __get_lpaif_handle(struct snd_pcm_substream *substream,
++				struct snd_soc_component *component,
++				struct lpaif_dmactl **dmactl, int *id, struct regmap **map)
++{
++	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
++	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
++	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
++	struct snd_pcm_runtime *rt = substream->runtime;
++	struct lpass_pcm_data *pcm_data = rt->private_data;
++	struct lpass_variant *v = drvdata->variant;
++	int dir = substream->stream;
++	unsigned int dai_id = cpu_dai->driver->id;
++	struct lpaif_dmactl *l_dmactl;
++	struct regmap *l_map;
++	int l_id;
++
++	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
++		l_id = pcm_data->dma_ch;
++		if (dai_id == LPASS_DP_RX) {
++			l_dmactl = drvdata->hdmi_rd_dmactl;
++			l_map = drvdata->hdmiif_map;
++		} else {
++			l_dmactl = drvdata->rd_dmactl;
++			l_map = drvdata->lpaif_map;
++		}
++	} else {
++		l_dmactl = drvdata->wr_dmactl;
++		l_id = pcm_data->dma_ch - v->wrdma_channel_start;
++		l_map = drvdata->lpaif_map;
++	}
++	if (dmactl)
++		*dmactl = l_dmactl;
++	if (id)
++		*id = l_id;
++	if (map)
++		*map = l_map;
++}
++
+ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+ 					   struct snd_pcm_substream *substream,
+ 					   struct snd_pcm_hw_params *params)
+@@ -191,22 +229,12 @@ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+ 	unsigned int channels = params_channels(params);
+ 	unsigned int regval;
+ 	struct lpaif_dmactl *dmactl;
+-	int id, dir = substream->stream;
++	int id;
+ 	int bitwidth;
+ 	int ret, dma_port = pcm_data->i2s_port + v->dmactl_audif_start;
+ 	unsigned int dai_id = cpu_dai->driver->id;
  
- 				status = "disabled";
- 			};
-+
-+			msm_dp: displayport-controller@ae90000 {
-+				compatible = "qcom,sc7280-dp";
-+
-+				reg = <0 0x0ae90000 0 0x1400>;
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
-+				clock-names =	"core_iface",
-+						"core_aux",
-+						"ctrl_link",
-+						"ctrl_link_iface",
-+						"stream_pixel";
-+				#clock-cells = <1>;
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-+				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-+				phys = <&dp_phy>;
-+				phy-names = "dp";
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SC7280_CX>;
-+
-+				#sound-dai-cells = <0>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					port@0 {
-+						reg = <0>;
-+						dp_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dp_out: endpoint { };
-+					};
-+				};
-+
-+				dp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-160000000 {
-+						opp-hz = /bits/ 64 <160000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
- 		};
+-	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+-		id = pcm_data->dma_ch;
+-		if (dai_id == LPASS_DP_RX)
+-			dmactl = drvdata->hdmi_rd_dmactl;
+-		else
+-			dmactl = drvdata->rd_dmactl;
+-
+-	} else {
+-		dmactl = drvdata->wr_dmactl;
+-		id = pcm_data->dma_ch - v->wrdma_channel_start;
+-	}
++	__get_lpaif_handle(substream, component, &dmactl, &id, NULL);
  
- 		pdc: interrupt-controller@b220000 {
-@@ -3104,6 +3184,12 @@
- 				bias-pull-up;
- 			};
+ 	bitwidth = snd_pcm_format_width(format);
+ 	if (bitwidth < 0) {
+@@ -379,24 +407,9 @@ static int lpass_platform_pcmops_prepare(struct snd_soc_component *component,
+ 	int ret, id, ch, dir = substream->stream;
+ 	unsigned int dai_id = cpu_dai->driver->id;
  
-+			dp_hot_plug_det: dp-hot-plug-det {
-+				pins = "gpio47";
-+				function = "dp_hot";
-+				bias-disable;
-+                        };
-+
- 			qspi_clk: qspi-clk {
- 				pins = "gpio14";
- 				function = "qspi_clk";
+-
+ 	ch = pcm_data->dma_ch;
+-	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+-		if (dai_id == LPASS_DP_RX) {
+-			dmactl = drvdata->hdmi_rd_dmactl;
+-			map = drvdata->hdmiif_map;
+-		} else {
+-			dmactl = drvdata->rd_dmactl;
+-			map = drvdata->lpaif_map;
+-		}
+-
+-		id = pcm_data->dma_ch;
+-	} else {
+-		dmactl = drvdata->wr_dmactl;
+-		id = pcm_data->dma_ch - v->wrdma_channel_start;
+-		map = drvdata->lpaif_map;
+-	}
+ 
++	__get_lpaif_handle(substream, component, &dmactl, &id, &map);
+ 	ret = regmap_write(map, LPAIF_DMABASE_REG(v, ch, dir, dai_id),
+ 				runtime->dma_addr);
+ 	if (ret) {
+@@ -444,26 +457,12 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+ 	struct lpaif_dmactl *dmactl;
+ 	struct regmap *map;
+ 	int ret, ch, id;
+-	int dir = substream->stream;
+ 	unsigned int reg_irqclr = 0, val_irqclr = 0;
+ 	unsigned int  reg_irqen = 0, val_irqen = 0, val_mask = 0;
+ 	unsigned int dai_id = cpu_dai->driver->id;
+ 
+ 	ch = pcm_data->dma_ch;
+-	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+-		id = pcm_data->dma_ch;
+-		if (dai_id == LPASS_DP_RX) {
+-			dmactl = drvdata->hdmi_rd_dmactl;
+-			map = drvdata->hdmiif_map;
+-		} else {
+-			dmactl = drvdata->rd_dmactl;
+-			map = drvdata->lpaif_map;
+-		}
+-	} else {
+-		dmactl = drvdata->wr_dmactl;
+-		id = pcm_data->dma_ch - v->wrdma_channel_start;
+-		map = drvdata->lpaif_map;
+-	}
++	__get_lpaif_handle(substream, component, &dmactl, &id, &map);
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+@@ -597,10 +596,7 @@ static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
+ 	struct regmap *map;
+ 	unsigned int dai_id = cpu_dai->driver->id;
+ 
+-	if (dai_id == LPASS_DP_RX)
+-		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++	__get_lpaif_handle(substream, component, NULL, NULL, &map);
+ 
+ 	ch = pcm_data->dma_ch;
+ 
 -- 
-2.7.4
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
