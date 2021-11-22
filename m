@@ -2,1492 +2,313 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D412458ADF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 09:52:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45461458AF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 10:02:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238934AbhKVIzP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 03:55:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53636 "EHLO
+        id S238910AbhKVJFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 04:05:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239063AbhKVIzC (ORCPT
+        with ESMTP id S229716AbhKVJF3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 03:55:02 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4DFC0613D7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:51:51 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id q17so13448811plr.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:51:51 -0800 (PST)
+        Mon, 22 Nov 2021 04:05:29 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF81C061574;
+        Mon, 22 Nov 2021 01:02:22 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id f18so77527875lfv.6;
+        Mon, 22 Nov 2021 01:02:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xF+z+/w9tHZnATVNsG/rEi3Ra+Cy4gXrR47G7xJAFeI=;
-        b=IXWyP3Lr1fDBp41vK27A0Rh5EZmWFBMA/9/fgPI7jCmuauUFnP03qsGGOG4YsFb5L2
-         NcNdLsjXf5rJ6iRQ+hfEP4nQrp5nm9M1Qlze1fCl3tWBERcvOaUelR8xZzDnaYXMTGn4
-         ecc2I1M1SXcydGfh9IZTR7UYQjtsJik3CbJ+IJGTE2rx8M23Ra0gZE4Ab/d6+uzO2UbE
-         UnDE7Qp0KWdwVHIYxbEFD6xSxC4s2x+i7cRi2XcWA9o8P0TW5GVLchBMeitYwUiYXrBx
-         sNXfkh5Vtjfy4zyJvIOa4OEaFPe0bZpQKSbdDMoYBauXcSWUXi9132wQXCW9sawWC8th
-         rPpg==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version;
+        bh=yJt+SRSX8jW1HW53qw5WPEzJ6TOm3Zw+e5pcv30xzUg=;
+        b=H0gUe0I5WYhd/qMc49gQ5ejJOmkYs6GVxp4V67Z9rKNdNZYONfh3jGqWqR8pJAPIMM
+         6RV1meRYAxuFWjSAGV6WVqQtEnKH7Qibb2BStrks9tfaHLBV5k7tMvde51zvU8tAY1cQ
+         zj1fYg21e0AqkABrPCFlX4iQZ82bdERG56M9ne7/v30I2kCboeNn0OAqbqaQaMptuO/C
+         kCGSarFR7tQ94JH2rmpnEa61tbmBH8jW6jhBSKfh487FQclrMnzQF9KH3uL6n9obhwXG
+         n9IHX6w8XtVEki3xUOXdn67tUYp0p9mKp85iSbj/Z8NuTNA6EmuOdqMOvOoTRAhylrno
+         gH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=xF+z+/w9tHZnATVNsG/rEi3Ra+Cy4gXrR47G7xJAFeI=;
-        b=2UPoUjX/NbRM91uSVgiKzDDGxjl262m2NoJiTG6AG3QiFT/+s0/n5MYXwzcwuladHM
-         X5m9UwIct1kN/bfWLh0qn4ide/nutXIl63ujCL9q7CvzPrR3PPbjCwK/l0jG+bak9lLW
-         ix++mc1M+BW7nk04jiSyxrGe8zeyBgH/Eq2JPL9nx940xhE4XF6H+aGp7hvrYPsRjh8l
-         HfWzH0CKecTNzIFDii/38x5GeAwqZGKWboEDRgicQXbN0O9LV6Z88HpVZ+0CHaVr7rqD
-         c6LFk3XcA+N0QU4pINAu+4M3YHZNm6by0XgCsm2csiVzDsAC74GElg6oNH3DN8GZ+irm
-         QDdA==
-X-Gm-Message-State: AOAM5324rVK71T/PfYq6/F1+bOtKmsmhS7fvuNOi1Y2Fn4BcyGT4PpVy
-        Ko3a2dsM80YgSphUKvViR06hrQ==
-X-Google-Smtp-Source: ABdhPJxr0+r6WxPn4uqJOAUUq77oRWVWsNf2W102kjQkdHtXqy2vluHA6QKkmsQDK/eZ3xpWf38Qyg==
-X-Received: by 2002:a17:90b:3b83:: with SMTP id pc3mr28674311pjb.106.1637571110563;
-        Mon, 22 Nov 2021 00:51:50 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id f8sm8445582pfv.135.2021.11.22.00.51.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version;
+        bh=yJt+SRSX8jW1HW53qw5WPEzJ6TOm3Zw+e5pcv30xzUg=;
+        b=Z4+KMMEdmDIBSbCaKpIxnZDV4QMIJo7LMnIa8o23ik+LB8aETRut3ntncLhTw/qNSX
+         7nk2A5qyfcLEd0YgSXLXc/7pT6xWVwOOlPm6nZfY++i91y7jmSX2bbrgZcmr2mwIsKPb
+         zVhGwnx/Eps+dSqKMvXbEvCnpnDsEJZeJ7k2ZEDaojjafAu2XMrFm4lp4ASCBORapPRg
+         Mi+ysyw9/VYrQTEPTF1tBLIGxbSX83Fyc0/SP3qyym3qZK0VRX3Q7dTlbnzPUfRXuG/O
+         yHdiAMZBQ14xwGiwY7CUkRRsCKdiEWbHAuNwlfiQYaUR5+Dx9zjVkPfmv9T4cHVvzDe9
+         MDfw==
+X-Gm-Message-State: AOAM5330IB04TXTY7ZiOqQl/Sc37QU1fRSc+T9HzPgzk9jxsqvSgnTyc
+        HUa5MfG1iNB/AK9Q+1L+F90=
+X-Google-Smtp-Source: ABdhPJz5VjIYFw9flHfsmR39Bm575nFBseGAY7aN31lcJujkNRdDAbb3Ga2pW1wCDyDAJ5XBvNHPSg==
+X-Received: by 2002:a05:651c:b12:: with SMTP id b18mr51864542ljr.306.1637571738924;
+        Mon, 22 Nov 2021 01:02:18 -0800 (PST)
+Received: from eldfell ([194.136.85.206])
+        by smtp.gmail.com with ESMTPSA id d39sm897361lfv.78.2021.11.22.01.02.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 00:51:50 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 6/6] interconnect: qcom: Add QCM2290 driver support
-Date:   Mon, 22 Nov 2021 16:51:23 +0800
-Message-Id: <20211122085123.21049-7-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211122085123.21049-1-shawn.guo@linaro.org>
-References: <20211122085123.21049-1-shawn.guo@linaro.org>
+        Mon, 22 Nov 2021 01:02:18 -0800 (PST)
+Date:   Mon, 22 Nov 2021 11:02:08 +0200
+From:   Pekka Paalanen <ppaalanen@gmail.com>
+To:     Jason Baron <jbaron@akamai.com>
+Cc:     seanpaul@chromium.org, sean@poorly.run,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        Jim Cromie <jim.cromie@gmail.com>, quic_saipraka@quicinc.com,
+        catalin.marinas@arm.com, dri-devel@lists.freedesktop.org,
+        will@kernel.org, maz@kernel.org, amd-gfx@lists.freedesktop.org,
+        mingo@redhat.com, daniel.vetter@ffwll.ch, arnd@arndb.de,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        rostedt@goodmis.org, intel-gvt-dev@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, quic_psodagud@quicinc.com,
+        mathieu.desnoyers@efficios.com
+Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with
+ it - RFC
+Message-ID: <20211122110208.528e1d80@eldfell>
+In-Reply-To: <41ea83b2-a707-cb6f-521e-070bb12502de@akamai.com>
+References: <20211111220206.121610-1-jim.cromie@gmail.com>
+        <20211111220206.121610-9-jim.cromie@gmail.com>
+        <20211112114953.GA1381@axis.com>
+        <f3914fa9-8b22-d54e-3f77-d998e74094b9@akamai.com>
+        <20211116104631.195cbd0b@eldfell>
+        <f87b7076-47e6-89b1-aaf9-b67aa6713e01@akamai.com>
+        <20211118172401.0b4d722e@eldfell>
+        <41ea83b2-a707-cb6f-521e-070bb12502de@akamai.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/UCDrJjDv+I30GhRn07Cyyaq";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It adds interconnect driver support for QCM2290 platform.  The topology
-consists of 3 NoCs: BIMC, Config NoC (CNOC) and System NoC (SNOC).  SNOC
-is a QCOM_ICC_QNOC type device, as well as its 3 virtual child devices,
-QUP, MMNRT and MMRT.  QUP is owned by RPM and thus has no .regmap_cfg,
-while the other 2 share the same .regmap_cfg with SNOC (parent).
+--Sig_/UCDrJjDv+I30GhRn07Cyyaq
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/interconnect/qcom/Kconfig   |    9 +
- drivers/interconnect/qcom/Makefile  |    2 +
- drivers/interconnect/qcom/qcm2290.c | 1363 +++++++++++++++++++++++++++
- 3 files changed, 1374 insertions(+)
- create mode 100644 drivers/interconnect/qcom/qcm2290.c
+On Fri, 19 Nov 2021 11:21:36 -0500
+Jason Baron <jbaron@akamai.com> wrote:
 
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index daf1e25f6042..8d24ee3732c8 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -42,6 +42,15 @@ config INTERCONNECT_QCOM_OSM_L3
- 	  Say y here to support the Operating State Manager (OSM) interconnect
- 	  driver which controls the scaling of L3 caches on Qualcomm SoCs.
- 
-+config INTERCONNECT_QCOM_QCM2290
-+	tristate "Qualcomm QCM2290 interconnect driver"
-+	depends on INTERCONNECT_QCOM
-+	depends on QCOM_SMD_RPM
-+	select INTERCONNECT_QCOM_SMD_RPM
-+	help
-+	  This is a driver for the Qualcomm Network-on-Chip on qcm2290-based
-+	  platforms.
-+
- config INTERCONNECT_QCOM_QCS404
- 	tristate "Qualcomm QCS404 interconnect driver"
- 	depends on INTERCONNECT_QCOM
-diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-index 69300b1d48ef..8436279b7e1f 100644
---- a/drivers/interconnect/qcom/Makefile
-+++ b/drivers/interconnect/qcom/Makefile
-@@ -5,6 +5,7 @@ qnoc-msm8916-objs			:= msm8916.o
- qnoc-msm8939-objs			:= msm8939.o
- qnoc-msm8974-objs			:= msm8974.o
- icc-osm-l3-objs				:= osm-l3.o
-+qnoc-qcm2290-objs			:= qcm2290.o
- qnoc-qcs404-objs			:= qcs404.o
- icc-rpmh-obj				:= icc-rpmh.o
- qnoc-sc7180-objs			:= sc7180.o
-@@ -23,6 +24,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
- obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
-+obj-$(CONFIG_INTERCONNECT_QCOM_QCM2290) += qnoc-qcm2290.o
- obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
- obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
- obj-$(CONFIG_INTERCONNECT_QCOM_SC7180) += qnoc-sc7180.o
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-new file mode 100644
-index 000000000000..74404e0b2080
---- /dev/null
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -0,0 +1,1363 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Qualcomm QCM2290 Network-on-Chip (NoC) QoS driver
-+ *
-+ * Copyright (c) 2021, Linaro Ltd.
-+ *
-+ */
-+
-+#include <dt-bindings/interconnect/qcom,qcm2290.h>
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/interconnect-provider.h>
-+#include <linux/io.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/slab.h>
-+
-+#include "icc-rpm.h"
-+#include "smd-rpm.h"
-+
-+enum {
-+	QCM2290_MASTER_APPSS_PROC = 1,
-+	QCM2290_MASTER_SNOC_BIMC_RT,
-+	QCM2290_MASTER_SNOC_BIMC_NRT,
-+	QCM2290_MASTER_SNOC_BIMC,
-+	QCM2290_MASTER_TCU_0,
-+	QCM2290_MASTER_GFX3D,
-+	QCM2290_MASTER_SNOC_CNOC,
-+	QCM2290_MASTER_QDSS_DAP,
-+	QCM2290_MASTER_CRYPTO_CORE0,
-+	QCM2290_MASTER_SNOC_CFG,
-+	QCM2290_MASTER_TIC,
-+	QCM2290_MASTER_ANOC_SNOC,
-+	QCM2290_MASTER_BIMC_SNOC,
-+	QCM2290_MASTER_PIMEM,
-+	QCM2290_MASTER_QDSS_BAM,
-+	QCM2290_MASTER_QUP_0,
-+	QCM2290_MASTER_IPA,
-+	QCM2290_MASTER_QDSS_ETR,
-+	QCM2290_MASTER_SDCC_1,
-+	QCM2290_MASTER_SDCC_2,
-+	QCM2290_MASTER_QPIC,
-+	QCM2290_MASTER_USB3_0,
-+	QCM2290_MASTER_QUP_CORE_0,
-+	QCM2290_MASTER_CAMNOC_SF,
-+	QCM2290_MASTER_VIDEO_P0,
-+	QCM2290_MASTER_VIDEO_PROC,
-+	QCM2290_MASTER_CAMNOC_HF,
-+	QCM2290_MASTER_MDP0,
-+
-+	QCM2290_SLAVE_EBI1,
-+	QCM2290_SLAVE_BIMC_SNOC,
-+	QCM2290_SLAVE_BIMC_CFG,
-+	QCM2290_SLAVE_CAMERA_NRT_THROTTLE_CFG,
-+	QCM2290_SLAVE_CAMERA_RT_THROTTLE_CFG,
-+	QCM2290_SLAVE_CAMERA_CFG,
-+	QCM2290_SLAVE_CLK_CTL,
-+	QCM2290_SLAVE_CRYPTO_0_CFG,
-+	QCM2290_SLAVE_DISPLAY_CFG,
-+	QCM2290_SLAVE_DISPLAY_THROTTLE_CFG,
-+	QCM2290_SLAVE_GPU_CFG,
-+	QCM2290_SLAVE_HWKM,
-+	QCM2290_SLAVE_IMEM_CFG,
-+	QCM2290_SLAVE_IPA_CFG,
-+	QCM2290_SLAVE_LPASS,
-+	QCM2290_SLAVE_MESSAGE_RAM,
-+	QCM2290_SLAVE_PDM,
-+	QCM2290_SLAVE_PIMEM_CFG,
-+	QCM2290_SLAVE_PKA_WRAPPER,
-+	QCM2290_SLAVE_PMIC_ARB,
-+	QCM2290_SLAVE_PRNG,
-+	QCM2290_SLAVE_QDSS_CFG,
-+	QCM2290_SLAVE_QM_CFG,
-+	QCM2290_SLAVE_QM_MPU_CFG,
-+	QCM2290_SLAVE_QPIC,
-+	QCM2290_SLAVE_QUP_0,
-+	QCM2290_SLAVE_SDCC_1,
-+	QCM2290_SLAVE_SDCC_2,
-+	QCM2290_SLAVE_SNOC_CFG,
-+	QCM2290_SLAVE_TCSR,
-+	QCM2290_SLAVE_USB3,
-+	QCM2290_SLAVE_VENUS_CFG,
-+	QCM2290_SLAVE_VENUS_THROTTLE_CFG,
-+	QCM2290_SLAVE_VSENSE_CTRL_CFG,
-+	QCM2290_SLAVE_SERVICE_CNOC,
-+	QCM2290_SLAVE_APPSS,
-+	QCM2290_SLAVE_SNOC_CNOC,
-+	QCM2290_SLAVE_IMEM,
-+	QCM2290_SLAVE_PIMEM,
-+	QCM2290_SLAVE_SNOC_BIMC,
-+	QCM2290_SLAVE_SERVICE_SNOC,
-+	QCM2290_SLAVE_QDSS_STM,
-+	QCM2290_SLAVE_TCU,
-+	QCM2290_SLAVE_ANOC_SNOC,
-+	QCM2290_SLAVE_QUP_CORE_0,
-+	QCM2290_SLAVE_SNOC_BIMC_NRT,
-+	QCM2290_SLAVE_SNOC_BIMC_RT,
-+};
-+
-+/* Master nodes */
-+static const u16 mas_appss_proc_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+	QCM2290_SLAVE_BIMC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_appss_proc = {
-+	.id = QCM2290_MASTER_APPSS_PROC,
-+	.name = "mas_apps_proc",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 0,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.prio_level = 0,
-+	.qos.areq_prio = 0,
-+	.mas_rpm_id = 0,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_appss_proc_links),
-+	.links = mas_appss_proc_links,
-+};
-+
-+static const u16 mas_snoc_bimc_rt_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+};
-+
-+static struct qcom_icc_node mas_snoc_bimc_rt = {
-+	.id = QCM2290_MASTER_SNOC_BIMC_RT,
-+	.name = "mas_snoc_bimc_rt",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 2,
-+	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
-+	.mas_rpm_id = 163,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_snoc_bimc_rt_links),
-+	.links = mas_snoc_bimc_rt_links,
-+};
-+
-+static const u16 mas_snoc_bimc_nrt_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+};
-+
-+static struct qcom_icc_node mas_snoc_bimc_nrt = {
-+	.id = QCM2290_MASTER_SNOC_BIMC_NRT,
-+	.name = "mas_snoc_bimc_nrt",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 2,
-+	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
-+	.mas_rpm_id = 163,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_snoc_bimc_nrt_links),
-+	.links = mas_snoc_bimc_nrt_links,
-+};
-+
-+static const u16 mas_snoc_bimc_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+};
-+
-+static struct qcom_icc_node mas_snoc_bimc = {
-+	.id = QCM2290_MASTER_SNOC_BIMC,
-+	.name = "mas_snoc_bimc",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 2,
-+	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
-+	.mas_rpm_id = 164,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_snoc_bimc_links),
-+	.links = mas_snoc_bimc_links,
-+};
-+
-+static const u16 mas_tcu_0_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+	QCM2290_SLAVE_BIMC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_tcu_0 = {
-+	.id = QCM2290_MASTER_TCU_0,
-+	.name = "mas_tcu_0",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 4,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.prio_level = 6,
-+	.qos.areq_prio = 6,
-+	.mas_rpm_id = 102,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_tcu_0_links),
-+	.links = mas_tcu_0_links,
-+};
-+
-+static const u16 mas_snoc_cnoc_links[] = {
-+	QCM2290_SLAVE_CAMERA_RT_THROTTLE_CFG,
-+	QCM2290_SLAVE_SDCC_2,
-+	QCM2290_SLAVE_SDCC_1,
-+	QCM2290_SLAVE_QM_CFG,
-+	QCM2290_SLAVE_BIMC_CFG,
-+	QCM2290_SLAVE_USB3,
-+	QCM2290_SLAVE_QM_MPU_CFG,
-+	QCM2290_SLAVE_CAMERA_NRT_THROTTLE_CFG,
-+	QCM2290_SLAVE_QDSS_CFG,
-+	QCM2290_SLAVE_PDM,
-+	QCM2290_SLAVE_IPA_CFG,
-+	QCM2290_SLAVE_DISPLAY_THROTTLE_CFG,
-+	QCM2290_SLAVE_TCSR,
-+	QCM2290_SLAVE_MESSAGE_RAM,
-+	QCM2290_SLAVE_PMIC_ARB,
-+	QCM2290_SLAVE_LPASS,
-+	QCM2290_SLAVE_DISPLAY_CFG,
-+	QCM2290_SLAVE_VENUS_CFG,
-+	QCM2290_SLAVE_GPU_CFG,
-+	QCM2290_SLAVE_IMEM_CFG,
-+	QCM2290_SLAVE_SNOC_CFG,
-+	QCM2290_SLAVE_SERVICE_CNOC,
-+	QCM2290_SLAVE_VENUS_THROTTLE_CFG,
-+	QCM2290_SLAVE_PKA_WRAPPER,
-+	QCM2290_SLAVE_HWKM,
-+	QCM2290_SLAVE_PRNG,
-+	QCM2290_SLAVE_VSENSE_CTRL_CFG,
-+	QCM2290_SLAVE_CRYPTO_0_CFG,
-+	QCM2290_SLAVE_PIMEM_CFG,
-+	QCM2290_SLAVE_QUP_0,
-+	QCM2290_SLAVE_CAMERA_CFG,
-+	QCM2290_SLAVE_CLK_CTL,
-+	QCM2290_SLAVE_QPIC,
-+};
-+
-+static struct qcom_icc_node mas_snoc_cnoc = {
-+	.id = QCM2290_MASTER_SNOC_CNOC,
-+	.name = "mas_snoc_cnoc",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = 52,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_snoc_cnoc_links),
-+	.links = mas_snoc_cnoc_links,
-+};
-+
-+static const u16 mas_qdss_dap_links[] = {
-+	QCM2290_SLAVE_CAMERA_RT_THROTTLE_CFG,
-+	QCM2290_SLAVE_SDCC_2,
-+	QCM2290_SLAVE_SDCC_1,
-+	QCM2290_SLAVE_QM_CFG,
-+	QCM2290_SLAVE_BIMC_CFG,
-+	QCM2290_SLAVE_USB3,
-+	QCM2290_SLAVE_QM_MPU_CFG,
-+	QCM2290_SLAVE_CAMERA_NRT_THROTTLE_CFG,
-+	QCM2290_SLAVE_QDSS_CFG,
-+	QCM2290_SLAVE_PDM,
-+	QCM2290_SLAVE_IPA_CFG,
-+	QCM2290_SLAVE_DISPLAY_THROTTLE_CFG,
-+	QCM2290_SLAVE_TCSR,
-+	QCM2290_SLAVE_MESSAGE_RAM,
-+	QCM2290_SLAVE_PMIC_ARB,
-+	QCM2290_SLAVE_LPASS,
-+	QCM2290_SLAVE_DISPLAY_CFG,
-+	QCM2290_SLAVE_VENUS_CFG,
-+	QCM2290_SLAVE_GPU_CFG,
-+	QCM2290_SLAVE_IMEM_CFG,
-+	QCM2290_SLAVE_SNOC_CFG,
-+	QCM2290_SLAVE_SERVICE_CNOC,
-+	QCM2290_SLAVE_VENUS_THROTTLE_CFG,
-+	QCM2290_SLAVE_PKA_WRAPPER,
-+	QCM2290_SLAVE_HWKM,
-+	QCM2290_SLAVE_PRNG,
-+	QCM2290_SLAVE_VSENSE_CTRL_CFG,
-+	QCM2290_SLAVE_CRYPTO_0_CFG,
-+	QCM2290_SLAVE_PIMEM_CFG,
-+	QCM2290_SLAVE_QUP_0,
-+	QCM2290_SLAVE_CAMERA_CFG,
-+	QCM2290_SLAVE_CLK_CTL,
-+	QCM2290_SLAVE_QPIC,
-+};
-+
-+static struct qcom_icc_node mas_qdss_dap = {
-+	.id = QCM2290_MASTER_QDSS_DAP,
-+	.name = "mas_qdss_dap",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = 49,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qdss_dap_links),
-+	.links = mas_qdss_dap_links,
-+};
-+
-+static const u16 mas_crypto_core0_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC
-+};
-+
-+static struct qcom_icc_node mas_crypto_core0 = {
-+	.id = QCM2290_MASTER_CRYPTO_CORE0,
-+	.name = "mas_crypto_core0",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 22,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 23,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_crypto_core0_links),
-+	.links = mas_crypto_core0_links,
-+};
-+
-+static const u16 mas_qup_core_0_links[] = {
-+	QCM2290_SLAVE_QUP_CORE_0,
-+};
-+
-+static struct qcom_icc_node mas_qup_core_0 = {
-+	.id = QCM2290_MASTER_QUP_CORE_0,
-+	.name = "mas_qup_core_0",
-+	.buswidth = 4,
-+	.mas_rpm_id = 170,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qup_core_0_links),
-+	.links = mas_qup_core_0_links,
-+};
-+
-+static const u16 mas_camnoc_sf_links[] = {
-+	QCM2290_SLAVE_SNOC_BIMC_NRT,
-+};
-+
-+static struct qcom_icc_node mas_camnoc_sf = {
-+	.id = QCM2290_MASTER_CAMNOC_SF,
-+	.name = "mas_camnoc_sf",
-+	.buswidth = 32,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 4,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 3,
-+	.mas_rpm_id = 172,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_camnoc_sf_links),
-+	.links = mas_camnoc_sf_links,
-+};
-+
-+static const u16 mas_camnoc_hf_links[] = {
-+	QCM2290_SLAVE_SNOC_BIMC_RT,
-+};
-+
-+static struct qcom_icc_node mas_camnoc_hf = {
-+	.id = QCM2290_MASTER_CAMNOC_HF,
-+	.name = "mas_camnoc_hf",
-+	.buswidth = 32,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 10,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 3,
-+	.qos.urg_fwd_en = true,
-+	.mas_rpm_id = 173,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_camnoc_hf_links),
-+	.links = mas_camnoc_hf_links,
-+};
-+
-+static const u16 mas_mdp0_links[] = {
-+	QCM2290_SLAVE_SNOC_BIMC_RT,
-+};
-+
-+static struct qcom_icc_node mas_mdp0 = {
-+	.id = QCM2290_MASTER_MDP0,
-+	.name = "mas_mdp0",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 5,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 3,
-+	.qos.urg_fwd_en = true,
-+	.mas_rpm_id = 8,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_mdp0_links),
-+	.links = mas_mdp0_links,
-+};
-+
-+static const u16 mas_video_p0_links[] = {
-+	QCM2290_SLAVE_SNOC_BIMC_NRT,
-+};
-+
-+static struct qcom_icc_node mas_video_p0 = {
-+	.id = QCM2290_MASTER_VIDEO_P0,
-+	.name = "mas_video_p0",
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 9,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 3,
-+	.qos.urg_fwd_en = true,
-+	.mas_rpm_id = 9,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_video_p0_links),
-+	.links = mas_video_p0_links,
-+};
-+
-+static const u16 mas_video_proc_links[] = {
-+	QCM2290_SLAVE_SNOC_BIMC_NRT,
-+};
-+
-+static struct qcom_icc_node mas_video_proc = {
-+	.id = QCM2290_MASTER_VIDEO_PROC,
-+	.name = "mas_video_proc",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 13,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 4,
-+	.mas_rpm_id = 168,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_video_proc_links),
-+	.links = mas_video_proc_links,
-+};
-+
-+static const u16 mas_snoc_cfg_links[] = {
-+	QCM2290_SLAVE_SERVICE_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_snoc_cfg = {
-+	.id = QCM2290_MASTER_SNOC_CFG,
-+	.name = "mas_snoc_cfg",
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = 20,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_snoc_cfg_links),
-+	.links = mas_snoc_cfg_links,
-+};
-+
-+static const u16 mas_tic_links[] = {
-+	QCM2290_SLAVE_PIMEM,
-+	QCM2290_SLAVE_IMEM,
-+	QCM2290_SLAVE_APPSS,
-+	QCM2290_SLAVE_SNOC_BIMC,
-+	QCM2290_SLAVE_SNOC_CNOC,
-+	QCM2290_SLAVE_TCU,
-+	QCM2290_SLAVE_QDSS_STM,
-+};
-+
-+static struct qcom_icc_node mas_tic = {
-+	.id = QCM2290_MASTER_TIC,
-+	.name = "mas_tic",
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 8,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 51,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_tic_links),
-+	.links = mas_tic_links,
-+};
-+
-+static const u16 mas_anoc_snoc_links[] = {
-+	QCM2290_SLAVE_PIMEM,
-+	QCM2290_SLAVE_IMEM,
-+	QCM2290_SLAVE_APPSS,
-+	QCM2290_SLAVE_SNOC_BIMC,
-+	QCM2290_SLAVE_SNOC_CNOC,
-+	QCM2290_SLAVE_TCU,
-+	QCM2290_SLAVE_QDSS_STM,
-+};
-+
-+static struct qcom_icc_node mas_anoc_snoc = {
-+	.id = QCM2290_MASTER_ANOC_SNOC,
-+	.name = "mas_anoc_snoc",
-+	.buswidth = 16,
-+	.mas_rpm_id = 110,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_anoc_snoc_links),
-+	.links = mas_anoc_snoc_links,
-+};
-+
-+static const u16 mas_bimc_snoc_links[] = {
-+	QCM2290_SLAVE_PIMEM,
-+	QCM2290_SLAVE_IMEM,
-+	QCM2290_SLAVE_APPSS,
-+	QCM2290_SLAVE_SNOC_CNOC,
-+	QCM2290_SLAVE_TCU,
-+	QCM2290_SLAVE_QDSS_STM,
-+};
-+
-+static struct qcom_icc_node mas_bimc_snoc = {
-+	.id = QCM2290_MASTER_BIMC_SNOC,
-+	.name = "mas_bimc_snoc",
-+	.buswidth = 8,
-+	.mas_rpm_id = 21,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_bimc_snoc_links),
-+	.links = mas_bimc_snoc_links,
-+};
-+
-+static const u16 mas_pimem_links[] = {
-+	QCM2290_SLAVE_IMEM,
-+	QCM2290_SLAVE_SNOC_BIMC,
-+};
-+
-+static struct qcom_icc_node mas_pimem = {
-+	.id = QCM2290_MASTER_PIMEM,
-+	.name = "mas_pimem",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 20,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 113,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_pimem_links),
-+	.links = mas_pimem_links,
-+};
-+
-+static const u16 mas_qdss_bam_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_qdss_bam = {
-+	.id = QCM2290_MASTER_QDSS_BAM,
-+	.name = "mas_qdss_bam",
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 2,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 19,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qdss_bam_links),
-+	.links = mas_qdss_bam_links,
-+};
-+
-+static const u16 mas_qup_0_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_qup_0 = {
-+	.id = QCM2290_MASTER_QUP_0,
-+	.name = "mas_qup_0",
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 0,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 166,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qup_0_links),
-+	.links = mas_qup_0_links,
-+};
-+
-+static const u16 mas_ipa_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_ipa = {
-+	.id = QCM2290_MASTER_IPA,
-+	.name = "mas_ipa",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 3,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 59,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_ipa_links),
-+	.links = mas_ipa_links,
-+};
-+
-+static const u16 mas_qdss_etr_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_qdss_etr = {
-+	.id = QCM2290_MASTER_QDSS_ETR,
-+	.name = "mas_qdss_etr",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 12,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 31,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qdss_etr_links),
-+	.links = mas_qdss_etr_links,
-+};
-+
-+static const u16 mas_sdcc_1_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_sdcc_1 = {
-+	.id = QCM2290_MASTER_SDCC_1,
-+	.name = "mas_sdcc_1",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 17,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 33,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_sdcc_1_links),
-+	.links = mas_sdcc_1_links,
-+};
-+
-+static const u16 mas_sdcc_2_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_sdcc_2 = {
-+	.id = QCM2290_MASTER_SDCC_2,
-+	.name = "mas_sdcc_2",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 23,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 35,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_sdcc_2_links),
-+	.links = mas_sdcc_2_links,
-+};
-+
-+static const u16 mas_qpic_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_qpic = {
-+	.id = QCM2290_MASTER_QPIC,
-+	.name = "mas_qpic",
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 1,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 58,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_qpic_links),
-+	.links = mas_qpic_links,
-+};
-+
-+static const u16 mas_usb3_0_links[] = {
-+	QCM2290_SLAVE_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node mas_usb3_0 = {
-+	.id = QCM2290_MASTER_USB3_0,
-+	.name = "mas_usb3_0",
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 24,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.areq_prio = 2,
-+	.mas_rpm_id = 32,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_usb3_0_links),
-+	.links = mas_usb3_0_links,
-+};
-+
-+static const u16 mas_gfx3d_links[] = {
-+	QCM2290_SLAVE_EBI1,
-+};
-+
-+static struct qcom_icc_node mas_gfx3d = {
-+	.id = QCM2290_MASTER_GFX3D,
-+	.name = "mas_gfx3d",
-+	.buswidth = 32,
-+	.qos.ap_owned = true,
-+	.qos.qos_port = 1,
-+	.qos.qos_mode = NOC_QOS_MODE_FIXED,
-+	.qos.prio_level = 0,
-+	.qos.areq_prio = 0,
-+	.mas_rpm_id = 6,
-+	.slv_rpm_id = -1,
-+	.num_links = ARRAY_SIZE(mas_gfx3d_links),
-+	.links = mas_gfx3d_links,
-+};
-+
-+/* Slave nodes */
-+static struct qcom_icc_node slv_ebi1 = {
-+	.name = "slv_ebi1",
-+	.id = QCM2290_SLAVE_EBI1,
-+	.buswidth = 8,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 0,
-+};
-+
-+static const u16 slv_bimc_snoc_links[] = {
-+	QCM2290_MASTER_BIMC_SNOC,
-+};
-+
-+static struct qcom_icc_node slv_bimc_snoc = {
-+	.name = "slv_bimc_snoc",
-+	.id = QCM2290_SLAVE_BIMC_SNOC,
-+	.buswidth = 8,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 2,
-+	.num_links = ARRAY_SIZE(slv_bimc_snoc_links),
-+	.links = slv_bimc_snoc_links,
-+};
-+
-+static struct qcom_icc_node slv_bimc_cfg = {
-+	.name = "slv_bimc_cfg",
-+	.id = QCM2290_SLAVE_BIMC_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 56,
-+};
-+
-+static struct qcom_icc_node slv_camera_nrt_throttle_cfg = {
-+	.name = "slv_camera_nrt_throttle_cfg",
-+	.id = QCM2290_SLAVE_CAMERA_NRT_THROTTLE_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 271,
-+};
-+
-+static struct qcom_icc_node slv_camera_rt_throttle_cfg = {
-+	.name = "slv_camera_rt_throttle_cfg",
-+	.id = QCM2290_SLAVE_CAMERA_RT_THROTTLE_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 279,
-+};
-+
-+static struct qcom_icc_node slv_camera_cfg = {
-+	.name = "slv_camera_cfg",
-+	.id = QCM2290_SLAVE_CAMERA_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 3,
-+};
-+
-+static struct qcom_icc_node slv_clk_ctl = {
-+	.name = "slv_clk_ctl",
-+	.id = QCM2290_SLAVE_CLK_CTL,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 47,
-+};
-+
-+static struct qcom_icc_node slv_crypto_0_cfg = {
-+	.name = "slv_crypto_0_cfg",
-+	.id = QCM2290_SLAVE_CRYPTO_0_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 52,
-+};
-+
-+static struct qcom_icc_node slv_display_cfg = {
-+	.name = "slv_display_cfg",
-+	.id = QCM2290_SLAVE_DISPLAY_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 4,
-+};
-+
-+static struct qcom_icc_node slv_display_throttle_cfg = {
-+	.name = "slv_display_throttle_cfg",
-+	.id = QCM2290_SLAVE_DISPLAY_THROTTLE_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 156,
-+};
-+
-+static struct qcom_icc_node slv_gpu_cfg = {
-+	.name = "slv_gpu_cfg",
-+	.id = QCM2290_SLAVE_GPU_CFG,
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 275,
-+};
-+
-+static struct qcom_icc_node slv_hwkm = {
-+	.name = "slv_hwkm",
-+	.id = QCM2290_SLAVE_HWKM,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 280,
-+};
-+
-+static struct qcom_icc_node slv_imem_cfg = {
-+	.name = "slv_imem_cfg",
-+	.id = QCM2290_SLAVE_IMEM_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 54,
-+};
-+
-+static struct qcom_icc_node slv_ipa_cfg = {
-+	.name = "slv_ipa_cfg",
-+	.id = QCM2290_SLAVE_IPA_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 183,
-+};
-+
-+static struct qcom_icc_node slv_lpass = {
-+	.name = "slv_lpass",
-+	.id = QCM2290_SLAVE_LPASS,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 21,
-+};
-+
-+static struct qcom_icc_node slv_message_ram = {
-+	.name = "slv_message_ram",
-+	.id = QCM2290_SLAVE_MESSAGE_RAM,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 55,
-+};
-+
-+static struct qcom_icc_node slv_pdm = {
-+	.name = "slv_pdm",
-+	.id = QCM2290_SLAVE_PDM,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 41,
-+};
-+
-+static struct qcom_icc_node slv_pimem_cfg = {
-+	.name = "slv_pimem_cfg",
-+	.id = QCM2290_SLAVE_PIMEM_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 167,
-+};
-+
-+static struct qcom_icc_node slv_pka_wrapper = {
-+	.name = "slv_pka_wrapper",
-+	.id = QCM2290_SLAVE_PKA_WRAPPER,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 281,
-+};
-+
-+static struct qcom_icc_node slv_pmic_arb = {
-+	.name = "slv_pmic_arb",
-+	.id = QCM2290_SLAVE_PMIC_ARB,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 59,
-+};
-+
-+static struct qcom_icc_node slv_prng = {
-+	.name = "slv_prng",
-+	.id = QCM2290_SLAVE_PRNG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 44,
-+};
-+
-+static struct qcom_icc_node slv_qdss_cfg = {
-+	.name = "slv_qdss_cfg",
-+	.id = QCM2290_SLAVE_QDSS_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 63,
-+};
-+
-+static struct qcom_icc_node slv_qm_cfg = {
-+	.name = "slv_qm_cfg",
-+	.id = QCM2290_SLAVE_QM_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 212,
-+};
-+
-+static struct qcom_icc_node slv_qm_mpu_cfg = {
-+	.name = "slv_qm_mpu_cfg",
-+	.id = QCM2290_SLAVE_QM_MPU_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 231,
-+};
-+
-+static struct qcom_icc_node slv_qpic = {
-+	.name = "slv_qpic",
-+	.id = QCM2290_SLAVE_QPIC,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 80,
-+};
-+
-+static struct qcom_icc_node slv_qup_0 = {
-+	.name = "slv_qup_0",
-+	.id = QCM2290_SLAVE_QUP_0,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 261,
-+};
-+
-+static struct qcom_icc_node slv_sdcc_1 = {
-+	.name = "slv_sdcc_1",
-+	.id = QCM2290_SLAVE_SDCC_1,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 31,
-+};
-+
-+static struct qcom_icc_node slv_sdcc_2 = {
-+	.name = "slv_sdcc_2",
-+	.id = QCM2290_SLAVE_SDCC_2,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 33,
-+};
-+
-+static const u16 slv_snoc_cfg_links[] = {
-+	QCM2290_MASTER_SNOC_CFG,
-+};
-+
-+static struct qcom_icc_node slv_snoc_cfg = {
-+	.name = "slv_snoc_cfg",
-+	.id = QCM2290_SLAVE_SNOC_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 70,
-+	.num_links = ARRAY_SIZE(slv_snoc_cfg_links),
-+	.links = slv_snoc_cfg_links,
-+};
-+
-+static struct qcom_icc_node slv_tcsr = {
-+	.name = "slv_tcsr",
-+	.id = QCM2290_SLAVE_TCSR,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 50,
-+};
-+
-+static struct qcom_icc_node slv_usb3 = {
-+	.name = "slv_usb3",
-+	.id = QCM2290_SLAVE_USB3,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 22,
-+};
-+
-+static struct qcom_icc_node slv_venus_cfg = {
-+	.name = "slv_venus_cfg",
-+	.id = QCM2290_SLAVE_VENUS_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 10,
-+};
-+
-+static struct qcom_icc_node slv_venus_throttle_cfg = {
-+	.name = "slv_venus_throttle_cfg",
-+	.id = QCM2290_SLAVE_VENUS_THROTTLE_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 178,
-+};
-+
-+static struct qcom_icc_node slv_vsense_ctrl_cfg = {
-+	.name = "slv_vsense_ctrl_cfg",
-+	.id = QCM2290_SLAVE_VSENSE_CTRL_CFG,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 263,
-+};
-+
-+static struct qcom_icc_node slv_service_cnoc = {
-+	.name = "slv_service_cnoc",
-+	.id = QCM2290_SLAVE_SERVICE_CNOC,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 76,
-+};
-+
-+static struct qcom_icc_node slv_qup_core_0 = {
-+	.name = "slv_qup_core_0",
-+	.id = QCM2290_SLAVE_QUP_CORE_0,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 264,
-+};
-+
-+static const u16 slv_snoc_bimc_nrt_links[] = {
-+	QCM2290_MASTER_SNOC_BIMC_NRT,
-+};
-+
-+static struct qcom_icc_node slv_snoc_bimc_nrt = {
-+	.name = "slv_snoc_bimc_nrt",
-+	.id = QCM2290_SLAVE_SNOC_BIMC_NRT,
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 259,
-+	.num_links = ARRAY_SIZE(slv_snoc_bimc_nrt_links),
-+	.links = slv_snoc_bimc_nrt_links,
-+};
-+
-+static const u16 slv_snoc_bimc_rt_links[] = {
-+	QCM2290_MASTER_SNOC_BIMC_RT,
-+};
-+
-+static struct qcom_icc_node slv_snoc_bimc_rt = {
-+	.name = "slv_snoc_bimc_rt",
-+	.id = QCM2290_SLAVE_SNOC_BIMC_RT,
-+	.buswidth = 16,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 260,
-+	.num_links = ARRAY_SIZE(slv_snoc_bimc_rt_links),
-+	.links = slv_snoc_bimc_rt_links,
-+};
-+
-+static struct qcom_icc_node slv_appss = {
-+	.name = "slv_appss",
-+	.id = QCM2290_SLAVE_APPSS,
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 20,
-+};
-+
-+static const u16 slv_snoc_cnoc_links[] = {
-+	QCM2290_MASTER_SNOC_CNOC,
-+};
-+
-+static struct qcom_icc_node slv_snoc_cnoc = {
-+	.name = "slv_snoc_cnoc",
-+	.id = QCM2290_SLAVE_SNOC_CNOC,
-+	.buswidth = 8,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 25,
-+	.num_links = ARRAY_SIZE(slv_snoc_cnoc_links),
-+	.links = slv_snoc_cnoc_links,
-+};
-+
-+static struct qcom_icc_node slv_imem = {
-+	.name = "slv_imem",
-+	.id = QCM2290_SLAVE_IMEM,
-+	.buswidth = 8,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 26,
-+};
-+
-+static struct qcom_icc_node slv_pimem = {
-+	.name = "slv_pimem",
-+	.id = QCM2290_SLAVE_PIMEM,
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 166,
-+};
-+
-+static const u16 slv_snoc_bimc_links[] = {
-+	QCM2290_MASTER_SNOC_BIMC,
-+};
-+
-+static struct qcom_icc_node slv_snoc_bimc = {
-+	.name = "slv_snoc_bimc",
-+	.id = QCM2290_SLAVE_SNOC_BIMC,
-+	.buswidth = 16,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 24,
-+	.num_links = ARRAY_SIZE(slv_snoc_bimc_links),
-+	.links = slv_snoc_bimc_links,
-+};
-+
-+static struct qcom_icc_node slv_service_snoc = {
-+	.name = "slv_service_snoc",
-+	.id = QCM2290_SLAVE_SERVICE_SNOC,
-+	.buswidth = 4,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 29,
-+};
-+
-+static struct qcom_icc_node slv_qdss_stm = {
-+	.name = "slv_qdss_stm",
-+	.id = QCM2290_SLAVE_QDSS_STM,
-+	.buswidth = 4,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 30,
-+};
-+
-+static struct qcom_icc_node slv_tcu = {
-+	.name = "slv_tcu",
-+	.id = QCM2290_SLAVE_TCU,
-+	.buswidth = 8,
-+	.qos.ap_owned = true,
-+	.qos.qos_mode = NOC_QOS_MODE_INVALID,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 133,
-+};
-+
-+static const u16 slv_anoc_snoc_links[] = {
-+	QCM2290_MASTER_ANOC_SNOC,
-+};
-+
-+static struct qcom_icc_node slv_anoc_snoc = {
-+	.name = "slv_anoc_snoc",
-+	.id = QCM2290_SLAVE_ANOC_SNOC,
-+	.buswidth = 16,
-+	.mas_rpm_id = -1,
-+	.slv_rpm_id = 141,
-+	.num_links = ARRAY_SIZE(slv_anoc_snoc_links),
-+	.links = slv_anoc_snoc_links,
-+};
-+
-+/* NoC descriptors */
-+static struct qcom_icc_node *qcm2290_bimc_nodes[] = {
-+	[MASTER_APPSS_PROC] = &mas_appss_proc,
-+	[MASTER_SNOC_BIMC_RT] = &mas_snoc_bimc_rt,
-+	[MASTER_SNOC_BIMC_NRT] = &mas_snoc_bimc_nrt,
-+	[MASTER_SNOC_BIMC] = &mas_snoc_bimc,
-+	[MASTER_TCU_0] = &mas_tcu_0,
-+	[MASTER_GFX3D] = &mas_gfx3d,
-+	[SLAVE_EBI1] = &slv_ebi1,
-+	[SLAVE_BIMC_SNOC] = &slv_bimc_snoc,
-+};
-+
-+static const struct regmap_config qcm2290_bimc_regmap_config = {
-+	.reg_bits	= 32,
-+	.reg_stride	= 4,
-+	.val_bits	= 32,
-+	.max_register	= 0x80000,
-+	.fast_io	= true,
-+};
-+
-+static struct qcom_icc_desc qcm2290_bimc = {
-+	.type = QCOM_ICC_BIMC,
-+	.nodes = qcm2290_bimc_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_bimc_nodes),
-+	.regmap_cfg = &qcm2290_bimc_regmap_config,
-+	/* M_REG_BASE() in vendor msm_bus_bimc_adhoc driver */
-+	.qos_offset = 0x8000,
-+};
-+
-+static struct qcom_icc_node *qcm2290_cnoc_nodes[] = {
-+	[MASTER_SNOC_CNOC] = &mas_snoc_cnoc,
-+	[MASTER_QDSS_DAP] = &mas_qdss_dap,
-+	[SLAVE_BIMC_CFG] = &slv_bimc_cfg,
-+	[SLAVE_CAMERA_NRT_THROTTLE_CFG] = &slv_camera_nrt_throttle_cfg,
-+	[SLAVE_CAMERA_RT_THROTTLE_CFG] = &slv_camera_rt_throttle_cfg,
-+	[SLAVE_CAMERA_CFG] = &slv_camera_cfg,
-+	[SLAVE_CLK_CTL] = &slv_clk_ctl,
-+	[SLAVE_CRYPTO_0_CFG] = &slv_crypto_0_cfg,
-+	[SLAVE_DISPLAY_CFG] = &slv_display_cfg,
-+	[SLAVE_DISPLAY_THROTTLE_CFG] = &slv_display_throttle_cfg,
-+	[SLAVE_GPU_CFG] = &slv_gpu_cfg,
-+	[SLAVE_HWKM] = &slv_hwkm,
-+	[SLAVE_IMEM_CFG] = &slv_imem_cfg,
-+	[SLAVE_IPA_CFG] = &slv_ipa_cfg,
-+	[SLAVE_LPASS] = &slv_lpass,
-+	[SLAVE_MESSAGE_RAM] = &slv_message_ram,
-+	[SLAVE_PDM] = &slv_pdm,
-+	[SLAVE_PIMEM_CFG] = &slv_pimem_cfg,
-+	[SLAVE_PKA_WRAPPER] = &slv_pka_wrapper,
-+	[SLAVE_PMIC_ARB] = &slv_pmic_arb,
-+	[SLAVE_PRNG] = &slv_prng,
-+	[SLAVE_QDSS_CFG] = &slv_qdss_cfg,
-+	[SLAVE_QM_CFG] = &slv_qm_cfg,
-+	[SLAVE_QM_MPU_CFG] = &slv_qm_mpu_cfg,
-+	[SLAVE_QPIC] = &slv_qpic,
-+	[SLAVE_QUP_0] = &slv_qup_0,
-+	[SLAVE_SDCC_1] = &slv_sdcc_1,
-+	[SLAVE_SDCC_2] = &slv_sdcc_2,
-+	[SLAVE_SNOC_CFG] = &slv_snoc_cfg,
-+	[SLAVE_TCSR] = &slv_tcsr,
-+	[SLAVE_USB3] = &slv_usb3,
-+	[SLAVE_VENUS_CFG] = &slv_venus_cfg,
-+	[SLAVE_VENUS_THROTTLE_CFG] = &slv_venus_throttle_cfg,
-+	[SLAVE_VSENSE_CTRL_CFG] = &slv_vsense_ctrl_cfg,
-+	[SLAVE_SERVICE_CNOC] = &slv_service_cnoc,
-+};
-+
-+static const struct regmap_config qcm2290_cnoc_regmap_config = {
-+	.reg_bits	= 32,
-+	.reg_stride	= 4,
-+	.val_bits	= 32,
-+	.max_register	= 0x8200,
-+	.fast_io	= true,
-+};
-+
-+static struct qcom_icc_desc qcm2290_cnoc = {
-+	.type = QCOM_ICC_NOC,
-+	.nodes = qcm2290_cnoc_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_cnoc_nodes),
-+	.regmap_cfg = &qcm2290_cnoc_regmap_config,
-+};
-+
-+static struct qcom_icc_node *qcm2290_snoc_nodes[] = {
-+	[MASTER_CRYPTO_CORE0] = &mas_crypto_core0,
-+	[MASTER_SNOC_CFG] = &mas_snoc_cfg,
-+	[MASTER_TIC] = &mas_tic,
-+	[MASTER_ANOC_SNOC] = &mas_anoc_snoc,
-+	[MASTER_BIMC_SNOC] = &mas_bimc_snoc,
-+	[MASTER_PIMEM] = &mas_pimem,
-+	[MASTER_QDSS_BAM] = &mas_qdss_bam,
-+	[MASTER_QUP_0] = &mas_qup_0,
-+	[MASTER_IPA] = &mas_ipa,
-+	[MASTER_QDSS_ETR] = &mas_qdss_etr,
-+	[MASTER_SDCC_1] = &mas_sdcc_1,
-+	[MASTER_SDCC_2] = &mas_sdcc_2,
-+	[MASTER_QPIC] = &mas_qpic,
-+	[MASTER_USB3_0] = &mas_usb3_0,
-+	[SLAVE_APPSS] = &slv_appss,
-+	[SLAVE_SNOC_CNOC] = &slv_snoc_cnoc,
-+	[SLAVE_IMEM] = &slv_imem,
-+	[SLAVE_PIMEM] = &slv_pimem,
-+	[SLAVE_SNOC_BIMC] = &slv_snoc_bimc,
-+	[SLAVE_SERVICE_SNOC] = &slv_service_snoc,
-+	[SLAVE_QDSS_STM] = &slv_qdss_stm,
-+	[SLAVE_TCU] = &slv_tcu,
-+	[SLAVE_ANOC_SNOC] = &slv_anoc_snoc,
-+};
-+
-+static const struct regmap_config qcm2290_snoc_regmap_config = {
-+	.reg_bits	= 32,
-+	.reg_stride	= 4,
-+	.val_bits	= 32,
-+	.max_register	= 0x60200,
-+	.fast_io	= true,
-+};
-+
-+static struct qcom_icc_desc qcm2290_snoc = {
-+	.type = QCOM_ICC_QNOC,
-+	.nodes = qcm2290_snoc_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_snoc_nodes),
-+	.regmap_cfg = &qcm2290_snoc_regmap_config,
-+	/* Vendor DT node fab-sys_noc property 'qcom,base-offset' */
-+	.qos_offset = 0x15000,
-+};
-+
-+static struct qcom_icc_node *qcm2290_qup_virt_nodes[] = {
-+	[MASTER_QUP_CORE_0] = &mas_qup_core_0,
-+	[SLAVE_QUP_CORE_0] = &slv_qup_core_0
-+};
-+
-+static struct qcom_icc_desc qcm2290_qup_virt = {
-+	.type = QCOM_ICC_QNOC,
-+	.nodes = qcm2290_qup_virt_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_qup_virt_nodes),
-+};
-+
-+static struct qcom_icc_node *qcm2290_mmnrt_virt_nodes[] = {
-+	[MASTER_CAMNOC_SF] = &mas_camnoc_sf,
-+	[MASTER_VIDEO_P0] = &mas_video_p0,
-+	[MASTER_VIDEO_PROC] = &mas_video_proc,
-+	[SLAVE_SNOC_BIMC_NRT] = &slv_snoc_bimc_nrt,
-+};
-+
-+static struct qcom_icc_desc qcm2290_mmnrt_virt = {
-+	.type = QCOM_ICC_QNOC,
-+	.nodes = qcm2290_mmnrt_virt_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_mmnrt_virt_nodes),
-+	.regmap_cfg = &qcm2290_snoc_regmap_config,
-+	.qos_offset = 0x15000,
-+};
-+
-+static struct qcom_icc_node *qcm2290_mmrt_virt_nodes[] = {
-+	[MASTER_CAMNOC_HF] = &mas_camnoc_hf,
-+	[MASTER_MDP0] = &mas_mdp0,
-+	[SLAVE_SNOC_BIMC_RT] = &slv_snoc_bimc_rt,
-+};
-+
-+static struct qcom_icc_desc qcm2290_mmrt_virt = {
-+	.type = QCOM_ICC_QNOC,
-+	.nodes = qcm2290_mmrt_virt_nodes,
-+	.num_nodes = ARRAY_SIZE(qcm2290_mmrt_virt_nodes),
-+	.regmap_cfg = &qcm2290_snoc_regmap_config,
-+	.qos_offset = 0x15000,
-+};
-+
-+static const struct of_device_id qcm2290_noc_of_match[] = {
-+	{ .compatible = "qcom,qcm2290-bimc", .data = &qcm2290_bimc },
-+	{ .compatible = "qcom,qcm2290-cnoc", .data = &qcm2290_cnoc },
-+	{ .compatible = "qcom,qcm2290-snoc", .data = &qcm2290_snoc },
-+	{ .compatible = "qcom,qcm2290-qup-virt", .data = &qcm2290_qup_virt },
-+	{ .compatible = "qcom,qcm2290-mmrt-virt", .data = &qcm2290_mmrt_virt },
-+	{ .compatible = "qcom,qcm2290-mmnrt-virt", .data = &qcm2290_mmnrt_virt },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, qcm2290_noc_of_match);
-+
-+static struct platform_driver qcm2290_noc_driver = {
-+	.probe = qnoc_probe,
-+	.remove = qnoc_remove,
-+	.driver = {
-+		.name = "qnoc-qcm2290",
-+		.of_match_table = qcm2290_noc_of_match,
-+	},
-+};
-+module_platform_driver(qcm2290_noc_driver);
-+
-+MODULE_DESCRIPTION("Qualcomm QCM2290 NoC driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.17.1
+> On 11/18/21 10:24 AM, Pekka Paalanen wrote:
+> > On Thu, 18 Nov 2021 09:29:27 -0500
+> > Jason Baron <jbaron@akamai.com> wrote:
+> >  =20
+> >> On 11/16/21 3:46 AM, Pekka Paalanen wrote: =20
+> >>> On Fri, 12 Nov 2021 10:08:41 -0500
+> >>> Jason Baron <jbaron@akamai.com> wrote:
+> >>>    =20
+> >>>> On 11/12/21 6:49 AM, Vincent Whitchurch wrote:   =20
+> >>>>> On Thu, Nov 11, 2021 at 03:02:04PM -0700, Jim Cromie wrote:     =20
+> >>>>>> Sean Paul proposed, in:
+> >>>>>> https://urldefense.com/v3/__https://patchwork.freedesktop.org/seri=
+es/78133/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQjlN5aBIomzJR1an3YWXM6KXs0EftVMQdr=
+ewRA8Dki4A$=20
+> >>>>>> drm/trace: Mirror DRM debug logs to tracefs
+> >>>>>>
+> >>>>>> His patchset's objective is to be able to independently steer some=
+ of
+> >>>>>> the drm.debug stream to an alternate tracing destination, by split=
+ting
+> >>>>>> drm_debug_enabled() into syslog & trace flavors, and enabling them
+> >>>>>> separately.  2 advantages were identified:
+> >>>>>>
+> >>>>>> 1- syslog is heavyweight, tracefs is much lighter
+> >>>>>> 2- separate selection of enabled categories means less traffic
+> >>>>>>
+> >>>>>> Dynamic-Debug can do 2nd exceedingly well:
+> >>>>>>
+> >>>>>> A- all work is behind jump-label's NOOP, zero off cost.
+> >>>>>> B- exact site selectivity, precisely the useful traffic.
+> >>>>>>    can tailor enabled set interactively, at shell.
+> >>>>>>
+> >>>>>> Since the tracefs interface is effective for drm (the threads sugg=
+est
+> >>>>>> so), adding that interface to dynamic-debug has real potential for
+> >>>>>> everyone including drm.
+> >>>>>>
+> >>>>>> if CONFIG_TRACING:
+> >>>>>>
+> >>>>>> Grab Sean's trace_init/cleanup code, use it to provide tracefs
+> >>>>>> available by default to all pr_debugs.  This will likely need some
+> >>>>>> further per-module treatment; perhaps something reflecting hierarc=
+hy
+> >>>>>> of module,file,function,line, maybe with a tuned flattening.
+> >>>>>>
+> >>>>>> endif CONFIG_TRACING
+> >>>>>>
+> >>>>>> Add a new +T flag to enable tracing, independent of +p, and add and
+> >>>>>> use 3 macros: dyndbg_site_is_enabled/logging/tracing(), to encapsu=
+late
+> >>>>>> the flag checks.  Existing code treats T like other flags.     =20
+> >>>>>
+> >>>>> I posted a patchset a while ago to do something very similar, but t=
+hat
+> >>>>> got stalled for some reason and I unfortunately didn't follow it up:
+> >>>>>
+> >>>>>  https://urldefense.com/v3/__https://lore.kernel.org/lkml/202008251=
+53338.17061-1-vincent.whitchurch@axis.com/__;!!GjvTz_vk!HcKnMRByYkIdyF1apqQ=
+jlN5aBIomzJR1an3YWXM6KXs0EftVMQdrewRGytKHPg$=20
+> >>>>>
+> >>>>> A key difference between that patchset and this patch (besides that
+> >>>>> small fact that I used +x instead of +T) was that my patchset allow=
+ed
+> >>>>> the dyndbg trace to be emitted to the main buffer and did not force=
+ them
+> >>>>> to be in an instance-specific buffer.     =20
+> >>>>
+> >>>> Yes, I agree I'd prefer that we print here to the 'main' buffer - it
+> >>>> seems to keep things simpler and easier to combine the output from
+> >>>> different sources as you mentioned.   =20
+> >>>
+> >>> Hi,
+> >>>
+> >>> I'm not quite sure I understand this discussion, but I would like to
+> >>> remind you all of what Sean's original work is about:
+> >>>
+> >>> Userspace configures DRM tracing into a flight recorder buffer (I gue=
+ss
+> >>> this is what you refer to "instance-specific buffer").
+> >>>
+> >>> Userspace runs happily for months, and then hits a problem: a failure
+> >>> in the DRM sub-system most likely, e.g. an ioctl that should never
+> >>> fail, failed. Userspace handles that failure by dumping the flight
+> >>> recorder buffer into a file and saving or sending a bug report. The
+> >>> flight recorder contents give a log of all relevant DRM in-kernel
+> >>> actions leading to the unexpected failure to help developers debug it.
+> >>>
+> >>> I don't mind if one can additionally send the flight recorder stream =
+to
+> >>> the main buffer, but I do want the separate flight recorder buffer to
+> >>> be an option so that a) unrelated things cannot flood the interesting
+> >>> bits out of it, and b) the scope of collected information is relevant.
+> >>>
+> >>> The very reason for this work is problems that are very difficult to
+> >>> reproduce in practice, either because the problem itself is triggered
+> >>> very rarely and randomly, or because the end users of the system have
+> >>> either no knowledge or no access to reconfigure debug logging and then
+> >>> reproduce the problem with good debug logs.
+> >>>
+> >>> Thank you very much for pushing this work forward!
+> >>>
+> >>>    =20
+> >>
+> >> So I think Vincent (earlier in the thread) was saying that he finds it
+> >> very helpful have dynamic debug output go to the 'main' trace buffer,
+> >> while you seem to be saying you'd prefer it just go to dynamic debug
+> >> specific trace buffer. =20
+> >=20
+> > Seems like we have different use cases: traditional debugging, and
+> > in-production flight recorder for problem reporting. I'm not surprised
+> > if they need different treatment.
+> >  =20
+> >> So we certainly can have dynamic output potentially go to both places -
+> >> although I think this would mean two tracepoints? But I really wonder
+> >> if we really need a separate tracing buffer for dynamic debug when
+> >> what goes to the 'main' buffer can be controlled and filtered to avoid
+> >> your concern around a 'flood'? =20
+> >=20
+> > If the DRM tracing goes into the main buffer, then systems in
+> > production cannot have any other sub-system traced in a similar
+> > fashion. To me it would feel very arrogant to say that to make use of
+> > DRM flight recording, you cannot trace much or anything else.
+> >=20
+> > The very purpose of the flight recorder is run in production all the
+> > time, not in a special debugging session.
+> >=20
+> > There is also the question of access and contents of the trace buffer.
+> > Ultimately, if automatic bug reports are enabled in a system, the
+> > contents of the trace buffer would be sent as-is to some bug tracking
+> > system. If there is a chance to put non-DRM stuff in the trace buffer,
+> > that could be a security problem.
+> >=20
+> > My use case is Weston. When Weston encounters an unexpected problem in
+> > production, something should automatically capture the DRM flight
+> > recorder contents and save it alongside the Weston log. Would be really
+> > nice if Weston itself could do that, but I suspect it is going to need
+> > root privileges so it needs some helper daemon.
+> >=20
+> > Maybe Sean can reiterate their use case more?
+> >=20
+> >=20
+> > Thanks,
+> > pq
+> >  =20
+>=20
+> Ok, so in this current thread the proposal was to create a "dyndbg-tracef=
+s"
+> buffer to put the dynamic debug output (including drm output from dynamic
+> debug) into. And I was saying let's just put in the 'main' trace buffer
+> (predicated on a dynamic debug specific tracepoint), since there seems
+> to be a a use-case for that and it keeps things simpler.
+>=20
+> But I went back to Sean's original patch, and it creates a drm specific
+> trace buffer "drm" (via trace_array_get_by_name("drm")). Here:
+> https://patchwork.freedesktop.org/patch/445549/?series=3D78133&rev=3D5
+>=20
+> So I think that may be some of the confusion here? The current thread/
+> proposal is not for a drm specific trace buffer...
 
+Hi Jason,
+
+I may very well have confused things, sorry about that. If this series
+is not superseding the idea of the DRM flight recorder, then don't mind
+me. It just sounded very similar and I also haven't seen new revisions
+of the flight recorder in a long time.
+
+> Having a subsystem specific trace buffer would allow subsystem specific
+> trace log permissions depending on the sensitivity of the data. But
+> doesn't drm output today go to the system log which is typically world
+> readable today?
+
+Yes, and that is exactly the problem. The DRM debug output is so high
+traffic it would make the system log both unusable due to cruft and
+slow down the whole machine. The debug output is only useful when
+something went wrong, and at that point it is too late to enable
+debugging. That's why a flight recorder with an over-written circular
+in-memory buffer is needed.
+
+The log being world-readable (it's not in every distribution, I
+believe) only means on that one machine, but there are hopes of making
+some logs truly world-readable by posting them to the internet (bug
+reports).
+
+I would be very wary of anything uploading my system logs automatically
+with bug reports, both from the reporter point of view (am I exposing
+things I don't want to) and from the bug report receiving service point
+of view (e.g. GDPR regulations).
+
+> So I could see us supporting subsystem specific trace buffer output
+> via dynamic debug here. We could add new dev_debug() variants that
+> allow say a trace buffer to be supplied. So in that way subsystems
+> could 'opt-out' of having their data put into the global trace buffer.
+> And perhaps some subsystems we would want to allow output to both
+> buffers? The subsystem specific one and the global one?
+
+Unfortunately the rest of the discussion goes too high over my head.
+
+
+Thanks,
+pq
+
+--Sig_/UCDrJjDv+I30GhRn07Cyyaq
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEJQjwWQChkWOYOIONI1/ltBGqqqcFAmGbXJAACgkQI1/ltBGq
+qqeD+A//foKJpPUY2CTrulmVAeS0zjdQkwqXJFJhHt6U0Aa10ntIpbtQVXEwehfM
+KsKCahI0D5hYm0V2SD0ALAS9/1xQOLL8+Zo6uMFFf976FqWjOfHYpl/y/yXTPrec
+MS0ynHNuc5caRE20soRlLx6JQYHv3z5EiuYXC0cIvydYzKt4KRhl2BL1gFXMZyjf
+93NmEH36aP5c8ekZ3ibJsV8kIYaig5WtnbUFwv0EIu1YM2R4t3xi7ObM+lZ2/XwU
+J+wuYH5fgE1DvOn+5Ix2fR1ceP7f3au967unVWKxcP23ZqBC2H8/FMI/wtqqzfov
+0KMjPkzOerlUR3YSPcEfy5PSPEtd5691TN6PoGqTfsWTEVpr699j1JdPmKaxxdU0
+S+oHfja+Md+CVrw2gNaJny96aUZ+EvGf3CVlyqQKu8XVfbCu0DistdVP01g9rQBi
+5L4PZwmP4x6oNFGHQoGXSvu1CgMTQ3bfyL0/jVZVanltCCJ/PslYVdaJt2ipY2jo
+aMXnwgZcGa6aESdgIcpNzAy4QpFZPhOqRdAi0I87MhY6bBAzMnSBqZabJ513WEat
+a8yyHgbIECSK6jA4NPNvCEU/iVHL6nvhfuiscKkwESAsvBp8ifMPbS/Z6VqYZ7SF
+29ZzWPtR8v5y1exxGtDY4EGb/xkoID73cLLTZCWWz9ZvVJCixWw=
+=UMyr
+-----END PGP SIGNATURE-----
+
+--Sig_/UCDrJjDv+I30GhRn07Cyyaq--
