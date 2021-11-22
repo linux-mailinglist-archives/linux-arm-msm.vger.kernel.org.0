@@ -2,103 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C782458A53
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 09:09:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 386F3458AC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 09:51:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231656AbhKVIMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 03:12:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
+        id S232560AbhKVIyl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 03:54:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbhKVIMz (ORCPT
+        with ESMTP id S229806AbhKVIyk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 03:12:55 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB73C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:09:48 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id v19so13394084plo.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:09:48 -0800 (PST)
+        Mon, 22 Nov 2021 03:54:40 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035F9C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:51:34 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id d4so537814pgc.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 00:51:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=uQ/+zOySUXz8+736XnP9ZMKw5v3u7n3hZqXwPthJL04=;
-        b=svPsnqBijieqr4XxzbY5mKcYwOH4RdYULdK9wZuS0ZMBSA/pJPvoymRNmDiH/0UXOD
-         LoBTnucxfDbqNIyEvlZ8onHUQfuLltO3R0h4A5DnWs3lakJr7/4FJ5DYSqIkWZRQkAbW
-         CK92LnT8jI+thyer9KYxPLqy0075RdT3Ma1PI/V51NHpG3J6Mb7onEMbCeYGijXFMy9h
-         /+2DC6Y3QcS4wUyy39zFPp4xu0eFuRRr4D84E5MmsEjpnvfdEicHSuvxJNUm40NK/D87
-         WtWKt7oFgmM73oo2LAS20E6tSPEEYSHxtxOloBdhloHNajcafJHaGbxS2jNWENISWUVk
-         qEpg==
+        bh=vN46N1+4oQ0oMJzswL8DTaFRap35wbWPoW8w+rqf+MQ=;
+        b=kHjZyfDVjJd+r/iCSVg6WzoW7vmtfsn6ulQrxELauq1RcJMmO60YU0oxsGzhs5cOfz
+         ckI52wnBlRYmxjp/rb6zI0yOoPz/426BYuox4D0FoFBdH3eRVASmVMJhYugvwrs2UeBX
+         kI3a4/uGUSjw85hanWUhvCLyKQnRUHUhCUoftgAmOSa0EyHx0tRndZDwSQKmG7O7cidp
+         yHCGrrnbVPjqKJ7uxq1LXtFQKgONnshfNgt59YhWLgne+HJ9xXQ/JxkE1XDR1BUil25w
+         iI4Y9ngCvNFNeREfDVcBtx9xgyGUXFHs4x6KQU3nhqqRCBC6UrJ0EBktW6oBKaQiP4z8
+         rmNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=uQ/+zOySUXz8+736XnP9ZMKw5v3u7n3hZqXwPthJL04=;
-        b=JQipNiPN6LKOp+gzvXRKJF7gKfZ9HiLzJOB9wh+XrmsFCfkmKY9ApWId2rXfSsTfsD
-         5YvR2pkfq65slm1fXwfDo+keclpfQEX9HlMV8y++yWtIZXYrb36q+0Z3GMsuiuw9onPm
-         t5wO9THJL9VrxrgeTeAJBVLYyUSE9K24nt/Idu7rWcgXhK8bElVcDp+JWXlwylyyf8CA
-         rShniieaot6VzyFYKrb1iAGIssywc/BPzoeNawu6rf6JqqBHtgExLN2N2ucY+NXWHf6M
-         4QX+U1/KFGJ2DJTNdtB9kkRlpTv94TReTVKHuKgsqcPMZiC0z2y0oZ8MzDZU/GBvGvor
-         mxxQ==
-X-Gm-Message-State: AOAM532+p625DNev17aoOqtxwzVtkGQQOfvBC5J8HKWnerXvHPxIbV8x
-        BZAyCvnhwtoB9KDaHHQUHQcI+A==
-X-Google-Smtp-Source: ABdhPJybJrED/Lat35Z7w8WNd8v013GgDX61eCQ4gyX/sbBxICtNUU4BIT8hBCfnMDyy2Q9N5UKnag==
-X-Received: by 2002:a17:903:2445:b0:142:830:ea8e with SMTP id l5-20020a170903244500b001420830ea8emr104746579pls.54.1637568588467;
-        Mon, 22 Nov 2021 00:09:48 -0800 (PST)
+        bh=vN46N1+4oQ0oMJzswL8DTaFRap35wbWPoW8w+rqf+MQ=;
+        b=nLxhsBjGrTTiatDDUzHMyQpvXZ2howD4tsR1p6kxWSi0gKLL9AxfU4DwTtnNqnLJJ9
+         9XUognPlpaEx8LLjktedOSXymiezHJSpikH3+c1t4xsbbqcGLEeQbsMFBBL5W1+jbFwT
+         B4Q7CTDO16NuyYpezGgWdIFNGOmauszj1YzsESCOzaQ4wS7IPmtnF0m2nN9atAUT1i7I
+         6U1/b9RRJb5rGtKoZ/gl0Js4XNlbpCCCggfZFed7CaX/GzX2JKbIcxpUBL9O5CNfA+xb
+         czLMWAhjFN0av9BdGfoUdSZXl7nIFS+ILQpRifAG9sGE93iyEY8tGcbQ8iQx4lPuKdLN
+         9xwg==
+X-Gm-Message-State: AOAM533LoWXeB+kuHxK4DmGtzBNyAKAAXaYATwOU0lgRoh3VUgCIx7KC
+        VS2qyClxDl6S/0Ukd6kih4r+IQ==
+X-Google-Smtp-Source: ABdhPJwCjflmLnGpIAwZk/wazQD7KDeEQC25uzRlzJwNzKJxN6YsNC3e+imykdsoDhQvqjD4j7THeA==
+X-Received: by 2002:a62:ea10:0:b0:4a2:c7bc:c5ec with SMTP id t16-20020a62ea10000000b004a2c7bcc5ecmr43270685pfh.44.1637571093586;
+        Mon, 22 Nov 2021 00:51:33 -0800 (PST)
 Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id il13sm19507813pjb.52.2021.11.22.00.09.46
+        by smtp.gmail.com with ESMTPSA id f8sm8445582pfv.135.2021.11.22.00.51.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 00:09:48 -0800 (PST)
+        Mon, 22 Nov 2021 00:51:33 -0800 (PST)
 From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Loic Poulain <loic.poulain@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] pinctrl: qcom: qcm2290: Add GPIO wakeirq map
-Date:   Mon, 22 Nov 2021 16:09:38 +0800
-Message-Id: <20211122080938.20623-1-shawn.guo@linaro.org>
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2 0/6] Add QCM2290 interconnect support
+Date:   Mon, 22 Nov 2021 16:51:17 +0800
+Message-Id: <20211122085123.21049-1-shawn.guo@linaro.org>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It adds the map of wakeup capable GPIOs and the pins at MPM wake
-controller on QCM2290, so that these GPIOs can wake up the SoC from
-vlow/vmin low power mode.
+The series begins with a separate cleanup on icc-rpm, followed by a few
+prep changes for QCM2290 support, and then adds bindings and
+interconnect driver for QCM2290 platform.
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-qcm2290.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Changes for v2:
+- Drop unneeded include of <dt-bindings/clock/qcom,gcc-qcm2290.h> from
+  bindings.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-index 3f05c0a24b79..aa9325f333fb 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-@@ -1083,6 +1083,16 @@ static const struct msm_pingroup qcm2290_groups[] = {
- 	[133] = SDC_QDSD_PINGROUP(sdc2_data, 0x86000, 9, 0),
- };
- 
-+static const struct msm_gpio_wakeirq_map qcm2290_mpm_map[] = {
-+	{ 0, 84 }, { 3, 75 }, { 4, 16 }, { 6, 59 }, { 8, 63 }, { 11, 17 },
-+	{ 13, 18 }, { 14, 51 }, { 17, 20 }, { 18, 52 }, { 19, 53 }, { 24, 6 },
-+	{ 25, 71 }, { 27, 73 }, { 28, 41 }, { 31, 27 }, { 32, 54 }, { 33, 55 },
-+	{ 34, 56 }, { 35, 57 }, { 36, 58 }, { 39, 28 }, { 46, 29 }, { 62, 60 },
-+	{ 63, 61 }, { 64, 62 }, { 69, 33 }, { 70, 34 }, { 72, 72 }, { 75, 35 },
-+	{ 79, 36 }, { 80, 21 }, { 81, 38 }, { 86, 19 }, { 87, 42 }, { 88, 43 },
-+	{ 89, 45 }, { 91, 74 }, { 94, 47 }, { 95, 48 }, { 96, 49 }, { 97, 50 },
-+};
-+
- static const struct msm_pinctrl_soc_data qcm2290_pinctrl = {
- 	.pins = qcm2290_pins,
- 	.npins = ARRAY_SIZE(qcm2290_pins),
-@@ -1091,6 +1101,8 @@ static const struct msm_pinctrl_soc_data qcm2290_pinctrl = {
- 	.groups = qcm2290_groups,
- 	.ngroups = ARRAY_SIZE(qcm2290_groups),
- 	.ngpios = 127,
-+	.wakeirq_map = qcm2290_mpm_map,
-+	.nwakeirq_map = ARRAY_SIZE(qcm2290_mpm_map),
- };
- 
- static int qcm2290_pinctrl_probe(struct platform_device *pdev)
+Shawn Guo (6):
+  interconnect: icc-rpm: Use NOC_QOS_MODE_INVALID for qos_mode check
+  interconnect: icc-rpm: Define ICC device type
+  interconnect: icc-rpm: Add QNOC type QoS support
+  interconnect: icc-rpm: Support child NoC device probe
+  dt-bindings: interconnect: Add Qualcomm QCM2290 NoC support
+  interconnect: qcom: Add QCM2290 driver support
+
+ .../bindings/interconnect/qcom,qcm2290.yaml   |  116 ++
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/icc-rpm.c           |   56 +-
+ drivers/interconnect/qcom/icc-rpm.h           |   14 +-
+ drivers/interconnect/qcom/msm8916.c           |    4 +-
+ drivers/interconnect/qcom/msm8939.c           |    5 +-
+ drivers/interconnect/qcom/qcm2290.c           | 1363 +++++++++++++++++
+ drivers/interconnect/qcom/sdm660.c            |    7 +-
+ .../dt-bindings/interconnect/qcom,qcm2290.h   |   94 ++
+ 10 files changed, 1657 insertions(+), 13 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
+ create mode 100644 drivers/interconnect/qcom/qcm2290.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
+
 -- 
 2.17.1
 
