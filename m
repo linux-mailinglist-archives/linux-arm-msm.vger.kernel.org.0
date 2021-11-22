@@ -2,101 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B68645903E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 15:30:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0B40459078
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 15:45:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235040AbhKVOdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 09:33:55 -0500
-Received: from mout.kundenserver.de ([212.227.17.24]:43197 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbhKVOdz (ORCPT
+        id S238837AbhKVOs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 09:48:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236031AbhKVOs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 09:33:55 -0500
-Received: from mail-wr1-f50.google.com ([209.85.221.50]) by
- mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MgNtR-1m9WGG1if9-00hzOz; Mon, 22 Nov 2021 15:30:47 +0100
-Received: by mail-wr1-f50.google.com with SMTP id u18so33108095wrg.5;
-        Mon, 22 Nov 2021 06:30:47 -0800 (PST)
-X-Gm-Message-State: AOAM531FzBG0qlD8wp5YnHIFIyp+yOnK+x1fcpjK+R+62UvBuXxqoVwC
-        5HGtXGrb1lt1TrFmRjV4JW+/k0Ru43vT1p3lCZA=
-X-Google-Smtp-Source: ABdhPJxwQgTTqkYEJR5I2hfzVGzzxTuU7usxVgKz/BIB3jyn4CsuZvl8ULo4pVKSafHc6tpoBh28lUk3DLof17hMmG0=
-X-Received: by 2002:adf:f7c2:: with SMTP id a2mr39417517wrq.71.1637591447024;
- Mon, 22 Nov 2021 06:30:47 -0800 (PST)
+        Mon, 22 Nov 2021 09:48:59 -0500
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3A8C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 06:45:52 -0800 (PST)
+Received: by mail-ua1-x935.google.com with SMTP id b17so37110748uas.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 06:45:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=xCBZRYi+bGHER588588xzQrbxsR/bQEqYg58BWZ0DSo=;
+        b=HZepQrvXfClAMCwhuic6yztXJQeJtfpgoZWbNyUKtdA5zxTQaxtv2YyLLynBiy/aPE
+         kbWMhVngltaM644PP0JsYncKtWLCbuPC6xpmNlRV0ILD3Bi2k6FWEM7J1+aOumLCZQJ3
+         EefjTvXBNZd9oSQJCkMNPt1Af5x2L1qZC2iOI+8azI9TAtgTq12BN3sBs89Tva8dfcOC
+         BSP3hff8jysf7FYSFoC/HHkQrjrM2gzIHddA+9/yUf54VHXiVaBrjyg7Rg+GkcLu4eEE
+         03UQutCm52KsCqTQAOqtq12k2c0UhifRhQQ0RKJmBfWJ31OwAbLNA9DACEVT2/+S9z8+
+         Ftmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=xCBZRYi+bGHER588588xzQrbxsR/bQEqYg58BWZ0DSo=;
+        b=VZWLYw7r9ZvHm8aqEFzqBZLxxVnn5N2yWJ6W2xoStGpc1a64f7+LC3qQ8cKMVgks8z
+         6QPJAIQ0LED9B43jlC27xJUQhBXIz0ezhiXK/tyIT2dKOawL5LHCBvk9LeBlVgTum29P
+         nkiqsY4g6zPyHPZGKgcmT0fv9GhRDlw5rgmEGH4rM2vCH9HkhXrvvkuMBTw65VXR72G6
+         nVQjeMcZ4J9qOJ71qqD08n7owA3pkPUUVJV1bpcWe3QBjJuzFKwA+6FpOFV3STnM7zT9
+         fRnHFTdk03q8dYeS1bPuYrRAkCaSXoK4JBeRyWLhQFxMwlQhu9qn/7BtiqNkY02b8nER
+         6v1Q==
+X-Gm-Message-State: AOAM533qHoiW8P+UYBjawgJYIBVtFFT8kkQo/T0FsSXK9llHjwTPr+ZM
+        RkE3J85DrgwQ1K3dXiv20hWaNVdIGFqaD+mp20A=
+X-Google-Smtp-Source: ABdhPJxmRNLpW3pLIn51vVnKhQN+c26QjLD7ltFAZgDj8LSVkwpyLiVItVg0CbgxJz9vCcwG6Pvhsq/Ys+Ds9TjLSbM=
+X-Received: by 2002:a67:c181:: with SMTP id h1mr130695037vsj.3.1637592351780;
+ Mon, 22 Nov 2021 06:45:51 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1636973694.git.quic_saipraka@quicinc.com>
- <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
- <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
- <b07e339c-530d-683c-c626-14b73b42e72a@quicinc.com> <1609f1f7-6f61-6e17-d907-c526f09bffe5@quicinc.com>
- <CAK8P3a1KxJFwgock3XiRDZYzT=5PZ=Hsh_8uFv9heoa1rwNqtA@mail.gmail.com> <9ef8b483-f15f-eda8-d430-2d01e6cad70e@quicinc.com>
-In-Reply-To: <9ef8b483-f15f-eda8-d430-2d01e6cad70e@quicinc.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 22 Nov 2021 15:30:31 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
-Message-ID: <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
-Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access instrumentation
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Will Deacon <will@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        quic_psodagud@quicinc.com, Marc Zyngier <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ingo Molnar <mingo@redhat.com>
+Sender: justicethomson10@gmail.com
+Received: by 2002:ab0:7026:0:0:0:0:0 with HTTP; Mon, 22 Nov 2021 06:45:50
+ -0800 (PST)
+From:   rukkyibrahimwarlord <rukkyibrahimwarlord@gmail.com>
+Date:   Mon, 22 Nov 2021 06:45:50 -0800
+X-Google-Sender-Auth: Q66Upe6KflaNfRwQ2G4nN5nEYZw
+Message-ID: <CALBp_VP1V71uM15pewDtJEGGWm4Ye=8zWBV=qpvY7NPR2V54oQ@mail.gmail.com>
+Subject: I NEED YOUR URGENT RESPOND.
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:73gkTW5fIWH7AJ47+2Ei3EKyerhGsjP7mhl0SP7coN2xgnTP08Z
- SW2yFq2t356TB14Kupoqk/KXdkHDyXoDc4pHmr9gx7b0n6jpNi/H20mA7VwZtUisb6z1XbR
- c0hFYcGMB/dwMgqmGuuQiCqm8MlAhnb664jKC6o/0UwAPTCvWz8fYwnXDqRWmBIZov/A/Bd
- iONaskA884V2KAqYrd3Jw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E0U/yhXxpaE=:ViNwE/BvfvcPDQ4pWsk+7U
- ZxM3onaTgN7FHW43sZJRGqCylvES+d9rsXY7p64rsTjhQYb8+HKd7JxMsvgGkTsYMa+5oEepZ
- Wa3N4D6q3OdZZhKLKQ5OR0Z5nVHrhEzYcZkko6pTv6fmpbG2F6kVqMq1Jqx3EtP5+tGztVtRT
- 8bRD98tXjlQZ479EH8Mk3uicgvWLvUDKOR4ELt73o/HBz+1gzop0+NdXDIoH4fRjkcNb3mXlT
- JjLAlDtlBLW375YBFRbDYYWpf5EWy2Jy9vg709GQDNqCGLSox+z20cs5m232FV7+FUUeAULnK
- Fqp1DVZ3hSGHOjU2GsQQRe21rtSCYr3z6j9ZclpOjBtunXLd89JK/EYmn80jOzCnmtSXfhFr+
- WSHW7I99YBVC4tJ/V0J5aqRY3dLH0Ri6WbYL0SHrE2BDYhaxAMZ2bMzjsC5fLAoRHCtDvDmxH
- dV/cO/0bduWhnnsdnE4p/NQsh8Tuo3LQ0yysJru7Vkuag4i6KGtaqEwqTdBjeWkEpz7nhyAdA
- O/c+IroALQzhqHr1O3LfmlOPlcm17954hsUPR9B2+lUlIYeBp0ras9gi0YsOWkWGkfFJfaQG7
- h8upZoKSiuQy3r66vlY+hepcFPR7inDhtEICEPCs2Uf5ZbwBuFuKjzPlXWaMqLKRyI8Fyl6Qm
- Ds2FaFB1uhEMMYihEGpVeKhreSHOs3RCkv/euu6eUP00AWUDyO4L+fuy+fqYPv9+ZRhrxFyTN
- vfUHD3qFdaqZjK5rIxD4oniiMjm7mNa3vHIjmyaDokDOH+jN5r6RmnTa2vm3NaUOt6t0kiO9c
- V0NPID/RyAfFtiBcr6/KfCg2Zp1iq30I9TlOl06bklwfxjn5vs=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 3:19 PM Sai Prakash Ranjan
-<quic_saipraka@quicinc.com> wrote:
-> On 11/22/2021 7:29 PM, Arnd Bergmann wrote:
-> >
-> > I think this would be a lot less confusing to readers, as it is implemented
-> > exactly in the place that has the normal definition, and it can also have
-> > somewhat more logical semantics by only instrumenting the
-> > normal/relaxed/ioport accessors but not the __raw_* versions that
-> > are meant to be little more than a pointer dereference.
->
-> But how is this different from logic in atomic-instrumented.h which also
-> has asm-generic version?
-> Initial review few years back mentioned about having something similar
-> to atomic instrumentation
-> and hence it was implemented with the similar approach keeping
-> instrumentation out of arch specific details.
+Dearest
 
-This is only a cosmetic difference. I usually prefer fewer indirections,
-and I like the way that include/asm-generic/io.h only has all the
-normal 'static inline' definitions spelled out, and calling the __raw_*
-versions. Your version adds an extra layer with the arch_raw_readl(),
-which I'd prefer to avoid.
+I know this message will come to you as a surprise since we haven't
+known or come across each other before considering the fact that I
+sourced your email contact through the Internet in search of a trusted
+person who can assist me.
 
-> And if we do move this instrumentation to asm-generic/io.h, how will
-> that be executed since
-> the arch specifc read{b,w,l,q} overrides this generic version?
+I am Miss Rukky Warlord Ibrahim Coulibaly, 24 years old female from
+the Republic of Ivory Coast,West Africa ,am the Daughter of Late Chief
+Sgt.Warlord Ibrahim Coulibaly (a.k.a General IB ). My late father was
+a well known Ivory Coast militia leader . He died on Thursday 28 April
+2011 following a fight with the Republican Forces of Ivory
+Coast(FRCI). I am constrained to contact you because of the
+maltreatment which I am receiving from my step mother.
 
-As I understand it, your version also requires architecture specific
-changes, so that would be the same: it only works for architectures
-that get the definition of readl()/readl_relaxed()/inl()/... from
-include/asm-generic/io.h and only override the __raw version.
+She planned to take away all my late father's treasury and properties
+from me since the unexpected death of my beloved Father. Meanwhile I
+wanted to travel to Europe, but she hid away my international passport
+and other valuable documents. Luckily she did not discover where I
+kept my father's File which contained important documents. Now I am
+presently staying in the Mission in Burkina Faso.
 
-      Arnd
+I am seeking a long term relationship and investment assistance. My
+father of blessed memory deposited the sum of US$ 27.5 Million in one
+bank in Burkina Faso with my name as the next of kin. I had contacted
+the Bank to clear the deposit but the Branch Manager told me that
+being a refugee, my status according to the local law does not
+authorize me to carry out the operation. However, he advised me to
+provide a trustee who will stand on my behalf. I had wanted to inform
+my stepmother about this deposit but I am afraid that she will not
+offer me anything after the release of the money.
+
+Therefore, I decided to seek your help in transferring the money into
+your bank account while I will relocate to your country and settle
+down with you. As you indicated your interest to help me I will give
+you the account number and the contact of the bank where my late
+beloved father deposited the money with my name as the next of kin. It
+is my intention to compensate you with 40% of the total money for your
+assistance and the balance shall be my investment in any profitable
+venture which you will recommend to me as i have no any idea about
+foreign investment.Please all communications should be through this
+email address for confidential purposes.(rukkyibrahimwarlord@gmail.com
+)
+
+
+Thanks a lot in anticipation of your quick response. I will give you
+details in my massage after receiving your acceptance mail to help me
+,
+
+Yours sincerely
+Miss Rukky Warlord Ibrahim Coulibaly
+(rukkyibrahimwarlord@gmail.com
+)
