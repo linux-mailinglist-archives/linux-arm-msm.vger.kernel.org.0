@@ -2,178 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97E28459165
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 16:27:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BDBB45917C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Nov 2021 16:35:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239850AbhKVPay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 Nov 2021 10:30:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239846AbhKVPay (ORCPT
+        id S239845AbhKVPi0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 Nov 2021 10:38:26 -0500
+Received: from mout.kundenserver.de ([212.227.17.10]:36729 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239815AbhKVPiZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 Nov 2021 10:30:54 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96A0C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 07:27:47 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id n15-20020a17090a160f00b001a75089daa3so17163236pja.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Nov 2021 07:27:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FWFwUQiNQcPmdLWpd4EdufDmfHkR01oMllZ2TVyM5h4=;
-        b=RdqohAcqy6NHhBvlbYxKLEw3Kj8ldpe/vCPMziaU0/z4T/SkAp/6t2n1lPDpt5YMt5
-         BrkmXkFkkjzTx/OFCnSKRGMrXapnmNgPMPjrvjmpMLYrTwMt8YgcL3AeayWOmMfd3qo/
-         iI+XC2i/0Q0Kx09S+dNp+tUpQwpiLTswJz5TVYcLJXbV/uWkHuhvjAJocukbOX4Oy/V9
-         5oqcgp067t0L+ZvDaVtS7AM1asICdpQJmYHiTz+I6b8vxw/RYWhoz9q+tcRrSBalVlM7
-         W4Ceux4kp/5nHIPq58maNI2n/W9OUqZBao3gKEltEBM3JnPFIsC6CHdUN9x5Va6p87jU
-         rT0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FWFwUQiNQcPmdLWpd4EdufDmfHkR01oMllZ2TVyM5h4=;
-        b=cdC78KAPcBVZQO/Caor8m0TCIMsFiiv3WXDdsY63Xm41m1W4T17eMa/h6Qsf7/VHp9
-         4zL3FNOUFKWzkKkmFNphKWAh4xWCh9BbxmfYHBAAmO9iecsPp2Zh1fnmR/EZdbpRxKgk
-         BC3QaX0trrlXrldf4dGYXB4x8fKKnDdfqX8mYTvnaYqAu9uzP0Jklvgw4WLLBdXFt5fW
-         WwYFzdCKKBbjjoYzN9B11TzIQNpHwTspyHt7gYRV7pjbQ41kowXIDTUxA+J41A98EfNu
-         3uDLv7mRwLGka7ewkxwhQCntWqdc1TUc7BbqR9jkVbLB/Hhe5kR5L2G3H7juscjCBFuK
-         GQ/A==
-X-Gm-Message-State: AOAM530bTNtwvNBS490Kp6bcGk9gRyHMg/dJT0+AZZJpNg4CFU/qzh/W
-        KdC9SuY+UlA83MMHI7Fj3ZUR
-X-Google-Smtp-Source: ABdhPJxlpS3VhiGIwfzqcOqSG0xq8GMqo57/UK4XVjG7EqB8Kn3/RisEsTh+r8TvOJqrd8VHqn3Z3g==
-X-Received: by 2002:a17:903:32c2:b0:141:eed4:ec0a with SMTP id i2-20020a17090332c200b00141eed4ec0amr108770519plr.74.1637594867106;
-        Mon, 22 Nov 2021 07:27:47 -0800 (PST)
-Received: from thinkpad ([202.21.42.242])
-        by smtp.gmail.com with ESMTPSA id g20sm10430677pfj.12.2021.11.22.07.27.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Nov 2021 07:27:46 -0800 (PST)
-Date:   Mon, 22 Nov 2021 20:57:42 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Aleksander Morgado <aleksander@aleksander.es>
-Cc:     mhi@lists.linux.dev, Loic Poulain <loic.poulain@linaro.org>,
-        Thomas Perrot <thomas.perrot@bootlin.com>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>, quic_jhugo@quicinc.com,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        stable <stable@vger.kernel.org>
-Subject: Re: [PATCH v3] bus: mhi: Fix race while handling SYS_ERR at power up
-Message-ID: <20211122152742.GA83834@thinkpad>
-References: <20211118055726.13107-1-manivannan.sadhasivam@linaro.org>
- <CAAP7ucJoOTOqFnNpJcQmxF=A0TOB8TtCCng-2q9pNkddRTbpuw@mail.gmail.com>
- <20211120112508.GA100286@thinkpad>
- <20211120113626.GB100286@thinkpad>
- <CAAP7ucJ8LyYXWRLGAhYfCV7nYL+6tSHCLrOJ_hZ+swqRfv7QfQ@mail.gmail.com>
+        Mon, 22 Nov 2021 10:38:25 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]) by
+ mrelayeu.kundenserver.de (mreue106 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MBmDy-1mwqJV3ohI-00C6OF; Mon, 22 Nov 2021 16:35:17 +0100
+Received: by mail-wr1-f46.google.com with SMTP id u1so33439657wru.13;
+        Mon, 22 Nov 2021 07:35:17 -0800 (PST)
+X-Gm-Message-State: AOAM530sLAVQvXK6/g3gPJ0jseTqmSumX0z1NsbxMYoE/+QNsiu1rnAC
+        NXu7PvV0GQKDfsGhZZT2BPfs8rccrJylifWtO1A=
+X-Google-Smtp-Source: ABdhPJxJtyPDgupGJO5dvWb1SjNslTHYXWjP3r97r/gd2zxQeFi9EA/iMblGVL3S0bnNlwwqB0nbTHmFAH/3E6PXgg8=
+X-Received: by 2002:adf:efc6:: with SMTP id i6mr40179592wrp.428.1637595317455;
+ Mon, 22 Nov 2021 07:35:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAAP7ucJ8LyYXWRLGAhYfCV7nYL+6tSHCLrOJ_hZ+swqRfv7QfQ@mail.gmail.com>
+References: <cover.1636973694.git.quic_saipraka@quicinc.com>
+ <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
+ <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
+ <b07e339c-530d-683c-c626-14b73b42e72a@quicinc.com> <1609f1f7-6f61-6e17-d907-c526f09bffe5@quicinc.com>
+ <CAK8P3a1KxJFwgock3XiRDZYzT=5PZ=Hsh_8uFv9heoa1rwNqtA@mail.gmail.com>
+ <9ef8b483-f15f-eda8-d430-2d01e6cad70e@quicinc.com> <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
+ <4ed41054-3868-d5e2-9958-56250b7f9be0@quicinc.com>
+In-Reply-To: <4ed41054-3868-d5e2-9958-56250b7f9be0@quicinc.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Mon, 22 Nov 2021 16:35:01 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a07sMdR9NUz5AOJk+O-op9qLU_PjnhvqvTz9xrHE7NXEg@mail.gmail.com>
+Message-ID: <CAK8P3a07sMdR9NUz5AOJk+O-op9qLU_PjnhvqvTz9xrHE7NXEg@mail.gmail.com>
+Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access instrumentation
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Will Deacon <will@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        quic_psodagud@quicinc.com, Marc Zyngier <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Ingo Molnar <mingo@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:afe0cawbtPSkXEpDaURr+UUlHsPTEzS/tUjQeRZIDw8hix9rMzH
+ rRTDvuz45huZDfzu80RI0J4udYOpJl0YsSusZzona0T1fro74mJm0DrgpVzqlDEvOep+1p2
+ aKkslwZ14vzaZiQxYskVvTlfvyZC8sn+Mhv8g/7Gp3cKuin1KyQUrD3yLoOAFGwHPcE33DW
+ 0yYknpYZdEyocQ49yNQ3g==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wv+83+BqJV8=:wICOjBZ/A8ofZ8nbL3NFMs
+ d8XlJeQljC5DvoIoxuuMXHQB5zS58kZxtPOPPoE5Fuv0IsGE1SosB3ofn2HrfqFB9UKfO4gQL
+ JzbhwOi5FZ4V6kgDdZILboya3FF/euDlHaO5sC/zuYwFtK8iyyvtXfFA1UXfgPBxJoUN/+hoW
+ k3/3TLf82af095JEZ6XXWTUbWu9OaFKXVGn+lu4PvNWgzrH2tX2h4YxptaYIuHeTEOdesdJzU
+ sygKigS3wmHwpmugL8VhLzmtf1/IK51DHGxqu6EpJTB9oMuQTHh727SQX38iUFoL4SNZaXUqt
+ oCmQz1N9V8w1hQRynXGPidoQ7LMlxDPydzAk0yznqWkVS6+yGos+AgAuWQC55RsCul5FuQTr5
+ TqAWyptla3MEvvqRJa64pY4LK5heXPJzUbTO2UM2yLTCO799Sk1kzN5h2CIH07uqeNNG9VV1b
+ lrvlHl03ZMpwbtEtBXA21h/jH/Q1gkG/e5YRDtZDAHK92j5KXaSMwBdo84pb5wbnbQb9BnvFo
+ Y7Bix7zxUcTsXOMHQRiDAzJvsZr6/FJqdCFn4+hYRagG+80JNAOQcdhIm/p1vOZ6cxuTLJG7R
+ NOeWCULUH87x0Ah+buaaJgQo60olDk9XMvnItHXsouLcCfKUG4UVS3MhbD4XfO6niWvU6wPvK
+ K54xeKN2F59i7yMClFtDcIiTXBEkfch7iEc88qGEieElptt4V9BvrOH+Nnx+F7WAk1ylHFY7o
+ MxXIPYHecx5nEa1/C7Q1uJva3PxOKsFjHHO5FkyIRZKyP0UkjnL6g7816UuJDTc6BkC+lACEw
+ A25O8z9d4HcBqz58FEtlrcDeMk5IqN91U7Zaki2Iizs6FEu61E=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-hey,
-
-On Mon, Nov 22, 2021 at 02:13:08PM +0100, Aleksander Morgado wrote:
-> Hey Mani,
-> 
-> > > > >
-> > > > > Some devices tend to trigger SYS_ERR interrupt while the host handling
-> > > > > SYS_ERR state of the device during power up. This creates a race
-> > > > > condition and causes a failure in booting up the device.
-> > > > >
-> > > > > The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
-> > > > > handling in mhi_async_power_up(). Once the host detects that the device
-> > > > > is in SYS_ERR state, it issues MHI_RESET and waits for the device to
-> > > > > process the reset request. During this time, the device triggers SYS_ERR
-> > > > > interrupt to the host and host starts handling SYS_ERR execution.
-> > > > >
-> > > > > So by the time the device has completed reset, host starts SYS_ERR
-> > > > > handling. This causes the race condition and the modem fails to boot.
-> > > > >
-> > > > > Hence, register the IRQ handler only after handling the SYS_ERR check
-> > > > > to avoid getting spurious IRQs from the device.
-> > > > >
-> > > > > Cc: stable@vger.kernel.org
-> > > > > Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
-> > > > > Reported-by: Aleksander Morgado <aleksander@aleksander.es>
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > ---
-> > > > >
-> > > > > Changes in v3:
-> > > > >
-> > > > > * Moved BHI_INTVEC setup after irq setup
-> > > > > * Used interval_us as the delay for the polling API
-> > > > >
-> > > > > Changes in v2:
-> > > > >
-> > > > > * Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
-> > > > >
-> > > >
-> > > > I tried this v3 patch and I'm not sure if it's working properly in my
-> > > > setup; not all boots are successfully bringing the modem up.
-> > > >
-> > >
-> > > Ouch!
-> > >
-> > > > Once I installed it, I kept having this kind of logs on every boot:
-> > > > [    7.030407] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
-> > > > 0x600000000-0x600000fff 64bit]
-> > > > [    7.038984] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-> > > > [    7.045814] mhi-pci-generic 0000:01:00.0: using shared MSI
-> > > > [    7.052191] mhi mhi0: Requested to power ON
-> > > > [    7.168042] mhi mhi0: Power on setup success
-> > > > [    7.168141] mhi mhi0: Wait for device to enter SBL or Mission mode
-> > > > [   15.687938] mhi-pci-generic 0000:01:00.0: failed to suspend device: -16
-> > >
-> > > [...]
-> > >
-> > > > I didn't try the v1 or v2 patches (sorry!), so not sure if the issues
-> > > > come in this last iteration or in an earlier one. Do you want me to
-> > > > try with v1 and v2 as well?
-> > > >
-> > >
-> > > Yes, please. Nothing changed other than moving the BHI_INTVEC programming.
-> > >
-> >
-> > Or if you want to do it quickly, please test the diff below:
-> >
-> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-> > index ee0515a25e46..21484a61bbed 100644
-> > --- a/drivers/bus/mhi/core/pm.c
-> > +++ b/drivers/bus/mhi/core/pm.c
-> > @@ -1055,7 +1055,9 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
-> >         mutex_lock(&mhi_cntrl->pm_mutex);
-> >         mhi_cntrl->pm_state = MHI_PM_DISABLE;
-> >
-> > +       /* Setup BHI INTVEC */
-> >         write_lock_irq(&mhi_cntrl->pm_lock);
-> > +       mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-> >         mhi_cntrl->pm_state = MHI_PM_POR;
-> >         mhi_cntrl->ee = MHI_EE_MAX;
-> >         current_ee = mhi_get_exec_env(mhi_cntrl);
-> > @@ -1094,9 +1096,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
-> >         if (ret)
-> >                 goto error_setup_irq;
-> >
-> > -       /* Setup BHI INTVEC */
-> > -       mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-> > -
-> >         /* Transition to next state */
-> >         next_state = MHI_IN_PBL(current_ee) ?
-> >                 DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
-> >
-> 
-> I tested that additional diff on top of v3, and so far so good; I did
-> 5 soft reboots and 5 hard boots and they were all successful.
+On Mon, Nov 22, 2021 at 3:59 PM Sai Prakash Ranjan
+<quic_saipraka@quicinc.com> wrote:
+> >> And if we do move this instrumentation to asm-generic/io.h, how will
+> >> that be executed since
+> >> the arch specifc read{b,w,l,q} overrides this generic version?
+> > As I understand it, your version also requires architecture specific
+> > changes, so that would be the same: it only works for architectures
+> > that get the definition of readl()/readl_relaxed()/inl()/... from
+> > include/asm-generic/io.h and only override the __raw version. Arnd
 >
+> Sorry, I didn't get this part, so  I am trying this on ARM64:
+>
+> arm64/include/asm/io.h has read{b,l,w,q} defined.
+> include/asm-generic/io.h has below:
+>    #ifndef readl
+>    #define readl readl
+>    static inline u32 readl(const volatile void __iomem *addr)
+>
+> and we include asm-generic/io.h in arm64/include/asm/io.h at the end
+> after the definitions for arm64 mmio accesors.
+> So arch implementation here overrides generic ones as I see it, am I
+> missing something? I even confirmed this
+> with some trace_printk to generic and arch specific definitions of readl
+> and I see arch specific ones being called.
 
-Great! Thanks for the testing. I'll post v4 with this change.
-Please spare some time in testing that also :)
+Ah, you are right that the arm64 version currently has custom definitions
+of the high-level interfaces. These predate the introduction of the
+__io_{p,}{b,a}{r,w} macros and are currently only used on risc-v.
 
-Thanks,
-Mani
- 
-> -- 
-> Aleksander
-> https://aleksander.es
+I think in this case you should start by changing arm64 to use the
+generic readl() etc definitions, by removing the extra definitions and
+using
+
+#define __io_ar(v) __iormb(__v)
+#define __io_bw() dma_wmb()
+
+      Arnd
