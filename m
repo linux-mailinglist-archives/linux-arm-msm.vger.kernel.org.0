@@ -2,79 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B24F3459EF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 10:11:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62505459F4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 10:32:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235206AbhKWJOc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 04:14:32 -0500
-Received: from foss.arm.com ([217.140.110.172]:49846 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234292AbhKWJO3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 04:14:29 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A1D69ED1;
-        Tue, 23 Nov 2021 01:11:21 -0800 (PST)
-Received: from [10.57.23.185] (unknown [10.57.23.185])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AFB233F73B;
-        Tue, 23 Nov 2021 01:11:17 -0800 (PST)
-Subject: Re: [PATCH v4 0/5] Refactor thermal pressure update to avoid code
- duplication
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, steev@kali.org,
-        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
-        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
-        rafael@kernel.org, amitk@kernel.org, daniel.lezcano@linaro.org,
-        amit.kachhap@gmail.com, thara.gopinath@linaro.org,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211109195714.7750-1-lukasz.luba@arm.com>
- <20211111031535.nvrngqqffdmw2jgz@vireshk-i7>
-From:   Lukasz Luba <lukasz.luba@arm.com>
-Message-ID: <b8e768b3-a03b-f359-fc15-bcfb84ab0353@arm.com>
-Date:   Tue, 23 Nov 2021 09:11:15 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S230270AbhKWJfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 04:35:40 -0500
+Received: from mail-4317.proton.ch ([185.70.43.17]:41683 "EHLO
+        mail-4317.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230236AbhKWJfj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 04:35:39 -0500
+Date:   Tue, 23 Nov 2021 09:32:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
+        s=protonmail; t=1637659949;
+        bh=WaYv4Vo1ied5Can2vStLBRqq5qJ8vzsHC41nroVCbKU=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=mF2LsX4wZDisixKtW1bcOAJTHf0WjPG91SzlHISEtGuZGk1Cn8biO9ZokaN192Yz8
+         BzOP9TotglL3KB6ghzW169xRSIpHRdWqu4RtCay7x6PYP5SI2K3qFivh/bRVx5qGHv
+         /mBYvwXmxvkXueWSArOCQrcblEfT1hnRsuTk08NfJ8YqaXEE/RwMIqM5APRvvfsmHz
+         Rctozj430tUUIcsMyBcIOgeY2daYHpj9S7GV1zVdYPa0/Tqx8ydyhdZZEXDk3+gdj3
+         5f+BQCmZAUVfr/EtsUINCrt9+kkMZWWFG2J9UIjBWseWwcTz4YRxMInK4sb7XDjQuF
+         JQjv+Fr35uKEw==
+To:     Pekka Paalanen <ppaalanen@gmail.com>
+From:   Simon Ser <contact@emersion.fr>
+Cc:     jim.cromie@gmail.com, quic_saipraka@quicinc.com,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Will Deacon <will@kernel.org>, maz@kernel.org,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        amd-gfx mailing list <amd-gfx@lists.freedesktop.org>,
+        Ingo Molnar <mingo@redhat.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Jason Baron <jbaron@akamai.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        intel-gvt-dev@lists.freedesktop.org,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Sean Paul <sean@poorly.run>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        LKML <linux-kernel@vger.kernel.org>, quic_psodagud@quicinc.com,
+        mathieu.desnoyers@efficios.com
+Reply-To: Simon Ser <contact@emersion.fr>
+Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with it - RFC
+Message-ID: <-PHBNsA2s0YNaFjE_76_aCTSMbqUpcaqbttDKFOZv0n9VRShPsgC8NDHq_S8KCpNbE32E9LRrw7CHb3pgFzgg99jFb0DX59vpcPVODkYe4Y=@emersion.fr>
+In-Reply-To: <20211123104522.7a336773@eldfell>
+References: <20211111220206.121610-1-jim.cromie@gmail.com> <f3914fa9-8b22-d54e-3f77-d998e74094b9@akamai.com> <20211116104631.195cbd0b@eldfell> <f87b7076-47e6-89b1-aaf9-b67aa6713e01@akamai.com> <20211118172401.0b4d722e@eldfell> <41ea83b2-a707-cb6f-521e-070bb12502de@akamai.com> <20211122110208.528e1d80@eldfell> <CAJfuBxyFzA++2JUxLY-6yLqmrETbmsWpTiyJH5w1qKiAkMriNw@mail.gmail.com> <20211123104522.7a336773@eldfell>
 MIME-Version: 1.0
-In-Reply-To: <20211111031535.nvrngqqffdmw2jgz@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Viresh,
+First off, let me reiterate that this feature would be invaluable as user-s=
+pace
+developers. It's often pretty difficult to figure out the cause of an EINVA=
+L,
+we have to ask users to follow complicated instructions [1] to grab DRM log=
+s.
+Then have to skim through several megabytes of logs to find the error.
 
-On 11/11/21 3:15 AM, Viresh Kumar wrote:
-> On 09-11-21, 19:57, Lukasz Luba wrote:
->> Hi all,
->>
->> This patch set v4 aims to refactor the thermal pressure update
->> code. There are already two clients which do similar thing:
->> convert the capped frequency value into the capacity of
->> affected CPU and call the 'set' function to store the
->> reduced capacity into the per-cpu variable.
->> There might be more than two of these users. In near future
->> it will be scmi-cpufreq driver, which receives notification
->> from FW about reduced frequency due to thermal. Other vendors
->> might follow. Let's avoid code duplication and potential
->> conversion bugs. Move the conversion code into the arch_topology.c
->> where the capacity calculation setup code and thermal pressure sit.
->>
->> Apart from that $subject patches, there is one patch (3/5) which fixes
->> issue in qcom-cpufreq-hw.c when the thermal pressure is not
->> updated for offline CPUs. It's similar fix that has been merged
->> recently for cpufreq_cooling.c:
->> 2ad8ccc17d1e4270cf65a3f2
->>
->> The patch 4/5 fixes also qcom-cpufreq-hw.c driver code which did
->> the translation from frequency to capacity wrongly when there
->> was a boost frequency available and stored in 'policy->cpuinfo.max_freq'.
-> 
-> LGTM. I will apply this in a few days so people get time to Ack/Review
-> the patches.
-> 
+I have a hack [2] which just calls system("sudo dmesg") after a failed atom=
+ic
+commit, it's been pretty handy. But it's really just a hack, a proper solut=
+ion
+would be awesome.
 
-Thara has reviewed the patches. Could you take the patch set into
-your tree, please?
+[1]: https://gitlab.freedesktop.org/wlroots/wlroots/-/wikis/DRM-Debugging
+[2]: https://gitlab.freedesktop.org/emersion/libliftoff/-/merge_requests/61
+
+> > > > Having a subsystem specific trace buffer would allow subsystem spec=
+ific
+> > > > trace log permissions depending on the sensitivity of the data. But
+> > > > doesn't drm output today go to the system log which is typically wo=
+rld
+> > > > readable today?
+
+dmesg isn't world-readable these days, it's been changed recently-ish (last
+year?) at least on my distribution (Arch). I need root to grab dmesg.
+
+(Maybe we can we just let the DRM master process grab the logs?)
+
+> > > Yes, and that is exactly the problem. The DRM debug output is so high
+> > > traffic it would make the system log both unusable due to cruft and
+> > > slow down the whole machine. The debug output is only useful when
+> > > something went wrong, and at that point it is too late to enable
+> > > debugging. That's why a flight recorder with an over-written circular
+> > > in-memory buffer is needed.
+> >
+> > Seans patch reuses enum drm_debug_category to split the tracing
+> > stream into 10 sub-streams
+> > - how much traffic from each ?
+> > - are some sub-streams more valuable for post-mortem ?
+> > - any value from further refinement of categories ?
+> > - drop irrelevant callsites individually to reduce clutter, extend
+> > buffer time/space ?
+>
+> I think it's hard to predict which sub-streams you are going to need
+> before you have a bug to debug. Hence I would err on the side of
+> enabling too much. This also means that better or more refined
+> categorisation might not be that much of help - or if it is, then are
+> the excluded debug messages worth having in the kernel to begin with.
+> Well, we're probably not that interested in GPU debugs but just
+> everything related to the KMS side, which on the existing categories
+> is... everything except half of CORE and DRIVER, maybe? Not sure.
+
+We've been recommending drm.debug=3D0x19F so far (see wiki linked above).
+KMS + PRIME + ATOMIC + LEASE is definitely something we want in, and
+CORE + DRIVER contains other useful info. We definitely don't want VBL.
+
+> My feeling is that that could mean in the order of hundreds of log
+> events at framerate (e.g. 60 times per second) per each enabled output
+> individually. And per DRM device, of course. This is with the
+> uninteresting GPU debugs already excluded.
+
+Indeed, successful KMS atomic commits already generate a lot of noise. On m=
+y
+machine, setting drm.debug=3D0x19F and running the following command:
+
+    sudo dmesg -w | pv >/dev/null
+
+I get 400KiB/s when idling, and 850KiB/s when wiggling the cursor.
+
+> Still, I don't think the flight recorder buffer would need to be
+> massive. I suspect it would be enough to hold a few frames' worth which
+> is just a split second under active operation. When something happens,
+> the userspace stack is likely going to stop on its tracks immediately
+> to collect the debug information, which means the flooding should pause
+> and the relevant messages don't get overwritten before we get them. In
+> a multi-seat system where each device is controlled by a separate
+> display server instance, per-device logs would help with this. OTOH,
+> multi-seat is not a very common use case I suppose.
+
+There's also the case of multi-GPU where GPU B's logs could clutter GPU A's=
+,
+making it harder to understand the cause of an atomic commit failure on GPU=
+ A.
+So per-device logs would be useful, but not a hard requirement for me, havi=
+ng
+*anything* at all would already be a big win.
+
+In my experiments linked above [2], system("sudo dmesg") after atomic commi=
+t
+failure worked pretty well, and the bottom of the log contained the cause o=
+f
+the failure. It was pretty useful to system("sudo dmesg -C") before perform=
+ing
+an atomic commit, to be able to only collect the extract of the log relevan=
+t to
+the atomic commit.
+
+Having some kind of "marker" mechanism could be pretty cool. "Mark" the log
+stream before performing an atomic commit (ideally that'd just return e.g. =
+an
+uint64 offset), then on failure request the logs collected after that mark.
