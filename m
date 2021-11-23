@@ -2,176 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E90BD45A7A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 17:25:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA1D45A78B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 17:23:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232287AbhKWQ2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 11:28:18 -0500
-Received: from mx1.riseup.net ([198.252.153.129]:51210 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231216AbhKWQ2S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 11:28:18 -0500
-Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 4Hz8ck1mDDzF4hK;
-        Tue, 23 Nov 2021 08:25:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1637684710; bh=XXHHfy3PIsnPkeTFzRP46/bHk0xpdkwwxYrG490tGrU=;
-        h=From:To:Cc:Subject:Date:From;
-        b=mxWmBnkQ1fSJqmqqCDelaG+Fh6pQ8CBzCkDNM7kFmXymE6NWyYjp2hhCcegqSic9X
-         ki+cP+4Rx+eAgvRPGJ+2RoW3/8ATVZeNOVDIt7i3QhLc2qy3ZLhXF35QMGTOPBYACV
-         pB25cg7HQEN3xdtPABwgforA7vXlTiKXCyvo6FU0=
-X-Riseup-User-ID: F7D6CDABEBB6CDF0966A8AD74D892355AD8F4081111D8A41F833EF70850E1741
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews1.riseup.net (Postfix) with ESMTPSA id 4Hz8ch0WZHz5vLq;
-        Tue, 23 Nov 2021 08:25:07 -0800 (PST)
-From:   Dang Huynh <danct12@riseup.net>
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        id S230146AbhKWQ0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 11:26:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33134 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229891AbhKWQ0b (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 11:26:31 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574F2C061714
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:23:23 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id u18-20020a9d7212000000b00560cb1dc10bso34461861otj.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:23:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zBuLmrD4RVS18Xj6yhG9KuDHzFKukaIEFbOkTKeiw1I=;
+        b=i/R6iuKAymapTKSGTomdwKbvBqToNTT/C28vCvn11DiBlVhMVKCNWZd8m5iIJws870
+         5i6M+Uromko5JASpYlf64cnDXfeiRhcXxeMc7SlPTrBT7ppkXhw4RzDn5aDBfyisz5xp
+         3BNIDYR0ZR6Vot9zl0CQj/Ff9yxpT+hKjvayZSdQdudMHDnDcLHd9ZHYAnC6ZCob96jL
+         sRnXshNLrv7V7KfCjp3REl/ctFWWFYenJLYMNwPzrSjECJ9f8Sz33ozK/nnCjkDQyvRy
+         qzFjFRwt+lkK0DQVHKukNwQxKY9Xi19siLuoD9ZUKJr52Y/QZKQAj0UrFMuXtmWCHvmK
+         FgJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zBuLmrD4RVS18Xj6yhG9KuDHzFKukaIEFbOkTKeiw1I=;
+        b=laxbEXwn61lfrsLBFO97vzjcJQpADBzYiAlGhBATIUDdjeQ3khYcsPI+yWhAq/UZ27
+         7qx+p0Sg9o1RO2nNiWaU55eIkydt6iSpfdXl8263T+SuxINyn+gubKjZ0xYyzQTXWGp9
+         IVQc08l27pCUvjrsKwV/8yya7w4jG08fMynhOfbe+0pDQRuaBpSOP2lbB7cTiMekWlsC
+         VhO3wj45z/XPfzbkp8JragP7lJt/J7fZIuRn/ZItr3XNtk9DveGwN05UQJisxEfGY2W3
+         rqS/wg7t7BhSJVcg8a8ogAM2Cwf2g+ab958rPc8qI02+Sqgz8VYuMeHluaXwgEj5p7Nf
+         rlBg==
+X-Gm-Message-State: AOAM532QvU8iWxj9AzGYZfLHXCgLByRuuATK2kQQWGGWm8aYxusIzvfw
+        ZW0rxqX2vcG8dUNKxlEC41T7Iw==
+X-Google-Smtp-Source: ABdhPJySUDxBc7WKKVZIoc6Yq1tAhOgCYQWNcF8/sGQlcJ5We9CtbA2F63QQnIzKYPDYtxwknNF4oA==
+X-Received: by 2002:a05:6830:232e:: with SMTP id q14mr5709355otg.133.1637684602631;
+        Tue, 23 Nov 2021 08:23:22 -0800 (PST)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 111sm2264314otu.55.2021.11.23.08.23.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 08:23:22 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     Robert Foss <robert.foss@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: Drop input-name property
-Date:   Tue, 23 Nov 2021 23:24:37 +0700
-Message-Id: <20211123162436.1507341-1-danct12@riseup.net>
+Subject: [PATCH v2] clk: qcom: clk-alpha-pll: Don't reconfigure running Trion
+Date:   Tue, 23 Nov 2021 08:25:08 -0800
+Message-Id: <20211123162508.153711-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211123161630.123222-1-bjorn.andersson@linaro.org>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This property doesn't seem to exist in the documentation nor
-in source code, but for some reason it is defined in a bunch
-of device trees.
+In the event that the bootloader has configured the Trion PLL as source
+for the display clocks, e.g. for the continuous splashscreen, then there
+will also be RCGs that are clocked by this instance.
 
-Signed-off-by: Dang Huynh <danct12@riseup.net>
+Reconfiguring, and in particular disabling the output of, the PLL will
+cause issues for these downstream RCGs and has been shown to prevent
+them from being re-parented.
+
+Follow downstream and skip configuration if it's determined that the PLL
+is already running.
+
+Fixes: 59128c20a6a9 ("clk: qcom: clk-alpha-pll: Add support for controlling Lucid PLLs")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
-This patch is a split of this treewide patch [1] to ease the 
-maintainers. 
 
-[1]: https://patchwork.kernel.org/patch/12633497/
+Changes since v1:
+- Forgot to commit the last minute s/pr_dbg/pr_debug/
 
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts            | 1 -
- arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi     | 1 -
- arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi   | 1 -
- arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts              | 3 ---
- arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi    | 2 --
- arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi        | 1 -
- arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts | 1 -
- 7 files changed, 10 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-index 69fcb6b0398d..84558ab5fe86 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-@@ -42,7 +42,6 @@ framebuffer0: framebuffer@3404000 {
- 
- 	gpio_keys {
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		autorepeat;
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-index 3a3790a52a2c..cc038f9b641f 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-@@ -62,7 +62,6 @@ divclk4: divclk4 {
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		autorepeat;
- 
- 		volupkey {
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-index 7cc564d8ca7c..dde7ed159c4d 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-@@ -29,7 +29,6 @@ / {
- 
- 	gpio_keys {
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		autorepeat;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-index 3d495ce3f46a..dc5b9b274df3 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-@@ -29,7 +29,6 @@ extcon_usb: extcon-usb {
- 
- 	gpio-hall-sensors {
- 		compatible = "gpio-keys";
--		input-name = "hall-sensors";
- 		label = "Hall sensors";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&hall_sensor1_default>;
-@@ -46,7 +45,6 @@ hall-sensor1 {
- 
- 	gpio-kb-extra-keys {
- 		compatible = "gpio-keys";
--		input-name = "extra-kb-keys";
- 		label = "Keyboard extra keys";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gpio_kb_pins_extra>;
-@@ -102,7 +100,6 @@ alt {
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		input-name = "side-buttons";
- 		label = "Side buttons";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index 91e391282181..47488a1aecae 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -93,7 +93,6 @@ vph_pwr: vph-pwr-regulator {
- 
- 	gpio-keys {
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		label = "Side buttons";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vol_down_pin_a>, <&cam_focus_pin_a>,
-@@ -126,7 +125,6 @@ camera-focus {
- 
- 	gpio-hall-sensor {
- 		compatible = "gpio-keys";
--		input-name = "hall-sensors";
- 		label = "Hall sensors";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&hall_sensor0_default>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-index e90c9ec84675..42af1fade461 100644
---- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-@@ -90,7 +90,6 @@ cam_vana_rear_vreg: cam_vana_rear_vreg {
- 	gpio_keys {
- 		status = "okay";
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-index 45eab0235d66..871ccbba445b 100644
---- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-@@ -42,7 +42,6 @@ extcon_usb: extcon-usb {
- 	gpio-keys {
- 		status = "okay";
- 		compatible = "gpio-keys";
--		input-name = "gpio-keys";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		autorepeat;
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index eaedcceb766f..8f65b9bdafce 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1429,6 +1429,15 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+ void clk_trion_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 			     const struct alpha_pll_config *config)
+ {
++	/*
++	 * If the bootloader left the PLL enabled it's likely that there are
++	 * RCGs that will lock up if we disable the PLL below.
++	 */
++	if (trion_pll_is_enabled(pll, regmap)) {
++		pr_debug("Trion PLL is already enabled, skipping configuration\n");
++		return;
++	}
++
+ 	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+ 	regmap_write(regmap, PLL_CAL_L_VAL(pll), TRION_PLL_CAL_VAL);
+ 	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
 -- 
-2.34.0
+2.33.1
 
