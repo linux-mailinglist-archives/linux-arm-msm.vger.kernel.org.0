@@ -2,54 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81BC145A28D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 13:28:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF63545A290
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 13:28:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236479AbhKWMbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 07:31:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34714 "EHLO
+        id S236458AbhKWMbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 07:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236458AbhKWMbZ (ORCPT
+        with ESMTP id S236544AbhKWMbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 07:31:25 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D1CC06173E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 04:28:17 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 133so18618416wme.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 04:28:17 -0800 (PST)
+        Tue, 23 Nov 2021 07:31:34 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CE76C06173E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 04:28:26 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id u18so38684035wrg.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 04:28:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=SXnHndjn1TOt11Ey5a67F+PAyOVaDD8SBwIn9/hXTOM=;
-        b=hAgpuZ3ZelFNHDs14F8O7CNddFyVIvYYLC1f5ruDP/PKnI9kflh+utx2/asmqUK1AJ
-         lPaqaxDTY3ddf1sUNNhR67szBqPHix0sPG6UIx6kLte7pf+9gQimeBoBJ6P15uJ0FSV2
-         Iw1YUpB3mmwicwd8pEdxkCXYDIgYDhCZRS8YFd20kx/1et6aCDdKGegyzjNvAnxIdPoZ
-         51OtpXreyBi80oayfgBrs1HdyynqKFtWowUwz/E+PQaj6JGjeEkSqJak6DfaY0JCq0/R
-         XKDqZVbx6sGN8Sfy1geBahySSHiOFb8C9mYaNMgBWSCdG1dxEh43UTwRGhzwPM/UwYjd
-         0A7A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=y+2dhMLktqLvGFcZL0JfDpP42kgRWTSwc0iWLEbRGpY=;
+        b=dPMOMM5MzAt9NPK2WuyYvIVUKazML1VSHPp1rShpjjhhvTLE1gPGoSk74ea3wtM7aW
+         oZcxFsNL/auXt6RmSrYbc8u2rUGKNxhGEmeWwnaNasf39Z3Jm3zt6LhrKZNopa9aJpIr
+         nPPrGN2VXetY3nSOsfpjic8ZXeBYc3vG2zRglWLMmiYrEJwf/L57hSffW2AVhWfvtj9f
+         DM9ZbvjtMEqucwNSOdKCXJ5UeQv7Qzp7Sj6U6iMADSqxzgWoS54Nd3HXXMJyEU1AMYYu
+         /96o+HvVYfY18KMt/M6y85YxAnakoB6H5ny5vSbTmYhRBZdSPTJPH49SHpIMvoZz/BGe
+         IC6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=SXnHndjn1TOt11Ey5a67F+PAyOVaDD8SBwIn9/hXTOM=;
-        b=WwCKJb3VolPpNFkqj2UHHLmMM89XBNahiytdeZ9OY73AVvOm2wws4OX/vrkp1tF+bi
-         FLLzlOkCCH3D/X0dMwHjo/YJ31u7n5L+s2x31pfsJ4yOtshjC+76P35AXtyYGuibLvJx
-         Tz5DWJ1msrygDzaCfteftTlXWJU8J+KOPOaLaEvqxOgQUnMfZg/JbjyFw3EYkMPdKKq+
-         VTnDnYv0lMcFy5RoGVpgMcsgbR0smoC2ubolJ0v20D1Bm0cZiDb8f9CfcP+INR0eKL7d
-         HWBig/pf9tHSX6YP2oUb2EILU16UWT9kgaWY/BQ0s39ZLHAunXGVuBsMi8kM2w9o7R5X
-         O0xg==
-X-Gm-Message-State: AOAM532i2jsZat4TW41aFutEOFuTcZQk5WzjoCfADAX7ypWhF5ZI71c+
-        ndMba4UILQC9L3MmL6aTbBh/zQ==
-X-Google-Smtp-Source: ABdhPJz1cNKjWzjauR6ApzjhPMHe+RsJS+qFP85xeN5g7/aYwUtSn7orNwnE24JsXrdNFJ8YPG7k/w==
-X-Received: by 2002:a7b:c102:: with SMTP id w2mr2567233wmi.151.1637670495657;
-        Tue, 23 Nov 2021 04:28:15 -0800 (PST)
+        bh=y+2dhMLktqLvGFcZL0JfDpP42kgRWTSwc0iWLEbRGpY=;
+        b=R8co09wnRRtc4APjQ8sMpPinHUW2iyD7udv64YrjZ6CrIb4so5L3PE65PVqwexohT1
+         Ofij/JAv2fFlYuOaja/74kl/FkCKNdW18lJeGJI+QlSdpXpqU8MBHu0FGoBaBvFr/SUI
+         j+eIz45rN12UqQPQ25ASZaZceqX65sBZM/n6GOKXWN1NxJ/xI6vupga4iE4qjQexGhrI
+         rcxh2SQ0XaLREZciWe4HpGhtxgHWB8f95YygPBOxkPNWfKr43Ctu0TanZde+vhiVAZ4z
+         a0TmhUIoGFoETE/9LIjfQ60k/AA/OMCW2PPdsThBj3TX7H55SfTjIT2WClhXp8v+p3EB
+         RavQ==
+X-Gm-Message-State: AOAM532J5M9BTYkJMWWvVvXX55SE5d9AZ82Prf2wxMy84esJ0EBu8rMl
+        JnQEgDn0PRaMQlKzAmnowYcSLQ==
+X-Google-Smtp-Source: ABdhPJyWHwpcLjAmX6aVef1dpIvIvbPsAlkjt+u1X+nUahCtZKqq61o/QkVDbMLaTxFFYqkhdIzdsA==
+X-Received: by 2002:adf:cf0a:: with SMTP id o10mr6836933wrj.84.1637670504721;
+        Tue, 23 Nov 2021 04:28:24 -0800 (PST)
 Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id z7sm964800wmi.33.2021.11.23.04.28.14
+        by smtp.googlemail.com with ESMTPSA id q24sm978561wmj.21.2021.11.23.04.28.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Nov 2021 04:28:15 -0800 (PST)
-Subject: Re: [PATCH v5 00/10] Add support for audio on SC7280 based targets
+        Tue, 23 Nov 2021 04:28:24 -0800 (PST)
+Subject: Re: [PATCH v5 05/10] ASoC: qcom: Add helper function to get dma
+ control and lpaif handle
 To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
         agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
         broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
@@ -58,14 +59,15 @@ To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
         alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, swboyd@chromium.org,
         judyhsiao@chromium.org
-References: <1637239714-11211-1-git-send-email-srivasam@codeaurora.org>
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1637581599-24120-1-git-send-email-srivasam@codeaurora.org>
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <5f750cfc-dace-59a7-2eb4-4831a313064c@linaro.org>
-Date:   Tue, 23 Nov 2021 12:28:14 +0000
+Message-ID: <5ddc2e60-7145-9579-3f33-91807109ec80@linaro.org>
+Date:   Tue, 23 Nov 2021 12:28:23 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <1637239714-11211-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1637581599-24120-1-git-send-email-srivasam@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,67 +77,164 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18/11/2021 12:48, Srinivasa Rao Mandadapu wrote:
-> This patch set is to add support for Audio over wcd codec,
-> digital mics, through digital codecs and without ADSP.
-> This patch set depends on:
-
-> 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=570161
-
-> 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=572615
-
-Except this one, rest of the patches are already in sound-next.
-and the only dependency I see here is the final patch which adds 
-Kconfigs to the soundcard SND_SOC_SC7280.
-Why not just move those two lines in the patchset that adds the soundcard?
-
-
-
---srini
-
-
-> 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=559677
-
+On 22/11/2021 11:46, Srinivasa Rao Mandadapu wrote:
+> Add support function to get dma control and lpaif handle to avoid
+> repeated code in platform driver
 > 
-> Changes Since V4:
->      -- Remove unused variable in lpass-sc7280 platform driver.
-> Changes Since V3:
->      -- Remove redundant power domain controls. As power domains can be configured from dtsi.
-> Changes Since V2:
->      -- Split lpass sc7280 cpu driver patch and create regmap config patch.
->      -- Create patches based on latest kernel tip.
->      -- Add helper function to get dma control and lpaif handle.
->      -- Remove unused variables.
-> Changes Since V1:
->      -- Typo errors fix
->      -- CPU driver readable/writable apis optimization.
->      -- Add Missing config patch
->      -- Add Common api for repeated dmactl initialization.
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+
+Few minor Nits, but overall it looks good to me.
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+> ---
+>   sound/soc/qcom/lpass-platform.c | 90 ++++++++++++++++++++---------------------
+>   1 file changed, 43 insertions(+), 47 deletions(-)
 > 
-> Srinivasa Rao Mandadapu (10):
->    ASoC: qcom: Move lpass_pcm_data structure to lpass header
->    ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
->    ASoC: qcom: Add register definition for codec rddma and wrdma
->    ASoC: qcom: Add lpass CPU driver for codec dma control
->    ASoC: qcom: Add helper function to get dma control and lpaif handle
->    ASoC: qcom: Add support for codec dma driver
->    ASoC: qcom: Add regmap config support for codec dma driver
->    ASoC: dt-bindings: Add SC7280 sound card bindings
->    ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
->    ASoC: qcom: SC7280: Update config for building codec dma drivers
-> 
->   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  69 ++-
->   sound/soc/qcom/Kconfig                             |  13 +
->   sound/soc/qcom/Makefile                            |   4 +
->   sound/soc/qcom/common.c                            |  39 ++
->   sound/soc/qcom/common.h                            |   1 +
->   sound/soc/qcom/lpass-cdc-dma.c                     | 195 ++++++++
->   sound/soc/qcom/lpass-cpu.c                         | 245 +++++++++-
->   sound/soc/qcom/lpass-lpaif-reg.h                   | 103 ++++-
->   sound/soc/qcom/lpass-platform.c                    | 513 ++++++++++++++++++---
->   sound/soc/qcom/lpass-sc7280.c                      | 416 +++++++++++++++++
->   sound/soc/qcom/lpass.h                             | 150 ++++++
->   11 files changed, 1669 insertions(+), 79 deletions(-)
->   create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
->   create mode 100644 sound/soc/qcom/lpass-sc7280.c
+> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> index a44162c..59c0884 100644
+> --- a/sound/soc/qcom/lpass-platform.c
+> +++ b/sound/soc/qcom/lpass-platform.c
+> @@ -177,6 +177,44 @@ static int lpass_platform_pcmops_close(struct snd_soc_component *component,
+>   	return 0;
+>   }
+>   
+> +static void __get_lpaif_handle(struct snd_pcm_substream *substream,
+> +				struct snd_soc_component *component,
+> +				struct lpaif_dmactl **dmactl, int *id, struct regmap **map)
+Same indentation is off here.
+
+> +{
+> +	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
+> +	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+> +	struct snd_pcm_runtime *rt = substream->runtime;
+> +	struct lpass_pcm_data *pcm_data = rt->private_data;
+> +	struct lpass_variant *v = drvdata->variant;
+> +	int dir = substream->stream;
+> +	unsigned int dai_id = cpu_dai->driver->id;
+> +	struct lpaif_dmactl *l_dmactl;
+> +	struct regmap *l_map;
+> +	int l_id;
+> +
+> +	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+> +		l_id = pcm_data->dma_ch;
+> +		if (dai_id == LPASS_DP_RX) {
+> +			l_dmactl = drvdata->hdmi_rd_dmactl;
+> +			l_map = drvdata->hdmiif_map;
+> +		} else {
+> +			l_dmactl = drvdata->rd_dmactl;
+> +			l_map = drvdata->lpaif_map;
+> +		}
+> +	} else {
+> +		l_dmactl = drvdata->wr_dmactl;
+> +		l_id = pcm_data->dma_ch - v->wrdma_channel_start;
+> +		l_map = drvdata->lpaif_map;
+> +	}
+> +	if (dmactl)
+> +		*dmactl = l_dmactl;
+> +	if (id)
+> +		*id = l_id;
+> +	if (map)
+> +		*map = l_map;
+> +}
+> +
+>   static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+>   					   struct snd_pcm_substream *substream,
+>   					   struct snd_pcm_hw_params *params)
+> @@ -191,22 +229,12 @@ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
+>   	unsigned int channels = params_channels(params);
+>   	unsigned int regval;
+>   	struct lpaif_dmactl *dmactl;
+> -	int id, dir = substream->stream;
+> +	int id;
+>   	int bitwidth;
+>   	int ret, dma_port = pcm_data->i2s_port + v->dmactl_audif_start;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+>   
+> -	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+> -		id = pcm_data->dma_ch;
+> -		if (dai_id == LPASS_DP_RX)
+> -			dmactl = drvdata->hdmi_rd_dmactl;
+> -		else
+> -			dmactl = drvdata->rd_dmactl;
+> -
+> -	} else {
+> -		dmactl = drvdata->wr_dmactl;
+> -		id = pcm_data->dma_ch - v->wrdma_channel_start;
+> -	}
+> +	__get_lpaif_handle(substream, component, &dmactl, &id, NULL);
+error handling is missing.
+
+>   
+>   	bitwidth = snd_pcm_format_width(format);
+>   	if (bitwidth < 0) {
+> @@ -379,24 +407,9 @@ static int lpass_platform_pcmops_prepare(struct snd_soc_component *component,
+>   	int ret, id, ch, dir = substream->stream;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+>   
+> -
+>   	ch = pcm_data->dma_ch;
+> -	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+> -		if (dai_id == LPASS_DP_RX) {
+> -			dmactl = drvdata->hdmi_rd_dmactl;
+> -			map = drvdata->hdmiif_map;
+> -		} else {
+> -			dmactl = drvdata->rd_dmactl;
+> -			map = drvdata->lpaif_map;
+> -		}
+> -
+> -		id = pcm_data->dma_ch;
+> -	} else {
+> -		dmactl = drvdata->wr_dmactl;
+> -		id = pcm_data->dma_ch - v->wrdma_channel_start;
+> -		map = drvdata->lpaif_map;
+> -	}
+>   
+> +	__get_lpaif_handle(substream, component, &dmactl, &id, &map);
+>   	ret = regmap_write(map, LPAIF_DMABASE_REG(v, ch, dir, dai_id),
+>   				runtime->dma_addr);
+>   	if (ret) {
+> @@ -444,26 +457,12 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
+>   	struct lpaif_dmactl *dmactl;
+>   	struct regmap *map;
+>   	int ret, ch, id;
+> -	int dir = substream->stream;
+>   	unsigned int reg_irqclr = 0, val_irqclr = 0;
+>   	unsigned int  reg_irqen = 0, val_irqen = 0, val_mask = 0;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+>   
+>   	ch = pcm_data->dma_ch;
+> -	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+> -		id = pcm_data->dma_ch;
+> -		if (dai_id == LPASS_DP_RX) {
+> -			dmactl = drvdata->hdmi_rd_dmactl;
+> -			map = drvdata->hdmiif_map;
+> -		} else {
+> -			dmactl = drvdata->rd_dmactl;
+> -			map = drvdata->lpaif_map;
+> -		}
+> -	} else {
+> -		dmactl = drvdata->wr_dmactl;
+> -		id = pcm_data->dma_ch - v->wrdma_channel_start;
+> -		map = drvdata->lpaif_map;
+> -	}
+> +	__get_lpaif_handle(substream, component, &dmactl, &id, &map);
+>   
+>   	switch (cmd) {
+>   	case SNDRV_PCM_TRIGGER_START:
+> @@ -597,10 +596,7 @@ static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
+>   	struct regmap *map;
+>   	unsigned int dai_id = cpu_dai->driver->id;
+>   
+> -	if (dai_id == LPASS_DP_RX)
+> -		map = drvdata->hdmiif_map;
+> -	else
+> -		map = drvdata->lpaif_map;
+> +	__get_lpaif_handle(substream, component, NULL, NULL, &map);
+>   
+>   	ch = pcm_data->dma_ch;
+>   
 > 
