@@ -2,97 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4413745A34D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 13:51:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 137A845A615
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 15:53:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236715AbhKWMyq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 07:54:46 -0500
-Received: from mail.kernel.org ([198.145.29.99]:44260 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234548AbhKWMyq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 07:54:46 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 57D3560F9F;
-        Tue, 23 Nov 2021 12:51:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637671898;
-        bh=wIrWQf7YDEFEE/QQ99FQt/AhMw3wdmvSFHVUP3uKPJM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QGkZLrvRZ8KTMwcjmn6QaI1qSGzu+DoXhu8PQwdm/+cC5pDtmTATs6POIbgvzvvxo
-         dvx+KAr/Q+u+JS9xVPk6U+7MmUsBqP+41x4NGLkHYCxIDvlSTvBzSwwSfjybOfj2nq
-         TWRsQoUsqmsGmFLBAmPGIX/fzXnDaxy9cZciaQXE+GdZ9Q0gggepiKZXZcNrbqfcrR
-         nHkhXzC+DvQ0+sPze3evyAcW6a63+vYer0kxBjG7JGzCBaYsm5sgS1HDHOjsFSlWxO
-         c9lRiHDTKp2sG2VkVB8n9OMhlpaRH11oqA5Gp/3+CBjyqqPEmeO+zBNBu7sa5kiK9F
-         SG13871QjbYqQ==
-Date:   Tue, 23 Nov 2021 20:51:08 +0800
-From:   Peter Chen <peter.chen@kernel.org>
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     bpf@vger.kernel.org, axboe@kernel.dk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@linux.ie, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, yuq825@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, christian.koenig@amd.com, ray.huang@amd.com,
-        sgoutham@marvell.com, gakula@marvell.com, sbhatta@marvell.com,
-        hkelam@marvell.com, jingoohan1@gmail.com,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, krzysztof.kozlowski@canonical.com,
-        mani@kernel.org, pawell@cadence.com, rogerq@kernel.org,
-        a-govindraju@ti.com, gregkh@linuxfoundation.org, ast@kernel.org,
-        daniel@iogearbox.net, andrii@kernel.org, kafai@fb.com,
-        songliubraving@fb.com, yhs@fb.com, john.fastabend@gmail.com,
-        kpsingh@kernel.org, sj@kernel.org, akpm@linux-foundation.org,
-        thomas.hellstrom@linux.intel.com, matthew.auld@intel.com,
-        colin.king@intel.com, geert@linux-m68k.org,
-        linux-block@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-mm@kvack.org
-Subject: Re: [PATCH bpf] treewide: add missing includes masked by cgroup ->
- bpf dependency
-Message-ID: <20211123125108.GA4453@Peter>
-References: <20211120035253.72074-1-kuba@kernel.org>
- <20211120073011.GA36650@Peter>
- <20211120072602.22f9e722@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+        id S233112AbhKWO4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 09:56:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40538 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238309AbhKWO4e (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 09:56:34 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00032C06173E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 06:53:26 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id z6so16087858plk.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 06:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=maDqwh1X8f7cSN0fnXGtc0hBKQIUGOLhEANsObWEWYQ=;
+        b=j7P+vUaj6aapj1yh5efgw2hxrBEpwYJQ/NIyhVl5ysZ50e7lmC8FnMm402n/fHYemt
+         R7wna6zNxRo1dJCDMhLhwWXF9qU1DcmK9Of9R54tC9qRtduLv9HnKPl4B7Yvy6yzkvHw
+         14Ioc8TcdAM230smUcxAXob7ulehMN/1vIsdc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=maDqwh1X8f7cSN0fnXGtc0hBKQIUGOLhEANsObWEWYQ=;
+        b=pYAjNqlYppJ6SSmb4Wp8xdiuZpmtv1Aiu9C86s9xTo0IkO8fMMrt2NoTSyopSWfbPE
+         cAC0NLYAkwKpRL5mYvsckfK5Svg+b0Y06v6pMikxXUAcoZPEwNWduVWEtfDFsfYzyYaZ
+         R5d26uB7Ppg3TqFmniySC8NNoPOLjNE+3er8mKFhX75wQn9ydX+nowkSTFy40MuQmKd1
+         /dxvye2b39I7Lr5k77v7BH5485V6mw2A9BoTvec8odhsMaWAlyN65qIkuQH455F0FXDm
+         YjfK/G4KL5eNHWfI3HL2CUXbz7Hlowdw8hKnOOhrVMgfOi8icrWEXnhRQKhd/V2NIKx9
+         wscA==
+X-Gm-Message-State: AOAM533UMDdW0wNjFkgZuzY4WfethBCmd/fZJ5kXmcIIcJAJMmEdPFzf
+        /N19C9brXeu4eQA9OpyDMK34EQ==
+X-Google-Smtp-Source: ABdhPJzgy0vfyZ/bqcSxJYg6gCR8GQcLKZassfIXV5fVSVKubGoI/Dp6S2mc9J2JGpncofFsDCDpkg==
+X-Received: by 2002:a17:90b:4c89:: with SMTP id my9mr3585722pjb.229.1637679206572;
+        Tue, 23 Nov 2021 06:53:26 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:5fa5:d920:9d68:9c16])
+        by smtp.gmail.com with UTF8SMTPSA id p188sm12693118pfg.102.2021.11.23.06.53.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Nov 2021 06:53:26 -0800 (PST)
+Date:   Tue, 23 Nov 2021 06:53:25 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
+        dianders@chromium.org, kgodara@codeaurora.org
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Document qcom,sc7280-crd
+ board
+Message-ID: <YZ0AZQDB6VPUAt8s@google.com>
+References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
+ <1637650813-16654-2-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211120072602.22f9e722@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <1637650813-16654-2-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-11-20 07:26:02, Jakub Kicinski wrote:
-> On Sat, 20 Nov 2021 15:30:11 +0800 Peter Chen wrote:
-> > > diff --git a/drivers/usb/cdns3/host.c b/drivers/usb/cdns3/host.c
-> > > index 84dadfa726aa..9643b905e2d8 100644
-> > > --- a/drivers/usb/cdns3/host.c
-> > > +++ b/drivers/usb/cdns3/host.c
-> > > @@ -10,6 +10,7 @@
-> > >   */
-> > >  
-> > >  #include <linux/platform_device.h>
-> > > +#include <linux/slab.h>  
-> > 
-> > Should be "#include <linux/module.h>"?
+On Tue, Nov 23, 2021 at 12:30:10PM +0530, Rajendra Nayak wrote:
+> Document the qcom,sc7280-crd board based off sc7280 SoC,
+> The board is also known as hoglin in the Chrome OS builds,
+> and given there would be multiple (at least one more) rev
+> of this board document the google,hoglin-rev0 compatible as well.
 > 
-> Why? Different files are missing different includes, this one needs
-> slab.h:
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> ../drivers/usb/cdns3/host.c: In function ‘__cdns_host_init’:
-> ../drivers/usb/cdns3/host.c:86:2: error: implicit declaration of function ‘kfree’; did you mean ‘vfree’? [-Werror=implicit-function-declaration]
->   kfree(cdns->xhci_plat_data);
->   ^~~~~
->   vfree
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index c8808e0..2abfd28 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -203,6 +203,8 @@ properties:
+>            - enum:
+>                - qcom,sc7280-idp
+>                - qcom,sc7280-idp2
+> +              - qcom,sc7280-crd
+> +              - google,hoglin-rev0
 
-Oh, my fault.
+I think we also want the generic 'google,hoglin' compatible string, analogous to
+for example 'google,lazor' and 'google,lazor-revN'. For lazor there are no
+explicit compatible entries for rev3 and above, there were no DT relevant
+hardware changes for rev > 3, hence the 'google,lazor' compatible string is
+used, without the need to modify the DT for each new HW revision.
 
-Acked-by: Peter Chen <peter.chen@kernel.org>
+Also on my CRD the bootloader thinks it is running on a rev4:
 
--- 
+  Compat preference: google,hoglin-rev4 google,hoglin
 
-Thanks,
-Peter Chen
-
+The board still boots thanks to the 'google,hoglin' entry in my device tree,
+but it seems you need to add more revN entries, or start with rev4 if you
+don't really care about supporting older revisions. In the later case you
+coul only have 'google,hoglin' for now, and add 'rev4' when you add support
+for the next revision (supposing it has DT relevant hardware changes). The
+sc7180-trogdor boards can serve as an example on how to deal with board
+revisions.
