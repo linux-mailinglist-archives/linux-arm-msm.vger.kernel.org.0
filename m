@@ -2,116 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88C2B45A990
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 18:02:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BDE845AA2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 18:40:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237245AbhKWRGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 12:06:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42984 "EHLO
+        id S238658AbhKWRnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 12:43:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235834AbhKWRGE (ORCPT
+        with ESMTP id S234143AbhKWRnw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 12:06:04 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 280FBC061714
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:02:56 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so2586840pju.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:02:56 -0800 (PST)
+        Tue, 23 Nov 2021 12:43:52 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAB0C061714
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:40:44 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id p17so18978834pgj.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6owNqcDoaPPSgoDjdbesWq57uvbLFPnsWIEPdW/px0Y=;
-        b=c9d8xUe/qOtuuioWpxS12A7KI9r3l4VMIXBgcGzpznWs0Z7OcN0I4loL/PTCu/UxS5
-         ddHAgBFAiLNy4HVFTUJfJgFawfhKcZMV4IqUQlX8hHmx8imjpHkXB/05UCzUTd9hZ+cM
-         H5R+4ROxvg+Y9eIXumRe0zLb1crOVseNnB+eGU5IwaVnf3HSCX4I+/rRHUNp7JXgRpON
-         gke3LRwzPRPRZzNa9aTuyIjo7iWhATMnE8BViCFYEdFkVI5rHv83SfK7c93u3qx80tPJ
-         j4N+tjk8bGBvDSGc2JaSzL/6Nwe6p8Bysk9bmwZbNnahGEYiZe4GPCESO79yevFbhZRY
-         qZtQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CdO3e2pDhMNJ+/pMA6Znc3yR1BY8F0IUwXILZu7t3/g=;
+        b=oVFTPn/YH2jTuPO2rvZ+bni4tcXtnBMXdNR2m3bx8ldO3dZEs97CiwZT15EpcQdIw5
+         CHJxX2qEi+3nJ9dj5kISe86jLAzHVWGVOLGAPvE4npPJghtMEOv3rDU70yEexawgs7WX
+         xnspRZEUUXaxP7YACnmStBcyCsl17/gyQCLF4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6owNqcDoaPPSgoDjdbesWq57uvbLFPnsWIEPdW/px0Y=;
-        b=Qgcm8Zvn00R+ycrdXWLNbAY+ia1uPpUYHnrXdK7jQs3nvEnhnzo+3c2eZHlgB4AFlp
-         M+IuSRXxB7/Tq2ABJxYFkNqS0+h4JJ0UN77O6iYqbc9VOiUD7eCBBQ1V+AxohbHvkNRP
-         GUvCcTjUdUrqdw+piONzXhBooyI2skRSOioDR+IercrklKvIQT+OoK4UHn1k59ICF/6B
-         RtA30cz17FQsXtcUmE+NrkdjrUlc5Qis3sAuyDnYBVDTDxwEhvg8ZMOL89NKzkO1EVox
-         pRWxgXV1LRdAQ6x+9NVp+YwN9ztUlO57nOeJlXKpGGoUDYvkufSsrcntygPB+VXAS0vK
-         thCg==
-X-Gm-Message-State: AOAM532wxXx0LtPEueWVdDfa5oAuHglkBns10U8hD1aLjJy+ApoJnwll
-        utirtgcmagHAXsfFAlU3PBcUSb9aA+qzXFCz1Va+ag==
-X-Google-Smtp-Source: ABdhPJwtC9yJlhnYSPMNvmxu7MqpYmoigPcHG8h5MiPYBe/ro3thUy9VrOdP/Yt2YsoF0GVD49p0yUtPiYGvL0ZSwMA=
-X-Received: by 2002:a17:90b:3e8c:: with SMTP id rj12mr4745975pjb.152.1637686975331;
- Tue, 23 Nov 2021 09:02:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CdO3e2pDhMNJ+/pMA6Znc3yR1BY8F0IUwXILZu7t3/g=;
+        b=nccZZxBvRfrC63otvc412cqp6IuMPVPejTpKhO1Y/f/vr6FKNDSdkAxPMdEIzE/oZ5
+         aICHINzueRbPHGyJJyb2sFELd0mq19qwvydG+Xrc8bB0OBLSU+t9SJ5kswIatb3GQpPI
+         OB2svww76C2yxL0UWr03EQ97emeHDB0G8joR/dQSPJR7YCr1udqV3gJaieLryb6W4v+8
+         KV4x3XbBqaBiXFh9W4BMoBmJNTIsL2nocHZSi8QbLR7G4Rm4GVabPPOVUN3IXLAqh+HB
+         39l5M8oP03dcnakC2QjI47002uDN2Ac1wO7pGgXzK5soZDcJQJAE+vH44Fm2kDmQRnii
+         wJ4w==
+X-Gm-Message-State: AOAM5324Rj4RfAouBiQIDynBtBhC2uSXh78bYKhc4MfLXFO0rGK8B931
+        AEzHHsVRy4DCacmwEcH/bsWonCD2PezgwQ==
+X-Google-Smtp-Source: ABdhPJyHfEZlhram/t4364Twny6+kpl7aix7nHDqV8ZCLTjEJS/craA9npwH1mwvP0JxjD3EK7lt2Q==
+X-Received: by 2002:a63:414:: with SMTP id 20mr5067331pge.178.1637689244184;
+        Tue, 23 Nov 2021 09:40:44 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:5fa5:d920:9d68:9c16])
+        by smtp.gmail.com with UTF8SMTPSA id i2sm13864246pfg.90.2021.11.23.09.40.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Nov 2021 09:40:43 -0800 (PST)
+Date:   Tue, 23 Nov 2021 09:40:42 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
+        dianders@chromium.org, kgodara@codeaurora.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Define EC and H1 nodes
+Message-ID: <YZ0nmrGHwIMdN2v6@google.com>
+References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
+ <1637650813-16654-4-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <20211123161630.123222-1-bjorn.andersson@linaro.org> <20211123162508.153711-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211123162508.153711-1-bjorn.andersson@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 23 Nov 2021 18:02:44 +0100
-Message-ID: <CAG3jFyv4uhEN9zO0Kt9QU+0i93YoT7ccpSN-amncQM=zM9r6JQ@mail.gmail.com>
-Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: Don't reconfigure running Trion
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1637650813-16654-4-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
+On Tue, Nov 23, 2021 at 12:30:12PM +0530, Rajendra Nayak wrote:
 
-On Tue, 23 Nov 2021 at 17:23, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> In the event that the bootloader has configured the Trion PLL as source
-> for the display clocks, e.g. for the continuous splashscreen, then there
-> will also be RCGs that are clocked by this instance.
->
-> Reconfiguring, and in particular disabling the output of, the PLL will
-> cause issues for these downstream RCGs and has been shown to prevent
-> them from being re-parented.
->
-> Follow downstream and skip configuration if it's determined that the PLL
-> is already running.
->
-> Fixes: 59128c20a6a9 ("clk: qcom: clk-alpha-pll: Add support for controlling Lucid PLLs")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Subject: arm64: dts: qcom: sc7280: Define EC and H1 nodes
+
+that seems to suggest that EC and H1 nodes are something generic of the
+sc7280, however these two chips are only present on systems that target
+Chrome OS, and the specific nodes are added are only used by the QCA
+sc7280 IDP and CRD, not other sc7280 boards using Chrome OS, like
+herobrine. I suggest to change it to "arm64: dts: qcom: sc7280: Define
+EC and H1 nodes for IDP/CRD".
+
+> From: Kshitiz Godara <kgodara@codeaurora.org>
+> 
+> The IDP2 and CRD boards share the EC and H1 parts, so define
+> all related device nodes into a common file and include them
+> in the idp2 and crd dts files to avoid duplication.
+> 
+> Signed-off-by: Kshitiz Godara <kgodara@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->
-> Changes since v1:
-> - Forgot to commit the last minute s/pr_dbg/pr_debug/
->
->  drivers/clk/qcom/clk-alpha-pll.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index eaedcceb766f..8f65b9bdafce 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -1429,6 +1429,15 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
->  void clk_trion_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->                              const struct alpha_pll_config *config)
->  {
-> +       /*
-> +        * If the bootloader left the PLL enabled it's likely that there are
-> +        * RCGs that will lock up if we disable the PLL below.
-> +        */
-> +       if (trion_pll_is_enabled(pll, regmap)) {
-> +               pr_debug("Trion PLL is already enabled, skipping configuration\n");
-> +               return;
-> +       }
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts    |   1 +
+>  arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi | 110 +++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp2.dts   |   1 +
+>  3 files changed, 112 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> index 09d02c2..8c2aee6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> @@ -8,6 +8,7 @@
+>  /dts-v1/;
+>  
+>  #include "sc7280-idp.dtsi"
+> +#include "sc7280-ec-h1.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
+> new file mode 100644
+> index 0000000..78fb5eb
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
+
+Similar comment as for the subject, the file name seems to imply
+that the include could be useful for any board with an EC and H1,
+however it will be only used by the IDP and CRD. Maybe name it
+'sc7280-idp-ec-h1.dtsi', from the CRD DT file it is alreay clear
+that it is related with the IDP, so it shouldn't be too confusing
+that the file name only says IDP.
+
+Also a birdie told me that the EC and H1 configuration is going to
+change in future revisions of the CRD, which is another reason for
+being more specific with the file name (a sc7280-crd-ec-h1.dtsi
+might be needed at that point, or the new not-any-longer-shared
+config goes directly into the sc7280-crd-revN.dts.
+
+> @@ -0,0 +1,110 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * sc7280 EC/H1 over SPI (common between IDP2 and CRD)
+> + *
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
 > +
->         clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
->         regmap_write(regmap, PLL_CAL_L_VAL(pll), TRION_PLL_CAL_VAL);
->         clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
-> --
-> 2.33.1
+> +ap_ec_spi: &spi10 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&qup_spi10_cs_gpio_init_high>, <&qup_spi10_cs_gpio>;
 
-This resolves an issue I was seeing related to clocks not being able
-to get updated.
+Shouldn't this also have <&qup_spi10_data_clk>?
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+> +	cs-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
+> +
+> +	cros_ec: ec@0 {
+> +		compatible = "google,cros-ec-spi";
+> +		reg = <0>;
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ap_ec_int_l>;
+> +		spi-max-frequency = <3000000>;
+> +
+> +		cros_ec_pwm: ec-pwm {
+> +			compatible = "google,cros-ec-pwm";
+> +			#pwm-cells = <1>;
+> +		};
+> +
+> +		i2c_tunnel: i2c-tunnel {
+> +			compatible = "google,cros-ec-i2c-tunnel";
+> +			google,remote-bus = <0>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +		};
+> +
+> +		typec {
+> +			compatible = "google,cros-ec-typec";
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			usb_c0: connector@0 {
+> +				compatible = "usb-c-connector";
+> +				reg = <0>;
+> +				label = "left";
+> +				power-role = "dual";
+> +				data-role = "host";
+> +				try-power-role = "source";
+> +			};
+> +
+> +			usb_c1: connector@1 {
+> +				compatible = "usb-c-connector";
+> +				reg = <1>;
+> +				label = "right";
+> +				power-role = "dual";
+> +				data-role = "host";
+> +				try-power-role = "source";
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +#include <arm/cros-ec-keyboard.dtsi>
+> +#include <arm/cros-ec-sbs.dtsi>
+> +
+> +ap_h1_spi: &spi14 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&qup_spi14_cs_gpio_init_high>, <&qup_spi14_cs_gpio>;
+
+<&qup_spi14_data_clk> missing?
+
+> +	cs-gpios = <&tlmm 59 GPIO_ACTIVE_LOW>;
+> +
+> +	cr50: tpm@0 {
+> +		compatible = "google,cr50";
+> +		reg = <0>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&h1_ap_int_odl>;
+> +		spi-max-frequency = <800000>;
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <104 IRQ_TYPE_EDGE_RISING>;
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	ap_ec_int_l: ap-ec-int-l {
+> +		pins = "gpio18";
+> +		function = "gpio";
+> +		input-enable;
+> +		bias-pull-up;
+> +		drive-strength = <2>;
+
+Is the explicit drive-strength setting actually needed?
+
+Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml:
+
+  drive-strength:
+    enum: [2, 4, 6, 8, 10, 12, 14, 16]
+    default: 2 <=
+    description:
+      Selects the drive strength for the specified pins, in mA.
+
+The default is 2, hence it shouldn't be necessary it set it explicitly.
+
+> +	};
+> +
+> +	h1_ap_int_odl: h1-ap-int-odl {
+> +		pins = "gpio104";
+> +		function = "gpio";
+> +		input-enable;
+> +		bias-pull-up;
+> +		drive-strength = <2>;
+
+see above
+
+> +	};
+> +
+> +	qup_spi10_cs_gpio_init_high: qup-spi10-cs-gpio-init-high {
+> +		pins = "gpio43";
+> +		output-high;
+> +		drive-strength = <2>;
+
+see above
+
+> +	};
+> +
+> +	qup_spi14_cs_gpio_init_high: qup-spi14-cs-gpio-init-high {
+> +		pins = "gpio59";
+> +		output-high;
+> +		drive-strength = <2>;
+
+see above
+
+> +	};
+> +};
+> +
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> index 3ae9969..208ca69 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> @@ -8,6 +8,7 @@
+>  /dts-v1/;
+>  
+>  #include "sc7280-idp.dtsi"
+> +#include "sc7280-ec-h1.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU2 platform";
