@@ -2,140 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8294F45A753
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 17:14:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4844D45A756
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 17:14:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237053AbhKWQRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 11:17:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59174 "EHLO
+        id S235462AbhKWQRz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 11:17:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236715AbhKWQRL (ORCPT
+        with ESMTP id S234340AbhKWQRy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 11:17:11 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1EDBC061714
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:03 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id p18so17461000plf.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:03 -0800 (PST)
+        Tue, 23 Nov 2021 11:17:54 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D29EC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:46 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso34556724otr.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8inpYltOn+CuOSRy1TzQ0Ih132g9z81+D5QmyV6ts9Y=;
-        b=i9rVupQl92AqsGZLGbAOub7zhj7/6WU2T4Pko8hrZl+IA44g+22VPUoU63MjKamPOx
-         EHUzvltfq2WdgtS5LQBEMIGi21/vWiEau8TliotzO6fF7bNhY5S3tCaumCmUW+FrWHhz
-         gb3X4g4L/SaQNGJBiJsxy92tlcqsfy3MpeS70=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eparqKgOL69KUNWYFvdHukdKFpCJnmDKYIk96v9YcXE=;
+        b=tFRIBCefavlG2hukUldYOdpVY0ySk2b03cy0H1I/a0B3rDkLqLGZu5drUNLmVZ/Xt+
+         lYUlri3zwdm5fjhSo8teSSntK8Z17MjDNG8juqmNE6Wk0tueqEHOZzpf55C8ovwzGDxI
+         kqmTZ/AGg6z1sI57XuA0/OFnj/RdAReUB4sT4fMFvn7DmaHwwBUO/wtfU+yiMnHGTcQ7
+         H9OrQAge7zXZ/7YL14pyRPRrDiSCOirT6k+cYI1z10kME+xPmwri7ten18Q/XBhEfYjv
+         4RigERj1Fjq40b38A/5LLConb32xV9AMcgJrd12NtCzzRsCw/ET0E4yIeZMlJPydpyPW
+         qLig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8inpYltOn+CuOSRy1TzQ0Ih132g9z81+D5QmyV6ts9Y=;
-        b=gwP+7QRbdto8PX7o5JiU9p+f8IC/RAp9xMPpBJQktEDYav5C8nq8aMaxC1jyFBrpfA
-         pwX9EnzaBBe7Gw/R+zpa8Zvu/DkSLTzJkJVc0kfMK8cFO0YBbqRIqK2mjYXyk52HZ6hw
-         TFINNb6XNYO8ioi4/i/Q1XYuIPz+gvhEIXlfS8gKWqZTEFdShzkgn/dlQXrGVBgRSeQA
-         raqwzTWQ3dleKcnEytSVCmfBuCHVpaVf2FTsiJNn6UPtUiigZeXMne5mgqtC0Y5B3IO7
-         Y89HcYica4Szit0ns4d3WXC2IIa/do2d2LMbPZTGxOGZSIIMzDRw2b00/ZNbEqLGxu0t
-         7+sQ==
-X-Gm-Message-State: AOAM533akiemZa+KwN8iAko0kfwcVl3/KhnAetG7kULf8Wccp8zVAFpc
-        orvMjUGf/jgAZ+uQZPYuI29ybQ==
-X-Google-Smtp-Source: ABdhPJwMfxC2wTbN/wG3x9FjFcU7i8b+6ZPx2ERHXd9Jk5kD6A1sd4h6hQVvjeYdILoZg1ualPJaSw==
-X-Received: by 2002:a17:90a:e40f:: with SMTP id hv15mr4231148pjb.5.1637684043171;
-        Tue, 23 Nov 2021 08:14:03 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:5fa5:d920:9d68:9c16])
-        by smtp.gmail.com with UTF8SMTPSA id s2sm14576950pfg.124.2021.11.23.08.14.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Nov 2021 08:14:02 -0800 (PST)
-Date:   Tue, 23 Nov 2021 08:14:01 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
-        dianders@chromium.org, kgodara@codeaurora.org
-Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7280-crd: Add device tree files
- for CRD
-Message-ID: <YZ0TSeXddm+qGJ0/@google.com>
-References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
- <1637650813-16654-3-git-send-email-rnayak@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eparqKgOL69KUNWYFvdHukdKFpCJnmDKYIk96v9YcXE=;
+        b=08TaW0Xkjeix8GX6H/ab5gftdR8dL+B7QoW7DxIs3iQFvhNPFRjgnbrOnzLFpWuJpK
+         1irGimA7cQYdpdMSHtQwhRudaFLAiXID/YBHTML8CDlsDuQbhw1PCckduUfGRC8xsKx3
+         eN8/qpoRUv26IjYn3fePu4BxJQUkT/nkcIuZXTpDaDMmkABx/iKTkb+ikpzwYVe3CkoB
+         R6CfifFx9F0TjqCkQhxE7j+vw3VSDHu+cpHWH0bClm20r1WHiRXAJZbVv0rJDA64jwUV
+         hQvXrjTw4X7CVLEwlu0mCgnVQR4gTSJiqrJIPa0k4/0ev36CljVGeSyscZ3sOLZ6rX0c
+         MP9A==
+X-Gm-Message-State: AOAM532SACrR4GqYsk1OcGiiZsH5m2TPKzXM3jVoqOcVexFbOKU0Wotv
+        C+VsY/iAveG94NHMkIo391Mjsg==
+X-Google-Smtp-Source: ABdhPJxGLkyYOkYO1lCzvGQGFw0d7eU216flfUBjVWROPBv+YR7xjdIAxKHad7pxr7OtH24lLyZ3LA==
+X-Received: by 2002:a9d:22a4:: with SMTP id y33mr5409631ota.188.1637684085769;
+        Tue, 23 Nov 2021 08:14:45 -0800 (PST)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q10sm2664338oiw.17.2021.11.23.08.14.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 08:14:45 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: clk-alpha-pll: Don't reconfigure running Trion
+Date:   Tue, 23 Nov 2021 08:16:30 -0800
+Message-Id: <20211123161630.123222-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1637650813-16654-3-git-send-email-rnayak@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 12:30:11PM +0530, Rajendra Nayak wrote:
-> CRD (Compute Reference Design) is a sc7280 based board, largely
-> derived from the existing IDP board design with some key deltas
-> 1. has EC and H1 over SPI similar to IDP2
-> 2. touchscreen and trackpad support
-> 3. eDP display
-> 
-> We just add the barebones dts file here, subsequent patches will
-> add support for EC/H1 and other components.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile       |  1 +
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 31 +++++++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 6b816eb..b18708c 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -78,6 +78,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> new file mode 100644
-> index 0000000..09d02c2
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> @@ -0,0 +1,31 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * sc7280 CRD board device tree source
-> + *
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sc7280-idp.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
-> +	compatible = "qcom,sc7280-crd", "google,hoglin-rev0", "qcom,sc7280";
+In the event that the bootloader has configured the Trion PLL as source
+for the display clocks, e.g. for the continuous splashscreen, then there
+will also be RCGs that are clocked by this instance.
 
-As per my comment on the binding there should also be a "google,hoglin"
-without a revision suffix, also it seems there are already CRDs with higher
-rev numbers.
+Reconfiguring, and in particular disabling the output of, the PLL will
+cause issues for these downstream RCGs and has been shown to prevent
+them from being re-parented.
 
-> +
-> +	aliases {
-> +		serial0 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +};
-> +
-> +&nvme_pwren {
-> +	pins = "gpio51";
-> +};
-> +
-> +&nvme_3v3_regulator {
-> +	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
-> +};
+Follow downstream and skip configuration if it's determined that the PLL
+is already running.
 
-uber-nit: 'nvme_3v3_regulator' should be before 'nvme_pwren', assuming
-alphabetical/ASCII ordering is used.
+Fixes: 59128c20a6a9 ("clk: qcom: clk-alpha-pll: Add support for controlling Lucid PLLs")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index eaedcceb766f..b04aa0a630e9 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -1429,6 +1429,15 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_postdiv_fabia_ops);
+ void clk_trion_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+ 			     const struct alpha_pll_config *config)
+ {
++	/*
++	 * If the bootloader left the PLL enabled it's likely that there are
++	 * RCGs that will lock up if we disable the PLL below.
++	 */
++	if (trion_pll_is_enabled(pll, regmap)) {
++		pr_dbg("Trion PLL is already enabled, skipping configuration\n");
++		return;
++	}
++
+ 	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+ 	regmap_write(regmap, PLL_CAL_L_VAL(pll), TRION_PLL_CAL_VAL);
+ 	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+-- 
+2.33.1
+
