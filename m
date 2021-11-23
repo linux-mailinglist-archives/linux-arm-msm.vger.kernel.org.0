@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6216D45A1E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 12:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2180B45A1F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 12:52:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235179AbhKWLxV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 06:53:21 -0500
+        id S236613AbhKWLzP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 06:55:15 -0500
 Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:37470 "EHLO
         alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235007AbhKWLxP (ORCPT
+        by vger.kernel.org with ESMTP id S236587AbhKWLxS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 06:53:15 -0500
+        Tue, 23 Nov 2021 06:53:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637668207; x=1669204207;
+  t=1637668210; x=1669204210;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=xv4hEsjW26SqodguJPybCav5NQE2PSNMV/braBNZuZs=;
-  b=UlSFVD7VBABl7wfuTm5YC1bJ5trxARbzEA/YiKlR7Jrn0Z0K4IR7f2CJ
-   Ou/LWcVATRz/wpROa3k5s1XJYdcn/MfM4fcsUFz9f+by9oiq/RJgFJtqP
-   iyy/VCwcAizfIxKv1KjiR6KIdBtWcjECjI3OYu7Yhi61G14gFJwqRazQe
-   M=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Nov 2021 03:50:07 -0800
+  bh=7/gMbCtAXli/isQMOGRh4m5xxrb/6LKlexYvHRPVb0Q=;
+  b=E+B5c9WRLKkmgQB9gG32Wg7S5QoELUpSnFW5Sz7Z/yWTAlIZ1FaSGqEh
+   wG+e5V9T/VXybe/A9J8XaRyGRdoeFpU9T31eah5Sjtc7/ZnepxI6WPDOG
+   u5fDt9Ay2k4pEgRwRgjvP8Jhe2rgJbdf8v54sEKouj17jPT5WiENVuRT4
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Nov 2021 03:50:10 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2021 03:50:06 -0800
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2021 03:50:10 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 23 Nov 2021 03:50:06 -0800
+ 15.2.922.19; Tue, 23 Nov 2021 03:50:10 -0800
 Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 23 Nov 2021 03:50:02 -0800
+ 15.2.922.19; Tue, 23 Nov 2021 03:50:06 -0800
 From:   Satya Priya <quic_c_skakit@quicinc.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
@@ -44,9 +44,9 @@ CC:     Liam Girdwood <lgirdwood@gmail.com>,
         <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <swboyd@chromium.org>,
         <mka@chromium.org>, Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH 2/3] regulator: qcom-rpmh: Add PMG1110 regulators
-Date:   Tue, 23 Nov 2021 17:19:26 +0530
-Message-ID: <1637668167-31325-3-git-send-email-quic_c_skakit@quicinc.com>
+Subject: [PATCH 3/3] arm64: dts: qcom: sc7280: Add pmg1110 regulators for sc7280-crd
+Date:   Tue, 23 Nov 2021 17:19:27 +0530
+Message-ID: <1637668167-31325-4-git-send-email-quic_c_skakit@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1637668167-31325-1-git-send-email-quic_c_skakit@quicinc.com>
 References: <1637668167-31325-1-git-send-email-quic_c_skakit@quicinc.com>
@@ -59,40 +59,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for PMG1110 regulators.
+Add pmg1110 pmic regulators support.
 
 Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 12425f6..684143c 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -814,6 +814,11 @@ static const struct rpmh_vreg_init_data pm8998_vreg_data[] = {
- 	{}
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+index bef3037..cb0aaf8 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+@@ -23,6 +23,18 @@
+ 	};
  };
  
-+static const struct rpmh_vreg_init_data pmg1110_vreg_data[] = {
-+	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps510,  "vdd-s1"),
-+	{}
++&apps_rsc {
++	pmg1110-regulators {
++		compatible = "qcom,pmg1110-rpmh-regulators";
++		qcom,pmic-id = "k";
++
++		vreg_s1k_1p0: smps1 {
++			regulator-min-microvolt = <1010000>;
++			regulator-max-microvolt = <1170000>;
++		};
++	};
 +};
 +
- static const struct rpmh_vreg_init_data pmi8998_vreg_data[] = {
- 	RPMH_VREG("bob",    "bob%s1",  &pmic4_bob,       "vdd-bob"),
- 	{}
-@@ -1218,6 +1223,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.data = pm8998_vreg_data,
- 	},
- 	{
-+		.compatible = "qcom,pmg1110-rpmh-regulators",
-+		.data = pmg1110_vreg_data,
-+	},
-+	{
- 		.compatible = "qcom,pmi8998-rpmh-regulators",
- 		.data = pmi8998_vreg_data,
- 	},
+ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
 -- 
 2.7.4
 
