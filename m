@@ -2,273 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BDE845AA2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 18:40:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E80FF45AA3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 18:42:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238658AbhKWRnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 12:43:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51868 "EHLO
+        id S239375AbhKWRp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 12:45:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234143AbhKWRnw (ORCPT
+        with ESMTP id S238958AbhKWRp0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 12:43:52 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAB0C061714
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:40:44 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id p17so18978834pgj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 09:40:44 -0800 (PST)
+        Tue, 23 Nov 2021 12:45:26 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9A7C061574;
+        Tue, 23 Nov 2021 09:42:18 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id v15so12821601ljc.0;
+        Tue, 23 Nov 2021 09:42:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CdO3e2pDhMNJ+/pMA6Znc3yR1BY8F0IUwXILZu7t3/g=;
-        b=oVFTPn/YH2jTuPO2rvZ+bni4tcXtnBMXdNR2m3bx8ldO3dZEs97CiwZT15EpcQdIw5
-         CHJxX2qEi+3nJ9dj5kISe86jLAzHVWGVOLGAPvE4npPJghtMEOv3rDU70yEexawgs7WX
-         xnspRZEUUXaxP7YACnmStBcyCsl17/gyQCLF4=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=klioHbiKDOj23wJ2ag02+ri9HjhHB0e0XDitPdnTUKE=;
+        b=jqu3l7OMPjegIvzh95GLnRoNekIQeM70R2xijFnWweilxN0ALne43+QG+msvzf/71m
+         lvThgOSIm2mVPbAAAHB7egFiHnQ+GQf//xc5yY0SYNEpnQ6e0yNnHXYubDJXVf5sdaYK
+         9exeSd+ShN56wnRH/hueQeKlMAikBeGJ9OQBjo5raFS4wguzx8zPIiK9/cY8xYhbLHZU
+         Fh8CiAoVN8DRNF02wxwAzup4QNlRQDZyy2hkxlrgJR5sGND3KZTnutwhliv0rmVjY0XK
+         ueQJxQC/BG0m0xT9RV27ZvhxaV8rSzESBDvS96fqY3PQqXbBOyZpcBqzJDxMUqJ4eX/A
+         7C6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CdO3e2pDhMNJ+/pMA6Znc3yR1BY8F0IUwXILZu7t3/g=;
-        b=nccZZxBvRfrC63otvc412cqp6IuMPVPejTpKhO1Y/f/vr6FKNDSdkAxPMdEIzE/oZ5
-         aICHINzueRbPHGyJJyb2sFELd0mq19qwvydG+Xrc8bB0OBLSU+t9SJ5kswIatb3GQpPI
-         OB2svww76C2yxL0UWr03EQ97emeHDB0G8joR/dQSPJR7YCr1udqV3gJaieLryb6W4v+8
-         KV4x3XbBqaBiXFh9W4BMoBmJNTIsL2nocHZSi8QbLR7G4Rm4GVabPPOVUN3IXLAqh+HB
-         39l5M8oP03dcnakC2QjI47002uDN2Ac1wO7pGgXzK5soZDcJQJAE+vH44Fm2kDmQRnii
-         wJ4w==
-X-Gm-Message-State: AOAM5324Rj4RfAouBiQIDynBtBhC2uSXh78bYKhc4MfLXFO0rGK8B931
-        AEzHHsVRy4DCacmwEcH/bsWonCD2PezgwQ==
-X-Google-Smtp-Source: ABdhPJyHfEZlhram/t4364Twny6+kpl7aix7nHDqV8ZCLTjEJS/craA9npwH1mwvP0JxjD3EK7lt2Q==
-X-Received: by 2002:a63:414:: with SMTP id 20mr5067331pge.178.1637689244184;
-        Tue, 23 Nov 2021 09:40:44 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:5fa5:d920:9d68:9c16])
-        by smtp.gmail.com with UTF8SMTPSA id i2sm13864246pfg.90.2021.11.23.09.40.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Nov 2021 09:40:43 -0800 (PST)
-Date:   Tue, 23 Nov 2021 09:40:42 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
-        dianders@chromium.org, kgodara@codeaurora.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Define EC and H1 nodes
-Message-ID: <YZ0nmrGHwIMdN2v6@google.com>
-References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
- <1637650813-16654-4-git-send-email-rnayak@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=klioHbiKDOj23wJ2ag02+ri9HjhHB0e0XDitPdnTUKE=;
+        b=bpV/5sOM3ynrvAPYtcAZ5DplQI7heL2tasuFVS6XISYaOtX79WyEckZM6u3xvyaR21
+         EzndaVwNviCMAYhKj2ireKvj3oI4oozg+YR3SUz1NLlB3MNt3vJG0Gn6ZJ47w1nT5Qei
+         l6cc7BCXj0UIEKBMOp7Tq67HMBm70eHpYzwxWoWjiqn7hUOsJQul05eeIZcqPplZZIxV
+         gwCUXjfPL5jciBfmonzteRTovPKlhh/juebkYp4jWzr40tjQPI3gsjEvsgxFcPkfRdvJ
+         SqNiVMxwOpaDAaEajVzZ9hnLxvmqykvuXU/C7Nk37RRQFo2E12pVV/h0Z0Kd7nzRLMle
+         Lb3Q==
+X-Gm-Message-State: AOAM533aCRNMAO5pW3KQ8zaNp4AZJSNLeKrTewmhnJ+J05708s0Vxxgh
+        QqDTIRF2qniNdT9U6rlJ+38=
+X-Google-Smtp-Source: ABdhPJwU6PsiQz2y0XovRimIF2l/X+gdP6soUOaF2IniBdFEDST5rjRdPc+qy8hEqPk/KJRw6ZBu6w==
+X-Received: by 2002:a2e:781a:: with SMTP id t26mr7379120ljc.90.1637689336549;
+        Tue, 23 Nov 2021 09:42:16 -0800 (PST)
+Received: from localhost.localdomain (public-gprs375115.centertel.pl. [37.47.96.140])
+        by smtp.googlemail.com with ESMTPSA id l12sm1349371lfk.212.2021.11.23.09.42.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 09:42:16 -0800 (PST)
+From:   Dominik Kobinski <dominikkobinski314@gmail.com>
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Subject: [PATCH 1/4] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+Date:   Tue, 23 Nov 2021 18:41:27 +0100
+Message-Id: <20211123174127.2261-1-dominikkobinski314@gmail.com>
+X-Mailer: git-send-email 2.34.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1637650813-16654-4-git-send-email-rnayak@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 12:30:12PM +0530, Rajendra Nayak wrote:
+Add support for pm8226 SPMI GPIOs. The PMIC features
+8 GPIOs, with no holes inbetween.
 
-> Subject: arm64: dts: qcom: sc7280: Define EC and H1 nodes
+Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-that seems to suggest that EC and H1 nodes are something generic of the
-sc7280, however these two chips are only present on systems that target
-Chrome OS, and the specific nodes are added are only used by the QCA
-sc7280 IDP and CRD, not other sc7280 boards using Chrome OS, like
-herobrine. I suggest to change it to "arm64: dts: qcom: sc7280: Define
-EC and H1 nodes for IDP/CRD".
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index 5283d5e9e8bc..0f0102f38cbb 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1159,6 +1159,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	/* pm8150l has 12 GPIOs with holes on 7 */
+ 	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+ 	{ .compatible = "qcom,pmc8180c-gpio", .data = (void *) 12 },
++	{ .compatible = "qcom,pm8226-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8350-gpio", .data = (void *) 10 },
+ 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
+-- 
+2.34.0
 
-> From: Kshitiz Godara <kgodara@codeaurora.org>
-> 
-> The IDP2 and CRD boards share the EC and H1 parts, so define
-> all related device nodes into a common file and include them
-> in the idp2 and crd dts files to avoid duplication.
-> 
-> Signed-off-by: Kshitiz Godara <kgodara@codeaurora.org>
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts    |   1 +
->  arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi | 110 +++++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280-idp2.dts   |   1 +
->  3 files changed, 112 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index 09d02c2..8c2aee6 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> @@ -8,6 +8,7 @@
->  /dts-v1/;
->  
->  #include "sc7280-idp.dtsi"
-> +#include "sc7280-ec-h1.dtsi"
->  
->  / {
->  	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
-> new file mode 100644
-> index 0000000..78fb5eb
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
-
-Similar comment as for the subject, the file name seems to imply
-that the include could be useful for any board with an EC and H1,
-however it will be only used by the IDP and CRD. Maybe name it
-'sc7280-idp-ec-h1.dtsi', from the CRD DT file it is alreay clear
-that it is related with the IDP, so it shouldn't be too confusing
-that the file name only says IDP.
-
-Also a birdie told me that the EC and H1 configuration is going to
-change in future revisions of the CRD, which is another reason for
-being more specific with the file name (a sc7280-crd-ec-h1.dtsi
-might be needed at that point, or the new not-any-longer-shared
-config goes directly into the sc7280-crd-revN.dts.
-
-> @@ -0,0 +1,110 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * sc7280 EC/H1 over SPI (common between IDP2 and CRD)
-> + *
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +ap_ec_spi: &spi10 {
-> +	status = "okay";
-> +
-> +	pinctrl-0 = <&qup_spi10_cs_gpio_init_high>, <&qup_spi10_cs_gpio>;
-
-Shouldn't this also have <&qup_spi10_data_clk>?
-
-> +	cs-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
-> +
-> +	cros_ec: ec@0 {
-> +		compatible = "google,cros-ec-spi";
-> +		reg = <0>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&ap_ec_int_l>;
-> +		spi-max-frequency = <3000000>;
-> +
-> +		cros_ec_pwm: ec-pwm {
-> +			compatible = "google,cros-ec-pwm";
-> +			#pwm-cells = <1>;
-> +		};
-> +
-> +		i2c_tunnel: i2c-tunnel {
-> +			compatible = "google,cros-ec-i2c-tunnel";
-> +			google,remote-bus = <0>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		typec {
-> +			compatible = "google,cros-ec-typec";
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			usb_c0: connector@0 {
-> +				compatible = "usb-c-connector";
-> +				reg = <0>;
-> +				label = "left";
-> +				power-role = "dual";
-> +				data-role = "host";
-> +				try-power-role = "source";
-> +			};
-> +
-> +			usb_c1: connector@1 {
-> +				compatible = "usb-c-connector";
-> +				reg = <1>;
-> +				label = "right";
-> +				power-role = "dual";
-> +				data-role = "host";
-> +				try-power-role = "source";
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +#include <arm/cros-ec-keyboard.dtsi>
-> +#include <arm/cros-ec-sbs.dtsi>
-> +
-> +ap_h1_spi: &spi14 {
-> +	status = "okay";
-> +
-> +	pinctrl-0 = <&qup_spi14_cs_gpio_init_high>, <&qup_spi14_cs_gpio>;
-
-<&qup_spi14_data_clk> missing?
-
-> +	cs-gpios = <&tlmm 59 GPIO_ACTIVE_LOW>;
-> +
-> +	cr50: tpm@0 {
-> +		compatible = "google,cr50";
-> +		reg = <0>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&h1_ap_int_odl>;
-> +		spi-max-frequency = <800000>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <104 IRQ_TYPE_EDGE_RISING>;
-> +	};
-> +};
-> +
-> +&tlmm {
-> +	ap_ec_int_l: ap-ec-int-l {
-> +		pins = "gpio18";
-> +		function = "gpio";
-> +		input-enable;
-> +		bias-pull-up;
-> +		drive-strength = <2>;
-
-Is the explicit drive-strength setting actually needed?
-
-Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml:
-
-  drive-strength:
-    enum: [2, 4, 6, 8, 10, 12, 14, 16]
-    default: 2 <=
-    description:
-      Selects the drive strength for the specified pins, in mA.
-
-The default is 2, hence it shouldn't be necessary it set it explicitly.
-
-> +	};
-> +
-> +	h1_ap_int_odl: h1-ap-int-odl {
-> +		pins = "gpio104";
-> +		function = "gpio";
-> +		input-enable;
-> +		bias-pull-up;
-> +		drive-strength = <2>;
-
-see above
-
-> +	};
-> +
-> +	qup_spi10_cs_gpio_init_high: qup-spi10-cs-gpio-init-high {
-> +		pins = "gpio43";
-> +		output-high;
-> +		drive-strength = <2>;
-
-see above
-
-> +	};
-> +
-> +	qup_spi14_cs_gpio_init_high: qup-spi14-cs-gpio-init-high {
-> +		pins = "gpio59";
-> +		output-high;
-> +		drive-strength = <2>;
-
-see above
-
-> +	};
-> +};
-> +
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> index 3ae9969..208ca69 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> @@ -8,6 +8,7 @@
->  /dts-v1/;
->  
->  #include "sc7280-idp.dtsi"
-> +#include "sc7280-ec-h1.dtsi"
->  
->  / {
->  	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU2 platform";
