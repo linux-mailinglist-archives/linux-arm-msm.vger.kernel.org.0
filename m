@@ -2,341 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48F8C45AE88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 22:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3AC245AF96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 23:57:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237518AbhKWVjw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 16:39:52 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:59154 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237281AbhKWVjs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 16:39:48 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637703399; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: References: Cc: To: From: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=ZxlavI9NbXcvLJaF6cvSXVVud5NqFFeoEpqcsDMej1E=; b=Fl+xVL1Gb5f6GI+AW/SOIcBOdIQ7ZTosROHxDhNGpjwy7iUu55TCtnlJ2GJQ5bPwRvTWUMJ1
- 0/dq1sdzDaEb4RfB40oD3sF5Fo/XMYtdWPb7O02yW18Ew49n803xZrgJq9r73vU1xZ8lAwdN
- X+ay6nw04I0tS5QurlPCMsP6Ink=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 619d5ee7bebfa3d4d58cdf14 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Nov 2021 21:36:39
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5A597C4360C; Tue, 23 Nov 2021 21:36:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.5] (unknown [117.211.32.249])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C484FC4338F;
-        Tue, 23 Nov 2021 21:36:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org C484FC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <5c8e8c7a-46d0-62b0-e730-cc5b980cc21a@codeaurora.org>
-Date:   Wed, 24 Nov 2021 03:06:31 +0530
+        id S230512AbhKWXAk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 18:00:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39712 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230424AbhKWXAj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 18:00:39 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4747BC06173E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 14:57:31 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so3339300pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 14:57:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/3PsIIKK7UoXMhoYSuG4fvr/lTXeq13xrdfjceY/U20=;
+        b=dtlu+klG5+0eE56joTScLTFS0JKqRY1qUK83ZNHRODbLl/CT3pQnRAGH6ROJjczVxN
+         d32ckPMVWA1PSRElvtNyblzfoMIbF4OiOwHv3eYtPMRTo5KabhJAODttErtDUWsBPbre
+         D/a1qbP8r1lelXP7GQNTLRGOqnvipSZg3ZEF6WuHgB6owneovMRJRXBvbi6vv5QheX6b
+         XamsFiYskSdAwFLdDYQJzUAbtbwER9pmJgTIhPirA13Y9AUOyYLRm2J6qO/iqqzQqLQY
+         e8luiBv4rFNp+D0pIWymCqf5veDQmlmgKmGWwiTNM1+VCPT1EHPr4ZAjViACHKwaBhrf
+         W27w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/3PsIIKK7UoXMhoYSuG4fvr/lTXeq13xrdfjceY/U20=;
+        b=hbKlx7t6F1GCw1/RozsP7pRiGff5bhDAXN4MYVxEfz1D669nS1yrzdMWhMnOG2TGky
+         4UiVW0kIVThAMt8oZrob1kRfyiKfNul1qNuP8AZGZd5k0t+j0IS3nJTSalabDjpsn19B
+         EiBXpwb0riRF9LSb3IZqQNViswlq1wOwz9aVwRVxyg5THoxOeqvhfrg9n2Mqc120e5hn
+         ahzXyDRx2zEBTJ8I3jA6dWi2EA/E2zUzbWkorKDds/yhNs1nhjmOpVzJMqlfGxULuWEL
+         UaWej9lbc78jqgXtzZDglDroLgn58kDAVMnvFi0pPRNhBJ+XAa4x9/ILa9+aCJY5xVFq
+         H9Cg==
+X-Gm-Message-State: AOAM531ELA7MJuwNkqprtVqk7wV2TP1nbnC1PbDe3xprLCHEdUONTPVd
+        kvbGGax9k0exwQwBU6LNr77/8A==
+X-Google-Smtp-Source: ABdhPJxPaDIt3yKaBtJIdD96b2KWT9mxXupw/eFVJsP85GTdAWt5WT+9BQSTMsd+2alGMcadDPMJwA==
+X-Received: by 2002:a17:902:a509:b0:143:7eb6:c953 with SMTP id s9-20020a170902a50900b001437eb6c953mr12050752plq.4.1637708250462;
+        Tue, 23 Nov 2021 14:57:30 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:13b4:5c2f:e0e6:ecaf])
+        by smtp.gmail.com with ESMTPSA id a18sm12161329pfn.185.2021.11.23.14.57.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 14:57:30 -0800 (PST)
+Date:   Tue, 23 Nov 2021 14:57:26 -0800
+From:   Peter Collingbourne <pcc@google.com>
+To:     Tadeusz Struk <tadeusz.struk@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
+ and enc/dec
+Message-ID: <YZ1xP2bKqpzG+mYo@google.com>
+References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2 6/6] drm/msm/a6xx: Add a few gmu buffers to coredump
-Content-Language: en-US
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>, Sean Paul <sean@poorly.run>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        =?UTF-8?Q?St=c3=a9phane_Marchesin?= <marcheu@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-kernel@vger.kernel.org
-References: <20211124024436.v2.1.I2ed37cd8ad45a5a94d9de53330f973a62bd1fb29@changeid>
- <20211124024436.v2.6.Ibfca354efaf274142593a6dbfbedb3de31918ff6@changeid>
-In-Reply-To: <20211124024436.v2.6.Ibfca354efaf274142593a6dbfbedb3de31918ff6@changeid>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/24/2021 2:47 AM, Akhil P Oommen wrote:
-> Add a few more gmu buffers to coredump to help debug gmu
-> issues.
+On Fri, Oct 29, 2021 at 02:48:33PM -0700, Tadeusz Struk wrote:
+> Venus video encode/decode hardware driver consists of three modules.
+> The parent module venus-core, and two sub modules venus-enc and venus-dec.
+> The venus-core module allocates a common structure that is used by the
+> enc/dec modules, loads the firmware, and performs some common hardware
+> initialization. Since the three modules are loaded one after the other,
+> and their probe functions can run in parallel it is possible that
+> the venc_probe and vdec_probe functions can finish before the core
+> venus_probe function, which then can fail when, for example it
+> fails to load the firmware. In this case the subsequent call to venc_open
+> causes an Oops as it tries to dereference already uninitialized structures
+> through dev->parent and the system crashes in __pm_runtime_resume() as in
+> the trace below:
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+> [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+> [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+> [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+> [   26.290326][  T485] Call trace:
+> [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+> [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+> [   26.290335][  T485]  v4l2_open+0x184/0x294
+> [   26.290340][  T485]  chrdev_open+0x468/0x5c8
+> [   26.290344][  T485]  do_dentry_open+0x260/0x54c
+> [   26.290349][  T485]  path_openat+0xbe8/0xd5c
+> [   26.290352][  T485]  do_filp_open+0xb8/0x168
+> [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+> [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+> [   26.290359][  T485]  invoke_syscall+0x60/0x170
+> [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+> [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+> [   26.290367][  T485]  el0_svc_compat+0x24/0x84
+> [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+> [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+> [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+> [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+> 
+> This can be fixed by synchronizing the three probe functions and
+> only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+> returns success.
+> 
+> Changes in v2:
+> - Change locking from mutex_lock to mutex_trylock
+>   in venc_probe and vdec_probe to avoid potential deadlock.
+> 
+> Signed-off-by: Tadeusz Struk <tadeusz.struk@linaro.org>
+
+I've had this patched in, no crashes so far after several reboots.
+
+Tested-by: Peter Collingbourne <pcc@google.com>
+
+Peter
+
 > ---
+>  drivers/media/platform/qcom/venus/core.c |  6 ++++++
+>  drivers/media/platform/qcom/venus/core.h |  2 ++
+>  drivers/media/platform/qcom/venus/vdec.c | 24 +++++++++++++++++++++---
+>  drivers/media/platform/qcom/venus/venc.c | 24 +++++++++++++++++++++---
+>  4 files changed, 50 insertions(+), 6 deletions(-)
 > 
-> (no changes since v1)
-> 
->   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 157 +++++++++++++++++++---------
->   1 file changed, 108 insertions(+), 49 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> index e6f5571..0cb6551 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-> @@ -13,12 +13,22 @@ struct a6xx_gpu_state_obj {
->   	u32 *data;
->   };
->   
-> +struct a6xx_gmu_state {
-> +	struct a6xx_gpu_state_obj *registers;
-> +	int nr_registers;
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index 91b15842c555..18f3e3a9823f 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -317,6 +317,7 @@ static int venus_probe(struct platform_device *pdev)
+>  
+>  	INIT_LIST_HEAD(&core->instances);
+>  	mutex_init(&core->lock);
+> +	mutex_init(&core->sync_lock);
+>  	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
+>  
+>  	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
+> @@ -331,6 +332,8 @@ static int venus_probe(struct platform_device *pdev)
+>  
+>  	venus_assign_register_offsets(core);
+>  
+> +	mutex_lock(&core->sync_lock);
 > +
-> +	struct msm_gpu_state_bo *log_bo;
-> +
-> +	struct msm_gpu_state_bo *hfi_bo;
-> +
-> +	struct msm_gpu_state_bo *debug_bo;
-> +
-> +	struct msm_gpu_state_bo *mem_bin_bo[2];
-> +};
-> +
->   struct a6xx_gpu_state {
->   	struct msm_gpu_state base;
->   
-> -	struct a6xx_gpu_state_obj *gmu_registers;
-> -	int nr_gmu_registers;
-> -
->   	struct a6xx_gpu_state_obj *registers;
->   	int nr_registers;
->   
-> @@ -42,7 +52,7 @@ struct a6xx_gpu_state {
->   	struct a6xx_gpu_state_obj *cx_debugbus;
->   	int nr_cx_debugbus;
->   
-> -	struct msm_gpu_state_bo *gmu_log;
-> +	struct a6xx_gmu_state gmu_state;
->   
->   	struct list_head objs;
->   };
-> @@ -777,20 +787,21 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
->   {
->   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->   	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-> +	struct a6xx_gmu_state *gmu_state = &a6xx_state->gmu_state;
->   
-> -	a6xx_state->gmu_registers = state_kcalloc(a6xx_state,
-> -		2, sizeof(*a6xx_state->gmu_registers));
-> +	gmu_state->registers = state_kcalloc(a6xx_state,
-> +		2, sizeof(*gmu_state->registers));
->   
-> -	if (!a6xx_state->gmu_registers)
-> +	if (!gmu_state->registers)
->   		return;
->   
-> -	a6xx_state->nr_gmu_registers = 2;
-> +	gmu_state->nr_registers = 2;
->   
->   	/* Get the CX GMU registers from AHB */
->   	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[0],
-> -		&a6xx_state->gmu_registers[0], false);
-> +		&gmu_state->registers[0], false);
->   	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
-> -		&a6xx_state->gmu_registers[1], true);
-> +		&gmu_state->registers[1], true);
->   
->   	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
->   		return;
-> @@ -799,31 +810,46 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
->   	gpu_write(gpu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
->   
->   	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[2],
-> -		&a6xx_state->gmu_registers[2], false);
-> +		&gmu_state->registers[2], false);
-> +
-> +	gmu_state->nr_registers = 3;
-
-This is not required after rebasing on top of:
-https://lore.kernel.org/all/20211103153049.1.Idfa574ccb529d17b69db3a1852e49b580132035c@changeid/
-
--Akhil.
-
->   }
->   
-> -static void a6xx_get_gmu_log(struct msm_gpu *gpu,
-> +static void a6xx_get_gmu_bo(struct a6xx_gpu_state *a6xx_state,
-> +		struct a6xx_gmu_bo *gmu_bo, struct msm_gpu_state_bo **dest_bo)
-> +{
-> +	struct msm_gpu_state_bo *bo;
-> +
-> +	bo = state_kcalloc(a6xx_state, 1, sizeof(**dest_bo));
-> +	if (!bo)
-> +		return;
-> +
-> +	bo->iova = gmu_bo->iova;
-> +	bo->size = gmu_bo->size;
-> +	bo->data = kvzalloc(bo->size, GFP_KERNEL);
-> +	if (!bo->data)
-> +		return;
-> +
-> +	memcpy(bo->data, gmu_bo->virt, gmu_bo->size);
-> +
-> +	*dest_bo = bo;
-> +}
-> +
-> +static void a6xx_get_gmu_state(struct msm_gpu *gpu,
->   		struct a6xx_gpu_state *a6xx_state)
->   {
-> +	struct a6xx_gmu_state *gmu_state = &a6xx_state->gmu_state;
->   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->   	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->   	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-> -	struct msm_gpu_state_bo *gmu_log;
->   
-> -	gmu_log = state_kcalloc(a6xx_state,
-> -		1, sizeof(*a6xx_state->gmu_log));
-> -	if (!gmu_log)
-> -		return;
-> +	a6xx_get_gmu_registers(gpu, a6xx_state);
->   
-> -	gmu_log->iova = gmu->log.iova;
-> -	gmu_log->size = gmu->log.size;
-> -	gmu_log->data = kvzalloc(gmu_log->size, GFP_KERNEL);
-> -	if (!gmu_log->data)
-> -		return;
-> +	a6xx_get_gmu_bo(a6xx_state, &gmu->log, &gmu_state->log_bo);
->   
-> -	memcpy(gmu_log->data, gmu->log.virt, gmu->log.size);
-> +	a6xx_get_gmu_bo(a6xx_state, &gmu->hfi, &gmu_state->hfi_bo);
->   
-> -	a6xx_state->gmu_log = gmu_log;
-> +	a6xx_get_gmu_bo(a6xx_state, &gmu->debug, &gmu_state->debug_bo);
->   }
->   
->   #define A6XX_GBIF_REGLIST_SIZE   1
-> @@ -961,9 +987,7 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
->   	/* Get the generic state from the adreno core */
->   	adreno_gpu_state_get(gpu, &a6xx_state->base);
->   
-> -	a6xx_get_gmu_registers(gpu, a6xx_state);
-> -
-> -	a6xx_get_gmu_log(gpu, a6xx_state);
-> +	a6xx_get_gmu_state(gpu, a6xx_state);
->   
->   	/* If GX isn't on the rest of the data isn't going to be accessible */
->   	if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
-> @@ -1005,9 +1029,16 @@ static void a6xx_gpu_state_destroy(struct kref *kref)
->   			struct msm_gpu_state, ref);
->   	struct a6xx_gpu_state *a6xx_state = container_of(state,
->   			struct a6xx_gpu_state, base);
-> +	struct a6xx_gmu_state *gmu_state = &a6xx_state->gmu_state;
->   
-> -	if (a6xx_state->gmu_log && a6xx_state->gmu_log->data)
-> -		kvfree(a6xx_state->gmu_log->data);
-> +	if (gmu_state->log_bo && gmu_state->log_bo->data)
-> +		kvfree(gmu_state->log_bo->data);
-> +
-> +	if (gmu_state->hfi_bo && gmu_state->hfi_bo->data)
-> +		kvfree(gmu_state->hfi_bo->data);
-> +
-> +	if (gmu_state->debug_bo && gmu_state->debug_bo->data)
-> +		kvfree(gmu_state->debug_bo->data);
->   
->   	list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node)
->   		kfree(obj);
-> @@ -1210,31 +1241,43 @@ static void a6xx_show_debugbus(struct a6xx_gpu_state *a6xx_state,
->   	}
->   }
->   
-> -void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-> -		struct drm_printer *p)
-> +void a6xx_gmu_show(struct a6xx_gmu_state *gmu_state, struct drm_printer *p)
->   {
-> -	struct a6xx_gpu_state *a6xx_state = container_of(state,
-> -			struct a6xx_gpu_state, base);
->   	int i;
->   
-> -	if (IS_ERR_OR_NULL(state))
-> -		return;
-> +	drm_puts(p, "gmu-log:\n");
-> +	if (gmu_state->log_bo) {
-> +		struct msm_gpu_state_bo *log_bo = gmu_state->log_bo;
->   
-> -	adreno_show(gpu, state, p);
-> +		drm_printf(p, "    iova: 0x%016llx\n", log_bo->iova);
-> +		drm_printf(p, "    size: %zu\n", log_bo->size);
-> +		adreno_show_object(p, &log_bo->data, log_bo->size,
-> +				&log_bo->encoded);
-> +	}
->   
-> -	drm_puts(p, "gmu-log:\n");
-> -	if (a6xx_state->gmu_log) {
-> -		struct msm_gpu_state_bo *gmu_log = a6xx_state->gmu_log;
-> +	drm_puts(p, "gmu-hfi:\n");
-> +	if (gmu_state->hfi_bo) {
-> +		struct msm_gpu_state_bo *hfi_bo = gmu_state->hfi_bo;
->   
-> -		drm_printf(p, "    iova: 0x%016llx\n", gmu_log->iova);
-> -		drm_printf(p, "    size: %zu\n", gmu_log->size);
-> -		adreno_show_object(p, &gmu_log->data, gmu_log->size,
-> -				&gmu_log->encoded);
-> +		drm_printf(p, "    iova: 0x%016llx\n", hfi_bo->iova);
-> +		drm_printf(p, "    size: %zu\n", hfi_bo->size);
-> +		adreno_show_object(p, &hfi_bo->data, hfi_bo->size,
-> +				&hfi_bo->encoded);
->   	}
->   
-> -	drm_puts(p, "registers:\n");
-> -	for (i = 0; i < a6xx_state->nr_registers; i++) {
-> -		struct a6xx_gpu_state_obj *obj = &a6xx_state->registers[i];
-> +	drm_puts(p, "gmu-debug:\n");
-> +	if (gmu_state->debug_bo) {
-> +		struct msm_gpu_state_bo *debug_bo = gmu_state->debug_bo;
-> +
-> +		drm_printf(p, "    iova: 0x%016llx\n", debug_bo->iova);
-> +		drm_printf(p, "    size: %zu\n", debug_bo->size);
-> +		adreno_show_object(p, &debug_bo->data, debug_bo->size,
-> +				&debug_bo->encoded);
+>  	ret = v4l2_device_register(dev, &core->v4l2_dev);
+>  	if (ret)
+>  		goto err_core_deinit;
+> @@ -377,6 +380,7 @@ static int venus_probe(struct platform_device *pdev)
+>  		goto err_dev_unregister;
+>  	}
+>  
+> +	mutex_unlock(&core->sync_lock);
+>  	venus_dbgfs_init(core);
+>  
+>  	return 0;
+> @@ -392,6 +396,7 @@ static int venus_probe(struct platform_device *pdev)
+>  	hfi_destroy(core);
+>  err_core_deinit:
+>  	hfi_core_deinit(core, false);
+> +	mutex_unlock(&core->sync_lock);
+>  err_core_put:
+>  	if (core->pm_ops->core_put)
+>  		core->pm_ops->core_put(core);
+> @@ -428,6 +433,7 @@ static int venus_remove(struct platform_device *pdev)
+>  
+>  	mutex_destroy(&core->pm_lock);
+>  	mutex_destroy(&core->lock);
+> +	mutex_destroy(&core->sync_lock);
+>  	venus_dbgfs_deinit(core);
+>  
+>  	return ret;
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 5ec851115eca..3f80dc26febb 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -119,6 +119,7 @@ struct venus_format {
+>   * @use_tz:	a flag that suggests presence of trustzone
+>   * @fw:		structure of firmware parameters
+>   * @lock:	a lock for this strucure
+> + * @sync_lock	a lock for probe sync between venus_core and venus_enc/dec
+>   * @instances:	a list_head of all instances
+>   * @insts_count:	num of instances
+>   * @state:	the state of the venus core
+> @@ -176,6 +177,7 @@ struct venus_core {
+>  		size_t mem_size;
+>  	} fw;
+>  	struct mutex lock;
+> +	struct mutex sync_lock;
+>  	struct list_head instances;
+>  	atomic_t insts_count;
+>  	unsigned int state;
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 198e47eb63f4..959e43bb6c00 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -1659,17 +1659,32 @@ static int vdec_probe(struct platform_device *pdev)
+>  	if (!core)
+>  		return -EPROBE_DEFER;
+>  
+> +	/* Sync and wait on the venus core to initialize first.
+> +	 * If we manage to acquire the sync_lock here it means
+> +	 * that the venus_probe() finished running */
+> +	ret = mutex_trylock(&core->sync_lock);
+> +	if (!ret) {
+> +		return -EPROBE_DEFER;
+> +	} else {
+> +		if (core->state != CORE_INIT) {
+> +			ret = -ENODEV;
+> +			goto err_core_unlock;
+> +		}
 > +	}
 > +
-> +	drm_puts(p, "registers-gmu:\n");
-> +	for (i = 0; i < gmu_state->nr_registers; i++) {
-> +		struct a6xx_gpu_state_obj *obj = &gmu_state->registers[i];
->   		const struct a6xx_registers *regs = obj->handle;
->   
->   		if (!obj->handle)
-> @@ -1242,10 +1285,26 @@ void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
->   
->   		a6xx_show_registers(regs->registers, obj->data, regs->count, p);
->   	}
-> +}
->   
-> -	drm_puts(p, "registers-gmu:\n");
-> -	for (i = 0; i < a6xx_state->nr_gmu_registers; i++) {
-> -		struct a6xx_gpu_state_obj *obj = &a6xx_state->gmu_registers[i];
+>  	platform_set_drvdata(pdev, core);
+>  
+>  	if (core->pm_ops->vdec_get) {
+>  		ret = core->pm_ops->vdec_get(dev);
+>  		if (ret)
+> -			return ret;
+> +			goto err_core_unlock;
+>  	}
+>  
+>  	vdev = video_device_alloc();
+> -	if (!vdev)
+> -		return -ENOMEM;
+> +	if (!vdev) {
+> +		ret = -ENOMEM;
+> +		goto err_core_unlock;
+> +	}
+>  
+>  	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+>  	vdev->release = video_device_release;
+> @@ -1690,11 +1705,14 @@ static int vdec_probe(struct platform_device *pdev)
+>  	pm_runtime_set_autosuspend_delay(dev, 2000);
+>  	pm_runtime_use_autosuspend(dev);
+>  	pm_runtime_enable(dev);
+> +	mutex_unlock(&core->sync_lock);
+>  
+>  	return 0;
+>  
+>  err_vdev_release:
+>  	video_device_release(vdev);
+> +err_core_unlock:
+> +	mutex_unlock(&core->sync_lock);
+>  	return ret;
+>  }
+>  
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index bc1c42dd53c0..11ec7bff5e3f 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -1338,17 +1338,32 @@ static int venc_probe(struct platform_device *pdev)
+>  	if (!core)
+>  		return -EPROBE_DEFER;
+>  
+> +	/* Sync and wait on the venus core to initialize first.
+> +	 * If we manage to acquire the sync_lock here it means
+> +	 * that the venus_probe() finished running */
+> +	ret = mutex_trylock(&core->sync_lock);
+> +	if (!ret) {
+> +		return -EPROBE_DEFER;
+> +	} else {
+> +		if (core->state != CORE_INIT) {
+> +			ret = -ENODEV;
+> +			goto err_core_unlock;
+> +		}
+> +	}
 > +
-> +void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-> +		struct drm_printer *p)
-> +{
-> +	struct a6xx_gpu_state *a6xx_state = container_of(state,
-> +			struct a6xx_gpu_state, base);
-> +	int i;
-> +
-> +	if (IS_ERR_OR_NULL(state))
-> +		return;
-> +
-> +	adreno_show(gpu, state, p);
-> +
-> +	a6xx_gmu_show(&a6xx_state->gmu_state, p);
-> +
-> +	drm_puts(p, "registers:\n");
-> +	for (i = 0; i < a6xx_state->nr_registers; i++) {
-> +		struct a6xx_gpu_state_obj *obj = &a6xx_state->registers[i];
->   		const struct a6xx_registers *regs = obj->handle;
->   
->   		if (!obj->handle)
+>  	platform_set_drvdata(pdev, core);
+>  
+>  	if (core->pm_ops->venc_get) {
+>  		ret = core->pm_ops->venc_get(dev);
+>  		if (ret)
+> -			return ret;
+> +			goto err_core_unlock;
+>  	}
+>  
+>  	vdev = video_device_alloc();
+> -	if (!vdev)
+> -		return -ENOMEM;
+> +	if (!vdev) {
+> +		ret = -ENOMEM;
+> +		goto err_core_unlock;
+> +	}
+>  
+>  	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+>  	vdev->release = video_device_release;
+> @@ -1367,11 +1382,14 @@ static int venc_probe(struct platform_device *pdev)
+>  
+>  	video_set_drvdata(vdev, core);
+>  	pm_runtime_enable(dev);
+> +	mutex_unlock(&core->sync_lock);
+>  
+>  	return 0;
+>  
+>  err_vdev_release:
+>  	video_device_release(vdev);
+> +err_core_unlock:
+> +	mutex_unlock(&core->sync_lock);
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.31.1
 > 
-
