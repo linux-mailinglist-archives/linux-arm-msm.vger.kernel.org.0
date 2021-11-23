@@ -2,160 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BB0F459C2E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 07:12:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7CEF459C70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 07:52:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233370AbhKWGPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 01:15:24 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:36279 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232865AbhKWGPY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 01:15:24 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637647937; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=AidKxmnHj9mMv9tdIOW5QjrSUsyiJSIzIHtTjYkpssc=;
- b=JiGq8cWlflTfhqjrJIgqWc2MBBRZZb2HIpkEy9/CDM56Q+DNyA1B7BYLaBm8zOy4rkVTIuMu
- i12dBnMMwkhat1EUBG60C1giKuR2RBpDux1lMClc5wTA2Sxj1NqL5OH7v0zYqc2H2hSzAHS/
- EEj4dNQwD/vAphgskgASnfbPlm8=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 619c863d465c4a723b4fd595 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Nov 2021 06:12:13
- GMT
-Sender: jeyr=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 022D7C4360D; Tue, 23 Nov 2021 06:12:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jeyr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2E914C4338F;
-        Tue, 23 Nov 2021 06:12:12 +0000 (UTC)
+        id S232715AbhKWGzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 01:55:50 -0500
+Received: from mx1.riseup.net ([198.252.153.129]:33602 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229728AbhKWGzu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 01:55:50 -0500
+Received: from fews1.riseup.net (fews1-pn.riseup.net [10.0.1.83])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+         client-signature RSA-PSS (2048 bits) client-digest SHA256)
+        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
+        by mx1.riseup.net (Postfix) with ESMTPS id 4HyvwB34LrzDv2X;
+        Mon, 22 Nov 2021 22:52:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1637650362; bh=2crRhYBlklLB+/OAkE79DuwqwJdO0OVKUmuw9Rbx/s0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=a3ZcqkLIwwPx12xnNt+1HVT/uXYXrdX+fUUOhyaC/zqsYGYaWQ8rBS/tuNXSVV7NR
+         Codl/V0ndNaKzOcafwvJH1/4gNTqmQjJ8YU7GLqwHJM1gYyBdRhFKtBRHa5BvyBlF0
+         0f3wE383rvsKBXPyOJsizuDJHOZiqgEp9PCZsETg=
+X-Riseup-User-ID: 8F6499043B028B14909275667E193D2CE092DEEBFD8526408BBAAD791A8AF191
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews1.riseup.net (Postfix) with ESMTPSA id 4Hyvw62NdVz5vcc;
+        Mon, 22 Nov 2021 22:52:38 -0800 (PST)
+From:   Dang Huynh <danct12@riseup.net>
+To:     Dang Huynh <danct12@riseup.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-mediatek@lists.infradead.org
+Subject: [PATCH] dts: treewide: Drop input-name property
+Date:   Tue, 23 Nov 2021 13:51:58 +0700
+Message-Id: <20211123065158.1383182-1-danct12@riseup.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 23 Nov 2021 11:42:12 +0530
-From:   jeyr@codeaurora.org
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH v3] misc: fastrpc: fix improper packet size calculation
-In-Reply-To: <YZeeWMGFev2D+4zr@kroah.com>
-References: <1632224895-32661-1-git-send-email-jeyr@codeaurora.org>
- <YUnHbiQDZK/+tTAp@kroah.com>
- <9c5c13a393b64a4527f7be7ca42734d2@codeaurora.org>
- <YUnSt9B4hAe3y2k2@kroah.com>
- <df24334190f8b7cb517e440bee8f2784@codeaurora.org>
- <56123f5e39e4cc7691da5d0d61468a97@codeaurora.org>
- <YZeeWMGFev2D+4zr@kroah.com>
-Message-ID: <3c4659fff3c632373d7df4712a3c0311@codeaurora.org>
-X-Sender: jeyr@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-11-19 18:23, Greg KH wrote:
-> On Fri, Nov 19, 2021 at 06:19:27PM +0530, jeyr@codeaurora.org wrote:
->> On 2021-09-21 18:43, jeyr@codeaurora.org wrote:
->> > On 2021-09-21 18:10, Greg KH wrote:
->> > > On Tue, Sep 21, 2021 at 06:03:42PM +0530, jeyr@codeaurora.org wrote:
->> > > > On 2021-09-21 17:22, Greg KH wrote:
->> > > > > On Tue, Sep 21, 2021 at 05:18:15PM +0530, Jeya R wrote:
->> > > > > > The buffer list is sorted and this is not being considered while
->> > > > > > calculating packet size. This would lead to improper copy length
->> > > > > > calculation for non-dmaheap buffers which would eventually cause
->> > > > > > sending improper buffers to DSP.
->> > > > > >
->> > > > > > Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke
->> > > > > > method")
->> > > > > > Signed-off-by: Jeya R <jeyr@codeaurora.org>
->> > > > > > Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> > > > >
->> > > > > Does this also need to go to the stable kernels?
->> > > > Yes, this needs to go to stable kernels also as this fixes a
->> > > > potential issue
->> > > > which is easily reproducible.
->> > >
->> > >
->> > >
->> > > >
->> > > > >
->> > > > > > ---
->> > > > > > Changes in v3:
->> > > > > > - relocate patch change list
->> > > > > >
->> > > > > > Changes in v2:
->> > > > > > - updated commit message to proper format
->> > > > > > - added fixes tag to commit message
->> > > > > > - removed unnecessary variable initialization
->> > > > > > - removed length check during payload calculation
->> > > > > >
->> > > > > >  drivers/misc/fastrpc.c | 10 ++++++----
->> > > > > >  1 file changed, 6 insertions(+), 4 deletions(-)
->> > > > > >
->> > > > > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> > > > > > index beda610..69d45c4 100644
->> > > > > > --- a/drivers/misc/fastrpc.c
->> > > > > > +++ b/drivers/misc/fastrpc.c
->> > > > > > @@ -719,16 +719,18 @@ static int fastrpc_get_meta_size(struct
->> > > > > > fastrpc_invoke_ctx *ctx)
->> > > > > >  static u64 fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx,
->> > > > > > int metalen)
->> > > > > >  {
->> > > > > >  	u64 size = 0;
->> > > > > > -	int i;
->> > > > > > +	int oix;
->> > > > >
->> > > > > What does "oix" stand for?  What was wrong with i?
->> > > > It is just a general convention we use. "oix" is used to iterate
->> > > > through
->> > > > sorted overlap buffer list and use "i" to get corresponding
->> > > > unsorted list
->> > > > index. We follow the same convention at other places also, for
->> > > > example:
->> > > > fastrpc_get_args function.
->> > >
->> > > That is the only place it is used in all of the whole kernel tree.  It
->> > > is not a normal variable for a loop, so who is "we" here?
->> > The convention was followed for the same file(fastrpc.c). As part of
->> > fastrpc_get_args
->> > function, while iterating through sorted buffer list, oix is used as
->> > index and to
->> > get unsorted index "raix", it is using "i". Just following the same way
->> > here to
->> > have better understanding. Please let me know if this is a concern, it
->> > can be updated
->> > to "i", "j" etc.
->> >
->> > -- Thanks
->> > >
->> > > thanks,
->> > >
->> > > greg k-h
->> Hello Greg,
->> 
->> Is this bug-fix patch planned to be released?
-> 
-> Released in what way?
-By release, I mean picked to your misc driver git tree.
-> 
-> I do not see it in any tree anywhere, perhaps it needs to be 
-> resubmitted
-> to be accepted?
-Sure, will resubmit the patch. Thanks.
-> 
-> thanks,
-> 
-> greg k-h
+This property doesn't seem to exist in the documentation nor
+in source code, but for some reason it is defined in a bunch
+of device trees.
+
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+---
+ arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts          | 1 -
+ arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts             | 1 -
+ arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts     | 1 -
+ arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts              | 1 -
+ arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts         | 1 -
+ arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts        | 1 -
+ arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts        | 1 -
+ arch/arm/boot/dts/sun8i-h3-nanopi.dtsi                       | 1 -
+ arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi             | 1 -
+ arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts            | 1 -
+ arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi     | 1 -
+ arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi   | 1 -
+ arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts              | 3 ---
+ arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi    | 2 --
+ arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi        | 1 -
+ arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts | 1 -
+ 16 files changed, 19 deletions(-)
+
+diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
+index f8c97efc61fc..0cee62c7b8b0 100644
+--- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
++++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
+@@ -19,7 +19,6 @@ chosen {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
+index ea15b645b229..6d77e0f8ca4d 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
+@@ -20,7 +20,6 @@ chosen {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+index 30ee913faae6..069136170198 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+@@ -450,7 +450,6 @@ bcrmf@1 {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+index 003f0fa9c857..96e1c978b878 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
+@@ -349,7 +349,6 @@ bluetooth {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
+index 398a3eaf306b..79e2cfbbb1ba 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
+@@ -20,7 +20,6 @@ chosen {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
+index b4dd85bd4faf..e66937e3f7dd 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
+@@ -20,7 +20,6 @@ chosen {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
+index 9743beebd84d..a62e5c25b23c 100644
+--- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
++++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
+@@ -20,7 +20,6 @@ chosen {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
+diff --git a/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi b/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
+index c7c3e7d8b3c8..1eabc69462d4 100644
+--- a/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
++++ b/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
+@@ -75,7 +75,6 @@ led-1 {
+ 
+ 	r_gpio_keys {
+ 		compatible = "gpio-keys";
+-		input-name = "k1";
+ 
+ 		k1 {
+ 			label = "k1";
+diff --git a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+index fcddec14738d..7a717f926929 100644
+--- a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
++++ b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+@@ -25,7 +25,6 @@ optee: optee@4fd00000 {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_default>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+index 69fcb6b0398d..84558ab5fe86 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+@@ -42,7 +42,6 @@ framebuffer0: framebuffer@3404000 {
+ 
+ 	gpio_keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		autorepeat;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+index 3a3790a52a2c..cc038f9b641f 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+@@ -62,7 +62,6 @@ divclk4: divclk4 {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		autorepeat;
+ 
+ 		volupkey {
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+index 7cc564d8ca7c..dde7ed159c4d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+@@ -29,7 +29,6 @@ / {
+ 
+ 	gpio_keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		autorepeat;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+index 3d495ce3f46a..dc5b9b274df3 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+@@ -29,7 +29,6 @@ extcon_usb: extcon-usb {
+ 
+ 	gpio-hall-sensors {
+ 		compatible = "gpio-keys";
+-		input-name = "hall-sensors";
+ 		label = "Hall sensors";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&hall_sensor1_default>;
+@@ -46,7 +45,6 @@ hall-sensor1 {
+ 
+ 	gpio-kb-extra-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "extra-kb-keys";
+ 		label = "Keyboard extra keys";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_kb_pins_extra>;
+@@ -102,7 +100,6 @@ alt {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "side-buttons";
+ 		label = "Side buttons";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+index 91e391282181..47488a1aecae 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+@@ -93,7 +93,6 @@ vph_pwr: vph-pwr-regulator {
+ 
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		label = "Side buttons";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vol_down_pin_a>, <&cam_focus_pin_a>,
+@@ -126,7 +125,6 @@ camera-focus {
+ 
+ 	gpio-hall-sensor {
+ 		compatible = "gpio-keys";
+-		input-name = "hall-sensors";
+ 		label = "Hall sensors";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&hall_sensor0_default>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+index e90c9ec84675..42af1fade461 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+@@ -90,7 +90,6 @@ cam_vana_rear_vreg: cam_vana_rear_vreg {
+ 	gpio_keys {
+ 		status = "okay";
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+index 45eab0235d66..871ccbba445b 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
++++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
+@@ -42,7 +42,6 @@ extcon_usb: extcon-usb {
+ 	gpio-keys {
+ 		status = "okay";
+ 		compatible = "gpio-keys";
+-		input-name = "gpio-keys";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		autorepeat;
+-- 
+2.34.0
+
