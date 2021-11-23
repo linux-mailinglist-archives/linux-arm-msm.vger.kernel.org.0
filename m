@@ -2,131 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0269145A6D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 16:50:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8294F45A753
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 17:14:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237185AbhKWPx5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 10:53:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53688 "EHLO
+        id S237053AbhKWQRM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 11:17:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238493AbhKWPx5 (ORCPT
+        with ESMTP id S236715AbhKWQRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 10:53:57 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A50CC061714
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 07:50:48 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id n85so19825752pfd.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 07:50:48 -0800 (PST)
+        Tue, 23 Nov 2021 11:17:11 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1EDBC061714
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:03 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id p18so17461000plf.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 08:14:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p5/dnjXoJ8teDVOSqiNUzGVK+QNLdlAM4nDDCgZROWw=;
-        b=SZkGjoNNQtoublRXDZq9kgD0trOc0Q3U7nJiv1jg/3HrkIypSCJMhDm2r8+yI4mlNk
-         wFndxsoxTZh4EX9CjzlM8JK1ivzYhc7Sib4z0ff7ifSmOdO23HtUVAM2g1V+TL1QhNDq
-         p5q8jjV7FynYOzQdmJcOyaP1OyvIqyI2wNEf9+YGWW6VwpAHNjHnURtVWJuIzu6sr+qF
-         mUn7Aqm/BHrSARXaf6omS1Xina4ZDNToYiAsaS3znXEVPkbyhoRiKxOVT5NTA2/CmrCp
-         Z3TuNp85RgwLUhTTvyeaJBqKu2iMIweqZRtjp7IFx6uZW2CHflreaDUWP707y/lYeuY6
-         stjA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8inpYltOn+CuOSRy1TzQ0Ih132g9z81+D5QmyV6ts9Y=;
+        b=i9rVupQl92AqsGZLGbAOub7zhj7/6WU2T4Pko8hrZl+IA44g+22VPUoU63MjKamPOx
+         EHUzvltfq2WdgtS5LQBEMIGi21/vWiEau8TliotzO6fF7bNhY5S3tCaumCmUW+FrWHhz
+         gb3X4g4L/SaQNGJBiJsxy92tlcqsfy3MpeS70=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p5/dnjXoJ8teDVOSqiNUzGVK+QNLdlAM4nDDCgZROWw=;
-        b=bfgEayPlkJRzMuqhCMrunlo8quN+a+qALggUsgLu+I1cwBx6HUVk4iSzdMpmrIvmas
-         JdyAIi+1WLEukQC+A4UN27zoD7HtyC8GksxF95BbOJUpJEv01L4Gkb3/Uv6GvKZHFZjc
-         VU59/cwuHRaOAnB9Y5UMXiSKx67aE3FKcrDuda2wJbiOutOzbzsUkUyVdJ7ru1VwJIKX
-         Us+m88k4/k3fJd+pfnSD493JujUkRQWkKhfYR6sPYCexf98MG0DFLn4/ufrb4yWzPA6/
-         qkwOhSGYf/hDlue2+WACgXJxVzfbL9zuRPDlbO/Mw+toyDLlk11mdof/iL/NOLaGgHVq
-         tn6w==
-X-Gm-Message-State: AOAM533cuDDMVegSkJ6FHzqJS0CLFlOP4MFQS9RqSiQfGhfFTgwnmtIm
-        ch3w4RcUvc3sxbthAn7lEidGSUvVkllyOPyd7/xqtQ==
-X-Google-Smtp-Source: ABdhPJx911N+Fj7qf+H5dcOu/OnmfyUkA1zkkaVVKqEAufjOTT1k6nEfn/NtxZ2mTj/uwQ0jK+uc0rkOnN6MIwSWgRU=
-X-Received: by 2002:aa7:9903:0:b0:49f:e368:4fc3 with SMTP id
- z3-20020aa79903000000b0049fe3684fc3mr6070106pff.1.1637682647615; Tue, 23 Nov
- 2021 07:50:47 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8inpYltOn+CuOSRy1TzQ0Ih132g9z81+D5QmyV6ts9Y=;
+        b=gwP+7QRbdto8PX7o5JiU9p+f8IC/RAp9xMPpBJQktEDYav5C8nq8aMaxC1jyFBrpfA
+         pwX9EnzaBBe7Gw/R+zpa8Zvu/DkSLTzJkJVc0kfMK8cFO0YBbqRIqK2mjYXyk52HZ6hw
+         TFINNb6XNYO8ioi4/i/Q1XYuIPz+gvhEIXlfS8gKWqZTEFdShzkgn/dlQXrGVBgRSeQA
+         raqwzTWQ3dleKcnEytSVCmfBuCHVpaVf2FTsiJNn6UPtUiigZeXMne5mgqtC0Y5B3IO7
+         Y89HcYica4Szit0ns4d3WXC2IIa/do2d2LMbPZTGxOGZSIIMzDRw2b00/ZNbEqLGxu0t
+         7+sQ==
+X-Gm-Message-State: AOAM533akiemZa+KwN8iAko0kfwcVl3/KhnAetG7kULf8Wccp8zVAFpc
+        orvMjUGf/jgAZ+uQZPYuI29ybQ==
+X-Google-Smtp-Source: ABdhPJwMfxC2wTbN/wG3x9FjFcU7i8b+6ZPx2ERHXd9Jk5kD6A1sd4h6hQVvjeYdILoZg1ualPJaSw==
+X-Received: by 2002:a17:90a:e40f:: with SMTP id hv15mr4231148pjb.5.1637684043171;
+        Tue, 23 Nov 2021 08:14:03 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:5fa5:d920:9d68:9c16])
+        by smtp.gmail.com with UTF8SMTPSA id s2sm14576950pfg.124.2021.11.23.08.14.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Nov 2021 08:14:02 -0800 (PST)
+Date:   Tue, 23 Nov 2021 08:14:01 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
+        dianders@chromium.org, kgodara@codeaurora.org
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sc7280-crd: Add device tree files
+ for CRD
+Message-ID: <YZ0TSeXddm+qGJ0/@google.com>
+References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
+ <1637650813-16654-3-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-References: <20211123154050.40984-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211123154050.40984-1-bjorn.andersson@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 23 Nov 2021 16:50:34 +0100
-Message-ID: <CAG3jFytT1Bvagn8hQnVvE48X-jR+pyNuQtjcgJAYmBC97=BL7g@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Add more of the INTF interrupt regions
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1637650813-16654-3-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Nov 2021 at 16:39, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> In addition to the other 7xxx INTF interrupt regions, SM8350 has
-> additional INTF regions at 0x0ae37000, 0x0ae38000 and 0x0ae39000, define
-> these. The 7xxx naming scheme of the bits are kept for consistency.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Tue, Nov 23, 2021 at 12:30:11PM +0530, Rajendra Nayak wrote:
+> CRD (Compute Reference Design) is a sc7280 based board, largely
+> derived from the existing IDP board design with some key deltas
+> 1. has EC and H1 over SPI similar to IDP2
+> 2. touchscreen and trackpad support
+> 3. eDP display
+> 
+> We just add the barebones dts file here, subsequent patches will
+> add support for EC/H1 and other components.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 18 ++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |  3 +++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index d2b6dca487e3..a77a5eaa78ad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -30,6 +30,9 @@
->  #define MDP_AD4_INTR_STATUS_OFF                0x420
->  #define MDP_INTF_0_OFF_REV_7xxx             0x34000
->  #define MDP_INTF_1_OFF_REV_7xxx             0x35000
-> +#define MDP_INTF_2_OFF_REV_7xxx             0x36000
-> +#define MDP_INTF_3_OFF_REV_7xxx             0x37000
-> +#define MDP_INTF_4_OFF_REV_7xxx             0x38000
->  #define MDP_INTF_5_OFF_REV_7xxx             0x39000
->
->  /**
-> @@ -110,6 +113,21 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
->                 MDP_INTF_1_OFF_REV_7xxx+INTF_INTR_EN,
->                 MDP_INTF_1_OFF_REV_7xxx+INTF_INTR_STATUS
->         },
-> +       {
-> +               MDP_INTF_2_OFF_REV_7xxx+INTF_INTR_CLEAR,
-> +               MDP_INTF_2_OFF_REV_7xxx+INTF_INTR_EN,
-> +               MDP_INTF_2_OFF_REV_7xxx+INTF_INTR_STATUS
-> +       },
-> +       {
-> +               MDP_INTF_3_OFF_REV_7xxx+INTF_INTR_CLEAR,
-> +               MDP_INTF_3_OFF_REV_7xxx+INTF_INTR_EN,
-> +               MDP_INTF_3_OFF_REV_7xxx+INTF_INTR_STATUS
-> +       },
-> +       {
-> +               MDP_INTF_4_OFF_REV_7xxx+INTF_INTR_CLEAR,
-> +               MDP_INTF_4_OFF_REV_7xxx+INTF_INTR_EN,
-> +               MDP_INTF_4_OFF_REV_7xxx+INTF_INTR_STATUS
-> +       },
->         {
->                 MDP_INTF_5_OFF_REV_7xxx+INTF_INTR_CLEAR,
->                 MDP_INTF_5_OFF_REV_7xxx+INTF_INTR_EN,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index d50e78c9f148..1ab75cccd145 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -26,6 +26,9 @@ enum dpu_hw_intr_reg {
->         MDP_AD4_1_INTR,
->         MDP_INTF0_7xxx_INTR,
->         MDP_INTF1_7xxx_INTR,
-> +       MDP_INTF2_7xxx_INTR,
-> +       MDP_INTF3_7xxx_INTR,
-> +       MDP_INTF4_7xxx_INTR,
->         MDP_INTF5_7xxx_INTR,
->         MDP_INTR_MAX,
->  };
+>  arch/arm64/boot/dts/qcom/Makefile       |  1 +
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 31 +++++++++++++++++++++++++++++++
+>  2 files changed, 32 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 6b816eb..b18708c 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -78,6 +78,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> new file mode 100644
+> index 0000000..09d02c2
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> @@ -0,0 +1,31 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * sc7280 CRD board device tree source
+> + *
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7280-idp.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
+> +	compatible = "qcom,sc7280-crd", "google,hoglin-rev0", "qcom,sc7280";
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+As per my comment on the binding there should also be a "google,hoglin"
+without a revision suffix, also it seems there are already CRDs with higher
+rev numbers.
+
+> +
+> +	aliases {
+> +		serial0 = &uart5;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +};
+> +
+> +&nvme_pwren {
+> +	pins = "gpio51";
+> +};
+> +
+> +&nvme_3v3_regulator {
+> +	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+> +};
+
+uber-nit: 'nvme_3v3_regulator' should be before 'nvme_pwren', assuming
+alphabetical/ASCII ordering is used.
