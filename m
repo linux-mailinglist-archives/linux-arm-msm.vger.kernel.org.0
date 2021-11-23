@@ -2,327 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DCC545A67F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 16:24:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C7F445A6A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Nov 2021 16:39:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236532AbhKWP1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 10:27:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47814 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236497AbhKWP1z (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 10:27:55 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2244EC06173E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 07:24:47 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso34288668ots.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 07:24:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=JpD5WpIhxDUkbt7w6TL55id0u6co4l+62l9b76Ql6yE=;
-        b=NrvF4QqjjfGRaiXEftlCeh5hxtQmd/oBn8N6nYo5xZ61CYUhYy2sp8YjyvMYtf+6r4
-         AMA1D4ejWYPVAjO64DEhhEK/rzT8aAE5SHIZaUzrSOg3Q3xgvYPloH6zeAtO0BLpy7ut
-         AzzshMD452L//bSolQHlO9U3xa76E5tN6NLy+EfBPl1Nykcu+6FggNLRVjOZIN9iE4uu
-         vrhsQwoMyRUq/Bu4yjKl+TjDaM/mwAA66o/oL5cGHWzgDVEItwXjQ5028TCtHPMHMQ1v
-         H/Hra52DAt9DYh+GfPYI2Hg8VXegkaB+6LArISAiq4YClmERQJgXJ+YDJbLECmaocmmk
-         a7DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JpD5WpIhxDUkbt7w6TL55id0u6co4l+62l9b76Ql6yE=;
-        b=aspQLy7OTq2ckqqajRZTe2+KxuX4hbEozOu/L7KB6HixHAV1guwc+7opxO/QEaDVY1
-         ONBPilxVoOfaVAqb8JmKAWr9GGKTvBO5zuoh55ZOflKTBAt1p54vEpinVQ13JvmlAFdM
-         vj//su0dNoYknjdjJ/DwqjX3l8d+cTrRoK96kr5lm9MHQqgZm2AHWygbTfykidQT6d6R
-         z0kwAtkbQmbbHRG6brsjHeocKpCgmIukABZEb88HoZuvMmX5hgLfxMz2snLJ4jQbnHBG
-         OEahc+r/L2T1van8eKG98PQZvq9AqrIX0GfVDgiKaIPVvvfzdzTfzVJBUb+KwlO8hQPI
-         TMaA==
-X-Gm-Message-State: AOAM530Sb4SkVmlfw6fZ6i1Fk+AglnMI0BOR5WLDSLwwG4TbL/AHNRg1
-        zAHBg1OhpaVl9yYUQ26bG06p8A==
-X-Google-Smtp-Source: ABdhPJxSqKyEA2wbIvfDs5E8BVg1B50eu94EXrlDS3SC+PEBF0OrHZ1r0uSnSUNP25yuwBMFrfZePg==
-X-Received: by 2002:a05:6830:4392:: with SMTP id s18mr5399396otv.168.1637681086407;
-        Tue, 23 Nov 2021 07:24:46 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r3sm2191435oti.51.2021.11.23.07.24.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Nov 2021 07:24:45 -0800 (PST)
-Date:   Tue, 23 Nov 2021 07:26:28 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dts: treewide: Drop input-name property
-Message-ID: <YZ0IJGJwy6O9ATpW@ripper>
-References: <20211123065158.1383182-1-danct12@riseup.net>
+        id S238507AbhKWPmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 10:42:15 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:11168 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238506AbhKWPmN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 10:42:13 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637681945; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
+ Message-ID: Sender; bh=mRAcJajBuUcZ3gglt5FYxyIJIcC+Pgh55D4MtpmKUbM=; b=tymoqofxf5XgACTkKDY8s+w7YLVRovwf4AavL68XzfOoCTw90j1mqYJ4sCWLQG5SF0iAnxhz
+ +DYI7ypspIpPZ1UU60nbPdP+e80CCO/o7QA+PfawPGWtr+FPUOR37zi3H7/ugAAwJOCfYM+4
+ YdVGbFdH51R8dYSaWPPjZjKi0gE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 619d0aff6bacc185a5453eb8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Nov 2021 15:38:39
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D5374C43618; Tue, 23 Nov 2021 15:38:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-6.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.5] (unknown [117.211.32.249])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D0187C4338F;
+        Tue, 23 Nov 2021 15:38:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D0187C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Message-ID: <0dd0444a-20ae-4fbc-fc8f-a1b93d53797a@codeaurora.org>
+Date:   Tue, 23 Nov 2021 21:08:28 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211123065158.1383182-1-danct12@riseup.net>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 4/4] drm/msm/a6xx: Capture gmu log in devcoredump
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20211118154903.1.I2ed37cd8ad45a5a94d9de53330f973a62bd1fb29@changeid>
+ <20211118154903.4.Ibb71b3c64d6f98d586131a143c27fbdb233260a1@changeid>
+ <CAF6AEGvxgVHXuz=W0_r=4EakV8XKVjdMeofZbuBYuz0Vep2BfA@mail.gmail.com>
+ <CAF6AEGvn2fGOUoKAQg57pYNcHJZTKUzgS6O9BTgat17VD52M6w@mail.gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+In-Reply-To: <CAF6AEGvn2fGOUoKAQg57pYNcHJZTKUzgS6O9BTgat17VD52M6w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Nov 22:51 PST 2021, Dang Huynh wrote:
-
-> This property doesn't seem to exist in the documentation nor
-> in source code, but for some reason it is defined in a bunch
-> of device trees.
+On 11/23/2021 12:36 AM, Rob Clark wrote:
+> On Mon, Nov 22, 2021 at 10:26 AM Rob Clark <robdclark@gmail.com> wrote:
+>>
+>> On Thu, Nov 18, 2021 at 2:21 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>>>
+>>> Capture gmu log in coredump to enhance debugging.
+>>>
+>>> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+>>> ---
+>>>
+>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 41 +++++++++++++++++++++++++++++
+>>>   drivers/gpu/drm/msm/adreno/adreno_gpu.c     |  2 +-
+>>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  2 ++
+>>>   3 files changed, 44 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>> index 7501849..9fa3fa6 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+>>> @@ -42,6 +42,8 @@ struct a6xx_gpu_state {
+>>>          struct a6xx_gpu_state_obj *cx_debugbus;
+>>>          int nr_cx_debugbus;
+>>>
+>>> +       struct msm_gpu_state_bo *gmu_log;
+>>> +
+>>>          struct list_head objs;
+>>>   };
+>>>
+>>> @@ -800,6 +802,30 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
+>>>                  &a6xx_state->gmu_registers[2], false);
+>>>   }
+>>>
+>>> +static void a6xx_get_gmu_log(struct msm_gpu *gpu,
+>>> +               struct a6xx_gpu_state *a6xx_state)
+>>> +{
+>>> +       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>>> +       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+>>> +       struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+>>> +       struct msm_gpu_state_bo *gmu_log;
+>>> +
+>>> +       gmu_log = state_kcalloc(a6xx_state,
+>>> +               1, sizeof(*a6xx_state->gmu_log));
+>>> +       if (!gmu_log)
+>>> +               return;
+>>> +
+>>> +       gmu_log->iova = gmu->log.iova;
+>>> +       gmu_log->size = gmu->log.size;
+>>> +       gmu_log->data = kvzalloc(gmu_log->size, GFP_KERNEL);
+>>> +       if (!gmu_log->data)
+>>> +               return;
+>>> +
+>>> +       memcpy(gmu_log->data, gmu->log.virt, gmu->log.size);
+>>> +
+>>> +       a6xx_state->gmu_log = gmu_log;
+>>> +}
+>>> +
+>>>   #define A6XX_GBIF_REGLIST_SIZE   1
+>>>   static void a6xx_get_registers(struct msm_gpu *gpu,
+>>>                  struct a6xx_gpu_state *a6xx_state,
+>>> @@ -937,6 +963,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+>>>
+>>>          a6xx_get_gmu_registers(gpu, a6xx_state);
+>>>
+>>> +       a6xx_get_gmu_log(gpu, a6xx_state);
+>>> +
+>>>          /* If GX isn't on the rest of the data isn't going to be accessible */
+>>>          if (!a6xx_gmu_gx_is_on(&a6xx_gpu->gmu))
+>>>                  return &a6xx_state->base;
+>>> @@ -978,6 +1006,9 @@ static void a6xx_gpu_state_destroy(struct kref *kref)
+>>>          struct a6xx_gpu_state *a6xx_state = container_of(state,
+>>>                          struct a6xx_gpu_state, base);
+>>>
+>>> +       if (a6xx_state->gmu_log && a6xx_state->gmu_log->data)
+>>> +               kvfree(a6xx_state->gmu_log->data);
+>>> +
+>>>          list_for_each_entry_safe(obj, tmp, &a6xx_state->objs, node)
+>>>                  kfree(obj);
+>>>
+>>> @@ -1191,6 +1222,16 @@ void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+>>>
+>>>          adreno_show(gpu, state, p);
+>>>
+>>> +       drm_puts(p, "gmu-log:\n");
+>>> +       if (a6xx_state->gmu_log) {
+>>> +               struct msm_gpu_state_bo *gmu_log = a6xx_state->gmu_log;
+>>> +
+>>> +               drm_printf(p, "    iova: 0x%016llx\n", gmu_log->iova);
+>>> +               drm_printf(p, "    size: %d\n", gmu_log->size);
+>>
+>> fwiw, that wants to be:
+>>
+>>   +               drm_printf(p, "    size: %zu\n", gmu_log->size);
+>>
+>> with that fixed, r-b
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-
-Many thanks for the cleanup Dang. Unfortunately 32-bit Qcom, 64-bit
-Qcom, the Mediatek and the sun8i changes goes through different
-maintainer trees.
-
-So if you could split this in 3 different patches that would make it
-easier for us maintainers.
-
-Thanks,
-Bjorn
-
-> ---
->  arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts          | 1 -
->  arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts             | 1 -
->  arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts     | 1 -
->  arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts              | 1 -
->  arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts         | 1 -
->  arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts        | 1 -
->  arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts        | 1 -
->  arch/arm/boot/dts/sun8i-h3-nanopi.dtsi                       | 1 -
->  arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi             | 1 -
->  arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts            | 1 -
->  arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi     | 1 -
->  arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi   | 1 -
->  arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts              | 3 ---
->  arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi    | 2 --
->  arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi        | 1 -
->  arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts | 1 -
->  16 files changed, 19 deletions(-)
+> Hmm, actually, I seem to be getting an empty log.. is special gmu fw,
+> or non-fused device needed for this to work?
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
-> index f8c97efc61fc..0cee62c7b8b0 100644
-> --- a/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dts
-> @@ -19,7 +19,6 @@ chosen {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-> index ea15b645b229..6d77e0f8ca4d 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dts
-> @@ -20,7 +20,6 @@ chosen {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> index 30ee913faae6..069136170198 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> @@ -450,7 +450,6 @@ bcrmf@1 {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> index 003f0fa9c857..96e1c978b878 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts
-> @@ -349,7 +349,6 @@ bluetooth {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
-> index 398a3eaf306b..79e2cfbbb1ba 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dts
-> @@ -20,7 +20,6 @@ chosen {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-> index b4dd85bd4faf..e66937e3f7dd 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dts
-> @@ -20,7 +20,6 @@ chosen {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-> index 9743beebd84d..a62e5c25b23c 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dts
-> @@ -20,7 +20,6 @@ chosen {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_pin_a>;
-> diff --git a/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi b/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
-> index c7c3e7d8b3c8..1eabc69462d4 100644
-> --- a/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
-> +++ b/arch/arm/boot/dts/sun8i-h3-nanopi.dtsi
-> @@ -75,7 +75,6 @@ led-1 {
->  
->  	r_gpio_keys {
->  		compatible = "gpio-keys";
-> -		input-name = "k1";
->  
->  		k1 {
->  			label = "k1";
-> diff --git a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-> index fcddec14738d..7a717f926929 100644
-> --- a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-> +++ b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-> @@ -25,7 +25,6 @@ optee: optee@4fd00000 {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_keys_default>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> index 69fcb6b0398d..84558ab5fe86 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> @@ -42,7 +42,6 @@ framebuffer0: framebuffer@3404000 {
->  
->  	gpio_keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		#address-cells = <1>;
->  		#size-cells = <0>;
->  		autorepeat;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-> index 3a3790a52a2c..cc038f9b641f 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-> @@ -62,7 +62,6 @@ divclk4: divclk4 {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		autorepeat;
->  
->  		volupkey {
-> diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-> index 7cc564d8ca7c..dde7ed159c4d 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
-> @@ -29,7 +29,6 @@ / {
->  
->  	gpio_keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		#address-cells = <1>;
->  		#size-cells = <0>;
->  		autorepeat;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> index 3d495ce3f46a..dc5b9b274df3 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
-> @@ -29,7 +29,6 @@ extcon_usb: extcon-usb {
->  
->  	gpio-hall-sensors {
->  		compatible = "gpio-keys";
-> -		input-name = "hall-sensors";
->  		label = "Hall sensors";
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&hall_sensor1_default>;
-> @@ -46,7 +45,6 @@ hall-sensor1 {
->  
->  	gpio-kb-extra-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "extra-kb-keys";
->  		label = "Keyboard extra keys";
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&gpio_kb_pins_extra>;
-> @@ -102,7 +100,6 @@ alt {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "side-buttons";
->  		label = "Side buttons";
->  		#address-cells = <1>;
->  		#size-cells = <0>;
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> index 91e391282181..47488a1aecae 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-> @@ -93,7 +93,6 @@ vph_pwr: vph-pwr-regulator {
->  
->  	gpio-keys {
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		label = "Side buttons";
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&vol_down_pin_a>, <&cam_focus_pin_a>,
-> @@ -126,7 +125,6 @@ camera-focus {
->  
->  	gpio-hall-sensor {
->  		compatible = "gpio-keys";
-> -		input-name = "hall-sensors";
->  		label = "Hall sensors";
->  		pinctrl-names = "default";
->  		pinctrl-0 = <&hall_sensor0_default>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> index e90c9ec84675..42af1fade461 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-> @@ -90,7 +90,6 @@ cam_vana_rear_vreg: cam_vana_rear_vreg {
->  	gpio_keys {
->  		status = "okay";
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		#address-cells = <1>;
->  		#size-cells = <0>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> index 45eab0235d66..871ccbba445b 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts
-> @@ -42,7 +42,6 @@ extcon_usb: extcon-usb {
->  	gpio-keys {
->  		status = "okay";
->  		compatible = "gpio-keys";
-> -		input-name = "gpio-keys";
->  		#address-cells = <1>;
->  		#size-cells = <0>;
->  		autorepeat;
-> -- 
-> 2.34.0
+> BR,
+> -R
+
+No, there is no special fw. I tested this on 7c3 and it worked for me. 
+a618/a630 has an old version of gmu firmware which is pretty different 
+from the newer ones. Let me check.
+
+-Akhil.
+
 > 
+>> BR,
+>> -R
+>>
+>>> +               adreno_show_object(p, &gmu_log->data, gmu_log->size,
+>>> +                               &gmu_log->encoded);
+>>> +       }
+>>> +
+>>>          drm_puts(p, "registers:\n");
+>>>          for (i = 0; i < a6xx_state->nr_registers; i++) {
+>>>                  struct a6xx_gpu_state_obj *obj = &a6xx_state->registers[i];
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> index 7486652..7d1ff20 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+>>> @@ -630,7 +630,7 @@ static char *adreno_gpu_ascii85_encode(u32 *src, size_t len)
+>>>   }
+>>>
+>>>   /* len is expected to be in bytes */
+>>> -static void adreno_show_object(struct drm_printer *p, void **ptr, int len,
+>>> +void adreno_show_object(struct drm_printer *p, void **ptr, int len,
+>>>                  bool *encoded)
+>>>   {
+>>>          if (!*ptr || !len)
+>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> index 225c277..6762308 100644
+>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>> @@ -306,6 +306,8 @@ void adreno_gpu_state_destroy(struct msm_gpu_state *state);
+>>>
+>>>   int adreno_gpu_state_get(struct msm_gpu *gpu, struct msm_gpu_state *state);
+>>>   int adreno_gpu_state_put(struct msm_gpu_state *state);
+>>> +void adreno_show_object(struct drm_printer *p, void **ptr, int len,
+>>> +               bool *encoded);
+>>>
+>>>   /*
+>>>    * Common helper function to initialize the default address space for arm-smmu
+>>> --
+>>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>>> of Code Aurora Forum, hosted by The Linux Foundation.
+>>>
+
