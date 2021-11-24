@@ -2,121 +2,481 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44D9E45C8C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 16:34:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33AEB45C8D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 16:35:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241434AbhKXPhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 10:37:47 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:35022 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241381AbhKXPhg (ORCPT
+        id S241521AbhKXPi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 10:38:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241558AbhKXPi0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 10:37:36 -0500
-Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
-        by mail.holtmann.org (Postfix) with ESMTPSA id BAB76CED24;
-        Wed, 24 Nov 2021 16:34:25 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [PATCH v3] Bluetooth: btusb: Add the new support IDs for WCN6855
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <c3f2783ddb0ac0bbcaae70b57c6afdfd@codeaurora.org>
-Date:   Wed, 24 Nov 2021 16:34:25 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org
+        Wed, 24 Nov 2021 10:38:26 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F313C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:35:14 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id u3so8308651lfl.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:35:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zbKDQn0BRVB9cySqIX+pArLVJE9Jkf3fujVTM0Bb+Sc=;
+        b=UlMmoYkkeFEZcIf9Tc8YPklNui3Iq080bM/z5UYETAdeO4i6z4Uy27WhS168IMuM59
+         aS0ven+Nj9Z9m+FlMW/E+/YmBJBAfUO3oVBumSJpEkk7PLBEOA9wRj35gpnRUHQHlk4A
+         tdFzaYUVgvkkEwxUUSzOAvfjxjPfQm8ueBrbQ3cF+KVyGy1N4iRFEo2jYo6Jxa/+EHkd
+         iQaPQgVoqHwWemob9FNNGcEmJ5iyGw/iC3TaNnRSmKHI6g4dGdcR1qM632TB6j8kTJLd
+         CUoycHaQrDmhbct7p/WhQqmSHpvQiKF3cfmPnX3IJEqS+jtxg46fPh22SwdP58YhuGkb
+         hf4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zbKDQn0BRVB9cySqIX+pArLVJE9Jkf3fujVTM0Bb+Sc=;
+        b=4xhR9Ji/gGOcmtYY821I5znD39Fx7PhaTiIEg0fya2jTCLvyBxDvHa4T8oa/rbcJU2
+         TpEBYFsv3I/72hAz2GB8WYWc8DK8RQXjvatL8+yAzfLIGoPwg3C85RFUxXoerGCVROOL
+         qcsz1+7shKFWuuCYt1zHmzZ2Pcu4eNZbySAqpVu3uS0FrfOiRUravyQrmWcJk8m3BZ2i
+         mWyGQVluSOeLiC5KftnMj1YaETmxyjIrBay31GZsbGcVq7xoTHk9ZLfu32zvsRqvbjEv
+         o7YdQ/FIUusTPKp8HFUAkWbaafCUBm9JlR5DWjnDlZXnpgv5LQnSP7zoU5K9VwnPQzUP
+         wUHg==
+X-Gm-Message-State: AOAM533pIqd8Bpk0wqgy8iqSdaTAJizDfsJoy620LbLAB9FQgMqSyqfV
+        2mFbTdjCn2b0kMbh/ZxpnQ3MJUxZZhGMCA==
+X-Google-Smtp-Source: ABdhPJy4vypM/CHo+5QhJfFsGt3MFgFEuRII6ii4HTyz1HQEuq6kpBMeOUtbncPfeeFR33fPNlUQVQ==
+X-Received: by 2002:a05:6512:2101:: with SMTP id q1mr15451619lfr.663.1637768112578;
+        Wed, 24 Nov 2021 07:35:12 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i24sm19672ljm.135.2021.11.24.07.35.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 07:35:11 -0800 (PST)
+Subject: Re: [PATCH v3 02/13] drm/msm/disp/dpu1: Add support for DSC
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-3-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <f61df956-15a2-aacd-4ddd-18f27d86e89a@linaro.org>
+Date:   Wed, 24 Nov 2021 18:35:10 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20211116062256.2417186-3-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Message-Id: <7268E5CB-5429-49CA-9832-A8E1C121920A@holtmann.org>
-References: <c3f2783ddb0ac0bbcaae70b57c6afdfd@codeaurora.org>
-To:     tjiang@codeaurora.org
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tim,
+On 16/11/2021 09:22, Vinod Koul wrote:
+> Display Stream Compression (DSC) is one of the hw blocks in dpu, so add
+> support by adding hw blocks for DSC
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-> Add the more IDs of HP to usb_device_id table for WCN6855.
-> 
-> -Device(0489:e0cc) from /sys/kernel/debug/usb/devices
-> T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=0489 ProdID=e0cc Rev= 0.01
-> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> 
-> -Device(0489:e0d6) from /sys/kernel/debug/usb/devices
-> T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-> P:  Vendor=0489 ProdID=e0d6 Rev= 0.01
-> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
-> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
-> drivers/bluetooth/btusb.c | 8 +++++++-
-> 1 file changed, 7 insertions(+), 1 deletion(-)
+>   drivers/gpu/drm/msm/Makefile                  |   1 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  13 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 210 ++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  77 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 ++
+>   5 files changed, 314 insertions(+)
+>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> 
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 40577f8856d8..7d7058f1f5c1 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -59,6 +59,7 @@ msm-y := \
+>   	disp/dpu1/dpu_formats.o \
+>   	disp/dpu1/dpu_hw_catalog.o \
+>   	disp/dpu1/dpu_hw_ctl.o \
+> +	disp/dpu1/dpu_hw_dsc.o \
+>   	disp/dpu1/dpu_hw_interrupts.o \
+>   	disp/dpu1/dpu_hw_intf.o \
+>   	disp/dpu1/dpu_hw_lm.o \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 4ade44bbd37e..65f43fadcda0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -553,6 +553,16 @@ struct dpu_merge_3d_cfg  {
+>   	const struct dpu_merge_3d_sub_blks *sblk;
+>   };
+>   
+> +/**
+> + * struct dpu_dsc_cfg - information of DSC blocks
+> + * @id                 enum identifying this block
+> + * @base               register offset of this block
+> + * @features           bit mask identifying sub-blocks/features
+> + */
+> +struct dpu_dsc_cfg {
+> +	DPU_HW_BLK_INFO;
+> +};
+> +
+>   /**
+>    * struct dpu_intf_cfg - information of timing engine blocks
+>    * @id                 enum identifying this block
+> @@ -749,6 +759,9 @@ struct dpu_mdss_cfg {
+>   	u32 merge_3d_count;
+>   	const struct dpu_merge_3d_cfg *merge_3d;
+>   
+> +	u32 dsc_count;
+> +	struct dpu_dsc_cfg *dsc;
+> +
+>   	u32 intf_count;
+>   	const struct dpu_intf_cfg *intf;
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> new file mode 100644
+> index 000000000000..449d6f1dad28
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> @@ -0,0 +1,210 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020-2021, Linaro Limited
+> + */
+> +
+> +#include "dpu_kms.h"
+> +#include "dpu_hw_catalog.h"
+> +#include "dpu_hwio.h"
+> +#include "dpu_hw_mdss.h"
+> +#include "dpu_hw_dsc.h"
+> +
+> +#define DSC_COMMON_MODE	                0x000
+> +#define DSC_ENC                         0X004
+> +#define DSC_PICTURE                     0x008
+> +#define DSC_SLICE                       0x00C
+> +#define DSC_CHUNK_SIZE                  0x010
+> +#define DSC_DELAY                       0x014
+> +#define DSC_SCALE_INITIAL               0x018
+> +#define DSC_SCALE_DEC_INTERVAL          0x01C
+> +#define DSC_SCALE_INC_INTERVAL          0x020
+> +#define DSC_FIRST_LINE_BPG_OFFSET       0x024
+> +#define DSC_BPG_OFFSET                  0x028
+> +#define DSC_DSC_OFFSET                  0x02C
+> +#define DSC_FLATNESS                    0x030
+> +#define DSC_RC_MODEL_SIZE               0x034
+> +#define DSC_RC                          0x038
+> +#define DSC_RC_BUF_THRESH               0x03C
+> +#define DSC_RANGE_MIN_QP                0x074
+> +#define DSC_RANGE_MAX_QP                0x0B0
+> +#define DSC_RANGE_BPG_OFFSET            0x0EC
+> +
+> +static void dpu_hw_dsc_disable(struct dpu_hw_dsc *dsc)
+> +{
+> +	struct dpu_hw_blk_reg_map *c = &dsc->hw;
+> +
+> +	DPU_REG_WRITE(c, DSC_COMMON_MODE, 0);
+> +}
+> +
+> +static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+> +			      struct msm_display_dsc_config *dsc, u32 mode)
+> +{
+> +	struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+> +	u32 data, lsb, bpp;
+> +	u32 initial_lines = dsc->initial_lines;
+> +	bool is_cmd_mode = !(mode & DSC_MODE_VIDEO);
+> +
+> +	DPU_REG_WRITE(c, DSC_COMMON_MODE, mode);
+> +
+> +	if (is_cmd_mode)
+> +		initial_lines += 1;
+> +
+> +	data = (initial_lines << 20);
+> +	data |= ((dsc->slice_last_group_size - 1) << 18);
+> +	/* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+> +	data |= dsc->drm->bits_per_pixel << 12;
+> +	lsb = dsc->drm->bits_per_pixel % 4;
+> +	bpp = dsc->drm->bits_per_pixel / 4;
+> +	bpp *= 4;
+> +	bpp <<= 4;
+> +	bpp |= lsb;
+> +
+> +	data |= bpp << 8;
+> +	data |= (dsc->drm->block_pred_enable << 7);
+> +	data |= (dsc->drm->line_buf_depth << 3);
+> +	data |= (dsc->drm->simple_422 << 2);
+> +	data |= (dsc->drm->convert_rgb << 1);
+> +	data |= dsc->drm->bits_per_component;
+> +
+> +	DPU_REG_WRITE(c, DSC_ENC, data);
+> +
+> +	data = dsc->drm->pic_width << 16;
+> +	data |= dsc->drm->pic_height;
+> +	DPU_REG_WRITE(c, DSC_PICTURE, data);
+> +
+> +	data = dsc->drm->slice_width << 16;
+> +	data |= dsc->drm->slice_height;
+> +	DPU_REG_WRITE(c, DSC_SLICE, data);
+> +
+> +	data = dsc->drm->slice_chunk_size << 16;
+> +	DPU_REG_WRITE(c, DSC_CHUNK_SIZE, data);
+> +
+> +	data = dsc->drm->initial_dec_delay << 16;
+> +	data |= dsc->drm->initial_xmit_delay;
+> +	DPU_REG_WRITE(c, DSC_DELAY, data);
+> +
+> +	data = dsc->drm->initial_scale_value;
+> +	DPU_REG_WRITE(c, DSC_SCALE_INITIAL, data);
+> +
+> +	data = dsc->drm->scale_decrement_interval;
+> +	DPU_REG_WRITE(c, DSC_SCALE_DEC_INTERVAL, data);
+> +
+> +	data = dsc->drm->scale_increment_interval;
+> +	DPU_REG_WRITE(c, DSC_SCALE_INC_INTERVAL, data);
+> +
+> +	data = dsc->drm->first_line_bpg_offset;
+> +	DPU_REG_WRITE(c, DSC_FIRST_LINE_BPG_OFFSET, data);
+> +
+> +	data = dsc->drm->nfl_bpg_offset << 16;
+> +	data |= dsc->drm->slice_bpg_offset;
+> +	DPU_REG_WRITE(c, DSC_BPG_OFFSET, data);
+> +
+> +	data = dsc->drm->initial_offset << 16;
+> +	data |= dsc->drm->final_offset;
+> +	DPU_REG_WRITE(c, DSC_DSC_OFFSET, data);
+> +
+> +	data = dsc->det_thresh_flatness << 10;
+> +	data |= dsc->drm->flatness_max_qp << 5;
+> +	data |= dsc->drm->flatness_min_qp;
+> +	DPU_REG_WRITE(c, DSC_FLATNESS, data);
+> +
+> +	data = dsc->drm->rc_model_size;
+> +	DPU_REG_WRITE(c, DSC_RC_MODEL_SIZE, data);
+> +
+> +	data = dsc->drm->rc_tgt_offset_low << 18;
+> +	data |= dsc->drm->rc_tgt_offset_high << 14;
+> +	data |= dsc->drm->rc_quant_incr_limit1 << 9;
+> +	data |= dsc->drm->rc_quant_incr_limit0 << 4;
+> +	data |= dsc->drm->rc_edge_factor;
+> +	DPU_REG_WRITE(c, DSC_RC, data);
+> +}
+> +
+> +static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
+> +				     struct msm_display_dsc_config *dsc)
+> +{
+> +	struct drm_dsc_rc_range_parameters *rc = dsc->drm->rc_range_params;
+> +	struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+> +	u32 off;
+> +	int i;
+> +
+> +	off = DSC_RC_BUF_THRESH;
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++) {
+> +		DPU_REG_WRITE(c, off, dsc->drm->rc_buf_thresh[i]);
+> +		off += 4;
+> +	}
+> +
+> +	off = DSC_RANGE_MIN_QP;
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> +		DPU_REG_WRITE(c, off, rc[i].range_min_qp);
+> +		off += 4;
+> +	}
+> +
+> +	off = DSC_RANGE_MAX_QP;
+> +	for (i = 0; i < 15; i++) {
+> +		DPU_REG_WRITE(c, off, rc[i].range_max_qp);
+> +		off += 4;
+> +	}
+> +
+> +	off = DSC_RANGE_BPG_OFFSET;
+> +	for (i = 0; i < 15; i++) {
+> +		DPU_REG_WRITE(c, off, rc[i].range_bpg_offset);
+> +		off += 4;
+> +	}
+> +}
+> +
+> +static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+> +				       struct dpu_mdss_cfg *m,
+> +				       void __iomem *addr,
+> +				       struct dpu_hw_blk_reg_map *b)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < m->dsc_count; i++) {
+> +		if (dsc == m->dsc[i].id) {
+> +			b->base_off = addr;
+> +			b->blk_off = m->dsc[i].base;
+> +			b->length = m->dsc[i].len;
+> +			b->hwversion = m->hwversion;
+> +			b->log_mask = DPU_DBG_MASK_DSC;
+> +			return &m->dsc[i];
+> +		}
+> +	}
+> +
+> +	return NULL;
+> +}
+> +
+> +static void _setup_dsc_ops(struct dpu_hw_dsc_ops *ops,
+> +			   unsigned long cap)
+> +{
+> +	ops->dsc_disable = dpu_hw_dsc_disable;
+> +	ops->dsc_config = dpu_hw_dsc_config;
+> +	ops->dsc_config_thresh = dpu_hw_dsc_config_thresh;
+> +};
+> +
+> +struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
+> +				   struct dpu_mdss_cfg *m)
+> +{
+> +	struct dpu_hw_dsc *c;
+> +	struct dpu_dsc_cfg *cfg;
+> +
+> +	c = kzalloc(sizeof(*c), GFP_KERNEL);
+> +	if (!c)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	cfg = _dsc_offset(idx, m, addr, &c->hw);
+> +	if (IS_ERR_OR_NULL(cfg)) {
+> +		kfree(c);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	c->idx = idx;
+> +	c->caps = cfg;
+> +	_setup_dsc_ops(&c->ops, c->caps->features);
+> +
+> +	return c;
+> +}
+> +
+> +void dpu_hw_dsc_destroy(struct dpu_hw_dsc *dsc)
+> +{
+> +	kfree(dsc);
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> new file mode 100644
+> index 000000000000..648c9e4d8749
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> @@ -0,0 +1,77 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/* Copyright (c) 2020-2021, Linaro Limited */
+> +
+> +#ifndef _DPU_HW_DSC_H
+> +#define _DPU_HW_DSC_H
+> +
+> +#include <drm/drm_dsc.h>
+> +
+> +#define DSC_MODE_SPLIT_PANEL            BIT(0)
+> +#define DSC_MODE_MULTIPLEX              BIT(1)
+> +#define DSC_MODE_VIDEO                  BIT(2)
+> +
+> +struct dpu_hw_dsc;
+> +
+> +/**
+> + * struct dpu_hw_dsc_ops - interface to the dsc hardware driver functions
+> + * Assumption is these functions will be called after clocks are enabled
+> + */
+> +struct dpu_hw_dsc_ops {
+> +	/**
+> +	 * dsc_disable - disable dsc
+> +	 * @hw_dsc: Pointer to dsc context
+> +	 */
+> +	void (*dsc_disable)(struct dpu_hw_dsc *hw_dsc);
+> +
+> +	/**
+> +	 * dsc_config - configures dsc encoder
+> +	 * @hw_dsc: Pointer to dsc context
+> +	 * @dsc: panel dsc parameters
+> +	 * @mode: dsc topology mode to be set
+> +	 */
+> +	void (*dsc_config)(struct dpu_hw_dsc *hw_dsc,
+> +			   struct msm_display_dsc_config *dsc, u32 mode);
+> +
+> +	/**
+> +	 * dsc_config_thresh - programs panel thresholds
+> +	 * @hw_dsc: Pointer to dsc context
+> +	 * @dsc: panel dsc parameters
+> +	 */
+> +	void (*dsc_config_thresh)(struct dpu_hw_dsc *hw_dsc,
+> +				  struct msm_display_dsc_config *dsc);
+> +};
+> +
+> +struct dpu_hw_dsc {
+> +	struct dpu_hw_blk base;
+> +	struct dpu_hw_blk_reg_map hw;
+> +
+> +	/* dsc */
+> +	enum dpu_dsc idx;
+> +	const struct dpu_dsc_cfg *caps;
+> +
+> +	/* ops */
+> +	struct dpu_hw_dsc_ops ops;
+> +};
+> +
+> +/**
+> + * dpu_hw_dsc_init - initializes the dsc block for the passed dsc idx.
+> + * @idx:  DSC index for which driver object is required
+> + * @addr: Mapped register io address of MDP
+> + * @m:    Pointer to mdss catalog data
+> + * Returns: Error code or allocated dpu_hw_dsc context
+> + */
+> +struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
+> +				   struct dpu_mdss_cfg *m);
+> +
+> +/**
+> + * dpu_hw_dsc_destroy - destroys dsc driver context
+> + * @dsc:   Pointer to dsc driver context returned by dpu_hw_dsc_init
+> + */
+> +void dpu_hw_dsc_destroy(struct dpu_hw_dsc *dsc);
+> +
+> +static inline struct dpu_hw_dsc *to_dpu_hw_dsc(struct dpu_hw_blk *hw)
+> +{
+> +	return container_of(hw, struct dpu_hw_dsc, base);
+> +}
+> +
+> +#endif /* _DPU_HW_DSC_H */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index bb9ceadeb0bb..b0ce8cb97d22 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -97,6 +97,7 @@ enum dpu_hw_blk_type {
+>   	DPU_HW_BLK_WB,
+>   	DPU_HW_BLK_DSPP,
+>   	DPU_HW_BLK_MERGE_3D,
+> +	DPU_HW_BLK_DSC,
+>   	DPU_HW_BLK_MAX,
+>   };
+>   
+> @@ -176,6 +177,17 @@ enum dpu_ctl {
+>   	CTL_MAX
+>   };
+>   
+> +enum dpu_dsc {
+> +	DSC_NONE = 0,
+> +	DSC_0,
+> +	DSC_1,
+> +	DSC_2,
+> +	DSC_3,
+> +	DSC_4,
+> +	DSC_5,
+> +	DSC_MAX
+> +};
+> +
+>   enum dpu_pingpong {
+>   	PINGPONG_0 = 1,
+>   	PINGPONG_1,
+> @@ -437,5 +449,6 @@ struct dpu_mdss_color {
+>   #define DPU_DBG_MASK_VBIF     (1 << 8)
+>   #define DPU_DBG_MASK_ROT      (1 << 9)
+>   #define DPU_DBG_MASK_DSPP     (1 << 10)
+> +#define DPU_DBG_MASK_DSC      (1 << 11)
+>   
+>   #endif  /* _DPU_HW_MDSS_H */
+> 
 
-patch has been applied to bluetooth-next tree.
 
-Regards
-
-Marcel
-
+-- 
+With best wishes
+Dmitry
