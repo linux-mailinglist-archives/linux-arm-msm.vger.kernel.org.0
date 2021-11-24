@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8687F45B97A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 12:49:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C33B45B97D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 12:49:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241764AbhKXLwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 06:52:25 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:26307 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241766AbhKXLwN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 06:52:13 -0500
+        id S241793AbhKXLwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 06:52:35 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:40826 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241756AbhKXLwY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Nov 2021 06:52:24 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637754543; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1637754554; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=QyOurOsREviPQ9JNA+8Z0Dpd8ffElEDjACrA+D9jJ20=; b=OMc64f7fOffSK4numb2DHf91w8BwylAKSXfZ0eDRKbxpJ5ldlgrjkk8MfUYbPt2U46U5fIQu
- E7ACG/9ExAsnyhik+7LZ8FS6UPmfKQxhafDJSngj4qCRm0JH3OQsxOPHWKBxaBN04uxqvzPf
- vrrctrIzPfvTKfsMlyAZ8XkVMIw=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ Message-ID: Sender; bh=b8/GdfKBYbdH1Nrmk6OOayCmRv1WUrLw5qRyD8w0my4=; b=UTUgpTYyQiCf2Sy2BzGrd/2Al9vaUvOOZ3c6mq3YgzBI9blQimROPW/h/EM7x1eLnYOpjTTi
+ J2fcL7jiyBUwQs5zYWetkqvlSwUKb1/GuRrwsnyAlytpqeSDD38wDcYJLt6qA85SFzuA+27j
+ sBLSCgMKznfPVamsXCReZiWh1KI=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 619e26a9e7d68470af8aef09 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Nov 2021 11:48:57
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 619e26ba6bacc185a5a11089 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Nov 2021 11:49:14
  GMT
 Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7D1D9C4360C; Wed, 24 Nov 2021 11:48:56 +0000 (UTC)
+        id AE341C4360D; Wed, 24 Nov 2021 11:49:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,17 +37,18 @@ Received: from [192.168.1.100] (unknown [49.207.214.117])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D1EEBC43616;
-        Wed, 24 Nov 2021 11:48:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D1EEBC43616
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7B8EAC4338F;
+        Wed, 24 Nov 2021 11:49:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 7B8EAC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <3b89ed5e-52b6-f450-7504-4bf33a42c9b6@codeaurora.org>
-Date:   Wed, 24 Nov 2021 17:18:49 +0530
+Message-ID: <ddbef224-b824-648b-ff33-f61e7bf8c345@codeaurora.org>
+Date:   Wed, 24 Nov 2021 17:19:05 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Define EC and H1 nodes
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7280-crd: Add Touchscreen and
+ touchpad support
 Content-Language: en-US
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
@@ -56,10 +56,10 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         linux-kernel@vger.kernel.org, sboyd@codeaurora.org,
         dianders@chromium.org, kgodara@codeaurora.org
 References: <1637650813-16654-1-git-send-email-rnayak@codeaurora.org>
- <1637650813-16654-4-git-send-email-rnayak@codeaurora.org>
- <YZ0nmrGHwIMdN2v6@google.com>
+ <1637650813-16654-5-git-send-email-rnayak@codeaurora.org>
+ <YZ0rwiHuh0OeP0VD@google.com>
 From:   Rajendra Nayak <rnayak@codeaurora.org>
-In-Reply-To: <YZ0nmrGHwIMdN2v6@google.com>
+In-Reply-To: <YZ0rwiHuh0OeP0VD@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -68,228 +68,112 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/23/2021 11:10 PM, Matthias Kaehlcke wrote:
-> On Tue, Nov 23, 2021 at 12:30:12PM +0530, Rajendra Nayak wrote:
-> 
->> Subject: arm64: dts: qcom: sc7280: Define EC and H1 nodes
-> 
-> that seems to suggest that EC and H1 nodes are something generic of the
-> sc7280, however these two chips are only present on systems that target
-> Chrome OS, and the specific nodes are added are only used by the QCA
-> sc7280 IDP and CRD, not other sc7280 boards using Chrome OS, like
-> herobrine. I suggest to change it to "arm64: dts: qcom: sc7280: Define
-> EC and H1 nodes for IDP/CRD".
-
-sure makes sense
-
-> 
+On 11/23/2021 11:28 PM, Matthias Kaehlcke wrote:
+> On Tue, Nov 23, 2021 at 12:30:13PM +0530, Rajendra Nayak wrote:
 >> From: Kshitiz Godara <kgodara@codeaurora.org>
 >>
->> The IDP2 and CRD boards share the EC and H1 parts, so define
->> all related device nodes into a common file and include them
->> in the idp2 and crd dts files to avoid duplication.
->>
+>> Add Touchscreen and touchpad hid-over-i2c node
+> 
+> to which board(s)?
+
+will update
+
+> 
 >> Signed-off-by: Kshitiz Godara <kgodara@codeaurora.org>
 >> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sc7280-crd.dts    |   1 +
->>   arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi | 110 +++++++++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280-idp2.dts   |   1 +
->>   3 files changed, 112 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
+>>   arch/arm64/boot/dts/qcom/sc7280-crd.dts | 63 +++++++++++++++++++++++++++++++++
+>>   1 file changed, 63 insertions(+)
 >>
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
->> index 09d02c2..8c2aee6 100644
+>> index 8c2aee6..bef3037 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
->> @@ -8,6 +8,7 @@
->>   /dts-v1/;
+>> @@ -23,6 +23,47 @@
+>>   	};
+>>   };
 >>   
->>   #include "sc7280-idp.dtsi"
->> +#include "sc7280-ec-h1.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
->> new file mode 100644
->> index 0000000..78fb5eb
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-ec-h1.dtsi
-> 
-> Similar comment as for the subject, the file name seems to imply
-> that the include could be useful for any board with an EC and H1,
-> however it will be only used by the IDP and CRD. Maybe name it
-> 'sc7280-idp-ec-h1.dtsi', from the CRD DT file it is alreay clear
-> that it is related with the IDP, so it shouldn't be too confusing
-> that the file name only says IDP.
-> 
-> Also a birdie told me that the EC and H1 configuration is going to
-> change in future revisions of the CRD, which is another reason for
-> being more specific with the file name (a sc7280-crd-ec-h1.dtsi
-> might be needed at that point, or the new not-any-longer-shared
-> config goes directly into the sc7280-crd-revN.dts.
-
-right I will rename it to sc7280-idp-ec-h1.dtsi
-
-> 
->> @@ -0,0 +1,110 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * sc7280 EC/H1 over SPI (common between IDP2 and CRD)
->> + *
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +ap_ec_spi: &spi10 {
+>> +ap_tp_i2c: &i2c0 {
 >> +	status = "okay";
+>> +	clock-frequency = <400000>;
 >> +
->> +	pinctrl-0 = <&qup_spi10_cs_gpio_init_high>, <&qup_spi10_cs_gpio>;
-> 
-> Shouldn't this also have <&qup_spi10_data_clk>?
-
-looks like it does, I'll add
-
-> 
->> +	cs-gpios = <&tlmm 43 GPIO_ACTIVE_LOW>;
->> +
->> +	cros_ec: ec@0 {
->> +		compatible = "google,cros-ec-spi";
->> +		reg = <0>;
->> +		interrupt-parent = <&tlmm>;
->> +		interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
+>> +	trackpad: trackpad@15 {
+>> +		compatible = "hid-over-i2c";
+>> +		reg = <0x15>;
 >> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&ap_ec_int_l>;
->> +		spi-max-frequency = <3000000>;
+>> +		pinctrl-0 = <&tp_int_odl>;
 >> +
->> +		cros_ec_pwm: ec-pwm {
->> +			compatible = "google,cros-ec-pwm";
->> +			#pwm-cells = <1>;
->> +		};
+>> +		interrupt-parent = <&tlmm>;
+>> +		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
 >> +
->> +		i2c_tunnel: i2c-tunnel {
->> +			compatible = "google,cros-ec-i2c-tunnel";
->> +			google,remote-bus = <0>;
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +		};
+>> +		post-power-on-delay-ms = <20>;
+>> +		hid-descr-addr = <0x0001>;
+>> +		vdd-supply = <&vreg_l18b_1p8>;
 >> +
->> +		typec {
->> +			compatible = "google,cros-ec-typec";
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			usb_c0: connector@0 {
->> +				compatible = "usb-c-connector";
->> +				reg = <0>;
->> +				label = "left";
->> +				power-role = "dual";
->> +				data-role = "host";
->> +				try-power-role = "source";
->> +			};
->> +
->> +			usb_c1: connector@1 {
->> +				compatible = "usb-c-connector";
->> +				reg = <1>;
->> +				label = "right";
->> +				power-role = "dual";
->> +				data-role = "host";
->> +				try-power-role = "source";
->> +			};
->> +		};
+>> +		wakeup-source;
 >> +	};
 >> +};
 >> +
->> +#include <arm/cros-ec-keyboard.dtsi>
->> +#include <arm/cros-ec-sbs.dtsi>
->> +
->> +ap_h1_spi: &spi14 {
+>> +ap_ts_pen_1v8: &i2c13 {
 >> +	status = "okay";
+>> +	clock-frequency = <400000>;
 >> +
->> +	pinctrl-0 = <&qup_spi14_cs_gpio_init_high>, <&qup_spi14_cs_gpio>;
-> 
-> <&qup_spi14_data_clk> missing?
-> 
->> +	cs-gpios = <&tlmm 59 GPIO_ACTIVE_LOW>;
->> +
->> +	cr50: tpm@0 {
->> +		compatible = "google,cr50";
->> +		reg = <0>;
+>> +	ap_ts: touchscreen@5c {
+>> +		compatible = "hid-over-i2c";
+>> +		reg = <0x5C>;
 >> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&h1_ap_int_odl>;
->> +		spi-max-frequency = <800000>;
+>> +		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
+>> +
 >> +		interrupt-parent = <&tlmm>;
->> +		interrupts = <104 IRQ_TYPE_EDGE_RISING>;
+>> +		interrupts = <55 IRQ_TYPE_LEVEL_LOW>;
+>> +
+>> +		post-power-on-delay-ms = <500>;
+>> +		hid-descr-addr = <0x0000>;
+>> +
+>> +		vdd-supply = <&vreg_l19b_1p8>;
 >> +	};
 >> +};
+>> +
+>>   &nvme_pwren {
+>>   	pins = "gpio51";
+>>   };
+>> @@ -30,3 +71,25 @@
+>>   &nvme_3v3_regulator {
+>>   	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+>>   };
 >> +
 >> +&tlmm {
->> +	ap_ec_int_l: ap-ec-int-l {
->> +		pins = "gpio18";
+>> +	tp_int_odl: tp-int-odl {
+>> +		pins = "gpio7";
 >> +		function = "gpio";
 >> +		input-enable;
->> +		bias-pull-up;
->> +		drive-strength = <2>;
 > 
-> Is the explicit drive-strength setting actually needed?
-> 
-> Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml:
-> 
->    drive-strength:
->      enum: [2, 4, 6, 8, 10, 12, 14, 16]
->      default: 2 <=
->      description:
->        Selects the drive strength for the specified pins, in mA.
-> 
-> The default is 2, hence it shouldn't be necessary it set it explicitly.
+> Not sure about this one, is the explicit 'input-enable' actually needed here?
 
-right, will remove when i respin
-thanks for the review
+Maybe not, will test it once after I remove it
 
 > 
+>> +		bias-disable;
 >> +	};
 >> +
->> +	h1_ap_int_odl: h1-ap-int-odl {
->> +		pins = "gpio104";
+>> +	ts_int_l: ts-int-l {
+>> +		pins = "gpio55";
 >> +		function = "gpio";
->> +		input-enable;
 >> +		bias-pull-up;
->> +		drive-strength = <2>;
-> 
-> see above
-> 
 >> +	};
 >> +
->> +	qup_spi10_cs_gpio_init_high: qup-spi10-cs-gpio-init-high {
->> +		pins = "gpio43";
->> +		output-high;
+>> +	ts_reset_l: ts-reset-l {
+>> +		pins = "gpio54";
+>> +		function = "gpio";
+>> +		bias-disable;
 >> +		drive-strength = <2>;
 > 
-> see above
+> As per my comment on "[3/4] arm64: dts: qcom: sc7280: Define EC and H1 nodes" it
+> seems setting the drive strength to 2 isn't necessary, since that's the default.
+
+right I'll remove it, thanks
+
 > 
->> +	};
->> +
->> +	qup_spi14_cs_gpio_init_high: qup-spi14-cs-gpio-init-high {
->> +		pins = "gpio59";
->> +		output-high;
->> +		drive-strength = <2>;
-> 
-> see above
-> 
->> +	};
->> +};
->> +
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
->> index 3ae9969..208ca69 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
->> @@ -8,6 +8,7 @@
->>   /dts-v1/;
->>   
->>   #include "sc7280-idp.dtsi"
->> +#include "sc7280-ec-h1.dtsi"
->>   
->>   / {
->>   	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU2 platform";
 
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
