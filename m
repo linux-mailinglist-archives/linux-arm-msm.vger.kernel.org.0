@@ -2,136 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3188445B653
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 09:12:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E10D45B81D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 11:12:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241274AbhKXIPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 03:15:52 -0500
-Received: from mga18.intel.com ([134.134.136.126]:28488 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238955AbhKXIPw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 03:15:52 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10177"; a="222103967"
-X-IronPort-AV: E=Sophos;i="5.87,260,1631602800"; 
-   d="scan'208";a="222103967"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2021 00:12:42 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,260,1631602800"; 
-   d="scan'208";a="591495451"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by FMSMGA003.fm.intel.com with ESMTP; 24 Nov 2021 00:12:38 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mpnOQ-0004W4-3B; Wed, 24 Nov 2021 08:12:38 +0000
-Date:   Wed, 24 Nov 2021 16:12:15 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>
-Cc:     kbuild-all@lists.01.org, Douglas Anderson <dianders@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>
-Subject: Re: [PATCH v2 6/6] drm/msm/a6xx: Add a few gmu buffers to coredump
-Message-ID: <202111241604.cGzD1KB0-lkp@intel.com>
-References: <20211124024436.v2.6.Ibfca354efaf274142593a6dbfbedb3de31918ff6@changeid>
+        id S233368AbhKXKPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 05:15:21 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:40458 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232949AbhKXKPU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Nov 2021 05:15:20 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1637748731; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=F5fahqnYpyAflep0RmdFu8+qVgtB2nLPPnOrLfo/vAw=;
+ b=RWoua93AKvdKcQHgSLc5a8F3l4Txe+DJPg6QMD/cJEO1tDyp6A50pk59c6AV61eGuDgSrYC1
+ fEky8Xn01IOT/q4vJQmD6aUnR/8spZFdgJzECEk7h4/UrNSXifB3jla8w7+cUe3S+1zvDpZM
+ 7E+xsrbm2H03Y58MWeU4Tn67yxU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 619e0ffabebfa3d4d51f207a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 24 Nov 2021 10:12:10
+ GMT
+Sender: schowdhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5D4BDC4360D; Wed, 24 Nov 2021 10:12:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: schowdhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 811C3C4338F;
+        Wed, 24 Nov 2021 10:12:09 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211124024436.v2.6.Ibfca354efaf274142593a6dbfbedb3de31918ff6@changeid>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 24 Nov 2021 15:42:09 +0530
+From:   schowdhu@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
+        greg@kroah.com, linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org, rnayak@codeaurora.org,
+        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org,
+        quic_schowdhu@quicinc.com
+Subject: Re: [PATCH V1 1/8] dt-bindings: Add the yaml bindings for EUD
+In-Reply-To: <YZ2zx4/8+yCcls/G@ripper>
+References: <cover.1637639009.git.schowdhu@codeaurora.org>
+ <472de38309fd5d773f903f7a0cfb4440ae1dd380.1637639009.git.schowdhu@codeaurora.org>
+ <YZ2zx4/8+yCcls/G@ripper>
+Message-ID: <c1772ad6c60dabd206be9cf91dd08c77@codeaurora.org>
+X-Sender: schowdhu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akhil,
+On 2021-11-24 09:08, Bjorn Andersson wrote:
+> On Mon 22 Nov 20:28 PST 2021, Souradeep Chowdhury wrote:
+> 
+>> Documentation for Embedded USB Debugger(EUD) device tree
+>> bindings in yaml format.
+>> 
+>> Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+>> ---
+>>  .../devicetree/bindings/soc/qcom/qcom,eud.yaml     | 52 
+>> ++++++++++++++++++++++
+>>  1 file changed, 52 insertions(+)
+>>  create mode 100644 
+>> Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> 
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml 
+>> b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> new file mode 100644
+>> index 0000000..724552c
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> @@ -0,0 +1,52 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,eud.yaml#"
+>> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+>> +
+>> +title: Qualcomm Embedded USB Debugger
+>> +
+>> +maintainers:
+>> +  - Souradeep Chowdhury <schowdhu@codeaurora.org>
+>> +
+>> +description: |
+> 
+> The '|' indicates that the formatting is significant, but it's not.
 
-Thank you for the patch! Perhaps something to improve:
+Ack
 
-[auto build test WARNING on drm/drm-next]
-[also build test WARNING on drm-intel/for-linux-next drm-tip/drm-tip v5.16-rc2 next-20211124]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> 
+>> +  This binding is used to describe the Qualcomm Embedded USB 
+>> Debugger, which is
+>> +  mini USB-hub implemented on chip to support USB-based debug 
+>> capabilities.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - qcom,sc7280-eud
+>> +      - const: qcom,eud
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: EUD Base Register Region
+>> +      - description: EUD Mode Manager Register
+>> +
+>> +  interrupts:
+>> +    description:
+>> +      EUD interrupt
+>> +
+>> +
+> 
+> Drop one of these two empty lines please.
 
-url:    https://github.com/0day-ci/linux/commits/Akhil-P-Oommen/drm-msm-Increase-gpu-boost-interval/20211124-052303
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: xtensa-allyesconfig (https://download.01.org/0day-ci/archive/20211124/202111241604.cGzD1KB0-lkp@intel.com/config)
-compiler: xtensa-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/9bb31a2940567b37d0eead980d4bef5f4cef7d24
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Akhil-P-Oommen/drm-msm-Increase-gpu-boost-interval/20211124-052303
-        git checkout 9bb31a2940567b37d0eead980d4bef5f4cef7d24
-        # save the config file to linux build tree
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross ARCH=xtensa 
+Ack
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+> 
+>> +  port:
+>> +    description:
+>> +      Any connector to the data bus of this controller should be 
+>> modelled
+>> +      using the OF graph bindings specified, if the "usb-role-switch"
+>> +      property is used. See graph.txt
+> 
+> This description does unfortunately not help me to understand what to
+> point this port to.
+> 
+> What's "the data bus"?
+> 
+> Is usb-role-switch a property to be put in this node? Doesn't it need 
+> to
+> be mentioned as a valid property?
 
-All warnings (new ones prefixed by >>):
+The end point of this port is attached to the connector child of dwc3 
+node. The dwc3 node has the "usb-role-switch"
+property. So "usb-role-switch" is not a valid property of the EUD node.
+Will update the description with more clarity accordingly.
 
->> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:1244:6: warning: no previous prototype for 'a6xx_gmu_show' [-Wmissing-prototypes]
-    1244 | void a6xx_gmu_show(struct a6xx_gmu_state *gmu_state, struct drm_printer *p)
-         |      ^~~~~~~~~~~~~
 
+> 
+>> +    $ref: /schemas/graph.yaml#/properties/port
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    eud@88e0000 {
+>> +           compatible = "qcom,sc7280-eud","qcom,eud";
+>> +           reg = <0 0x88e0000 0 0x2000>,
+>> +                 <0 0x88e2000 0 0x1000>;
+> 
+> The example is compiled with #address-cells == #size-cells == 1, so 
+> drop
+> the four lone 0s from the reg.
 
-vim +/a6xx_gmu_show +1244 drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+Ack
 
-  1243	
-> 1244	void a6xx_gmu_show(struct a6xx_gmu_state *gmu_state, struct drm_printer *p)
-  1245	{
-  1246		int i;
-  1247	
-  1248		drm_puts(p, "gmu-log:\n");
-  1249		if (gmu_state->log_bo) {
-  1250			struct msm_gpu_state_bo *log_bo = gmu_state->log_bo;
-  1251	
-  1252			drm_printf(p, "    iova: 0x%016llx\n", log_bo->iova);
-  1253			drm_printf(p, "    size: %zu\n", log_bo->size);
-  1254			adreno_show_object(p, &log_bo->data, log_bo->size,
-  1255					&log_bo->encoded);
-  1256		}
-  1257	
-  1258		drm_puts(p, "gmu-hfi:\n");
-  1259		if (gmu_state->hfi_bo) {
-  1260			struct msm_gpu_state_bo *hfi_bo = gmu_state->hfi_bo;
-  1261	
-  1262			drm_printf(p, "    iova: 0x%016llx\n", hfi_bo->iova);
-  1263			drm_printf(p, "    size: %zu\n", hfi_bo->size);
-  1264			adreno_show_object(p, &hfi_bo->data, hfi_bo->size,
-  1265					&hfi_bo->encoded);
-  1266		}
-  1267	
-  1268		drm_puts(p, "gmu-debug:\n");
-  1269		if (gmu_state->debug_bo) {
-  1270			struct msm_gpu_state_bo *debug_bo = gmu_state->debug_bo;
-  1271	
-  1272			drm_printf(p, "    iova: 0x%016llx\n", debug_bo->iova);
-  1273			drm_printf(p, "    size: %zu\n", debug_bo->size);
-  1274			adreno_show_object(p, &debug_bo->data, debug_bo->size,
-  1275					&debug_bo->encoded);
-  1276		}
-  1277	
-  1278		drm_puts(p, "registers-gmu:\n");
-  1279		for (i = 0; i < gmu_state->nr_registers; i++) {
-  1280			struct a6xx_gpu_state_obj *obj = &gmu_state->registers[i];
-  1281			const struct a6xx_registers *regs = obj->handle;
-  1282	
-  1283			if (!obj->handle)
-  1284				continue;
-  1285	
-  1286			a6xx_show_registers(regs->registers, obj->data, regs->count, p);
-  1287		}
-  1288	}
-  1289	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> 
+> Regards,
+> Bjorn
+> 
+>> +    };
+>> --
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+>> member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>> 
