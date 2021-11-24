@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A3E645CF27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 22:37:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3428645CF2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 22:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345094AbhKXVkW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 16:40:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34164 "EHLO
+        id S1345236AbhKXVk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 16:40:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344930AbhKXVkU (ORCPT
+        with ESMTP id S1346061AbhKXVkW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 16:40:20 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D553FC06173E;
-        Wed, 24 Nov 2021 13:37:09 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id w33-20020a17090a6ba400b001a722a06212so5038010pjj.0;
-        Wed, 24 Nov 2021 13:37:09 -0800 (PST)
+        Wed, 24 Nov 2021 16:40:22 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D7D6C061574;
+        Wed, 24 Nov 2021 13:37:12 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id u17so2924326plg.9;
+        Wed, 24 Nov 2021 13:37:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3B9R8wmPt5FiY3+8DpmPyX4kLYpyKeoK4xVcuXGAELc=;
-        b=T3rGlQWhA9dMgzhwxjwybLi5abgIwTOqcDalv2g7bUFxDvEuLCmyh4zYTzM5xC1jO6
-         MlMs2XJF8SzQWMEAn8pLboEaZd5/MWEWxtVey28ecaG2ESrq84sbwOhF7SRqBErqZ8lg
-         5AsWoDJS00qAD2y81PTr00MNkHWH9doUBMsMTLGAfw4pJ4e4+voQO19lHDAsqR0yXy7C
-         HZveZTVdbv5TGr92qTN3Z7Rpyv4rhA5xF26XSkolYMUUxVpbsybq/96EECMH7vYrAaBb
-         9vCGm3iQwrdGv75JSWDiMrXqiZjSSP43Dq+UYAawHjDxTUU7u98bVRyHhTXIFnfcWG1c
-         9F6g==
+        bh=f6ln+3/9DBZRpR4O41lZm+OOJ4C7JaNKQynsg2JOb2g=;
+        b=EbBCcAzyZWm/Q6HMWYMKsq1Be407ENtQqcZASUE4eHvTa5BMm+1SPmG7vsMxWHXJqO
+         tH563uBZZQXq2FEFTt94GS4rtnxqAqR9m4OXeIwNCaJAPbDjG513N5aC+NdBzT8Kv4rZ
+         fQmYPzbjoIYw4/kDJtk+l7FwoJVIeJSwAmjFPKoucZ792mBhvOFHtNmGmg5ahr3QkEX6
+         FktSXOaxUllHXfQf/lKwshYA5eiDOs1ILPVM05lIOUC9CqdpL6CxA1dCHByfb3nKMjVi
+         ngfwM0P8pP9tVpSrogdYnx05KbcuYuWApPDl1aiM+FtF5G/GHixmLuGA+j+ck18bTx2B
+         TGSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3B9R8wmPt5FiY3+8DpmPyX4kLYpyKeoK4xVcuXGAELc=;
-        b=MQ7ZZw4iKdcRgTt2ZCEZiPPTWOvZcYEN9b+qI3bykhYMYFl9+DESPjMrXdOQVpNWIG
-         MefYqibFJwG/ehmWgXo+QiAxa5K6XnqnrjPnmHjc8bc1MfE+/P/rPf27AL0aYEkgdbOK
-         jckx4B8mPbxoFp3BhUx1Q8w6njm1rkVcofv2RxXO16boB7DDtk1N1nWQ77hnLPrzPBqr
-         6xcj6VweCo5s7o4atztSftwQoNE123WA61Mu4wyp0yBUwxsmn5MsVWBAZ4sUEvoR8g5y
-         rTU5tXu4NcGvvfeoI/9d3QjubYGS/tjLoC5dSgMaZ6NIkhAJDHMm2XyAXC+6E9IUOC1Y
-         OWkg==
-X-Gm-Message-State: AOAM530WfZebwUTTAk0FE0SzLGcd5YeAWLv9wAMWpAK7jmr3ku73n33j
-        cUTl5J4VrcOyKwcin13ryEA=
-X-Google-Smtp-Source: ABdhPJwe/lRaJSe0GFu+WGWCDcRFHEa/gNdXvQ4MfPOvkizc8B007dmK8onv9kIv9NgcsOsS/5eJzQ==
-X-Received: by 2002:a17:903:2283:b0:141:f858:f9af with SMTP id b3-20020a170903228300b00141f858f9afmr22475416plh.80.1637789829386;
-        Wed, 24 Nov 2021 13:37:09 -0800 (PST)
+        bh=f6ln+3/9DBZRpR4O41lZm+OOJ4C7JaNKQynsg2JOb2g=;
+        b=hqGotdtu018KxL2bKkBY7/VxxkhDyy4Z2TNqvl8VgP+StktOP/MIMAgpqY7B5Wcnnb
+         8QuaaW6TmDHbuTuKG4bQo0e/6EKSPEhUeQCCzVoSTJhKPVCA2E0KqR6GZGtmdJguozqm
+         HFUPd4mEYWtWo4hmluwm/XCYIP6cH8EMaHb5Z44g4IJDGeCb1HDTecUHsfe8MugqRRlx
+         67/cR8wdpXk+oipfIw3yeyESSjwF/LzmbEAlg6dI+Ehyv4rlpAomnLOiy7dDKrpynDYg
+         g7QZzXIJnxneOiZaaVyEk7x3rF7SFoXxPnjVKNeDrTdHY7IGwpnizoyqcxoU/09rZ6ty
+         czfg==
+X-Gm-Message-State: AOAM531QwRoA+OO8jKPzF4nzU2x9FV+Zq6GyBMSuXpUA0GNXQtHfrcvH
+        Mcq7bGtv+rt5NLho/vLDzJo=
+X-Google-Smtp-Source: ABdhPJwtik0+mxhV8osmTBLsnQR8ryhgLzx+m9B+uUtLe8i1esQUgxePWXQCjhjrDguWIPgkLxfaVQ==
+X-Received: by 2002:a17:90a:1b67:: with SMTP id q94mr200972pjq.119.1637789831907;
+        Wed, 24 Nov 2021 13:37:11 -0800 (PST)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id c6sm722654pfv.54.2021.11.24.13.37.08
+        by smtp.gmail.com with ESMTPSA id k91sm545748pja.19.2021.11.24.13.37.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 13:37:08 -0800 (PST)
+        Wed, 24 Nov 2021 13:37:10 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Rob Clark <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 1/3] drm/msm/gpu: Fix idle_work time
-Date:   Wed, 24 Nov 2021 13:41:27 -0800
-Message-Id: <20211124214151.1427022-3-robdclark@gmail.com>
+Subject: [PATCH v2 2/3] drm/msm/gpu: Fix check for devices without devfreq
+Date:   Wed, 24 Nov 2021 13:41:28 -0800
+Message-Id: <20211124214151.1427022-4-robdclark@gmail.com>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211124214151.1427022-1-robdclark@gmail.com>
 References: <20211124214151.1427022-1-robdclark@gmail.com>
@@ -72,25 +71,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-This was supposed to be a relative timer, not absolute.
+Looks like 658f4c829688 ("drm/msm/devfreq: Add 1ms delay before
+clamping freq") was badly rebased on top of efb8a170a367 ("drm/msm:
+Fix devfreq NULL pointer dereference on a3xx") and ended up with
+the NULL check in the wrong place.
 
 Fixes: 658f4c829688 ("drm/msm/devfreq: Add 1ms delay before clamping freq")
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index 43468919df61..7285041c737e 100644
+index 7285041c737e..1f55242bb6a1 100644
 --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
 +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -228,5 +228,5 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+@@ -203,9 +203,6 @@ static void msm_devfreq_idle_work(struct kthread_work *work)
+ 	struct msm_gpu *gpu = container_of(df, struct msm_gpu, devfreq);
+ 	unsigned long idle_freq, target_freq = 0;
+ 
+-	if (!df->devfreq)
+-		return;
+-
+ 	/*
+ 	 * Hold devfreq lock to synchronize with get_dev_status()/
+ 	 * target() callbacks
+@@ -227,6 +224,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+ {
  	struct msm_gpu_devfreq *df = &gpu->devfreq;
  
++	if (!df->devfreq)
++		return;
++
  	msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
--			       HRTIMER_MODE_ABS);
-+			       HRTIMER_MODE_REL);
+ 			       HRTIMER_MODE_REL);
  }
 -- 
 2.33.1
