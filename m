@@ -2,89 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD9B045CD24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:24:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48EDA45CD72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:44:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243524AbhKXT1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 14:27:25 -0500
-Received: from mout.kundenserver.de ([217.72.192.73]:32851 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242493AbhKXT1Z (ORCPT
+        id S234861AbhKXTrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 14:47:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36572 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232924AbhKXTrb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 14:27:25 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MbRXj-1mEiFI2mzJ-00bsdq; Wed, 24 Nov 2021 20:24:13 +0100
-Received: by mail-wm1-f51.google.com with SMTP id 77-20020a1c0450000000b0033123de3425so6424115wme.0;
-        Wed, 24 Nov 2021 11:24:13 -0800 (PST)
-X-Gm-Message-State: AOAM533o3fdAsZtw649pokCUGRehu/GqjCDQ1GQiXyWYrfMvuS+G/73V
-        zKblQs2wo+manpSqcD4PPuWMeDfRL0CZPrZdQXM=
-X-Google-Smtp-Source: ABdhPJxU3XHzGkZdmjVLUlcDMysYVZXYBGK7dc18pfMdKQoniTree9ljP7IJbkiJjYrYSt/hozmOHO002j1Kgkumx8s=
-X-Received: by 2002:a1c:1c1:: with SMTP id 184mr18501034wmb.1.1637781853302;
- Wed, 24 Nov 2021 11:24:13 -0800 (PST)
+        Wed, 24 Nov 2021 14:47:31 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 539CBC06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:44:21 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id k21so4701908ioh.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:44:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TVY0xbbNHGxOoTnm29wKJKABb+CBuNHDgBMwoMorQ2g=;
+        b=IDGj76q2VEC2WdGF9jr62e6uYamT9DHKLSk8HUTszRtO/fvegN5T6t6alvqlzZGJLv
+         k3eGKKCfDj9MuJiowcN0nzQlexrBpkv3mnYfkn8V2jnXpFduH1yAk2yw1DpF2XPOVRyC
+         YVqa3ZgzhcdsnD80Lec3EX2uFl/RlaS/d8IAYT0+EXaCmCaBkmsGVTbkmqLP5RbpGhgI
+         7jZjizXNHUh5Pz0nr/U2mz5oc9JJwhi5PJKCs/Gmzh7fgqfKUTahpZAiw6Zhf0pbyBy5
+         g1lD3l5cTvfAwQH2a0xMhPZBQNIbftQCc6hxWho0K5WYUNdfwnxi5UqhLra0Incfibt5
+         rhgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TVY0xbbNHGxOoTnm29wKJKABb+CBuNHDgBMwoMorQ2g=;
+        b=BrxxRyoa8U4q2g6PPCoeOtv2KAne3kF1T2Ut+lt/ui35/jTu8/ae7r7xqpQfb8NcZL
+         ZLAWpKaudyImUnKuewE8wxrWDxbaxbjBU/hPvNLMx1yw2ZC5YL+LO/K3BxkxHve8jzLJ
+         kBEDHeDnNgMXEAwfFGhsq31PgHthomuVdeE09PkxXT+S8O6IctnS1CA4KqXw1zryTTu8
+         8O/I4bHl2iRlHpdN4MiBmQuTWkfto6JwB6cukoLXoRF8RTT0xl/WBThLo7qL6WN6YJHX
+         KsFsS3wfvojnNdTF/oPJKx6WRJzFYAjpxW5zNFUQlhFeCo4U+JxSqnTIoRcgg1BZaz/e
+         YE1w==
+X-Gm-Message-State: AOAM5339fBRaYrn7+kZHPYgR2MJopNipS7wpXs95gWLioLdhGfa57YpV
+        +IPXc8E6gqAasAMw1KSmMeiF4g==
+X-Google-Smtp-Source: ABdhPJzSvYeWShlZpzbONR090fnXMSi5s3F8BjV1BxpHOETC4EcWCjEhxVc0xZ1ZcHQs4HImdxpapQ==
+X-Received: by 2002:a05:6638:12d6:: with SMTP id v22mr20175309jas.6.1637783060762;
+        Wed, 24 Nov 2021 11:44:20 -0800 (PST)
+Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id r14sm490145iov.14.2021.11.24.11.44.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Nov 2021 11:44:20 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     pkurapat@codeaurora.org, avuyyuru@codeaurora.org,
+        bjorn.andersson@linaro.org, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, evgreen@chromium.org, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 0/2] net: ipa: GSI channel flow control
+Date:   Wed, 24 Nov 2021 13:44:14 -0600
+Message-Id: <20211124194416.707007-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <cover.1637781097.git.mchehab+huawei@kernel.org>
-In-Reply-To: <cover.1637781097.git.mchehab+huawei@kernel.org>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Wed, 24 Nov 2021 20:23:57 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a1kQp4g6-59ui8ASBb-QYmwrtK5dh6L2PKjyXVV_VEGvw@mail.gmail.com>
-Message-ID: <CAK8P3a1kQp4g6-59ui8ASBb-QYmwrtK5dh6L2PKjyXVV_VEGvw@mail.gmail.com>
-Subject: Re: [PATCH 00/20] Solve the remaining issues with clang and W=1 on media
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     Linuxarm <linuxarm@huawei.com>,
-        Mauro Carvalho Chehab <mauro.chehab@huawei.com>,
-        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Andy Gross <agross@kernel.org>, Antti Palosaari <crope@iki.fi>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Malcolm Priestley <tvboxspy@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC..." 
-        <linux-mediatek@lists.infradead.org>, llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:fxnprxjloCWWYrvORmSMHeOI+UyQtOtMWEVLVsVv0o9SV41qVbT
- S4iJx+EM7+6t6XJ5aXREawkfRroBWZX+jxTHvN0Tpf8qLx2cg8Q119kQIDClYSXoMhj1r21
- 9FaE/VtUSsk5W0CBuh1DARwSw99ZHCW7XGDXUMncJfQ/gE8+PhMxU4n4OW9kQca3VWvvMPl
- gGV5Y38gO/X0yMM0AWD0Q==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:o42QZZqtfts=:lO3a4whMuLV9TfNlAYN7FK
- 9KBQQz3Uj6RkiPaz6XD2DF2CjSgv7PybhEXWTy11gzXDA+i/eWXz3pYkiqhRY9JsymT6NMrRr
- D8Gknkjd+Cqfa4Oa4ovcwO0Ofv+ataCadvUgRYcyG1c2QYfarUnO5q0g5kp51BolRpi4x5f7n
- IYFv4KwCn19mmDPlhWkxhmNe4zwMFr4VJnAd1UeMR7C1kp3tHUZQbvN6tegT5IpKpz+x0hVPf
- jyPRPh6HZ6FwYUJ2pyGBWV0Sm+U7FmYaAjQZvj3J6qpvF7y9AHySU78UPYkiCITuV+Bv7IPuY
- hv+dj1dgyg2K3mZa7CskXBvW0QYHoGIGdpSu4VrxGNPx7HjI/ZBp1WjAyIhWFik2i+Ks4YWvT
- svply4e8UtkSfvRRw8goxQFQ2OkWOLIq3X/+qrw0/XDAFMqf1E8DCrz3XZIBGK3KqRC9SHkVj
- asGtN1jTcH5Ou6CdR+/TWEH1OjTwHL7FavyAy0iDS1SzIC400jlnXdid/XXVDhRliqE8bLJ7G
- yRMQ1rRbOtWOZI/F29LwPjnq6NuTPrlT+9fg08oWJhfCUpNUo0qNTQSQ751HV7gmKWxl/xE9o
- rNfI37hRjR6KsTBxW0nnwnTvbYWccWFuLik2pfB57DbhTpM+pRCU76Sc2qCUAHc2bS7qj0e7R
- UInMHW7PbME6yaKEEtTFn+8BKBn8KuoZZxCNPAfE4lVLTMaZgcQG0KBAscOE3v4gfT7JY8lU7
- 7HfF5sVhY+euARjjMxaK0gje8Nv8McltGCQLlyKhSE9VVXytAuX4j7M3M2QN7wO6NqJ4FWyFD
- T9xhKWLNAVPlJOh3yMjBMpbsRMAluoDOKWl8fhuCzqDd4Nj9Jo=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 24, 2021 at 8:13 PM Mauro Carvalho Chehab
-<mchehab+huawei@kernel.org> wrote:
->
-> Currently, using clang with W=1 and CONFIG_WERROR causes media to break.
-> This is reported by builder.linuxtv.org.
->
-> This series solve the remaining issues.
+Starting with IPA v4.2, endpoint DELAY mode (which prevents data
+transfer on TX endpoints) does not work properly.  To address this,
+changes were made to allow underlying GSI channels to be put into
+a "flow controlled" state, which achieves a similar objective.
+The first patch in this series implements the flow controlled
+channel state and the commands used to control it.  It arranges
+to use the new mechanism--instead of DELAY mode--for IPA v4.2+.
 
-I looked through my randconfig tree and found one more that I had
-initially not sent
-as I wasn't sure whether we want to fix
--Wtautological-constant-out-of-range-compare
-warnings. I'll send it now, as all warnings of that type in other
-drivers have been addressed.
+In IPA v4.11, the notion of GSI channel flow control was enhanced,
+and implemented in a slightly different way.  For the most part this
+doesn't affect the way the IPA driver uses flow control, but the
+second patch adds support for the newer mechanism.
 
-        Arnd
+					-Alex
+
+Alex Elder (2):
+  net: ipa: introduce channel flow control
+  net: ipa: support enhanced channel flow control
+
+ drivers/net/ipa/gsi.c          | 70 ++++++++++++++++++++++++++--------
+ drivers/net/ipa/gsi.h          | 10 +++++
+ drivers/net/ipa/gsi_reg.h      |  4 ++
+ drivers/net/ipa/ipa_endpoint.c | 50 ++++++++++++++----------
+ 4 files changed, 99 insertions(+), 35 deletions(-)
+
+-- 
+2.32.0
+
