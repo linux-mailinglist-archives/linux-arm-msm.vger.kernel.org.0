@@ -2,110 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC61945CA54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 17:47:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BA4345CA68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 17:52:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349164AbhKXQvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 11:51:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:38002 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241782AbhKXQvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 11:51:06 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id EBCFD60FDA;
-        Wed, 24 Nov 2021 16:47:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637772476;
-        bh=xZZelNzGy3fEF+TRUP3mu2a2dvknfo0hSlfUMkdbXnE=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=QB2Os1i5AAZ9Xb5Ny2MOKmxAU9QaCl4g4U/BMONy2Go/4aNLCZCzKJp4JxdPfjil5
-         qHxNPAYki4sRFQnethGWNHA8GHDZbL88c3bDuLfvcdTBjwqsGNST4xcjN2W+EGY1y0
-         TvtMabQArNlwiSl0HxWQWfW+MKM5rssREZWlgFg6NjwjKGpKe6g39mGxEVGA3oaNxX
-         HdmkqI2DxHPlkYycjzpNmN6H99QT9uBQ/u82VVGRg2GOI7x+KvH19VBj7dIKiSmSJA
-         ADAU0J4jKCyMB/cBewSPJ3BzTq+hVhklOzMuTKcMRu99LF5Z4XVXjwqpsz5TxBueIE
-         8jyssOdTheYGg==
-Received: by mail-wm1-f48.google.com with SMTP id y196so3016654wmc.3;
-        Wed, 24 Nov 2021 08:47:55 -0800 (PST)
-X-Gm-Message-State: AOAM531K28KbFrMeUnQZk/r41mjzkGYVAHNfeHOoOjd8aKJH/vtnMiY9
-        rKJFj5805AMmrQQp7ia6liNjw/Bzm4EwydV9adE=
-X-Google-Smtp-Source: ABdhPJwbFP7vLbm8pNQQOpEuYc09R2zZihV7ND7aqtuJCkGnJDFI12J2lrIBTl3QZQQRaScbWu3GRnefAkQ3ygpVdCU=
-X-Received: by 2002:a1c:770e:: with SMTP id t14mr16061185wmi.173.1637772474274;
- Wed, 24 Nov 2021 08:47:54 -0800 (PST)
-MIME-Version: 1.0
-References: <20211122222203.4103644-1-arnd@kernel.org> <20211122222203.4103644-2-arnd@kernel.org>
- <1dbe0c9f-e209-49e1-f05c-765d9f9b91eb@gmail.com>
-In-Reply-To: <1dbe0c9f-e209-49e1-f05c-765d9f9b91eb@gmail.com>
-From:   Arnd Bergmann <arnd@kernel.org>
-Date:   Wed, 24 Nov 2021 17:47:38 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a0ojMBib+6UGGxO1GyQ4a22RM3yn79Uv=ixQ2KFUCfGrw@mail.gmail.com>
-Message-ID: <CAK8P3a0ojMBib+6UGGxO1GyQ4a22RM3yn79Uv=ixQ2KFUCfGrw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/11] ASoC: tegra20-spdif: stop setting slave_id
-To:     Dmitry Osipenko <digetx@gmail.com>
-Cc:     Vinod Koul <vkoul@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Andy Gross <agross@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
+        id S1349253AbhKXQzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 11:55:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53614 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232378AbhKXQzJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Nov 2021 11:55:09 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE55C061714
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 08:51:59 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id b1so8811932lfs.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 08:51:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SxpT0NltrIzzR1Gn9E4hcFAfBzYhQiD+NgncBW5q7Kc=;
+        b=mI5oApmWGex/imckCGWVSEmyd75rAfp7utD8RM/u6lijs2E2bLA2V6gFRBU77DVcne
+         ifZQ6LvXKvt6UrBDCx5GDpLICiuDEcAl8wkk5kKfHLzvmsJtttB/lmOP12t17eyAuIfa
+         WK6Dfcq+vHj4JSjtNyurCRY0O9P2mcRut7rZkhUNGApEa6+Qc7bJ8VVz/mBI9zpE+1qh
+         ebADOyI3xAFqT6+y81GXvQnj/Y/rI/YEGMijWx3E9/mZ8FyVzc3FyApDR+t3IjHsXuCp
+         U1eCLhNQWMkwgXJY/bokq84cdZjE6m4w/KkqwUFB1bgtPclDuMr3bDgnzAyZN2/Jkx+J
+         lP7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SxpT0NltrIzzR1Gn9E4hcFAfBzYhQiD+NgncBW5q7Kc=;
+        b=z35TO9w2suTB4gD7PUTFnRP7p40rdYgRUlvcXnIC3csr2f/OxC5f5hXS8eXtzz1vSo
+         UdXcqh1M0Z0dfrszF03NlA09IKXLMknzvZAxIOZKbH0/DocJnZPMsn+hkTafSnPbYt95
+         6hoY6WEAFyFfynH4HZqP9qzOA9BUck57k5HYlb8GxDE3ISW6ms8eyWncbrYPxg7GU41Z
+         Ish42gI3GEkS140cuEK+sECq5mXmKD92RUvklD389sDWOzrEsiOtSi8IrpcK8fGKmf1r
+         2347+ShhIWH6S8d2RsOeoc743GlWlevwa2BizgMa2F0iuLAsGDrLQXZORltkOTz5K2D0
+         ELpw==
+X-Gm-Message-State: AOAM532HbhsiD3sody2itMCtgiqCxQaZa3TKy98uuoeoZwh8nJk54kUL
+        dJJRJiAqppcrMtS1h5qFxIgz2A==
+X-Google-Smtp-Source: ABdhPJwHHd2b51vkL1ni+njs9obrWdIBL3HhU72Ow3NDYj5qyCvn5JW9wrg24gwf6jwKVFe1tCAchA==
+X-Received: by 2002:a19:ee01:: with SMTP id g1mr17044094lfb.44.1637772717815;
+        Wed, 24 Nov 2021 08:51:57 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id i24sm39685ljm.135.2021.11.24.08.51.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 08:51:57 -0800 (PST)
+Subject: Re: [PATCH v3 13/13] drm/msm/dsi: Pass DSC params to drm_panel
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Scott Branden <sbranden@broadcom.com>,
-        Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
-        dmaengine@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        linux-mtd <linux-mtd@lists.infradead.org>,
-        "moderated list:BROADCOM BCM2835 ARM ARCHITECTURE" 
-        <linux-rpi-kernel@lists.infradead.org>,
-        "open list:SERIAL DRIVERS" <linux-serial@vger.kernel.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        linux-staging@lists.linux.dev,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-14-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <056650fc-b2aa-49b7-cf8d-f479c2fe5825@linaro.org>
+Date:   Wed, 24 Nov 2021 19:51:56 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20211116062256.2417186-14-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 24, 2021 at 5:32 PM Dmitry Osipenko <digetx@gmail.com> wrote:
-> 23.11.2021 01:21, Arnd Bergmann =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
->
-> The commit message is correct, however you could remove even more code
-> here. But there is no need to make a v3 just because this patch because
-> I already prepared patchset that revives this S/PDIF driver and enables
-> HDMI audio on Tegra20. I'll take care of cleaning up the whole code of
-> this driver.
+On 16/11/2021 09:22, Vinod Koul wrote:
+> When DSC is enabled, we need to pass the DSC parameters to panel driver
+> as well, so add a dsc parameter in panel and set it when DSC is enabled
 
-Ok, perfect, thanks for taking a closer look as well.
+Nit: I think patch description is a bit inaccurate, since we pass DSC 
+parameters from panel to DSI host rather than other way around.
 
->
-> -       dmareq =3D platform_get_resource(pdev, IORESOURCE_DMA, 0);
-> -       if (!dmareq) {
-> -               dev_err(&pdev->dev, "No DMA resource\n");
-> -               return -ENODEV;
-> -       }
-> -
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 16 +++++++++++++++-
+>   include/drm/drm_panel.h            |  7 +++++++
+>   2 files changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 2c14c36f0b3d..3d5773fcf496 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -2159,11 +2159,25 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
+>   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+>   	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
+>   	struct msm_drm_private *priv;
+> +	struct drm_panel *panel;
+>   	int ret;
+>   
+>   	msm_host->dev = dev;
+> +	panel = msm_dsi_host_get_panel(&msm_host->base);
+>   	priv = dev->dev_private;
+> -	priv->dsc = msm_host->dsc;
+> +
+> +	if (panel && panel->dsc) {
+> +		struct msm_display_dsc_config *dsc = priv->dsc;
+> +
+> +		if (!dsc) {
+> +			dsc = kzalloc(sizeof(*dsc), GFP_KERNEL);
+> +			if (!dsc)
+> +				return -ENOMEM;
+> +			dsc->drm = panel->dsc;
+> +			priv->dsc = dsc;
+> +			msm_host->dsc = dsc;
+> +		}
+> +	}
+>   
+>   	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
+>   	if (ret) {
+> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
+> index 4602f833eb51..eb8ae9bf32ed 100644
+> --- a/include/drm/drm_panel.h
+> +++ b/include/drm/drm_panel.h
+> @@ -171,6 +171,13 @@ struct drm_panel {
+>   	 * Panel entry in registry.
+>   	 */
+>   	struct list_head list;
+> +
+> +	/**
+> +	 * @dsc:
+> +	 *
+> +	 * Panel DSC pps payload to be sent
+> +	 */
+> +	struct drm_dsc_config *dsc;
+>   };
+>   
+>   void drm_panel_init(struct drm_panel *panel, struct device *dev,
+> 
 
-Right, I think I considered doing this at some point as well, not sure
-why I left it in for the version I posted. Passing the IORESOURCE_DMA
-values is clearly wrong by itself and needs to be removed, though
-it's not obvious what the correct way of requesting the DMA channel
-is for this driver either, without a DT binding or users.
 
-        Arnd
+-- 
+With best wishes
+Dmitry
