@@ -2,131 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E9D45CB40
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 18:39:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0AAA45CB94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 18:57:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242621AbhKXRmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 12:42:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36184 "EHLO
+        id S1349980AbhKXSAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 13:00:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbhKXRmv (ORCPT
+        with ESMTP id S1350032AbhKXSAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 12:42:51 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7935C061574;
-        Wed, 24 Nov 2021 09:39:41 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id c32so9302002lfv.4;
-        Wed, 24 Nov 2021 09:39:41 -0800 (PST)
+        Wed, 24 Nov 2021 13:00:42 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9DF1C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:31 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id v23so3143524pjr.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6KwYnqzzoTeuVNxhHsajzRe6liKfZ7vCZOdko2MKcYY=;
-        b=lvNbpNKcqOAj74UHrS6XpdHcUjOf2sCIzeJURasqmwDotEWhqg+OtI1hIqfxXw53rO
-         z4tIfWJ15SJPCQPQEYpaz/zmC2AtWtLFdcPfiSvbidZ8Exl9V8VhaqU9R2npHpy4tYc0
-         yoAFhsyR/tm1sxMO7gFsD63QuHkm+jfTl/BAb0mYaTiKTxDGqN4kFZjH9jZeyYnQTnDY
-         +iO2QczJQHUVcBKOsIBMpcFVHI8R1BvISIqundwfmbO8Omwr++T3KiO2VqAHQJyXOIWo
-         3aZgsvReXTiUAJF/ECnq/pwPQIvxcyAQtmtfpSjrZuVeY4POAqNgnpvX5T/RJZH9Gntm
-         5JVA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Pw0JKTN0GSsLtiYFBeZZp+1RoDxA59KVirOS1u9rqHE=;
+        b=M2ESdLuBYPdPhCmt48tygApbQ5jWq/pdE5EzOfjz1WvbyrxTJ4jpIs437UnjZ4TUam
+         eD+4dZN3QPRgw4QyubmMb0IcEVvlN0tSRduzhOpyBsZmo0SBZTsbrIqhE72pNwJ7lwNa
+         rA7eTpmS5WBNgED2jVxGq5tHflwKNnjOShXgg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=6KwYnqzzoTeuVNxhHsajzRe6liKfZ7vCZOdko2MKcYY=;
-        b=2XJD9GYe9hHnmKvNFuhTMENH7Fskzbl+0c0Q9mpX7FHCCkqpD9/lsrJl6Z3tbnD2D6
-         tNuAp3Cz2ctAkXxSbwVyfEVLuA+aczy97bAPagyqHl+oPN85ZZduqFSIy+KKT6NBNBVf
-         vKlOc+SXUjvRo6Dt37YRfS/vqEb/oNMAcRWU8o3wOaAcgodfhWAAn8jtQlmgyoVRYH2O
-         XqMRhBXbXgUCWX5+865lg1rmmhMlVlpxo3e9SeKxFuto0JauS6AHHob/TvP2JEt3PDFc
-         BCywUAXrY6C4Ek1nLvP7lFx8cC70M/z3kY7jj+WaKEGje0Ei2Elnx/AmMH0gQSzzcjCn
-         UDIg==
-X-Gm-Message-State: AOAM533AsgWYcLN+Uio0Mp23dqbIHj2eUzXTM9eYwK6UZryMihhq2jeP
-        rkWWq3U3jTHFtpIiYzV0gjfq5yFK63s=
-X-Google-Smtp-Source: ABdhPJzMAN6+EU9Pjecu2Hl3ZC50CFEhc3UzlNKlYPHJ5/rwKJi/3grC00PRL2kx8I9BrVZVbuLcvw==
-X-Received: by 2002:a19:c350:: with SMTP id t77mr16616753lff.152.1637775579976;
-        Wed, 24 Nov 2021 09:39:39 -0800 (PST)
-Received: from [192.168.2.145] (94-29-48-99.dynamic.spd-mgts.ru. [94.29.48.99])
-        by smtp.googlemail.com with ESMTPSA id q5sm44228lfu.18.2021.11.24.09.39.38
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Pw0JKTN0GSsLtiYFBeZZp+1RoDxA59KVirOS1u9rqHE=;
+        b=wdPqvBlHrfwoKU5jOOpLKxDH8Avm5C5eBlbs9M0YRNh8I3l+9uh1OXPsaEzcRpJ4ws
+         tCNYdZGoJPsyZipZmfHXAchmdVAxGroe7svuiD8EV9H6XtW5exG80IDh5LKaRkbjPqBz
+         VL4qm508bhH3jbkvj0UPr6chmaK8LBEvB5b+0sFA7xtK42mYCjh61RIAUJlrgxwsAzIv
+         H02x1ltqwrdSMUSkjax6dgmgiEBNbF696PxNgwcIXeFW0L8b3F0elAVCulLW0EEuvwta
+         CRyMrtQB6DCHowvhhFhkckywSHXwLM7Z/+I3Emr75medT8PfCiRzuhNqwGOs0/WYtoD0
+         hpWw==
+X-Gm-Message-State: AOAM532FwdJer78iU3hkdakRPnIMgn1xAShrMgmrvwtOHAwUQgD3MZ48
+        oOd4gRv1F7gMbYJNDbdP+cpcmg==
+X-Google-Smtp-Source: ABdhPJy8hyBkU5o6asraA7eq2NgUATesBqffAe/dLKEnbuDHckCZJqQ7V0VhrqXQoTQhvemiPfVD2g==
+X-Received: by 2002:a17:902:a717:b0:142:76bc:da69 with SMTP id w23-20020a170902a71700b0014276bcda69mr21202878plq.12.1637776651380;
+        Wed, 24 Nov 2021 09:57:31 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:d8d8:79a:9375:eb49])
+        by smtp.gmail.com with UTF8SMTPSA id nn4sm328505pjb.38.2021.11.24.09.57.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 09:39:39 -0800 (PST)
-Subject: Re: [PATCH v2 01/11] ASoC: tegra20-spdif: stop setting slave_id
-To:     Arnd Bergmann <arnd@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Andy Gross <agross@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jon Hunter <jonathanh@nvidia.com>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Scott Branden <sbranden@broadcom.com>,
-        Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
-        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-serial@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-staging@lists.linux.dev,
-        linux-tegra@vger.kernel.org
-References: <20211122222203.4103644-1-arnd@kernel.org>
- <20211122222203.4103644-2-arnd@kernel.org>
-From:   Dmitry Osipenko <digetx@gmail.com>
-Message-ID: <b5c9ece3-c702-26b8-347a-f6d9bed2c5db@gmail.com>
-Date:   Wed, 24 Nov 2021 20:39:38 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Wed, 24 Nov 2021 09:57:30 -0800 (PST)
+Date:   Wed, 24 Nov 2021 09:57:29 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add WCN6750 WiFi node
+Message-ID: <YZ59CYVwrMtb7ser@google.com>
+References: <1637732438-17016-1-git-send-email-quic_mpubbise@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20211122222203.4103644-2-arnd@kernel.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <1637732438-17016-1-git-send-email-quic_mpubbise@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-23.11.2021 01:21, Arnd Bergmann пишет:
-> From: Arnd Bergmann <arnd@arndb.de>
+On Wed, Nov 24, 2021 at 11:10:38AM +0530, Manikanta Pubbisetty wrote:
+> Adding DTS node for WCN6750 WiFi chipset.
 > 
-> The DMA resource is never set up anywhere, and passing this as slave_id
-> has not been the proper procedure in a long time.
-> 
-> As a preparation for removing all slave_id references from the ALSA code,
-> remove this one.
-> 
-> According to Dmitry Osipenko, this driver has never been used and
-> the mechanism for configuring DMA would not work as it is implemented,
-> so this part will get rewritten when the driver gets put into use
-> again in the future.
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
 > ---
->  sound/soc/tegra/tegra20_spdif.c | 1 -
->  1 file changed, 1 deletion(-)
+> Depends on:
+> - https://patchwork.kernel.org/project/linux-arm-msm/patch/1637299488-22336-1-git-send-email-pillair@codeaurora.org/
+> - https://patchwork.kernel.org/project/linux-wireless/patch/1637693434-15462-20-git-send-email-quic_mpubbise@quicinc.com/
 > 
-> diff --git a/sound/soc/tegra/tegra20_spdif.c b/sound/soc/tegra/tegra20_spdif.c
-> index 9fdc82d58db3..1c3385da6f82 100644
-> --- a/sound/soc/tegra/tegra20_spdif.c
-> +++ b/sound/soc/tegra/tegra20_spdif.c
-> @@ -284,7 +284,6 @@ static int tegra20_spdif_platform_probe(struct platform_device *pdev)
->  	spdif->playback_dma_data.addr = mem->start + TEGRA20_SPDIF_DATA_OUT;
->  	spdif->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
->  	spdif->playback_dma_data.maxburst = 4;
-> -	spdif->playback_dma_data.slave_id = dmareq->start;
->  
->  	pm_runtime_enable(&pdev->dev);
->  
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  7 +++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 47 ++++++++++++++++++++++++++++++++
+>  2 files changed, 54 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index d623d71..ee152b9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -598,3 +598,10 @@
+>  		bias-pull-up;
+>  	};
+>  };
+> +
+> +&wifi {
+> +	status = "okay";
+> +	wifi-firmware {
+> +		iommus = <&apps_smmu 0x1C02 0x1>;
 
-Reviewed-by: Dmitry Osipenko <digetx@gmail.com>
+nit: the convention in this file seems to be to use lowercase characters
+in hex numbers
+
+> +	};
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 1969e8dfb..eb7106f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -83,6 +83,11 @@
+>  		#size-cells = <2>;
+>  		ranges;
+>  
+> +		wlan_ce_mem: memory@4cd000 {
+> +			no-map;
+> +			reg = <0x0 0x4cd000 0x0 0x1000>;
+> +		};
+> +
+>  		hyp_mem: memory@80000000 {
+>  			reg = <0x0 0x80000000 0x0 0x600000>;
+>  			no-map;
+> @@ -1579,6 +1584,48 @@
+>  			qcom,bcm-voters = <&apps_bcm_voter>;
+>  		};
+>  
+> +		wifi: wifi@17a10040 {
+> +			compatible = "qcom,wcn6750-wifi";
+> +			reg = <0 0x17A10040 0 0x0>;
+
+
+ditto
+
+> +			reg-names = "msi_addr";
+> +			iommus = <&apps_smmu 0x1C00 0x1>;
+
+ditto
