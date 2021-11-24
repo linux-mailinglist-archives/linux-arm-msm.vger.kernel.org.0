@@ -2,145 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B07545B139
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 02:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BFFD45B279
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 04:11:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234183AbhKXBse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 Nov 2021 20:48:34 -0500
-Received: from mga01.intel.com ([192.55.52.88]:1272 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231955AbhKXBse (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 Nov 2021 20:48:34 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10177"; a="259061090"
-X-IronPort-AV: E=Sophos;i="5.87,258,1631602800"; 
-   d="scan'208";a="259061090"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2021 17:45:25 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,258,1631602800"; 
-   d="scan'208";a="591415984"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by FMSMGA003.fm.intel.com with ESMTP; 23 Nov 2021 17:45:22 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mphLe-00048n-4r; Wed, 24 Nov 2021 01:45:22 +0000
-Date:   Wed, 24 Nov 2021 09:45:17 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Don't reconfigure running Trion
-Message-ID: <202111240901.R3Fzm2O3-lkp@intel.com>
-References: <20211123161630.123222-1-bjorn.andersson@linaro.org>
+        id S234285AbhKXDO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 Nov 2021 22:14:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39874 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233627AbhKXDOz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 23 Nov 2021 22:14:55 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEF1C06173E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 19:11:46 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id m6so2390082oim.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Nov 2021 19:11:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=fN/Dl6TxJyEsFt6u9NU+sGC5XUURVMgjTKQkCfW2T3U=;
+        b=uH7Wf/5iE4N6KcT0ASOtp1c43wElMx55biNOwUI52oUdDHLao+sKCDGtIRbA29w/9m
+         OKlPXBfisQZtai87FrCo+E0p56YO55MkA1lUvyZWqn3kXehEZicvMHhJatwBDWEJoagH
+         F9oACMqvZH9nppWw939vd42XcQ2s/Fjqts1IdI1Wafa6sL7/omMrBRAimM8tEtADuCMz
+         pV9qC19MeTYDTdJaB1MyCmhSKZjYlIVCEupBw+XT7ec4RRlyrVfGFsNzJzC/ImeAsR5R
+         JjoM6Ul4YHLwF2vDKrdTHuPZccQTau+hutNr+eod+x7xE9m88TGgMTd1shzWiDJh+7tR
+         RqgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=fN/Dl6TxJyEsFt6u9NU+sGC5XUURVMgjTKQkCfW2T3U=;
+        b=aSbwpf98pOE6H6V04k06KbTOY/iOzZ6GjT9MrAfGPEIy6YjCyuaQwBcmpD1VGx+crM
+         y7w+ZUjgygl7xxQwOsdcTtDJ13TPPwcodw7RE7xMp5vN3I8Y3C46HoYfuFkego7za1sY
+         p5a9mnl4vYICb38skqAZcEiYsqHzSsunVcjPA8xaxrLJbCH3KLWWYOn2hOlMxUen0Rky
+         lecM/ymZAtSF5Wc4GOAv7z+sbtu1XbcPIVBjTTYsVkHrKv1ZX9nOCsY6vYmZWmzX3vMF
+         4meAAfuzCz6m2vI7iueb3WaZQnojKqiYHPpPIto01tC+cxnN7Vx1cJqEMrSO8DlO4Q5t
+         +GmA==
+X-Gm-Message-State: AOAM533myN0uDiCvXJbt2hHu5ApRMl+bhpGDr9d5fEo5KtftEww/dNfU
+        XHXe3t1exmPFh0ivpbLp9JoYzg==
+X-Google-Smtp-Source: ABdhPJwIQ//gQ7KWi26qOY7SvR6fhEiF5FLmJ878n5ss82BwHOI30ESrg+s5mW/82/sJ+68HVlTQqg==
+X-Received: by 2002:aca:2b09:: with SMTP id i9mr2411519oik.14.1637723505553;
+        Tue, 23 Nov 2021 19:11:45 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id n23sm2789913oig.4.2021.11.23.19.11.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Nov 2021 19:11:45 -0800 (PST)
+Date:   Tue, 23 Nov 2021 19:13:27 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dominik Kobinski <dominikkobinski314@gmail.com>
+Cc:     agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Subject: Re: [PATCH 1/4] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+Message-ID: <YZ2t19wBLvuUVKfk@ripper>
+References: <20211123174127.2261-1-dominikkobinski314@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211123161630.123222-1-bjorn.andersson@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20211123174127.2261-1-dominikkobinski314@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Tue 23 Nov 09:41 PST 2021, Dominik Kobinski wrote:
 
-I love your patch! Yet something to improve:
+> Add support for pm8226 SPMI GPIOs. The PMIC features
+> 8 GPIOs, with no holes inbetween.
+> 
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on v5.16-rc2 next-20211123]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-url:    https://github.com/0day-ci/linux/commits/Bjorn-Andersson/clk-qcom-clk-alpha-pll-Don-t-reconfigure-running-Trion/20211124-001628
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: riscv-randconfig-r042-20211123 (https://download.01.org/0day-ci/archive/20211124/202111240901.R3Fzm2O3-lkp@intel.com/config.gz)
-compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 49e3838145dff1ec91c2e67a2cb562775c8d2a08)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install riscv cross compiling tool for clang build
-        # apt-get install binutils-riscv64-linux-gnu
-        # https://github.com/0day-ci/linux/commit/1c6539db17125d4d4eaf17c4071063fe8a7e2ca6
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Bjorn-Andersson/clk-qcom-clk-alpha-pll-Don-t-reconfigure-running-Trion/20211124-001628
-        git checkout 1c6539db17125d4d4eaf17c4071063fe8a7e2ca6
-        # save the config file to linux build tree
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 ARCH=riscv 
+Regards,
+Bjorn
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/clk-alpha-pll.c:1437:3: error: implicit declaration of function 'pr_dbg' [-Werror,-Wimplicit-function-declaration]
-                   pr_dbg("Trion PLL is already enabled, skipping configuration\n");
-                   ^
-   1 error generated.
-
-
-vim +/pr_dbg +1437 drivers/clk/qcom/clk-alpha-pll.c
-
-  1421	
-  1422	/**
-  1423	 * clk_lucid_pll_configure - configure the lucid pll
-  1424	 *
-  1425	 * @pll: clk alpha pll
-  1426	 * @regmap: register map
-  1427	 * @config: configuration to apply for pll
-  1428	 */
-  1429	void clk_trion_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-  1430				     const struct alpha_pll_config *config)
-  1431	{
-  1432		/*
-  1433		 * If the bootloader left the PLL enabled it's likely that there are
-  1434		 * RCGs that will lock up if we disable the PLL below.
-  1435		 */
-  1436		if (trion_pll_is_enabled(pll, regmap)) {
-> 1437			pr_dbg("Trion PLL is already enabled, skipping configuration\n");
-  1438			return;
-  1439		}
-  1440	
-  1441		clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
-  1442		regmap_write(regmap, PLL_CAL_L_VAL(pll), TRION_PLL_CAL_VAL);
-  1443		clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
-  1444		clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll),
-  1445					     config->config_ctl_val);
-  1446		clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll),
-  1447					     config->config_ctl_hi_val);
-  1448		clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll),
-  1449					     config->config_ctl_hi1_val);
-  1450		clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll),
-  1451						config->user_ctl_val);
-  1452		clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll),
-  1453						config->user_ctl_hi_val);
-  1454		clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U1(pll),
-  1455						config->user_ctl_hi1_val);
-  1456		clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll),
-  1457						config->test_ctl_val);
-  1458		clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll),
-  1459						config->test_ctl_hi_val);
-  1460		clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll),
-  1461						config->test_ctl_hi1_val);
-  1462	
-  1463		regmap_update_bits(regmap, PLL_MODE(pll), PLL_UPDATE_BYPASS,
-  1464				   PLL_UPDATE_BYPASS);
-  1465	
-  1466		/* Disable PLL output */
-  1467		regmap_update_bits(regmap, PLL_MODE(pll),  PLL_OUTCTRL, 0);
-  1468	
-  1469		/* Set operation mode to OFF */
-  1470		regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
-  1471	
-  1472		/* Place the PLL in STANDBY mode */
-  1473		regmap_update_bits(regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
-  1474	}
-  1475	EXPORT_SYMBOL_GPL(clk_trion_pll_configure);
-  1476	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> index 5283d5e9e8bc..0f0102f38cbb 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> @@ -1159,6 +1159,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+>  	/* pm8150l has 12 GPIOs with holes on 7 */
+>  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+>  	{ .compatible = "qcom,pmc8180c-gpio", .data = (void *) 12 },
+> +	{ .compatible = "qcom,pm8226-gpio", .data = (void *) 8 },
+>  	{ .compatible = "qcom,pm8350-gpio", .data = (void *) 10 },
+>  	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
+>  	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
+> -- 
+> 2.34.0
+> 
