@@ -2,125 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0AAA45CB94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 18:57:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03E2F45CB7F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 18:57:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349980AbhKXSAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 13:00:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40240 "EHLO
+        id S243235AbhKXSAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 13:00:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350032AbhKXSAm (ORCPT
+        with ESMTP id S240749AbhKXSAa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 13:00:42 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9DF1C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:31 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id v23so3143524pjr.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:31 -0800 (PST)
+        Wed, 24 Nov 2021 13:00:30 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3B6C06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:20 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id s13so5734177wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Pw0JKTN0GSsLtiYFBeZZp+1RoDxA59KVirOS1u9rqHE=;
-        b=M2ESdLuBYPdPhCmt48tygApbQ5jWq/pdE5EzOfjz1WvbyrxTJ4jpIs437UnjZ4TUam
-         eD+4dZN3QPRgw4QyubmMb0IcEVvlN0tSRduzhOpyBsZmo0SBZTsbrIqhE72pNwJ7lwNa
-         rA7eTpmS5WBNgED2jVxGq5tHflwKNnjOShXgg=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jJoyvThcbb9hgq1QujgM3jWedxTK6fvqPUXSUejGJVY=;
+        b=qnOp5jdLIclbSuOfa2slKfB9E6Mni1982ntv3MHYfDgQV83zRWA4N69hahwqYnF9DU
+         CxxSG7FMztgD4UNHcVh5SzsoURXAFle4T4OG90mjFIh65pfkIMqHlXZibHwBcuzTIP/w
+         8mS21rh56S8lBYJQHuQotCODgdAJv8dF1WMEHYVEdvuGtyBVzewI8QTdVQ7dv/bKTfbu
+         eKjNWQwMfy7MWqlV9X3uf9r7hNjc1mzncgPqfgMjKVv6eDpPSsyRC1EW3gCEPafg1uV1
+         Koa34LvZThbXe3qK8R06ZV7GDFjyxLOszlh1JYcH04ZpsoaJEPKNhppcFfL5epvhVFuh
+         sUQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Pw0JKTN0GSsLtiYFBeZZp+1RoDxA59KVirOS1u9rqHE=;
-        b=wdPqvBlHrfwoKU5jOOpLKxDH8Avm5C5eBlbs9M0YRNh8I3l+9uh1OXPsaEzcRpJ4ws
-         tCNYdZGoJPsyZipZmfHXAchmdVAxGroe7svuiD8EV9H6XtW5exG80IDh5LKaRkbjPqBz
-         VL4qm508bhH3jbkvj0UPr6chmaK8LBEvB5b+0sFA7xtK42mYCjh61RIAUJlrgxwsAzIv
-         H02x1ltqwrdSMUSkjax6dgmgiEBNbF696PxNgwcIXeFW0L8b3F0elAVCulLW0EEuvwta
-         CRyMrtQB6DCHowvhhFhkckywSHXwLM7Z/+I3Emr75medT8PfCiRzuhNqwGOs0/WYtoD0
-         hpWw==
-X-Gm-Message-State: AOAM532FwdJer78iU3hkdakRPnIMgn1xAShrMgmrvwtOHAwUQgD3MZ48
-        oOd4gRv1F7gMbYJNDbdP+cpcmg==
-X-Google-Smtp-Source: ABdhPJy8hyBkU5o6asraA7eq2NgUATesBqffAe/dLKEnbuDHckCZJqQ7V0VhrqXQoTQhvemiPfVD2g==
-X-Received: by 2002:a17:902:a717:b0:142:76bc:da69 with SMTP id w23-20020a170902a71700b0014276bcda69mr21202878plq.12.1637776651380;
-        Wed, 24 Nov 2021 09:57:31 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:d8d8:79a:9375:eb49])
-        by smtp.gmail.com with UTF8SMTPSA id nn4sm328505pjb.38.2021.11.24.09.57.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 09:57:30 -0800 (PST)
-Date:   Wed, 24 Nov 2021 09:57:29 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add WCN6750 WiFi node
-Message-ID: <YZ59CYVwrMtb7ser@google.com>
-References: <1637732438-17016-1-git-send-email-quic_mpubbise@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jJoyvThcbb9hgq1QujgM3jWedxTK6fvqPUXSUejGJVY=;
+        b=y2fFHZPNG4X06wljq4sSaUB6KFW2uekBBo3muynFYNplr1He8eqtl20vTorzZHaXAy
+         0BDHq6yHBNB6TfIEUkf+PLIu8ymGxf2nuO5GNcjN2YbcIJjJwV3mFFue6t+wQnvAyNZe
+         8/V9AunNlZBfr5+8f4jCwpB0ahOvRl9XSrNBLkTOwg5Lq1FweKhvEycipJDVN8ixzKM5
+         5hjCuxhZWeV1OilUyByaFL2y05ZzA4TGqaHCxFIw4c+dVosRbDMFwO5eQ0fMFl8dFVy3
+         xIUIM9cOjnFyIUU1V6KaPM0GPpzZ9FrvKlVrWIhJf9H9ZjrgbdvoLmzNZ4BvUx8K/jSA
+         kNdw==
+X-Gm-Message-State: AOAM532Tqc9mIdQh482aeMF6MymTV38VQef6rnygT/5/jp514BEZxMoo
+        FWpLuYb2KvK2HuKG3nxXJTSlUnNX3uN0Lr56
+X-Google-Smtp-Source: ABdhPJzyWMOnDp9PnEBKFZfV0YJ9HfPYmzM4ZFon4mGsv4PzEG38G5UMe87hIXgfD9b7IM/j7qu0qw==
+X-Received: by 2002:a5d:4889:: with SMTP id g9mr73962wrq.455.1637776638500;
+        Wed, 24 Nov 2021 09:57:18 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id s24sm380576wmj.26.2021.11.24.09.57.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Nov 2021 09:57:17 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        robert.foss@linaro.org, jonathan@marek.ca
+Cc:     andrey.konovalov@linaro.org, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        jgrahsl@snap.com, hfink@snap.com, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 00/19] CAMSS: Add SM8250 support
+Date:   Wed, 24 Nov 2021 17:59:02 +0000
+Message-Id: <20211124175921.1048375-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1637732438-17016-1-git-send-email-quic_mpubbise@quicinc.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 24, 2021 at 11:10:38AM +0530, Manikanta Pubbisetty wrote:
-> Adding DTS node for WCN6750 WiFi chipset.
-> 
-> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-> ---
-> Depends on:
-> - https://patchwork.kernel.org/project/linux-arm-msm/patch/1637299488-22336-1-git-send-email-pillair@codeaurora.org/
-> - https://patchwork.kernel.org/project/linux-wireless/patch/1637693434-15462-20-git-send-email-quic_mpubbise@quicinc.com/
-> 
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  7 +++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 47 ++++++++++++++++++++++++++++++++
->  2 files changed, 54 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index d623d71..ee152b9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -598,3 +598,10 @@
->  		bias-pull-up;
->  	};
->  };
-> +
-> +&wifi {
-> +	status = "okay";
-> +	wifi-firmware {
-> +		iommus = <&apps_smmu 0x1C02 0x1>;
+V2:
+- Adds Tested-by Julian Grahsl as indicated.
+- Fixes low-level noise checkpatch --strict
+  I ended up having to push defines into static inlines for this.
+- Adds Reviewed-by Robert Foss.
+- Adds VFE/CSID fix for sdm845 as explicit additional sdm845 specific
+  patch per Robert's suggestion.
 
-nit: the convention in this file seems to be to use lowercase characters
-in hex numbers
+I took the time then to test out on sdm845 to ensure the new patch breaks
+nothing "./cam -c 1 --capture=1 --file=capture.raw" continues to produce
+expected data.
 
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 1969e8dfb..eb7106f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -83,6 +83,11 @@
->  		#size-cells = <2>;
->  		ranges;
->  
-> +		wlan_ce_mem: memory@4cd000 {
-> +			no-map;
-> +			reg = <0x0 0x4cd000 0x0 0x1000>;
-> +		};
-> +
->  		hyp_mem: memory@80000000 {
->  			reg = <0x0 0x80000000 0x0 0x600000>;
->  			no-map;
-> @@ -1579,6 +1584,48 @@
->  			qcom,bcm-voters = <&apps_bcm_voter>;
->  		};
->  
-> +		wifi: wifi@17a10040 {
-> +			compatible = "qcom,wcn6750-wifi";
-> +			reg = <0 0x17A10040 0 0x0>;
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc1-sm8250-camss-imx577-only
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc3-sm8250-camss-imx577-only-v2
+
+git diff v5.16-rc1-sm8250-camss-imx577-only..v5.16-rc3-sm8250-camss-imx577-only-v2 -- drivers/media/platform/qcom/camss
+
+V1/RESEND:
+RESEND: git send-email --to=inux-arm-msm@vger.kernel.org -> --to=linux-arm-msm@vger.kernel.org
+
+This series is imported from excellent enabling work contributed by
+Jonathan Marek which we have picked up in Linaro for the RB5 project.
+
+Link: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210511180728.23781-2-jonathan@marek.ca/
+Link: https://www.qualcomm.com/products/robotics-rb5-platform
+Link: https://www.96boards.org/product/qualcomm-robotics-rb5
+Link: https://www.thundercomm.com/app_en/product/1590131656070623?index=1&categoryId=category0&tabIndex=1
+
+The RB5 has a slightly different sku I think to Jonathan's platform -
+QRB5165 in our case with a different version of LK the relevant bootloader
+for the board.
+
+As a result we needed to make some additional updates to the provided
+patcheset, included here.
+
+The most notable changes are:
+
+- Addition of clocks.
+- Addition of bandwidth settings.
+- Representing the dependency on a VFE for a given CSID so that V4L
+  subdevs will come out of reset right when poked.
+
+A full tree which is bootable and capable of producing pixel data from the
+imx577 main sensor is availble here, with this series being a sub-set of
+the necessary patches on the SoC side only.
+
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=v5.16-rc1-sm8250-camss-imx577-only
+
+media-ctl --reset
+media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+
+yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
 
 
-ditto
+Bryan O'Donoghue (3):
+  media: camss: Add SM8250 bandwdith configuration support
+  media: camss: Do vfe_get/vfe_put for csid on sm8250
+  media: camss: Apply vfe_get/vfe_put fix to SDM845
 
-> +			reg-names = "msi_addr";
-> +			iommus = <&apps_smmu 0x1C00 0x1>;
+Jonathan Marek (16):
+  media: dt-bindings: media: camss: Add qcom,sm8250-camss binding
+  media: camss: csiphy-3ph: don't print HW version as an error
+  media: camss: csiphy-3ph: disable interrupts
+  media: camss: csiphy-3ph: add support for SM8250 CSI DPHY
+  media: camss: csid-170: fix non-10bit formats
+  media: camss: csid-170: don't enable unused irqs
+  media: camss: csid-170: remove stray comment
+  media: camss: csid-170: support more than one lite vfe
+  media: camss: csid-170: set the right HALT_CMD when disabled
+  media: camss: csid: allow csid to work without a regulator
+  media: camss: remove vdda-csiN from sdm845 resources
+  media: camss: fix VFE irq name
+  media: camss: vfe-170: fix "VFE halt timeout" error
+  media: camss: Add initial support for VFE hardware version Titan 480
+  media: camss: add support for V4L2_PIX_FMT_GREY for sdm845 HW
+  media: camss: add support for SM8250 camss
 
-ditto
+ .../bindings/media/qcom,sm8250-camss.yaml     | 450 ++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   3 +-
+ .../{camss-csid-170.c => camss-csid-gen2.c}   |  32 +-
+ .../media/platform/qcom/camss/camss-csid.c    |  56 +-
+ .../media/platform/qcom/camss/camss-csid.h    |   2 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 184 ++++--
+ .../media/platform/qcom/camss/camss-csiphy.c  |   9 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  12 +-
+ .../media/platform/qcom/camss/camss-vfe-480.c | 564 ++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.c |  17 +-
+ drivers/media/platform/qcom/camss/camss-vfe.h |   4 +
+ .../media/platform/qcom/camss/camss-video.c   |   5 +-
+ drivers/media/platform/qcom/camss/camss.c     | 306 +++++++++-
+ drivers/media/platform/qcom/camss/camss.h     |  18 +
+ 14 files changed, 1558 insertions(+), 104 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+ rename drivers/media/platform/qcom/camss/{camss-csid-170.c => camss-csid-gen2.c} (95%)
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-480.c
+
+-- 
+2.33.0
+
