@@ -2,117 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03A5445CDFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 21:25:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB08545CE0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 21:33:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234599AbhKXU2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 15:28:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45734 "EHLO
+        id S234125AbhKXUgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 15:36:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232422AbhKXU2f (ORCPT
+        with ESMTP id S233705AbhKXUgp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 15:28:35 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08010C061746
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 12:25:25 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id f9so4763273ioo.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 12:25:25 -0800 (PST)
+        Wed, 24 Nov 2021 15:36:45 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26087C061746
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 12:33:35 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id v15so8093257ljc.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 12:33:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EsV2SEwRbXH/MiB85OZ9gOtuzuulNPsgUywfp2AegPE=;
-        b=wRs57miWUjiAN3yKPWYe1Ff4Rp2qfpsN7anHj65SyTRB3SUa7jliQhYH8SbZy6KGjA
-         RWv9bZoBdvG+BwFVGHxB9hu9OPl2AjtmxAXJKsusk0lX4j1NPOSwY/SUj4TobnhI4ipD
-         C8p8/hgp0pyMHxPphDqraqPbHcImo73e6R+EG0yIGNQdTYqKDua/MiKD24fKhqL4VSEt
-         bkiMOjgyDI4ZLWHOeHjNRHDs3NraKsbumZYaC+jqoUAVEDCTY/6EE40TFYjPBsT4mDdz
-         xxfxWMUrYYqT/FKsOJEU4YghDWj6UOMTiF6SXp6CVU42PPGPl9vNeffu3Emr6eZtL/Kt
-         8Vjw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sT2ApcG9AQxoESBvPgec5gNhDuTFLopwHxgm37++phI=;
+        b=Ns7MLbs7+WyewOZwg3Ezzj/vma7SFuQpk5ELc+KUUW9s833R20wu6hc66uS2qFXss9
+         cpKsq1iQ2Lh/k9RE1a2txSD0XJkyfrMaPTF5+nEfhlWiGT9Gw/D4VSGeVtcFZJmAMj1o
+         KGCz/ur86ZNNQmA9RYaKIf9zWnzhto2//I6DuPixZwRCXzG7rEQzGu12Vvi3E+497AHt
+         /3HoFln0orR+fgP/F1FFvgNBNzvjfRIh1JEV80/XhNrJPUbcaxZ8CGobuVf3XVpO26d3
+         DIzlTLtsLQHqFYyyyCvWbKoRAWIR1NdCEImjMUmdPUlLX/pLFybCgyR/CjWKM+1xhyC0
+         QLkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EsV2SEwRbXH/MiB85OZ9gOtuzuulNPsgUywfp2AegPE=;
-        b=EkI1oasXqoYX4WIdMY33ZQJll95BypBsEXRK8FwkX2iRhgJTj0K4+HlT08hHy1Vpxj
-         zoj+80Q8w+p+rl/tDrnb33hFKaeNO4d2O8LY1CfbSNxAYtkJUa0HLObvmQBZ7LeTmX6c
-         O2pHjBVKW3gJbbb6+RvfXHEZkHO39QdZe6Qf7JVXCHHSEpA5bTWec4BhI7Fc10+G4Qe4
-         d/z+7Q5Minb/Cz7HNSpHhpqWSBXF0rP40HPfgA7x1e0gPcv2ps75uBR4gh5OU5WBMsAb
-         RaKOK4QvFvvNxcaJk/VRjJ2s2ocaklTz7wEiqQsBVGilgrFxN3FlVwG++VOhhlGf1Bk9
-         +RVg==
-X-Gm-Message-State: AOAM5307+1ZURGvOltY1vhHGKrMUtXM2r881Yfz3hTNbYn2Q8v2oQNkr
-        uZYOvxbv2nBG0TOLRoYxyVFtgw==
-X-Google-Smtp-Source: ABdhPJz6abhDsO/1DFeTnORM770ghgL/aQBKugHIxMndKddTitNV9WFH/2HF08BKYJIzM7iN/b02mw==
-X-Received: by 2002:a05:6602:14d3:: with SMTP id b19mr18395447iow.17.1637785524195;
-        Wed, 24 Nov 2021 12:25:24 -0800 (PST)
-Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id x2sm312795ile.29.2021.11.24.12.25.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 12:25:23 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, kuba@kernel.org
-Cc:     pkurapat@codeaurora.org, avuyyuru@codeaurora.org,
-        bjorn.andersson@linaro.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, evgreen@chromium.org, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 7/7] net: ipa: rearrange GSI structure fields
-Date:   Wed, 24 Nov 2021 14:25:11 -0600
-Message-Id: <20211124202511.862588-8-elder@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211124202511.862588-1-elder@linaro.org>
-References: <20211124202511.862588-1-elder@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sT2ApcG9AQxoESBvPgec5gNhDuTFLopwHxgm37++phI=;
+        b=p5/0b8xOBO9z0++h/vLFfy+5aTQyX45QCJe1vAKcjLsqer6ZcMzzzXgEZKqPR5JNaG
+         DAZNcGe4oxUcbM/TjZrb26AulHBpUP+dH3H9OEWyzGWug46Zb2DxI3H87cu15I4X73ey
+         IyUULcOXZ1cuHRcC0ibm/6fwBvE2Vxp/eCkwP4PKBt3PuJGkxs/sOwg9hoNGKkqMUlqZ
+         5pC0x2ZS0I3MgIQOVWZeOPR4/dJ6doZGCIHv2FttcwFTGOseqsIscQPXwIpYv+3DqAjb
+         KlmJjhGmIzGSIQhnRO87JSQwluF0xfmVkoajdcYuDxH96zIetqP+OUzkYB0VinM3EzPl
+         WEGg==
+X-Gm-Message-State: AOAM531NbLPqDS735jOiPGuOFqojR76zt2xoAGiICAHDhRsG5/p/iXCy
+        qCQGLbx6hw0koZV+JW8XZx5fjA==
+X-Google-Smtp-Source: ABdhPJyaWfST1iBUwxTtckh2LYTYg0pVPA9P0rQgbTKLoz+Ahm/X1Xfm3OLS3NZKBq7e7hTgtpjB0A==
+X-Received: by 2002:a2e:9bd4:: with SMTP id w20mr19388784ljj.69.1637786013365;
+        Wed, 24 Nov 2021 12:33:33 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c21sm80949lfv.29.2021.11.24.12.33.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 12:33:32 -0800 (PST)
+Subject: Re: [PATCH v3 11/13] drm/msm/dsi: add mode valid callback for dsi_mgr
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-12-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <08b4ee1f-6232-7d5d-9b84-2aa9a1396e48@linaro.org>
+Date:   Wed, 24 Nov 2021 23:33:32 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211116062256.2417186-12-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dummy net_device is a large field in the GSI structure, but it
-is not at all interesting from the perspective of debugging.  Move
-it to the end of the GSI structure so the other fields are easier to
-find in memory.
+On 16/11/2021 09:22, Vinod Koul wrote:
+> Add a mode valid callback for dsi_mgr for checking mode being valid in
+> case of DSC. For DSC the height and width needs to be multiple of slice,
+> so we check that here
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-The channel and event ring arrays are also very large, so move them
-near the end of the structure as well.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Swap the position of the result and completion fields to improve
-structure packing.
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi.h         |  2 ++
+>   drivers/gpu/drm/msm/dsi/dsi_host.c    | 26 ++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 12 ++++++++++++
+>   3 files changed, 40 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index 569c8ff062ba..e7affab2fc1e 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -115,6 +115,8 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+>   int msm_dsi_host_power_off(struct mipi_dsi_host *host);
+>   int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+>   				  const struct drm_display_mode *mode);
+> +enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+> +					    const struct drm_display_mode *mode);
+>   struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
+>   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
+>   struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 30c1e299aa52..31d385d8d834 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -2588,6 +2588,32 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+>   	return 0;
+>   }
+>   
+> +enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+> +					    const struct drm_display_mode *mode)
+> +{
+> +	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+> +	struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +	int pic_width = mode->hdisplay;
+> +	int pic_height = mode->vdisplay;
+> +
+> +	if (!msm_host->dsc)
+> +		return MODE_OK;
+> +
+> +	if (pic_width % dsc->drm->slice_width) {
+> +		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
+> +		       pic_width, dsc->drm->slice_width);
+> +		return MODE_H_ILLEGAL;
+> +	}
+> +
+> +	if (pic_height % dsc->drm->slice_height) {
+> +		pr_err("DSI: pic_height %d has to be multiple of slice %d\n",
+> +		       pic_height, dsc->drm->slice_height);
+> +		return MODE_V_ILLEGAL;
+> +	}
+> +
+> +	return MODE_OK;
+> +}
+> +
+>   struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host)
+>   {
+>   	return of_drm_find_panel(to_msm_dsi_host(host)->device_node);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index 20c4d650fd80..0ad8a53aaa0e 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -579,6 +579,17 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
+>   		msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
+>   }
+>   
+> +static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
+> +						      const struct drm_display_info *info,
+> +						      const struct drm_display_mode *mode)
+> +{
+> +	int id = dsi_mgr_bridge_get_id(bridge);
+> +	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> +	struct mipi_dsi_host *host = msm_dsi->host;
+> +
+> +	return msm_dsi_host_check_dsc(host, mode);
+> +}
+> +
+>   static const struct drm_connector_funcs dsi_mgr_connector_funcs = {
+>   	.detect = dsi_mgr_connector_detect,
+>   	.fill_modes = drm_helper_probe_single_connector_modes,
+> @@ -600,6 +611,7 @@ static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
+>   	.disable = dsi_mgr_bridge_disable,
+>   	.post_disable = dsi_mgr_bridge_post_disable,
+>   	.mode_set = dsi_mgr_bridge_mode_set,
+> +	.mode_valid = dsi_mgr_bridge_mode_valid,
+>   };
+>   
+>   /* initialize connector when we're connected to a drm_panel */
+> 
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ipa/gsi.h b/drivers/net/ipa/gsi.h
-index ccaa333e37620..75dfc7655f3ba 100644
---- a/drivers/net/ipa/gsi.h
-+++ b/drivers/net/ipa/gsi.h
-@@ -145,21 +145,21 @@ struct gsi_evt_ring {
- struct gsi {
- 	struct device *dev;		/* Same as IPA device */
- 	enum ipa_version version;
--	struct net_device dummy_dev;	/* needed for NAPI */
- 	void __iomem *virt_raw;		/* I/O mapped address range */
- 	void __iomem *virt;		/* Adjusted for most registers */
- 	u32 irq;
- 	u32 channel_count;
- 	u32 evt_ring_count;
--	struct gsi_channel channel[GSI_CHANNEL_COUNT_MAX];
--	struct gsi_evt_ring evt_ring[GSI_EVT_RING_COUNT_MAX];
- 	u32 event_bitmap;		/* allocated event rings */
- 	u32 modem_channel_bitmap;	/* modem channels to allocate */
- 	u32 type_enabled_bitmap;	/* GSI IRQ types enabled */
- 	u32 ieob_enabled_bitmap;	/* IEOB IRQ enabled (event rings) */
--	struct completion completion;	/* Signals GSI command completion */
- 	int result;			/* Negative errno (generic commands) */
-+	struct completion completion;	/* Signals GSI command completion */
- 	struct mutex mutex;		/* protects commands, programming */
-+	struct gsi_channel channel[GSI_CHANNEL_COUNT_MAX];
-+	struct gsi_evt_ring evt_ring[GSI_EVT_RING_COUNT_MAX];
-+	struct net_device dummy_dev;	/* needed for NAPI */
- };
- 
- /**
 -- 
-2.32.0
-
+With best wishes
+Dmitry
