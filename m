@@ -2,90 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EF0B45CC2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 19:37:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E40C845CCE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:14:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244630AbhKXSkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 13:40:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242716AbhKXSkN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 13:40:13 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A939C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 10:37:03 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id g19so3469400pfb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 10:37:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pez5w3jV97XcX3c3fey0y+X2jYtUTi++2V8HLPAeStQ=;
-        b=ZSKJezyCV1AVGPeZm+I5cj3e7kHTG9HyQs/VSAfKDm9TpsAq2ztpPYcixreZj6SMm5
-         u1uYTA1Vn1gC1re/DrHrohEweUgbbJiuBACGsonp+WNWEj4XunokDGReZQ76ta5oFhET
-         niCRZukV1aacEMNGrO+SkY8p+W65a3YCCS7Q4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pez5w3jV97XcX3c3fey0y+X2jYtUTi++2V8HLPAeStQ=;
-        b=stCwD2dt9CbgDwebkA7jeV8sUSjuWRYjOuS6Lfj+0NTg6Iq7K6Bb8dd8A5bewZEiEU
-         f/8rsjXPbAWU1xQ2HpqMuhx9eJDG0OBvrql6Z2bZ6PmWqCXrJOIEG3u8AxbItJJd0LII
-         vrojmzREbdv1gxKxnkJNavWEfcez43xnNuvP8ZECMp3Rvn/Mq+PVDbbtKHkHhrXjpng1
-         JO/LqSuB2VNlm6nIt3AdknOhTsrpqNIExW4EUmszGcNknHcPOLOMB4UxIDxs3l8Y3Q4R
-         ROriMao+w3CZuRo/97gbBeq6wjqYXANAw7VKuKcwguQdlvA4n4PCiid7dYNSLAVWOdEt
-         +Cmw==
-X-Gm-Message-State: AOAM533e5IhZHGCXfWkGNU0IU5loaNJ3vam1hA0qTDt+K1oL0j6SuiwM
-        aRFLvjuQjk+5NeTWQwiQ5ykWnA==
-X-Google-Smtp-Source: ABdhPJzMe45WLcaDbwKn3N28h2l6ZhjUT6rpImb434IcKhq4zqrVMt9koscUttYWITmtTD9bXgdCXQ==
-X-Received: by 2002:a05:6a00:124a:b0:4a0:b9d7:66bb with SMTP id u10-20020a056a00124a00b004a0b9d766bbmr8381181pfi.15.1637779022751;
-        Wed, 24 Nov 2021 10:37:02 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:d8d8:79a:9375:eb49])
-        by smtp.gmail.com with UTF8SMTPSA id rm10sm397124pjb.29.2021.11.24.10.37.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 10:37:02 -0800 (PST)
-Date:   Wed, 24 Nov 2021 10:37:01 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, kuba@kernel.org, pkurapat@codeaurora.org,
-        avuyyuru@codeaurora.org, bjorn.andersson@linaro.org,
-        cpratapa@codeaurora.org, subashab@codeaurora.org,
-        evgreen@chromium.org, elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net 1/2] net: ipa: directly disable ipa-setup-ready
- interrupt
-Message-ID: <YZ6GTe3wUU7PbI/W@google.com>
-References: <20211123001555.505546-1-elder@linaro.org>
- <20211123001555.505546-2-elder@linaro.org>
+        id S1351128AbhKXTQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 14:16:43 -0500
+Received: from mail.kernel.org ([198.145.29.99]:52782 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1351097AbhKXTQl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 24 Nov 2021 14:16:41 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4F3C061058;
+        Wed, 24 Nov 2021 19:13:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637781211;
+        bh=ShVkegqqlX9t3NgDlpdxjJkZAHHvUFAOs0QktUXWaRU=;
+        h=From:To:Cc:Subject:Date:From;
+        b=JIPgVQG3LDY5LNEy7Z/faVPS18QIVYSpCdrmNV0RLG6Q1njtwPhcvrv7OBO3+7Wi5
+         fg5JlbrEm2Wg6L/E8YSB0hKu20+VA1KuMhtyRVALaxKGjWbRFBjGIFlJhHi9wf9S4R
+         auZDiv2kx5dj6jSh53Zq6PZ21yjcsxzVzdQHUQgSGNjUKctEUU09E9oRip3y4igX1K
+         cwLDePxNW8/es+iXmX5r3az0ypdnogpJP9lh7RceFlHG3Wa+fAJeknC3SdyHHKXZum
+         ZRdsPu+gqIz1mchnAbaI07zLtdwBCVXNdO4Vriy113unQ1nq61PimTpY3SDS44zW2x
+         C9rQwPqdmBvGg==
+Received: by mail.kernel.org with local (Exim 4.94.2)
+        (envelope-from <mchehab@kernel.org>)
+        id 1mpxhs-004Q50-Eq; Wed, 24 Nov 2021 20:13:24 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Andy Gross <agross@kernel.org>, Antti Palosaari <crope@iki.fi>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Malcolm Priestley <tvboxspy@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        llvm@lists.linux.dev
+Subject: [PATCH 00/20] Solve the remaining issues with clang and W=1 on media
+Date:   Wed, 24 Nov 2021 20:13:03 +0100
+Message-Id: <cover.1637781097.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20211123001555.505546-2-elder@linaro.org>
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 06:15:54PM -0600, Alex Elder wrote:
-> We currently maintain a "disabled" Boolean flag to determine whether
-> the "ipa-setup-ready" SMP2P IRQ handler does anything.  That flag
-> must be accessed under protection of a mutex.
-> 
-> Instead, disable the SMP2P interrupt when requested, which prevents
-> the interrupt handler from ever being called.  More importantly, it
-> synchronizes a thread disabling the interrupt with the completion of
-> the interrupt handler in case they run concurrently.
-> 
-> Use the IPA setup_complete flag rather than the disabled flag in the
-> handler to determine whether to ignore any interrupts arriving after
-> the first.
-> 
-> Rename the "disabled" flag to be "setup_disabled", to be specific
-> about its purpose.
-> 
-> Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
-> Signed-off-by: Alex Elder <elder@linaro.org>
+Currently, using clang with W=1 and CONFIG_WERROR causes media to break.
+This is reported by builder.linuxtv.org.
 
-I don't claim to know much about IPA, but this looks reasonable to me.
+This series solve the remaining issues.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Mauro Carvalho Chehab (20):
+  media: adv7842: get rid of two unused functions
+  media: saa7134-go7007: get rid of to_state() function
+  media: davinci: get rid of an unused function
+  media: drxd: drop offset var from DownloadMicrocode()
+  media: drxk: drop operation_mode from set_dvbt()
+  media: m88ds3103: drop reg11 calculus from m88ds3103b_select_mclk()
+  media: si21xx: report eventual errors at set_frontend
+  media: solo6x10: add _maybe_unused to currently unused functions
+  media: si470x: fix printk warnings with clang
+  media: radio-si476x: drop a container_of() abstraction macro
+  media: lmedm04: don't ignore errors when setting a filter
+  media: au0828-i2c: drop a duplicated function
+  media: adv7604 add _maybe_unused to currently unused functions
+  media: adv7511: drop unused functions
+  media: imx290: mark read reg function as __maybe_unused
+  media: davinci: vpbe_osd: mark read reg function as __maybe_unused
+  media: qcom: camss: mark read reg function as  __maybe_unused
+  media: mtk-mdp: address a clang warning
+  media: cobalt: drop an unused variable
+  media: mxl5005s: drop some dead code
+
+ drivers/media/dvb-frontends/drxd_hard.c       |  8 -------
+ drivers/media/dvb-frontends/drxk_hard.c       |  6 -----
+ drivers/media/dvb-frontends/m88ds3103.c       |  6 +----
+ drivers/media/dvb-frontends/si21xx.c          |  7 +++---
+ drivers/media/i2c/adv7511-v4l2.c              | 22 -------------------
+ drivers/media/i2c/adv7604.c                   | 18 +++++++--------
+ drivers/media/i2c/adv7842.c                   | 10 ---------
+ drivers/media/i2c/imx290.c                    |  2 +-
+ drivers/media/pci/cobalt/cobalt-cpld.c        |  5 +----
+ drivers/media/pci/saa7134/saa7134-go7007.c    |  7 +-----
+ .../media/pci/solo6x10/solo6x10-v4l2-enc.c    | 12 +++++-----
+ drivers/media/platform/davinci/vpbe_osd.c     |  2 +-
+ drivers/media/platform/davinci/vpif_capture.c | 11 ----------
+ drivers/media/platform/mtk-mdp/mtk_mdp_core.c |  2 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  2 +-
+ drivers/media/radio/radio-si476x.c            |  6 -----
+ drivers/media/radio/si470x/radio-si470x-i2c.c |  4 ++--
+ drivers/media/radio/si470x/radio-si470x-usb.c |  8 +++----
+ drivers/media/tuners/mxl5005s.c               | 14 +-----------
+ drivers/media/usb/au0828/au0828-i2c.c         |  7 ------
+ drivers/media/usb/dvb-usb-v2/lmedm04.c        |  3 +++
+ 21 files changed, 36 insertions(+), 126 deletions(-)
+
+-- 
+2.33.1
+
+
