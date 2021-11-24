@@ -2,214 +2,366 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4506245CD77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:44:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3A0945CD7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:45:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235878AbhKXTrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 14:47:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
+        id S235621AbhKXTsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 14:48:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235610AbhKXTre (ORCPT
+        with ESMTP id S235578AbhKXTsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 14:47:34 -0500
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C86C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:44:24 -0800 (PST)
-Received: by mail-io1-xd32.google.com with SMTP id f9so4629966ioo.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:44:24 -0800 (PST)
+        Wed, 24 Nov 2021 14:48:41 -0500
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B7AC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:45:31 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id b16so7685635ljf.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:45:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9+1wmLMR32a4owb7dmiLLzwYsR7GITdvUE8vjTvuilE=;
-        b=W9Wsncv65+Y3CmoeAbhZYtPAmBFUAnhs9JZy2aq+yOyfzrBfTfBGYf89XsdwCV4Fdc
-         TM0XqH+T4oVJks86UJIwZS0vxGcrHu6qqWg5CyZ58pUq+Rv1DfGXKYbpIpX85F+vgdkV
-         tVl6XoSVEeJEekdCKf4rTkUsw8bW0zEn7veEyeLzB+ndpYC7ZooXSn/Cpp3HboXiqhb+
-         3hpHzFvMIowiSU7Lkmhumlx3ZSCw4a8IFTv4ssNSh7cV2mz7HXjSLajnUtFZ1WkrIWah
-         rHu2DMxbhgBCjtd17YDjowYWq/JvNrpYeCklyJJP1cp/JsG3WdEOGPwbeQbx5DjPtt7X
-         nm1g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FYe8SZY8tKnKyO3YnDz/mlszVEbqAvVXRrJA/Pn5hGs=;
+        b=enw7Ei65RL89rluLa7X0Z0lz/BscBdapoamvmqrdwSKCagZuJTGLxdhyOpFeetD70P
+         wax4ZkfqAmLHKLYS+xwtCYQEPS/FIS3xUh5bJeFISrO0ByfOpSA5OSat/2LG39J4T07K
+         B0frj1f6G81QVcOnnU1oEqG6VFXXwlktPyQErkQOfCL1JQwBiUK2A2gLlEBCK5YthMHQ
+         RR5sE2ZA3QDPRkwZ+S2gf6OhFfmloFV4Ym5WUI8V7PbcYpNYIZIfbJGbHYxR5aOw/UIK
+         z8YEJ6EuN3ghBehTI9ktuBXRpeKfc6fKXhZ6OjWDOkfx+5kO4cePiSSA8jG+SUgFSzkF
+         S8rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9+1wmLMR32a4owb7dmiLLzwYsR7GITdvUE8vjTvuilE=;
-        b=P9HkMGnlnq/+ktl/CTur1ao1WsHYIVR6m82+QcXJTvUUNUqeyrf6hscKK+OrQiyA4y
-         S1x7RVDyjckpE9itUgmxfc23O4LSBjn5GRzPLFQyYtZYU0pN4LP4UOKJ8y+Ag2lBl966
-         stqlTtefynhJvwZudUllgrJ6ez54vEwmTwfVb3138b+aqIGcVcQVaHhXo7jNQORGWzzV
-         BIWIm0pb9mf1gHJACDr9a86+C6hfwtkb4ibl4eJWPioLJvVe2MviNGThxgu6C/qWCyjr
-         AzQ98V74NgOgT3l+yJxcIjIlTqYus2StwDSyZMxwmdSl58owvC5T7Mfn21BO1DryP5gS
-         v2Pw==
-X-Gm-Message-State: AOAM5320IBJfsT4NdhLv0V3uuGkx7Zcyk+S4+vjJmPiRIayVcVsA7npJ
-        bPdBZcK94OX8fk0bcy1BdYTqLw==
-X-Google-Smtp-Source: ABdhPJzPyTIl2t/oL3DjN5/Lhw+wTdL2jGh8m7uzJGY603AFVNlHPu0JZoBNTAXesEg3q0f5NEvjWQ==
-X-Received: by 2002:a6b:7306:: with SMTP id e6mr17042524ioh.25.1637783063826;
-        Wed, 24 Nov 2021 11:44:23 -0800 (PST)
-Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id r14sm490145iov.14.2021.11.24.11.44.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 11:44:23 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, kuba@kernel.org
-Cc:     pkurapat@codeaurora.org, avuyyuru@codeaurora.org,
-        bjorn.andersson@linaro.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, evgreen@chromium.org, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 2/2] net: ipa: support enhanced channel flow control
-Date:   Wed, 24 Nov 2021 13:44:16 -0600
-Message-Id: <20211124194416.707007-3-elder@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211124194416.707007-1-elder@linaro.org>
-References: <20211124194416.707007-1-elder@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FYe8SZY8tKnKyO3YnDz/mlszVEbqAvVXRrJA/Pn5hGs=;
+        b=HHt30sZCzX48McpVG8HRvx0rlxLAE16u1iPO1gnjqrjoh6Ql25KpUMKc2V2MF39AVf
+         IUsUBI/bHZcpxH/GpWT6y78vEozncBvzN2yd2oD21oxtt/8uQwLjby7kvSvJZ3BYDjvb
+         kv7NnuJlVBIfUO92ZWhK5DkOZadpn/Mce9FM/1GnZ5EbU+jgLDY4qQmpTCaz7uXp2Xe0
+         eJ4vFAOB7raOrf5D3C5mFXOKq+viMtAmn3yiGX2FLBf/ny9gBsiIZol9AR+EzJA26SyP
+         cY2QNDaXkdM23Fjue4DexX2rXA6eLlTNpeDIYtM9G8Gxasfrq0k/EDQMPp+eQNEBw1UD
+         vRBw==
+X-Gm-Message-State: AOAM5317hPXaMjvxy//6Cf4kEMUOlU0up7/yLNfaRo7m498l4jBHIi2n
+        6dx/6oVIKbOdMj/EuCdiMOAm0w==
+X-Google-Smtp-Source: ABdhPJwxcub+kL6aUHYpIX6Ga9P2hZ9V4SPH5upele4k0jWTFeYQe8HtM8Y5JLoB/xvSqxpt2+0LFw==
+X-Received: by 2002:a05:651c:1791:: with SMTP id bn17mr17399555ljb.525.1637783129355;
+        Wed, 24 Nov 2021 11:45:29 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h14sm68197lfu.195.2021.11.24.11.45.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Nov 2021 11:45:28 -0800 (PST)
+Subject: Re: [PATCH v3] drm/msm/dp: employ bridge mechanism for display enable
+ and disable
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1637002123-18682-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <02b7b643-f6d4-aa5f-6e05-46aa7c3a81cb@linaro.org>
+Date:   Wed, 24 Nov 2021 22:45:28 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1637002123-18682-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPA v4.2 introduced GSI channel flow control, used instead of IPA
-endpoint DELAY mode to prevent a TX channel from injecting packets
-into the IPA core.  It used a new FLOW_CONTROLLED channel state
-which could be entered using GSI generic commands.
+On 15/11/2021 21:48, Kuogee Hsieh wrote:
+> Currently the msm_dp_*** functions implement the same sequence which would
+> happen when drm_bridge is used. hence get rid of this intermediate layer
+> and align with the drm_bridge usage to avoid customized implementation.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> 
+> Changes in v2:
+> -- revise commit text
+> -- rename dp_bridge to msm_dp_bridge
+> -- delete empty functions
+> 
+> Changes in 3:
+> -- replace kzalloc() with devm_kzalloc()
+> -- replace __dp_display_enable() with dp_display_enable()
+> -- replace __dp_display_disable() with dp_display_disable()
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 21 -------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  7 +++
+>   drivers/gpu/drm/msm/dp/dp_display.c         |  4 +-
+>   drivers/gpu/drm/msm/dp/dp_display.h         |  1 +
+>   drivers/gpu/drm/msm/dp/dp_drm.c             | 91 +++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h               | 16 +++--
+>   6 files changed, 113 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 31050aa..c4e08c4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1003,9 +1003,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>   
+>   	trace_dpu_enc_mode_set(DRMID(drm_enc));
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
+> -		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
+> -
+>   	list_for_each_entry(conn_iter, connector_list, head)
+>   		if (conn_iter->encoder == drm_enc)
+>   			conn = conn_iter;
+> @@ -1181,14 +1178,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+>   
+>   	_dpu_encoder_virt_enable_helper(drm_enc);
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
+> -		if (ret) {
+> -			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
+> -				ret);
+> -			goto out;
+> -		}
+> -	}
+>   	dpu_enc->enabled = true;
+>   
+>   out:
+> @@ -1214,11 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+>   	/* wait for idle */
+>   	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
+> -			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
+> -	}
+> -
+>   	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+>   
+>   	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> @@ -1243,11 +1227,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+>   
+>   	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
+> -			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
+> -	}
+> -
+>   	mutex_unlock(&dpu_enc->enc_lock);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 27d98b5..d16337f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -557,6 +557,13 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+>   				  encoder->base.id, rc);
+>   			return rc;
+>   		}
+> +
+> +		rc = msm_dp_bridge_init(priv->dp[i], dev, encoder);
+> +		if (rc) {
+> +			DPU_ERROR("failed to setup DPU bridge %d: rc:%d\n",
+> +				encoder->base.id, rc);
+> +			return rc;
+> +		}
 
-IPA v4.11 extended the channel flow control model.  Rather than
-having a distinct FLOW_CONTROLLED channel state, each channel has a
-"flow control" property that can be enabled or not--independent of
-the channel state.  The AP (or modem) can modify this property using
-the same GSI generic commands as before.
+There is no need to teach DPU driver about all the gory details of DP 
+internals. Move this call to the msm_dp_modeset_init().
 
-The AP only uses channel flow control on modem TX channels, and only
-when recovering from a modem crash.  The AP has no way to discover
-the state of a modem channel, so the fact that (starting with IPA
-v4.11) flow control no longer uses a distinct channel state is
-invisible to the AP.  So enhanced flow control generally does not
-change the way AP uses flow control.
+>   	}
+>   
+>   	return rc;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2f113ff..51770a4 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1674,8 +1674,8 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+>   }
+>   
+>   void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode)
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+>   {
+>   	struct dp_display_private *dp_display;
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 76f45f9..2237e80 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -13,6 +13,7 @@
+>   struct msm_dp {
+>   	struct drm_device *drm_dev;
+>   	struct device *codec_dev;
+> +	struct drm_bridge *bridge;
+>   	struct drm_connector *connector;
+>   	struct drm_encoder *encoder;
+>   	struct drm_panel *drm_panel;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index f33e315..b341f1f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -5,12 +5,21 @@
+>   
+>   #include <drm/drm_atomic_helper.h>
+>   #include <drm/drm_atomic.h>
+> +#include <drm/drm_bridge.h>
+>   #include <drm/drm_crtc.h>
+>   
+>   #include "msm_drv.h"
+>   #include "msm_kms.h"
+>   #include "dp_drm.h"
+>   
+> +
+> +struct msm_dp_bridge {
+> +	struct drm_bridge bridge;
+> +	struct msm_dp *dp_display;
+> +};
+> +
+> +#define to_dp_display(x)     container_of((x), struct msm_dp_bridge, bridge)
+> +
+>   struct dp_connector {
+>   	struct drm_connector base;
+>   	struct msm_dp *dp_display;
+> @@ -162,3 +171,85 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+>   
+>   	return connector;
+>   }
+> +
+> +static int dp_bridge_attach(struct drm_bridge *drm_bridge,
+> +				enum drm_bridge_attach_flags flags)
+> +{
+> +	return 0;
+> +}
 
-There are a few small differences, however:
-  - There is a notion of "primary" or "secondary" flow control, and
-    when enabling or disabling flow control that must be specified
-    in a new field in the GSI generic command register.  For now, we
-    always specify 0 (meaning "primary").
-  - When disabling flow control, it's possible a request will need
-    to be retried.  We retry up to 5 times in this case.
-  - Another new generic command allows the current flow control
-    state to be queried.  We do not use this.
+As far as I see from drm_bridge_attach() there is no need to provide 
+stubs for attach callback. Please drop it.
 
-Other than the need for retries, the code essentially works the same
-way as before.
+> +
+> +static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_mode_set(dp_display, drm_bridge->encoder, mode, adjusted_mode);
+> +}
+> +
+> +static void dp_bridge_enable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_enable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static void dp_bridge_disable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_pre_disable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_disable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static const struct drm_bridge_funcs dp_bridge_ops = {
+> +	.attach       = dp_bridge_attach,
+> +	.mode_fixup   = NULL,
+> +	.pre_enable   = NULL,
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/gsi.c     | 20 ++++++++++++++++----
- drivers/net/ipa/gsi.h     |  2 +-
- drivers/net/ipa/gsi_reg.h |  2 ++
- 3 files changed, 19 insertions(+), 5 deletions(-)
+No need to initialize fields to default values (NULL). Drop these two 
+please.
 
-diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
-index 5f9e9fb501e7f..1125926367b2c 100644
---- a/drivers/net/ipa/gsi.c
-+++ b/drivers/net/ipa/gsi.c
-@@ -93,6 +93,7 @@
- 
- #define GSI_CHANNEL_STOP_RETRIES	10
- #define GSI_CHANNEL_MODEM_HALT_RETRIES	10
-+#define GSI_CHANNEL_MODEM_FLOW_RETRIES	5	/* disable flow control only */
- 
- #define GSI_MHI_EVENT_ID_START		10	/* 1st reserved event id */
- #define GSI_MHI_EVENT_ID_END		16	/* Last reserved event id */
-@@ -1658,7 +1659,8 @@ static void gsi_channel_teardown_one(struct gsi *gsi, u32 channel_id)
-  * issue the command and wait for it to complete.
-  */
- static int gsi_generic_command(struct gsi *gsi, u32 channel_id,
--			       enum gsi_generic_cmd_opcode opcode)
-+			       enum gsi_generic_cmd_opcode opcode,
-+			       u8 params)
- {
- 	struct completion *completion = &gsi->completion;
- 	bool timeout;
-@@ -1685,6 +1687,7 @@ static int gsi_generic_command(struct gsi *gsi, u32 channel_id,
- 	val = u32_encode_bits(opcode, GENERIC_OPCODE_FMASK);
- 	val |= u32_encode_bits(channel_id, GENERIC_CHID_FMASK);
- 	val |= u32_encode_bits(GSI_EE_MODEM, GENERIC_EE_FMASK);
-+	val |= u32_encode_bits(params, GENERIC_PARAMS_FMASK);
- 
- 	timeout = !gsi_command(gsi, GSI_GENERIC_CMD_OFFSET, val, completion);
- 
-@@ -1703,7 +1706,7 @@ static int gsi_generic_command(struct gsi *gsi, u32 channel_id,
- static int gsi_modem_channel_alloc(struct gsi *gsi, u32 channel_id)
- {
- 	return gsi_generic_command(gsi, channel_id,
--				   GSI_GENERIC_ALLOCATE_CHANNEL);
-+				   GSI_GENERIC_ALLOCATE_CHANNEL, 0);
- }
- 
- static void gsi_modem_channel_halt(struct gsi *gsi, u32 channel_id)
-@@ -1713,7 +1716,7 @@ static void gsi_modem_channel_halt(struct gsi *gsi, u32 channel_id)
- 
- 	do
- 		ret = gsi_generic_command(gsi, channel_id,
--					  GSI_GENERIC_HALT_CHANNEL);
-+					  GSI_GENERIC_HALT_CHANNEL, 0);
- 	while (ret == -EAGAIN && retries--);
- 
- 	if (ret)
-@@ -1725,13 +1728,22 @@ static void gsi_modem_channel_halt(struct gsi *gsi, u32 channel_id)
- void
- gsi_modem_channel_flow_control(struct gsi *gsi, u32 channel_id, bool enable)
- {
-+	u32 retries = 0;
- 	u32 command;
- 	int ret;
- 
- 	command = enable ? GSI_GENERIC_ENABLE_FLOW_CONTROL
- 			 : GSI_GENERIC_DISABLE_FLOW_CONTROL;
-+	/* Disabling flow control on IPA v4.11+ can return -EAGAIN if enable
-+	 * is underway.  In this case we need to retry the command.
-+	 */
-+	if (!enable && gsi->version >= IPA_VERSION_4_11)
-+		retries = GSI_CHANNEL_MODEM_FLOW_RETRIES;
-+
-+	do
-+		ret = gsi_generic_command(gsi, channel_id, command, 0);
-+	while (ret == -EAGAIN && retries--);
- 
--	ret = gsi_generic_command(gsi, channel_id, command);
- 	if (ret)
- 		dev_err(gsi->dev,
- 			"error %d %sabling mode channel %u flow control\n",
-diff --git a/drivers/net/ipa/gsi.h b/drivers/net/ipa/gsi.h
-index 41b3ab14c5124..5370a282a9f57 100644
---- a/drivers/net/ipa/gsi.h
-+++ b/drivers/net/ipa/gsi.h
-@@ -101,7 +101,7 @@ enum gsi_channel_state {
- 	GSI_CHANNEL_STATE_STARTED		= 0x2,
- 	GSI_CHANNEL_STATE_STOPPED		= 0x3,
- 	GSI_CHANNEL_STATE_STOP_IN_PROC		= 0x4,
--	GSI_CHANNEL_STATE_FLOW_CONTROLLED	= 0x5,	/* IPA v4.2+ */
-+	GSI_CHANNEL_STATE_FLOW_CONTROLLED	= 0x5,	/* IPA v4.2-v4.9 */
- 	GSI_CHANNEL_STATE_ERROR			= 0xf,
- };
- 
-diff --git a/drivers/net/ipa/gsi_reg.h b/drivers/net/ipa/gsi_reg.h
-index 4ab23998b3485..8906f4381032e 100644
---- a/drivers/net/ipa/gsi_reg.h
-+++ b/drivers/net/ipa/gsi_reg.h
-@@ -313,6 +313,7 @@ enum gsi_evt_cmd_opcode {
- #define GENERIC_OPCODE_FMASK		GENMASK(4, 0)
- #define GENERIC_CHID_FMASK		GENMASK(9, 5)
- #define GENERIC_EE_FMASK		GENMASK(13, 10)
-+#define GENERIC_PARAMS_FMASK		GENMASK(31, 24)	/* IPA v4.11+ */
- 
- /** enum gsi_generic_cmd_opcode - GENERIC_OPCODE field values in GENERIC_CMD */
- enum gsi_generic_cmd_opcode {
-@@ -320,6 +321,7 @@ enum gsi_generic_cmd_opcode {
- 	GSI_GENERIC_ALLOCATE_CHANNEL		= 0x2,
- 	GSI_GENERIC_ENABLE_FLOW_CONTROL		= 0x3,	/* IPA v4.2+ */
- 	GSI_GENERIC_DISABLE_FLOW_CONTROL	= 0x4,	/* IPA v4.2+ */
-+	GSI_GENERIC_QUERY_FLOW_CONTROL		= 0x5,	/* IPA v4.11+ */
- };
- 
- /* The next register is present for IPA v3.5.1 and above */
+> +	.enable       = dp_bridge_enable,
+> +	.disable      = dp_bridge_disable,
+> +	.post_disable = dp_bridge_post_disable,
+> +	.mode_set     = dp_bridge_mode_set,
+> +};
+> +
+> +int msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> +			struct drm_encoder *encoder)
+> +{
+> +	int rc;
+> +	struct msm_drm_private *priv;
+> +	struct msm_dp_bridge *dp_bridge;
+> +	struct drm_bridge *bridge;
+> +
+> +	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
+> +	if (!dp_bridge)
+> +		return -ENOMEM;
+> +
+> +	dp_bridge->dp_display = dp_display;
+> +
+> +	bridge = &dp_bridge->bridge;
+> +	bridge->funcs = &dp_bridge_ops;
+> +	bridge->encoder = encoder;
+> +
+> +	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+> +	if (rc) {
+> +		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
+> +		kfree(dp_bridge);
+> +		return rc;
+> +	}
+> +
+> +	priv = dev->dev_private;
+> +	priv->bridges[priv->num_bridges++] = bridge;
+> +	dp_display->bridge = bridge;
+> +
+> +	return 0;
+> +} > diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+b/drivers/gpu/drm/msm/msm_drv.h
+> index 4bb797e..9a2092f 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -388,8 +388,10 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode);
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode);
+> +int msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> +			struct drm_encoder *encoder);
+>   void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+>   
+> @@ -426,10 +428,16 @@ static inline int msm_dp_display_pre_disable(struct msm_dp *dp,
+>   }
+>   static inline void msm_dp_display_mode_set(struct msm_dp *dp,
+>   				struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode)
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+>   {
+>   }
+> +static inline int msm_dp_bridge_init(struct msm_dp *dp_display,
+> +				struct drm_device *dev,
+> +				struct drm_encoder *encoder)
+> +{
+> +	return -EINVAL;
+> +}
+
+If msm_dp_bridge_init() becomes DP-internal function, this is unnecessary.
+
+>   
+>   static inline void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>   {
+> 
+
+
 -- 
-2.32.0
-
+With best wishes
+Dmitry
