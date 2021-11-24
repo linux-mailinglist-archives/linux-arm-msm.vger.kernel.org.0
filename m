@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30BAB45CBA6
+	by mail.lfdr.de (Postfix) with ESMTP id 7C14745CBA7
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 18:57:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350121AbhKXSAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 13:00:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40310 "EHLO
+        id S1350122AbhKXSAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 13:00:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350117AbhKXSAt (ORCPT
+        with ESMTP id S1350117AbhKXSAu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 13:00:49 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E49C06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:39 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id d72-20020a1c1d4b000000b00331140f3dc8so2789416wmd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:39 -0800 (PST)
+        Wed, 24 Nov 2021 13:00:50 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4C67C06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:40 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id o19-20020a1c7513000000b0033a93202467so2797221wmc.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 09:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LBwfTtSyYCU0xqsJ/IyzroSY8TR9asGjJxvjOL1AdpE=;
-        b=RXO8VHf1B5HKGzWyQ0JrhK16tqkAZ3XnR03tW0cWqbZ56063Pjk58dtl92ji2ElWRq
-         /dwGLMzv4Qk71hOiAAhaPnHKTOo+EUtL0IsfeotOi7kzbQOfPCtMU6DCb85UvSs+r3kl
-         ITbhSdEbrhY/y3J71Erlh5UeQFICNLLaV/LwFYbdnROKDCqDsSwSSFKYZZkOJ8WyZ3bB
-         pOKEELxWZ2cSCX4ehF66SiQYJwZ8hw3NZGxOeck3o56XDI3IQJXxsGgM2QclStf0NmKm
-         5DKXau2iXSyzWEL/tyFqzM27mEsd5TCGdmFeiBpJymUHS8SVgM+gFOkUzbGuHJmVpnf+
-         2spA==
+        bh=/vVxuU7a+LUiAWFx1LiXN7IDyUv3UsbR6TDuxkNCB/w=;
+        b=pElfa4N+mVHIERjaDJUGd+rNgcDFDOycBoe6SRgoO1jnmv4EFwR0s+nfDkoXIb9rOn
+         wut3M9nbBW5QmyRT8g4cBkNs8QQ2vUBbk707ov7rfGLFx3m6079cdDeMvXI6j3vsdoE7
+         PO0+et9igKf3wDppggUUyMc5VZA+s8+Lwp+ov4z+9M+fcqhuxZlosJf/LTChx4VSYe1l
+         /5evz5sd8wY5qSf9WtQdqVM0K4FPUs/sQqg1AF415vlGOHaWc+3s8d3umGcftsHxgbYu
+         Fl5vFVxeiZaCjKeaSG5DO28bc0ilZXYx1Gt//1MTXUJho/fdaVmaq2PdTXvXBmaNiv9o
+         SxVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LBwfTtSyYCU0xqsJ/IyzroSY8TR9asGjJxvjOL1AdpE=;
-        b=RXQQX1o5aVN4TqfUV+iSK30si2pEP/Ma8lhj3Ci5j9Eg2W/hl/nAbbZlHh7E+lHk/f
-         441nEzbTUkzzxTd7mlPThV26xkZKCq0/ABEYCMe38th97AtoMIecN6W6aPUMwyVAFpwD
-         SPGRn3K5XLh2zumwqrSc3RwXIqDE3msRL9Y0BY6XAdP2IxCfdJyqRFSCJci9a8EyhTpS
-         lXd5Yhu9Fc69Cczzw78zx9u32eJ8Dj8EWClZV05LcZpaIOCbfXwU7+BRBPRY4WcAiR/b
-         R5cQDTGp4eHbh/b68hOEmxveZriiO6QXb7Kro8SodkBlag8NqoQM6e8yNUqsO7TMLPwP
-         xybA==
-X-Gm-Message-State: AOAM532DPulV9PwiUZE5lb/R5VO/+wp4Waelqt9tilA+/DGp/QMVvOup
-        TFmddB/0k0wAJbH0N1S1rVb6emOR3vV+I8wo
-X-Google-Smtp-Source: ABdhPJzp2J5tbRzrQJ6cGgFDYa1M6nTCym79SqGQAhKmw0MfG9/FVXSpfj6y4DyqpVsqbFwnMKmfog==
-X-Received: by 2002:a1c:f70c:: with SMTP id v12mr17440385wmh.18.1637776657957;
-        Wed, 24 Nov 2021 09:57:37 -0800 (PST)
+        bh=/vVxuU7a+LUiAWFx1LiXN7IDyUv3UsbR6TDuxkNCB/w=;
+        b=zkAwn7A2cTXrSaZ6zpZXx5BrqnR22pK010mX0w+cjcjC4X/O0EOyDgkVCba3iSlwwT
+         FPUNGqnkjL1RPABDzNbcMafYO80IbSnWBHw48o9TwcEdauwakqiAqzD4NRoPca4QQpBh
+         wPOLp/tFknI0zjzsxLi0QnIMUeop3Lz4o3XR/WO7ENeK6Gmlor7w/mOqSW7R7pjdAdOr
+         TThEh+d1rLDO1LuS0ns8847JJsfuTMvbww96pEoXnM4wj/MaPFfJCk/1/gRKIT58UC8Q
+         yjhZTGjZbXSAyGz1YVAK342mI4/1Injxb6fO74q6L49DGqCMy+raHIWEwG3rFRue3MvN
+         rv/w==
+X-Gm-Message-State: AOAM531314abeGeMLELiGxCpmMVx31ujz9Pg4JtCOcHmO29a2PVt833m
+        jYVj99FabjH3De7/2Z+P6So7C/T8onFs6T5k
+X-Google-Smtp-Source: ABdhPJzJwPMuFWpEfRFeLQsfUJM8vyZi54CcxvX6xCs8tOmEL8Rz7aMg8SBJ5l0+Ywkfjh6wVnGC/Q==
+X-Received: by 2002:a05:600c:19d1:: with SMTP id u17mr17864488wmq.148.1637776659211;
+        Wed, 24 Nov 2021 09:57:39 -0800 (PST)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s24sm380576wmj.26.2021.11.24.09.57.37
+        by smtp.gmail.com with ESMTPSA id s24sm380576wmj.26.2021.11.24.09.57.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Nov 2021 09:57:37 -0800 (PST)
+        Wed, 24 Nov 2021 09:57:38 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         robert.foss@linaro.org, jonathan@marek.ca
 Cc:     andrey.konovalov@linaro.org, todor.too@gmail.com,
         agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
         jgrahsl@snap.com, hfink@snap.com, bryan.odonoghue@linaro.org
-Subject: [PATCH v2 18/19] media: camss: Do vfe_get/vfe_put for csid on sm8250
-Date:   Wed, 24 Nov 2021 17:59:20 +0000
-Message-Id: <20211124175921.1048375-19-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 19/19] media: camss: Apply vfe_get/vfe_put fix to SDM845
+Date:   Wed, 24 Nov 2021 17:59:21 +0000
+Message-Id: <20211124175921.1048375-20-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211124175921.1048375-1-bryan.odonoghue@linaro.org>
 References: <20211124175921.1048375-1-bryan.odonoghue@linaro.org>
@@ -66,90 +66,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sm8250 CAMSS CSID depends on the VFE it is attached to being powered on
-and clocked prior to taking the CSID out of reset.
+Similar to the SM8250 the CSID relies on the VFE to be clocked prior to
+taking the CSID out of reset.
 
-It is possible to open just the CSID subdev from libcamera and attempt to
-bring the CSID block up.
+Apply the same fixup to SDM845 as SM8250.
 
-If we do not first bring up the VFE the CSID will fail to come out of
-reset.
-
-Tested-by: Julian Grahsl <jgrahsl@snap.com>
+Suggested-by: Robert Foss <robert.foss@linaro.org>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid.c | 12 +++++++++++-
- drivers/media/platform/qcom/camss/camss-vfe.c  |  4 ++--
- drivers/media/platform/qcom/camss/camss-vfe.h  |  3 +++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 9ef6fbbeeddf..e6835b92695b 100644
+index e6835b92695b..32f82e471bae 100644
 --- a/drivers/media/platform/qcom/camss/camss-csid.c
 +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -156,10 +156,18 @@ static int csid_set_clock_rates(struct csid_device *csid)
- static int csid_set_power(struct v4l2_subdev *sd, int on)
- {
- 	struct csid_device *csid = v4l2_get_subdevdata(sd);
--	struct device *dev = csid->camss->dev;
-+	struct camss *camss = csid->camss;
-+	struct device *dev = camss->dev;
-+	struct vfe_device *vfe = &camss->vfe[csid->id];
+@@ -159,10 +159,11 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+ 	struct camss *camss = csid->camss;
+ 	struct device *dev = camss->dev;
+ 	struct vfe_device *vfe = &camss->vfe[csid->id];
++	u32 version = camss->version;
  	int ret;
  
  	if (on) {
-+		if (camss->version == CAMSS_8250) {
-+			ret = vfe_get(vfe);
-+			if (ret < 0)
-+				return ret;
-+		}
-+
- 		ret = pm_runtime_resume_and_get(dev);
- 		if (ret < 0)
- 			return ret;
-@@ -204,6 +212,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+-		if (camss->version == CAMSS_8250) {
++		if (version == CAMSS_8250 || version == CAMSS_845) {
+ 			ret = vfe_get(vfe);
+ 			if (ret < 0)
+ 				return ret;
+@@ -212,7 +213,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
  		camss_disable_clocks(csid->nclocks, csid->clock);
  		ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
  		pm_runtime_put_sync(dev);
-+		if (camss->version == CAMSS_8250)
-+			vfe_put(vfe);
+-		if (camss->version == CAMSS_8250)
++		if (version == CAMSS_8250 || version == CAMSS_845)
+ 			vfe_put(vfe);
  	}
  
- 	return ret;
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 5b5fe620914d..703ea39f1262 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -575,7 +575,7 @@ static int vfe_check_clock_rates(struct vfe_device *vfe)
-  *
-  * Return 0 on success or a negative error code otherwise
-  */
--static int vfe_get(struct vfe_device *vfe)
-+int vfe_get(struct vfe_device *vfe)
- {
- 	int ret;
- 
-@@ -637,7 +637,7 @@ static int vfe_get(struct vfe_device *vfe)
-  * vfe_put - Power down VFE module
-  * @vfe: VFE Device
-  */
--static void vfe_put(struct vfe_device *vfe)
-+void vfe_put(struct vfe_device *vfe)
- {
- 	mutex_lock(&vfe->power_lock);
- 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-index 6500474a749e..0eba04eb9b77 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.h
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-@@ -203,4 +203,7 @@ extern const struct vfe_hw_ops vfe_ops_4_8;
- extern const struct vfe_hw_ops vfe_ops_170;
- extern const struct vfe_hw_ops vfe_ops_480;
- 
-+int vfe_get(struct vfe_device *vfe);
-+void vfe_put(struct vfe_device *vfe);
-+
- #endif /* QC_MSM_CAMSS_VFE_H */
 -- 
 2.33.0
 
