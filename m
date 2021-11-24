@@ -2,121 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F8CC45CD10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:18:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD9B045CD24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 20:24:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243419AbhKXTVL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 14:21:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58694 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243231AbhKXTVK (ORCPT
+        id S243524AbhKXT1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 14:27:25 -0500
+Received: from mout.kundenserver.de ([217.72.192.73]:32851 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242493AbhKXT1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 14:21:10 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAADDC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:18:00 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id x131so3560593pfc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 11:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lRYEiY3a9ZTAs618fN+kr6u8/MAeWH9IPhTcrDyebEs=;
-        b=Jwd4aaU1S34hZ8eU3YFVKMqv59/V+UpXAexAxZdzhKl6xSdlKGIpvBdmuey2W1U195
-         56Q+5H8vAaCTbQwxH4ieIx/YYq3bD5F5H4795begBcCZDdbSWEvAUkc7hK2dZh3wRABM
-         mxG+ifW00Ic2RYdLDjZ/x45WuTTEL3io88eZ8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lRYEiY3a9ZTAs618fN+kr6u8/MAeWH9IPhTcrDyebEs=;
-        b=KI9yUxkXbOGfsBTACX04QZ47I92/gl47+Pcp36dvScNNKVUoHDgpBdG4COz9jWV5YQ
-         hjkwt7TSJJLONc42Y1+lPvAgFo39kQ787HONcwEQzihbFKQf0RqEk9aJcqvanqkfYTN9
-         +D38P8pr8Vj7a1VBK7JRJOUKBPCOEz8i0X5U1XOd8VN8mW9YX4YgN0tBuTBZc3fDbOfM
-         uvnPHu9IUdT4hYS26qVJciNuh37XmhFG7iZEt7IKJpWo1bLR4TFmcfgq67Fn+oU/DrDQ
-         9VSoUFyNvunTf1K3mZqKa155mLxLFrk9HGvWKM09Tk9hUU4I8SpmzpaEHJoJxexhPMCX
-         OBaA==
-X-Gm-Message-State: AOAM531FnPr5t/bQPWh8NITD+yYE5CBj8LOTCZvkhs/mqZGnBjdlc/G5
-        TfMc9m6Rpbn1JocokDtnFLDQ9A==
-X-Google-Smtp-Source: ABdhPJwiXSf0NUB07PV3do00Ol5yCyawJ0mCpxFdorKlBjH/yGbMu8iMRvnjbXI6sEYwVd+hOcx7PQ==
-X-Received: by 2002:a05:6a00:26e3:b0:49f:c0ca:850e with SMTP id p35-20020a056a0026e300b0049fc0ca850emr8595057pfw.4.1637781480427;
-        Wed, 24 Nov 2021 11:18:00 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:d8d8:79a:9375:eb49])
-        by smtp.gmail.com with UTF8SMTPSA id a3sm519742pfv.5.2021.11.24.11.17.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 11:18:00 -0800 (PST)
-Date:   Wed, 24 Nov 2021 11:17:59 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Deepak Kumar Singh <deesin@codeaurora.org>
-Cc:     bjorn.andersson@linaro.org, swboyd@chromium.org,
-        clew@codeaurora.org, mathieu.poirier@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Subject: Re: [PATCH V1 2/3] rpmsg: glink: Add support to handle signals
- command
-Message-ID: <YZ6P56yRP9TAtcqa@google.com>
-References: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
- <1633015924-881-4-git-send-email-deesin@codeaurora.org>
+        Wed, 24 Nov 2021 14:27:25 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]) by
+ mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MbRXj-1mEiFI2mzJ-00bsdq; Wed, 24 Nov 2021 20:24:13 +0100
+Received: by mail-wm1-f51.google.com with SMTP id 77-20020a1c0450000000b0033123de3425so6424115wme.0;
+        Wed, 24 Nov 2021 11:24:13 -0800 (PST)
+X-Gm-Message-State: AOAM533o3fdAsZtw649pokCUGRehu/GqjCDQ1GQiXyWYrfMvuS+G/73V
+        zKblQs2wo+manpSqcD4PPuWMeDfRL0CZPrZdQXM=
+X-Google-Smtp-Source: ABdhPJxU3XHzGkZdmjVLUlcDMysYVZXYBGK7dc18pfMdKQoniTree9ljP7IJbkiJjYrYSt/hozmOHO002j1Kgkumx8s=
+X-Received: by 2002:a1c:1c1:: with SMTP id 184mr18501034wmb.1.1637781853302;
+ Wed, 24 Nov 2021 11:24:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1633015924-881-4-git-send-email-deesin@codeaurora.org>
+References: <cover.1637781097.git.mchehab+huawei@kernel.org>
+In-Reply-To: <cover.1637781097.git.mchehab+huawei@kernel.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 24 Nov 2021 20:23:57 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a1kQp4g6-59ui8ASBb-QYmwrtK5dh6L2PKjyXVV_VEGvw@mail.gmail.com>
+Message-ID: <CAK8P3a1kQp4g6-59ui8ASBb-QYmwrtK5dh6L2PKjyXVV_VEGvw@mail.gmail.com>
+Subject: Re: [PATCH 00/20] Solve the remaining issues with clang and W=1 on media
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     Linuxarm <linuxarm@huawei.com>,
+        Mauro Carvalho Chehab <mauro.chehab@huawei.com>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Andy Gross <agross@kernel.org>, Antti Palosaari <crope@iki.fi>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Malcolm Priestley <tvboxspy@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC..." 
+        <linux-mediatek@lists.infradead.org>, llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:fxnprxjloCWWYrvORmSMHeOI+UyQtOtMWEVLVsVv0o9SV41qVbT
+ S4iJx+EM7+6t6XJ5aXREawkfRroBWZX+jxTHvN0Tpf8qLx2cg8Q119kQIDClYSXoMhj1r21
+ 9FaE/VtUSsk5W0CBuh1DARwSw99ZHCW7XGDXUMncJfQ/gE8+PhMxU4n4OW9kQca3VWvvMPl
+ gGV5Y38gO/X0yMM0AWD0Q==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:o42QZZqtfts=:lO3a4whMuLV9TfNlAYN7FK
+ 9KBQQz3Uj6RkiPaz6XD2DF2CjSgv7PybhEXWTy11gzXDA+i/eWXz3pYkiqhRY9JsymT6NMrRr
+ D8Gknkjd+Cqfa4Oa4ovcwO0Ofv+ataCadvUgRYcyG1c2QYfarUnO5q0g5kp51BolRpi4x5f7n
+ IYFv4KwCn19mmDPlhWkxhmNe4zwMFr4VJnAd1UeMR7C1kp3tHUZQbvN6tegT5IpKpz+x0hVPf
+ jyPRPh6HZ6FwYUJ2pyGBWV0Sm+U7FmYaAjQZvj3J6qpvF7y9AHySU78UPYkiCITuV+Bv7IPuY
+ hv+dj1dgyg2K3mZa7CskXBvW0QYHoGIGdpSu4VrxGNPx7HjI/ZBp1WjAyIhWFik2i+Ks4YWvT
+ svply4e8UtkSfvRRw8goxQFQ2OkWOLIq3X/+qrw0/XDAFMqf1E8DCrz3XZIBGK3KqRC9SHkVj
+ asGtN1jTcH5Ou6CdR+/TWEH1OjTwHL7FavyAy0iDS1SzIC400jlnXdid/XXVDhRliqE8bLJ7G
+ yRMQ1rRbOtWOZI/F29LwPjnq6NuTPrlT+9fg08oWJhfCUpNUo0qNTQSQ751HV7gmKWxl/xE9o
+ rNfI37hRjR6KsTBxW0nnwnTvbYWccWFuLik2pfB57DbhTpM+pRCU76Sc2qCUAHc2bS7qj0e7R
+ UInMHW7PbME6yaKEEtTFn+8BKBn8KuoZZxCNPAfE4lVLTMaZgcQG0KBAscOE3v4gfT7JY8lU7
+ 7HfF5sVhY+euARjjMxaK0gje8Nv8McltGCQLlyKhSE9VVXytAuX4j7M3M2QN7wO6NqJ4FWyFD
+ T9xhKWLNAVPlJOh3yMjBMpbsRMAluoDOKWl8fhuCzqDd4Nj9Jo=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 30, 2021 at 09:02:03PM +0530, Deepak Kumar Singh wrote:
-> Remote peripherals send signal notifications over glink with commandID 15.
-> 
-> Add support to send and receive the signal command and convert the signals
-> from NATIVE to TIOCM while receiving and vice versa while sending.
-> 
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
->  drivers/rpmsg/qcom_glink_native.c | 75 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 75 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 05533c7..384fcd2 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
+On Wed, Nov 24, 2021 at 8:13 PM Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
 >
-> ...
+> Currently, using clang with W=1 and CONFIG_WERROR causes media to break.
+> This is reported by builder.linuxtv.org.
 >
-> +static int qcom_glink_handle_signals(struct qcom_glink *glink,
-> +				     unsigned int rcid, unsigned int sigs)
-> +{
-> +	struct glink_channel *channel;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&glink->idr_lock, flags);
-> +	channel = idr_find(&glink->rcids, rcid);
-> +	spin_unlock_irqrestore(&glink->idr_lock, flags);
-> +	if (!channel) {
-> +		dev_err(glink->dev, "signal for non-existing channel\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/* convert signals from NATIVE to TIOCM */
-> +	if (sigs & NATIVE_DTR_SIG)
-> +		sigs |= TIOCM_DSR;
-> +	if (sigs & NATIVE_CTS_SIG)
-> +		sigs |= TIOCM_CTS;
-> +	if (sigs & NATIVE_CD_SIG)
-> +		sigs |= TIOCM_CD;
-> +	if (sigs & NATIVE_RI_SIG)
-> +		sigs |= TIOCM_RI;
-> +	sigs &= 0x0fff;
+> This series solve the remaining issues.
 
-'sigs' is only used when the channel has a signal handler, hence you could
-return before the above block if there is no signal handler and remove the
-condition below.
+I looked through my randconfig tree and found one more that I had
+initially not sent
+as I wasn't sure whether we want to fix
+-Wtautological-constant-out-of-range-compare
+warnings. I'll send it now, as all warnings of that type in other
+drivers have been addressed.
 
-> +
-> +	if (channel->ept.sig_cb)
-> +		channel->ept.sig_cb(channel->ept.rpdev, channel->ept.priv, sigs);
-> +
-> +	return 0;
-> +}
+        Arnd
