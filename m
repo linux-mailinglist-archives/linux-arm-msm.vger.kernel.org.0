@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30AFB45C8DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 16:39:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE5A545C8E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Nov 2021 16:40:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242054AbhKXPmv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 Nov 2021 10:42:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
+        id S243427AbhKXPnp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 Nov 2021 10:43:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241972AbhKXPmv (ORCPT
+        with ESMTP id S244227AbhKXPnp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 Nov 2021 10:42:51 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196D5C061714
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:39:41 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id bu18so8486938lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:39:41 -0800 (PST)
+        Wed, 24 Nov 2021 10:43:45 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 086B3C061714
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:40:35 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id n12so8391236lfe.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 07:40:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Crdb0M+qbVtb4o2i/dD0q1NmdK6CpzCFBaORwXwWGDg=;
-        b=XjfFfyRQ8Rcv5JiMa2X3OWVW45aMoXHYpKvxSKBDiU+c+CddAdgLSx3KfYLiyaV5Qf
-         YF1GdQKTeslaBtCAh7qyeaV7UBJgH8IVIZLh4YLNakYFaiNY1aMwiqNH8yDXjI4g0+81
-         6yqSZUu/jKUWhnh2CPeR8XugeV4bHkzXefZ9wNoA7Gj1LOQNl2j5n0t/o5v0rELFeutF
-         MG5D3vVK/RkKk3mpoo/t6ubNCXqyLpSbzSFQpCvIAqY8O2yPzNG8KL61Li/VKnMXSK+g
-         60hy5S3WbTGMO+WoWeIaVfmAJQs7nAlIGV9RozR8u6t8vEjB/7PY+4iukGMIt6nH6M67
-         l8Eg==
+        bh=MRHSK8zabRFIynpw4+uy7/MG4Xk6F7PWDEFcamsYRYU=;
+        b=TugcSYnHV39SipEpIZX0+YVXT2YzASAzsk9uWYPrM41qixYEvcCzmp12Z8+OLFznPr
+         dkNfO3y312qdyv88H0pBptv570nvbk+cekRIfAz342IShomnUqYoAwfPG+G6FJRWYKcm
+         NA26AiIcR3TOf8Jty7f3CM9fL7ar42Q9fFwww4ZnCOaoVcYFJMdue1AcWegLuNp+5GP8
+         A08ZIsnq7EGPANchlly0T+hDY2ZBgAIflrZR0cb4/BxfBW63PXDIm0g0PZ9xMu/0120w
+         1jbwW8KFcWn1KcPq2kymAJo7cb9PxrwRFTZQoNyymOfebPw7U2qxg8dMjBnWGV+Hi5/9
+         lYKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Crdb0M+qbVtb4o2i/dD0q1NmdK6CpzCFBaORwXwWGDg=;
-        b=vPtl7g7ruETSI+kTATtDq8qqA7LoPnlGuCy4ibdGZVeTcLATGlFgDzbSetmIhZ4WEN
-         WgP5khQ718NAZa514Wjiai05CvM/1+Ty86oOMsXlFO1ZK7r5rw4gfo79MPjgphGfHfhF
-         dVpvv6fA3UeJLjRPgNdM9pNBjYa7D2+Y6ucMM4nhdOpf/QrcjMUuIDiH53dIq1P5B/uv
-         HyIyadPXTIpg1OjvFXIXldDsjfFsSznAJjEgXVoioe6anA20xzXfAMdAVl81+WlKmtQ5
-         e8eC88uuGMzcF0Ar5gKM3p+Wv/4MfACLTuioniIBCvQL1FFlxjo+IIdj5AKkRFbOIOAW
-         Yh4A==
-X-Gm-Message-State: AOAM531FPYmNNKUEoOc8LYwtYL/Uo6tUdfTfigTxTPktysy3jVaGPz9r
-        EVnmJYLjrwuWFPl6L/yfg2I3Kg==
-X-Google-Smtp-Source: ABdhPJwzeiSanGN1u/Kw+0PTXpmUJyb2P0UO0Fn4wRmERNLYqOSCiBbYXqizF5j/xvh+wg0b0pM6DA==
-X-Received: by 2002:a05:6512:1115:: with SMTP id l21mr15100835lfg.201.1637768379346;
-        Wed, 24 Nov 2021 07:39:39 -0800 (PST)
+        bh=MRHSK8zabRFIynpw4+uy7/MG4Xk6F7PWDEFcamsYRYU=;
+        b=a6CYzcS1iMo4Z5lxFjvGMu9IPEwzd/LyNvVapl6PPs8HW05al9GposGJ8xqte9/2GV
+         +Uib92bxfU6XZgjpe0/an+dLi882YXdPYh8p2nmqnhsWqFJK2I0DqEOJ2hDXjvgp+HE4
+         MDGwMVhcE8mK1I0AWTzC92Tr77GVBu59qPtr8/P8KEsakMNmmQFQnBoYHXUAs4Az0tGf
+         ATo/kpPYBMSV/j/bhhUPdMUAgl1s3HIIfkOm2OtCtdycln4dfezH4gwuInlhaPu3Qv1w
+         HUn+npqI7iZ4CmNByi7oIhf/rbyNZY9DJQ0JtJUEJkDxieTPckylKrDX0QhAkQz8KUFK
+         +HFg==
+X-Gm-Message-State: AOAM530EOPSXzSwLIfoIfNtZdeG8E3dfkQsh955y5jWJS/6u2BsBLw9r
+        cqb7T2N9gIN4cHChbcIxVxxVXQ==
+X-Google-Smtp-Source: ABdhPJxGGspGiIzucoi+Pl9RHLXjwi2ldVTBfma2Pqx2udv5TQOaceAH0vTSByWarlNgAddvvzt/Bw==
+X-Received: by 2002:a05:6512:33c9:: with SMTP id d9mr15286457lfg.615.1637768433301;
+        Wed, 24 Nov 2021 07:40:33 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a7sm14357lfk.216.2021.11.24.07.39.38
+        by smtp.gmail.com with ESMTPSA id d10sm15999lfe.106.2021.11.24.07.40.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 07:39:38 -0800 (PST)
+        Wed, 24 Nov 2021 07:40:32 -0800 (PST)
 Subject: Re: [PATCH v3 05/13] drm/msm/disp/dpu1: Don't use DSC with mode_3d
 To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -64,8 +64,8 @@ Cc:     linux-arm-msm@vger.kernel.org,
 References: <20211116062256.2417186-1-vkoul@kernel.org>
  <20211116062256.2417186-6-vkoul@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <4ebbe41b-cf6b-23e9-3972-9f87e190b9cb@linaro.org>
-Date:   Wed, 24 Nov 2021 18:39:38 +0300
+Message-ID: <20269960-a753-72d4-5a1d-430af00cf562@linaro.org>
+Date:   Wed, 24 Nov 2021 18:40:32 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -108,6 +108,10 @@ On 16/11/2021 09:22, Vinod Koul wrote:
 > +
 > +	if (priv->dsc)
 > +		return priv->dsc->dsc_mask;
+
+dsc_mask doesn't exist at this point, so the patch should be moved later 
+in the series.
+
 > +
 > +	return 0;
 > +}
@@ -125,10 +129,6 @@ On 16/11/2021 09:22, Vinod Koul wrote:
 >   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
 > +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
 > +
-
-I'd prefer if we disable mode_3d here, rather than ignoring it in the 
-dpu_hw_ctl_intf_cfg()
-
 >   	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
 >   }
 >   
@@ -143,10 +143,6 @@ dpu_hw_ctl_intf_cfg()
 > -	if (cfg->mode_3d) {
 > +	/* In DSC we can't set merge, so check for dsc too */
 > +	if (cfg->mode_3d && !cfg->dsc) {
-
-I think here'd better have WARN_ON(cfg->mode_3d && cfg->dsc) or similar 
-dev_warn().
-
 >   		intf_cfg |= BIT(19);
 >   		intf_cfg |= (cfg->mode_3d - 0x1) << 20;
 >   	}
