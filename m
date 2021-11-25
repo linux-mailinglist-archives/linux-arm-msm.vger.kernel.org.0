@@ -2,87 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0B045DDED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 16:49:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFFEC45DE48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 17:06:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347362AbhKYPwH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 10:52:07 -0500
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:43725 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347861AbhKYPuH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 10:50:07 -0500
-Received: by mail-ot1-f46.google.com with SMTP id h16-20020a9d7990000000b0055c7ae44dd2so9978633otm.10;
-        Thu, 25 Nov 2021 07:46:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iCerFhrT655vbv4nCL7oKRYJTOa2nuC2HJ+XBleEaic=;
-        b=xFWMEz+znu4RnRR//O9/ZrVk+h+I8T4WMgoWQEXwb0354ROoANzBtZk2GYln112QYE
-         1BXUNcob+8FH3cNsr8nm4YaaZxFQstW3QRWldqdnPm1QaLJ57iHzcc7Yh49Rp+H5ADa2
-         AsOZZJSFqq505kZB+ONIUyLywWLxDvDLxnHb0gajTlbGbiBbU8qk/JNmYBfXShVe3gko
-         QtrOgYkYClQnk2SjsD5AipDtp+kgj8xzGgL2LJ2xHgncB1+N9jmx3CRSNyI/jL9xIFBN
-         veDPOOl0J426JpI2+sy2DGrT4rorS8NBZxBz207slyjWKkTRMf1ByLSqc7ZN1Ne504kG
-         87FQ==
-X-Gm-Message-State: AOAM5338ylkRMWaVHNZFv3Flhqv/OU597PB2wQNBjSihZYFKs8HH9nZE
-        jT0r7vkH/aaO6b7blKpfwAvv5pLUqeHaHGd3fPY=
-X-Google-Smtp-Source: ABdhPJw6kC4CgpTqN/QGPY8kv41HRrZ+mJbwBj5XI3Q6nKglnh017y0ljFHKh1XAnfdLKKP3bdiXwNtXNNpqqSeAxco=
-X-Received: by 2002:a05:6830:348f:: with SMTP id c15mr22458073otu.254.1637855215279;
- Thu, 25 Nov 2021 07:46:55 -0800 (PST)
+        id S234191AbhKYQJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 11:09:27 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35480 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229729AbhKYQH0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Nov 2021 11:07:26 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 39F0C60200;
+        Thu, 25 Nov 2021 16:04:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1637856255;
+        bh=KdhSkXjkdaP3MlPJHTn/Y5rldvqlD30vDk4OrRZDGKk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lt0lqCFzS2OgfQbao/5lQKll2XYntB/PIV6jwUtWT0qBqf/hIz4IVt/mPVut2SyL9
+         3A1gtB+ozJ4Ip4e7N4fCBK7aBbqGZljrGO7iCL71oMLftVpTrQsMxt63EQZjrakvI3
+         EA4BB2njilar/v2O4ZYz6q2W1uppOkOC9RgeuoKMU3I4BLKL/N/gyI2OlxbIw3yBjR
+         +LtAtY0Si3WewtPBtNh/R+diN370QEpwvlgPWLJi/7nvB2qwRf/bZimJltZj7E4G2m
+         p1Qy9e92OFQGPIt4NEfNgECw4r66Ix4mXzTjmLMIXAFZuZElBD5sUQMyu0FSJvZXGp
+         mcj3Zb7Rsq5Ww==
+Date:   Thu, 25 Nov 2021 16:04:09 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Subject: Re: [PATCH v4 00/10] Add support for audio on SC7280 based targets
+Message-ID: <YZ+z+XPyecvDJA88@sirena.org.uk>
+References: <1635838265-27346-1-git-send-email-srivasam@codeaurora.org>
+ <YZUT6BQKz00jXov9@sirena.org.uk>
+ <e01729cd-0b2b-fe27-809b-c75ccbb6fac4@codeaurora.org>
 MIME-Version: 1.0
-References: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
- <CAJZ5v0hhUSjNdHwF4dRUQ1Fgos-jqg1agHBShhhwFUGK6wiedQ@mail.gmail.com> <ac35bafa-a57f-e9ea-4dee-9af547de34e2@quicinc.com>
-In-Reply-To: <ac35bafa-a57f-e9ea-4dee-9af547de34e2@quicinc.com>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Thu, 25 Nov 2021 16:46:44 +0100
-Message-ID: <CAJZ5v0jqfvgEGjhiq6Cbd5S2Aj7+Jvi2Pj_GE8==Q2vjATRXCg@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Allow cpuidle governors to be compiled as modules
-To:     Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, quic_lsrao@quicinc.com,
-        "Nayak, Rajendra" <rnayak@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4hRPBrvlJm1eOICO"
+Content-Disposition: inline
+In-Reply-To: <e01729cd-0b2b-fe27-809b-c75ccbb6fac4@codeaurora.org>
+X-Cookie: This bag is recyclable.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 25, 2021 at 2:18 PM Maulik Shah <quic_mkshah@quicinc.com> wrote:
->
-> Hi Rafael,
->
-> On 11/25/2021 5:57 PM, Rafael J. Wysocki wrote:
-> > On Thu, Nov 25, 2021 at 9:55 AM Maulik Shah <quic_mkshah@quicinc.com> wrote:
-> >> This series makes changes to allow cpuidle governors menu, ladder and teo
-> >> to compiled as modules when building with allmodconfig.
-> > What's the purpose of this?
->
-> There are two purposes of this series.
->
-> 1. The series enables cpuidle governors to be allowed to compiled as
-> modules.
->      This is something similar to what cpufreq/devfreq governors do
-> today as they can be be compiled as modules or built-in depending on the
-> build config.
 
-Which is not the case for all of them, though, and I don't see why
-this would imply that making cpuidle governors modular would be
-useful.
+--4hRPBrvlJm1eOICO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 2. The series will also enable custom cpuidle governor to be able to
-> register with cpuidle framework by using cpuidle_register_governor() API.
->      This will be already achieved by (1) since it will export the
-> required APIs for menu/ladder/teo governors to be compiled as module.
+On Thu, Nov 18, 2021 at 03:35:46PM +0530, Srinivasa Rao Mandadapu wrote:
+> On 11/17/2021 8:08 PM, Mark Brown wrote:
+> > On Tue, Nov 02, 2021 at 01:00:55PM +0530, Srinivasa Rao Mandadapu wrote:
+> >=20
+> > > This patch set depends on:
+> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D57=
+0161
+> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D57=
+2615
+> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D55=
+9677
+> > None of those links seem to show any patches (or errors)?
+>=20
+> Sorry for Inconvenience Rob. I think due to it's status change patches are
+> not being appeared on provided link.
 
-No custom cpuidle governors in the mainline, please.  If you have one
-you want to be included, please submit it.
+I'm not Rob...
 
-So from the mainline perspective this series doesn't serve any useful
-purpose at all.
+> With removing filter able to see patch set. Below are the links with view
+> filter change.
+>=20
+> --=20
+> https://patchwork.kernel.org/project/alsa-devel/list/?series=3D570161&arc=
+hive=3Dboth&state=3D*
 
-Sorry about that.
+Please note this bit of the mail:
+
+> > Please include human readable descriptions of things like commits and
+> > issues being discussed in e-mail in your mails, this makes them much
+> > easier for humans to read especially when they have no internet access.
+> > I do frequently catch up on my mail on flights or while otherwise
+> > travelling so this is even more pressing for me than just being about
+> > making things a bit easier to read.
+
+So it looks like we still depend on at least the sc7280 machine driver?
+
+--4hRPBrvlJm1eOICO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGfs/gACgkQJNaLcl1U
+h9D8cwf7Bff6TgE+WAzqNt2VB/K+kGas4TbADTHreLi1oEV1ONDQb+aKeV5FQXbl
+mQi1ps0bNGYak+GLne3wYLWe+H6xJKlPKh7SssQDqoSSEhKxJvf0ZVivuhTlcKK/
+IUTPJJBcnh6ftPjn5u8XJN9JWm2HMj5LgkG6itJZcK+/Au7RfpPmrCGl/+UYmfZc
+IXZGhdIkk/k3g6ZK/+UE/gAtDfsznLHDNKQMU/wygs+j4vjF5vUhkt5HBAnksnrK
+tr1LWGjemENfMvsTRfXtokbL39lJ4Ej9t1qz7qknJc02ZSuhUJS/8JBamgJpbtTH
+GpCeSMkLRDocDDSSAjs9EnDjCS9FnA==
+=8KsA
+-----END PGP SIGNATURE-----
+
+--4hRPBrvlJm1eOICO--
