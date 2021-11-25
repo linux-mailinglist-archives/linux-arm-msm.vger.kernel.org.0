@@ -2,124 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14AC945DB3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:38:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA09E45DB28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:33:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347884AbhKYNlz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 08:41:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354974AbhKYNjy (ORCPT
+        id S1354013AbhKYNhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 08:37:07 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:3253 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345755AbhKYNfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 08:39:54 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29949C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 05:26:55 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id v15so12634509ljc.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 05:26:55 -0800 (PST)
+        Thu, 25 Nov 2021 08:35:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=Gxl3XvhS3jy/Vg4tNUDSLVXMW/QY1KlnmAlTBNyzUmw=;
-        b=Z0idp8uhQ9AsUuYWi2RnXFNxiSFeD/SgsFtNGz10ZBJzP7SsQtNgnkZLl/0Yq6zw88
-         ZtfWmpPkursnohrG1+gdmVYyX+4ItJgd/a3eYJ8N668kcslwO1r1ZELpeljaLyoGtHT3
-         ONQcpMAQhkdGCAiAKUqSzvyYfmJqCUR8U2VdpKiSaK3DNepZx5z6BX2s2ozokIcJIZeR
-         9zG5NwH6IbCEJ6xEGZrbe3YkP7d9J3sLxLtwUNLhKBX2vF21orTi+1TKC0oNNfK2T4K5
-         F+QSOhdkG7MyzKuaVEkIkoA83s5Na6NAXGf2NjKR90pY8sDx13MpmxC9g4RebyrmUKsy
-         5moA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Gxl3XvhS3jy/Vg4tNUDSLVXMW/QY1KlnmAlTBNyzUmw=;
-        b=xGKg28/6xz0FtDJtLbEt/0D0AwSa7SOAeijgZ0l1wCq3WK3/slxU95QYpZZ/buBIjs
-         h+VXmi0Tk8LTDRQHrjIGnK/newqk950gd4Y7qcNpZ+amsnPYqeZHQ6qTg0oPYiJcRatg
-         zO6PK28Lc3iEddxqs94+/wT9ko+4l/U+C1DoDRphqLOcJe73sWYSM7URiEfMgpw0M4UG
-         gqCEIlIP0IMmI1gMITJ/0zBDce0c4pYf8U7syAIJN2u5hPgOgcVtCZMgrLTeahMcBJKL
-         WYB76KpFnC3hbHsobnU+8s60EuwgPLnkNyudoue7me4HIA/h9vD9/8NPyReHzg1gdu4T
-         2yvw==
-X-Gm-Message-State: AOAM532+4DxRg7/+GETfC9URyliYgyYehwGfc+RbZJqzCrLx7kUCmGYv
-        +Pq8y9+A9YqIbhZiT0CAKCF3TA==
-X-Google-Smtp-Source: ABdhPJzk0rkyZtS6FTgYDoC1LTJrxi0JVWAKHJVNqgGa3UJSxIleCmDGIlTtkxqSRMXBy9YzDuv34g==
-X-Received: by 2002:a2e:9a05:: with SMTP id o5mr24471640lji.488.1637846813476;
-        Thu, 25 Nov 2021 05:26:53 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k14sm229478ljk.57.2021.11.25.05.26.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Nov 2021 05:26:53 -0800 (PST)
-Subject: Re: [PATCH v2 07/13] drm/msm: replace drm_detect_hdmi_monitor() with
- drm_display_info.is_hdmi
-To:     Claudio Suarez <cssk@net-c.es>, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Pan Xinhui <Xinhui.Pan@amd.com>, Emma Anholt <emma@anholt.net>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Chen-Yu Tsai <wens@csie.org>, Sandy Huang <hjc@rock-chips.com>,
-        heiko@sntech.de, Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Ben Skeggs <bskeggs@redhat.com>, nouveau@lists.freedesktop.org,
-        ville.syrjala@linux.intel.com
-References: <20211016184226.3862-1-cssk@net-c.es>
- <20211016184226.3862-8-cssk@net-c.es>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <32c14b83-c5ee-1690-525d-8cf3d02a2394@linaro.org>
-Date:   Thu, 25 Nov 2021 16:26:51 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637847116; x=1669383116;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=M+sAp6FDBHNbmy+1ZLQA8pXhg95S6T7aLbPwagstLOM=;
+  b=F22MrwzAnm9wc2mhBnc5sRKP+9F7XDrq8sFTeqcdvWTzl+aAuPGzZmA+
+   AdlN48M3zgabCVWY6l2RPZMshbVcSh6hW79B47seCE9/8bZF9c3yHO4sS
+   K1I4R/j0NymLyimRg1ETS3k0qTMGISDEFfo+3b3HYFwf1QMvyONu0R5tR
+   4=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 05:31:56 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 05:31:55 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 25 Nov 2021 05:31:55 -0800
+Received: from [10.216.32.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 25 Nov
+ 2021 05:31:49 -0800
+Message-ID: <f7a1c6de-ae1d-1615-1212-bdb9bdcdbcbc@quicinc.com>
+Date:   Thu, 25 Nov 2021 19:01:44 +0530
 MIME-Version: 1.0
-In-Reply-To: <20211016184226.3862-8-cssk@net-c.es>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 2/4] sched/core: Export symbols used by cpuidle governors
+To:     Peter Zijlstra <peterz@infradead.org>
+CC:     <bjorn.andersson@linaro.org>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <ulf.hansson@linaro.org>, <quic_lsrao@quicinc.com>,
+        <rnayak@codeaurora.org>, Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        "Vincent Guittot" <vincent.guittot@linaro.org>
+References: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
+ <1637830481-21709-3-git-send-email-quic_mkshah@quicinc.com>
+ <YZ9Y2w2xIrw39B/K@hirez.programming.kicks-ass.net>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <YZ9Y2w2xIrw39B/K@hirez.programming.kicks-ass.net>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/10/2021 21:42, Claudio Suarez wrote:
-> Once EDID is parsed, the monitor HDMI support information is available
-> through drm_display_info.is_hdmi. Retriving the same information with
-> drm_detect_hdmi_monitor() is less efficient. Change to
-> drm_display_info.is_hdmi
-> 
-> Signed-off-by: Claudio Suarez <cssk@net-c.es>
+Hi Peter,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 11/25/2021 3:05 PM, Peter Zijlstra wrote:
+> On Thu, Nov 25, 2021 at 02:24:39PM +0530, Maulik Shah wrote:
+>> Export symbols that are used by cpuidle menu governor in preparation
+>> to allow cpuidle governors to be compiled as modules.
+>>
+>> Cc: Ingo Molnar <mingo@redhat.com>
+>> Cc: Peter Zijlstra <peterz@infradead.org>
+>> Cc: Juri Lelli <juri.lelli@redhat.com>
+>> Cc: Vincent Guittot <vincent.guittot@linaro.org>
+>> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+>> ---
+>>   kernel/sched/core.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+>> index 8cffe31..1d031e0 100644
+>> --- a/kernel/sched/core.c
+>> +++ b/kernel/sched/core.c
+>> @@ -5047,6 +5047,7 @@ unsigned int nr_iowait_cpu(int cpu)
+>>   {
+>>   	return atomic_read(&cpu_rq(cpu)->nr_iowait);
+>>   }
+>> +EXPORT_SYMBOL(nr_iowait_cpu);
+> NACK, that function is batshit insane, exporting it serves nobody.
+Thanks for the review.
+Exporting is to serve cpuidle menu governor when its compiled as module 
+(last patch in this series).
 
-> ---
->   drivers/gpu/drm/msm/hdmi/hdmi_connector.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> index 58707a1f3878..07585092f919 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-> @@ -364,8 +364,8 @@ static int msm_hdmi_connector_get_modes(struct drm_connector *connector)
->   
->   	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl);
->   
-> -	hdmi->hdmi_mode = drm_detect_hdmi_monitor(edid);
->   	drm_connector_update_edid_property(connector, edid);
-> +	hdmi->hdmi_mode = connector->display_info.is_hdmi;
->   
->   	if (edid) {
->   		ret = drm_add_edid_modes(connector, edid);
-> 
+otherwise we get below error during compilation,
+ERROR: modpost: "nr_iowait_cpu" [drivers/cpuidle/governors/menu.ko] 
+undefined!
 
+Do you suggest to use something else instead of this?
+I think making this function inline and moving to linux/sched/stat.h 
+(along with dependent data structures) may help but yet to try.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Maulik
