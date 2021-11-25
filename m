@@ -2,118 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E18045DC22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:15:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC0945DC2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:18:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350536AbhKYOTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 09:19:04 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:6050 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239002AbhKYORD (ORCPT
+        id S1355644AbhKYOVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 09:21:10 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:57153 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355646AbhKYOTK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 09:17:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637849632; x=1669385632;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9B1kagCGofhMafAlXRiDA3X0zfmqJUebEtDe625FPrc=;
-  b=FnP5F9nhO6KVaQL1aSUsoPwLmx0SOC0NHuZgBdjrTMpRwUfMSWjFqO2c
-   YbHep6FhUenwDPyu5S8P4XyHuFKVGyjYAP6iNn2CAd4YF2VikRO9LLzQA
-   fKBp+E0Vao1M42dpAoX2gCVPeQBhZ8LV0uSNxBbMq53qfCYPFPzyKCfnu
-   E=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Nov 2021 06:13:52 -0800
+        Thu, 25 Nov 2021 09:19:10 -0500
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 06:15:58 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 06:13:52 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 25 Nov 2021 06:13:51 -0800
-Received: from [10.216.32.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 25 Nov
- 2021 06:13:45 -0800
-Message-ID: <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
-Date:   Thu, 25 Nov 2021 19:43:42 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH] sched/idle: Export cpu_idle_poll_ctrl() symbol
-To:     Peter Zijlstra <peterz@infradead.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-CC:     <bjorn.andersson@linaro.org>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <ulf.hansson@linaro.org>, <quic_lsrao@quicinc.com>,
-        <rnayak@codeaurora.org>, Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        "Vincent Guittot" <vincent.guittot@linaro.org>
-References: <1637831676-32737-1-git-send-email-quic_mkshah@quicinc.com>
- <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-In-Reply-To: <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2021 06:15:57 -0800
+X-QCInternal: smtphost
+Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Nov 2021 19:45:51 +0530
+Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
+        id E84F244D8; Thu, 25 Nov 2021 19:45:50 +0530 (IST)
+From:   Jeya R <jeyr@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
+Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: [PATCH 0/5] Add secure domains support
+Date:   Thu, 25 Nov 2021 19:45:39 +0530
+Message-Id: <1637849744-24844-1-git-send-email-jeyr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Peter,
+This patch series adds secure domains support. If the non-secure DT property
+is not added to the domain fastrpc DT node, the domain is set as secure. If
+any process is getting initialized using non-secure device and the dsp channel
+is secure, then the session gets rejected.
 
-On 11/25/2021 3:21 PM, Peter Zijlstra wrote:
-> On Thu, Nov 25, 2021 at 02:44:36PM +0530, Maulik Shah wrote:
->> Export cpu_idle_poll_ctrl() so that module drivers can use same.
-> This does not seem like a really safe interface to expose to the
-> world.
+Jeya R (5):
+  dt-bindings: misc: convert fastrpc bindings to yaml and add property
+  misc: fastrpc: Add secure device node support
+  misc: fastrpc: Set channel as secure
+  misc: fastrpc: reject non-secure node for secure domain
+  arm64: dts: qcom: add non-secure domain property to fastrpc nodes
 
-Thanks for the review.
+ .../devicetree/bindings/misc/qcom,fastrpc.txt      | 78 -----------------
+ .../devicetree/bindings/misc/qcom,fastrpc.yaml     | 97 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |  1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |  2 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |  3 +
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |  3 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  3 +
+ drivers/misc/fastrpc.c                             | 51 +++++++++++-
+ 8 files changed, 158 insertions(+), 80 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
 
-Keeping the cpuidle enabled from boot up may delay/increase the boot up 
-time.
-Below is our use case to force cpuidle to stay in cpu_idle_poll().
+-- 
+2.7.4
 
-We keep cpuidle disabled from boot up using "nohlt" option of kernel 
-command line which internally sets cpu_idle_force_poll = 1;
-and once the device bootup reaches till certain point (for example the 
-android homescreen is up) userspace may notify a
-vendor module driver which can invoke cpu_idle_poll_ctrl(false); to come 
-out of poll mode.
-So vendor module driver needs cpu_idle_poll_ctrl() exported symbol.
-
-We can not take PM-QoS from driver to prevent deep cpuidle since all the 
-vendor modules are kept in a separate partition and will be loaded only 
-after kernel boot up is done
-and by this time kernel already starts executing deep cpuidle modes.
->
-> Surely the better solution is to rework things to not rely on this. I'm
-> fairly sure it's not hard to write a cpuidle driver that does much the
-> same.
-The other option i think is to pass cpuidle.off=1 in kernel command line 
-and then add enable_cpuidle() in drivers/cpuidle/cpuidle.c
-something similar as below which can be called by vendor module.
-
-void enable_cpuidle(void)
-{
-         off = 0;
-}
-EXPORT_SYMBOL_GPL(enable_cpuidle);
-
-This may be a good option since we have already disable_cpuidle() but 
-not enable_cpuidle().
-
-void disable_cpuidle(void)
-{
-         off = 1;
-}
-
-Hi Rafael/Daniel, can you please let me know your suggestion on 
-this/similar implementation?
-
-Thanks,
-Maulik
