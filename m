@@ -2,130 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 15DB945DFA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 18:26:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9200D45DFA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 18:26:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348518AbhKYR2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 12:28:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41236 "EHLO
+        id S1347843AbhKYR2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 12:28:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348823AbhKYR0j (ORCPT
+        with ESMTP id S1348075AbhKYR0j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 25 Nov 2021 12:26:39 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D7CC0613D7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:16:27 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id cq22-20020a17090af99600b001a9550a17a5so8194586pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:16:27 -0800 (PST)
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0F7FC06175B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:15:51 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id e8so6456164ilu.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:15:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=telus.net; s=google;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=ZcJ/rON8wGKNLK176u9S8NH6zRHqqLGaIZ+pfZTgUPw=;
-        b=KYBujD2+qTiES1emT1f3fzJuzyE2lUUnM/LTtkjBnxBAUhT+zffA43ZqQYFgTgvW3Q
-         VuZlDKrnoghBs6ucT88wfDb3XfbT5Fx7DqdICQcsHfUeok1e27YohMC4d+uc59ka8t7O
-         yzcQomsiXRkIxYyVsjQlPSty7UqL/fXxj7qrd4WzWH44SOT8lr3RvAu1C8NhDm1aOv80
-         Hwu4eZ32bVxA6r1FqqF+7nKM+Mxfd923iJK3+UpmHMYLZURLl8OG5zbcshJT6cFsuTKA
-         fn/7GJJzXx5GirjTMD0IeDST+KNBmCSs3PzRtcJziIedv27hNJ7EehzRd6Wg38Zzi/yW
-         osLQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/uYJR7BpBUZnQlATvrNBpAhoCNJC2VJDDuo/0Wdks2I=;
+        b=U1wy3xNctEYKtUSbQx4rQXWxWtAp3C6P5JqLjhqLydfu/j7qzEy22qOVSYZ8CT4Q0E
+         KVf41IlVtfIa4dkrSkmRdOr7Mqn9KxanQNNnwy3jx2/d4CNhit0+YKJ3rmErXoNkDT9h
+         EPVq9/nY4i12LhSgQ+wt8DA6NbflF6T7isKlU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:content-language
-         :thread-index;
-        bh=ZcJ/rON8wGKNLK176u9S8NH6zRHqqLGaIZ+pfZTgUPw=;
-        b=Gxslr33+W2koUVzpN2r2Z33ob0/v+918JHBpHG/4StlaR/oRMdp4NhPQDDlRCVvuTa
-         RMyj4xiCMmAccJfODdxV42/INKlUTKlXKHwtSF6VdYEAfPS1teJq9evZvFmenzPMY4ye
-         HzG13bXLGH464/kUlUkV6nhWOJkwBo/DUVDyqpsAatBFBBqaLYws9vZRHZBRZWLpsVM6
-         r53eCyi2M4vHqxgdqqXft9hjt1oJ7V+WQKKSiTwV6qndub9wb9DOQPuSQNC70hoYu1wr
-         bbXerEqq5pPZ821wwDMwo3yVIgQn8wRmtNkDwzlFpnYkVvCsfjm9k5hTMA/U/RdQQq9Y
-         4kSA==
-X-Gm-Message-State: AOAM530R8z0V0Sed0Z4hP2v05jBjZ40puFRseN3uztSOdzHNYEb2kZi/
-        R3QYl8y+f3IYnFrE3oWew+7zXg==
-X-Google-Smtp-Source: ABdhPJxwCha2L7wGusNFfYXQo9nPmyDSPKWcNCr9tjNDLTishpMt2VdlrMjkVW0M4ibOqj5ePn2+Lg==
-X-Received: by 2002:a17:902:b712:b0:143:72b7:4096 with SMTP id d18-20020a170902b71200b0014372b74096mr31733673pls.25.1637860587337;
-        Thu, 25 Nov 2021 09:16:27 -0800 (PST)
-Received: from DougS18 ([173.180.45.4])
-        by smtp.gmail.com with ESMTPSA id b10sm4044140pfl.200.2021.11.25.09.16.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Nov 2021 09:16:26 -0800 (PST)
-From:   "Doug Smythies" <dsmythies@telus.net>
-To:     "'Maulik Shah'" <quic_mkshah@quicinc.com>,
-        <bjorn.andersson@linaro.org>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>
-Cc:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <ulf.hansson@linaro.org>,
-        <quic_lsrao@quicinc.com>, <rnayak@codeaurora.org>,
-        "Doug Smythies" <dsmythies@telus.net>
-References: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
-In-Reply-To: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
-Subject: RE: [PATCH 0/4] Allow cpuidle governors to be compiled as modules
-Date:   Thu, 25 Nov 2021 09:16:25 -0800
-Message-ID: <000601d7e220$2dd78990$89869cb0$@telus.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/uYJR7BpBUZnQlATvrNBpAhoCNJC2VJDDuo/0Wdks2I=;
+        b=kHyAXTFKpHRsyTcRnBIrsqDmcZgCCC59hkJeY1n7OQ7LaKU3q5IlQdg7+m348Qk9WP
+         BOKN/WPeggFB8fCn6MkPUqef835gyzVHy2RAXen9sDjkgjDbIpN6VfhOJM8rJC0QcKbi
+         XDxoFz2JR8n/z+IZtuLjWioJj0yUPgGj6lwiiRyGcCYkvoxpb0UluadhUkwlf0ODJxoD
+         vO5ikzqdHORDoOP958r+6mW6CIGUBqS0RmBt1kbNOgwGc4o/8uCyF/DT9MeUcBFeSGEm
+         XaBYwFRAP8VnmHV82nvc2gYFD2agoQL4mk1aoqd/y/5r7lOeTax01BnkVQ20wLEsOAYp
+         lRyw==
+X-Gm-Message-State: AOAM530A87ZIoBx/8tWbJgV+NJ9WUXFwetKyyT+wg/W/pYcNIezFUX5a
+        SBFviDVPOFbBfhKXj/UlTSIwluYYlO7W0e3r9tILRA==
+X-Google-Smtp-Source: ABdhPJwllgvWyk4LNbY/PtxJGQlD+gEgV7b5sp6fqyvfUdRDRSzNrnZLFjdBH7EIEcEybhBkeEKxek8U1YU0hnor4HU=
+X-Received: by 2002:a92:c54d:: with SMTP id a13mr23882839ilj.143.1637860551141;
+ Thu, 25 Nov 2021 09:15:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGT+IG2EWhj5x7yn247xTDGojnxHKycPHaA
+References: <20210428193654.1498482-1-robdclark@gmail.com> <20210428193654.1498482-2-robdclark@gmail.com>
+ <e6f04ed5-100d-6ef9-c272-1a1370e45579@linaro.org>
+In-Reply-To: <e6f04ed5-100d-6ef9-c272-1a1370e45579@linaro.org>
+From:   Rob Clark <robdclark@chromium.org>
+Date:   Thu, 25 Nov 2021 09:20:57 -0800
+Message-ID: <CAJs_Fx6cJSkU=+C7Fh14=xojn0n-ad9_qNFXuimFFm_X3WfUOg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm: Handle ringbuffer overflow
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Eric Anholt <emma@anholt.net>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dave Airlie <airlied@redhat.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi All,
+On Wed, Nov 24, 2021 at 11:36 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 28/04/2021 22:36, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Currently if userspace manages to fill up the ring faster than the GPU
+> > can consume we (a) spin for up to 1sec, and then (b) overwrite the
+> > ringbuffer contents from previous submits that the GPU is still busy
+> > executing.  Which predictably goes rather badly.
+> >
+> > Instead, just skip flushing (updating WPTR) and reset ring->next back to
+> > where it was before we tried writing the submit into the ringbuffer, and
+> > return an error to userspace (which can then try again).
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+>
+> Rob, you've posted this patch, but never merged it. Should it be merged
+> at some point?
 
-I realize that previous replies render this one useless
-but sending anyhow.
+I think it is a bit less needed now, since drm/sched will limit the #
+of in-flight submits (when I sent that patch, it was before conversion
+to use drm/sched)
 
-On 2021.11.25 00:55 Maulik Shah wrote:
+With a bit more locking re-work we could do something more clever like
+just blocking until there is space in the ringbuffer.. but aren't
+there quite yet.
 
-> This series makes changes to allow cpuidle governors
-> menu, ladder and teo to compiled as modules when
-> building with allmodconfig.
+BR,
+-R
 
-One current issue with governors being available as modules
-is that they don't appear on the available governors list unless
-they are loaded.
-
-Example with this patch set, all done as modules:
-
-~$ grep . /sys/devices/system/cpu/cpuidle/*
-/sys/devices/system/cpu/cpuidle/current_driver:none
-/sys/devices/system/cpu/cpuidle/current_governor:none
-/sys/devices/system/cpu/cpuidle/current_governor_ro:none
-
-However, and based on my systems power consumption,
-some sort of idle must be running.
-
-~$ echo teo | sudo tee /sys/devices/system/cpu/cpuidle/current_governor
-teo
-tee: /sys/devices/system/cpu/cpuidle/current_governor: Invalid argument
-
-~$ sudo modprobe teo
-~$ grep . /sys/devices/system/cpu/cpuidle/*
-/sys/devices/system/cpu/cpuidle/available_governors:teo
-/sys/devices/system/cpu/cpuidle/current_driver:none
-/sys/devices/system/cpu/cpuidle/current_governor:teo
-/sys/devices/system/cpu/cpuidle/current_governor_ro:teo
-
-By the way, for the cpufreq stuff, while governors that
-are actually available, but are modules, changing to them
-without first force loading the module works:
-
-$ grep . /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors
-/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors:performance schedutil
-/sys/devices/system/cpu/cpu10/cpufreq/scaling_available_governors:performance schedutil
-...
-
-$ echo ondemand | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-ondemand
-
-$ grep . /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors
-/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors:ondemand performance schedutil
-/sys/devices/system/cpu/cpu10/cpufreq/scaling_available_governors:ondemand performance schedutil
-
-... Doug
-
-
+>
+> > ---
+> >   drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  3 +++
+> >   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  3 +++
+> >   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 24 +++++++++++++++++-
+> >   drivers/gpu/drm/msm/msm_gem_submit.c    |  7 +++++-
+> >   drivers/gpu/drm/msm/msm_gpu.c           | 33 +++++++++++++++++++++++--
+> >   drivers/gpu/drm/msm/msm_gpu.h           |  2 +-
+> >   drivers/gpu/drm/msm/msm_ringbuffer.h    |  5 ++++
+> >   7 files changed, 72 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > index ce13d49e615b..0c8faad3b328 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > @@ -36,6 +36,9 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+> >               OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
+> >       }
+> >
+> > +     if (unlikely(ring->overflow))
+> > +             return;
+> > +
+> >       spin_lock_irqsave(&ring->preempt_lock, flags);
+> >
+> >       /* Copy the shadow to the actual register */
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > index d553f62f4eeb..4a4728a774c0 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > @@ -68,6 +68,9 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+> >               OUT_RING(ring, upper_32_bits(shadowptr(a6xx_gpu, ring)));
+> >       }
+> >
+> > +     if (unlikely(ring->overflow))
+> > +             return;
+> > +
+> >       spin_lock_irqsave(&ring->preempt_lock, flags);
+> >
+> >       /* Copy the shadow to the actual register */
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > index 0f184c3dd9d9..a658777e07b1 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -467,6 +467,9 @@ void adreno_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring, u32 reg)
+> >   {
+> >       uint32_t wptr;
+> >
+> > +     if (unlikely(ring->overflow))
+> > +             return;
+> > +
+> >       /* Copy the shadow to the actual register */
+> >       ring->cur = ring->next;
+> >
+> > @@ -788,12 +791,31 @@ static uint32_t ring_freewords(struct msm_ringbuffer *ring)
+> >       return (rptr + (size - 1) - wptr) % size;
+> >   }
+> >
+> > +static bool space_avail(struct msm_ringbuffer *ring, uint32_t ndwords)
+> > +{
+> > +     if (ring_freewords(ring) >= ndwords)
+> > +             return true;
+> > +
+> > +     /* We don't have a good way to know in general when the RPTR has
+> > +      * advanced.. newer things that use CP_WHERE_AM_I to update the
+> > +      * shadow rptr could possibly insert a packet to generate an irq.
+> > +      * But that doesn't cover older GPUs.  But if the ringbuffer is
+> > +      * full, it could take a while before it is empty again, so just
+> > +      * insert a blind sleep to avoid a busy loop.
+> > +      */
+> > +     msleep(1);
+> > +
+> > +     return false;
+> > +}
+> > +
+> >   void adreno_wait_ring(struct msm_ringbuffer *ring, uint32_t ndwords)
+> >   {
+> > -     if (spin_until(ring_freewords(ring) >= ndwords))
+> > +     if (spin_until(space_avail(ring, ndwords))) {
+> >               DRM_DEV_ERROR(ring->gpu->dev->dev,
+> >                       "timeout waiting for space in ringbuffer %d\n",
+> >                       ring->id);
+> > +             ring->overflow = true;
+> > +     }
+> >   }
+> >
+> >   /* Get legacy powerlevels from qcom,gpu-pwrlevels and populate the opp table */
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > index 5480852bdeda..4bc669460fda 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > @@ -683,6 +683,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> >       submitid = atomic_inc_return(&ident) - 1;
+> >
+> >       ring = gpu->rb[queue->prio];
+> > +
+> > +     GEM_WARN_ON(ring->overflow);
+> > +
+> >       trace_msm_gpu_submit(pid_nr(pid), ring->id, submitid,
+> >               args->nr_bos, args->nr_cmds);
+> >
+> > @@ -829,7 +832,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+> >               }
+> >       }
+> >
+> > -     msm_gpu_submit(gpu, submit);
+> > +     ret = msm_gpu_submit(gpu, submit);
+> > +     if (ret)
+> > +             goto out;
+> >
+> >       args->fence = submit->fence->seqno;
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> > index ab7c167b0623..7655ad9108c8 100644
+> > --- a/drivers/gpu/drm/msm/msm_gpu.c
+> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> > @@ -787,7 +787,7 @@ void msm_gpu_retire(struct msm_gpu *gpu)
+> >   }
+> >
+> >   /* add bo's to gpu's ring, and kick gpu: */
+> > -void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> > +int msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> >   {
+> >       struct drm_device *dev = gpu->dev;
+> >       struct msm_drm_private *priv = dev->dev_private;
+> > @@ -834,9 +834,38 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> >       spin_unlock(&ring->submit_lock);
+> >
+> >       gpu->funcs->submit(gpu, submit);
+> > -     priv->lastctx = submit->queue->ctx;
+> >
+> >       hangcheck_timer_reset(gpu);
+> > +
+> > +     if (unlikely(ring->overflow)) {
+> > +             /*
+> > +              * Reset the ptr back to before the submit, so the GPU
+> > +              * doesn't see a partial submit:
+> > +              */
+> > +             ring->next = ring->cur;
+> > +
+> > +             /*
+> > +              * Clear the overflow flag, hopefully the next submit on
+> > +              * the ring actually fits
+> > +              */
+> > +             ring->overflow = false;
+> > +
+> > +             /*
+> > +              * One might be tempted to remove the submit from the
+> > +              * submits list, and drop it's reference (and drop the
+> > +              * active reference for all the bos).  But we can't
+> > +              * really signal the fence attached to obj->resv without
+> > +              * disturbing other fences on the timeline.  So instead
+> > +              * just leave it and let it retire normally when a
+> > +              * later submit completes.
+> > +              */
+> > +
+> > +             return -ENOSPC;
+> > +     }
+> > +
+> > +     priv->lastctx = submit->queue->ctx;
+> > +
+> > +     return 0;
+> >   }
+> >
+> >   /*
+> > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> > index d7cd02cd2109..2dd2ef1f8328 100644
+> > --- a/drivers/gpu/drm/msm/msm_gpu.h
+> > +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> > @@ -302,7 +302,7 @@ int msm_gpu_perfcntr_sample(struct msm_gpu *gpu, uint32_t *activetime,
+> >               uint32_t *totaltime, uint32_t ncntrs, uint32_t *cntrs);
+> >
+> >   void msm_gpu_retire(struct msm_gpu *gpu);
+> > -void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit);
+> > +int msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit);
+> >
+> >   int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+> >               struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
+> > diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+> > index fe55d4a1aa16..d8ad9818c389 100644
+> > --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
+> > +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+> > @@ -40,6 +40,8 @@ struct msm_ringbuffer {
+> >       struct drm_gem_object *bo;
+> >       uint32_t *start, *end, *cur, *next;
+> >
+> > +     bool overflow;
+> > +
+> >       /*
+> >        * List of in-flight submits on this ring.  Protected by submit_lock.
+> >        */
+> > @@ -69,6 +71,9 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring);
+> >   static inline void
+> >   OUT_RING(struct msm_ringbuffer *ring, uint32_t data)
+> >   {
+> > +     if (ring->overflow)
+> > +             return;
+> > +
+> >       /*
+> >        * ring->next points to the current command being written - it won't be
+> >        * committed as ring->cur until the flush
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
