@@ -2,107 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFFEC45DE48
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 17:06:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15DB945DFA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 18:26:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234191AbhKYQJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 11:09:27 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35480 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229729AbhKYQH0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 11:07:26 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 39F0C60200;
-        Thu, 25 Nov 2021 16:04:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637856255;
-        bh=KdhSkXjkdaP3MlPJHTn/Y5rldvqlD30vDk4OrRZDGKk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lt0lqCFzS2OgfQbao/5lQKll2XYntB/PIV6jwUtWT0qBqf/hIz4IVt/mPVut2SyL9
-         3A1gtB+ozJ4Ip4e7N4fCBK7aBbqGZljrGO7iCL71oMLftVpTrQsMxt63EQZjrakvI3
-         EA4BB2njilar/v2O4ZYz6q2W1uppOkOC9RgeuoKMU3I4BLKL/N/gyI2OlxbIw3yBjR
-         +LtAtY0Si3WewtPBtNh/R+diN370QEpwvlgPWLJi/7nvB2qwRf/bZimJltZj7E4G2m
-         p1Qy9e92OFQGPIt4NEfNgECw4r66Ix4mXzTjmLMIXAFZuZElBD5sUQMyu0FSJvZXGp
-         mcj3Zb7Rsq5Ww==
-Date:   Thu, 25 Nov 2021 16:04:09 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Subject: Re: [PATCH v4 00/10] Add support for audio on SC7280 based targets
-Message-ID: <YZ+z+XPyecvDJA88@sirena.org.uk>
-References: <1635838265-27346-1-git-send-email-srivasam@codeaurora.org>
- <YZUT6BQKz00jXov9@sirena.org.uk>
- <e01729cd-0b2b-fe27-809b-c75ccbb6fac4@codeaurora.org>
+        id S1348518AbhKYR2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 12:28:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41236 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348823AbhKYR0j (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Nov 2021 12:26:39 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D7CC0613D7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:16:27 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id cq22-20020a17090af99600b001a9550a17a5so8194586pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 09:16:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=telus.net; s=google;
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=ZcJ/rON8wGKNLK176u9S8NH6zRHqqLGaIZ+pfZTgUPw=;
+        b=KYBujD2+qTiES1emT1f3fzJuzyE2lUUnM/LTtkjBnxBAUhT+zffA43ZqQYFgTgvW3Q
+         VuZlDKrnoghBs6ucT88wfDb3XfbT5Fx7DqdICQcsHfUeok1e27YohMC4d+uc59ka8t7O
+         yzcQomsiXRkIxYyVsjQlPSty7UqL/fXxj7qrd4WzWH44SOT8lr3RvAu1C8NhDm1aOv80
+         Hwu4eZ32bVxA6r1FqqF+7nKM+Mxfd923iJK3+UpmHMYLZURLl8OG5zbcshJT6cFsuTKA
+         fn/7GJJzXx5GirjTMD0IeDST+KNBmCSs3PzRtcJziIedv27hNJ7EehzRd6Wg38Zzi/yW
+         osLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:content-language
+         :thread-index;
+        bh=ZcJ/rON8wGKNLK176u9S8NH6zRHqqLGaIZ+pfZTgUPw=;
+        b=Gxslr33+W2koUVzpN2r2Z33ob0/v+918JHBpHG/4StlaR/oRMdp4NhPQDDlRCVvuTa
+         RMyj4xiCMmAccJfODdxV42/INKlUTKlXKHwtSF6VdYEAfPS1teJq9evZvFmenzPMY4ye
+         HzG13bXLGH464/kUlUkV6nhWOJkwBo/DUVDyqpsAatBFBBqaLYws9vZRHZBRZWLpsVM6
+         r53eCyi2M4vHqxgdqqXft9hjt1oJ7V+WQKKSiTwV6qndub9wb9DOQPuSQNC70hoYu1wr
+         bbXerEqq5pPZ821wwDMwo3yVIgQn8wRmtNkDwzlFpnYkVvCsfjm9k5hTMA/U/RdQQq9Y
+         4kSA==
+X-Gm-Message-State: AOAM530R8z0V0Sed0Z4hP2v05jBjZ40puFRseN3uztSOdzHNYEb2kZi/
+        R3QYl8y+f3IYnFrE3oWew+7zXg==
+X-Google-Smtp-Source: ABdhPJxwCha2L7wGusNFfYXQo9nPmyDSPKWcNCr9tjNDLTishpMt2VdlrMjkVW0M4ibOqj5ePn2+Lg==
+X-Received: by 2002:a17:902:b712:b0:143:72b7:4096 with SMTP id d18-20020a170902b71200b0014372b74096mr31733673pls.25.1637860587337;
+        Thu, 25 Nov 2021 09:16:27 -0800 (PST)
+Received: from DougS18 ([173.180.45.4])
+        by smtp.gmail.com with ESMTPSA id b10sm4044140pfl.200.2021.11.25.09.16.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Nov 2021 09:16:26 -0800 (PST)
+From:   "Doug Smythies" <dsmythies@telus.net>
+To:     "'Maulik Shah'" <quic_mkshah@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>
+Cc:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <ulf.hansson@linaro.org>,
+        <quic_lsrao@quicinc.com>, <rnayak@codeaurora.org>,
+        "Doug Smythies" <dsmythies@telus.net>
+References: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
+In-Reply-To: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
+Subject: RE: [PATCH 0/4] Allow cpuidle governors to be compiled as modules
+Date:   Thu, 25 Nov 2021 09:16:25 -0800
+Message-ID: <000601d7e220$2dd78990$89869cb0$@telus.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4hRPBrvlJm1eOICO"
-Content-Disposition: inline
-In-Reply-To: <e01729cd-0b2b-fe27-809b-c75ccbb6fac4@codeaurora.org>
-X-Cookie: This bag is recyclable.
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGT+IG2EWhj5x7yn247xTDGojnxHKycPHaA
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi All,
 
---4hRPBrvlJm1eOICO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I realize that previous replies render this one useless
+but sending anyhow.
 
-On Thu, Nov 18, 2021 at 03:35:46PM +0530, Srinivasa Rao Mandadapu wrote:
-> On 11/17/2021 8:08 PM, Mark Brown wrote:
-> > On Tue, Nov 02, 2021 at 01:00:55PM +0530, Srinivasa Rao Mandadapu wrote:
-> >=20
-> > > This patch set depends on:
-> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D57=
-0161
-> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D57=
-2615
-> > > 	-- https://patchwork.kernel.org/project/alsa-devel/list/?series=3D55=
-9677
-> > None of those links seem to show any patches (or errors)?
->=20
-> Sorry for Inconvenience Rob. I think due to it's status change patches are
-> not being appeared on provided link.
+On 2021.11.25 00:55 Maulik Shah wrote:
 
-I'm not Rob...
+> This series makes changes to allow cpuidle governors
+> menu, ladder and teo to compiled as modules when
+> building with allmodconfig.
 
-> With removing filter able to see patch set. Below are the links with view
-> filter change.
->=20
-> --=20
-> https://patchwork.kernel.org/project/alsa-devel/list/?series=3D570161&arc=
-hive=3Dboth&state=3D*
+One current issue with governors being available as modules
+is that they don't appear on the available governors list unless
+they are loaded.
 
-Please note this bit of the mail:
+Example with this patch set, all done as modules:
 
-> > Please include human readable descriptions of things like commits and
-> > issues being discussed in e-mail in your mails, this makes them much
-> > easier for humans to read especially when they have no internet access.
-> > I do frequently catch up on my mail on flights or while otherwise
-> > travelling so this is even more pressing for me than just being about
-> > making things a bit easier to read.
+~$ grep . /sys/devices/system/cpu/cpuidle/*
+/sys/devices/system/cpu/cpuidle/current_driver:none
+/sys/devices/system/cpu/cpuidle/current_governor:none
+/sys/devices/system/cpu/cpuidle/current_governor_ro:none
 
-So it looks like we still depend on at least the sc7280 machine driver?
+However, and based on my systems power consumption,
+some sort of idle must be running.
 
---4hRPBrvlJm1eOICO
-Content-Type: application/pgp-signature; name="signature.asc"
+~$ echo teo | sudo tee /sys/devices/system/cpu/cpuidle/current_governor
+teo
+tee: /sys/devices/system/cpu/cpuidle/current_governor: Invalid argument
 
------BEGIN PGP SIGNATURE-----
+~$ sudo modprobe teo
+~$ grep . /sys/devices/system/cpu/cpuidle/*
+/sys/devices/system/cpu/cpuidle/available_governors:teo
+/sys/devices/system/cpu/cpuidle/current_driver:none
+/sys/devices/system/cpu/cpuidle/current_governor:teo
+/sys/devices/system/cpu/cpuidle/current_governor_ro:teo
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGfs/gACgkQJNaLcl1U
-h9D8cwf7Bff6TgE+WAzqNt2VB/K+kGas4TbADTHreLi1oEV1ONDQb+aKeV5FQXbl
-mQi1ps0bNGYak+GLne3wYLWe+H6xJKlPKh7SssQDqoSSEhKxJvf0ZVivuhTlcKK/
-IUTPJJBcnh6ftPjn5u8XJN9JWm2HMj5LgkG6itJZcK+/Au7RfpPmrCGl/+UYmfZc
-IXZGhdIkk/k3g6ZK/+UE/gAtDfsznLHDNKQMU/wygs+j4vjF5vUhkt5HBAnksnrK
-tr1LWGjemENfMvsTRfXtokbL39lJ4Ej9t1qz7qknJc02ZSuhUJS/8JBamgJpbtTH
-GpCeSMkLRDocDDSSAjs9EnDjCS9FnA==
-=8KsA
------END PGP SIGNATURE-----
+By the way, for the cpufreq stuff, while governors that
+are actually available, but are modules, changing to them
+without first force loading the module works:
 
---4hRPBrvlJm1eOICO--
+$ grep . /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors:performance schedutil
+/sys/devices/system/cpu/cpu10/cpufreq/scaling_available_governors:performance schedutil
+...
+
+$ echo ondemand | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+ondemand
+
+$ grep . /sys/devices/system/cpu/cpu*/cpufreq/scaling_available_governors
+/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors:ondemand performance schedutil
+/sys/devices/system/cpu/cpu10/cpufreq/scaling_available_governors:ondemand performance schedutil
+
+... Doug
+
+
