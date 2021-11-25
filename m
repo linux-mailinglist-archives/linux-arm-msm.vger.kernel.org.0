@@ -2,161 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A5C945DBF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:08:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E18045DC22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:15:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355532AbhKYOLt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 09:11:49 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:33636 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232810AbhKYOJt (ORCPT
+        id S1350536AbhKYOTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 09:19:04 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:6050 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239002AbhKYORD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 09:09:49 -0500
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 06:06:38 -0800
+        Thu, 25 Nov 2021 09:17:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637849632; x=1669385632;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=9B1kagCGofhMafAlXRiDA3X0zfmqJUebEtDe625FPrc=;
+  b=FnP5F9nhO6KVaQL1aSUsoPwLmx0SOC0NHuZgBdjrTMpRwUfMSWjFqO2c
+   YbHep6FhUenwDPyu5S8P4XyHuFKVGyjYAP6iNn2CAd4YF2VikRO9LLzQA
+   fKBp+E0Vao1M42dpAoX2gCVPeQBhZ8LV0uSNxBbMq53qfCYPFPzyKCfnu
+   E=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Nov 2021 06:13:52 -0800
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2021 06:06:36 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Nov 2021 19:36:22 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id 2256C2132F; Thu, 25 Nov 2021 19:36:21 +0530 (IST)
-From:   saluvala <saluvala@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        saluvala@codeaurora.org
-Subject: [RFC PATCH v1] Bluetooth: hci_qca: Add new hci_uart proto callback to power off voltage sources
-Date:   Thu, 25 Nov 2021 19:36:19 +0530
-Message-Id: <1637849179-18382-1-git-send-email-saluvala@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 06:13:52 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 25 Nov 2021 06:13:51 -0800
+Received: from [10.216.32.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 25 Nov
+ 2021 06:13:45 -0800
+Message-ID: <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
+Date:   Thu, 25 Nov 2021 19:43:42 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH] sched/idle: Export cpu_idle_poll_ctrl() symbol
+To:     Peter Zijlstra <peterz@infradead.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+CC:     <bjorn.andersson@linaro.org>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <ulf.hansson@linaro.org>, <quic_lsrao@quicinc.com>,
+        <rnayak@codeaurora.org>, Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        "Vincent Guittot" <vincent.guittot@linaro.org>
+References: <1637831676-32737-1-git-send-email-quic_mkshah@quicinc.com>
+ <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change adds a new hci_uart proto callback entry i.e., power off.
-This poweroff Callback is exposed to the drivers and called during BT OFF
-immediately after port close. This will ensure that Voltages sources are
-powered off after sending all the data before port close. Previously as
-part of hdev shutdown callback, voltages sources are powered off. But we
-have seen cases where post shutdown sequence completion some packets which
-are already queued are sent to UART. As controller is powered off, UART
-can’t send the data out or it is sending partial data due RTS line high.
+Hi Peter,
 
-Signed-off-by: saluvala <saluvala@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c    | 26 +++++++++++++++++++-------
- drivers/bluetooth/hci_serdev.c |  3 +++
- drivers/bluetooth/hci_uart.h   |  1 +
- 3 files changed, 23 insertions(+), 7 deletions(-)
+On 11/25/2021 3:21 PM, Peter Zijlstra wrote:
+> On Thu, Nov 25, 2021 at 02:44:36PM +0530, Maulik Shah wrote:
+>> Export cpu_idle_poll_ctrl() so that module drivers can use same.
+> This does not seem like a really safe interface to expose to the
+> world.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index dd768a8..e1dee75 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -231,6 +231,7 @@ static int qca_regulator_enable(struct qca_serdev *qcadev);
- static void qca_regulator_disable(struct qca_serdev *qcadev);
- static void qca_power_shutdown(struct hci_uart *hu);
- static int qca_power_off(struct hci_dev *hdev);
-+static int qca_power_off_reg(struct hci_uart *hu);
- static void qca_controller_memdump(struct work_struct *work);
- 
- static enum qca_btsoc_type qca_soc_type(struct hci_uart *hu)
-@@ -554,7 +555,6 @@ static void qca_controller_memdump_timeout(struct work_struct *work)
- 	mutex_unlock(&qca->hci_memdump_lock);
- }
- 
--
- /* Initialize protocol */
- static int qca_open(struct hci_uart *hu)
- {
-@@ -1815,6 +1815,7 @@ static const struct hci_uart_proto qca_proto = {
- 	.flush		= qca_flush,
- 	.setup		= qca_setup,
- 	.recv		= qca_recv,
-+	.poweroff	= qca_power_off_reg,
- 	.enqueue	= qca_enqueue,
- 	.dequeue	= qca_dequeue,
- };
-@@ -1881,7 +1882,6 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 	struct qca_data *qca = hu->priv;
- 	unsigned long flags;
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
--	bool sw_ctrl_state;
- 
- 	/* From this point we go into power off state. But serial port is
- 	 * still open, stop queueing the IBS data and flush all the buffered
-@@ -1904,7 +1904,22 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 		host_set_baudrate(hu, 2400);
- 		qca_send_power_pulse(hu, false);
- 		qca_regulator_disable(qcadev);
--	} else if (soc_type == QCA_WCN6750) {
-+	} else if (qcadev->bt_en) {
-+		gpiod_set_value_cansleep(qcadev->bt_en, 0);
-+	}
-+
-+	set_bit(QCA_BT_OFF, &qca->flags);
-+}
-+
-+static int qca_power_off_reg(struct hci_uart *hu)
-+{
-+	struct qca_serdev *qcadev;
-+	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-+	bool sw_ctrl_state;
-+
-+	qcadev = serdev_device_get_drvdata(hu->serdev);
-+
-+	if (soc_type == QCA_WCN6750) {
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 		msleep(100);
- 		qca_regulator_disable(qcadev);
-@@ -1912,11 +1927,8 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 			sw_ctrl_state = gpiod_get_value_cansleep(qcadev->sw_ctrl);
- 			bt_dev_dbg(hu->hdev, "SW_CTRL is %d", sw_ctrl_state);
- 		}
--	} else if (qcadev->bt_en) {
--		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 	}
--
--	set_bit(QCA_BT_OFF, &qca->flags);
-+	return 0;
- }
- 
- static int qca_power_off(struct hci_dev *hdev)
-diff --git a/drivers/bluetooth/hci_serdev.c b/drivers/bluetooth/hci_serdev.c
-index 3b00d82..b3fec15 100644
---- a/drivers/bluetooth/hci_serdev.c
-+++ b/drivers/bluetooth/hci_serdev.c
-@@ -157,6 +157,9 @@ static int hci_uart_close(struct hci_dev *hdev)
- 		serdev_device_close(hu->serdev);
- 	}
- 
-+	if (hu->proto->poweroff)
-+		hu->proto->poweroff(hu);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/bluetooth/hci_uart.h b/drivers/bluetooth/hci_uart.h
-index fb4a2d0..fc3cd77f 100644
---- a/drivers/bluetooth/hci_uart.h
-+++ b/drivers/bluetooth/hci_uart.h
-@@ -59,6 +59,7 @@ struct hci_uart_proto {
- 	int (*recv)(struct hci_uart *hu, const void *data, int len);
- 	int (*enqueue)(struct hci_uart *hu, struct sk_buff *skb);
- 	struct sk_buff *(*dequeue)(struct hci_uart *hu);
-+	int (*poweroff)(struct hci_uart *hu);
- };
- 
- struct hci_uart {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+Thanks for the review.
 
+Keeping the cpuidle enabled from boot up may delay/increase the boot up 
+time.
+Below is our use case to force cpuidle to stay in cpu_idle_poll().
+
+We keep cpuidle disabled from boot up using "nohlt" option of kernel 
+command line which internally sets cpu_idle_force_poll = 1;
+and once the device bootup reaches till certain point (for example the 
+android homescreen is up) userspace may notify a
+vendor module driver which can invoke cpu_idle_poll_ctrl(false); to come 
+out of poll mode.
+So vendor module driver needs cpu_idle_poll_ctrl() exported symbol.
+
+We can not take PM-QoS from driver to prevent deep cpuidle since all the 
+vendor modules are kept in a separate partition and will be loaded only 
+after kernel boot up is done
+and by this time kernel already starts executing deep cpuidle modes.
+>
+> Surely the better solution is to rework things to not rely on this. I'm
+> fairly sure it's not hard to write a cpuidle driver that does much the
+> same.
+The other option i think is to pass cpuidle.off=1 in kernel command line 
+and then add enable_cpuidle() in drivers/cpuidle/cpuidle.c
+something similar as below which can be called by vendor module.
+
+void enable_cpuidle(void)
+{
+         off = 0;
+}
+EXPORT_SYMBOL_GPL(enable_cpuidle);
+
+This may be a good option since we have already disable_cpuidle() but 
+not enable_cpuidle().
+
+void disable_cpuidle(void)
+{
+         off = 1;
+}
+
+Hi Rafael/Daniel, can you please let me know your suggestion on 
+this/similar implementation?
+
+Thanks,
+Maulik
