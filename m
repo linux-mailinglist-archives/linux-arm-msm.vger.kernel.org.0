@@ -2,151 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A31F845DFFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 18:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF18945E066
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 19:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235868AbhKYRxH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 12:53:07 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55930 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242201AbhKYRvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 12:51:06 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C9DD6610F8;
-        Thu, 25 Nov 2021 17:47:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637862475;
-        bh=XpDIv730mgFE1qt/Qxxr4XwiiISkabpqqXicAdNUWXw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=d3cxN6e/BR+AWWg5G61DNnT/M6twroFnUFGdMJgWN/g9bUV9bAsMExx+N4LydMgB+
-         EbCsMGydcGljISBYAh61JdxpPqq/ANOfxf2Y7yV7jjpddUxjxWC1FQNuI4GgX3n003
-         QARwNe2+fjuGVAmgNbjqqtOYYdsA9idAIvrRNYHheYxtngRzU0D38O7/500+8XBVqS
-         bz6Qfz6MhPBAxMrldLyJJzCpjABmwRjPA01WESyfLHhPsbVEN23abRkCc5W2XiilWZ
-         DdU3H2XYlqCjYkVwINyx78HYD+ZVVlZPH8Mir2s9ZPusEwIZA1HOW6BI9h+b6IlywH
-         C/XVULDWSyleg==
-From:   Georgi Djakov <djakov@kernel.org>
-To:     djakov@kernel.org, quic_mdtipton@quicinc.com,
-        okukatla@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Mike Tipton <mdtipton@codeaurora.org>
-Subject: [PATCH v3] interconnect: qcom: icc-rpmh: Add BCMs to commit list in pre_aggregate
-Date:   Thu, 25 Nov 2021 19:47:51 +0200
-Message-Id: <20211125174751.25317-1-djakov@kernel.org>
-X-Mailer: git-send-email 2.29.0
+        id S233355AbhKYSKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 13:10:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232053AbhKYSIl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Nov 2021 13:08:41 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B09A1C0613B6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 10:01:19 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id j18so795636ljc.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 10:01:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ynwG4NbHg4X5JMdO8pH96G9Wv988uerBIA+nf4r1wKk=;
+        b=Lf9RQccj7htjEysn7T/OVOaVJzbpsW5S+bTEFkAP0QG/9NWtATiBqZrMDO/IiR015F
+         9i0miGLPORiRxK99o9gKSdN0im3lgDvA9hQ3kGBEblbqVFCWpi9w+jDdO22YRbpCMosf
+         OTixRIJi6ToshrNj1rvzy1hSXJpxD9wSIadcjsInu2GTW8U4zDwRFQNtAFGcRMCD9jx4
+         ZffKjpWyHfPcNmtX2WzNT+f8DRpuSzwyoeLc0yq0ioZCrllK5V9+1MK7HG8CJ0mzxShU
+         O2F/4pHshsN46wIgpjuJT3Wya0Wzc+OzaorXI6FnlQhZIsR081WQwhppgmC5AcZ9vMMD
+         89ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ynwG4NbHg4X5JMdO8pH96G9Wv988uerBIA+nf4r1wKk=;
+        b=SmF2wZGZvRT+b32CdmuxRGSY3sY7xmwZzAyAKAQ6/Scays91skaAnlp+4fot5mUv3o
+         cAUxZzVBuzBV1ACSeAyRKqaG1km3W8cNAmyiIe8OOK/bIidP9UGgREJ7gmR69JcYDIqI
+         kWBiG61POF8QrcG/vJlGwXMRp25lfKBwvA/PHtmnOKguIppMml3ScAzirna/pZqLoCeu
+         cK7oLy6yj6KGWP3BgkNkNiX3BxMxjsbwpI2WKKhIrLW39aJoIjnvpbhsH+WSMJJxjkl3
+         o7jj3ivM+o4uRlbyOXYNisD+0Suf6qebzOsaUBJZLVNkwQufs68ikg8/h6X5pTgQhcmY
+         1RiA==
+X-Gm-Message-State: AOAM531POtw8h/SJuqgvBoDQAuZPdlb1AxxfT5LkeujiwoRoEk+Ql4m8
+        V4vwcqBH1cN9HJwuip9t8l6GtyQxRG8pTw==
+X-Google-Smtp-Source: ABdhPJw33JWXItJy2u8lGIRYrValQuMuKOHbanYZyU2Kqt/vDbH8kCiuWvbT+NbEk54d3pP73ShV0Q==
+X-Received: by 2002:a2e:9b4f:: with SMTP id o15mr17933127ljj.105.1637863276829;
+        Thu, 25 Nov 2021 10:01:16 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l20sm318194lfj.36.2021.11.25.10.01.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Nov 2021 10:01:16 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dsi: fix initialization in the bonded DSI case
+Date:   Thu, 25 Nov 2021 21:01:14 +0300
+Message-Id: <20211125180114.561278-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Mike Tipton <mdtipton@codeaurora.org>
+Commit 739b4e7756d3 ("drm/msm/dsi: Fix an error code in
+msm_dsi_modeset_init()") changed msm_dsi_modeset_init() to return an
+error code in case msm_dsi_manager_validate_current_config() returns
+false. However this is not an error case, but a slave DSI of the bonded
+DSI link. In this case msm_dsi_modeset_init() should return 0, but just
+skip connector and bridge initialization.
 
-We're only adding BCMs to the commit list in aggregate(), but there are
-cases where pre_aggregate() is called without subsequently calling
-aggregate(). In particular, in icc_sync_state() when a node with initial
-BW has zero requests. Since BCMs aren't added to the commit list in
-these cases, we don't actually send the zero BW request to HW. So the
-resources remain on unnecessarily.
+To reduce possible confusion, drop the
+msm_dsi_manager_validate_current_config() function, and specif 'bonded
+&& !master' condition directly in the msm_dsi_modeset_init().
 
-Add BCMs to the commit list in pre_aggregate() instead, which is always
-called even when there are no requests.
-
-Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-[georgi: remove icc_sync_state for platforms with incomplete support]
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 739b4e7756d3 ("drm/msm/dsi: Fix an error code in msm_dsi_modeset_init()")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-v3:
-* This patch lowers the power consumption of the boards that have
-  (almost) full interconnect support enabled in their client drivers.
-  This might cause however issues on platforms with very minimal
-  interconnect support that have the sync_state callback set.
-  We remove the sync_state callback for these platforms to prevent
-  them from turning off any interconnects that have no clients yet.
+ drivers/gpu/drm/msm/dsi/dsi.c         | 10 +++++++---
+ drivers/gpu/drm/msm/dsi/dsi.h         |  1 -
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 17 -----------------
+ 3 files changed, 7 insertions(+), 21 deletions(-)
 
-v2: https://lore.kernel.org/lkml/20210721175432.2119-5-mdtipton@codeaurora.org/
-
- drivers/interconnect/qcom/icc-rpmh.c | 10 +++++-----
- drivers/interconnect/qcom/sm8150.c   |  1 -
- drivers/interconnect/qcom/sm8250.c   |  1 -
- drivers/interconnect/qcom/sm8350.c   |  1 -
- 4 files changed, 5 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-index 3eb7936d2cf6..2c8e12549804 100644
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -21,13 +21,18 @@ void qcom_icc_pre_aggregate(struct icc_node *node)
- {
- 	size_t i;
- 	struct qcom_icc_node *qn;
-+	struct qcom_icc_provider *qp;
- 
- 	qn = node->data;
-+	qp = to_qcom_provider(node->provider);
- 
- 	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
- 		qn->sum_avg[i] = 0;
- 		qn->max_peak[i] = 0;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 75ae3008b68f..fc280cc43494 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -215,9 +215,13 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+ 		goto fail;
  	}
-+
-+	for (i = 0; i < qn->num_bcms; i++)
-+		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+ 
+-	if (!msm_dsi_manager_validate_current_config(msm_dsi->id)) {
+-		ret = -EINVAL;
+-		goto fail;
++	if (msm_dsi_is_bonded_dsi(msm_dsi) &&
++	    !msm_dsi_is_master_dsi(msm_dsi)) {
++		/*
++		 * Do not return an eror here,
++		 * Just skip creating encoder/connector for the slave-DSI.
++		 */
++		return 0;
+ 	}
+ 
+ 	msm_dsi->encoder = encoder;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index 66443dc98500..ef8212990254 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -82,7 +82,6 @@ int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
+ bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
+ int msm_dsi_manager_register(struct msm_dsi *msm_dsi);
+ void msm_dsi_manager_unregister(struct msm_dsi *msm_dsi);
+-bool msm_dsi_manager_validate_current_config(u8 id);
+ void msm_dsi_manager_tpg_enable(void);
+ 
+ /* msm dsi */
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index a152dbf63038..a73cfeb93e90 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -645,23 +645,6 @@ struct drm_connector *msm_dsi_manager_connector_init(u8 id)
+ 	return ERR_PTR(ret);
  }
- EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
  
-@@ -45,10 +50,8 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- {
- 	size_t i;
- 	struct qcom_icc_node *qn;
--	struct qcom_icc_provider *qp;
- 
- 	qn = node->data;
--	qp = to_qcom_provider(node->provider);
- 
- 	if (!tag)
- 		tag = QCOM_ICC_TAG_ALWAYS;
-@@ -68,9 +71,6 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 	*agg_avg += avg_bw;
- 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
- 
--	for (i = 0; i < qn->num_bcms; i++)
--		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+-bool msm_dsi_manager_validate_current_config(u8 id)
+-{
+-	bool is_bonded_dsi = IS_BONDED_DSI();
 -
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
-diff --git a/drivers/interconnect/qcom/sm8150.c b/drivers/interconnect/qcom/sm8150.c
-index 2a85f53802b5..745e3c36a61a 100644
---- a/drivers/interconnect/qcom/sm8150.c
-+++ b/drivers/interconnect/qcom/sm8150.c
-@@ -535,7 +535,6 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8150",
- 		.of_match_table = qnoc_of_match,
--		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
-index 8dfb5dea562a..aa707582ea01 100644
---- a/drivers/interconnect/qcom/sm8250.c
-+++ b/drivers/interconnect/qcom/sm8250.c
-@@ -551,7 +551,6 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8250",
- 		.of_match_table = qnoc_of_match,
--		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
-diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
-index 3e26a2175b28..c79f93a1ac73 100644
---- a/drivers/interconnect/qcom/sm8350.c
-+++ b/drivers/interconnect/qcom/sm8350.c
-@@ -531,7 +531,6 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8350",
- 		.of_match_table = qnoc_of_match,
--		.sync_state = icc_sync_state,
- 	},
- };
- module_platform_driver(qnoc_driver);
+-	/*
+-	 * For bonded DSI, we only have one drm panel. For this
+-	 * use case, we register only one bridge/connector.
+-	 * Skip bridge/connector initialisation if it is
+-	 * slave-DSI for bonded DSI configuration.
+-	 */
+-	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id)) {
+-		DBG("Skip bridge registration for slave DSI->id: %d\n", id);
+-		return false;
+-	}
+-	return true;
+-}
+-
+ /* initialize bridge */
+ struct drm_bridge *msm_dsi_manager_bridge_init(u8 id)
+ {
+-- 
+2.33.0
+
