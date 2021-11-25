@@ -2,100 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D215345E2E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 23:05:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0633945E30E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 23:42:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344293AbhKYWIi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 17:08:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46028 "EHLO
+        id S244244AbhKYWqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 17:46:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344915AbhKYWGi (ORCPT
+        with ESMTP id S244205AbhKYWoE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 17:06:38 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D03C061758;
-        Thu, 25 Nov 2021 14:02:59 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id bu18so19521785lfb.0;
-        Thu, 25 Nov 2021 14:02:59 -0800 (PST)
+        Thu, 25 Nov 2021 17:44:04 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14AEC06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 14:39:47 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id l22so19513768lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 14:39:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sjNM0SmpprH2Ybt3lGnDr03lBtbdsYNvqzNEYejWd8Q=;
-        b=PYKkfTiTWkYf8HvGWbMcVxPSDsJb6kPY2+lTxviXtA5LgWGkD258oHR5zzlBWjHM8B
-         u/z3UH+Qd67RTQvNeQo6oCo3lH30Hm8uniImTK2FEvYh5RrmkjOtwP++L/fjtI9NPrsq
-         xX1mvH4fTNr4xsF4IfqAzgSZYLGJNvLdxZS1d8iKfQN0DXT5gZNnhgDMeA0SwGMvUsAZ
-         V402AE4RUTLHq2eV1UYmow6l1cGGK9+KmBvBpronprAICQINMNOmpzp3Fvy6GkFi+SyQ
-         yadvmffsnm+2Uv3mNvRGUWyjbPwL6Zn85zKtDwuusg1AMVJa20hd666a0clnTIFiyY6v
-         qOCQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mJT9UmrAop50weZOiXkTq034qrYD2Z7sYhOghCoxa7U=;
+        b=ER5U62wVTM7pabOVfUgOEfM++HmPnLsIUtJJtK1duTTFNB1CUBpvMyCcuhpZMsBbEy
+         HDXuAH+TvPJQEhC+vUgaGzUkw58buUjEI2O9CCt0xxtv7vOrHYW9/YANe+yqS1ddX/TM
+         Q8P1kvdiJ39A2mU8DxDuMAR2kMMzCJqnmW7fz/HA/VhHW+MrGAy6DqNvtlbrfmgwB/zP
+         g1ZAlfbDH83u1msdS7JMtmReqJpnPPnxyBVraO1oRJmf3HMZZ7UNzNFVuqARNxon5BCc
+         yW7rfhJZTxAMcx9j3NXeT/FyPs9UpLvbzRG0LkK4fVIWdI8Yi8flY+TSl/4vPWx7NUm3
+         VcIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sjNM0SmpprH2Ybt3lGnDr03lBtbdsYNvqzNEYejWd8Q=;
-        b=XmDCM/xjsKi2noinCtyZW1c1MKdPrGsS31fAGIg0k6XF1U2ZQBX91UWVa4v7miLfpM
-         BN8p+vUHyRMxT9l6/I1qRn0tOALxkYOtLT+QFp4kx4W/fJ2xYQms/AV6w1xFJq9uLJwe
-         f1/IdumYrLP8P69QZJyYEO3veB+2rKWsAkf+NVxcCCSrGI6GZDZ5sa3WwxnDv8t1HG9V
-         oDZclypp7U6PgzOla5sBEKTSVXpau/pcJtMEZZdiUQxCMXGozFNGpIRPbrzZnKALjqbk
-         3e24H4PQFYx93q6fmlLz5qcwpGZVfqs1wuuip9cs9RObKgMfVKigDFidZwT4KgkK50dG
-         vkxQ==
-X-Gm-Message-State: AOAM530bXMHXs7bQwlfCEsrti2lM2D33Zktg8ubep6TQIA51Bj5oSEm8
-        f7yC60dN7sQNbEO9mw8FVgo=
-X-Google-Smtp-Source: ABdhPJxNL52UiWFbYeqwEGrMXJ+nV0qL6DktEPN4uXUgMqYCgi03MNvgXvsPFqudLKWRhqupELw6OQ==
-X-Received: by 2002:a05:6512:398b:: with SMTP id j11mr25360757lfu.170.1637877777392;
-        Thu, 25 Nov 2021 14:02:57 -0800 (PST)
-Received: from localhost.localdomain (public-gprs212807.centertel.pl. [46.134.170.136])
-        by smtp.googlemail.com with ESMTPSA id b27sm342732ljf.52.2021.11.25.14.02.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 14:02:57 -0800 (PST)
-From:   Dominik Kobinski <dominikkobinski314@gmail.com>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Subject: [PATCH v2,5/5] arm: dts: qcom: pm8226: Support SPMI regulators on PMIC sid 1
-Date:   Thu, 25 Nov 2021 23:02:44 +0100
-Message-Id: <20211125220244.62586-1-dominikkobinski314@gmail.com>
-X-Mailer: git-send-email 2.34.0
-In-Reply-To: <20211125213451.62010-1-dominikkobinski314@gmail.com>
-References: <20211125213451.62010-1-dominikkobinski314@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mJT9UmrAop50weZOiXkTq034qrYD2Z7sYhOghCoxa7U=;
+        b=ShDw5mqvYE+05cHOoGzEB+EyinBg+irhrKjKMwAcfdIwADrS+g324LshTSntqwR51d
+         Tb2gLJuURR9egC0WQ6Wd1mBZ5G0cLq+WT7bbotarhCamW95Io9+RpRKx6GkbvtqTi+9A
+         AMJF8e3irskklmFLiLOmocB/JP3880jYIAYZkkB5k0BLDkyScRRuY+Nzx7hrqhQMACN/
+         YHSF7Kc9aG6W9rqmGHrGFW+NUyTci2VXoKhi32OwkQxWVl4c2gfYzXB9HfQQhgE8J3mj
+         IWw/kmXvDgcrOe+Ftg3xuByOQ+8sumb6e9SGorn0swVo4ULaNlXlXAAwdrGO2lBWPbOH
+         U7MQ==
+X-Gm-Message-State: AOAM532KcgrrHDTWpJ1u7iRLgm+/Dhox3bFj5odn5Z6LwJLOu4Ozmb0J
+        FVZawSO2ogs8zifGMI2bqTOSUg==
+X-Google-Smtp-Source: ABdhPJzYAsPi7L22JigPExXwwF0ksBTYtm1JieAuKmK3VDJBdWCxiRTSKgcCc7Gpkn2HnnVb4OLLqw==
+X-Received: by 2002:a05:6512:3053:: with SMTP id b19mr26807543lfb.276.1637879985892;
+        Thu, 25 Nov 2021 14:39:45 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x5sm332534ljm.101.2021.11.25.14.39.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Nov 2021 14:39:45 -0800 (PST)
+Subject: Re: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>, robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, kernel@collabora.com,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        jami.kettunen@somainline.org
+References: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <4e0147b9-6168-6eac-87f3-4d90c8404e3a@linaro.org>
+Date:   Fri, 26 Nov 2021 01:39:44 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8226 PMIC has SPMI regulators on the PMIC SID 1:
-add the spmi vregs compatible to probe them.
+On 25/11/2021 18:09, AngeloGioacchino Del Regno wrote:
+> Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
+> DSI host gets initialized earlier, but this caused unability to probe
+> the entire stack of components because they all depend on interrupts
+> coming from the main `mdss` node (mdp5, or dpu1).
+> 
+> To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
+> them at msm_pdev_probe() time: this will make sure that we add the
+> required interrupt controller mapping before dsi and/or other components
+> try to initialize, finally satisfying the dependency.
+> 
+> While at it, also change the allocation of msm_drm_private to use the
+> devm variant of kzalloc().
+> 
+> Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>>
----
-This patch is based on changes done in the following patches :
- - https://patchwork.kernel.org/project/linux-arm-msm/patch/20211118210210.160895-3-luca@z3ntu.xyz/
- - https://patchwork.kernel.org/project/linux-arm-msm/patch/20211122235230.2467246-1-jm5112356@gmail.com/
- - https://patchwork.kernel.org/project/linux-arm-msm/patch/20211123003256.2467776-1-jm5112356@gmail.com/
+If device is not fully bound (e.g. DSI host could not bind the panel), 
+this patch causes the following oops on reboot:
 
- arch/arm/boot/dts/qcom-pm8226.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+[   75.011942] Unable to handle kernel NULL pointer dereference at 
+virtual address 0000000000000030
+[   75.020974] Mem abort info:
+[   75.023859]   ESR = 0x96000006
+[   75.027013]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   75.032480]   SET = 0, FnV = 0
+[   75.035627]   EA = 0, S1PTW = 0
+[   75.038861]   FSC = 0x06: level 2 translation fault
+[   75.043876] Data abort info:
+[   75.046847]   ISV = 0, ISS = 0x00000006
+[   75.050796]   CM = 0, WnR = 0
+[   75.053857] user pgtable: 4k pages, 48-bit VAs, pgdp=00000001102b3000
+[   75.060478] [0000000000000030] pgd=080000011035d003, 
+p4d=080000011035d003, pud=080000011035f003, pmd=0000000000000000
+[   75.071380] Internal error: Oops: 96000006 [#1] SMP
+[   75.076388] Modules linked in:
+[   75.079530] CPU: 0 PID: 1442 Comm: reboot Not tainted 
+5.16.0-rc1-00046-g2207fd610cf4-dirty #185
+[   75.088460] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+[   75.095345] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS 
+BTYPE=--)
+[   75.102496] pc : drm_atomic_state_alloc+0x14/0x74
+[   75.107335] lr : drm_atomic_helper_disable_all+0x20/0x210
+[   75.112885] sp : ffff80001480bb70
+[   75.116298] x29: ffff80001480bb70 x28: ffff0c8753505400 x27: 
+0000000000000000
+[   75.123626] x26: ffff0c874097d890 x25: ffffaa357b610e00 x24: 
+0000000000000000
+[   75.130954] x23: ffffaa357bdaa030 x22: ffffaa357bdfd2d8 x21: 
+ffff80001480bbf8
+[   75.138282] x20: ffff0c87469bd800 x19: ffff0c87469bd800 x18: 
+ffffffffffffffff
+[   75.145608] x17: 000000000000000e x16: 0000000000000001 x15: 
+ffff80009480ba3d
+[   75.152934] x14: 0000000000000004 x13: 0000000000000000 x12: 
+ffff0c87452c1288
+[   75.160261] x11: 0000000000000003 x10: ffff0c87452c1240 x9 : 
+0000000000000001
+[   75.167588] x8 : ffff80001480bc38 x7 : 0000000000000000 x6 : 
+ffff0c874f63d300
+[   75.174914] x5 : 0000000000000000 x4 : ffffaa357b582d30 x3 : 
+0000000000000000
+[   75.182240] x2 : ffff80001480bc20 x1 : 0000000000000000 x0 : 
+ffff0c87469bd800
+[   75.189568] Call trace:
+[   75.192092]  drm_atomic_state_alloc+0x14/0x74
+[   75.196571]  drm_atomic_helper_disable_all+0x20/0x210
+[   75.201765]  drm_atomic_helper_shutdown+0x80/0x130
+[   75.206683]  msm_pdev_shutdown+0x2c/0x40
+[   75.210717]  platform_shutdown+0x28/0x40
+[   75.214751]  device_shutdown+0x15c/0x450
+[   75.218785]  __do_sys_reboot+0x218/0x2a0
+[   75.222819]  __arm64_sys_reboot+0x28/0x34
+[   75.226937]  invoke_syscall+0x48/0x114
+[   75.230794]  el0_svc_common.constprop.0+0xd4/0xfc
+[   75.235626]  do_el0_svc+0x28/0x90
+[   75.239030]  el0_svc+0x28/0x80
+[   75.242174]  el0t_64_sync_handler+0xa4/0x130
+[   75.246567]  el0t_64_sync+0x1a0/0x1a4
+[   75.250338] Code: a9be7bfd 910003fd a90153f3 f9418c01 (f9401821)
+[   75.256599] ---[ end trace d90b41486de58d22 ]---
 
-diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
-index 25780c8fa2e9..49c2fac6f287 100644
---- a/arch/arm/boot/dts/qcom-pm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
-@@ -62,6 +62,10 @@ pm8226_1: pm8226@1 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 
-+		pm8226_spmi_regulators: pm8226-regulators {
-+			compatible = "qcom,pm8226-regulators";
-+		};
-+
- 		pm8226_vib: vibrator@c000 {
- 			compatible = "qcom,pm8916-vib";
- 			reg = <0xc000>;
+
+The following patch fixes it:
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 41c6a9f9dd34..5a92417d21d0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1435,7 +1435,7 @@ static void msm_pdev_shutdown(struct
+         struct drm_device *drm = platform_get_drvdata(pdev);
+         struct msm_drm_private *priv = drm ? drm->dev_private : NULL;
+
+-       if (!priv || !priv->kms)
++       if (!priv || !priv->kms || !drm->mode_config.funcs)
+                 return;
+
+         drm_atomic_helper_shutdown(drm);
+
+
+> ---
+>   drivers/gpu/drm/msm/msm_drv.c | 81 ++++++++++++++++-------------------
+>   1 file changed, 38 insertions(+), 43 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 7936e8d498dd..790acf4993c0 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -512,45 +512,12 @@ static int msm_init_vram(struct drm_device *dev)
+>   static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+> -	struct drm_device *ddev;
+> -	struct msm_drm_private *priv;
+> -	struct msm_kms *kms;
+> -	struct msm_mdss *mdss;
+> +	struct drm_device *ddev = platform_get_drvdata(pdev);
+> +	struct msm_drm_private *priv = ddev->dev_private;
+> +	struct msm_kms *kms = priv->kms;
+> +	struct msm_mdss *mdss = priv->mdss;
+>   	int ret, i;
+>   
+> -	ddev = drm_dev_alloc(drv, dev);
+> -	if (IS_ERR(ddev)) {
+> -		DRM_DEV_ERROR(dev, "failed to allocate drm_device\n");
+> -		return PTR_ERR(ddev);
+> -	}
+> -
+> -	platform_set_drvdata(pdev, ddev);
+> -
+> -	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+> -	if (!priv) {
+> -		ret = -ENOMEM;
+> -		goto err_put_drm_dev;
+> -	}
+> -
+> -	ddev->dev_private = priv;
+> -	priv->dev = ddev;
+> -
+> -	switch (get_mdp_ver(pdev)) {
+> -	case KMS_MDP5:
+> -		ret = mdp5_mdss_init(ddev);
+> -		break;
+> -	case KMS_DPU:
+> -		ret = dpu_mdss_init(ddev);
+> -		break;
+> -	default:
+> -		ret = 0;
+> -		break;
+> -	}
+> -	if (ret)
+> -		goto err_free_priv;
+> -
+> -	mdss = priv->mdss;
+> -
+>   	priv->wq = alloc_ordered_workqueue("msm", 0);
+>   	priv->hangcheck_period = DRM_MSM_HANGCHECK_DEFAULT_PERIOD;
+>   
+> @@ -685,11 +652,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+>   err_destroy_mdss:
+>   	if (mdss && mdss->funcs)
+>   		mdss->funcs->destroy(ddev);
+> -err_free_priv:
+> -	kfree(priv);
+> -err_put_drm_dev:
+> -	drm_dev_put(ddev);
+> -	platform_set_drvdata(pdev, NULL);
+>   	return ret;
+>   }
+>   
+> @@ -1382,12 +1344,42 @@ static const struct component_master_ops msm_drm_ops = {
+>   static int msm_pdev_probe(struct platform_device *pdev)
+>   {
+>   	struct component_match *match = NULL;
+> +	struct msm_drm_private *priv;
+> +	struct drm_device *ddev;
+>   	int ret;
+>   
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	ddev = drm_dev_alloc(&msm_driver, &pdev->dev);
+> +	if (IS_ERR(ddev)) {
+> +		DRM_DEV_ERROR(&pdev->dev, "failed to allocate drm_device\n");
+> +		return PTR_ERR(ddev);
+> +	}
+> +
+> +	platform_set_drvdata(pdev, ddev);
+> +	ddev->dev_private = priv;
+> +	priv->dev = ddev;
+> +
+> +	switch (get_mdp_ver(pdev)) {
+> +	case KMS_MDP5:
+> +		ret = mdp5_mdss_init(ddev);
+> +		break;
+> +	case KMS_DPU:
+> +		ret = dpu_mdss_init(ddev);
+> +		break;
+> +	default:
+> +		ret = 0;
+> +		break;
+> +	}
+> +	if (ret)
+> +		goto err_put_drm_dev;
+> +
+>   	if (get_mdp_ver(pdev)) {
+>   		ret = add_display_components(pdev, &match);
+>   		if (ret)
+> -			return ret;
+> +			goto fail;
+>   	}
+>   
+>   	ret = add_gpu_components(&pdev->dev, &match);
+> @@ -1409,6 +1401,9 @@ static int msm_pdev_probe(struct platform_device *pdev)
+>   
+>   fail:
+>   	of_platform_depopulate(&pdev->dev);
+> +err_put_drm_dev:
+> +	drm_dev_put(ddev);
+> +	platform_set_drvdata(pdev, NULL);
+>   	return ret;
+>   }
+>   
+> 
+
+
 -- 
-2.34.0
-
+With best wishes
+Dmitry
