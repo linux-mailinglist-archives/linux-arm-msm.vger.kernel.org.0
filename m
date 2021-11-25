@@ -2,66 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F76A45DADB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:19:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 548E745DAE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:20:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355165AbhKYNWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 08:22:45 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:23253 "EHLO
+        id S1355338AbhKYNXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 08:23:39 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:25895 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344193AbhKYNUo (ORCPT
+        with ESMTP id S1349527AbhKYNVi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 08:20:44 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 05:17:33 -0800
+        Thu, 25 Nov 2021 08:21:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637846307; x=1669382307;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=U5Kor8T/KOS/W7IRbRf/Canjq2Mk951LWAJIdYI46kA=;
+  b=xD7QrchOLzsgTpt0mZk63obTpaIiSdzsoo3oKpfFU9otsq0GtTjc4jFH
+   cDZ/cHIsUw8MYrXPNcOkgo22r2HMq3XEhZtlj+p5DThuF6mRqSXXLejMi
+   WXGOcGUo0/NZyBVeoKniSBgdaxaqhtrVAy6FIKV4ExAx4D7hDyWQt14Yc
+   s=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 05:18:27 -0800
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2021 05:17:31 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx229.qualcomm.com ([10.204.179.152])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Nov 2021 18:47:14 +0530
-Received: by hyd-lablnx229.qualcomm.com (Postfix, from userid 2390365)
-        id 81B9D2126C; Thu, 25 Nov 2021 18:47:12 +0530 (IST)
-From:   pharish <pharish@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        saluvala@codeaurora.org, pharish <pharish@codeaurora.org>
-Subject: [PATCH v1] Bluetooth: hci_qca: Stop IBS timer during BT OFF
-Date:   Thu, 25 Nov 2021 18:47:10 +0530
-Message-Id: <1637846230-4798-2-git-send-email-pharish@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637846230-4798-1-git-send-email-pharish@codeaurora.org>
-References: <1637846230-4798-1-git-send-email-pharish@codeaurora.org>
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 05:18:26 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 25 Nov 2021 05:18:26 -0800
+Received: from [10.216.32.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 25 Nov
+ 2021 05:18:22 -0800
+Message-ID: <ac35bafa-a57f-e9ea-4dee-9af547de34e2@quicinc.com>
+Date:   Thu, 25 Nov 2021 18:48:16 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 0/4] Allow cpuidle governors to be compiled as modules
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>, <quic_lsrao@quicinc.com>,
+        "Nayak, Rajendra" <rnayak@codeaurora.org>
+References: <1637830481-21709-1-git-send-email-quic_mkshah@quicinc.com>
+ <CAJZ5v0hhUSjNdHwF4dRUQ1Fgos-jqg1agHBShhhwFUGK6wiedQ@mail.gmail.com>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <CAJZ5v0hhUSjNdHwF4dRUQ1Fgos-jqg1agHBShhhwFUGK6wiedQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change stops IBS timers during BT OFF.
+Hi Rafael,
 
-Signed-off-by: pharish <pharish@codeaurora.org>
----
- drivers/bluetooth/hci_qca.c | 3 +++
- 1 file changed, 3 insertions(+)
+On 11/25/2021 5:57 PM, Rafael J. Wysocki wrote:
+> On Thu, Nov 25, 2021 at 9:55 AM Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>> This series makes changes to allow cpuidle governors menu, ladder and teo
+>> to compiled as modules when building with allmodconfig.
+> What's the purpose of this?
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index dd768a8..6f44b26 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1928,6 +1928,9 @@ static int qca_power_off(struct hci_dev *hdev)
- 	hu->hdev->hw_error = NULL;
- 	hu->hdev->cmd_timeout = NULL;
- 
-+	mod_timer(&qca->tx_idle_timer, 0);
-+	mod_timer(&qca->wake_retrans_timer, 0);
-+
- 	/* Stop sending shutdown command if soc crashes. */
- 	if (soc_type != QCA_ROME
- 		&& qca->memdump_state == QCA_MEMDUMP_IDLE) {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+There are two purposes of this series.
+
+1. The series enables cpuidle governors to be allowed to compiled as 
+modules.
+     This is something similar to what cpufreq/devfreq governors do 
+today as they can be be compiled as modules or built-in depending on the 
+build config.
+
+2. The series will also enable custom cpuidle governor to be able to 
+register with cpuidle framework by using cpuidle_register_governor() API.
+     This will be already achieved by (1) since it will export the 
+required APIs for menu/ladder/teo governors to be compiled as module.
+
+Thanks,
+Maulik
 
