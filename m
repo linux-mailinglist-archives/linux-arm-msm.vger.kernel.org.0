@@ -2,169 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0301645DC36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:20:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B832245DC89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:43:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355599AbhKYOXM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 09:23:12 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:36216 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355646AbhKYOVL (ORCPT
+        id S1347969AbhKYOqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 09:46:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34482 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355802AbhKYOoc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 09:21:11 -0500
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 06:16:03 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2021 06:16:01 -0800
-X-QCInternal: smtphost
-Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 25 Nov 2021 19:45:53 +0530
-Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id 410954500; Thu, 25 Nov 2021 19:45:51 +0530 (IST)
-From:   Jeya R <jeyr@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: [PATCH 5/5] arm64: dts: qcom: add non-secure domain property to fastrpc nodes
-Date:   Thu, 25 Nov 2021 19:45:44 +0530
-Message-Id: <1637849744-24844-6-git-send-email-jeyr@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637849744-24844-1-git-send-email-jeyr@codeaurora.org>
+        Thu, 25 Nov 2021 09:44:32 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99406C06173E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 06:41:20 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id o13so12097869wrs.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 06:41:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=u7oR5jSLi6x2xK4T6TK107bv1l+Sd3I4M38y7DRQ3wc=;
+        b=ka5tYq7FeV/AbEgYRPjJqEqHPiQiiFDSgR1Wc5fhKVKXpjta+J+3erBGBOnI8V2ykt
+         mHnJP2I7jBSXe/KOTWuPxbQB2bfcearbBfH+jjNHSdC+bdA1EIo9/rBAYa2XKFRXuf5n
+         MsTl6oxC/c0jx6G2YJKx06BYO5z3xU0QtWEXOyJ6kCvfnGJ+2OI7GvlCUNr25KRL+NRo
+         3vfmZsgjCvfUakkGwr2jT5LwEGMlEPvhmZSxW+7ui32+aoKgycbDm+GaY6RFHQYeuAKy
+         b3hbIRW/8GzWk1d7b43DOXWVjQnxc+c1IKYJngbVMOWIb9JcIDy/F9lGnx9Vs9rNK6sW
+         BgDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=u7oR5jSLi6x2xK4T6TK107bv1l+Sd3I4M38y7DRQ3wc=;
+        b=VbBSvmjfgAGBgYb5GYuTSvrDWmuD/X4WF2Q6Qk1k33uARlj7K6+M/zWjJiqxI30iKz
+         FqQ9CHLlrmZnkhPlA83JGTybVyIs73DsOqSbKgk4VgL7cPXIeiJGvU8vMcVznEV+e2T/
+         eON0JysVI0CO3os2XWq4dyN1UEFcts5Re7H4iqpHtDdhbuT2iqR8/FS32Lj2AKZ9PwYg
+         kXR1hkTcvwvn37yXtd/llcB8WAilSZftPKg2nr2qsGCl78ad+x2UgXIfDh4vZO7vWgcM
+         +o8wWFGAhwuRF6dThvBjbRm/zIZiGwWIQrQiMQHB3AiUYq+0+al8/gbT71/tq/jdruvY
+         Z85g==
+X-Gm-Message-State: AOAM531gYsqrjMRwJ185pDC0zwQ3APRfntjxugnMIClpdt9+40u/U53v
+        CL5xK/v8Ml0bQ3p5HG3Qr4zQFQ==
+X-Google-Smtp-Source: ABdhPJzmoBIhl6HTpdl7Jt3V0QxF7y+UhYnVHW1MZia45q3ylfVZNPYwGsq7gF5kXmRuBOzOIIjfaQ==
+X-Received: by 2002:adf:d1e2:: with SMTP id g2mr7260698wrd.346.1637851279185;
+        Thu, 25 Nov 2021 06:41:19 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id p2sm9225163wmq.23.2021.11.25.06.41.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Nov 2021 06:41:18 -0800 (PST)
+Subject: Re: [PATCH 1/5] dt-bindings: misc: convert fastrpc bindings to yaml
+ and add property
+To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org
+Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
 References: <1637849744-24844-1-git-send-email-jeyr@codeaurora.org>
+ <1637849744-24844-2-git-send-email-jeyr@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <be50fe57-e109-370d-621b-66bff479b46e@linaro.org>
+Date:   Thu, 25 Nov 2021 14:41:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <1637849744-24844-2-git-send-email-jeyr@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-FastRPC DSP domain would be set as secure if non-secure dsp property is not
-added to the fastrpc DT node. Add this property to DT files of  msm8916,
-sdm845, sm8150, sm8250 and sm8350.
+Hi Jeya,
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
- 5 files changed, 12 insertions(+)
+You should retain the original patch ownership while sending the patches.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index c1c42f2..137a479 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1365,6 +1365,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,smd-channels = "fastrpcsmd-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 5260875..4aebfed 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -838,6 +838,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "adsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-@@ -888,6 +889,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "cdsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 81b4ff2..9ac213b 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1751,6 +1751,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2994,6 +2995,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -3439,6 +3441,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 6f6129b..62b8aa1 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2107,6 +2107,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2172,6 +2173,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -3905,6 +3907,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index d134280..80f753c 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1278,6 +1278,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1347,6 +1348,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1643,6 +1645,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
--- 
-2.7.4
+On 25/11/2021 14:15, Jeya R wrote:
+> Convert Qualcomm FastRPC bindings to yaml format and add a property
+> to set dsp domain as non-secure.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> ---
+>   .../devicetree/bindings/misc/qcom,fastrpc.txt      | 78 -----------------
+>   .../devicetree/bindings/misc/qcom,fastrpc.yaml     | 97 ++++++++++++++++++++++
+>   2 files changed, 97 insertions(+), 78 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+>   create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+> deleted file mode 100644
+> index 2a1827a..0000000
+> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+> +++ /dev/null
+> @@ -1,78 +0,0 @@
+> -Qualcomm Technologies, Inc. FastRPC Driver
+> -
+> -The FastRPC implements an IPC (Inter-Processor Communication)
+> -mechanism that allows for clients to transparently make remote method
+> -invocations across DSP and APPS boundaries. This enables developers
+> -to offload tasks to the DSP and free up the application processor for
+> -other tasks.
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: must be "qcom,fastrpc"
+> -
+> -- label
+> -	Usage: required
+> -	Value type: <string>
+> -	Definition: should specify the dsp domain name this fastrpc
+> -	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
+> -
+> -- #address-cells
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: Must be 1
+> -
+> -- #size-cells
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: Must be 0
+> -
+> -= COMPUTE BANKS
+> -Each subnode of the Fastrpc represents compute context banks available
+> -on the dsp.
+> -- All Compute context banks MUST contain the following properties:
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: must be "qcom,fastrpc-compute-cb"
+> -
+> -- reg
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: Context Bank ID.
+> -
+> -- qcom,nsessions:
+> -	Usage: Optional
+> -	Value type: <u32>
+> -	Defination: A value indicating how many sessions can share this
+> -		    context bank. Defaults to 1 when this property
+> -		    is not specified.
+> -
+> -Example:
+> -
+> -adsp-pil {
+> -	compatible = "qcom,msm8996-adsp-pil";
+> -	...
+> -	smd-edge {
+> -		label = "lpass";
+> -		fastrpc {
+> -			compatible = "qcom,fastrpc";
+> -			qcom,smd-channels = "fastrpcsmd-apps-dsp";
+> -			label = "adsp";
+> -			#address-cells = <1>;
+> -			#size-cells = <0>;
+> -
+> -			cb@1 {
+> -				compatible = "qcom,fastrpc-compute-cb";
+> -				reg = <1>;
+> -			};
+> -
+> -			cb@2 {
+> -				compatible = "qcom,fastrpc-compute-cb";
+> -				reg = <2>;
+> -			};
+> -			...
+> -		};
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> new file mode 100644
+> index 0000000..c3fe39b2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> @@ -0,0 +1,97 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Technologies, Inc. FastRPC Driver
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +
+> +description: |
+> +  This binding describes Qualcomm FastRPC an IPC (Inter-Processor Communication)
+> +  mechanism that allows for clients to transparently make remote method
+> +  invocations across DSP and APPS boundaries. This enables developers
+> +  to offload tasks to the DSP and free up the application processor for
+> +  other tasks.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,fastrpc
+> +
+> +  label:
+> +    enum:
+> +      - adsp
+> +      - mdsp
+> +      - sdsp
+> +      - cdsp
+> +
+> +  qcom,non-secure-domain: true
+> +    # Specify that dsp domain is non-secure.
+> +
 
+This change was not there in the original patch that I shared, you 
+should add this change in a separate patch, as first patch converts to 
+yaml and next one adds new bindings.
+
+This is also not following yaml style bindings.
+Please take some time to look at 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/example-schema.yaml?h=v5.16-rc2
+to add new binding.
+
+
+
+--srini
+
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +patternProperties:
+> +  "^cb@[0-9a-f]$":
+> +    type: object
+> +    description: |
+> +      Compute context bank
+> +
+> +    properties:
+> +      compatible:
+> +        const: qcom,fastrpc-compute-cb
+> +
+> +      reg:
+> +        maxItems: 1
+> +        description: Context Bank ID
+> +
+> +      qcom,nsessions:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: How many sessions can share this context bank.
+> +                     Defaults to 1 when this property is not specified.
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - label
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    adsp-pil {
+> +        compatible = "qqcom,msm8996-adsp-pil";
+> +
+> +        smd-edge {
+> +            label = "lpass";
+> +
+> +            fastrpc {
+> +                compatible = "qcom,fastrpc";
+> +                label = "adsp";
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +
+> +                cb@1 {
+> +                    compatible = "qcom,fastrpc-compute-cb";
+> +                    reg = <1>;
+> +                };
+> +
+> +                cb@2 {
+> +                    compatible = "qcom,fastrpc-compute-cb";
+> +                    reg = <2>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +
+> +
+> 
