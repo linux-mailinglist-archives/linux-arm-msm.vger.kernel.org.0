@@ -2,96 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A81A345E0B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 19:48:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5567B45E2BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 22:49:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242743AbhKYSvv convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 13:51:51 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:33937 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350178AbhKYStu (ORCPT
+        id S244582AbhKYVwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 16:52:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42544 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351714AbhKYVuk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 13:49:50 -0500
-Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
-        by mail.holtmann.org (Postfix) with ESMTPSA id B86A2CECC6;
-        Thu, 25 Nov 2021 19:46:37 +0100 (CET)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [RFC PATCH v1] Bluetooth: hci_qca: Add new hci_uart proto
- callback to power off voltage sources
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1637849179-18382-1-git-send-email-saluvala@codeaurora.org>
-Date:   Thu, 25 Nov 2021 19:46:37 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        bgodavar@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org,
-        mcchou@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <655A8E36-F89F-4A4D-80A0-5223EBB638CE@holtmann.org>
-References: <1637849179-18382-1-git-send-email-saluvala@codeaurora.org>
-To:     saluvala <saluvala@codeaurora.org>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+        Thu, 25 Nov 2021 16:50:40 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685B5C06179E;
+        Thu, 25 Nov 2021 13:35:34 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id 207so14790680ljf.10;
+        Thu, 25 Nov 2021 13:35:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lBUP8sB2aI1FUk/vnaXhsK1BHbgXbVg30dlWrCLTWIs=;
+        b=D0huGNvruLhANQVyQUxLJm8yi5e65QWLmAstbFw8hg2z5ysyXHpTAaGnpWiruYC3jA
+         /o2lMcaSBhyRsp62PXsP36HB6M5nq2d52h/7BmXDIlHzx5PXO+aiICoPAkxSb+UsUuHX
+         uFkFCR5q/7UPuk/UaaI/MEU3lDXD9nU8Z8IL2MviL1W2Of+Ors2TawTCtEZUqMmJ95zj
+         U85FZyn43khUBvngVyXrqgGigsuAEMrGfZ4RwEDbNm+ouVv7WYBuXbsDub1Y/TDeD7iU
+         S7eOSm3mQEPrOMPowkHGnExf0sXckFUCuRPJqmtLGGkId4BTo88ORk+nvi4wH3O8j1qo
+         nE5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=lBUP8sB2aI1FUk/vnaXhsK1BHbgXbVg30dlWrCLTWIs=;
+        b=PEdGoJ9QgVCkbym1vY/5pTTQ3tRLaN0gA7ao4EDU1cvJ/W2SEivMo0/oM2fLfNZ3PC
+         dI9tItXjgsNvEVOsXMwLQglnEXHEDl3E24N57mFVZUcKFiE/ldA7HSsiwZJkVEoTBESm
+         JIbUj9UfYBvcWDaenjXGPJQwRhrkbKxjrabs7sSVxOB7Aa7aqPrFGD8B2ns9QW88wJed
+         J3SHUwwb7Y+UPA+hKAUS19SNbeV1fEZiD+xx0R0v3a3NqMnfXc+F4EeB16NZS7HYzU3+
+         tFC+DaMusnrXB16iwK50qUgKXHbQs6n4AxM7W/JZZ95zL+TWdDXO/0HEqvbFvSwFzzAn
+         tMxQ==
+X-Gm-Message-State: AOAM532c6JCF12mIsnL4hXxINgk7TgJCMbLRSQu4iYLsqQOEShIyNcCp
+        xRQkKExgCAPpUIhxgOgXBco=
+X-Google-Smtp-Source: ABdhPJw2P+YDrYLtFq/v5NC7HQsvt9vt1z9mU9XNVKJTWw421HTxtK3SrGLPyDoW9ODVvF3GnC/ruQ==
+X-Received: by 2002:a2e:a706:: with SMTP id s6mr27876441lje.370.1637876132757;
+        Thu, 25 Nov 2021 13:35:32 -0800 (PST)
+Received: from localhost.localdomain (public-gprs212807.centertel.pl. [46.134.170.136])
+        by smtp.googlemail.com with ESMTPSA id 76sm318014ljj.69.2021.11.25.13.35.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Nov 2021 13:35:32 -0800 (PST)
+From:   Dominik Kobinski <dominikkobinski314@gmail.com>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dominik Kobinski <dominikkobinski314@gmail.com>
+Subject: [PATCH v2,0/5] Add pm8226 SPMI regulators
+Date:   Thu, 25 Nov 2021 22:34:51 +0100
+Message-Id: <20211125213451.62010-1-dominikkobinski314@gmail.com>
+X-Mailer: git-send-email 2.34.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This series enables pm8226 SPMI regulators commonly used on msm8x26 platforms.
+It is a v2 of this series : https://patchwork.kernel.org/project/linux-arm-msm/list/?series=584741
 
-> This change adds a new hci_uart proto callback entry i.e., power off.
-> This poweroff Callback is exposed to the drivers and called during BT OFF
-> immediately after port close. This will ensure that Voltages sources are
-> powered off after sending all the data before port close. Previously as
-> part of hdev shutdown callback, voltages sources are powered off. But we
-> have seen cases where post shutdown sequence completion some packets which
-> are already queued are sent to UART. As controller is powered off, UART
-> can’t send the data out or it is sending partial data due RTS line high.
-> 
-> Signed-off-by: saluvala <saluvala@codeaurora.org>
+Changes since v1:
+ - Add spmi regulators node in qcom-pm8226.dtsi to enable probing them.
 
-this really has to stop. Read the documentation on how to submit patches and start configuring your .gitconfig correct so that you include you clear text name etc.
+Dominik Kobinski (5):
+  pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+  dt-bindings: pinctrl: qcom: pmic-gpio: Document pm8226 compatible
+  dt-bindings: regulator: qcom: spmi-regulator: Document pm8226
+    compatible
+  regulator: qcom_spmi: Add pm8226 regulators
+  arm: dts: qcom: pm8226: Support SPMI regulators on PMIC sid 1
 
-> ---
-> drivers/bluetooth/hci_qca.c    | 26 +++++++++++++++++++-------
-> drivers/bluetooth/hci_serdev.c |  3 +++
-> drivers/bluetooth/hci_uart.h   |  1 +
-> 3 files changed, 23 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index dd768a8..e1dee75 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -231,6 +231,7 @@ static int qca_regulator_enable(struct qca_serdev *qcadev);
-> static void qca_regulator_disable(struct qca_serdev *qcadev);
-> static void qca_power_shutdown(struct hci_uart *hu);
-> static int qca_power_off(struct hci_dev *hdev);
-> +static int qca_power_off_reg(struct hci_uart *hu);
-> static void qca_controller_memdump(struct work_struct *work);
-> 
-> static enum qca_btsoc_type qca_soc_type(struct hci_uart *hu)
-> @@ -554,7 +555,6 @@ static void qca_controller_memdump_timeout(struct work_struct *work)
-> 	mutex_unlock(&qca->hci_memdump_lock);
-> }
-> 
-> -
-> /* Initialize protocol */
-> static int qca_open(struct hci_uart *hu)
-> {
-> @@ -1815,6 +1815,7 @@ static const struct hci_uart_proto qca_proto = {
-> 	.flush		= qca_flush,
-> 	.setup		= qca_setup,
-> 	.recv		= qca_recv,
-> +	.poweroff	= qca_power_off_reg,
-> 	.enqueue	= qca_enqueue,
-> 	.dequeue	= qca_dequeue,
-> };
+ .../bindings/pinctrl/qcom,pmic-gpio.yaml      |  1 +
+ .../regulator/qcom,spmi-regulator.txt         |  1 +
+ arch/arm/boot/dts/qcom-pm8226.dtsi            |  4 ++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |  1 +
+ drivers/regulator/qcom_spmi-regulator.c       | 39 +++++++++++++++++++
+ 5 files changed, 46 insertions(+)
 
-I am not extending this. Write a clean serdev only driver for this hardware.
-
-Regards
-
-Marcel
+-- 
+2.34.0
 
