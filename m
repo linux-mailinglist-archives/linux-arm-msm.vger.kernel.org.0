@@ -2,89 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5567B45E2BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 22:49:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C1AF45E2CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 22:59:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244582AbhKYVwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 16:52:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42544 "EHLO
+        id S234283AbhKYWC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 17:02:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351714AbhKYVuk (ORCPT
+        with ESMTP id S229618AbhKYWA3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 16:50:40 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685B5C06179E;
-        Thu, 25 Nov 2021 13:35:34 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id 207so14790680ljf.10;
-        Thu, 25 Nov 2021 13:35:34 -0800 (PST)
+        Thu, 25 Nov 2021 17:00:29 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCB2C06179C;
+        Thu, 25 Nov 2021 13:53:37 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id bu18so19483096lfb.0;
+        Thu, 25 Nov 2021 13:53:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lBUP8sB2aI1FUk/vnaXhsK1BHbgXbVg30dlWrCLTWIs=;
-        b=D0huGNvruLhANQVyQUxLJm8yi5e65QWLmAstbFw8hg2z5ysyXHpTAaGnpWiruYC3jA
-         /o2lMcaSBhyRsp62PXsP36HB6M5nq2d52h/7BmXDIlHzx5PXO+aiICoPAkxSb+UsUuHX
-         uFkFCR5q/7UPuk/UaaI/MEU3lDXD9nU8Z8IL2MviL1W2Of+Ors2TawTCtEZUqMmJ95zj
-         U85FZyn43khUBvngVyXrqgGigsuAEMrGfZ4RwEDbNm+ouVv7WYBuXbsDub1Y/TDeD7iU
-         S7eOSm3mQEPrOMPowkHGnExf0sXckFUCuRPJqmtLGGkId4BTo88ORk+nvi4wH3O8j1qo
-         nE5Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=YVJr77gpEIa8Ln6f/UcL4zgGfSDpE2hZ3y/G1TUsxAU=;
+        b=G/EQy0KJe/9NsLEsLM0Wr0mCHcKU31I4esiYXF9+4c9lv1PZdoJ9n7WicClBi5JvYq
+         tgeEDiQjUVlQ3bQdLchk61LpABjIfU6UGzIVAkYqSQjIDByldlcEBHsfd9efnUatLh5k
+         AFGY6BmQW/E8tTL7pmFTFzQfx1/9KLT5ee8Iw/OXphjeLwTkYapwpXlFD/PdxpleyOp4
+         FjPFzEs9JZBchf8yVdnaZ3gNARXohCXmeIRM0lGZrba1Tm6QBWvN/EmRcDqAYRIQqq/S
+         zN7eQHS+Zmy2lXDQSqtyvbZN+tEqgbMdNVNKjM3otR4EvoAI/OruYkZeIqoDhFJrOXO1
+         kDHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=lBUP8sB2aI1FUk/vnaXhsK1BHbgXbVg30dlWrCLTWIs=;
-        b=PEdGoJ9QgVCkbym1vY/5pTTQ3tRLaN0gA7ao4EDU1cvJ/W2SEivMo0/oM2fLfNZ3PC
-         dI9tItXjgsNvEVOsXMwLQglnEXHEDl3E24N57mFVZUcKFiE/ldA7HSsiwZJkVEoTBESm
-         JIbUj9UfYBvcWDaenjXGPJQwRhrkbKxjrabs7sSVxOB7Aa7aqPrFGD8B2ns9QW88wJed
-         J3SHUwwb7Y+UPA+hKAUS19SNbeV1fEZiD+xx0R0v3a3NqMnfXc+F4EeB16NZS7HYzU3+
-         tFC+DaMusnrXB16iwK50qUgKXHbQs6n4AxM7W/JZZ95zL+TWdDXO/0HEqvbFvSwFzzAn
-         tMxQ==
-X-Gm-Message-State: AOAM532c6JCF12mIsnL4hXxINgk7TgJCMbLRSQu4iYLsqQOEShIyNcCp
-        xRQkKExgCAPpUIhxgOgXBco=
-X-Google-Smtp-Source: ABdhPJw2P+YDrYLtFq/v5NC7HQsvt9vt1z9mU9XNVKJTWw421HTxtK3SrGLPyDoW9ODVvF3GnC/ruQ==
-X-Received: by 2002:a2e:a706:: with SMTP id s6mr27876441lje.370.1637876132757;
-        Thu, 25 Nov 2021 13:35:32 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YVJr77gpEIa8Ln6f/UcL4zgGfSDpE2hZ3y/G1TUsxAU=;
+        b=2VIvD0XMN5WyjtGKapJRcza7Hwt1R+/hRT417JaiyEmEgRw7fqnQe26Mc0j9/W+Fyg
+         iF0A6Ht6om9oZ7Sa7W+5PWGd3vL590scLUFw47ohWTmtDPK/9CWlxt9Blq3VnIF7i4ub
+         R/QUThNox3syGoAfHRNL7pi255bWMfJkFV3iBzqc7sFZ3oNci7icq9SYojuXtCVCEXlh
+         0WW0rLBEqhITquTbXxHfPhxbbV7UEyIGTRGE8eBkHYRXicmyRdgsPqjpUBgTYbgo6kmP
+         XN3dr3Oox5pV58PYzDV2HZXB1h119dMzb5Nik8kPUBN6l8taWw7SyYwYhtRpjZURDfMh
+         XEiQ==
+X-Gm-Message-State: AOAM533GrELRjrSw/2Nw2gjswFwXnLbNEdsKWpTES2GmlRmodprx8rzK
+        ++Bsl2xdrHqD5KjRkr72tE3NdJ7GHfTATA==
+X-Google-Smtp-Source: ABdhPJz/GZxIjRFQoFp6qOwdkagNuEdAKF7VFzquwQ25bln+kcdz1nHW484XxCWkwsl222IDzokBLQ==
+X-Received: by 2002:ac2:5df6:: with SMTP id z22mr25919312lfq.230.1637877215416;
+        Thu, 25 Nov 2021 13:53:35 -0800 (PST)
 Received: from localhost.localdomain (public-gprs212807.centertel.pl. [46.134.170.136])
-        by smtp.googlemail.com with ESMTPSA id 76sm318014ljj.69.2021.11.25.13.35.31
+        by smtp.googlemail.com with ESMTPSA id c12sm341606lji.29.2021.11.25.13.53.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 13:35:32 -0800 (PST)
+        Thu, 25 Nov 2021 13:53:35 -0800 (PST)
 From:   Dominik Kobinski <dominikkobinski314@gmail.com>
 To:     bjorn.andersson@linaro.org
 Cc:     agross@kernel.org, linus.walleij@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Dominik Kobinski <dominikkobinski314@gmail.com>
-Subject: [PATCH v2,0/5] Add pm8226 SPMI regulators
-Date:   Thu, 25 Nov 2021 22:34:51 +0100
-Message-Id: <20211125213451.62010-1-dominikkobinski314@gmail.com>
+        Dominik Kobinski <dominikkobinski314@gmail.com>,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Subject: [PATCH v2,1/5] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+Date:   Thu, 25 Nov 2021 22:53:10 +0100
+Message-Id: <20211125215310.62371-1-dominikkobinski314@gmail.com>
 X-Mailer: git-send-email 2.34.0
+In-Reply-To: <20211125213451.62010-1-dominikkobinski314@gmail.com>
+References: <20211125213451.62010-1-dominikkobinski314@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series enables pm8226 SPMI regulators commonly used on msm8x26 platforms.
-It is a v2 of this series : https://patchwork.kernel.org/project/linux-arm-msm/list/?series=584741
+Add support for pm8226 SPMI GPIOs. The PMIC features
+8 GPIOs, with no holes inbetween.
 
-Changes since v1:
- - Add spmi regulators node in qcom-pm8226.dtsi to enable probing them.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
+---
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Dominik Kobinski (5):
-  pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
-  dt-bindings: pinctrl: qcom: pmic-gpio: Document pm8226 compatible
-  dt-bindings: regulator: qcom: spmi-regulator: Document pm8226
-    compatible
-  regulator: qcom_spmi: Add pm8226 regulators
-  arm: dts: qcom: pm8226: Support SPMI regulators on PMIC sid 1
-
- .../bindings/pinctrl/qcom,pmic-gpio.yaml      |  1 +
- .../regulator/qcom,spmi-regulator.txt         |  1 +
- arch/arm/boot/dts/qcom-pm8226.dtsi            |  4 ++
- drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |  1 +
- drivers/regulator/qcom_spmi-regulator.c       | 39 +++++++++++++++++++
- 5 files changed, 46 insertions(+)
-
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index 5283d5e9e8bc..0f0102f38cbb 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1159,6 +1159,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	/* pm8150l has 12 GPIOs with holes on 7 */
+ 	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+ 	{ .compatible = "qcom,pmc8180c-gpio", .data = (void *) 12 },
++	{ .compatible = "qcom,pm8226-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8350-gpio", .data = (void *) 10 },
+ 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
 -- 
 2.34.0
 
