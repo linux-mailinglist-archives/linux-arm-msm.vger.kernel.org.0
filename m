@@ -2,95 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AABE45D892
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 11:59:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E03645D89E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 12:01:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350635AbhKYLCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 06:02:33 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:50571 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1351444AbhKYLAc (ORCPT
+        id S1354664AbhKYLFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 06:05:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354870AbhKYLDI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 06:00:32 -0500
+        Thu, 25 Nov 2021 06:03:08 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B595C061784
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 02:58:58 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so7489733pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 02:58:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637837841; x=1669373841;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Z7fKz/xvhDiw+T1709sWkdJOwMrAVM5ww8NT/RbyHd0=;
-  b=OpClZ7VWL27/oHfw3DNuGZrnjn1hzcDB9pOZz1+bdHVFAUNtT5E32X5A
-   zeA/cA+WZ0jlpPFNdkGj93O8wKf9HwAVePYzfhQ3cZvMC03UElMON7eBm
-   l4RlBaFdFh/R/4sc8FjjnAKTlUqN6n4ob7nz095FR1kn/7Rt97bIbvQ8D
-   w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Nov 2021 02:57:21 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 02:57:21 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 25 Nov 2021 02:57:21 -0800
-Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 25 Nov 2021 02:57:16 -0800
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH 2/2] arm64: qcom: sc7280: Add USB2 controller and phy nodes for SKU1 board
-Date:   Thu, 25 Nov 2021 16:26:55 +0530
-Message-ID: <1637837815-8532-3-git-send-email-quic_c_sanm@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637837815-8532-1-git-send-email-quic_c_sanm@quicinc.com>
-References: <1637837815-8532-1-git-send-email-quic_c_sanm@quicinc.com>
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sCgAh/8By8wNIrpD9ZFYd1/D45MydwuRk8zcWPcXzGQ=;
+        b=cLqXpIgXjTlGOz1+IBYb8VUFp+uxcoeg2qgpXuYboMkZ9nEN2PIueIvHrVwRREeLmb
+         +MrF9p67VwUtwkCOKgMpKFHfMbgQKrRu3A4Ei5fZTDaW/5FP6BRBW4nGfIWSFpYZFNe8
+         0HSKyJrAk7bR75zNpuXPOvX7m7hC7BeqhRGcMfOrHH6huXvQNL5Az0dD8t07sD1vp6fW
+         DSs5Sa4z5eLSfVWXh6wJRcbwCy9qkbxFE/5DrfUZkwUbQAyBimFVikRyc2tPk4rfv6vB
+         IVnUrMjl/5tVH3g09/AQOnibornKoF23XfqUGYJTThaJBEa6V998JrI4MIc7OGUol2aZ
+         HDyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sCgAh/8By8wNIrpD9ZFYd1/D45MydwuRk8zcWPcXzGQ=;
+        b=yCv7oREk/vf4PTnwmpNmfICWP93lXfsuWXiWjT4LWV1iCCfcuSS6StuuOK4g1Z/a/m
+         WRh0sB/SaMfSa+39SUpDsaVf9yQG5ZXSfIKgl/qYzI2MOT32x0ndC0VqatwOOnaQUG2R
+         e9aTckXQYoQF27Cfk+wf7eI7NWPTYNEb1bZHzkFzlhN2ZBWS1y6bUILXolVD/tqHGhwr
+         Rz07jr8a04DO8mi2YhJlUYXjBDpJHwOQsez2AZ5Jw6rHD3qlfAgVE4sWkM9c4phqYBAr
+         EDfv2ziMZMY4296rVL5iv3AmyezfuDuNv9xxcBJU2vKTURpf4gsYI7L71QU/QvsOzXcB
+         ft1g==
+X-Gm-Message-State: AOAM531FVrCc9j8H95CfdQ8vc//JuToe/hqtk47UwxeV1kbrzqWhAo5X
+        ysr4o/cuaREfUhVPziN13prNr2vsN0ytdcpyAw9NSg==
+X-Google-Smtp-Source: ABdhPJzEuWLGFxkRno8JHC5jNEyjXKuuqBAtEaEU9SYXKzgCatvz+aOmCp4g+jj8lAIvVYTHHBWYGkqPHzjzHeAWsL4=
+X-Received: by 2002:a17:90b:4a05:: with SMTP id kk5mr5895404pjb.232.1637837938076;
+ Thu, 25 Nov 2021 02:58:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <cover.1637781097.git.mchehab+huawei@kernel.org> <c33a6897f5a0803b3fde93fcf4ad652c0915db54.1637781097.git.mchehab+huawei@kernel.org>
+In-Reply-To: <c33a6897f5a0803b3fde93fcf4ad652c0915db54.1637781097.git.mchehab+huawei@kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Thu, 25 Nov 2021 11:58:45 +0100
+Message-ID: <CAG3jFyvHvNs93x29s9CoxwRJnpEo_VpyFvCcb6qOAOVpWUs+mA@mail.gmail.com>
+Subject: Re: [PATCH 17/20] media: qcom: camss: mark read reg function as __maybe_unused
+To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Todor Tomov <todor.too@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Adding USB2 controller and phy nodes for SC7280 SKU1 board.
+Thanks for submitting this Mauro.
 
-Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+On Wed, 24 Nov 2021 at 20:13, Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
+>
+> Such function is currently unused, but could be needed in the
+> future. So, keep it, marking it as __maybe_unused, in order to
+> avoid a clang W=1 error.
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>
+> To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
+> See [PATCH 00/20] at: https://lore.kernel.org/all/cover.1637781097.git.mchehab+huawei@kernel.org/
+>
+>  drivers/media/platform/qcom/camss/camss-vfe-170.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> index 5c083d70d495..455ae1a819e6 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
+> @@ -191,7 +191,7 @@ static u32 vfe_hw_version(struct vfe_device *vfe)
+>         return hw_version;
+>  }
+>
+> -static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
+> +static inline void __maybe_unused vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
+>  {
+>         u32 bits = readl_relaxed(vfe->base + reg);
+>
+> --
+> 2.33.1
+>
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 9b991ba..ffd483d 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -80,3 +80,19 @@
- 		qcom,pre-scaling = <1 1>;
- 	};
- };
-+
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_2_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l10c_0p8>;
-+	vdda33-supply = <&vreg_l2b_3p0>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+};
--- 
-2.7.4
+I've submitted a patch[1] for removing this function, with that patch
+applied, this patch is no longer needed.
 
+[1] https://lore.kernel.org/all/20211011121301.421410-1-robert.foss@linaro.org/
