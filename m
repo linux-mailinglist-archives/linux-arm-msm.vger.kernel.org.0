@@ -2,311 +2,422 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D60E045D5A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 08:38:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 839CE45D5DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 08:59:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240263AbhKYHl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 02:41:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52940 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235848AbhKYHj4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 02:39:56 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A47FAC061748
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 23:36:45 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id c32so14053744lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 23:36:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hiObrTf9v1RU1iPUzjRKa2X5bHrBY+vq37yRCw4SQfg=;
-        b=xJM97+HaGHEuZbldHf8LtFpYrwkTEqoHiVBbrK47linMt8oiBxA8Q+Qa5bKTWGnw93
-         XcyV+jt1YOZvvDZXyeMRa+bf2+Dki0Pbl9WPvD+R6yNOehkWitsG0HRqjOar7eJpts93
-         wjZotE0QJy04G+Sw5MwR9bF4X8ATSBtxX1D5BQQ0Nb3Bm6GDwDB27FOcdQbtEkSOcwzr
-         rgwqHrTUJ1LRpzqdIaI8hcMh+kHvgJBw1OYlAxCZvznaoB1mgrKGl6uskjA/ModEUbou
-         Z9zB2NPuKCSWxZAMrLWPQE5wsgU7xuANt7DdKVwhxG2QPerbDL3LrTP4yTGPfLQ430Qh
-         wDIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hiObrTf9v1RU1iPUzjRKa2X5bHrBY+vq37yRCw4SQfg=;
-        b=x4viRYIDDfiw8+1+HpEuf/dnquPl3CMEgKoYPQzDwi/G2jn763c1+3tRDnQwnADTpU
-         66qDN5teXqc8y7c9PhKZsGuZJXbWFHcEB9sAskxtR04zvHqfYfx7bJSAZaEDgp6GocjA
-         BOjevS4aAFfZR1Tg7zJjZvC4NnaFJ53H4c8vJeK2OGX36vqHcjNDeO6V2Ie4agXDI3Nv
-         GgiDhF0NuT1yG693YvT90hnRtSgPIA9aZLZ5i2DkquDPbYvf1N82MqX91ip6tGT3Cs0n
-         JOOzHhzXLzsdHFBbW78NKtG3CUkAkAbZAY809Ins18RkMvuNg8Sp3cH+6MU1t61WtDqH
-         lM5g==
-X-Gm-Message-State: AOAM531jnkHRvM13kKq6UzD3eKq/0eVIbruJPi33BYFZ/itasMp5B0qD
-        61LQKLVBadBJU51ZLt5EKakCCwEGPFSdsg==
-X-Google-Smtp-Source: ABdhPJwqZErZYiffJ6x0dq1P6hgBrtHAkjYogcBg0mpyDkFuQEt7j0rZdxzcrn+0CDA9aTRgaTJlLw==
-X-Received: by 2002:ac2:5a0a:: with SMTP id q10mr22360431lfn.610.1637825803819;
-        Wed, 24 Nov 2021 23:36:43 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j15sm195193lfg.167.2021.11.24.23.36.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Nov 2021 23:36:43 -0800 (PST)
-Subject: Re: [PATCH 1/2] drm/msm: Handle ringbuffer overflow
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Dave Airlie <airlied@redhat.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20210428193654.1498482-1-robdclark@gmail.com>
- <20210428193654.1498482-2-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <e6f04ed5-100d-6ef9-c272-1a1370e45579@linaro.org>
-Date:   Thu, 25 Nov 2021 10:36:42 +0300
+        id S236384AbhKYICN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 03:02:13 -0500
+Received: from mga18.intel.com ([134.134.136.126]:37491 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236412AbhKYIAM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Nov 2021 03:00:12 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10178"; a="222338817"
+X-IronPort-AV: E=Sophos;i="5.87,262,1631602800"; 
+   d="scan'208";a="222338817"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2021 23:57:01 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,262,1631602800"; 
+   d="scan'208";a="497980157"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.76]) ([10.237.72.76])
+  by orsmga007.jf.intel.com with ESMTP; 24 Nov 2021 23:56:57 -0800
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat sysfs
+ entry
+To:     "Sajida Bhanu (Temp) (QUIC)" <quic_c_sbhanu@quicinc.com>,
+        "riteshh@codeaurora.org" <riteshh@codeaurora.org>,
+        "Asutosh Das (asd)" <asutoshd@quicinc.com>,
+        "ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc:     "stummala@codeaurora.org" <stummala@codeaurora.org>,
+        "vbadigan@codeaurora.org" <vbadigan@codeaurora.org>,
+        "Ram Prakash Gupta (QUIC)" <quic_rampraka@quicinc.com>,
+        "Pradeep Pragallapati (QUIC)" <quic_pragalla@quicinc.com>,
+        "sartgarg@codeaurora.org" <sartgarg@codeaurora.org>,
+        "nitirawa@codeaurora.org" <nitirawa@codeaurora.org>,
+        "sayalil@codeaurora.org" <sayalil@codeaurora.org>
+References: <1637130012-21846-1-git-send-email-quic_c_sbhanu@quicinc.com>
+ <c90754b9-37bb-7b4e-4130-05f62b2881fd@intel.com>
+ <SJ0PR02MB8449BC60FA635E61162A6383CD9F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <ea06e091-9ba9-3cb5-121c-a04bdce6dede@intel.com>
+Date:   Thu, 25 Nov 2021 09:56:56 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ Firefox/78.0 Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <20210428193654.1498482-2-robdclark@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+In-Reply-To: <SJ0PR02MB8449BC60FA635E61162A6383CD9F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/04/2021 22:36, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 22/11/2021 12:05, Sajida Bhanu (Temp) (QUIC) wrote:
+> Please find the inline comments.
 > 
-> Currently if userspace manages to fill up the ring faster than the GPU
-> can consume we (a) spin for up to 1sec, and then (b) overwrite the
-> ringbuffer contents from previous submits that the GPU is still busy
-> executing.  Which predictably goes rather badly.
+> -----Original Message-----
+> From: Adrian Hunter <adrian.hunter@intel.com> 
+> Sent: Wednesday, November 17, 2021 1:15 PM
+> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; riteshh@codeaurora.org; Asutosh Das (asd) <asutoshd@quicinc.com>; ulf.hansson@linaro.org; agross@kernel.org; bjorn.andersson@linaro.org; linux-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org
+> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayalil@codeaurora.org
+> Subject: Re: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat sysfs entry
 > 
-> Instead, just skip flushing (updating WPTR) and reset ring->next back to
-> where it was before we tried writing the submit into the ringbuffer, and
-> return an error to userspace (which can then try again).
+> On 17/11/2021 08:20, Shaik Sajida Bhanu wrote:
+>> Add sysfs entry to query eMMC and SD card errors statistics.
+>> This feature is useful for debug and testing.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Did you consider making it part of cqhci.c so that all drivers using cqhci could benefit?
+> 
+> Hi Adrian,
+> 
+> Thanks for the review.
+> We are enabling  this changes for both eMMC and SD card as well. So , if we include these changes in cqhci.c then changes will not effect for SD card right.
 
-Rob, you've posted this patch, but never merged it. Should it be merged 
-at some point?
+Seems like something mmc core could support perhaps, with drivers calling mmc core functions to add their stats.
+Needs Ulf to comment.
 
-> ---
->   drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  3 +++
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  3 +++
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 24 +++++++++++++++++-
->   drivers/gpu/drm/msm/msm_gem_submit.c    |  7 +++++-
->   drivers/gpu/drm/msm/msm_gpu.c           | 33 +++++++++++++++++++++++--
->   drivers/gpu/drm/msm/msm_gpu.h           |  2 +-
->   drivers/gpu/drm/msm/msm_ringbuffer.h    |  5 ++++
->   7 files changed, 72 insertions(+), 5 deletions(-)
+Alternatively, SDHCI could do it which would at least give support to other SDHCI drivers.
+
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index ce13d49e615b..0c8faad3b328 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -36,6 +36,9 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->   		OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
->   	}
->   
-> +	if (unlikely(ring->overflow))
-> +		return;
-> +
->   	spin_lock_irqsave(&ring->preempt_lock, flags);
->   
->   	/* Copy the shadow to the actual register */
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index d553f62f4eeb..4a4728a774c0 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -68,6 +68,9 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->   		OUT_RING(ring, upper_32_bits(shadowptr(a6xx_gpu, ring)));
->   	}
->   
-> +	if (unlikely(ring->overflow))
-> +		return;
-> +
->   	spin_lock_irqsave(&ring->preempt_lock, flags);
->   
->   	/* Copy the shadow to the actual register */
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 0f184c3dd9d9..a658777e07b1 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -467,6 +467,9 @@ void adreno_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring, u32 reg)
->   {
->   	uint32_t wptr;
->   
-> +	if (unlikely(ring->overflow))
-> +		return;
-> +
->   	/* Copy the shadow to the actual register */
->   	ring->cur = ring->next;
->   
-> @@ -788,12 +791,31 @@ static uint32_t ring_freewords(struct msm_ringbuffer *ring)
->   	return (rptr + (size - 1) - wptr) % size;
->   }
->   
-> +static bool space_avail(struct msm_ringbuffer *ring, uint32_t ndwords)
-> +{
-> +	if (ring_freewords(ring) >= ndwords)
-> +		return true;
-> +
-> +	/* We don't have a good way to know in general when the RPTR has
-> +	 * advanced.. newer things that use CP_WHERE_AM_I to update the
-> +	 * shadow rptr could possibly insert a packet to generate an irq.
-> +	 * But that doesn't cover older GPUs.  But if the ringbuffer is
-> +	 * full, it could take a while before it is empty again, so just
-> +	 * insert a blind sleep to avoid a busy loop.
-> +	 */
-> +	msleep(1);
-> +
-> +	return false;
-> +}
-> +
->   void adreno_wait_ring(struct msm_ringbuffer *ring, uint32_t ndwords)
->   {
-> -	if (spin_until(ring_freewords(ring) >= ndwords))
-> +	if (spin_until(space_avail(ring, ndwords))) {
->   		DRM_DEV_ERROR(ring->gpu->dev->dev,
->   			"timeout waiting for space in ringbuffer %d\n",
->   			ring->id);
-> +		ring->overflow = true;
-> +	}
->   }
->   
->   /* Get legacy powerlevels from qcom,gpu-pwrlevels and populate the opp table */
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 5480852bdeda..4bc669460fda 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -683,6 +683,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->   	submitid = atomic_inc_return(&ident) - 1;
->   
->   	ring = gpu->rb[queue->prio];
-> +
-> +	GEM_WARN_ON(ring->overflow);
-> +
->   	trace_msm_gpu_submit(pid_nr(pid), ring->id, submitid,
->   		args->nr_bos, args->nr_cmds);
->   
-> @@ -829,7 +832,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
->   		}
->   	}
->   
-> -	msm_gpu_submit(gpu, submit);
-> +	ret = msm_gpu_submit(gpu, submit);
-> +	if (ret)
-> +		goto out;
->   
->   	args->fence = submit->fence->seqno;
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index ab7c167b0623..7655ad9108c8 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -787,7 +787,7 @@ void msm_gpu_retire(struct msm_gpu *gpu)
->   }
->   
->   /* add bo's to gpu's ring, and kick gpu: */
-> -void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
-> +int msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->   {
->   	struct drm_device *dev = gpu->dev;
->   	struct msm_drm_private *priv = dev->dev_private;
-> @@ -834,9 +834,38 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->   	spin_unlock(&ring->submit_lock);
->   
->   	gpu->funcs->submit(gpu, submit);
-> -	priv->lastctx = submit->queue->ctx;
->   
->   	hangcheck_timer_reset(gpu);
-> +
-> +	if (unlikely(ring->overflow)) {
-> +		/*
-> +		 * Reset the ptr back to before the submit, so the GPU
-> +		 * doesn't see a partial submit:
-> +		 */
-> +		ring->next = ring->cur;
-> +
-> +		/*
-> +		 * Clear the overflow flag, hopefully the next submit on
-> +		 * the ring actually fits
-> +		 */
-> +		ring->overflow = false;
-> +
-> +		/*
-> +		 * One might be tempted to remove the submit from the
-> +		 * submits list, and drop it's reference (and drop the
-> +		 * active reference for all the bos).  But we can't
-> +		 * really signal the fence attached to obj->resv without
-> +		 * disturbing other fences on the timeline.  So instead
-> +		 * just leave it and let it retire normally when a
-> +		 * later submit completes.
-> +		 */
-> +
-> +		return -ENOSPC;
-> +	}
-> +
-> +	priv->lastctx = submit->queue->ctx;
-> +
-> +	return 0;
->   }
->   
->   /*
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index d7cd02cd2109..2dd2ef1f8328 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -302,7 +302,7 @@ int msm_gpu_perfcntr_sample(struct msm_gpu *gpu, uint32_t *activetime,
->   		uint32_t *totaltime, uint32_t ncntrs, uint32_t *cntrs);
->   
->   void msm_gpu_retire(struct msm_gpu *gpu);
-> -void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit);
-> +int msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit);
->   
->   int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->   		struct msm_gpu *gpu, const struct msm_gpu_funcs *funcs,
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> index fe55d4a1aa16..d8ad9818c389 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-> @@ -40,6 +40,8 @@ struct msm_ringbuffer {
->   	struct drm_gem_object *bo;
->   	uint32_t *start, *end, *cur, *next;
->   
-> +	bool overflow;
-> +
->   	/*
->   	 * List of in-flight submits on this ring.  Protected by submit_lock.
->   	 */
-> @@ -69,6 +71,9 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring);
->   static inline void
->   OUT_RING(struct msm_ringbuffer *ring, uint32_t data)
->   {
-> +	if (ring->overflow)
-> +		return;
-> +
->   	/*
->   	 * ring->next points to the current command being written - it won't be
->   	 * committed as ring->cur until the flush
+> Thanks,
+> Sajida
+>>
+>> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+>> ---
+>>  drivers/mmc/host/cqhci.h     |   1 +
+>>  drivers/mmc/host/sdhci-msm.c | 192 +++++++++++++++++++++++++++++++++++++++++++
+>>  drivers/mmc/host/sdhci.c     |  17 ++++
+>>  drivers/mmc/host/sdhci.h     |   1 +
+>>  include/linux/mmc/host.h     |   1 +
+>>  5 files changed, 212 insertions(+)
+>>
+>> diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h index 
+>> ba9387e..f72a1d6 100644
+>> --- a/drivers/mmc/host/cqhci.h
+>> +++ b/drivers/mmc/host/cqhci.h
+>> @@ -286,6 +286,7 @@ struct cqhci_host_ops {
+>>  				 u64 *data);
+>>  	void (*pre_enable)(struct mmc_host *mmc);
+>>  	void (*post_disable)(struct mmc_host *mmc);
+>> +	void (*err_stats)(struct mmc_host *mmc, unsigned long flags);
+>>  #ifdef CONFIG_MMC_CRYPTO
+>>  	int (*program_key)(struct cqhci_host *cq_host,
+>>  			   const union cqhci_crypto_cfg_entry *cfg, int slot); diff --git 
+>> a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c index 
+>> 50c71e0..e1dcd2d 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -242,6 +242,23 @@ struct sdhci_msm_variant_ops {
+>>  			u32 offset);
+>>  };
+>>  
+>> +enum {
+>> +	MMC_ERR_CMD_TIMEOUT,
+>> +	MMC_ERR_CMD_CRC,
+>> +	MMC_ERR_DAT_TIMEOUT,
+>> +	MMC_ERR_DAT_CRC,
+>> +	MMC_ERR_AUTO_CMD,
+>> +	MMC_ERR_ADMA,
+>> +	MMC_ERR_TUNING,
+>> +	MMC_ERR_CMDQ_RED,
+>> +	MMC_ERR_CMDQ_GCE,
+>> +	MMC_ERR_CMDQ_ICCE,
+>> +	MMC_ERR_REQ_TIMEOUT,
+>> +	MMC_ERR_CMDQ_REQ_TIMEOUT,
+>> +	MMC_ERR_ICE_CFG,
+>> +	MMC_ERR_MAX,
+>> +};
+>> +
+>>  /*
+>>   * From V5, register spaces have changed. Wrap this info in a structure
+>>   * and choose the data_structure based on version info mentioned in DT.
+>> @@ -285,6 +302,8 @@ struct sdhci_msm_host {
+>>  	u32 dll_config;
+>>  	u32 ddr_config;
+>>  	bool vqmmc_enabled;
+>> +	bool err_occurred;
+>> +	u32  err_stats[MMC_ERR_MAX];
+>>  };
+>>  
+>>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct 
+>> sdhci_host *host) @@ -2106,9 +2125,20 @@ static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *c
+>>  		host->data_timeout = 22LL * NSEC_PER_SEC;  }
+>>  
+>> +void sdhci_msm_cqe_err_stats(struct mmc_host *mmc, unsigned long 
+>> +flags) {
+>> +	struct sdhci_host *host = mmc_priv(mmc);
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +
+>> +	if (flags & BIT(0))
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]++;
+>> +}
+>> +
+>>  static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+>>  	.enable		= sdhci_msm_cqe_enable,
+>>  	.disable	= sdhci_msm_cqe_disable,
+>> +	.err_stats	= sdhci_msm_cqe_err_stats,
+>>  #ifdef CONFIG_MMC_CRYPTO
+>>  	.program_key	= sdhci_msm_program_key,
+>>  #endif
+>> @@ -2403,6 +2433,46 @@ static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+>>  		readl_relaxed(host->ioaddr +
+>>  			msm_offset->core_vendor_spec_func2),
+>>  		readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec3));
+>> +	msm_host->err_occurred = true;
+>> +}
+>> +
+>> +void sdhci_msm_err_stats(struct sdhci_host *host, u32 intmask) {
+>> +	int command;
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +
+>> +	if (!msm_host->err_occurred)
+>> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT] = 0;
+>> +
+>> +	if (host && host->mmc && host->mmc->timer) {
+>> +		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]++;
+>> +		host->mmc->timer = false;
+>> +	}
+>> +
+>> +	if (intmask & SDHCI_INT_CRC) {
+>> +		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
+>> +		if (command != MMC_SEND_TUNING_BLOCK ||
+>> +		    command != MMC_SEND_TUNING_BLOCK_HS200)
+>> +			msm_host->err_stats[MMC_ERR_CMD_CRC]++;
+>> +	} else if ((intmask & SDHCI_INT_TIMEOUT) ||
+>> +		(intmask & SDHCI_INT_DATA_TIMEOUT))
+>> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]++;
+>> +	else if (intmask & SDHCI_INT_DATA_CRC) {
+>> +		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
+>> +		if (command != MMC_SEND_TUNING_BLOCK ||
+>> +		    command != MMC_SEND_TUNING_BLOCK_HS200)
+>> +			msm_host->err_stats[MMC_ERR_DAT_CRC]++;
+>> +	} else if (intmask & SDHCI_INT_DATA_TIMEOUT)
+>> +		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]++;
+>> +	else if (intmask & CQHCI_IS_RED)
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_RED]++;
+>> +	else if (intmask & CQHCI_IS_GCE)
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_GCE]++;
+>> +	else if (intmask & CQHCI_IS_ICCE)
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]++;
+>> +	else if (intmask & SDHCI_INT_ADMA_ERROR)
+>> +		msm_host->err_stats[MMC_ERR_ADMA]++;
+>>  }
+>>  
+>>  static const struct sdhci_msm_variant_ops mci_var_ops = { @@ -2456,6 
+>> +2526,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
+>>  	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
+>>  	.set_power = sdhci_set_power_noreg,
+>>  	.set_timeout = sdhci_msm_set_timeout,
+>> +	.err_stats = sdhci_msm_err_stats,
+>>  };
+>>  
+>>  static const struct sdhci_pltfm_data sdhci_msm_pdata = { @@ -2482,6 
+>> +2553,125 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>>  	of_property_read_u32(node, "qcom,dll-config", 
+>> &msm_host->dll_config);  }
+>>  
+>> +static ssize_t err_state_show(struct device *dev,
+>> +			struct device_attribute *attr, char *buf) {
+>> +	struct sdhci_host *host = dev_get_drvdata(dev);
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +
+>> +	if (!host || !host->mmc)
+>> +		return -EINVAL;
+>> +
+>> +	return scnprintf(buf, PAGE_SIZE, "%d\n", !!msm_host->err_occurred); 
+>> +}
+>> +
+>> +static ssize_t err_state_store(struct device *dev,
+>> +				struct device_attribute *attr,
+>> +				const char *buf, size_t count)
+>> +{
+>> +	struct sdhci_host *host = dev_get_drvdata(dev);
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +	unsigned int val;
+>> +
+>> +	if (kstrtouint(buf, 0, &val))
+>> +		return -EINVAL;
+>> +	if (!host || !host->mmc)
+>> +		return -EINVAL;
+>> +
+>> +	msm_host->err_occurred = !!val;
+>> +	if (!val)
+>> +		memset(msm_host->err_stats, 0, sizeof(msm_host->err_stats));
+>> +
+>> +	return count;
+>> +}
+>> +static DEVICE_ATTR_RW(err_state);
+>> +
+>> +static ssize_t err_stats_show(struct device *dev,
+>> +				struct device_attribute *attr, char *buf) {
+>> +	struct sdhci_host *host = dev_get_drvdata(dev);
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +	char tmp[100];
+>> +
+>> +	if (!host || !host->mmc)
+>> +		return -EINVAL;
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Command Timeout Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMD_TIMEOUT]);
+>> +	strlcpy(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Command CRC Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMD_CRC]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Data Timeout Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_DAT_TIMEOUT]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Data CRC Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_DAT_CRC]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Auto-Cmd Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_ADMA]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# ADMA Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_ADMA]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Tuning Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_TUNING]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# CMDQ RED Errors: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_RED]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# CMDQ GCE Errors: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_GCE]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# CMDQ ICCE Errors: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_ICCE]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# CMDQ Request Timedout: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	scnprintf(tmp, sizeof(tmp), "# Request Timedout Error: %d\n",
+>> +		msm_host->err_stats[MMC_ERR_REQ_TIMEOUT]);
+>> +	strlcat(buf, tmp, PAGE_SIZE);
+>> +
+>> +	return strlen(buf);
+>> +}
+>> +static DEVICE_ATTR_RO(err_stats);
+>> +
+>> +static struct attribute *sdhci_msm_sysfs_attrs[] = {
+>> +	&dev_attr_err_state.attr,
+>> +	&dev_attr_err_stats.attr,
+>> +	NULL
+>> +};
+>> +
+>> +static const struct attribute_group sdhci_msm_sysfs_group = {
+>> +	.name = "qcom",
+>> +	.attrs = sdhci_msm_sysfs_attrs,
+>> +};
+>> +
+>> +static int sdhci_msm_init_sysfs(struct platform_device *pdev) {
+>> +	int ret;
+>> +
+>> +	ret = sysfs_create_group(&pdev->dev.kobj, &sdhci_msm_sysfs_group);
+>> +	if (ret)
+>> +		dev_err(&pdev->dev, "%s: Failed sdhci_msm sysfs group err=%d\n",
+>> +			__func__, ret);
+>> +	return ret;
+>> +}
+>>  
+>>  static int sdhci_msm_probe(struct platform_device *pdev)  { @@ 
+>> -2734,6 +2924,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>  	if (ret)
+>>  		goto pm_runtime_disable;
+>>  
+>> +	sdhci_msm_init_sysfs(pdev);
+>> +
+>>  	pm_runtime_mark_last_busy(&pdev->dev);
+>>  	pm_runtime_put_autosuspend(&pdev->dev);
+>>  
+>> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c index 
+>> 07c6da1..f82a3eff 100644
+>> --- a/drivers/mmc/host/sdhci.c
+>> +++ b/drivers/mmc/host/sdhci.c
+>> @@ -3159,6 +3159,13 @@ static void sdhci_timeout_timer(struct timer_list *t)
+>>  	spin_lock_irqsave(&host->lock, flags);
+>>  
+>>  	if (host->cmd && !sdhci_data_line_cmd(host->cmd)) {
+>> +		if (host->ops->err_stats) {
+>> +			u32 intmask;
+>> +
+>> +			host->mmc->timer = true;
+>> +			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+>> +			host->ops->err_stats(host, intmask);
+>> +		}
+>>  		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
+>>  		       mmc_hostname(host->mmc));
+>>  		sdhci_dumpregs(host);
+>> @@ -3181,6 +3188,13 @@ static void sdhci_timeout_data_timer(struct 
+>> timer_list *t)
+>>  
+>>  	if (host->data || host->data_cmd ||
+>>  	    (host->cmd && sdhci_data_line_cmd(host->cmd))) {
+>> +		if (host->ops->err_stats) {
+>> +			u32 intmask;
+>> +
+>> +			host->mmc->timer = true;
+>> +			intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+>> +			host->ops->err_stats(host, intmask);
+>> +		}
+>>  		pr_err("%s: Timeout waiting for hardware interrupt.\n",
+>>  		       mmc_hostname(host->mmc));
+>>  		sdhci_dumpregs(host);
+>> @@ -3466,6 +3480,9 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
+>>  	}
+>>  
+>>  	intmask = sdhci_readl(host, SDHCI_INT_STATUS);
+>> +	if (host->ops->err_stats)
+>> +		host->ops->err_stats(host, intmask);
+>> +
+>>  	if (!intmask || intmask == 0xffffffff) {
+>>  		result = IRQ_NONE;
+>>  		goto out;
+>> diff --git a/drivers/mmc/host/sdhci.h b/drivers/mmc/host/sdhci.h index 
+>> d7929d7..a1546b3 100644
+>> --- a/drivers/mmc/host/sdhci.h
+>> +++ b/drivers/mmc/host/sdhci.h
+>> @@ -658,6 +658,7 @@ struct sdhci_ops {
+>>  	void	(*request_done)(struct sdhci_host *host,
+>>  				struct mmc_request *mrq);
+>>  	void    (*dump_vendor_regs)(struct sdhci_host *host);
+>> +	void	(*err_stats)(struct sdhci_host *host, u32 intmask);
+>>  };
+>>  
+>>  #ifdef CONFIG_MMC_SDHCI_IO_ACCESSORS
+>> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h index 
+>> 7afb57c..33186ff 100644
+>> --- a/include/linux/mmc/host.h
+>> +++ b/include/linux/mmc/host.h
+>> @@ -492,6 +492,7 @@ struct mmc_host {
+>>  	int			cqe_qdepth;
+>>  	bool			cqe_enabled;
+>>  	bool			cqe_on;
+>> +	bool                    timer;
+>>  
+>>  	/* Inline encryption support */
+>>  #ifdef CONFIG_MMC_CRYPTO
+>>
 > 
 
-
--- 
-With best wishes
-Dmitry
