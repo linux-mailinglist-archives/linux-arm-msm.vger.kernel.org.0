@@ -2,151 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6582D45DAD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:16:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B74645DAD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 14:19:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354977AbhKYNTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 08:19:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44210 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355017AbhKYNRx (ORCPT
+        id S1355138AbhKYNWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 08:22:43 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:8383 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244519AbhKYNUn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 08:17:53 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856DBC061763
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 05:13:52 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id u3so16265593lfl.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 05:13:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cxPtdSVDRQX5bqi7JizAtmVow9MuQt/W0D86xbTHGHQ=;
-        b=VHFWU0HYMzvIxYMMX3dUUCfFvp1Dj5ccaIlW85NX9C/BbApzELtGk5xLBSEWp8gRzK
-         IlK0h/kr6xE0Ha4Myz889IVOFWWUa3K/Pfun2Z+m88D/UYV6wIErEHnsbRdV1LMx0QJ2
-         TbxCLA1qnBrufa0NPu7FXqbgRkdfomtB/4g0vOa6k4TOMLLPgu2FxY8l4oeUrM7Ved26
-         lUNgcQgpa+/iiyT2ln5Oz3DYg5p1bmuI7puKXrsn8r87aPQzK7xG38XULxjrX/dLs+XQ
-         PuAdERBk0ATidB+j8eyJcf4vj4zZIN3NcAQnz4KgmNb58vEYIsqD8Nm2rXJ7wjl8Iyik
-         iM4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cxPtdSVDRQX5bqi7JizAtmVow9MuQt/W0D86xbTHGHQ=;
-        b=ObAFbqLpi2G8JWHyCG3YFSID3mU9e3Xs7iQTL+P/Vp7dEXzqB0KKOMRk9Rxnj0KpWI
-         4OWzxqZXaakJYplx0at4RHod4pbqdes4nmO3IuCAscWev6iIuxHhNcfegnp8NKyVBNoo
-         ULImy9DaNKGGcGCarRq7kbDnC+N+m0EwCoiMY9NraYTOsy0Hc+EDe+jX2dwVgWjGWqZv
-         ZH1Rcuh/YVrMdSYtlv+PyAaua8a+suUE2T/CR0+OO0DpOwWOT4KX0ZQCrN7FGAG0M48V
-         YgW6vm4d2vCQrnkgJCSOoibNyflhoydLsz5Ngr8thtetnSUnFjgK3d/sryr0GuvYE46L
-         Uxzg==
-X-Gm-Message-State: AOAM531BdukzTxWMZ5uHi1HSEAIapA9bX/OvwcrFyhNZGJ7mPIPITjLe
-        S2cofIHduJ5zbUS3xDonfT2d2Q==
-X-Google-Smtp-Source: ABdhPJyCGINht0MOg86lGl3cZMWh2pafYvGATuji6Z/rHNAQ59rwn50dOf0aPTgI9Y1weyorvVWkEQ==
-X-Received: by 2002:a05:6512:104f:: with SMTP id c15mr23781125lfb.256.1637846030798;
-        Thu, 25 Nov 2021 05:13:50 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e11sm262053lfq.65.2021.11.25.05.13.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Nov 2021 05:13:50 -0800 (PST)
-Subject: Re: [PATCH v5 7/7] drm/msm/dp: Add sc8180x DP controllers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20211016221843.2167329-1-bjorn.andersson@linaro.org>
- <20211016221843.2167329-8-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <ce19f893-d805-1285-4bc2-445853498006@linaro.org>
-Date:   Thu, 25 Nov 2021 16:13:49 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <20211016221843.2167329-8-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        Thu, 25 Nov 2021 08:20:43 -0500
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 25 Nov 2021 05:17:31 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 25 Nov 2021 05:17:30 -0800
+X-QCInternal: smtphost
+Received: from hyd-lablnx229.qualcomm.com ([10.204.179.152])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 25 Nov 2021 18:47:14 +0530
+Received: by hyd-lablnx229.qualcomm.com (Postfix, from userid 2390365)
+        id 6173F21534; Thu, 25 Nov 2021 18:47:12 +0530 (IST)
+From:   pharish <pharish@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        saluvala@codeaurora.org, pharish <pharish@codeaurora.org>
+Subject: [PATCH v1] Bluetooth: hci_qca: Optimizations in init sequence for WCN6750.
+Date:   Thu, 25 Nov 2021 18:47:09 +0530
+Message-Id: <1637846230-4798-1-git-send-email-pharish@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/10/2021 01:18, Bjorn Andersson wrote:
-> The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
-> DP driver.
-> 
-> Link: https://lore.kernel.org/linux-arm-msm/20210725042436.3967173-7-bjorn.andersson@linaro.org/
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This change adds optimazation in init sequence for WCN6750.
 
-It seems that SC8180x DPU support was never merged (because of 
-hw_interrupt rework, because of hw_catalog TODOs and FIXMEs). Could you 
-please post new iteration of that patchset, squashing this one into it?
+Signed-off-by: pharish <pharish@codeaurora.org>
+---
+ drivers/bluetooth/hci_qca.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-
-> ---
-> 
-> Changes since v4:
-> - Use the MSM_DP_CONTROLLER_n enums
-> - const the msm_dp_desc array
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  6 +++---
->   drivers/gpu/drm/msm/dp/dp_display.c            | 11 +++++++++++
->   2 files changed, 14 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 47d5d71eb5d3..0ac6a79e8af9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -918,13 +918,13 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
->   };
->   
->   static const struct dpu_intf_cfg sc8180x_intf[] = {
-> -	INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> +	INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->   	INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
->   	INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
->   	/* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy index until this is supported */
->   	INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
-> -	INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
-> -	INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> +	INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
-> +	INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, MSM_DP_CONTROLLER_2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->   };
->   
->   /*************************************************************
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index d3c9d7273354..70dcd4e6d466 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -135,8 +135,19 @@ static const struct msm_dp_config sc7180_dp_cfg = {
->   	.num_descs = 1,
->   };
->   
-> +static const struct msm_dp_config sc8180x_dp_cfg = {
-> +	.descs = (const struct msm_dp_desc[]) {
-> +		[MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-> +		[MSM_DP_CONTROLLER_1] = { .io_start = 0x0ae98000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-> +		[MSM_DP_CONTROLLER_2] = { .io_start = 0x0ae9a000, .connector_type = DRM_MODE_CONNECTOR_eDP },
-> +	},
-> +	.num_descs = 3,
-> +};
-> +
->   static const struct of_device_id dp_dt_match[] = {
->   	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
-> +	{ .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
-> +	{ .compatible = "qcom,sc8180x-edp", .data = &sc8180x_dp_cfg },
->   	{}
->   };
->   
-> 
-
-
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 6f44b26..4dedaaa 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1603,15 +1603,19 @@ static int qca_regulator_init(struct hci_uart *hu)
+ 	 */
+ 	qcadev = serdev_device_get_drvdata(hu->serdev);
+ 	if (!qcadev->bt_power->vregs_on) {
+-		serdev_device_close(hu->serdev);
++		if (qca_is_wcn399x(soc_type))
++			serdev_device_close(hu->serdev);
++
+ 		ret = qca_regulator_enable(qcadev);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = serdev_device_open(hu->serdev);
+-		if (ret) {
+-			bt_dev_err(hu->hdev, "failed to open port");
+-			return ret;
++		if (qca_is_wcn399x(soc_type)) {
++			ret = serdev_device_open(hu->serdev);
++			if (ret) {
++				bt_dev_err(hu->hdev, "failed to open port");
++				return ret;
++			}
+ 		}
+ 	}
+ 
+@@ -1635,9 +1639,8 @@ static int qca_regulator_init(struct hci_uart *hu)
+ 		}
+ 	}
+ 
+-	qca_set_speed(hu, QCA_INIT_SPEED);
+-
+ 	if (qca_is_wcn399x(soc_type)) {
++		qca_set_speed(hu, QCA_INIT_SPEED);
+ 		ret = qca_send_power_pulse(hu, true);
+ 		if (ret)
+ 			return ret;
+@@ -1648,6 +1651,7 @@ static int qca_regulator_init(struct hci_uart *hu)
+ 	 * Without this, we will have RTS and CTS synchronization
+ 	 * issues.
+ 	 */
++
+ 	serdev_device_close(hu->serdev);
+ 	ret = serdev_device_open(hu->serdev);
+ 	if (ret) {
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
