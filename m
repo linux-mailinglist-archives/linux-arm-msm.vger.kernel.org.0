@@ -2,194 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D01B45DCC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 15:59:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ADB345DD01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 16:12:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355957AbhKYPCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 10:02:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
+        id S240344AbhKYPPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 10:15:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351775AbhKYPAV (ORCPT
+        with ESMTP id S1353210AbhKYPNL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 10:00:21 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF45C0613F2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 06:55:35 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so4854588wme.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 06:55:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7JCAKf9oYA7x3BAXSjfEiB48U74HpvNrlO45NEfGpZU=;
-        b=TJXyQopU1zrLMJj4DitXJIx6dMnxF2L5hsFjVqN2Y86nPWEr+YOlT/l40Y6h0DOi9I
-         ANmF1H4bvNRWTkDW48hHQ7q8j1yObs2neZyGZhHyYJb/vGalcgSmrfzLnyYNspIbHUd/
-         XfSQK7mWY9DXPUcOz9kdDyBCUif4rM0tVPlhTswh5pAmdL70f6EKRlzc6AML+8SG4eDS
-         hhYI5xd4Jc2Pkzb8SLozfz4I4tfV4vt8yoaZWHtqneNosrK9dWdtGcsYUjeTzp+XwX1Q
-         e3ppwCFt0/HOKdMz1ZASn6f79I3S5boXf9HVWdRRCDLbZn7JgeoJz8ebduusa6Frxtrq
-         ItiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7JCAKf9oYA7x3BAXSjfEiB48U74HpvNrlO45NEfGpZU=;
-        b=CHU+mqJ4ZR1ax66yqerUVCRZHWtZhBdgXPzagpw85NDFi8r86ma7IwVHtfyXnD85dD
-         D60TQfnbXFp5A44+5CdMBPupXVI9s1PBIWbjcOzw9+ThEw9+h8MtKgl62BbCufVWDz+S
-         5aJGP+p01ZaWCDvo2uxsF8vRGANqeZK+ZW9nOQK9xe5yrpFhf9+Mc4rJkmG/MMwncRHP
-         4cwurQ+VGpbTaAg5huWjaUplA8AIaDs5bd2EfsoVidB1EP1ypzrBsVk+HVdPYBe2Zhrd
-         eV4WCrimWyRV/c12njZrV0+GbqR6yXXK5MfekgTtYf07ORinuo8i2iRD06YfnGKFysJI
-         k5+g==
-X-Gm-Message-State: AOAM532GqJGsAL7Gz0G0zj6XvqFVcCYeA4a+Thk8YAgBSwr2yYr5EkHo
-        rTDmYtN6j5zrvW02eCe1rtgppQ==
-X-Google-Smtp-Source: ABdhPJx0PsgG06/T0eZFPZ8IBA/Oi3tBMWd4vmX+FvqdV1Qa7NyY0LC4/WzGyyyoRIbxD6AQd5lJTQ==
-X-Received: by 2002:a7b:cf02:: with SMTP id l2mr2402934wmg.78.1637852133685;
-        Thu, 25 Nov 2021 06:55:33 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id d15sm4465576wri.50.2021.11.25.06.55.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Nov 2021 06:55:33 -0800 (PST)
-Subject: Re: [PATCH 2/5] misc: fastrpc: Add secure device node support
-To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org
-Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        fastrpc.upstream@qti.qualcomm.com
-References: <1637849744-24844-1-git-send-email-jeyr@codeaurora.org>
- <1637849744-24844-3-git-send-email-jeyr@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <11cc9ff8-3852-d352-7105-fd1d223d69bf@linaro.org>
-Date:   Thu, 25 Nov 2021 14:55:32 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Thu, 25 Nov 2021 10:13:11 -0500
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B27F6C0613D7;
+        Thu, 25 Nov 2021 07:09:59 -0800 (PST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: kholk11)
+        with ESMTPSA id 069CB1F45900
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=collabora.com; s=mail;
+        t=1637852996; bh=Rv1jRLcowZm99hT/zu7+THzcYVzW6fHVM8XmlXMUXeY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LQpcwBkI3xvrvAEDTnF5OywjJ/5S04v2FtMZ/nP1dB+EyqJMMwZEQzU698tKJ8gIG
+         9RijVStBQR3JTbfa6GpyWK9qV/eP90PvJ5VTdpzQgG2i8UyPaMnKn+czqYa+J/rWWO
+         f4y0EAGaNwYk/Xvgd+EnH96LDpx3OYdtzWixWYneDMhvAxP61GLJt+dcxAs3URpTob
+         fWxkLy0IOYAQxSMC/TA+b8LmnYjwbK0rFHUjejd6o7afLKzUtX2p4U9llYYNbAloKp
+         9UZ3kfRbfhIPupkNIlmejdp7hdnEQxi+2W4CXRyER2WcEiMSjyWQJYS3vgUmf+k7zW
+         KzblCYInOGydQ==
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, kernel@collabora.com,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        jami.kettunen@somainline.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
+Date:   Thu, 25 Nov 2021 16:09:47 +0100
+Message-Id: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-In-Reply-To: <1637849744-24844-3-git-send-email-jeyr@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeya,
+Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
+DSI host gets initialized earlier, but this caused unability to probe
+the entire stack of components because they all depend on interrupts
+coming from the main `mdss` node (mdp5, or dpu1).
 
-Thanks for the patch,
+To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
+them at msm_pdev_probe() time: this will make sure that we add the
+required interrupt controller mapping before dsi and/or other components
+try to initialize, finally satisfying the dependency.
 
-On 25/11/2021 14:15, Jeya R wrote:
-> Register and deregister secure device node. Check for device name during
-> device open get proper channel context.
-> 
-> Signed-off-by: Jeya R <jeyr@codeaurora.org>
-> ---
->   drivers/misc/fastrpc.c | 33 +++++++++++++++++++++++++++++++--
->   1 file changed, 31 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 39aca77..0775554e 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -79,6 +79,7 @@
->   #define SENSORS_PD	(2)
->   
->   #define miscdev_to_cctx(d) container_of(d, struct fastrpc_channel_ctx, miscdev)
-> +#define securedev_to_cctx(d) container_of(d, struct fastrpc_channel_ctx, securedev)
->   
->   static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->   						"sdsp", "cdsp"};
-> @@ -213,6 +214,7 @@ struct fastrpc_channel_ctx {
->   	struct idr ctx_idr;
->   	struct list_head users;
->   	struct miscdevice miscdev;
-> +	struct miscdevice securedev;
->   	struct kref refcount;
->   };
->   
-> @@ -1218,10 +1220,23 @@ static int fastrpc_device_release(struct inode *inode, struct file *file)
->   
->   static int fastrpc_device_open(struct inode *inode, struct file *filp)
->   {
-> -	struct fastrpc_channel_ctx *cctx = miscdev_to_cctx(filp->private_data);
-> +	struct fastrpc_channel_ctx *cctx = NULL;
->   	struct fastrpc_user *fl = NULL;
-> +	struct miscdevice *currdev = NULL;
->   	unsigned long flags;
->   
-> +	if (!filp)
-> +		return -EFAULT;
-> +
-> +	currdev = (struct miscdevice *)(filp->private_data);
-> +	if (!currdev)
-> +		return -EFAULT;
-> +
-> +	if (strstr(currdev->name, "secure") != NULL)
-> +		cctx = securedev_to_cctx(filp->private_data);
-> +	else
-> +		cctx = miscdev_to_cctx(filp->private_data);
-> +
+While at it, also change the allocation of msm_drm_private to use the
+devm variant of kzalloc().
 
+Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+ drivers/gpu/drm/msm/msm_drv.c | 81 ++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 43 deletions(-)
 
-Now we only have one of the two possibilities,
-Either device node is "non secure" or a "secure"
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 7936e8d498dd..790acf4993c0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -512,45 +512,12 @@ static int msm_init_vram(struct drm_device *dev)
+ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct drm_device *ddev;
+-	struct msm_drm_private *priv;
+-	struct msm_kms *kms;
+-	struct msm_mdss *mdss;
++	struct drm_device *ddev = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = ddev->dev_private;
++	struct msm_kms *kms = priv->kms;
++	struct msm_mdss *mdss = priv->mdss;
+ 	int ret, i;
+ 
+-	ddev = drm_dev_alloc(drv, dev);
+-	if (IS_ERR(ddev)) {
+-		DRM_DEV_ERROR(dev, "failed to allocate drm_device\n");
+-		return PTR_ERR(ddev);
+-	}
+-
+-	platform_set_drvdata(pdev, ddev);
+-
+-	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+-	if (!priv) {
+-		ret = -ENOMEM;
+-		goto err_put_drm_dev;
+-	}
+-
+-	ddev->dev_private = priv;
+-	priv->dev = ddev;
+-
+-	switch (get_mdp_ver(pdev)) {
+-	case KMS_MDP5:
+-		ret = mdp5_mdss_init(ddev);
+-		break;
+-	case KMS_DPU:
+-		ret = dpu_mdss_init(ddev);
+-		break;
+-	default:
+-		ret = 0;
+-		break;
+-	}
+-	if (ret)
+-		goto err_free_priv;
+-
+-	mdss = priv->mdss;
+-
+ 	priv->wq = alloc_ordered_workqueue("msm", 0);
+ 	priv->hangcheck_period = DRM_MSM_HANGCHECK_DEFAULT_PERIOD;
+ 
+@@ -685,11 +652,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ err_destroy_mdss:
+ 	if (mdss && mdss->funcs)
+ 		mdss->funcs->destroy(ddev);
+-err_free_priv:
+-	kfree(priv);
+-err_put_drm_dev:
+-	drm_dev_put(ddev);
+-	platform_set_drvdata(pdev, NULL);
+ 	return ret;
+ }
+ 
+@@ -1382,12 +1344,42 @@ static const struct component_master_ops msm_drm_ops = {
+ static int msm_pdev_probe(struct platform_device *pdev)
+ {
+ 	struct component_match *match = NULL;
++	struct msm_drm_private *priv;
++	struct drm_device *ddev;
+ 	int ret;
+ 
++	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++
++	ddev = drm_dev_alloc(&msm_driver, &pdev->dev);
++	if (IS_ERR(ddev)) {
++		DRM_DEV_ERROR(&pdev->dev, "failed to allocate drm_device\n");
++		return PTR_ERR(ddev);
++	}
++
++	platform_set_drvdata(pdev, ddev);
++	ddev->dev_private = priv;
++	priv->dev = ddev;
++
++	switch (get_mdp_ver(pdev)) {
++	case KMS_MDP5:
++		ret = mdp5_mdss_init(ddev);
++		break;
++	case KMS_DPU:
++		ret = dpu_mdss_init(ddev);
++		break;
++	default:
++		ret = 0;
++		break;
++	}
++	if (ret)
++		goto err_put_drm_dev;
++
+ 	if (get_mdp_ver(pdev)) {
+ 		ret = add_display_components(pdev, &match);
+ 		if (ret)
+-			return ret;
++			goto fail;
+ 	}
+ 
+ 	ret = add_gpu_components(&pdev->dev, &match);
+@@ -1409,6 +1401,9 @@ static int msm_pdev_probe(struct platform_device *pdev)
+ 
+ fail:
+ 	of_platform_depopulate(&pdev->dev);
++err_put_drm_dev:
++	drm_dev_put(ddev);
++	platform_set_drvdata(pdev, NULL);
+ 	return ret;
+ }
+ 
+-- 
+2.33.1
 
-If you create just one device node based on the device tree bindings 
-then you would not need to do any of these runtime checks.
-
-something like this in fastrpc_rpmsg_probe() should do:
-
------------------------>cut<----------------------------------
-data->secure = !(of_property_read_bool(rdev->of_node, 
-"qcom,non-secure-domain"));
-data->miscdev.minor = MISC_DYNAMIC_MINOR;
-data->miscdev.name = devm_kasprintf(rdev, GFP_KERNEL, "fastrpc-%s-%s",
-				    domains[domain_id],
-				    data->secure ? "secure" : "");
-data->miscdev.fops = &fastrpc_fops;
-err = misc_register(&data->miscdev);
-if (err) {
-	kfree(data);
-	return err;
-}
------------------------>cut<----------------------------------
-
-
---srini
-
->   	fl = kzalloc(sizeof(*fl), GFP_KERNEL);
->   	if (!fl)
->   		return -ENOMEM;
-> @@ -1644,6 +1659,15 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   		kfree(data);
->   		return err;
->   	}
-> +	data->securedev.minor = MISC_DYNAMIC_MINOR;
-> +	data->securedev.name = devm_kasprintf(rdev, GFP_KERNEL,
-> +				"fastrpc-%s-secure", domains[domain_id]);
-> +	data->securedev.fops = &fastrpc_fops;
-> +	err = misc_register(&data->securedev);
-> +	if (err) {
-> +		kfree(data);
-> +		return err;
-> +	}
->   
->   	kref_init(&data->refcount);
->   
-> @@ -1655,7 +1679,11 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   	data->domain_id = domain_id;
->   	data->rpdev = rpdev;
->   
-> -	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-> +	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-> +	dev_info(rdev, "%s done for %s with nodes non-secure(%d), secure(%d) return: %d\n",
-> +		__func__, domains[domain_id],
-> +		data->miscdev.minor, data->securedev.minor, err);
-> +	return err;
->   }
->   
->   static void fastrpc_notify_users(struct fastrpc_user *user)
-> @@ -1680,6 +1708,7 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   	spin_unlock_irqrestore(&cctx->lock, flags);
->   
->   	misc_deregister(&cctx->miscdev);
-> +	misc_deregister(&cctx->securedev);
->   	of_platform_depopulate(&rpdev->dev);
->   
->   	cctx->rpdev = NULL;
-> 
