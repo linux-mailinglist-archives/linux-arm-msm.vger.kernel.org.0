@@ -2,82 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DE0F45D486
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 07:06:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 242E545D4FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Nov 2021 07:52:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345842AbhKYGJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 01:09:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60820 "EHLO
+        id S1346776AbhKYGzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 01:55:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346211AbhKYGHO (ORCPT
+        with ESMTP id S1347543AbhKYGxt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 01:07:14 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC21AC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 22:04:03 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id 71so4264465pgb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 22:04:03 -0800 (PST)
+        Thu, 25 Nov 2021 01:53:49 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A393C06175D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 22:50:18 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id gf14-20020a17090ac7ce00b001a7a2a0b5c3so7013147pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Nov 2021 22:50:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=H4HGalLWPoVzFfPEimJE+jSmxShewGOJaaasN5eIRFY=;
-        b=Yzolavh8EgkLLQNjLrl92FoQDZ1jXBMTGsHtIbaDhmR5Ma95uIWI7NMCc4mUHZhVYq
-         6tVImTXu4OqG1Sl9c8zUbm15NBTorwhGsT5Be3sQ45sXhlbqP88TeEFaTNdSyqqh9LvX
-         UO6o51fG77tfwqMQ3qLCAvefkJP4crErJn4znvUYoPOxJ/VviydR2/QL4ClGJQyWrObh
-         gXBnSuOqom9ByInHTijSXG6M2nbuqvc47jpocSSGd/lQfqsggs+dYxMw6EooylMBQxIv
-         1V+0B6al0w/KVhfgH7XicUSn00JebhOe4tX5Izt0DWkN9I8VpPp1SQ2knsfa8UgrD8R/
-         oh6g==
+        bh=aLZTzdqAHN4njzqIicuAT3Ic+Y2XtUxhcUjJQMOb7xs=;
+        b=Oe/lr717vm9ZmunvbrWUJEHX1jGZvSJbm3Y05EH9Rhle3p07RjPuGDyL1eUzHS+TQH
+         Br7MfMZK4yoFD7yxQHBxKwjVcViyJhhnuRn3R1dTPbEuNGtwUcsuaSTNHp5vV6sxuzZe
+         LyyySc4RfViFjrPbn7zYCOfy03OhuDDOVqdV0/P4768viANopPp3Tj06bUjngyt59rIV
+         sJ+z6rzgZbh04cspJL2ZwpKbue3Ik9Pe4ZMFTddlEaQAHHR3AvLgItFMIWYmjHapvqEC
+         JwR0FDv2w2XJ0cXz5gXLKt1Mhks2DcagQMgGk8ydf0srGGbm2T9jkVZt3FxHhKC9vjur
+         TMqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=H4HGalLWPoVzFfPEimJE+jSmxShewGOJaaasN5eIRFY=;
-        b=Zyhkmy38iNl1v3gIv4rRrKOu3TmzZ82uY8y9Z0OkFUSWAf6XFfh7NTx0M1BPJez2Ee
-         0RKdeKz+4yvY2/Ve4t5J872bZEZa6OqbyvL5z025WnThfaoXBsNyDYIOw9BuPBn6u5kR
-         AhMEL/uX17TKktQ3WTbOXuN6lV694PLFC3I1lzMKplRL2wVEwe6iY3iouMiCTw61+UqC
-         xm0ibpr8MX2q0lwnbY7wZzh9ku5sl1d67IXadwrANNmmDeP6Dj1US/V8NaeIxvtRnHn0
-         ItOOmToo+u4R3eL1hyF24F9oxBvb5hxelKsVR9/5OvvDIvwj3w2pBeVjCYx2tpqn3SNm
-         Q1KA==
-X-Gm-Message-State: AOAM5308xvFGiKnlkxvK1ZVZfvA1F58p356cgAFRgjaLJvyDoDGsuyUJ
-        hRSZ23jciXt8cA5DG1ZchVqOcw==
-X-Google-Smtp-Source: ABdhPJxX+JigNlEsGnLVlcVZ4PEeRBHwNV2cngtjzEmmJD5jrW7yOVvbTC/efI18E8K7OL72LYonaQ==
-X-Received: by 2002:a05:6a00:244d:b0:44d:c279:5155 with SMTP id d13-20020a056a00244d00b0044dc2795155mr11835871pfj.0.1637820243399;
-        Wed, 24 Nov 2021 22:04:03 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id pj12sm6973544pjb.51.2021.11.24.22.04.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Nov 2021 22:04:03 -0800 (PST)
-Date:   Thu, 25 Nov 2021 14:03:57 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add Qualcomm MPM irqchip driver support
-Message-ID: <20211125060356.GA10105@dragon>
-References: <20211122075207.20114-1-shawn.guo@linaro.org>
+        bh=aLZTzdqAHN4njzqIicuAT3Ic+Y2XtUxhcUjJQMOb7xs=;
+        b=UIwvF5uoRePlKxn3esxLgYeEsVQTmPqnundDHVE2oT/YBgRWwiy0D8hnYnBKqafK3F
+         BBP9W87RBFcV4ge1Q3pzNsiPuQbe2hwy6Pa6fFHCzLvT703smWJqAA3gIIRd9A/6c9X3
+         7cX9p9IQOpwBqUlTe/Q41Nsc6x9o2dj7n6iyL0PdBTb6qXkAVCIRWA9sCDH5q5V6AbZ9
+         lPlVDuFvzjS2S0Wg0+pm0c//nG0wQVX4d+MsqGeSy7v+Y8WvpUpsTmg2gfh9RXH1bUMY
+         lnWmj01WeGATN4OzYSduYWXaK3V21nriscLJOJ+72O210Y1P3+o+Optom0S2bZu3JITi
+         881A==
+X-Gm-Message-State: AOAM530e315vSaQCQrntUNZfZO2agDHe54viYdNwmpHXxYc6BhT5t9t9
+        AeIiKy4jp+6EdyJTqieLSWGEsw==
+X-Google-Smtp-Source: ABdhPJwUQbsuqcx0cjo2BNSLjskMS4com6gMFeSOWFH+slwNWFckXWeCVRDPV0yGUjpDLtzxQKmEsw==
+X-Received: by 2002:a17:902:e547:b0:141:ddbc:a8d6 with SMTP id n7-20020a170902e54700b00141ddbca8d6mr26876899plf.27.1637823017721;
+        Wed, 24 Nov 2021 22:50:17 -0800 (PST)
+Received: from localhost ([122.181.57.99])
+        by smtp.gmail.com with ESMTPSA id q17sm2154062pfu.117.2021.11.24.22.50.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Nov 2021 22:50:17 -0800 (PST)
+Date:   Thu, 25 Nov 2021 12:20:14 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 0/3] cpufreq: qcom-hw: a few fixes in qcom cpufreq driver
+Message-ID: <20211125065014.phkfugo2wptosrgv@vireshk-i7>
+References: <20211111154808.2024808-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211122075207.20114-1-shawn.guo@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20211111154808.2024808-1-vladimir.zapolskiy@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 03:52:05PM +0800, Shawn Guo wrote:
-> It adds DT binding and driver support for Qualcomm MPM (MSM Power Manager)
-> interrupt controller.
+On 11-11-21, 17:48, Vladimir Zapolskiy wrote:
+> I find it essential to resend a fix from Ard and also add two more
+> lesser fixes to the set, review and comments are more than welcome.
 > 
-> Shawn Guo (2):
->   dt-bindings: interrupt-controller: Add Qualcomm MPM support
->   irqchip: Add Qualcomm MPM controller driver
+> Ard Biesheuvel (1):
+>   cpufreq: qcom-cpufreq-hw: Avoid stack buffer for IRQ name
+> 
+> Vladimir Zapolskiy (2):
+>   cpufreq: qcom-hw: Fix probable nested interrupt handling
+>   cpufreq: qcom-hw: Set CPU affinity of dcvsh interrupts
+> 
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
 
-Please disregard this version.  I would like to update the driver for
-better alignment with qcom-pdc, so that DT can be wired up in the same
-way as PDC.  Sorry for the noise!
+Applied. Thanks.
 
-Shawn
+-- 
+viresh
