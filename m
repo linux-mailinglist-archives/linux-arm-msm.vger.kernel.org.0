@@ -2,102 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 182B545E55C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 03:39:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 747C245E65F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 04:01:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358516AbhKZClg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 21:41:36 -0500
-Received: from mail.kernel.org ([198.145.29.99]:49808 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1358031AbhKZCjf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 21:39:35 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DBDD961242;
-        Fri, 26 Nov 2021 02:34:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637894042;
-        bh=EVCyJxq0Rk/sGpamv5LAGeHhzwS5mU1kOyobSTBO/4k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lnpoa+tamGYF7djetfTGr9a5ttfsoNffWesiPCLhxkzJgkGCeTeh5O9L1NFxqXf9D
-         OpC6A3Pxf41XEpgIwv4gC3bzsvpwRgxmK4xwy1INi+FOaKmBMtl6qzKnM9AUiRFqR7
-         vcJnjXHk3yIaVjCPjJPVU+PszdlxqXhvO2X7DDzmfRAx4GeTDcj6q9nSiUoHwanW1p
-         E9+1aJcV0NmYzLKOnh3am6rJYl27+EuFHVoxYxZgeMIW6VJ5f6TmMj59A9jnyctnO1
-         4Hm82LkO8ANKxC5trb+iV4fTq8TM1dfIrEZtSK2ns+tWQqQP18l2obIZoTmnceWkOW
-         7ltqbpgWKoERA==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Julian Braha <julianbraha@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 11/28] pinctrl: qcom: fix unmet dependencies on GPIOLIB for GPIOLIB_IRQCHIP
-Date:   Thu, 25 Nov 2021 21:33:26 -0500
-Message-Id: <20211126023343.442045-11-sashal@kernel.org>
+        id S1358696AbhKZCzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 21:55:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1358705AbhKZCxi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 25 Nov 2021 21:53:38 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18ED5C061D6D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 18:35:20 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id t26so20501726lfk.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 18:35:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=K08hnQBTPfWEs+HMfPYvCpN/H48kICMBN1bfcTW0bUw=;
+        b=QqG5fNRfambM/9eGjhWQTDgxNeUaGRGqGj1c4RU9sVvIy/itpEUlV+wwHI5cI/I7oH
+         8o9ehfSavZZFGXKRInEHik8xP6lHPHWYjCKUkQoW9WgwTk9YifloDRmbrk6SXDqNU5vn
+         FG1LrcuhZrxLJdb9qGnrC8PdXYLxjvFl/SqlL+pcAiJFxzRvS+eP8NGih2CjTDdhZwWp
+         LppeMsIfMDEx/ozQjfnk6va5ArvB93Cq6KfTLtMLIV4P/HqZo7OfH6GP5rLxDeGBLWmq
+         Tcu/UTma/0yIMBy49/DSH6OsgXuGAOfIRBC8qEau++DTyFk9euGBpZfC7gfqMaQFCCJN
+         WeGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=K08hnQBTPfWEs+HMfPYvCpN/H48kICMBN1bfcTW0bUw=;
+        b=3y3/WcrQ3FyMrIjmRT+zhsMDPDWvgI4DJeNxh3eChJYnvJPtL5zVaswwLYnvRPWMnn
+         uvxdYIthc2/3qs2sI7H6XvLrf1WzC9tjhIScGVN2eKsb4HUuKQgVB0gCJuxdJYMJXvLv
+         uWt3+fihrwKZc6oIGeTm5/QSwrnLqZ7IafEg+24SuWSSTel4Y2nptkZABoLvaqX2X2fJ
+         SljtlcMBfdp85Cu59ko8ptia4DMRN5/ZnH+pcvz1jl09SYUFKVOAGtq1zsmQA9u3PUmv
+         S2NOLJ0AOl638xuvCjbWN+w5o3BmrN2Zaj/ExRkrCyKNPaUrAfG/ViNi+JyGtljPZ2Oj
+         xsqA==
+X-Gm-Message-State: AOAM531gerQjzO8Xc3ERmVjG7GBH2qrkmAK5WXaifEym7ewzFiW8MKV2
+        meslX1xCixuhNfdUbxV9f70OC9dLD6f90Q==
+X-Google-Smtp-Source: ABdhPJwaHrap7PPmQnp6flFxVBPmROMv9vSRZo//q+MyiYYJ/7khxNgpJ1SAdmODw5i2LCGwTLjfkg==
+X-Received: by 2002:a19:750d:: with SMTP id y13mr28325028lfe.101.1637894118290;
+        Thu, 25 Nov 2021 18:35:18 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id n7sm391005lfu.116.2021.11.25.18.35.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Nov 2021 18:35:17 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH v2 0/2] drm/msm: rework clock handling
+Date:   Fri, 26 Nov 2021 05:35:14 +0300
+Message-Id: <20211126023516.1108411-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211126023343.442045-1-sashal@kernel.org>
-References: <20211126023343.442045-1-sashal@kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Julian Braha <julianbraha@gmail.com>
+msm_dss_clk_*() functions significantly duplicate clk_bulk_* family of
+functions. Drop custom code and use bulk clocks directly. This also
+removes dependency of DP driver on the DPU driver internals.
 
-[ Upstream commit 60430d4c4eddcdf8eac2bdbec9704f84a436eedf ]
+Changes since v1:
+ - Rebase on top of current tree to fix conflicts
 
-When PINCTRL_QCOM_SPMI_PMIC or PINCTRL_QCOM_SSBI_PMIC
-is selected, and GPIOLIB is not selected, Kbuild
-gives the following warnings:
+The following changes since commit e4840d537c2c6b1189d4de16ee0f4820e069dcea:
 
-WARNING: unmet direct dependencies detected for GPIOLIB_IRQCHIP
-  Depends on [n]: GPIOLIB [=n]
-  Selected by [y]:
-  - PINCTRL_QCOM_SPMI_PMIC [=y] && PINCTRL [=y] && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && OF [=y] && SPMI [=y]
+  drm/msm: Do hw_init() before capturing GPU state (2021-11-22 10:45:55 -0800)
 
-WARNING: unmet direct dependencies detected for GPIOLIB_IRQCHIP
-  Depends on [n]: GPIOLIB [=n]
-  Selected by [y]:
-  - PINCTRL_QCOM_SSBI_PMIC [=y] && PINCTRL [=y] && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && OF [=y]
+are available in the Git repository at:
 
-This is because these config options enable GPIOLIB_IRQCHIP
-without selecting or depending on GPIOLIB, despite
-GPIOLIB_IRQCHIP depending on GPIOLIB.
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git dpu-clocks-cleanup
 
-These unmet dependency bugs were detected by Kismet,
-a static analysis tool for Kconfig. Please advise if this
-is not the appropriate solution.
+for you to fetch changes up to d6c3e05f71d0fe131f427c32553a01b6df0bec9d:
 
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Link: https://lore.kernel.org/r/20211029004610.35131-1-julianbraha@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pinctrl/qcom/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+  drm/msm/dp: rewrite dss_module_power to use bulk clock functions (2021-11-25 12:20:56 +0300)
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 5fe7b8aaf69d8..a209eb1f189ab 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -169,6 +169,7 @@ config PINCTRL_QCOM_SPMI_PMIC
- 	select PINMUX
- 	select PINCONF
- 	select GENERIC_PINCONF
-+  select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	select IRQ_DOMAIN_HIERARCHY
- 	help
-@@ -183,6 +184,7 @@ config PINCTRL_QCOM_SSBI_PMIC
- 	select PINMUX
- 	select PINCONF
- 	select GENERIC_PINCONF
-+  select GPIOLIB
- 	select GPIOLIB_IRQCHIP
- 	select IRQ_DOMAIN_HIERARCHY
- 	help
--- 
-2.33.0
+----------------------------------------------------------------
+Dmitry Baryshkov (2):
+      drm/msm/dpu: simplify clocks handling
+      drm/msm/dp: rewrite dss_module_power to use bulk clock functions
+
+ drivers/gpu/drm/msm/Makefile                  |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  24 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c   | 187 --------------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h   |  40 ------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  46 ++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |  26 ++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  19 ++-
+ drivers/gpu/drm/msm/dp/dp_parser.c            |  21 ++-
+ drivers/gpu/drm/msm/dp/dp_parser.h            |  17 ++-
+ drivers/gpu/drm/msm/dp/dp_power.c             |  81 ++++++-----
+ drivers/gpu/drm/msm/msm_drv.c                 |  49 +++++++
+ drivers/gpu/drm/msm/msm_drv.h                 |   1 +
+ 14 files changed, 164 insertions(+), 358 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
+
 
