@@ -2,92 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B69A745E833
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 08:07:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 634D745E835
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 08:07:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359089AbhKZHKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 02:10:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51774 "EHLO
+        id S1359114AbhKZHKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 02:10:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235202AbhKZHIk (ORCPT
+        with ESMTP id S236249AbhKZHIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 02:08:40 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F354BC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:27 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id p18so6063082plf.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:27 -0800 (PST)
+        Fri, 26 Nov 2021 02:08:42 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB5BC061748
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:30 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id n26so8051749pff.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y1ILYtinVwd0mkwf055YK252Zf97GHuWql+Jyy65qoA=;
-        b=lUoqKFA7wF7TBlQnazfz94JjWQSDAeVQaRn1p38Rk9zTKRnnM2nZ3PUZzsAELGlUs0
-         OiZwooQpcVoCY6Lmgi7UcBOpBKuATQaQ80hS8GIMzKWDrwSESbhx0hGTOIu1qGEWnSiI
-         meD0g2CR/T8UUS3kfYoFsPfFShNd2JPYZPy5o8NUneA6A/gsFcz7fWd0vb3Xssyu+iDR
-         8PN2+9IZqRW8vTNMhHxcSWzXMolpf4tgj8+pmx49nFFG2vnSya0Qe3/qCufuzebK/XoB
-         JcWO+Hm9ab3oa6HdtQa4JfcqWQ7oczicxif1LRE73LgpIl/c+XyCr6ZCVWf3+oLxRB0p
-         Dhvw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KvsdfS4yAXK8qGr4kUwpkhkSA11Udv6JYNv1Y5Hw6v0=;
+        b=BYKWBAs3Zfsl/r+tx3SI7o4yI8UFQFU9x8CrYin/iiqLTKcCro+j7FPe/TVapOoQpZ
+         4RQp0MTKeRnGEK/8O9JRX9Wdn8lNNy6j7X+mWrtUBrkrGZpBK8QgnZKQLLZ9H01PkIkr
+         9MjfAhOM9lbJQD1BXXMkjX+HfheUJvW6Mgss5ExeuXZaJduTssm7PjKtKy8dDEn6uYSu
+         8ewWu0VglAmJiHLjdrxV4gb4ln+kgFWdbRIMTcX57ECqBO8GG7Hjx0NtCoTgPPuprN54
+         38wVyIc/eM/fpaRll5rgu5HVYv5n32GzvhgnIJj8V6YNMAwa8Dcucfic956o6G95gWC3
+         Xu3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Y1ILYtinVwd0mkwf055YK252Zf97GHuWql+Jyy65qoA=;
-        b=OPluUBIDlBRXZ8qUe931cfnWwNVAG8R/KJjKJpc7XjCnx4kpPgR+CQnKiDYX9odjjz
-         jbMmX4YjzbM3W4bldm1zB/NXqTnn04Rpruo2NibIx2HD1nz8LxHLlV5rZ0R9Y92/Qdw0
-         3AruSpZHkFvI+LTpgK7R0mFbWNQIKwKLdpD7vB0SV+DhSyjCfEpYBkDQXfxPmAnXdoQl
-         vWrFe0cT5UmpbV9t9kH/EEk0zQwuoU4iAw9YwuJ6fWlR/O70An5zpu6F7mebIHEPzEsx
-         A2k+H6UsjU75ev+GmE1ZkzUBhRLph3nmphTmnozOBlOU10qiS/bccrN6k92muuFHmQv8
-         EECg==
-X-Gm-Message-State: AOAM5338JH14/kFw+Y50srs767Sbnisx837hd+toE3qpcrBV0b4vv/gL
-        SEF/Hnm4ZcGSCWi8e8vwZ9otanU01a9+
-X-Google-Smtp-Source: ABdhPJx2GKz4dN+VPfHHobP8KobaR+8T+eVckNaOsRxk8EN+f7YYm81qizDfUhCG5V6eE/F+R6PmJg==
-X-Received: by 2002:a17:90a:f00e:: with SMTP id bt14mr13660700pjb.219.1637910327442;
-        Thu, 25 Nov 2021 23:05:27 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KvsdfS4yAXK8qGr4kUwpkhkSA11Udv6JYNv1Y5Hw6v0=;
+        b=dDmQ+CKLaE8TQOcitK4/9TmJuVZ9WrWAqnw64w56JPO0h5mGPp3cjuvMR1OztZLC1M
+         qTwBGkQGIZMn0FIyvS3cCSIx5JIqpwVKHJJcpaOoMKe1hdgrRkexLftVTTYTQ+yCCeid
+         b/pHUDxG+6wL50VAZb3dGLLn+qVVfzJKr9EgVF+x1lvck0B1k/Qq8aNPgqRwUkFxfnju
+         +TZtHIjMPQQeX0KenNpcmZc9EKA4OL9+mEwv8dPpvpUci64iVCAziw7GdP7URXd+RN7X
+         WMnBE7z/QuAHGLLblpJkRtbyePYdEp5Oo4M/zQRVsU5pLmAcMrWhehu52z0wb6zfNXpc
+         mx8g==
+X-Gm-Message-State: AOAM530HzT6kqA3g7cVCI5doSBTZxc//+hjWN6CGABzTkXw7RZrnb/TZ
+        aBdS8L/0lzmj2ZIPzfOBJURZ
+X-Google-Smtp-Source: ABdhPJwGYyuWRiOHyU6/h8MNBCE9mgEzQr1HiVzHqqd5qT9loqL3FpaJWqvt2EWurtiOTfpD4o7dwA==
+X-Received: by 2002:a63:b22:: with SMTP id 34mr20153957pgl.454.1637910330163;
+        Thu, 25 Nov 2021 23:05:30 -0800 (PST)
 Received: from localhost.localdomain ([117.215.117.247])
-        by smtp.gmail.com with ESMTPSA id d12sm4042104pgf.19.2021.11.25.23.05.24
+        by smtp.gmail.com with ESMTPSA id d12sm4042104pgf.19.2021.11.25.23.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 23:05:26 -0800 (PST)
+        Thu, 25 Nov 2021 23:05:29 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     bjorn.andersson@linaro.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 0/6] Add PCIe EP and IPA support for SDX55
-Date:   Fri, 26 Nov 2021 12:35:14 +0530
-Message-Id: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/6] ARM: dts: qcom: sdx55: Add support for PCIe PHY
+Date:   Fri, 26 Nov 2021 12:35:15 +0530
+Message-Id: <20211126070520.28979-2-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
+References: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Add devicetree support for PCIe PHY used in SDX55 platform. This PHY is
+used by the PCIe EP controller.
 
-This series adds the devicetree support for PCIe PHY, PCIe EP and IPA on SDX55.
-The PCIe EP is enabled only on FN980 as there is no endpoint support on T55.
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 35 +++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-For IPA, the support is enabled on both FN980 and T55 boards. With this, IPA
-seems to be functional as the modem ready interrupt has been received. But there
-is an issue with some QMI command failing with the mode, so can't do the
-data call atm.
-
-Thanks,
-Mani
-
-Manivannan Sadhasivam (6):
-  ARM: dts: qcom: sdx55: Add support for PCIe PHY
-  ARM: dts: qcom: sdx55-fn980: Enable PCIE0 PHY
-  ARM: dts: qcom: sdx55: Add support for PCIe EP
-  ARM: dts: qcom: sdx55-fn980: Enable PCIe EP
-  ARM: dts: qcom: sdx55-fn980: Enable IPA
-  ARM: dts: qcom: sdx55-t55: Enable IPA
-
- arch/arm/boot/dts/qcom-sdx55-t55.dts          |  6 ++
- .../boot/dts/qcom-sdx55-telit-fn980-tlb.dts   | 59 ++++++++++++++
- arch/arm/boot/dts/qcom-sdx55.dtsi             | 80 +++++++++++++++++++
- 3 files changed, 145 insertions(+)
-
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 44526ad9d210..16995782dfdf 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -309,6 +309,41 @@ qpic_nand: nand-controller@1b30000 {
+ 			status = "disabled";
+ 		};
+ 
++		pcie0_phy: phy@1c07000 {
++			compatible = "qcom,sdx55-qmp-pcie-phy";
++			reg = <0x01c07000 0x1c4>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges;
++			clocks = <&gcc GCC_PCIE_AUX_PHY_CLK_SRC>,
++				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_0_CLKREF_CLK>,
++				 <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
++			clock-names = "aux", "cfg_ahb", "ref", "refgen";
++
++			resets = <&gcc GCC_PCIE_PHY_BCR>;
++			reset-names = "phy";
++
++			assigned-clocks = <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			status = "disabled";
++
++			pcie0_lane: lanes@1c06000 {
++				reg = <0x01c06000 0x104>, /* tx0 */
++				      <0x01c06200 0x328>, /* rx0 */
++				      <0x01c07200 0x1e8>, /* pcs */
++				      <0x01c06800 0x104>, /* tx1 */
++				      <0x01c06a00 0x328>, /* rx1 */
++				      <0x01c07600 0x800>; /* pcs_misc */
++				clocks = <&gcc GCC_PCIE_PIPE_CLK>;
++				clock-names = "pipe0";
++
++				#phy-cells = <0>;
++				clock-output-names = "pcie_pipe_clk";
++			};
++		};
++
+ 		ipa: ipa@1e40000 {
+ 			compatible = "qcom,sdx55-ipa";
+ 
 -- 
 2.25.1
 
