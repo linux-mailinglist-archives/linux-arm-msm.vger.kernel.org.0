@@ -2,93 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C1E45E840
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 08:09:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 364C045E9C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 09:59:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359117AbhKZHMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 02:12:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359110AbhKZHKn (ORCPT
+        id S1347400AbhKZJCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 04:02:50 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:49000 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347368AbhKZJAp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 02:10:43 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2E39C06175D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:42 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id v19so6087219plo.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:42 -0800 (PST)
+        Fri, 26 Nov 2021 04:00:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=n3D0/obh+8GDy4NXpRzCcn/wksmLWSbTBh0aXEdpFCE=;
-        b=ro65tUWhtJIjuY3swffGValIXVWIqHNXfKUfHp6mfXD/qpjHD8haXq/JoIP1128yZ/
-         pKHxuCfKO1FA97DbbhPsAJMvo5PBi849ReGu+CMvsVN2wKS0sqZeZksRofWbJSSLXagf
-         hLwgkmhp4qsgqXLAFzToo6OTpEP7gRa61NbJ4IGX5RxuEvUFr/tBKAVus0MUmZgqzppY
-         i3F83POY6HFMfSkeh+PFcLDGGR7paYJm0WllNH7X6zsTdp/O5fr55HmugPfOCEDuzRwi
-         D8WW1qNC2lSG+Zaj4UIWB7frSCoegqIrZ7g7US5rkl8aAAEc1isV0PjrXFDiouj/zDk/
-         8TAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=n3D0/obh+8GDy4NXpRzCcn/wksmLWSbTBh0aXEdpFCE=;
-        b=iCEIgdLh69JON8R/+TZYFULzEBvYkfAdvVU5kKits5WV9uNbeooXtNHQygOT7RnUrJ
-         Etno2SsHmTIcTY1Ra1PMbrOTKL/4XGoFJYaS5wJ1rYC1ah+TWLdSuzgdY+sZzT9R+FAI
-         GEXf9C2dhG60xxD0mOBmR3PJvW5GD8ZjQJJUKZk72j1lgAg4DhLIIFXd27Onz0ogv3Fq
-         wUwgHOBEAuTot/hbg8kVmQDx1Z5mPHKpxyiQSw5rlZwDZ+YaeW/8ol0POAlX8S4OBjUa
-         DwI06C6Hfet1XKdulGsd6HGLeo1l0tQFhIPKzqB3ZeoMlE8Pfel2iHRG9xkkA3cYrrnw
-         cMnw==
-X-Gm-Message-State: AOAM533V954IuA4N6XZHO8h3lm+7xjMLPcpEk3CL6ek3jsGGDnv67kLg
-        6wQMFKuC47xadDuBCCaluspj
-X-Google-Smtp-Source: ABdhPJzKiBbRjTyDR5yzChLw+2o8Qnzvqhbx4YlFIRRMZU1zRnuU71MH9eWlM8kSdLOW1ntVb7tH5Q==
-X-Received: by 2002:a17:902:dacb:b0:141:e931:3b49 with SMTP id q11-20020a170902dacb00b00141e9313b49mr35342773plx.45.1637910342291;
-        Thu, 25 Nov 2021 23:05:42 -0800 (PST)
-Received: from localhost.localdomain ([117.215.117.247])
-        by smtp.gmail.com with ESMTPSA id d12sm4042104pgf.19.2021.11.25.23.05.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 23:05:42 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6/6] ARM: dts: qcom: sdx55-t55: Enable IPA
-Date:   Fri, 26 Nov 2021 12:35:20 +0530
-Message-Id: <20211126070520.28979-7-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
-References: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1637917053; x=1669453053;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=EYjeCTwdteyE7IMR2jhdzrSkl27yNe3saVoMlhUd2e8=;
+  b=hVLC724v546Qy+5ghal9VJUm1Gj38LWEaGRiMBPr8ecZ7NeZxwtyGvB6
+   +aqHVY34b5BQBj0vXXNpql+p8HnWS0gpYEo29ZiGx8R8MPTHay6KcWqp+
+   KzMHZn8iczegtDmhIRdvSUnXSm4RxEfKHE5sR1hQqf1kDxLhGS6g+mRCQ
+   U=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 26 Nov 2021 00:57:33 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Nov 2021 00:57:32 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 26 Nov 2021 00:57:31 -0800
+Received: from [10.216.34.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 26 Nov
+ 2021 00:57:27 -0800
+Subject: Re: [PATCH V3 1/4] dt-bindings: leds: Add pm8350c pmic support
+To:     Trilok Soni <quic_tsoni@quicinc.com>, Pavel Machek <pavel@ucw.cz>,
+        "Rob Herring" <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>
+CC:     <mka@chromium.org>, <swboyd@chromium.org>,
+        <linux-leds@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        satya priya <skakit@codeaurora.org>
+References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1635507893-25490-2-git-send-email-quic_c_skakit@quicinc.com>
+ <7bbc2d70-9b18-7e2f-1121-49d4342341ca@quicinc.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <22ecbdc4-0203-bc68-5c17-3b1b81c0a488@quicinc.com>
+Date:   Fri, 26 Nov 2021 14:27:23 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <7bbc2d70-9b18-7e2f-1121-49d4342341ca@quicinc.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable IP Accelerator (IPA) on Thundercomm T55 board for getting data
-connectivity from modem.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm/boot/dts/qcom-sdx55-t55.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+On 10/29/2021 10:53 PM, Trilok Soni wrote:
+> On 10/29/2021 4:44 AM, Satya Priya wrote:
+>> From: satya priya <skakit@codeaurora.org>
+>>
+>> Add pm8350c pmic pwm support.
+>>
+>> Signed-off-by: satya priya <skakit@codeaurora.org>
+>
+> If you are sending email form quic_c_skakit@quicinc.com then can you 
+> please use the same email for SOB as well?
+>
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55-t55.dts b/arch/arm/boot/dts/qcom-sdx55-t55.dts
-index 2ffcd085904d..7ed8feb99afb 100644
---- a/arch/arm/boot/dts/qcom-sdx55-t55.dts
-+++ b/arch/arm/boot/dts/qcom-sdx55-t55.dts
-@@ -236,6 +236,12 @@ &blsp1_uart3 {
- 	status = "ok";
- };
- 
-+&ipa {
-+	status = "okay";
-+
-+	memory-region = <&ipa_fw_mem>;
-+};
-+
- &qpic_bam {
- 	status = "ok";
- };
--- 
-2.25.1
+Okay, I'll resend the V3 by changing SOB.
 
+
+>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>> Acked-by: Rob Herring <robh@kernel.org>
+>> ---
+>> Changes in V2:
+>>   - No changes.
+>>
+>> Changes in V3:
+>>   - No changes.
+>>
+>>   Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git 
+>> a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml 
+>> b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> index 336bd8e..409a4c7 100644
+>> --- a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+>> @@ -19,6 +19,7 @@ properties:
+>>       enum:
+>>         - qcom,pm8150b-lpg
+>>         - qcom,pm8150l-lpg
+>> +      - qcom,pm8350c-pwm
+>>         - qcom,pm8916-pwm
+>>         - qcom,pm8941-lpg
+>>         - qcom,pm8994-lpg
+>>
