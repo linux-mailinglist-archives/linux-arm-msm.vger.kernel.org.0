@@ -2,88 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B6DE45EA73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 10:34:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 030AF45EA8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 10:41:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234759AbhKZJhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 04:37:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55484 "EHLO
+        id S1376434AbhKZJoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 04:44:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232710AbhKZJfQ (ORCPT
+        with ESMTP id S1376377AbhKZJmK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 04:35:16 -0500
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF24C0613E0;
-        Fri, 26 Nov 2021 01:26:21 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: kholk11)
-        with ESMTPSA id 5C18E1F46742
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=collabora.com; s=mail;
-        t=1637918779; bh=RZZMdLZe+frl5NeinRGjT60ZCs3bDCTm8bd2vGIWYxU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=CMSPNnmkh8LJZdT2NGjAofryIcTSQ9/lo/FTRbyld5ugGLnF6+IOhNXdNEEL2aIoM
-         n2cQTnwp6DsiX7xLZgqi9TYa72PSqU502GYiJUQWJz2yZWY8g1QrVpIIhVzuwQq2vI
-         6eWCGzgGf00rZlyVZ1z3xJ7BTPGfUi9Xns3Td0A9i/01y4QXgIkXc+0AZ6eRawjArj
-         rXGFCmzKd6T01mCYFwXiy2KSDGeIiizDWjRMzqgvUHm3i9sAaD7uBfB4wBcdRek2tv
-         Fp/+Ti49MMnGx7R8MpUplhvp78kM59133FijmDYbfGPPrJpSiKSsMt31WPh8YsFCk1
-         bh6e5KeOTe9UA==
-Subject: Re: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        jami.kettunen@somainline.org
-References: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
- <32cdade5-1487-9182-e939-4d93f8a27ad6@linaro.org>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Message-ID: <2b37dfd3-c3be-2640-56d0-25c9971c4f50@collabora.com>
-Date:   Fri, 26 Nov 2021 10:26:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-MIME-Version: 1.0
-In-Reply-To: <32cdade5-1487-9182-e939-4d93f8a27ad6@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Fri, 26 Nov 2021 04:42:10 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321BAC06139B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 01:35:55 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so9501320pjc.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 01:35:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=YPCZQk3ldefrvQEF5kF6Pda8ed46AtY2WEwLZ32ZdQE=;
+        b=WtOjZrJ8kWWA/IQ4NgDTdNnoPQvTwOGJEmFe7tzDF4AdX9q/wCXVktD6SA0o73hhhK
+         Ages3FPYK+dSDrmrTCNCKS+r+kEUTvNJAMnLCgEYP+a5o1txJ1biFs2Bht1JkgeMlLFC
+         c1F7hNnVJpYnfnRYsNgwKZaKiupTk6ASc0altLy6340h73qSJE9U3bNuUPHXow5nFRan
+         k+mVFsaRRod9TJWK+P6SEMEiwaMe840mO6MHRPDc8aiNSMkeLaUBflqBYZ9t4E+76aN1
+         jMYkyIXWYN4Fmr5Dh9pRfdvib69XCoPH1ShjXpqHFeBmdd/FFoGs8MyXewkcqd+eb/4w
+         1PJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=YPCZQk3ldefrvQEF5kF6Pda8ed46AtY2WEwLZ32ZdQE=;
+        b=nAhCG3ooWvEDmP9Ih3cvPuLQpfxLhIrIGs8VAOqHIE9HWptrXwPDSvf/ImHftOv0gF
+         RwJ9I1Fh2JgqS9mJgRnc14ZrOiedLcHcKnvkWuE5FDrJfKzYiWVzGqGMaEW/9+fdJp7T
+         hfnfMuSzF9ZKcsl9H8BalgaEw4hlYVl+nl3+6la3SWN1btVy739eyYzZMhCYhryzSbSQ
+         nSO7T/nNym1XpBtLCj+3E40bRHlgoUc0/N0tgo5ChBPbkhhSFzkc+uRnv4Cin5fKdH6U
+         lf1uEEp1DELRNRKUjHcwcW7ov6v4N8pQkTHDF3Ntf4bLqfEKGI4ue2sf6KgBhojs+ISf
+         WEPw==
+X-Gm-Message-State: AOAM530UhMOCH8zNPqKzmSX+b2wvKChvjNCXH/Skj9ZfyZlzOh4gBv/C
+        bDTdS6PArwGH8GTg9yhUd2feuw==
+X-Google-Smtp-Source: ABdhPJwaIFkm5Ct+j9PxVOQBfts3QKBod1ClI7mOqt7mHRmi+bme6jGCvPJj762Z361zKL1GGNJsRw==
+X-Received: by 2002:a17:902:da8d:b0:142:4fa:9147 with SMTP id j13-20020a170902da8d00b0014204fa9147mr35915452plx.72.1637919354703;
+        Fri, 26 Nov 2021 01:35:54 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id q11sm6079647pfk.192.2021.11.26.01.35.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Nov 2021 01:35:54 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2 0/2] Add Qualcomm MPM irqchip driver support
+Date:   Fri, 26 Nov 2021 17:35:27 +0800
+Message-Id: <20211126093529.31661-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 26/11/21 01:06, Dmitry Baryshkov ha scritto:
-> On 25/11/2021 18:09, AngeloGioacchino Del Regno wrote:
->> Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
->> DSI host gets initialized earlier, but this caused unability to probe
->> the entire stack of components because they all depend on interrupts
->> coming from the main `mdss` node (mdp5, or dpu1).
->>
->> To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
->> them at msm_pdev_probe() time: this will make sure that we add the
->> required interrupt controller mapping before dsi and/or other components
->> try to initialize, finally satisfying the dependency.
->>
->> While at it, also change the allocation of msm_drm_private to use the
->> devm variant of kzalloc().
->>
->> Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> 
-> Another issue (or a pack of issues):
-> Now the msm_drm_init() is unbalanced with msm_drm_uninit(). Bits of code (putting 
-> the drm dev, removing the IRQ domain, etc) have to be called now from the 
-> msm_pdev_remove() function rather than from the unbind path.
-> 
-> The following changes fix the observed issues here, however additional care should 
-> be taken.
-> 
+It adds DT binding and driver support for Qualcomm MPM (MSM Power Manager)
+interrupt controller.
+
+Changes for v2:
+
+- Update both driver and binding for better alignment with qcom-pdc
+  implementation.  Devices with wake-up capability via MPM_GIC pin
+  will specify MPM pin rather than GIC interrupt number in DT.
 
 
-Hello Dmitry,
+Shawn Guo (2):
+  dt-bindings: interrupt-controller: Add Qualcomm MPM support
+  irqchip: Add Qualcomm MPM controller driver
 
-thanks for the thorough review (and solutions!).
-Are you going to push your changes on top, or should I send a V2?
+ .../interrupt-controller/qcom,mpm.yaml        |  72 +++
+ drivers/irqchip/Kconfig                       |   8 +
+ drivers/irqchip/Makefile                      |   1 +
+ drivers/irqchip/qcom-mpm.c                    | 487 ++++++++++++++++++
+ 4 files changed, 568 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+ create mode 100644 drivers/irqchip/qcom-mpm.c
 
-Cheers,
-- Angelo
+-- 
+2.17.1
+
