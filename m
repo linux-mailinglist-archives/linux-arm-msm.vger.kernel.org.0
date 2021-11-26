@@ -2,151 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2E2445E79C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 06:58:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B69A745E833
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 08:07:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344007AbhKZGBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 01:01:47 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:7444 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1345845AbhKZF7r (ORCPT
+        id S1359089AbhKZHKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 02:10:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235202AbhKZHIk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 00:59:47 -0500
+        Fri, 26 Nov 2021 02:08:40 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F354BC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:27 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id p18so6063082plf.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 23:05:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1637906195; x=1669442195;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=GYNL32o6Hn6Ik+B1j/3VlrFdmKQ3ydSTnL023Sn+wi0=;
-  b=w1jb7n7HET5jPBPK4nzgkW6tCORn89KJ2MB36P73W9Bh7RJ/4BjcxvEv
-   tfNpjqVcT6x+p4iWbxypHjuQFcgE0e0VyxLpe64/rYcQym0WkY3w4iijj
-   zzOKh1DUtxP1uT9c79IjmSR9VusTqZ3K72OCl//ZhjYrvxIFOPhWElP+1
-   Y=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Nov 2021 21:56:34 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2021 21:56:34 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 25 Nov 2021 21:56:33 -0800
-Received: from [10.216.32.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 25 Nov
- 2021 21:56:28 -0800
-Message-ID: <4427fe8d-c96d-d1f7-3ef2-674000b61b93@quicinc.com>
-Date:   Fri, 26 Nov 2021 11:26:24 +0530
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y1ILYtinVwd0mkwf055YK252Zf97GHuWql+Jyy65qoA=;
+        b=lUoqKFA7wF7TBlQnazfz94JjWQSDAeVQaRn1p38Rk9zTKRnnM2nZ3PUZzsAELGlUs0
+         OiZwooQpcVoCY6Lmgi7UcBOpBKuATQaQ80hS8GIMzKWDrwSESbhx0hGTOIu1qGEWnSiI
+         meD0g2CR/T8UUS3kfYoFsPfFShNd2JPYZPy5o8NUneA6A/gsFcz7fWd0vb3Xssyu+iDR
+         8PN2+9IZqRW8vTNMhHxcSWzXMolpf4tgj8+pmx49nFFG2vnSya0Qe3/qCufuzebK/XoB
+         JcWO+Hm9ab3oa6HdtQa4JfcqWQ7oczicxif1LRE73LgpIl/c+XyCr6ZCVWf3+oLxRB0p
+         Dhvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y1ILYtinVwd0mkwf055YK252Zf97GHuWql+Jyy65qoA=;
+        b=OPluUBIDlBRXZ8qUe931cfnWwNVAG8R/KJjKJpc7XjCnx4kpPgR+CQnKiDYX9odjjz
+         jbMmX4YjzbM3W4bldm1zB/NXqTnn04Rpruo2NibIx2HD1nz8LxHLlV5rZ0R9Y92/Qdw0
+         3AruSpZHkFvI+LTpgK7R0mFbWNQIKwKLdpD7vB0SV+DhSyjCfEpYBkDQXfxPmAnXdoQl
+         vWrFe0cT5UmpbV9t9kH/EEk0zQwuoU4iAw9YwuJ6fWlR/O70An5zpu6F7mebIHEPzEsx
+         A2k+H6UsjU75ev+GmE1ZkzUBhRLph3nmphTmnozOBlOU10qiS/bccrN6k92muuFHmQv8
+         EECg==
+X-Gm-Message-State: AOAM5338JH14/kFw+Y50srs767Sbnisx837hd+toE3qpcrBV0b4vv/gL
+        SEF/Hnm4ZcGSCWi8e8vwZ9otanU01a9+
+X-Google-Smtp-Source: ABdhPJx2GKz4dN+VPfHHobP8KobaR+8T+eVckNaOsRxk8EN+f7YYm81qizDfUhCG5V6eE/F+R6PmJg==
+X-Received: by 2002:a17:90a:f00e:: with SMTP id bt14mr13660700pjb.219.1637910327442;
+        Thu, 25 Nov 2021 23:05:27 -0800 (PST)
+Received: from localhost.localdomain ([117.215.117.247])
+        by smtp.gmail.com with ESMTPSA id d12sm4042104pgf.19.2021.11.25.23.05.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Nov 2021 23:05:26 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/6] Add PCIe EP and IPA support for SDX55
+Date:   Fri, 26 Nov 2021 12:35:14 +0530
+Message-Id: <20211126070520.28979-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH] sched/idle: Export cpu_idle_poll_ctrl() symbol
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-CC:     <bjorn.andersson@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <ulf.hansson@linaro.org>, <quic_lsrao@quicinc.com>,
-        <rnayak@codeaurora.org>, Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        "Vincent Guittot" <vincent.guittot@linaro.org>
-References: <1637831676-32737-1-git-send-email-quic_mkshah@quicinc.com>
- <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
- <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
- <0fb74083-e378-e1b4-624b-4f2076f237df@linaro.org>
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-In-Reply-To: <0fb74083-e378-e1b4-624b-4f2076f237df@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Daniel,
+Hi Bjorn,
 
-On 11/25/2021 10:56 PM, Daniel Lezcano wrote:
-> On 25/11/2021 15:13, Maulik Shah wrote:
->> Hi Peter,
->>
->> On 11/25/2021 3:21 PM, Peter Zijlstra wrote:
->>> On Thu, Nov 25, 2021 at 02:44:36PM +0530, Maulik Shah wrote:
->>>> Export cpu_idle_poll_ctrl() so that module drivers can use same.
->>> This does not seem like a really safe interface to expose to the
->>> world.
->> Thanks for the review.
->>
->> Keeping the cpuidle enabled from boot up may delay/increase the boot up
->> time.
->> Below is our use case to force cpuidle to stay in cpu_idle_poll().
->>
->> We keep cpuidle disabled from boot up using "nohlt" option of kernel
->> command line which internally sets cpu_idle_force_poll = 1;
->> and once the device bootup reaches till certain point (for example the
->> android homescreen is up) userspace may notify a
->> vendor module driver which can invoke cpu_idle_poll_ctrl(false); to come
->> out of poll mode.
->> So vendor module driver needs cpu_idle_poll_ctrl() exported symbol.
->>
->> We can not take PM-QoS from driver to prevent deep cpuidle since all the
->> vendor modules are kept in a separate partition and will be loaded only
->> after kernel boot up is done
->> and by this time kernel already starts executing deep cpuidle modes.
->>> Surely the better solution is to rework things to not rely on this. I'm
->>> fairly sure it's not hard to write a cpuidle driver that does much the
->>> same.
->> The other option i think is to pass cpuidle.off=1 in kernel command line
->> and then add enable_cpuidle() in drivers/cpuidle/cpuidle.c
->> something similar as below which can be called by vendor module.
->>
->> void enable_cpuidle(void)
->> {
->>          off = 0;
->> }
->> EXPORT_SYMBOL_GPL(enable_cpuidle);
->>
->> This may be a good option since we have already disable_cpuidle() but
->> not enable_cpuidle().
->>
->> void disable_cpuidle(void)
->> {
->>          off = 1;
->> }
->>
->> Hi Rafael/Daniel, can you please let me know your suggestion on
->> this/similar implementation?
-> Did you try to use the QoS latency? Sounds like it is exactly for this
-> purpose.
->
-> Set it to zero to force cpuidle to choose the shallowest idle state and
-> then INT_MAX to disable the constraint.
->
->   cpu_latency_qos_add_request();
->
-> Hope that helps
->
->    -- Daniel
-The PM-QoS is not helping here since all the vendor drivers are kept in 
-a separate partition
-and will be loaded only after kernel boot up is done and by the time 
-vendor kernel modules are inserted
-takes QoS, kernel/menu governor already starts executing deep cpuidle modes.
+This series adds the devicetree support for PCIe PHY, PCIe EP and IPA on SDX55.
+The PCIe EP is enabled only on FN980 as there is no endpoint support on T55.
 
-kernel start (t0)---------Menu governor loads (t1)----------vendor 
-modules loaded (t2)----------Usespace ready(t3)
-
-Untill (t2), its only core kernel/android kernel which don't have any 
-vendor driver which can take QoS.
-If we take QoS, it can be taken only from point (t2) but CPUs still 
-enter deep idle state between (t1) to (t2).
-
-So to prevent this passing "cpuidle.off=1" or "nohlt" in kernel command 
-line can keep deep cpuidle states disabled from boot up and
-once vendor modules are ready at (t2) or (t3), it can either invoke 
-newly added enable_cpuidle() or cpu_idle_poll_ctrl(false);
-to comeout of polling mode and start executing deep low power modes.
+For IPA, the support is enabled on both FN980 and T55 boards. With this, IPA
+seems to be functional as the modem ready interrupt has been received. But there
+is an issue with some QMI command failing with the mode, so can't do the
+data call atm.
 
 Thanks,
-Maulik
+Mani
+
+Manivannan Sadhasivam (6):
+  ARM: dts: qcom: sdx55: Add support for PCIe PHY
+  ARM: dts: qcom: sdx55-fn980: Enable PCIE0 PHY
+  ARM: dts: qcom: sdx55: Add support for PCIe EP
+  ARM: dts: qcom: sdx55-fn980: Enable PCIe EP
+  ARM: dts: qcom: sdx55-fn980: Enable IPA
+  ARM: dts: qcom: sdx55-t55: Enable IPA
+
+ arch/arm/boot/dts/qcom-sdx55-t55.dts          |  6 ++
+ .../boot/dts/qcom-sdx55-telit-fn980-tlb.dts   | 59 ++++++++++++++
+ arch/arm/boot/dts/qcom-sdx55.dtsi             | 80 +++++++++++++++++++
+ 3 files changed, 145 insertions(+)
+
+-- 
+2.25.1
+
