@@ -2,92 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B84D145E3BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 01:34:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53A4845E3CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 01:51:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243510AbhKZAhn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 Nov 2021 19:37:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50996 "EHLO
+        id S235709AbhKZAyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 Nov 2021 19:54:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239373AbhKZAfm (ORCPT
+        with ESMTP id S238209AbhKZAwh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 Nov 2021 19:35:42 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BCADC06173E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 16:32:30 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id k23so15490914lje.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 16:32:30 -0800 (PST)
+        Thu, 25 Nov 2021 19:52:37 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A749C061746
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 16:49:25 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id t23so15723428oiw.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Nov 2021 16:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9zxxPurAOayOI5k8xCP1c5Dwmp5PuzCyvgFFBlIyeu8=;
-        b=B75/NmrMNxEa1jk+XqTYqmWFQwGwSRzSYogVYVlas6FZgcwF4ZmcgmMS581RJFUKdf
-         PuNfI3MVlc5HeL+JiNRVuwHAxhHS/JVisWGKMNKKesZn5EWv9U73cdZRtmOZU4MFTvQo
-         CG4EmkLn5Rl4n2Ce+xFBibNAYmNywCGTUfJEHcvNfVtqg0JN3mCiP5gxXOqDwxmkfyFf
-         nrg4GCfesAiwVcEvuvqpD/jOskmaa0D/j177ZIiEXrEj5GwyXdyMKxKdU6GI/BUzcsu4
-         YWapH7nmcs4uhfLzG1Q+sbz2zD3Gffach5QwV0sziXBU7JueFZHx79Tr9rtc/eYBfU3j
-         olGQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MJyTUWxQXPHGQkKjZ7k+rOXbAwSNCjxiEhnuPxSPop8=;
+        b=iWRpZ+TQ7Il4rGtnfEJ3Sl1RKOJegwgi4Zh+HGjEeqIrfki/Bqmn/eDHt2E2pZ04KZ
+         j/mwalws8Op8Bj4TShQ/t72Ka+yfrE4S65oxTUKOeQSeK53wj/5Jat4u48jz1hl9BCyA
+         MCpg6TFXBSbISkGhUT0cjW3MaMf88S1ZsTShY0ek6qNZ5N+if6dcVl2dOOaT68jHpUq/
+         ywpejwAF0NbXfX3jf2BN6sMoG36btZHlyxrP9TbuMlQ5cIJf+dOloU2b63Nbn4lL1Ju1
+         kgkUuMwF5EwUHZ1hyBfffdwJP2pmpGIDE6nWTY4D0tT89gthVMY6FXVow6wFXMxtI1/7
+         2aCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9zxxPurAOayOI5k8xCP1c5Dwmp5PuzCyvgFFBlIyeu8=;
-        b=ODb3XAa6KcPoBiTzr01lXAZXOv0R+yy6GLaxPmsHkUOTmf86IKzwz06sKvcympt72x
-         mHRisxcSyLT5YxqgMz2S13vrAaolJlDfjMHFT3hLYy/Mwa1YClZ4fvv2lsB5vMv8u21/
-         AI6QXIIldkb+OTNE/raDfa8/sVU3ZkfLU/GHy9KerQqR8PzYZbx/HgY2tlBlcy0CMfNZ
-         GnJFdIApJR/ltTVL505PlS7Koxdioki+Zp1DpUcxw9yYKcYR2FiT+sVhK6AkL7TXS7kR
-         zgI1hmBqIKX9n/4dO30/R5Up81Ejy9iwl2WcwljCczRiu7aiS0oHIHwH2Hpdp1jGjSkv
-         cuKQ==
-X-Gm-Message-State: AOAM531BIbtSe/K7llY/23RMYh2aZeVjvEsIeAYIGW1a1xuLts3yagxp
-        KtMBrqjK/EPdqlm/pbdf8r4I1g==
-X-Google-Smtp-Source: ABdhPJwtgkGmQFw8MHypVgwxcPXSz6OPwevU2ZFCZ5PdXKjzvDST7ym6kYJ7dKWaImbzOFWxheVuBg==
-X-Received: by 2002:a2e:984f:: with SMTP id e15mr27903691ljj.427.1637886748722;
-        Thu, 25 Nov 2021 16:32:28 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k13sm417812lfo.300.2021.11.25.16.32.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Nov 2021 16:32:28 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] drm/ bridge: tc358762: drop connector field
-Date:   Fri, 26 Nov 2021 03:32:27 +0300
-Message-Id: <20211126003227.1031347-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211126003227.1031347-1-dmitry.baryshkov@linaro.org>
-References: <20211126003227.1031347-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MJyTUWxQXPHGQkKjZ7k+rOXbAwSNCjxiEhnuPxSPop8=;
+        b=3llR7DNxImwsLbL+0SA7RtQpq4GjSgn13oFgpoIhVt+sahOIAtOB72FhijhTL2EvHb
+         vyR/Lj6UDJHrbZayj4bNnqewuPpxlC94FzTpnisuhnmyjtFDVtimvHKaJ6smPfbS+EAz
+         UdfpbD3LFmMJ1oh66bBJgAQvyqGGZKb/bKbiCDbIlhsSroaDvcv6P6At14+ckKvKackC
+         eAD51eZNFDfVjyS+xDTIIXgjQhSXFAEskQZGhtVyuQGFCw/6zi2qnM2wzCTD/0Yq7N5V
+         5I0HPPvH6g9kOlaaLZO7Qu0DffHfbG2nRRYrXgKE6BHtIAeowbEUqymXkyzORshSAgkx
+         Q9Dw==
+X-Gm-Message-State: AOAM532IuK8YO1lS08b3qTlz9G2Wn8lTF/BAw/yZCvoMd8YEoBYSECVx
+        VxS1UT1qOhwxg5XBgJaGiXYOAWiarz7Xadr+51TgpA==
+X-Google-Smtp-Source: ABdhPJyI8EnbD3+lbR5qtmfWX7hsHJIxqPMhsn70rie3MdiW7kXMWthnIDliSLATRM4YMvnM1z4kG5OjM6M8yD/QL9c=
+X-Received: by 2002:a05:6808:60e:: with SMTP id y14mr19684713oih.162.1637887764514;
+ Thu, 25 Nov 2021 16:49:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211125213451.62010-1-dominikkobinski314@gmail.com> <20211125215310.62371-1-dominikkobinski314@gmail.com>
+In-Reply-To: <20211125215310.62371-1-dominikkobinski314@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 26 Nov 2021 01:49:12 +0100
+Message-ID: <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
+Subject: Re: [PATCH v2,1/5] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+To:     Dominik Kobinski <dominikkobinski314@gmail.com>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The tc358762.connector field is unused. Remove it to save space.
+On Thu, Nov 25, 2021 at 10:53 PM Dominik Kobinski
+<dominikkobinski314@gmail.com> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/bridge/tc358762.c | 1 -
- 1 file changed, 1 deletion(-)
+> Add support for pm8226 SPMI GPIOs. The PMIC features
+> 8 GPIOs, with no holes inbetween.
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Suggested-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+> Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
 
-diff --git a/drivers/gpu/drm/bridge/tc358762.c b/drivers/gpu/drm/bridge/tc358762.c
-index ebdf771a1e49..930e19dfb329 100644
---- a/drivers/gpu/drm/bridge/tc358762.c
-+++ b/drivers/gpu/drm/bridge/tc358762.c
-@@ -61,7 +61,6 @@
- struct tc358762 {
- 	struct device *dev;
- 	struct drm_bridge bridge;
--	struct drm_connector connector;
- 	struct regulator *regulator;
- 	struct drm_bridge *panel_bridge;
- 	bool enabled;
--- 
-2.33.0
+I applied this to the pinctrl tree.
 
+Is there anything else I should be applying?
+
+Yours,
+Linus Walleij
