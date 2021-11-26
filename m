@@ -2,146 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BC3F45ED84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 13:08:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80B1345EE31
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 13:41:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377493AbhKZMLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 07:11:19 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:29149 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349967AbhKZMJQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 07:09:16 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637928364; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=c6IyD/BeAihFyUj2C1cqxjSwDHUWvq3HRlptCU7BuGQ=; b=wxD/mTuewIsrADJ/p4bY7iUwhk/OemJwieCHLDsPk2FBfsrI80talKtgA7kzCHzv3wx1YHm5
- 0dlM/veJ0FTVXFL8droyPF85IIL9G0VE+8H1dWEczZDG0/uu519g4XCdfVVLVhaf1nK6qEK0
- WqaVuyGQIigvEwR6a/cCWJNIAsw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61a0cdabe7d68470af94ad42 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Nov 2021 12:06:03
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E24D2C4360D; Fri, 26 Nov 2021 12:06:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 236BAC4360C;
-        Fri, 26 Nov 2021 12:05:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 236BAC4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: [PATCH v6 10/10] ASoC: qcom: SC7280: Update config for building codec dma drivers
-Date:   Fri, 26 Nov 2021 17:34:42 +0530
-Message-Id: <1637928282-2819-11-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
-References: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
+        id S1377539AbhKZMor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 07:44:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234618AbhKZMmq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 26 Nov 2021 07:42:46 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C971C0613B7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 04:05:50 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id l22so23731802lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 04:05:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ad78gPgRANP0ns5h2SPcFEcBt7/4TrzbtwXXFw7gKwU=;
+        b=pHpWqFGvgPJmQFlX9VUZ++RDpjJP9i5hE+V+s/IbIXYSrTi/vO0HggU7ZnYlE1Ffei
+         yV0CQIFdRab9Xx2grDg/OkKrTRaujb4xZzyCm43V5yn5uhl2tt/H4fw266u0JAokjxwN
+         4C/19nfVtPPo07HMKsm2AVAPOhtmjjsrk50zKob893/JTQyI+xoe/9gRwNugRGCuW8c6
+         X+K4R88JxB+ER0CEtyMiQX+QcLXWL7B9emgAqJWjjehQw1cfArhbD3pOBsGuUG4XygF4
+         nmMf/KfsrxH0BecGQhFwL2EGncsI0XeBnCPfAfSEk3FeYQIu8SDhhRsTNYdcBKlpk3Wm
+         Xdsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ad78gPgRANP0ns5h2SPcFEcBt7/4TrzbtwXXFw7gKwU=;
+        b=13ucpVZ81vcfnTpl8IhCKI/njFcfNq40+jyndL3hiVxmYiAcO0X1iVkJL+kvbB0+W3
+         r6GizpiTnZwt2x0kop/GDzgdnUGURpTpf9Lx9t80xv2JchF2CFj82Fc6zch3TqjmvX7c
+         fduwWDYfgbbmBlCZ4TlV0qQrg45TJ+kbLXxZWx89FzR6zdHeUUiVGMEDrM+JwKUn+0XO
+         NUm1sjYqA57DyPK8R1yydDds42zHYHn6BMJcHoOlaIvd+ubltgn3t8u+9mGk6iLXyhCi
+         QhcX1DEAbJ6TeY5E/nVIzCuwYsJy7DtRhoPRHH/elUyJNkUy2mtGw9zKNBoEinLQZSz+
+         5wmw==
+X-Gm-Message-State: AOAM5307UC/GOhHTzJbIyMY1Tn9zsZf8xg1aCZkEOYWvdNsX0htLG8WW
+        LW9eQlKtOT9dqMqMSBLIqdswKdJnl/LXGl/iBBIfrQ==
+X-Google-Smtp-Source: ABdhPJzRr4kRWZmYIZbavgZi9Awdb01BWO8GajoIKLrUXdV645jcFnKCGjJD0JwTJL+PeSToTWRK6+zBAp1e2itZKCo=
+X-Received: by 2002:ac2:5607:: with SMTP id v7mr29278692lfd.71.1637928348376;
+ Fri, 26 Nov 2021 04:05:48 -0800 (PST)
+MIME-Version: 1.0
+References: <1637831676-32737-1-git-send-email-quic_mkshah@quicinc.com>
+ <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net> <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
+In-Reply-To: <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 26 Nov 2021 13:05:12 +0100
+Message-ID: <CAPDyKFo8Z+G-14t-o-HiHf1_xuexBAGo3eumca-0QO8eTqNpsw@mail.gmail.com>
+Subject: Re: [PATCH] sched/idle: Export cpu_idle_poll_ctrl() symbol
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     Peter Zijlstra <peterz@infradead.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_lsrao@quicinc.com, rnayak@codeaurora.org,
+        Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add configuration for building SC7280 audio codec dma drivers.
+On Thu, 25 Nov 2021 at 15:13, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>
+> Hi Peter,
+>
+> On 11/25/2021 3:21 PM, Peter Zijlstra wrote:
+> > On Thu, Nov 25, 2021 at 02:44:36PM +0530, Maulik Shah wrote:
+> >> Export cpu_idle_poll_ctrl() so that module drivers can use same.
+> > This does not seem like a really safe interface to expose to the
+> > world.
+>
+> Thanks for the review.
+>
+> Keeping the cpuidle enabled from boot up may delay/increase the boot up
+> time.
+> Below is our use case to force cpuidle to stay in cpu_idle_poll().
+>
+> We keep cpuidle disabled from boot up using "nohlt" option of kernel
+> command line which internally sets cpu_idle_force_poll = 1;
+> and once the device bootup reaches till certain point (for example the
+> android homescreen is up) userspace may notify a
+> vendor module driver which can invoke cpu_idle_poll_ctrl(false); to come
+> out of poll mode.
+> So vendor module driver needs cpu_idle_poll_ctrl() exported symbol.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
----
-This patch set depends on:
-    -- https://patchwork.kernel.org/project/alsa-devel/list/?series=582321
+Waiting for the homescreen can be considered as rather late, from the
+kernel boot progress point of view.
 
- sound/soc/qcom/Kconfig  | 13 +++++++++++++
- sound/soc/qcom/Makefile |  4 ++++
- 2 files changed, 17 insertions(+)
+That said, I am wondering if a similar improvement can be achieved by
+just allowing WFI (thus no deeper idle states) until homescreen? If
+so, that can be quite easily achieved by modularizing the cpuidle-psci
+driver.
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 530d01f..b46a2e7 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -20,6 +20,10 @@ config SND_SOC_LPASS_PLATFORM
- 	tristate
- 	select REGMAP_MMIO
- 
-+config SND_SOC_LPASS_CDC_DMA
-+	tristate
-+	select REGMAP_MMIO
-+
- config SND_SOC_LPASS_IPQ806X
- 	tristate
- 	select SND_SOC_LPASS_CPU
-@@ -36,6 +40,13 @@ config SND_SOC_LPASS_SC7180
- 	select SND_SOC_LPASS_PLATFORM
- 	select SND_SOC_LPASS_HDMI
- 
-+config SND_SOC_LPASS_SC7280
-+	tristate
-+	select SND_SOC_LPASS_CPU
-+	select SND_SOC_LPASS_PLATFORM
-+	select SND_SOC_LPASS_HDMI
-+	select SND_SOC_LPASS_CDC_DMA
-+
- config SND_SOC_STORM
- 	tristate "ASoC I2S support for Storm boards"
- 	select SND_SOC_LPASS_IPQ806X
-@@ -156,7 +167,9 @@ config SND_SOC_SC7280
- 	tristate "SoC Machine driver for SC7280 boards"
- 	depends on I2C && SOUNDWIRE || COMPILE_TEST
- 	select SND_SOC_QCOM_COMMON
-+	select SND_SOC_LPASS_SC7280
- 	select SND_SOC_MAX98357A
-+	select SND_SOC_WCD938X
- 	select SND_SOC_LPASS_RX_MACRO
- 	select SND_SOC_LPASS_TX_MACRO
- 	help
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 625aec6..8b7b876 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -1,18 +1,22 @@
- # SPDX-License-Identifier: GPL-2.0
- # Platform
- snd-soc-lpass-cpu-objs := lpass-cpu.o
-+snd-soc-lpass-cdc-dma-objs := lpass-cdc-dma.o
- snd-soc-lpass-hdmi-objs := lpass-hdmi.o
- snd-soc-lpass-platform-objs := lpass-platform.o
- snd-soc-lpass-ipq806x-objs := lpass-ipq806x.o
- snd-soc-lpass-apq8016-objs := lpass-apq8016.o
- snd-soc-lpass-sc7180-objs := lpass-sc7180.o
-+snd-soc-lpass-sc7280-objs := lpass-sc7280.o
- 
- obj-$(CONFIG_SND_SOC_LPASS_CPU) += snd-soc-lpass-cpu.o
-+obj-$(CONFIG_SND_SOC_LPASS_CDC_DMA) += snd-soc-lpass-cdc-dma.o
- obj-$(CONFIG_SND_SOC_LPASS_HDMI) += snd-soc-lpass-hdmi.o
- obj-$(CONFIG_SND_SOC_LPASS_PLATFORM) += snd-soc-lpass-platform.o
- obj-$(CONFIG_SND_SOC_LPASS_IPQ806X) += snd-soc-lpass-ipq806x.o
- obj-$(CONFIG_SND_SOC_LPASS_APQ8016) += snd-soc-lpass-apq8016.o
- obj-$(CONFIG_SND_SOC_LPASS_SC7180) += snd-soc-lpass-sc7180.o
-+obj-$(CONFIG_SND_SOC_LPASS_SC7280) += snd-soc-lpass-sc7280.o
- 
- # Machine
- snd-soc-storm-objs := storm.o
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+[...]
 
+Kind regards
+Uffe
