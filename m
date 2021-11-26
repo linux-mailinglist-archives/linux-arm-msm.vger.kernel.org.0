@@ -2,74 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E15BE45F295
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 18:03:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E24C145F360
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 19:02:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235450AbhKZRGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 12:06:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40466 "EHLO
+        id S233973AbhKZSFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 13:05:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhKZREd (ORCPT
+        with ESMTP id S234587AbhKZSDx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 12:04:33 -0500
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCA4C07E5F6;
-        Fri, 26 Nov 2021 08:37:34 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id b1so25489502lfs.13;
-        Fri, 26 Nov 2021 08:37:34 -0800 (PST)
+        Fri, 26 Nov 2021 13:03:53 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3E9C0613B6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 09:40:44 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id i6so20012390uae.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 09:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5Kh+r+enE/aDMEcIg5E7aidz6CHPbgPNpbPDxwc6DgE=;
-        b=nuOBw0N7ESsRZ8Kle97wVZLlQu5aQBukVf/f3QaReGPkqwkHgtMY7p4eOcM5+i8XSn
-         1zq5QczRWSGt8aK4RwWE5pEcgdnliAyGZ5N6R2p1aBnOLWpvKVxyumHzclidwN6LdML2
-         ZJ3sq4ftv/ypq0M2epY2umP6kFY2drnTmDeiUsitz7BJt4o3AbPVpp9FAlgvrJViG7n8
-         4Ne14u0MQ7M6fRkRA8f5s6F4cPD1B6BNPf6PCKYodipNwgpO3dMbij/5dXhqtzVPQji3
-         ksL6/0rHO+Kgdyig82NsV7TMB9Qwg7u2qFMoHGkqHRuKtCKxizqOXiPO9rk5pjMLrCni
-         uoSw==
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=twnDFrQ60XiEjgZw9pbSusJAhJbARqlv6OmREBcySmg=;
+        b=LYXz8np6ZoPAdaUH23nS2YBYUkm2Tz4AjkC8ZAj1unjrj32NsLn/RrlA8E/cPQgNbo
+         onQSok4zjoC4grwr3pUUc/kxMng7TUqSOabLtCsuTfrmSfsR4F26lkMUp5KdxUeVn6Q6
+         I0dutm/fs1ZkqbH2dv0pL5MeLoGFze8fkiiV6ij/7ZXAfiVtl/6bEfN0IufovK9H0Oxz
+         TG+oG+3bHM95UMNByLwbM0wxvfmgrz60gAVS3jTXYLCMUfRldcI5zjA5HYqFwGbdS4U3
+         P6ES8rOs7wlhpjKFEFy24z9WkkafdvrgeXrSKmCcw3eZcA7OKLtwXFD4f+njnyLY22TL
+         xcGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5Kh+r+enE/aDMEcIg5E7aidz6CHPbgPNpbPDxwc6DgE=;
-        b=2sknrVBYxNrTtQwrbfDro4Zk9pxJsF6PleePbx+kVq37RFH5Fi4uCX+UC+G/8KCmAM
-         xcVFlyPSQCU7mIby9miEx7/e1rV5RbsmE1+MFij2Y0OBffF/y2QbHA4TxeHwWlv03l23
-         paQSCWE2ebFhzXgBqHG1iwydRo46y7TCqp5nkkruyN6/iEcXJTbg5uVPXDj1oI0h84hf
-         S5Zj9DALDftSriBrof8iMC6BgGWIHqon30ESefXPT5QYmQR8vZ0XAveH0g8eDANoxGOs
-         sexYfLylh7jEDaYr9l4ERJF0/40zWewH43bpzt1K5//fVLccSuEyL9SOWMMYT7HJt6B8
-         iiTg==
-X-Gm-Message-State: AOAM531ujeLThwPOzqrAs+opTkXbCgIUFQecr8AxRpPNDLftund5DimL
-        6tHECPZzcmhtcSGdE7AAWX8=
-X-Google-Smtp-Source: ABdhPJyUXNOan4K2/n26Y8rT6nUMdDqi7PPMlqzjw3ahkpFZkcIvq40b55PsRAVMeykP6zfjqvU4FA==
-X-Received: by 2002:a05:6512:b14:: with SMTP id w20mr30228832lfu.164.1637944653083;
-        Fri, 26 Nov 2021 08:37:33 -0800 (PST)
-Received: from localhost.localdomain (public-gprs174427.centertel.pl. [46.134.20.156])
-        by smtp.googlemail.com with ESMTPSA id p5sm540608lfa.251.2021.11.26.08.37.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Nov 2021 08:37:32 -0800 (PST)
-From:   Dominik Kobinski <dominikkobinski314@gmail.com>
-To:     linus.walleij@linaro.org
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        dominikkobinski314@gmail.com, ivo.ivanov.ivanov1@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dominik Kobinski <dkobinski314@gmail.com>
-Subject: Re: [PATCH v2,1/5] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility 
-Date:   Fri, 26 Nov 2021 17:36:57 +0100
-Message-Id: <20211126163657.65471-1-dominikkobinski314@gmail.com>
-X-Mailer: git-send-email 2.34.0
-In-Reply-To: <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
-References: <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=twnDFrQ60XiEjgZw9pbSusJAhJbARqlv6OmREBcySmg=;
+        b=n1Dx9BBiCeDlCtCsX3751B+fFY5Xb2NBydat7UMldnuxlDZrl22yQVtRoZYJAFMP9b
+         BWxo5PbD5WL6wJkdH2R+N6YprKzZYAmWVZaktwAufu5FUzJBQj11bl6Rc99YMjS0gi6A
+         gKE7ZhshXfO3VWozQH58jvwlS2qno3V6mxbmSDiDu2fpJE14XnE+Ml5gh3VcnUmAWTDq
+         5dZUEUyNqVwU0N2eILCnjHxZ0pgxSd1yxN6WR7Fhpu1JywPFZ7psvZzcidAeJ8JeXojx
+         CL1h6bT0pAsqyoXQ8eHfyNjdC573P5mp2X9UlmBL+rxswHKFg7mrxwrlGTihLgsqlye8
+         FJ0w==
+X-Gm-Message-State: AOAM53185RMGh5VED8Ph2Ag0zGAYuyxSL6h5oO4UJCg4NSy07BgY0TP7
+        KooyRyeFpRlaRM0UfRXkDtrOK2/SL8SlqGU5Dr4=
+X-Google-Smtp-Source: ABdhPJxjZXVZAsgSu95UEvBb0ibvs27cgDF4j4m+sxmgGoY5MnJE2g43tzdmoe5BpVE+T9aDYwKr86OROgsFYSW/rQI=
+X-Received: by 2002:a67:1ac1:: with SMTP id a184mr18222916vsa.22.1637948443357;
+ Fri, 26 Nov 2021 09:40:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a59:d94a:0:b0:260:20d5:e9c8 with HTTP; Fri, 26 Nov 2021
+ 09:40:42 -0800 (PST)
+Reply-To: mrsroseraya00@gmail.com
+From:   "Mrs. Rose Raya" <mrsmariahassan01@gmail.com>
+Date:   Fri, 26 Nov 2021 18:40:42 +0100
+Message-ID: <CAJpue5FesE556v8hndvdSg2aOT6BkuDFV2MW-CiCTEu4ZAmXbQ@mail.gmail.com>
+Subject: I NEED YOUR URGENT REPLY
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dominik Kobinski <dkobinski314@gmail.com>
+Dearest One.
 
-Thank you for applying the patch. I believe the second one in this series (https://patchwork.kernel.org/project/linux-arm-msm/patch/20211125215626.62447-1-dominikkobinski314@gmail.com/) should be also applied to the pinctrl tree.
+I know that this message might come to you as a surprise because we
+don't  know each other. I have a Very  important request that made me
+to contact  you; I was diagnosed with ovarian cancer disease which
+doctors have confirmed to me that I have just few days to leave, Now
+that I=E2=80=99m ending the  race like this without any family  members and=
+ no
+child,
 
-Regards,
-Dominik Kobinski
+
+I=E2=80=99m a business woman from Indonesia dealing with gold exportation h=
+ere
+in  the Republic of Burkina Faso. I have  decided to hand over the sum
+of ($10.5  Million Dollar) in my account to you for the help of
+orphanage homes in your country to fulfill my wish on earth. You will
+take 50% of the money  and share the rest to orphanage homes,  I shall
+give you more details with the contact of the bank for you to contact
+them when you reply to me with the answer below.
+
+1. YOUR FULL NAME:
+2. YOUR AGE:
+3. SEX:
+4. NATIONALITY:
+5. COUNTRY OF RESIDENCE:
+6. TELEPHONE NUMBER:
+7. YOUR MARITAL STATUS:
+8. YOUR OCCUPATION:
+9. SEND TO ME YOUR PICTURE:
+10. YOU HAVE TO ASSURE ME YOU WILL ACT AS I HAVE INSTRUCTED YOU IF THE
+MONEY GETS TO YOUR BANK ACCOUNT.
+Yours Faithfully,
+Mrs. Rose Raya
