@@ -2,933 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4067245EC80
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 12:22:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCF3B45ED2B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Nov 2021 12:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240725AbhKZL0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 06:26:08 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:30307 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235375AbhKZLYI (ORCPT
+        id S1377151AbhKZMAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 07:00:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345594AbhKZL6Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 06:24:08 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1637925655; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=PCj6m3oPQysDBzr9wG9dfn9SrRsgZsQc/BypmpkCZaA=; b=Lxxl0T69vkk+W1h0+QhpbyOLcIAryPdBQIrQx9g/OaOfj2jc+x8/PmHysZeG1Ps9Fhf7jAa5
- b1eQV9AUE6ksCdBsZtHU9Cb0zkWhxgPUj0NpgdPRKTGUNA2VAjSgAaD0kqTHYoHfzUiEonUX
- 9cQ4mogVgXOr2wAgxhzOBTHoPZ4=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n08.prod.us-east-1.postgun.com with SMTP id
- 61a0c316df12ba53c40ac240 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 26 Nov 2021 11:20:54
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D5625C4360C; Fri, 26 Nov 2021 11:20:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04925C4360C;
-        Fri, 26 Nov 2021 11:20:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 04925C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v5 06/10] ASoC: qcom: Add support for codec dma driver
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1637581599-24120-1-git-send-email-srivasam@codeaurora.org>
- <1637581599-24120-2-git-send-email-srivasam@codeaurora.org>
- <3900e628-4baf-ddc9-e033-adc07fdf66c1@linaro.org>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <46e95033-e0bd-2326-8c63-860a744878ec@codeaurora.org>
-Date:   Fri, 26 Nov 2021 16:50:41 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Fri, 26 Nov 2021 06:58:25 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C1C7C08EA4B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 03:22:24 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id j3so17957906wrp.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 03:22:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CH/BjpiBpZ/vu5u2YjAKcdVgEIZZP8RkoskTORrwc7k=;
+        b=W901Nj+xtSh1aiNfDE0AMKIOsC0ArWr80z7PJf34QwtvFBSITUMZJSslyGMx8aPwXY
+         HQfI4jtvf0PCFqM897iRWJdpPQ4XWSloTbGLYMFzxUZ1vcTn+L80wzKw8BdLfc9LiV2u
+         ewffAgUhVp48ltm6XiHTIVmMc8d95+6AmyqXpms7XlCf84xW7mXJD73hqyq8UNT4mNj7
+         uURucMcPRvMlkXf0FdFQMUzDogO2xGYu4s1rxMYMwUJTwJpTiRMkFs05fq0WULaP7Bx8
+         xRppUITefkkT5MNMHS60YpOb/6vEI3s1VHGY7meb8dAbqBvHy0YJsuxTad9hr1B6ULlc
+         rZOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CH/BjpiBpZ/vu5u2YjAKcdVgEIZZP8RkoskTORrwc7k=;
+        b=C0+iWLD568VHMLVKRM78HGTWfRzXG2D2WtE36a1gdkTMgCQbr3n3aFYWDOysjdVY93
+         8YcmD/SIXvb7Btm/vuPgrQu/DhWNzb+1LawmzKxictF5V7nqLWemmAdF72QOTSJf+FQq
+         qTlO9yrMsrRehIa9xIEfSbYqIGlqrp9kS34I7Ml4mabn1RRVrJibqookT8FFWhgBoTtv
+         kasZrbu5BiVmoVzMFMGYa4nCtqj4UivzEvqjPZ7SQ5rBIsDNHA63QP5jI5/h6SmD5q/E
+         561ss2mZxcFYqqLWPQEHkzyJBgzYt0f/gg1WtVhTPEk/L5NrEacl4WxtDc73kM/g63kP
+         pH1g==
+X-Gm-Message-State: AOAM5326XK3lldGbO9IvuFjBlPnVLohZb2k96o+LLdhPgXNksCHOXHyd
+        W9Qmamvb04x5hCPHACh5ig4O1Q==
+X-Google-Smtp-Source: ABdhPJybvJVDj9O9DJ2NwSgzjlWPPDKmXV88NtvDPWzA4oqWQr33oPSWf1DuSfpq0COI7AIp00Woiw==
+X-Received: by 2002:adf:e38d:: with SMTP id e13mr12839437wrm.402.1637925742716;
+        Fri, 26 Nov 2021 03:22:22 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:47ed:5339:c53f:6a8? ([2a01:e34:ed2f:f020:47ed:5339:c53f:6a8])
+        by smtp.googlemail.com with ESMTPSA id l11sm5101510wrp.61.2021.11.26.03.22.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Nov 2021 03:22:21 -0800 (PST)
+Subject: Re: [PATCH] sched/idle: Export cpu_idle_poll_ctrl() symbol
+To:     Maulik Shah <quic_mkshah@quicinc.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ulf.hansson@linaro.org, quic_lsrao@quicinc.com,
+        rnayak@codeaurora.org, Ingo Molnar <mingo@redhat.com>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>
+References: <1637831676-32737-1-git-send-email-quic_mkshah@quicinc.com>
+ <YZ9ctgCBYJEEjuwt@hirez.programming.kicks-ass.net>
+ <687d97b6-347a-92c0-34ba-00331dfb6c82@quicinc.com>
+ <0fb74083-e378-e1b4-624b-4f2076f237df@linaro.org>
+ <4427fe8d-c96d-d1f7-3ef2-674000b61b93@quicinc.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <444f74f7-43cc-fc48-7417-ccbcf8e176c8@linaro.org>
+Date:   Fri, 26 Nov 2021 12:22:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <3900e628-4baf-ddc9-e033-adc07fdf66c1@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <4427fe8d-c96d-d1f7-3ef2-674000b61b93@quicinc.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 26/11/2021 06:56, Maulik Shah wrote:
+> Hi Daniel,
+> 
+> On 11/25/2021 10:56 PM, Daniel Lezcano wrote:
+>> On 25/11/2021 15:13, Maulik Shah wrote:
+>>> Hi Peter,
+>>>
+>>> On 11/25/2021 3:21 PM, Peter Zijlstra wrote:
+>>>> On Thu, Nov 25, 2021 at 02:44:36PM +0530, Maulik Shah wrote:
+>>>>> Export cpu_idle_poll_ctrl() so that module drivers can use same.
+>>>> This does not seem like a really safe interface to expose to the
+>>>> world.
+>>> Thanks for the review.
+>>>
+>>> Keeping the cpuidle enabled from boot up may delay/increase the boot up
+>>> time.
+>>> Below is our use case to force cpuidle to stay in cpu_idle_poll().
+>>>
+>>> We keep cpuidle disabled from boot up using "nohlt" option of kernel
+>>> command line which internally sets cpu_idle_force_poll = 1;
+>>> and once the device bootup reaches till certain point (for example the
+>>> android homescreen is up) userspace may notify a
+>>> vendor module driver which can invoke cpu_idle_poll_ctrl(false); to come
+>>> out of poll mode.
+>>> So vendor module driver needs cpu_idle_poll_ctrl() exported symbol.
+>>>
+>>> We can not take PM-QoS from driver to prevent deep cpuidle since all the
+>>> vendor modules are kept in a separate partition and will be loaded only
+>>> after kernel boot up is done
+>>> and by this time kernel already starts executing deep cpuidle modes.
+>>>> Surely the better solution is to rework things to not rely on this. I'm
+>>>> fairly sure it's not hard to write a cpuidle driver that does much the
+>>>> same.
+>>> The other option i think is to pass cpuidle.off=1 in kernel command line
+>>> and then add enable_cpuidle() in drivers/cpuidle/cpuidle.c
+>>> something similar as below which can be called by vendor module.
+>>>
+>>> void enable_cpuidle(void)
+>>> {
+>>>          off = 0;
+>>> }
+>>> EXPORT_SYMBOL_GPL(enable_cpuidle);
+>>>
+>>> This may be a good option since we have already disable_cpuidle() but
+>>> not enable_cpuidle().
+>>>
+>>> void disable_cpuidle(void)
+>>> {
+>>>          off = 1;
+>>> }
+>>>
+>>> Hi Rafael/Daniel, can you please let me know your suggestion on
+>>> this/similar implementation?
+>> Did you try to use the QoS latency? Sounds like it is exactly for this
+>> purpose.
+>>
+>> Set it to zero to force cpuidle to choose the shallowest idle state and
+>> then INT_MAX to disable the constraint.
+>>
+>>   cpu_latency_qos_add_request();
+>>
+>> Hope that helps
+>>
+>>    -- Daniel
+> The PM-QoS is not helping here since all the vendor drivers are kept in
+> a separate partition
+> and will be loaded only after kernel boot up is done and by the time
+> vendor kernel modules are inserted
+> takes QoS, kernel/menu governor already starts executing deep cpuidle
+> modes.
+> 
+> kernel start (t0)---------Menu governor loads (t1)----------vendor
+> modules loaded (t2)----------Usespace ready(t3)
+> 
+> Untill (t2), its only core kernel/android kernel which don't have any
+> vendor driver which can take QoS.
+> If we take QoS, it can be taken only from point (t2) but CPUs still
+> enter deep idle state between (t1) to (t2).
+> 
+> So to prevent this passing "cpuidle.off=1" or "nohlt" in kernel command
+> line can keep deep cpuidle states disabled from boot up and
+> once vendor modules are ready at (t2) or (t3), it can either invoke
+> newly added enable_cpuidle() or cpu_idle_poll_ctrl(false);
+> to comeout of polling mode and start executing deep low power modes.
 
-On 11/23/2021 5:58 PM, Srinivas Kandagatla wrote:
-Thanks for valuable time Srini!!!
->
-> On 22/11/2021 11:46, Srinivasa Rao Mandadapu wrote:
->> Upadate lpass cpu and platform driver to support audio over codec dma
->> in ADSP bypass use case.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> ---
->>   sound/soc/qcom/common.c         |  39 ++++
->>   sound/soc/qcom/common.h         |   1 +
->
-> common.c is mostly intended to be used by machine drivers, so I would 
-> suggest that you move it to lpass.h and make is_cdc_dma_port a static 
-> inlnie function.
->
-Okay. will move to lpass.h
->>   sound/soc/qcom/lpass-cpu.c      |  60 +++++-
->>   sound/soc/qcom/lpass-platform.c | 424 
->> ++++++++++++++++++++++++++++++++++++++--
->>   4 files changed, 508 insertions(+), 16 deletions(-)
->>
->> diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
->> index 09af007..26d3752 100644
->> --- a/sound/soc/qcom/common.c
->> +++ b/sound/soc/qcom/common.c
->> @@ -4,6 +4,7 @@
->>     #include <linux/module.h>
->>   #include "common.h"
->> +#include "lpass.h"
->>     int qcom_snd_parse_of(struct snd_soc_card *card)
->>   {
->> @@ -169,4 +170,42 @@ int qcom_snd_parse_of(struct snd_soc_card *card)
->>   }
->>   EXPORT_SYMBOL(qcom_snd_parse_of);
->>   +bool is_cdc_dma_port(int dai_id)
->> +{
->> +    switch (dai_id) {
->> +    case LPASS_CDC_DMA_RX0:
->> +    case LPASS_CDC_DMA_RX1:
->> +    case LPASS_CDC_DMA_RX2:
->> +    case LPASS_CDC_DMA_RX3:
->> +    case LPASS_CDC_DMA_RX4:
->> +    case LPASS_CDC_DMA_RX5:
->> +    case LPASS_CDC_DMA_RX6:
->> +    case LPASS_CDC_DMA_RX7:
->> +    case LPASS_CDC_DMA_RX8:
->> +    case LPASS_CDC_DMA_RX9:
->> +    case LPASS_CDC_DMA_TX0:
->> +    case LPASS_CDC_DMA_TX1:
->> +    case LPASS_CDC_DMA_TX2:
->> +    case LPASS_CDC_DMA_TX3:
->> +    case LPASS_CDC_DMA_TX4:
->> +    case LPASS_CDC_DMA_TX5:
->> +    case LPASS_CDC_DMA_TX6:
->> +    case LPASS_CDC_DMA_TX7:
->> +    case LPASS_CDC_DMA_TX8:
->> +    case LPASS_CDC_DMA_VA_TX0:
->> +    case LPASS_CDC_DMA_VA_TX1:
->> +    case LPASS_CDC_DMA_VA_TX2:
->> +    case LPASS_CDC_DMA_VA_TX3:
->> +    case LPASS_CDC_DMA_VA_TX4:
->> +    case LPASS_CDC_DMA_VA_TX5:
->> +    case LPASS_CDC_DMA_VA_TX6:
->> +    case LPASS_CDC_DMA_VA_TX7:
->> +    case LPASS_CDC_DMA_VA_TX8:
->> +        return true;
->> +    default:
->> +        return false;
->> +    }
->> +}
->> +EXPORT_SYMBOL(is_cdc_dma_port);
->> +
->>   MODULE_LICENSE("GPL v2");
->> diff --git a/sound/soc/qcom/common.h b/sound/soc/qcom/common.h
->> index f05c05b..a8fea4c 100644
->> --- a/sound/soc/qcom/common.h
->> +++ b/sound/soc/qcom/common.h
->> @@ -7,5 +7,6 @@
->>   #include <sound/soc.h>
->>     int qcom_snd_parse_of(struct snd_soc_card *card);
->> +bool is_cdc_dma_port(int dai_id);
->>     #endif
->> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
->> index 3bd9eb3..9e6656c 100644
->> --- a/sound/soc/qcom/lpass-cpu.c
->> +++ b/sound/soc/qcom/lpass-cpu.c
->> @@ -17,6 +17,7 @@
->>   #include <sound/soc.h>
->>   #include <sound/soc-dai.h>
->>   #include "lpass-lpaif-reg.h"
->> +#include "common.h"
->>   #include "lpass.h"
->>     #define LPASS_CPU_MAX_MI2S_LINES    4
->> @@ -857,7 +858,9 @@ static void of_lpass_cpu_parse_dai_data(struct 
->> device *dev,
->>           }
->>           if (id == LPASS_DP_RX) {
->>               data->hdmi_port_enable = 1;
->> -        } else {
->> +        } else if (is_cdc_dma_port(id))
->> +            data->codec_dma_enable = 1;
->> +        else {
->>               data->mi2s_playback_sd_mode[id] =
->>                   of_lpass_cpu_parse_sd_lines(dev, node,
->>                                   "qcom,playback-sd-lines");
->> @@ -872,6 +875,7 @@ int asoc_qcom_lpass_cpu_platform_probe(struct 
->> platform_device *pdev)
->>   {
->>       struct lpass_data *drvdata;
->>       struct device_node *dsp_of_node;
->> +    struct resource *res;
->>       struct lpass_variant *variant;
->>       struct device *dev = &pdev->dev;
->>       const struct of_device_id *match;
->> @@ -897,6 +901,58 @@ int asoc_qcom_lpass_cpu_platform_probe(struct 
->> platform_device *pdev)
->>         of_lpass_cpu_parse_dai_data(dev, drvdata);
->>   +    drvdata->num_clks =  variant->num_clks;
->> +    if (drvdata->codec_dma_enable) {
->> +        drvdata->rxtx_lpaif =
->> +                devm_platform_ioremap_resource_byname(pdev, 
->> "lpass-rxtx-lpaif");
->> +        if (IS_ERR(drvdata->rxtx_lpaif))
->> +            return PTR_ERR(drvdata->rxtx_lpaif);
->> +
->> +        drvdata->va_lpaif = 
->> devm_platform_ioremap_resource_byname(pdev, "lpass-va-lpaif");
->> +        if (IS_ERR(drvdata->va_lpaif))
->> +            return PTR_ERR(drvdata->va_lpaif);
->> +
->> +        lpass_rxtx_regmap_config.max_register = 
->> LPAIF_CDC_WRDMAPER_REG(variant,
->> +                    variant->rxtx_wrdma_channels +
->> +                    variant->rxtx_wrdma_channel_start, 
->> LPASS_CDC_DMA_TX3);
->> +
->> +        drvdata->rxtx_lpaif_map = devm_regmap_init_mmio(dev, 
->> drvdata->rxtx_lpaif,
->> +                    &lpass_rxtx_regmap_config);
->> +        if (IS_ERR(drvdata->rxtx_lpaif_map)) {
->> +            dev_err(dev, "error initializing rxtx regmap: %ld\n",
->> +                PTR_ERR(drvdata->rxtx_lpaif_map));
->> +            return PTR_ERR(drvdata->rxtx_lpaif_map);
->> +        }
->> +        lpass_va_regmap_config.max_register = 
->> LPAIF_CDC_WRDMAPER_REG(variant,
->> +                    variant->va_wrdma_channels +
->> +                    variant->va_wrdma_channel_start, 
->> LPASS_CDC_DMA_VA_TX0);
->> +
->> +        drvdata->va_lpaif_map = devm_regmap_init_mmio(dev, 
->> drvdata->va_lpaif,
->> +                    &lpass_va_regmap_config);
->> +        if (IS_ERR(drvdata->va_lpaif_map)) {
->> +            dev_err(dev, "error initializing va regmap: %ld\n",
->> +                PTR_ERR(drvdata->va_lpaif_map));
-> there is a 100 chars limit now, so you can wrap this to a single line.
->
-Okay. it's crossing 102 lines.
->> +            return PTR_ERR(drvdata->va_lpaif_map);
->> +        }
->> +        drvdata->cdc_clks = devm_kcalloc(dev, 
->> variant->cdc_dma_num_clks,
->> +                    sizeof(*drvdata->cdc_clks), GFP_KERNEL);
->> +        drvdata->cdc_num_clks = variant->cdc_dma_num_clks;
-> double space after =
->
-okay.
->> +
->> +        for (i = 0; i < drvdata->cdc_num_clks; i++)
->> +            drvdata->cdc_clks[i].id = variant->cdc_dma_clk_names[i];
->> +
->> +        ret = devm_clk_bulk_get(dev, drvdata->cdc_num_clks, 
->> drvdata->cdc_clks);
->> +        if (ret) {
->> +            dev_err(dev, "Failed to get clocks %d\n", ret);
->> +            return ret;
->> +        }
->> +
->> +        res = platform_get_resource_byname(pdev, IORESOURCE_MEM, 
->> "lpass-rxtx-cdc-dma-lpm");
->> +        drvdata->rxtx_cdc_dma_lpm_buf = res->start;
->> +
->> +        res = platform_get_resource_byname(pdev, IORESOURCE_MEM, 
->> "lpass-va-cdc-dma-lpm");
->> +        drvdata->va_cdc_dma_lpm_buf = res->start;
->> +    }
->>       drvdata->lpaif = devm_platform_ioremap_resource_byname(pdev, 
->> "lpass-lpaif");
->>       if (IS_ERR(drvdata->lpaif))
->>           return PTR_ERR(drvdata->lpaif);
->> @@ -939,7 +995,7 @@ int asoc_qcom_lpass_cpu_platform_probe(struct 
->> platform_device *pdev)
->>         for (i = 0; i < variant->num_dai; i++) {
->>           dai_id = variant->dai_driver[i].id;
->> -        if (dai_id == LPASS_DP_RX)
->> +        if (dai_id == LPASS_DP_RX || is_cdc_dma_port(dai_id))
->>               continue;
->>             drvdata->mi2s_osr_clk[dai_id] = devm_clk_get_optional(dev,
->> diff --git a/sound/soc/qcom/lpass-platform.c 
->> b/sound/soc/qcom/lpass-platform.c
->> index 59c0884..4b79908 100644
->> --- a/sound/soc/qcom/lpass-platform.c
->> +++ b/sound/soc/qcom/lpass-platform.c
->> @@ -14,12 +14,15 @@
->>   #include <linux/regmap.h>
->>   #include <sound/soc.h>
->>   #include "lpass-lpaif-reg.h"
->> +#include "common.h"
->>   #include "lpass.h"
->>     #define DRV_NAME "lpass-platform"
->>     #define LPASS_PLATFORM_BUFFER_SIZE    (24 *  2 * 1024)
->>   #define LPASS_PLATFORM_PERIODS        2
->> +#define LPSAS_RXTX_CDC_DMA_LPM_BUFF_SIZE (24 * 1024)
->> +#define LPSAS_VA_CDC_DMA_LPM_BUFF_SIZE (12 * 1024)
->>     static const struct snd_pcm_hardware lpass_platform_pcm_hardware = {
->>       .info            =    SNDRV_PCM_INFO_MMAP |
->> @@ -45,6 +48,103 @@ static const struct snd_pcm_hardware 
->> lpass_platform_pcm_hardware = {
->>       .fifo_size        =    0,
->>   };
->>   +static const struct snd_pcm_hardware lpass_platform_rxtx_hardware = {
->> +    .info            =    SNDRV_PCM_INFO_MMAP |
->> +                    SNDRV_PCM_INFO_MMAP_VALID |
->> +                    SNDRV_PCM_INFO_INTERLEAVED |
->> +                    SNDRV_PCM_INFO_PAUSE |
->> +                    SNDRV_PCM_INFO_RESUME,
->> +    .formats        =    SNDRV_PCM_FMTBIT_S16 |
->> +                    SNDRV_PCM_FMTBIT_S24 |
->> +                    SNDRV_PCM_FMTBIT_S32,
->> +    .rates            =    SNDRV_PCM_RATE_8000_192000,
->> +    .rate_min        =    8000,
->> +    .rate_max        =    192000,
->> +    .channels_min        =    1,
->> +    .channels_max        =    8,
->> +    .buffer_bytes_max    =    LPSAS_RXTX_CDC_DMA_LPM_BUFF_SIZE,
->> +    .period_bytes_max    =    LPSAS_RXTX_CDC_DMA_LPM_BUFF_SIZE /
->> +                        LPASS_PLATFORM_PERIODS,
->> +    .period_bytes_min    =    LPSAS_RXTX_CDC_DMA_LPM_BUFF_SIZE /
->> +                        LPASS_PLATFORM_PERIODS,
->> +    .periods_min        =    LPASS_PLATFORM_PERIODS,
->> +    .periods_max        =    LPASS_PLATFORM_PERIODS,
->> +    .fifo_size        =    0,
->> +};
->> +
->> +static const struct snd_pcm_hardware lpass_platform_va_hardware = {
->> +    .info            =    SNDRV_PCM_INFO_MMAP |
->> +                    SNDRV_PCM_INFO_MMAP_VALID |
->> +                    SNDRV_PCM_INFO_INTERLEAVED |
->> +                    SNDRV_PCM_INFO_PAUSE |
->> +                    SNDRV_PCM_INFO_RESUME,
->> +    .formats        =    SNDRV_PCM_FMTBIT_S16 |
->> +                    SNDRV_PCM_FMTBIT_S24 |
->> +                    SNDRV_PCM_FMTBIT_S32,
->> +    .rates            =    SNDRV_PCM_RATE_8000_192000,
->> +    .rate_min        =    8000,
->> +    .rate_max        =    192000,
->> +    .channels_min        =    1,
->> +    .channels_max        =    8,
->> +    .buffer_bytes_max    =    LPSAS_VA_CDC_DMA_LPM_BUFF_SIZE,
->> +    .period_bytes_max    =    LPSAS_VA_CDC_DMA_LPM_BUFF_SIZE /
->> +                        LPASS_PLATFORM_PERIODS,
->> +    .period_bytes_min    =    LPSAS_VA_CDC_DMA_LPM_BUFF_SIZE /
->> +                        LPASS_PLATFORM_PERIODS,
->> +    .periods_min        =    LPASS_PLATFORM_PERIODS,
->> +    .periods_max        =    LPASS_PLATFORM_PERIODS,
->> +    .fifo_size        =    0,
->> +};
->> +
->> +static int lpass_platform_alloc_rxtx_dmactl_fields(struct device *dev,
->> +                     struct regmap *map)
->> +{
->> +    struct lpass_data *drvdata = dev_get_drvdata(dev);
->> +    struct lpass_variant *v = drvdata->variant;
->> +    struct lpaif_dmactl *rd_dmactl, *wr_dmactl;
->> +    int rval;
->> +
->> +    drvdata->rxtx_rd_dmactl = devm_kzalloc(dev, sizeof(struct 
->> lpaif_dmactl),
->> +                      GFP_KERNEL);
->> +    if (drvdata->rxtx_rd_dmactl == NULL)
->> +        return -ENOMEM;
->> +
->> +    drvdata->rxtx_wr_dmactl = devm_kzalloc(dev, sizeof(struct 
->> lpaif_dmactl),
->> +                      GFP_KERNEL);
->> +    if (drvdata->rxtx_wr_dmactl == NULL)
->> +        return -ENOMEM;
->> +
->> +    rd_dmactl = drvdata->rxtx_rd_dmactl;
->> +    wr_dmactl = drvdata->rxtx_wr_dmactl;
->
-> may be rewrite this to:
->
->     rd_dmactl = devm_kzalloc(dev, sizeof(*rd_dmactl), GFP_KERNEL);
->     if (rd_dmactl == NULL)
->         return -ENOMEM;
->
->     wr_dmactl = devm_kzalloc(dev, sizeof(*wr_dmactl), GFP_KERNEL);
->     if (wr_dmactl == NULL)
->         return -ENOMEM;
->
->     drvdata->rxtx_rd_dmactl = rd_dmactl;
->     drvdata->rxtx_wr_dmactl = wr_dmactl;
->
-Okay.
->
->> +
->> +    rval = devm_regmap_field_bulk_alloc(dev, map, &rd_dmactl->intf,
->> +                        &v->rxtx_rdma_intf, 15);
->
-> can we define this magic number 15 properly?
-Okay.
->> +    if (rval)
->> +        return rval;
->> +
->> +    return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->intf,
->> +                        &v->rxtx_wrdma_intf, 15);
->> +}
->> +
->> +static int lpass_platform_alloc_va_dmactl_fields(struct device *dev,
->> +                     struct regmap *map)
->> +{
->> +    struct lpass_data *drvdata = dev_get_drvdata(dev);
->> +    struct lpass_variant *v = drvdata->variant;
->> +    struct lpaif_dmactl *wr_dmactl;
->> +
->> +    drvdata->va_wr_dmactl = devm_kzalloc(dev, sizeof(struct 
->> lpaif_dmactl),
->> +                      GFP_KERNEL);
->> +    if (drvdata->va_wr_dmactl == NULL)
->> +        return -ENOMEM;
->> +
->> +    wr_dmactl = drvdata->va_wr_dmactl;
-> simillar comment.
->
-Okay.
->> +
->> +    return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->intf,
->> +                        &v->va_wrdma_intf, 15);
->> +}
->> +
->> +
->>   static int lpass_platform_alloc_dmactl_fields(struct device *dev,
->>                        struct regmap *map)
->>   {
->> @@ -126,22 +226,43 @@ static int lpass_platform_pcmops_open(struct 
->> snd_soc_component *component,
->>       if (cpu_dai->driver->id == LPASS_DP_RX) {
->>           map = drvdata->hdmiif_map;
->>           drvdata->hdmi_substream[dma_ch] = substream;
->> +    } else if (dai_id == LPASS_CDC_DMA_RX0 || dai_id == 
->> LPASS_CDC_DMA_TX3) {
->> +        map = drvdata->rxtx_lpaif_map;
->> +        drvdata->rxtx_substream[dma_ch] = substream;
->> +    } else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
->> +        map = drvdata->va_lpaif_map;
->> +        drvdata->va_substream[dma_ch] = substream;
->>       } else {
->>           map = drvdata->lpaif_map;
->>           drvdata->substream[dma_ch] = substream;
->>       }
->>       data->dma_ch = dma_ch;
->> -    ret = regmap_write(map,
->> -            LPAIF_DMACTL_REG(v, dma_ch, dir, data->i2s_port), 0);
->> -    if (ret) {
->> -        dev_err(soc_runtime->dev,
->> -            "error writing to rdmactl reg: %d\n", ret);
->> -        return ret;
->> +    if (!(dai_id == LPASS_CDC_DMA_RX0 ||
->> +        dai_id == LPASS_CDC_DMA_TX3 ||
->> +        dai_id == LPASS_CDC_DMA_VA_TX0)) {
->> +        ret = regmap_write(map, LPAIF_DMACTL_REG(v, dma_ch, dir, 
->> data->i2s_port), 0);
->> +        if (ret) {
->> +            dev_err(soc_runtime->dev,
->> +                "error writing to rdmactl reg: %d\n", ret);
->> +            return ret;
->> +        }
->>       }
->> -    snd_soc_set_runtime_hwparams(substream, 
->> &lpass_platform_pcm_hardware);
->> -
->> -    runtime->dma_bytes = lpass_platform_pcm_hardware.buffer_bytes_max;
->>   +    switch (dai_id) {
->> +    case LPASS_CDC_DMA_RX0:
->> +    case LPASS_CDC_DMA_TX3:
->> +        snd_soc_set_runtime_hwparams(substream, 
->> &lpass_platform_rxtx_hardware);
->> +        runtime->dma_bytes = 
->> lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +        break;
->> +    case LPASS_CDC_DMA_VA_TX0:
->> +        snd_soc_set_runtime_hwparams(substream, 
->> &lpass_platform_va_hardware);
->> +        runtime->dma_bytes = 
->> lpass_platform_va_hardware.buffer_bytes_max;
->> +        break;
->> +    default:
->> +        snd_soc_set_runtime_hwparams(substream, 
->> &lpass_platform_pcm_hardware);
->> +        runtime->dma_bytes = 
->> lpass_platform_pcm_hardware.buffer_bytes_max;
->> +        break;
->> +    }
->>       ret = snd_pcm_hw_constraint_integer(runtime,
->>               SNDRV_PCM_HW_PARAM_PERIODS);
->>       if (ret < 0) {
->> @@ -168,6 +289,10 @@ static int lpass_platform_pcmops_close(struct 
->> snd_soc_component *component,
->>       data = runtime->private_data;
->>       if (dai_id == LPASS_DP_RX)
->>           drvdata->hdmi_substream[data->dma_ch] = NULL;
->> +    else if (dai_id == LPASS_CDC_DMA_RX0 || dai_id == 
->> LPASS_CDC_DMA_TX3)
->> +        drvdata->rxtx_substream[data->dma_ch] = NULL;
->> +    else if (dai_id == LPASS_CDC_DMA_VA_TX0)
->> +        drvdata->va_substream[data->dma_ch] = NULL;
->>       else
->>           drvdata->substream[data->dma_ch] = NULL;
->>       if (v->free_dma_channel)
->> @@ -198,14 +323,27 @@ static void __get_lpaif_handle(struct 
->> snd_pcm_substream *substream,
->>           if (dai_id == LPASS_DP_RX) {
->>               l_dmactl = drvdata->hdmi_rd_dmactl;
->>               l_map = drvdata->hdmiif_map;
->> +        } else if (dai_id == LPASS_CDC_DMA_RX0) {
->> +            l_map = drvdata->rxtx_lpaif_map;
->> +            l_dmactl = drvdata->rxtx_rd_dmactl;
->>           } else {
->>               l_dmactl = drvdata->rd_dmactl;
->>               l_map = drvdata->lpaif_map;
->>           }
->>       } else {
->> -        l_dmactl = drvdata->wr_dmactl;
->> -        l_id = pcm_data->dma_ch - v->wrdma_channel_start;
->> -        l_map = drvdata->lpaif_map;
->> +        if (dai_id == LPASS_CDC_DMA_TX3) {
->> +            l_dmactl = drvdata->rxtx_wr_dmactl;
->> +            l_map = drvdata->rxtx_lpaif_map;
->> +            l_id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
->> +        } else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
->> +            l_dmactl = drvdata->va_wr_dmactl;
->> +            l_map = drvdata->va_lpaif_map;
->> +            l_id = pcm_data->dma_ch - v->va_wrdma_channel_start;
->> +        } else {
->> +            l_dmactl = drvdata->wr_dmactl;
->> +            l_id = pcm_data->dma_ch - v->wrdma_channel_start;
->> +            l_map = drvdata->lpaif_map;
->> +        }
->>       }
->>       if (dmactl)
->>           *dmactl = l_dmactl;
->> @@ -256,6 +394,10 @@ static int 
->> lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
->>       }
->>         switch (dai_id) {
->> +    case LPASS_CDC_DMA_RX0:
->> +    case LPASS_CDC_DMA_TX3:
->> +    case LPASS_CDC_DMA_VA_TX0:
->
-> Is there a reason why we can not add support to other CDC_DMA dais as 
-> part of this patchset?
->
-Okay.. will include all possible dais.
->> +        break;
->>       case LPASS_DP_RX:
->>           ret = regmap_fields_write(dmactl->burst8, id,
->>                               LPAIF_DMACTL_BURSTEN_INCR4);
->> @@ -380,6 +522,10 @@ static int lpass_platform_pcmops_hw_free(struct 
->> snd_soc_component *component,
->>         if (dai_id == LPASS_DP_RX)
->>           map = drvdata->hdmiif_map;
->> +    else if (dai_id == LPASS_CDC_DMA_RX0 ||
->> +        dai_id == LPASS_CDC_DMA_TX3 ||
->> +        dai_id == LPASS_CDC_DMA_VA_TX0)
->> +        return 0;
->>       else
->>           map = drvdata->lpaif_map;
->>   @@ -434,6 +580,16 @@ static int 
->> lpass_platform_pcmops_prepare(struct snd_soc_component *component,
->>           return ret;
->>       }
->>   +    if (dai_id == LPASS_CDC_DMA_RX0 ||
->> +        dai_id == LPASS_CDC_DMA_TX3 ||
->> +        dai_id == LPASS_CDC_DMA_VA_TX0) {
->> +        ret = regmap_fields_write(dmactl->fifowm, id, 
->> LPAIF_DMACTL_FIFOWM_8);
->> +        if (ret) {
->> +            dev_err(soc_runtime->dev, "error writing fifowm field to 
->> dmactl reg: %d, id: %d\n",
->> +                ret, id);
->> +            return ret;
->> +        }
->> +    }
->>       ret = regmap_fields_write(dmactl->enable, id, 
->> LPAIF_DMACTL_ENABLE_ON);
->>       if (ret) {
->>           dev_err(soc_runtime->dev, "error writing to rdmactl reg: 
->> %d\n",
->> @@ -476,6 +632,22 @@ static int lpass_platform_pcmops_trigger(struct 
->> snd_soc_component *component,
->>               return ret;
->>           }
->>           switch (dai_id) {
->> +        case LPASS_CDC_DMA_RX0:
->> +        case LPASS_CDC_DMA_TX3:
->> +        case LPASS_CDC_DMA_VA_TX0:
->> +            ret = regmap_fields_write(dmactl->dyncclk, id, 
->> LPAIF_DMACTL_DYNCLK_ON);
->> +            if (ret) {
->> +                dev_err(soc_runtime->dev,
->> +                    "error writing to rdmactl reg field: %d\n", ret);
->> +                return ret;
->> +            }
->> +            reg_irqclr = LPAIF_RXTX_IRQCLEAR_REG(v, 
->> LPAIF_IRQ_PORT_HOST, dai_id);
->> +            val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +            reg_irqen = LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST, 
->> dai_id);
->> +            val_mask = LPAIF_IRQ_ALL(ch);
->> +            val_irqen = LPAIF_IRQ_ALL(ch);
->> +            break;
->>           case LPASS_DP_RX:
->>               ret = regmap_fields_write(dmactl->dyncclk, id,
->>                        LPAIF_DMACTL_DYNCLK_ON);
->> @@ -540,6 +712,24 @@ static int lpass_platform_pcmops_trigger(struct 
->> snd_soc_component *component,
->>               return ret;
->>           }
->>           switch (dai_id) {
->> +        case LPASS_CDC_DMA_RX0:
->> +        case LPASS_CDC_DMA_TX3:
->> +        case LPASS_CDC_DMA_VA_TX0:
->> +            ret = regmap_fields_write(dmactl->dyncclk, id, 
->> LPAIF_DMACTL_DYNCLK_OFF);
->> +            if (ret) {
->> +                dev_err(soc_runtime->dev,
->> +                    "error writing to rdmactl reg field: %d\n", ret);
->> +                return ret;
->> +            }
->> +
->> +            reg_irqclr = LPAIF_RXTX_IRQCLEAR_REG(v, 
->> LPAIF_IRQ_PORT_HOST, dai_id);
->> +            val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +            reg_irqen = LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST, 
->> dai_id);
->> +            val_mask = LPAIF_IRQ_ALL(ch);
->> +            val_irqen = LPAIF_IRQ_ALL(ch);
->> +
->> +        break;
->>           case LPASS_DP_RX:
->>               ret = regmap_fields_write(dmactl->dyncclk, id,
->>                        LPAIF_DMACTL_DYNCLK_OFF);
->> @@ -619,6 +809,38 @@ static snd_pcm_uframes_t 
->> lpass_platform_pcmops_pointer(
->>       return bytes_to_frames(substream->runtime, curr_addr - base_addr);
->>   }
->>   +static int lpass_platform_cdc_dma_mmap(struct snd_soc_component 
->> *component,
->> +            struct snd_pcm_substream *substream,
->> +            struct vm_area_struct *vma)
->> +{
->> +    struct snd_pcm_runtime *runtime = substream->runtime;
->> +    unsigned long size, offset;
->> +
->> +    vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
->> +    size = vma->vm_end - vma->vm_start;
->> +    offset = vma->vm_pgoff << PAGE_SHIFT;
->> +    return io_remap_pfn_range(vma, vma->vm_start,
->> +            (runtime->dma_addr + offset) >> PAGE_SHIFT,
->> +            size, vma->vm_page_prot);
->> +
->> +}
->> +
->> +static int lpass_platform_pcmops_mmap(struct snd_soc_component 
->> *component,
->> +                      struct snd_pcm_substream *substream,
->> +                      struct vm_area_struct *vma)
->> +{
->> +    struct snd_soc_pcm_runtime *soc_runtime = 
->> asoc_substream_to_rtd(substream);
->> +    struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
->> +    unsigned int dai_id = cpu_dai->driver->id;
->> +
->> +    if (dai_id == LPASS_CDC_DMA_RX0 ||
->> +        dai_id == LPASS_CDC_DMA_TX3 ||
->> +        dai_id == LPASS_CDC_DMA_VA_TX0) {
->> +        return lpass_platform_cdc_dma_mmap(component, substream, vma);
->> +    }
->> +    return 0;
->> +}
->> +
->>   static irqreturn_t lpass_dma_interrupt_handler(
->>               struct snd_pcm_substream *substream,
->>               struct lpass_data *drvdata,
->> @@ -635,6 +857,14 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>         mask = LPAIF_IRQ_ALL(chan);
->>       switch (dai_id) {
->> +    case LPASS_CDC_DMA_RX0:
->> +    case LPASS_CDC_DMA_TX3:
->> +    case LPASS_CDC_DMA_VA_TX0:
->> +        map = (dai_id == LPASS_CDC_DMA_VA_TX0) ?
->> +                drvdata->va_lpaif_map : drvdata->rxtx_lpaif_map;
->> +        reg = LPAIF_RXTX_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST, dai_id);
->> +        val = 0;
->> +        break;
->>       case LPASS_DP_RX:
->>           map = drvdata->hdmiif_map;
->>           reg = LPASS_HDMITX_APP_IRQCLEAR_REG(v);
->> @@ -758,18 +988,112 @@ static irqreturn_t 
->> lpass_platform_hdmiif_irq(int irq, void *data)
->>                   return rv;
->>           }
->>       }
->> +    return IRQ_HANDLED;
->> +}
->> +
->> +static irqreturn_t lpass_platform_rxtxif_irq(int irq, void *data)
->> +{
->> +    struct lpass_data *drvdata = data;
->> +    struct lpass_variant *v = drvdata->variant;
->> +    unsigned int irqs;
->> +    int rv, chan;
->> +
->> +    rv = regmap_read(drvdata->rxtx_lpaif_map,
->> +            LPAIF_RXTX_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST, 
->> LPASS_CDC_DMA_RX0), &irqs);
->> +    if (rv)
->> +        return IRQ_NONE;
->> +    /* Handle per channel interrupts */
->> +    for (chan = 0; chan < LPASS_MAX_CDC_DMA_CHANNELS; chan++) {
->> +        if (irqs & LPAIF_IRQ_ALL(chan) && 
->> drvdata->rxtx_substream[chan]) {
->> +            rv = lpass_dma_interrupt_handler(
->> +                        drvdata->rxtx_substream[chan],
->> +                        drvdata, chan, irqs);
->> +            if (rv != IRQ_HANDLED)
->> +                return rv;
->> +        }
->> +    }
->> +
->> +    return IRQ_HANDLED;
->> +}
->> +
->> +static irqreturn_t lpass_platform_vaif_irq(int irq, void *data)
->> +{
->> +    struct lpass_data *drvdata = data;
->> +    struct lpass_variant *v = drvdata->variant;
->> +    unsigned int irqs;
->> +    int rv, chan;
->>   +    rv = regmap_read(drvdata->va_lpaif_map,
->> +            LPAIF_RXTX_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST,
->> +            LPASS_CDC_DMA_VA_TX0), &irqs);
->> +    if (rv)
->> +        return IRQ_NONE;
->> +    /* Handle per channel interrupts */
->> +    for (chan = 0; chan < LPASS_MAX_VA_CDC_DMA_CHANNELS; chan++) {
->> +        if (irqs & LPAIF_IRQ_ALL(chan) && 
->> drvdata->va_substream[chan]) {
->> +            rv = lpass_dma_interrupt_handler(
->> +                        drvdata->va_substream[chan],
->> +                        drvdata, chan, irqs);
->> +            if (rv != IRQ_HANDLED)
->> +                return rv;
->> +        }
->> +    }
->>       return IRQ_HANDLED;
->>   }
->>   +static int lpass_platform_prealloc_cdc_dma_buffer(struct 
->> snd_soc_component *component,
->> +            struct snd_pcm *pcm, int dai_id)
->> +{
->> +    struct lpass_data *drvdata = 
->> snd_soc_component_get_drvdata(component);
->> +    struct snd_pcm_substream *substream;
->> +    struct snd_dma_buffer *buf;
->> +    int ret;
->> +
->> +    if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
->> +        substream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
->> +    else
->> +        substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
->> +
->> +    ret = dma_coerce_mask_and_coherent(pcm->card->dev, 
->> DMA_BIT_MASK(64));
->> +    if (ret)
->> +        return ret;
->> +
->> +    buf = &substream->dma_buffer;
->> +    buf->dev.dev = pcm->card->dev;
->> +    buf->private_data = NULL;
->> +
->> +    /* Assign Codec DMA buffer pointers */
->> +    buf->dev.type = SNDRV_DMA_TYPE_CONTINUOUS;
->> +    if (dai_id == LPASS_CDC_DMA_RX0) {
->> +        buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +        buf->addr = drvdata->rxtx_cdc_dma_lpm_buf;
->> +    } else if (dai_id == LPASS_CDC_DMA_TX3) {
->> +        buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +        buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + 
->> LPSAS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +    } else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
->> +        buf->bytes = lpass_platform_va_hardware.buffer_bytes_max;
->> +        buf->addr = drvdata->va_cdc_dma_lpm_buf;
->> +    }
->> +
->> +    buf->area = (unsigned char * __force)ioremap(buf->addr, 
->> buf->bytes);
->> +
->> +    return 0;
->> +}
->> +
->>   static int lpass_platform_pcm_new(struct snd_soc_component *component,
->>                     struct snd_soc_pcm_runtime *soc_runtime)
->>   {
->>       struct snd_pcm *pcm = soc_runtime->pcm;
->> +    struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
->> +    unsigned int dai_id = cpu_dai->driver->id;
->> +
->>       size_t size = lpass_platform_pcm_hardware.buffer_bytes_max;
->>   -    return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
->> -                        component->dev, size);
->> +    if (is_cdc_dma_port(dai_id))
->> +        return lpass_platform_prealloc_cdc_dma_buffer(component, 
->> pcm, dai_id);
-> May be a comment here would be nice for reader to understand why we 
-> allocate this buffer.
-Okay. will add comments.
->
->> +    else
->> +        return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
->> +                        component->dev, size);
->>   }
->>     static int lpass_platform_pcmops_suspend(struct snd_soc_component 
->> *component)
->> @@ -804,6 +1128,22 @@ static int lpass_platform_pcmops_resume(struct 
->> snd_soc_component *component)
->>       return regcache_sync(map);
->>   }
->>   +int lpass_platform_copy(struct snd_soc_component *component,
->> +             struct snd_pcm_substream *substream, int channel,
->> +             unsigned long pos, void __user *buf, unsigned long bytes)
->> +{
->> +    struct snd_pcm_runtime *rt = substream->runtime;
->> +
->> +    unsigned char *dma_buf = rt->dma_area + pos +
->> +                channel * (rt->dma_bytes / rt->channels);
->> +
->> +    if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
->> +        return copy_from_user_toio(dma_buf, buf, bytes);
->> +    else if (substream->stream == SNDRV_PCM_STREAM_CAPTURE)
->> +        return copy_to_user_fromio(buf, dma_buf, bytes);
->> +
->> +    return 0;
->> +}
->>     static const struct snd_soc_component_driver 
->> lpass_component_driver = {
->>       .name        = DRV_NAME,
->> @@ -814,9 +1154,11 @@ static const struct snd_soc_component_driver 
->> lpass_component_driver = {
->>       .prepare    = lpass_platform_pcmops_prepare,
->>       .trigger    = lpass_platform_pcmops_trigger,
->>       .pointer    = lpass_platform_pcmops_pointer,
->> +    .mmap        = lpass_platform_pcmops_mmap,
->
-> isn't this just snd_pcm_lib_mmap_iomem for cdc dma.
-Yes. it's required for only cdc dma.
->
->>       .pcm_construct    = lpass_platform_pcm_new,
->>       .suspend        = lpass_platform_pcmops_suspend,
->>       .resume            = lpass_platform_pcmops_resume,
->> +    .copy_user        = lpass_platform_copy,
->
-> Why do we need this for other non cdc dma dais?
->
->
-> Am thinking that we shoudl have a seperate instance of this for dais 
-> that can only do dma with hardware buffers.
-Okay. How to maintain 2 instances in the same platform driver?
->
->>     };
->>   @@ -854,6 +1196,60 @@ int asoc_qcom_lpass_platform_register(struct 
->> platform_device *pdev)
->>           return ret;
->>       }
->>   +    if (drvdata->codec_dma_enable) {
->> +        ret = regmap_write(drvdata->rxtx_lpaif_map,
->> +            LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST, 
->> LPASS_CDC_DMA_TX3), 0x0);
->> +        if (ret) {
->> +            dev_err(&pdev->dev, "error writing to rxtx irqen reg: 
->> %d\n", ret);
->> +            return ret;
->> +        }
->> +        ret = regmap_write(drvdata->va_lpaif_map,
->> +            LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST, 
->> LPASS_CDC_DMA_VA_TX0), 0x0);
->> +        if (ret) {
->> +            dev_err(&pdev->dev, "error writing to rxtx irqen reg: 
->> %d\n", ret);
->> +            return ret;
->> +        }
->> +        drvdata->rxtxif_irq = platform_get_irq_byname(pdev, 
->> "lpass-irq-rxtxif");
->> +        if (drvdata->rxtxif_irq < 0)
->> +            return -ENODEV;
->> +
->> +        ret = devm_request_irq(&pdev->dev, drvdata->rxtxif_irq,
->> +                lpass_platform_rxtxif_irq, IRQF_TRIGGER_RISING,
->> +                "lpass-irq-rxtxif", drvdata);
->> +        if (ret) {
->> +            dev_err(&pdev->dev, "rxtx irq request failed: %d\n", ret);
->> +            return ret;
->> +        }
->> +
->> +        ret = lpass_platform_alloc_rxtx_dmactl_fields(&pdev->dev,
->> +                         drvdata->rxtx_lpaif_map);
->> +        if (ret) {
->> +            dev_err(&pdev->dev,
->> +                "error initializing rxtx dmactl fields: %d\n", ret);
->> +            return ret;
->> +        }
->> +
->> +        drvdata->vaif_irq = platform_get_irq_byname(pdev, 
->> "lpass-irq-vaif");
->> +        if (drvdata->vaif_irq < 0)
->> +            return -ENODEV;
->> +
->> +        ret = devm_request_irq(&pdev->dev, drvdata->vaif_irq,
->> +                lpass_platform_vaif_irq, IRQF_TRIGGER_RISING,
->> +                "lpass-irq-vaif", drvdata);
->> +        if (ret) {
->> +            dev_err(&pdev->dev, "va irq request failed: %d\n", ret);
->> +            return ret;
->> +        }
->> +
->> +        ret = lpass_platform_alloc_va_dmactl_fields(&pdev->dev,
->> +                         drvdata->va_lpaif_map);
->> +        if (ret) {
->> +            dev_err(&pdev->dev,
->> +                "error initializing va dmactl fields: %d\n", ret);
->> +            return ret;
->> +        }
->> +    }
->> +
->>       if (drvdata->hdmi_port_enable) {
->>           drvdata->hdmiif_irq = platform_get_irq_byname(pdev, 
->> "lpass-irq-hdmi");
->>           if (drvdata->hdmiif_irq < 0)
->>
+I understand. The approach is valid but I'm wondering if it should fall
+under a more global feature with a perf <-> power cursor
+
+If the goal is to be as fast as possible at boot time, the cursor should
+be set to 'perf and then changed to 'power' after the system has booted.
+
+So not only cpuidle but also any other subsystems can skip the PM path
+or go the highest performance state (assuming the PM code is compiled-in
+for the devices).
+
+
+
+
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
