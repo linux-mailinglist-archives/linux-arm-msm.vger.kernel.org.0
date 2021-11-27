@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BAAC45FAED
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Nov 2021 02:32:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D717145FC20
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Nov 2021 03:40:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351312AbhK0BfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 Nov 2021 20:35:19 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:36876 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351492AbhK0BdS (ORCPT
+        id S1347546AbhK0CoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 Nov 2021 21:44:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229852AbhK0CmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 Nov 2021 20:33:18 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A784160A70;
-        Sat, 27 Nov 2021 01:30:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F795C004E1;
-        Sat, 27 Nov 2021 01:30:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1637976604;
-        bh=mAlOarq0Dk/Cnzg2qMm+ZAQk5qZ2N0epByo7obErI3Q=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=Fcg42vtVZeZF5y1aURx+juD4v5oZgIonvPdKmX+Zu/VqzCrWO0+jfA937y+R5X64X
-         dXS8d/40IlhSffQQecFZ322OXRZbiKXTRNYZH3grxyimFMp7J4spN2lm5wl6o1Nl7u
-         TKH7dld0xezmDVUEYPWuvqPF3ZU/t44KFu98dpwqgU1xvW6Fzl8AE4tgoKTOZixR/9
-         l8AmMQ+MA9Ud4B4RegAdCh3aABEX7ZTjxW9vqoac7uvtIbDJvEPvPgCmpWhafnV5x8
-         ozu2qA+jej/STjTwjjhnQ4yB2LiOc2Y1xaTy2I3ZULTe6+JiGVocKBhVlU8aN29yY0
-         jpj4cChOJQIPg==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, Dominik Kobinski <dominikkobinski314@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linus.walleij@linaro.org,
-        bjorn.andersson@linaro.org
-In-Reply-To: <20211123174127.2261-1-dominikkobinski314@gmail.com>
-References: <20211123174127.2261-1-dominikkobinski314@gmail.com>
-Subject: Re: (subset) [PATCH 1/4] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
-Message-Id: <163797660213.2988101.12499295081195849746.b4-ty@kernel.org>
-Date:   Sat, 27 Nov 2021 01:30:02 +0000
+        Fri, 26 Nov 2021 21:42:00 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35C62C09B078
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 17:38:02 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so16293412otl.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Nov 2021 17:38:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/qy2fVsf4IGu5lXH6K0cKVvkPysB8kLgQcCvFksozo8=;
+        b=zZRP5+zdTlaagOcbSDxdZ8PuDDuUy/L7LJO3ttHZgQKDlJZE15kNsEiERS21axDcsC
+         LUccGVJA9lb+7+bYI5T26Wcb0epFTa0M1Nx7WJgiB79+Z+psUQFoEeivKe2Bfll4f7Ei
+         kGlgsOtT3+8TXnqwDPZjqH7LzRmyLYemCBZe+O+KhCaiEkZ9Y2U1l7ffKXknVZqlwtwQ
+         FYg8gLxqYn+eSuaag/GfU7zEZfVgmhRyor0e+o0IH9sqXJffV6Ku+SSRsgZJPeXC3Zdk
+         hSJzuzKj1vhJCythfVssJF0MTrJMICurmBvllcMeH3K37r+MWPcIZuEYhUMft9+VL7Ul
+         wajA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/qy2fVsf4IGu5lXH6K0cKVvkPysB8kLgQcCvFksozo8=;
+        b=I+er5IqsKxTSha+dkiXfihhQkYT4miQLr8m9eGhw3sV/b+XxKpOMme/XlyGuhLq9Fr
+         uD9M54UMDX/Kiw8JmTsWbC2V+wPGyLVB5xGQwqs9lQXjcwRb9RLgc+w3jvMQ40Ajri0d
+         g7yyYN29Zzw5nR/Hkki3NKRXz2Y3UKv5JYMJg/RUKqESlJLzyH1hkAFaADtX69f+M7ow
+         98G6c9S1lYmV43Lc+IptQ3rRyFimZaO2pCQs6fGPj30faCxLytRESl2LGMf277Uvg3Li
+         vvKk5JY86vS7KnYhStXjxQZrQp1IFTdEcQamdRQPHPPAEwC30nP5a9jmVs27+d1ik73c
+         SylA==
+X-Gm-Message-State: AOAM532z2CTL6/XaIYKOBLjLgoOrRui3S/sg8a1XCednGKjwIzfta87g
+        CW+j4gYcX0QQnxrZA/oWGiENi2683vqSsecwN/zoEw==
+X-Google-Smtp-Source: ABdhPJwz7YlhjlehvhsdllSAlratkmK3DP53zBfQyCzOUts83RiuSgVdEJlFvaYiY3fJrk8VgZ7a0E75/laPJ89l+QE=
+X-Received: by 2002:a9d:74d0:: with SMTP id a16mr30440684otl.237.1637977081591;
+ Fri, 26 Nov 2021 17:38:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <CACRpkdau+wHpoWa1JrLt35dnCHJejs8HZkkzZCrrcnRCx3SinQ@mail.gmail.com>
+ <20211126163657.65471-1-dominikkobinski314@gmail.com>
+In-Reply-To: <20211126163657.65471-1-dominikkobinski314@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 27 Nov 2021 02:37:50 +0100
+Message-ID: <CACRpkdYdOvpS0GgHw9UfMrfnUeEphKUk-y-0vKYSsS9dWc3r3g@mail.gmail.com>
+Subject: Re: [PATCH v2,1/5] pinctrl: qcom: spmi-gpio: Add pm8226 compatibility
+To:     Dominik Kobinski <dominikkobinski314@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        ivo.ivanov.ivanov1@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dominik Kobinski <dkobinski314@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Nov 2021 18:41:27 +0100, Dominik Kobinski wrote:
-> Add support for pm8226 SPMI GPIOs. The PMIC features
-> 8 GPIOs, with no holes inbetween.
-> 
-> 
+On Fri, Nov 26, 2021 at 5:37 PM Dominik Kobinski
+<dominikkobinski314@gmail.com> wrote:
 
-Applied to
+> From: Dominik Kobinski <dkobinski314@gmail.com>
+>
+> Thank you for applying the patch. I believe the second one in this series (https://patchwork.kernel.org/project/linux-arm-msm/patch/20211125215626.62447-1-dominikkobinski314@gmail.com/) should be also applied to the pinctrl tree.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+Looks like the regulator tree should take this one?
+It is a regulator binding...
 
-Thanks!
-
-[3/4] dt-bindings: regulator: qcom: spmi-regulator: Document pm8226 compatible
-      commit: 76e95f331be09bac8764e971613439d294422d6e
-[4/4] regulator: qcom_spmi: Add pm8226 regulators
-      commit: f8843e5e2dc85dc6a546ec130d76be66e62abed6
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Yours,
+Linus Walleij
