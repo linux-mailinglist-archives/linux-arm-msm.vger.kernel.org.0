@@ -2,79 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AC907460BD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 01:47:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 37903460C02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 02:03:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239194AbhK2AvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Nov 2021 19:51:11 -0500
-Received: from mail-oi1-f175.google.com ([209.85.167.175]:34452 "EHLO
-        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236394AbhK2AtL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Nov 2021 19:49:11 -0500
-Received: by mail-oi1-f175.google.com with SMTP id t19so31431299oij.1;
-        Sun, 28 Nov 2021 16:45:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=RUMZtYVmOKmzKWvEgBBAy6Os4t7757ETuxyl2/LzMms=;
-        b=l63ct9OnqiYS2uKJnSY6zec3v89HTvLoTdpI+Rmjmf1Sba4CxnaIcE0LjecBxUXZv1
-         kTz4IYyxGEe0vMTOyXUvfBKwiz4azY4M+WoDmD0p6SdILcVlJYlTRw7ZHtGyjEpWsLOr
-         sb+tbTeYLtQ+GXUa04Baa9Z7+vphgCSOBZAdRnM1MbgW7j1mRkxSq9+LjFLsLfjw/GqZ
-         GiRLyETQu2xH+zsCZ77uXXqulMFKBEk9B8jjEbQNd466CvFWDkNdt87g8OIj12jLIqwW
-         i7balQUB8PCeIjL63vxDFbx64posejVd/P+qComgcrHsU3c4Kt5z0jTLJIJhEKXzoBc6
-         xVAQ==
-X-Gm-Message-State: AOAM532JNGljyoFat/+H0XEMUs+9DVViCdSOE2WWEN3jGHpOqY2fqD7W
-        QKmNXVMuzxFARur5IBhwew==
-X-Google-Smtp-Source: ABdhPJwiTS7PZPgXfbF/PFr//hEYE9Ia5kHLXct2UKvI7VLCBOfrMizjd5E8aog3TgjSpBFn3t16Qw==
-X-Received: by 2002:a05:6808:2388:: with SMTP id bp8mr38048904oib.38.1638146754406;
-        Sun, 28 Nov 2021 16:45:54 -0800 (PST)
-Received: from robh.at.kernel.org ([172.58.99.229])
-        by smtp.gmail.com with ESMTPSA id a6sm2695366oic.39.2021.11.28.16.45.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Nov 2021 16:45:53 -0800 (PST)
-Received: (nullmailer pid 2912174 invoked by uid 1000);
-        Mon, 29 Nov 2021 00:45:40 -0000
-Date:   Sun, 28 Nov 2021 18:45:40 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc:     rui.zhang@intel.com, pmeerw@pmeerw.net,
-        manivannan.sadhasivam@linaro.org, jic23@kernel.org,
-        mka@chromium.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, quic_subbaram@quicinc.com,
-        daniel.lezcano@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_aghayal@quicinc.com,
-        lars@metafoo.de, "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-iio@vger.kernel.org, linux-pm@vger.kernel.org,
-        agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm-owner@vger.kernel.org, linus.walleij@linaro.org,
-        quic_kgunda@quicinc.com, amitk@kernel.org,
-        dmitry.baryshkov@linaro.org, knaack.h@gmx.de
-Subject: Re: [PATCH V3 1/4] dt-bindings: thermal: qcom: add PMIC5 Gen2 ADC_TM
- bindings
-Message-ID: <YaQitCoPQRqFuZaO@robh.at.kernel.org>
-References: <1637647025-20409-1-git-send-email-quic_jprakash@quicinc.com>
- <1637647025-20409-2-git-send-email-quic_jprakash@quicinc.com>
+        id S1376782AbhK2BGz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Nov 2021 20:06:55 -0500
+Received: from mail.vallenar.cl ([200.54.241.89]:43026 "EHLO mail.vallenar.cl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235331AbhK2BEz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 28 Nov 2021 20:04:55 -0500
+X-Greylist: delayed 21421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Nov 2021 20:04:47 EST
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vallenar.cl (Postfix) with ESMTP id 2ECA31CCA36D;
+        Sun, 28 Nov 2021 12:24:53 -0300 (-03)
+Received: from mail.vallenar.cl ([127.0.0.1])
+        by localhost (mail.vallenar.cl [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id q-MGcXXIs6xC; Sun, 28 Nov 2021 12:24:52 -0300 (-03)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.vallenar.cl (Postfix) with ESMTP id B18FD1D09F66;
+        Sun, 28 Nov 2021 11:52:42 -0300 (-03)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.vallenar.cl B18FD1D09F66
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vallenar.cl;
+        s=EC098874-C7DE-11E7-B3B1-1A9A6030413E; t=1638111162;
+        bh=IQxUcKgLaEia+DMrVj9OEHbWOH8TffrzQMeZgAxYubI=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=MNjo73r4thabIXIX17BkWiB7TZbbl86GNlruV3Alvq1cyEYsQq//83J9GyKqvyni3
+         14mzJE8eJ/lLi+A4Z1bmESveCdc6z7WWmG9c5lGgZUtuHpI6SvRKaOG+C3ZTKbrXO6
+         5A9jqRo96wRmQFBH8Qh5NWilE5Ih4nDmHTXrgWi4pERx24VrS6n2ZG6WFaA9G1DB8t
+         mOjzE94BDiot2Z4HGjwImn3n4ndzzl3TZZN1rzHe4usRgna8vvIkScOCM6agsumETr
+         uDHxjr0Y35i8WU5Oak2HYl82KOUvs2Py0ne4soi22PxSDBmF02NJOx998Xvj/LsAQ7
+         EiUKbFnm8WXVA==
+X-Virus-Scanned: amavisd-new at vallenar.cl
+Received: from mail.vallenar.cl ([127.0.0.1])
+        by localhost (mail.vallenar.cl [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id cGk2q-1z0kHg; Sun, 28 Nov 2021 11:52:42 -0300 (-03)
+Received: from [192.168.8.101] (unknown [105.0.3.102])
+        by mail.vallenar.cl (Postfix) with ESMTPSA id 5EAD11D08B7B;
+        Sun, 28 Nov 2021 11:21:37 -0300 (-03)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1637647025-20409-2-git-send-email-quic_jprakash@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: 2.000.000,00. Euro
+To:     Recipients <yperez@vallenar.cl>
+From:   "manuel franco" <yperez@vallenar.cl>
+Date:   Sun, 28 Nov 2021 16:29:08 +0200
+Reply-To: manuelfrancospende00@gmail.com
+Message-Id: <20211128142138.5EAD11D08B7B@mail.vallenar.cl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 Nov 2021 11:27:01 +0530, Jishnu Prakash wrote:
-> Add documentation for PMIC5 Gen2 ADC_TM peripheral.
-> It is used for monitoring ADC channel thresholds for PMIC7-type
-> PMICs. It is present on PMK8350, like PMIC7 ADC and can be used
-> to monitor up to 8 ADC channels, from any of the PMIC7 PMICs
-> on a target, through PBS(Programmable Boot Sequence).
-> 
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
-> ---
->  .../bindings/thermal/qcom-spmi-adc-tm5.yaml        | 110 ++++++++++++++++++++-
->  1 file changed, 108 insertions(+), 2 deletions(-)
-> 
+Sie haben eine Spende von 2.000.000,00. Euro
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Mein Name ist Manuel Franco aus den Vereinigten Staaten.
+Ich habe die Amerika-Lotterie im Wert von 768 Millionen US-Dollar gewonnen =
+und spende einen Teil davon an nur 5 gl=FCckliche Menschen und ein paar Wai=
+senh=E4user als Wohlwollen f=FCr die Menschheit.
