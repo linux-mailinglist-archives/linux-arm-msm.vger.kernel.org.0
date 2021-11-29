@@ -2,51 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 414B7461EE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 19:40:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B13D2461FA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 19:53:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354506AbhK2Sll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 13:41:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36856 "EHLO
+        id S1379627AbhK2S4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 13:56:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379514AbhK2Sjj (ORCPT
+        with ESMTP id S1379493AbhK2Syz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 13:39:39 -0500
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0148FC12B6B2;
-        Mon, 29 Nov 2021 06:57:03 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: kholk11)
-        with ESMTPSA id E7DCC1F44873
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=collabora.com; s=mail;
-        t=1638197821; bh=diE9jAw9lUIQQd/ekZxakvexYtMLMupgXaiQfjW+cc0=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=UO/jvS33cB5wBTB4cnZqRx3JAgkN85LgS7IOfCDwj4kYSxdjrk4D4opmiWmxHmwpe
-         9V6FyjGLxQnjZhGqB7LAVFNl5PqtMkDUpsjUZykYr0bKNosMbGGIlBthGwXFXPVDeZ
-         9mitBOEq70eDAdYOj7uvJzbLmy8bTEg2PF/WdQkZBIgfND7dNAd5q2n0qkznOh8kB/
-         Oli2bJO55R53FmGMtzq55YIhnWPv8ssN9BRruJYhKz1KBoOodEpar2Td1cil4Ml2mJ
-         Ak0Rb0E53FCmTpTDeQA2KU+4QcNH1k2wQc5koF1zcfScyevVnrmkqYUne2QMSCUYaL
-         Xy7HFlYLJNUhA==
-Subject: Re: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        jami.kettunen@somainline.org
-References: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
- <bf1540f1-4a9f-a9d6-d487-929107c487fd@linaro.org>
- <9a0158ae-a3b1-21b2-1ba3-82d4901eb873@collabora.com>
- <CAA8EJpq1Lmpe8v5OLuEHBJd8Ehid+Jpyzs42BURVmn4B-=yWJA@mail.gmail.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Message-ID: <4e395a6f-e174-ca5c-4fce-197dc69cd185@collabora.com>
-Date:   Mon, 29 Nov 2021 15:56:57 +0100
+        Mon, 29 Nov 2021 13:54:55 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CFCC08C5DA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 07:13:02 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id o13so37431320wrs.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 07:13:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xquLonnK7pAKBqVBzE4OuytOwfJ3qCkRHAHnNdpdzPw=;
+        b=hHMyva5D2w89wjRhCI6ExzexdQiQ9tO2PwCgN4OhQg0fYHIsbEVelK1zk1v25I8wXn
+         kQeisU7JhMX579OFnK7wz81792tamQIlxG3ObAg+xrHi6wgZxqu8mrL9B38wRjZFgfI7
+         n/l378P8RaiAyzDqQPjOrhpPp+5EVL7ni6CQdnadcYoMXChvTWmTotMIRDDP1bXknVX2
+         2JCx1bsgwMQlb3X5InXz2T3dFO8ET1/Ep+9EU8wo4wa1YxhlePsMF+YVlWs5A+v0keuk
+         6i2UCbWBVIHPpaBQfYfkWURJfLouNqZdVBsGfn2ybuc/euGQtBr/1CEyUufjiHy66qW9
+         cpeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xquLonnK7pAKBqVBzE4OuytOwfJ3qCkRHAHnNdpdzPw=;
+        b=RvclOi/M4AJcZQXZXaB4WJf5LYubgvtK6KBY36gfYF4qiWB+dTWQk/fuWzADCgT+4S
+         NQHOpp2eEMUgY6q8JiSuzr3041MKGfRAN+KM1/5JCgj73HaUzfUpnOETWeWtzVTNZjAQ
+         yDhO1zSNNSULNqSKcYNNs+OnTOGgMBI1GWsrSBT87BWFoBgxDkXLoxY6/t29p0YQoCBM
+         J5pUD7GrtMRq8G8LOFdpUbW0e/69ymBimPhL0r5aKFDI1f7OHkKVz4F/uFKm4OvY3iH1
+         6O3sZfOArQTtb4aFkHlKa9yU5pjVURG8T8uT1dgrRZ3NR/74I6CPrMU+k8zNH2Vk+Glh
+         pXgw==
+X-Gm-Message-State: AOAM531ieY5CImPmaX5iuhslvW+NxQOOPrpBc2UKcbPh4xDA2tXKpsMm
+        mvlYvHFyhId3rCHGWLYuAxO1Aw==
+X-Google-Smtp-Source: ABdhPJzKyl4TJblK+Slv12GEcnCAS7+Hp0r869ZbGOnYYo0uMtagIcvKyzHPiYTmDU6aEL5fGE/k3w==
+X-Received: by 2002:a05:6000:1c2:: with SMTP id t2mr33167492wrx.378.1638198780445;
+        Mon, 29 Nov 2021 07:13:00 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id r17sm22290873wmq.5.2021.11.29.07.12.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Nov 2021 07:12:59 -0800 (PST)
+Subject: Re: [PATCH 1/2] misc: fastrpc: Add fdlist implementation
+To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org
+Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
+References: <1638163720-23123-1-git-send-email-jeyr@codeaurora.org>
+ <1638163720-23123-2-git-send-email-jeyr@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <3ee1388d-2528-56ed-ce5f-4c667beb67cb@linaro.org>
+Date:   Mon, 29 Nov 2021 15:12:58 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAA8EJpq1Lmpe8v5OLuEHBJd8Ehid+Jpyzs42BURVmn4B-=yWJA@mail.gmail.com>
+In-Reply-To: <1638163720-23123-2-git-send-email-jeyr@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -54,120 +69,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 29/11/21 15:53, Dmitry Baryshkov ha scritto:
-> Hi,
-> 
-> On Mon, 29 Nov 2021 at 17:15, AngeloGioacchino Del Regno
-> <angelogioacchino.delregno@collabora.com> wrote:
->>
->> Il 29/11/21 03:20, Dmitry Baryshkov ha scritto:
->>> Hi,
->>>
->>> On 25/11/2021 18:09, AngeloGioacchino Del Regno wrote:
->>>> Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
->>>> DSI host gets initialized earlier, but this caused unability to probe
->>>> the entire stack of components because they all depend on interrupts
->>>> coming from the main `mdss` node (mdp5, or dpu1).
->>>>
->>>> To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
->>>> them at msm_pdev_probe() time: this will make sure that we add the
->>>> required interrupt controller mapping before dsi and/or other components
->>>> try to initialize, finally satisfying the dependency.
->>>>
->>>> While at it, also change the allocation of msm_drm_private to use the
->>>> devm variant of kzalloc().
->>>>
->>>> Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
->>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
->>>
->>> I have been thinking about this. I do not feel that this is the correct approach.
->>> Currently DRM device exists only when all components are bound. If any of the
->>> subdevices is removed, corresponding component is delteted (and thus all components
->>> are unbound), the DRM device is taken down. This results in the state cleanup,
->>> userspace notifications, etc.
->>>
->>> With your changes, DRM device will continue to exist even after one of subdevices
->>> is removed. This is not an expected behaviour, since subdrivers do not perform full
->>> cleanup, delegating that to DRM device takedown.
->>>
->>> I suppose that proper solution would be to split msm_drv.c into into:
->>> - generic components & drm code to be called from mdp4/mdp5/dpu driver (making
->>> mdp4, mdp5 or dpu1 the components master)
->>>
->>> - bare mdss driver, taking care only about IRQs, OF devices population - calling
->>> proper mdss_init/mdss_destroy functions. Most probably we can drop this part
->>> altogether and just make md5_mdss.c/dpu_mdss.c proper platform drivers.
->>>
->>
->>
->> Hmm... getting a better look on how things are structured... yes, I mostly agree
->> with you, though I'm not sure about making MDP{4,5}/DPU1 the component master; that
->> would result in a major change in drm-msm, which may be "a bit too much".
->>
->> Don't misunderstand me here, please, major changes are fine - but I feel urgency
->> to get this bug solved ASAP (since drm-msm is currently broken at least for drm
->> bridges) and, if we do anything major, that would require a very careful slow
->> review process that will leave this driver broken for a lot of time.
-> 
-> Yep. I wanted to hear your and Rob's opinion, that's why I did not
-> rush into implementing it.
-> I still think this is the way to go in the long term. What I really
-> liked in your patchset was untying the knot between component binds
-> returning EPROBE_DEFER and mdss subdevices being in place. This solved
-> the "dsi host registration" infinite loop for me.
-> 
-
-Thanks. I'm also curious about Rob's opinion on this, as that'd be very valuable.
-
->>
->> I actually tried something else that "simplifies" the former approach, so here's
->> my proposal:
->> * we introduce {mdp5,dpu}_mdss_early_init(struct device, struct msm_drm_private)
->> * allocate only msm_drm_private in msm_pdev_probe, leaving the drm_dev_alloc call
->>     into msm_drm_init(), so that the drm_dev_put() stays in msm_drm_uninit()
->> * pass msm_drm_private as drvdata instead of drm_device
->> * change all the drvdata users to get drm_device from priv->dev, instead of getting
->>     msm_drm_private from drm_device->dev_private (like many other drm drivers are
->>     currently doing)
-> 
-> This sounds in a way that it should work. I'm looking forward to
-> seeing (and testing) your patches.
-> 
-
-Alright then, I'm running some more tests and cleaning up the patches.
-Expect a v2 between today and tomorrow at max! :))
-
->>
->> This way, we keep the current flow of creating the DRM device at msm_drm_init time
->> and tearing it down at msm_drm_unbind time, solving the issue that you are
->> describing.
->>
->> If you're okay with this kind of approach, I have two patches here that are 95%
->> ready, can finish them off and send briefly.
->>
->> Though, something else must be noted here... in the last mail where I'm pasting
->> a crash that happens when running 'rmmod panel_edp ti_sn65dsi86', I have implied
->> that this is happening due to the patch that I've sent: after some more research,
->> I'm not convinced anymore that this is a consequence of that. That crash may not
->> be related to my fix at all, but to something else (perhaps also related to commit
->> 8f59ee9a570c, the one that we're fixing here).
->>
->> Of course, that crash still happens even with the approach that I've just proposed.
->>
->>
->> Looking forward for your opinion!
->>
->> Cheers,
->> - Angelo
-> 
-> 
-> 
+Thanks for the patch,
 
 
--- 
-AngeloGioacchino Del Regno
-Software Engineer
+On 29/11/2021 05:28, Jeya R wrote:
+> Add fdlist implementation to support dma handles. fdlist is populated
+> by DSP if any map is no longer used and it is freed during put_args.
 
-Collabora Ltd.
-Platinum Building, St John's Innovation Park, Cambridge CB4 0DS, UK
-Registered in England & Wales, no. 5513718
+Does the dsp add all the fds (from in/out handles) to this list or only 
+ones that are no-longer used by the dsp?
+
+
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> ---
+>   drivers/misc/fastrpc.c | 22 ++++++++++++++++++++--
+>   1 file changed, 20 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 39aca77..3c937ff 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -353,7 +353,7 @@ static void fastrpc_context_free(struct kref *ref)
+>   	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
+>   	cctx = ctx->cctx;
+>   
+> -	for (i = 0; i < ctx->nscalars; i++)
+> +	for (i = 0; i < ctx->nbufs; i++)
+>   		fastrpc_map_put(ctx->maps[i]);
+
+If above question is true, then who is going to free the rest of the 
+scalars.
+
+>   
+>   	if (ctx->buf)
+> @@ -785,6 +785,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+>   	err = fastrpc_buf_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
+>   	if (err)
+>   		return err;
+> +	memset(ctx->buf->virt, 0, pkt_size);
+
+Why do we need to make this zero, dma_alloc_coherent should have 
+returned zeroed memory here anyway?
+
+
+>   
+>   	rpra = ctx->buf->virt;
+>   	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+> @@ -887,9 +888,19 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>   			    u32 kernel)
+>   {
+>   	struct fastrpc_remote_arg *rpra = ctx->rpra;
+> -	int i, inbufs;
+> +	struct fastrpc_map *mmap = NULL;
+> +	struct fastrpc_invoke_buf *list;
+> +	struct fastrpc_phy_page *pages;
+> +	u64 *fdlist;
+> +	int i, inbufs, outbufs, handles;
+>   
+>   	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+> +	outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
+> +	handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
+> +	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+> +	pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
+> +		sizeof(*rpra));
+> +	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
+>   
+>   	for (i = inbufs; i < ctx->nbufs; ++i) {
+>   		if (!ctx->maps[i]) {
+> @@ -906,6 +917,13 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>   		}
+>   	}
+>   
+> +	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
+> +		if (!fdlist[i])
+> +			break;
+> +		if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
+
+fastrpc_map_find() is will invoke a kref_get on the map so calling 
+single fastrpc_map_put() here is not going to work. driver will be 
+leaking memory.
+
+Have you tested this patch with kmemleak enabled?
+
+--srini
+
+
+> +			fastrpc_map_put(mmap);
+
+
+> +	}
+> +
+>   	return 0;
+>   }
+>   
+> 
