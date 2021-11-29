@@ -2,86 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C798461AF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 16:32:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80F5C461AFC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 16:32:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234943AbhK2Pfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 10:35:51 -0500
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:45815 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344160AbhK2Pdv (ORCPT
+        id S1344975AbhK2PgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 10:36:03 -0500
+Received: from mail-oi1-f169.google.com ([209.85.167.169]:45824 "EHLO
+        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229883AbhK2Pd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 10:33:51 -0500
-Received: by mail-oi1-f181.google.com with SMTP id 7so35212744oip.12;
-        Mon, 29 Nov 2021 07:30:33 -0800 (PST)
+        Mon, 29 Nov 2021 10:33:57 -0500
+Received: by mail-oi1-f169.google.com with SMTP id 7so35213391oip.12;
+        Mon, 29 Nov 2021 07:30:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=m4n1c0DkMDGMvar0IQu4WXywqga4uflTYXHUTLO3idE=;
-        b=VWWRkUZUIk7d7Dxc1K1JMLfZS3K4HMojbsCcQ7HcxPegJu74EEPMVmf9DsAc/52uHe
-         G0SM3w5sNfC6EGO0S8inL0O4dMbFHAfOw7QpwdQJnZ9HlgyVVJzYNjbLjh0djEXbf3vd
-         qqBRHmZ+9tIaq9XP45h3r16Me+7X6NcRvVmhGy6+ABjxXi1l76DXCeuUgmmDouyyP9Ht
-         Am+PTu8FeDxEZ2Ne0b2hchPdOMv8q41Uhtnf5CNGm9HE+z8KeEdRS4Y7Ms+8X41rMzI+
-         ptj1NcEXvAzrKpPdavVqB7gic8zKd+sTgMMAbU6vfB7kpKi8DiK61KXwfHCKZkcBV9Eo
-         Rl8w==
-X-Gm-Message-State: AOAM5334tw6nnCmAt1sWf38ZIvwNPAFzGGENRnsMprBIMsfW7dxZ7OpG
-        UYyXIMFjK7uNuKe49FqZfQ==
-X-Google-Smtp-Source: ABdhPJzkwkUaXI6PG8tzsGAmXouYAAtD/aY86iaymO28QoeayfkXaFCBwnqJhl86e+24aOT2mM0y8w==
-X-Received: by 2002:a05:6808:1589:: with SMTP id t9mr41980146oiw.108.1638199833168;
-        Mon, 29 Nov 2021 07:30:33 -0800 (PST)
+        bh=6THXcIGoLp6QwGKfw0cyj8oia8wwhQE6ljHde1y7tgU=;
+        b=4Lph2TiYqFWRcvLjlRA9QWAVlJyEAr93Epd/zL8ijjFvij0zoQuXXziy63GKYUDzBl
+         BkcdchQCcZILD1W5dGilTgbJHWDY0eavjtXET7H/m9K4pwOpIfWnDUnpWJSauAwPIvZI
+         VBTw9BfylhECkUyS6+Emb9aavajxyDJKD4cLTogVxX/q6Jls1yTQUnyBOjfX5GN3hnXO
+         0IWJXb1yKdt1dP+JPti9nYg6uzXyKx53vj3nZQ5zfDXs328+nlbP0VdbPCo1PLIs1jVJ
+         hW2qVezTSta4fpCuCtvHGkQbWODWK8iFerKuiYkvqhrjt13XXbzj76gNAe7a3EX7ZZt2
+         5J7g==
+X-Gm-Message-State: AOAM530JHdPwAWvhBo8tVbDR9PtFY16KA/0f4sdM/oGL8RzdjQQof6j5
+        OxilTjZFP/KaQkrgjxz51A==
+X-Google-Smtp-Source: ABdhPJzSL0gcqzaakshHOOyWn+i3lg8/UoCkqqvEtyH87CsQRjyrYnvjJR22ShYlDpIIpvfFrqxLDw==
+X-Received: by 2002:a05:6808:1185:: with SMTP id j5mr41185468oil.16.1638199839402;
+        Mon, 29 Nov 2021 07:30:39 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id s17sm2273404ooj.42.2021.11.29.07.30.31
+        by smtp.gmail.com with ESMTPSA id ay40sm3107794oib.1.2021.11.29.07.30.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Nov 2021 07:30:32 -0800 (PST)
-Received: (nullmailer pid 123612 invoked by uid 1000);
+        Mon, 29 Nov 2021 07:30:38 -0800 (PST)
+Received: (nullmailer pid 123617 invoked by uid 1000);
         Mon, 29 Nov 2021 15:30:31 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc:     sboyd@kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, collinsd@codeaurora.org,
-        Rob Herring <robh+dt@kernel.org>, subbaram@codeaurora.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <1638174137-23290-11-git-send-email-quic_fenglinw@quicinc.com>
-References: <1638174137-23290-1-git-send-email-quic_fenglinw@quicinc.com> <1638174137-23290-11-git-send-email-quic_fenglinw@quicinc.com>
-Subject: Re: [PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>, agross@kernel.org,
+        lgirdwood@gmail.com, bgoswami@codeaurora.org, robh+dt@kernel.org,
+        linux-gpio@vger.kernel.org, judyhsiao@chromium.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        bjorn.andersson@linaro.org, swboyd@chromium.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com, perex@perex.cz,
+        linux-arm-msm@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>, broonie@kernel.org,
+        plai@codeaurora.org, rohitkr@codeaurora.org,
+        alsa-devel@alsa-project.org
+In-Reply-To: <1638179932-3353-3-git-send-email-srivasam@codeaurora.org>
+References: <1638179932-3353-1-git-send-email-srivasam@codeaurora.org> <1638179932-3353-3-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH v3 2/5] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi pinctrl bindings
 Date:   Mon, 29 Nov 2021 09:30:31 -0600
-Message-Id: <1638199831.114024.123611.nullmailer@robh.at.kernel.org>
+Message-Id: <1638199831.132589.123616.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 29 Nov 2021 16:22:17 +0800, Fenglin Wu wrote:
-> Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
-> update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
-> it and update it with a smaller range.
+On Mon, 29 Nov 2021 15:28:49 +0530, Srinivasa Rao Mandadapu wrote:
+> Add device tree binding Documentation details for Qualcomm SC7280
+> LPASS LPI pinctrl driver.
 > 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 > ---
->  .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
->  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
->  Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
->  3 files changed, 130 insertions(+), 68 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>  .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml     | 115 +++++++++++++++++++++
+>  1 file changed, 115 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
 yamllint warnings/errors:
-./Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml:37:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
-./Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml:41:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
 
 dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml: duplicate '$id' value 'http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#'
 
 doc reference errors (make refcheckdocs):
-Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt: Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
 
-See https://patchwork.ozlabs.org/patch/1561055
+See https://patchwork.ozlabs.org/patch/1561073
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
