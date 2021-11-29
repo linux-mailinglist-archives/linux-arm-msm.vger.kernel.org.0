@@ -2,204 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DD9D460E9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 06:31:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ADE6460F4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 08:25:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241030AbhK2FeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 00:34:11 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:14352 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239218AbhK2FcK (ORCPT
+        id S233859AbhK2H3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 02:29:05 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:32767 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233486AbhK2H1F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 00:32:10 -0500
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 28 Nov 2021 21:28:53 -0800
+        Mon, 29 Nov 2021 02:27:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638170628; x=1669706628;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ZlbWCVV/lfOP54IUq+A6kh+sJQ9XzioUfaO5ohBaCec=;
+  b=ezirMwPclZPnhtr/DlfMkda+UbwVRpDAw7cs+iiOQy9nWSSh3DRP7j6D
+   d9httSuycQ+1ElMqSrpF+IoMnIWRfbGpB6ptl3rNbPlJUu4/2Quly3l8N
+   wnr7CtyUTjlO9Dwnh8sZWa8x6GUy289LDczXtiXDSqkKdPA2BdCyJ48Jl
+   s=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Nov 2021 23:23:48 -0800
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 28 Nov 2021 21:28:52 -0800
-X-QCInternal: smtphost
-Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Nov 2021 10:58:43 +0530
-Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id 57CF84361; Mon, 29 Nov 2021 10:58:42 +0530 (IST)
-From:   Jeya R <jeyr@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: [PATCH 2/2] misc: fastrpc: Add dma handle implementation
-Date:   Mon, 29 Nov 2021 10:58:40 +0530
-Message-Id: <1638163720-23123-3-git-send-email-jeyr@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638163720-23123-1-git-send-email-jeyr@codeaurora.org>
-References: <1638163720-23123-1-git-send-email-jeyr@codeaurora.org>
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2021 23:23:48 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 28 Nov 2021 23:23:47 -0800
+Received: from [10.216.45.128] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 28 Nov
+ 2021 23:23:43 -0800
+Message-ID: <56a5820e-9cd7-aa49-7ce8-9547f355986e@quicinc.com>
+Date:   Mon, 29 Nov 2021 12:53:39 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v2 2/2] irqchip: Add Qualcomm MPM controller driver
+To:     Shawn Guo <shawn.guo@linaro.org>, Marc Zyngier <maz@kernel.org>,
+        "Thomas Gleixner" <tglx@linutronix.de>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20211126093529.31661-1-shawn.guo@linaro.org>
+ <20211126093529.31661-3-shawn.guo@linaro.org>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <20211126093529.31661-3-shawn.guo@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add dma handle instructions to remote arguments.
+Hi Shawn,
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
----
- drivers/misc/fastrpc.c | 75 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 20 deletions(-)
+On 11/26/2021 3:05 PM, Shawn Guo wrote:
+> +static int __maybe_unused qcom_mpm_suspend_late(struct device *dev)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 3c937ff..77071ee3 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -92,9 +92,20 @@ struct fastrpc_invoke_buf {
- 	u32 pgidx;		/* index to start of contiguous region */
- };
- 
--struct fastrpc_remote_arg {
--	u64 pv;
--	u64 len;
-+struct fastrpc_remote_dmahandle {
-+	s32 fd;			/* dma handle fd */
-+	u32 offset;		/* dma handle offset */
-+	u32 len;		/* dma handle length */
-+};
-+
-+struct fastrpc_remote_buf {
-+	u64 pv;			/* buffer pointer */
-+	u64 len;		/* length of buffer */
-+};
-+
-+union fastrpc_remote_arg {
-+	struct fastrpc_remote_buf buf;
-+	struct fastrpc_remote_dmahandle dma;
- };
- 
- struct fastrpc_mmap_rsp_msg {
-@@ -189,7 +200,7 @@ struct fastrpc_invoke_ctx {
- 	struct work_struct put_work;
- 	struct fastrpc_msg msg;
- 	struct fastrpc_user *fl;
--	struct fastrpc_remote_arg *rpra;
-+	union fastrpc_remote_arg *rpra;
- 	struct fastrpc_map **maps;
- 	struct fastrpc_buf *buf;
- 	struct fastrpc_invoke_args *args;
-@@ -760,12 +771,26 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
- 	return 0;
- }
- 
-+static struct fastrpc_invoke_buf *fastrpc_invoke_buf_start(union fastrpc_remote_arg *pra, u32 sc)
-+{
-+	unsigned int len = REMOTE_SCALARS_LENGTH(sc);
-+
-+	return (struct fastrpc_invoke_buf *)(&pra[len]);
-+}
-+
-+static struct fastrpc_phy_page *fastrpc_phy_page_start(u32 sc, struct fastrpc_invoke_buf *buf)
-+{
-+	unsigned int len = REMOTE_SCALARS_LENGTH(sc);
-+
-+	return (struct fastrpc_phy_page *)(&buf[len]);
-+}
-+
- static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- {
- 	struct device *dev = ctx->fl->sctx->dev;
--	struct fastrpc_remote_arg *rpra;
-+	union fastrpc_remote_arg *rpra = NULL;
- 	struct fastrpc_invoke_buf *list;
--	struct fastrpc_phy_page *pages;
-+	struct fastrpc_phy_page *pages, *ipage;
- 	int inbufs, i, oix, err = 0;
- 	u64 len, rlen, pkt_size;
- 	u64 pg_start, pg_end;
-@@ -773,7 +798,13 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 	int metalen;
- 
- 	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
--	metalen = fastrpc_get_meta_size(ctx);
-+	list = fastrpc_invoke_buf_start(rpra, ctx->sc);
-+	pages = fastrpc_phy_page_start(ctx->sc, list);
-+	ipage = pages;
-+	ipage += ctx->nscalars;
-+	metalen = (size_t)&ipage[0] +
-+		sizeof(u64) * FASTRPC_MAX_FDLIST +
-+		sizeof(u32) * FASTRPC_MAX_CRCLIST;
- 	pkt_size = fastrpc_get_payload_size(ctx, metalen);
- 
- 	err = fastrpc_create_maps(ctx);
-@@ -788,12 +819,11 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 	memset(ctx->buf->virt, 0, pkt_size);
- 
- 	rpra = ctx->buf->virt;
--	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
--	pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
--		sizeof(*rpra));
-+	ctx->rpra = rpra;
-+	list = fastrpc_invoke_buf_start(rpra, ctx->sc);
-+	pages = fastrpc_phy_page_start(ctx->sc, list);
- 	args = (uintptr_t)ctx->buf->virt + metalen;
- 	rlen = pkt_size - metalen;
--	ctx->rpra = rpra;
- 
- 	for (oix = 0; oix < ctx->nbufs; ++oix) {
- 		int mlen;
-@@ -801,8 +831,8 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 		i = ctx->olaps[oix].raix;
- 		len = ctx->args[i].length;
- 
--		rpra[i].pv = 0;
--		rpra[i].len = len;
-+		rpra[i].buf.pv = 0;
-+		rpra[i].buf.len = len;
- 		list[i].num = len ? 1 : 0;
- 		list[i].pgidx = i;
- 
-@@ -812,7 +842,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 		if (ctx->maps[i]) {
- 			struct vm_area_struct *vma = NULL;
- 
--			rpra[i].pv = (u64) ctx->args[i].ptr;
-+			rpra[i].buf.pv = (u64) ctx->args[i].ptr;
- 			pages[i].addr = ctx->maps[i]->phys;
- 
- 			mmap_read_lock(current->mm);
-@@ -839,7 +869,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 			if (rlen < mlen)
- 				goto bail;
- 
--			rpra[i].pv = args - ctx->olaps[oix].offset;
-+			rpra[i].buf.pv = args - ctx->olaps[oix].offset;
- 			pages[i].addr = ctx->buf->phys -
- 					ctx->olaps[oix].offset +
- 					(pkt_size - rlen);
-@@ -853,7 +883,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 		}
- 
- 		if (i < inbufs && !ctx->maps[i]) {
--			void *dst = (void *)(uintptr_t)rpra[i].pv;
-+			void *dst = (void *)(uintptr_t)rpra[i].buf.pv;
- 			void *src = (void *)(uintptr_t)ctx->args[i].ptr;
- 
- 			if (!kernel) {
-@@ -869,12 +899,17 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 	}
- 
- 	for (i = ctx->nbufs; i < ctx->nscalars; ++i) {
--		rpra[i].pv = (u64) ctx->args[i].ptr;
--		rpra[i].len = ctx->args[i].length;
-+		rpra[i].buf.pv = (u64) ctx->args[i].ptr;
-+		rpra[i].buf.len = ctx->args[i].length;
- 		list[i].num = ctx->args[i].length ? 1 : 0;
- 		list[i].pgidx = i;
--		pages[i].addr = ctx->maps[i]->phys;
--		pages[i].size = ctx->maps[i]->size;
-+		if (ctx->maps[i]) {
-+			pages[i].addr = ctx->maps[i]->phys;
-+			pages[i].size = ctx->maps[i]->size;
-+		}
-+		rpra[i].dma.fd = ctx->args[i].fd;
-+		rpra[i].dma.len = ctx->args[i].length;
-+		rpra[i].dma.offset = (u64) ctx->args[i].ptr;
- 	}
- 
- bail:
--- 
-2.7.4
+why maybe unused?
 
+> +{
+> +	struct qcom_mpm_priv *priv = dev_get_drvdata(dev);
+> +	int i, ret;
+> +
+> +	for (i = 0; i < priv->reg_stride; i++)
+> +		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
+> +
+> +	/* Notify RPM to write vMPM into HW */
+> +	ret = mbox_send_message(priv->mbox_chan, NULL);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static int __maybe_unused qcom_mpm_resume_early(struct device *dev)
+> +{
+> +	/* Nothing to do for now */
+> +	return 0;
+> +}
+> +
+> +static const struct dev_pm_ops qcom_mpm_pm_ops = {
+> +	SET_LATE_SYSTEM_SLEEP_PM_OPS(qcom_mpm_suspend_late,
+> +				     qcom_mpm_resume_early)
+> +};
+
+This is not limited to suspend, you will need to notify RPM during 
+deepest cpu idle state entry as well, since MPM may be monitoring 
+interrupts in that case too.
+
+This may be handled for both suspend/CPUidle using cpu pm notifications 
+where in last cpu entering deepest idle may notify RPM (something 
+similar to what rpmh-rsc.c does)
+
+Thanks,
+Maulik
