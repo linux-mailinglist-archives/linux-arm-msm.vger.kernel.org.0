@@ -2,95 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5665B4611C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 11:08:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1527C46117A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 10:57:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344633AbhK2KLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 05:11:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245186AbhK2KJU (ORCPT
+        id S245703AbhK2KAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 05:00:43 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:17726 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231528AbhK2J6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 05:09:20 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E93C0698C4;
-        Mon, 29 Nov 2021 01:47:58 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 29 Nov 2021 04:58:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638179721; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=rTfcGTR+3GLs3cW3kgd/lC6PwGh1if+M38DrtgJcOGQ=;
+ b=GobgZgVGYADasssy6yD2p1R2D6UOgKzUZ17MzqvsuFdwQNj6SgbXg+YiN3orLLFoCa7ZctBn
+ cxrckYhhL69vb0GYsMjBMo9mFCX18NYHX1Agbco6c2AAYGyhRTvRBiYTZtnnVrvOXrkd1RFD
+ LV1y8DJnyNQXa/PJ7uiE4wagykM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61a4a389bebfa3d4d5084100 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Nov 2021 09:55:21
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 398FEC4360D; Mon, 29 Nov 2021 09:55:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1945561274;
-        Mon, 29 Nov 2021 09:47:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17490C93056;
-        Mon, 29 Nov 2021 09:47:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638179277;
-        bh=g7axgzCcZGn/eeA1irl2Ht+bPVY0TQVNksswKwdV460=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=BeyQubmuGPslQehBh6n2w+Qk+OC0h7H+dSEAMsDwXRHOR5ge0JmWQPtkv82y4Akgn
-         eucesC14ZOxrgtVjuAyE8l6EIcns2wO6CWGBXeGNcdHihCZe3tkAGmV2C6Ebp9ctrG
-         wAdiMvqTr5ovJCh8JTgM3VmhwHmpsZ1zQf108T1AJAC6No8aOIHrg7F2PHaRv18ols
-         s2o6ifx+hkB/+DpOVcwvldgKImrmws1HvtCty/h68l/7KP+01S6b8PnsrwZigsAwr0
-         RoUm9shvYenAL/XO0f220yrMDbGWzqTMYr3iRI1xB1WV8ueaOA+GffSnrCYmvY2Qs6
-         8Sme4GhwJZwBg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
-        (envelope-from <mchehab@kernel.org>)
-        id 1mrdGM-000RBy-Un; Mon, 29 Nov 2021 10:47:54 +0100
-From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
-        Robert Foss <robert.foss@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH v2 17/20] media: camss: Remove unused static function
-Date:   Mon, 29 Nov 2021 10:47:49 +0100
-Message-Id: <f1b1507dd460eb050dd1817bd11d664e1cba0f6e.1638179135.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <cover.1638179135.git.mchehab+huawei@kernel.org>
-References: <cover.1638179135.git.mchehab+huawei@kernel.org>
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5A828C4360C;
+        Mon, 29 Nov 2021 09:55:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 29 Nov 2021 15:25:20 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Rakesh Pillai <pillair@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org,
+        pillair=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH v7] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+In-Reply-To: <1637299488-22336-1-git-send-email-pillair@codeaurora.org>
+References: <1637299488-22336-1-git-send-email-pillair@codeaurora.org>
+Message-ID: <14d31c99d8fe258af3fc1f28c787c8cb@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Robert Foss <robert.foss@linaro.org>
+Hey Rakesh,
 
-vfe_reg_clr() is not used in camss-vfe-170.c, and can be removed.
+On 2021-11-19 10:54, Rakesh Pillai wrote:
+> Add the WPSS remoteproc node in dts for
+> PIL loading.
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> ---
+> Changes from v6:
+> - Swap the oder of two properties in wpss_mem reserved memory
+> 
+> Changes from v5:
+> - Update the clock names
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 56 
+> +++++++++++++++++++++++++++++++++
+>  2 files changed, 60 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index 9b991ba..ddab150 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -80,3 +80,7 @@
+>  		qcom,pre-scaling = <1 1>;
+>  	};
+>  };
+> +
+> +&remoteproc_wpss {
+> +	status = "okay";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 365a2e0..dd93f13 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -134,6 +134,11 @@
+>  			no-map;
+>  		};
+> 
+> +		wpss_mem: memory@9ae00000 {
+> +			reg = <0x0 0x9ae00000 0x0 0x1900000>;
+> +			no-map;
+> +		};
+> +
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
+wpss_mem is already part of idp
+board dts. We no longer include
+PIL reserved memory regions in
+the base SoC dtsi since the size
+varies across boards.
 
-See [PATCH v2 00/20] at: https://lore.kernel.org/all/cover.1638179135.git.mchehab+huawei@kernel.org/
+>  		rmtfs_mem: memory@9c900000 {
+>  			compatible = "qcom,rmtfs-mem";
+>  			reg = <0x0 0x9c900000 0x0 0x280000>;
+> @@ -2598,6 +2603,57 @@
+>  			status = "disabled";
+>  		};
+> 
+> +		remoteproc_wpss: remoteproc@8a00000 {
+> +			compatible = "qcom,sc7280-wpss-pil";
+> +			reg = <0 0x08a00000 0 0x10000>;
+> +
+> +			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
+> +					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready", "handover",
+> +					  "stop-ack", "shutdown-ack";
+> +
+> +			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
+> +				 <&gcc GCC_WPSS_AHB_CLK>,
+> +				 <&gcc GCC_WPSS_RSCP_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "ahb_bdg", "ahb",
+> +				      "rscp", "xo";
+> +
+> +			power-domains = <&rpmhpd SC7280_CX>,
+> +					<&rpmhpd SC7280_MX>;
+> +			power-domain-names = "cx", "mx";
+> +
+> +			memory-region = <&wpss_mem>;
+> +
+> +			qcom,qmp = <&aoss_qmp>;
+> +
+> +			qcom,smem-states = <&wpss_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
+> +				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
+> +			reset-names = "restart", "pdc_sync";
+> +
+> +			qcom,halt-regs = <&tcsr_mutex 0x37000>;
+> +
+> +			status = "disabled";
+> +
+> +			glink-edge {
+> +				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
+> +							     IPCC_MPROC_SIGNAL_GLINK_QMP
+> +							     IRQ_TYPE_EDGE_RISING>;
+> +				mboxes = <&ipcc IPCC_CLIENT_WPSS
+> +						IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +				label = "wpss";
+> +				qcom,remote-pid = <13>;
+> +			};
+> +		};
+> +
+>  		dc_noc: interconnect@90e0000 {
+>  			reg = <0 0x090e0000 0 0x5080>;
+>  			compatible = "qcom,sc7280-dc-noc";
 
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index 5c083d70d495..f524af712a84 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -191,13 +191,6 @@ static u32 vfe_hw_version(struct vfe_device *vfe)
- 	return hw_version;
- }
- 
--static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
--{
--	u32 bits = readl_relaxed(vfe->base + reg);
--
--	writel_relaxed(bits & ~clr_bits, vfe->base + reg);
--}
--
- static inline void vfe_reg_set(struct vfe_device *vfe, u32 reg, u32 set_bits)
- {
- 	u32 bits = readl_relaxed(vfe->base + reg);
 -- 
-2.33.1
-
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
