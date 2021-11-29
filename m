@@ -2,73 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4278461517
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 13:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CC73461520
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 13:32:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243652AbhK2Mer (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 07:34:47 -0500
-Received: from no-data ([111.160.120.54]:56313 "HELO 23.128.96.18"
-        rhost-flags-OK-FAIL-FAIL-FAIL) by vger.kernel.org with SMTP
-        id S236408AbhK2Mcp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 07:32:45 -0500
-X-Greylist: delayed 17613 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Nov 2021 07:32:42 EST
-Received: from [178.88.101.204] by 23.128.96.18 with ESMTP id 23100309; Mon, 29 Nov 2021 11:27:27 -0100
-Message-ID: <h-i--tb4dc$84-$h-n4@8luckq0z2>
-From:    =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
-         <hgds2142ajh@hanmail.net>
-Reply-To:  =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
-           <hgds2142ajh@hanmail.net>
-To:     linux-nilfs@vger.kernel.org
-Subject:  =?ISO-8859-1?Q?=20=B1=B8=C0=CE/=B1=B8=C1=F7=C1=DF=C0=CC=BD=C3=B6?= =?ISO-8859-1?Q?=F3=B8?=
-        =?ISO-8859-1?Q?=E9?=  =?ISO-8859-1?Q?=20=B9=DD=B5=E5=BD=C3?=  =?ISO-8859-1?Q?=20=B9=E6=B9=AE=C7?=
-        =?ISO-8859-1?Q?=D8=BC=AD?=  =?ISO-8859-1?Q?=20=C8=AE=C0=CE=C7=D8=BA=B8=BC=BC=BF=E4.?= sna n 
-Date:   Mon, 29 Nov 2021 11:27:27 -0100
-X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+        id S1349020AbhK2Mfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 07:35:30 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:59322 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244746AbhK2Md3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 07:33:29 -0500
+Received: from mail.kernel.org (unknown [198.145.29.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D3B7CB8105A;
+        Mon, 29 Nov 2021 12:30:10 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPS id 717DA60184;
+        Mon, 29 Nov 2021 12:30:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638189009;
+        bh=YumIVWW8v4CgXiygB9D+c81bh6Mc4361zipd22kWrcs=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=bORHPDKpD09HrJC4raYE+/dvcGxogT8lIugWpsBnpDKB9pvomlIRV4hpIjGWWkstE
+         Pi+as2VOZsngMQdk4zvgoQ15yXHKlAkKwhTrvof2/LX/fZIZULuwr6vhm8b9sn76LS
+         cAwKTFh7THT/o8ISjx9MExXVf6AHsLUMq+LCFmYnezWJ0vuS5CYlRczbgHrL3ubeS1
+         owIHCXoBDN+HpZ/NP7NNMBghk/O2v9mEB3bGBGHxf4jxgIiWEngXW1YtKmQkoP9egZ
+         7wFq6gqZhMgWrr7MIdwesYjSptt06Ys2wIv4UStJUcBlMMqXLZXUNbZWypZd7k4xpB
+         93L3tVCostTqA==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 6066760A45;
+        Mon, 29 Nov 2021 12:30:09 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="_B5D_DECAABC44A_BA_"
-X-Priority: 3
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v3 0/2] net: wwan: Add Qualcomm BAM-DMUX WWAN network
+ driver
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <163818900938.24631.13563359260502643872.git-patchwork-notify@kernel.org>
+Date:   Mon, 29 Nov 2021 12:30:09 +0000
+References: <20211127173108.3992-1-stephan@gerhold.net>
+In-Reply-To: <20211127173108.3992-1-stephan@gerhold.net>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     davem@davemloft.net, kuba@kernel.org, loic.poulain@linaro.org,
+        ryazanov.s.a@gmail.com, johannes@sipsolutions.net,
+        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        aleksander@aleksander.es, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, jeffrey.l.hugo@gmail.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello:
 
---_B5D_DECAABC44A_BA_
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+This series was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-<p>=BE=C8=B3=E7=C7=CF=BC=BC=BF=E4. =C8=B8=BF=F8=B4=D4=B5=E9~~~!!
-   <div>=B0=A8=B1=E2,=C4=DA=B7=CE=B3=AA
-=C1=B6=BD=C9=C7=CF=BD=C3=B0=ED=BF=E4=
-,</div>
-   <div>=C0=A5=BC=AD=C7=CE=C7=CF=B4=D9 =B1=B8=C0=CE/=B1=B8=C1=F7=BF=A1 =B0=
-=FC=C7=D1 =C1=C1=C0=BA =C1=A4=BA=B8=B0=A1 =C0=D6=BE=EE
-=B0=F8=C0=AF=C7=D5=B4=
-=CF=B4=D9.</div>
-   <div>
-      <br />=C1=F7=C1=BE/=C6=C4=C6=AE/=BA=D0=B7=F9=BA=B0=B7=CE
-=C6=C4=C6=AE=
-=C5=B8=C0=D3,=BE=CB=B9=D9,=C1=A4=C1=F7=BF=F8 =B1=B8=C0=CE
-=B1=B8=C1=F7=C0=CC=
- =B0=A1=B4=C9=C7=D1
-   </div>
-   <div>=BE=E0 300=BF=A9=B0=B3 =BB=E7=C0=CC=C6=AE =C0=FC=BF=EB
-=BE=EE=C7=C3=
-=B8=AE=C4=C9=C0=CC=BC=C7=C0=D4=B4=CF=B4=D9.</div>
-   <div>
-      <br />=B4=A9=B1=BA=B0=A1 =B9=AB=BE=F9=C0=BB =C3=A3=B5=E7=C1=F6
-=B9=DD=
-=B5=E5=BD=C3 "=C0=E2=B9=EA=B5=E5 =C0=FC=BF=EB=BE=DB"=BF=A1=B4=C2 =C0=D6=B4=
-=D9=B0=ED =C0=DA=BD=C5=C7=D5=B4=CF=B4=D9.
-   </div>
-   <div>=B2=C0 =C7=D1=B9=F8 =B9=E6=B9=AE=C7=D8=BA=B8=BC=BC=BF=E4.</div>
-   <div>=B9=E6=B9=AE=C7=CF=B1=E2&gt;&gt;&gt; <a href=3D"https://soo.gd/TvW=
-c" target=3D"_blank">https://soo.gd/TvWc</a></div>
-   </p>
-cb jnkdjnph
- 
- 
-cxndm bk mrxzyjft
+On Sat, 27 Nov 2021 18:31:06 +0100 you wrote:
+> The BAM Data Multiplexer provides access to the network data channels
+> of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
+> or MSM8974. This series adds a driver that allows using it.
+> 
+> All the changes in this patch series are based on a quite complicated
+> driver from Qualcomm [1]. The driver has been used in postmarketOS [2]
+> on various smartphones/tablets based on Qualcomm MSM8916 and MSM8974
+> for more than a year now with no reported problems. It works out of
+> the box with open-source WWAN userspace such as ModemManager.
+> 
+> [...]
 
---_B5D_DECAABC44A_BA_--
+Here is the summary with links:
+  - [net-next,v3,1/2] dt-bindings: net: Add schema for Qualcomm BAM-DMUX
+    https://git.kernel.org/netdev/net-next/c/f3aee7c900ed
+  - [net-next,v3,2/2] net: wwan: Add Qualcomm BAM-DMUX WWAN network driver
+    https://git.kernel.org/netdev/net-next/c/21a0ffd9b38c
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
