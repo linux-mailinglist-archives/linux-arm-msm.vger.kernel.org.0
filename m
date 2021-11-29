@@ -2,94 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 732EB462793
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 00:05:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 068CB4627E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 00:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236162AbhK2XH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 18:07:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236167AbhK2XHJ (ORCPT
+        id S234039AbhK2XOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 18:14:30 -0500
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:41485 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231776AbhK2XOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 18:07:09 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6E7C03AD4B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 10:08:54 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id s37so7246796pga.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 10:08:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=rP+kmQ5wlVc+pR2GAaszPahOc1SeLyhDcPjEPnD8vp8=;
-        b=Sx+Cd5E8JI8zEmKLPz+YRIFV82PQSl8DV4hUwC+cQ6uo3Vv6YiMyl7IU/7fFxvhdle
-         rKahqkKvRC+hEKXAPC0QgJilRZsblIxkNdKQU5+dIUYaVWWHLQ0ngKa2u0efwtrHtlD1
-         VtwZjctDXvZQ9/XYhrKHeSxb62V/LHMwNlzE4=
+        Mon, 29 Nov 2021 18:14:20 -0500
+Received: by mail-ot1-f52.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so27680618otl.8;
+        Mon, 29 Nov 2021 15:11:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rP+kmQ5wlVc+pR2GAaszPahOc1SeLyhDcPjEPnD8vp8=;
-        b=4Vzpd98N/1WvpHvGF/g37lNrOv4HFe7+JjjhT8zKOSa2lV3BJActi/O+YzjMszTpEw
-         RgTU0x/lBeb8AnyfO8pk/gbEk7ZqN6wEvEbv4kWah7YKksyrPT5fOeB6HsYurGU81k9l
-         4/yEjcas3mVhXLx+W9taat4rwcl3KDc8CwJnpLy77kjWk1Pxj2DlKrSJdUkTKNSKXopE
-         KVwL4Uy/GS2XC82JFh46Ln6o3TqJSEEdAFh8l8L8sOtht1jebHPoxmCRP0zktgc65fvW
-         LKwSha2ivv5IqkMHRFSVw4FOLNWay6098xK4KsncQ4Zo9De6L8hj1MrQSMnAv27fFxsG
-         lF4w==
-X-Gm-Message-State: AOAM530k7Q6YWx2z5PPIzC/g1ZtBMXOWZpdPMaFFmZSAM55u/r+ADDf6
-        ASgyy31rBnHv04MJRWRj7MGplg==
-X-Google-Smtp-Source: ABdhPJyBgug4oG2KvEUDqd0Zf+drGvUYuM0nyMa78y6ktglY2/5CuXmSrvYNfK42nb98+565lrPVAw==
-X-Received: by 2002:a63:5308:: with SMTP id h8mr36326936pgb.287.1638209334244;
-        Mon, 29 Nov 2021 10:08:54 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:d16f:3a09:ab7a:238e])
-        by smtp.gmail.com with UTF8SMTPSA id g7sm18644943pfv.159.2021.11.29.10.08.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 10:08:53 -0800 (PST)
-Date:   Mon, 29 Nov 2021 10:08:52 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        kgodara@codeaurora.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: Document qcom,sc7280-crd
- board
-Message-ID: <YaUXNG0EEKsyfbPC@google.com>
-References: <1638185497-26477-1-git-send-email-quic_rjendra@quicinc.com>
- <1638185497-26477-2-git-send-email-quic_rjendra@quicinc.com>
+        bh=CMaGKX/h46j8VfqR9A4axIYozojVdsex0bKjA1RLIq4=;
+        b=Qwd9jUBWEZnY9SChf79J5MvL9MjDAFABLj0Ih3DGcDUQTkiyI0WBzPAhNcUxE7WDOU
+         MHspEnxZ0mmJD4J4ozeXgNI79DbuGC7LPuMOi2iPpLfdsmJiI8YdoQl4MAaZeBcfPgoZ
+         f5opg0h0ap8pznldr6SAdpxb5/VkFnUNuMGH/Fv4ZzYGYNqFrmySv/y2d+r0UfOcI5FJ
+         aFIolmcUBXs5SZJwcf5Y8ElIE4PZ4ZV7PrSLc0DJLKB/CNGoAd35Hs9vLDkxdJiDGmo7
+         SN/PPJZc26SGbPQ4LpLMDGyJwNA9VCHzPu/DTo4a2FQMsHPT+u2Kk+fMrAaoGz/Td7kA
+         OdkQ==
+X-Gm-Message-State: AOAM532dRdUwWnNv2rqgBKOIwt7JxogaW/oorlvDR17OV/ELd1YlR0Uw
+        P8gz51vhdbQhm4mCwAlOqw==
+X-Google-Smtp-Source: ABdhPJyoXRwEeKNOGspvfHRwIpiq2w/sTFqnwrOAxbflEAbIkmIObIXtRbHes8+29dol+NSw2R1dfQ==
+X-Received: by 2002:a9d:12a6:: with SMTP id g35mr47847606otg.61.1638227461716;
+        Mon, 29 Nov 2021 15:11:01 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id bi20sm3386826oib.29.2021.11.29.15.11.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 15:11:00 -0800 (PST)
+Received: (nullmailer pid 785807 invoked by uid 1000);
+        Mon, 29 Nov 2021 23:11:00 -0000
+Date:   Mon, 29 Nov 2021 17:11:00 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/7] dt-bindings: power: supply: pm8941-charger: add
+ pm8226
+Message-ID: <YaVeBGAnU2CY9SLr@robh.at.kernel.org>
+References: <20211118210210.160895-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1638185497-26477-2-git-send-email-quic_rjendra@quicinc.com>
+In-Reply-To: <20211118210210.160895-1-luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 05:01:34PM +0530, Rajendra Nayak wrote:
-> Document the qcom,sc7280-crd board based off sc7280 SoC,
-> The board is also known as hoglin in the Chrome OS builds,
-> so document the google,hoglin compatible as well.
+On Thu, 18 Nov 2021 22:02:04 +0100, Luca Weiss wrote:
+> The charger in PM8226 (used in MSM8226) is similar to the charger in
+> PM8941.
 > 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../devicetree/bindings/power/supply/qcom,pm8941-charger.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index c8808e0..91937ab 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -203,6 +203,8 @@ properties:
->            - enum:
->                - qcom,sc7280-idp
->                - qcom,sc7280-idp2
-> +              - qcom,sc7280-crd
 
-nit: add in alphabetical order, i.e. before qcom,sc7280-idp
-
-> +              - google,hoglin
->                - google,piglin
->                - google,senor
->            - const: qcom,sc7280
-
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Acked-by: Rob Herring <robh@kernel.org>
