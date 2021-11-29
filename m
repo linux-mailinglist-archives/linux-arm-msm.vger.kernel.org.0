@@ -2,90 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CC784616BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 14:38:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF36B46168B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 14:34:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345115AbhK2NlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 08:41:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55908 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231942AbhK2NjK (ORCPT
+        id S230520AbhK2NiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 08:38:07 -0500
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:25698 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239789AbhK2NgH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 08:39:10 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 669CCC09B127;
-        Mon, 29 Nov 2021 04:17:46 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id B301CCE110A;
-        Mon, 29 Nov 2021 12:17:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AE1C004E1;
-        Mon, 29 Nov 2021 12:17:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638188262;
-        bh=TS0mCU94vpdYlwPE1yfgV3rJM5zYoKRFZ02zqnwnIc8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q2FdC8BxDJO5arAsfllDiOjmNKcMbKtMHhH8KXyX5jN3sswMsNvwGp2GB+ANob4dn
-         jsyxsSewepb2cASZGni/DwtBlY4P1h3/DWkbY2JPIRaG2QpOW/IrYZg7wXiKI08zaQ
-         9Dl4B9AspiN23D9z8CjQi2oewTY40dMQ02WpbFGtwW2eNe0llodNES7fxUN9GRUgbl
-         YnmXdS6MJYxrd0CcWTSOwdrIjy0nafs1m4Gr7+eBJFLHVUX+wLWzS7Y/aiszon3jb+
-         Mtk20qYDNKhJSvK8HhYinxSaqzbOXJdbcFgZorWuksilN6qpZARwshlNQpK+W5xoMT
-         X1PgcPBdnDmEg==
-Date:   Mon, 29 Nov 2021 12:17:38 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Dominik Kobinski <dominikkobinski314@gmail.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        ivo.ivanov.ivanov1@gmail.com, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dominikkobinski314@gmail.com
-Subject: Re: (subset) [PATCH 1/4] pinctrl: qcom: spmi-gpio: Add pm8226
- compatibility
-Message-ID: <YaTENEobjxF7Cgx+@sirena.org.uk>
-References: <20211127122626.GA3798@debian.domena>
+        Mon, 29 Nov 2021 08:36:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638192764;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=gi23SGT/K9YoXpcCcls21EuR/fDTjd/FuL/5ViyQjhg=;
+    b=TfQWq19/hLRBke38VDdCZVzLoy+ZDXZSI2f+0mvl/dymgwxPDxoRIsWa1/fEhPcAVa
+    uu48k2uy3tsc4tG2ATgbRM+dd3t7sUQWg70RpqOsv7/Cmzi+pbCxMFhpZ/wLUAIBV1MV
+    aUUejydmn14+OCosAQiKn/QmskGshXw9ppCnABuVUXVdAt7+ZpVKkZ267z35KF6xy2Bn
+    1Du+5F6IfAniTwrQebuglNJiP+3C20qu7OVneO73BUQMwgFil2DY7C7liLhbayNfNrQ8
+    ytHfiWiddkSTGPDC0mikFWejoNQ7mKdbM8OZAOPzVKGHt9gradMSPzXuzAXyAUcmSWX5
+    UWsw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL2YvqQ"
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.34.10 AUTH)
+    with ESMTPSA id j03bcbxATDWhPUt
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 29 Nov 2021 14:32:43 +0100 (CET)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-remoteproc@vger.kernel.org, phone-devel@vger.kernel.org,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/2] Enable BAM-DMUX/WWAN on Qualcomm MSM8916
+Date:   Mon, 29 Nov 2021 14:29:28 +0100
+Message-Id: <20211129132930.6901-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="g2QDtMqK+ThNTGXI"
-Content-Disposition: inline
-In-Reply-To: <20211127122626.GA3798@debian.domena>
-X-Cookie: Thank god!! ... It's HENNY YOUNGMAN!!
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series enables using mobile Internet/WWAN on devices based on Qualcomm
+MSM8916. The network driver for that was applied earlier today to net-next. [1]
 
---g2QDtMqK+ThNTGXI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The device tree node of BAM-DMUX does not have any own memory resources.
+It just bundles resources from other hardware blocks. It could be added to the
+device tree root node, but it logically belongs below the modem remote processor.
 
-On Sat, Nov 27, 2021 at 01:26:31PM +0100, Dominik Kobinski wrote:
-> I have sent a v2 of this series (https://patchwork.kernel.org/project/linux-arm-msm/list/?series=586091), but forgot to set this patch series to superseded. Sorry for the confusion.
-> The only change that was actually made to this patchset was the commit message to the [4/4] patch, as pointed out by Bjorn Andersson. There was also another patch added at the end of the v2 series, but I believe it doesn't concern this subsystem.
-> I'm not sure how it should be handled now. I am really sorry for not setting this series to superseded earlier and complicating the whole situation.
+To allow adding it there, the qcom_q6v5_mss driver is modified slightly to
+populate additional devices from the device tree. Finally, the necessary
+nodes are added to the MSM8916 device tree.
 
-Since you didn't quote any context in your reply I'm not 100% sure what
-this is all about, the message you're replying to is a pinctrl one but
-the message is to me so I guess it's something I applied.  If there's
-any changes needed in code that's already applied please send an
-incremental patch with those changes.
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git/commit/?id=688e075748645b43cf4d55e8fd279f5249699b7a
 
-Please also look at your mail client setup - it's not word wrapping
-within paragraphs and for some reason it set a Reply-To with the message
-ID of the message you're replying to which confuses things.
+Stephan Gerhold (2):
+  remoteproc: qcom_q6v5_mss: Populate additional devices from DT
+  arm64: dts: qcom: msm8916: Add BAM-DMUX for WWAN network interfaces
 
---g2QDtMqK+ThNTGXI
-Content-Type: application/pgp-signature; name="signature.asc"
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 30 +++++++++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_mss.c    |  7 +++++++
+ 2 files changed, 37 insertions(+)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.34.1
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGkxOEACgkQJNaLcl1U
-h9AeNAf/ZN2/Uki9zWoyT12smlvz/CQBeTgBV8gkVXzd+pMsP8ho1rDC0gi95qoc
-brej3HMCNG3Ft8qnyzQGswbea//vlwy4iV/97gXB96DzzX85/n2fdeFr3U7bl5Aa
-ZNpmmxttXF4GSzbIAE2t6yUdEGvIthsRhzKE2OW8/6nVUUl06cncchIHZR/t93Hy
-/K8d9Dz+CkL4XHDFcBRUrqScCuCt+xmv+qqOhzxJUiD4ljCdFxz1PryhwF4OA4HA
-lK3DGoj1XsUa6j/29Nq1RTJnATlxHXxn3Zsg8ZCptPEl/3lPGDAFXDQvblUeEQrw
-naAW8IgzSpWPYS1ye15ZTd8hDYgiKg==
-=tGim
------END PGP SIGNATURE-----
-
---g2QDtMqK+ThNTGXI--
