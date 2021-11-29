@@ -2,92 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BCA7461EAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 19:36:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C08FD4621DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 21:11:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379546AbhK2SjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 13:39:07 -0500
-Received: from vps5.brixit.nl ([192.81.221.234]:51478 "EHLO vps5.brixit.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1379117AbhK2ShG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 13:37:06 -0500
-Received: from [192.168.20.102] (unknown [77.239.252.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S233710AbhK2UOW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 15:14:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56700 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233873AbhK2UMV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 15:12:21 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A3EC08ECB6;
+        Mon, 29 Nov 2021 08:45:54 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by vps5.brixit.nl (Postfix) with ESMTPSA id 702A6618B4;
-        Mon, 29 Nov 2021 18:33:44 +0000 (UTC)
-Subject: Re: [PATCH] arm64: dts: qcom: sdm660-xiaomi-lavender: Add volume up
- button
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        by ams.source.kernel.org (Postfix) with ESMTPS id 69982B81215;
+        Mon, 29 Nov 2021 16:45:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337B6C53FAD;
+        Mon, 29 Nov 2021 16:45:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638204352;
+        bh=4Gqnsc8eJT8RGnAR77WhxngkWMm7XUHlUU4m60Zgkqk=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=W2GRWoPP07J8SXxP4UtGzSceMfq+SFFmEWOgs+mCqdzLOqTtqbvfWKlKh5Bwko5+R
+         ywRQMpIMZms1HpEMF/2Kg9U/jd8KomaS2jAl/gzunKgllYVPWce8SBSYX1jYF1EA9e
+         rtGIA8zYoB6cz+eqdOsbdyFxGVy3DH7Mjosy68Sv4gmtfWm4lqNLTiank7hCQTG6im
+         EvnY7mVKupZfhcri+trkRGfTZ2DSqVf7Q7xGb6RenfozhBYP80vjOsABpOgMfb9qfr
+         v36z8KPTiP6/QOkNg5BqcA1V+wqtaJKqSsCAD3b0Wwri4EjRQpfCrgQEmoi3NDZ9fy
+         biyaVjmYQcAvQ==
+From:   Mark Brown <broonie@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Caleb Connolly <caleb@connolly.tech>
-References: <20211121170449.1124048-1-danct12@riseup.net>
-From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
-Message-ID: <ce775ef5-2e88-af2b-264b-da77a2e23007@postmarketos.org>
-Date:   Mon, 29 Nov 2021 21:35:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, mka@chromium.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        David Collins <collinsd@codeaurora.org>, swboyd@chromium.org
+In-Reply-To: <1637668167-31325-1-git-send-email-quic_c_skakit@quicinc.com>
+References: <1637668167-31325-1-git-send-email-quic_c_skakit@quicinc.com>
+Subject: Re: (subset) [PATCH 0/3] Add PMG1110(Seco Jr) PMIC support
+Message-Id: <163820434992.1716869.8358627296301312921.b4-ty@kernel.org>
+Date:   Mon, 29 Nov 2021 16:45:49 +0000
 MIME-Version: 1.0
-In-Reply-To: <20211121170449.1124048-1-danct12@riseup.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/21/21 8:04 PM, Dang Huynh wrote:
-> This enables the volume up key.
+On Tue, 23 Nov 2021 17:19:24 +0530, Satya Priya wrote:
+> This series depends on below series which adds the base CRD dts
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=584349
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
-> This patch is a continuation of this series [1]. The other patches in
-> the series have been applied and remains this.
+> Satya Priya (3):
+>   dt-bindings: regulator: Add compatible for pmg1110
+>   regulator: qcom-rpmh: Add PMG1110 regulators
+>   arm64: dts: qcom: sc7280: Add pmg1110 regulators for sc7280-crd
 > 
-> Changes in v5:
-> - Remove deprecated input-name property.
-> 
-> [1]: https://patchwork.kernel.org/cover/12630601/
-> 
->   arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> index 9a6684922804..6586b8e47483 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
-> @@ -9,6 +9,8 @@
->   #include "sdm660.dtsi"
->   #include "pm660.dtsi"
->   #include "pm660l.dtsi"
-> +#include <dt-bindings/input/input.h>
-> +#include <dt-bindings/input/gpio-keys.h>
->   
->   / {
->   	model = "Xiaomi Redmi Note 7";
-> @@ -33,6 +35,17 @@ vph_pwr: vph-pwr-regulator {
->   		regulator-boot-on;
->   	};
->   
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		volup {
-> +			label = "Volume Up";
-> +			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> +
->   	reserved-memory {
->   		#address-cells = <2>;
->   		#size-cells = <2>;
-> 
+> [...]
 
-Nice, works on my Redmi Note 7.
+Applied to
 
-Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/3] dt-bindings: regulator: Add compatible for pmg1110
+      commit: ac88e9526d68f2532be3b4b439d45c0c8de7e170
+[2/3] regulator: qcom-rpmh: Add PMG1110 regulators
+      commit: 59eadd2af3f717f2ff70dbb6c153757dc1650651
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
