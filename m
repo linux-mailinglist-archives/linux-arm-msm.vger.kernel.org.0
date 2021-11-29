@@ -2,83 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8A4946258E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 23:38:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ADD2462720
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 23:59:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232211AbhK2WlC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 17:41:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33678 "EHLO
+        id S236658AbhK2XBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 18:01:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234121AbhK2Wjz (ORCPT
+        with ESMTP id S236926AbhK2XAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 17:39:55 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269F8C1262BB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 10:02:22 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id x5so17778173pfr.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 10:02:22 -0800 (PST)
+        Mon, 29 Nov 2021 18:00:37 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57A91C03AA2C;
+        Mon, 29 Nov 2021 10:18:27 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id s37so7271592pga.9;
+        Mon, 29 Nov 2021 10:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QXp6Rjdb9so9tn9PWuGIbuOUwfs9Jwsb1LIx5Ujs/yw=;
-        b=OWuHk7RoCEwXKDMDXfCljE037wZMeREf4yKV9u6svRDiDf1m8rOYK2y6iK2FrztOTt
-         ulu8jIK1sFPK88tkYTVGUMBm/iwGCD1nk1R1B5xcDAuMU8MRkTSuxNThPJ+ExZYIGyG+
-         qn/tj3SRQs4Igp74uqeU0o/fqEg5xwKxZp3CU=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fUNuveYGMtrqjB2VQZVCUJJ1mSxi3vYF+lEWoSAESLM=;
+        b=SdrRH1TrlPjoH3o1ImcgrE+JbnNbd74DzvJjimwCmDhp3OiBNEk18o0Ys4Uicpze3g
+         zCw9IGuUC4v9BZ3CYiScmVgbZeZiuvOS2RLrM/6RhKvqepnADkdKhvVbDrJ3NewrVm2e
+         QkJbwFI67r2N1UWhs9XjfbDcNC8N67++NnHIH83L8flrOCi9RFPkIyFGQxiwV1+t69kZ
+         xb3y0ca8ks1Fwi5AovNNmkOezoX6/KDZR5IqLoti7r5uqWZ7tAFDuyivhX2knAKqZNQi
+         4RHrssSrZg9WIhHbA/vUFfaq8NU/kED7xEz2fNqm+STCQIV0P9QO+dogodmRpk1RwMzw
+         9gJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QXp6Rjdb9so9tn9PWuGIbuOUwfs9Jwsb1LIx5Ujs/yw=;
-        b=bBEkl2iRjLfqsDF2XC243xLTk36LYyZyxKz6bTiA2NHaxHlrOcMAiG5WImhyhSArce
-         ikK1ewbtC2f8YRhdUUgBhLwGe5mVxCQkBLKkuvZFO+KSlc1CK7qs/WN+UQMXlXai1VK9
-         /BiOUiz5CSTB/cnwfZLI0eBWJjB3Dfp7cYMdTIBbaA9jfwHzfCrMz90Ll+7e3dstggAn
-         m3p0oCnku2J4tnL4c5jWVmwp2SNFts+iM9vIlZDqip25AvVUj19yB+/oVRaaG+G8YRU1
-         SzQ3i6ExY7i+Y5xrBFhCqszLSmNhMFWKXn/PvkJ4HoBTftcW8dxITlwza1M7Hd4RcpqL
-         l0Jw==
-X-Gm-Message-State: AOAM533UB9ro0nOcZt6TgRA5xnha8A9DSxUzyqCsz19aGvDDt8844flr
-        pVY7Vb+AkTElluaQV3e7REedmA==
-X-Google-Smtp-Source: ABdhPJzmsIA11/pFaCm4cakUSOz2ziL/uU5FLtsc2LHAl9CDHjLHoupWOsGCvTUPwfVjMQ9Wn70QUw==
-X-Received: by 2002:a63:1956:: with SMTP id 22mr36174289pgz.452.1638208941713;
-        Mon, 29 Nov 2021 10:02:21 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:d16f:3a09:ab7a:238e])
-        by smtp.gmail.com with UTF8SMTPSA id k19sm18083179pff.20.2021.11.29.10.02.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 10:02:21 -0800 (PST)
-Date:   Mon, 29 Nov 2021 10:02:20 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH 1/2] arm64: qcom: sc7280: Remove USB2 controller and phy
- nodes from common dtsi
-Message-ID: <YaUVrDw9j0Aks/pn@google.com>
-References: <1637837815-8532-1-git-send-email-quic_c_sanm@quicinc.com>
- <1637837815-8532-2-git-send-email-quic_c_sanm@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fUNuveYGMtrqjB2VQZVCUJJ1mSxi3vYF+lEWoSAESLM=;
+        b=40xj9Va9rI4ToSET+4h1yOyQ8UTET050SJJ7RTtVLI31JLuryD32kMDwbNHSfOPsd1
+         MeG3tqAkYUXbPFkACt9/mDzr+ILxE99SIwM6kT8dlor+g5EB0FI90h5mMVqIePAWnl5a
+         TBDBHcfe+fiWAH20ndctXyOFUKSZaJS6eleLP1qpcCn02po8bbJQRVm7kPCVvwnDyJom
+         ltAwdAhgHievH70fL3FEUoW3oeKh+DvZbK3IxvRYI4pUCE3CFFB1psNj3Gm6TRy/GAJK
+         spigzEvXJ40VGOJY9TNMaUOvZZXdcJtvbrmDjhgCp2NBCd/hcoHdHH2/zvk5aDpS7Tv+
+         XLMA==
+X-Gm-Message-State: AOAM532EzfOYEhDkKBFvoI/JH5T7fR2FLQKVz24qHfnFJVPcp3/ZdPnF
+        YypxTed1rAUnu7wPyJPi32Q=
+X-Google-Smtp-Source: ABdhPJyJeydSjX4k1OB1bo6HrPO31iSNMLC3cBqM8orkTUv7tItFGjyOmE00ZWY2AuQIhUqjA3OxNA==
+X-Received: by 2002:a63:3190:: with SMTP id x138mr35037673pgx.401.1638209906886;
+        Mon, 29 Nov 2021 10:18:26 -0800 (PST)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id d7sm19415554pfj.91.2021.11.29.10.18.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 10:18:25 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gpu: Don't allow zero fence_id
+Date:   Mon, 29 Nov 2021 10:23:44 -0800
+Message-Id: <20211129182344.292609-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1637837815-8532-2-git-send-email-quic_c_sanm@quicinc.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 25, 2021 at 04:26:54PM +0530, Sandeep Maheswaram wrote:
-> Remove USB2 controller and phy nodes from common dtsi file as it is
-> required only for SKU1 board.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+From: Rob Clark <robdclark@chromium.org>
 
-A series shouldn't break things if it is only applied partially (in order). In
-this case the USB2 controller wouldn't work on the SKU1 board if only this patch
-is applied. It should be squashed with patch 2 of this series ("arm64: qcom:
-sc7280: Add USB2 controller and phy nodes for SKU1 board").
+Elsewhere we treat zero as "no fence" and __msm_gem_submit_destroy()
+skips removal from fence_idr.  We could alternately change this to use
+negative values for "no fence" but I think it is more clear to not allow
+zero as a valid fence_id.
 
-Also doing the move in a single patch instead of two separate patches for remove
-and add makes it easier to review the latter part, since it's evident from the
-patch itself that it's just a move.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem_submit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 282628d6b72c..6cfa984dee6a 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -881,7 +881,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	 * to the underlying fence.
+ 	 */
+ 	submit->fence_id = idr_alloc_cyclic(&queue->fence_idr,
+-			submit->user_fence, 0, INT_MAX, GFP_KERNEL);
++			submit->user_fence, 1, INT_MAX, GFP_KERNEL);
+ 	if (submit->fence_id < 0) {
+ 		ret = submit->fence_id = 0;
+ 		submit->fence_id = 0;
+-- 
+2.33.1
+
