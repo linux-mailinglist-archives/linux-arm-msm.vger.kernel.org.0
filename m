@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3601E460B05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 00:16:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC5EB460B93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 01:23:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357399AbhK1XTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Nov 2021 18:19:24 -0500
-Received: from mail-oo1-f45.google.com ([209.85.161.45]:45794 "EHLO
-        mail-oo1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359474AbhK1XRX (ORCPT
+        id S1376538AbhK2A0W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Nov 2021 19:26:22 -0500
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:33450 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347452AbhK2AYW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Nov 2021 18:17:23 -0500
-Received: by mail-oo1-f45.google.com with SMTP id v30-20020a4a315e000000b002c52d555875so5129568oog.12;
-        Sun, 28 Nov 2021 15:14:07 -0800 (PST)
+        Sun, 28 Nov 2021 19:24:22 -0500
+Received: by mail-ot1-f43.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso23226026otf.0;
+        Sun, 28 Nov 2021 16:21:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=E7YB16y0wT7AgSG9E05suzTqDyBhomfEB6fhcc6pb/k=;
-        b=XxbTXFD//GFlw0/VAF2/xYWRmBCanklV0sO6FzdLCBtG0EAicsb/YsGDU18ivbVXkP
-         m2I6yp6hTKtdQWUDmbIUVve6ndPeW7zZ2qk1C2e1fzVaLKZNwmtFk96fGwbfX0x/Lqjd
-         hgrHsAfSSjHwuKsq+h5msFyzz2YlLR5tsE+l7B98/KLVi6CHkl3flK6x/MZtaFPB1aWO
-         yQCdmJhK1J4eq+9TdzImRY6VBeh83SZIufQVvBSkpcnc8R1aUTGddAQQP6TCzheinoOy
-         MrbUFcN0NxUtxud9hs3mk7xzKZWLgV01jxLSX5VB3kCczKrGkazVHPNvjTUWEWqCXktw
-         x4Ww==
-X-Gm-Message-State: AOAM5312kca2pVuTZzMfni5+IuV9uogDKmfUZC50Vv0GJNyH9DBoVNg+
-        9EFAzWKcyMFafZKHs7ITpg==
-X-Google-Smtp-Source: ABdhPJxPmMk4S9C2AfLmslWdb0YYZa+Sv5/6uaqWmZ8sMaaYSfGWRVzhilkfyLAOa+VNvdPc+WdP4w==
-X-Received: by 2002:a4a:b387:: with SMTP id p7mr25155929ooo.46.1638141246826;
-        Sun, 28 Nov 2021 15:14:06 -0800 (PST)
-Received: from robh.at.kernel.org ([2607:fb90:5fe7:4487:4f99:dbc0:75d1:3e27])
-        by smtp.gmail.com with ESMTPSA id r37sm2384625otv.54.2021.11.28.15.14.04
+        bh=jFihDUcfKe3tbkzkBwFzBaLZw10RQ1vQ6L3GlSqJBEQ=;
+        b=tKI3f8/qOKMBlhR43gxLqJ6HZjIudfNMx33AF2UY8ytQRjNWBIglAJW5e0PhRQ0t9d
+         ukMMIOKn/xx+f2BWvA1d5WjugOvW/C5HmOlFpFwTS6iMvqyGuPudZKVu19MFh2a8czCL
+         mxQVxM1579tz93LMmIqRrG+25jvphTeJOEc+J0kL5yWlcOlggoutOf9qPEBLmRCmgZ9f
+         BGc+S2Fxsv8EJR76ZEjea+pTflRJ0tBfj0w0McRw4bmheisTBx2Cf6Jqkov8w3tGj3CE
+         JndRQRYNF1VKyMRiyR/8D0m8BWOnqzgSbrCiZg15n75ibKW/RDUYCDUNC3kf1Piq+if3
+         LE2g==
+X-Gm-Message-State: AOAM530I1dZt6vEgnpnNq3CZjPIinI3v8NezdkMdZDoTmFFufCuocmtO
+        zeKBizQlXS72YnoAGxBJvA==
+X-Google-Smtp-Source: ABdhPJwYjKHDjVIegEOQV55jA7l4/9WTjF6keTH5n1iSKGRRzxX7i0fjyfHVmkuIsJ7CsEIZEO9Ahw==
+X-Received: by 2002:a05:6830:1154:: with SMTP id x20mr42304686otq.205.1638145264911;
+        Sun, 28 Nov 2021 16:21:04 -0800 (PST)
+Received: from robh.at.kernel.org ([172.58.99.242])
+        by smtp.gmail.com with ESMTPSA id f18sm2373686otl.28.2021.11.28.16.21.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Nov 2021 15:14:06 -0800 (PST)
-Received: (nullmailer pid 2794741 invoked by uid 1000);
-        Sun, 28 Nov 2021 23:14:02 -0000
-Date:   Sun, 28 Nov 2021 17:14:02 -0600
+        Sun, 28 Nov 2021 16:21:04 -0800 (PST)
+Received: (nullmailer pid 2877730 invoked by uid 1000);
+        Mon, 29 Nov 2021 00:21:01 -0000
+Date:   Sun, 28 Nov 2021 18:21:01 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     quic_vamslank@quicinc.com
-Cc:     bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        maz@kernel.org, tglx@linutronix.de, linux-arm-msm@vger.kernel.org,
-        sboyd@kernel.org, agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, manivannan.sadhasivam@linaro.org,
-        mturquette@baylibre.com, robh+dt@kernel.org
-Subject: Re: [PATCH v5 1/6] dt-bindings: clock: Add SDX65 GCC clock bindings
-Message-ID: <YaQNOtjqCqc/PPif@robh.at.kernel.org>
-References: <cover.1637302009.git.quic_vamslank@quicinc.com>
- <e20b452994bbd410411a631ef96091031c2fc039.1637302009.git.quic_vamslank@quicinc.com>
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     devicetree@vger.kernel.org, todor.too@gmail.com,
+        linux-media@vger.kernel.org, mchehab@kernel.org,
+        bjorn.andersson@linaro.org, Stephan Gerhold <stephan@gerhold.net>,
+        agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        angelogioacchino.delregno@somainline.org,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] media: dt-bindings: media: camss: Remove
+ clock-lane property
+Message-ID: <YaQc7cf2vHhlNAy0@robh.at.kernel.org>
+References: <20211118124819.1902427-1-robert.foss@linaro.org>
+ <20211118124819.1902427-3-robert.foss@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e20b452994bbd410411a631ef96091031c2fc039.1637302009.git.quic_vamslank@quicinc.com>
+In-Reply-To: <20211118124819.1902427-3-robert.foss@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 Nov 2021 22:11:33 -0800, quic_vamslank@quicinc.com wrote:
-> From: Vamsi krishna Lanka <quic_vamslank@quicinc.com>
+On Thu, 18 Nov 2021 13:48:17 +0100, Robert Foss wrote:
+> The clock-lanes property is not programmable by the hardware,
+> and as such it should not be exposed in the dt-binding.
 > 
-> Add device tree bindings for global clock controller on SDX65 SOCs.
-> 
-> Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> Signed-off-by: Robert Foss <robert.foss@linaro.org>
 > ---
->  .../bindings/clock/qcom,gcc-sdx65.yaml        |  80 ++++++++++++
->  include/dt-bindings/clock/qcom,gcc-sdx65.h    | 122 ++++++++++++++++++
->  2 files changed, 202 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx65.h
+>  .../bindings/media/qcom,msm8916-camss.yaml    | 10 ----------
+>  .../bindings/media/qcom,msm8996-camss.yaml    | 20 -------------------
+>  .../bindings/media/qcom,sdm660-camss.yaml     | 20 -------------------
+>  .../bindings/media/qcom,sdm845-camss.yaml     | 17 ----------------
+>  4 files changed, 67 deletions(-)
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
