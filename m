@@ -2,297 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B7546100F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 09:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 772DB461126
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 10:32:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346855AbhK2I2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 03:28:31 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:38972 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S243362AbhK2I0a (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 03:26:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638174193; x=1669710193;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=lus7t+7RnG6811oacMwIqPUtLL3I3xh8wAWlySsjTu0=;
-  b=aBGOhwwh0IWZPnVHB4QPF9ly62To0q2krnRML3tU6W884Ns5K7onB3Dz
-   1WcRwftct2HupvcW8ezeX3mJh8+dDK0TJmFARUJG9GFoTlWuicsuSB0Nr
-   4Eg1E+UBebDj0npr2UwaYMTwPZvUQu6AojXgsOLz9ZeKv52DfFlKWaIlj
-   M=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 29 Nov 2021 00:23:11 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 00:23:11 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 29 Nov 2021 00:23:10 -0800
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 29 Nov 2021 00:23:07 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        <devicetree@vger.kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>
-Subject: [PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-Date:   Mon, 29 Nov 2021 16:22:17 +0800
-Message-ID: <1638174137-23290-11-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638174137-23290-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1638174137-23290-1-git-send-email-quic_fenglinw@quicinc.com>
+        id S244818AbhK2Jfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 04:35:54 -0500
+Received: from mga07.intel.com ([134.134.136.100]:20582 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243681AbhK2Jdy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 04:33:54 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10182"; a="299325834"
+X-IronPort-AV: E=Sophos;i="5.87,272,1631602800"; 
+   d="scan'208";a="299325834"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 01:22:04 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,272,1631602800"; 
+   d="scan'208";a="499258035"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 29 Nov 2021 01:22:02 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1mrcrJ-000BlG-Of; Mon, 29 Nov 2021 09:22:01 +0000
+Date:   Mon, 29 Nov 2021 17:21:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     kbuild-all@lists.01.org, Jeya R <jeyr@codeaurora.org>,
+        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH 2/2] misc: fastrpc: Add dma handle implementation
+Message-ID: <202111291710.WVYQ9Aed-lkp@intel.com>
+References: <1638163720-23123-3-git-send-email-jeyr@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1638163720-23123-3-git-send-email-jeyr@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
-update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
-it and update it with a smaller range.
+Hi Jeya,
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+Thank you for the patch! Yet something to improve:
+
+[auto build test ERROR on char-misc/char-misc-testing]
+[also build test ERROR on v5.16-rc3 next-20211126]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Jeya-R/Add-DMA-handle-implementation/20211129-133228
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git cd455ebb748c4e198c8158e5d61b3034bf10f22b
+config: microblaze-randconfig-r031-20211128 (https://download.01.org/0day-ci/archive/20211129/202111291710.WVYQ9Aed-lkp@intel.com/config)
+compiler: microblaze-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/d8e9cc594aeafa392d306e883c741b984b5fc89a
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Jeya-R/Add-DMA-handle-implementation/20211129-133228
+        git checkout d8e9cc594aeafa392d306e883c741b984b5fc89a
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=microblaze SHELL=/bin/bash drivers/misc/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   drivers/misc/fastrpc.c: In function 'fastrpc_get_meta_size':
+>> drivers/misc/fastrpc.c:721:31: error: 'fastrpc_remote_arg' defined as wrong kind of tag
+     721 |         size = (sizeof(struct fastrpc_remote_arg) +
+         |                               ^~~~~~~~~~~~~~~~~~
+>> drivers/misc/fastrpc.c:721:24: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
+     721 |         size = (sizeof(struct fastrpc_remote_arg) +
+         |                        ^~~~~~
+   drivers/misc/fastrpc.c: In function 'fastrpc_put_args':
+   drivers/misc/fastrpc.c:925:16: error: 'fastrpc_remote_arg' defined as wrong kind of tag
+     925 |         struct fastrpc_remote_arg *rpra = ctx->rpra;
+         |                ^~~~~~~~~~~~~~~~~~
+>> drivers/misc/fastrpc.c:925:43: error: initialization of 'struct fastrpc_remote_arg *' from incompatible pointer type 'union fastrpc_remote_arg *' [-Werror=incompatible-pointer-types]
+     925 |         struct fastrpc_remote_arg *rpra = ctx->rpra;
+         |                                           ^~~
+   drivers/misc/fastrpc.c:935:55: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
+     935 |         list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+         |                                                       ^
+   drivers/misc/fastrpc.c:937:23: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
+     937 |                 sizeof(*rpra));
+         |                       ^
+>> drivers/misc/fastrpc.c:942:60: error: invalid use of undefined type 'struct fastrpc_remote_arg'
+     942 |                         void *src = (void *)(uintptr_t)rpra[i].pv;
+         |                                                            ^
+   drivers/misc/fastrpc.c:942:63: error: invalid use of undefined type 'struct fastrpc_remote_arg'
+     942 |                         void *src = (void *)(uintptr_t)rpra[i].pv;
+         |                                                               ^
+   drivers/misc/fastrpc.c:944:39: error: invalid use of undefined type 'struct fastrpc_remote_arg'
+     944 |                         u64 len = rpra[i].len;
+         |                                       ^
+   drivers/misc/fastrpc.c:944:42: error: invalid use of undefined type 'struct fastrpc_remote_arg'
+     944 |                         u64 len = rpra[i].len;
+         |                                          ^
+   drivers/misc/fastrpc.c:958:39: error: 'fl' undeclared (first use in this function); did you mean 'fd'?
+     958 |                 if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
+         |                                       ^~
+         |                                       fd
+   drivers/misc/fastrpc.c:958:39: note: each undeclared identifier is reported only once for each function it appears in
+   At top level:
+   drivers/misc/fastrpc.c:717:12: warning: 'fastrpc_get_meta_size' defined but not used [-Wunused-function]
+     717 | static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
+         |            ^~~~~~~~~~~~~~~~~~~~~
+   cc1: some warnings being treated as errors
+
+
+vim +/fastrpc_remote_arg +721 drivers/misc/fastrpc.c
+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  689  
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  690  /*
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  691   * Fastrpc payload buffer with metadata looks like:
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  692   *
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  693   * >>>>>>  START of METADATA <<<<<<<<<
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  694   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  695   * |           Arguments             |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  696   * | type:(struct fastrpc_remote_arg)|
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  697   * |             (0 - N)             |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  698   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  699   * |         Invoke Buffer list      |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  700   * | type:(struct fastrpc_invoke_buf)|
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  701   * |           (0 - N)               |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  702   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  703   * |         Page info list          |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  704   * | type:(struct fastrpc_phy_page)  |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  705   * |             (0 - N)             |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  706   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  707   * |         Optional info           |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  708   * |(can be specific to SoC/Firmware)|
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  709   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  710   * >>>>>>>>  END of METADATA <<<<<<<<<
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  711   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  712   * |         Inline ARGS             |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  713   * |            (0-N)                |
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  714   * +---------------------------------+
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  715   */
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  716  
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  717  static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  718  {
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  719  	int size = 0;
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  720  
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08 @721  	size = (sizeof(struct fastrpc_remote_arg) +
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  722  		sizeof(struct fastrpc_invoke_buf) +
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  723  		sizeof(struct fastrpc_phy_page)) * ctx->nscalars +
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  724  		sizeof(u64) * FASTRPC_MAX_FDLIST +
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  725  		sizeof(u32) * FASTRPC_MAX_CRCLIST;
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  726  
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  727  	return size;
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  728  }
+c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  729  
+
 ---
- .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
- .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
- Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
- 3 files changed, 130 insertions(+), 68 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-deleted file mode 100644
-index 6332507..0000000
---- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+++ /dev/null
-@@ -1,67 +0,0 @@
--Qualcomm SPMI Controller (PMIC Arbiter)
--
--The SPMI PMIC Arbiter is found on Snapdragon chipsets.  It is an SPMI
--controller with wrapping arbitration logic to allow for multiple on-chip
--devices to control a single SPMI master.
--
--The PMIC Arbiter can also act as an interrupt controller, providing interrupts
--to slave devices.
--
--See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
--controller binding requirements for child nodes.
--
--See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
--generic interrupt controller binding documentation.
--
--Required properties:
--- compatible : should be "qcom,spmi-pmic-arb".
--- reg-names  : must contain:
--     "core" - core registers
--     "intr" - interrupt controller registers
--     "cnfg" - configuration registers
--   Registers used only for V2 PMIC Arbiter:
--     "chnls"  - tx-channel per virtual slave registers.
--     "obsrvr" - rx-channel (called observer) per virtual slave registers.
--
--- reg : address + size pairs describing the PMIC arb register sets; order must
--        correspond with the order of entries in reg-names
--- #address-cells : must be set to 2
--- #size-cells : must be set to 0
--- qcom,ee : indicates the active Execution Environment identifier (0-5)
--- qcom,channel : which of the PMIC Arb provided channels to use for accesses (0-5)
--
--Optional properties:
--- interrupts : interrupt list for the PMIC Arb controller, must contain a
--               single interrupt entry for the peripheral interrupt
--- interrupt-names : corresponding interrupt names for the interrupts
--                    listed in the 'interrupts' property, must contain:
--     "periph_irq" - summary interrupt for PMIC peripherals
--- interrupt-controller : boolean indicator that the PMIC arbiter is an interrupt controller
--- #interrupt-cells :  must be set to 4. Interrupts are specified as a 4-tuple:
--    cell 1: slave ID for the requested interrupt (0-15)
--    cell 2: peripheral ID for requested interrupt (0-255)
--    cell 3: the requested peripheral interrupt (0-7)
--    cell 4: interrupt flags indicating level-sense information, as defined in
--            dt-bindings/interrupt-controller/irq.h
--
--Example:
--
--	spmi {
--		compatible = "qcom,spmi-pmic-arb";
--		reg-names = "core", "intr", "cnfg";
--		reg = <0xfc4cf000 0x1000>,
--		      <0xfc4cb000 0x1000>,
--		      <0xfc4ca000 0x1000>;
--
--		interrupt-names = "periph_irq";
--		interrupts = <0 190 0>;
--
--		qcom,ee = <0>;
--		qcom,channel = <0>;
--
--		#address-cells = <2>;
--		#size-cells = <0>;
--
--		interrupt-controller;
--		#interrupt-cells = <4>;
--	};
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-new file mode 100644
-index 0000000..be23e47
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-@@ -0,0 +1,128 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SPMI PMIC Arbiter
-+
-+maintainers:
-+  - Fenglin Wu <quic_fenglinw@quicinc.com>
-+  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-+
-+description: |
-+  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
-+  controller with wrapping arbitration logic to allow for multiple
-+  on-chip devices to control a single SPMI master.
-+
-+  The PMIC Arbiter can also act as an interrupt controller, providing
-+  interrupts to slave devices.
-+
-+  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
-+  SPMI controller binding requirements for child nodes.
-+
-+allOf:
-+  - $ref: spmi.yaml#
-+
-+properties:
-+  $nodename:
-+    pattern: "^spmi@.*"
-+
-+  compatible:
-+    const: qcom,spmi-pmic-arb
-+
-+  reg-names:
-+    oneOf:
-+      - items:
-+        - const: core
-+        - const: intr
-+        - const: cnfg
-+      - items:
-+        - const: core
-+        - const: intr
-+        - const: cnfg
-+        - const: chnls
-+        - const: obsrvr
-+
-+  reg:
-+    minItems: 3
-+    maxItems: 5
-+    description: |
-+      Specifies base physical address and size of the registers in SPMI PMIC
-+      Arbiter HW module, with the following order.
-+        - SPMI PMIC arbiter core registers (core)
-+        - SPMI PMIC arbiter interrupt controller registers (intr)
-+        - SPMI PMIC arbiter configuration registers (cnfg)
-+        - SPMI PMIC arbiter tx-channel per virtual slave registers (chnls)
-+        - SPMI PMIC arbiter rx-channel per virtual slave registers (obsrvr).
-+      Register for "chnls" and "obsrvr" are only applicable for PMIC arbiter
-+      with HW version greater than V2.
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 0
-+
-+  interrupts:
-+    description: The summary interrupt for the PMIC Arb controller.
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: periph_irq
-+
-+  interrupt-controller: true
-+
-+  "#interrupt-cells":
-+    const: 4
-+    description: |
-+      Specifies the number of cells needed to encode any interrupt source.
-+      The 1st cell is the slave ID for the requested interrupt, its valid
-+      range is [0-15].
-+      The 2nd cell is the  peripheral ID for requested interrupt, its valid
-+      range is [0-255].
-+      The 3rd cell is the requested peripheral interrupt, its valid range
-+      is [0-7].
-+      The 4th cell is interrupt flags indicating level-sense information,
-+      as defined in dt-bindings/interrupt-controller/irq.h
-+
-+  qcom,ee:
-+    description: the active Execution Environment identifier
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+  qcom,channel:
-+    description: which of the PMIC Arbiter provided channels to use for accesses
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+required:
-+  - compatible
-+  - reg-names
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - qcom,ee
-+  - qcom,channel
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    spmi@fc4cf000 {
-+          compatible = "qcom,spmi-pmic-arb";
-+          reg-names = "core", "intr", "cnfg";
-+          reg = <0xfc4cf000 0x1000>,
-+                <0xfc4cb000 0x1000>,
-+                <0xfc4ca000 0x1000>;
-+          interrupt-names = "periph_irq";
-+          interrupts = <0 190 0>;
-+          interrupt-controller;
-+          #interrupt-cells = <4>;
-+
-+          qcom,ee = <0>;
-+          qcom,channel = <0>;
-+
-+          #address-cells = <2>;
-+          #size-cells = <0>;
-+    };
-diff --git a/Documentation/devicetree/bindings/spmi/spmi.yaml b/Documentation/devicetree/bindings/spmi/spmi.yaml
-index 1d243fae..d7d9345 100644
---- a/Documentation/devicetree/bindings/spmi/spmi.yaml
-+++ b/Documentation/devicetree/bindings/spmi/spmi.yaml
-@@ -25,7 +25,8 @@ properties:
-     pattern: "^spmi@.*"
- 
-   reg:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 5
- 
-   "#address-cells":
-     const: 2
--- 
-2.7.4
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
