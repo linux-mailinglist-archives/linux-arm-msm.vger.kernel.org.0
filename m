@@ -2,165 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 772DB461126
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 10:32:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DDE1461157
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 10:50:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244818AbhK2Jfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 04:35:54 -0500
-Received: from mga07.intel.com ([134.134.136.100]:20582 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243681AbhK2Jdy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 04:33:54 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10182"; a="299325834"
-X-IronPort-AV: E=Sophos;i="5.87,272,1631602800"; 
-   d="scan'208";a="299325834"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 01:22:04 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,272,1631602800"; 
-   d="scan'208";a="499258035"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga007.jf.intel.com with ESMTP; 29 Nov 2021 01:22:02 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mrcrJ-000BlG-Of; Mon, 29 Nov 2021 09:22:01 +0000
-Date:   Mon, 29 Nov 2021 17:21:28 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     kbuild-all@lists.01.org, Jeya R <jeyr@codeaurora.org>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH 2/2] misc: fastrpc: Add dma handle implementation
-Message-ID: <202111291710.WVYQ9Aed-lkp@intel.com>
-References: <1638163720-23123-3-git-send-email-jeyr@codeaurora.org>
+        id S245345AbhK2JxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 04:53:24 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:53386 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243997AbhK2JvO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 04:51:14 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id ED4F261216;
+        Mon, 29 Nov 2021 09:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BBAC53FCD;
+        Mon, 29 Nov 2021 09:47:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638179276;
+        bh=5CENAf/8QanA+lLNHGoriAWyTBD8I6cnLPIi4nuvTN4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=H5x3OCE4WZM12i3Vle4WyTNxy+SESS5l9MQeZY2n7ErMwupHa1wRMhIDBf89g7wm0
+         6gSP3nnbNkjlvyl5EfRHCHT9yuFlAICe30EKLNuUnfkgpJwvV7j/LK/tpRwFkXXtNL
+         ngawzo+pjvK7MjnPQuBBEVueMaD0DcmNhT89Dcki0PS010FrjtX4z8KjMu49WiD2hB
+         Gbe7aXtjeIzubLax6URGtRpmgiSQWSoZk9ytffAodGu1kBI6yn/I9CQGZat+iZ9dFm
+         X+llPm1yrsTkJuLdmzOSQUGh9OICb+q4/osiwb1c99vuQQuHtvh97hr5+sg2lMOfgk
+         gS60XsLMi2/+g==
+Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
+        (envelope-from <mchehab@kernel.org>)
+        id 1mrdGM-000RAt-2h; Mon, 29 Nov 2021 10:47:54 +0100
+From:   Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc:     linuxarm@huawei.com, mauro.chehab@huawei.com,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+        Andrey Utkin <andrey_utkin@fastmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Anton Sviridenko <anton@corp.bluecherry.net>,
+        Antti Palosaari <crope@iki.fi>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bluecherry Maintainers <maintainers@bluecherrydvr.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Houlong Wei <houlong.wei@mediatek.com>,
+        Ismael Luceno <ismael@iodev.co.uk>,
+        Kees Cook <keescook@chromium.org>,
+        Malcolm Priestley <tvboxspy@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Xiaofeng Cao <caoxiaofeng@yulong.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        llvm@lists.linux.dev
+Subject: [PATCH v2 00/20] Solve the remaining issues with clang and W=1 on media
+Date:   Mon, 29 Nov 2021 10:47:32 +0100
+Message-Id: <cover.1638179135.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1638163720-23123-3-git-send-email-jeyr@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeya,
+Currently, using clang with W=1 and CONFIG_WERROR causes media to break.
+This is reported by builder.linuxtv.org.
 
-Thank you for the patch! Yet something to improve:
+This series solve the remaining issues.
 
-[auto build test ERROR on char-misc/char-misc-testing]
-[also build test ERROR on v5.16-rc3 next-20211126]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+v2:
+  - Use __always_unused for the code we're keeping
+  - Dropped a couple more unused functions
+  - Added reviews got from the first submission and addressed some comments.
 
-url:    https://github.com/0day-ci/linux/commits/Jeya-R/Add-DMA-handle-implementation/20211129-133228
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git cd455ebb748c4e198c8158e5d61b3034bf10f22b
-config: microblaze-randconfig-r031-20211128 (https://download.01.org/0day-ci/archive/20211129/202111291710.WVYQ9Aed-lkp@intel.com/config)
-compiler: microblaze-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/d8e9cc594aeafa392d306e883c741b984b5fc89a
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Jeya-R/Add-DMA-handle-implementation/20211129-133228
-        git checkout d8e9cc594aeafa392d306e883c741b984b5fc89a
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=microblaze SHELL=/bin/bash drivers/misc/
+Mauro Carvalho Chehab (19):
+  media: adv7842: get rid of two unused functions
+  media: saa7134-go7007: get rid of to_state() function
+  media: davinci: get rid of an unused function
+  media: drxd: drop offset var from DownloadMicrocode()
+  media: drxk: drop operation_mode from set_dvbt()
+  media: m88ds3103: drop reg11 calculus from m88ds3103b_select_mclk()
+  media: si21xx: report eventual errors at set_frontend
+  media: solo6x10: mark unused functions as such
+  media: si470x: fix printk warnings with clang
+  media: radio-si476x: drop a container_of() abstraction macro
+  media: lmedm04: don't ignore errors when setting a filter
+  media: au0828-i2c: drop a duplicated function
+  media: adv7604: mark unused functions as such
+  media: adv7511: drop unused functions
+  media: imx290: mark read reg function as __always_unused
+  media: davinci: vpbe_osd: mark read reg function as __always_unused
+  media: mtk-mdp: address a clang warning
+  media: cobalt: drop an unused variable
+  media: mxl5005s: drop some dead code
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Robert Foss (1):
+  media: camss: Remove unused static function
 
-All errors (new ones prefixed by >>):
+ drivers/media/dvb-frontends/drxd_hard.c       |  8 -------
+ drivers/media/dvb-frontends/drxk_hard.c       | 23 ++++---------------
+ drivers/media/dvb-frontends/m88ds3103.c       |  6 +----
+ drivers/media/dvb-frontends/si21xx.c          |  7 +++---
+ drivers/media/i2c/adv7511-v4l2.c              | 22 ------------------
+ drivers/media/i2c/adv7604.c                   | 18 +++++++--------
+ drivers/media/i2c/adv7842.c                   | 10 --------
+ drivers/media/i2c/imx290.c                    |  2 +-
+ drivers/media/pci/cobalt/cobalt-cpld.c        |  5 +---
+ drivers/media/pci/saa7134/saa7134-go7007.c    |  7 +-----
+ .../media/pci/solo6x10/solo6x10-v4l2-enc.c    | 12 +++++-----
+ drivers/media/platform/davinci/vpbe_osd.c     |  2 +-
+ drivers/media/platform/davinci/vpif_capture.c | 11 ---------
+ drivers/media/platform/mtk-mdp/mtk_mdp_core.c |  2 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  7 ------
+ drivers/media/radio/radio-si476x.c            |  6 -----
+ drivers/media/radio/si470x/radio-si470x-i2c.c |  4 ++--
+ drivers/media/radio/si470x/radio-si470x-usb.c |  8 +++----
+ drivers/media/tuners/mxl5005s.c               | 14 +----------
+ drivers/media/usb/au0828/au0828-i2c.c         |  7 ------
+ drivers/media/usb/dvb-usb-v2/lmedm04.c        |  3 +++
+ 21 files changed, 40 insertions(+), 144 deletions(-)
 
-   drivers/misc/fastrpc.c: In function 'fastrpc_get_meta_size':
->> drivers/misc/fastrpc.c:721:31: error: 'fastrpc_remote_arg' defined as wrong kind of tag
-     721 |         size = (sizeof(struct fastrpc_remote_arg) +
-         |                               ^~~~~~~~~~~~~~~~~~
->> drivers/misc/fastrpc.c:721:24: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
-     721 |         size = (sizeof(struct fastrpc_remote_arg) +
-         |                        ^~~~~~
-   drivers/misc/fastrpc.c: In function 'fastrpc_put_args':
-   drivers/misc/fastrpc.c:925:16: error: 'fastrpc_remote_arg' defined as wrong kind of tag
-     925 |         struct fastrpc_remote_arg *rpra = ctx->rpra;
-         |                ^~~~~~~~~~~~~~~~~~
->> drivers/misc/fastrpc.c:925:43: error: initialization of 'struct fastrpc_remote_arg *' from incompatible pointer type 'union fastrpc_remote_arg *' [-Werror=incompatible-pointer-types]
-     925 |         struct fastrpc_remote_arg *rpra = ctx->rpra;
-         |                                           ^~~
-   drivers/misc/fastrpc.c:935:55: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
-     935 |         list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
-         |                                                       ^
-   drivers/misc/fastrpc.c:937:23: error: invalid application of 'sizeof' to incomplete type 'struct fastrpc_remote_arg'
-     937 |                 sizeof(*rpra));
-         |                       ^
->> drivers/misc/fastrpc.c:942:60: error: invalid use of undefined type 'struct fastrpc_remote_arg'
-     942 |                         void *src = (void *)(uintptr_t)rpra[i].pv;
-         |                                                            ^
-   drivers/misc/fastrpc.c:942:63: error: invalid use of undefined type 'struct fastrpc_remote_arg'
-     942 |                         void *src = (void *)(uintptr_t)rpra[i].pv;
-         |                                                               ^
-   drivers/misc/fastrpc.c:944:39: error: invalid use of undefined type 'struct fastrpc_remote_arg'
-     944 |                         u64 len = rpra[i].len;
-         |                                       ^
-   drivers/misc/fastrpc.c:944:42: error: invalid use of undefined type 'struct fastrpc_remote_arg'
-     944 |                         u64 len = rpra[i].len;
-         |                                          ^
-   drivers/misc/fastrpc.c:958:39: error: 'fl' undeclared (first use in this function); did you mean 'fd'?
-     958 |                 if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
-         |                                       ^~
-         |                                       fd
-   drivers/misc/fastrpc.c:958:39: note: each undeclared identifier is reported only once for each function it appears in
-   At top level:
-   drivers/misc/fastrpc.c:717:12: warning: 'fastrpc_get_meta_size' defined but not used [-Wunused-function]
-     717 | static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
-         |            ^~~~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
+-- 
+2.33.1
 
 
-vim +/fastrpc_remote_arg +721 drivers/misc/fastrpc.c
-
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  689  
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  690  /*
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  691   * Fastrpc payload buffer with metadata looks like:
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  692   *
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  693   * >>>>>>  START of METADATA <<<<<<<<<
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  694   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  695   * |           Arguments             |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  696   * | type:(struct fastrpc_remote_arg)|
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  697   * |             (0 - N)             |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  698   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  699   * |         Invoke Buffer list      |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  700   * | type:(struct fastrpc_invoke_buf)|
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  701   * |           (0 - N)               |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  702   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  703   * |         Page info list          |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  704   * | type:(struct fastrpc_phy_page)  |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  705   * |             (0 - N)             |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  706   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  707   * |         Optional info           |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  708   * |(can be specific to SoC/Firmware)|
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  709   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  710   * >>>>>>>>  END of METADATA <<<<<<<<<
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  711   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  712   * |         Inline ARGS             |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  713   * |            (0-N)                |
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  714   * +---------------------------------+
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  715   */
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  716  
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  717  static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  718  {
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  719  	int size = 0;
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  720  
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08 @721  	size = (sizeof(struct fastrpc_remote_arg) +
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  722  		sizeof(struct fastrpc_invoke_buf) +
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  723  		sizeof(struct fastrpc_phy_page)) * ctx->nscalars +
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  724  		sizeof(u64) * FASTRPC_MAX_FDLIST +
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  725  		sizeof(u32) * FASTRPC_MAX_CRCLIST;
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  726  
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  727  	return size;
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  728  }
-c68cfb718c8f97 Srinivas Kandagatla 2019-02-08  729  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
