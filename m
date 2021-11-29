@@ -2,182 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D81D546170D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 14:51:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09F7E4617D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 15:17:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbhK2NzL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 08:55:11 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:55818 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238715AbhK2NxK (ORCPT
+        id S1348866AbhK2OUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 09:20:21 -0500
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:43392 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243825AbhK2OSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 08:53:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638193793; x=1669729793;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=AjNlHkQhieFspKATbLnIUNoPpyvk2lFtejCtDPm1ES8=;
-  b=w17fMPBA5DQDjPlDWwZ4rVvjUZg1V9TyvAVlSiEsRXnifdColUgczQiM
-   Qdsq+PfqszWqZKekrMdaRQJ6nnj9QWxkOKzOCyDMYDB8ZaOqPiLtUpn4d
-   SQAy2RHPDG3/8/yV1t48eAV8XNDQoUce0kY2lJmuROFxND4ovePDcjEAt
-   g=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Nov 2021 05:49:53 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 05:49:52 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 29 Nov 2021 05:49:52 -0800
-Received: from [10.50.44.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 29 Nov
- 2021 05:49:48 -0800
-Message-ID: <466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com>
-Date:   Mon, 29 Nov 2021 19:19:45 +0530
+        Mon, 29 Nov 2021 09:18:20 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: kholk11)
+        with ESMTPSA id 9B0811F44680
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=collabora.com; s=mail;
+        t=1638195300; bh=qg0ogrpDEw7JPiv8EIlq4c9NL0fyYtw+4YIjCYhjohM=;
+        h=From:Subject:To:Cc:References:Date:In-Reply-To:From;
+        b=IbTiE2av+7ihv0Qq9SkHZc2960kgW1bDv5Y9iGihVQFz6IjoUilrYSku9yJtwLhOn
+         GtiOrcTSZP1KwdxCklTZWVFd9zNdBMvsCw7Wzr/S9FIw2lOXhp5sJi0CVnWlrnwjj7
+         J2KMKlPvhcGnlrI9v8TxzXQUkn9+jA+p/npimhp6aJdSV1FBm0SeShc+a/cMl2B9kj
+         C2RqBMpIvyYb/wXEqv+sLCk7rC3teGaG/9busDeEQuj7HwKRwSPh6MELP6fmFTaBG1
+         kKSOlDjWlaRx54vzfbVICO5ltEnKJExlwm612kbDKF/n1jEMd1Rxfuu12LU/JcIkWo
+         fsx3oYHza5R2g==
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, kernel@collabora.com,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        jami.kettunen@somainline.org
+References: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+ <bf1540f1-4a9f-a9d6-d487-929107c487fd@linaro.org>
+Message-ID: <9a0158ae-a3b1-21b2-1ba3-82d4901eb873@collabora.com>
+Date:   Mon, 29 Nov 2021 15:14:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv4 2/2] arm64/io: Add a header for mmio access
- instrumentation
+In-Reply-To: <bf1540f1-4a9f-a9d6-d487-929107c487fd@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Arnd Bergmann <arnd@arndb.de>
-CC:     Will Deacon <will@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        <quic_psodagud@quicinc.com>, "Marc Zyngier" <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ingo Molnar <mingo@redhat.com>
-References: <cover.1636973694.git.quic_saipraka@quicinc.com>
- <9396fbdc415a3096ab271868960372b21479e4fb.1636973694.git.quic_saipraka@quicinc.com>
- <CAK8P3a2Bp4LP7C1-XLKvjyxV-e1vrHb-=3zpm75CRgPYNbY2jA@mail.gmail.com>
- <b07e339c-530d-683c-c626-14b73b42e72a@quicinc.com>
- <1609f1f7-6f61-6e17-d907-c526f09bffe5@quicinc.com>
- <CAK8P3a1KxJFwgock3XiRDZYzT=5PZ=Hsh_8uFv9heoa1rwNqtA@mail.gmail.com>
- <9ef8b483-f15f-eda8-d430-2d01e6cad70e@quicinc.com>
- <CAK8P3a0Zo+PTGAAvisAZamfLUm1ToGZpmHDn-Xk0Eo8TTRGyZg@mail.gmail.com>
- <4ed41054-3868-d5e2-9958-56250b7f9be0@quicinc.com>
- <CAK8P3a07sMdR9NUz5AOJk+O-op9qLU_PjnhvqvTz9xrHE7NXEg@mail.gmail.com>
- <d216f201-183f-c253-495d-1d9203141a63@quicinc.com>
-In-Reply-To: <d216f201-183f-c253-495d-1d9203141a63@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd,
-
-On 11/22/2021 9:13 PM, Sai Prakash Ranjan wrote:
-> On 11/22/2021 9:05 PM, Arnd Bergmann wrote:
->> On Mon, Nov 22, 2021 at 3:59 PM Sai Prakash Ranjan
->> <quic_saipraka@quicinc.com> wrote:
->>>>> And if we do move this instrumentation to asm-generic/io.h, how will
->>>>> that be executed since
->>>>> the arch specifc read{b,w,l,q} overrides this generic version?
->>>> As I understand it, your version also requires architecture specific
->>>> changes, so that would be the same: it only works for architectures
->>>> that get the definition of readl()/readl_relaxed()/inl()/... from
->>>> include/asm-generic/io.h and only override the __raw version. Arnd
->>> Sorry, I didn't get this part, so  I am trying this on ARM64:
->>>
->>> arm64/include/asm/io.h has read{b,l,w,q} defined.
->>> include/asm-generic/io.h has below:
->>>     #ifndef readl
->>>     #define readl readl
->>>     static inline u32 readl(const volatile void __iomem *addr)
->>>
->>> and we include asm-generic/io.h in arm64/include/asm/io.h at the end
->>> after the definitions for arm64 mmio accesors.
->>> So arch implementation here overrides generic ones as I see it, am I
->>> missing something? I even confirmed this
->>> with some trace_printk to generic and arch specific definitions of 
->>> readl
->>> and I see arch specific ones being called.
->> Ah, you are right that the arm64 version currently has custom 
->> definitions
->> of the high-level interfaces. These predate the introduction of the
->> __io_{p,}{b,a}{r,w} macros and are currently only used on risc-v.
+Il 29/11/21 03:20, Dmitry Baryshkov ha scritto:
+> Hi,
+> 
+> On 25/11/2021 18:09, AngeloGioacchino Del Regno wrote:
+>> Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
+>> DSI host gets initialized earlier, but this caused unability to probe
+>> the entire stack of components because they all depend on interrupts
+>> coming from the main `mdss` node (mdp5, or dpu1).
 >>
->> I think in this case you should start by changing arm64 to use the
->> generic readl() etc definitions, by removing the extra definitions and
->> using
+>> To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
+>> them at msm_pdev_probe() time: this will make sure that we add the
+>> required interrupt controller mapping before dsi and/or other components
+>> try to initialize, finally satisfying the dependency.
 >>
->> #define __io_ar(v) __iormb(__v)
->> #define __io_bw() dma_wmb()
+>> While at it, also change the allocation of msm_drm_private to use the
+>> devm variant of kzalloc().
 >>
->>
->
-> Sure, will do that.
+>> Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> 
+> I have been thinking about this. I do not feel that this is the correct approach. 
+> Currently DRM device exists only when all components are bound. If any of the 
+> subdevices is removed, corresponding component is delteted (and thus all components 
+> are unbound), the DRM device is taken down. This results in the state cleanup, 
+> userspace notifications, etc.
+> 
+> With your changes, DRM device will continue to exist even after one of subdevices 
+> is removed. This is not an expected behaviour, since subdrivers do not perform full 
+> cleanup, delegating that to DRM device takedown.
+> 
+> I suppose that proper solution would be to split msm_drv.c into into:
+> - generic components & drm code to be called from mdp4/mdp5/dpu driver (making 
+> mdp4, mdp5 or dpu1 the components master)
+> 
+> - bare mdss driver, taking care only about IRQs, OF devices population - calling 
+> proper mdss_init/mdss_destroy functions. Most probably we can drop this part 
+> altogether and just make md5_mdss.c/dpu_mdss.c proper platform drivers.
+> 
 
-I got the callback version implemented as suggested by you to compare 
-the overall size and performance
-with the inline version and apparently the size increased more in case 
-of callback version when compared to
-inline version. As for the performance, I ran some basic dd tests and 
-sysbench and didn't see any noticeable
-difference between the two implementations.
 
-**Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-$ size vmlinux
-    text                   data                    bss dec             
-hex         filename
-23884219        14284468         532568 38701255        24e88c7 vmlinux
+Hmm... getting a better look on how things are structured... yes, I mostly agree
+with you, though I'm not sure about making MDP{4,5}/DPU1 the component master; that
+would result in a major change in drm-msm, which may be "a bit too much".
 
-**Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-$ size vmlinux
-    text                  data                     bss dec               
-        hex        filename
-24108179        14279596         532568 38920343        251e097 vmlinux
+Don't misunderstand me here, please, major changes are fine - but I feel urgency
+to get this bug solved ASAP (since drm-msm is currently broken at least for drm 
+bridges) and, if we do anything major, that would require a very careful slow
+review process that will leave this driver broken for a lot of time.
 
-$ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
-add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
-Total: Before=25812612, After=26043292, chg +0.89%
+I actually tried something else that "simplifies" the former approach, so here's
+my proposal:
+* we introduce {mdp5,dpu}_mdss_early_init(struct device, struct msm_drm_private)
+* allocate only msm_drm_private in msm_pdev_probe, leaving the drm_dev_alloc call
+   into msm_drm_init(), so that the drm_dev_put() stays in msm_drm_uninit()
+* pass msm_drm_private as drvdata instead of drm_device
+* change all the drvdata users to get drm_device from priv->dev, instead of getting
+   msm_drm_private from drm_device->dev_private (like many other drm drivers are
+   currently doing)
 
-Note: I had arm64 move to asm-generic high level accessors in both 
-versions which I plan to post together but
-not included in below links,
+This way, we keep the current flow of creating the DRM device at msm_drm_init time
+and tearing it down at msm_drm_unbind time, solving the issue that you are
+describing.
 
-For your reference, here are the 2 versions of the patches,
-  Inline version - 
-https://github.com/saiprakash-ranjan/RTB-Patches/blob/main/0001-asm-generic-io-Add-logging-support-for-MMIO-accessor.patch
-  Callback version - 
-https://github.com/saiprakash-ranjan/RTB-Patches/blob/main/0001-asm-generic-io-Add-callback-based-MMIO-logging-suppo.patch
+If you're okay with this kind of approach, I have two patches here that are 95%
+ready, can finish them off and send briefly.
 
-Couple of things noted in callback version which didn't look quite good 
-was that it needed some way to register the
-callbacks and need to use some initcall (core_initcall used) as 
-implemented in above patch but that would probably
-mean we would lose some register logging(if there is some) in between 
-early_initcall(which is when trace events get
-enabled) and this trace_readwrite core_initcall. Another thing I noticed 
-that since we now move to callback based
-implementations, the caller info is somewhat inaccurate when compared to 
-inline version.
+Though, something else must be noted here... in the last mail where I'm pasting
+a crash that happens when running 'rmmod panel_edp ti_sn65dsi86', I have implied
+that this is happening due to the patch that I've sent: after some more research,
+I'm not convinced anymore that this is a consequence of that. That crash may not
+be related to my fix at all, but to something else (perhaps also related to commit
+8f59ee9a570c, the one that we're fixing here).
 
-Also regarding your earlier comment on inline versions being possibly 
-problematic on lower memory systems, enabling
-Ftrace itself is making a considerable size difference and in such 
-systems ftrace wouldn't be enabled which implicitly means
-MMIO logging which are based on trace events will be disabled anyways.
+Of course, that crash still happens even with the approach that I've just proposed.
 
-Here is the size delta with FTRACE enabled and disabled with arm64 
-defconfig without MMIO logging support:
-$ ./scripts/bloat-o-meter ftrace-disabled-vmlinux ftrace-enabled-vmlinux
-add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
-Total: Before=22865837, After=25215198, chg +10.27%
 
-Given all this, I would prefer inline versions in asm-generic high level 
-accessors, let me know what you think.
+Looking forward for your opinion!
 
-Thanks,
-Sai
+Cheers,
+- Angelo
