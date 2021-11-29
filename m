@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B91B460C9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 03:22:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DFC460CA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 03:27:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbhK2CZd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 Nov 2021 21:25:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49838 "EHLO
+        id S237112AbhK2CaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 Nov 2021 21:30:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234414AbhK2CXd (ORCPT
+        with ESMTP id S238186AbhK2C2W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 Nov 2021 21:23:33 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66286C06174A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Nov 2021 18:20:16 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id bu18so40611574lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Nov 2021 18:20:16 -0800 (PST)
+        Sun, 28 Nov 2021 21:28:22 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED71EC061748
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Nov 2021 18:25:05 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id l7so31497063lja.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Nov 2021 18:25:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gbXpy3X0fAtXtWiERTMiFnq4YzMw3Gn4MO7+9HVk0zs=;
-        b=riAko6cxL5ZRupe3kDzYS9nBBKhba4A6hHLKSoFDDF+P8MBGCyx6NPjh403sXAhz6o
-         KCqji0QzueFYRrss2xQVIuIHaQoKMSCTnzAQtWtNdncRyYy9x76We7lAYt4rFhIGsP0i
-         KAYIumBQ5ylYOnEq83R1VUC/NSk2DerWqfBtbNE3Xx9kpJNvRFxCSQI6Pujlj30B3Mna
-         zy2xFYiwyJgA7IowgAklqEDDYVJ1shDXTjbjXn7QLSkpvqir9jOz68W2ksxMWAxuNLsx
-         16ozAdUWv/iNS3A70mahCg593ikXS+uwSURxQ9vGzRT6T2A5wuts7oBqcgLfEgbRA2EC
-         wMqQ==
+        bh=rFDHshpl2dqAGPF3MoHGk3Vso6gtNhODB+79/AogQ9g=;
+        b=XBoonPe1eIrnsHDCUwya0qnIP3hjiEyRPURX47zbUH0f58LGJuVJETenDe+4PXJ14k
+         /bHpX3L8SJgD3IMgcd6mup+YgygXHlovZL2F1iQB8y5+Jq4d3Fe8jAPXcvB00GaGGJRT
+         z2B0nnFYKIjih7idRXWK9YCOmAZv7ewoOG6E1Ez+FMEfDI9c9aTrdWwppa/zRR0yfUme
+         RupkhNrKMioJ0mkKSswG+1Z1IDuL3QqtcJNGep+8MgwGTEXGDy9prqlZyG4bfLYKcqjI
+         JSNg4Me74hl4btPVwq77eBXGI4p+Q5itN5Mjo6LOAxPcxQit4MdY+y9wOGLDoZRyADFR
+         b5Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=gbXpy3X0fAtXtWiERTMiFnq4YzMw3Gn4MO7+9HVk0zs=;
-        b=7Ra1XDRoibLzp244rEVqvGMD9GrEAC8ZZXzsoBm3mD4FLLWhHBTurfq8/AiaYaYI5U
-         h5Cqk+E9MTXa3ojJxiBpAcTa+Zo2YX0ae6OcX/qUrURbf0ZxNSkBe83HRPKupOOw646Z
-         KEyUoz/ZFaf/gM0EUrjzhG7AolKZuw4Pxv0cP8v+iUwvLURJxlcmJWfFe+2HwthpYc6w
-         pdEz9tZVFPJI7QCbgKACXK9eqsqxIs6B6AY9PznA36YSBZE7SF9rxpThdYC8Qpn5i37E
-         xP1xUtzziM7GBZCipZ2HJ8l3nbjdlwP8CcMc0MnU63Sa5DKZCGx0i5MTWIzUphY+bpkA
-         D9pQ==
-X-Gm-Message-State: AOAM530KO6nNe26MM6emh7jXK6BwV6eZa9RE6aZR/Usjyo71p10dTEfE
-        ydLkQO1j3VnfStR5egDF2PbdiA==
-X-Google-Smtp-Source: ABdhPJxIwWo/bewpFBzWHTwOtHdrqRrm9GQlZeon4gRuwO5aydkPs6ToAAYp/JHEnm84xRrVcMGrBw==
-X-Received: by 2002:a05:6512:3251:: with SMTP id c17mr43171055lfr.440.1638152414615;
-        Sun, 28 Nov 2021 18:20:14 -0800 (PST)
+        bh=rFDHshpl2dqAGPF3MoHGk3Vso6gtNhODB+79/AogQ9g=;
+        b=Fs+yLOObDg/wczepQ99GZLmjvdACyYaJxBzq7/rauRgF9iJwNJNMT48JsAPvrgIilr
+         lv7+XRb5WGIT2xadn2FWBpCEsLlAFLuT7j4X7wGFjn5bnYrs2CyustUB25B7uAn8BQwm
+         Z7ZRNh/mhC2Mv+Dim3W51F8kIPT9kjCBSVECSJc51CdCczZVsQHu//11eSB0PVHEyV2o
+         yVWU63JQMhfZPDdGx9ddPTttRmGPCXs4nGGlLdOyvO9fxdt+Sct0F+7nnHUAWUkoV84K
+         vq5tLBWdnrK/r7L6ezjYOGkwiDIz5NYRN5gOWWxXcbzxbo6IGPKU4pO05igFmLY4AOsg
+         WIig==
+X-Gm-Message-State: AOAM532FVCwmkeoUoHIjJBw7UzynIzYNbCMt5FYGZh2HnV++RBPf/VEr
+        GMsKNYHQEXHv9DqbMDukHTLZcA==
+X-Google-Smtp-Source: ABdhPJyNWsMZuDlI5sEJ6vas937eCxVotkiqOCL8L/+b7scSUgcDIF51Tfu40fRc9OcwqKFhApin4g==
+X-Received: by 2002:a2e:9197:: with SMTP id f23mr45782387ljg.235.1638152704037;
+        Sun, 28 Nov 2021 18:25:04 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d18sm1336482lfl.30.2021.11.28.18.20.13
+        by smtp.gmail.com with ESMTPSA id m20sm1173100lfu.241.2021.11.28.18.25.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Nov 2021 18:20:14 -0800 (PST)
-Subject: Re: [PATCH] drm/msm: Initialize MDSS irq domain at probe time
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        jami.kettunen@somainline.org
-References: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+        Sun, 28 Nov 2021 18:25:03 -0800 (PST)
+Subject: Re: [PATCH V3 3/4] thermal: qcom: Add support for multiple
+ generations of devices
+To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        mka@chromium.org, robh+dt@kernel.org, knaack.h@gmx.de,
+        lars@metafoo.de, pmeerw@pmeerw.net,
+        manivannan.sadhasivam@linaro.org, linus.walleij@linaro.org,
+        quic_kgunda@quicinc.com, quic_aghayal@quicinc.com,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com,
+        quic_subbaram@quicinc.com, jic23@kernel.org, amitk@kernel.org,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     linux-arm-msm-owner@vger.kernel.org, linux-iio@vger.kernel.org
+References: <1637647025-20409-1-git-send-email-quic_jprakash@quicinc.com>
+ <1637647025-20409-4-git-send-email-quic_jprakash@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <bf1540f1-4a9f-a9d6-d487-929107c487fd@linaro.org>
-Date:   Mon, 29 Nov 2021 05:20:13 +0300
+Message-ID: <47228209-552e-b148-c93a-4fbb5a36583e@linaro.org>
+Date:   Mon, 29 Nov 2021 05:25:02 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20211125150947.354076-1-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <1637647025-20409-4-git-send-email-quic_jprakash@quicinc.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -73,169 +79,166 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 25/11/2021 18:09, AngeloGioacchino Del Regno wrote:
-> Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
-> DSI host gets initialized earlier, but this caused unability to probe
-> the entire stack of components because they all depend on interrupts
-> coming from the main `mdss` node (mdp5, or dpu1).
+On 23/11/2021 08:57, Jishnu Prakash wrote:
+> Refactor code to support multiple generations of ADC_TM devices
+> by defining gen number, irq name and disable, configure and isr
+> APIs in the individual data structs.
 > 
-> To fix this issue, also anticipate probing mdp5 or dpu1 by initializing
-> them at msm_pdev_probe() time: this will make sure that we add the
-> required interrupt controller mapping before dsi and/or other components
-> try to initialize, finally satisfying the dependency.
-> 
-> While at it, also change the allocation of msm_drm_private to use the
-> devm variant of kzalloc().
-> 
-> Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
 
-I have been thinking about this. I do not feel that this is the correct 
-approach. Currently DRM device exists only when all components are 
-bound. If any of the subdevices is removed, corresponding component is 
-delteted (and thus all components are unbound), the DRM device is taken 
-down. This results in the state cleanup, userspace notifications, etc.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-With your changes, DRM device will continue to exist even after one of 
-subdevices is removed. This is not an expected behaviour, since 
-subdrivers do not perform full cleanup, delegating that to DRM device 
-takedown.
-
-I suppose that proper solution would be to split msm_drv.c into into:
-- generic components & drm code to be called from mdp4/mdp5/dpu driver 
-(making mdp4, mdp5 or dpu1 the components master)
-
-- bare mdss driver, taking care only about IRQs, OF devices population - 
-calling proper mdss_init/mdss_destroy functions. Most probably we can 
-drop this part altogether and just make md5_mdss.c/dpu_mdss.c proper 
-platform drivers.
+Minor question below.
 
 > ---
->   drivers/gpu/drm/msm/msm_drv.c | 81 ++++++++++++++++-------------------
->   1 file changed, 38 insertions(+), 43 deletions(-)
+>   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 76 ++++++++++++++++++++------------
+>   1 file changed, 48 insertions(+), 28 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 7936e8d498dd..790acf4993c0 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -512,45 +512,12 @@ static int msm_init_vram(struct drm_device *dev)
->   static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> index 824671c..fc8cd45 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> @@ -78,11 +78,10 @@ enum adc5_timer_select {
+>   	ADC5_TIMER_SEL_NONE,
+>   };
+>   
+> -struct adc_tm5_data {
+> -	const u32	full_scale_code_volt;
+> -	unsigned int	*decimation;
+> -	unsigned int	*hw_settle;
+> -	bool		is_hc;
+> +enum adc5_gen {
+> +	ADC_TM5,
+> +	ADC_TM_HC,
+> +	ADC_TM5_MAX
+>   };
+>   
+>   enum adc_tm5_cal_method {
+> @@ -92,6 +91,18 @@ enum adc_tm5_cal_method {
+>   };
+>   
+>   struct adc_tm5_chip;
+> +struct adc_tm5_channel;
+> +
+> +struct adc_tm5_data {
+> +	const u32 full_scale_code_volt;
+> +	unsigned int *decimation;
+> +	unsigned int *hw_settle;
+> +	int (*disable_channel)(struct adc_tm5_channel *channel);
+> +	int (*configure)(struct adc_tm5_channel *channel, int low, int high);
+> +	irqreturn_t (*isr)(int irq, void *data);
+> +	char *irq_name;
+> +	int gen;
+> +};
+
+Any reason for moving the adc_tm5_data definition? It is still prefix 
+with the adc_tmp5_channel declaration.
+
+>   
+>   /**
+>    * struct adc_tm5_channel - ADC Thermal Monitoring channel data.
+> @@ -139,22 +150,6 @@ struct adc_tm5_chip {
+>   	u16			base;
+>   };
+>   
+> -static const struct adc_tm5_data adc_tm5_data_pmic = {
+> -	.full_scale_code_volt = 0x70e4,
+> -	.decimation = (unsigned int []) { 250, 420, 840 },
+> -	.hw_settle = (unsigned int []) { 15, 100, 200, 300, 400, 500, 600, 700,
+> -					 1000, 2000, 4000, 8000, 16000, 32000,
+> -					 64000, 128000 },
+> -};
+> -
+> -static const struct adc_tm5_data adc_tm_hc_data_pmic = {
+> -	.full_scale_code_volt = 0x70e4,
+> -	.decimation = (unsigned int []) { 256, 512, 1024 },
+> -	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
+> -					 1000, 2000, 4000, 6000, 8000, 10000 },
+> -	.is_hc = true,
+> -};
+> -
+>   static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
 >   {
->   	struct platform_device *pdev = to_platform_device(dev);
-> -	struct drm_device *ddev;
-> -	struct msm_drm_private *priv;
-> -	struct msm_kms *kms;
-> -	struct msm_mdss *mdss;
-> +	struct drm_device *ddev = platform_get_drvdata(pdev);
-> +	struct msm_drm_private *priv = ddev->dev_private;
-> +	struct msm_kms *kms = priv->kms;
-> +	struct msm_mdss *mdss = priv->mdss;
->   	int ret, i;
+>   	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
+> @@ -343,14 +338,14 @@ static int adc_tm5_set_trips(void *data, int low, int high)
+>   		channel->channel, low, high);
 >   
-> -	ddev = drm_dev_alloc(drv, dev);
-> -	if (IS_ERR(ddev)) {
-> -		DRM_DEV_ERROR(dev, "failed to allocate drm_device\n");
-> -		return PTR_ERR(ddev);
-> -	}
-> -
-> -	platform_set_drvdata(pdev, ddev);
-> -
-> -	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-> -	if (!priv) {
-> -		ret = -ENOMEM;
-> -		goto err_put_drm_dev;
-> -	}
-> -
-> -	ddev->dev_private = priv;
-> -	priv->dev = ddev;
-> -
-> -	switch (get_mdp_ver(pdev)) {
-> -	case KMS_MDP5:
-> -		ret = mdp5_mdss_init(ddev);
-> -		break;
-> -	case KMS_DPU:
-> -		ret = dpu_mdss_init(ddev);
-> -		break;
-> -	default:
-> -		ret = 0;
-> -		break;
-> -	}
-> -	if (ret)
-> -		goto err_free_priv;
-> -
-> -	mdss = priv->mdss;
-> -
->   	priv->wq = alloc_ordered_workqueue("msm", 0);
->   	priv->hangcheck_period = DRM_MSM_HANGCHECK_DEFAULT_PERIOD;
+>   	if (high == INT_MAX && low <= -INT_MAX)
+> -		ret = adc_tm5_disable_channel(channel);
+> +		ret = chip->data->disable_channel(channel);
+>   	else
+> -		ret = adc_tm5_configure(channel, low, high);
+> +		ret = chip->data->configure(channel, low, high);
 >   
-> @@ -685,11 +652,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->   err_destroy_mdss:
->   	if (mdss && mdss->funcs)
->   		mdss->funcs->destroy(ddev);
-> -err_free_priv:
-> -	kfree(priv);
-> -err_put_drm_dev:
-> -	drm_dev_put(ddev);
-> -	platform_set_drvdata(pdev, NULL);
 >   	return ret;
 >   }
 >   
-> @@ -1382,12 +1344,42 @@ static const struct component_master_ops msm_drm_ops = {
->   static int msm_pdev_probe(struct platform_device *pdev)
->   {
->   	struct component_match *match = NULL;
-> +	struct msm_drm_private *priv;
-> +	struct drm_device *ddev;
->   	int ret;
+> -static struct thermal_zone_of_device_ops adc_tm5_ops = {
+> +static struct thermal_zone_of_device_ops adc_tm5_thermal_ops = {
+>   	.get_temp = adc_tm5_get_temp,
+>   	.set_trips = adc_tm5_set_trips,
+>   };
+> @@ -366,7 +361,7 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
+>   		tzd = devm_thermal_zone_of_sensor_register(adc_tm->dev,
+>   							   adc_tm->channels[i].channel,
+>   							   &adc_tm->channels[i],
+> -							   &adc_tm5_ops);
+> +							   &adc_tm5_thermal_ops);
+>   		if (IS_ERR(tzd)) {
+>   			if (PTR_ERR(tzd) == -ENODEV) {
+>   				dev_warn(adc_tm->dev, "thermal sensor on channel %d is not used\n",
+> @@ -526,6 +521,31 @@ static int adc_tm5_get_dt_channel_data(struct adc_tm5_chip *adc_tm,
+>   	return 0;
+>   }
 >   
-> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-> +	if (!priv)
-> +		return -ENOMEM;
+> +static const struct adc_tm5_data adc_tm5_data_pmic = {
+> +	.full_scale_code_volt = 0x70e4,
+> +	.decimation = (unsigned int []) { 250, 420, 840 },
+> +	.hw_settle = (unsigned int []) { 15, 100, 200, 300, 400, 500, 600, 700,
+> +					 1000, 2000, 4000, 8000, 16000, 32000,
+> +					 64000, 128000 },
+> +	.disable_channel = adc_tm5_disable_channel,
+> +	.configure = adc_tm5_configure,
+> +	.isr = adc_tm5_isr,
+> +	.irq_name = "pm-adc-tm5",
+> +	.gen = ADC_TM5,
+> +};
 > +
-> +	ddev = drm_dev_alloc(&msm_driver, &pdev->dev);
-> +	if (IS_ERR(ddev)) {
-> +		DRM_DEV_ERROR(&pdev->dev, "failed to allocate drm_device\n");
-> +		return PTR_ERR(ddev);
-> +	}
+> +static const struct adc_tm5_data adc_tm_hc_data_pmic = {
+> +	.full_scale_code_volt = 0x70e4,
+> +	.decimation = (unsigned int []) { 256, 512, 1024 },
+> +	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
+> +					 1000, 2000, 4000, 6000, 8000, 10000 },
+> +	.disable_channel = adc_tm5_disable_channel,
+> +	.configure = adc_tm5_configure,
+> +	.isr = adc_tm5_isr,
+> +	.irq_name = "pm-adc-tm5",
+> +	.gen = ADC_TM_HC,
+> +};
 > +
-> +	platform_set_drvdata(pdev, ddev);
-> +	ddev->dev_private = priv;
-> +	priv->dev = ddev;
-> +
-> +	switch (get_mdp_ver(pdev)) {
-> +	case KMS_MDP5:
-> +		ret = mdp5_mdss_init(ddev);
-> +		break;
-> +	case KMS_DPU:
-> +		ret = dpu_mdss_init(ddev);
-> +		break;
-> +	default:
-> +		ret = 0;
-> +		break;
-> +	}
-> +	if (ret)
-> +		goto err_put_drm_dev;
-> +
->   	if (get_mdp_ver(pdev)) {
->   		ret = add_display_components(pdev, &match);
->   		if (ret)
-> -			return ret;
-> +			goto fail;
+>   static int adc_tm5_get_dt_data(struct adc_tm5_chip *adc_tm, struct device_node *node)
+>   {
+>   	struct adc_tm5_channel *channels;
+> @@ -623,7 +643,7 @@ static int adc_tm5_probe(struct platform_device *pdev)
+>   		return ret;
 >   	}
 >   
->   	ret = add_gpu_components(&pdev->dev, &match);
-> @@ -1409,6 +1401,9 @@ static int msm_pdev_probe(struct platform_device *pdev)
+> -	if (adc_tm->data->is_hc)
+> +	if (adc_tm->data->gen == ADC_TM_HC)
+>   		ret = adc_tm_hc_init(adc_tm);
+>   	else
+>   		ret = adc_tm5_init(adc_tm);
+> @@ -638,8 +658,8 @@ static int adc_tm5_probe(struct platform_device *pdev)
+>   		return ret;
+>   	}
 >   
->   fail:
->   	of_platform_depopulate(&pdev->dev);
-> +err_put_drm_dev:
-> +	drm_dev_put(ddev);
-> +	platform_set_drvdata(pdev, NULL);
->   	return ret;
+> -	return devm_request_threaded_irq(dev, irq, NULL, adc_tm5_isr,
+> -					 IRQF_ONESHOT, "pm-adc-tm5", adc_tm);
+> +	return devm_request_threaded_irq(dev, irq, NULL, adc_tm->data->isr,
+> +			IRQF_ONESHOT, adc_tm->data->irq_name, adc_tm);
 >   }
 >   
+>   static const struct of_device_id adc_tm5_match_table[] = {
 > 
 
 
