@@ -2,234 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D4044611A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 11:01:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C191346128F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 11:39:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349347AbhK2KFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 05:05:03 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:59254 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1346080AbhK2KDB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 05:03:01 -0500
+        id S1345178AbhK2Km7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 05:42:59 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:42551 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235804AbhK2Kk6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 05:40:58 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638179983; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=VlR8aqgZt1NjItqFN4OMgjhCVZUDpejgd47uj9MkXR0=; b=iezph6ZDv0uTYNuOclnJxU79pw2oN2QgIDE0SDqnkXrRAgASQ1QfW6wzAML+fdolBdYcijFK
- 3q8BT+vUhd2EGsoXHuWzQslKwCEeFC/OJGUV7ZMNnO9LwSiik6wDqxyucGpLUUx92b/VGyaG
- lKY4bJn60a1C+xaETZl6PLqdQuw=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1638182261; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=NfRWfQ/kjNZZNKYjAgXr3woDR9TbFsk4RacT+8xIke8=; b=lrgyGjSE9PiYUckDwY6xElgCSo4ZejO56w63xfd/XQcMyqT/P+zSXCurs4e3RWl/GyffZzvP
+ qfq+R39ZJljh80hokN9ItXm3DgPozDdY3eBeaAleIGiSPFz2kosX/PbvG7x3PsTfcsUU9q+u
+ tdgdYNiqGXsoiJFGAk0RlpRODL4=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61a4a48f1abc6f02d06fc3c8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Nov 2021 09:59:43
+ smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
+ 61a4ad74135a8a9d0e4bcda3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 29 Nov 2021 10:37:40
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 03E39C4338F; Mon, 29 Nov 2021 09:59:43 +0000 (UTC)
+        id 24951C43616; Mon, 29 Nov 2021 10:37:40 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-4.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [10.242.143.72] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AC11AC4360C;
-        Mon, 29 Nov 2021 09:59:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org AC11AC4360C
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E59BC4338F;
+        Mon, 29 Nov 2021 10:37:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 0E59BC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+Subject: Re: [PATCH v6 08/10] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org,
         Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: [PATCH v3 5/5] pinctrl: qcom: Add SC7280 lpass pin configuration
-Date:   Mon, 29 Nov 2021 15:28:52 +0530
-Message-Id: <1638179932-3353-6-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638179932-3353-1-git-send-email-srivasam@codeaurora.org>
-References: <1638179932-3353-1-git-send-email-srivasam@codeaurora.org>
+References: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
+ <1637928282-2819-9-git-send-email-srivasam@codeaurora.org>
+ <YaO0ER2pNIQrvlxM@robh.at.kernel.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <9c21dc98-6bbb-bf33-361c-a768d185f07a@codeaurora.org>
+Date:   Mon, 29 Nov 2021 16:07:31 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <YaO0ER2pNIQrvlxM@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pin control support for SC7280 LPASS LPI.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
----
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        |   1 +
- drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 127 ++++++++++++++++++++++++
- 3 files changed, 129 insertions(+)
- create mode 100644 drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 74568cf..e07be79 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -38,3 +38,4 @@ obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
- obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
- obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
-+obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-sc7280-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-index b0afb40..1b91585 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-@@ -131,6 +131,7 @@ static const unsigned int gpio10_pins[] = { 10 };
- static const unsigned int gpio11_pins[] = { 11 };
- static const unsigned int gpio12_pins[] = { 12 };
- static const unsigned int gpio13_pins[] = { 13 };
-+static const unsigned int gpio14_pins[] = { 14 };
- 
- int lpi_pinctrl_probe(struct platform_device *pdev);
- int lpi_pinctrl_remove(struct platform_device *pdev);
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-new file mode 100644
-index 0000000..38b2056
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -0,0 +1,127 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+ * ALSA SoC platform-machine driver for QTi LPASS
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+/* sc7280 variant specific data */
-+static const struct pinctrl_pin_desc sc7280_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+};
-+
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-+static const char * const dmic1_clk_groups[] = { "gpio6" };
-+static const char * const dmic1_data_groups[] = { "gpio7" };
-+static const char * const dmic2_clk_groups[] = { "gpio8" };
-+static const char * const dmic2_data_groups[] = { "gpio9" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const dmic3_clk_groups[] = { "gpio12" };
-+static const char * const dmic3_data_groups[] = { "gpio13" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-+static const char * const wsa_swr_data_groups[] = { "gpio11" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
-+
-+static const struct lpi_pingroup sc7280_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, _, _, _),
-+	LPI_PINGROUP(6, NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-+	LPI_PINGROUP(7, NO_SLEW, dmic1_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, NO_SLEW, dmic2_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, NO_SLEW, dmic2_data, i2s1_data, _, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-+	LPI_PINGROUP(12, NO_SLEW, dmic3_clk, i2s2_data, _, _),
-+	LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
-+	LPI_PINGROUP(14, 6, swr_tx_data, _, _, _),
-+};
-+
-+static const struct lpi_function sc7280_functions[] = {
-+	LPI_FUNCTION(dmic1_clk),
-+	LPI_FUNCTION(dmic1_data),
-+	LPI_FUNCTION(dmic2_clk),
-+	LPI_FUNCTION(dmic2_data),
-+	LPI_FUNCTION(dmic3_clk),
-+	LPI_FUNCTION(dmic3_data),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(wsa_swr_clk),
-+	LPI_FUNCTION(wsa_swr_data),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
-+	.pins = sc7280_lpi_pins,
-+	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-+	.groups = sc7280_groups,
-+	.ngroups = ARRAY_SIZE(sc7280_groups),
-+	.functions = sc7280_functions,
-+	.nfunctions = ARRAY_SIZE(sc7280_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{
-+	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
-+	       .data = &sc7280_lpi_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		   .name = "qcom-sc7280-lpass-lpi-pinctrl",
-+		   .of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
-+
+On 11/28/2021 10:23 PM, Rob Herring wrote:
+Thanks for Your Time Rob!!!
+> On Fri, Nov 26, 2021 at 05:34:40PM +0530, Srinivasa Rao Mandadapu wrote:
+>> Add bindings for sc7280 lpass cpu driver which supports
+>> audio over i2s based speaker, soundwire based headset, msm dmics
+>> and HDMI Port.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> ---
+>>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 69 +++++++++++++++++++---
+>>   1 file changed, 61 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> index 1e23c0e..0f5a57c 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+>> @@ -22,35 +22,36 @@ properties:
+>>         - qcom,lpass-cpu
+>>         - qcom,apq8016-lpass-cpu
+>>         - qcom,sc7180-lpass-cpu
+>> +      - qcom,sc7280-lpass-cpu
+>>   
+>>     reg:
+>> -    maxItems: 2
+>> +    maxItems: 5
+>>       description: LPAIF core registers
+>>   
+>>     reg-names:
+>> -    maxItems: 2
+>> +    maxItems: 5
+>>   
+>>     clocks:
+>>       minItems: 3
+>> -    maxItems: 6
+>> +    maxItems: 7
+>>   
+>>     clock-names:
+>>       minItems: 3
+>> -    maxItems: 6
+>> +    maxItems: 7
+>>   
+>>     interrupts:
+>> -    maxItems: 2
+>> +    maxItems: 4
+>>       description: LPAIF DMA buffer interrupt
+>>   
+>>     interrupt-names:
+>> -    maxItems: 2
+>> +    maxItems: 4
+>>   
+>>     qcom,adsp:
+>>       $ref: /schemas/types.yaml#/definitions/phandle
+>>       description: Phandle for the audio DSP node
+>>   
+>>     iommus:
+>> -    maxItems: 2
+>> +    maxItems: 3
+>>       description: Phandle to apps_smmu node with sid mask
+>>   
+>>     power-domains:
+>> @@ -69,7 +70,7 @@ patternProperties:
+>>     "^dai-link@[0-9a-f]$":
+>>       type: object
+>>       description: |
+>> -      LPASS CPU dai node for each I2S device. Bindings of each node
+>> +      LPASS CPU dai node for each I2S device or Soundwire device. Bindings of each node
+>>         depends on the specific driver providing the functionality and
+>>         properties.
+>>       properties:
+>> @@ -174,6 +175,58 @@ allOf:
+>>           - iommus
+>>           - power-domains
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,sc7280-lpass-cpu
+>> +
+>> +    then:
+>> +      properties:
+>> +        clock-names:
+>> +          oneOf:
+>> +            - items:   #for I2S
+>> +                - const: lpass_aon_cc_audio_hm_h_clk
+>> +                - const: lpass_core_cc_sysnoc_mport_core_clk
+>> +                - const: lpass_core_cc_ext_if1_ibit_clk
+>> +            - items:   #for Soundwire
+>> +                - const: lpass_aon_cc_audio_hm_h_clk
+>> +                - const: lpass_audio_cc_codec_mem0_clk
+>> +                - const: lpass_audio_cc_codec_mem1_clk
+>> +                - const: lpass_audio_cc_codec_mem2_clk
+>> +            - items:   #for HDMI
+>> +                - const: lpass_aon_cc_audio_hm_h_clk
+> 'lpass_' and '_clk' are redundant.
+Yes. but these clock names are defined by HW design team. clock drivers 
+fallowed the same,  hence in audio drivers.
+>
+>> +
+>> +        reg-names:
+>> +          anyOf:
+>> +            - items:   #for I2S
+>> +                - const: lpass-lpaif
+>> +            - items:   #for I2S and HDMI
+>> +                - const: lpass-hdmiif
+>> +                - const: lpass-lpaif
+> Doesn't this apply to other SoCs?
+>
+>> +            - items:   #for I2S, soundwire and HDMI
+>> +                - const: lpass-cdc-lpm
+>> +                - const: lpass-rxtx-lpaif
+>> +                - const: lpass-va-lpaif
+>> +                - const: lpass-hdmiif
+>> +                - const: lpass-lpaif
+> 'lpass-' is redundant too, but consistency across SoCs is better.
+>
+> hdmiif and lpaif should be first. (Add new resources on the end.)
+Okay.. order is maintained as per register addresses. if it's okay, even 
+address range is out of order, will change accordingly.
+>
+>> +        interrupt-names:
+>> +          anyOf:
+>> +            - items:   #for I2S
+>> +                - const: lpass-irq-lpaif
+>> +            - items:   #for I2S and HDMI
+>> +                - const: lpass-irq-lpaif
+>> +                - const: lpass-irq-hdmi
+>> +            - items:   #for I2S, soundwire and HDMI
+>> +                - const: lpass-irq-lpaif
+>> +                - const: lpass-irq-vaif
+>> +                - const: lpass-irq-rxtxif
+>> +                - const: lpass-irq-hdmi
+> Again, add new entries to the end.
+  Replied above for the same.
+>> +
+>> +      required:
+>> +        - iommus
+>> +        - power-domains
+>> +
+>>   examples:
+>>     - |
+>>       #include <dt-bindings/sound/sc7180-lpass.h>
+>> -- 
+>> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+>> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+>>
+>>
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
