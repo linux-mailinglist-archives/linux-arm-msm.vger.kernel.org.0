@@ -2,165 +2,317 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B13D2461FA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 19:53:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0299461C74
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Nov 2021 18:06:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379627AbhK2S4z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 13:56:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39330 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379493AbhK2Syz (ORCPT
+        id S241612AbhK2RJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 12:09:35 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:13660 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235101AbhK2RHf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 13:54:55 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CFCC08C5DA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 07:13:02 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id o13so37431320wrs.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 07:13:01 -0800 (PST)
+        Mon, 29 Nov 2021 12:07:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xquLonnK7pAKBqVBzE4OuytOwfJ3qCkRHAHnNdpdzPw=;
-        b=hHMyva5D2w89wjRhCI6ExzexdQiQ9tO2PwCgN4OhQg0fYHIsbEVelK1zk1v25I8wXn
-         kQeisU7JhMX579OFnK7wz81792tamQIlxG3ObAg+xrHi6wgZxqu8mrL9B38wRjZFgfI7
-         n/l378P8RaiAyzDqQPjOrhpPp+5EVL7ni6CQdnadcYoMXChvTWmTotMIRDDP1bXknVX2
-         2JCx1bsgwMQlb3X5InXz2T3dFO8ET1/Ep+9EU8wo4wa1YxhlePsMF+YVlWs5A+v0keuk
-         6i2UCbWBVIHPpaBQfYfkWURJfLouNqZdVBsGfn2ybuc/euGQtBr/1CEyUufjiHy66qW9
-         cpeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xquLonnK7pAKBqVBzE4OuytOwfJ3qCkRHAHnNdpdzPw=;
-        b=RvclOi/M4AJcZQXZXaB4WJf5LYubgvtK6KBY36gfYF4qiWB+dTWQk/fuWzADCgT+4S
-         NQHOpp2eEMUgY6q8JiSuzr3041MKGfRAN+KM1/5JCgj73HaUzfUpnOETWeWtzVTNZjAQ
-         yDhO1zSNNSULNqSKcYNNs+OnTOGgMBI1GWsrSBT87BWFoBgxDkXLoxY6/t29p0YQoCBM
-         J5pUD7GrtMRq8G8LOFdpUbW0e/69ymBimPhL0r5aKFDI1f7OHkKVz4F/uFKm4OvY3iH1
-         6O3sZfOArQTtb4aFkHlKa9yU5pjVURG8T8uT1dgrRZ3NR/74I6CPrMU+k8zNH2Vk+Glh
-         pXgw==
-X-Gm-Message-State: AOAM531ieY5CImPmaX5iuhslvW+NxQOOPrpBc2UKcbPh4xDA2tXKpsMm
-        mvlYvHFyhId3rCHGWLYuAxO1Aw==
-X-Google-Smtp-Source: ABdhPJzKyl4TJblK+Slv12GEcnCAS7+Hp0r869ZbGOnYYo0uMtagIcvKyzHPiYTmDU6aEL5fGE/k3w==
-X-Received: by 2002:a05:6000:1c2:: with SMTP id t2mr33167492wrx.378.1638198780445;
-        Mon, 29 Nov 2021 07:13:00 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id r17sm22290873wmq.5.2021.11.29.07.12.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Nov 2021 07:12:59 -0800 (PST)
-Subject: Re: [PATCH 1/2] misc: fastrpc: Add fdlist implementation
-To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org
-Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        fastrpc.upstream@qti.qualcomm.com
-References: <1638163720-23123-1-git-send-email-jeyr@codeaurora.org>
- <1638163720-23123-2-git-send-email-jeyr@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <3ee1388d-2528-56ed-ce5f-4c667beb67cb@linaro.org>
-Date:   Mon, 29 Nov 2021 15:12:58 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638205458; x=1669741458;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=3ohmcwXUg0K8xofo5SVJyfgRNwFnqhhSko0Xjjj7ve8=;
+  b=IiAql9NMm8k1nLK7AxQzJU89SuAwL3Bn91q67Nh+ii2QZPzp2C72fX0U
+   BXQfZOFEQjfERJXpccqUulCmumaYl3xfcoE2jSW9t1tYFYJ9rfZCOxtoe
+   AgKgG2uv7ejgQy9Zhj0QBPJ2D8jpcQu55/9mQ8mD/vmqb/tlQJ6yUG90z
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 29 Nov 2021 09:04:18 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 09:04:17 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 29 Nov 2021 09:04:16 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 29 Nov 2021 09:04:16 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5] drm/msm/dp:  employ bridge mechanism for display enable and disable
+Date:   Mon, 29 Nov 2021 09:04:04 -0800
+Message-ID: <1638205444-4616-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <1638163720-23123-2-git-send-email-jeyr@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for the patch,
+Currently the msm_dp_*** functions implement the same sequence which would
+happen when drm_bridge is used. hence get rid of this intermediate layer
+and align with the drm_bridge usage to avoid customized implementation.
 
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-On 29/11/2021 05:28, Jeya R wrote:
-> Add fdlist implementation to support dma handles. fdlist is populated
-> by DSP if any map is no longer used and it is freed during put_args.
+Changes in v2:
+-- revise commit text
+-- rename dp_bridge to msm_dp_bridge
+-- delete empty functions
 
-Does the dsp add all the fds (from in/out handles) to this list or only 
-ones that are no-longer used by the dsp?
+Changes in v3:
+-- replace kzalloc() with devm_kzalloc()
+-- replace __dp_display_enable() with dp_display_enable()
+-- replace __dp_display_disable() with dp_display_disable()
 
+Changes in v4:
+-- msm_dp_bridge_init() called from msm_dp_modeset_init() same as dsi
 
-> 
-> Signed-off-by: Jeya R <jeyr@codeaurora.org>
-> ---
->   drivers/misc/fastrpc.c | 22 ++++++++++++++++++++--
->   1 file changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 39aca77..3c937ff 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -353,7 +353,7 @@ static void fastrpc_context_free(struct kref *ref)
->   	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
->   	cctx = ctx->cctx;
->   
-> -	for (i = 0; i < ctx->nscalars; i++)
-> +	for (i = 0; i < ctx->nbufs; i++)
->   		fastrpc_map_put(ctx->maps[i]);
+Changes in v5:
+-- delete attach, mode_fixup and pre_enable from dp_bridge_ops
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 21 --------
+ drivers/gpu/drm/msm/dp/dp_display.c         | 16 +++++-
+ drivers/gpu/drm/msm/dp/dp_display.h         |  1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c             | 77 +++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h               | 12 +++--
+ 5 files changed, 100 insertions(+), 27 deletions(-)
 
-If above question is true, then who is going to free the rest of the 
-scalars.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 31050aa..c4e08c4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1003,9 +1003,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+ 
+ 	trace_dpu_enc_mode_set(DRMID(drm_enc));
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
+-		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
+-
+ 	list_for_each_entry(conn_iter, connector_list, head)
+ 		if (conn_iter->encoder == drm_enc)
+ 			conn = conn_iter;
+@@ -1181,14 +1178,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+ 
+ 	_dpu_encoder_virt_enable_helper(drm_enc);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
+-		if (ret) {
+-			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
+-				ret);
+-			goto out;
+-		}
+-	}
+ 	dpu_enc->enabled = true;
+ 
+ out:
+@@ -1214,11 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 	/* wait for idle */
+ 	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
+-	}
+-
+ 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+ 
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+@@ -1243,11 +1227,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+ 
+ 	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+ 
+-	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+-		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
+-			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
+-	}
+-
+ 	mutex_unlock(&dpu_enc->enc_lock);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 2f113ff..89a8d43 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1571,6 +1571,18 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 	}
+ 
+ 	priv->connectors[priv->num_connectors++] = dp_display->connector;
++
++	dp_display->bridge = msm_dp_bridge_init(dp_display, dev, encoder);
++	if (IS_ERR(dp_display->bridge)) {
++		ret = PTR_ERR(dp_display->bridge);
++		DRM_DEV_ERROR(dev->dev,
++			"failed to create dp bridge: %d\n", ret);
++		dp_display->bridge = NULL;
++		return ret;
++	}
++
++	priv->bridges[priv->num_bridges++] = dp_display->bridge;
++
+ 	return 0;
+ }
+ 
+@@ -1674,8 +1686,8 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+ }
+ 
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
+ {
+ 	struct dp_display_private *dp_display;
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+index 76f45f9..2237e80 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.h
++++ b/drivers/gpu/drm/msm/dp/dp_display.h
+@@ -13,6 +13,7 @@
+ struct msm_dp {
+ 	struct drm_device *drm_dev;
+ 	struct device *codec_dev;
++	struct drm_bridge *bridge;
+ 	struct drm_connector *connector;
+ 	struct drm_encoder *encoder;
+ 	struct drm_panel *drm_panel;
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index f33e315..15c0309e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -5,12 +5,21 @@
+ 
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_atomic.h>
++#include <drm/drm_bridge.h>
+ #include <drm/drm_crtc.h>
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+ #include "dp_drm.h"
+ 
++
++struct msm_dp_bridge {
++	struct drm_bridge bridge;
++	struct msm_dp *dp_display;
++};
++
++#define to_dp_display(x)     container_of((x), struct msm_dp_bridge, bridge)
++
+ struct dp_connector {
+ 	struct drm_connector base;
+ 	struct msm_dp *dp_display;
+@@ -162,3 +171,71 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+ 
+ 	return connector;
+ }
++
++static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_mode_set(dp_display, drm_bridge->encoder, mode, adjusted_mode);
++}
++
++static void dp_bridge_enable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_enable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_disable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_pre_disable(dp_display, drm_bridge->encoder);
++}
++
++static void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
++{
++	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
++	struct msm_dp *dp_display = dp_bridge->dp_display;
++
++	msm_dp_display_disable(dp_display, drm_bridge->encoder);
++}
++
++static const struct drm_bridge_funcs dp_bridge_ops = {
++	.enable       = dp_bridge_enable,
++	.disable      = dp_bridge_disable,
++	.post_disable = dp_bridge_post_disable,
++	.mode_set     = dp_bridge_mode_set,
++};
++
++struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
++			struct drm_encoder *encoder)
++{
++	int rc;
++	struct msm_dp_bridge *dp_bridge;
++	struct drm_bridge *bridge;
++
++	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
++	if (!dp_bridge)
++		return ERR_PTR(-ENOMEM);
++
++	dp_bridge->dp_display = dp_display;
++
++	bridge = &dp_bridge->bridge;
++	bridge->funcs = &dp_bridge_ops;
++	bridge->encoder = encoder;
++
++	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
++	if (rc) {
++		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
++		kfree(dp_bridge);
++		return ERR_PTR(rc);
++	}
++
++	return bridge;
++}
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 4bb797e..c18a959 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -388,8 +388,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+ void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode);
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode);
++
++struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display,
++					struct drm_device *dev,
++					struct drm_encoder *encoder);
+ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+ 
+@@ -426,8 +430,8 @@ static inline int msm_dp_display_pre_disable(struct msm_dp *dp,
+ }
+ static inline void msm_dp_display_mode_set(struct msm_dp *dp,
+ 				struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++				const struct drm_display_mode *mode,
++				const struct drm_display_mode *adjusted_mode)
+ {
+ }
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
->   
->   	if (ctx->buf)
-> @@ -785,6 +785,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
->   	err = fastrpc_buf_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
->   	if (err)
->   		return err;
-> +	memset(ctx->buf->virt, 0, pkt_size);
-
-Why do we need to make this zero, dma_alloc_coherent should have 
-returned zeroed memory here anyway?
-
-
->   
->   	rpra = ctx->buf->virt;
->   	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
-> @@ -887,9 +888,19 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   			    u32 kernel)
->   {
->   	struct fastrpc_remote_arg *rpra = ctx->rpra;
-> -	int i, inbufs;
-> +	struct fastrpc_map *mmap = NULL;
-> +	struct fastrpc_invoke_buf *list;
-> +	struct fastrpc_phy_page *pages;
-> +	u64 *fdlist;
-> +	int i, inbufs, outbufs, handles;
->   
->   	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
-> +	outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
-> +	handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
-> +	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
-> +	pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
-> +		sizeof(*rpra));
-> +	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
->   
->   	for (i = inbufs; i < ctx->nbufs; ++i) {
->   		if (!ctx->maps[i]) {
-> @@ -906,6 +917,13 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   		}
->   	}
->   
-> +	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
-> +		if (!fdlist[i])
-> +			break;
-> +		if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
-
-fastrpc_map_find() is will invoke a kref_get on the map so calling 
-single fastrpc_map_put() here is not going to work. driver will be 
-leaking memory.
-
-Have you tested this patch with kmemleak enabled?
-
---srini
-
-
-> +			fastrpc_map_put(mmap);
-
-
-> +	}
-> +
->   	return 0;
->   }
->   
-> 
