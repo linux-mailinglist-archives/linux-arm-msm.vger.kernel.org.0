@@ -2,62 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7479A462C7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 07:01:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F20E462C9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 07:06:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232822AbhK3GEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 01:04:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50316 "EHLO
+        id S238639AbhK3GJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 01:09:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbhK3GEi (ORCPT
+        with ESMTP id S238661AbhK3GJj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 01:04:38 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A71C061574;
-        Mon, 29 Nov 2021 22:01:19 -0800 (PST)
+        Tue, 30 Nov 2021 01:09:39 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67452C06175E;
+        Mon, 29 Nov 2021 22:06:20 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5EF36B811EC;
-        Tue, 30 Nov 2021 06:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2EAC53FC1;
-        Tue, 30 Nov 2021 06:01:13 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 570A1CE17E4;
+        Tue, 30 Nov 2021 06:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A16C53FC7;
+        Tue, 30 Nov 2021 06:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638252075;
-        bh=mcAvUiIoVAk9IAnnlyMQa9dCBo+p8bqdX/VdOnGq5vs=;
+        s=k20201202; t=1638252376;
+        bh=q/zOGdTT4xs6T3I1boN7o5TZDyxJ3Nv/FRTXjltnS5g=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T2GSQZJNiXWoafXEGyo85MDNxFXBFrdoABNAz2foJh+c7/3mKIYwr0L4aLFMZ3KFf
-         MAWit5DfBobqv+NEyYK75BqZ97U7xK4MPlfgRg3XmcP5POmIJIHZIMcGHTkkliLwQf
-         Ku8IDAf2JVbDrmctZGoeKhy/OzQfHKfO522BphjiGWXObQMJByjacum2t9Avo0LVSx
-         Jw41l5Q9FKpgdyzkFZWYkHpxUHtHcSDdDOMSJHyQAAuMqn5QuU/CKjvCy9zSPmW1++
-         InFqh4ZGrpmj79vXECWUsJKApzj1w+l0D/vDFEQ9HhJvOh9l1+bynwMwwuAFopeCXe
-         cZE4p+ZAUbEBQ==
-Date:   Tue, 30 Nov 2021 11:31:10 +0530
+        b=LZWSIxuuVOhWz5hC65bSGO0GVqIQG0U3eKLUpYC0dFTRBbwlt2BdfOP12vzddHo46
+         dDDfYJKE8/FXSa+4GeCHHfu9oGQTj4VuorVlFffL74XLLUpsjlgpzKay2v1oYBZ0RT
+         YCPmunmVmdbSeT9otcFL5ps1pdlDrQo95HkJ3aBwoIjElotLCAuU4l0MkQJoA56tEC
+         Zpr/7Dy31/FErVFsGVTm2UUlSy7j4zm0mHOYVBV2RyEM1x2j6KSO1I19OQhQ1gclIO
+         Sh2bV/O/uoA7lhBfwAlOqUxP4kmh4Q3vcHzVdqMJdHiiZuSEyz44w8vTd5q8TjvsSK
+         x78Vy5Fzd/SdQ==
+Date:   Tue, 30 Nov 2021 11:36:11 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc:     hemantk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: pci_generic: Simplify code and axe the use of
  a deprecated API
-Message-ID: <20211130060110.GA205712@thinkpad>
+Message-ID: <20211130060611.GB205712@thinkpad>
 References: <bb3dc436fe142309a2334549db782c5ebb80a2be.1625718497.git.christophe.jaillet@wanadoo.fr>
+ <1625765577.10055.24.camel@codeaurora.org>
+ <cd72331c-c3d3-f1e9-e1b2-7572b6cdf0a2@wanadoo.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <bb3dc436fe142309a2334549db782c5ebb80a2be.1625718497.git.christophe.jaillet@wanadoo.fr>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cd72331c-c3d3-f1e9-e1b2-7572b6cdf0a2@wanadoo.fr>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 08, 2021 at 06:30:37AM +0200, Christophe JAILLET wrote:
-> The wrappers in include/linux/pci-dma-compat.h should go away.
+On Mon, Nov 29, 2021 at 07:27:20PM +0100, Christophe JAILLET wrote:
+> Le 08/07/2021 à 19:32, Hemant Kumar a écrit :
+> > On Thu, 2021-07-08 at 06:30 +0200, Christophe JAILLET wrote:
+> > > The wrappers in include/linux/pci-dma-compat.h should go away.
+> > > 
+> > > Replace 'pci_set_dma_mask/pci_set_consistent_dma_mask' by an
+> > > equivalent
+> > > and less verbose 'dma_set_mask_and_coherent()' call.
+> > > 
+> > > Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> > > ---
+> > > If needed, see post from Christoph Hellwig on the kernel-janitors ML:
+> > >     https://marc.info/?l=kernel-janitors&m=158745678307186&w=4
+> > > ---
+> > 
+> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > 
 > 
-> Replace 'pci_set_dma_mask/pci_set_consistent_dma_mask' by an equivalent
-> and less verbose 'dma_set_mask_and_coherent()' call.
+> Hi,
 > 
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> Polite reminder.
+> This is still not part of -next.
+> 
+> The patch is old (July/21), I can resend if needed.
 
-Reveiwed-by: Manivannan Sadhasivam <mani@kernel.org>
+Sorry, this one slipped through the cracks. Applied to mhi-next now!
 
 Thanks,
 Mani
