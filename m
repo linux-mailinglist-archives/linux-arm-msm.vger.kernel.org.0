@@ -2,109 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 565BA4628D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 01:06:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E18FD462931
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 01:38:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232102AbhK3AKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 19:10:03 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:2926 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232065AbhK3AKC (ORCPT
+        id S234139AbhK3AlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 19:41:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34990 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229724AbhK3AlX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 19:10:02 -0500
+        Mon, 29 Nov 2021 19:41:23 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1F1CC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 16:38:05 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id z6so13541220plk.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 16:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638230804; x=1669766804;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Bw03o32uUdu6ZhNX68gM0vPW2K0EquUybwNztSvmq5s=;
-  b=dQvXMlir8U58gCgt0xRZFm5ca+idxTtP75atC7pFlAXW64dad/ce07M0
-   8VFZ25BV611uHhBq2/JoWYrn7ekmtwf++IxLc/nYpH9/l2AS1eCZXTAs7
-   tPvYls+lg9JWp0XWb1cnOldqEOHUKv3Yy4L+yKt+kq4E+MH8sikK4Mb4K
-   I=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 29 Nov 2021 16:06:44 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 16:06:43 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 29 Nov 2021 16:06:43 -0800
-Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 29 Nov
- 2021 16:06:40 -0800
-Message-ID: <2a735bf2-8f7a-b09f-1c9b-85d850b3a8c4@quicinc.com>
-Date:   Tue, 30 Nov 2021 08:06:37 +0800
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M6jA8oMIw0WKWHCuk49iV8tiF/OHiCn1/finUYhXsR0=;
+        b=KVhdnnVCAHFsnPWTe8VbiVosUJrhlRWbOSYmJClKVCe+VaZ9aA4E3msky0yZkhPOge
+         TzupGUhq4ZPtg7ADrwgLDGYCASQFORJMqNvPVcoQs0utulSImhgQObjvRJlGbjlb/Xy9
+         oh9o2Hux8wQWaM56+sppx19SGsuIv3LV0xyvEq8ZzZdGO1OpomzqAoBZXjJBryYy4lEJ
+         rFrmxptwAQTL1N0GMrjc11yDF0VH5UscoTYWSvRAVdlxaFM9oOMyanCoxCrQnNvnsYxk
+         dCRk6JroPiKlcHOB+w1d6HyZ5tXZ5dTQu6kbz78D3XjFPneDl3YC4yx1o3FSWrtx6LR9
+         2nsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=M6jA8oMIw0WKWHCuk49iV8tiF/OHiCn1/finUYhXsR0=;
+        b=QtZlXXfOa26GKx3BkMGQQWzzV18ZIAYvOvf6WLuAwWux42lPzC5u3zSElwB0OoPi1r
+         9AYRWjNcUpKFP5KBgE5r4So6DhlXPt0DnQZ+W7nli61M/NZ9MC2z1havAnyRgUtoLYDJ
+         Tn16sdJ4DxvVGhg2YL6wKBl1gBHPmNM7iWC2XynNmDouThrIsA8XcojprMF2pMmjKX0d
+         W+zcISfwQ8nB6oYuSkKE8vt9Ihr+gi7kfVjqSFDHK5pNE98EVdFVg4r1vK31c7W4w1+u
+         dWOcEPyl5w5M+Z6gOsfSPUYsFE+1mOGwq00iCafMIKpZX0oW2AbO3uoww9TAOJDEtoq/
+         ixMA==
+X-Gm-Message-State: AOAM531neHZrY0mIElHgOBJpA1+dO0v3HKBuCts7Xe69w+rGZm91C9mk
+        J9foHQPPH75XAudBv0m1XsR6RpjWnWY=
+X-Google-Smtp-Source: ABdhPJxr4vcGGEbi0ZQCjgz2Otn7VtmY0sJgzJyqo2TQplX3iJXsHGDpQ/KAc6UTGYi8vxdBYnqJZA==
+X-Received: by 2002:a17:903:22c6:b0:141:fac1:b722 with SMTP id y6-20020a17090322c600b00141fac1b722mr64866311plg.23.1638232685180;
+        Mon, 29 Nov 2021 16:38:05 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id c18sm19028535pfl.201.2021.11.29.16.38.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 16:38:03 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     igt-dev@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>
+Subject: [PATCH igt 0/2] msm+lib: Add test for buffer mapping permissions
+Date:   Mon, 29 Nov 2021 16:43:22 -0800
+Message-Id: <20211130004324.337399-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding
- to YAML format
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <sboyd@kernel.org>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>, <collinsd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>, <subbaram@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1638174137-23290-1-git-send-email-quic_fenglinw@quicinc.com>
- <1638174137-23290-11-git-send-email-quic_fenglinw@quicinc.com>
- <1638199831.114024.123611.nullmailer@robh.at.kernel.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <1638199831.114024.123611.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 2021/11/29 23:30, Rob Herring wrote:
-> On Mon, 29 Nov 2021 16:22:17 +0800, Fenglin Wu wrote:
->> Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
->> update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
->> it and update it with a smaller range.
->>
->> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->> ---
->>   .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
->>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
->>   Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
->>   3 files changed, 130 insertions(+), 68 deletions(-)
->>   delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->>   create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
->>
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
-> ./Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml:37:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
-> ./Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml:41:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
-I will fix the indentation warning in next patch. I double checked this
-at my side but it's curious that it didn't show up at my side even I have
-installed yamllint and also upgraded dtschema to the latest.
-> dtschema/dtc warnings/errors:
->
-> doc reference errors (make refcheckdocs):
-> Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt: Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->
-> See https://patchwork.ozlabs.org/patch/1561055
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
->
+First patch just splits out a couple of helpers from igt_sysfs so they
+can be re-used.  Second patch adds a test which locates the address of
+a given buffer, and verifies (depending on expected permissions) that
+writes and/or reads trigger an iova fault rather than succeeding.
+
+Rob Clark (2):
+  igt: Split out I/O helpers
+  msm: Add test for kernel buffer permissions
+
+ lib/igt_io.c        |  96 +++++++++++++++++
+ lib/igt_io.h        |  33 ++++++
+ lib/igt_msm.h       |   1 +
+ lib/igt_sysfs.c     |  45 +-------
+ lib/meson.build     |   1 +
+ tests/meson.build   |   1 +
+ tests/msm_mapping.c | 257 ++++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 394 insertions(+), 40 deletions(-)
+ create mode 100644 lib/igt_io.c
+ create mode 100644 lib/igt_io.h
+ create mode 100644 tests/msm_mapping.c
+
+-- 
+2.33.1
+
