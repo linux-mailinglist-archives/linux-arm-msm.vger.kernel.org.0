@@ -2,110 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9F5B462E91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 09:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3A2462EAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 09:43:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239675AbhK3IfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 03:35:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56384 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239668AbhK3IfJ (ORCPT
+        id S239703AbhK3IqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 03:46:22 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:54200 "EHLO
+        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239666AbhK3IqS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 03:35:09 -0500
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B85CC061714
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 00:31:51 -0800 (PST)
-Received: by mail-pf1-x42c.google.com with SMTP id n26so19876812pff.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 00:31:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X2rX5g1aB3ao6Mz+KBNuCJKa2ATJHaYDNFIn2W26y0k=;
-        b=Vvf9yRDbDirxKAxZG/3T/MRzfvWn4X3bVmO6Q+T9At9jezo3XTJLTr08aof/C6VMCs
-         UvFx4/WoENskJGjeiCmK8jw97ea/Jdl4KfUggvOUN76ztl1VY5lM32kGoY2hxFjTl8U8
-         efCQioAGrR1sRorj4bRQx+3fORaIuoWJbjyWJ9p6jZ2Ds2X4suinMYYQ3jKiTUWri3qj
-         bfOHpCdmd8WhoCNWfMXdnFDGYmJePi2FuvreIqLtqG3HUsaVi+5v0UkEwUvfrdLE6ugm
-         40SaVQ28WKa3/bm6lVk7batcP8lwtUFkSCjfhGjdKWw8Ib6UYBf8w9EgVUYvrSiGdh8x
-         exhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X2rX5g1aB3ao6Mz+KBNuCJKa2ATJHaYDNFIn2W26y0k=;
-        b=dqyc3MKohdtt/vZLa1XqmJwqiiudXwVmFuXkcaxCdq4UdcPbn9KIKtHh33aVd3fet0
-         VX5hKQk42ticPqQFvgtxlGxCT6jRqZbVSpbHXv+bB5eC8zZH0Ftgu34UqjBK+0qHy14e
-         Kqg2ZDs5y6ZCnWdDNlQDxRtUT9/XIHIEKXqOmuLx46RlAkcPXXiCMGg3dlq8B4m4mZtp
-         QbccmDaUA3qKqiosITbYKiUg/MalLv/tdnFAgad/yiGOBnSPs4teQKvKKsyMJMCCjQ28
-         gcLDPQdPKgcVe3YGckUbw6EOnW5N8LlWW6JhMbL29kC8htdGSDcaW+9QVfI97DYIwwzb
-         wRPg==
-X-Gm-Message-State: AOAM531h3pduG2q2zbfz/5pZVIPIEcqs07l2dbiiKUJeWZ4Pg/1ZEVnd
-        NA1HgJ8g5oyW4XlT7RSQbpkSIQ==
-X-Google-Smtp-Source: ABdhPJxX/0BAg0okPbx9lj9wYat5fdBiNW3O/EylVD0yCf550J23PN1GTSeFNwRiBtqdIFYDPTcwPQ==
-X-Received: by 2002:a62:1a03:0:b0:494:64b5:3e01 with SMTP id a3-20020a621a03000000b0049464b53e01mr45220700pfa.35.1638261110526;
-        Tue, 30 Nov 2021 00:31:50 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id z15sm19622141pfc.2.2021.11.30.00.31.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Nov 2021 00:31:50 -0800 (PST)
-Date:   Tue, 30 Nov 2021 16:31:44 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
+        Tue, 30 Nov 2021 03:46:18 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id AD97DCE1812;
+        Tue, 30 Nov 2021 08:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6697C53FC1;
+        Tue, 30 Nov 2021 08:42:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638261775;
+        bh=kop9ekaNxcrvm1nzG7ZaL3bUmyF0UPMTsxU7AW0+IsE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=tN2dE1R+510zjPlOOblJ1YMjDC/3lkzIy9sA0QbUnp5hu5kuqnli5b7Nxt7PNMpWC
+         r0KZTmCME458FYwr0pM0j2RoLH4rSpMsfXW4xUI61wnQQvS60iAcf2A6QWjPFSo1ta
+         5ihZujakLwGXoWYXEEwoRSRONBpGLeDfGtWg7q062Y8ViQi9FRwaPZtcIjw02VH/Ew
+         TopiFIfYk1FA4rkfLLUufgXTIb+gA05MVVyvhtjApP9qPNDGG+VDv1DHlYkBd+DyEB
+         kKTMiIYovYm55WupBH9I6FhkGXixsD8dg6IcIHYKjwHoHsXhvI9zTTYPdNnxLRPtRN
+         RBvudAt1W+Nbg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1mryiz-008oud-EP; Tue, 30 Nov 2021 08:42:53 +0000
+Date:   Tue, 30 Nov 2021 08:42:53 +0000
+Message-ID: <87lf16m3ua.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 2/2] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20211130083143.GF10105@dragon>
+In-Reply-To: <20211130023151.GD10105@dragon>
 References: <20211126093529.31661-1-shawn.guo@linaro.org>
- <20211126093529.31661-3-shawn.guo@linaro.org>
- <87czmmbu8k.wl-maz@kernel.org>
- <20211129133308.GB10105@dragon>
- <87pmqjm1c8.wl-maz@kernel.org>
- <20211130023151.GD10105@dragon>
- <2e821841-a921-3fda-9ee6-3d5127653033@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2e821841-a921-3fda-9ee6-3d5127653033@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        <20211126093529.31661-3-shawn.guo@linaro.org>
+        <87czmmbu8k.wl-maz@kernel.org>
+        <20211129133308.GB10105@dragon>
+        <87pmqjm1c8.wl-maz@kernel.org>
+        <20211130023151.GD10105@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, robh+dt@kernel.org, loic.poulain@linaro.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 01:19:48PM +0530, Maulik Shah wrote:
->    Hi Shawn,
+On Tue, 30 Nov 2021 02:31:52 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
 > 
->    On 11/30/2021 8:01 AM, Shawn Guo wrote:
+> + Maulik
 > 
-> +       do {
-> +               r_val = readl(priv->base + offset);
-> +               udelay(5);
-> +       } while (r_val != val);
+> On Mon, Nov 29, 2021 at 03:24:39PM +0000, Marc Zyngier wrote:
+> [...]
+> > > > > @@ -430,6 +430,14 @@ config QCOM_PDC
+> > > > >  	  Power Domain Controller driver to manage and configure wakeup
+> > > > >  	  IRQs for Qualcomm Technologies Inc (QTI) mobile chips.
+> > > > >  
+> > > > > +config QCOM_MPM
+> > > > > +	bool "QCOM MPM"
+> > > > 
+> > > > Can't be built as a module?
+> > > 
+> > > The driver is implemented as a builtin_platform_driver().
+> > 
+> > This, on its own, shouldn't preclude the driver from being built as a
+> > module. However, the config option only allows it to be built in. Why?
 > 
-> What? Is this waiting for a bit to clear? Why isn't this one of the
-> read*_poll_timeout*() function instead? Surely you can't wait forever
-> here.
-> 
-> This is taken from downstream, and it seems to double check the written
-> value by reading it back.  But to be honest, I'm not really this is
-> necessary.  I will do some testing with the read-back check dropped.
-> 
-> How about asking for specs instead? There are QC people on Cc, and
-> many more reading the list. Hopefully they can explain what this is
-> all about.
-> 
-> Maulik,
-> 
-> If you have some information about this, that would be great.
-> 
->    This can be converted to read poll_timeout(). This was introduced in
->    place of wmb() to make sure writes are completed.
+> I just tried to build it as a module, and it seems that "irq_to_desc" is
+> only available for built-in build.
 
-Hmm, in this case, writel() will just do the right thing, as it wraps
-wmb() there.  Or am I missing something?
+Yet another thing that you should not be using. The irqdomain code
+gives you everything you need without having to resort to the
+internals of the core IRQ infrastructure.
 
-Shawn
+> > Furthermore, why would you look up anywhere other than the wake-up
+> > domain? My impression was that only these interrupts would require
+> > being re-triggered.
+> 
+> Both domains have MPM pins that could wake up system.
+
+Then why do you need two domains?
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
