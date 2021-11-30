@@ -2,224 +2,307 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F8A9462952
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 01:55:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB03246297E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 02:15:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230231AbhK3A6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 19:58:19 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:22281 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232860AbhK3A6T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 19:58:19 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638233700; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Si6o8utt9hx7y8YzH3OhVdkira7dpL45F1uP7ReREDA=;
- b=X6+3sthdAEGha0w4u6tsKQwf6zUwhe0JzWkDN/uWLn0ij9CU7pkUqGR+Ig7iBPMIEibkfxL5
- AAUTOU7Eg6M7EDdRWI7vpq10dTgg3Yk8jFMz1yqcj0HO2su5aW/boatNGueSgt4BhGT3EyQl
- e7piVcIQeJehyrXMbDeZAMNWpoE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61a576641abc6f02d055b807 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 30 Nov 2021 00:55:00
- GMT
-Sender: quic_bbhatt=quicinc.com@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 52347C43619; Tue, 30 Nov 2021 00:55:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 35796C4338F;
-        Tue, 30 Nov 2021 00:54:59 +0000 (UTC)
+        id S235136AbhK3BSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 20:18:18 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:23519 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233381AbhK3BSO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 29 Nov 2021 20:18:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638234896; x=1669770896;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=A0M/OkbgjDDEzxJJd7thNaREyyEELCRZKsECK+0kPX4=;
+  b=j4FwP+2O6w5FqXV9iuB2RMcPd3tdcEWCk1XfFvo9PSFLktg8HLDl08Em
+   szy2FndswfkiMS47WPw5T82ZxnrPfDoXsCtuJKVoaLzxCl3ZylxkY7Niz
+   s4Y6nSVIRpcCwhFaWhw57AKYL8DUB/Hs318Tlhvmn0SohUOk+syc5YXFK
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Nov 2021 17:14:55 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 17:14:54 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 29 Nov 2021 17:14:53 -0800
+Received: from [10.38.245.83] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 29 Nov
+ 2021 17:14:50 -0800
+Message-ID: <e898e0c3-2831-1e84-bf9e-7e812cf9c813@quicinc.com>
+Date:   Mon, 29 Nov 2021 17:14:48 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [Freedreno] [PATCH v3 01/13] drm/msm/dsi: add support for dsc
+ data
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+CC:     Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Abhinav Kumar" <abhinavk@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <dri-devel@lists.freedesktop.org>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-2-vkoul@kernel.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211116062256.2417186-2-vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 29 Nov 2021 16:54:59 -0800
-From:   Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_jhugo@quicinc.com,
-        hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        aleksander@aleksander.es, loic.poulain@linaro.org,
-        thomas.perrot@bootlin.com, linux-arm-msm@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v4] bus: mhi: Fix race while handling SYS_ERR at power up
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: quic_bbhatt@quicinc.com
-Mail-Reply-To: quic_bbhatt@quicinc.com
-In-Reply-To: <20211126030144.GC5859@thinkpad>
-References: <20211124132221.44915-1-manivannan.sadhasivam@linaro.org>
- <20211126030144.GC5859@thinkpad>
-Message-ID: <020937096d9039a295b97d71994a6d5a@quicinc.com>
-X-Sender: quic_bbhatt@quicinc.com
-User-Agent: Roundcube Webmail/1.3.9
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-11-25 07:01 PM, Manivannan Sadhasivam wrote:
-> On Wed, Nov 24, 2021 at 06:52:21PM +0530, Manivannan Sadhasivam wrote:
->> Some devices tend to trigger SYS_ERR interrupt while the host handling
->> SYS_ERR state of the device during power up. This creates a race
->> condition and causes a failure in booting up the device.
->> 
->> The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
->> handling in mhi_async_power_up(). Once the host detects that the 
->> device
->> is in SYS_ERR state, it issues MHI_RESET and waits for the device to
->> process the reset request. During this time, the device triggers 
->> SYS_ERR
->> interrupt to the host and host starts handling SYS_ERR execution.
-Since device does not actually trigger a SYS_ERR interrupt, we could say 
-"device
-triggers BHI interrupt acknowledging the MHI RESET sent by host but does 
-not clear
-the MHI state to reset or ready and leaves it as SYS_ERR" or any such 
-wording.
->> 
->> So by the time the device has completed reset, host starts SYS_ERR
->> handling. This causes the race condition and the modem fails to boot.
->> 
->> Hence, register the IRQ handler only after handling the SYS_ERR check
->> to avoid getting spurious IRQs from the device.
->> 
->> Cc: stable@vger.kernel.org
->> Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
->> Reported-by: Aleksander Morgado <aleksander@aleksander.es>
->> Signed-off-by: Manivannan Sadhasivam 
->> <manivannan.sadhasivam@linaro.org>
-> 
-> Hemant, Bhaumik, Jeff: Can you please do the review again?
-> 
-> Thanks,
-> Mani
-> 
->> ---
->> 
->> Changes in v4:
->> 
->> * Reverted the change that moved BHI_INTVEC as that was causing issue 
->> as
->>   reported by Aleksander.
->> 
->> Changes in v3:
->> 
->> * Moved BHI_INTVEC setup after irq setup
->> * Used interval_us as the delay for the polling API
->> 
->> Changes in v2:
->> 
->> * Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
->> 
->>  drivers/bus/mhi/core/pm.c | 33 +++++++++++----------------------
->>  1 file changed, 11 insertions(+), 22 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> index fb99e3727155..21484a61bbed 100644
->> --- a/drivers/bus/mhi/core/pm.c
->> +++ b/drivers/bus/mhi/core/pm.c
->> @@ -1038,7 +1038,7 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->>  	enum mhi_ee_type current_ee;
->>  	enum dev_st_transition next_state;
->>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->> -	u32 val;
->> +	u32 interval_us = 25000; /* poll register field every 25 
->> milliseconds */
->>  	int ret;
->> 
->>  	dev_info(dev, "Requested to power ON\n");
->> @@ -1055,10 +1055,6 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->>  	mutex_lock(&mhi_cntrl->pm_mutex);
->>  	mhi_cntrl->pm_state = MHI_PM_DISABLE;
->> 
->> -	ret = mhi_init_irq_setup(mhi_cntrl);
->> -	if (ret)
->> -		goto error_setup_irq;
->> -
->>  	/* Setup BHI INTVEC */
->>  	write_lock_irq(&mhi_cntrl->pm_lock);
->>  	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
->> @@ -1072,7 +1068,7 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->>  		dev_err(dev, "%s is not a valid EE for power on\n",
->>  			TO_MHI_EXEC_STR(current_ee));
->>  		ret = -EIO;
->> -		goto error_async_power_up;
->> +		goto error_setup_irq;
-We're using the label "error_setup_irq" even though there has not been 
-any prior IRQ
-setup done. Can we use the label "error_async_power_up" instead?
->>  	}
->> 
->>  	state = mhi_get_mhi_state(mhi_cntrl);
->> @@ -1081,20 +1077,12 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->> 
->>  	if (state == MHI_STATE_SYS_ERR) {
->>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
->> -		ret = wait_event_timeout(mhi_cntrl->state_event,
->> -				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
->> -					mhi_read_reg_field(mhi_cntrl,
->> -							   mhi_cntrl->regs,
->> -							   MHICTRL,
->> -							   MHICTRL_RESET_MASK,
->> -							   MHICTRL_RESET_SHIFT,
->> -							   &val) ||
->> -					!val,
->> -				msecs_to_jiffies(mhi_cntrl->timeout_ms));
->> -		if (!ret) {
->> -			ret = -EIO;
->> +		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
->> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
->> +				 interval_us);
->> +		if (ret) {
->>  			dev_info(dev, "Failed to reset MHI due to syserr state\n");
->> -			goto error_async_power_up;
->> +			goto error_setup_irq;
-Same here
->>  		}
->> 
->>  		/*
->> @@ -1104,6 +1092,10 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->>  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
->>  	}
->> 
->> +	ret = mhi_init_irq_setup(mhi_cntrl);
->> +	if (ret)
->> +		goto error_setup_irq;
-And here
->> +
->>  	/* Transition to next state */
->>  	next_state = MHI_IN_PBL(current_ee) ?
->>  		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
->> @@ -1116,9 +1108,6 @@ int mhi_async_power_up(struct mhi_controller 
->> *mhi_cntrl)
->> 
->>  	return 0;
->> 
->> -error_async_power_up:
->> -	mhi_deinit_free_irq(mhi_cntrl);
->> -
->>  error_setup_irq:
-s/error_setup_irq/error_async_power_up
->>  	mhi_cntrl->pm_state = MHI_PM_DISABLE;
->>  	mutex_unlock(&mhi_cntrl->pm_mutex);
->> --
->> 2.25.1
->> 
+Hi Vinod
 
--- 
-Thanks,
-Bhaumik
+On 11/15/2021 10:22 PM, Vinod Koul wrote:
+> Display Stream Compression (DSC) parameters need to be calculated. Add
+> helpers and struct msm_display_dsc_config in msm_drv for this
+> msm_display_dsc_config uses drm_dsc_config for DSC parameters.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 132 +++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h      |  20 +++++
+>   2 files changed, 152 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index f69a125f9559..30c1e299aa52 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -31,6 +31,8 @@
+>   
+>   #define DSI_RESET_TOGGLE_DELAY_MS 20
+>   
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc);
+> +
+>   static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+>   {
+>   	u32 ver;
+> @@ -157,6 +159,7 @@ struct msm_dsi_host {
+>   	struct regmap *sfpb;
+>   
+>   	struct drm_display_mode *mode;
+> +	struct msm_display_dsc_config *dsc;
+>   
+>   	/* connected device info */
+>   	struct device_node *device_node;
+> @@ -1710,6 +1713,135 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
+>   	return -EINVAL;
+>   }
+>   
+> +static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
+> +	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
+> +	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
+> +};
+> +
+> +/* only 8bpc, 8bpp added */
+> +static char min_qp[DSC_NUM_BUF_RANGES] = {
+> +	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
+> +};
+> +
+> +static char max_qp[DSC_NUM_BUF_RANGES] = {
+> +	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
+> +};
+> +
+> +static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+> +	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+> +};
+> +
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
+> +{
+> +	int mux_words_size;
+> +	int groups_per_line, groups_total;
+> +	int min_rate_buffer_size;
+> +	int hrd_delay;
+> +	int pre_num_extra_mux_bits, num_extra_mux_bits;
+> +	int slice_bits;
+> +	int target_bpp_x16;
+> +	int data;
+> +	int final_value, final_scale;
+> +	int i;
+> +
+> +	dsc->drm->rc_model_size = 8192;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->rc_edge_factor = 6;
+> +	dsc->drm->rc_tgt_offset_high = 3;
+> +	dsc->drm->rc_tgt_offset_low = 3;
+> +	dsc->drm->simple_422 = 0;
+> +	dsc->drm->convert_rgb = 1;
+> +	dsc->drm->vbr_enable = 0;
+> +
+> +	/* handle only bpp = bpc = 8 */
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
+> +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
+> +
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
+> +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
+> +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
+> +	}
+> +
+> +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
+> +	if (dsc->drm->bits_per_pixel != 8)
+> +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
+> +
+> +	mux_words_size = 48;		/* bpc == 8/10 */
+> +	if (dsc->drm->bits_per_component == 12)
+> +		mux_words_size = 64;
+> +
+> +	dsc->drm->initial_xmit_delay = 512;
+> +	dsc->drm->initial_scale_value = 32;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
+> +
+> +	/* bpc 8 */
+> +	dsc->drm->flatness_min_qp = 3;
+> +	dsc->drm->flatness_max_qp = 12;
+> +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
+> +	dsc->drm->rc_quant_incr_limit0 = 11;
+> +	dsc->drm->rc_quant_incr_limit1 = 11;
+> +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> +
+> +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+> +	 * params are calculated
+> +	 */
+since its been a while on this, before moving ahead with a FIXME 
+comment, I wanted to know if you had a chance to check what is the 
+discrepancy between this and drm_dsc_compute_rc_parameters().
+
+The LOC saved can be quite a bit if we move to
+drm_dsc_compute_rc_parameters(). Last time we synced, I think only one 
+parameter was mismatching. The code-churn to avoid one mismatch seems a 
+lot. If there are more conflicting parameters than one or two, we can go 
+ahead with this custom calculation with your FIXME.
+
+
+> +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
+> +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
+> +	dsc->drm->slice_chunk_size = dsc->drm->slice_width * dsc->drm->bits_per_pixel / 8;
+> +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
+> +		dsc->drm->slice_chunk_size++;
+> +
+> +	/* rbs-min */
+> +	min_rate_buffer_size =  dsc->drm->rc_model_size - dsc->drm->initial_offset +
+> +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
+> +				groups_per_line * dsc->drm->first_line_bpg_offset;
+> +
+> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->drm->bits_per_pixel);
+> +
+> +	dsc->drm->initial_dec_delay = hrd_delay - dsc->drm->initial_xmit_delay;
+> +
+> +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
+> +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
+> +
+> +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
+> +
+> +	groups_total = groups_per_line * dsc->drm->slice_height;
+> +
+> +	data = dsc->drm->first_line_bpg_offset * 2048;
+> +
+> +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height - 1));
+> +
+> +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->drm->bits_per_component + 4) - 2);
+> +
+> +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+> +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+> +
+> +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset + num_extra_mux_bits);
+> +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+> +
+> +	/* bpp * 16 + 0.5 */
+> +	data = dsc->drm->bits_per_pixel * 16;
+> +	data *= 2;
+> +	data++;
+> +	data /= 2;
+> +	target_bpp_x16 = data;
+> +
+> +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
+> +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
+> +	dsc->drm->final_offset = final_value;
+> +
+> +	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size - final_value);
+> +
+> +	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset + dsc->drm->slice_bpg_offset);
+> +	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) / data;
+> +
+> +	dsc->drm->scale_decrement_interval = groups_per_line / (dsc->drm->initial_scale_value - 8);
+> +
+> +	return 0;
+> +}
+> +
+>   static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>   {
+>   	struct device *dev = &msm_host->pdev->dev;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 69952b239384..de7cb65bfc52 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -30,6 +30,7 @@
+>   #include <drm/drm_plane_helper.h>
+>   #include <drm/drm_probe_helper.h>
+>   #include <drm/drm_fb_helper.h>
+> +#include <drm/drm_dsc.h>
+>   #include <drm/msm_drm.h>
+>   #include <drm/drm_gem.h>
+>   
+> @@ -134,6 +135,22 @@ struct msm_drm_thread {
+>   	struct kthread_worker *worker;
+>   };
+>   
+> +/* DSC config */
+> +struct msm_display_dsc_config {
+> +	struct drm_dsc_config *drm;
+> +
+> +	u32 initial_lines;
+> +	u32 pkt_per_line;
+> +	u32 bytes_in_slice;
+> +	u32 bytes_per_pkt;
+> +	u32 eol_byte_num;
+> +	u32 pclk_per_line;
+> +	u32 slice_last_group_size;
+> +	u32 det_thresh_flatness;
+> +
+> +	unsigned int dsc_mask;
+> +};
+> +
+>   struct msm_drm_private {
+>   
+>   	struct drm_device *dev;
+> @@ -228,6 +245,9 @@ struct msm_drm_private {
+>   	/* Properties */
+>   	struct drm_property *plane_property[PLANE_PROP_MAX_NUM];
+>   
+> +	/* DSC configuration */
+> +	struct msm_display_dsc_config *dsc;
+I agree with Dmitry, that we need a closer binding of dsc_config with 
+which display its getting associated with. Having it in the private 
+object is too generic.
+
+https://patchwork.freedesktop.org/patch/463255/?series=90413&rev=4
+
+How about moving this to struct dpu_encoder_virt.
+That way, it will be associated with the correct encoder.
+
+Yes, I dont see the usage for dsc_mask too.
+
+> +
+>   	/* VRAM carveout, used when no IOMMU: */
+>   	struct {
+>   		unsigned long size;
+> 
