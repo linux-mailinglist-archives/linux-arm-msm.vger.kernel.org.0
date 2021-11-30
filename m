@@ -2,160 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C12884634F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 13:58:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3CE746352A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 14:12:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbhK3NBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 08:01:30 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:37429 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232488AbhK3NB2 (ORCPT
+        id S238462AbhK3NPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 08:15:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239196AbhK3NPv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 08:01:28 -0500
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 30 Nov 2021 04:58:05 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 30 Nov 2021 04:58:04 -0800
-X-QCInternal: smtphost
-Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 30 Nov 2021 18:27:56 +0530
-Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id B11C943DE; Tue, 30 Nov 2021 18:27:54 +0530 (IST)
-From:   Jeya R <jeyr@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
-        bkumar@qti.qualcomm.com, ekangupt@qti.qualcomm.com,
-        jeyr@qti.qualcomm.com
-Subject: [PATCH 3/3] misc: fastrpc: Handle mapping of invoke argument with attribute
-Date:   Tue, 30 Nov 2021 18:27:52 +0530
-Message-Id: <1638277072-6459-6-git-send-email-jeyr@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638277072-6459-1-git-send-email-jeyr@codeaurora.org>
-References: <1638277072-6459-1-git-send-email-jeyr@codeaurora.org>
+        Tue, 30 Nov 2021 08:15:51 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4186C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 05:12:31 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso19470158wml.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 05:12:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=13fLHiEQF6pzhcz2WtgN+CcxU86iHvn9Ed1PMe3Dgmc=;
+        b=u94G9RNZ+Tui6a3YE83HCfNfuShwxCK308YdsOGaSxwcjaYs4fitQoypt8CBQnWdsq
+         po8v86TxHvVeUhvx9UPVM98K1KCJ7bxyhy9zTrtYZXJAYjvC+7EY+/ubNp/ahKgEpFg5
+         3GFFFU1r4OUC04MyMs5V4CjsHMnHWIUPLwA9oz2PJ1dkXQ2+RCucH/jbAZfMkkKCJrUY
+         cdLH8Qmux93WId5nxyPMfCEPO8lpzgBOtZekLCcBCjhxYDx50fGU1GdHOORfhWTxczQa
+         fUGE9zIlroft18PH2uLRbFGMxVPqYHWc4VLDu32Rmqjk3PhmM7H3srNkDwLjOmB+ec4X
+         9iZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=13fLHiEQF6pzhcz2WtgN+CcxU86iHvn9Ed1PMe3Dgmc=;
+        b=BvU8PJ8r2bUDK+uBgEPVsD1caLot4yXBkDOR645xcl6tvKB482r03jItiGiizhsd9p
+         X6aDeXNrFcVX3jBVMw1MdwAS+wF6QlVwVN/EOcQTKViPME7XHfEFNwSxpI7hS2BnHYvI
+         orge08mskGWdPtnjuhKlVWkb+MsmQohbEpKdaByjGRF6c6jfcdvPLcloPXNrNP08tdwk
+         0iX6WvK8O+qzdGcuqnB3pMYen4KQbL3jtq9HWYZJLhhASLh3D6oS3qHolv8+2N/sK6pd
+         uYL0dOKc5/J6Ceh38YcI2bgP4Gm5gAVecU33UenRGP6CUMejb0HZJpZOuYcwRhS/OWwQ
+         1PkQ==
+X-Gm-Message-State: AOAM530T2Zngt2yz4Jja8tE543Qjm6+Bx6U7xUZKCXYa37uRO/UZ1IJt
+        P9/kMaqlfPUF3fvBp9aLP1NO8w==
+X-Google-Smtp-Source: ABdhPJwt8PVAIHAdDmXhCR7nPn458i2K2GdL1l197sJ2LP7lNV9hxJV1Qwy1Nr8mXfKX6BYgZTgEgA==
+X-Received: by 2002:a1c:9d03:: with SMTP id g3mr4738698wme.143.1638277950315;
+        Tue, 30 Nov 2021 05:12:30 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id h22sm2577321wmq.14.2021.11.30.05.12.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Nov 2021 05:12:29 -0800 (PST)
+Subject: Re: [PATCH 1/2] misc: fastrpc: Add fdlist implementation
+To:     Jeya R <jeyr@codeaurora.org>, ekangupt@qti.qualcomm.com,
+        linux-arm-msm@vger.kernel.org
+Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
+References: <1638276897-6146-1-git-send-email-jeyr@codeaurora.org>
+ <1638276897-6146-3-git-send-email-jeyr@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <cadd374b-cb22-9eaf-0513-67b34ccbbcf1@linaro.org>
+Date:   Tue, 30 Nov 2021 13:12:27 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <1638276897-6146-3-git-send-email-jeyr@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow mapping of arguments for remote invocations with attribute.
+Hi Jeya,
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
----
- drivers/misc/fastrpc.c      | 25 ++++++++++++++++---------
- include/uapi/misc/fastrpc.h |  5 ++++-
- 2 files changed, 20 insertions(+), 10 deletions(-)
+This is version 2 of the patchset which is not reflected in the subject 
+line.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index a9adfa4d..f6a6e4d 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -172,6 +172,7 @@ struct fastrpc_map {
- 	u64 size;
- 	void *va;
- 	u64 len;
-+	u32 attr;
- 	struct kref refcount;
- };
- 
-@@ -246,6 +247,10 @@ static void fastrpc_free_map(struct kref *ref)
- 	map = container_of(ref, struct fastrpc_map, refcount);
- 
- 	if (map->table) {
-+		if (map->attr & FASTRPC_SECUREMAP) {
-+			/* Invoke qcom_scm API to assign memory access
-+			 * back to HLOS
-+			 */
- 		dma_buf_unmap_attachment(map->attach, map->table,
- 					 DMA_BIDIRECTIONAL);
- 		dma_buf_detach(map->buf, map->attach);
-@@ -622,7 +627,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- };
- 
- static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
--			      u64 len, struct fastrpc_map **ppmap)
-+			      u64 len, u32 attr, struct fastrpc_map **ppmap)
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-@@ -664,6 +669,14 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 	map->len = len;
- 	kref_init(&map->refcount);
- 
-+	if (attr & FASTRPC_SECUREMAP) {
-+		map->attr = attr;
-+		/*
-+		 * If subsystem VMIDs are defined in DTSI, then do
-+		 * hyp_assign from HLOS to those VM(s).
-+		*/
-+	}
-+
- 	spin_lock(&fl->lock);
- 	list_add_tail(&map->node, &fl->maps);
- 	spin_unlock(&fl->lock);
-@@ -746,16 +759,12 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
- 	int i, err;
- 
- 	for (i = 0; i < ctx->nscalars; ++i) {
--		/* Make sure reserved field is set to 0 */
--		if (ctx->args[i].reserved)
--			return -EINVAL;
--
- 		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1 ||
- 		    ctx->args[i].length == 0)
- 			continue;
- 
- 		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
--					 ctx->args[i].length, &ctx->maps[i]);
-+					 ctx->args[i].length, ctx->args[i].attr, x->maps[i]);
- 		if (err) {
- 			dev_err(dev, "Error Creating map %d\n", err);
- 			return -EINVAL;
-@@ -1062,7 +1071,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	fl->pd = USER_PD;
- 
- 	if (init.filelen && init.filefd) {
--		err = fastrpc_map_create(fl, init.filefd, init.filelen, &map);
-+		err = fastrpc_map_create(fl, init.filefd, init.filelen, 0, &map);
- 		if (err)
- 			goto err;
- 	}
-@@ -1171,7 +1180,6 @@ static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
--	args[0].reserved = 0;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
- 
- 	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
-@@ -1307,7 +1315,6 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
--	args[0].reserved = 0;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
- 	fl->pd = pd;
- 
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index 0a89f95..4dd4a9e 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -14,11 +14,14 @@
- #define FASTRPC_IOCTL_MUNMAP		_IOWR('R', 7, struct fastrpc_req_munmap)
- #define FASTRPC_IOCTL_INIT_ATTACH_SNS	_IO('R', 8)
- 
-+/* Fastrpc attribute for memory protection of buffers */
-+#define FASTRPC_SECUREMAP (1)
-+
- struct fastrpc_invoke_args {
- 	__u64 ptr;
- 	__u64 length;
- 	__s32 fd;
--	__u32 reserved;
-+	__u32 attr;
- };
- 
- struct fastrpc_invoke {
--- 
-2.7.4
 
+
+
+On 30/11/2021 12:54, Jeya R wrote:
+> Add fdlist implementation to support dma handles. fdlist is populated
+> by DSP if any map is no longer used and it is freed during put_args.
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> ---
+>   drivers/misc/fastrpc.c | 22 ++++++++++++++++++++--
+>   1 file changed, 20 insertions(+), 2 deletions(-)
+
+Have you missed comments my comments on this patch
+
+https://www.spinics.net/lists/linux-arm-msm/msg99023.html
+
+--srini
+
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 39aca77..3c937ff 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -353,7 +353,7 @@ static void fastrpc_context_free(struct kref *ref)
+>   	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
+>   	cctx = ctx->cctx;
+>   
+> -	for (i = 0; i < ctx->nscalars; i++)
+> +	for (i = 0; i < ctx->nbufs; i++)
+>   		fastrpc_map_put(ctx->maps[i]);
+>   
+>   	if (ctx->buf)
+> @@ -785,6 +785,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+>   	err = fastrpc_buf_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
+>   	if (err)
+>   		return err;
+> +	memset(ctx->buf->virt, 0, pkt_size);
+>   
+>   	rpra = ctx->buf->virt;
+>   	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+> @@ -887,9 +888,19 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>   			    u32 kernel)
+>   {
+>   	struct fastrpc_remote_arg *rpra = ctx->rpra;
+> -	int i, inbufs;
+> +	struct fastrpc_map *mmap = NULL;
+> +	struct fastrpc_invoke_buf *list;
+> +	struct fastrpc_phy_page *pages;
+> +	u64 *fdlist;
+> +	int i, inbufs, outbufs, handles;
+>   
+>   	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+> +	outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
+> +	handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
+> +	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+> +	pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
+> +		sizeof(*rpra));
+> +	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
+>   
+>   	for (i = inbufs; i < ctx->nbufs; ++i) {
+>   		if (!ctx->maps[i]) {
+> @@ -906,6 +917,13 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>   		}
+>   	}
+>   
+> +	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
+> +		if (!fdlist[i])
+> +			break;
+> +		if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
+> +			fastrpc_map_put(mmap);
+> +	}
+> +
+>   	return 0;
+>   }
+>   
+> 
