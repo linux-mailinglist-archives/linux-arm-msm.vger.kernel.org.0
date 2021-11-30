@@ -2,137 +2,377 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F8BA463BE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 17:36:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9540A463C97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 18:13:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244010AbhK3QjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 11:39:11 -0500
-Received: from new4-smtp.messagingengine.com ([66.111.4.230]:56127 "EHLO
-        new4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238032AbhK3QjJ (ORCPT
+        id S243657AbhK3RQV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 12:16:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38278 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244679AbhK3RQU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 11:39:09 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 57BBE580131;
-        Tue, 30 Nov 2021 11:35:49 -0500 (EST)
-Received: from imap47 ([10.202.2.97])
-  by compute3.internal (MEProxy); Tue, 30 Nov 2021 11:35:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svenpeter.dev;
-         h=mime-version:message-id:in-reply-to:references:date:from:to
-        :cc:subject:content-type; s=fm3; bh=jY6BiEiqqEX3r2Q5KUj5NScjlUZf
-        fg61Yq1tlm97XYA=; b=jyB3/dh+y7c9vt/oLRpNSfNC/oiUOK/VJK8JZyNRCFOc
-        bbeesyoIbl0CSqNRur2TB14V/liIrJm4KX65Ik5ZGo1zySpONG4YtTYzxS9CUKqo
-        NadBNNjzdNLypkNQ0jqUx8ihBa7tFdlcJZ+mGSzOsWBPYZXi4QI48dbCjTPCKc5Y
-        imDYW1yZvArYKhwyp0CUULMH+TDwPYZwXkrriKohEY1X5H/zQAaPyMzgBO7q5Cg7
-        K35cAUIOssmHF9cib9gSoodhxLIIP6rEjUQRWSyBeJDJDGwUQEyFCCbTWHTAflun
-        Gf1K62APOkgUU9E3NuoB2p/MdnsLAq+TZzTuNdzy4g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=jY6BiE
-        iqqEX3r2Q5KUj5NScjlUZffg61Yq1tlm97XYA=; b=exCdb3Nlcw6TyjODvHWX5M
-        AR4JsRPKMCpnb4auq1n3u4nBIjfoQu+GhUoAi2rLTUxifFSh1/E9pI4pOM214S1n
-        y7F99nqoJl5pf6X6pnTbXPgmd2Ff9LSDFno6mF3LCa7cu6ToYwDsg40cFloTMm6X
-        T8BPVW9CqytvDYZud5nRlSMqScxpaRp2wizBe8djXxwO1vWYLmUEasWdoecS7S+/
-        up8vIDqSqu9xxrKrZo0PojWXnjMUYnv+3Zw1W3tqMOvQOO/bs2kXY8Q1KOcpBK3U
-        opHeutP31WvAe7KgYdw6A3LDPVHkLeiyINTvGjDU/vMG4EO8OX7MknPAdljc9YGg
-        ==
-X-ME-Sender: <xms:5FKmYShZZhFZh_IqmL6zHDeut9llF2lsBwsB5ob6JIMrKfKQufKHZA>
-    <xme:5FKmYTAChIUwXNvY3MibWHPgF9kZgGL3xHeFJpb6V8JNAtxzdQuVdbF_rQ4CJOJpV
-    QQep3Wcyj173qdgvIQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddriedugdelvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedfufhvvghn
-    ucfrvghtvghrfdcuoehsvhgvnhesshhvvghnphgvthgvrhdruggvvheqnecuggftrfgrth
-    htvghrnhepvedvgeevuddvvedvgfelfeegiedvgeehieeutdelvedvieevveeljeefvedt
-    leehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsvhgvnhesshhvvghnphgvthgvrhdruggv
-    vh
-X-ME-Proxy: <xmx:5FKmYaFmzA6NDcLu9LRzcsdsr0jSn8GM_Cu20YrnjBaUO3k5fIxcfA>
-    <xmx:5FKmYbTEi3CfNwGKFxUyj_LkA-infyZrfKX1l9P8p3GPOnW5tEiHUQ>
-    <xmx:5FKmYfw8cCiPIb3PwaLkom8BOFImZuMrUAtPEuPt0dPAg__QyHfuAA>
-    <xmx:5VKmYUoGkNdE6vr5qBJo0dj_y2WXJf4TWEUMQSqeDoNjOG5NFDuvdg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id BDB3C27407E3; Tue, 30 Nov 2021 11:35:48 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4410-g5528bb82a8-fm-20211130.003-g5528bb82
-Mime-Version: 1.0
-Message-Id: <0f3c9f9e-caf9-462a-ba8d-882266d4c7c4@www.fastmail.com>
-In-Reply-To: <20211130160338.GA2739234@bhelgaas>
-References: <20211130160338.GA2739234@bhelgaas>
-Date:   Tue, 30 Nov 2021 17:35:16 +0100
-From:   "Sven Peter" <sven@svenpeter.dev>
-To:     "Bjorn Helgaas" <helgaas@kernel.org>,
-        "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-Cc:     "Lorenzo Pieralisi" <lorenzo.pieralisi@arm.com>,
-        "Bjorn Helgaas" <bhelgaas@google.com>, svarbanov@mm-sol.com,
-        bjorn.andersson@linaro.org, "Rob Herring" <robh@kernel.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, "kernel test robot" <lkp@intel.com>,
-        "Marc Zyngier" <maz@kernel.org>,
-        "Alyssa Rosenzweig" <alyssa@rosenzweig.io>
-Subject: Re: [PATCH] PCI: qcom: Fix warning generated due to the incorrect data type
-Content-Type: text/plain
+        Tue, 30 Nov 2021 12:16:20 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3E9C061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 09:13:01 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id j3so46015538wrp.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 09:13:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=r/RzzACEGmvpF3IiOGI/VeVi04SG1oxFn0L0QmRaXOU=;
+        b=EDHBCnZV+Wl+S6/VL/Eiow7Rf87bWTxqhf+0uHr57WEzNWkSATf4UO0qpCY8Iy97CC
+         TJYxPMSUgDCTum4RriKuoAPtPRpqXLJNSgqMCUfZKggyaPZ1JzgrRiZgHaYuJ3llBNY4
+         q5UOM0TlC3qFiTozbSF6V9rwXCw5NqrjOS9nHRdyJia0aLhALTunb8Ypb3oqwskk0tBh
+         sTkCvdAVzurcNp22JDLlU9sZMtP1UJT6tktTzABhMQtKcjHkQnlzIG76eX/syvc4lzAu
+         ktGbMVPcPFoATkrc/UZmWpv/236DiZXivEvVt0WqkNpls10kohBMwtcTHNZMCBKm9xJO
+         UGBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=r/RzzACEGmvpF3IiOGI/VeVi04SG1oxFn0L0QmRaXOU=;
+        b=T8JwxpQ2edcUxdDIQtT9JxzXrbbJal/feNH2Uw68uLnZmhPPnY/8HhwIZn889zhNCs
+         5rLXdzdHee0Z0f9eDb67jCMl5tVkvJwDvz0bYrIoF9xK8AiqLpd4LuXCsi32aEXh46Rl
+         ADkRw2iqfWeI4k63+o4Wb8joyIE9bMBUkmk3ZUbvZkvCjk/einE65qk5N15mp51cxIZn
+         vVv5bhskueqC54MsvwFPJC1IaPQOOS0qrn4Eq+19BmwjAMEszI1CUcOBXjIPgQqBmVTG
+         +E49YQSySUzMG44OaAEBuZI840sVJhpNiZq5/KHM8p1i3wB+PRu1NbjjTk/AHwFsaS6X
+         NqSQ==
+X-Gm-Message-State: AOAM533D9v0bP867/9g6qKFpae2VLR6JjYxUCesFx4dT3qmiZHXBvd/4
+        6N5NSrcHdLf8kkrt4K4sBK4zTw==
+X-Google-Smtp-Source: ABdhPJym3UsIoYgofoLQvjSzZVsW6tJDx1MN2tq9DcLrNaC0QZOit3T/fTuKusXLjpplBoXsBqFaJg==
+X-Received: by 2002:adf:ed83:: with SMTP id c3mr204682wro.169.1638292379523;
+        Tue, 30 Nov 2021 09:12:59 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id n13sm17342354wrt.44.2021.11.30.09.12.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Nov 2021 09:12:59 -0800 (PST)
+Subject: Re: [PATCH v3 1/5] dt-bindings: pinctrl: qcom: Update lpass lpi file
+ name to SoC specific
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1638179932-3353-1-git-send-email-srivasam@codeaurora.org>
+ <1638179932-3353-2-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <14163c1c-c453-0cec-c7e9-1ff0a8a982d3@linaro.org>
+Date:   Tue, 30 Nov 2021 17:12:57 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <1638179932-3353-2-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, Nov 30, 2021, at 17:03, Bjorn Helgaas wrote:
-> [+cc Marc, Alyssa, Sven for RID-to-SID mapping insight.  The patch at
-> https://lore.kernel.org/all/20211130062137.GD205712@thinkpad/ merely
-> fixes a warning.  My meta-question is about the qcom BDF-to-SID
-> mapping.]
->
-> On Tue, Nov 30, 2021 at 11:51:37AM +0530, Manivannan Sadhasivam wrote:
->> On Mon, Nov 29, 2021 at 09:36:14PM -0600, Bjorn Helgaas wrote:
->> > ...
->> > I'm also curious why pcie-qcom.c is the only driver that does this.
->> > "iommu-map" is not specific to qcom, but no other drivers do similar
->> > things with it.
->> 
->> Yes, on the recent qcom platforms starting from sm8250 we need to program
->> the BDF to SID mapping in the controller and that's the reason we are
->> extracting the "iommu-map" property in DT.
->
-> This sounds like something that may not really be specific to sm8250.
-
-So a single IOMMU can possibly differentiate between N different devices [1].
-Each device [1] is identified by some number which is called sid (stream id?
-security id? who knows.) on Apple hardware (and apparently also on qcom).
-Now I don't know much about PCI but the way I understand it is that the
-bus/device/function tuple can be used to uniquely identify a single device on the bus.
-All iommu-map does is to provide the mapping between those two different spaces [2].
-
-For most iommus this seems to be just a static mapping that's hardwired in silicon
-and I think that's why almost no PCI driver needs to care about it: The iommu
-core will just use it to convert the PCI requester ID to a number the iommu
-driver understands.
-
-Apple's frankenchip however allows to configure this mapping from software
-after a device has been attached and that's why we need that special code inside
-the PCI driver: We have to make sure that whatever is configured inside iommu-map
-(and used by the iommu core to match PCI devices to iommu groups) matches to what
-the HW does.
-
-I can only assume that qcom does something similar. It looks like the qcom HW can be
-fully configured during probe time though while we really have to wait until a device
-is attached for the Apple chip (mostly because we only have 16 slots there).
 
 
-Hope that helps.
+On 29/11/2021 09:58, Srinivasa Rao Mandadapu wrote:
+> Change generic lpass lpi pincotrol bindings file to SoC specific file,
+> to distinguish and accomadate other SoC specific dt bindings.
 
 
-Best,
+TBH, for adding sc7820 lpass lpi support, this rename patch is totally 
+not necessary.
 
-Sven
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> ---
+>   .../bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml   | 130 ---------------------
+>   .../pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml     | 130 +++++++++++++++++++++
 
+Consider using "git mv" when renaming files, this would give a better 
+diff stat.
 
-
-[1] Technically the smallest unit are iommu groups which can contain multiple
-devices but we can just ignore that. The iommu code will do the correct thing
-if it gets told that two PCI devices have the same identification number.
-
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/of_iommu.c#n53
+--srini
+>   2 files changed, 130 insertions(+), 130 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+> deleted file mode 100644
+> index e47ebf9..0000000
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+> +++ /dev/null
+> @@ -1,130 +0,0 @@
+> -# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> -%YAML 1.2
+> ----
+> -$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
+> -$schema: http://devicetree.org/meta-schemas/core.yaml#
+> -
+> -title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
+> -  Low Power Island (LPI) TLMM block
+> -
+> -maintainers:
+> -  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> -
+> -description: |
+> -  This binding describes the Top Level Mode Multiplexer block found in the
+> -  LPASS LPI IP on most Qualcomm SoCs
+> -
+> -properties:
+> -  compatible:
+> -    const: qcom,sm8250-lpass-lpi-pinctrl
+> -
+> -  reg:
+> -    minItems: 2
+> -    maxItems: 2
+> -
+> -  clocks:
+> -    items:
+> -      - description: LPASS Core voting clock
+> -      - description: LPASS Audio voting clock
+> -
+> -  clock-names:
+> -    items:
+> -      - const: core
+> -      - const: audio
+> -
+> -  gpio-controller: true
+> -
+> -  '#gpio-cells':
+> -    description: Specifying the pin number and flags, as defined in
+> -      include/dt-bindings/gpio/gpio.h
+> -    const: 2
+> -
+> -  gpio-ranges:
+> -    maxItems: 1
+> -
+> -#PIN CONFIGURATION NODES
+> -patternProperties:
+> -  '-pins$':
+> -    type: object
+> -    description:
+> -      Pinctrl node's client devices use subnodes for desired pin configuration.
+> -      Client device subnodes use below standard properties.
+> -    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> -
+> -    properties:
+> -      pins:
+> -        description:
+> -          List of gpio pins affected by the properties specified in this
+> -          subnode.
+> -        items:
+> -          oneOf:
+> -            - pattern: "^gpio([0-9]|[1-9][0-9])$"
+> -        minItems: 1
+> -        maxItems: 14
+> -
+> -      function:
+> -        enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data, qua_mi2s_ws,
+> -                qua_mi2s_data, swr_rx_clk, swr_rx_data, dmic1_clk, i2s1_clk,
+> -                dmic1_data, i2s1_ws, dmic2_clk, dmic2_data, i2s1_data,
+> -                i2s2_clk, wsa_swr_clk, i2s2_ws, wsa_swr_data, dmic3_clk,
+> -                dmic3_data, i2s2_data ]
+> -        description:
+> -          Specify the alternative function to be configured for the specified
+> -          pins.
+> -
+> -      drive-strength:
+> -        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> -        default: 2
+> -        description:
+> -          Selects the drive strength for the specified pins, in mA.
+> -
+> -      slew-rate:
+> -        enum: [0, 1, 2, 3]
+> -        default: 0
+> -        description: |
+> -            0: No adjustments
+> -            1: Higher Slew rate (faster edges)
+> -            2: Lower Slew rate (slower edges)
+> -            3: Reserved (No adjustments)
+> -
+> -      bias-pull-down: true
+> -
+> -      bias-pull-up: true
+> -
+> -      bias-disable: true
+> -
+> -      output-high: true
+> -
+> -      output-low: true
+> -
+> -    required:
+> -      - pins
+> -      - function
+> -
+> -    additionalProperties: false
+> -
+> -required:
+> -  - compatible
+> -  - reg
+> -  - clocks
+> -  - clock-names
+> -  - gpio-controller
+> -  - '#gpio-cells'
+> -  - gpio-ranges
+> -
+> -additionalProperties: false
+> -
+> -examples:
+> -  - |
+> -    #include <dt-bindings/sound/qcom,q6afe.h>
+> -    lpi_tlmm: pinctrl@33c0000 {
+> -        compatible = "qcom,sm8250-lpass-lpi-pinctrl";
+> -        reg = <0x33c0000 0x20000>,
+> -              <0x3550000 0x10000>;
+> -        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> -                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> -        clock-names = "core", "audio";
+> -        gpio-controller;
+> -        #gpio-cells = <2>;
+> -        gpio-ranges = <&lpi_tlmm 0 0 14>;
+> -    };
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> new file mode 100644
+> index 0000000..e47ebf9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> @@ -0,0 +1,130 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
+> +  Low Power Island (LPI) TLMM block
+> +
+> +maintainers:
+> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  LPASS LPI IP on most Qualcomm SoCs
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8250-lpass-lpi-pinctrl
+> +
+> +  reg:
+> +    minItems: 2
+> +    maxItems: 2
+> +
+> +  clocks:
+> +    items:
+> +      - description: LPASS Core voting clock
+> +      - description: LPASS Audio voting clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: core
+> +      - const: audio
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-pins$':
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9])$"
+> +        minItems: 1
+> +        maxItems: 14
+> +
+> +      function:
+> +        enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data, qua_mi2s_ws,
+> +                qua_mi2s_data, swr_rx_clk, swr_rx_data, dmic1_clk, i2s1_clk,
+> +                dmic1_data, i2s1_ws, dmic2_clk, dmic2_data, i2s1_data,
+> +                i2s2_clk, wsa_swr_clk, i2s2_ws, wsa_swr_data, dmic3_clk,
+> +                dmic3_data, i2s2_data ]
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      slew-rate:
+> +        enum: [0, 1, 2, 3]
+> +        default: 0
+> +        description: |
+> +            0: No adjustments
+> +            1: Higher Slew rate (faster edges)
+> +            2: Lower Slew rate (slower edges)
+> +            3: Reserved (No adjustments)
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/sound/qcom,q6afe.h>
+> +    lpi_tlmm: pinctrl@33c0000 {
+> +        compatible = "qcom,sm8250-lpass-lpi-pinctrl";
+> +        reg = <0x33c0000 0x20000>,
+> +              <0x3550000 0x10000>;
+> +        clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+> +                 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+> +        clock-names = "core", "audio";
+> +        gpio-controller;
+> +        #gpio-cells = <2>;
+> +        gpio-ranges = <&lpi_tlmm 0 0 14>;
+> +    };
+> 
