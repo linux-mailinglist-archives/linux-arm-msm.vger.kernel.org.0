@@ -2,122 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29C03462F82
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 10:26:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90EB8462FA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 10:28:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240139AbhK3J31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 04:29:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
+        id S235239AbhK3JcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 04:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240134AbhK3J31 (ORCPT
+        with ESMTP id S240224AbhK3JcL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 04:29:27 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8138BC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:26:08 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id 137so12049909pgg.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:26:08 -0800 (PST)
+        Tue, 30 Nov 2021 04:32:11 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C77A7C061748
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:28:52 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id 137so16850155wma.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:28:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oXaDYGL7nEXP6MNRdftg+VSUENUU16+vGuz3Sq2zHmk=;
-        b=GJ1ucd5ka2VdzllDSZLTJ8pjC8gSB9QI0NsluP3HnKA83XqVS+NSe2+pZAiSgVBUJR
-         6GGRstmcea2lyftcaJg9Yn7NFFsH2EFs5qLy/GAmKtto2Kgq3njYVds7Kgg3iluBGpok
-         LExATY1eamMn+U6ymOAJsMc2oOy9a+aj/Fj94bgL00K9N23WNuFXCtEkDJZWTrhHrLF4
-         OMtJKZG+h3C1kbjot788f9ZqnAN+xRvwZtmYJr5060ame2CX1yqnlMJQAQwZORK6Cc9y
-         yZ+vOVW7JCyheNHqqmeMAAlRD2zUizWAetGcw5HX2C1H0JYKbJSveh1IjfR2BjwkMtUj
-         ExJQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ydMPP+rzHmOMEEgYyVDZvKAwWBch53F19D/eQXwTEQw=;
+        b=hH+7XrW33GqrJ6WPl28jU6Dv0stolWydSfKUAZPT3Qe7FEOW3J1AFwjpckhZc7jfeg
+         wz+uoMTCwjEgTtnyYzUJSEaG/jnBh5fDspQ2VWG+25i5l2+Sh7GzyfPEyJgq4sdmoTjQ
+         G42+qBQVEPlkz7ICud/LABQ8E25xu24VI0aC5yml8ALuOAUmBe7tIs4Mkb1NyWDvF7gw
+         czXRLsqtxmXQIEJv/UOvxp6IRi2FFTQMFbCsIgSgk4Ikg9XNBxf/eJ2BdbNJcE5+8ypF
+         Yo4m0mhQbV1RnffSwcy1+z1TC6H51I6AHzw9zU9mN6TawcsbDBfPFzfe4JNWpmeswf73
+         2wMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oXaDYGL7nEXP6MNRdftg+VSUENUU16+vGuz3Sq2zHmk=;
-        b=ljUJpm66J6uqlg9xXAuYqzhMcmbjPWu5+BLm4+cfsH9Lhgd/14p+TetqoUffnggEQd
-         gMF+y8G9C6yPVZd0U8fugDFdFJ2dkNtF4xH5XkX1NvfrVGYOe6F9UsQDKhn4Ou7spjHP
-         fDUQlEqpdDJeBUegdDq/4MvMfMN2BRYeL4e8ivYZXAePb8oo+NX9K9/3ke3Sqt0zso4S
-         /6QkbDvlPnYg0QZ3bdSS+5JpZfzyn3yW0+e5vcqmBR1E9cse3fpvm4jJYJcu7JRS3oT7
-         RfQf5vh8rDealIjbqp4TBg0BDo2yOvqYHdCCU6dFzRMP+fIctxePIepFUz1h3FDETbQo
-         /nDA==
-X-Gm-Message-State: AOAM532U/o96w7MAG39bdPafht6fnkXv+ffqbrt8vYE8aY4AcsdIqg5w
-        8MydzUsvrAyEVGcjzDp1NgFS9Q==
-X-Google-Smtp-Source: ABdhPJw1xQqbeYhHCicpDBy+0sukQLd5rd5BI0RUeGimNc2XNL9J4iwrJyi5V0c3hsqtLtPVqAtcOA==
-X-Received: by 2002:a63:8349:: with SMTP id h70mr40123495pge.315.1638264368057;
-        Tue, 30 Nov 2021 01:26:08 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id h194sm19796817pfe.156.2021.11.30.01.26.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Nov 2021 01:26:07 -0800 (PST)
-Date:   Tue, 30 Nov 2021 17:26:02 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20211130092601.GI10105@dragon>
-References: <20211126093529.31661-1-shawn.guo@linaro.org>
- <20211126093529.31661-3-shawn.guo@linaro.org>
- <56a5820e-9cd7-aa49-7ce8-9547f355986e@quicinc.com>
- <20211129134459.GC10105@dragon>
- <519ac97a-6bff-ee93-58c6-63559c3a6cb6@quicinc.com>
- <20211130084445.GG10105@dragon>
- <e7a70e7d-c9b6-c10d-23c8-dd5ca74cc4dd@quicinc.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ydMPP+rzHmOMEEgYyVDZvKAwWBch53F19D/eQXwTEQw=;
+        b=TRS7pIxPclUX2duPq9/KJzb3Y6eSgQ9tbSYDH9h/vSA6DCeAq4NVstZzHjIYdZqrKf
+         wEa9xhaxRu1NBTQ73Rcw3y/n59KXYURiHs//UgxPPyquHSz90nQ7wnRjximPPFRDzpyD
+         2NxLV3FVkQs0Kfm99dF9EhPYcKs3k50W8qWJugRSthJINIDlFue7MLDGE6HImzrGuVii
+         64pMrpydh+g1Ph1o911LWge+/eQNIO+UEopyrXSbTPupONagymE/55VM0+e393QvKiI2
+         n3qS8Rll5aV0/1/LNL+ozgCaeQ2V0XnJ8AFAuNnZ+0Yr4ENW4IwqNPbvdVhR9gowWktc
+         XVyw==
+X-Gm-Message-State: AOAM530XeBHc2UTXSeVrRH1Y6XCqY3K1/tMIpTmNvar2BhXsJ1QLnrx2
+        mSt42hPNW/RlTxUXsSduzrMreg==
+X-Google-Smtp-Source: ABdhPJyQ/yNF4X7GSZ8DNdpsH5VZJr1rb42VyysX8gWQiLTy6z1ptZiHHKXbe49IC+/6Wa7Z3y7UYw==
+X-Received: by 2002:a05:600c:214f:: with SMTP id v15mr3519928wml.194.1638264531321;
+        Tue, 30 Nov 2021 01:28:51 -0800 (PST)
+Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id t4sm1733246wmi.48.2021.11.30.01.28.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 01:28:50 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
+Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3] dt-bindings: misc: fastrpc convert bindings to yaml
+Date:   Tue, 30 Nov 2021 09:28:46 +0000
+Message-Id: <20211130092846.18804-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e7a70e7d-c9b6-c10d-23c8-dd5ca74cc4dd@quicinc.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 02:34:28PM +0530, Maulik Shah wrote:
-> Hi,
-> 
-> On 11/30/2021 2:14 PM, Shawn Guo wrote:
-> > On Tue, Nov 30, 2021 at 01:56:02PM +0530, Maulik Shah wrote:
-> > > Hi,
-> > > 
-> > > On 11/29/2021 7:15 PM, Shawn Guo wrote:
-> > > > > This is not limited to suspend, you will need to notify RPM during deepest
-> > > > > cpu idle state entry as well, since MPM may be monitoring interrupts in that
-> > > > > case too.
-> > > > Yeah, I was trying to test this MPM driver with cpuidle, but failed to
-> > > > see the SoC get into vlow/vmin state from cpuidle.
-> > > In a few cases SoC can enter vmin/vlow from cpuidle one is from static
-> > > screen on.
-> > > 
-> > > > Do you have any
-> > > > suggestion how I should test it properly?
-> > > Suspend resume (use "s2idle" and not "deep" mode on upstream kernel) is one
-> > > good method, but you will have to make sure all drivers have removed votes
-> > > on xo clock when entering suspend.
-> > > Also need to make sure other subsystem like modem is in power collaspe (look
-> > > at the internal master stats driver to know if other subsystems entering to
-> > > low power mode or not).
-> > I have already been able to trigger a vmin sleep with s2idle by doing:
-> > 
-> >   $ echo mem > /sys/power/state
-> > 
-> > My question is how I can get a vmin sleep in idle case, so that MPM
-> > driver can be tested in both suspend and idle context.
-> > 
-> > Shawn
-> 
-> In a few cases SoC can enter vmin/vlow from cpuidle one is from static screen on.
-> you can turn on display and set display off timeout to maximum (30 minutes) in android phone and then just leave the device idle for few minutes
-> 
-> another possible way (if display is not present) is to take some wake_lock (write something to /sys/power/wake_lock) and disconnect USB and leave the device idle for few minutes.
-> since taking wake_lock device will not enter suspend, cpuidle can make SoC enter deepest mode like vmin (if all other conditions like other subsystem sleeping and votes on xo clock removed, etc met).
+Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
+dt-entries correctly and any future additions can go into yaml format.
 
-I'm running an upstream kernel with neither display nor USB enabled.  I
-will test again and check conditions of other subsystems.
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
 
-Thanks for the input, Maulik!
+Changes since v2:
+ fixed typo in pil compatible string 
+ added required properties for pil example node
 
-Shawn
+ .../devicetree/bindings/misc/qcom,fastrpc.txt |  78 -------------
+ .../bindings/misc/qcom,fastrpc.yaml           | 104 ++++++++++++++++++
+ 2 files changed, 104 insertions(+), 78 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+
+diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
+deleted file mode 100644
+index 2a1827ab50d2..000000000000
+--- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
++++ /dev/null
+@@ -1,78 +0,0 @@
+-Qualcomm Technologies, Inc. FastRPC Driver
+-
+-The FastRPC implements an IPC (Inter-Processor Communication)
+-mechanism that allows for clients to transparently make remote method
+-invocations across DSP and APPS boundaries. This enables developers
+-to offload tasks to the DSP and free up the application processor for
+-other tasks.
+-
+-- compatible:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be "qcom,fastrpc"
+-
+-- label
+-	Usage: required
+-	Value type: <string>
+-	Definition: should specify the dsp domain name this fastrpc
+-	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
+-
+-- #address-cells
+-	Usage: required
+-	Value type: <u32>
+-	Definition: Must be 1
+-
+-- #size-cells
+-	Usage: required
+-	Value type: <u32>
+-	Definition: Must be 0
+-
+-= COMPUTE BANKS
+-Each subnode of the Fastrpc represents compute context banks available
+-on the dsp.
+-- All Compute context banks MUST contain the following properties:
+-
+-- compatible:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be "qcom,fastrpc-compute-cb"
+-
+-- reg
+-	Usage: required
+-	Value type: <u32>
+-	Definition: Context Bank ID.
+-
+-- qcom,nsessions:
+-	Usage: Optional
+-	Value type: <u32>
+-	Defination: A value indicating how many sessions can share this
+-		    context bank. Defaults to 1 when this property
+-		    is not specified.
+-
+-Example:
+-
+-adsp-pil {
+-	compatible = "qcom,msm8996-adsp-pil";
+-	...
+-	smd-edge {
+-		label = "lpass";
+-		fastrpc {
+-			compatible = "qcom,fastrpc";
+-			qcom,smd-channels = "fastrpcsmd-apps-dsp";
+-			label = "adsp";
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cb@1 {
+-				compatible = "qcom,fastrpc-compute-cb";
+-				reg = <1>;
+-			};
+-
+-			cb@2 {
+-				compatible = "qcom,fastrpc-compute-cb";
+-				reg = <2>;
+-			};
+-			...
+-		};
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+new file mode 100644
+index 000000000000..1840db08500c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+@@ -0,0 +1,104 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Technologies, Inc. FastRPC Driver
++
++maintainers:
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description: |
++  This binding describes Qualcomm FastRPC an IPC (Inter-Processor Communication)
++  mechanism that allows for clients to transparently make remote method
++  invocations across DSP and APPS boundaries. This enables developers
++  to offload tasks to the DSP and free up the application processor for
++  other tasks.
++
++properties:
++  compatible:
++    const: qcom,fastrpc
++
++  label:
++    enum:
++      - adsp
++      - mdsp
++      - sdsp
++      - cdsp
++
++  "#address-cells":
++    const: 1
++
++  "#size-cells":
++    const: 0
++
++patternProperties:
++  "^cb@[0-9a-f]$":
++    type: object
++    description: |
++      Compute context bank
++
++    properties:
++      compatible:
++        const: qcom,fastrpc-compute-cb
++
++      reg:
++        maxItems: 1
++        description: Context Bank ID
++
++      qcom,nsessions:
++        $ref: /schemas/types.yaml#/definitions/uint32
++        description: How many sessions can share this context bank.
++                     Defaults to 1 when this property is not specified.
++
++    required:
++      - compatible
++      - reg
++
++    additionalProperties: false
++
++required:
++  - compatible
++  - label
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++    adsp {
++        compatible = "qcom,msm8996-adsp-pil";
++        interrupts-extended = <&intc 0 162 IRQ_TYPE_EDGE_RISING>,
++                              <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
++                              <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
++                              <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
++                              <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
++        interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
++        clocks = <&xo_board>;
++        clock-names = "xo";
++        memory-region = <&adsp_region>;
++        qcom,smem-states = <&smp2p_adsp_out 0>;
++        qcom,smem-state-names = "stop";
++
++        smd-edge {
++            label = "lpass";
++
++            fastrpc {
++                compatible = "qcom,fastrpc";
++                label = "adsp";
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                cb@1 {
++                    compatible = "qcom,fastrpc-compute-cb";
++                    reg = <1>;
++                };
++
++                cb@2 {
++                    compatible = "qcom,fastrpc-compute-cb";
++                    reg = <2>;
++                };
++            };
++        };
++    };
+-- 
+2.21.0
+
