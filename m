@@ -2,68 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 758FB463926
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 16:04:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 568CC463A7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 16:43:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244947AbhK3PHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 10:07:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60740 "EHLO
+        id S232245AbhK3PrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 10:47:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243120AbhK3O61 (ORCPT
+        with ESMTP id S238646AbhK3PrO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 09:58:27 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4282AC0698D7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 06:51:23 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id e3so87892744edu.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 06:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=argLEM5PENDrg5kgQHigjDQKj69yQI8BEKRU8DCve18=;
-        b=BWuBIDpob0mGF8zy4nbK9bM4rG+oA8VeclbqPPwnnZuCanAVCt5dKnE/f0wgWkzG2T
-         LQeBzF9z64BsTM8KZ8V0TNHdOsaWAKyGcEap9lPrrR+3WyOvHz+vBe1yIlDBG4mQsIZx
-         eIlZaoej9i8JnBhXvXBk43WU0WHwAYXsiUiTVJg14tKf9rSluTppc9BvkBBq8rkZzg8E
-         5tRzRjf5zUt/K2fvmimjentZ4ZtMKCY/9AMikOlKuoxifCEL/5naT3WCzAa6c5hM1fe0
-         Qn1RQ/wyhzON/HIUzpbhLwao+EdN+lmo2t9htf1dyiFjOlJ+0wKHRNx0L0gsygcepMJ3
-         pcIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=argLEM5PENDrg5kgQHigjDQKj69yQI8BEKRU8DCve18=;
-        b=mnzhcfW3tMaoQm5xYSjY8e0iAQMN5HGhuTqSfKYVYdKK3LqlpQ5MdaFPbOGG/6tx63
-         0zNBUmOk2IasdsgFXJ9qnuhy4qQVnkmNVo7g5Vgs1b89/1JDxVxSWpPPxEotHPrUMTQA
-         7sHeCyZM/jhDkQuCHz0ORImcxY+sKZj2WH7qneGgRKm3o5nTtYMoHvlHD6yUydgADwPp
-         HLcwUVGDUN4J9rGsbiChCw8jhecxR/Zt5KFafz/e2e8/+VmIllcQzOGVDksQ4rIMfkC2
-         ipW683tq9vlmP5ku41mNijTPXi1W7halsbS5FqZEQIvba8KJvQtKUReAA9Zq02lWVvhQ
-         w5cA==
-X-Gm-Message-State: AOAM530j7fVdoaGnt5r53MEIsxI9eNQaXxl6dxWOTaGFv9aGImvVe4BG
-        ulbsBORMQVmY3Wkc1fvi0B4Vw/0gA8WoFkp/450=
-X-Google-Smtp-Source: ABdhPJyRg1JoAapAck/Y1uF1yBEXqnDMWbuqQqiylAuySLfOJtxHWvu5f3cEu6RyJ5lqiRajaHGzTrr73RGiVdwwJXk=
-X-Received: by 2002:a17:907:1b17:: with SMTP id mp23mr24389179ejc.521.1638283881582;
- Tue, 30 Nov 2021 06:51:21 -0800 (PST)
+        Tue, 30 Nov 2021 10:47:14 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429ACC06174A;
+        Tue, 30 Nov 2021 07:43:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 08094B81A2E;
+        Tue, 30 Nov 2021 15:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713FFC53FC7;
+        Tue, 30 Nov 2021 15:43:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638287032;
+        bh=xV+MrXI1P5OrMeClY2oJlSEliMrz395H0OKQ1VlrMOY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=r3MOZpgL1b9Ha89LJqV1MwVgaZJQq0z1HVWC79GTmzb4XOLqQM9hbicN+qZIKDVBh
+         xtOeBSG2lXU2uinTXvOAhgcgbT3kUd31rYzWsmN8oFW9NakckUmm3YdwseYR9HAx05
+         sAxq3IkPab/kfmTNPa2yBu64uL0SdJwIprpNb1unVRejcDLKYNnI+WEYNrk+7vyHAc
+         yUvmE3Lg/i0a7eXnGravLMHDqKoLWze5sEYDTA1NuKWbr1jPM1OlxsJ1pEI6j2foRb
+         aJkgUWztfzcphZRep3znqf+Udqm8rijJfn+JivXyP9wg0HRFVaxlaAHuvPyEIaqxD8
+         IkkarTwERyeuQ==
+Date:   Tue, 30 Nov 2021 09:43:51 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        svarbanov@mm-sol.com, bjorn.andersson@linaro.org, robh@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v2] PCI: qcom: Use __be16 for catching cpu_to_be16()
+ return instead of u16
+Message-ID: <20211130154351.GA2738262@bhelgaas>
 MIME-Version: 1.0
-Received: by 2002:a17:907:720e:0:0:0:0 with HTTP; Tue, 30 Nov 2021 06:51:21
- -0800 (PST)
-Reply-To: c6715203@gmail.com
-From:   Maria-Elisabeth Schaeffler <jelagatfaith8@gmail.com>
-Date:   Tue, 30 Nov 2021 17:51:21 +0300
-Message-ID: <CABJp9N4kZxg0yHMCErbbqMCE-=yR10fM6GjR16GOW-nZ10PLtQ@mail.gmail.com>
-Subject: Spende
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YaXc3mlBbhvEkZCX@rocinante>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Hi,
-Ihre Spende in H=C3=B6he von 1.500.000,00 Euro von Maria-Frau Elisabeth
-Schaeffler steht Ihnen weiterhin zur Verf=C3=BCgung. kontaktieren Sie mich
-f=C3=BCr weitere Informationen.
+On Tue, Nov 30, 2021 at 09:12:14AM +0100, Krzysztof Wilczyński wrote:
+> Hello!
+> 
+> [...]
+> > > > cpu_to_be16() returns __be16 value but the driver uses u16 and that's
+> > > > incorrect. Fix it by using __be16 as the datatype of bdf_be variable.
+> > > 
+> > > It would be "data type" in the above.
+> > > 
+> > > Not really a requirement to do so, but you could include the actual
+> > > warning, as sometimes this is useful for reference later, as per:
+> > > 
+> > >   drivers/pci/controller/dwc/pcie-qcom.c:1346:30: warning: incorrect type in initializer (different base types)
+> > >   drivers/pci/controller/dwc/pcie-qcom.c:1346:30:    expected unsigned short [usertype] bdf_be
+> > >   drivers/pci/controller/dwc/pcie-qcom.c:1346:30:    got restricted __be16 [usertype]
+> > > 
+> > 
+> > I usually do but as per Bjorn's comment I thought it is not recommended for PCI
+> > subsystem (or maybe I misread his comments). Will add.
+> 
+> Ah right.  I must have missed his comment too.  I usually include warnings
+> myself, where applicable.  Let's wait for what Bjorn says, just in case, so
+> that we avoid adding something he does not want to have included in the
+> commit message.
 
-Mit freundlichen Gr=C3=BC=C3=9Fen
-Frau Maria-Elisabeth Schaeffler.
+I think it's nice to include the warning in the commit log (and even
+the way to *generate* the warning if it's more complicated than
+"make") because that helps others verify the commit.
+
+I just don't want the warning to be the *reason* for the commit
+because it's too easy to focus on quickly removing the warning without
+fully understanding whether there is an underlying defect.
+
+Bjorn
