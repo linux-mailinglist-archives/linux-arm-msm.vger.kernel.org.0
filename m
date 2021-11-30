@@ -2,85 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1F3463EF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 20:59:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9CBE463EF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 21:03:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343563AbhK3UC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 15:02:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47646 "EHLO
+        id S1343565AbhK3UGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 15:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239950AbhK3UC2 (ORCPT
+        with ESMTP id S240027AbhK3UGw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 15:02:28 -0500
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D1CC061574;
-        Tue, 30 Nov 2021 11:59:08 -0800 (PST)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 91811201DF;
-        Tue, 30 Nov 2021 20:59:04 +0100 (CET)
-Message-ID: <dee30442-8a78-07f3-1fa1-e5922a510182@somainline.org>
-Date:   Tue, 30 Nov 2021 20:59:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH 04/16] arm64: dts: qcom: sm8350: Specify clock-frequency
- for arch timer
-To:     Stephen Boyd <sboyd@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Tue, 30 Nov 2021 15:06:52 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C27C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 12:03:32 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id p13so14069998pfw.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 12:03:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=muJ29bKDUUrSskXGJgCVK4wH9p4Q4vUd1+SeB9qzFgg=;
+        b=XDJWQaFkILCWUUvLb/uIFXGwaHNQA23YQSjzfGzmjHMA+Yk81MtuPk/2syrX4YfPQe
+         7YqIaR9kX3AZsj37NacVff2cRF5tSnsnhGEP/b91nJHIzRm3CyUvVxkcwPbVH5LzCnl2
+         AT1NPZEXAHN/2YBaOSvDf0SgEjaGLYcfk+/gM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=muJ29bKDUUrSskXGJgCVK4wH9p4Q4vUd1+SeB9qzFgg=;
+        b=Ac6cqAJGrjhBtybqVQnQ33FdnfDs/VI1LZmYl/ZVGSE2FklN8d54gWV7Uma3xa5feP
+         ugn0cBR4gLsg/yYLvsw8ErEzI3wvusBrjBrbiCBO5yAmsvy3cYJMR6S/1GJHSqarm6kc
+         wrrCOk1H9jHyRV3XCZe5d13EhZ3Tql5TppgRjTUWN/OxGdY8uVhXGR27IPXA0JyfuKRS
+         85uGsNXz4oXKzaIvA6n0fuTMIii4u+6CNpltcStSqRzGbT1ma2F0k0EkChD7CBeZ3ED6
+         712Ajzy//DzTB91dWqmTOo3PLKRjjvU8+uNHND3ZNSIKAcZqlVfP5mO/LMeqVxsUzdT/
+         ox6Q==
+X-Gm-Message-State: AOAM530iO08wuZ7uIO+TuTOcvrx0OhEWhnqxELQyLhYe8ftlZfyebSG1
+        BobPR0Z7O5nqYaDLjWDdlt/Giw==
+X-Google-Smtp-Source: ABdhPJwa83bFfumktwKpBVwFszz7w+WHjUH+gWSuMVgxt159xo92in7siC73ZSAdZFLdAAZFwuEmtw==
+X-Received: by 2002:a63:5147:: with SMTP id r7mr1095295pgl.448.1638302612301;
+        Tue, 30 Nov 2021 12:03:32 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:ecc:102f:1eec:93da])
+        by smtp.gmail.com with UTF8SMTPSA id p2sm3346951pja.55.2021.11.30.12.03.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Nov 2021 12:03:31 -0800 (PST)
+Date:   Tue, 30 Nov 2021 12:03:30 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
- <20211114012755.112226-4-konrad.dybcio@somainline.org>
- <20211130020536.52D0FC53FC7@smtp.kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20211130020536.52D0FC53FC7@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        kgodara@codeaurora.org, Kshitiz Godara <kgodara1@codeaurora.org>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sc7280-crd: Add Touchscreen and
+ touchpad support
+Message-ID: <YaaDkiFp54mLAbJH@google.com>
+References: <1638185497-26477-1-git-send-email-quic_rjendra@quicinc.com>
+ <1638185497-26477-5-git-send-email-quic_rjendra@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1638185497-26477-5-git-send-email-quic_rjendra@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Nov 29, 2021 at 05:01:37PM +0530, Rajendra Nayak wrote:
+> From: Kshitiz Godara <kgodara1@codeaurora.org>
+> 
+> Add Touchscreen and touchpad hid-over-i2c node for the sc7280 CRD board
+> 
+> Signed-off-by: Kshitiz Godara <kgodara1@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 61 +++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> index 1e3e2f3..fcfb14d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> @@ -23,6 +23,47 @@
+>  	};
+>  };
+>  
+> +ap_tp_i2c: &i2c0 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	trackpad: trackpad@15 {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x15>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&tp_int_odl>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +		post-power-on-delay-ms = <20>;
+> +		hid-descr-addr = <0x0001>;
+> +		vdd-supply = <&vreg_l18b_1p8>;
+> +
+> +		wakeup-source;
+> +	};
+> +};
+> +
+> +ap_ts_pen_1v8: &i2c13 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	ap_ts: touchscreen@5c {
+> +		compatible = "hid-over-i2c";
+> +		reg = <0x5C>;
 
-On 30/11/2021 03:05, Stephen Boyd wrote:
-> Quoting Konrad Dybcio (2021-11-13 17:27:43)
->> Arch timer runs at 19.2 MHz. Specify the rate in the timer node.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> index a30ba3193d84..60866a20a55c 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
->> @@ -2484,5 +2484,6 @@ timer {
->>                               <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->>                               <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
->>                               <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
->> +               clock-frequency = <19200000>;
-> Does the firmware not set the frequency properly?
+nit: the convention seems to be to use lowercase characters for hex numbers.
 
-It does on my device on the current firmware version (it wouldn't really 
-boot if it didn't, no?),
-
-but who knows if it always will, or if it always has been..
-
-
-It's present in downstream too, so I reckon it does not hurt to have it 
-here too, even
-
-for completeness-of-describing-the-machine-properly sake.
-
-
-Konrad
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
