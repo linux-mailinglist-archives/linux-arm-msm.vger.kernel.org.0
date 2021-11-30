@@ -2,278 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90EB8462FA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 10:28:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E23A463166
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 11:44:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235239AbhK3JcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 04:32:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
+        id S235833AbhK3Krl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 05:47:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240224AbhK3JcL (ORCPT
+        with ESMTP id S235845AbhK3Krk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 04:32:11 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C77A7C061748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:28:52 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id 137so16850155wma.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 01:28:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ydMPP+rzHmOMEEgYyVDZvKAwWBch53F19D/eQXwTEQw=;
-        b=hH+7XrW33GqrJ6WPl28jU6Dv0stolWydSfKUAZPT3Qe7FEOW3J1AFwjpckhZc7jfeg
-         wz+uoMTCwjEgTtnyYzUJSEaG/jnBh5fDspQ2VWG+25i5l2+Sh7GzyfPEyJgq4sdmoTjQ
-         G42+qBQVEPlkz7ICud/LABQ8E25xu24VI0aC5yml8ALuOAUmBe7tIs4Mkb1NyWDvF7gw
-         czXRLsqtxmXQIEJv/UOvxp6IRi2FFTQMFbCsIgSgk4Ikg9XNBxf/eJ2BdbNJcE5+8ypF
-         Yo4m0mhQbV1RnffSwcy1+z1TC6H51I6AHzw9zU9mN6TawcsbDBfPFzfe4JNWpmeswf73
-         2wMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ydMPP+rzHmOMEEgYyVDZvKAwWBch53F19D/eQXwTEQw=;
-        b=TRS7pIxPclUX2duPq9/KJzb3Y6eSgQ9tbSYDH9h/vSA6DCeAq4NVstZzHjIYdZqrKf
-         wEa9xhaxRu1NBTQ73Rcw3y/n59KXYURiHs//UgxPPyquHSz90nQ7wnRjximPPFRDzpyD
-         2NxLV3FVkQs0Kfm99dF9EhPYcKs3k50W8qWJugRSthJINIDlFue7MLDGE6HImzrGuVii
-         64pMrpydh+g1Ph1o911LWge+/eQNIO+UEopyrXSbTPupONagymE/55VM0+e393QvKiI2
-         n3qS8Rll5aV0/1/LNL+ozgCaeQ2V0XnJ8AFAuNnZ+0Yr4ENW4IwqNPbvdVhR9gowWktc
-         XVyw==
-X-Gm-Message-State: AOAM530XeBHc2UTXSeVrRH1Y6XCqY3K1/tMIpTmNvar2BhXsJ1QLnrx2
-        mSt42hPNW/RlTxUXsSduzrMreg==
-X-Google-Smtp-Source: ABdhPJyQ/yNF4X7GSZ8DNdpsH5VZJr1rb42VyysX8gWQiLTy6z1ptZiHHKXbe49IC+/6Wa7Z3y7UYw==
-X-Received: by 2002:a05:600c:214f:: with SMTP id v15mr3519928wml.194.1638264531321;
-        Tue, 30 Nov 2021 01:28:51 -0800 (PST)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id t4sm1733246wmi.48.2021.11.30.01.28.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 01:28:50 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3] dt-bindings: misc: fastrpc convert bindings to yaml
-Date:   Tue, 30 Nov 2021 09:28:46 +0000
-Message-Id: <20211130092846.18804-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Tue, 30 Nov 2021 05:47:40 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0091FC061574;
+        Tue, 30 Nov 2021 02:44:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 4CA3DCE1876;
+        Tue, 30 Nov 2021 10:44:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779F5C53FCD;
+        Tue, 30 Nov 2021 10:44:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638269057;
+        bh=04yVuabJJKMCBpJ/rygyY4iuEHZdBxTgTl3/sUcLTuQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=q566dTw467Yo4WZqnE6Nrl31P9gBrp0+Gzh09ZA82a/1Doa/JbDlHSHrU8vktzQ5v
+         JBxYVHyGDUGvZgqysWfJ5OtpR5ssF+NtmVjjc619Ld+EJnOHITztt7NASRjjwl0v7g
+         5myDRXoF4+bF2vNeDIW+6uuHPB7/Fg1+EQN9arKPwexgKb+ce8Fwh+3yq7I0N0Z19h
+         y6E20j0oXDUTsLnA6S6hpQrOFxeu1Hl+Hz6/NOXpGyFDF/3VVNa/lhXqQlM4N8nOjm
+         B8ToJrMwaT/m/c2RMuP9ghxb5CjljAouizQQMudkmTzYfJ+TYJUAnmQZzfZPgu+6HW
+         ycGHSK/NxLe9w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1ms0cR-008qUU-Do; Tue, 30 Nov 2021 10:44:15 +0000
+Date:   Tue, 30 Nov 2021 10:44:15 +0000
+Message-ID: <87fsrdncsg.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] irqchip: Add Qualcomm MPM controller driver
+In-Reply-To: <20211130091708.GH10105@dragon>
+References: <20211126093529.31661-1-shawn.guo@linaro.org>
+        <20211126093529.31661-3-shawn.guo@linaro.org>
+        <87czmmbu8k.wl-maz@kernel.org>
+        <20211129133308.GB10105@dragon>
+        <87pmqjm1c8.wl-maz@kernel.org>
+        <20211130023151.GD10105@dragon>
+        <87lf16m3ua.wl-maz@kernel.org>
+        <20211130091708.GH10105@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, robh+dt@kernel.org, loic.poulain@linaro.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-dt-entries correctly and any future additions can go into yaml format.
+On Tue, 30 Nov 2021 09:17:08 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> On Tue, Nov 30, 2021 at 08:42:53AM +0000, Marc Zyngier wrote:
+> > On Tue, 30 Nov 2021 02:31:52 +0000,
+> > Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > 
+> > > + Maulik
+> > > 
+> > > On Mon, Nov 29, 2021 at 03:24:39PM +0000, Marc Zyngier wrote:
+> > > [...]
+> > > > > > > @@ -430,6 +430,14 @@ config QCOM_PDC
+> > > > > > >  	  Power Domain Controller driver to manage and configure wakeup
+> > > > > > >  	  IRQs for Qualcomm Technologies Inc (QTI) mobile chips.
+> > > > > > >  
+> > > > > > > +config QCOM_MPM
+> > > > > > > +	bool "QCOM MPM"
+> > > > > > 
+> > > > > > Can't be built as a module?
+> > > > > 
+> > > > > The driver is implemented as a builtin_platform_driver().
+> > > > 
+> > > > This, on its own, shouldn't preclude the driver from being built as a
+> > > > module. However, the config option only allows it to be built in. Why?
+> > > 
+> > > I just tried to build it as a module, and it seems that "irq_to_desc" is
+> > > only available for built-in build.
+> > 
+> > Yet another thing that you should not be using. The irqdomain code
+> > gives you everything you need without having to resort to the
+> > internals of the core IRQ infrastructure.
+> 
+> I see.  I should use irq_get_irq_data() rather than &desc->irq_data.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
+Even better:
 
-Changes since v2:
- fixed typo in pil compatible string 
- added required properties for pil example node
+	desc = irq_resolve_mapping(domain, hwirq);
 
- .../devicetree/bindings/misc/qcom,fastrpc.txt |  78 -------------
- .../bindings/misc/qcom,fastrpc.yaml           | 104 ++++++++++++++++++
- 2 files changed, 104 insertions(+), 78 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
- create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+Job done. No extra tracking, no dubious hack in the unmask callback,
+works with modules.
 
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-deleted file mode 100644
-index 2a1827ab50d2..000000000000
---- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-+++ /dev/null
-@@ -1,78 +0,0 @@
--Qualcomm Technologies, Inc. FastRPC Driver
--
--The FastRPC implements an IPC (Inter-Processor Communication)
--mechanism that allows for clients to transparently make remote method
--invocations across DSP and APPS boundaries. This enables developers
--to offload tasks to the DSP and free up the application processor for
--other tasks.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc"
--
--- label
--	Usage: required
--	Value type: <string>
--	Definition: should specify the dsp domain name this fastrpc
--	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
--
--- #address-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 1
--
--- #size-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 0
--
--= COMPUTE BANKS
--Each subnode of the Fastrpc represents compute context banks available
--on the dsp.
--- All Compute context banks MUST contain the following properties:
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc-compute-cb"
--
--- reg
--	Usage: required
--	Value type: <u32>
--	Definition: Context Bank ID.
--
--- qcom,nsessions:
--	Usage: Optional
--	Value type: <u32>
--	Defination: A value indicating how many sessions can share this
--		    context bank. Defaults to 1 when this property
--		    is not specified.
--
--Example:
--
--adsp-pil {
--	compatible = "qcom,msm8996-adsp-pil";
--	...
--	smd-edge {
--		label = "lpass";
--		fastrpc {
--			compatible = "qcom,fastrpc";
--			qcom,smd-channels = "fastrpcsmd-apps-dsp";
--			label = "adsp";
--			#address-cells = <1>;
--			#size-cells = <0>;
--
--			cb@1 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <1>;
--			};
--
--			cb@2 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <2>;
--			};
--			...
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-new file mode 100644
-index 000000000000..1840db08500c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-@@ -0,0 +1,104 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Technologies, Inc. FastRPC Driver
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  This binding describes Qualcomm FastRPC an IPC (Inter-Processor Communication)
-+  mechanism that allows for clients to transparently make remote method
-+  invocations across DSP and APPS boundaries. This enables developers
-+  to offload tasks to the DSP and free up the application processor for
-+  other tasks.
-+
-+properties:
-+  compatible:
-+    const: qcom,fastrpc
-+
-+  label:
-+    enum:
-+      - adsp
-+      - mdsp
-+      - sdsp
-+      - cdsp
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+patternProperties:
-+  "^cb@[0-9a-f]$":
-+    type: object
-+    description: |
-+      Compute context bank
-+
-+    properties:
-+      compatible:
-+        const: qcom,fastrpc-compute-cb
-+
-+      reg:
-+        maxItems: 1
-+        description: Context Bank ID
-+
-+      qcom,nsessions:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description: How many sessions can share this context bank.
-+                     Defaults to 1 when this property is not specified.
-+
-+    required:
-+      - compatible
-+      - reg
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - label
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    adsp {
-+        compatible = "qcom,msm8996-adsp-pil";
-+        interrupts-extended = <&intc 0 162 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-+                              <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
-+        interrupt-names = "wdog", "fatal", "ready", "handover", "stop-ack";
-+        clocks = <&xo_board>;
-+        clock-names = "xo";
-+        memory-region = <&adsp_region>;
-+        qcom,smem-states = <&smp2p_adsp_out 0>;
-+        qcom,smem-state-names = "stop";
-+
-+        smd-edge {
-+            label = "lpass";
-+
-+            fastrpc {
-+                compatible = "qcom,fastrpc";
-+                label = "adsp";
-+                #address-cells = <1>;
-+                #size-cells = <0>;
-+
-+                cb@1 {
-+                    compatible = "qcom,fastrpc-compute-cb";
-+                    reg = <1>;
-+                };
-+
-+                cb@2 {
-+                    compatible = "qcom,fastrpc-compute-cb";
-+                    reg = <2>;
-+                };
-+            };
-+        };
-+    };
+> 
+> > 
+> > > > Furthermore, why would you look up anywhere other than the wake-up
+> > > > domain? My impression was that only these interrupts would require
+> > > > being re-triggered.
+> > > 
+> > > Both domains have MPM pins that could wake up system.
+> > 
+> > Then why do you need two domains?
+> 
+> This is basically the same situation as qcom-pdc, and I have some
+> description about that in the commit log:
+> 
+> - For given SoC, a fixed number of MPM pins are supported, e.g. 96 pins
+>   on QCM2290.  Each of these MPM pins can be either a MPM_GIC pin or
+>   a MPM_GPIO pin. The mapping between MPM_GIC pin and GIC interrupt
+>   is defined by SoC, as well as the mapping between MPM_GPIO pin and
+>   GPIO number.  The former mapping can be found as the SoC data in this
+>   MPM driver, while the latter can be found as the msm_gpio_wakeirq_map[]
+>   in TLMM driver.
+> 
+> - Two irq domains are created for a single irq_chip to handle MPM_GIC
+>   and MPM_GPIO pins respectively, i.e. MPM_GIC domain and MPM_GPIO domain.
+>   The former is a child domain of GIC irq domain, while the latter is
+>   a parent domain of TLMM/GPIO irq domain.
+
+That doesn't answer my question.
+
+It doesn't matter what the pins are used for as long as you can
+identify which ones are routed to the GIC and which are not. You are
+obviously are able to do so, since you are able to disconnect part of
+the hierarchy (why is qcom_mpm_gic_alloc() named as such, since most
+of the interrupts it deals with are *never* routed to the GIC).
+
+All the interrupts have the same irqchip callbacks and act on the same
+'priv' data, so they it is obvious they don't overlap in the hwirq
+space.
+
+Ergo: you can implement the whole thing with a single domain. All you
+need to make sure is that you identify the pins that are routed to the
+GIC, and you already have that information.
+
+	M.
+
 -- 
-2.21.0
-
+Without deviation from the norm, progress is not possible.
