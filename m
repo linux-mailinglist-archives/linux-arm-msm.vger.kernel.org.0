@@ -2,107 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A3A2462EAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 09:43:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 54454462EBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 09:44:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239703AbhK3IqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 03:46:22 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:54200 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239666AbhK3IqS (ORCPT
+        id S235152AbhK3IsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 03:48:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59320 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234801AbhK3IsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 03:46:18 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id AD97DCE1812;
-        Tue, 30 Nov 2021 08:42:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6697C53FC1;
-        Tue, 30 Nov 2021 08:42:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638261775;
-        bh=kop9ekaNxcrvm1nzG7ZaL3bUmyF0UPMTsxU7AW0+IsE=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=tN2dE1R+510zjPlOOblJ1YMjDC/3lkzIy9sA0QbUnp5hu5kuqnli5b7Nxt7PNMpWC
-         r0KZTmCME458FYwr0pM0j2RoLH4rSpMsfXW4xUI61wnQQvS60iAcf2A6QWjPFSo1ta
-         5ihZujakLwGXoWYXEEwoRSRONBpGLeDfGtWg7q062Y8ViQi9FRwaPZtcIjw02VH/Ew
-         TopiFIfYk1FA4rkfLLUufgXTIb+gA05MVVyvhtjApP9qPNDGG+VDv1DHlYkBd+DyEB
-         kKTMiIYovYm55WupBH9I6FhkGXixsD8dg6IcIHYKjwHoHsXhvI9zTTYPdNnxLRPtRN
-         RBvudAt1W+Nbg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <maz@kernel.org>)
-        id 1mryiz-008oud-EP; Tue, 30 Nov 2021 08:42:53 +0000
-Date:   Tue, 30 Nov 2021 08:42:53 +0000
-Message-ID: <87lf16m3ua.wl-maz@kernel.org>
-From:   Marc Zyngier <maz@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
+        Tue, 30 Nov 2021 03:48:11 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CFDFC061714
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 00:44:52 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id u11so14371524plf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 00:44:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5Uv+Et/eardA9dLqCb6Zt0NIzF1MABxNziCVHSLPsZY=;
+        b=wCiNYkU26amoalRtyBbpfKwIBnmbC2Nmv8Pbm3CD5CHpEqiHuBaT/PqQn79ZE28kHJ
+         BiLSnXHvusRoM62ayfhX5SZzcUbdWqhKlx+StAKP9rD/qjeAc5CbFpRBqfLXbZIH2Wsy
+         94uG+LNSwdgObjOJTpz2qf/HPxhpgnY+CVuyvn661pcCxCKW/ogUUmSoZWzG0BIk7+gV
+         aghJDj0xKTZFwAjb0aUBBEttrnZuNlRS955pUa/iAXvGGn3/ZkmqIj1PSiDnQwNFjYpK
+         xHAi5Y5CvVG5hiifL5SFuQXzWzrvnb32ibsocSasuIgz3RELkvYETrHEk6UA7HzW8+mJ
+         GuPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5Uv+Et/eardA9dLqCb6Zt0NIzF1MABxNziCVHSLPsZY=;
+        b=heNY0d5I1ddstneGpGfFZWE9y2ilxnZSNVQN76O31zb50zw93eYoxmFHksgL7NEEo0
+         fbR/mGSeFv7Bcn54/b+bylKJMBp63ZRoD1aAx8tzwaPpZGNjjNcU7Plzv3ymeGvSPaA1
+         foQicbz3cFhFWP1QgiIIag3yeDklTkJtG5tGWFihQuGe/BXR4il9PEFCxCTNt0QJ6Q8p
+         h+O7ytof4m0o1XRENyeygzmBo1oC3fnidQnb6AZp8DLOMVmFLtJWus0JJkbGFta9y2JK
+         xgYrVGqjfERNWlHlmeplk8YOMwg1KS8B6yJh/fsUwI5dNKQVioIrTvKp5Gesi45c9ULt
+         QJnA==
+X-Gm-Message-State: AOAM530q4Qsr8tAcVOaTDOuvaIzSg+JgaFz1SUC9n7knev5XiEqlEKZe
+        WRLlrPYt5h/6zJUPsvcI0GNZnA==
+X-Google-Smtp-Source: ABdhPJyxkSr5h7LMbjh/DeT0Ity+NeRVuxjcFrSIGYdvkYPRsayMZ6vbTXd9+OdFzZOIFBxW/ixvfw==
+X-Received: by 2002:a17:90b:4d8c:: with SMTP id oj12mr4470256pjb.100.1638261892051;
+        Tue, 30 Nov 2021 00:44:52 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id j7sm1746075pjf.41.2021.11.30.00.44.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Nov 2021 00:44:51 -0800 (PST)
+Date:   Tue, 30 Nov 2021 16:44:46 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v2 2/2] irqchip: Add Qualcomm MPM controller driver
-In-Reply-To: <20211130023151.GD10105@dragon>
+Message-ID: <20211130084445.GG10105@dragon>
 References: <20211126093529.31661-1-shawn.guo@linaro.org>
-        <20211126093529.31661-3-shawn.guo@linaro.org>
-        <87czmmbu8k.wl-maz@kernel.org>
-        <20211129133308.GB10105@dragon>
-        <87pmqjm1c8.wl-maz@kernel.org>
-        <20211130023151.GD10105@dragon>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, robh+dt@kernel.org, loic.poulain@linaro.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+ <20211126093529.31661-3-shawn.guo@linaro.org>
+ <56a5820e-9cd7-aa49-7ce8-9547f355986e@quicinc.com>
+ <20211129134459.GC10105@dragon>
+ <519ac97a-6bff-ee93-58c6-63559c3a6cb6@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <519ac97a-6bff-ee93-58c6-63559c3a6cb6@quicinc.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 Nov 2021 02:31:52 +0000,
-Shawn Guo <shawn.guo@linaro.org> wrote:
+On Tue, Nov 30, 2021 at 01:56:02PM +0530, Maulik Shah wrote:
+> Hi,
 > 
-> + Maulik
+> On 11/29/2021 7:15 PM, Shawn Guo wrote:
+> > > This is not limited to suspend, you will need to notify RPM during deepest
+> > > cpu idle state entry as well, since MPM may be monitoring interrupts in that
+> > > case too.
+> > Yeah, I was trying to test this MPM driver with cpuidle, but failed to
+> > see the SoC get into vlow/vmin state from cpuidle.
 > 
-> On Mon, Nov 29, 2021 at 03:24:39PM +0000, Marc Zyngier wrote:
-> [...]
-> > > > > @@ -430,6 +430,14 @@ config QCOM_PDC
-> > > > >  	  Power Domain Controller driver to manage and configure wakeup
-> > > > >  	  IRQs for Qualcomm Technologies Inc (QTI) mobile chips.
-> > > > >  
-> > > > > +config QCOM_MPM
-> > > > > +	bool "QCOM MPM"
-> > > > 
-> > > > Can't be built as a module?
-> > > 
-> > > The driver is implemented as a builtin_platform_driver().
-> > 
-> > This, on its own, shouldn't preclude the driver from being built as a
-> > module. However, the config option only allows it to be built in. Why?
+> In a few cases SoC can enter vmin/vlow from cpuidle one is from static
+> screen on.
 > 
-> I just tried to build it as a module, and it seems that "irq_to_desc" is
-> only available for built-in build.
+> > Do you have any
+> > suggestion how I should test it properly?
+> Suspend resume (use "s2idle" and not "deep" mode on upstream kernel) is one
+> good method, but you will have to make sure all drivers have removed votes
+> on xo clock when entering suspend.
+> Also need to make sure other subsystem like modem is in power collaspe (look
+> at the internal master stats driver to know if other subsystems entering to
+> low power mode or not).
 
-Yet another thing that you should not be using. The irqdomain code
-gives you everything you need without having to resort to the
-internals of the core IRQ infrastructure.
+I have already been able to trigger a vmin sleep with s2idle by doing:
 
-> > Furthermore, why would you look up anywhere other than the wake-up
-> > domain? My impression was that only these interrupts would require
-> > being re-triggered.
-> 
-> Both domains have MPM pins that could wake up system.
+ $ echo mem > /sys/power/state
 
-Then why do you need two domains?
+My question is how I can get a vmin sleep in idle case, so that MPM
+driver can be tested in both suspend and idle context.
 
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+Shawn
