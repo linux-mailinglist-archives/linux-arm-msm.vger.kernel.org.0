@@ -2,307 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB03246297E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 02:15:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C08EA4629FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 02:47:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235136AbhK3BSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 20:18:18 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:23519 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233381AbhK3BSO (ORCPT
+        id S236913AbhK3Buh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 20:50:37 -0500
+Received: from mail-oi1-f180.google.com ([209.85.167.180]:42969 "EHLO
+        mail-oi1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229827AbhK3Buh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 20:18:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638234896; x=1669770896;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=A0M/OkbgjDDEzxJJd7thNaREyyEELCRZKsECK+0kPX4=;
-  b=j4FwP+2O6w5FqXV9iuB2RMcPd3tdcEWCk1XfFvo9PSFLktg8HLDl08Em
-   szy2FndswfkiMS47WPw5T82ZxnrPfDoXsCtuJKVoaLzxCl3ZylxkY7Niz
-   s4Y6nSVIRpcCwhFaWhw57AKYL8DUB/Hs318Tlhvmn0SohUOk+syc5YXFK
-   k=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 29 Nov 2021 17:14:55 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2021 17:14:54 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 29 Nov 2021 17:14:53 -0800
-Received: from [10.38.245.83] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 29 Nov
- 2021 17:14:50 -0800
-Message-ID: <e898e0c3-2831-1e84-bf9e-7e812cf9c813@quicinc.com>
-Date:   Mon, 29 Nov 2021 17:14:48 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [Freedreno] [PATCH v3 01/13] drm/msm/dsi: add support for dsc
- data
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-CC:     Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Abhinav Kumar" <abhinavk@codeaurora.org>,
+        Mon, 29 Nov 2021 20:50:37 -0500
+Received: by mail-oi1-f180.google.com with SMTP id n66so38178037oia.9;
+        Mon, 29 Nov 2021 17:47:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Tgy4edY9pGRm8kT3d6217bKg6opO3kPRlIz6J3SSLJ0=;
+        b=xjccsQmxrn3FeZvX6Xr51/o8PZkuxxZ3GQhcMSztsPccKFOeAhZr+SwcS/WzuqFirY
+         qoYVE/51YEuW2NDEX7edGinezoC/javcoZZHVb1g5Gxxh/fLilFLRRBqL1prJpL6eaB9
+         CPCXgH69IioMWShYpR7pOA6+obO4p+wIK2Kq3Q9NmL0Wjfx9u4QZYrZdfuTMgNiKz2t8
+         7XNuK1X4O52NryfS+4BuUXFeSY1gGiXuGzhcwU6or1ra7q3pm/q+A9lsbkDuNSqbw8Tw
+         pOf7w9vQj2VpCJrCN9+SavbF1m3MPOmXK1sGU3QcBwv4YxSF6c+jLq1mhweo3twgTq/U
+         tgHg==
+X-Gm-Message-State: AOAM531Wcn3jmRlFFBOM1RG2t4c7jy2vmVh5kwophCW0BoZc5wm7iVUY
+        KtXPiihHCME9P0vlL2E9WA==
+X-Google-Smtp-Source: ABdhPJyzXo6wQaZkHTpCbltXhUflPOkdaQAJMRY4cJ1EBC8EIxN4lSucCBsuGCRGYqfoHr7v+W0xIg==
+X-Received: by 2002:aca:230b:: with SMTP id e11mr1599242oie.22.1638236838792;
+        Mon, 29 Nov 2021 17:47:18 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id a6sm3410078oic.39.2021.11.29.17.47.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Nov 2021 17:47:18 -0800 (PST)
+Received: (nullmailer pid 1001672 invoked by uid 1000);
+        Tue, 30 Nov 2021 01:47:17 -0000
+Date:   Mon, 29 Nov 2021 19:47:17 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-References: <20211116062256.2417186-1-vkoul@kernel.org>
- <20211116062256.2417186-2-vkoul@kernel.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20211116062256.2417186-2-vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: soc: qcom: stats: Document
+ compatibles with fixed offset
+Message-ID: <YaWCpXV4A0j6u402@robh.at.kernel.org>
+References: <20211119213953.31970-1-stephan@gerhold.net>
+ <20211119213953.31970-2-stephan@gerhold.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211119213953.31970-2-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod
-
-On 11/15/2021 10:22 PM, Vinod Koul wrote:
-> Display Stream Compression (DSC) parameters need to be calculated. Add
-> helpers and struct msm_display_dsc_config in msm_drv for this
-> msm_display_dsc_config uses drm_dsc_config for DSC parameters.
+On Fri, 19 Nov 2021 22:39:51 +0100, Stephan Gerhold wrote:
+> Document additional compatibles that can be used similarly to qcom,rpm-stats
+> for older RPM firmware versions that have the sleep stats at a fixed offset
+> rather than a dynamic one. The exact offset might vary depending on the SoC
+> so use SoC-specific compatible names to avoid confusion.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 132 +++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/msm_drv.h      |  20 +++++
->   2 files changed, 152 insertions(+)
+> Changes in v2:
+>   - Use SoC-specific compatibles instead of qcom,rpm-legacy-stats
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index f69a125f9559..30c1e299aa52 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -31,6 +31,8 @@
->   
->   #define DSI_RESET_TOGGLE_DELAY_MS 20
->   
-> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc);
-> +
->   static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
->   {
->   	u32 ver;
-> @@ -157,6 +159,7 @@ struct msm_dsi_host {
->   	struct regmap *sfpb;
->   
->   	struct drm_display_mode *mode;
-> +	struct msm_display_dsc_config *dsc;
->   
->   	/* connected device info */
->   	struct device_node *device_node;
-> @@ -1710,6 +1713,135 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
->   	return -EINVAL;
->   }
->   
-> +static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
-> +	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
-> +	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
-> +};
-> +
-> +/* only 8bpc, 8bpp added */
-> +static char min_qp[DSC_NUM_BUF_RANGES] = {
-> +	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
-> +};
-> +
-> +static char max_qp[DSC_NUM_BUF_RANGES] = {
-> +	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
-> +};
-> +
-> +static char bpg_offset[DSC_NUM_BUF_RANGES] = {
-> +	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
-> +};
-> +
-> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
-> +{
-> +	int mux_words_size;
-> +	int groups_per_line, groups_total;
-> +	int min_rate_buffer_size;
-> +	int hrd_delay;
-> +	int pre_num_extra_mux_bits, num_extra_mux_bits;
-> +	int slice_bits;
-> +	int target_bpp_x16;
-> +	int data;
-> +	int final_value, final_scale;
-> +	int i;
-> +
-> +	dsc->drm->rc_model_size = 8192;
-> +	dsc->drm->first_line_bpg_offset = 12;
-> +	dsc->drm->rc_edge_factor = 6;
-> +	dsc->drm->rc_tgt_offset_high = 3;
-> +	dsc->drm->rc_tgt_offset_low = 3;
-> +	dsc->drm->simple_422 = 0;
-> +	dsc->drm->convert_rgb = 1;
-> +	dsc->drm->vbr_enable = 0;
-> +
-> +	/* handle only bpp = bpc = 8 */
-> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
-> +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
-> +
-> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
-> +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
-> +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
-> +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
-> +	}
-> +
-> +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
-> +	if (dsc->drm->bits_per_pixel != 8)
-> +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
-> +
-> +	mux_words_size = 48;		/* bpc == 8/10 */
-> +	if (dsc->drm->bits_per_component == 12)
-> +		mux_words_size = 64;
-> +
-> +	dsc->drm->initial_xmit_delay = 512;
-> +	dsc->drm->initial_scale_value = 32;
-> +	dsc->drm->first_line_bpg_offset = 12;
-> +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
-> +
-> +	/* bpc 8 */
-> +	dsc->drm->flatness_min_qp = 3;
-> +	dsc->drm->flatness_max_qp = 12;
-> +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
-> +	dsc->drm->rc_quant_incr_limit0 = 11;
-> +	dsc->drm->rc_quant_incr_limit1 = 11;
-> +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-> +
-> +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
-> +	 * params are calculated
-> +	 */
-since its been a while on this, before moving ahead with a FIXME 
-comment, I wanted to know if you had a chance to check what is the 
-discrepancy between this and drm_dsc_compute_rc_parameters().
 
-The LOC saved can be quite a bit if we move to
-drm_dsc_compute_rc_parameters(). Last time we synced, I think only one 
-parameter was mismatching. The code-churn to avoid one mismatch seems a 
-lot. If there are more conflicting parameters than one or two, we can go 
-ahead with this custom calculation with your FIXME.
-
-
-> +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
-> +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
-> +	dsc->drm->slice_chunk_size = dsc->drm->slice_width * dsc->drm->bits_per_pixel / 8;
-> +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
-> +		dsc->drm->slice_chunk_size++;
-> +
-> +	/* rbs-min */
-> +	min_rate_buffer_size =  dsc->drm->rc_model_size - dsc->drm->initial_offset +
-> +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
-> +				groups_per_line * dsc->drm->first_line_bpg_offset;
-> +
-> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->drm->bits_per_pixel);
-> +
-> +	dsc->drm->initial_dec_delay = hrd_delay - dsc->drm->initial_xmit_delay;
-> +
-> +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
-> +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
-> +
-> +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
-> +
-> +	groups_total = groups_per_line * dsc->drm->slice_height;
-> +
-> +	data = dsc->drm->first_line_bpg_offset * 2048;
-> +
-> +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height - 1));
-> +
-> +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->drm->bits_per_component + 4) - 2);
-> +
-> +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
-> +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
-> +
-> +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset + num_extra_mux_bits);
-> +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
-> +
-> +	/* bpp * 16 + 0.5 */
-> +	data = dsc->drm->bits_per_pixel * 16;
-> +	data *= 2;
-> +	data++;
-> +	data /= 2;
-> +	target_bpp_x16 = data;
-> +
-> +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
-> +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
-> +	dsc->drm->final_offset = final_value;
-> +
-> +	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size - final_value);
-> +
-> +	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset + dsc->drm->slice_bpg_offset);
-> +	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) / data;
-> +
-> +	dsc->drm->scale_decrement_interval = groups_per_line / (dsc->drm->initial_scale_value - 8);
-> +
-> +	return 0;
-> +}
-> +
->   static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
->   {
->   	struct device *dev = &msm_host->pdev->dev;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 69952b239384..de7cb65bfc52 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -30,6 +30,7 @@
->   #include <drm/drm_plane_helper.h>
->   #include <drm/drm_probe_helper.h>
->   #include <drm/drm_fb_helper.h>
-> +#include <drm/drm_dsc.h>
->   #include <drm/msm_drm.h>
->   #include <drm/drm_gem.h>
->   
-> @@ -134,6 +135,22 @@ struct msm_drm_thread {
->   	struct kthread_worker *worker;
->   };
->   
-> +/* DSC config */
-> +struct msm_display_dsc_config {
-> +	struct drm_dsc_config *drm;
-> +
-> +	u32 initial_lines;
-> +	u32 pkt_per_line;
-> +	u32 bytes_in_slice;
-> +	u32 bytes_per_pkt;
-> +	u32 eol_byte_num;
-> +	u32 pclk_per_line;
-> +	u32 slice_last_group_size;
-> +	u32 det_thresh_flatness;
-> +
-> +	unsigned int dsc_mask;
-> +};
-> +
->   struct msm_drm_private {
->   
->   	struct drm_device *dev;
-> @@ -228,6 +245,9 @@ struct msm_drm_private {
->   	/* Properties */
->   	struct drm_property *plane_property[PLANE_PROP_MAX_NUM];
->   
-> +	/* DSC configuration */
-> +	struct msm_display_dsc_config *dsc;
-I agree with Dmitry, that we need a closer binding of dsc_config with 
-which display its getting associated with. Having it in the private 
-object is too generic.
-
-https://patchwork.freedesktop.org/patch/463255/?series=90413&rev=4
-
-How about moving this to struct dpu_encoder_virt.
-That way, it will be associated with the correct encoder.
-
-Yes, I dont see the usage for dsc_mask too.
-
-> +
->   	/* VRAM carveout, used when no IOMMU: */
->   	struct {
->   		unsigned long size;
-> 
+Acked-by: Rob Herring <robh@kernel.org>
