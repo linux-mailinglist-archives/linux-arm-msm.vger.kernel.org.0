@@ -2,151 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21451462AB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 03:50:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58503462B39
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 04:36:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbhK3CxW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 Nov 2021 21:53:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36540 "EHLO
+        id S237923AbhK3Dji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 Nov 2021 22:39:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230034AbhK3CxV (ORCPT
+        with ESMTP id S237921AbhK3Djh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 Nov 2021 21:53:21 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D109C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 18:50:03 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id c29so7126513pgl.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Nov 2021 18:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=koRfBp4VpgjWJfC/0JEHPzq77c2QcCg2LBZMxLjnjcw=;
-        b=kQdAJbtUSkt+KdGki/UVNknRsYpeAsuwfQb3rAWIfM/9m5HPZP1V9zmEUkwQ5/1bmO
-         Jz3hr8zFnabd78Zfx78i4DVoKT2M/QtpXhli2BpQg72FdVprlDAM4ubbXONmGGM9HRfy
-         EGjEQvWf+FdzCSqc+emgqogNFUZjawAzyD2OJrrU+HCvq2f8iX6kHLhzre9LlvLotyLT
-         lmIMmypRFciVvQm2fKZr15w3kOBd/KawzHHRBy95FbjzT1x+1O48Qkpj3DYebbXNFwic
-         LitZr57k3GCQXjMirxVqTKx6/r9QKwJooGvOaVBrjGzWcDDLRC/3j+RNwY7XmMXQcSMJ
-         o0Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=koRfBp4VpgjWJfC/0JEHPzq77c2QcCg2LBZMxLjnjcw=;
-        b=l0c+dQQ/aWKEhv5M3OmI7cimy+i9w9Jge5jjl4ttFfgvz2PorhfA0pwTR1iLvVq1XC
-         OXBI/KMrCfRoJIu2Kv8F/1p1aHjscUKhMb6Qk6plSk3nMGVStuN30HbA40sp0PPCF4uM
-         o5qxY+rCyUYMdc+anUvMHSv4e+0PGxcZCHw0pBo/hBWhZe3cB+WVsa/lKXOU4VmNc9hz
-         GoGwbscspZqvBXxSxd8SAyUWJjvm4m0ITiYNS01wp2lgpl4Wb/oy+a4PwPlenE7UfVba
-         xaGYZ3AquDOCpRHSiqdM6L+a8lK7GrTwih2u1oqs764Fu4Bc2X+CXouZv4GPD84cdvRE
-         9sHg==
-X-Gm-Message-State: AOAM531QnWLAX2+NSC+l2mcbN9RgIyc/nhnkSFg2/aFC36WRsxsVoZt+
-        8rKeRhl3rHOTOjlemmsI4h7mmg==
-X-Google-Smtp-Source: ABdhPJxEIkpoVr0R7RjxZ1wJ3uZ+NmxlaVH6sjBftFGnmD94mx15PURSCA1UMDwmChno3ARXM54o9A==
-X-Received: by 2002:a05:6a00:1145:b0:4a2:6a03:c592 with SMTP id b5-20020a056a00114500b004a26a03c592mr42467227pfm.65.1638240602819;
-        Mon, 29 Nov 2021 18:50:02 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id e29sm9354659pge.17.2021.11.29.18.50.00
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 29 Nov 2021 18:50:02 -0800 (PST)
-Date:   Tue, 30 Nov 2021 10:49:57 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Georgi Djakov <djakov@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/6] dt-bindings: interconnect: Add Qualcomm QCM2290
- NoC support
-Message-ID: <20211130024956.GE10105@dragon>
-References: <20211122085123.21049-1-shawn.guo@linaro.org>
- <20211122085123.21049-6-shawn.guo@linaro.org>
- <YaWLGAvZJ1dZwWNj@robh.at.kernel.org>
+        Mon, 29 Nov 2021 22:39:37 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D153C061574;
+        Mon, 29 Nov 2021 19:36:19 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EFFD7B80DE0;
+        Tue, 30 Nov 2021 03:36:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF36C53FC7;
+        Tue, 30 Nov 2021 03:36:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638243376;
+        bh=IycgnrvCMNHeENFLTGVnJuL3IdXlmzt7FRjEBZ4ijb4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=I1OxSd5rT9W0FplE3jccvEC8b4Ddl3So10QcWdDwbwezIRQ8jbiXaN4wkjceOMJ/g
+         c27PxhSSwfw38F9E/+e6GRnnDy355gJh2dDB+ry/6XnOr5ormX7E8HJ3ZN8dQLRmVj
+         pF+7tJpydphATIPisalNsdD/uob8cHmI8B8n3vMWRnHAwmFBpjv5GDmirKypXp1m+G
+         C4a2rUtTwTK5Fo/Cano8aiX+B+oY9cJuvyzO6ewGfY8oeQvvxN0wEdVE+XY1++AQ/m
+         3J+VakHd1Pveh/OvN4lJ3E2hyZJKpxA8EBJTv5uYbK5lpagJr49FTYDr41eA32nBSP
+         8X+5LXfpHfpVQ==
+Date:   Mon, 29 Nov 2021 21:36:14 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        svarbanov@mm-sol.com, bjorn.andersson@linaro.org, robh@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] PCI: qcom: Fix warning generated due to the incorrect
+ data type
+Message-ID: <20211130033614.GA2721688@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YaWLGAvZJ1dZwWNj@robh.at.kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20211124140424.51675-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 08:23:20PM -0600, Rob Herring wrote:
-> On Mon, Nov 22, 2021 at 04:51:22PM +0800, Shawn Guo wrote:
-> > Add bindings for Qualcomm QCM2290 Network-On-Chip interconnect devices.
-> > 
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > ---
-> >  .../bindings/interconnect/qcom,qcm2290.yaml   | 116 ++++++++++++++++++
-> >  .../dt-bindings/interconnect/qcom,qcm2290.h   |  94 ++++++++++++++
-> >  2 files changed, 210 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
-> >  create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
-> > 
-> > diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
-> > new file mode 100644
-> > index 000000000000..fb5e62196d9a
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
-> > @@ -0,0 +1,116 @@
-> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/interconnect/qcom,qcm2290.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm QCM2290 Network-On-Chip interconnect
-> > +
-> > +maintainers:
-> > +  - Shawn Guo <shawn.guo@linaro.org>
-> > +
-> > +description: |
-> > +  The Qualcomm QCM2290 interconnect providers support adjusting the
-> > +  bandwidth requirements between the various NoC fabrics.
-> > +
-> > +properties:
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,qcm2290-bimc
-> > +      - qcom,qcm2290-cnoc
-> > +      - qcom,qcm2290-snoc
-> > +      - qcom,qcm2290-qup-virt
-> > +      - qcom,qcm2290-mmrt-virt
-> > +      - qcom,qcm2290-mmnrt-virt
-> > +
-> > +  '#interconnect-cells':
-> > +    const: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: bus
-> > +      - const: bus_a
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: Bus Clock
-> > +      - description: Bus A Clock
-> > +
-> > +required:
-> > +  - compatible
-> > +  - '#interconnect-cells'
-> > +  - clock-names
-> > +  - clocks
-> > +
-> > +additionalProperties: true
+On Wed, Nov 24, 2021 at 07:34:24PM +0530, Manivannan Sadhasivam wrote:
+> Fix the below sparse warning due to the use of incorrect initializer
+> data type (u16) for bdf_be variable that receives the return value of
+> cpu_to_be16(). The correct type should be __be16.
+
+I think the patch looks OK, but the reason to change this is not to
+"fix the warning".  The reason is to fix the *problem*, i.e.,
+cpu_to_be16() returns "__be16", which is incompatible with "u16".
+
+The warning is only a helpful hint, and should not be part of the
+subject line.  "cpu_to_be16" or "iommu-map" would be much more
+useful information in the subject.
+
+I'm also curious why pcie-qcom.c is the only driver that does this.
+"iommu-map" is not specific to qcom, but no other drivers do similar
+things with it.
+
+> sparse warnings: (new ones prefixed by >>)
+> >> drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse: sparse: incorrect type in initializer (different base types) @@     expected unsigned short [usertype] bdf_be @@     got restricted __be16 [usertype] @@
+>    drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse:     expected unsigned short [usertype] bdf_be
+>    drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse:     got restricted __be16 [usertype]
 > 
-> Nope. You have to define the child nodes.
-
-Thanks for spotting it!  Will fix.
-
-> Though the 'virt' looks 
-> suspicious. 
-
-They are interconnect providers which do not have a separate QoS
-register space, but do have corresponding bus clocks to scale.  They are
-named as 'virt' by following downstream and qcom,rpmh.yaml binding.
-
-Shawn
+> Reported-by: kernel test robot <lkp@intel.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300163e5..6c3b034e9946 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1312,7 +1312,7 @@ static int qcom_pcie_config_sid_sm8250(struct qcom_pcie *pcie)
+>  
+>  	/* Look for an available entry to hold the mapping */
+>  	for (i = 0; i < nr_map; i++) {
+> -		u16 bdf_be = cpu_to_be16(map[i].bdf);
+> +		__be16 bdf_be = cpu_to_be16(map[i].bdf);
+>  		u32 val;
+>  		u8 hash;
+>  
+> -- 
+> 2.25.1
+> 
