@@ -2,133 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F522463F23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 21:21:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E28E6463F62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 21:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343614AbhK3UYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 15:24:30 -0500
-Received: from mga05.intel.com ([192.55.52.43]:37697 "EHLO mga05.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234770AbhK3UY3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 15:24:29 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10184"; a="322554487"
-X-IronPort-AV: E=Sophos;i="5.87,277,1631602800"; 
-   d="scan'208";a="322554487"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2021 12:21:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,277,1631602800"; 
-   d="scan'208";a="512348767"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga008.jf.intel.com with ESMTP; 30 Nov 2021 12:21:07 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1ms9cg-000Dj1-GF; Tue, 30 Nov 2021 20:21:06 +0000
-Date:   Wed, 1 Dec 2021 04:20:48 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     kbuild-all@lists.01.org, Jeya R <jeyr@codeaurora.org>,
-        gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
-        fastrpc.upstream@qti.qualcomm.com, bkumar@qti.qualcomm.com,
-        ekangupt@qti.qualcomm.com, jeyr@qti.qualcomm.com
-Subject: Re: [PATCH 1/2] misc: fastrpc: Add fdlist implementation
-Message-ID: <202112010402.quLlpjqn-lkp@intel.com>
-References: <1638277072-6459-3-git-send-email-jeyr@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1638277072-6459-3-git-send-email-jeyr@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S240422AbhK3Ujt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 15:39:49 -0500
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:42757 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233340AbhK3Ujr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 30 Nov 2021 15:39:47 -0500
+Received: by mail-oi1-f177.google.com with SMTP id n66so43678710oia.9;
+        Tue, 30 Nov 2021 12:36:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=wCtcUYBvlVGHN8xKMzrxRVpeHFGARyrqttFdhRjsOvA=;
+        b=Uu/P6vwUbtxSMawffxV9qTTmh5lNzMnEEed9RDeBxndfV33GOPqQeb4S/k9stUT5OZ
+         sgaTcOYSDgsN6cCZ72HHnqs9xNLVvpTXolIYtLIsNJyvqDwdFxaF0+vOGGVX3pbE3ua4
+         uZl/IuzrDxFXJ2qHfhTg3MEK1weL9mxdlcpWFjuedhAXERAQOFqs8KFru/xv70vD0TkI
+         /8TvFKsM5VqxkFgfE9VW8cZnXzR75KOdNjx+XfSGzx0/xeyTAWUb7yPDo+Gr10Vbal0h
+         nc6qSiCbWbwTh55nxfF5RaMnnRv6PISsLnXHzPoC29z3JAB/IPbTcUoFl1EcD59Y4gX0
+         6LCw==
+X-Gm-Message-State: AOAM532wIqNPHI3RYsw4MM7niKC2r1XNAsZliyQbbJLYYtectIPdhF/G
+        xjfJDOwDH5aMUvflG0XYyA==
+X-Google-Smtp-Source: ABdhPJxo/4waI0WrNmDZV3sNCOgq5ecIj9/zvL/GuYMLUN3eYWl8GiKKQIelYEzNSLor+PR+rcuW3g==
+X-Received: by 2002:aca:1202:: with SMTP id 2mr1334978ois.63.1638304587919;
+        Tue, 30 Nov 2021 12:36:27 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id 9sm3826169oij.16.2021.11.30.12.36.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 12:36:27 -0800 (PST)
+Received: (nullmailer pid 2968347 invoked by uid 1000);
+        Tue, 30 Nov 2021 20:36:26 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        devicetree@vger.kernel.org, Kathiravan T <kathirav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Balaji Prakash J <bjagadee@codeaurora.org>
+In-Reply-To: <62ec6016400e80ee379c07ef2c80abbf7f60bbe2.1638293850.git.baruch@tkos.co.il>
+References: <8137a76d66146dd5c1efa0c46c60de5766b7a349.1638293850.git.baruch@tkos.co.il> <62ec6016400e80ee379c07ef2c80abbf7f60bbe2.1638293850.git.baruch@tkos.co.il>
+Subject: Re: [PATCH v9 2/3] dt-bindings: pwm: add IPQ6018 binding
+Date:   Tue, 30 Nov 2021 14:36:26 -0600
+Message-Id: <1638304586.245688.2968346.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeya,
+On Tue, 30 Nov 2021 19:37:29 +0200, Baruch Siach wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> 
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> 
+> v9:
+> 
+>   Add 'ranges' property to example (Rob)
+> 
+>   Drop label in example (Rob)
+> 
+> v8:
+> 
+>   Add size cell to 'reg' (Rob)
+> 
+> v7:
+> 
+>   Use 'reg' instead of 'offset' (Rob)
+> 
+>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+> 
+>   Use single cell address/size in example node (Bjorn)
+> 
+>   Move '#pwm-cells' lower in example node (Bjorn)
+> 
+>   List 'reg' as required
+> 
+> v6:
+> 
+>   Device node is child of TCSR; remove phandle (Rob Herring)
+> 
+>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+> 
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
+> 
+> v4: Update the binding example node as well (Rob Herring's bot)
+> 
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+> 
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> 
 
-Thank you for the patch! Yet something to improve:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-[auto build test ERROR on char-misc/char-misc-testing]
-[also build test ERROR on v5.16-rc3 next-20211130]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+yamllint warnings/errors:
 
-url:    https://github.com/0day-ci/linux/commits/Jeya-R/misc-fastrpc-Add-fdlist-implementation/20211130-215833
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git 5d331b5922551637c586cdf5fdc1778910fc937f
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20211201/202112010402.quLlpjqn-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/d9eaed76074c94c9751c3a587ef2409fa7ce153e
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Jeya-R/misc-fastrpc-Add-fdlist-implementation/20211130-215833
-        git checkout d9eaed76074c94c9751c3a587ef2409fa7ce153e
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=sh SHELL=/bin/bash drivers/misc/
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0: /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+doc reference errors (make refcheckdocs):
 
-All errors (new ones prefixed by >>):
+See https://patchwork.ozlabs.org/patch/1561766
 
-   drivers/misc/fastrpc.c: In function 'fastrpc_put_args':
->> drivers/misc/fastrpc.c:923:39: error: 'fl' undeclared (first use in this function); did you mean 'fd'?
-     923 |                 if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
-         |                                       ^~
-         |                                       fd
-   drivers/misc/fastrpc.c:923:39: note: each undeclared identifier is reported only once for each function it appears in
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-vim +923 drivers/misc/fastrpc.c
+pip3 install dtschema --upgrade
 
-   886	
-   887	static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
-   888				    u32 kernel)
-   889	{
-   890		struct fastrpc_remote_arg *rpra = ctx->rpra;
-   891		struct fastrpc_map *mmap = NULL;
-   892		struct fastrpc_invoke_buf *list;
-   893		struct fastrpc_phy_page *pages;
-   894		u64 *fdlist;
-   895		int i, inbufs, outbufs, handles;
-   896	
-   897		inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
-   898		outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
-   899		handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
-   900		list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
-   901		pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
-   902			sizeof(*rpra));
-   903		fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
-   904	
-   905		for (i = inbufs; i < ctx->nbufs; ++i) {
-   906			if (!ctx->maps[i]) {
-   907				void *src = (void *)(uintptr_t)rpra[i].pv;
-   908				void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
-   909				u64 len = rpra[i].len;
-   910	
-   911				if (!kernel) {
-   912					if (copy_to_user((void __user *)dst, src, len))
-   913						return -EFAULT;
-   914				} else {
-   915					memcpy(dst, src, len);
-   916				}
-   917			}
-   918		}
-   919	
-   920		for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
-   921			if (!fdlist[i])
-   922				break;
- > 923			if (!fastrpc_map_find(fl, (int)fdlist[i], &mmap))
-   924				fastrpc_map_put(mmap);
-   925		}
-   926	
-   927		return 0;
-   928	}
-   929	
+Please check and re-submit.
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
