@@ -2,130 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E28E6463F62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 21:36:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF13463FD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Nov 2021 22:21:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240422AbhK3Ujt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 15:39:49 -0500
-Received: from mail-oi1-f177.google.com ([209.85.167.177]:42757 "EHLO
-        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233340AbhK3Ujr (ORCPT
+        id S1344009AbhK3VYZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 16:24:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38100 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343971AbhK3VYS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 15:39:47 -0500
-Received: by mail-oi1-f177.google.com with SMTP id n66so43678710oia.9;
-        Tue, 30 Nov 2021 12:36:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=wCtcUYBvlVGHN8xKMzrxRVpeHFGARyrqttFdhRjsOvA=;
-        b=Uu/P6vwUbtxSMawffxV9qTTmh5lNzMnEEed9RDeBxndfV33GOPqQeb4S/k9stUT5OZ
-         sgaTcOYSDgsN6cCZ72HHnqs9xNLVvpTXolIYtLIsNJyvqDwdFxaF0+vOGGVX3pbE3ua4
-         uZl/IuzrDxFXJ2qHfhTg3MEK1weL9mxdlcpWFjuedhAXERAQOFqs8KFru/xv70vD0TkI
-         /8TvFKsM5VqxkFgfE9VW8cZnXzR75KOdNjx+XfSGzx0/xeyTAWUb7yPDo+Gr10Vbal0h
-         nc6qSiCbWbwTh55nxfF5RaMnnRv6PISsLnXHzPoC29z3JAB/IPbTcUoFl1EcD59Y4gX0
-         6LCw==
-X-Gm-Message-State: AOAM532wIqNPHI3RYsw4MM7niKC2r1XNAsZliyQbbJLYYtectIPdhF/G
-        xjfJDOwDH5aMUvflG0XYyA==
-X-Google-Smtp-Source: ABdhPJxo/4waI0WrNmDZV3sNCOgq5ecIj9/zvL/GuYMLUN3eYWl8GiKKQIelYEzNSLor+PR+rcuW3g==
-X-Received: by 2002:aca:1202:: with SMTP id 2mr1334978ois.63.1638304587919;
-        Tue, 30 Nov 2021 12:36:27 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id 9sm3826169oij.16.2021.11.30.12.36.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 12:36:27 -0800 (PST)
-Received: (nullmailer pid 2968347 invoked by uid 1000);
-        Tue, 30 Nov 2021 20:36:26 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Andy Gross <agross@kernel.org>,
+        Tue, 30 Nov 2021 16:24:18 -0500
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F137CC061748
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 13:20:57 -0800 (PST)
+Received: from localhost.localdomain (adsl-d210.84-47-0.t-com.sk [84.47.0.210])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 571FA1FA69;
+        Tue, 30 Nov 2021 22:20:54 +0100 (CET)
+From:   Martin Botka <martin.botka@somainline.org>
+To:     martin.botka1@gmail.com
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        paul.bouchara@somainline.org,
+        Martin Botka <martin.botka@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-arm-kernel@lists.infradead.org,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pwm@vger.kernel.org,
-        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        devicetree@vger.kernel.org, Kathiravan T <kathirav@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org,
-        Balaji Prakash J <bjagadee@codeaurora.org>
-In-Reply-To: <62ec6016400e80ee379c07ef2c80abbf7f60bbe2.1638293850.git.baruch@tkos.co.il>
-References: <8137a76d66146dd5c1efa0c46c60de5766b7a349.1638293850.git.baruch@tkos.co.il> <62ec6016400e80ee379c07ef2c80abbf7f60bbe2.1638293850.git.baruch@tkos.co.il>
-Subject: Re: [PATCH v9 2/3] dt-bindings: pwm: add IPQ6018 binding
-Date:   Tue, 30 Nov 2021 14:36:26 -0600
-Message-Id: <1638304586.245688.2968346.nullmailer@robh.at.kernel.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: sm6125-gcc: Swap ops of ice and apps on sdcc1
+Date:   Tue, 30 Nov 2021 22:20:15 +0100
+Message-Id: <20211130212015.25232-1-martin.botka@somainline.org>
+X-Mailer: git-send-email 2.34.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 Nov 2021 19:37:29 +0200, Baruch Siach wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
-> 
-> v9:
-> 
->   Add 'ranges' property to example (Rob)
-> 
->   Drop label in example (Rob)
-> 
-> v8:
-> 
->   Add size cell to 'reg' (Rob)
-> 
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
+Without this change eMMC runs at overclocked freq.
+Swap the ops to not OC the eMMC.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Signed-off-by: Martin Botka <martin.botka@somainline.org>
+---
+ drivers/clk/qcom/gcc-sm6125.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0: /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1561766
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
+index 543cfab7561f..431b55bb0d2f 100644
+--- a/drivers/clk/qcom/gcc-sm6125.c
++++ b/drivers/clk/qcom/gcc-sm6125.c
+@@ -1121,7 +1121,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src = {
+ 		.name = "gcc_sdcc1_apps_clk_src",
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
+ 
+@@ -1143,7 +1143,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
+ 		.name = "gcc_sdcc1_ice_core_clk_src",
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-		.ops = &clk_rcg2_floor_ops,
++		.ops = &clk_rcg2_ops,
+ 	},
+ };
+ 
+-- 
+2.34.0
 
