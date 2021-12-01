@@ -2,146 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A3EA464A5B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 10:09:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CD9B464B56
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 11:12:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348148AbhLAJMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 04:12:30 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:32268 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242325AbhLAJM3 (ORCPT
+        id S1348508AbhLAKPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 05:15:31 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:19115 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242748AbhLAKPa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 04:12:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638349744;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ktYS9iuRKHdZDzICD4l2BwfqGtaFxG7/qEVsEt7N3Jg=;
-    b=BJ7ga5T8603X7+gtXhrnhRDXGVPHG29IJ4lhXtDhebeYWxwhw7JvQ62EZaH0jQJlZW
-    PlaQhg6pGz1lEpLJWHxloYKC20Kry0Lr4RvB++V/gEtrXSSE2hBKKZ2TQXxbSsS0qPSB
-    ylsAZjTtCsuyHsLIgfHAntGCJItreV87YB1BuZ2XYLzqxVoZ9B3KVpCRoU/UJfbIzYUf
-    uuykiATar6su76mAezl1VG7jyxXDY8vOwxOxiXmOOH4mYqy/iRAbHN51D6BEognwWMdy
-    QonYQh/nDPSNLwgDhVTrsakf/WRjNgaYIrBkobCQbLq5CNsuLtQKKXzE9F4kMhPzCVzz
-    b/9A==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK85/aY="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.34.10 AUTH)
-    with ESMTPSA id j03bcbxB1993eju
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 1 Dec 2021 10:09:03 +0100 (CET)
-Date:   Wed, 1 Dec 2021 10:09:02 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, phone-devel@vger.kernel.org,
-        Aleksander Morgado <aleksander@aleksander.es>
-Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Populate additional
- devices from DT
-Message-ID: <Yac7rvxHhWld1/s3@gerhold.net>
-References: <20211129132930.6901-1-stephan@gerhold.net>
- <20211129132930.6901-2-stephan@gerhold.net>
- <Yabw7kCsbhE1EFhW@builder.lan>
+        Wed, 1 Dec 2021 05:15:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638353530; x=1669889530;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=37+h5/yfbKV3ScL3bbanTaHVYxBBcBPpZQjE90BZzLo=;
+  b=jGC+2zU6eWfyqRrIKu3K/4A5opKA2ck8di6KTZ0kp0GhukejD/uihT/V
+   9L4h3Y8yErV8gVkiRbTXiDvMpPEOphL62sg0mbvwRTnRRkbm/6Bw+4WCy
+   1+XOApbFziVV4wQyW0eEi8JWc97K60Q8ZRzoKU6EKQSG/XPdm/hWgADfY
+   I=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Dec 2021 02:12:10 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 02:12:08 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 1 Dec 2021 02:12:04 -0800
+Received: from blr-ubuntu-173.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 1 Dec 2021 02:12:01 -0800
+From:   Rajendra Nayak <quic_rjendra@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dianders@chromium.org>,
+        <mka@chromium.org>, <kgodara@codeaurora.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: [PATCH v3 0/4] arm64: dts: qcom: Add support for the sc7280 CRD board
+Date:   Wed, 1 Dec 2021 15:41:38 +0530
+Message-ID: <1638353502-23640-1-git-send-email-quic_rjendra@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yabw7kCsbhE1EFhW@builder.lan>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 09:50:06PM -0600, Bjorn Andersson wrote:
-> On Mon 29 Nov 07:29 CST 2021, Stephan Gerhold wrote:
-> 
-> > Some devices without own memory resources could be placed anywhere in the
-> > device tree but they logically belong to the modem remote processor. Make
-> > it possible to probe them when defined under the mpss device tree node
-> > by calling of_platform_populate().
-> > 
-> 
-> This seems reasonable, but other "child devices" of the remoteproc
-> follows the state of the remoteproc instance. So I'm worried that this
-> will create an inconsistency in that assumption.
-> 
+Add support for sc7280 CRD (Compute Reference Design) Board.
+It shares the same EC and H1 as the IDP2 boards, comes with an eDP
+display and supports both touch and trackpad.
+Since the EC and H1 nodes are identical across CRD and IDP2 this
+series also adds support for EC/H1 on IDP2 devices.
 
-On Linux there are two devices managed by qcom_q6v5_mss, the platform
-device used by the driver and the actual remoteproc instance that has
-the state. The devices that follow the state are children of the
-remoteproc instance. I'm creating BAM-DMUX below the platform device.
+Kshitiz Godara (2):
+  arm64: dts: qcom: sc7280: Define EC and H1 nodes for IDP/CRD
+  arm64: dts: qcom: sc7280-crd: Add Touchscreen and touchpad support
 
-This is just not represented in the device tree very well since both
-platform device and remoteproc instance share the same device tree node.
-However, all the state managed nodes are manually managed and do not
-have a compatible so it should not cause problems.
+Rajendra Nayak (2):
+  dt-bindings: arm: qcom: Document qcom,sc7280-crd board
+  arm64: dts: qcom: sc7280-crd: Add device tree files for CRD
 
-> > This can be used for BAM-DMUX for example, which provides the WWAN network
-> > interfaces on some older Qualcomm SoCs such as MSM8916 or MSM8974.
-> > 
-> 
-> Is there a technical reason for placing the BAM-DMUX within the modem
-> remoteproc node? Can we simply move it to / ?
-> 
+ Documentation/devicetree/bindings/arm/qcom.yaml |   6 +-
+ arch/arm64/boot/dts/qcom/Makefile               |   1 +
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts         |  93 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi  | 105 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp2.dts        |   1 +
+ 5 files changed, 204 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-crd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi
 
-I had it at / originally and at the moment it would still work there.
-I moved it below the remoteproc when the whole "WWAN subsystem"
-discussion came up. The goal is to have a common parent device for all
-the ports of a WWAN modem.
+-- 
+2.7.4
 
-The way it works is that you give the WWAN subsystem a (parent) device
-that represents the modem itself, and then it groups all WWAN ports
-below that. The control ports (rpmsg_wwan_ctrl driver) are currently
-already created below the modem platform device.
-
-The bam-dmux driver does not integrate with the WWAN subsystem yet
-because of some unrelated open problems, but in the future I will likely
-need a reference to the modem platform device there as well.
-
-There are other approaches of course (e.g. a phandle to the modem
-remoteproc node), but I still think it logically fits best somewhere
-below the modem node. If the modem remoteproc is status = "disabled",
-it does not make sense to load bam-dmux either etc.
-
-Thanks,
-Stephan
-
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> >  drivers/remoteproc/qcom_q6v5_mss.c | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> > 
-> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> > index 43ea8455546c..69f3d1ebf1f1 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > @@ -1989,8 +1989,14 @@ static int q6v5_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		goto remove_sysmon_subdev;
-> >  
-> > +	ret = of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
-> > +	if (ret)
-> > +		goto remove_rproc;
-> > +
-> >  	return 0;
-> >  
-> > +remove_rproc:
-> > +	rproc_del(rproc);
-> >  remove_sysmon_subdev:
-> >  	qcom_remove_sysmon_subdev(qproc->sysmon);
-> >  remove_subdevs:
-> > @@ -2010,6 +2016,7 @@ static int q6v5_remove(struct platform_device *pdev)
-> >  	struct q6v5 *qproc = platform_get_drvdata(pdev);
-> >  	struct rproc *rproc = qproc->rproc;
-> >  
-> > +	of_platform_depopulate(&pdev->dev);
-> >  	rproc_del(rproc);
-> >  
-> >  	qcom_q6v5_deinit(&qproc->q6v5);
-> > -- 
-> > 2.34.1
-> > 
