@@ -2,96 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9364659B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 00:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D2954659BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 00:20:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244913AbhLAXWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 18:22:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55720 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343573AbhLAXWD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 18:22:03 -0500
-Received: from out2.migadu.com (out2.migadu.com [IPv6:2001:41d0:2:aacc::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339F9C06174A;
-        Wed,  1 Dec 2021 15:18:37 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+        id S1353767AbhLAXX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 18:23:56 -0500
+Received: from out0.migadu.com ([94.23.1.103]:36511 "EHLO out0.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1353839AbhLAXXz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 18:23:55 -0500
+Message-ID: <c60ced4b2c46db9f1979067294289a89b3f39991.camel@jeanthomas.me>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jeanthomas.me;
-        s=key1; t=1638400715;
+        s=key1; t=1638400831;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=Pgd3bHeiad2R39kNuS/FvhTMLDisAZND7wX25XIldg8=;
-        b=U1r8QepYQOzDRTyd5698WL6m+p6lH1F29f4gc9drZs15jDoQrL+TEXQLF0sUgimzJcMagR
-        xdgHGWG2wxrJrGybwtod0M8fzpnwPVn+UOX/12H6L36maZptgs2D5YFc5FCXkgYO4qL/io
-        6IXTERVfpG9zXz+JgAeFxjLGvQPQEiCuYhtNE7QL3SGyaFxMU46lfIYahXHWebNAnxDUtd
-        laKYdDHosiOrZHU35t/TCoqL5OzqA30HEUnzw9KbbVJVeEKkN2tF9QFw3PpRVpNxXm73Tv
-        8NyPDsjzidY4bFwFDcI7jgeHbtXMf3oLKaXiiGPEEmwg2q6X52MVRVsibpceeg==
+        bh=b2bEGbPOgVz8fIS2dkpNyk/z2nkbdk9bvhGTxJilM0M=;
+        b=VvPd5kbRIsg1Sg8xUFLdqIqLa96a69b3BJZHjOS+Oge5bUBQ1ql5frqgHc70S1UQ1a9YnD
+        oW4P36YJBRa9R8u1BRAQTp4cX0ISWrysAQjg1NvbLYs8gxJafn2YInw4aNbQ93Rwlqg6Ti
+        AKeVXMvsnGQsl7Q9TOkpccWVUm2HAgquLCauFprT4zSKi5WKnV8/kbm+afKB2tB/fYLWcR
+        tHbmowVaIeoZu2C8GBxq4BPrB//xRFBmv1GSjzCxB100Sc/D0eMkS0kijkbVfTyDAgo/c3
+        ztwqnFohyjfO1TFbTf5KNVszl5Li/SdIov+wTG9LwrNcLvhR/oA7U05LsuWq3w==
+Subject: Re: [PATCH 2/2] arm64: dts: Add support for LG Bullhead rev 1.0
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From:   Jean THOMAS <virgule@jeanthomas.me>
-To:     virgule@jeanthomas.me
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Petr Vorel <petr.vorel@gmail.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, petr.vorel@gmail.com,
-        konradybcio@gmail.com
-Subject: [PATCH v2 2/2] arm64: dts: msm8992-lg-bullhead: Add support for LG Bullhead rev 1.0
-Date:   Thu,  2 Dec 2021 00:18:32 +0100
-Message-Id: <20211201231832.188634-2-virgule@jeanthomas.me>
-In-Reply-To: <20211201231832.188634-1-virgule@jeanthomas.me>
-References: <20211201231832.188634-1-virgule@jeanthomas.me>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konradybcio@gmail.com>
+Date:   Thu, 02 Dec 2021 00:20:05 +0100
+In-Reply-To: <YaazSDljP80tuiA2@pevik>
+References: <20211130225645.171725-1-virgule@jeanthomas.me>
+         <20211130225645.171725-2-virgule@jeanthomas.me> <YaazSDljP80tuiA2@pevik>
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 X-Migadu-Auth-User: jeanthomas.me
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit implements a DTS file for LG Bullhead (Nexus 5X) rev 1.0
-with its matching "qcom,board-id" property.
+Hi Petr,
 
-Changes since v1:
- - Added "model" property to the DTS file
+Thanks for your review.
 
-Signed-off-by: Jean THOMAS <virgule@jeanthomas.me>
----
- arch/arm64/boot/dts/qcom/Makefile                  |  1 +
- .../boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts   | 14 ++++++++++++++
- 2 files changed, 15 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 3617157f1420..17aa096f8b99 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -17,6 +17,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-xiaomi-libra.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
-new file mode 100644
-index 000000000000..7e6bce4af441
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
-@@ -0,0 +1,14 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8992-lg-bullhead.dtsi"
-+
-+/ {
-+	model = "LG Nexus 5X rev 1.0";
-+
-+	/* required for bootloader to select correct board */
-+	qcom,board-id = <0xa64 0>;
-+};
--- 
-2.33.1
+> I wonder if each of new dtb files should contain updated models
+> 
+> msm8992-lg-bullhead-rev-10.dtb:
+> model = "LG Nexus 5X rev 1.0";
+> 
+> msm8992-lg-bullhead-rev-101.dtb:
+> model = "LG Nexus 5X rev 1.01";
+> 
+> as it's in downstream sources. Because 10 and 101 are a bit cryptic
+> values.
+I fixed this in v2.
 
+Regards,
+Jean.
