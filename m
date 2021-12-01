@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FC8646514D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:18:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D852446515B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:20:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245059AbhLAPV6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:21:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57044 "EHLO
+        id S1350713AbhLAPXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:23:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243692AbhLAPV6 (ORCPT
+        with ESMTP id S244050AbhLAPXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:21:58 -0500
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B2A3C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:18:37 -0800 (PST)
-Received: from [192.168.1.101] (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        Wed, 1 Dec 2021 10:23:33 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90133C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:20:12 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5A2743F733;
-        Wed,  1 Dec 2021 16:18:35 +0100 (CET)
-Message-ID: <bef7e4bf-6d4d-c665-b96a-84b28ed19a33@somainline.org>
-Date:   Wed, 1 Dec 2021 16:18:34 +0100
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5693DB8200F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 15:20:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 14A23C53FCF;
+        Wed,  1 Dec 2021 15:20:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638372010;
+        bh=ra1VlSepCqLKcFrNBTMTLKO6nZx0IyLI1cl94JorC84=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=ZZ406Q5ff/z4SkDBztuHKuXIITLAwzsGPKmewZTdkriWVWJz/MLX9kQQWomJxn/fq
+         phF+xK56IWw25vn80tb22AQRt2fFL5uforQL0JyoF0glowG2gwsD4cjaMwcnu5IVMy
+         y97zOY8/iS174gpbyQs3UnpATBJQgGGV0SV+mwkyCmSqlJJCI2YLu0BHvPHeMguTME
+         C7jxEExCjFBJSaLg0OG9GRLRO7Kn2owlWCDhr61OmJPWT9QFi9Q5pnSQuqDxM0XNFe
+         ygUJaLFfnt4O/Ki5a/YjOXPiH+5VxNrZWp6jeS13FkvRz0dzex1JuHWUW9ynq9Vl+q
+         b/e5PX2aphGMQ==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 01F8D60A88;
+        Wed,  1 Dec 2021 15:20:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH 09/15] arm64: dts: qcom: sm8450-qrd: enable ufs nodes
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-10-vkoul@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20211201072915.3969178-10-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916: fix MMC controller aliases
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <163837201000.24619.11186014497079344264.git-patchwork-notify@kernel.org>
+Date:   Wed, 01 Dec 2021 15:20:10 +0000
+References: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello:
 
-On 01.12.2021 08:29, Vinod Koul wrote:
-> Enable the UFS and phy node and add the regulators used by them.
->
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-> index 218eb3ce1ee5..3e65d662ab8c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-> @@ -5,6 +5,7 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/gpio/gpio.h>
+This patch was applied to qcom/linux.git (for-next)
+by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
-This should probably go to the SoC DTSI, as it's generally used
+On Wed,  1 Dec 2021 05:05:59 +0300 you wrote:
+> Change sdhcN aliases to mmcN to make them actually work. Currently the
+> board uses non-standard aliases sdhcN, which do not work, resulting in
+> mmc0 and mmc1 hosts randomly changing indices between boots.
+> 
+> Fixes: c4da5a561627 ("arm64: dts: qcom: Add msm8916 sdhci configuration nodes")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> [...]
 
-in every DT if you have anything more than serial console working..
+Here is the summary with links:
+  - arm64: dts: qcom: msm8916: fix MMC controller aliases
+    https://git.kernel.org/qcom/c/b0293c19d42f
 
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-Konrad
 
