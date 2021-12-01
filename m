@@ -2,363 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 970C2464C08
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 11:52:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFB64464CC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 12:34:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbhLAKzl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 05:55:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52312 "EHLO
+        id S1348947AbhLALh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 06:37:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242505AbhLAKzk (ORCPT
+        with ESMTP id S1348682AbhLALhY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 05:55:40 -0500
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22F5C061574;
-        Wed,  1 Dec 2021 02:52:19 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: kholk11)
-        with ESMTPSA id 06D9D1F45630
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=collabora.com; s=mail;
-        t=1638355938; bh=rL9Yo0VP8rvWWbfN9374jnoFbEFvxR/1usMNsyxgNhg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GhOvmzRBH6ydmh3oDb3Ju4hTU4S7ptZWIgytadzTT3xEd1H438JXLGqOQVMRr5Lw6
-         NOHiJO9s7S1tI6fWuRt24Ue8mbPAuRCpmN6rVxu/znMNrG1rvrGoa8wAyl66Bi9eo+
-         lypT5RYbnoxyNjGG4a+ieSyBzCIu9GN76OtKWc3kt+LABz/ZnpuFpAHrifJoDgdE7z
-         s0NbFq373f6jwQ2+d3gNuYuAtHCgP4X5YyRC4re3w5Dnvt56RB7w7VNoXaFraXZB07
-         vMBa9KhYI2So5VKuY7pWzm0QOQGP1XCUb9JhYeJv/UdMEs+zU6H/9lh25JdsQAkS8J
-         CjHKA7xxSODAA==
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-To:     robdclark@gmail.com
-Cc:     dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, kernel@collabora.com,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        jami.kettunen@somainline.org, martin.botka@somainline.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH v3 2/2] drm/msm: Initialize MDSS irq domain at probe time
-Date:   Wed,  1 Dec 2021 11:52:10 +0100
-Message-Id: <20211201105210.24970-3-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211201105210.24970-1-angelogioacchino.delregno@collabora.com>
-References: <20211201105210.24970-1-angelogioacchino.delregno@collabora.com>
+        Wed, 1 Dec 2021 06:37:24 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9D0C0613D7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 03:34:00 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id i6so48112819uae.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 03:34:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=nKE9e+4jEQRb21OhoYPSbxPLfJ2IuSmNXU0U6wmcP4ykCacrWpdbtE0jjuz/hSLLGi
+         3CHjeG+lFmWzoULwCsmlhVFgDEk5dLFaYb51pw7bXGjZ9H8t0j91dP9aL17MRQYkMPZK
+         Snvty/Yp8/ZrWZr2EuFXHqBxUdbU8X39ik45viERJ1Dn7qW8BPCFp2vlafV2okU0kn5j
+         QPTIDY8QJSy8zAVbK10d6+AY0lky+mrQRAAg0uS1DacQStzD/dQtt/uBz/RlGIdZCai/
+         BHep24kmiLdl1nvBvHYMFonu8NoJvJlErv7lbZlg2+2c277BpkzmDA4WwPZoxzlIf0Mh
+         Af5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=GkQMIo9m330br+f8xOchrNhWcQkhNORRBXt2tUmOgSU5xWQe2Wnbuz6tiRiJR1yvZ+
+         9LdgdgmdjFylHh+NFsUF6a7woaxSXYDTpTHjNHGL0m/RuPVe+oyw/EdLFmFK5/N7tq8b
+         HXNwkce/K3AtfqRWRgH0xPWj4OVpOcRI+GFP0HwkSr9DeDunDVQuzeTFwNiaIkIPnkUO
+         uCfqJdQqeUB1DtWDCAjbK3iHl2CdbJlVVZlDGpVDutVPPOIubQk82PqGrCx+HbZfTYNz
+         88Kb1NmjD6GipESBAt34VIskK7BcYExV4gf7YCGlGBS0jif7akBn9sVziv5LaEPq40ui
+         nIfQ==
+X-Gm-Message-State: AOAM531e4vT+8sVlHOzT5A1ICu7NxIrJQQNNNHiPunCmXmtPzg+812eA
+        F6Vmej1NH4Lso0HrMufd5X9aMxLv1EKdb5IpI7s=
+X-Google-Smtp-Source: ABdhPJwK+H50pzFgfv5CJPfAwBzUdMqIKHh+Ckkuju2lG2knVlJrzqINPiiwPjc/Uz6xuSJez7Fkn5YZPcfa5CPpvro=
+X-Received: by 2002:a67:ef4d:: with SMTP id k13mr6266305vsr.4.1638358439020;
+ Wed, 01 Dec 2021 03:33:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Sender: unitednationawardwinner@gmail.com
+Received: by 2002:ab0:6c55:0:0:0:0:0 with HTTP; Wed, 1 Dec 2021 03:33:58 -0800 (PST)
+From:   "Mrs. Orgil Baatar" <mrs.orgilbaatar21@gmail.com>
+Date:   Wed, 1 Dec 2021 03:33:58 -0800
+X-Google-Sender-Auth: uTQ_nfkzXaWGWaTWp1BSFqK3Ucs
+Message-ID: <CAJ4dHaSrD-X=xpfKNZV-hXSiMV6mNYrgy5vWCNkKm6iu5RQStg@mail.gmail.com>
+Subject: Your long awaited part payment of $2.5.000.00Usd
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since commit 8f59ee9a570c ("drm/msm/dsi: Adjust probe order"), the
-DSI host gets initialized earlier, but this caused unability to probe
-the entire stack of components because they all depend on interrupts
-coming from the main `mdss` node (mdp5, or dpu1).
+Attention: Beneficiary, Your long awaited part payment of
+$2.5.000.00Usd (TWO MILLION FIVE Hundred Thousand United State
+Dollars) is ready for immediate release to you, and it was
+electronically credited into an ATM Visa Card for easy delivery.
 
-To fix this issue, anticipate registering the irq domain from mdp5/dpu1
-at msm_mdev_probe() time, as to make sure that the interrupt controller
-is available before dsi and/or other components try to initialize,
-finally satisfying the dependency.
+Your new Payment Reference No.- 6363836,
+Pin Code No: 1787
+Your Certificate of Merit Payment No: 05872,
 
-Moreover, to balance this operation while avoiding to always check if
-the irq domain is registered everytime we call bind() on msm_pdev, add
-a new *remove function pointer to msm_mdss_funcs, used to remove the
-irq domain only at msm_pdev_remove() time.
+Your Names: |
+Address: |
 
-Fixes: 8f59ee9a570c ("drm/msm/dsi: Adjust probe order")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c  | 50 ++++++++++++-------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 58 +++++++++++++++--------
- drivers/gpu/drm/msm/msm_drv.c             | 22 ++++++++-
- drivers/gpu/drm/msm/msm_kms.h             |  3 ++
- 4 files changed, 95 insertions(+), 38 deletions(-)
+Person to Contact:MR KELLY HALL the Director of the International
+Audit unit ATM Payment Center,
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index b466784d9822..6c2569175633 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -106,13 +106,10 @@ static const struct irq_domain_ops dpu_mdss_irqdomain_ops = {
- 	.xlate = irq_domain_xlate_onecell,
- };
- 
--static int _dpu_mdss_irq_domain_add(struct dpu_mdss *dpu_mdss)
-+static int _dpu_mdss_irq_domain_add(struct device *dev, struct dpu_mdss *dpu_mdss)
- {
--	struct device *dev;
- 	struct irq_domain *domain;
- 
--	dev = dpu_mdss->base.dev->dev;
--
- 	domain = irq_domain_add_linear(dev->of_node, 32,
- 			&dpu_mdss_irqdomain_ops, dpu_mdss);
- 	if (!domain) {
-@@ -194,7 +191,6 @@ static void dpu_mdss_destroy(struct drm_device *dev)
- 
- 	pm_runtime_suspend(dev->dev);
- 	pm_runtime_disable(dev->dev);
--	_dpu_mdss_irq_domain_fini(dpu_mdss);
- 	irq = platform_get_irq(pdev, 0);
- 	irq_set_chained_handler_and_data(irq, NULL, NULL);
- 	msm_dss_put_clk(mp->clk_config, mp->num_clk);
-@@ -203,15 +199,43 @@ static void dpu_mdss_destroy(struct drm_device *dev)
- 	if (dpu_mdss->mmio)
- 		devm_iounmap(&pdev->dev, dpu_mdss->mmio);
- 	dpu_mdss->mmio = NULL;
--	priv->mdss = NULL;
-+}
-+
-+static void dpu_mdss_remove(struct msm_mdss *mdss)
-+{
-+	_dpu_mdss_irq_domain_fini(to_dpu_mdss(mdss));
- }
- 
- static const struct msm_mdss_funcs mdss_funcs = {
- 	.enable	= dpu_mdss_enable,
- 	.disable = dpu_mdss_disable,
- 	.destroy = dpu_mdss_destroy,
-+	.remove = dpu_mdss_remove,
- };
- 
-+int dpu_mdss_early_init(struct device *dev, struct msm_drm_private *priv)
-+{
-+	struct dpu_mdss *dpu_mdss;
-+	int ret;
-+
-+	dpu_mdss = devm_kzalloc(dev, sizeof(*dpu_mdss), GFP_KERNEL);
-+	if (!dpu_mdss)
-+		return -ENOMEM;
-+
-+	ret = _dpu_mdss_irq_domain_add(dev, dpu_mdss);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Here we have no drm_device yet, but still do the assignment
-+	 * so that we can retrieve our struct dpu_mdss from the main
-+	 * init function, since we allocate it here.
-+	 */
-+	priv->mdss = &dpu_mdss->base;
-+
-+	return 0;
-+}
-+
- int dpu_mdss_init(struct drm_device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev->dev);
-@@ -221,9 +245,9 @@ int dpu_mdss_init(struct drm_device *dev)
- 	int ret;
- 	int irq;
- 
--	dpu_mdss = devm_kzalloc(dev->dev, sizeof(*dpu_mdss), GFP_KERNEL);
-+	dpu_mdss = to_dpu_mdss(priv->mdss);
- 	if (!dpu_mdss)
--		return -ENOMEM;
-+		return -ENODATA;
- 
- 	dpu_mdss->mmio = msm_ioremap(pdev, "mdss", "mdss");
- 	if (IS_ERR(dpu_mdss->mmio))
-@@ -241,10 +265,6 @@ int dpu_mdss_init(struct drm_device *dev)
- 	dpu_mdss->base.dev = dev;
- 	dpu_mdss->base.funcs = &mdss_funcs;
- 
--	ret = _dpu_mdss_irq_domain_add(dpu_mdss);
--	if (ret)
--		goto irq_domain_error;
--
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0) {
- 		ret = irq;
-@@ -253,16 +273,10 @@ int dpu_mdss_init(struct drm_device *dev)
- 
- 	irq_set_chained_handler_and_data(irq, dpu_mdss_irq,
- 					 dpu_mdss);
--
--	priv->mdss = &dpu_mdss->base;
--
- 	pm_runtime_enable(dev->dev);
--
- 	return 0;
- 
- irq_error:
--	_dpu_mdss_irq_domain_fini(dpu_mdss);
--irq_domain_error:
- 	msm_dss_put_clk(mp->clk_config, mp->num_clk);
- clk_parse_err:
- 	devm_kfree(&pdev->dev, mp->clk_config);
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-index 0ea53420bc40..a99538ae4182 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
-@@ -112,9 +112,8 @@ static const struct irq_domain_ops mdss_hw_irqdomain_ops = {
- };
- 
- 
--static int mdss_irq_domain_init(struct mdp5_mdss *mdp5_mdss)
-+static int mdss_irq_domain_init(struct device *dev, struct mdp5_mdss *mdp5_mdss)
- {
--	struct device *dev = mdp5_mdss->base.dev->dev;
- 	struct irq_domain *d;
- 
- 	d = irq_domain_add_linear(dev->of_node, 32, &mdss_hw_irqdomain_ops,
-@@ -182,20 +181,52 @@ static void mdp5_mdss_destroy(struct drm_device *dev)
- 	if (!mdp5_mdss)
- 		return;
- 
--	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
--	mdp5_mdss->irqcontroller.domain = NULL;
--
- 	regulator_disable(mdp5_mdss->vdd);
- 
- 	pm_runtime_disable(dev->dev);
- }
- 
-+static void mdp5_mdss_remove(struct msm_mdss *mdss)
-+{
-+	struct mdp5_mdss *mdp5_mdss = to_mdp5_mdss(mdss);
-+
-+	irq_domain_remove(mdp5_mdss->irqcontroller.domain);
-+	mdp5_mdss->irqcontroller.domain = NULL;
-+}
-+
- static const struct msm_mdss_funcs mdss_funcs = {
- 	.enable	= mdp5_mdss_enable,
- 	.disable = mdp5_mdss_disable,
- 	.destroy = mdp5_mdss_destroy,
-+	.remove = mdp5_mdss_remove,
- };
- 
-+int mdp5_mdss_early_init(struct device *dev, struct msm_drm_private *priv)
-+{
-+	struct mdp5_mdss *mdp5_mdss;
-+	int ret;
-+
-+	if (!of_device_is_compatible(dev->of_node, "qcom,mdss"))
-+		return 0;
-+
-+	mdp5_mdss = devm_kzalloc(dev, sizeof(*mdp5_mdss), GFP_KERNEL);
-+	if (!mdp5_mdss)
-+		return -ENOMEM;
-+
-+	ret = mdss_irq_domain_init(dev, mdp5_mdss);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Here we have no drm_device yet, but still do the assignment
-+	 * so that we can retrieve our struct mdp5_mdss from the main
-+	 * init function, since we allocate it here.
-+	 */
-+	priv->mdss = &mdp5_mdss->base;
-+
-+	return 0;
-+}
-+
- int mdp5_mdss_init(struct drm_device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev->dev);
-@@ -208,11 +239,9 @@ int mdp5_mdss_init(struct drm_device *dev)
- 	if (!of_device_is_compatible(dev->dev->of_node, "qcom,mdss"))
- 		return 0;
- 
--	mdp5_mdss = devm_kzalloc(dev->dev, sizeof(*mdp5_mdss), GFP_KERNEL);
--	if (!mdp5_mdss) {
--		ret = -ENOMEM;
--		goto fail;
--	}
-+	mdp5_mdss = to_mdp5_mdss(priv->mdss);
-+	if (!mdp5_mdss)
-+		return -ENODATA;
- 
- 	mdp5_mdss->base.dev = dev;
- 
-@@ -255,17 +284,8 @@ int mdp5_mdss_init(struct drm_device *dev)
- 		goto fail_irq;
- 	}
- 
--	ret = mdss_irq_domain_init(mdp5_mdss);
--	if (ret) {
--		DRM_DEV_ERROR(dev->dev, "failed to init sub-block irqs: %d\n", ret);
--		goto fail_irq;
--	}
--
- 	mdp5_mdss->base.funcs = &mdss_funcs;
--	priv->mdss = &mdp5_mdss->base;
--
- 	pm_runtime_enable(dev->dev);
--
- 	return 0;
- fail_irq:
- 	regulator_disable(mdp5_mdss->vdd);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 64230e473a34..ded4f4d6545f 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1389,6 +1389,20 @@ static int msm_pdev_probe(struct platform_device *pdev)
- 	if (!priv)
- 		return -ENOMEM;
- 
-+	switch (get_mdp_ver(pdev)) {
-+	case KMS_MDP5:
-+		ret = mdp5_mdss_early_init(&pdev->dev, priv);
-+		break;
-+	case KMS_DPU:
-+		ret = dpu_mdss_early_init(&pdev->dev, priv);
-+		break;
-+	default:
-+		ret = 0;
-+		break;
-+	}
-+	if (ret)
-+		return ret;
-+
- 	platform_set_drvdata(pdev, priv);
- 
- 	if (get_mdp_ver(pdev)) {
-@@ -1421,6 +1435,12 @@ static int msm_pdev_probe(struct platform_device *pdev)
- 
- static int msm_pdev_remove(struct platform_device *pdev)
- {
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+
-+	if (priv->mdss && priv->mdss->funcs)
-+		priv->mdss->funcs->remove(priv->mdss);
-+
-+	priv->mdss = NULL;
- 	component_master_del(&pdev->dev, &msm_drm_ops);
- 	of_platform_depopulate(&pdev->dev);
- 
-@@ -1432,7 +1452,7 @@ static void msm_pdev_shutdown(struct platform_device *pdev)
- 	struct msm_drm_private *priv = platform_get_drvdata(pdev);
- 	struct drm_device *drm = priv ? priv->dev : NULL;
- 
--	if (!priv || !priv->kms)
-+	if (!priv || !priv->kms || !drm->mode_config.funcs)
- 		return;
- 
- 	drm_atomic_helper_shutdown(drm);
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 6a42b819abc4..2c539a228156 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -202,6 +202,7 @@ struct msm_mdss_funcs {
- 	int (*enable)(struct msm_mdss *mdss);
- 	int (*disable)(struct msm_mdss *mdss);
- 	void (*destroy)(struct drm_device *dev);
-+	void (*remove)(struct msm_mdss *mdss);
- };
- 
- struct msm_mdss {
-@@ -209,7 +210,9 @@ struct msm_mdss {
- 	const struct msm_mdss_funcs *funcs;
- };
- 
-+int mdp5_mdss_early_init(struct device *dev, struct msm_drm_private *priv);
- int mdp5_mdss_init(struct drm_device *dev);
-+int dpu_mdss_early_init(struct device *dev, struct msm_drm_private *priv);
- int dpu_mdss_init(struct drm_device *dev);
- 
- #define for_each_crtc_mask(dev, crtc, crtc_mask) \
--- 
-2.33.1
+Email: uba-bf@e-ubabf.com
+TELEPHONE: +226 64865611 You can whatsApp the bank
 
+Regards.
+Mrs ORGIL BAATAR
