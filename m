@@ -2,91 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36FDD464711
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 07:16:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E366F4647E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:23:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346878AbhLAGTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 01:19:31 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:33698 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346866AbhLAGTb (ORCPT
+        id S230360AbhLAH0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 02:26:48 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:52500 "EHLO
+        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347168AbhLAH0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 01:19:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638339371; x=1669875371;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=0td12hIHGPIEFYS082kAUKPfRUhsg9mYr4FJVS5nTsE=;
-  b=V3N9ohBlLrd5tFU4JICMZ3nIV8rQQ9w582cQ7kg4Dfywm4C+EueHDKZ8
-   YKquyjisudqqVtmJStiG363eWxVvz7z1aX09eOhvJ76I13QAKdTe4A8bO
-   1F/qWykIbbPTA/0NgIcQWamS0+zaKt1MH0rML3/Ga2yS9cb+Kl8zdbbMc
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 30 Nov 2021 22:16:10 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2021 22:16:10 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 30 Nov 2021 22:16:10 -0800
-Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 30 Nov 2021 22:16:06 -0800
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH v3] usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk for DWC3 controller
-Date:   Wed, 1 Dec 2021 11:45:38 +0530
-Message-ID: <1638339338-6731-2-git-send-email-quic_c_sanm@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638339338-6731-1-git-send-email-quic_c_sanm@quicinc.com>
-References: <1638339338-6731-1-git-send-email-quic_c_sanm@quicinc.com>
+        Wed, 1 Dec 2021 02:26:47 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 44566CE1D68;
+        Wed,  1 Dec 2021 07:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14985C53FAD;
+        Wed,  1 Dec 2021 07:23:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638343403;
+        bh=QkDYnqLkhpOqGOf8REtEmrkoUi08AcwqoUU69C4hG64=;
+        h=From:To:Cc:Subject:Date:From;
+        b=CLNLhW2/CHpgb9eszwtFYwrlvYor2KX4jPLFowSflbgOCRT9M5Rdi7lC9zIkoIRVd
+         T+j/zrpm/Y45tKRIF8d6YgyZ8gvxcgJ6YtqaUXIqSubs51Mo9sb6/1WZrl9SDAXbdc
+         oepD7jw2ejaHlyY+NAUjiEMKqzLU64eOryHYEV3EuRP+/QuML+lsSyeYizvbtJ/eow
+         3jCNu0EfyiGY5QXMCs8m5x6g4pT+J1R288neGYvCgFaqXi8y3EJEfP1/N3buRN0gFr
+         K8vX4DGsR6CPFn6cOzuUUnKj95oRO2gRIU75EGymTpgZkXx8TGYbiTERD7rlnZ8QjN
+         b/WUVn+FqumpQ==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] clk: qcom: Add clocks for SM8450 SoC
+Date:   Wed,  1 Dec 2021 12:53:06 +0530
+Message-Id: <20211201072310.3968679-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
-Runtime suspend of phy drivers was failing from DWC3 driver as
-runtime usage value is 2 because the phy is initialized from
-DWC3 core and HCD core.
-DWC3 manages phy in their core drivers.
-Set this quirk to avoid phy initialization in HCD core.
+This series adds the GCC and RPMH clock support required for SM8450 SoC
+along with devicetree binding for these clocks.
 
-Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
----
- drivers/usb/host/xhci-plat.c | 3 +++
- 1 file changed, 3 insertions(+)
+Please note that the GCC driver patch depends on new alpha LUCID_EVO
+introduced by Vamsi in [1]. That would be required to be picked before this
+patch can be applied.
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index c1edcc9..9bbd939 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -327,6 +327,9 @@ static int xhci_plat_probe(struct platform_device *pdev)
- 					 &xhci->imod_interval);
- 	}
- 
-+	if (of_device_is_compatible(pdev->dev.parent->of_node, "snps,dwc3"))
-+		xhci->quirks |= XHCI_SKIP_PHY_INIT;
-+
- 	hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev, "usb-phy", 0);
- 	if (IS_ERR(hcd->usb_phy)) {
- 		ret = PTR_ERR(hcd->usb_phy);
+[1]: https://lore.kernel.org/all/a0b04869a20a0afef99dd457ebb6474f50591210.1637302009.git.quic_vamslank@quicinc.com/
+
+Vinod Koul (4):
+  dt-bindings: clock: Add SM8450 GCC clock bindings
+  dt-bindings: clock: Add RPMHCC bindings for SM8450
+  clk: qcom: Add clock driver for SM8450
+  clk: qcom: rpmh: add support for SM8450 rpmh clocks
+
+ .../bindings/clock/qcom,gcc-sm8450.yaml       |   85 +
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-rpmh.c                   |   27 +
+ drivers/clk/qcom/gcc-sm8450.c                 | 3314 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm8450.h   |  244 ++
+ 7 files changed, 3680 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8450.h
+
 -- 
-2.7.4
+2.31.1
 
