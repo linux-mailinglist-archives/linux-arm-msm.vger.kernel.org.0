@@ -2,74 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56113464853
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B61846485C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:29:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347437AbhLAHb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 02:31:58 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:54766 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347489AbhLAHbw (ORCPT
+        id S237397AbhLAHcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 02:32:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232254AbhLAHcr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 02:31:52 -0500
+        Wed, 1 Dec 2021 02:32:47 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E02FEC061574;
+        Tue, 30 Nov 2021 23:29:26 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 189B0CE1D7A;
-        Wed,  1 Dec 2021 07:28:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3354C53FAD;
-        Wed,  1 Dec 2021 07:28:25 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 39316CE1D73;
+        Wed,  1 Dec 2021 07:29:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A23BC53FAD;
+        Wed,  1 Dec 2021 07:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638343708;
-        bh=LwGeNInHF6Y97r5bRNYu6aqtEmm6rAjEZbygOJHjtXs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DY8mwrxUEULE/bu9yYHNaQfBR3MGpAK0UKvFvbs+KF6TZ5awyJkJyH1l1kWUTJSI9
-         t+B59feX/Z5yxHbkbm0IQ+PPdIiaqFLj9Qhs7iYOojElbrRFNiAkbPI7m0pxx7mvkl
-         vNbC+jYsDY0CXZwJRL9cPw7eoqMpKVResDTpvVOUu9x4pp7rJBcSHDGUwpPUpcftpa
-         cZANCt+X1qIMQ+0J1sfVssTXK5d7iUwu0sdIPilC3mBmMhgS4BJUlMjEzbKlAgL9pL
-         8eE76v8GW4uZEVKuq3BC8AXoEr3b2eFrGgaGSGIV8VrSGIwu0S7KV9vhdTGW4Lyu2+
-         dOx4KdvT5etUg==
+        s=k20201202; t=1638343763;
+        bh=t3bNC3c6ZjeWZfOS3kzdCyceuti6Qo0imhU6iZf3EI0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YHcdCC3v6Xon9aOaOScLhUCfqV12YrxQ9YPIehfS7xtGI3zltwLft9/PN1yhxY4HD
+         kdlD5JiXw5GWOMaH8OZxasOjFjczO1CBwsxC+y4EvDpZTPhIHUW6QzBAtMnJIpLhuf
+         WLHBekpHIZz9B7rs7J4UE6mmXmSL2J3ZHCJ6vB710Xy9LBa1neugW0zGkCyRx9xKLV
+         aqV6gJUn+tOuLYsi58l947AeVwMSY1/7b9Vdl2CggdvWrdlVzxfvazDtANTrmOVlwo
+         mH1rZgMMv4wGEUHhlnVDJFfubYDDAkcXAHPvH2Bd54BLDzvM1N9n151WEmE7MZJHwS
+         JQ+Rlalj22yDQ==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 7/7] soc: qcom: socinfo: add SM8450 ID
-Date:   Wed,  1 Dec 2021 12:57:45 +0530
-Message-Id: <20211201072745.3969077-8-vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 00/15] arm64: dts: qcom: Add support for SM8450 SoC and QRD board
+Date:   Wed,  1 Dec 2021 12:59:00 +0530
+Message-Id: <20211201072915.3969178-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211201072745.3969077-1-vkoul@kernel.org>
-References: <20211201072745.3969077-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Snapdragon 8 Gen 1 Mobile Platform [1] (SM8450) is the latest Qualcomm SoC
+announced today.
 
-Add the ID for the Qualcomm SM8450 SoC.
+This series adds the DTS support including clocks, tlmm, smmu, regulators,
+ufs, interconnects, pmics and cpufreq found in the SM8450 QRD board.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+[1]: https://www.qualcomm.com/products/snapdragon-8-gen-1-mobile-platform
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 9a0eb59405e8..113dc57b74c3 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -315,6 +315,7 @@ static const struct soc_id soc_id[] = {
- 	{ 425, "SC7180" },
- 	{ 453, "IPQ6005" },
- 	{ 455, "QRB5165" },
-+	{ 457, "SM8450" },
- };
- 
- static const char *socinfo_machine(struct device *dev, unsigned int id)
+Dmitry Baryshkov (2):
+  arm64: dts: qcom: sm8450: Add rpmhpd node
+  arm64: dts: qcom: sm8450: add i2c13 and i2c14 device nodes
+
+Vinod Koul (12):
+  arm64: dts: qcom: Add base SM8450 DTSI
+  arm64: dts: qcom: Add base SM8450 QRD DTS
+  arm64: dts: qcom: sm8450: Add tlmm nodes
+  arm64: dts: qcom: sm8450-qrd: Add reserved gpio range for QRD
+  arm64: dts: qcom: sm8450: Add reserved memory nodes
+  arm64: dts: qcom: sm8450: add smmu nodes
+  arm64: dts: qcom: sm8450-qrd: Add rpmh regulator nodes
+  arm64: dts: qcom: sm8450: add ufs nodes
+  arm64: dts: qcom: sm8450-qrd: enable ufs nodes
+  arm64: dts: qcom: sm8450: add interconnect nodes
+  arm64: dts: qcom: sm8450: add spmi node
+  arm64: dts: qcom: sm8450-qrd: include pmic files
+
+Vladimir Zapolskiy (1):
+  arm64: dts: qcom: sm8450: add cpufreq support
+
+ arch/arm64/boot/dts/qcom/Makefile       |    1 +
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts |  379 ++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 1142 +++++++++++++++++++++++
+ 3 files changed, 1522 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450-qrd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450.dtsi
+
 -- 
 2.31.1
 
