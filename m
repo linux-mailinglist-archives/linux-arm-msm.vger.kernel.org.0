@@ -2,109 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D4C54646FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 07:05:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56BF246470E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 07:16:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbhLAGIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 01:08:34 -0500
-Received: from mga06.intel.com ([134.134.136.31]:38598 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229652AbhLAGIa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 01:08:30 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10184"; a="297194708"
-X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
-   d="scan'208";a="297194708"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2021 22:05:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
-   d="scan'208";a="459130103"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 30 Nov 2021 22:05:07 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1msIjq-000EL8-J5; Wed, 01 Dec 2021 06:05:06 +0000
-Date:   Wed, 1 Dec 2021 14:04:32 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>, robdclark@gmail.com
-Cc:     kbuild-all@lists.01.org, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        maxime@cerno.tech, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] drm/msm: Allocate msm_drm_private early and pass
- it as driver data
-Message-ID: <202112011405.Wn79h7q3-lkp@intel.com>
-References: <20211130141048.294246-2-angelogioacchino.delregno@collabora.com>
+        id S1346868AbhLAGT2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 01:19:28 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:38339 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1346866AbhLAGT1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 01:19:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638339367; x=1669875367;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=BR15XsJ/2xFEXlJ/cpJHjd2xlSg5BN8S4jdNhwlMkZ0=;
+  b=xwY8BB5VyhyjyE29F/L28U0kS6h2IeRkwDcogPo9Po1fydzjeKG/uJPh
+   BW55qpFhJKjUUjXsTAD1nRL6G0dh/nXAMkyNUq7Qag6Krj6/3998J/u1p
+   ZonjtSXJ2G/9VW6rUOtyeY0Wn9dVaZPuZHUD0XRzJVyZArFdMAFLdUPNx
+   Q=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Nov 2021 22:16:06 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2021 22:16:06 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 30 Nov 2021 22:16:05 -0800
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 30 Nov 2021 22:16:01 -0800
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v3] Skip phy initialization for DWC3 USB Controllers
+Date:   Wed, 1 Dec 2021 11:45:37 +0530
+Message-ID: <1638339338-6731-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211130141048.294246-2-angelogioacchino.delregno@collabora.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi AngeloGioacchino,
+Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
+Runtime suspend of phy drivers was failing from DWC3 driver as
+runtime usage value is 2 because the phy is initialized from
+DWC3 core and HCD core.
+DWC3 manages phy in their core drivers.
+Set this quirk to avoid phy initialization in HCD core.
 
-Thank you for the patch! Perhaps something to improve:
+v3:
+Dropped the dt property and binding.
+Checking for dwc3 compatible in xhci to set the quirk XHCI_SKIP_PHY_INIT.
 
-[auto build test WARNING on drm/drm-next]
-[also build test WARNING on next-20211130]
-[cannot apply to v5.16-rc3]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+v2:
+Updated the commit descriptions.
+Changed subject prefix from dwc to dwc3.
+Increased props array size.
 
-url:    https://github.com/0day-ci/linux/commits/AngeloGioacchino-Del-Regno/drm-msm-Fix-dsi-bridge-probe/20211130-221304
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: csky-randconfig-c004-20211128 (https://download.01.org/0day-ci/archive/20211201/202112011405.Wn79h7q3-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 11.2.0
+Sandeep Maheswaram (1):
+  usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk for DWC3 controller
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+ drivers/usb/host/xhci-plat.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
+-- 
+2.7.4
 
-cocci warnings: (new ones prefixed by >>)
->> drivers/gpu/drm/msm/msm_drv.c:412:1-6: WARNING: invalid free of devm_ allocated data
-
-vim +412 drivers/gpu/drm/msm/msm_drv.c
-
-2aa31767259722 Sean Paul           2019-05-24  384  
-98659487b845c0 Abhinav Kumar       2021-04-16  385  	msm_disp_snapshot_destroy(ddev);
-98659487b845c0 Abhinav Kumar       2021-04-16  386  
-2b669875332fbd Archit Taneja       2016-05-02  387  	drm_mode_config_cleanup(ddev);
-c8afe684c95cd1 Rob Clark           2013-06-26  388  
-2b669875332fbd Archit Taneja       2016-05-02  389  	pm_runtime_get_sync(dev);
-f026e431cf8611 Thomas Zimmermann   2021-08-03  390  	msm_irq_uninstall(ddev);
-2b669875332fbd Archit Taneja       2016-05-02  391  	pm_runtime_put_sync(dev);
-c8afe684c95cd1 Rob Clark           2013-06-26  392  
-16976085a114ae Archit Taneja       2016-11-03  393  	if (kms && kms->funcs)
-c8afe684c95cd1 Rob Clark           2013-06-26  394  		kms->funcs->destroy(kms);
-c8afe684c95cd1 Rob Clark           2013-06-26  395  
-871d812aa43e63 Rob Clark           2013-11-16  396  	if (priv->vram.paddr) {
-00085f1efa387a Krzysztof Kozlowski 2016-08-03  397  		unsigned long attrs = DMA_ATTR_NO_KERNEL_MAPPING;
-871d812aa43e63 Rob Clark           2013-11-16  398  		drm_mm_takedown(&priv->vram.mm);
-2b669875332fbd Archit Taneja       2016-05-02  399  		dma_free_attrs(dev, priv->vram.size, NULL,
-00085f1efa387a Krzysztof Kozlowski 2016-08-03  400  			       priv->vram.paddr, attrs);
-871d812aa43e63 Rob Clark           2013-11-16  401  	}
-871d812aa43e63 Rob Clark           2013-11-16  402  
-2b669875332fbd Archit Taneja       2016-05-02  403  	component_unbind_all(dev, ddev);
-060530f1ea6740 Rob Clark           2014-03-03  404  
-bc3220be22577e Rajesh Yadav        2018-06-21  405  	if (mdss && mdss->funcs)
-bc3220be22577e Rajesh Yadav        2018-06-21  406  		mdss->funcs->destroy(ddev);
-0a6030d224d3a4 Archit Taneja       2016-05-08  407  
-2b669875332fbd Archit Taneja       2016-05-02  408  	ddev->dev_private = NULL;
-4d8dc2dfae2c48 Thomas Zimmermann   2018-09-26  409  	drm_dev_put(ddev);
-c8afe684c95cd1 Rob Clark           2013-06-26  410  
-2aa31767259722 Sean Paul           2019-05-24  411  	destroy_workqueue(priv->wq);
-c8afe684c95cd1 Rob Clark           2013-06-26 @412  	kfree(priv);
-c8afe684c95cd1 Rob Clark           2013-06-26  413  
-c8afe684c95cd1 Rob Clark           2013-06-26  414  	return 0;
-c8afe684c95cd1 Rob Clark           2013-06-26  415  }
-c8afe684c95cd1 Rob Clark           2013-06-26  416  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
