@@ -2,143 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3AB9464885
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:30:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB5C54648DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:34:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347663AbhLAHde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 02:33:34 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:55602 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347664AbhLAHd2 (ORCPT
+        id S237534AbhLAHhf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 02:37:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35696 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235915AbhLAHhf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 02:33:28 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id E65D5CE1D76
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94376C53FD0;
-        Wed,  1 Dec 2021 07:30:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638343805;
-        bh=fOecN1+zYsm6d7VARL+K91hTDCpiK30taxsF9RNJCIs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Zm/IauwsG7f2K0HZWHzC6WMGGlR626m26E+qpb68NZXEAGbsrCHLoZZ78GtP/++zb
-         4xtybBJO7asIVTF7v95U4o1kW4hCqSkyS7RnjpahYYiqBrsdevN8GD5lpE8Oby9+84
-         0lfOkMWMuKddCUnJNpOCd2BnFQkW36GF3PaLu3NO0l5E8Xl4geCN6TaSTdxk3xTOH2
-         xD1Q4ejSQmSIFMcuODQDgPPrHC8PG392gr5/p8Pc7oeV5mPBTIJ4ZfqLthXzbMRn8y
-         /BzREmlbe9Oc6w7TY1lhcuDXc6HR4sL9hcvsea0mfuC345lh7v0E+YVdV5ch4X9kEe
-         TFYN2gehCOnyQ==
-From:   Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 15/15] arm64: dts: qcom: sm8450: add i2c13 and i2c14 device nodes
-Date:   Wed,  1 Dec 2021 12:59:15 +0530
-Message-Id: <20211201072915.3969178-16-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211201072915.3969178-1-vkoul@kernel.org>
-References: <20211201072915.3969178-1-vkoul@kernel.org>
+        Wed, 1 Dec 2021 02:37:35 -0500
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:8234::])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948ADC061574;
+        Tue, 30 Nov 2021 23:34:14 -0800 (PST)
+Received: from ip4d173d4a.dynamic.kabel-deutschland.de ([77.23.61.74] helo=[192.168.66.200]); authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1msK83-0000cS-8F; Wed, 01 Dec 2021 08:34:11 +0100
+Message-ID: <915c3760-181e-bbac-aec4-1e20d0dab2a9@leemhuis.info>
+Date:   Wed, 1 Dec 2021 08:34:09 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-To:     unlisted-recipients:; (no To-header on input)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Content-Language: en-BS
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Kalle Valo <kvalo@codeaurora.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>, ath11k@lists.infradead.org,
+        linux-wireless@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        regressions@lists.linux.dev, mhi <mhi@lists.linux.dev>
+References: <871r5p0x2u.fsf@codeaurora.org>
+ <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+ <877df6tlnq.fsf@codeaurora.org>
+ <CAMZdPi8P7YZPhPir+WfS3cY_a7He1m2Pq2uqBhczPdEeoNRb0Q@mail.gmail.com>
+ <87a6jl9ndo.fsf@codeaurora.org> <87ee8hgqni.fsf@codeaurora.org>
+ <20211021100305.GD7580@workstation> <20211118174145.GA31300@thinkpad>
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+In-Reply-To: <20211118174145.GA31300@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1638344054;e5ab82bc;
+X-HE-SMSGID: 1msK83-0000cS-8F
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi, this is your Linux kernel regression tracker speaking, this time
+looking for a status update.
 
-Add device tree nodes for two i2c blocks: i2c13 and i2c14.
+On 18.11.21 18:41, Manivannan Sadhasivam wrote:
+> On Thu, Oct 21, 2021 at 03:33:05PM +0530, Manivannan Sadhasivam wrote:
+>> On Tue, Oct 19, 2021 at 03:12:01PM +0300, Kalle Valo wrote:
+>>> Kalle Valo <kvalo@codeaurora.org> writes:
+>>>
+>>>> (adding the new mhi list, yay)
+>>>>
+>>>> Hi Loic,
+>>>>
+>>>> Loic Poulain <loic.poulain@linaro.org> writes:
+>>>>
+>>>>>> Loic Poulain <loic.poulain@linaro.org> writes:
+>>>>>>
+>>>>>>> On Thu, 16 Sept 2021 at 10:00, Kalle Valo <kvalo@codeaurora.org> wrote:
+>>>>>>
+>>>>>>>> At the moment I'm running my tests with commit 020d3b26c07a reverted and
+>>>>>>>> everything works without problems. Is there a simple way to fix this? Or
+>>>>>>>> maybe we should just revert the commit? Commit log and kernel logs from
+>>>>>>>> a failing case below.
+>>>>>>>
+>>>>>>> Do you have log of success case?
+>>>>>>
+>>>>>> A log from a successful case in the end of email, using v5.15-rc1 plus
+>>>>>> revert of commit 020d3b26c07abe27.
+>>>>>>
+>>>>>>> To me, the device loses power, that is why MHI resuming is failing.
+>>>>>>> Normally the device should be properly recovered/reinitialized. Before
+>>>>>>> that patch the power loss was simply not detected (or handled at
+>>>>>>> higher stack level).
+>>>>>>
+>>>>>> Currently in ath11k we always keep the firmware running when in suspend,
+>>>>>> this is a workaround due to problems between mac80211 and MHI stack.
+>>>>>> IIRC the problem was something related MHI creating struct device during
+>>>>>> resume or something like that.
+>>>>>
+>>>>> Could you give a try with the attached patch? It should solve your
+>>>>> issue without breaking modem support.
+>>>>
+>>>> Sorry for taking so long, but I now tested your patch on top of
+>>>> v5.15-rc3 and, as expected, everything works as before with QCA6390 on
+>>>> NUC x86 testbox.
+>>>>
+>>>> Tested-by: Kalle Valo <kvalo@codeaurora.org>
+>>>
+>>> I doubt we will find enough time to fully debug this mhi issue anytime
+>>> soon. Can we commit Loic's patch so that this regression is resolved?
+>>>
+>>
+>> Sorry no :( Eventhough Loic's patch is working, I want to understand the
+>> issue properly so that we could add a proper fix or patch the firmware
+>> if possible.
+>>
+>> Let's try to get the debug logs as I requested.
+> 
+> I'm able to reproduce the issue on my NUC. I'm still investigating on how to
+> properly fix this issue. Expect a patch soon.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 64 ++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+Was there some progress? This issue was reported 75 days ago and still
+is not fixed. From the point of the Linux kernel regression tracker I'd
+say: it should not take this long. Looking back at it I wonder if
+'reverted the culprit and reapply later together with a proper fix'
+would have been the better strategy. I wonder if that still would be the
+best way forward if no patch is forthcoming soon.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 29c5abcfa074..40c739b842ac 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -587,6 +587,44 @@ uart7: serial@99c000 {
- 			};
- 		};
- 
-+		qupv3_id_1: geniqup@ac0000 {
-+			compatible = "qcom,geni-se-qup";
-+			reg = <0x0 0x00ac0000 0x0 0x6000>;
-+			clock-names = "m-ahb", "s-ahb";
-+			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
-+				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+			status = "disabled";
-+
-+			i2c13: i2c@a94000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00a94000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c13_default_state>;
-+				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
-+			i2c14: i2c@a98000 {
-+				compatible = "qcom,geni-i2c";
-+				reg = <0 0x00a98000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S6_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_i2c14_default_state>;
-+				interrupts = <GIC_SPI 363 IRQ_TYPE_LEVEL_HIGH>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+		};
-+
- 		config_noc: interconnect@1500000 {
- 			compatible = "qcom,sm8450-config-noc";
- 			reg = <0 0x01500000 0 0x1c000>;
-@@ -687,6 +725,32 @@ tlmm: pinctrl@f100000 {
- 			gpio-ranges = <&tlmm 0 0 211>;
- 			wakeup-parent = <&pdc>;
- 
-+			qup_i2c13_default_state: qup-i2c13-default-state {
-+				mux {
-+					pins = "gpio48", "gpio49";
-+					function = "qup13";
-+				};
-+
-+				config {
-+					pins = "gpio48", "gpio49";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
-+
-+			qup_i2c14_default_state: qup-i2c14-default-state {
-+				mux {
-+					pins = "gpio52", "gpio53";
-+					function = "qup14";
-+				};
-+
-+				config {
-+					pins = "gpio49", "gpio50";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
-+			};
-+
- 			qup_uart7_default_state: qup-uart3-default-state {
- 				rx {
- 					pins = "gpio26";
--- 
-2.31.1
+Ciao, Thorsten
 
+#regzbot poke
+
+>>> At the moment I'm doing all my regression testing with commit
+>>> 020d3b26c07abe27 reverted. That's a risk, I would prefer to do my
+>>> testing without any hacks.
+>>>
+>>> -- 
+>>> https://patchwork.kernel.org/project/linux-wireless/list/
+>>>
+>>> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
+P.S.: As a Linux kernel regression tracker I'm getting a lot of reports
+on my table. I can only look briefly into most of them. Unfortunately
+therefore I sometimes will get things wrong or miss something important.
+I hope that's not the case here; if you think it is, don't hesitate to
+tell me about it in a public reply. That's in everyone's interest, as
+what I wrote above might be misleading to everyone reading this; any
+suggestion I gave they thus might sent someone reading this down the
+wrong rabbit hole, which none of us wants.
+
+BTW, I have no personal interest in this issue, which is tracked using
+regzbot, my Linux kernel regression tracking bot
+(https://linux-regtracking.leemhuis.info/regzbot/). I'm only posting
+this mail to get things rolling again and hence don't need to be CC on
+all further activities wrt to this regression.
