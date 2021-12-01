@@ -2,76 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D852446515B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:20:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C37E46515E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:21:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350713AbhLAPXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:23:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57482 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244050AbhLAPXd (ORCPT
+        id S244006AbhLAPYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:24:22 -0500
+Received: from relay06.th.seeweb.it ([5.144.164.167]:40141 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238378AbhLAPYW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:23:33 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90133C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:20:12 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Wed, 1 Dec 2021 10:24:22 -0500
+Received: from [192.168.1.101] (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5693DB8200F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 15:20:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 14A23C53FCF;
-        Wed,  1 Dec 2021 15:20:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638372010;
-        bh=ra1VlSepCqLKcFrNBTMTLKO6nZx0IyLI1cl94JorC84=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ZZ406Q5ff/z4SkDBztuHKuXIITLAwzsGPKmewZTdkriWVWJz/MLX9kQQWomJxn/fq
-         phF+xK56IWw25vn80tb22AQRt2fFL5uforQL0JyoF0glowG2gwsD4cjaMwcnu5IVMy
-         y97zOY8/iS174gpbyQs3UnpATBJQgGGV0SV+mwkyCmSqlJJCI2YLu0BHvPHeMguTME
-         C7jxEExCjFBJSaLg0OG9GRLRO7Kn2owlWCDhr61OmJPWT9QFi9Q5pnSQuqDxM0XNFe
-         ygUJaLFfnt4O/Ki5a/YjOXPiH+5VxNrZWp6jeS13FkvRz0dzex1JuHWUW9ynq9Vl+q
-         b/e5PX2aphGMQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 01F8D60A88;
-        Wed,  1 Dec 2021 15:20:10 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 02E913F6D0;
+        Wed,  1 Dec 2021 16:20:59 +0100 (CET)
+Message-ID: <99e88947-177c-2f39-7f88-de16c24c3e42@somainline.org>
+Date:   Wed, 1 Dec 2021 16:20:59 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: fix MMC controller aliases
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <163837201000.24619.11186014497079344264.git-patchwork-notify@kernel.org>
-Date:   Wed, 01 Dec 2021 15:20:10 +0000
-References: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 10/15] arm64: dts: qcom: sm8450: add interconnect nodes
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211201072915.3969178-1-vkoul@kernel.org>
+ <20211201072915.3969178-11-vkoul@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20211201072915.3969178-11-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
 
-This patch was applied to qcom/linux.git (for-next)
-by Bjorn Andersson <bjorn.andersson@linaro.org>:
+On 01.12.2021 08:29, Vinod Koul wrote:
+> And the various interconnect nodes found in SM8450 SoC and use it for
+> UFS controller.
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 80 ++++++++++++++++++++++++++++
+>  1 file changed, 80 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 75827bbfb3ad..4c7cdcea33fa 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -6,6 +6,7 @@
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,gcc-sm8450.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/interconnect/qcom,sm8450.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  
+>  / {
+> @@ -573,6 +574,61 @@ uart7: serial@99c000 {
+>  			};
+>  		};
+>  
+> +		config_noc: interconnect@1500000 {
+> +			compatible = "qcom,sm8450-config-noc";
+> +			reg = <0 0x01500000 0 0x1c000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		mc_virt: interconnect@1580000 {
+> +			compatible = "qcom,sm8450-mc-virt";
+> +			reg = <0 0x01580000 0 0x1000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		system_noc: interconnect@1680000 {
+> +			reg = <0 0x01680000 0 0x1e200>;
+> +			compatible = "qcom,sm8450-system-noc";
 
-On Wed,  1 Dec 2021 05:05:59 +0300 you wrote:
-> Change sdhcN aliases to mmcN to make them actually work. Currently the
-> board uses non-standard aliases sdhcN, which do not work, resulting in
-> mmc0 and mmc1 hosts randomly changing indices between boots.
-> 
-> Fixes: c4da5a561627 ("arm64: dts: qcom: Add msm8916 sdhci configuration nodes")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> [...]
+Compatible first, please
 
-Here is the summary with links:
-  - arm64: dts: qcom: msm8916: fix MMC controller aliases
-    https://git.kernel.org/qcom/c/b0293c19d42f
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		pcie_noc: interconnect@16c0000 {
+> +			reg = <0 0x016c0000 0 0xe280>;
+> +			compatible = "qcom,sm8450-pcie-anoc";
 
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre1_noc: interconnect@16e0000 {
+> +			reg = <0 0x016e0000 0 0x1c080>;
+> +			compatible = "qcom,sm8450-aggre1-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre2_noc: interconnect@1700000 {
+> +			reg = <0 0x01700000 0 0x31080>;
+> +			compatible = "qcom,sm8450-aggre2-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +			clocks = <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&rpmhcc RPMH_IPA_CLK>;
+> +		};
+> +
+> +		mmss_noc: interconnect@1740000 {
+> +			reg = <0 0x01740000 0 0x1f080>;
+> +			compatible = "qcom,sm8450-mmss-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		tcsr_mutex: hwlock@1f40000 {
+>  			compatible = "qcom,tcsr-mutex";
+>  			reg = <0x0 0x01f40000 0x0 0x40000>;
+> @@ -817,6 +873,13 @@ rpmhcc: clock-controller {
+>  			};
+>  		};
+>  
+> +		gem_noc: interconnect@19100000 {
+> +			reg = <0 0x19100000 0 0xbb800>;
+> +			compatible = "qcom,sm8450-gem-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>  		ufs_mem_hc: ufshc@1d84000 {
+>  			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
+>  				     "jedec,ufs-2.0";
+> @@ -833,6 +896,9 @@ ufs_mem_hc: ufshc@1d84000 {
+>  
+>  			iommus = <&apps_smmu 0xe0 0x0>;
+>  
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+> +					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+>  			clock-names =
+>  				"core_clk",
+>  				"bus_aggr_clk",
+> @@ -888,6 +954,20 @@ ufs_mem_phy_lanes: lanes@1d87400 {
+>  				#clock-cells = <0>;
+>  			};
+>  		};
+> +
+> +		nsp_noc: interconnect@320c0000 {
+> +			reg = <0 0x320c0000 0 0x10000>;
+> +			compatible = "qcom,sm8450-nsp-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		lpass_ag_noc: interconnect@3c40000 {
+> +			reg = <0 0x3c40000 0 0x17200>;
+> +			compatible = "qcom,sm8450-lpass-ag-noc";
+
+Ditto
+
+
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+>  	};
+>  
+>  	timer {
+>
+
+Konrad
 
