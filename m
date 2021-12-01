@@ -2,249 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EEC3F4651B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:32:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 860114651C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:33:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350992AbhLAPfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:35:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbhLAPfU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:35:20 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58BAEC06174A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:31:59 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id m6so49281457oim.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:31:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uFMUhbGSve6XOXG4hT9U3q9GImUbsSFy9Vah1OZisDI=;
-        b=VEqQ4qm73WYGNDTAMVaJv66zUxxEcw1I76eSBm6a3yxe4VglM1A8bd3AWGyIbSITsG
-         L15cql+Aqb1LKY7WuUgdhnqVjOUvVvUYgw+iOUVzlqdv6g9JpLdLgFZJrdGc/qfem8Ic
-         SmD6x7TfGe+WVqdeR9eLomzxti3j9u6g8H2Q+TruWVTvhxgGH/EbFn2BmHIKE77dcYPQ
-         AVdAk4ha5MiNJ/fABaqxzubfxrrIAJ9KPPFfBnbxEAcMPPf7nSif221xhhqJDC0ethkY
-         AdCVXauvs3kwFIM18EZC0A7yrJt/3j+OBqkcd047bVeqxiwyuaUmU+7dmprGUqcue6tA
-         Pcfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uFMUhbGSve6XOXG4hT9U3q9GImUbsSFy9Vah1OZisDI=;
-        b=K03eY7P9dTbzGu6qABLAe8lzfcaXTZK8ijGiEPqfN1c4vf5InE1an9qyuwHSU8gMXv
-         QXuHadYvQ7+D54ra3w0I8HeQ5yf2ZEexxbOGWOyuYeY4IOPPUBALzb/VyoptIrQcEFQc
-         Bf/uDcovtgfQxfW6guHgalvxGA63pWPly+5oZ/9RYRKfqr7Rem0ufKRx9/KxkClFusxH
-         Hi61HryxsBB28Yx6QOAleCH+dJa2Dz8Be/kR2aONhdCpFh6jk2Hb/GUZaLFc00qywXQd
-         LnaixU+YCy2Lb/xCv/6HxRfFJrU/dNTkqrrLFAMbl3Q26Mfri+1m9YbDlqSrdGZeQK3E
-         Wzkw==
-X-Gm-Message-State: AOAM5309TknDM2ecCV6kMh0QxxMsJfzYqBojvSCiDrIVM4Vwo5XB5t2F
-        +d29OH5EnwGBsgbxT6bVYFZYHw==
-X-Google-Smtp-Source: ABdhPJwnqbKqj2jV7StOM44pZVUXOOt1pFckEfKefaxTyLXR8Nzec8O4l7stJ4JSVQj5U2bon04vgw==
-X-Received: by 2002:aca:1204:: with SMTP id 4mr6800261ois.136.1638372718608;
-        Wed, 01 Dec 2021 07:31:58 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m2sm7954oop.12.2021.12.01.07.31.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 07:31:58 -0800 (PST)
-Date:   Wed, 1 Dec 2021 09:31:53 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
-        dianders@chromium.org, quic_khsieh@quicinc.com,
-        quic_mkrishn@quicinc.com
-Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: sc7280: add edp display dt nodes
-Message-ID: <YaeVaTtP4g6mchDr@builder.lan>
-References: <1637580369-876-1-git-send-email-quic_sbillaka@quicinc.com>
- <1637580369-876-3-git-send-email-quic_sbillaka@quicinc.com>
+        id S1351028AbhLAPgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:36:54 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:26837 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1351027AbhLAPgw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 10:36:52 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638372811; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=Q6HUfZt5oXc1duwzRmR4q+p0TcjKzuDlkMig1w3ztew=; b=h8Z66wQKT0C7N7uedH+hbkkXyuRHwxXYQSElshDKdPb4B+mXEiMl1hMMKjxiIBkntGgESIeD
+ 89ZDNdytmKIwYeB7D3m6ep7m1temDqyaGQAOrE7axBjaWIMFT9uLSXHqUCG9l1HpKHOMxBJ7
+ s7vM2THR+39nh2jB3y5/LsJx5Zs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 61a795cbe7d68470afbdae2a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Dec 2021 15:33:31
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E26A2C4361A; Wed,  1 Dec 2021 15:33:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [10.242.143.72] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A681C4338F;
+        Wed,  1 Dec 2021 15:33:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9A681C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v6 10/10] ASoC: qcom: SC7280: Update config for building
+ codec dma drivers
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
+ <1637928282-2819-11-git-send-email-srivasam@codeaurora.org>
+ <0d51b0fd-61a9-e68f-6ab8-27708667d787@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <a3663a8d-5a05-3bbe-4d5d-2b5b4a55d0d4@codeaurora.org>
+Date:   Wed, 1 Dec 2021 21:03:20 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1637580369-876-3-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <0d51b0fd-61a9-e68f-6ab8-27708667d787@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Nov 05:26 CST 2021, Sankeerth Billakanti wrote:
 
-> Add edp controller and phy DT nodes for sc7280.
-> 
-> Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
+On 12/1/2021 4:20 PM, Srinivas Kandagatla wrote:
+Thanks for Your time Srini!!!
+>
+> On 26/11/2021 12:04, Srinivasa Rao Mandadapu wrote:
+>> Add configuration for building SC7280 audio codec dma drivers.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> ---
+>> This patch set depends on:
+>>      -- 
+>> https://patchwork.kernel.org/project/alsa-devel/list/?series=582321
+>>
+>>   sound/soc/qcom/Kconfig  | 13 +++++++++++++
+>>   sound/soc/qcom/Makefile |  4 ++++
+>>   2 files changed, 17 insertions(+)
+>>
+>> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+>> index 530d01f..b46a2e7 100644
+>> --- a/sound/soc/qcom/Kconfig
+>> +++ b/sound/soc/qcom/Kconfig
+>> @@ -20,6 +20,10 @@ config SND_SOC_LPASS_PLATFORM
+>>       tristate
+>>       select REGMAP_MMIO
+>>   +config SND_SOC_LPASS_CDC_DMA
+>> +    tristate
+>> +    select REGMAP_MMIO
+>> +
+>>   config SND_SOC_LPASS_IPQ806X
+>>       tristate
+>>       select SND_SOC_LPASS_CPU
+>> @@ -36,6 +40,13 @@ config SND_SOC_LPASS_SC7180
+>>       select SND_SOC_LPASS_PLATFORM
+>>       select SND_SOC_LPASS_HDMI
+>>   +config SND_SOC_LPASS_SC7280
+>> +    tristate
+>> +    select SND_SOC_LPASS_CPU
+>> +    select SND_SOC_LPASS_PLATFORM
+>> +    select SND_SOC_LPASS_HDMI
+>> +    select SND_SOC_LPASS_CDC_DMA
+>> +
+>>   config SND_SOC_STORM
+>>       tristate "ASoC I2S support for Storm boards"
+>>       select SND_SOC_LPASS_IPQ806X
+>> @@ -156,7 +167,9 @@ config SND_SOC_SC7280
+>>       tristate "SoC Machine driver for SC7280 boards"
+>>       depends on I2C && SOUNDWIRE || COMPILE_TEST
+>>       select SND_SOC_QCOM_COMMON
+>> +    select SND_SOC_LPASS_SC7280
+>>       select SND_SOC_MAX98357A
+>> +    select SND_SOC_WCD938X
+>
+> Why are we updating machine Kconfigs in this patch, should that be not 
+> in your machine driver patch series?
 
-If Krishna authored the patch (he certified its origin first), then he
-should be From: as well.
+Actually, SND_SOC_LPASS_SC7280 is of lpass-sc7280 platform driver.  
+SND_SOC_WCD938X is for wcd codec driver.
 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
-> 
-> Changes in v4:
->     None
-> 
-> Changes in v3:
->     - Add one clock cell per line (Stephen Boyd)
->     - Unit address should match first reg property (Stephen Boyd)
->     - Remove new line (Stephen Boyd)
->     - Add the dsi_phy clocks in dispcc (Kuogee Hsieh)
-> 
-> Changes in v2:
->     - Move regulator definitions to board file (Matthias Kaehlcke)
->     - Move the gpio definitions to board file (Matthias Kaehlcke)
->     - Move the pinconf to board file (Matthias Kaehlcke)
->     - Move status property (Stephen Boyd)
->     - Drop flags from interrupts (Stephen Boyd)
->     - Add clock names one per line for readability (Stephen Boyd)
->     - Rename edp-opp-table (Stephen Boyd)
-> 
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 107 ++++++++++++++++++++++++++++++++++-
->  1 file changed, 105 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 12c4d32..5ad500e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2695,8 +2695,8 @@
->  				 <&dsi_phy 1>,
->  				 <0>,
->  				 <0>,
-> -				 <0>,
-> -				 <0>;
-> +				 <&edp_phy 0>,
-> +				 <&edp_phy 1>;
->  			clock-names = "bi_tcxo",
->  				      "gcc_disp_gpll0_clk",
->  				      "dsi0_phy_pll_out_byteclk",
-> @@ -2784,6 +2784,13 @@
->  							remote-endpoint = <&dsi0_in>;
->  						};
->  					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +						dpu_intf5_out: endpoint {
-> +							remote-endpoint = <&edp_in>;
-> +						};
-> +					};
->  				};
->  
->  				mdp_opp_table: opp-table {
-> @@ -2899,6 +2906,102 @@
->  
->  				status = "disabled";
->  			};
-> +
-> +			msm_edp: edp@aea0000 {
+Will add WCD Kconfig as separate patch.
 
-mdss_edp:
+>
+> I think I did point this out in previous versions too.
+>
+>
+> --srini
+>
+>
+>>       select SND_SOC_LPASS_RX_MACRO
+>>       select SND_SOC_LPASS_TX_MACRO
+>>       help
+>> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+>> index 625aec6..8b7b876 100644
+>> --- a/sound/soc/qcom/Makefile
+>> +++ b/sound/soc/qcom/Makefile
+>> @@ -1,18 +1,22 @@
+>>   # SPDX-License-Identifier: GPL-2.0
+>>   # Platform
+>>   snd-soc-lpass-cpu-objs := lpass-cpu.o
+>> +snd-soc-lpass-cdc-dma-objs := lpass-cdc-dma.o
+>>   snd-soc-lpass-hdmi-objs := lpass-hdmi.o
+>>   snd-soc-lpass-platform-objs := lpass-platform.o
+>>   snd-soc-lpass-ipq806x-objs := lpass-ipq806x.o
+>>   snd-soc-lpass-apq8016-objs := lpass-apq8016.o
+>>   snd-soc-lpass-sc7180-objs := lpass-sc7180.o
+>> +snd-soc-lpass-sc7280-objs := lpass-sc7280.o
+>>     obj-$(CONFIG_SND_SOC_LPASS_CPU) += snd-soc-lpass-cpu.o
+>> +obj-$(CONFIG_SND_SOC_LPASS_CDC_DMA) += snd-soc-lpass-cdc-dma.o
+>>   obj-$(CONFIG_SND_SOC_LPASS_HDMI) += snd-soc-lpass-hdmi.o
+>>   obj-$(CONFIG_SND_SOC_LPASS_PLATFORM) += snd-soc-lpass-platform.o
+>>   obj-$(CONFIG_SND_SOC_LPASS_IPQ806X) += snd-soc-lpass-ipq806x.o
+>>   obj-$(CONFIG_SND_SOC_LPASS_APQ8016) += snd-soc-lpass-apq8016.o
+>>   obj-$(CONFIG_SND_SOC_LPASS_SC7180) += snd-soc-lpass-sc7180.o
+>> +obj-$(CONFIG_SND_SOC_LPASS_SC7280) += snd-soc-lpass-sc7280.o
+>>     # Machine
+>>   snd-soc-storm-objs := storm.o
+>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-> +				compatible = "qcom,sc7280-edp";
-> +
-> +				reg = <0 0xaea0000 0 0x200>,
-> +				      <0 0xaea0200 0 0x200>,
-> +				      <0 0xaea0400 0 0xc00>,
-> +				      <0 0xaea1000 0 0x400>;
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <14>;
-> +
-> +				clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +					 <&gcc GCC_EDP_CLKREF_EN>,
-> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_EDP_AUX_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_EDP_LINK_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_EDP_LINK_INTF_CLK>,
-> +					 <&dispcc DISP_CC_MDSS_EDP_PIXEL_CLK>;
-> +				clock-names = "core_xo",
-> +					      "core_ref",
-> +					      "core_iface",
-> +					      "core_aux",
-> +					      "ctrl_link",
-> +					      "ctrl_link_iface",
-> +					      "stream_pixel";
-> +				#clock-cells = <1>;
-> +				assigned-clocks = <&dispcc DISP_CC_MDSS_EDP_LINK_CLK_SRC>,
-> +						  <&dispcc DISP_CC_MDSS_EDP_PIXEL_CLK_SRC>;
-> +				assigned-clock-parents = <&edp_phy 0>, <&edp_phy 1>;
-> +
-> +				phys = <&edp_phy>;
-> +				phy-names = "dp";
-> +
-> +				operating-points-v2 = <&edp_opp_table>;
-> +				power-domains = <&rpmhpd SC7280_CX>;
-> +
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				status = "disabled";
-> +
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +					port@0 {
-> +						reg = <0>;
-> +						edp_in: endpoint {
-> +							remote-endpoint = <&dpu_intf5_out>;
-> +						};
-> +					};
-> +				};
-> +
-> +				edp_opp_table: opp-table {
-> +					compatible = "operating-points-v2";
-> +
-> +					opp-160000000 {
-> +						opp-hz = /bits/ 64 <160000000>;
-> +						required-opps = <&rpmhpd_opp_low_svs>;
-> +					};
-> +
-> +					opp-270000000 {
-> +						opp-hz = /bits/ 64 <270000000>;
-> +						required-opps = <&rpmhpd_opp_svs>;
-> +					};
-> +
-> +					opp-540000000 {
-> +						opp-hz = /bits/ 64 <540000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +
-> +					opp-810000000 {
-> +						opp-hz = /bits/ 64 <810000000>;
-> +						required-opps = <&rpmhpd_opp_nom>;
-> +					};
-> +				};
-> +			};
-> +
-> +			edp_phy: phy@aec2a00 {
-
-mdss_edp_phy
-
-Thanks,
-Bjorn
-
-> +				compatible = "qcom,sc7280-edp-phy";
-> +
-> +				reg = <0 0xaec2a00 0 0x19c>,
-> +				      <0 0xaec2200 0 0xa0>,
-> +				      <0 0xaec2600 0 0xa0>,
-> +				      <0 0xaec2000 0 0x1c0>;
-> +
-> +				clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +					 <&gcc GCC_EDP_CLKREF_EN>;
-> +				clock-names = "aux",
-> +					      "cfg_ahb";
-> +
-> +				#clock-cells = <1>;
-> +				#phy-cells = <0>;
-> +
-> +				status = "disabled";
-> +			};
->  		};
->  
->  		pdc: interrupt-controller@b220000 {
-> -- 
-> 2.7.4
-> 
