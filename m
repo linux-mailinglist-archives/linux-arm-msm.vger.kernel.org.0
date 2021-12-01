@@ -2,122 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB2D464553
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 04:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C47146456D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 04:28:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241532AbhLADS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 22:18:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34340 "EHLO
+        id S231315AbhLADcA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 22:32:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbhLADSz (ORCPT
+        with ESMTP id S1346442AbhLADcA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 22:18:55 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C61CC061748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:15:35 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id o4so45572614oia.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:15:35 -0800 (PST)
+        Tue, 30 Nov 2021 22:32:00 -0500
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C3EC061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:28:39 -0800 (PST)
+Received: by mail-oo1-xc2b.google.com with SMTP id t9-20020a4a8589000000b002c5c4d19723so7372222ooh.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rfbZNyOXs7UYt/C8SkmVXDzLeccdUraAry8kNt9rMZA=;
-        b=qhCz1BA+Ld/I+a6hUZz6GSfV78ZB1+C79IXb383OdSPqeFCVEhXucliIAqQIYfb2RH
-         oDJWNmAWyb8xSfdx30TDI0BtGIQN8xHiz1mSHBJ4pPWdavVjJPu0NV9mpGjkPw4ZzZlu
-         fs4EYjDvCTad7QOeoj1m4sPkc8WJz62YBUeIGsuxnpbpz0Uo0Gcv1S7rImzTrrKzjLsv
-         hoNptFJ3CKWy/DWK1pX4e/5T5pRIETdrJnqRTcecI3lk/X/iTgox8Xfgw6M/gakVBNA3
-         Ps4FC1JualEzgrTB4DL02JhoOz/bRHWkY5TQmr9YfQxzYN2twPUOnZ4+GuwxpksYWCnG
-         N4tQ==
+        bh=MO98g5+euDpCVh/jM+G9QFzSNcP/DvDPu2ZrHFjPZiI=;
+        b=q6TBdnlLfvm7R0HoW22oepN5kftiW3DpHBwcdL5EVMVlQpGgSqkDtufnZK0r4iNdIh
+         D6RdI8R8ln6MLdW4KiWC2Rx6rbXBLAJuvtf3lRKF2ZTk+btOyK5q4eAVTg1NuhnMH60N
+         ir2AG6gVWCd+7tsmMUpib0VI1SFZTXsWTALpSenGMRJuKxA4me3+VxiJ68sGGyW7rsSy
+         hQWPJpQPuFRXS2IVI+hunuBpke78ZuO1pj7rH17exKzYX6ifp2647hw5KHKf7u5df+K2
+         rVlmY2XsKYDHsuZjjuOnSt1HZnLUx3m0A8nhApcOn+uH3etDRRTKh7HB6aSfpkjg820p
+         fNqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rfbZNyOXs7UYt/C8SkmVXDzLeccdUraAry8kNt9rMZA=;
-        b=ikE6oXaqeywNOmdiEAe37nmKptP4uBbBj8dWLhALaeAmf7AW9oWbjb5ZH5OUeGXQH3
-         QUkkLEN5l5A8PUUIkhVTG7/3aDleuMxv36FnbviAHyWfqpIWZb0oD2MxL/TDUP/JbeeV
-         WFS7jWd0kjxqbF0k0CgH0tPGJYuqCuBhJm+4OSlZbDI1NNF6uf85kyeb/fJMan2F2ErM
-         KVZW0CO7ceBGfE0zTd9ytgO2DXyxyEukt5mC0leIeCO3hZXZ7lyJ6pz1YKvhaIxHalU9
-         j7yv61vGfaLRpUers7v2EV2rh88fL98asZRGdiMzETd8b2Dqy0c7eCYqMMyOZLRWyIob
-         Q/cg==
-X-Gm-Message-State: AOAM533YyiqQaodehabaUeO74I1GXfiuOKcmzK7xW4H2nccNZl9SJ8rD
-        Kl+t5fKL2IbYe10hPRI7mf1kdw==
-X-Google-Smtp-Source: ABdhPJwg6EqePcEwKHucsIyJya6VWBAF7FYeTcj8e1CJTYhg7dUqr13M8WjqUM3vCIK1ZVGKUj9BBg==
-X-Received: by 2002:a05:6808:1285:: with SMTP id a5mr3515158oiw.104.1638328534673;
-        Tue, 30 Nov 2021 19:15:34 -0800 (PST)
+        bh=MO98g5+euDpCVh/jM+G9QFzSNcP/DvDPu2ZrHFjPZiI=;
+        b=TFVaghzhQzD4oDchzS9GUqQkrRULeCnTI5EJ/Y7G1N6GtOsWgry27xa5HIPMmy0NFA
+         SE/XarunjPxxIaP24qYhzqFEbW8HBO14ugJXdgcagdvbg63HbLLPpHcA91/moMoB0VKT
+         jIV5unq8DwwdPGmFgAqgltWRmzgfUS6ulC5SDrdhtI6tpBy7/cb0tU+Nsu/t5m6ECRZq
+         cXo3GfN2qlXPABA6Dl7vj8dwxjAcXGH2FhZungC7Ve5LZoyOaHaaU3whwpLvjxEEGtqe
+         QlAdkvVBNGWKXIbKW1QXnRgGtwrsi7LhlymYYIknsaByqTg/zz1/UhSKmqwh4ZSs34Xy
+         HbRQ==
+X-Gm-Message-State: AOAM530VaiL7D6zwtjkJgv9tHnADcy8GVWnTumUAjQiNwMdyQU7/X3kx
+        9NYIB5A+Rn40+aKIZ2SCgblxhQ==
+X-Google-Smtp-Source: ABdhPJxRV0wt7Uha2/z9XZkBUc9mYcppiJ72YLqp1ThPKmdn8S+ZpdjExghjKIx6cLzq0lU87Q2lnA==
+X-Received: by 2002:a4a:d854:: with SMTP id g20mr2695766oov.6.1638329319096;
+        Tue, 30 Nov 2021 19:28:39 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s17sm3057269ooj.42.2021.11.30.19.15.33
+        by smtp.gmail.com with ESMTPSA id w24sm3394628ots.10.2021.11.30.19.28.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 19:15:34 -0800 (PST)
-Date:   Tue, 30 Nov 2021 21:15:29 -0600
+        Tue, 30 Nov 2021 19:28:38 -0800 (PST)
+Date:   Tue, 30 Nov 2021 21:28:33 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Katherine Perez <kaperez@linux.microsoft.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: sm8350: fix tlmm base address
-Message-ID: <Yabo0fGXC1rITmsM@builder.lan>
-References: <20211122190552.74073-1-kaperez@linux.microsoft.com>
- <20211122190552.74073-3-kaperez@linux.microsoft.com>
- <YZxoGp33Seaa2WEG@matsya>
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com
+Subject: Re: [PATCH 2/2] arm64: qcom: sc7280: Add USB2 controller and phy
+ nodes for SKU1 board
+Message-ID: <Yabr4azUasmQDy7U@builder.lan>
+References: <1637837815-8532-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1637837815-8532-3-git-send-email-quic_c_sanm@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YZxoGp33Seaa2WEG@matsya>
+In-Reply-To: <1637837815-8532-3-git-send-email-quic_c_sanm@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 22 Nov 22:03 CST 2021, Vinod Koul wrote:
+On Thu 25 Nov 04:56 CST 2021, Sandeep Maheswaram wrote:
 
-> On 22-11-21, 11:05, Katherine Perez wrote:
-> > TLMM controller base address is incorrect and will hang on some platforms.
-> > Fix by giving the correct address.
+> Adding USB2 controller and phy nodes for SC7280 SKU1 board.
 > 
-> Thanks, recheck the spec this looks correct. We should have tlmm reg
-> space here and not tlmm base which also contains xpu region (thus hang)
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index 9b991ba..ffd483d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -80,3 +80,19 @@
+>  		qcom,pre-scaling = <1 1>;
+>  	};
+>  };
+> +
+> +&usb_2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_dwc3 {
+> +	dr_mode = "host";
 
-Aren't you reading the patch backwards?
+The commit messages doesn't capture why the mode changes from peripheral
+to host.
 
-Afaict downstream the driver carries an offset of 0x100000, which we
-dropped as we upstreamed the driver. As such changing reg to 0x0f000000
-should cause most gpio register accesses to fall outside the actual
-register window.
+> +};
+> +
+> +&usb_2_hsphy {
 
-Or perhaps I'm missing something here?
+Is this specific to this SKU? Is there a reason not to keep this in the
+dtsi?
 
-Regards,
+
+Please squash the two patches and please write a proper commit message.
+
+Thanks,
 Bjorn
 
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
-> 
-> > 
-> > Signed-off-by: Katherine Perez <kaperez@linux.microsoft.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8350.dtsi | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> > index d134280e2939..624d294612d8 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> > @@ -960,9 +960,9 @@ spmi_bus: spmi@c440000 {
-> >  			#interrupt-cells = <4>;
-> >  		};
-> >  
-> > -		tlmm: pinctrl@f100000 {
-> > +		tlmm: pinctrl@f000000 {
-> >  			compatible = "qcom,sm8350-tlmm";
-> > -			reg = <0 0x0f100000 0 0x300000>;
-> > +			reg = <0 0x0f000000 0 0x300000>;
-> >  			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> >  			gpio-controller;
-> >  			#gpio-cells = <2>;
-> > -- 
-> > 2.31.1
-> 
+> +	status = "okay";
+> +
+> +	vdda-pll-supply = <&vreg_l10c_0p8>;
+> +	vdda33-supply = <&vreg_l2b_3p0>;
+> +	vdda18-supply = <&vreg_l1c_1p8>;
+> +};
 > -- 
-> ~Vinod
+> 2.7.4
+> 
