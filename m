@@ -2,149 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EBCF464612
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 05:49:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 911BF46462B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 05:55:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346641AbhLAEwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 23:52:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346635AbhLAEwk (ORCPT
+        id S1346647AbhLAE6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 23:58:41 -0500
+Received: from bzq-84-110-109-230.red.bezeqint.net ([84.110.109.230]:42015
+        "EHLO mx.tkos.co.il" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S230301AbhLAE6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 23:52:40 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61B2C061748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 20:49:19 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id k23so45622225lje.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 20:49:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pSuFVsq72hPtsLKMPEQ8DAcqHMPcbxuH5KA1VU6GhFs=;
-        b=WygDa/xjukSsfZ3t/wUdmzO12DGsKJzy7Z52zlGIGju7QuGsOoySE2lsHy4njUCoj4
-         JQ5Mew/AzuBan0+5nwppPJPvzOn02B0Pw9o7p36wdus2VssT0BVE5ijjuTVgziWx0xtf
-         ubDuYqWlEuQyVtGAYfaQuntUwqAKQT0qkN0dxvtUofbT25sFEo6AWvINVvib6W+U26fj
-         9yrHjXhLd1IT4k3s7H2zmDqvNbOToyutXVGHrG/sBHBbxn2F8PnFvEob49OFBxIEtqmT
-         u6C8c3WqkoRuOXTgrqznEIzjrQY1QoY3i+wVoBKcpWMdpugUHVxRKYV2nTX/F5iIlGgz
-         Y39w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pSuFVsq72hPtsLKMPEQ8DAcqHMPcbxuH5KA1VU6GhFs=;
-        b=y0a44vBi/VpG9Idl22oZpfpBhSphmV70sMWQLN0rnwXAK9tW/NQC8ptx+ee7iPqK0q
-         5xOiAYCxzgcEghjUliBx11DpYQiDwCqdS46EsGTCMlTX8fMwmw1kn7QDPf7guzfE3YBF
-         qygE5J3mPd1/+1wGKZAOluF8EeOoAiDEYzOYRcD2uilkr/dW5Abgr1y6APGQWwt+dIIv
-         3+i55XaDgxhp/kj87kU5qFpc/NYdxTQm4p6IG6XqGzwzPmcdmH6G3EQW5eM1mV27f4FL
-         K+IVFF2LuZo5q7Qau+2tQ+8ZAvAAuXd8JMEfQI7J/FgPf13O7apigdH5nJOz3wc1Q4vL
-         kOHA==
-X-Gm-Message-State: AOAM530LkFvpQcNIaqmZzLsk83o+V8dxsHfJ/zmE0sEQeYLA9Yl+t3Fh
-        WWCTrZuRiG0Y4loWYpSWPlhcPgMYgmmx9Jlxl27V7Ciq9Ug=
-X-Google-Smtp-Source: ABdhPJyYGpWJxGsf/XYVUyOuiOOdY4Uh8JZPBGRQpLk6LZ3/Q5QFwe8+nOPGsLiudEOkhvZOG7NtSRYKY8E27+Jnyn0=
-X-Received: by 2002:a2e:984f:: with SMTP id e15mr3265777ljj.427.1638334157424;
- Tue, 30 Nov 2021 20:49:17 -0800 (PST)
+        Tue, 30 Nov 2021 23:58:40 -0500
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id 4FAF1440EF5;
+        Wed,  1 Dec 2021 06:55:05 +0200 (IST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
+        s=default; t=1638334505;
+        bh=/9UgSQBguvDNEg21C4Vht5zcaGeUIg9+CJ/8Ytppoqg=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=CuqDgOeRLuaDyaGPkDXfSRSU7fRiuG8jS25Yb1KgjkS5nAcnHAKoMFCm9xAms7OIX
+         +ZmJsIPIAgRQxETU6FmNynvqUuzTfHvwGkW7AUwzY65N4AjcEJSehKc/ZgulSqty/C
+         KdzcXj1PEGG5OnHAB2OIDAzjwOr7uzA+9s6zy5BdwPLhKX1tHR9Nz+Sa6l+15Y4CO1
+         9kgDoQI/qCg47AHXRhx3LV6FBDv3o9vkmR7F1/XsyuXvPAC2Oe70l7ANc255vRudVF
+         C2p+3/GQP9cKIRghHsotxVTIbPQ8hmJqruAbK1dPR3/d2AwqUNgqAZOMdl/jNln75x
+         jzl7Pr0pra+ow==
+References: <8137a76d66146dd5c1efa0c46c60de5766b7a349.1638293850.git.baruch@tkos.co.il>
+ <62ec6016400e80ee379c07ef2c80abbf7f60bbe2.1638293850.git.baruch@tkos.co.il>
+ <1638304586.245688.2968346.nullmailer@robh.at.kernel.org>
+User-agent: mu4e 1.6.10; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, devicetree@vger.kernel.org,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org,
+        Balaji Prakash J <bjagadee@codeaurora.org>
+Subject: Re: [PATCH v9 2/3] dt-bindings: pwm: add IPQ6018 binding
+Date:   Wed, 01 Dec 2021 06:49:24 +0200
+In-reply-to: <1638304586.245688.2968346.nullmailer@robh.at.kernel.org>
+Message-ID: <87ee6wgc0b.fsf@tarshish>
 MIME-Version: 1.0
-References: <20211029214833.2615274-1-tadeusz.struk@linaro.org> <YZ2x+xuvnHC48MHg@ripper>
-In-Reply-To: <YZ2x+xuvnHC48MHg@ripper>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Tue, 30 Nov 2021 20:49:06 -0800
-Message-ID: <CALAqxLV7YzuHLzNFSWawjpoJGb3WwO4bgnMN_5mWoHmB582kZw@mail.gmail.com>
-Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
- and enc/dec
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Tadeusz Struk <tadeusz.struk@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 23, 2021 at 7:29 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 29 Oct 14:48 PDT 2021, Tadeusz Struk wrote:
->
-> > Venus video encode/decode hardware driver consists of three modules.
-> > The parent module venus-core, and two sub modules venus-enc and venus-dec.
-> > The venus-core module allocates a common structure that is used by the
-> > enc/dec modules, loads the firmware, and performs some common hardware
-> > initialization. Since the three modules are loaded one after the other,
-> > and their probe functions can run in parallel it is possible that
-> > the venc_probe and vdec_probe functions can finish before the core
-> > venus_probe function, which then can fail when, for example it
-> > fails to load the firmware. In this case the subsequent call to venc_open
-> > causes an Oops as it tries to dereference already uninitialized structures
-> > through dev->parent and the system crashes in __pm_runtime_resume() as in
-> > the trace below:
-> >
-> > [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
-> > [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
-> > [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
-> > [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
-> > [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
-> > [   26.290326][  T485] Call trace:
-> > [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
-> > [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
-> > [   26.290335][  T485]  v4l2_open+0x184/0x294
-> > [   26.290340][  T485]  chrdev_open+0x468/0x5c8
-> > [   26.290344][  T485]  do_dentry_open+0x260/0x54c
-> > [   26.290349][  T485]  path_openat+0xbe8/0xd5c
-> > [   26.290352][  T485]  do_filp_open+0xb8/0x168
-> > [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
-> > [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
-> > [   26.290359][  T485]  invoke_syscall+0x60/0x170
-> > [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
-> > [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
-> > [   26.290367][  T485]  el0_svc_compat+0x24/0x84
-> > [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
-> > [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
-> > [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
-> > [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
-> >
-> > This can be fixed by synchronizing the three probe functions and
-> > only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
-> > returns success.
-> >
-> > Changes in v2:
-> > - Change locking from mutex_lock to mutex_trylock
-> >   in venc_probe and vdec_probe to avoid potential deadlock.
-> >
->
-> Rather than trying to synchronize away the side effects of
-> of_platform_populate() I think we should stop using it.
->
-> I had the very same problem in the qcom_wcnss remoteproc driver and
-> in below change I got rid of that by manually initializing a struct
-> device for the child node. In the event that the child probe defer I
-> would just probe defer the parent as well.
->
-> 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
->
-> The change might look a little bit messy, but the end result it much
-> cleaner than relying on various locks etc.
->
->
-> But in the qcom_wcnss case I have a child _device_ because I need
-> something to do e.g. regulator_get() on. I fail to see why venc and vdec
-> are devices in the first place.
+Hi Rob,
 
-I definitely agree with Bjorn that all this asynchronous component
-probing feels overly complicated, and a rework is probably the better
-solution.
+On Tue, Nov 30 2021, Rob Herring wrote:
+> On Tue, 30 Nov 2021 19:37:29 +0200, Baruch Siach wrote:
+>> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+>>=20
+>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>> ---
+>>=20
+>> v9:
+>>=20
+>>   Add 'ranges' property to example (Rob)
+>>=20
+>>   Drop label in example (Rob)
+>>=20
+>> v8:
+>>=20
+>>   Add size cell to 'reg' (Rob)
+>>=20
+>> v7:
+>>=20
+>>   Use 'reg' instead of 'offset' (Rob)
+>>=20
+>>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+>>=20
+>>   Use single cell address/size in example node (Bjorn)
+>>=20
+>>   Move '#pwm-cells' lower in example node (Bjorn)
+>>=20
+>>   List 'reg' as required
+>>=20
+>> v6:
+>>=20
+>>   Device node is child of TCSR; remove phandle (Rob Herring)
+>>=20
+>>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-K=C3=B6nig)
+>>=20
+>> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>>     Andersson, Kathiravan T)
+>>=20
+>> v4: Update the binding example node as well (Rob Herring's bot)
+>>=20
+>> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>>=20
+>> v2: Make #pwm-cells const (Rob Herring)
+>> ---
+>>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
+>>  1 file changed, 53 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>>=20
+>
+> My bot found errors running 'make DT_CHECKER_FLAGS=3D-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>
+> yamllint warnings/errors:
+>
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0:
+> /example-0/syscon@1937000: failed to match any schema with compatible:
+> ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
 
-Though my only question is:  is someone planning to do this rework?
+My previous submission[1] had this text above the patch changelog:
 
-In the meantime, Tadeusz' patch does resolve a *very* frequent boot
-crash seen when the venus driver is enabled.
-So Stanimir, should we consider merging this as a stop gap until the
-larger probe rework is done?
+---
+This series does not convert the TCSR binding documentation to YAML. As
+a result, this commit adds new a dt_binding_check warning:
 
-thanks
--john
+/example-0/syscon@1937000: failed to match any schema with compatible: ['qc=
+om,tcsr-ipq 6018', 'syscon', 'simple-mfd']
+
+If that is a blocker to IPQ6018 PWM support, so be it. Patches will wait
+for someone else to push them further.
+---
+
+This time I missed the 'DT_CHECKER_FLAGS=3D-m' part so I didn't see the
+error.
+
+Thanks for the reminder,
+baruch
+
+[1] https://lore.kernel.org/all/8238dfb5d5e4a40a995f047db36d9a7240431de5.16=
+30323987.git.baruch@tkos.co.il/
+
+> doc reference errors (make refcheckdocs):
+>
+> See https://patchwork.ozlabs.org/patch/1561766
+>
+> This check can fail if there are any dependencies. The base for a patch
+> series is generally the most recent rc1.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit.
+
+
+--=20
+                                                     ~. .~   Tk Open Systems
+=3D}------------------------------------------------ooO--U--Ooo------------=
+{=3D
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
