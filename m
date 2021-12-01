@@ -2,126 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25E9B4649E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 09:41:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F582464A06
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 09:42:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231756AbhLAIoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 03:44:24 -0500
-Received: from mga12.intel.com ([192.55.52.136]:49453 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1348093AbhLAInC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 03:43:02 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10184"; a="216432216"
-X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
-   d="scan'208";a="216432216"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 00:39:28 -0800
-X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
-   d="scan'208";a="596159000"
-Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.72.185])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 00:39:26 -0800
-Received: from platvala by thrakatuluk with local (Exim 4.94)
-        (envelope-from <petri.latvala@intel.com>)
-        id 1msL8N-0003rL-Gt; Wed, 01 Dec 2021 10:38:35 +0200
-Date:   Wed, 1 Dec 2021 10:38:35 +0200
-From:   Petri Latvala <petri.latvala@intel.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     igt-dev@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>
-Subject: Re: [igt-dev] [PATCH igt 1/2] igt: Split out I/O helpers
-Message-ID: <Yac0i2wEZbH32lbL@platvala-desk.ger.corp.intel.com>
-References: <20211130004324.337399-1-robdclark@gmail.com>
- <20211130004324.337399-2-robdclark@gmail.com>
+        id S236824AbhLAIqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 03:46:08 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.160]:34830 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232256AbhLAIqI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 03:46:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638348167;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=weXKgw4iwBoVH890jJwopyMorOvqZZBQX0hK5OUbKsk=;
+    b=Z1vsLqtG+1eLLFGWVyBwADS+N/VCK7e3P2KiFufQUd+Ki9aYsfqfhbeIFMYVoY2knS
+    r/7uulLi/XdBiaA5/voaE9YTtCxvbLFakPLmF8g4g8dTbjKsKCGl5xPt7ytngs6zJRTO
+    2g2qYyE1WYAHR6k/7WiDCVyPkIKCTpU3or2jkO8UD29+uymUA7ceWKn4nIOclJb1NtYD
+    fJZsuZ1EAcaraeGMiyZTUL1qu0h/4KR4jxUt1b9NF1b/OGnbMF76OniTxJtXRR8Jxe4m
+    T8NvOexnb9jUGjOU4xjs7domMjXaJm94aM8UbXpkLLrotjl7qO1Y+CQvXg8hXw4EPlfS
+    EKVg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK85/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.34.10 AUTH)
+    with ESMTPSA id j03bcbxB18gkeSR
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 1 Dec 2021 09:42:46 +0100 (CET)
+Date:   Wed, 1 Dec 2021 09:42:41 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916: fix MMC controller aliases
+Message-ID: <Yac1gYXpwnBZDcuT@gerhold.net>
+References: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211130004324.337399-2-robdclark@gmail.com>
-X-Patchwork-Hint: comment
+In-Reply-To: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 29, 2021 at 04:43:23PM -0800, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Wed, Dec 01, 2021 at 05:05:59AM +0300, Dmitry Baryshkov wrote:
+> Change sdhcN aliases to mmcN to make them actually work. Currently the
+> board uses non-standard aliases sdhcN, which do not work, resulting in
+> mmc0 and mmc1 hosts randomly changing indices between boots.
 > 
-> Split the readN()/writeN() helpers out into an igt_io module, so they
-> can be re-used by tests.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Fixes: c4da5a561627 ("arm64: dts: qcom: Add msm8916 sdhci configuration nodes")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+I've been meaning to fix this for quite some time, but whenever I tried
+I wasn't actually able to reproduce the random numbering. They were
+always numbered correctly but that was probably lucky coincidence. :)
+Thanks for sending this!
+
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+
 > ---
->  lib/igt_io.c    | 96 +++++++++++++++++++++++++++++++++++++++++++++++++
->  lib/igt_io.h    | 33 +++++++++++++++++
->  lib/igt_sysfs.c | 45 +++--------------------
->  lib/meson.build |  1 +
->  4 files changed, 135 insertions(+), 40 deletions(-)
->  create mode 100644 lib/igt_io.c
->  create mode 100644 lib/igt_io.h
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/lib/igt_io.c b/lib/igt_io.c
-> new file mode 100644
-> index 00000000..ad54cbe5
-> --- /dev/null
-> +++ b/lib/igt_io.c
-> @@ -0,0 +1,96 @@
-> +/*
-> + * Copyright © 2016 Intel Corporation
-> + *
-> + * Permission is hereby granted, free of charge, to any person obtaining a
-> + * copy of this software and associated documentation files (the "Software"),
-> + * to deal in the Software without restriction, including without limitation
-> + * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-> + * and/or sell copies of the Software, and to permit persons to whom the
-> + * Software is furnished to do so, subject to the following conditions:
-> + *
-> + * The above copyright notice and this permission notice (including the next
-> + * paragraph) shall be included in all copies or substantial portions of the
-> + * Software.
-> + *
-> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-> + * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-> + * IN THE SOFTWARE.
-> + *
-> + */
-> +
-> +#include <errno.h>
-> +#include <stdlib.h>
-> +#include <unistd.h>
-> +
-> +#include "igt_io.h"
-> +
-> +/**
-> + * SECTION:igt_io
-> + * @short_description: Helpers for file I/O
-> + * @title: io
-> + * @include: igt_io.h
-> + *
-> + * This library provides helpers for file I/O
-> + */
-> +
-
-This new section needs to be explicitly included in the docs. Squash this in:
-
-diff --git a/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml b/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
-index 189597c6..0dc5a0b7 100644
---- a/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
-+++ b/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
-@@ -30,6 +30,7 @@
-     <xi:include href="xml/igt_fb.xml"/>
-     <xi:include href="xml/igt_frame.xml"/>
-     <xi:include href="xml/igt_gt.xml"/>
-+    <xi:include href="xml/igt_io.xml"/>
-     <xi:include href="xml/igt_kmod.xml"/>
-     <xi:include href="xml/igt_kms.xml"/>
-     <xi:include href="xml/igt_list.xml"/>
-
-
-
--- 
-Petri Latvala
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index c1c42f26b61e..8be601275e9b 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -19,8 +19,8 @@ / {
+>  	#size-cells = <2>;
+>  
+>  	aliases {
+> -		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
+> -		sdhc2 = &sdhc_2; /* SDC2 SD card slot */
+> +		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
+> +		mmc1 = &sdhc_2; /* SDC2 SD card slot */
+>  	};
+>  
+>  	chosen { };
+> -- 
+> 2.33.0
+> 
