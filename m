@@ -2,128 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 983A6464594
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 04:50:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EBCF464612
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 05:49:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241583AbhLADxc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 22:53:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42044 "EHLO
+        id S1346641AbhLAEwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 23:52:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229886AbhLADxc (ORCPT
+        with ESMTP id S1346635AbhLAEwk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 22:53:32 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06BB6C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:50:11 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id g11-20020a4a754b000000b002c679a02b18so7388193oof.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 19:50:11 -0800 (PST)
+        Tue, 30 Nov 2021 23:52:40 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D61B2C061748
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 20:49:19 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id k23so45622225lje.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 20:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Vh64HlEJjPzjJ+Mpfa13ShJlj+Z94ObsnHICCNTz+Qs=;
-        b=lgIhSMrQStWm/xh3G3jIw9VllTe2uKgdqLWQywK8mPMN+TqFpMnWA8BVqxedCNZIp0
-         tfQc8DXMlTjFF4Mh5ojJuwIVQesS4v57XTZM//Z39i1QChQU1Dsu1aGMXjBCicJXJm7B
-         Jx4/Ht00O9olvh5hPGd/uv2678KjeqEYOfEFNoSpPbBvGMtvgOvM6aGOQuYBcokK1u1u
-         INobD5negB4q1vdB3i4zUVAbOYa3ZkpJ3RDJYEwBZe4oXxE1moESg3Vr5ni+nfJVs1BR
-         mGOXt2ti5p+WmIiRwXIuxwkmdNPwAXIIkZ1XJEYTm4BEMnYkCekrCuJHb57FTkGemFsW
-         hiow==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pSuFVsq72hPtsLKMPEQ8DAcqHMPcbxuH5KA1VU6GhFs=;
+        b=WygDa/xjukSsfZ3t/wUdmzO12DGsKJzy7Z52zlGIGju7QuGsOoySE2lsHy4njUCoj4
+         JQ5Mew/AzuBan0+5nwppPJPvzOn02B0Pw9o7p36wdus2VssT0BVE5ijjuTVgziWx0xtf
+         ubDuYqWlEuQyVtGAYfaQuntUwqAKQT0qkN0dxvtUofbT25sFEo6AWvINVvib6W+U26fj
+         9yrHjXhLd1IT4k3s7H2zmDqvNbOToyutXVGHrG/sBHBbxn2F8PnFvEob49OFBxIEtqmT
+         u6C8c3WqkoRuOXTgrqznEIzjrQY1QoY3i+wVoBKcpWMdpugUHVxRKYV2nTX/F5iIlGgz
+         Y39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Vh64HlEJjPzjJ+Mpfa13ShJlj+Z94ObsnHICCNTz+Qs=;
-        b=fxxi9PV380V0t0hbT8CrKuZYC7tA3toObbF9lC35SHN0SPcaDGuepiKCVCmPnAh6wF
-         5qXkpII401oGOE0on7YDkFRh3nBCWRZx7XaiyuH6b4nTK+eVu/2BnvfK/WGQoDt0Cy0r
-         tjUI1ABylEiv/DC0he+uIpNfLeutxOQhkXdkbdCl9mlMoZutEFsw2c23CXnpRQxym76v
-         xd/O0G9sJV4dd8n3c6JWAnrjS6tob5XLbEXn0Mk6/pAxs8qDwPSxzmLc9CwSi1ej0+nu
-         g0AIOda0V2sNDVBgf4k4mOP7wPgZ4B2bliyZJZoAOndEjE30nTvz4Uoq3TuWJEnkkvQn
-         ESSg==
-X-Gm-Message-State: AOAM530WDVLbEqEhl3J0VydQA6kiWmpvTB2FeLrQOff5IfptoIv2oeIj
-        bupLbEMaT5u0vgtnf+yryd/Ylw==
-X-Google-Smtp-Source: ABdhPJzH+r5KszynhMHork3TPK+4l/u0Mu1pjmCk4Dh4XaNoVyejeWYQu/mXe80D4FYluMpd7xN6VQ==
-X-Received: by 2002:a4a:a641:: with SMTP id j1mr2714339oom.63.1638330611085;
-        Tue, 30 Nov 2021 19:50:11 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x16sm3574994otq.47.2021.11.30.19.50.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Nov 2021 19:50:10 -0800 (PST)
-Date:   Tue, 30 Nov 2021 21:50:06 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, phone-devel@vger.kernel.org,
-        Aleksander Morgado <aleksander@aleksander.es>
-Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Populate additional
- devices from DT
-Message-ID: <Yabw7kCsbhE1EFhW@builder.lan>
-References: <20211129132930.6901-1-stephan@gerhold.net>
- <20211129132930.6901-2-stephan@gerhold.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pSuFVsq72hPtsLKMPEQ8DAcqHMPcbxuH5KA1VU6GhFs=;
+        b=y0a44vBi/VpG9Idl22oZpfpBhSphmV70sMWQLN0rnwXAK9tW/NQC8ptx+ee7iPqK0q
+         5xOiAYCxzgcEghjUliBx11DpYQiDwCqdS46EsGTCMlTX8fMwmw1kn7QDPf7guzfE3YBF
+         qygE5J3mPd1/+1wGKZAOluF8EeOoAiDEYzOYRcD2uilkr/dW5Abgr1y6APGQWwt+dIIv
+         3+i55XaDgxhp/kj87kU5qFpc/NYdxTQm4p6IG6XqGzwzPmcdmH6G3EQW5eM1mV27f4FL
+         K+IVFF2LuZo5q7Qau+2tQ+8ZAvAAuXd8JMEfQI7J/FgPf13O7apigdH5nJOz3wc1Q4vL
+         kOHA==
+X-Gm-Message-State: AOAM530LkFvpQcNIaqmZzLsk83o+V8dxsHfJ/zmE0sEQeYLA9Yl+t3Fh
+        WWCTrZuRiG0Y4loWYpSWPlhcPgMYgmmx9Jlxl27V7Ciq9Ug=
+X-Google-Smtp-Source: ABdhPJyYGpWJxGsf/XYVUyOuiOOdY4Uh8JZPBGRQpLk6LZ3/Q5QFwe8+nOPGsLiudEOkhvZOG7NtSRYKY8E27+Jnyn0=
+X-Received: by 2002:a2e:984f:: with SMTP id e15mr3265777ljj.427.1638334157424;
+ Tue, 30 Nov 2021 20:49:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211129132930.6901-2-stephan@gerhold.net>
+References: <20211029214833.2615274-1-tadeusz.struk@linaro.org> <YZ2x+xuvnHC48MHg@ripper>
+In-Reply-To: <YZ2x+xuvnHC48MHg@ripper>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 30 Nov 2021 20:49:06 -0800
+Message-ID: <CALAqxLV7YzuHLzNFSWawjpoJGb3WwO4bgnMN_5mWoHmB582kZw@mail.gmail.com>
+Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
+ and enc/dec
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 29 Nov 07:29 CST 2021, Stephan Gerhold wrote:
+On Tue, Nov 23, 2021 at 7:29 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 29 Oct 14:48 PDT 2021, Tadeusz Struk wrote:
+>
+> > Venus video encode/decode hardware driver consists of three modules.
+> > The parent module venus-core, and two sub modules venus-enc and venus-dec.
+> > The venus-core module allocates a common structure that is used by the
+> > enc/dec modules, loads the firmware, and performs some common hardware
+> > initialization. Since the three modules are loaded one after the other,
+> > and their probe functions can run in parallel it is possible that
+> > the venc_probe and vdec_probe functions can finish before the core
+> > venus_probe function, which then can fail when, for example it
+> > fails to load the firmware. In this case the subsequent call to venc_open
+> > causes an Oops as it tries to dereference already uninitialized structures
+> > through dev->parent and the system crashes in __pm_runtime_resume() as in
+> > the trace below:
+> >
+> > [   26.064835][  T485] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> > [   26.270914][  T485] Hardware name: Thundercomm Dragonboard 845c (DT)
+> > [   26.285019][  T485] pc : __pm_runtime_resume+0x34/0x178
+> > [   26.286374][  T213] lt9611 10-003b: hdmi cable connected
+> > [   26.290285][  T485] lr : venc_open+0xc0/0x278 [venus_enc]
+> > [   26.290326][  T485] Call trace:
+> > [   26.290328][  T485]  __pm_runtime_resume+0x34/0x178
+> > [   26.290330][  T485]  venc_open+0xc0/0x278 [venus_enc]
+> > [   26.290335][  T485]  v4l2_open+0x184/0x294
+> > [   26.290340][  T485]  chrdev_open+0x468/0x5c8
+> > [   26.290344][  T485]  do_dentry_open+0x260/0x54c
+> > [   26.290349][  T485]  path_openat+0xbe8/0xd5c
+> > [   26.290352][  T485]  do_filp_open+0xb8/0x168
+> > [   26.290354][  T485]  do_sys_openat2+0xa4/0x1e8
+> > [   26.290357][  T485]  __arm64_compat_sys_openat+0x70/0x9c
+> > [   26.290359][  T485]  invoke_syscall+0x60/0x170
+> > [   26.290363][  T485]  el0_svc_common+0xb8/0xf8
+> > [   26.290365][  T485]  do_el0_svc_compat+0x20/0x30
+> > [   26.290367][  T485]  el0_svc_compat+0x24/0x84
+> > [   26.290372][  T485]  el0t_32_sync_handler+0x7c/0xbc
+> > [   26.290374][  T485]  el0t_32_sync+0x1b8/0x1bc
+> > [   26.290381][  T485] ---[ end trace 04ca7c088b4c1a9c ]---
+> > [   26.290383][  T485] Kernel panic - not syncing: Oops: Fatal exception
+> >
+> > This can be fixed by synchronizing the three probe functions and
+> > only allowing the venc_probe() and vdec_probe() to pass when venus_probe()
+> > returns success.
+> >
+> > Changes in v2:
+> > - Change locking from mutex_lock to mutex_trylock
+> >   in venc_probe and vdec_probe to avoid potential deadlock.
+> >
+>
+> Rather than trying to synchronize away the side effects of
+> of_platform_populate() I think we should stop using it.
+>
+> I had the very same problem in the qcom_wcnss remoteproc driver and
+> in below change I got rid of that by manually initializing a struct
+> device for the child node. In the event that the child probe defer I
+> would just probe defer the parent as well.
+>
+> 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
+>
+> The change might look a little bit messy, but the end result it much
+> cleaner than relying on various locks etc.
+>
+>
+> But in the qcom_wcnss case I have a child _device_ because I need
+> something to do e.g. regulator_get() on. I fail to see why venc and vdec
+> are devices in the first place.
 
-> Some devices without own memory resources could be placed anywhere in the
-> device tree but they logically belong to the modem remote processor. Make
-> it possible to probe them when defined under the mpss device tree node
-> by calling of_platform_populate().
-> 
+I definitely agree with Bjorn that all this asynchronous component
+probing feels overly complicated, and a rework is probably the better
+solution.
 
-This seems reasonable, but other "child devices" of the remoteproc
-follows the state of the remoteproc instance. So I'm worried that this
-will create an inconsistency in that assumption.
+Though my only question is:  is someone planning to do this rework?
 
-> This can be used for BAM-DMUX for example, which provides the WWAN network
-> interfaces on some older Qualcomm SoCs such as MSM8916 or MSM8974.
-> 
+In the meantime, Tadeusz' patch does resolve a *very* frequent boot
+crash seen when the venus driver is enabled.
+So Stanimir, should we consider merging this as a stop gap until the
+larger probe rework is done?
 
-Is there a technical reason for placing the BAM-DMUX within the modem
-remoteproc node? Can we simply move it to / ?
-
-Regards,
-Bjorn
-
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 43ea8455546c..69f3d1ebf1f1 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -1989,8 +1989,14 @@ static int q6v5_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto remove_sysmon_subdev;
->  
-> +	ret = of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
-> +	if (ret)
-> +		goto remove_rproc;
-> +
->  	return 0;
->  
-> +remove_rproc:
-> +	rproc_del(rproc);
->  remove_sysmon_subdev:
->  	qcom_remove_sysmon_subdev(qproc->sysmon);
->  remove_subdevs:
-> @@ -2010,6 +2016,7 @@ static int q6v5_remove(struct platform_device *pdev)
->  	struct q6v5 *qproc = platform_get_drvdata(pdev);
->  	struct rproc *rproc = qproc->rproc;
->  
-> +	of_platform_depopulate(&pdev->dev);
->  	rproc_del(rproc);
->  
->  	qcom_q6v5_deinit(&qproc->q6v5);
-> -- 
-> 2.34.1
-> 
+thanks
+-john
