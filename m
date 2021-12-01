@@ -2,87 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DBD2464457
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 02:01:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85D574644BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 03:06:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237155AbhLABFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 Nov 2021 20:05:00 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:4123 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236512AbhLABE7 (ORCPT
+        id S229918AbhLACJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 Nov 2021 21:09:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231168AbhLACJX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 Nov 2021 20:04:59 -0500
+        Tue, 30 Nov 2021 21:09:23 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D31C061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 18:06:02 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id u3so58770320lfl.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Nov 2021 18:06:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638320499; x=1669856499;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=Tmns+pSWd50vLS9F74F2TuYEdYx1lfAxUZZYVCRGMt8=;
-  b=TdoTIax1R+41ZQlMNr7XiRdt+AN3sBvKCgu4KzBMIRu66JoduMS575XG
-   4o+OVuYm+Tp6dSY6xNaX1PuqgGTo9NE4et03Xcyc2MpEewoZJgMG2It6x
-   1fwgefzZyQHtaWnyM3ikp1SMFggyCL0AI+Ncd58Dpqw9esHnhich2H7ym
-   g=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 30 Nov 2021 17:01:39 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2021 17:01:39 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 30 Nov 2021 17:01:39 -0800
-Received: from vivace-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 30 Nov 2021 17:01:38 -0800
-From:   Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-To:     <manivannan.sadhasivam@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <quic_hemantk@quicinc.com>,
-        <quic_jhugo@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <stable@vger.kernel.org>,
-        <quic_olgak@quicinc.com>, <loic.poulain@linaro.org>,
-        Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-Subject: [PATCH v2] bus: mhi: core: Fix reading wake_capable channel configuration
-Date:   Tue, 30 Nov 2021 17:01:31 -0800
-Message-ID: <1638320491-13382-1-git-send-email-quic_bbhatt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YGmw0uPE0WwJKnfuLbCFZzX2SHEBSEZmfzKbbjU/aPA=;
+        b=Oa3nsaOEANtdIxiAm25G9UBwmj964Cq3KkGbd62RexQqDkGuOQgWMkqdy0mkKwdfAj
+         1NL4NzeisVMY4XEpsRfOwHUW3yoZczNP5hRcJdEmXdlCq8ERm8J8mICcJrDqvz7b15x0
+         ZuklhPH9oz0I8NM161bwjMF/GiQdwObOLw/Om8AzXee5l0PHdtKmotKZ3w2TGVbx/aPK
+         giDH6QGVJIOKGhkSQEbgjZH+d1JVkmnIhWHYhAfs+N9Xhf1dIQUyktRo4bI1wnEkRVOd
+         R0q3RM/FHf2Lgr6nf1CEiU6Kr7mtD8UJo/yQ3hks3meODRX8YPEAcAckHQBlS8WRXZFd
+         NiWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YGmw0uPE0WwJKnfuLbCFZzX2SHEBSEZmfzKbbjU/aPA=;
+        b=BdvBImqwunNIuyKuk+kI+W38hNPEQpoh0sg93CtqJ64O9kxeo20bFA12NlluIeMCNo
+         IANXNgnwIYMfENKfLXIUMUReyIwS6aMMLWIbiY+w6K0eyGaQ0siA9O4ZxRWwUr/bDk4Q
+         hi1MPoVr45aKG7WgJ8jWHAP1yp2j7vvHjdNmP+S3TYZ0YDAMWcFfyg6A1lwB1fjEiCMP
+         0HC175Hp13QXUcI35xmv41EEnYXNjp7zqQLWJkIGxR8FKIjtXBT3ZDOmPvSQ0L67vAJI
+         +yRAbV2jwKDe7ziw51sE5i28lCKbow8GzCsve5NrPkwyOO2pn2OUTcZCMzV7gJbY027z
+         MQzw==
+X-Gm-Message-State: AOAM532l+c9y28pKLca9AKIZlvQxR76HJzoOZ887lPLzT5X1/1gqw7hp
+        zBotX/eaWNYq4JoR2K9sbim9mg==
+X-Google-Smtp-Source: ABdhPJw4xU9O8YcuScTLYEPfmINbiiQUs0wc2HfjRbGvdhFNmdv2S5bxPIoBY2ajv6sa+GZUg2oQgg==
+X-Received: by 2002:a05:6512:2506:: with SMTP id be6mr2890722lfb.597.1638324360904;
+        Tue, 30 Nov 2021 18:06:00 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q1sm1905627lfo.255.2021.11.30.18.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Nov 2021 18:06:00 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: msm8916: fix MMC controller aliases
+Date:   Wed,  1 Dec 2021 05:05:59 +0300
+Message-Id: <20211201020559.1611890-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 'wake-capable' entry in channel configuration is not set when
-parsing the configuration specified by the controller driver. Add
-the missing entry to ensure channel is correctly specified as a
-'wake-capable' channel.
+Change sdhcN aliases to mmcN to make them actually work. Currently the
+board uses non-standard aliases sdhcN, which do not work, resulting in
+mmc0 and mmc1 hosts randomly changing indices between boots.
 
-Cc: stable@vger.kernel.org
-Fixes: 0cbf260820fa ("bus: mhi: core: Add support for registering MHI controllers")
-Signed-off-by: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: c4da5a561627 ("arm64: dts: qcom: Add msm8916 sdhci configuration nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/bus/mhi/core/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-v2:
--Update subject as per comments
--Add fixes tag and CC stable
-
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 5aaca6d..f1ec3441 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -788,6 +788,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
- 		mhi_chan->offload_ch = ch_cfg->offload_channel;
- 		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
- 		mhi_chan->pre_alloc = ch_cfg->auto_queue;
-+		mhi_chan->wake_capable = ch_cfg->wake_capable;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index c1c42f26b61e..8be601275e9b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -19,8 +19,8 @@ / {
+ 	#size-cells = <2>;
  
- 		/*
- 		 * If MHI host allocates buffers, then the channel direction
+ 	aliases {
+-		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
+-		sdhc2 = &sdhc_2; /* SDC2 SD card slot */
++		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
++		mmc1 = &sdhc_2; /* SDC2 SD card slot */
+ 	};
+ 
+ 	chosen { };
 -- 
-2.7.4
+2.33.0
 
