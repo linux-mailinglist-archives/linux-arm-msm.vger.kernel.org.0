@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAE8046518B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:26:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A2F24651A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:27:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350932AbhLAP32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:29:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58956 "EHLO
+        id S1350960AbhLAPbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234405AbhLAP31 (ORCPT
+        with ESMTP id S1350942AbhLAPbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:29:27 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBAC9C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:26:06 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id t19so49232966oij.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:26:06 -0800 (PST)
+        Wed, 1 Dec 2021 10:31:10 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8619AC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:27:49 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id bj13so49233884oib.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:27:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ho6rCo9lvPlr61eCFjwRCuPn4r4Kk8E194rQWiIz0bI=;
-        b=YXF59qJSiaiKjxgLQe1GtDIWTcG43VO5iCCkRI2et4LcvkcKPMebyz92zURex8nzXK
-         Q0/aKVyWDM1lJ6t9Tue0/s3t4Y5ONXFCBUBZXUtU42+D6EMCS7ym15Ce9GfaYnfwgtj7
-         6CzxVWF/lVMGUR/kZYFErFRNs3zUB6EuctgjqljXgo/Jxeg+1EoyGmB/Hhr6YrpL9V7Z
-         oaQW4yNQWj65D4YRq1o22wKY0GgSoRo2BL/iHVHIDmIQrQqVpstVh9YoWLxBlUUlDZgU
-         6N6L7GBW+dzUu/DUl+LeZuphGH4L5oCVMMEQB0x7ICqnJlxyVkTj1F4MM/N2kCiIzZfn
-         MiFw==
+        bh=l8xvI7A1E9TM1mnTTh/elERLIoIv5XuFcEsenm8X46c=;
+        b=CJSNuzL5FZ4vD2YdNJaFkBHPsdq8Q75EJUibVdfMzsByDMjf4O2OPHoJZQb7AZUHKK
+         G9cFhJhLp3WJpOO723anVekYeYP5heuYtdd1o5Mq0VuXBWGhKB7D6vX4+3ngB9ogULTX
+         G+zHLqpbuGckZ+IJiwzS92N8DcCYbMN/zTeDsfsVz30OnlIZ9oljVTN6BvXSbLY+8OR/
+         LnogDQdKcktXc7ZczHZiLDfSZtoVHqxquLt9KKpozlUskLlsz55f8/dXrawBkGESlBaE
+         TB2vjVhtFONu6//r+iI7wFP7SCNoCh2nBB2Z+F0TYDWpPbdxxx0D32S/zz30btnPV3mJ
+         I+VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ho6rCo9lvPlr61eCFjwRCuPn4r4Kk8E194rQWiIz0bI=;
-        b=7rx9/6v+nA+4EvMJJ4NQcXXCC72NV3XcHTZxt1/3f3VREhj0uQqc4Y65W7oxL4LSpA
-         7UzZWc7xw71k4567f/0JRDOrmBTAFS65ypAZJT27hdMYWYog4HbecGXuzQLighaRdk2X
-         C7WwwS6i0bqFVN2M2IkYJ9qxr8ELRNgaazpN3GsOq59gjr4T9o86X7AlAcNcLORl+bTM
-         7dytOVBUS5jL9dxgyGkBcbD+j+n+zTb4A0LhzSo/FwdVDdNRWcHyQl5ECKJFY3ryehf2
-         PAYq+X1LVv0yH2TvwnNSWuK7fjNBI8x+k5jzHSBYQu0JKcWyah2FL2aWjIEBZmtVliW4
-         Jv3w==
-X-Gm-Message-State: AOAM531oHWNh229P/zdrIhJpqQEJ/OTwhqCN59i/Zr+VlaTaa35laI5T
-        V9+CC1VpfS7Cqp3OKy2u5eXZUg==
-X-Google-Smtp-Source: ABdhPJymuEP6wWTINOd5J43jZF/j9auHYUXRrHHj1cpGkUtoyw/CVMO7oF9UFb725mHlHPWTb/UEgQ==
-X-Received: by 2002:a05:6808:1a02:: with SMTP id bk2mr6718132oib.52.1638372366039;
-        Wed, 01 Dec 2021 07:26:06 -0800 (PST)
+        bh=l8xvI7A1E9TM1mnTTh/elERLIoIv5XuFcEsenm8X46c=;
+        b=2iwb78olBzy4AwBjghqB++BKN/IN6kc0vR5AYliNlo/E43gl45pnTVywnQTTdndTfg
+         /+8ZH4upOCDFs4WlBp/lrzD3XfuKpnPjtwNe7NzaLKaGHH2d1VI6HKnDQJ2rmGh4becc
+         q72oGTv3tPXpN+H3Mz0C8M556cMAmhOCBjO4E3dTNOitynsljrynXm2x6RqL5Qk8wffk
+         UgphyQBNl8nAa77zgOBjT+WevI9oBDWq256ui3H4RJM8QSzO5DJ0X6nZLjHgqUTKrCOa
+         H3LxX1j+Lh9qpANC0clqZRpId0l0IQVPcdJS6NVaipxmzyBrORCy2EkRBBAcyD2G2Ggx
+         FVtA==
+X-Gm-Message-State: AOAM53209+sl5ZYYqN63rqcQAsuFbMxW/pwXthb9QGyFhUCwl0alfPNX
+        K5ThNQEfaPO7r/8M1xEs8p8vYw==
+X-Google-Smtp-Source: ABdhPJy5IWSG0Z56Aao5MD9rx1W1Z4XlN7RCDNKzOtZifdcw5Ab9jHuNe8u+8GN33eec2iny0QlcgQ==
+X-Received: by 2002:aca:d704:: with SMTP id o4mr6755870oig.99.1638372468903;
+        Wed, 01 Dec 2021 07:27:48 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e14sm8491oow.3.2021.12.01.07.26.05
+        by smtp.gmail.com with ESMTPSA id s13sm21532otv.34.2021.12.01.07.27.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 07:26:05 -0800 (PST)
-Date:   Wed, 1 Dec 2021 09:26:00 -0600
+        Wed, 01 Dec 2021 07:27:48 -0800 (PST)
+Date:   Wed, 1 Dec 2021 09:27:43 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -59,7 +59,7 @@ Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
         dianders@chromium.org, quic_khsieh@quicinc.com
 Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: sc7280: add display dt nodes
-Message-ID: <YaeUCK5+P8DrEM41@builder.lan>
+Message-ID: <YaeUb7A1VpiJQxdk@builder.lan>
 References: <1637580369-876-1-git-send-email-quic_sbillaka@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -77,8 +77,20 @@ On Mon 22 Nov 05:26 CST 2021, Sankeerth Billakanti wrote:
 > 
 > Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
 > Reported-by: kernel test robot <lkp@intel.com>
+
+Sorry, missed this one before sending my reply.
+
+"kernel test robot" did not report the lack of mdss nodes in your dts.
+So please drop this as well.
+
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > Reported-by: kernel test robot <lkp@intel.com>
+
+And again.
+
+Thanks,
+Bjorn
+
 > Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 > ---
 > 
@@ -137,11 +149,6 @@ On Mon 22 Nov 05:26 CST 2021, Sankeerth Billakanti wrote:
 > +			status = "disabled";
 > +
 > +			mdp: display-controller@ae01000 {
-
-I believe the only reason to give this a label is so that you can enable
-it in the dts. But I don't see the point of having it status disabled,
-given that it should always follow the mdss node's status.
-
 > +				compatible = "qcom,sc7280-dpu";
 > +				reg = <0 0x0ae01000 0 0x8f030>,
 > +					<0 0x0aeb0000 0 0x2008>;
@@ -172,15 +179,6 @@ given that it should always follow the mdss node's status.
 > +				interrupts = <0>;
 > +
 > +				status = "disabled";
-
-So my suggestion is to drop this and drop the label.
-
-If not, please change the label of this node to mdss_mdp, for sorting
-purposes.
-
-Thanks,
-Bjorn
-
 > +
 > +				mdp_opp_table: opp-table {
 > +					compatible = "operating-points-v2";
