@@ -2,62 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8591A46512B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:14:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A37B5465126
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:13:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350659AbhLAPRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:17:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55724 "EHLO
+        id S1350829AbhLAPQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:16:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350751AbhLAPQh (ORCPT
+        with ESMTP id S1350759AbhLAPQi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:16:37 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEF6C061748
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:13:16 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso35568525otf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:13:16 -0800 (PST)
+        Wed, 1 Dec 2021 10:16:38 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92477C06175D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:13:17 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id be32so49071823oib.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zHnyn0V4D1cDh530N0PDN6SxecckzjKWiElhDEIypxc=;
-        b=eS5bLwRe01fg0ZrcHBic15idl3vRr5TaSzVk+R7q2FO8U/Ut8YWpN8HNTb/7daHq1z
-         DegJAHrRJFJ5DvdIg5We/MpVCdYKlA50BH1FL4vpeNxXlN/FyHUoW9hogQWbGyFX7ZW+
-         UKpoTUj96gyLsw8ToAl+9DzJY1AzW/QV5lKo2kiU5H13o00Yeh9s4mADfhJv6rthPMps
-         GV3LFrHTt2YvGtmCbvoKm7WtfwAtT1I+EoEAzba6LkGOntmV38Mhu63VO1SLhMHcuq4B
-         jnva00nTZnhCAD0n8A2VdE6nnhuXTKekmXjbuH/8j9jBnxyE6uKN3O3FA7qYXT85U5Nh
-         UF4Q==
+        bh=Unj8fgPyjfJkahZ6ypt6LMRULx2Bip07rg0JABUZ9MQ=;
+        b=hdqVVBieY3s1AtKxmjdJWsipfahQcm4dVslERr+84Rb0A1XIw0sKXAd8vZEmCdYdH/
+         MTx5ePvxa3E7mBtWd08ZujdVecvOiwOd1wQEnAXbTzuiPYQ84/E35c/bDDsLHVl4SV5f
+         S79aBL1U2PY8AMcAf7fI6BQPE34BHq/nO/UlT9KOGFucG5n3q4AuMDi1i+k2P745OSYX
+         ew/b7BYktHZ2Mpt9pyzJBzBYX/aX0dRz7yduVrEfvH2QhovU3aOzjqPgjNxRmxVFhcxU
+         P2rQ6PpAQ9oZe+K53OTG8/4zWj84mTqSuV6fqaDxWRKAO7rxLO8akfZHb5eNW1uOjHxE
+         zufQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zHnyn0V4D1cDh530N0PDN6SxecckzjKWiElhDEIypxc=;
-        b=BGeucFMjgmpWn1MC45tPbzcwkWtoEhayfZ2CoBYZImQ/561yCB66yfP5RlHlNyY0U+
-         a6iHEXDJgt7FIXRKRCNyVWTWgCJ1fF/fM8XKLaydfOlt9TjFCJsMXbzk7182DVG4If3m
-         iqUC/QEVSeayGMMxUWbJfuFlJSkRuzSGouxwXFRuRNe4j1HjeYhpEnCUkpS+POmNSclc
-         zxuL4f2fEdnkPU1UQfUwWhoUz09SlpWGY3tNvRMX0AXzK0xf3BB/FxisH65bjCdFwLz8
-         EXTH16BHhWt+x2kJYyraMbWqW40rjwdjxSJXWs7mba728Bl+MtRFVuUESm5UEHKz3I9l
-         +e+Q==
-X-Gm-Message-State: AOAM533IlxwOgdnBqx7kM0kS+4dcH0FGk953LL/MlrBmenYnHnxzlFUe
-        NWLhvzWuXsqETJd4OtNrbki91UxDXob7Fg==
-X-Google-Smtp-Source: ABdhPJy7hptbKYqcIM1z69aEtHiMKTqkYVcs56AAUIiUTpc+AEu9/T7j9qv/iQZMtM8X/j+/vzm3Ig==
-X-Received: by 2002:a9d:74cd:: with SMTP id a13mr6512786otl.71.1638371595672;
-        Wed, 01 Dec 2021 07:13:15 -0800 (PST)
+        bh=Unj8fgPyjfJkahZ6ypt6LMRULx2Bip07rg0JABUZ9MQ=;
+        b=GO0fTe6CfDRo1QO0SPrFp0GZrfVaX47xGrn9mXgBYdm0GVJRvQeep8Yd2h6mAclCGD
+         ALFRIXGLy+mmiQNoVogpFDDwqF6p+pnFtEY/A/WKvL1kC0160nzlstVYBt3Oc7bHHJ6B
+         5t9DjVijf9V8EnSGx19q0dOVjtNRMb/RUXQYb07Oj/gMtH4N8y4yj4K9td7UlfeU7Vk3
+         BG8nhs8v2J+fMaC6jKKxRdbSFK11VuLQppyKefY+rSOsLe/SGEkBCVwoNMsoxq0rPctB
+         Tb88UTxMx5mqrBHyC9jaIFtSTwgWg3ApxNE9RyEbrz5QGjr8GhcKu0u5kn3epFw1YI1U
+         W8Dw==
+X-Gm-Message-State: AOAM532242DEZvHPuLHtBdXboDe187pDv45NroxUQkUFhWToCQ9aOBOJ
+        mln/CTILkxWplqRQor3hThTKAw==
+X-Google-Smtp-Source: ABdhPJzRuR5iZfmjMw+nkqd9UgFeDQ7USHGnUe3txn8np8TG5/2IUdp0ONf8dTSKSRHrHwD1EC2BXg==
+X-Received: by 2002:a05:6808:300d:: with SMTP id ay13mr6520578oib.144.1638371596919;
+        Wed, 01 Dec 2021 07:13:16 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id be12sm33933oib.50.2021.12.01.07.13.14
+        by smtp.gmail.com with ESMTPSA id be12sm33933oib.50.2021.12.01.07.13.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Dec 2021 07:13:15 -0800 (PST)
+        Wed, 01 Dec 2021 07:13:16 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH] soc: qcom: aoss: constify static struct thermal_cooling_device_ops
-Date:   Wed,  1 Dec 2021 09:13:02 -0600
-Message-Id: <163837153033.1905338.15967895794638876580.b4-ty@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: Re: (subset) [PATCH v2 0/3] Add RPM sleep stats for MSM8916
+Date:   Wed,  1 Dec 2021 09:13:03 -0600
+Message-Id: <163837153032.1905338.13125098238372702261.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211128210317.25504-1-rikard.falkeborn@gmail.com>
-References: <20211128210317.25504-1-rikard.falkeborn@gmail.com>
+In-Reply-To: <20211119213953.31970-1-stephan@gerhold.net>
+References: <20211119213953.31970-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -65,18 +67,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 28 Nov 2021 22:03:17 +0100, Rikard Falkeborn wrote:
-> The only usage of qmp_cooling_device_ops is to pass its address to
-> devm_thermal_of_cooling_device_register() which takes a pointer to const
-> struct thermal_cooling_device_ops as argument. Make it const to allow
-> the compiler to put it in read-only memory.
+On Fri, 19 Nov 2021 22:39:50 +0100, Stephan Gerhold wrote:
+> MSM8916 is similar to the other SoCs that had the RPM stats node added
+> in commit 290bc6846547 ("arm64: dts: qcom: Enable RPM Sleep stats").
+> However, the dynamic offset readable at 0x14 seems only available on
+> some of the newer RPM firmware versions.
 > 
+> To be absolutely sure, this series adds new SoC-specific compatibles
+> for the older SoC that read the sleep stats from a fixed offset of 0xdba0.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] soc: qcom: aoss: constify static struct thermal_cooling_device_ops
-      commit: f5c3902d854744b42604359f68b42426185ed7a5
+[1/3] dt-bindings: soc: qcom: stats: Document compatibles with fixed offset
+      commit: 0a023bc0dd3ce6db6d87026c6fce3e2381c30192
+[2/3] soc: qcom: stats: Add fixed sleep stats offset for older RPM firmwares
+      commit: 569fc4015a93267f50d37f4e85ca6f70428123b2
 
 Best regards,
 -- 
