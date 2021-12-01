@@ -2,122 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E8ED464911
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:45:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25E9B4649E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 09:41:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241808AbhLAHsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 02:48:47 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:60844 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347769AbhLAHsl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 02:48:41 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9A053CE1D68;
-        Wed,  1 Dec 2021 07:45:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D92C53FD0;
-        Wed,  1 Dec 2021 07:45:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638344717;
-        bh=OMSYCijhi9mHPXribUljpaln0YA/jwCKn5SpeihydXo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mGoLqgCvvCewfCJY2gtoPfQBSsed8M9+WrUxAUzeMT19V/UAVCTUUpoireJv5U6OY
-         G72PmqKIuxGxc+ypjKQwi179vUuSKzuGCgejL7kY5F/rrjMLXraNhMoWD1yDhKy05T
-         hwimgwyaTT4gwZJlE+LSrfCuOK4SJF+GQ3fD+4NtaAEZ8XxZR/nPfDFP5sQn2wUrPb
-         Auw1Q5V59AeFqqepsZS3NYHR5BlVkR8/xfxUzoet5P2OsN/g7+4itPuV4vKuGrfmJ5
-         8H/jdCuJLHSgyQOTYUeeKREBlywj4oRBQiNwNQTnziGD+4H29L9Yhz0gKi8GIh8eYr
-         YiiR4Cj9ArPtA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 3/3] phy: qcom-qmp: Add SM8450 UFS QMP Phy
-Date:   Wed,  1 Dec 2021 13:14:56 +0530
-Message-Id: <20211201074456.3969849-4-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211201074456.3969849-1-vkoul@kernel.org>
-References: <20211201074456.3969849-1-vkoul@kernel.org>
+        id S231756AbhLAIoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 03:44:24 -0500
+Received: from mga12.intel.com ([192.55.52.136]:49453 "EHLO mga12.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1348093AbhLAInC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 03:43:02 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10184"; a="216432216"
+X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
+   d="scan'208";a="216432216"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 00:39:28 -0800
+X-IronPort-AV: E=Sophos;i="5.87,278,1631602800"; 
+   d="scan'208";a="596159000"
+Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.72.185])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 00:39:26 -0800
+Received: from platvala by thrakatuluk with local (Exim 4.94)
+        (envelope-from <petri.latvala@intel.com>)
+        id 1msL8N-0003rL-Gt; Wed, 01 Dec 2021 10:38:35 +0200
+Date:   Wed, 1 Dec 2021 10:38:35 +0200
+From:   Petri Latvala <petri.latvala@intel.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     igt-dev@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Subject: Re: [igt-dev] [PATCH igt 1/2] igt: Split out I/O helpers
+Message-ID: <Yac0i2wEZbH32lbL@platvala-desk.ger.corp.intel.com>
+References: <20211130004324.337399-1-robdclark@gmail.com>
+ <20211130004324.337399-2-robdclark@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211130004324.337399-2-robdclark@gmail.com>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8450 UFS seems to use same sequence as SM8350, so reuse the sequence
-from SM8450. Add the new clock list for this phy and the new compatible
+On Mon, Nov 29, 2021 at 04:43:23PM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Split the readN()/writeN() helpers out into an igt_io module, so they
+> can be re-used by tests.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  lib/igt_io.c    | 96 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  lib/igt_io.h    | 33 +++++++++++++++++
+>  lib/igt_sysfs.c | 45 +++--------------------
+>  lib/meson.build |  1 +
+>  4 files changed, 135 insertions(+), 40 deletions(-)
+>  create mode 100644 lib/igt_io.c
+>  create mode 100644 lib/igt_io.h
+> 
+> diff --git a/lib/igt_io.c b/lib/igt_io.c
+> new file mode 100644
+> index 00000000..ad54cbe5
+> --- /dev/null
+> +++ b/lib/igt_io.c
+> @@ -0,0 +1,96 @@
+> +/*
+> + * Copyright © 2016 Intel Corporation
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a
+> + * copy of this software and associated documentation files (the "Software"),
+> + * to deal in the Software without restriction, including without limitation
+> + * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+> + * and/or sell copies of the Software, and to permit persons to whom the
+> + * Software is furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice (including the next
+> + * paragraph) shall be included in all copies or substantial portions of the
+> + * Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+> + * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+> + * IN THE SOFTWARE.
+> + *
+> + */
+> +
+> +#include <errno.h>
+> +#include <stdlib.h>
+> +#include <unistd.h>
+> +
+> +#include "igt_io.h"
+> +
+> +/**
+> + * SECTION:igt_io
+> + * @short_description: Helpers for file I/O
+> + * @title: io
+> + * @include: igt_io.h
+> + *
+> + * This library provides helpers for file I/O
+> + */
+> +
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Co-developed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 32 +++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+This new section needs to be explicitly included in the docs. Squash this in:
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 456a59d8c7d0..a959c97a699f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -3091,6 +3091,10 @@ static const char * const qmp_v4_sm8250_usbphy_clk_l[] = {
- 	"aux", "ref_clk_src", "com_aux"
- };
- 
-+static const char * const sm8450_ufs_phy_clk_l[] = {
-+	"qref", "ref", "ref_aux",
-+};
-+
- static const char * const sdm845_ufs_phy_clk_l[] = {
- 	"ref", "ref_aux",
- };
-@@ -4087,6 +4091,31 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
- 	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
- };
- 
-+static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
-+	.type			= PHY_TYPE_UFS,
-+	.nlanes			= 2,
-+
-+	.serdes_tbl		= sm8350_ufsphy_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_serdes_tbl),
-+	.tx_tbl			= sm8350_ufsphy_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_tx_tbl),
-+	.rx_tbl			= sm8350_ufsphy_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_rx_tbl),
-+	.pcs_tbl		= sm8350_ufsphy_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(sm8350_ufsphy_pcs_tbl),
-+	.clk_list		= sm8450_ufs_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sm8450_ufs_phy_clk_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8150_ufsphy_regs_layout,
-+
-+	.start_ctrl		= SERDES_START,
-+	.pwrdn_ctrl		= SW_PWRDN,
-+	.phy_status		= PHYSTATUS,
-+
-+	.is_dual_lane_phy	= true,
-+};
-+
- static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
- 	.type			= PHY_TYPE_USB3,
- 	.nlanes			= 1,
-@@ -5745,6 +5774,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8350-qmp-usb3-uni-phy",
- 		.data = &sm8350_usb3_uniphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8450-qmp-ufs-phy",
-+		.data = &sm8450_ufsphy_cfg,
- 	}, {
- 		.compatible = "qcom,qcm2290-qmp-usb3-phy",
- 		.data = &qcm2290_usb3phy_cfg,
+diff --git a/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml b/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
+index 189597c6..0dc5a0b7 100644
+--- a/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
++++ b/docs/reference/igt-gpu-tools/igt-gpu-tools-docs.xml
+@@ -30,6 +30,7 @@
+     <xi:include href="xml/igt_fb.xml"/>
+     <xi:include href="xml/igt_frame.xml"/>
+     <xi:include href="xml/igt_gt.xml"/>
++    <xi:include href="xml/igt_io.xml"/>
+     <xi:include href="xml/igt_kmod.xml"/>
+     <xi:include href="xml/igt_kms.xml"/>
+     <xi:include href="xml/igt_list.xml"/>
+
+
+
 -- 
-2.31.1
-
+Petri Latvala
