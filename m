@@ -2,104 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2B844651B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:30:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEC3F4651B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:32:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351004AbhLAPeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:34:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60026 "EHLO
+        id S1350992AbhLAPfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:35:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230118AbhLAPeB (ORCPT
+        with ESMTP id S230118AbhLAPfU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:34:01 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EAA1C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:30:40 -0800 (PST)
-Received: from [192.168.1.101] (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A53BA3F75A;
-        Wed,  1 Dec 2021 16:30:38 +0100 (CET)
-Message-ID: <ee38afe9-0e9e-cae1-c4c5-70db9f166a38@somainline.org>
-Date:   Wed, 1 Dec 2021 16:30:37 +0100
+        Wed, 1 Dec 2021 10:35:20 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58BAEC06174A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:31:59 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id m6so49281457oim.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 07:31:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uFMUhbGSve6XOXG4hT9U3q9GImUbsSFy9Vah1OZisDI=;
+        b=VEqQ4qm73WYGNDTAMVaJv66zUxxEcw1I76eSBm6a3yxe4VglM1A8bd3AWGyIbSITsG
+         L15cql+Aqb1LKY7WuUgdhnqVjOUvVvUYgw+iOUVzlqdv6g9JpLdLgFZJrdGc/qfem8Ic
+         SmD6x7TfGe+WVqdeR9eLomzxti3j9u6g8H2Q+TruWVTvhxgGH/EbFn2BmHIKE77dcYPQ
+         AVdAk4ha5MiNJ/fABaqxzubfxrrIAJ9KPPFfBnbxEAcMPPf7nSif221xhhqJDC0ethkY
+         AdCVXauvs3kwFIM18EZC0A7yrJt/3j+OBqkcd047bVeqxiwyuaUmU+7dmprGUqcue6tA
+         Pcfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uFMUhbGSve6XOXG4hT9U3q9GImUbsSFy9Vah1OZisDI=;
+        b=K03eY7P9dTbzGu6qABLAe8lzfcaXTZK8ijGiEPqfN1c4vf5InE1an9qyuwHSU8gMXv
+         QXuHadYvQ7+D54ra3w0I8HeQ5yf2ZEexxbOGWOyuYeY4IOPPUBALzb/VyoptIrQcEFQc
+         Bf/uDcovtgfQxfW6guHgalvxGA63pWPly+5oZ/9RYRKfqr7Rem0ufKRx9/KxkClFusxH
+         Hi61HryxsBB28Yx6QOAleCH+dJa2Dz8Be/kR2aONhdCpFh6jk2Hb/GUZaLFc00qywXQd
+         LnaixU+YCy2Lb/xCv/6HxRfFJrU/dNTkqrrLFAMbl3Q26Mfri+1m9YbDlqSrdGZeQK3E
+         Wzkw==
+X-Gm-Message-State: AOAM5309TknDM2ecCV6kMh0QxxMsJfzYqBojvSCiDrIVM4Vwo5XB5t2F
+        +d29OH5EnwGBsgbxT6bVYFZYHw==
+X-Google-Smtp-Source: ABdhPJwnqbKqj2jV7StOM44pZVUXOOt1pFckEfKefaxTyLXR8Nzec8O4l7stJ4JSVQj5U2bon04vgw==
+X-Received: by 2002:aca:1204:: with SMTP id 4mr6800261ois.136.1638372718608;
+        Wed, 01 Dec 2021 07:31:58 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m2sm7954oop.12.2021.12.01.07.31.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Dec 2021 07:31:58 -0800 (PST)
+Date:   Wed, 1 Dec 2021 09:31:53 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
+        dianders@chromium.org, quic_khsieh@quicinc.com,
+        quic_mkrishn@quicinc.com
+Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: sc7280: add edp display dt nodes
+Message-ID: <YaeVaTtP4g6mchDr@builder.lan>
+References: <1637580369-876-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1637580369-876-3-git-send-email-quic_sbillaka@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm8450: add i2c13 and i2c14
- device nodes
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-16-vkoul@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20211201072915.3969178-16-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1637580369-876-3-git-send-email-quic_sbillaka@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon 22 Nov 05:26 CST 2021, Sankeerth Billakanti wrote:
 
-On 01.12.2021 08:29, Vinod Koul wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Add device tree nodes for two i2c blocks: i2c13 and i2c14.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Add edp controller and phy DT nodes for sc7280.
+> 
+> Signed-off-by: Krishna Manikandan <quic_mkrishn@quicinc.com>
+
+If Krishna authored the patch (he certified its origin first), then he
+should be From: as well.
+
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 64 ++++++++++++++++++++++++++++
->  1 file changed, 64 insertions(+)
->
-[...]
-
-
->  		config_noc: interconnect@1500000 {
->  			compatible = "qcom,sm8450-config-noc";
->  			reg = <0 0x01500000 0 0x1c000>;
-> @@ -687,6 +725,32 @@ tlmm: pinctrl@f100000 {
->  			gpio-ranges = <&tlmm 0 0 211>;
->  			wakeup-parent = <&pdc>;
+> 
+> Changes in v4:
+>     None
+> 
+> Changes in v3:
+>     - Add one clock cell per line (Stephen Boyd)
+>     - Unit address should match first reg property (Stephen Boyd)
+>     - Remove new line (Stephen Boyd)
+>     - Add the dsi_phy clocks in dispcc (Kuogee Hsieh)
+> 
+> Changes in v2:
+>     - Move regulator definitions to board file (Matthias Kaehlcke)
+>     - Move the gpio definitions to board file (Matthias Kaehlcke)
+>     - Move the pinconf to board file (Matthias Kaehlcke)
+>     - Move status property (Stephen Boyd)
+>     - Drop flags from interrupts (Stephen Boyd)
+>     - Add clock names one per line for readability (Stephen Boyd)
+>     - Rename edp-opp-table (Stephen Boyd)
+> 
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 107 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 105 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 12c4d32..5ad500e 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2695,8 +2695,8 @@
+>  				 <&dsi_phy 1>,
+>  				 <0>,
+>  				 <0>,
+> -				 <0>,
+> -				 <0>;
+> +				 <&edp_phy 0>,
+> +				 <&edp_phy 1>;
+>  			clock-names = "bi_tcxo",
+>  				      "gcc_disp_gpll0_clk",
+>  				      "dsi0_phy_pll_out_byteclk",
+> @@ -2784,6 +2784,13 @@
+>  							remote-endpoint = <&dsi0_in>;
+>  						};
+>  					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +						dpu_intf5_out: endpoint {
+> +							remote-endpoint = <&edp_in>;
+> +						};
+> +					};
+>  				};
 >  
-> +			qup_i2c13_default_state: qup-i2c13-default-state {
-> +				mux {
-> +					pins = "gpio48", "gpio49";
-> +					function = "qup13";
+>  				mdp_opp_table: opp-table {
+> @@ -2899,6 +2906,102 @@
+>  
+>  				status = "disabled";
+>  			};
+> +
+> +			msm_edp: edp@aea0000 {
+
+mdss_edp:
+
+> +				compatible = "qcom,sc7280-edp";
+> +
+> +				reg = <0 0xaea0000 0 0x200>,
+> +				      <0 0xaea0200 0 0x200>,
+> +				      <0 0xaea0400 0 0xc00>,
+> +				      <0 0xaea1000 0 0x400>;
+> +
+> +				interrupt-parent = <&mdss>;
+> +				interrupts = <14>;
+> +
+> +				clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +					 <&gcc GCC_EDP_CLKREF_EN>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_EDP_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_EDP_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_EDP_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_EDP_PIXEL_CLK>;
+> +				clock-names = "core_xo",
+> +					      "core_ref",
+> +					      "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel";
+> +				#clock-cells = <1>;
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_EDP_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_EDP_PIXEL_CLK_SRC>;
+> +				assigned-clock-parents = <&edp_phy 0>, <&edp_phy 1>;
+> +
+> +				phys = <&edp_phy>;
+> +				phy-names = "dp";
+> +
+> +				operating-points-v2 = <&edp_opp_table>;
+> +				power-domains = <&rpmhpd SC7280_CX>;
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +					port@0 {
+> +						reg = <0>;
+> +						edp_in: endpoint {
+> +							remote-endpoint = <&dpu_intf5_out>;
+> +						};
+> +					};
 > +				};
 > +
-> +				config {
-> +					pins = "gpio48", "gpio49";
-> +					drive-strength = <2>;
-> +					bias-pull-up;
+> +				edp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
 > +				};
 > +			};
 > +
+> +			edp_phy: phy@aec2a00 {
 
-This should be collapsed into:
+mdss_edp_phy
 
+Thanks,
+Bjorn
 
-qup_i2c13_default_state: qup-i2c13-default-state {
-
-        pins = "..."
-
-        function = "..."
-
-        drive-strength = <2>
-
-        bias-pull-up;
-
-};
-
-
-And the same goes for the rest of the pins.
-
-
-[...]
-
-
-Konrad
-
+> +				compatible = "qcom,sc7280-edp-phy";
+> +
+> +				reg = <0 0xaec2a00 0 0x19c>,
+> +				      <0 0xaec2200 0 0xa0>,
+> +				      <0 0xaec2600 0 0xa0>,
+> +				      <0 0xaec2000 0 0x1c0>;
+> +
+> +				clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +					 <&gcc GCC_EDP_CLKREF_EN>;
+> +				clock-names = "aux",
+> +					      "cfg_ahb";
+> +
+> +				#clock-cells = <1>;
+> +				#phy-cells = <0>;
+> +
+> +				status = "disabled";
+> +			};
+>  		};
+>  
+>  		pdc: interrupt-controller@b220000 {
+> -- 
+> 2.7.4
+> 
