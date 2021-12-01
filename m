@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18E6A464901
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:40:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DFA2464908
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 08:45:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347863AbhLAHn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 02:43:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37118 "EHLO
+        id S240974AbhLAHs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 02:48:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347853AbhLAHn0 (ORCPT
+        with ESMTP id S234408AbhLAHs3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 02:43:26 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69D88C061574;
-        Tue, 30 Nov 2021 23:40:06 -0800 (PST)
+        Wed, 1 Dec 2021 02:48:29 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFDA1C061574;
+        Tue, 30 Nov 2021 23:45:08 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 5767ECE1D49;
-        Wed,  1 Dec 2021 07:40:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF780C53FD0;
-        Wed,  1 Dec 2021 07:39:58 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 75561B80D60;
+        Wed,  1 Dec 2021 07:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5A9C53FCC;
+        Wed,  1 Dec 2021 07:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638344402;
-        bh=rd1g/Mg+d9q8eRsVNqe7GRL0cp3tKq24b0vxwmqSUco=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=F6oBf04UDEjljSy3K4IoRij8DRgqgaPN7pu8QAHzXBy9o2Jz805NI7NBGItU3Y8bs
-         C7oIKxidj3F0X/dVGCcdcLA5ukRAs+r1qiANANpgBHurSzX40X9DS0bpT+AvVPt4OH
-         RwjLZGYVFV9WEMcRxSh2JZ+I2rdHzVV5kMqJgMEpOxwIPwqxWZFwJbIbdfV3d7Kufb
-         aCi+WbisGz5ZX+8YogLI5xx3OsECBcH4gTB8QTxoNjmmMSTm6yqCVnViKopFSO/5eg
-         5iTGy6nuFBRK99d7hMcmq0tUP+1r4JLc2y1CblLNNUWsPUYOKKpAOZdNPrMo5V3XmG
-         j9Rp6ZKDKiUVg==
+        s=k20201202; t=1638344706;
+        bh=OH2rEpGPL9jDaE26jPFWGFb1qKd2RjGNeO1dPGYzF9g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hg/BrIUBlR2QkSkQzQzzYFobCtPBhuAi5gpAFIRD2oCyDIbXzU+Wi+lz004uSpigF
+         xDUOCGio3ydiWV/6j4SwFlNp5XTvVgWX8hyctLD+yh/ufAs/Qgrj45rdhPD4dDOQLn
+         L+5VcZ1CPIHY/MJRhjCVRGdpZ0VhSo9SOrHZS9hGb2NbVB/F64kB9oVNwsAnAH3Kxq
+         xJH8VxfKtZ+3vlzDhc4FifVYpbLqkmXbtT1Nx4+QckCdpJ8CLJ5h6jM7BKyCLvUAIp
+         jAXsv8TXC+ZBupwiuUwz29rBO/gex+m1xu/ykELnVWY7QMJTdq8rKL+BjNshUcyfIn
+         GpE0p/M5S9row==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
+To:     "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux-foundation.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] iommu: arm-smmu-impl: Add SM8450 qcom iommu implementation
-Date:   Wed,  1 Dec 2021 13:09:43 +0530
-Message-Id: <20211201073943.3969549-3-vkoul@kernel.org>
+Subject: [PATCH 0/3] scsi|phy: Add SM8450 UFS & Phy support
+Date:   Wed,  1 Dec 2021 13:14:53 +0530
+Message-Id: <20211201074456.3969849-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211201073943.3969549-1-vkoul@kernel.org>
-References: <20211201073943.3969549-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8450 qcom iommu implementation to the table of
-qcom_smmu_impl_of_match table which brings in iommu support for
-SM8450 SoC
+Add the binding documentation for ufs SM8450 compatible, phy compatible and
+SM8450 UFS QMP Phy support.
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+Vinod Koul (3):
+  scsi: ufs: dt-bindings: Add SM8450 compatible strings
+  dt-bindings: phy: qcom,qmp: Add SM8450 UFS phy compatible
+  phy: qcom-qmp: Add SM8450 UFS QMP Phy
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index ca736b065dd0..4aee83330629 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -415,6 +415,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,sm8150-smmu-500" },
- 	{ .compatible = "qcom,sm8250-smmu-500" },
- 	{ .compatible = "qcom,sm8350-smmu-500" },
-+	{ .compatible = "qcom,sm8450-smmu-500" },
- 	{ }
- };
- 
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  1 +
+ .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c           | 32 +++++++++++++++++++
+ 3 files changed, 34 insertions(+)
+
 -- 
 2.31.1
 
