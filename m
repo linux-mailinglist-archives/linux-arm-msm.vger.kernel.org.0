@@ -2,175 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 860114651C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:33:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A064651CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Dec 2021 16:37:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351028AbhLAPgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 10:36:54 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:26837 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351027AbhLAPgw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 10:36:52 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638372811; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Q6HUfZt5oXc1duwzRmR4q+p0TcjKzuDlkMig1w3ztew=; b=h8Z66wQKT0C7N7uedH+hbkkXyuRHwxXYQSElshDKdPb4B+mXEiMl1hMMKjxiIBkntGgESIeD
- 89ZDNdytmKIwYeB7D3m6ep7m1temDqyaGQAOrE7axBjaWIMFT9uLSXHqUCG9l1HpKHOMxBJ7
- s7vM2THR+39nh2jB3y5/LsJx5Zs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 61a795cbe7d68470afbdae2a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 01 Dec 2021 15:33:31
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E26A2C4361A; Wed,  1 Dec 2021 15:33:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [10.242.143.72] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S244080AbhLAPk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 10:40:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33260 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234031AbhLAPk0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Dec 2021 10:40:26 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA513C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 07:37:05 -0800 (PST)
+Received: from [192.168.1.101] (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A681C4338F;
-        Wed,  1 Dec 2021 15:33:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9A681C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v6 10/10] ASoC: qcom: SC7280: Update config for building
- codec dma drivers
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
- <1637928282-2819-11-git-send-email-srivasam@codeaurora.org>
- <0d51b0fd-61a9-e68f-6ab8-27708667d787@linaro.org>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <a3663a8d-5a05-3bbe-4d5d-2b5b4a55d0d4@codeaurora.org>
-Date:   Wed, 1 Dec 2021 21:03:20 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 576393F767;
+        Wed,  1 Dec 2021 16:37:03 +0100 (CET)
+Message-ID: <2649eada-3e80-cec3-5dca-bded67fa5f80@somainline.org>
+Date:   Wed, 1 Dec 2021 16:37:02 +0100
 MIME-Version: 1.0
-In-Reply-To: <0d51b0fd-61a9-e68f-6ab8-27708667d787@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 3/4] clk: qcom: Add clock driver for SM8450
 Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211201072310.3968679-1-vkoul@kernel.org>
+ <20211201072310.3968679-4-vkoul@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20211201072310.3968679-4-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 12/1/2021 4:20 PM, Srinivas Kandagatla wrote:
-Thanks for Your time Srini!!!
+On 01.12.2021 08:23, Vinod Koul wrote:
+> This adds Global Clock controller (GCC) driver for SM8450 SoC including
+> the gcc resets and gdsc.
 >
-> On 26/11/2021 12:04, Srinivasa Rao Mandadapu wrote:
->> Add configuration for building SC7280 audio codec dma drivers.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> ---
->> This patch set depends on:
->>      -- 
->> https://patchwork.kernel.org/project/alsa-devel/list/?series=582321
->>
->>   sound/soc/qcom/Kconfig  | 13 +++++++++++++
->>   sound/soc/qcom/Makefile |  4 ++++
->>   2 files changed, 17 insertions(+)
->>
->> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
->> index 530d01f..b46a2e7 100644
->> --- a/sound/soc/qcom/Kconfig
->> +++ b/sound/soc/qcom/Kconfig
->> @@ -20,6 +20,10 @@ config SND_SOC_LPASS_PLATFORM
->>       tristate
->>       select REGMAP_MMIO
->>   +config SND_SOC_LPASS_CDC_DMA
->> +    tristate
->> +    select REGMAP_MMIO
->> +
->>   config SND_SOC_LPASS_IPQ806X
->>       tristate
->>       select SND_SOC_LPASS_CPU
->> @@ -36,6 +40,13 @@ config SND_SOC_LPASS_SC7180
->>       select SND_SOC_LPASS_PLATFORM
->>       select SND_SOC_LPASS_HDMI
->>   +config SND_SOC_LPASS_SC7280
->> +    tristate
->> +    select SND_SOC_LPASS_CPU
->> +    select SND_SOC_LPASS_PLATFORM
->> +    select SND_SOC_LPASS_HDMI
->> +    select SND_SOC_LPASS_CDC_DMA
->> +
->>   config SND_SOC_STORM
->>       tristate "ASoC I2S support for Storm boards"
->>       select SND_SOC_LPASS_IPQ806X
->> @@ -156,7 +167,9 @@ config SND_SOC_SC7280
->>       tristate "SoC Machine driver for SC7280 boards"
->>       depends on I2C && SOUNDWIRE || COMPILE_TEST
->>       select SND_SOC_QCOM_COMMON
->> +    select SND_SOC_LPASS_SC7280
->>       select SND_SOC_MAX98357A
->> +    select SND_SOC_WCD938X
+> This patch is based on initial code downstream by Vivek Aknurwar
+> <viveka@codeaurora.org>
 >
-> Why are we updating machine Kconfigs in this patch, should that be not 
-> in your machine driver patch series?
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  drivers/clk/qcom/Kconfig      |    8 +
+>  drivers/clk/qcom/Makefile     |    1 +
+>  drivers/clk/qcom/gcc-sm8450.c | 3314 +++++++++++++++++++++++++++++++++
+>  3 files changed, 3323 insertions(+)
+>  create mode 100644 drivers/clk/qcom/gcc-sm8450.c
+>
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 74efc82127e1..3a568e7ad886 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -618,6 +618,14 @@ config SM_GCC_8350
+>  	  Say Y if you want to use peripheral devices such as UART,
+>  	  SPI, I2C, USB, SD/UFS, PCIe etc.
+>  
+> +config SM_GCC_8450
+> +	tristate "SM8450 Global Clock Controller"
+> +	select QCOM_GDSC
+> +	help
+> +	  Support for the global clock controller on SM8450 devices.
+> +	  Say Y if you want to use peripheral devices such as UART,
+> +	  SPI, I2C, USB, SD/UFS, PCIe etc.
+> +
+>  config SM_GPUCC_8150
+>  	tristate "SM8150 Graphics Clock Controller"
+>  	select SM_GCC_8150
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 1718c34d3551..efb0837ea199 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -90,6 +90,7 @@ obj-$(CONFIG_SM_GCC_6350) += gcc-sm6350.o
+>  obj-$(CONFIG_SM_GCC_8150) += gcc-sm8150.o
+>  obj-$(CONFIG_SM_GCC_8250) += gcc-sm8250.o
+>  obj-$(CONFIG_SM_GCC_8350) += gcc-sm8350.o
+> +obj-$(CONFIG_SM_GCC_8450) += gcc-sm8450.o
+>  obj-$(CONFIG_SM_GPUCC_8150) += gpucc-sm8150.o
+>  obj-$(CONFIG_SM_GPUCC_8250) += gpucc-sm8250.o
+>  obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
+> diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+> new file mode 100644
+> index 000000000000..175c18a1cdbe
+> --- /dev/null
+> +++ b/drivers/clk/qcom/gcc-sm8450.c
+> @@ -0,0 +1,3314 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021, Linaro Limited
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,gcc-sm8450.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "clk-regmap-divider.h"
+> +#include "clk-regmap-mux.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
+> +enum {
+> +	P_BI_TCXO,
+> +	P_GCC_GPLL0_OUT_EVEN,
+> +	P_GCC_GPLL0_OUT_MAIN,
+> +	P_GCC_GPLL4_OUT_MAIN,
+> +	P_GCC_GPLL9_OUT_MAIN,
+> +	P_PCIE_0_PIPE_CLK,
+> +	P_PCIE_1_PHY_AUX_CLK,
+> +	P_PCIE_1_PIPE_CLK,
+> +	P_SLEEP_CLK,
+> +	P_UFS_PHY_RX_SYMBOL_0_CLK,
+> +	P_UFS_PHY_RX_SYMBOL_1_CLK,
+> +	P_UFS_PHY_TX_SYMBOL_0_CLK,
+> +	P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK,
+> +};
+> +
+> +static struct clk_alpha_pll gcc_gpll0 = {
+> +	.offset = 0x0,
+> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+> +	.clkr = {
+> +		.enable_reg = 0x62018,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(struct clk_init_data){
+> +			.name = "gcc_gpll0",
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.fw_name = "bi_tcxo",
+> +				.name = "bi_tcxo",
 
-Actually, SND_SOC_LPASS_SC7280 is of lpass-sc7280 platform driver.  
-SND_SOC_WCD938X is for wcd codec driver.
+I don't think we want .name for new drivers, as we do things cleanly
 
-Will add WCD Kconfig as separate patch.
+from the start and don't have DT incompatibility problems.
 
->
-> I think I did point this out in previous versions too.
->
->
-> --srini
->
->
->>       select SND_SOC_LPASS_RX_MACRO
->>       select SND_SOC_LPASS_TX_MACRO
->>       help
->> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
->> index 625aec6..8b7b876 100644
->> --- a/sound/soc/qcom/Makefile
->> +++ b/sound/soc/qcom/Makefile
->> @@ -1,18 +1,22 @@
->>   # SPDX-License-Identifier: GPL-2.0
->>   # Platform
->>   snd-soc-lpass-cpu-objs := lpass-cpu.o
->> +snd-soc-lpass-cdc-dma-objs := lpass-cdc-dma.o
->>   snd-soc-lpass-hdmi-objs := lpass-hdmi.o
->>   snd-soc-lpass-platform-objs := lpass-platform.o
->>   snd-soc-lpass-ipq806x-objs := lpass-ipq806x.o
->>   snd-soc-lpass-apq8016-objs := lpass-apq8016.o
->>   snd-soc-lpass-sc7180-objs := lpass-sc7180.o
->> +snd-soc-lpass-sc7280-objs := lpass-sc7280.o
->>     obj-$(CONFIG_SND_SOC_LPASS_CPU) += snd-soc-lpass-cpu.o
->> +obj-$(CONFIG_SND_SOC_LPASS_CDC_DMA) += snd-soc-lpass-cdc-dma.o
->>   obj-$(CONFIG_SND_SOC_LPASS_HDMI) += snd-soc-lpass-hdmi.o
->>   obj-$(CONFIG_SND_SOC_LPASS_PLATFORM) += snd-soc-lpass-platform.o
->>   obj-$(CONFIG_SND_SOC_LPASS_IPQ806X) += snd-soc-lpass-ipq806x.o
->>   obj-$(CONFIG_SND_SOC_LPASS_APQ8016) += snd-soc-lpass-apq8016.o
->>   obj-$(CONFIG_SND_SOC_LPASS_SC7180) += snd-soc-lpass-sc7180.o
->> +obj-$(CONFIG_SND_SOC_LPASS_SC7280) += snd-soc-lpass-sc7280.o
->>     # Machine
->>   snd-soc-storm-objs := storm.o
->>
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+[...]
+
+
+> +
+> +static int gcc_sm8450_probe(struct platform_device *pdev)
+> +{
+> +	struct regmap *regmap;
+> +	int ret;
+> +
+> +	regmap = qcom_cc_map(pdev, &gcc_sm8450_desc);
+> +	if (IS_ERR(regmap))
+> +		return PTR_ERR(regmap);
+> +
+> +	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+> +				       ARRAY_SIZE(gcc_dfs_clocks));
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
+> +	regmap_update_bits(regmap, gcc_ufs_phy_ice_core_clk.halt_reg, BIT(14), BIT(14));
+> +
+> +	/* Keep the critical clock always-On
+
+I think the general style for multiline comments is to start with /* and then add a newline
+
+
+
+> +	 * gcc_camera_ahb_clk, gcc_camera_xo_clk, gcc_disp_ahb_clk,
+> +	 * gcc_disp_xo_clk, gcc_gpu_cfg_ahb_clk, gcc_video_ahb_clk,
+> +	 * gcc_video_xo_clk
+> +	 */
+> +	regmap_update_bits(regmap, 0x36004, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x36020, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x37004, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x3701c, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x81004, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x42004, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x42028, BIT(0), BIT(0));
+> +
+> +	ret = qcom_cc_really_probe(pdev, &gcc_sm8450_desc, regmap);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "Failed to register GCC clocks\n");
+
+That's a bad downstream leftover that we don't want..
+
+
+
+> +		return ret;
+> +	}
+> +
+> +	dev_info(&pdev->dev, "Registered GCC clocks\n");
+
+And so is this.
+
+
+
+> +
+> +	return ret;
+
+You can simply return qcom_cc_really_probe(pdev, &gcc_sm8450_desc, regmap);
+
+
+Konrad
 
