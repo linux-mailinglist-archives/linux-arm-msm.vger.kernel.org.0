@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70A96465A29
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:00:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1A50465A2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:01:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353947AbhLBAEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 19:04:13 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:20599 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353913AbhLBAEK (ORCPT
+        id S1353957AbhLBAEQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 19:04:16 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:46001 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1353951AbhLBAEO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:04:10 -0500
+        Wed, 1 Dec 2021 19:04:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638403249; x=1669939249;
+  t=1638403252; x=1669939252;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=axw472bSu3K2vJfwD04DHUB95b3LnBR9ZXFqiqsqQQg=;
-  b=sBC59cv57TsUZXD+6dFcp3XsBnzT7JKJh1S5m8f2rXUhdjU46qcQqTom
-   jo0yyKEQKEn3RvfpkTec0l4Q1VgcuvhUFCOvZz4d5XcPA8iMOJaE48jmH
-   lv+3wbCkapF9wQHaijcS9NijltTq6KtyvKEpSi371f9hz6/jkEmtKESAv
-   4=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 01 Dec 2021 16:00:48 -0800
+  bh=6IMGfTuF3BVQ6/1Vk5UOBnvjkDqjWlq1aGTwIYOXs9w=;
+  b=CxorVjl3jGIz2NQeD+Gwnpnn4kDquh0YC4nwwGbxAqt3hlLJrCDneNIL
+   Wg2pxBmbazvDCjZurl56zDaJ1r3SLi9Wd/gJFrQ3g+m47yU0sbb3OSLWy
+   niuk0cPq/G43X8+sxC91vMYMVtBa5w6e6WB31Vu4kApMu2NJS1KJklRJh
+   c=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Dec 2021 16:00:51 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 16:00:47 -0800
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 16:00:51 -0800
 Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:00:47 -0800
+ 15.2.922.19; Wed, 1 Dec 2021 16:00:50 -0800
 Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:00:45 -0800
+ 15.2.922.19; Wed, 1 Dec 2021 16:00:47 -0800
 From:   Fenglin Wu <quic_fenglinw@quicinc.com>
 To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <sboyd@kernel.org>
 CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
         <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>, <maz@kernel.org>
-Subject: [RESEND PATCH v3 02/10] spmi: pmic-arb: do not ack and clear peripheral interrupts in cleanup_irq
-Date:   Thu, 2 Dec 2021 08:00:04 +0800
-Message-ID: <1638403212-29265-3-git-send-email-quic_fenglinw@quicinc.com>
+Subject: [RESEND PATCH v3 03/10] spmi: pmic-arb: check apid against limits before calling irq handler
+Date:   Thu, 2 Dec 2021 08:00:05 +0800
+Message-ID: <1638403212-29265-4-git-send-email-quic_fenglinw@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
 References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
@@ -55,79 +55,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+From: David Collins <collinsd@codeaurora.org>
 
-Currently, cleanup_irq() is invoked when a peripheral's interrupt
-fires and there is no mapping present in the interrupt domain of
-spmi interrupt controller.
+Check that the apid for an SPMI interrupt falls between the
+min_apid and max_apid that can be handled by the APPS processor
+before invoking the per-apid interrupt handler:
+periph_interrupt().
 
-The cleanup_irq clears the arbiter bit, clears the pmic interrupt
-and disables it at the pmic in that order. The last disable in
-cleanup_irq races with request_irq() in that it stomps over the
-enable issued by request_irq. Fix this by not writing to the pmic
-in cleanup_irq. The latched bit will be left set in the pmic,
-which will not send us more interrupts even if the enable bit
-stays enabled.
+This avoids an access violation in rare cases where the status
+bit is set for an interrupt that is not owned by the APPS
+processor.
 
-When a client wants to request an interrupt, use the activate
-callback on the irq_domain to clear latched bit. This ensures
-that the latched, if set due to the above changes in cleanup_irq
-or when the bootloader leaves it set, gets cleaned up, paving way
-for upcoming interrupts to trigger.
-
-With this, there is a possibility of unwanted triggering of
-interrupt right after the latched bit is cleared - the interrupt
-may be left enabled too. To avoid that, clear the enable first
-followed by clearing the latched bit in the activate callback.
-
-Signed-off-by: Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-[collinsd@codeaurora.org: fix merge conflict]
 Signed-off-by: David Collins <collinsd@codeaurora.org>
 Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 ---
- drivers/spmi/spmi-pmic-arb.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/spmi/spmi-pmic-arb.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index da629cc..ce7ae99 100644
+index ce7ae99..479f721 100644
 --- a/drivers/spmi/spmi-pmic-arb.c
 +++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -492,16 +492,6 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
- 	dev_err_ratelimited(&pmic_arb->spmic->dev, "%s apid=%d sid=0x%x per=0x%x irq=%d\n",
- 			__func__, apid, sid, per, id);
- 	writel_relaxed(irq_mask, pmic_arb->ver_ops->irq_clear(pmic_arb, apid));
--
--	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, sid,
--			(per << 8) + QPNPINT_REG_LATCHED_CLR, &irq_mask, 1))
--		dev_err_ratelimited(&pmic_arb->spmic->dev, "failed to ack irq_mask = 0x%x for ppid = %x\n",
--				irq_mask, ppid);
--
--	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, sid,
--			       (per << 8) + QPNPINT_REG_EN_CLR, &irq_mask, 1))
--		dev_err_ratelimited(&pmic_arb->spmic->dev, "failed to ack irq_mask = 0x%x for ppid = %x\n",
--				irq_mask, ppid);
- }
+@@ -523,21 +523,26 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+ 	struct spmi_pmic_arb *pmic_arb = irq_desc_get_handler_data(desc);
+ 	const struct pmic_arb_ver_ops *ver_ops = pmic_arb->ver_ops;
+ 	struct irq_chip *chip = irq_desc_get_chip(desc);
+-	int first = pmic_arb->min_apid >> 5;
+-	int last = pmic_arb->max_apid >> 5;
++	int first = pmic_arb->min_apid;
++	int last = pmic_arb->max_apid;
+ 	u8 ee = pmic_arb->ee;
+ 	u32 status, enable, handled = 0;
+ 	int i, id, apid;
  
- static int periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
-@@ -674,6 +664,7 @@ static int qpnpint_irq_domain_activate(struct irq_domain *domain,
- 	u16 apid = hwirq_to_apid(d->hwirq);
- 	u16 sid = hwirq_to_sid(d->hwirq);
- 	u16 irq = hwirq_to_irq(d->hwirq);
-+	u8 buf;
+ 	chained_irq_enter(chip, desc);
  
- 	if (pmic_arb->apid_data[apid].irq_ee != pmic_arb->ee) {
- 		dev_err(&pmic_arb->spmic->dev, "failed to xlate sid = %#x, periph = %#x, irq = %u: ee=%u but owner=%u\n",
-@@ -682,6 +673,10 @@ static int qpnpint_irq_domain_activate(struct irq_domain *domain,
- 		return -ENODEV;
- 	}
- 
-+	buf = BIT(irq);
-+	qpnpint_spmi_write(d, QPNPINT_REG_EN_CLR, &buf, 1);
-+	qpnpint_spmi_write(d, QPNPINT_REG_LATCHED_CLR, &buf, 1);
-+
- 	return 0;
- }
- 
+-	for (i = first; i <= last; ++i) {
++	for (i = first >> 5; i <= last >> 5; ++i) {
+ 		status = readl_relaxed(
+ 				ver_ops->owner_acc_status(pmic_arb, ee, i));
+ 		while (status) {
+ 			id = ffs(status) - 1;
+ 			status &= ~BIT(id);
+ 			apid = id + i * 32;
++			if (apid < first || apid > last) {
++				WARN_ONCE(true, "spurious spmi irq received for apid=%d\n",
++					apid);
++				continue;
++			}
+ 			enable = readl_relaxed(
+ 					ver_ops->acc_enable(pmic_arb, apid));
+ 			if (enable & SPMI_PIC_ACC_ENABLE_BIT)
 -- 
 2.7.4
 
