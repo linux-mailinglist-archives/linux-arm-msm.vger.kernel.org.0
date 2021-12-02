@@ -2,76 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4D58466710
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 16:46:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79395466861
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 17:32:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359149AbhLBPuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 10:50:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242188AbhLBPt5 (ORCPT
+        id S1347989AbhLBQfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 11:35:31 -0500
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:33528 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1359809AbhLBQf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 10:49:57 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49118C061758
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 07:46:34 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id v23so62159pjr.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 07:46:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/xOX+MwbYYm6u5nECdOl4Jqy0wvq2qfMu3Pv+iN6kbQ=;
-        b=h2EabMGwDwVYPbOXG0rurfwoabYlkJcUaDSJo1Mpe8o3iddMlcVy8hOg/Gtg2pufMp
-         XXryC51IdgePpIkXtjCAorrvtHzyssnDJKsMXnXokSAfk1k1VrwW/rKGG8m2ZDU3tRQ7
-         EYXhwpA1QbD2QKlwoevsPECMxsYRPpBl1ENyE=
+        Thu, 2 Dec 2021 11:35:28 -0500
+Received: by mail-ot1-f41.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso450438otf.0;
+        Thu, 02 Dec 2021 08:32:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/xOX+MwbYYm6u5nECdOl4Jqy0wvq2qfMu3Pv+iN6kbQ=;
-        b=1os2+pZyzFehCxnrqjy57Y2vxg8+q+LjsnB4YdpJRq0M2JxviUIT8fZWSaz054XLep
-         ntnY92xvRdRKiPKsj85mQDRl/7Ac0YP3ubW5+JxjYh60pskOgggth5ULE6mOPnmXEzjA
-         7tIDFvjMOW2tIIem+QZXcLv9CAT0kJXLFTFsksRZ4dWsbpO34LOiowDEmtKWmSNcWMnx
-         O69HyVh57h31hCgeZJfislCh/g9UExwVWP9uWHnpNseK3pAcBRK2KUTIQK8D/b4DtzwQ
-         FClwekIIk0BGEDVh1lkgy4mmKw2Lr2aLhvY0/R4Tk0nXfLG2MV1bngggnx+H9vIfDl4n
-         wskQ==
-X-Gm-Message-State: AOAM530jogVTcKTICbo2DP3Hp5A5keOzxCxAWM418TRhXxnMJC44c0gd
-        CaWApwSChtYoyU20fKNSXmwevA==
-X-Google-Smtp-Source: ABdhPJzh642Nqi1c66mNvgl1xHObBn1Zz/bzbAgNs+yRsC6kHayeKfeWLwpe3Kdgi1JuslnvD3euqw==
-X-Received: by 2002:a17:90b:4a83:: with SMTP id lp3mr6914000pjb.242.1638459993828;
-        Thu, 02 Dec 2021 07:46:33 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:b371:4539:c97c:c751])
-        by smtp.gmail.com with UTF8SMTPSA id pg13sm18546pjb.8.2021.12.02.07.46.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Dec 2021 07:46:33 -0800 (PST)
-Date:   Thu, 2 Dec 2021 07:46:32 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com
-Subject: Re: [PATCH v2] arm64: qcom: sc7280: Move USB2 controller nodes from
- common dtsi to SKU1
-Message-ID: <YajqWKBBNY+dTP7a@google.com>
-References: <1638422248-24221-1-git-send-email-quic_c_sanm@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=puf1vYFijievtcSCov0SbjyhrhL/hDVDktUDZuYOXCA=;
+        b=SmGADNj9Hc9u89U2HOeoc+A+NFqlevoN/L0V//DZ1RIGXJOs3HpVSesLDDpTphBiso
+         uMoZGooooAzutrB3JE6IXbOUQDYTtPiKEr694kTWBHCiOn2NXKeeZ4XV0WF//wd9+TUi
+         vJJrT2h26Ge8wFgVailGi31pyoTHd/1pOEVjLfumbkuKa8fSB4fzS+cQnqxd6AdKE5wB
+         6q4hJc1vVWT1H4870XIi2l5r0wYyvqZu5o0Q3Hv67/Osjj9LHiaR8LbUh0XfmPsQ2mfp
+         vxke5Fzheiuov2eN6qGqbCaVuqOxV8BrHaXUN5fmNgRsh5CEjvfELAEkOU6clm9iXqF2
+         0lqw==
+X-Gm-Message-State: AOAM532rma5SwqLly2NG0YK7dL2EWQdljf+WL5f6fyy8vc0ENENtHCzZ
+        fvf4B6Tw2207RWkiihC2HCIc+8fUtc4N/Hr+Q38=
+X-Google-Smtp-Source: ABdhPJzztRvfXpTejpa4p8BiYgUURMlTcY9YBhmQXZowM98RHRgSd6d+nWQuUX2RjJJvhr7RayEAXgc/mJmccAHDHg8=
+X-Received: by 2002:a9d:4c10:: with SMTP id l16mr12129271otf.198.1638462725118;
+ Thu, 02 Dec 2021 08:32:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1638422248-24221-1-git-send-email-quic_c_sanm@quicinc.com>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+ <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+ <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com> <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
+ <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org> <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
+ <20211202105027.GA1180274@e123083-lin>
+In-Reply-To: <20211202105027.GA1180274@e123083-lin>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Thu, 2 Dec 2021 17:31:53 +0100
+Message-ID: <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate freq_factor
+To:     Morten Rasmussen <morten.rasmussen@arm.com>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 02, 2021 at 10:47:28AM +0530, Sandeep Maheswaram wrote:
-> Move USB2 controller and phy nodes from common dtsi file as it is
-> required only for SKU1 board and change the mode to host mode as
-> it will be used in host mode for SKU1.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+On Thu, Dec 2, 2021 at 11:50 AM Morten Rasmussen
+<morten.rasmussen@arm.com> wrote:
+>
+> On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
+> > On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
+> > <thara.gopinath@linaro.org> wrote:
+> > >
+> > > Hi,
+> > >
+> > > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
+> > > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
+> > > >>
+> > > >> Hi Rafael,
+> > > >>
+> > > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
+> > > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+> > > >>> <thara.gopinath@linaro.org> wrote:
+> > > >>>>
+> > > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+> > > >>>> we don't consider boost frequencies while calculating cpu capacities, use
+> > > >>>> policy->max to populate the freq_factor during boot up.
+> > > >>>
+> > > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
+> > > >>
+> > > >> Agree it's tricky how we treat the boost frequencies and also combine
+> > > >> them with thermal pressure.
+> > > >> We probably would have consider these design bits:
+> > > >> 1. Should thermal pressure include boost frequency?
+> > > >
+> > > > Well, I guess so.
+> > > >
+> > > > Running at a boost frequency certainly increases thermal pressure.
+> > > >
+> > > >> 2. Should max capacity 1024 be a boost frequency so scheduler
+> > > >>      would see it explicitly?
+> > > >
+> > > > That's what it is now if cpuinfo.max_freq is a boost frequency.
+> > > >
+> > > >> - if no, then schedutil could still request boost freq thanks to
+> > > >>     map_util_perf() where we add 25% to the util and then
+> > > >>     map_util_freq() would return a boost freq when util was > 1024
+> > > >>
+> > > >>
+> > > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
+> > > >> get_next_freq(). If the value stored in there is a boost,
+> > > >> then don't we get a higher freq value for the same util?
+> > > >
+> > > > Yes. we do, which basically is my point.
+> > > >
+> > > > The schedutil's response is proportional to cpuinfo.max_freq and that
+> > > > needs to be taken into account for the results to be consistent.
+> > >
+> > > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
+> > > frequency of a cpu, irrespective of whether boost is enabled or not.
+> > > Where as policy->max is the currently available maximum cpu frequency
+> > > which can be equal to cpuinfo.max_freq or lower (depending on whether
+> > > boost is enabled, whether there is a constraint on policy->max placed by
+> > > thermal etc).
+> >
+> > It may also depend on the limit set by user space.
+> >
+> > > So in this case isn't it better for schedutil to consider
+> > > policy->max instead of cpuinfo.max ?
+> >
+> > Not really.
+> >
+> > In that case setting policy->max to 1/2 of cpuinfo.max_freq would
+> > cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
+> > which would be rather unexpected.
+> >
+> > policy->max is a cap, not the current maximum capacity.
+> >
+> > > Like you mentioned above same
+> > > utilization will relate to different frequencies depending on the
+> > > maximum frequency.
+> >
+> > Which is not how it is expected (and defined) to work, though.
+> >
+> > If you really want to play with the current maximum capacity, you need
+> > to change it whenever boost is disabled or enabled - and there is a
+> > mechanism for updating cpufinfo.max_freq in such cases.
+>
+> I don't see why we would want to change max capacity on the fly. It is
+> not a cheap operation as we would need to normalize the capacity for all
+> CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
+> we even have to rebuild the sched_domain hierarchy to update flags. The
+> update would also temporarily mess with load and utilization signals, so
+> not a cheap operation.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+I didn't say it was cheap. :-)
+
+However, boost frequencies are not disabled and enabled very often, so
+it may be acceptable to do it then.  I actually don't know.
+
+The point is that if you set the max capacity to correspond to the max
+boosted perf and it is never reached (because boost is disabled), the
+scaling will cause CPUs to appear as underutilized, but in fact there
+is no spare capacity in the system.
+
+Conversely, if the max capacity corresponds to the max non-boost perf
+and boost is used very often, the scaling will cause the CPUs to
+appear to be 100% loaded, but there may be still spare capacity in the
+system.
