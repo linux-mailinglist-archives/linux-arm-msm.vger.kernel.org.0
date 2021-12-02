@@ -2,83 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A0A646607E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 10:33:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B9924660B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 10:52:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356533AbhLBJgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 04:36:42 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:60705 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1356439AbhLBJgk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 04:36:40 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638437597; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=WPa8QM7TiHznVMzVYKuk2L9NKcSm2U7NIvrXT4MjL58=; b=hkpp9B3rd5RDU9hlKyrrFbGJxu6Ed2te4U1unu1bRnd/nKuX/VbEnXQ2Rx1Esu0kKKgSmMTp
- IHaHhZ4k2neHxUL4hwMQtUm9ZyFZ/26hvWZVfzO8Ayftq5JBvUdursFdJD/jMqnrcFgshEd0
- X3kUDQrZ4Ur8I/SeI+enMETOGY4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 61a892dde7d68470af9bf12c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Dec 2021 09:33:17
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4AA62C43639; Thu,  2 Dec 2021 09:33:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33EC3C4361A;
-        Thu,  2 Dec 2021 09:33:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 33EC3C4361A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        zijuhu@codeaurora.org, tjiang@codeaurora.org,
-        Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH v1] Bluetooth: btusb: Add one more Bluetooth part for WCN6855
-Date:   Thu,  2 Dec 2021 17:33:08 +0800
-Message-Id: <1638437588-19087-1-git-send-email-zijuhu@codeaurora.org>
+        id S1356672AbhLBJ4I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 04:56:08 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:41185 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1356667AbhLBJ4B (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Dec 2021 04:56:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638438760; x=1669974760;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=tC5LXKjUKwQxEKmuAm29KfJD1uoIp9cEC1FTYO6jNx0=;
+  b=cNaKUN5m3J5HsuNAUK8rmgObCal5up7QQ503RjG4LJRjnRODARJpPuDE
+   TJgTJ4hLPOLeno0s8E9Dz0F42PcZQ/jyU+fm7Gb56w1mkem8vshAbKOmK
+   1sRq95xkVnDBKUHP6A1Az9arP+8qDDhufiW5IXNTrKhv22gQ9MuRk09uW
+   g=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 02 Dec 2021 01:52:33 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2021 01:52:33 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 2 Dec 2021 01:52:32 -0800
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 2 Dec 2021 01:52:27 -0800
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <bjorn.andersson@linaro.org>, <greg@kroah.com>, <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_satyap@quicinc.com>,
+        <quic_pheragu@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <quic_saipraka@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V2 0/8] Add Embedded USB Debugger (EUD) driver
+Date:   Thu, 2 Dec 2021 15:21:19 +0530
+Message-ID: <cover.1638430506.git.quic_schowdhu@quicinc.com>
 X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+This is a series of patches that implements a driver for the control
+peripheral, EUD (Embedded USB Debugger). The EUD is a mini-USB hub
+implemented on chip to support the USB-based debug and trace capabilities.
+Apart from debug capabilities, EUD has a control peripheral. Control
+Peripheral is on when EUD is on and gets signals like USB attach, pet
+EUD etc. EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH. At regular intervals,
+the EUD driver receives an interrupt to pet the driver indicating that
+the software is functional.
 
-Add a USB ID 0bda:385a to usb_device_id table for WCN6855.
+Changes in V2
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
----
- drivers/bluetooth/btusb.c | 3 +++
- 1 file changed, 3 insertions(+)
+*Fixed the yaml issue and also implemeted comments on yaml in V1.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ab169fc673ea..bf980f2c2101 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -302,6 +302,9 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0e2), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
- 
- 	/* Broadcom BCM2035 */
- 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Changes in V1
+
+* EUD has now been mapped as a separate DT node as it is an independent QCOM IP.
+
+* EUD is attached to the connector child of dwc3 via port end point since EUD
+  driver needs the connector for role-switching.
+
+* EUD driver has been moved now to drivers/soc/qcom/qcom_eud.c.
+
+* All the comments from version 0 of the patch has been implemented.
+
+Souradeep Chowdhury (8):
+  dt-bindings: Add the yaml bindings for EUD
+  dt-bindings: connector: Add property for EUD type-C connector
+  bindings: usb: dwc3: Update dwc3 properties for EUD connector
+  usb: dwc3: drd: Register the eud connector child node for dwc3
+  soc: qcom: eud: Add driver support for Embedded USB Debugger(EUD)
+  arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector
+  arm64: dts: qcom: sc7280: Set the default dr_mode for usb2
+  MAINTAINERS: Add maintainer entry for EUD
+
+ Documentation/ABI/testing/sysfs-driver-eud         |   9 +
+ .../bindings/connector/usb-connector.yaml          |   4 +
+ .../devicetree/bindings/soc/qcom/qcom,eud.yaml     |  50 ++++
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |   6 +
+ MAINTAINERS                                        |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |   4 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  25 ++
+ drivers/soc/qcom/Kconfig                           |  10 +
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/qcom_eud.c                        | 268 +++++++++++++++++++++
+ drivers/usb/dwc3/drd.c                             |  26 ++
+ 11 files changed, 411 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+ create mode 100644 drivers/soc/qcom/qcom_eud.c
+
+--
+2.7.4
 
