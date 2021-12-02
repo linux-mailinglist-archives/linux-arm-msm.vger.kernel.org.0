@@ -2,108 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6F2F4666C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 16:36:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3206746670D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 16:46:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359093AbhLBPj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 10:39:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52168 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359097AbhLBPj0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 10:39:26 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90701C061758
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 07:36:03 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id d9so39653644wrw.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 07:36:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/vVxuU7a+LUiAWFx1LiXN7IDyUv3UsbR6TDuxkNCB/w=;
-        b=TiIvKEA250oVYTFdjOdG0AwfIPQMn5jbjDlpBKyO5zkA4a72ZiZrKTxXJDA6MaJFKc
-         z6uBOn7kTIT7lhfQW5ElMpwU5mnvQx4lTbqDuCtEKOQ743phik9ufxuRkl2IA+Rh9O11
-         J06rhRtF6abL0qqZBBpMr7SbqOiuNAU4YLcQ0nsVmXeGSU3nd6x163aGg9/tS/6GKAWV
-         YXQa0SnmrvYw4u6zvmY0WYg7UVl9+2zp5aE0AvKtgPZ+eCMBeeiIhHaHz+hi8IuevcfJ
-         nMJHfAGrzlfdTL71kP1IpICWymbbl4elb8LvO0n5CcUKl3kq6UP2a3vhdCoPgZHcF5/J
-         /zHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/vVxuU7a+LUiAWFx1LiXN7IDyUv3UsbR6TDuxkNCB/w=;
-        b=UV4vHU0A8TZI2coG3Do2O4FdPL2K4ZwDh6SkLKK4PPjg1cvIscUabI7KDtRpo1VsVR
-         MRcUV364N7yWHlNm0Z+HU+pXZcdSjJJ6e1sFxZj//VhlBSW7u21TFqOVCsXipO5QpTx3
-         4AEmvcU1VkIyvB1MKFAwApCAroHhew/YNB8mgJ4NcAyvkBo/sB6makasslcsiYPZfrUq
-         XdP5Ek309D6sphPxBiQTNT4syKwfxDlOHH2BaiJ0Sjq7HLjglbJAmtSjFaA9bx2plzjW
-         /5X5D6dPBDAxp/Nnhs6F2r9veMi0cUX8hel6BBm+9AYl5vR/Law7evrpZaaWGmPjkB+V
-         S4qg==
-X-Gm-Message-State: AOAM533+fnC2VD1ym/d20c6N7Ga1jA25BdZ20UaRhziPGJn+fQCK2cKn
-        B604BGNgGEe+5GzTJNAcasWNbA5XmZUc8a9O
-X-Google-Smtp-Source: ABdhPJxwd9zldiPd6CgKcrcDB2YKK/NKBgLTpScR/QgH7coz6ISpoc842RgrFWlcAHby8715MFiptA==
-X-Received: by 2002:adf:e84e:: with SMTP id d14mr14929986wrn.472.1638459361802;
-        Thu, 02 Dec 2021 07:36:01 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id bd18sm3662wmb.43.2021.12.02.07.36.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 07:36:01 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        robert.foss@linaro.org, jonathan@marek.ca
-Cc:     andrey.konovalov@linaro.org, todor.too@gmail.com,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        jgrahsl@snap.com, hfink@snap.com, bryan.odonoghue@linaro.org
-Subject: [RESEND PATCH v2 19/19] media: camss: Apply vfe_get/vfe_put fix to SDM845
-Date:   Thu,  2 Dec 2021 15:37:29 +0000
-Message-Id: <20211202153729.3362372-20-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211202153729.3362372-1-bryan.odonoghue@linaro.org>
-References: <20211202153729.3362372-1-bryan.odonoghue@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1348042AbhLBPtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 10:49:25 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:24353 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1359158AbhLBPtK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Dec 2021 10:49:10 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638459947; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Mam5fJ/g0ud+mA5jIn/QLyomgHNukbcMWyEljhMxKKE=; b=nGsAjng6ecZDJOl/kTNx+pDHezvzf1UWXgrcpoXrmV0SMaK2tT+Qo2OD4xYWzqpygspI8vhQ
+ r6LewsjDQkbetWchm1AU2e9Q3jClBfGINyHhxuHp8NB6ZvRL+jvR/p9xTghJ7gW1IKHkX7Ew
+ BTPBHi50UdQQ4CEjeukwCIFIx4w=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 61a8e9b9642caac318df4f9a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Dec 2021 15:43:53
+ GMT
+Sender: srivasam=codeaurora.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 71139C43637; Thu,  2 Dec 2021 15:43:52 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7FF68C4338F;
+        Thu,  2 Dec 2021 15:43:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 7FF68C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.com
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v7 00/10] Add support for audio on SC7280 based targets
+Date:   Thu,  2 Dec 2021 21:13:16 +0530
+Message-Id: <1638459806-27600-1-git-send-email-srivasam@codeaurora.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Similar to the SM8250 the CSID relies on the VFE to be clocked prior to
-taking the CSID out of reset.
+From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 
-Apply the same fixup to SDM845 as SM8250.
+This patch set is to add support for Audio over wcd codec,
+digital mics, through digital codecs and without ADSP.
 
-Suggested-by: Robert Foss <robert.foss@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-csid.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Changes Since V6:
+    -- Split cdc dma regmap config macros.
+    -- Add write dma reg fields for i2s path.
+    -- Add helper function to distinguish rxtx and va dma ports.
+    -- Optimizing clock and reg name in cpu dt-bindings.
+    -- Update buffer management for cdc dma path.
+    -- Remove Kconfig fields of machine driver.
+Changes Since V5:
+    -- Include MI2S primary node to snd_soc_dai_driver in lpass-sc7280 platform driver.
+    -- Move dependency patch list to corresponding patch.
+    -- Add support for missing cdc-dma ports.
+    -- Change if/else conditional statements to switch cases.
+    -- Add missing error handlings.
+    -- Typo errors fix.
+Changes Since V4:
+    -- Remove unused variable in lpass-sc7280 platform driver.
+Changes Since V3:
+    -- Remove redundant power domain controls. As power domains can be configured from dtsi.
+Changes Since V2:
+    -- Split lpass sc7280 cpu driver patch and create regmap config patch.
+    -- Create patches based on latest kernel tip.
+    -- Add helper function to get dma control and lpaif handle.
+    -- Remove unused variables.
+Changes Since V1:
+    -- Typo errors fix
+    -- CPU driver readable/writable apis optimization.
+    -- Add Missing config patch
+    -- Add Common api for repeated dmactl initialization.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index e6835b92695b..32f82e471bae 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -159,10 +159,11 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	struct camss *camss = csid->camss;
- 	struct device *dev = camss->dev;
- 	struct vfe_device *vfe = &camss->vfe[csid->id];
-+	u32 version = camss->version;
- 	int ret;
- 
- 	if (on) {
--		if (camss->version == CAMSS_8250) {
-+		if (version == CAMSS_8250 || version == CAMSS_845) {
- 			ret = vfe_get(vfe);
- 			if (ret < 0)
- 				return ret;
-@@ -212,7 +213,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		camss_disable_clocks(csid->nclocks, csid->clock);
- 		ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
- 		pm_runtime_put_sync(dev);
--		if (camss->version == CAMSS_8250)
-+		if (version == CAMSS_8250 || version == CAMSS_845)
- 			vfe_put(vfe);
- 	}
- 
+Srinivasa Rao Mandadapu (10):
+  ASoC: qcom: Move lpass_pcm_data structure to lpass header
+  ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
+  ASoC: qcom: Add register definition for codec rddma and wrdma
+  ASoC: qcom: Add lpass CPU driver for codec dma control
+  ASoC: qcom: Add helper function to get dma control and lpaif handle
+  ASoC: qcom: Add support for codec dma driver
+  ASoC: qcom: Add regmap config support for codec dma driver
+  ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+  ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
+  ASoC: qcom: SC7280: Update config for building codec dma drivers
+
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  70 ++-
+ sound/soc/qcom/Kconfig                             |  11 +
+ sound/soc/qcom/Makefile                            |   4 +
+ sound/soc/qcom/lpass-cdc-dma.c                     | 275 +++++++++
+ sound/soc/qcom/lpass-cpu.c                         | 244 +++++++-
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 127 ++++-
+ sound/soc/qcom/lpass-platform.c                    | 617 ++++++++++++++++++---
+ sound/soc/qcom/lpass-sc7280.c                      | 441 +++++++++++++++
+ sound/soc/qcom/lpass.h                             | 162 ++++++
+ 9 files changed, 1864 insertions(+), 87 deletions(-)
+ create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
+ create mode 100644 sound/soc/qcom/lpass-sc7280.c
+
 -- 
-2.33.0
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
