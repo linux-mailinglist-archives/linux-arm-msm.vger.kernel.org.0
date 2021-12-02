@@ -2,298 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 916F7465A3A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:02:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F14D3465A86
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:16:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354080AbhLBAGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 19:06:02 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:20583 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354002AbhLBAEe (ORCPT
+        id S240696AbhLBATV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 19:19:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234145AbhLBATU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:04:34 -0500
+        Wed, 1 Dec 2021 19:19:20 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720E2C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Dec 2021 16:15:58 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id s139so52037925oie.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Dec 2021 16:15:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638403273; x=1669939273;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=f2yYHDXNl3uhD7HN2SXULZcfY2DXP5daCOiiMrMpBQ4=;
-  b=ZNENtuc/SDrOtaFVSzt+Aco7aoQHopr/N52yY5y4F2leQfKhHNLbz1Tv
-   U+A1HKBCKScKiwhCJTvK2kOBKF2Y11kA+j55TE+GjAqeggMPFFMRLdwze
-   dyZM0IMY0yTqrk8AYpBs2/dJErdIsCUAOCzdG9Z+8LqWrZx8lfBCM1nHR
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 01 Dec 2021 16:01:13 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 16:01:12 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:01:12 -0800
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:01:08 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5fIQ6AXcM0gNdq6MfBOpt1z0X7Fsc0u8cUt+/4xh4Do=;
+        b=sSiMH+E9z8brVBxLHOPGy5WD8p0Snw2niO7+cuV7qs7ojEKGxazj7fQcZpDz0V92Bs
+         G1PXKiAh/nFJ/W/3kb7PTTGq94E7cnCY2NvskLbm9fpBzONbCLIn7SKkBiR0DsnY3g1+
+         yodRXFe0IM3nL4sqmqq6cb+MfkcHVRoT39Lxz14JnQdXfoafMKf89rolpJUIyYLckSmQ
+         mTBxKuId4dd5zW5D9XLoEi/uSHo7E4yeyA5rPFX8QJ95yGP/Dgd1bROJMlLJkii7L+UY
+         mfZAdmFLJk1D+Yi17YMmUMDddWPWZ8LdzYJEOzaVXKZ/Wm+qpDM4dBcajEpOZkC8/OBQ
+         ueow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5fIQ6AXcM0gNdq6MfBOpt1z0X7Fsc0u8cUt+/4xh4Do=;
+        b=F+BtfoaEjeoVOocKdz81nmbdXCD8+PQiR5L/bYFuibJuI4EE1PH0AqGqAz48FtKAAk
+         5suoxnycW0FX845p8eD9mrbO5uGO3y/biDvljiY8cvm9oV/w9aU7/BoybuCTa9Jhsyft
+         iTDvQSqQePj5HTaUmqBVpfmG4Z9JAjY9K8hk899yzOqGiTAqYx2fDWCthfUa4nX7GATp
+         b/pJeutRdbS3Zp9awt/rKjVoyud7343NN//4Bq4bCbwDGTLsILc/xqR90wMvbVhKHwNv
+         SYMIlR+cqVPOFdhf/QeiZFPg2izxLpbnsfRHvvOSo4R/GxQhA0MohU/1cfAzW3O0lO+y
+         XgXQ==
+X-Gm-Message-State: AOAM530I6gitrQ3poD/eSKJjSGGC+bDRS7ClTc8edvXyrk+wG794PTy5
+        alkLM9APm2FF81f/1oncqTNxSCUeLG1xxQ==
+X-Google-Smtp-Source: ABdhPJxYuan9p3VRQ508Kk7Zuc6kskhGwIgXWbLNIhlATTfZRw0mtehJw8BtJQ+RbFJs2vJokHYEyA==
+X-Received: by 2002:aca:accd:: with SMTP id v196mr1716493oie.108.1638404157797;
+        Wed, 01 Dec 2021 16:15:57 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id g2sm553464oic.35.2021.12.01.16.15.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Dec 2021 16:15:57 -0800 (PST)
+Date:   Wed, 1 Dec 2021 16:17:29 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        <devicetree@vger.kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <tglx@linutronix.de>, <maz@kernel.org>
-Subject: [RESEND PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-Date:   Thu, 2 Dec 2021 08:00:12 +0800
-Message-ID: <1638403212-29265-11-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 04/16] arm64: dts: qcom: sm8350: Specify clock-frequency
+ for arch timer
+Message-ID: <YagQmQzk7GorCUVv@ripper>
+References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+ <20211114012755.112226-4-konrad.dybcio@somainline.org>
+ <20211130020536.52D0FC53FC7@smtp.kernel.org>
+ <dee30442-8a78-07f3-1fa1-e5922a510182@somainline.org>
+ <20211201204543.1286DC53FAD@smtp.kernel.org>
+ <0b171f2e-4bbc-a54a-7615-87fd4559fee9@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0b171f2e-4bbc-a54a-7615-87fd4559fee9@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
-update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
-it and update it with a smaller range.
+On Wed 01 Dec 16:00 PST 2021, Konrad Dybcio wrote:
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
- .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
- Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
- 3 files changed, 130 insertions(+), 68 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> 
+> On 01.12.2021 21:45, Stephen Boyd wrote:
+> > Quoting Konrad Dybcio (2021-11-30 11:59:03)
+> >> On 30/11/2021 03:05, Stephen Boyd wrote:
+> >>> Quoting Konrad Dybcio (2021-11-13 17:27:43)
+> >>>> Arch timer runs at 19.2 MHz. Specify the rate in the timer node.
+> >>>>
+> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> >>>> ---
+> >>>>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 +
+> >>>>   1 file changed, 1 insertion(+)
+> >>>>
+> >>>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> >>>> index a30ba3193d84..60866a20a55c 100644
+> >>>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> >>>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> >>>> @@ -2484,5 +2484,6 @@ timer {
+> >>>>                               <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> >>>>                               <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> >>>>                               <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> >>>> +               clock-frequency = <19200000>;
+> >>> Does the firmware not set the frequency properly?
+> >> It does on my device on the current firmware version (it wouldn't really 
+> >> boot if it didn't, no?),
+> >>
+> >> but who knows if it always will, or if it always has been..
+> >>
+> >>
+> >> It's present in downstream too, so I reckon it does not hurt to have it 
+> >> here too, even
+> >>
+> >> for completeness-of-describing-the-machine-properly sake.
+> >>
+> > No. We don't want dts files to have this. The property is only there to
+> > workaround bad firmware that doesn't set the frequency. Please drop this
+> > patch.
+> 
+> After looking at it again, I see I was indeed wrong, and so was this patch.
+> 
+> Sorry, and green light for dropping..
+> 
 
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-deleted file mode 100644
-index 6332507..0000000
---- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+++ /dev/null
-@@ -1,67 +0,0 @@
--Qualcomm SPMI Controller (PMIC Arbiter)
--
--The SPMI PMIC Arbiter is found on Snapdragon chipsets.  It is an SPMI
--controller with wrapping arbitration logic to allow for multiple on-chip
--devices to control a single SPMI master.
--
--The PMIC Arbiter can also act as an interrupt controller, providing interrupts
--to slave devices.
--
--See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
--controller binding requirements for child nodes.
--
--See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
--generic interrupt controller binding documentation.
--
--Required properties:
--- compatible : should be "qcom,spmi-pmic-arb".
--- reg-names  : must contain:
--     "core" - core registers
--     "intr" - interrupt controller registers
--     "cnfg" - configuration registers
--   Registers used only for V2 PMIC Arbiter:
--     "chnls"  - tx-channel per virtual slave registers.
--     "obsrvr" - rx-channel (called observer) per virtual slave registers.
--
--- reg : address + size pairs describing the PMIC arb register sets; order must
--        correspond with the order of entries in reg-names
--- #address-cells : must be set to 2
--- #size-cells : must be set to 0
--- qcom,ee : indicates the active Execution Environment identifier (0-5)
--- qcom,channel : which of the PMIC Arb provided channels to use for accesses (0-5)
--
--Optional properties:
--- interrupts : interrupt list for the PMIC Arb controller, must contain a
--               single interrupt entry for the peripheral interrupt
--- interrupt-names : corresponding interrupt names for the interrupts
--                    listed in the 'interrupts' property, must contain:
--     "periph_irq" - summary interrupt for PMIC peripherals
--- interrupt-controller : boolean indicator that the PMIC arbiter is an interrupt controller
--- #interrupt-cells :  must be set to 4. Interrupts are specified as a 4-tuple:
--    cell 1: slave ID for the requested interrupt (0-15)
--    cell 2: peripheral ID for requested interrupt (0-255)
--    cell 3: the requested peripheral interrupt (0-7)
--    cell 4: interrupt flags indicating level-sense information, as defined in
--            dt-bindings/interrupt-controller/irq.h
--
--Example:
--
--	spmi {
--		compatible = "qcom,spmi-pmic-arb";
--		reg-names = "core", "intr", "cnfg";
--		reg = <0xfc4cf000 0x1000>,
--		      <0xfc4cb000 0x1000>,
--		      <0xfc4ca000 0x1000>;
--
--		interrupt-names = "periph_irq";
--		interrupts = <0 190 0>;
--
--		qcom,ee = <0>;
--		qcom,channel = <0>;
--
--		#address-cells = <2>;
--		#size-cells = <0>;
--
--		interrupt-controller;
--		#interrupt-cells = <4>;
--	};
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-new file mode 100644
-index 0000000..3f0bea2
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-@@ -0,0 +1,128 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SPMI PMIC Arbiter
-+
-+maintainers:
-+  - Fenglin Wu <quic_fenglinw@quicinc.com>
-+  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-+
-+description: |
-+  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
-+  controller with wrapping arbitration logic to allow for multiple
-+  on-chip devices to control a single SPMI master.
-+
-+  The PMIC Arbiter can also act as an interrupt controller, providing
-+  interrupts to slave devices.
-+
-+  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
-+  SPMI controller binding requirements for child nodes.
-+
-+allOf:
-+  - $ref: spmi.yaml#
-+
-+properties:
-+  $nodename:
-+    pattern: "^spmi@.*"
-+
-+  compatible:
-+    const: qcom,spmi-pmic-arb
-+
-+  reg-names:
-+    oneOf:
-+      - items:
-+          - const: core
-+          - const: intr
-+          - const: cnfg
-+      - items:
-+          - const: core
-+          - const: intr
-+          - const: cnfg
-+          - const: chnls
-+          - const: obsrvr
-+
-+  reg:
-+    minItems: 3
-+    maxItems: 5
-+    description: |
-+      Specifies base physical address and size of the registers in SPMI PMIC
-+      Arbiter HW module, with the following order.
-+        - SPMI PMIC arbiter core registers (core)
-+        - SPMI PMIC arbiter interrupt controller registers (intr)
-+        - SPMI PMIC arbiter configuration registers (cnfg)
-+        - SPMI PMIC arbiter tx-channel per virtual slave registers (chnls)
-+        - SPMI PMIC arbiter rx-channel per virtual slave registers (obsrvr).
-+      Register for "chnls" and "obsrvr" are only applicable for PMIC arbiter
-+      with HW version greater than V2.
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 0
-+
-+  interrupts:
-+    description: The summary interrupt for the PMIC Arb controller.
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: periph_irq
-+
-+  interrupt-controller: true
-+
-+  "#interrupt-cells":
-+    const: 4
-+    description: |
-+      Specifies the number of cells needed to encode any interrupt source.
-+      The 1st cell is the slave ID for the requested interrupt, its valid
-+      range is [0-15].
-+      The 2nd cell is the  peripheral ID for requested interrupt, its valid
-+      range is [0-255].
-+      The 3rd cell is the requested peripheral interrupt, its valid range
-+      is [0-7].
-+      The 4th cell is interrupt flags indicating level-sense information,
-+      as defined in dt-bindings/interrupt-controller/irq.h
-+
-+  qcom,ee:
-+    description: the active Execution Environment identifier
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+  qcom,channel:
-+    description: which of the PMIC Arbiter provided channels to use for accesses
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+required:
-+  - compatible
-+  - reg-names
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - qcom,ee
-+  - qcom,channel
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    spmi@fc4cf000 {
-+          compatible = "qcom,spmi-pmic-arb";
-+          reg-names = "core", "intr", "cnfg";
-+          reg = <0xfc4cf000 0x1000>,
-+                <0xfc4cb000 0x1000>,
-+                <0xfc4ca000 0x1000>;
-+          interrupt-names = "periph_irq";
-+          interrupts = <0 190 0>;
-+          interrupt-controller;
-+          #interrupt-cells = <4>;
-+
-+          qcom,ee = <0>;
-+          qcom,channel = <0>;
-+
-+          #address-cells = <2>;
-+          #size-cells = <0>;
-+    };
-diff --git a/Documentation/devicetree/bindings/spmi/spmi.yaml b/Documentation/devicetree/bindings/spmi/spmi.yaml
-index 1d243fae..d7d9345 100644
---- a/Documentation/devicetree/bindings/spmi/spmi.yaml
-+++ b/Documentation/devicetree/bindings/spmi/spmi.yaml
-@@ -25,7 +25,8 @@ properties:
-     pattern: "^spmi@.*"
- 
-   reg:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 5
- 
-   "#address-cells":
-     const: 2
--- 
-2.7.4
+Can you please send me a patch that reverts the change as I merged it
+into my -next branch already? Both to simplify for me and to document
+why it shouldn't be here for others to refer to in the future.
 
+Thanks,
+Bjorn
