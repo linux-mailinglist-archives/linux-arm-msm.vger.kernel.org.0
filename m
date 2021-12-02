@@ -2,113 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30FA7466A41
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 20:16:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD812466AAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 21:03:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376734AbhLBTUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 14:20:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376706AbhLBTUD (ORCPT
+        id S243468AbhLBUGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 15:06:39 -0500
+Received: from mail-oi1-f172.google.com ([209.85.167.172]:38543 "EHLO
+        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243096AbhLBUGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 14:20:03 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF438C06174A;
-        Thu,  2 Dec 2021 11:16:40 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id k4so697769pgb.8;
-        Thu, 02 Dec 2021 11:16:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=icZeasEa5qBq3L8d5srtUANYqE41LiH/z3sgJm+fPJk=;
-        b=mqbD/6pSOGpoiznFKyrI4XqOazyzb74jum4qEY7J66AGmj7jxs/Yu4CwHTHNdDqTc+
-         FN6/q2YOlbxUY3TWstoFCyhXwx8GOb8FUiUbrLWZNBsfUFvdcQods66rKkgLHzfbCsx0
-         GO2NxijCurY7kbM/abAkt2GMoyQYwH1Sx/mopV4n2xNbAZpXAL89J3BxUqJfFRX/IRxW
-         dSN5Hxd6ALDxndArAlCfFZxYWb6V1usbiPeJcbsHGmiRFf7xYty/vUUrcIjC/UG+WF1V
-         y5Re89VD0GPILs6x655gOrh1z7/IUrJCLGkCQAROOKGpbra4FVhYk6fciqBwnWHldWXM
-         gVEg==
+        Thu, 2 Dec 2021 15:06:38 -0500
+Received: by mail-oi1-f172.google.com with SMTP id r26so1376328oiw.5;
+        Thu, 02 Dec 2021 12:03:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=icZeasEa5qBq3L8d5srtUANYqE41LiH/z3sgJm+fPJk=;
-        b=ghC7lBu6SDKU9PUpA85wD+cJr1Ou+0PuuHhKksLx3gZKuaHZ+5Xj7VQ9si+uUCxHcd
-         2emofqybX3jiguox3dj82GguKxa+KH0QHCsHp7uSEhiwSaFfSW5ffdeNVgq9kIVxnKL8
-         Q+CnJaA40aYs4YOdwTU2236frFzPBRx4MBmH5/cKbeFnmlbEmqzEAxnOwFB29/Vu//iO
-         rO6yChSZhQxhzjSrMUeh4SyDnp5y544a6UZXpDwWHwbixgw3n6SwdroK/66uqcOXDla0
-         uBozY4AyjSXSiAH3cE0V+M052vCa8VnD/esaZjPQm28KD819O82iixLV4uCRt3RMDzB+
-         W9Bg==
-X-Gm-Message-State: AOAM530DgKdZqvhpXMwvB0fpKFB01S6BFQLbv80hmx85NfZ6KnRY35lU
-        ZzZPOX8/VYgoTGUSFLa2vwXHCGs26no=
-X-Google-Smtp-Source: ABdhPJyGMARj3AkzMfhyvvlcCbMFPzdg3jD2tNeAfYl/NHsTkBLla9Yo3mGMLKbH76yqyZuHqiYFkg==
-X-Received: by 2002:a05:6a00:1905:b0:4a8:2f86:3f18 with SMTP id y5-20020a056a00190500b004a82f863f18mr14665364pfi.52.1638472600288;
-        Thu, 02 Dec 2021 11:16:40 -0800 (PST)
-Received: from jaschultz-Thelio-Major.corp.microsoft.com ([2001:4898:80e8:37:517f:74c7:9fe9:b5e8])
-        by smtp.gmail.com with ESMTPSA id x14sm289897pjl.27.2021.12.02.11.16.39
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=tdFnY4wzmt+MgdOT2Tq5J82thiu5XzZLbDcTwtxSNYk=;
+        b=CqSeMDPexP+Eq9nX4P+8phtQxZua0E6a1us2n3o+PbsS97AwiIWXQqm9L73vkR4LPl
+         LKKYLzniiyBzQLW+sJKBOZPdNriRhONmv+sTycDz94u4qv8gnaPp/bSYb8GjGAOBnP5o
+         jLVsW4h93LyLYdhPVlHo62JlVmfw32mdbSAAhuysDgsvrjjscd7t9XnRrz61L0v1S/AZ
+         4zbTMPZxO17bCFdhNyqKY8fHOoV87eLFXpQbiUKt2yVP+wxA1BHiQp+rY05P3kbH+3yR
+         D9ttf92WhLcrkJDIcS3oeJjdlACrNQnbrsYP1cWuxwN6pvRGMggHtMZhT0L+0jV9VOPe
+         l+Wg==
+X-Gm-Message-State: AOAM5339Pfv3ilX+UC4MfNtLpV22DZbEOhPaCuA8io0PgYL/Q+jIJNsm
+        c/sYB4ydwKBLkxpFdD03HA==
+X-Google-Smtp-Source: ABdhPJy+Vf8yrVBOrncV37VxW9c3c7Y/RAVX3OHOeNP3Xt7D8Nw+7TsHiQ6ZGDEM3eK2Axdz+VoWvQ==
+X-Received: by 2002:a05:6808:1a01:: with SMTP id bk1mr6236903oib.46.1638475395629;
+        Thu, 02 Dec 2021 12:03:15 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id a5sm203291otd.74.2021.12.02.12.03.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 11:16:39 -0800 (PST)
-From:   Jarrett Schultz <jaschultzms@gmail.com>
-X-Google-Original-From: Jarrett Schultz <jaschultz@microsoft.com>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <markgross@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <balbi@kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: [PATCH 5/5] arm64: dts: qcom: surface-duo: Add surface xbl
-Date:   Thu,  2 Dec 2021 11:16:30 -0800
-Message-Id: <20211202191630.12450-6-jaschultz@microsoft.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211202191630.12450-1-jaschultz@microsoft.com>
-References: <20211202191630.12450-1-jaschultz@microsoft.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 02 Dec 2021 12:03:14 -0800 (PST)
+Received: (nullmailer pid 1112575 invoked by uid 1000);
+        Thu, 02 Dec 2021 20:03:13 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
+Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org, tiwai@suse.com,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        bgoswami@codeaurora.org, lgirdwood@gmail.com,
+        alsa-devel@alsa-project.org, swboyd@chromium.org,
+        srinivas.kandagatla@linaro.org, agross@kernel.org, perex@perex.cz,
+        linux-arm-msm@vger.kernel.org, broonie@kernel.org,
+        plai@codeaurora.org, bjorn.andersson@linaro.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>,
+        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
+        judyhsiao@chromium.org
+In-Reply-To: <1638459806-27600-9-git-send-email-srivasam@codeaurora.com>
+References: <1638459806-27600-1-git-send-email-srivasam@codeaurora.com> <1638459806-27600-9-git-send-email-srivasam@codeaurora.com>
+Subject: Re: [PATCH v7 08/10] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+Date:   Thu, 02 Dec 2021 14:03:13 -0600
+Message-Id: <1638475393.161838.1112574.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce device tree source for the surface xbl driver.
+On Thu, 02 Dec 2021 21:13:24 +0530, Srinivasa Rao Mandadapu wrote:
+> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> 
+> Add bindings for sc7280 lpass cpu driver which supports
+> audio over i2s based speaker, soundwire based headset, msm dmics
+> and HDMI Port.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> ---
+>  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 70 +++++++++++++++++++---
+>  1 file changed, 62 insertions(+), 8 deletions(-)
+> 
 
-Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
----
+yamllint warnings/errors:
 
-Changes in v3:
- - N/A
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg: [[0, 1658351616, 0, 425984], [0, 1659895808, 0, 167936]] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg-names: ['lpass-hdmiif', 'lpass-lpaif'] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupts: [[0, 160, 1], [0, 268, 1]] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupt-names: ['lpass-irq-lpaif', 'lpass-irq-hdmi'] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: iommus: [[4294967295, 4128, 0], [4294967295, 4146, 0]] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
 
----
+doc reference errors (make refcheckdocs):
 
-Changes in v2:
- - Updated to reference an offset inside of imem
----
- .../boot/dts/qcom/sm8150-microsoft-surface-duo.dts     | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+See https://patchwork.ozlabs.org/patch/1562819
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index 5901c28e6696..abb7964daac4 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -430,6 +430,16 @@ &i2c19 {
- 	/* MAX34417 @ 0x1e */
- };
- 
-+&imem {
-+	status = "okay";
-+
-+	xbl@a94 {
-+		compatible = "microsoft,sm8150-surface-duo-xbl";
-+		reg = <0xa94 0x100>;
-+		status = "okay";
-+	};
-+};
-+
- &pon {
- 	pwrkey {
- 		status = "okay";
--- 
-2.25.1
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
