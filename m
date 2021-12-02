@@ -2,90 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C2D6A466D0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 23:38:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F155466D41
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 23:51:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377456AbhLBWlk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 17:41:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35018 "EHLO
+        id S1346039AbhLBWzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 17:55:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349648AbhLBWlb (ORCPT
+        with ESMTP id S244087AbhLBWzC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 17:41:31 -0500
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4376CC06175C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 14:38:07 -0800 (PST)
-Received: by mail-qt1-x82c.google.com with SMTP id n15so1475274qta.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 14:38:07 -0800 (PST)
+        Thu, 2 Dec 2021 17:55:02 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9A1C06174A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 14:51:39 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so1682161otg.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 14:51:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/YgkxkUgYa3cGXFN75ZNVpxqudNeMPhQu2Vflsaslk8=;
-        b=kXDO6ZiBZCIi/mnCweRXGLA2xMwJarSMYy8jU8Z8J97OsNm9qT9phk279CqJLkXe6C
-         5DZfMIaCv0yJnDUQC1GhxA9g+q2wTyOiTURiMqwAqAmMLBMnlrXu8UOsTSKS14GWUisV
-         2w/D3o4NV3RxmAFx2gxN4xub2KfvmqX/rbRQRbewW+bHRa/aEvsgl56iTkPKQrIZyrNe
-         P5ZX4ntuJFRUFY5HC1ZTXzSVx+/jvgFWCC74+7oCctqssZ+zC3vV/VqF9amWg8tkWiFB
-         n0+ZJmcNgWxSoxD2JmOboNsMenMN+6zrbu4iD/TWCEcy+kXDlJY8zzPNYl2olhOZ6D/B
-         DEfA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=G+McyWCYbmpjpANc0iPYcABDaPO85Ld/wlLRZjD5kLg=;
+        b=JVh5EP5UyHHaNRAtHYGVi+rhzICB7i9jWA1Llw5vFsL30ZWFm5dov/5HgQ7PrjfyMF
+         cdhIvN66DELXflYZC8l/t0rdBc4UZyRKrrPs4OCNOpZN3vFxTYthGshbxe6zu3eLVXoC
+         mCRNLamhog6hLB5zEO+t7mg5RBtZFQhYanQsg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/YgkxkUgYa3cGXFN75ZNVpxqudNeMPhQu2Vflsaslk8=;
-        b=FPlZMu4WIHBVOSXvQxMDkc3Yh4b+znb09vaKGEijJRqvcEANtjUFF4IPmkHG2Muq7j
-         SGm8NJPeV5RZUFs7sNwATM2osaTLJb/RDkCWrOTDeLkxhsG44ahcD6JwILQzgW97XmbK
-         MSNZdbJMQkY6JLDjiT+sjnk2qObL4iVj3hXP4ZV0rfiuEchd0omz41nPodeTiqZh/N/y
-         WhuN+sQ5PO+b8A5BMblKLzZuOGtW27+CPlVXGDFwpwhJ0yovrPllDyfkM+TiRg4uOII3
-         4we1Ybtw4AXZwvVAFfRdt4XGvBdzIJwpuKKXSUVhPuqmdzlDQyuOe7MD7e6RNOKGF8dP
-         VQbA==
-X-Gm-Message-State: AOAM533WbReftGUmy0LPaMjJ/TLlUDpC+tDA2npVOlu32rrOW6DgXIZo
-        355TvcAP7icSojwep50PLmnvHbSbSbHmJQ==
-X-Google-Smtp-Source: ABdhPJw5thbB/dwtKRrrsemIkR0hgl49PqQvYWmXUWSSKHPwBpOe14Uc2RUufrjd5T2vkX1MAo4jAg==
-X-Received: by 2002:ac8:5c53:: with SMTP id j19mr16615598qtj.40.1638484686382;
-        Thu, 02 Dec 2021 14:38:06 -0800 (PST)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id h3sm961152qko.78.2021.12.02.14.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 14:38:06 -0800 (PST)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        daniel.lezcano@linaro.org, rafael@kernel.org, rui.zhang@intel.com,
-        robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] dt-bindings: thermal: Add sm8150 compatible string for LMh
-Date:   Thu,  2 Dec 2021 17:38:02 -0500
-Message-Id: <20211202223802.382068-4-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211202223802.382068-1-thara.gopinath@linaro.org>
-References: <20211202223802.382068-1-thara.gopinath@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=G+McyWCYbmpjpANc0iPYcABDaPO85Ld/wlLRZjD5kLg=;
+        b=J3US/5bsxCLtnAT0WUCwf1MoXuD1F+qF6QU16T5wgmsz3EkfZcOGX/rI22supZEFDI
+         uyjUNAXgx/AxFMKoLnnfD16K9Ig+ib0wDXcIY+MK4+SPxskDeh7+4QElGZiwttF8hts0
+         iJ+pV9aisi1NfACgzh5EkJUi8d7E1PBhjUbWqoDAjeLOzOnu4MiOdOVDKimT3XGkRbAG
+         Zcaq/OZvzw7VtpkP7mmriYLkzvCbkuPjLsSP1gO7AApZQLG3XbSZjiV314bx1es4Ajoh
+         oEJqQKdxM7AITVcJjAiVSPDhMjQZeAykELbIjkQC1orXuV/oTGoOebHA8FD9G3JJuXQD
+         Zwmw==
+X-Gm-Message-State: AOAM531eOpbHPRBfCC6vOZJ2IibnEDBK0tLfRuEGxMSQCy3Fo+MWRAr5
+        j1zFlNXJ+Iy6N+A4zbXhTZRw2irKtP3kk4yFyfH6Pw==
+X-Google-Smtp-Source: ABdhPJzS29+LQ903PdAUxA5kWhCkKjLGFY2Fq0VTw8nEaBMpva7LdDAsgQrfNLDEHcVCbXgEfKRtiUEhJh5gZE/o+P0=
+X-Received: by 2002:a9d:2243:: with SMTP id o61mr13366960ota.126.1638485499138;
+ Thu, 02 Dec 2021 14:51:39 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 2 Dec 2021 14:51:38 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE-0n50R1wfw=V7o19N20YOqSrRZKR7Zd4QLcRcjYQNsdf3QHg@mail.gmail.com>
+References: <1631637901-11603-1-git-send-email-khsieh@codeaurora.org> <CAE-0n50R1wfw=V7o19N20YOqSrRZKR7Zd4QLcRcjYQNsdf3QHg@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 2 Dec 2021 14:51:38 -0800
+Message-ID: <CAE-0n51OA3c_hcnpJ-k5ZQvCN3kv8PcjLMRw4BLx9OKZPjGLcA@mail.gmail.com>
+Subject: Re: [PATCH v4] phy: qcom-qmp: add support for display port voltage
+ and pre-emphasis swing
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kishon@ti.com, p.zabel@pengutronix.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Extend the LMh dt binding document to include compatible string
-supporting sm8150 SoC.
+Quoting Stephen Boyd (2021-09-14 12:49:13)
+> Quoting Kuogee Hsieh (2021-09-14 09:45:01)
+> > Both voltage and pre-emphasis swing level are set during link training
+> > negotiation between host and sink. There are totally four tables added.
+> > A voltage swing table for both hbr and hbr1, a voltage table for both
+> > hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1 and a pre-emphasis
+> > table for both hbr2 and hbr3. In addition, write 0x0a to TX_TX_POL_INV is
+> > added to complete the sequence of configure dp phy base on HPG.
+> >
+> > Chnages in v2:
+> > -- revise commit test
+> > -- add Fixes tag
+> > -- replaced voltage_swing_cfg with voltage
+> > -- replaced pre_emphasis_cfg with emphasis
+> > -- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_v4_phy_configure_dp_swing()
+> > -- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_phy_configure_dp_swing()
+> >
+> > Changes in V3:
+> > -- add __qcom_qmp_phy_configure_dp_swing() to commit swing/pre-emphasis level
+> >
+> > Changes in V4:
+> > -- pass 2D array to __qcom_qmp_phy_configure_dp_swing()
+> >
+> > Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+> > Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> > ---
+>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- Documentation/devicetree/bindings/thermal/qcom-lmh.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-index 289e9a845600..a9b7388ca9ac 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-@@ -19,6 +19,7 @@ properties:
-   compatible:
-     enum:
-       - qcom,sdm845-lmh
-+      - qcom,sm8150-lmh
- 
-   reg:
-     items:
--- 
-2.25.1
-
+Can this patch be picked up?
