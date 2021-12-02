@@ -2,159 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 79395466861
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 17:32:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D2A546696E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 18:53:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347989AbhLBQfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 11:35:31 -0500
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:33528 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359809AbhLBQf2 (ORCPT
+        id S1348064AbhLBR4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 12:56:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1376467AbhLBR4W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 11:35:28 -0500
-Received: by mail-ot1-f41.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso450438otf.0;
-        Thu, 02 Dec 2021 08:32:05 -0800 (PST)
+        Thu, 2 Dec 2021 12:56:22 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F3DC06174A;
+        Thu,  2 Dec 2021 09:53:00 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id s137so486180pgs.5;
+        Thu, 02 Dec 2021 09:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/VH3WbIlxyOwvwez5olzgvVxJ3WPswa8VWGaw7DoXZk=;
+        b=ki0jFgMici7Sa64K4KBGuZzS4Ni8qe/0qpbPOoyULcVuRoEm6V2ATuc2Q8oYHgs85Y
+         X0BjDIRfEtxpD5n+UkZZabdXmTypiYOTKccryPn8O63oCNjSF2lS/tXMYFiUKiEeddZ8
+         3IvmWT36Sv/hIbO1fe1VmLLQCfY12ZPs2P0yTC7J3cW/abGU/9Hq7iHn3itT9b4bzJNY
+         PAP4K89AGDPTwyssTjjHjpW/iW2eCv+jWb1Z/NuB6UtvDfYe5aG/kherXxT+KCm+x4X2
+         gi/xgk1JNCuX4R61/5aYBe3y7Lfe0uLxLSaE/8JbSyRERs3GcWmIq8BTERGpOCH8yg2Y
+         1N7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=puf1vYFijievtcSCov0SbjyhrhL/hDVDktUDZuYOXCA=;
-        b=SmGADNj9Hc9u89U2HOeoc+A+NFqlevoN/L0V//DZ1RIGXJOs3HpVSesLDDpTphBiso
-         uMoZGooooAzutrB3JE6IXbOUQDYTtPiKEr694kTWBHCiOn2NXKeeZ4XV0WF//wd9+TUi
-         vJJrT2h26Ge8wFgVailGi31pyoTHd/1pOEVjLfumbkuKa8fSB4fzS+cQnqxd6AdKE5wB
-         6q4hJc1vVWT1H4870XIi2l5r0wYyvqZu5o0Q3Hv67/Osjj9LHiaR8LbUh0XfmPsQ2mfp
-         vxke5Fzheiuov2eN6qGqbCaVuqOxV8BrHaXUN5fmNgRsh5CEjvfELAEkOU6clm9iXqF2
-         0lqw==
-X-Gm-Message-State: AOAM532rma5SwqLly2NG0YK7dL2EWQdljf+WL5f6fyy8vc0ENENtHCzZ
-        fvf4B6Tw2207RWkiihC2HCIc+8fUtc4N/Hr+Q38=
-X-Google-Smtp-Source: ABdhPJzztRvfXpTejpa4p8BiYgUURMlTcY9YBhmQXZowM98RHRgSd6d+nWQuUX2RjJJvhr7RayEAXgc/mJmccAHDHg8=
-X-Received: by 2002:a9d:4c10:: with SMTP id l16mr12129271otf.198.1638462725118;
- Thu, 02 Dec 2021 08:32:05 -0800 (PST)
-MIME-Version: 1.0
-References: <20211115201010.68567-1-thara.gopinath@linaro.org>
- <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
- <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com> <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
- <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org> <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
- <20211202105027.GA1180274@e123083-lin>
-In-Reply-To: <20211202105027.GA1180274@e123083-lin>
-From:   "Rafael J. Wysocki" <rafael@kernel.org>
-Date:   Thu, 2 Dec 2021 17:31:53 +0100
-Message-ID: <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
-Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate freq_factor
-To:     Morten Rasmussen <morten.rasmussen@arm.com>
-Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/VH3WbIlxyOwvwez5olzgvVxJ3WPswa8VWGaw7DoXZk=;
+        b=D2KuuE5IBxVinzONhT6dQmWz0sqb6RCv1KlWPrQtnOFQcGjJW32S2PNm2E0Dsfsuqd
+         LftuClp+0CxJRyxyDayMwRo3oTp70FfghKm+3SYHfSdBMLNioSsqRHnPS4s0cHIF9vNL
+         l3mhxjHo0w5fUSyVcFWPVELkIteUGsQZ0H2/T56jb3x6vaCJP1meE1BVmWZaTuB5Sfaa
+         dyQCXhIuo2XceayARt+MbmySyiL2nzd7KUQIlnksohwdEYBfdudGh0r/GHjcf4v5Yz0/
+         oWMox6KwTpKmfMwQQX5eQhPWHil3aHEderIZR2R9b7xHj4QDfL+UEFEF30fLn9eTjNmM
+         DWYQ==
+X-Gm-Message-State: AOAM531QLqn4EpeSt66N6zUI8aiTYN8f9QGSj04w4k+6dGaSfvDkLpge
+        vNW2IYHtBOJk2louDGwOyNM=
+X-Google-Smtp-Source: ABdhPJxw5K5NOSKsl6m8jqCs3d2vdi8VsFtGWuL6gcIFVhwNX0el+ckIu339OdVB5vEI5xez30MjGA==
+X-Received: by 2002:a63:d245:: with SMTP id t5mr477466pgi.483.1638467579464;
+        Thu, 02 Dec 2021 09:52:59 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id u3sm473702pfk.32.2021.12.02.09.52.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Dec 2021 09:52:58 -0800 (PST)
+Subject: Re: [PATCH v3 1/3] irqchip: Pass platform_device pointer to init_cb
+To:     Shawn Guo <shawn.guo@linaro.org>, Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>
+Cc:     Maulik Shah <quic_mkshah@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Neil Armstrong <narmstrong@baylibre.com>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+ <20211202122122.23548-2-shawn.guo@linaro.org>
+From:   Florian Fainelli <f.fainelli@gmail.com>
+Message-ID: <b221fec0-43d0-537d-d78e-84da10a9c2d7@gmail.com>
+Date:   Thu, 2 Dec 2021 09:52:55 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20211202122122.23548-2-shawn.guo@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 2, 2021 at 11:50 AM Morten Rasmussen
-<morten.rasmussen@arm.com> wrote:
->
-> On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
-> > On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
-> > <thara.gopinath@linaro.org> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
-> > > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
-> > > >>
-> > > >> Hi Rafael,
-> > > >>
-> > > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
-> > > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
-> > > >>> <thara.gopinath@linaro.org> wrote:
-> > > >>>>
-> > > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
-> > > >>>> we don't consider boost frequencies while calculating cpu capacities, use
-> > > >>>> policy->max to populate the freq_factor during boot up.
-> > > >>>
-> > > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
-> > > >>
-> > > >> Agree it's tricky how we treat the boost frequencies and also combine
-> > > >> them with thermal pressure.
-> > > >> We probably would have consider these design bits:
-> > > >> 1. Should thermal pressure include boost frequency?
-> > > >
-> > > > Well, I guess so.
-> > > >
-> > > > Running at a boost frequency certainly increases thermal pressure.
-> > > >
-> > > >> 2. Should max capacity 1024 be a boost frequency so scheduler
-> > > >>      would see it explicitly?
-> > > >
-> > > > That's what it is now if cpuinfo.max_freq is a boost frequency.
-> > > >
-> > > >> - if no, then schedutil could still request boost freq thanks to
-> > > >>     map_util_perf() where we add 25% to the util and then
-> > > >>     map_util_freq() would return a boost freq when util was > 1024
-> > > >>
-> > > >>
-> > > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
-> > > >> get_next_freq(). If the value stored in there is a boost,
-> > > >> then don't we get a higher freq value for the same util?
-> > > >
-> > > > Yes. we do, which basically is my point.
-> > > >
-> > > > The schedutil's response is proportional to cpuinfo.max_freq and that
-> > > > needs to be taken into account for the results to be consistent.
-> > >
-> > > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
-> > > frequency of a cpu, irrespective of whether boost is enabled or not.
-> > > Where as policy->max is the currently available maximum cpu frequency
-> > > which can be equal to cpuinfo.max_freq or lower (depending on whether
-> > > boost is enabled, whether there is a constraint on policy->max placed by
-> > > thermal etc).
-> >
-> > It may also depend on the limit set by user space.
-> >
-> > > So in this case isn't it better for schedutil to consider
-> > > policy->max instead of cpuinfo.max ?
-> >
-> > Not really.
-> >
-> > In that case setting policy->max to 1/2 of cpuinfo.max_freq would
-> > cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
-> > which would be rather unexpected.
-> >
-> > policy->max is a cap, not the current maximum capacity.
-> >
-> > > Like you mentioned above same
-> > > utilization will relate to different frequencies depending on the
-> > > maximum frequency.
-> >
-> > Which is not how it is expected (and defined) to work, though.
-> >
-> > If you really want to play with the current maximum capacity, you need
-> > to change it whenever boost is disabled or enabled - and there is a
-> > mechanism for updating cpufinfo.max_freq in such cases.
->
-> I don't see why we would want to change max capacity on the fly. It is
-> not a cheap operation as we would need to normalize the capacity for all
-> CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
-> we even have to rebuild the sched_domain hierarchy to update flags. The
-> update would also temporarily mess with load and utilization signals, so
-> not a cheap operation.
+On 12/2/21 4:21 AM, Shawn Guo wrote:
+> It makes sense to just pass device_node for callback in IRQCHIP_DECLARE
+> case, but not so much for IRQCHIP_PLATFORM_DRIVER one, because
+> platform_driver probe/init usually needs device pointer for various
+> purposes, e.g. resource allocation, service request, device prefixed
+> message output, etc.  Create a new callback type irqchip_init_cb_t which
+> takes platform_device pointer as parameter, and update the existing
+> IRQCHIP_PLATFORM_DRIVER users accordingly.
+> 
+> Cc: Florian Fainelli <f.fainelli@gmail.com>
+> Cc: Claudiu Beznea <claudiu.beznea@microchip.com>
+> Cc: Neil Armstrong <narmstrong@baylibre.com>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-I didn't say it was cheap. :-)
+Could you copy all recipients on all 3 patches plus your cover letter
+next time so we have the full context? Thanks!
 
-However, boost frequencies are not disabled and enabled very often, so
-it may be acceptable to do it then.  I actually don't know.
+[snip]
 
-The point is that if you set the max capacity to correspond to the max
-boosted perf and it is never reached (because boost is disabled), the
-scaling will cause CPUs to appear as underutilized, but in fact there
-is no spare capacity in the system.
+>  
+> -static int __init bcm7120_l2_intc_probe_7120(struct device_node *dn,
+> +static int __init bcm7120_l2_intc_probe_7120(struct platform_device *pdev,
+>  					     struct device_node *parent)
+>  {
+> -	return bcm7120_l2_intc_probe(dn, parent, bcm7120_l2_intc_iomap_7120,
+> +	return bcm7120_l2_intc_probe(pdev->dev.of_node, parent,
+> +				     bcm7120_l2_intc_iomap_7120,
+>  				     "BCM7120 L2");
 
-Conversely, if the max capacity corresponds to the max non-boost perf
-and boost is used very often, the scaling will cause the CPUs to
-appear to be 100% loaded, but there may be still spare capacity in the
-system.
+If you look further into that driver, you will see that we do something
+like this in bcm7120_l2_intc_probe:
+
+          pdev = of_find_device_by_node(dn);
+          if (!pdev) {
+                  ret = -ENODEV;
+                  goto out_free_data;
+          }
+
+which would be completely superfluous now that we pass a platform_device
+directly. Can you rework your patch so as to eliminate that
+of_find_device_by_ndoe() (and the companion put_device call)?
+-- 
+Florian
