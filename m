@@ -2,91 +2,563 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 527AD466444
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 14:09:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7134664D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 14:58:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354543AbhLBNM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 08:12:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235891AbhLBNM2 (ORCPT
+        id S1355224AbhLBOBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 09:01:40 -0500
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:38634 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1357990AbhLBOBi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 08:12:28 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8156C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 05:09:05 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id k37-20020a05600c1ca500b00330cb84834fso2287729wms.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 05:09:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=qkloyzmgkZa50FZSGGF+wfEwZstu/TdZOMc2VxsMJqs=;
-        b=apYEp4vpKMGECl5LlrWhArJI/Lx+RPDNkc9Sz/dJ2M/+U/1nkVPXqFJSXrKTvi4apH
-         heKE5CoKV4bCpl2WIye7eBXiYDVbgQKE4nqX8FAPpe2CI3Fv6ImWnS3zUO/J9bN6CduI
-         tY9May4bHaZJC9BQNuXEJhTJsKCguOtYVS8P1196mtcSGLWYFykp0V0q7euqHqvBnkoe
-         b1c0nAbanwZVwusDYW600mdeNN/6vXr3uqZfxSrlPzzuL8faLppgc/0t/YD6J9BkjeBv
-         kXlhAy3y6kG2lQWaz1gA5bPuZl3T2+YyELAP66vflwHp679Q6JvDJxODbx7ik9JiPtpo
-         58OA==
+        Thu, 2 Dec 2021 09:01:38 -0500
+Received: by mail-ot1-f48.google.com with SMTP id n104-20020a9d2071000000b005799790cf0bso40072227ota.5;
+        Thu, 02 Dec 2021 05:58:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=qkloyzmgkZa50FZSGGF+wfEwZstu/TdZOMc2VxsMJqs=;
-        b=kTXgGqTIQa+26gFxUY7Agn5R4lHuW6K+PNq25Z5y8pgl4dvhsr7MVHbHrVoOSbyo1G
-         JX4zTugq8ljDTS5f16RzHylt15133pwcIJHkTMqv8bBqbdqCV3RFTBhcTGbV99/e4tKE
-         qa1nnErNmgQXU288Nz631HT/aWR3Yaasmh4Ax33Ld1hOC0oRaiXP2JDrKhheyXADLo+4
-         um494qrEKJtM+wPwmuDrR8mXLYTOMxO1a8TIvIbLWpH10LvycGE/miJnrjCFQI5AI5sT
-         s9Xj3NqRUo3ox8rShGnbh1sC4gRhSqYihzyc5EOOhggbMsGjGNtjpOjFw+uIg/XpSLGy
-         kb3g==
-X-Gm-Message-State: AOAM531YsNnUaAd9cVNOGnRtHZNTB1XMdZ2v8i17cxrkKE499Ec/KPEn
-        0d54TJkRJUB+YXuaGYg5nqmjiw==
-X-Google-Smtp-Source: ABdhPJxfqQfAywXSxFLngYVN4tPDat61yp/6i71R11WBpwUS44vkgyhgIPpJHV9bt49GoG3JJyALYQ==
-X-Received: by 2002:a05:600c:190b:: with SMTP id j11mr6258700wmq.112.1638450544141;
-        Thu, 02 Dec 2021 05:09:04 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id u15sm1812119wmq.13.2021.12.02.05.09.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Dec 2021 05:09:03 -0800 (PST)
-Message-ID: <76ed0769-897a-5636-81a6-877c72d7df13@linaro.org>
-Date:   Thu, 2 Dec 2021 13:11:08 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [PATCH v2 01/19] media: dt-bindings: media: camss: Add
- qcom,sm8250-camss binding
-Content-Language: en-US
-To:     Hans Verkuil <hverkuil@xs4all.nl>, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, robert.foss@linaro.org,
-        jonathan@marek.ca
-Cc:     andrey.konovalov@linaro.org, todor.too@gmail.com,
-        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        jgrahsl@snap.com, hfink@snap.com
-References: <20211124175921.1048375-1-bryan.odonoghue@linaro.org>
- <20211124175921.1048375-2-bryan.odonoghue@linaro.org>
- <a1c7a29d-115c-881f-4f00-fe502365242e@xs4all.nl>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <a1c7a29d-115c-881f-4f00-fe502365242e@xs4all.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=OUovefyGyr/ld5Zl1Zb2s1x2kPrJsHHfs2hAWyfjCDs=;
+        b=vcdj5mESRMGxOBCAkSptMMXzAfplAmSPsWeYXSuj/WnzLqfl7FKMLwXokl+TLGvzg0
+         m6Xa5NlP3Nx5+sSrxMO+elVj9mUkMipC3Tz5VwW86fGyVogtLUgIGx/6EbHwUGzan+9+
+         e5mcnimaUdf0pldlUh13pKZ7cbC1tO3uWiS0KstcXZSy28A0K0q1ptQ/cWW256l8+Rey
+         wNPKBBgAzlbJLQ9SZ2wa4zW5KfBeAP8rQo2CM3hSYnKeb3qCJDKYi/w9g547U6mNn8yV
+         wRkp5dEAb4HzDCsEezxZNJfx+6vKJlrjOXC4rDL46QXbCa3MR/swVfeisJebvLU6QsXq
+         mZ5Q==
+X-Gm-Message-State: AOAM531jdYBsy9viVnx31nH75pJvmoUCckBz5Zuu2A2BlG9n5avY6kl0
+        enIuy4wbfrnD+4VHqNI3JA==
+X-Google-Smtp-Source: ABdhPJxAgZTnrp6GBDxHEBz9M7W86DeyUxH0YF29p7pQUcJEKAGjuG5ST9AUOXwsjm9FE/Rm3yUrHg==
+X-Received: by 2002:a05:6830:1445:: with SMTP id w5mr11624401otp.112.1638453495279;
+        Thu, 02 Dec 2021 05:58:15 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id j20sm1055852ota.76.2021.12.02.05.58.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Dec 2021 05:58:14 -0800 (PST)
+Received: (nullmailer pid 3736893 invoked by uid 1000);
+        Thu, 02 Dec 2021 13:58:09 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     linux-kernel@vger.kernel.org,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        collinsd@codeaurora.org, Andy Gross <agross@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        subbaram@codeaurora.org, tglx@linutronix.de, maz@kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>, sboyd@kernel.org
+In-Reply-To: <1638403212-29265-11-git-send-email-quic_fenglinw@quicinc.com>
+References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com> <1638403212-29265-11-git-send-email-quic_fenglinw@quicinc.com>
+Subject: Re: [RESEND PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
+Date:   Thu, 02 Dec 2021 07:58:09 -0600
+Message-Id: <1638453489.532760.3736891.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/12/2021 13:06, Hans Verkuil wrote:
-> Hi Bryan,
+On Thu, 02 Dec 2021 08:00:12 +0800, Fenglin Wu wrote:
+> Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
+> update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
+> it and update it with a smaller range.
 > 
-> This patch needs to be CC-ed to devicetree@vger.kernel.org. I need an Acked-by from
-> the device tree maintainers before I can merge this series.
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
+>  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
+>  Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
+>  3 files changed, 130 insertions(+), 68 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
 > 
-> Everything else looks good, it's the only thing preventing this from merging.
-> 
-> Regards,
-> 
-> 	Hans
 
-np
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-I'll resend with a cc
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/1562483
+
+
+qcom,spmi@400f000: $nodename:0: 'qcom,spmi@400f000' does not match '^spmi@.*'
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
+
+qcom,spmi@400f000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
+
+qcom,spmi@400f000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
+
+qcom,spmi@c440000: $nodename:0: 'qcom,spmi@c440000' does not match '^spmi@.*'
+	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+
+qcom,spmi@c440000: 'cell-index', 'pmic@2', 'pmic@3', 'pmic@8', 'pmic@9' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
+
+qcom,spmi@c440000: 'cell-index', 'pmic@8', 'pmic@9' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+
+qcom,spmi@c440000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
+	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+
+spmi@1c40000: 'cell-index' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dt.yaml
+
+spmi@1c40000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dt.yaml
+
+spmi@200f000: 'cell-index' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
+	arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
+	arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
+
+spmi@200f000: 'pmic@0', 'pmic@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+	arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dt.yaml
+
+spmi@200f000: 'pms405@0', 'pms405@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/qcs404-evb-1000.dt.yaml
+	arch/arm64/boot/dts/qcom/qcs404-evb-4000.dt.yaml
+
+spmi@200f000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+	arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
+	arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dt.yaml
+	arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+	arch/arm64/boot/dts/qcom/qcs404-evb-1000.dt.yaml
+	arch/arm64/boot/dts/qcom/qcs404-evb-4000.dt.yaml
+	arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dt.yaml
+
+spmi@800f000: 'cell-index' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dt.yaml
+
+spmi@800f000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dt.yaml
+
+spmi@800f000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3', 'pmic@4', 'pmic@5' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-oneplus-dumpling.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-lilac.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-maple.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dt.yaml
+
+spmi@800f000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@4', 'pmic@5' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
+
+spmi@800f000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-oneplus-dumpling.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-lilac.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-maple.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-ganges-kirin.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-discovery.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-pioneer.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile-voyager.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm636-sony-xperia-ganges-mermaid.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dt.yaml
+
+spmi@c440000: #address-cells:0:0: 2 was expected
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+
+spmi@c440000: 'cell-index' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+
+spmi@c440000: 'cell-index', 'pmic@0', 'pmic@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+
+spmi@c440000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+
+spmi@c440000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3', 'pmic@4', 'pmic@5' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sm8150-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dt.yaml
+
+spmi@c440000: 'cell-index', 'pmic@0', 'pmic@1', 'pmic@4', 'pmic@5' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+
+spmi@c440000: 'pmic@0', 'pmic@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dt.yaml
+
+spmi@c440000: 'pmic@0', 'pmic@1', 'pmic@2' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+
+spmi@c440000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3', 'pmic@4', 'pmic@5' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8350-mtp.dt.yaml
+
+spmi@c440000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3', 'pmic@4', 'pmic@5', 'pmic@a', 'pmic@b' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+spmi@c440000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@4' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+
+spmi@c440000: reg-names: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sa8155p-adp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
+	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
+	arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dt.yaml
+	arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8350-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8350-mtp.dt.yaml
+
+spmi@c440000: #size-cells:0:0: 0 was expected
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r3-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7180-trogdor-r1-lte.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+
+spmi@fc4c0000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dt.yaml
+
+spmi@fc4cf000: 'pm8226@0', 'pm8226@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8026-lg-lenok.dt.yaml
+
+spmi@fc4cf000: 'pm8841@4', 'pm8841@5', 'pm8941@0', 'pm8941@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+
+spmi@fc4cf000: 'pma8084@0', 'pma8084@1' do not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8084-ifc6540.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-samsung-klte.dt.yaml
 
