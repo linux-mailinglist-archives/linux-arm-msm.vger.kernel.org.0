@@ -2,101 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59DBD465B04
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:35:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E99C7465B2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:43:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235274AbhLBAiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 19:38:22 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:27398 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233847AbhLBAiW (ORCPT
+        id S1343993AbhLBArC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 19:47:02 -0500
+Received: from relay04.th.seeweb.it ([5.144.164.165]:41591 "EHLO
+        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240582AbhLBArB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:38:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638405300; x=1669941300;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=tigB941sFJ2JS9XqW/Csq5Ad1Iz966W6LuwZoun7X4c=;
-  b=mEXkHIZ7bWojYKP56KlBO3VhAS+gfFjlUAo9AzLFmH4pIvrYZklTVTfL
-   uZV56ypgXts1x/kRZsGWdhwuYEgNx1Ne8EwXIgfBj7HEor3UQQfXOViil
-   v2YHf/xKCjOGcEsZIn8knNL5tCjpEZygE/IkG6h3bT7V82QIt8uEPTo6l
-   U=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Dec 2021 16:35:00 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 16:35:00 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:35:00 -0800
-Received: from quicinc.com (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 1 Dec 2021
- 16:34:59 -0800
-Date:   Wed, 1 Dec 2021 16:34:58 -0800
-From:   Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <olof@lixom.net>, <soc@kernel.org>, <linus.walleij@linaro.org>,
-        <sboyd@codeaurora.org>, <robh+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v3 0/3] Add devicetree support for SDX65 Modem and MTP
-Message-ID: <20211202003458.GA25288@quicinc.com>
-References: <1635552125-16407-1-git-send-email-quic_vamslank@quicinc.com>
+        Wed, 1 Dec 2021 19:47:01 -0500
+Received: from localhost.localdomain (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id AE4251FA18;
+        Thu,  2 Dec 2021 01:43:37 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] Revert "arm64: dts: qcom: sm8350: Specify clock-frequency for arch timer"
+Date:   Thu,  2 Dec 2021 01:43:28 +0100
+Message-Id: <20211202004328.459899-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1635552125-16407-1-git-send-email-quic_vamslank@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 29, 2021 at 05:02:02PM -0700, quic_vamslank@quicinc.com wrote:
-> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-> 
-> Hello,
-> 
-> Changes from v2:
->  - Added cmd-db node to the sdx65 dtsi file
-> 
-> Changes from v1:
->  - Addressed Bjorn's comments
-> 
-> This series adds devicetree support for Qualcomm SDX65 platform and MTP
-> board. This series functionally depends on Add Pdc, GCC and RPMh Clock support
-> series [1] and Add pinctrl support for SDX65 [2] which are under review.
-> 
-> With this current devicetree support, the MTP can boot into initramfs
-> shell.
-> 
-> Thanks,
-> Vamsi
+This reverts commit ed9500c1df59437856d43e657f185fb1eb5d817d.
 
-Can you please review this patch series. It's been pending since longtime now.
+The clock-frequency property was meant to aid platforms with broken firmwares
+that don't set up the timer properly on their own. Don't include it where it is
+not the case.
 
-Thanks,
-Vamsi
-> 
-> Vamsi krishna Lanka (3):
->   dt-bindings: arm: qcom: Document SDX65 platform and boards
->   ARM: dts: qcom: Add SDX65 platform and MTP board support
->   ARM: dts: qcom: sdx65: Add pincontrol node
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml |   6 +
->  arch/arm/boot/dts/Makefile                      |   3 +-
->  arch/arm/boot/dts/qcom-sdx65-mtp.dts            |  25 +++
->  arch/arm/boot/dts/qcom-sdx65.dtsi               | 222 ++++++++++++++++++++++++
->  4 files changed, 255 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm/boot/dts/qcom-sdx65-mtp.dts
->  create mode 100644 arch/arm/boot/dts/qcom-sdx65.dtsi
-> 
-> -- 
-> 2.7.4
-> 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 7323ed74f41a..53b39e718fb6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -3193,6 +3193,5 @@ timer {
+ 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+-		clock-frequency = <19200000>;
+ 	};
+ };
+-- 
+2.33.1
+
