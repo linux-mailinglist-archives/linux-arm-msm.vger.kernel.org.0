@@ -2,209 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 036DB465F1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 09:06:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A0A646607E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 10:33:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345520AbhLBIJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 03:09:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32872 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240918AbhLBIJW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 03:09:22 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52628C06174A
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 00:06:00 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id r26so69503682lfn.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 00:06:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aluHyp/G7aUqVf+8EbDwLQk4Mm65sEVYc28AHHhMT+8=;
-        b=srBlte0h/pIE8eIgDEkNIA/w/mb8T7IpDroBQMg/hXjMAoakC0zuJy8+giEG9Yyr4c
-         3RqpVEeBJ4QwmqooPfGY0OIYfOQpr0bH56AAOkba/OsyPPZyaYT1hnd/agXI3q5YqL4u
-         vIki7SZWbElHq6UdjjS+IiO+VZaF7d+zmhtK9K8NKVwbYbLVtz3R2kTXQUveW6PXQyCL
-         L7/WYsJjlQhPBbcf6NiHyzFuHH7S9G6LnX3v2Y+xeyR0FGHD1YoTj2yOKBbvwqwYSXnH
-         aU+QvrVHDxOAZO5EPftvXqU4PE0kOuprf5a7Wqf5bneJzkQp6Uol8Co2hZUUWJJ9VXLt
-         jwAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aluHyp/G7aUqVf+8EbDwLQk4Mm65sEVYc28AHHhMT+8=;
-        b=rfVkh3EEYJ81V9SNL/kFxXNJmCL3g+52X9ksXwgDexQViwh/hNn5EvBi2wEHOHdwJD
-         w4U/WfhmMbW+gxXpNIQL+AFzocd2agP3e2Eze/B+cjSQC7K//G0LJjt/ql9ilAB/PWl6
-         f3joh1V8iHyZ/jysO5wk+8C2kJvJE94fZJAEGPVsscWDuvNTK+0DLB1DGXznnVxToy67
-         T9gt90L356vYIwDEBFXEYMy4NPf94M3xgw0lFh8JmQjK+LpuXUI58j+qRDmyIu6qrs8B
-         y1lO5LCP0ecLYn0GvTuKX7iYJ1SiVc9EjX0euZpv9aK4YBf95vgc7MAWZ9OjZ5a3FLCe
-         XCKg==
-X-Gm-Message-State: AOAM530sL/1btlt0AfcG63HZHTHJugInta3C+dEi9dtWYqrTvp1LijrO
-        LBAHRQUfsF7b4niJkfgkXYrjpd/dcVacyGy+6sXpjw==
-X-Google-Smtp-Source: ABdhPJzSU0H7g5qn7iqaj5X7GydiJkdxhePjijCTTqN7hbpHePmUUPTn1a8wODRmyW2kwN9Xtrx3iyUzRkSqs1mXXVw=
-X-Received: by 2002:a05:6512:3d07:: with SMTP id d7mr11143471lfv.233.1638432358467;
- Thu, 02 Dec 2021 00:05:58 -0800 (PST)
-MIME-Version: 1.0
-References: <1637130012-21846-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <CAPDyKFqd9ThDUPAYom32w4D8nZYxbvYnJgA9dmQnFu2qEhhMig@mail.gmail.com>
- <SJ0PR02MB8449A2533CEFE1B7EAFEA023CD639@SJ0PR02MB8449.namprd02.prod.outlook.com>
- <SJ0PR02MB8449B93CD2752DC3263DD529CD699@SJ0PR02MB8449.namprd02.prod.outlook.com>
- <f178a0db-c978-42cf-1335-09b19d9574cc@intel.com>
-In-Reply-To: <f178a0db-c978-42cf-1335-09b19d9574cc@intel.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 2 Dec 2021 09:05:21 +0100
-Message-ID: <CAPDyKFpihKExf2qiPuHtbJitP-q21rFCY-MNMdvAvbQd1C2_jA@mail.gmail.com>
-Subject: Re: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat sysfs entry
-To:     Adrian Hunter <adrian.hunter@intel.com>
-Cc:     "Sajida Bhanu (Temp) (QUIC)" <quic_c_sbhanu@quicinc.com>,
-        "riteshh@codeaurora.org" <riteshh@codeaurora.org>,
-        "Asutosh Das (asd)" <asutoshd@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "stummala@codeaurora.org" <stummala@codeaurora.org>,
-        "vbadigan@codeaurora.org" <vbadigan@codeaurora.org>,
-        "Ram Prakash Gupta (QUIC)" <quic_rampraka@quicinc.com>,
-        "Pradeep Pragallapati (QUIC)" <quic_pragalla@quicinc.com>,
-        "sartgarg@codeaurora.org" <sartgarg@codeaurora.org>,
-        "nitirawa@codeaurora.org" <nitirawa@codeaurora.org>,
-        "sayalil@codeaurora.org" <sayalil@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1356533AbhLBJgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 04:36:42 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:60705 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1356439AbhLBJgk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Dec 2021 04:36:40 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638437597; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=WPa8QM7TiHznVMzVYKuk2L9NKcSm2U7NIvrXT4MjL58=; b=hkpp9B3rd5RDU9hlKyrrFbGJxu6Ed2te4U1unu1bRnd/nKuX/VbEnXQ2Rx1Esu0kKKgSmMTp
+ IHaHhZ4k2neHxUL4hwMQtUm9ZyFZ/26hvWZVfzO8Ayftq5JBvUdursFdJD/jMqnrcFgshEd0
+ X3kUDQrZ4Ur8I/SeI+enMETOGY4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 61a892dde7d68470af9bf12c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Dec 2021 09:33:17
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4AA62C43639; Thu,  2 Dec 2021 09:33:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33EC3C4361A;
+        Thu,  2 Dec 2021 09:33:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 33EC3C4361A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
+        hemantg@codeaurora.org, rjliao@codeaurora.org,
+        zijuhu@codeaurora.org, tjiang@codeaurora.org,
+        Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH v1] Bluetooth: btusb: Add one more Bluetooth part for WCN6855
+Date:   Thu,  2 Dec 2021 17:33:08 +0800
+Message-Id: <1638437588-19087-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 2 Dec 2021 at 08:28, Adrian Hunter <adrian.hunter@intel.com> wrote:
->
-> On 02/12/2021 08:42, Sajida Bhanu (Temp) (QUIC) wrote:
-> > Gentle Reminder.
-> >
-> > Thanks,
-> > Sajida
-> > -----Original Message-----
-> > From: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>
-> > Sent: Friday, November 26, 2021 10:54 AM
-> > To: Ulf Hansson <ulf.hansson@linaro.org>; Sajida Bhanu (Temp) (QUIC) <q=
-uic_c_sbhanu@quicinc.com>
-> > Cc: adrian.hunter@intel.com; riteshh@codeaurora.org; Asutosh Das (asd) =
-<asutoshd@quicinc.com>; agross@kernel.org; bjorn.andersson@linaro.org; linu=
-x-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.ker=
-nel.org; stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupt=
-a (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pra=
-galla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayal=
-il@codeaurora.org
-> > Subject: RE: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat s=
-ysfs entry
-> >
-> >
-> >
-> > -----Original Message-----
-> > From: Ulf Hansson <ulf.hansson@linaro.org>
-> > Sent: Thursday, November 25, 2021 5:01 PM
-> > To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>
-> > Cc: adrian.hunter@intel.com; riteshh@codeaurora.org; Asutosh Das (asd) =
-<asutoshd@quicinc.com>; agross@kernel.org; bjorn.andersson@linaro.org; linu=
-x-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.ker=
-nel.org; stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupt=
-a (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pra=
-galla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayal=
-il@codeaurora.org
-> > Subject: Re: [PATCH V1] mmc: sdhci-msm: Add eMMC and SD card err_stat s=
-ysfs entry
-> >
-> > On Wed, 17 Nov 2021 at 07:20, Shaik Sajida Bhanu <quic_c_sbhanu@quicinc=
-.com> wrote:
-> >>
-> >> Add sysfs entry to query eMMC and SD card errors statistics.
-> >> This feature is useful for debug and testing.
-> >>
-> >> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-> >> ---
-> >>  drivers/mmc/host/cqhci.h     |   1 +
-> >>  drivers/mmc/host/sdhci-msm.c | 192 ++++++++++++++++++++++++++++++++++=
-+++++++++
-> >>  drivers/mmc/host/sdhci.c     |  17 ++++
-> >>  drivers/mmc/host/sdhci.h     |   1 +
-> >>  include/linux/mmc/host.h     |   1 +
-> >>  5 files changed, 212 insertions(+)
-> >
-> > To allow an easier review, I strongly suggest splitting up the changes =
-in smaller pieces. Maybe in three steps: add interfaces, implement them, ad=
-d sysfs - or something along those lines.
-> >
-> > I am also trying to understand the benefit of having these stats availa=
-ble. Can you perhaps share a little bit of background on how they are usabl=
-e for you? Is it for debug purpose or does it have other purposes too?
-> >
-> > If it turns out that we agree on finding these stats valuable for us, t=
-hen I am inclined to think that this should be integrated closer with the m=
-mc core.
-> >
-> > The error codes that are propagated to the core from failed requests ar=
-e common error codes, so we should be able to use that information from the=
- core itself, I think.
-> >
-> > Kind regards
-> > Uffe
-> >
-> > Hi Ulf,
-> >
-> > Thanks for the review
-> >
-> > I am also trying to understand the benefit of having these stats availa=
-ble. Can you perhaps share a little bit of background on how they are usabl=
-e for you? Is it for debug purpose or does it have other purposes too?
-> >
-> >>>>>>>>>>>>> These changes for debug purpose only .. if any errors occur=
-red while testing eMMC and SD card those will be captured in these sysfs en=
-tries ,  we can directly go and check the sysfs entries and get to know wha=
-t is the error occurred in driver level.
->
-> I would suggest using debugfs and adding support in mmc host debugfs
-> e.g.
->
-> static inline void mmc_debugfs_err_stats_enable(struct mmc_host *mmc)
-> {
->         mmc->err_stats_enabled =3D true;
-> }
->
-> enum mmc_err_stat {
->         MMC_ERR_CMD_TIMEOUT,
->         MMC_ERR_CMD_CRC,
->         MMC_ERR_DAT_TIMEOUT,
->         MMC_ERR_DAT_CRC,
->         MMC_ERR_AUTO_CMD,
->         MMC_ERR_ADMA,
->         MMC_ERR_TUNING,
->         MMC_ERR_CMDQ_RED,
->         MMC_ERR_CMDQ_GCE,
->         MMC_ERR_CMDQ_ICCE,
->         MMC_ERR_REQ_TIMEOUT,
->         MMC_ERR_CMDQ_REQ_TIMEOUT,
->         MMC_ERR_ICE_CFG,
->         MMC_ERR_MAX,
-> };
->
-> static inline void mmc_debugfs_err_stats_inc(struct mmc_host *mmc, enum m=
-mc_err_stat stat)
-> {
->         mmc->err_stats[stat] +=3D 1;
-> }
->
-> And amend mmc_add_host_debugfs() to create the err_stats file etc.
->
-> sdhci.c could call mmc_debugfs_err_stats_enable() and mmc_debugfs_err_sta=
-ts_inc() as needed.
-> cqhci.c could call mmc_debugfs_err_stats_inc() as needed.
->
-> Ulf, does that sound reasonable?
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-Yes, it does! Thanks for having a closer look!
+Add a USB ID 0bda:385a to usb_device_id table for WCN6855.
 
-[...]
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+---
+ drivers/bluetooth/btusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Kind regards
-Uffe
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index ab169fc673ea..bf980f2c2101 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -302,6 +302,9 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
++	{ USB_DEVICE(0x0489, 0xe0e2), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
+ 
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
