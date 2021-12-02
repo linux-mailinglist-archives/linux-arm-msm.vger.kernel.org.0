@@ -2,135 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10675465A27
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:00:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 790C8465A24
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 01:00:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353943AbhLBAEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Dec 2021 19:04:09 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:53315 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1353927AbhLBAEG (ORCPT
+        id S1353934AbhLBADa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Dec 2021 19:03:30 -0500
+Received: from relay07.th.seeweb.it ([5.144.164.168]:39937 "EHLO
+        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353923AbhLBAD3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Dec 2021 19:04:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638403245; x=1669939245;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=cdkFVgjDJ8+uVmfLIwHM3XZjlTGoRIvGrQjqko0zAxI=;
-  b=zdQc1VIPTBUZdkcPsOOppaZdtE7lfLugB9yUQsF9ZeouUN6fIZDqvowV
-   QoWkV0XdIFZxpFvQkW7WXmdpLXDWwk1It1nA0kl9JeVTZ+Xr24yFHI6b6
-   O6xgv8R1cNhFjbdKoDva6wl3Y1D6hE/ZafF864chCq0Z1z1UHCzaFTvnI
-   E=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Dec 2021 16:00:45 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2021 16:00:45 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:00:44 -0800
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 1 Dec 2021 16:00:42 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>,
-        <maz@kernel.org>, Abhijeet Dharmapurikar <adharmap@codeaurora.org>
-Subject: [RESEND PATCH v3 01/10] spmi: pmic-arb: handle spurious interrupt
-Date:   Thu, 2 Dec 2021 08:00:03 +0800
-Message-ID: <1638403212-29265-2-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
+        Wed, 1 Dec 2021 19:03:29 -0500
+Received: from [192.168.1.101] (83.6.166.111.neoplus.adsl.tpnet.pl [83.6.166.111])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5866B3F35C;
+        Thu,  2 Dec 2021 01:00:05 +0100 (CET)
+Message-ID: <0b171f2e-4bbc-a54a-7615-87fd4559fee9@somainline.org>
+Date:   Thu, 2 Dec 2021 01:00:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 04/16] arm64: dts: qcom: sm8350: Specify clock-frequency
+ for arch timer
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211114012755.112226-1-konrad.dybcio@somainline.org>
+ <20211114012755.112226-4-konrad.dybcio@somainline.org>
+ <20211130020536.52D0FC53FC7@smtp.kernel.org>
+ <dee30442-8a78-07f3-1fa1-e5922a510182@somainline.org>
+ <20211201204543.1286DC53FAD@smtp.kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20211201204543.1286DC53FAD@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
 
-Call handle_bad_irq() for handling spurious interrupt. While at it,
-add an error print in cleanup_irq() for any spurious interrupt which
-is fired but not having interrupt handler registered.
+On 01.12.2021 21:45, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2021-11-30 11:59:03)
+>> On 30/11/2021 03:05, Stephen Boyd wrote:
+>>> Quoting Konrad Dybcio (2021-11-13 17:27:43)
+>>>> Arch timer runs at 19.2 MHz. Specify the rate in the timer node.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>> ---
+>>>>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 1 +
+>>>>   1 file changed, 1 insertion(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>>> index a30ba3193d84..60866a20a55c 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>>>> @@ -2484,5 +2484,6 @@ timer {
+>>>>                               <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+>>>>                               <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+>>>>                               <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+>>>> +               clock-frequency = <19200000>;
+>>> Does the firmware not set the frequency properly?
+>> It does on my device on the current firmware version (it wouldn't really 
+>> boot if it didn't, no?),
+>>
+>> but who knows if it always will, or if it always has been..
+>>
+>>
+>> It's present in downstream too, so I reckon it does not hurt to have it 
+>> here too, even
+>>
+>> for completeness-of-describing-the-machine-properly sake.
+>>
+> No. We don't want dts files to have this. The property is only there to
+> workaround bad firmware that doesn't set the frequency. Please drop this
+> patch.
 
-Signed-off-by: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/spmi/spmi-pmic-arb.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+After looking at it again, I see I was indeed wrong, and so was this patch.
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index bbbd311..da629cc 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -489,6 +489,8 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
- 	u8 per = ppid & 0xFF;
- 	u8 irq_mask = BIT(id);
- 
-+	dev_err_ratelimited(&pmic_arb->spmic->dev, "%s apid=%d sid=0x%x per=0x%x irq=%d\n",
-+			__func__, apid, sid, per, id);
- 	writel_relaxed(irq_mask, pmic_arb->ver_ops->irq_clear(pmic_arb, apid));
- 
- 	if (pmic_arb_write_cmd(pmic_arb->spmic, SPMI_CMD_EXT_WRITEL, sid,
-@@ -502,10 +504,10 @@ static void cleanup_irq(struct spmi_pmic_arb *pmic_arb, u16 apid, int id)
- 				irq_mask, ppid);
- }
- 
--static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
-+static int periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
- {
- 	unsigned int irq;
--	u32 status, id;
-+	u32 status, id, handled = 0;
- 	u8 sid = (pmic_arb->apid_data[apid].ppid >> 8) & 0xF;
- 	u8 per = pmic_arb->apid_data[apid].ppid & 0xFF;
- 
-@@ -520,7 +522,10 @@ static void periph_interrupt(struct spmi_pmic_arb *pmic_arb, u16 apid)
- 			continue;
- 		}
- 		generic_handle_irq(irq);
-+		handled++;
- 	}
-+
-+	return (handled) ? 0 : -EINVAL;
- }
- 
- static void pmic_arb_chained_irq(struct irq_desc *desc)
-@@ -531,7 +536,7 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
- 	int first = pmic_arb->min_apid >> 5;
- 	int last = pmic_arb->max_apid >> 5;
- 	u8 ee = pmic_arb->ee;
--	u32 status, enable;
-+	u32 status, enable, handled = 0;
- 	int i, id, apid;
- 
- 	chained_irq_enter(chip, desc);
-@@ -546,10 +551,14 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
- 			enable = readl_relaxed(
- 					ver_ops->acc_enable(pmic_arb, apid));
- 			if (enable & SPMI_PIC_ACC_ENABLE_BIT)
--				periph_interrupt(pmic_arb, apid);
-+				if (periph_interrupt(pmic_arb, apid) == 0)
-+					handled++;
- 		}
- 	}
- 
-+	if (handled == 0)
-+		handle_bad_irq(desc);
-+
- 	chained_irq_exit(chip, desc);
- }
- 
--- 
-2.7.4
+Sorry, and green light for dropping..
+
+
+Konrad
 
