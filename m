@@ -2,73 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8955C466D6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 00:06:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6634D466D70
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 00:07:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349214AbhLBXJs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 18:09:48 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:48358 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240957AbhLBXJs (ORCPT
+        id S1349368AbhLBXKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 18:10:36 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:35072 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240957AbhLBXKf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 18:09:48 -0500
+        Thu, 2 Dec 2021 18:10:35 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7E8726289E;
-        Thu,  2 Dec 2021 23:06:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05F3C00446;
-        Thu,  2 Dec 2021 23:06:24 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 71B8DB82529;
+        Thu,  2 Dec 2021 23:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195A4C00446;
+        Thu,  2 Dec 2021 23:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638486384;
-        bh=VUEYdAFJhKTrltiaV7nF0XjUQpLcjDDZsHHE3Cltt/A=;
+        s=k20201202; t=1638486430;
+        bh=wmM58uRK/qC9dcL8saFQjfElAN065Lt+br3Tvg/P2Oo=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=CW89NRiawMbLw6uHQrUgjZYn15mnKjZoJvsqaO2xz6iWLk4iRz4NqNhvhUU2eLbis
-         iB8+R1EXrV18TlBa2LnW5YyC8eOLsq26WcWnw7mggeS0X9tt0xc2kPR2OB6L5JGvMu
-         76+znuCTFR4Leec9rMRg+6obnDm9R0ig85R/rFLxlXBLoO69bZ6dAv0FYgJWWu+NQL
-         0HJ7Ett3Ou7N6js6rOJp6SBAjrXOHLpn+R0gx+tfv3xuveqLN3WJQkUm5DfG7P9/XC
-         D+E9u5bNrTP188nhKcZ5QjwjuQxVkHAFHVuvCHkiaX0/imTpPt6+NbJAIwNvnTYtRp
-         FqOUlckDMzACQ==
+        b=Pt3YMnKfCig8NYEIG7y7JiLjm92T72vX8bxZ7RJZioO1QtRawx0el9n/Ns8dNnMRS
+         Re46axk1RgjzPmFkwP7BK2Dsjv/q0lhiu2Eoy7Lr/dMRt+raQot7JMrVaNxSS8u8UJ
+         VnUDHOqdl6oP/q1pn5kj03FrEBHj7IFqw2rhkvryiK9q3fYOMJfPOqRlmTpZcNfKBY
+         ZGyX5+4JMXjfGd20OaaQbWInCj1MTnMCd3qw09rW945D6Idx9FC/04EccdN9J9i6sm
+         MmzdibnDzU4ngtM7UFNw6nFqhQnfQngOf2VjY3Bin/PQxM86Ytcz0RbjU1jNMSkqlu
+         qNlFGT4Do1iYw==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211201072718.3969011-1-vkoul@kernel.org>
-References: <20211201072718.3969011-1-vkoul@kernel.org>
-Subject: Re: [PATCH] spmi: pmic-arb: Add support for PMIC v7
+In-Reply-To: <20211115233407.1046179-1-dmitry.baryshkov@linaro.org>
+References: <20211115233407.1046179-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH] clk: qcom: regmap-mux: fix parent clock lookup
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        stable@vger.kernel.org
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 02 Dec 2021 15:06:23 -0800
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Thu, 02 Dec 2021 15:07:08 -0800
 User-Agent: alot/0.9.1
-Message-Id: <20211202230624.C05F3C00446@smtp.kernel.org>
+Message-Id: <20211202230710.195A4C00446@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2021-11-30 23:27:18)
-> @@ -1169,8 +1270,12 @@ static int spmi_pmic_arb_probe(struct platform_dev=
-ice *pdev)
->         pmic_arb =3D spmi_controller_get_drvdata(ctrl);
->         pmic_arb->spmic =3D ctrl;
-> =20
-> +       /*
-> +        * Don't use devm_ioremap_resource() as the resources are shared =
-in
-> +        * PMIC v7 onwards, so causing failure when mapping
-> +        */
->         res =3D platform_get_resource_byname(pdev, IORESOURCE_MEM, "core"=
-);
-> -       core =3D devm_ioremap_resource(&ctrl->dev, res);
-> +       core =3D devm_ioremap(&ctrl->dev, res->start, resource_size(res));
+Quoting Dmitry Baryshkov (2021-11-15 15:34:07)
+> The function mux_get_parent() uses qcom_find_src_index() to find the
+> parent clock index, which is incorrect: qcom_find_src_index() uses src
+> enum for the lookup, while mux_get_parent() should use cfg field (which
+> corresponds to the register value). Add qcom_find_cfg_index() function
+> doing this kind of lookup and use it for mux parent lookup.
+>=20
+> Fixes: df964016490b ("clk: qcom: add parent map for regmap mux")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-What does this mean? We have two nodes in DT that have the same reg
-properties? How does that work?
-
->         if (IS_ERR(core)) {
->                 err =3D PTR_ERR(core);
->                 goto err_put_ctrl;
+Applied to clk-fixes
