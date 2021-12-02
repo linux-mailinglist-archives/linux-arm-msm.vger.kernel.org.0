@@ -2,132 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7831F4661BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 11:50:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44383466239
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 12:22:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241159AbhLBKx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 05:53:58 -0500
-Received: from foss.arm.com ([217.140.110.172]:33420 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231208AbhLBKx5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 05:53:57 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 58759142F;
-        Thu,  2 Dec 2021 02:50:35 -0800 (PST)
-Received: from e123083-lin (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1383B3F7D7;
-        Thu,  2 Dec 2021 02:50:33 -0800 (PST)
-Date:   Thu, 2 Dec 2021 11:50:27 +0100
-From:   Morten Rasmussen <morten.rasmussen@arm.com>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
- freq_factor
-Message-ID: <20211202105027.GA1180274@e123083-lin>
-References: <20211115201010.68567-1-thara.gopinath@linaro.org>
- <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
- <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
- <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
- <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
- <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
+        id S1357289AbhLBLZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 06:25:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346350AbhLBLZi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Dec 2021 06:25:38 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A9CAC061757
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 03:22:16 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id q3so36041521wru.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 03:22:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=57MihNmUyq2yL5Hp/EvWIEoULb+nvWcaJPe8Tm/kK3I=;
+        b=j/lo7Y+8i3x/bYaN1cp6hiulf75jS1A+Lk0q6kayJ4J8UCI1s8URhPTKaZssoIBl6V
+         2NfAp26ve0kg29/NBBarRV9zhSNVKkoEfOLiP20FJsF6t7HArfrUhpSFtzww4Y+9L6v1
+         rXlBZpu85XURN3J0ZOD5R2WrsffY9LsVZiyE7SBy/6OjCSYm5SoQGzQeRuiio3ATKt6q
+         13VrrojWhA7jXNuPGAT3c4wxaP0frleUZYI0fbZyDkEknjAgh8xAOx76ft5QMVHgc7hN
+         8w68sya6W8sovRSW1JKTidfgaWguTV6S1pUTWVZRP2vqVkrNSXUkGI1FpJzJPIFNdaxd
+         dPsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=57MihNmUyq2yL5Hp/EvWIEoULb+nvWcaJPe8Tm/kK3I=;
+        b=TVjMRBeGl9pusIV8TaArtNgeXP93/KFuEyWWE8P3shfrCqvYR+KFwftF1e5hbW3qTa
+         n6lgg4Bt1/Xih6Q+XIJYCSD/gloHEsiqPbSAl74Ul1bxzKovkrv2kH47nwJOf50mylx3
+         Tv4dQ4iVAH5pKDjzOpoF69jlVgCU+3sVIyzXljJv2snEzdAFERHfOQYXQXX18mr3So/G
+         jm5tF0/VorFVUSPgaCjlA04BVhYWvyOD4CwDUWe9m+9s7+FdFm53zMEfLMo9VQpQ5FTd
+         SITaPNEGlUgPhOpJNfKKu6bml54sqJtg8co3jHrzxRG37to1qJ8lOfXMdv7kKcez7wro
+         B6Xw==
+X-Gm-Message-State: AOAM530lLxpRoPRK+ZrZPfp1+/NyZAKSkNmSaGCu86CEhSNqKz47cdhE
+        Kwd/QnWJDZ78W8YcHXPb04YAHw==
+X-Google-Smtp-Source: ABdhPJzv2sMtPSd0XDLh5Macj8qITjActzhDy+HoOIouRPrsCxZNACCQB+UrNGU00jKFXN2yn5bV4w==
+X-Received: by 2002:adf:b35d:: with SMTP id k29mr13179787wrd.466.1638444134961;
+        Thu, 02 Dec 2021 03:22:14 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id z14sm2337734wrp.70.2021.12.02.03.22.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Dec 2021 03:22:14 -0800 (PST)
+Subject: Re: [PATCH v6 03/10] ASoC: qcom: Add register definition for codec
+ rddma and wrdma
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1637928282-2819-1-git-send-email-srivasam@codeaurora.org>
+ <1637928282-2819-4-git-send-email-srivasam@codeaurora.org>
+ <3bb4aea6-2f47-8b6b-e7a9-1518d478e32d@linaro.org>
+ <efb98b22-e56a-d193-6ca0-e950dc3c4a42@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <928c419e-ae92-38bd-3974-e81efbe301ff@linaro.org>
+Date:   Thu, 2 Dec 2021 11:22:13 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
+In-Reply-To: <efb98b22-e56a-d193-6ca0-e950dc3c4a42@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
-> On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
-> <thara.gopinath@linaro.org> wrote:
-> >
-> > Hi,
-> >
-> > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
-> > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
-> > >>
-> > >> Hi Rafael,
-> > >>
-> > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
-> > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
-> > >>> <thara.gopinath@linaro.org> wrote:
-> > >>>>
-> > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
-> > >>>> we don't consider boost frequencies while calculating cpu capacities, use
-> > >>>> policy->max to populate the freq_factor during boot up.
-> > >>>
-> > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
-> > >>
-> > >> Agree it's tricky how we treat the boost frequencies and also combine
-> > >> them with thermal pressure.
-> > >> We probably would have consider these design bits:
-> > >> 1. Should thermal pressure include boost frequency?
-> > >
-> > > Well, I guess so.
-> > >
-> > > Running at a boost frequency certainly increases thermal pressure.
-> > >
-> > >> 2. Should max capacity 1024 be a boost frequency so scheduler
-> > >>      would see it explicitly?
-> > >
-> > > That's what it is now if cpuinfo.max_freq is a boost frequency.
-> > >
-> > >> - if no, then schedutil could still request boost freq thanks to
-> > >>     map_util_perf() where we add 25% to the util and then
-> > >>     map_util_freq() would return a boost freq when util was > 1024
-> > >>
-> > >>
-> > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
-> > >> get_next_freq(). If the value stored in there is a boost,
-> > >> then don't we get a higher freq value for the same util?
-> > >
-> > > Yes. we do, which basically is my point.
-> > >
-> > > The schedutil's response is proportional to cpuinfo.max_freq and that
-> > > needs to be taken into account for the results to be consistent.
-> >
-> > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
-> > frequency of a cpu, irrespective of whether boost is enabled or not.
-> > Where as policy->max is the currently available maximum cpu frequency
-> > which can be equal to cpuinfo.max_freq or lower (depending on whether
-> > boost is enabled, whether there is a constraint on policy->max placed by
-> > thermal etc).
-> 
-> It may also depend on the limit set by user space.
-> 
-> > So in this case isn't it better for schedutil to consider
-> > policy->max instead of cpuinfo.max ?
-> 
-> Not really.
-> 
-> In that case setting policy->max to 1/2 of cpuinfo.max_freq would
-> cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
-> which would be rather unexpected.
-> 
-> policy->max is a cap, not the current maximum capacity.
-> 
-> > Like you mentioned above same
-> > utilization will relate to different frequencies depending on the
-> > maximum frequency.
-> 
-> Which is not how it is expected (and defined) to work, though.
-> 
-> If you really want to play with the current maximum capacity, you need
-> to change it whenever boost is disabled or enabled - and there is a
-> mechanism for updating cpufinfo.max_freq in such cases.
 
-I don't see why we would want to change max capacity on the fly. It is
-not a cheap operation as we would need to normalize the capacity for all
-CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
-we even have to rebuild the sched_domain hierarchy to update flags. The
-update would also temporarily mess with load and utilization signals, so
-not a cheap operation.
 
-Morten
+On 02/12/2021 10:55, Srinivasa Rao Mandadapu wrote:
+>>>   +/* LPAIF RXTX IRQ */
+>>> +#define LPAIF_RXTX_IRQ_REG_ADDR(v, addr, port, dai_id) \
+>>> +        ((dai_id == LPASS_CDC_DMA_RX0 || dai_id == 
+>>> LPASS_CDC_DMA_TX3) ? \
+>>> +        (v->rxtx_irq_reg_base + (addr) + v->rxtx_irq_reg_stride * 
+>>> (port)) : \
+>>> +        (v->va_irq_reg_base + (addr) + v->va_irq_reg_stride * (port)))
+>>> +
+>>> +#define LPAIF_RXTX_IRQEN_REG(v, port, dai_id) 
+>>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0x0, port, dai_id)
+>>> +#define LPAIF_RXTX_IRQSTAT_REG(v, port, dai_id) 
+>>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0x4, port, dai_id)
+>>> +#define LPAIF_RXTX_IRQCLEAR_REG(v, port, dai_id) 
+>>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0xC, port, dai_id)
+>>> +
+>>
+>> How about doing like this:
+>>
+>>
+>> /* LPAIF RXTX IRQ */
+>> #define LPAIF_RXTX_IRQ_REG_ADDR(v, addr, port) \
+>>         (v->rxtx_irq_reg_base + (addr) + v->rxtx_irq_reg_stride * (port))
+>>
+>> #define LPAIF_RXTX_IRQEN_REG(v, port, dai_id) 
+>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0x0, port)
+>> #define LPAIF_RXTX_IRQSTAT_REG(v, port, dai_id) 
+>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0x4, port)
+>> #define LPAIF_RXTX_IRQCLEAR_REG(v, port, dai_id) 
+>> LPAIF_RXTX_IRQ_REG_ADDR(v, 0xC, port)
+>>
+>> /* LPAIF VA IRQ */
+>> #define LPAIF_VA_IRQ_REG_ADDR(v, addr, port) \
+>>         (v->va_irq_reg_base + (addr) + v->va_irq_reg_stride * (port))
+>>
+>> #define LPAIF_VA_IRQEN_REG(v, port, dai_id) LPAIF_VA_IRQ_REG_ADDR(v, 
+>> 0x0, port)
+>> #define LPAIF_VA_IRQSTAT_REG(v, port, dai_id) LPAIF_VA_IRQ_REG_ADDR(v, 
+>> 0x4, port)
+>> #define LPAIF_VA_IRQCLEAR_REG(v, port, dai_id) 
+>> LPAIF_VA_IRQ_REG_ADDR(v, 0xC, port)
+>>
+> With this we are seeing number macros increasing. How about handling 
+
+Its okay to add new macros, this makes them much clear to the reader and 
+inline with rest of the macros in the file.
+
+
+--srini
+> like below.
+>> lpass.h:
+> 
+> static inline bool is_rxtx_cdc_dma_port(int dai_id)
+> {
+> 
+>      switch (dai_id) {
+>          case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
+>          case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
+>              return true;
+>          default:
+>              return false;
+>        }
+> }
+> 
+> 
+> Usage:
+> 
+> #define LPAIF_RXTX_IRQ_REG_ADDR(v, addr, port, dai_id) \
+> is_rxtx_cdc_dma_port(dai_id) ? \
+> (v->rxtx_irq_reg_base + (addr) + v->rxtx_irq_reg_stride * (port)) : \
+> (v->va_irq_reg_base + (addr) + v->va_irq_reg_stride * (port))
+> 
+> 
