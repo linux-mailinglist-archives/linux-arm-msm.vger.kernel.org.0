@@ -2,33 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C12C4665ED
+	by mail.lfdr.de (Postfix) with ESMTP id 3B71B4665EB
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 15:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355653AbhLBPAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S239462AbhLBPAh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 2 Dec 2021 10:00:37 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:24066 "EHLO
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:11260 "EHLO
         mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235854AbhLBPAf (ORCPT
+        with ESMTP id S234845AbhLBPAf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 2 Dec 2021 10:00:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638457025;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638457026;
     s=strato-dkim-0002; d=gerhold.net;
-    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=+On65RK/P0y1X+9L5FVYKDm1EJ1ZjlP8KZD5YNFlWzM=;
-    b=AiL/0KmL7ZK4SQLe3rdZ9bYTPplrQgRl3H6Cod7RHEqmL4Bo9X8IdwbisltTUT6Tvs
-    lUOfCXkYZ9F9S0IZ1E6zWtMcAnOD/Po1DJ8H+HurkHzht7iVoTy3loZxn1jeZ/JAjyUk
-    zUrgY+/CFlUl7jrU82kMKRLtitze7pX9RS4PRv/TWVqwKRr1LPzoF4iZa5LMfpGjykRT
-    35mk1QYwuDIYp7+90KGo4xAnfY3zhkROPVb3y7TmG8ZFyogOfStTQ9zMa0PW0Y0N+ax7
-    x7UJwPd1WJYUZ/wZukwfC2NwdkNnXcz7ecj9mVGS4mf5DoBQnhe3TMezp8NhR9hqgXKV
-    MZdQ==
+    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=NNx+hi3aDIPo3ao1SaJ4PvzUDk3d4JiYY4XCPyjzaS0=;
+    b=iAPRxMjLGg7XgdPEZt3EtZF1S1Zowi2vlrcKCMm8GaWitjhPamNTQ4jPGN1cSH9kG3
+    Wv84Rg01c8+QZQRx7KffCRISbNAIOZ8w8fUQbAxBQXkqT9TijsRImyhR/SFKXGKX3aVW
+    N6vekMMzWqLWG1CKvvPDbHMQc1qt8oiAXBfzYwRQ1EZr+NVD/OX6/Fh9pZUWBhSjT3OZ
+    kqXtsgl0fL6zzHwR8CT7WK8ZUkZ4XbIgCK8OXreXZYpBtE8mJU2eCoxfXR2XIc/Vym4l
+    MWtj0+TdXCdumIaxtrlanagIMSkk5a2nZ9F55IhFTb/ILZf/BxUylF4bWPVzkd4kBN+Z
+    Vkzg==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fyLyu9s="
 X-RZG-CLASS-ID: mo00
 Received: from droid..
     by smtp.strato.de (RZmta 47.34.10 AUTH)
-    with ESMTPSA id j03bcbxB2Ev5pxu
+    with ESMTPSA id j03bcbxB2Ev5pxv
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
     Thu, 2 Dec 2021 15:57:05 +0100 (CET)
@@ -42,39 +43,49 @@ Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 0/5] ASoC: qcom: apq8016_sbc: Allow routing audio through QDSP6
-Date:   Thu,  2 Dec 2021 15:55:00 +0100
-Message-Id: <20211202145505.58852-1-stephan@gerhold.net>
+Subject: [PATCH 1/5] ASoC: dt-bindings: qcom: sm8250: Drop redundant MultiMedia routes
+Date:   Thu,  2 Dec 2021 15:55:01 +0100
+Message-Id: <20211202145505.58852-2-stephan@gerhold.net>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20211202145505.58852-1-stephan@gerhold.net>
+References: <20211202145505.58852-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series makes it possible to route audio through the combined
-audio/modem DSP on MSM8916/APQ8016 devices instead of bypassing it using
-the LPASS drivers. This is necessary to support certain functionality such
-as voice call audio. See PATCH 4/5 for details.
+The MultiMedia audio routes can be deduced from other parts of the
+device tree (e.g. the definitions of the MultiMedia DAIs) and therefore
+specifying them again in "audio-routing" is redundant and prone to
+mistakes. This is no longer necessary since commit 6fd8d2d275f7
+("ASoC: qcom: qdsp6: Move frontend AIFs to q6asm-dai").
 
-Also, qcom,apq8016-sbc.txt is converted to DT schema by adding it to the
-existing qcom,sm8250.yaml. The bindings are similar enough that it is easier
-to share a single schema instead of duplicating everything into multiple ones.
+Let's drop them from the example in the DT schema as well
+to avoid confusion.
 
-Stephan Gerhold (5):
-  ASoC: dt-bindings: qcom: sm8250: Drop redundant MultiMedia routes
-  ASoC: dt-bindings: qcom: sm8250: Document "aux-devs"
-  ASoC: dt-bindings: qcom: apq8016-sbc: Move to qcom,sm8250 DT schema
-  ASoC: dt-bindings: qcom: Document qcom,msm8916-qdsp6-sndcard
-    compatible
-  ASoC: qcom: apq8016_sbc: Allow routing audio through QDSP6
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
- .../bindings/sound/qcom,apq8016-sbc.txt       |  96 -------------
- .../bindings/sound/qcom,sm8250.yaml           | 136 +++++++++++++++++-
- sound/soc/qcom/apq8016_sbc.c                  | 134 ++++++++++++++++-
- 3 files changed, 259 insertions(+), 107 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8016-sbc.txt
-
+diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+index 7d57eb91657a..a0f1d7340eb5 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+@@ -86,10 +86,7 @@ examples:
+         audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+                     "SpkrRight IN", "WSA_SPK2 OUT",
+                     "VA DMIC0", "vdd-micb",
+-                    "VA DMIC1", "vdd-micb",
+-                    "MM_DL1",  "MultiMedia1 Playback",
+-                    "MM_DL2",  "MultiMedia2 Playback",
+-                    "MultiMedia3 Capture", "MM_UL3";
++                    "VA DMIC1", "vdd-micb";
+ 
+         mm1-dai-link {
+             link-name = "MultiMedia0";
 -- 
 2.34.1
 
