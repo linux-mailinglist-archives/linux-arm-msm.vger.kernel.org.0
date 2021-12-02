@@ -2,105 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD812466AAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 21:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E2E2466AB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Dec 2021 21:05:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243468AbhLBUGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 15:06:39 -0500
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:38543 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243096AbhLBUGi (ORCPT
+        id S1348483AbhLBUI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 15:08:29 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:1680 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234495AbhLBUIW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 15:06:38 -0500
-Received: by mail-oi1-f172.google.com with SMTP id r26so1376328oiw.5;
-        Thu, 02 Dec 2021 12:03:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=tdFnY4wzmt+MgdOT2Tq5J82thiu5XzZLbDcTwtxSNYk=;
-        b=CqSeMDPexP+Eq9nX4P+8phtQxZua0E6a1us2n3o+PbsS97AwiIWXQqm9L73vkR4LPl
-         LKKYLzniiyBzQLW+sJKBOZPdNriRhONmv+sTycDz94u4qv8gnaPp/bSYb8GjGAOBnP5o
-         jLVsW4h93LyLYdhPVlHo62JlVmfw32mdbSAAhuysDgsvrjjscd7t9XnRrz61L0v1S/AZ
-         4zbTMPZxO17bCFdhNyqKY8fHOoV87eLFXpQbiUKt2yVP+wxA1BHiQp+rY05P3kbH+3yR
-         D9ttf92WhLcrkJDIcS3oeJjdlACrNQnbrsYP1cWuxwN6pvRGMggHtMZhT0L+0jV9VOPe
-         l+Wg==
-X-Gm-Message-State: AOAM5339Pfv3ilX+UC4MfNtLpV22DZbEOhPaCuA8io0PgYL/Q+jIJNsm
-        c/sYB4ydwKBLkxpFdD03HA==
-X-Google-Smtp-Source: ABdhPJy+Vf8yrVBOrncV37VxW9c3c7Y/RAVX3OHOeNP3Xt7D8Nw+7TsHiQ6ZGDEM3eK2Axdz+VoWvQ==
-X-Received: by 2002:a05:6808:1a01:: with SMTP id bk1mr6236903oib.46.1638475395629;
-        Thu, 02 Dec 2021 12:03:15 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id a5sm203291otd.74.2021.12.02.12.03.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Dec 2021 12:03:14 -0800 (PST)
-Received: (nullmailer pid 1112575 invoked by uid 1000);
-        Thu, 02 Dec 2021 20:03:13 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
-Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org, tiwai@suse.com,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        bgoswami@codeaurora.org, lgirdwood@gmail.com,
-        alsa-devel@alsa-project.org, swboyd@chromium.org,
-        srinivas.kandagatla@linaro.org, agross@kernel.org, perex@perex.cz,
-        linux-arm-msm@vger.kernel.org, broonie@kernel.org,
-        plai@codeaurora.org, bjorn.andersson@linaro.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        judyhsiao@chromium.org
-In-Reply-To: <1638459806-27600-9-git-send-email-srivasam@codeaurora.com>
-References: <1638459806-27600-1-git-send-email-srivasam@codeaurora.com> <1638459806-27600-9-git-send-email-srivasam@codeaurora.com>
-Subject: Re: [PATCH v7 08/10] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
-Date:   Thu, 02 Dec 2021 14:03:13 -0600
-Message-Id: <1638475393.161838.1112574.nullmailer@robh.at.kernel.org>
+        Thu, 2 Dec 2021 15:08:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638475500; x=1670011500;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=M6JRb1L5bI93eUvGCDqUCDgna5+vK0854mAKgmhopQc=;
+  b=B03AGRBRbiV6D8ierfHkTF7vl1FRrw6tm7PvwiYUqDOHRPZOcjn8E1sH
+   3K6Jx8lr7GAcxO/YD8cnfbMdjyGzWz5k9t+tzBO+opi11N9HgWvj7b0Pa
+   p1pejHEm1dJAEO7zbEDLJRgJDj7z12oV4zRvcXkhVF80ulr4F3Rb3enA8
+   E=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Dec 2021 12:04:57 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2021 12:04:57 -0800
+Received: from [10.110.122.223] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 2 Dec 2021
+ 12:04:56 -0800
+Subject: Re: [PATCH 1/5] dt-bindings: platform: microsoft: Document surface
+ xbl
+To:     Jarrett Schultz <jaschultzms@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <platform-driver-x86@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Jarrett Schultz <jaschultz@microsoft.com>
+References: <20211202191630.12450-1-jaschultz@microsoft.com>
+ <20211202191630.12450-2-jaschultz@microsoft.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+Message-ID: <d85dba31-7d79-7c00-b930-41e513aa323d@quicinc.com>
+Date:   Thu, 2 Dec 2021 12:04:56 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20211202191630.12450-2-jaschultz@microsoft.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 02 Dec 2021 21:13:24 +0530, Srinivasa Rao Mandadapu wrote:
-> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On 12/2/2021 11:16 AM, Jarrett Schultz wrote:
+> Introduce yaml for surface xbl driver.
 > 
-> Add bindings for sc7280 lpass cpu driver which supports
-> audio over i2s based speaker, soundwire based headset, msm dmics
-> and HDMI Port.
+> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> ---
->  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 70 +++++++++++++++++++---
->  1 file changed, 62 insertions(+), 8 deletions(-)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Is it not possible to send patch email from @microsoft.com ?
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg: [[0, 1658351616, 0, 425984], [0, 1659895808, 0, 167936]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg-names: ['lpass-hdmiif', 'lpass-lpaif'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupts: [[0, 160, 1], [0, 268, 1]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupt-names: ['lpass-irq-lpaif', 'lpass-irq-hdmi'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: iommus: [[4294967295, 4128, 0], [4294967295, 4146, 0]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1562819
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+---Trilok Soni
