@@ -2,106 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21C1B467A0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 16:09:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FFFC467A2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 16:21:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239176AbhLCPMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 10:12:51 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.165]:19066 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233227AbhLCPMu (ORCPT
+        id S1381721AbhLCPZP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 10:25:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1381713AbhLCPZP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 10:12:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1638544158;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=2bjcp/msHQ00yL90ECtPop5IeeDvIBRlvfdATMh29ng=;
-    b=TjuLqaye4iM4Q7PUGROvuuz9fNjHspIJFXD/K6vmYSMPNnN0p6fhMIooaUFTd2GgGN
-    mSHtVuM2E8JGx75lH7UQ5ct99upPJ7QNd/pui5QPJaCgPA9DMTn1Vclb4rZ3m5XGg4nq
-    j32huNUhTFmx1nVkKXH+0snCynQHN3AH9dCdQ+y7lR4DL7uldDgC3R4L1ZVhlMKDTNPV
-    IzKCnsfnODGM0RqTRBKvUSw3bT/3+Hil5H/mgstTYH2twOr0rRB7tvTCPAmN/Q0LK/Qh
-    ToGIpB4jv69l8QNf3JTMlUAYkPbQdOkJygK+7ORjNye9c6UZ4f6ZZkd3I9/T8nNBrp7J
-    a/sQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrKY7lg=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.34.10 AUTH)
-    with ESMTPSA id j03bcbxB3F9Hvz4
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Fri, 3 Dec 2021 16:09:17 +0100 (CET)
-Date:   Fri, 3 Dec 2021 16:09:13 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 5/5] ASoC: qcom: apq8016_sbc: Allow routing audio through
- QDSP6
-Message-ID: <YaozGfiaL2RjeY9W@gerhold.net>
-References: <20211202145505.58852-1-stephan@gerhold.net>
- <20211202145505.58852-6-stephan@gerhold.net>
- <455604c2-9b73-4b9b-2ce7-890aafe41845@linaro.org>
- <YaorZnQTwvXo6vrO@gerhold.net>
- <5c6607cc-ad2a-6f90-e087-78ef3bd39e80@linaro.org>
+        Fri, 3 Dec 2021 10:25:15 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4559C061353
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 07:21:50 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id a18so6453916wrn.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 07:21:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=NWBlTWNs/SDRDxcsHdXQ/DBHT2ACOQuzczNNaBJvbGY=;
+        b=n1qKX7CfMzr4yCAZC9iSYNLdp7VBfQxHHj5oZ6QrGM8NZY0WIqd6gHb4vo9dBWkQHi
+         +5z53Dr7s7yweBq14ZJShl2FihQ22vaFl+NzBuaGL8MaWAzD7SspZqEnK9eu9kdoHRLu
+         Z5Zhu2xayKowcOwCc4CGyMKLaDYhjf0HS8+vZj9yJ+asrzmuXoku1dER4OYK3XVFngpt
+         Z6h2vMNQsw8/ztpVi6VubQCgiQcgoPXNsQECwxkcxhwiH1Ga0fkr0gVSc6I/sUPE/h0T
+         cZrYaoNapMNsV6uVrgJPS5+ubpY9umj0Mv8L94E6nOkgtPKA3PUdY9d597LNbyvKLZmE
+         G1sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=NWBlTWNs/SDRDxcsHdXQ/DBHT2ACOQuzczNNaBJvbGY=;
+        b=FcEcYR/oLX+J8pN6o92Z2Ry4axTrXNpq6mfyBd1FMQdg2S0ugxgaUDL1xyJwSHsuxB
+         h5c4tvPHgX68Pgnucn+PlaRhOZivCM/TF29zKcxg1mjFslwxprTRC/HxZGuwp1obrV3z
+         FCcZOrvpDv9nKfWDClCTvpX7u/kslk4c77P0Rlq6d6K4m68IpWUYFgwO/iaqD4gK5LuW
+         JgvtIBASg9gx7BJ8XUdObcAWwtejsjSW8QbLgzr8Q9q8xj6jg/PgwY7BHhg0dHpv2gib
+         YUfMSZZZFYjsiCXiHN9ZnCoYvWj0ZUVoKQjIfsIYk/8TRxYqBT87NzOB0khWoBzd0DkY
+         d4cw==
+X-Gm-Message-State: AOAM533EfCe5/BCLjUpwVAmgrbdoMrhrYyMpCBmyBEfew/0MdeBGr+Lr
+        xFpB6F2n7MoFJunhGd1Zk8gMgg==
+X-Google-Smtp-Source: ABdhPJy1yWegc3CaZOHkauWkJOjTboULhasYlk4AaL+a0tQia5tvbT2eDC/LqcL9NV5yVluiLFeLIg==
+X-Received: by 2002:adf:f209:: with SMTP id p9mr21771829wro.191.1638544909324;
+        Fri, 03 Dec 2021 07:21:49 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id a1sm3945521wri.89.2021.12.03.07.21.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Dec 2021 07:21:48 -0800 (PST)
+Subject: Re: [PATCH v7 2/2] ASoC: qcom: SC7280: Add machine driver
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+References: <1638533183-19023-1-git-send-email-srivasam@codeaurora.com>
+ <1638533183-19023-3-git-send-email-srivasam@codeaurora.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <a564d5d5-5f31-2005-3546-2390bba3ff9e@linaro.org>
+Date:   Fri, 3 Dec 2021 15:21:47 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5c6607cc-ad2a-6f90-e087-78ef3bd39e80@linaro.org>
+In-Reply-To: <1638533183-19023-3-git-send-email-srivasam@codeaurora.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 03, 2021 at 02:52:43PM +0000, Srinivas Kandagatla wrote:
-> On 03/12/2021 14:36, Stephan Gerhold wrote:
-> > On Fri, Dec 03, 2021 at 10:35:08AM +0000, Srinivas Kandagatla wrote:
-> > > I have tested DB410c this use case in the past using similar patch [1].
-> > > 
-> > 
-> > Did you use a different modem DSP firmware? (An older one maybe?)
-> 
-> It was very old which came with some Android release I guess.
-> 
 
-Right, that should be similar to the ones used on MSM8916
-smartphones/tablets. I was really glad that the qdsp6 drivers (q6asm,
-q6afe, ...) worked without any changes on MSM8916 by the way, thanks a
-lot for all your work on them!
 
-> > > > @@ -148,11 +266,16 @@ static const struct snd_soc_dapm_widget apq8016_sbc_dapm_widgets[] = {
-> > > >    static int apq8016_sbc_platform_probe(struct platform_device *pdev)
-> > > >    {
-> > > > +	void (*add_ops)(struct snd_soc_card *card);
-> > > >    	struct device *dev = &pdev->dev;
-> > > >    	struct snd_soc_card *card;
-> > > >    	struct apq8016_sbc_data *data;
-> > > >    	int ret;
-> > > > +	add_ops = device_get_match_data(&pdev->dev);
-> > > > +	if (!add_ops)
-> > > > +		return -EINVAL;
-> > > 
-> > > We will never hit the error case here because without a match we can not
-> > > even enter the probe function.
-> > > 
-> > 
-> > Theoretically it's possible to create platform devices through other
-> > ways than the device tree (think of old board C files for example).
-> > I agree that nobody should do that, but having this check here
-> > at least avoids a NULL pointer dereference in this unlikely scenario.
-> > 
-> > Please let me know if I should remove it anyway, that's fine for me!
+On 03/12/2021 12:06, Srinivasa Rao Mandadapu wrote:
+> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > 
-> TBH, I don't have very strong opinion on this.
+> Add new machine driver to register sound card on sc7280 based targets and
+> do the required configuration for lpass cpu dai and external codecs
+> connected over MI2S and soundwire interfaces.
+> Add support for audio jack detection, soundwire init and MBHC.
 > 
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>   sound/soc/qcom/Kconfig  |  14 +++
+>   sound/soc/qcom/Makefile |   2 +
+>   sound/soc/qcom/lpass.h  |   1 +
+>   sound/soc/qcom/sc7280.c | 290 ++++++++++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 307 insertions(+)
+>   create mode 100644 sound/soc/qcom/sc7280.c
 
-Great, can I assume your Reviewed-by: applies without any changes then?
+Overall it looks good, but few nits below.
 
-Thanks,
-Stephan
+> 
+> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+> index cc7c1de..932b082 100644
+> --- a/sound/soc/qcom/Kconfig
+> +++ b/sound/soc/qcom/Kconfig
+> @@ -152,4 +152,18 @@ config SND_SOC_SC7180
+>   	  SC7180 SoC-based systems.
+>   	  Say Y if you want to use audio device on this SoCs.
+>   
+> +config SND_SOC_SC7280
+> +	tristate "SoC Machine driver for SC7280 boards"
+> +	depends on I2C && SOUNDWIRE || COMPILE_TEST
+> +	select SND_SOC_QCOM_COMMON
+> +	select SND_SOC_LPASS_SC7280
+> +	select SND_SOC_MAX98357A
+> +	select SND_SOC_WCD938X
+> +	select SND_SOC_LPASS_RX_MACRO
+> +	select SND_SOC_LPASS_TX_MACRO
+> +	help
+> +	  Add support for audio on Qualcomm Technologies Inc.
+> +	  SC7280 SoC-based systems.
+> +	  Say Y or M if you want to use audio device on this SoCs.
+> +
+>   endif #SND_SOC_QCOM
+> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+> index 1600ae5..625aec6 100644
+> --- a/sound/soc/qcom/Makefile
+> +++ b/sound/soc/qcom/Makefile
+> @@ -19,6 +19,7 @@ snd-soc-storm-objs := storm.o
+>   snd-soc-apq8016-sbc-objs := apq8016_sbc.o
+>   snd-soc-apq8096-objs := apq8096.o
+>   snd-soc-sc7180-objs := sc7180.o
+> +snd-soc-sc7280-objs := sc7280.o
+>   snd-soc-sdm845-objs := sdm845.o
+>   snd-soc-sm8250-objs := sm8250.o
+>   snd-soc-qcom-common-objs := common.o
+> @@ -27,6 +28,7 @@ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
+>   obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
+>   obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
+>   obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
+> +obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
+>   obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
+>   obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
+>   obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
+> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+> index 67ef497..c0f0247 100644
+> --- a/sound/soc/qcom/lpass.h
+> +++ b/sound/soc/qcom/lpass.h
+> @@ -16,6 +16,7 @@
+>   #include "lpass-hdmi.h"
+>   
+>   #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
+> +#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
+
+This change does not really belong in this patch, can you move this into 
+a separate patch?
+
+
+>   #define LPASS_MAX_MI2S_PORTS			(8)
+>   #define LPASS_MAX_DMA_CHANNELS			(8)
+>   #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
+> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+> new file mode 100644
+> index 0000000..31a77eb
+> --- /dev/null
+> +++ b/sound/soc/qcom/sc7280.c
+> @@ -0,0 +1,290 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +//
+> +// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> +//
+> +// ALSA SoC Machine driver for sc7280
+> +
+> +#include <linux/input.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <sound/core.h>
+> +#include <sound/jack.h>
+> +#include <sound/pcm.h>
+> +#include <sound/soc.h>
+> +#include <linux/soundwire/sdw.h>
+> +
+...
+
+> +
+> +static const struct snd_soc_ops sc7280_ops = {
+> +	.hw_params = sc7280_snd_hw_params,
+> +	.hw_free = sc7280_snd_hw_free,
+> +	.prepare = sc7280_snd_prepare,
+> +};
+> +
+> +static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
+> +	SND_SOC_DAPM_HP("Headphone Jack", NULL),
+> +	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+> +};
+
+This is not used anywhere in the file.
+
+> +
+> +static int sc7280_snd_platform_probe(struct platform_device *pdev)
+> +{
+> +	struct snd_soc_card *card;
+> +	struct sc7280_snd_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	struct snd_soc_dai_link *link;
+> +	int ret, i;
+> +
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	card = &data->card;
+> +	snd_soc_card_set_drvdata(card, data);
+> +
+> +	card->owner = THIS_MODULE;
+> +	card->driver_name = "SC7280";
+> +	card->dev = dev;
+> +
+> +	ret = qcom_snd_parse_of(card);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for_each_card_prelinks(card, i, link) {
+> +		link->init = sc7280_init;
+> +		link->ops = &sc7280_ops;
+> +	}
+> +
+> +	return devm_snd_soc_register_card(dev, card);
+> +}
+> +
+> +static const struct of_device_id sc7280_snd_device_id[]  = {
+> +	{ .compatible = "google,sc7280-herobrine" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
+> +
+> +static struct platform_driver sc7280_snd_driver = {
+> +	.probe = sc7280_snd_platform_probe,
+> +	.driver = {
+> +		.name = "msm-snd-sc7280",
+> +		.of_match_table = sc7280_snd_device_id,
+> +		.pm = &snd_soc_pm_ops,
+> +	},
+> +};
+> +module_platform_driver(sc7280_snd_driver);
+> +
+> +MODULE_DESCRIPTION("sc7280 ASoC Machine Driver");
+> +MODULE_LICENSE("GPL");
+> 
