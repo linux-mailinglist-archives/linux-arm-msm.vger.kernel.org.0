@@ -2,84 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C96E468084
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 00:34:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C44E7468086
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 00:34:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354055AbhLCXhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 18:37:42 -0500
-Received: from mail-oo1-f42.google.com ([209.85.161.42]:35715 "EHLO
-        mail-oo1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240573AbhLCXhl (ORCPT
+        id S1376761AbhLCXho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 18:37:44 -0500
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:46841 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1376744AbhLCXhn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 18:37:41 -0500
-Received: by mail-oo1-f42.google.com with SMTP id e17-20020a4a8291000000b002c5ee0645e7so2520702oog.2;
-        Fri, 03 Dec 2021 15:34:17 -0800 (PST)
+        Fri, 3 Dec 2021 18:37:43 -0500
+Received: by mail-oi1-f174.google.com with SMTP id s139so8741637oie.13;
+        Fri, 03 Dec 2021 15:34:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=HvmUO3stczSOHy4AZ2u5yjtXBe51DiBBMcIExmIvsPk=;
-        b=1JIchbjaLZzDknM343KPGEgCIqPPJrvHeVDDbfmLuaCZNcU7k0dOvAdCGp4Rc6TUuX
-         fL/1ABebaTigvQBCfPUcW4znZpo1rTYPLU0lcEhwMXwuKYRGrglsakmVTkZxGEdzKbOY
-         C3vTv9GILsq57fC/9Ww08EtIVOsfFUp6lfc5z7gxvsKxQep2x//CiwPM0TNSfugUSujY
-         dNMPUCjXRayLjWZ6uOBuuPvdg479WWSlCC6IMizDT8w7ZqQUebd+5IiLoW6ngrG9W5Rh
-         7qyOyR6CpxjgHBqjOyQATdYEKQJH7lLYmDrDanyKo7VE/705Q/6zBqSLbHUXovul7q3D
-         TIJg==
-X-Gm-Message-State: AOAM5325xrrAUXovEFxNYS0DHzf98OHq6Z82f+WTa2Rb1Ht1qHf5S+wF
-        Lx6WU403cVLdvTbxiEqn7Q==
-X-Google-Smtp-Source: ABdhPJwgEbmNp7uLje0JTDCKmsCzjEkEBrgzlOt1VkyxJTN4CmOwWISnvXbaId1z31yTwIqQdnFCXg==
-X-Received: by 2002:a4a:9406:: with SMTP id h6mr14654887ooi.80.1638574456759;
-        Fri, 03 Dec 2021 15:34:16 -0800 (PST)
+        bh=dXD3ujoJ+Ol1hRij1M2TL8mmDFnoEkO7pukqJulGr+k=;
+        b=N8FHxRps6Mh9oYwKNVOVPnqko75SKMGpusLgr7G4kGy1Kudd0UnrpRr8or96mszjeF
+         c+Z/7127uvL/Ah7Yukon694KGRYX5uWW8LAWH2/OuYupS7Y9XjYbIdTT3aX7qdsG9vsZ
+         mOUPQxfy5FTdPIFj8caxgIihf0ybu018GfWkHD7um845Vjyf0dDy1Z5+Ej7+HNyKPYIA
+         uH4ThAFJL9i8d/A1wZZxZimQisw9ayu4KBnCzDtvIs/YJ8jlGiF9E8PF8Xv4DRQwdaH2
+         Yp5LG9+qQX7a4HMoGESQHSby0rwWmZb5fwpfqLYjB1SujgXgU7y/JGLTx8B24apCYzEs
+         uYmg==
+X-Gm-Message-State: AOAM531qFOc9n+LwGt/S2EMn4TBCgInb+MZg+ssAyV5UNAVbH0OKws6o
+        /l3EQAwy7yZ1QJ/UawXjFw==
+X-Google-Smtp-Source: ABdhPJw6QS6fsJGv+QpL9azlCRNikWE+y330z+sQRPDPP5v6tmPL6FFgkXT+M0qnV60ohRJj21X+IQ==
+X-Received: by 2002:a05:6808:10ce:: with SMTP id s14mr11965670ois.137.1638574458626;
+        Fri, 03 Dec 2021 15:34:18 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w71sm939444oiw.6.2021.12.03.15.34.15
+        by smtp.gmail.com with ESMTPSA id b22sm945076oib.41.2021.12.03.15.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 15:34:16 -0800 (PST)
-Received: (nullmailer pid 1042998 invoked by uid 1000);
+        Fri, 03 Dec 2021 15:34:17 -0800 (PST)
+Received: (nullmailer pid 1043005 invoked by uid 1000);
         Fri, 03 Dec 2021 23:34:15 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Jarrett Schultz <jaschultzms@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, Felipe Balbi <balbi@kernel.org>,
-        platform-driver-x86@vger.kernel.org, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Mark Gross <markgross@kernel.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-In-Reply-To: <20211202191630.12450-2-jaschultz@microsoft.com>
-References: <20211202191630.12450-1-jaschultz@microsoft.com> <20211202191630.12450-2-jaschultz@microsoft.com>
-Subject: Re: [PATCH 1/5] dt-bindings: platform: microsoft: Document surface xbl
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
+Cc:     robh+dt@kernel.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        alsa-devel@alsa-project.org, rohitkr@codeaurora.org,
+        plai@codeaurora.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
+        bgoswami@codeaurora.org, srinivas.kandagatla@linaro.org,
+        broonie@kernel.org, tiwai@suse.com, lgirdwood@gmail.com,
+        perex@perex.cz, swboyd@chromium.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>
+In-Reply-To: <1638531140-25899-3-git-send-email-srivasam@codeaurora.com>
+References: <1638531140-25899-1-git-send-email-srivasam@codeaurora.com> <1638531140-25899-3-git-send-email-srivasam@codeaurora.com>
+Subject: Re: [PATCH v4 2/5] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi pinctrl bindings
 Date:   Fri, 03 Dec 2021 17:34:15 -0600
-Message-Id: <1638574455.193372.1042997.nullmailer@robh.at.kernel.org>
+Message-Id: <1638574455.236196.1043004.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 02 Dec 2021 11:16:26 -0800, Jarrett Schultz wrote:
-> Introduce yaml for surface xbl driver.
+On Fri, 03 Dec 2021 17:02:17 +0530, Srinivasa Rao Mandadapu wrote:
+> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > 
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+> Add device tree binding Documentation details for Qualcomm SC7280
+> LPASS LPI pinctrl driver.
 > 
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
 > ---
-> 
-> Changes in v3:
->  - Updated description to only pertain to the hardware
->  - Updated the required field to properly reflect the binding
->  - Removed the first example
->  - Fixed the size of the reg field in the second example
-> 
-> ---
-> 
-> Changes in v2:
->  - Removed json-schema dependence
->  - Elaborated on description of driver
->  - Updated example
-> ---
->  .../platform/microsoft/surface-xbl.yaml       | 69 +++++++++++++++++++
->  MAINTAINERS                                   |  7 ++
->  2 files changed, 76 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+>  .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml     | 115 +++++++++++++++++++++
+>  1 file changed, 115 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -88,18 +79,13 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: properties:properties: 'compatible' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'type', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: properties: 'properties' should not be valid under {'enum': ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'if', 'items', 'maxItems', 'maximum', 'minItems', 'minimum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'propertyNames', 'required', 'then', 'unevaluatedProperties']}
-	hint: A json-schema keyword was found instead of a DT property name.
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: ignoring, error in schema: properties: properties
-warning: no schema found in file: ./Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
-Documentation/devicetree/bindings/platform/microsoft/surface-xbl.example.dt.yaml:0:0: /example-0/imem@146bf000/xbl@a94: failed to match any schema with compatible: ['microsoft,sm8150-surface-duo-xbl']
+./Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml: duplicate '$id' value 'http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#'
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1562961
+See https://patchwork.ozlabs.org/patch/1563187
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
