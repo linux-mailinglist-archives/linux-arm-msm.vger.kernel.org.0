@@ -2,107 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADAB2467364
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 09:43:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14BDA467447
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 10:48:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379270AbhLCIqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 03:46:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58232 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379272AbhLCIqd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 03:46:33 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9DBAC061757
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 00:43:09 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id p18so1594489plf.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 00:43:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KCOdy3fLrIckFFP2lKLlpo99jfWSPyEX2EKLwlFJXHw=;
-        b=YrjvB9g87wSHTK9Mpg7nHVtai4Wo1DQCQazzwpBlOmFmjdfdsMknpZEzX18EjDqxCt
-         RYEhAX6yVLcwKjpd0dJp1ZUWPXu0+mYsSgmBrx/SXlKEwHVa6daFi3hy6EcRCJQj+j4p
-         y90EfmmqRu77AHo/7g0abIkplntukPE5/or/L+Fn8JCo58RUc2Z0ngyf2l/KrtK/zBlI
-         N5YZKOKm7TSlViU/o+8mFc4tQ3+SWNf3hH/A0hQ+s/VyAL6fUaGLM7Vfe9wyZIoBtzam
-         uWu7WIGYKY6ATs2ocamX/VGmZgJDqPBQPHWeGzWEa2ZNbKJyBo9K4NhhPac5TcOhJkWS
-         O1SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KCOdy3fLrIckFFP2lKLlpo99jfWSPyEX2EKLwlFJXHw=;
-        b=JNv6tJE5v3zihu7gFfaap+ezalLL+1Bn7h0zAZcZlifGMJcHOi8clJf9VIicHSvbPK
-         cNFLrRnIz7wYox+v4xDVyHLGJGRWGMc/iLg4O+0jtjw7AUKt/Py3dzXm2lyOYa1Uk/Vv
-         YhZqb4pqVBPCYAJGR+TnBGQ8i0sLk3We9ypT0+Jij1mtdNwFvsbxWOOOFtMt1WgRkdRf
-         9hNR19+KYH3LkElVeRoOyTiuahwo0E3Uq3wTrybK+xjFt56L+m3omh6fdyley57KKZjk
-         9xzkQNFXcuaA0jpwEZGc8f/iWXs+6TrVu3AarjR746w2VCMK3DpgAHI/r04FLDgdqk8d
-         AG6w==
-X-Gm-Message-State: AOAM533CHiA3iWUE3KidA1x9m3aMe9KjlfZWKsiW3+x0i/WXZgRmko5D
-        1G6O98YoJy9QL0hqJ0HQNtF1
-X-Google-Smtp-Source: ABdhPJxs7GG70chTt6hGwV8bD8adqdSCvTb07/634kDWLqsHtkwFyEvymQiBuqjImQU+fSX0eEHDSg==
-X-Received: by 2002:a17:90a:fe0b:: with SMTP id ck11mr12221312pjb.15.1638520988875;
-        Fri, 03 Dec 2021 00:43:08 -0800 (PST)
-Received: from thinkpad ([117.202.184.5])
-        by smtp.gmail.com with ESMTPSA id k18sm1706240pgb.70.2021.12.03.00.43.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 00:43:08 -0800 (PST)
-Date:   Fri, 3 Dec 2021 14:13:01 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, quic_hemantk@quicinc.com,
-        quic_jhugo@quicinc.com, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, stable@vger.kernel.org,
-        quic_olgak@quicinc.com, loic.poulain@linaro.org
-Subject: Re: [PATCH v2] bus: mhi: core: Fix reading wake_capable channel
- configuration
-Message-ID: <20211203084301.GA18809@thinkpad>
-References: <1638320491-13382-1-git-send-email-quic_bbhatt@quicinc.com>
+        id S1379643AbhLCJvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 04:51:55 -0500
+Received: from foss.arm.com ([217.140.110.172]:46382 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1379642AbhLCJvz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Dec 2021 04:51:55 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7B0A71435;
+        Fri,  3 Dec 2021 01:48:31 -0800 (PST)
+Received: from e123083-lin (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 398973F5A1;
+        Fri,  3 Dec 2021 01:48:30 -0800 (PST)
+Date:   Fri, 3 Dec 2021 10:48:24 +0100
+From:   Morten Rasmussen <morten.rasmussen@arm.com>
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
+ freq_factor
+Message-ID: <20211203094734.GA5838@e123083-lin>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+ <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+ <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
+ <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
+ <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
+ <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
+ <20211202105027.GA1180274@e123083-lin>
+ <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1638320491-13382-1-git-send-email-quic_bbhatt@quicinc.com>
+In-Reply-To: <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Nov 30, 2021 at 05:01:31PM -0800, Bhaumik Bhatt wrote:
-> The 'wake-capable' entry in channel configuration is not set when
-> parsing the configuration specified by the controller driver. Add
-> the missing entry to ensure channel is correctly specified as a
-> 'wake-capable' channel.
+On Thu, Dec 02, 2021 at 05:31:53PM +0100, Rafael J. Wysocki wrote:
+> On Thu, Dec 2, 2021 at 11:50 AM Morten Rasmussen
+> <morten.rasmussen@arm.com> wrote:
+> >
+> > On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
+> > > On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
+> > > <thara.gopinath@linaro.org> wrote:
+> > > >
+> > > > Hi,
+> > > >
+> > > > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
+> > > > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
+> > > > >>
+> > > > >> Hi Rafael,
+> > > > >>
+> > > > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
+> > > > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+> > > > >>> <thara.gopinath@linaro.org> wrote:
+> > > > >>>>
+> > > > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+> > > > >>>> we don't consider boost frequencies while calculating cpu capacities, use
+> > > > >>>> policy->max to populate the freq_factor during boot up.
+> > > > >>>
+> > > > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
+> > > > >>
+> > > > >> Agree it's tricky how we treat the boost frequencies and also combine
+> > > > >> them with thermal pressure.
+> > > > >> We probably would have consider these design bits:
+> > > > >> 1. Should thermal pressure include boost frequency?
+> > > > >
+> > > > > Well, I guess so.
+> > > > >
+> > > > > Running at a boost frequency certainly increases thermal pressure.
+> > > > >
+> > > > >> 2. Should max capacity 1024 be a boost frequency so scheduler
+> > > > >>      would see it explicitly?
+> > > > >
+> > > > > That's what it is now if cpuinfo.max_freq is a boost frequency.
+> > > > >
+> > > > >> - if no, then schedutil could still request boost freq thanks to
+> > > > >>     map_util_perf() where we add 25% to the util and then
+> > > > >>     map_util_freq() would return a boost freq when util was > 1024
+> > > > >>
+> > > > >>
+> > > > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
+> > > > >> get_next_freq(). If the value stored in there is a boost,
+> > > > >> then don't we get a higher freq value for the same util?
+> > > > >
+> > > > > Yes. we do, which basically is my point.
+> > > > >
+> > > > > The schedutil's response is proportional to cpuinfo.max_freq and that
+> > > > > needs to be taken into account for the results to be consistent.
+> > > >
+> > > > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
+> > > > frequency of a cpu, irrespective of whether boost is enabled or not.
+> > > > Where as policy->max is the currently available maximum cpu frequency
+> > > > which can be equal to cpuinfo.max_freq or lower (depending on whether
+> > > > boost is enabled, whether there is a constraint on policy->max placed by
+> > > > thermal etc).
+> > >
+> > > It may also depend on the limit set by user space.
+> > >
+> > > > So in this case isn't it better for schedutil to consider
+> > > > policy->max instead of cpuinfo.max ?
+> > >
+> > > Not really.
+> > >
+> > > In that case setting policy->max to 1/2 of cpuinfo.max_freq would
+> > > cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
+> > > which would be rather unexpected.
+> > >
+> > > policy->max is a cap, not the current maximum capacity.
+> > >
+> > > > Like you mentioned above same
+> > > > utilization will relate to different frequencies depending on the
+> > > > maximum frequency.
+> > >
+> > > Which is not how it is expected (and defined) to work, though.
+> > >
+> > > If you really want to play with the current maximum capacity, you need
+> > > to change it whenever boost is disabled or enabled - and there is a
+> > > mechanism for updating cpufinfo.max_freq in such cases.
+> >
+> > I don't see why we would want to change max capacity on the fly. It is
+> > not a cheap operation as we would need to normalize the capacity for all
+> > CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
+> > we even have to rebuild the sched_domain hierarchy to update flags. The
+> > update would also temporarily mess with load and utilization signals, so
+> > not a cheap operation.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 0cbf260820fa ("bus: mhi: core: Add support for registering MHI controllers")
-> Signed-off-by: Bhaumik Bhatt <quic_bbhatt@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> I didn't say it was cheap. :-)
 
-Applied to mhi-next!
+You didn't :-) But I thought it was worth pointing out in case someone
+would think we need to constantly renormalize to the highest achievable
+performance level taking all factors into account, including thermal
+capping.
 
-Thanks,
-Mani
+> However, boost frequencies are not disabled and enabled very often, so
+> it may be acceptable to do it then.  I actually don't know.
 
-> ---
->  drivers/bus/mhi/core/init.c | 1 +
->  1 file changed, 1 insertion(+)
+Agree.
+
 > 
-> v2:
-> -Update subject as per comments
-> -Add fixes tag and CC stable
-> 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index 5aaca6d..f1ec3441 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -788,6 +788,7 @@ static int parse_ch_cfg(struct mhi_controller *mhi_cntrl,
->  		mhi_chan->offload_ch = ch_cfg->offload_channel;
->  		mhi_chan->db_cfg.reset_req = ch_cfg->doorbell_mode_switch;
->  		mhi_chan->pre_alloc = ch_cfg->auto_queue;
-> +		mhi_chan->wake_capable = ch_cfg->wake_capable;
->  
->  		/*
->  		 * If MHI host allocates buffers, then the channel direction
-> -- 
-> 2.7.4
-> 
+> The point is that if you set the max capacity to correspond to the max
+> boosted perf and it is never reached (because boost is disabled), the
+> scaling will cause CPUs to appear as underutilized, but in fact there
+> is no spare capacity in the system.
+
+We kind of have the problem already with thermal capping but addressed
+it by having the thermal pressure signal to indicate the some of the
+capacity is unavailable. Perhaps the thermal pressure signal should be extended
+to cover all reasons for capacity being unavailable, or we should have
+another signal to track boost frequencies not being delivered, manually
+disabled or not possible due to system circumstances?
+
+> Conversely, if the max capacity corresponds to the max non-boost perf
+> and boost is used very often, the scaling will cause the CPUs to
+> appear to be 100% loaded, but there may be still spare capacity in the
+> system.
+
+It is even worse than that. Allowing delivered performance to exceed the
+CPU capacity will break utilization scale invariance at it will make
+per-task utilization appear smaller than it really is potentially
+leading to wrong task placement.
+
+I think we have to ensure that the full performance range is visible to
+the OS. If part of it is often unachievable we need to track the gap
+between requested and delivered performance and somehow take that into
+account when making task placement decisions.
+
+Morten
