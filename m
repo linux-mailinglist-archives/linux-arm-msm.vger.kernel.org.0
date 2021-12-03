@@ -2,271 +2,485 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F22844675DD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 12:05:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE5EE467626
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 12:21:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351636AbhLCLI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 06:08:26 -0500
-Received: from new3-smtp.messagingengine.com ([66.111.4.229]:57755 "EHLO
-        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232412AbhLCLIZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 06:08:25 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id B183D580186;
-        Fri,  3 Dec 2021 06:05:01 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 03 Dec 2021 06:05:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=ly7Qh9L4OGdMO5OUB1lCPCeZ/2O
-        QECslXma5zOZU7ug=; b=STx8VBqY1luyKLSVp8tg1YCC2R/UaVbvK+vwF8k1kPj
-        N7vbpFceJS4LrsuzirAOLAE9r7mwKB2bQyAdWFJdTp1SMOMa2XCQg/3NGDaM8pIY
-        oE0zTb9mht8kKnv6kWCAIOIgDmZhLqfxPFCjmxhADYbNwaAIRR7zTfraO/PDr8wU
-        F85W9inth2QevHhjJPsgtbWDDB1imBLZcX2o8w6eETGYyIqv53w+pUl37rAutHVC
-        xoWJLAwMzqDot2yb4Cr3vRe1F5EyTf46EFNSHogpvMeQRSEsDpD5Ip91YUEngZZV
-        0fjA95+/x03tS1hlQKDQPn+7Ll7Q/KZabUV7VcLb5QQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ly7Qh9
-        L4OGdMO5OUB1lCPCeZ/2OQECslXma5zOZU7ug=; b=KLmlaMNprWTK+tS95PZGm0
-        u9OrYDp27yuCPf0OCVSCIkzLnnXuI7UmCNUqv863Z/4BeLVw0Ceg9aupq+YgAhKk
-        S/0yEGlFe4qdggPOe8uzgYecBk5GhCKzCdwcinq8d9o8Q89IFAc+1Rp+MvNhTpZX
-        fJ6WOQtPIOUYhKe91I6u5S8nHgdoZGt+PC0f9cAa3rs2qITm8v3J1iI0wwELu28r
-        WZpWmcF0TKJwaWS/r2iIPr6/QfQEMjwgug7Eq+BCiZQIZ6vV3mZEyNoha5wY1xTB
-        n/Jz0rosscnA+1d83e0OQQwk91xHKU+uYc000pnZE8wVp5Xr3nEMXoA9So68IIXQ
-        ==
-X-ME-Sender: <xms:3fmpYfg4zsmCzVvwoi_Ywe8705Kpj-76ukJuJi-QY3Dk1XhDAzY_7w>
-    <xme:3fmpYcAtkxDhp761OrWLygels-r1FK7kNBMkNISt2MGR-PpcsR-2mZJBqUctd5xDE
-    VGtoWqVHZWzEw>
-X-ME-Received: <xmr:3fmpYfFSJe7EuW7BenTpMrvbdi-E5xSrcCdD7r9irxZBTLebN6ouDzye78ieS6sQywnHOUSk5kBd5B6Tw7Z6QIhvuNugduqf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrieejgddviecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:3fmpYcRCeKcnEaHdFuWCdbxtf8WFW2yx03PmswrOhT85ofuHVNs0Pg>
-    <xmx:3fmpYcxJJBuECXMIMQyQIFGLO2lF4bKwUCD-NfOeeBdLDuUpfzhLXw>
-    <xmx:3fmpYS5Qt5mtS4XJ9CeXTgjIAD9hoaYQq5igkaoIVWhTPF-DzHr_Fg>
-    <xmx:3fmpYUcw0Mh3RCW8OeCN0JdYAmi9lCC9nK1kVtx3FjtJ-gG0Rozr8A>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Dec 2021 06:05:00 -0500 (EST)
-Date:   Fri, 3 Dec 2021 12:04:58 +0100
-From:   Greg KH <greg@kroah.com>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        linux-kernel@vger.kernel.org, quic_tsoni@quicinc.com,
-        quic_psodagud@quicinc.com, quic_satyap@quicinc.com,
-        quic_pheragu@quicinc.com, quic_rjendra@quicinc.com,
-        quic_sibis@quicinc.com, quic_saipraka@quicinc.com
-Subject: Re: [PATCH V2 5/8] soc: qcom: eud: Add driver support for Embedded
- USB Debugger(EUD)
-Message-ID: <Yan52hNKKZMgzleI@kroah.com>
-References: <cover.1638430506.git.quic_schowdhu@quicinc.com>
- <e13421cebfcddda5e7df99a8cf767854d121976e.1638430506.git.quic_schowdhu@quicinc.com>
+        id S1380355AbhLCLYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 06:24:36 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:26366 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1380361AbhLCLYg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Dec 2021 06:24:36 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638530472; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: Cc: From: References: To:
+ Subject: Sender; bh=pDtEZWS5YSI3FoY4bVEoYtx82qBri66Tr+JZ7waSoZg=; b=eN1ft/pCbMp9Z7zOulyk+sOmqfKmGg+2RDKLA8+LFIHcucwJ24VzXmilOppN4wp9/8WfLxPM
+ SEvhuQUwm5ta7eeF4pKUVYg9RHSQOeMR4WkhpFlP87918aO1C4OJJna+wfF1w9egO3BI0CRX
+ sGZSbfGrmEWZMOjueN0YUyEZByI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 61a9fda8db3ac5552aa565c2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Dec 2021 11:21:12
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 0D636C43616; Fri,  3 Dec 2021 11:21:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.242.143.72] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E33E8C4338F;
+        Fri,  3 Dec 2021 11:21:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E33E8C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v6 2/2] ASoC: qcom: SC7280: Add machine driver
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+References: <1637239506-9387-1-git-send-email-srivasam@codeaurora.org>
+ <1637239506-9387-3-git-send-email-srivasam@codeaurora.org>
+ <5d0ca118-2a38-a7cf-ebec-f28f98078583@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Cc:     "Venkata Prasad Potturu (Temp)" <potturu@codeaurora.org>
+Message-ID: <c68f85f1-b4a8-6abe-35c8-afa2ae373a77@codeaurora.org>
+Date:   Fri, 3 Dec 2021 16:51:02 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e13421cebfcddda5e7df99a8cf767854d121976e.1638430506.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <5d0ca118-2a38-a7cf-ebec-f28f98078583@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 02, 2021 at 03:21:24PM +0530, Souradeep Chowdhury wrote:
-> Add support for control peripheral of EUD (Embedded USB Debugger) to
-> listen to events such as USB attach/detach, pet EUD to indicate software
-> is functional.Reusing the platform device kobj, sysfs entry 'enable' is
-> created to enable or disable EUD.
-> 
-> To enable the eud the following needs to be done
-> echo 1 > /sys/bus/platform/.../enable
-> 
-> To disable eud, following is the command
-> echo 0 > /sys/bus/platform/.../enable
-> 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  Documentation/ABI/testing/sysfs-driver-eud |   9 +
->  drivers/soc/qcom/Kconfig                   |  10 ++
->  drivers/soc/qcom/Makefile                  |   1 +
->  drivers/soc/qcom/qcom_eud.c                | 268 +++++++++++++++++++++++++++++
->  4 files changed, 288 insertions(+)
->  create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
->  create mode 100644 drivers/soc/qcom/qcom_eud.c
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
-> new file mode 100644
-> index 0000000..eaf2e82
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-driver-eud
-> @@ -0,0 +1,9 @@
-> +What:		/sys/bus/platform/drivers/eud/.../enable
-> +Date:           October 2021
 
-You sent this patch in December 2021 :(
+On 12/1/2021 10:03 PM, Srinivas Kandagatla wrote:
+Thanks for Your time Srini!!!
+>
+> On 18/11/2021 12:45, Srinivasa Rao Mandadapu wrote:
+>> Add new machine driver to register sound card on sc7280 based targets 
+>> and
+>> do the required configuration for lpass cpu dai and external codecs
+>> connected over MI2S and soundwire interfaces.
+>> Add support for audio jack detection, soundwire init and MBHC.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> ---
+>>   sound/soc/qcom/Kconfig  |  12 ++
+>>   sound/soc/qcom/Makefile |   2 +
+>>   sound/soc/qcom/sc7280.c | 299 
+>> ++++++++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 313 insertions(+)
+>>   create mode 100644 sound/soc/qcom/sc7280.c
+>>
+>> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+>> index cc7c1de..530d01f 100644
+>> --- a/sound/soc/qcom/Kconfig
+>> +++ b/sound/soc/qcom/Kconfig
+>> @@ -152,4 +152,16 @@ config SND_SOC_SC7180
+>>         SC7180 SoC-based systems.
+>>         Say Y if you want to use audio device on this SoCs.
+>>   +config SND_SOC_SC7280
+>> +    tristate "SoC Machine driver for SC7280 boards"
+>> +    depends on I2C && SOUNDWIRE || COMPILE_TEST
+>> +    select SND_SOC_QCOM_COMMON
+>> +    select SND_SOC_MAX98357A
+>> +    select SND_SOC_LPASS_RX_MACRO
+>> +    select SND_SOC_LPASS_TX_MACRO
+>
+> Consider adding
+>
+> +    select SND_SOC_LPASS_SC7280
+> +    select SND_SOC_WCD938X
+>
+>
+> and remove them from "[PATCH v6 10/10] ASoC: qcom: SC7280: Update 
+> config for building codec dma drivers"
+>
+Okay.. Will do accordingly.
+>
+>> +      Add support for audio on Qualcomm Technologies Inc.
+>> +      SC7280 SoC-based systems.
+>> +      Say Y or M if you want to use audio device on this SoCs.
+>> +
+>>   endif #SND_SOC_QCOM
+>> diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+>> index 1600ae5..625aec6 100644
+>> --- a/sound/soc/qcom/Makefile
+>> +++ b/sound/soc/qcom/Makefile
+>> @@ -19,6 +19,7 @@ snd-soc-storm-objs := storm.o
+>>   snd-soc-apq8016-sbc-objs := apq8016_sbc.o
+>>   snd-soc-apq8096-objs := apq8096.o
+>>   snd-soc-sc7180-objs := sc7180.o
+>> +snd-soc-sc7280-objs := sc7280.o
+>>   snd-soc-sdm845-objs := sdm845.o
+>>   snd-soc-sm8250-objs := sm8250.o
+>>   snd-soc-qcom-common-objs := common.o
+>> @@ -27,6 +28,7 @@ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
+>>   obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
+>>   obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
+>>   obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
+>> +obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
+>>   obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
+>>   obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
+>>   obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
+>> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+>> new file mode 100644
+>> index 0000000..c20d4ab1
+>> --- /dev/null
+>> +++ b/sound/soc/qcom/sc7280.c
+>> @@ -0,0 +1,299 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +//
+>> +// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+>> +//
+>> +// ALSA SoC Machine driver for sc7280
+>> +
+>> +#include <linux/gpio.h>
+>> +#include <linux/gpio/consumer.h>
+> Why do we need this?
+Will remove it.
+>
+>> +#include <linux/input.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <sound/core.h>
+>> +#include <sound/jack.h>
+>> +#include <sound/pcm.h>
+>> +#include <sound/soc.h>
+>> +
+>> +#include <dt-bindings/sound/sc7180-lpass.h>
+>> +#include <dt-bindings/sound/qcom,q6afe.h>
+> Why this include?
+>
+Okay. Will remove it.
+>> +
+>> +#include "../codecs/wcd938x.h"
+>
+> Why do we need the codec header file here?
+Okay. will replace with #include <linux/soundwire/sdw.h> for sound wire 
+stream init functions.
+>
+>> +#include "common.h"
+>> +#include "lpass.h"
+>> +
+>> +#define LPASS_MAX_PORTS  (LPASS_CDC_DMA_VA_TX8 + 1)
+>
+> May be add this in lpass.h instead of machine file.
+Okay. Will change accordingly.
+>
+>> +
+>> +struct sc7280_snd_data {
+>> +    bool stream_prepared[LPASS_MAX_PORTS];
+> move this to the end of struct.
+Okay.
+>
+>> +    struct snd_soc_card card;
+>> +    struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
+>> +    struct snd_soc_jack hs_jack;
+>> +    struct snd_soc_jack hdmi_jack;
+>> +    bool jack_setup;
+>> +};
+>> +
+>> +static void sc7280_jack_free(struct snd_jack *jack)
+>> +{
+>> +    struct snd_soc_component *component = jack->private_data;
+>> +
+>> +    snd_soc_component_set_jack(component, NULL, NULL);
+>> +}
+>> +
+>> +static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
+>> +{
+>> +    struct snd_soc_card *card = rtd->card;
+>> +    struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
+>> +    struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+>> +    struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +    struct snd_soc_component *component = codec_dai->component;
+>> +    struct snd_jack *jack;
+>> +    int rval, i;
+>> +
+>> +    if (!pdata->jack_setup) {
+>> +        rval = snd_soc_card_jack_new(card, "Headset Jack",
+>> +                            SND_JACK_HEADSET | SND_JACK_LINEOUT |
+>> +                            SND_JACK_MECHANICAL |
+>> +                            SND_JACK_BTN_0 | SND_JACK_BTN_1 |
+>> +                            SND_JACK_BTN_2 | SND_JACK_BTN_3 |
+>> +                            SND_JACK_BTN_4 | SND_JACK_BTN_5,
+>> +                            &pdata->hs_jack, NULL, 0);
+>> +
+>> +        if (rval < 0) {
+>> +            dev_err(card->dev, "Unable to add Headset Jack\n");
+>> +            return rval;
+>> +        }
+>> +
+>> +        jack = pdata->hs_jack.jack;
+>> +
+>> +        snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+>> +        snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
+>> +        snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
+>> +        snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
+>> +
+>> +        jack->private_data = component;
+>> +        jack->private_free = sc7280_jack_free;
+>> +        pdata->jack_setup = true;
+>> +    }
+>> +    switch (cpu_dai->id) {
+>> +    case LPASS_CDC_DMA_RX0:
+>> +    case LPASS_CDC_DMA_TX3:
+>> +        for_each_rtd_codec_dais(rtd, i, codec_dai) {
+>> +            rval = snd_soc_component_set_jack(component, 
+>> &pdata->hs_jack, NULL);
+>> +            if (rval != 0 && rval != -ENOTSUPP) {
+>> +                dev_err(card->dev, "Failed to set jack: %d\n", rval);
+>> +                return rval;
+>> +            }
+>> +        }
+>> +
+>> +        break;
+>> +    default:
+>> +        break;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
+>> +{
+>> +    struct snd_soc_card *card = rtd->card;
+>> +    struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
+>> +    struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+>> +    struct snd_soc_component *component = codec_dai->component;
+>> +    struct snd_jack *jack;
+>> +    int rval;
+>> +
+>> +    rval = snd_soc_card_jack_new(
+>> +            card, "HDMI Jack",
+>> +            SND_JACK_LINEOUT,
+>> +            &pdata->hdmi_jack, NULL, 0);
+>
+> you could probably warp this up to 100 chars
+Okay.
+>
+>> +
+>> +    if (rval < 0) {
+>> +        dev_err(card->dev, "Unable to add HDMI Jack\n");
+>> +        return rval;
+>> +    }
+>> +
+>> +    jack = pdata->hdmi_jack.jack;
+>> +    jack->private_data = component;
+>> +    jack->private_free = sc7280_jack_free;
+>> +
+>> +    return snd_soc_component_set_jack(component, &pdata->hdmi_jack, 
+>> NULL);
+>> +}
+>> +
+>> +static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
+>> +{
+>> +    struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +
+>> +    switch (cpu_dai->id) {
+>> +    case LPASS_CDC_DMA_TX3:
+>> +        return sc7280_headset_init(rtd);
+>> +    case LPASS_CDC_DMA_RX0:
+>> +    case LPASS_CDC_DMA_VA_TX0:
+>> +    case MI2S_SECONDARY:
+>> +        return 0;
+>> +    case LPASS_DP_RX:
+>> +        return sc7280_hdmi_init(rtd);
+>> +    default:
+>> +        dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, 
+>> cpu_dai->id);
+>> +    }
+>> +
+>> +    return -EINVAL;
+>> +}
+>> +
+>> +static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
+>> +                struct snd_pcm_hw_params *params)
+>> +{
+>> +    struct snd_pcm_runtime *runtime = substream->runtime;
+>> +    struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>> +    struct snd_soc_dai *codec_dai;
+>> +    const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +    struct sc7280_snd_data *pdata = 
+>> snd_soc_card_get_drvdata(rtd->card);
+>> +    struct sdw_stream_runtime *sruntime;
+>> +    int i;
+>> +
+>> +    snd_pcm_hw_constraint_minmax(runtime, 
+>> SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
+>> +    snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 
+>> 48000, 48000);
+>> +
+>> +    switch (cpu_dai->id) {
+>> +    case LPASS_CDC_DMA_TX3:
+>> +    case LPASS_CDC_DMA_RX0:
+>> +        for_each_rtd_codec_dais(rtd, i, codec_dai) {
+>> +            sruntime = snd_soc_dai_get_sdw_stream(codec_dai, 
+>> substream->stream);
+>> +            if (sruntime != ERR_PTR(-ENOTSUPP))
+>> +                pdata->sruntime[cpu_dai->id] = sruntime;
+>> +        }
+>> +        break;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
+>> +{
+>> +    struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>> +    const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +    struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+>> +    struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
+>> +    int ret;
+>> +
+>> +    if (!sruntime)
+>> +        return 0;
+>> +
+>> +    if (data->stream_prepared[cpu_dai->id]) {
+>> +        sdw_disable_stream(sruntime);
+>> +        sdw_deprepare_stream(sruntime);
+>> +        data->stream_prepared[cpu_dai->id] = false;
+>> +    }
+>> +
+>> +    ret = sdw_prepare_stream(sruntime);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    ret = sdw_enable_stream(sruntime);
+>> +    if (ret) {
+>> +        sdw_deprepare_stream(sruntime);
+>> +        return ret;
+>> +    }
+>> +    data->stream_prepared[cpu_dai->id] = true;
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
+>> +{
+>> +    struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>> +    const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +
+>> +    switch (cpu_dai->id) {
+>> +    case LPASS_CDC_DMA_RX0:
+>> +    case LPASS_CDC_DMA_TX3:
+>> +        return sc7280_snd_swr_prepare(substream);
+>> +    default:
+>> +        break;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
+>> +{
+>> +    struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>> +    struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+>> +    const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+>> +    struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
+>> +
+>> +    switch (cpu_dai->id) {
+>> +    case LPASS_CDC_DMA_RX0:
+>> +    case LPASS_CDC_DMA_TX3:
+>> +        if (sruntime && data->stream_prepared[cpu_dai->id]) {
+>> +            sdw_disable_stream(sruntime);
+>> +            sdw_deprepare_stream(sruntime);
+>> +            data->stream_prepared[cpu_dai->id] = false;
+>> +        }
+>> +        break;
+>> +    default:
+>> +        break;
+>> +    }
+>> +    return 0;
+>> +}
+>> +
+>> +static const struct snd_soc_ops sc7280_ops = {
+>> +    .hw_params = sc7280_snd_hw_params,
+>> +    .hw_free = sc7280_snd_hw_free,
+>> +    .prepare = sc7280_snd_prepare,
+>> +};
+>> +
+>> +static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
+>> +    SND_SOC_DAPM_HP("Headphone Jack", NULL),
+>> +    SND_SOC_DAPM_MIC("Headset Mic", NULL),
+>> +};
+>> +
+>> +static int sc7280_snd_platform_probe(struct platform_device *pdev)
+>> +{
+>> +    struct snd_soc_card *card;
+>> +    struct sc7280_snd_data *data;
+>> +    struct device *dev = &pdev->dev;
+>> +    struct snd_soc_dai_link *link;
+>> +    int ret, i;
+>> +
+>> +    data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+>> +    if (!data)
+>> +        return -ENOMEM;
+>> +
+>> +    card = &data->card;
+>> +    snd_soc_card_set_drvdata(card, data);
+>> +
+>> +    card->owner = THIS_MODULE;
+>> +    card->driver_name = "SC7280";
+>> +    card->dev = dev;
+>> +
+>> +    ret = qcom_snd_parse_of(card);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    for_each_card_prelinks(card, i, link) {
+>> +        link->init = sc7280_init;
+>> +        link->ops = &sc7280_ops;
+>> +    }
+>> +
+>> +    return devm_snd_soc_register_card(dev, card);
+>> +}
+>> +
+>> +static const struct of_device_id sc7280_snd_device_id[]  = {
+>> +    { .compatible = "google,sc7280-herobrine" },
+>> +    {}
+>> +};
+>> +MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
+>> +
+>> +static struct platform_driver sc7280_snd_driver = {
+>> +    .probe = sc7280_snd_platform_probe,
+>> +    .driver = {
+>> +        .name = "msm-snd-sc7280",
+>> +        .of_match_table = sc7280_snd_device_id,
+>> +        .pm = &snd_soc_pm_ops,
+>> +    },
+>> +};
+>> +module_platform_driver(sc7280_snd_driver);
+>> +
+>> +MODULE_DESCRIPTION("sc7280 ASoC Machine Driver");
+>> +MODULE_LICENSE("GPL v2");
+> "GPL" should be good enough here.
+Okay.
+>
+> --srini
+>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-
-
-> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> +Description:
-> +		The Enable/Disable sysfs interface for Embedded
-> +		USB Debugger(EUD). This enables and disables the
-> +		EUD based on a 1 or a 0 value. By enabling EUD,
-> +		the user is able to activate the mini-usb hub of
-> +		EUD for debug and trace capabilities.
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 79b568f..a4db41b 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -42,6 +42,16 @@ config QCOM_CPR
->  	  To compile this driver as a module, choose M here: the module will
->  	  be called qcom-cpr
-> 
-> +config QCOM_EUD
-> +	tristate "QCOM Embedded USB Debugger(EUD) Driver"
-> +	select USB_ROLE_SWITCH
-> +	help
-> +	  This module enables support for Qualcomm Technologies, Inc.
-> +	  Embedded USB Debugger (EUD). The EUD is a control peripheral
-> +	  which reports VBUS attach/detach events and has USB-based
-> +	  debug and trace capabilities. On selecting m, the module name
-> +	  that is built is qcom_eud.ko
-> +
->  config QCOM_GENI_SE
->  	tristate "QCOM GENI Serial Engine Driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index ad675a6..3331a40 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -4,6 +4,7 @@ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
->  obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
->  obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
->  obj-$(CONFIG_QCOM_CPR)		+= cpr.o
-> +obj-$(CONFIG_QCOM_EUD)          += qcom_eud.o
->  obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
->  obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
->  obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
-> diff --git a/drivers/soc/qcom/qcom_eud.c b/drivers/soc/qcom/qcom_eud.c
-> new file mode 100644
-> index 0000000..613ac41
-> --- /dev/null
-> +++ b/drivers/soc/qcom/qcom_eud.c
-> @@ -0,0 +1,268 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <linux/bitops.h>
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +#include <linux/sysfs.h>
-> +#include <linux/usb/role.h>
-> +
-> +#define EUD_REG_INT1_EN_MASK	0x0024
-> +#define EUD_REG_INT_STATUS_1	0x0044
-> +#define EUD_REG_CTL_OUT_1	0x0074
-> +#define EUD_REG_VBUS_INT_CLR	0x0080
-> +#define EUD_REG_CSR_EUD_EN	0x1014
-> +#define EUD_REG_SW_ATTACH_DET	0x1018
-> +#define EUD_REG_EUD_EN2         0x0000
-> +
-> +#define EUD_ENABLE		BIT(0)
-> +#define EUD_INT_PET_EUD		BIT(0)
-> +#define EUD_INT_VBUS		BIT(2)
-> +#define EUD_INT_SAFE_MODE	BIT(4)
-> +#define EUD_INT_ALL		(EUD_INT_VBUS|EUD_INT_SAFE_MODE)
-> +
-> +struct eud_chip {
-> +	struct device			*dev;
-> +	struct usb_role_switch		*role_sw;
-> +	void __iomem			*eud_reg_base;
-> +	void __iomem			*eud_mode_mgr2_phys_base;
-> +	unsigned int			int_status;
-> +	int				eud_irq;
-> +	bool				enable;
-> +	bool				usb_attach;
-> +
-> +};
-> +
-> +static int enable_eud(struct eud_chip *priv)
-> +{
-> +	writel(EUD_ENABLE, priv->eud_reg_base + EUD_REG_CSR_EUD_EN);
-> +	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
-> +			priv->eud_reg_base + EUD_REG_INT1_EN_MASK);
-> +	writel(1, priv->eud_mode_mgr2_phys_base + EUD_REG_EUD_EN2);
-> +
-> +	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
-> +}
-> +
-> +static void disable_eud(struct eud_chip *priv)
-> +{
-> +	writel(0, priv->eud_reg_base + EUD_REG_CSR_EUD_EN);
-> +	writel(0, priv->eud_mode_mgr2_phys_base + EUD_REG_EUD_EN2);
-> +}
-> +
-> +static ssize_t enable_show(struct device *dev,
-> +		struct device_attribute *attr, char *buf)
-> +{
-> +	struct eud_chip *chip = dev_get_drvdata(dev);
-> +
-> +	return sysfs_emit(buf, "%d\n", chip->enable);
-> +}
-> +
-> +static ssize_t enable_store(struct device *dev,
-> +		struct device_attribute *attr,
-> +		const char *buf, size_t count)
-> +{
-> +	struct eud_chip *chip = dev_get_drvdata(dev);
-> +	bool enable;
-> +	int ret;
-> +
-> +	if (kstrtobool(buf, &enable))
-> +		return -EINVAL;
-> +
-> +	if (enable) {
-> +		ret = enable_eud(chip);
-> +		if (!ret)
-> +			chip->enable = enable;
-> +	} else {
-> +		disable_eud(chip);
-> +	}
-> +
-> +	return count;
-> +}
-> +
-> +static DEVICE_ATTR_RW(enable);
-> +
-> +static struct attribute *eud_attrs[] = {
-> +	&dev_attr_enable.attr,
-> +	NULL,
-> +};
-> +
-> +static struct attribute_group attr_group = {
-> +	.attrs = eud_attrs,
-> +};
-> +
-> +static const struct attribute_group *attr_groups[] = {
-> +	&attr_group,
-> +	NULL
-> +};
-
-ATTRIBUTE_GROUPS()?
-
-thanks,
-
-greg k-h
