@@ -2,75 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5D4E468093
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 00:34:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C96E468084
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 00:34:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1383460AbhLCXhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 18:37:53 -0500
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:38823 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1383477AbhLCXhs (ORCPT
+        id S1354055AbhLCXhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 18:37:42 -0500
+Received: from mail-oo1-f42.google.com ([209.85.161.42]:35715 "EHLO
+        mail-oo1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240573AbhLCXhl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 18:37:48 -0500
-Received: by mail-ot1-f42.google.com with SMTP id n104-20020a9d2071000000b005799790cf0bso5401190ota.5;
-        Fri, 03 Dec 2021 15:34:24 -0800 (PST)
+        Fri, 3 Dec 2021 18:37:41 -0500
+Received: by mail-oo1-f42.google.com with SMTP id e17-20020a4a8291000000b002c5ee0645e7so2520702oog.2;
+        Fri, 03 Dec 2021 15:34:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=iC865KFxTLPcMpjh7ZOt0xoZbvZ+6a6MRjUFIn4wKjE=;
-        b=tXAtokrSJjTaMBto288pNrE9He1Czgt9g4x0k4313Tcm4GQkYI8X3e/uyTxCMyhhs3
-         6gPuHrwPxYv22PQI7UGWyVVEVj7/MoLdhcaGPOUeQPYlz7A8/S7Qur0wqzlQCMZ/iYuF
-         OKSabJ9H9DHdwbOkHRFHt5m0CPwO7oldSj9tSbg1PZN3mDy2PWgYZl8nWIG91gMqGm63
-         6RgbdAd3oXXre110lHau1C/QwqbpFNBfSDfLkaLjd88Yd+20bD13EszACw7Bja5rQh18
-         g+LD9Af+3fzgWFkIx7WikdrWNmLkV2wb3PAiKY5WC5kGfdCdw3LLNNeoAHgl03gm1j1l
-         MEhQ==
-X-Gm-Message-State: AOAM530YHYeUMZGdufyNaQzQD6+Q1M9ajHjJpcB45yMeTJLjPLgc10Wq
-        2jGTAQ/vVMAKYvu0ntJVMg==
-X-Google-Smtp-Source: ABdhPJw9SZBJilhMiAFCEuqmdNCHQzZc2/FYmICpgHv78bkjKjYOPiDzcdolwABRd3lABaKDyJ5BFQ==
-X-Received: by 2002:a9d:4d08:: with SMTP id n8mr18258991otf.368.1638574463756;
-        Fri, 03 Dec 2021 15:34:23 -0800 (PST)
+        bh=HvmUO3stczSOHy4AZ2u5yjtXBe51DiBBMcIExmIvsPk=;
+        b=1JIchbjaLZzDknM343KPGEgCIqPPJrvHeVDDbfmLuaCZNcU7k0dOvAdCGp4Rc6TUuX
+         fL/1ABebaTigvQBCfPUcW4znZpo1rTYPLU0lcEhwMXwuKYRGrglsakmVTkZxGEdzKbOY
+         C3vTv9GILsq57fC/9Ww08EtIVOsfFUp6lfc5z7gxvsKxQep2x//CiwPM0TNSfugUSujY
+         dNMPUCjXRayLjWZ6uOBuuPvdg479WWSlCC6IMizDT8w7ZqQUebd+5IiLoW6ngrG9W5Rh
+         7qyOyR6CpxjgHBqjOyQATdYEKQJH7lLYmDrDanyKo7VE/705Q/6zBqSLbHUXovul7q3D
+         TIJg==
+X-Gm-Message-State: AOAM5325xrrAUXovEFxNYS0DHzf98OHq6Z82f+WTa2Rb1Ht1qHf5S+wF
+        Lx6WU403cVLdvTbxiEqn7Q==
+X-Google-Smtp-Source: ABdhPJwgEbmNp7uLje0JTDCKmsCzjEkEBrgzlOt1VkyxJTN4CmOwWISnvXbaId1z31yTwIqQdnFCXg==
+X-Received: by 2002:a4a:9406:: with SMTP id h6mr14654887ooi.80.1638574456759;
+        Fri, 03 Dec 2021 15:34:16 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w71sm939507oiw.6.2021.12.03.15.34.22
+        by smtp.gmail.com with ESMTPSA id w71sm939444oiw.6.2021.12.03.15.34.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 15:34:23 -0800 (PST)
-Received: (nullmailer pid 1043003 invoked by uid 1000);
+        Fri, 03 Dec 2021 15:34:16 -0800 (PST)
+Received: (nullmailer pid 1042998 invoked by uid 1000);
         Fri, 03 Dec 2021 23:34:15 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
-Cc:     swboyd@chromium.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org, broonie@kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        plai@codeaurora.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, bjorn.andersson@linaro.org,
-        tiwai@suse.com, bgoswami@codeaurora.org,
-        linux-gpio@vger.kernel.org, rohitkr@codeaurora.org, perex@perex.cz,
-        agross@kernel.org, Linus Walleij <linus.walleij@linaro.org>,
-        lgirdwood@gmail.com
-In-Reply-To: <1638531140-25899-2-git-send-email-srivasam@codeaurora.com>
-References: <1638531140-25899-1-git-send-email-srivasam@codeaurora.com> <1638531140-25899-2-git-send-email-srivasam@codeaurora.com>
-Subject: Re: [PATCH v4 1/5] dt-bindings: pinctrl: qcom: Update lpass lpi file name to SoC specific
+To:     Jarrett Schultz <jaschultzms@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, Felipe Balbi <balbi@kernel.org>,
+        platform-driver-x86@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Mark Gross <markgross@kernel.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Jarrett Schultz <jaschultz@microsoft.com>
+In-Reply-To: <20211202191630.12450-2-jaschultz@microsoft.com>
+References: <20211202191630.12450-1-jaschultz@microsoft.com> <20211202191630.12450-2-jaschultz@microsoft.com>
+Subject: Re: [PATCH 1/5] dt-bindings: platform: microsoft: Document surface xbl
 Date:   Fri, 03 Dec 2021 17:34:15 -0600
-Message-Id: <1638574455.221589.1043002.nullmailer@robh.at.kernel.org>
+Message-Id: <1638574455.193372.1042997.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 03 Dec 2021 17:02:16 +0530, Srinivasa Rao Mandadapu wrote:
-> Change generic lpass lpi pincotrol bindings file to SoC specific file,
-> to distinguish and accomadate other SoC specific dt bindings.
+On Thu, 02 Dec 2021 11:16:26 -0800, Jarrett Schultz wrote:
+> Introduce yaml for surface xbl driver.
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
-> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+> 
 > ---
->  .../bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml   | 130 ---------------------
->  .../pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml     | 130 +++++++++++++++++++++
->  2 files changed, 130 insertions(+), 130 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> 
+> Changes in v3:
+>  - Updated description to only pertain to the hardware
+>  - Updated the required field to properly reflect the binding
+>  - Removed the first example
+>  - Fixed the size of the reg field in the second example
+> 
+> ---
+> 
+> Changes in v2:
+>  - Removed json-schema dependence
+>  - Elaborated on description of driver
+>  - Updated example
+> ---
+>  .../platform/microsoft/surface-xbl.yaml       | 69 +++++++++++++++++++
+>  MAINTAINERS                                   |  7 ++
+>  2 files changed, 76 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -79,12 +88,18 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml: $id: relative path/filename doesn't match actual path or filename
-	expected: http://devicetree.org/schemas/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: properties:properties: 'compatible' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'type', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: properties: 'properties' should not be valid under {'enum': ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'if', 'items', 'maxItems', 'maximum', 'minItems', 'minimum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'propertyNames', 'required', 'then', 'unevaluatedProperties']}
+	hint: A json-schema keyword was found instead of a DT property name.
+	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml: ignoring, error in schema: properties: properties
+warning: no schema found in file: ./Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+Documentation/devicetree/bindings/platform/microsoft/surface-xbl.example.dt.yaml:0:0: /example-0/imem@146bf000/xbl@a94: failed to match any schema with compatible: ['microsoft,sm8150-surface-duo-xbl']
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1563181
+See https://patchwork.ozlabs.org/patch/1562961
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
