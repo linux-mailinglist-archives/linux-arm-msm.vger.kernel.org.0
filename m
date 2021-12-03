@@ -2,201 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB62D467467
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 10:59:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA8ED467473
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 11:01:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379706AbhLCKCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 05:02:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:54624 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1379680AbhLCKCl (ORCPT
+        id S229783AbhLCKFK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 05:05:10 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:27830 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1379720AbhLCKFJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 05:02:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1638525557;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=E2vHUFicrD9W5EZNJ7j2bhIPa83t3WB27STnfU5LVlc=;
-        b=cYFF2eyUyqqlnMl1uAqGb9uXQ5mz6jNKaajVs0A/d3eJnDqsTRwFvqgtekshGlbWghB2BZ
-        cpHnXkEltjXaOmkIJv5ecvVzJRSTXTFyh+sTSdef7MmL99fnWPyY1/hjSpPFQ3W5n97bEe
-        OkZOfqaSnMgRqTYx+8gK60H4yWwTa3M=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-160-mZk_g3jzPGO5_sVvskQZmQ-1; Fri, 03 Dec 2021 04:59:15 -0500
-X-MC-Unique: mZk_g3jzPGO5_sVvskQZmQ-1
-Received: by mail-ed1-f72.google.com with SMTP id eg20-20020a056402289400b003eb56fcf6easo2076458edb.20
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 01:59:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=E2vHUFicrD9W5EZNJ7j2bhIPa83t3WB27STnfU5LVlc=;
-        b=et80EyQUKrMHfecfNU6Jjo/ZmvOaB8Z6pVgFmVRhorJ1HbLrvoOeOKinws/iEQmSKS
-         nH2UMAR1iGnzALGeJqzxjGbOnnaTZGPDJQVZ4NL7vBKi+kxm2J8sT/pm0Bo0HPs47JbR
-         JAAqFF10nsfDfAeObUmhB3aaUvb+xJcb7mZvQOx39y9TT+QxHNRSfjKFFpgiT+M2UD5D
-         lzq5PSglf8+/cUYccvQ+gL3OL2bqpjFpiGk0Rh56Z5bbd/U7nHx/Whg1Uf8T41ky9Snr
-         acVZcN7lvUmw8b+C3m8sUIc+nlIapaN+Y5u9n2oovbQ12ebdM8vgQ+OhsId0+9huep9a
-         GhCQ==
-X-Gm-Message-State: AOAM531CJUJ6ibgHmjn4LYiUDY1V7uB9oX/rVqihCsQ3Q8NP0PHgBBYo
-        G10OmKT0kGFx/NFOI648YHfh/QqtJ8mOjnQn9OURQoffTAO/0ckswKJKBupHdVr1SHO8WXOXQCJ
-        RdM+5sJb1ZckzKhmNqPKZnV0vaQ==
-X-Received: by 2002:a17:907:6e1a:: with SMTP id sd26mr22168615ejc.529.1638525554681;
-        Fri, 03 Dec 2021 01:59:14 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxj4dSYWAn/t79ZE3IPK0+6KsZm/ZXFoRyrbGRKXkBJnWU58F0/RSRnchkbFfeKBydbL0tTFg==
-X-Received: by 2002:a17:907:6e1a:: with SMTP id sd26mr22168590ejc.529.1638525554442;
-        Fri, 03 Dec 2021 01:59:14 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c1e:bf00:1054:9d19:e0f0:8214? (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
-        by smtp.gmail.com with ESMTPSA id z6sm1641678edc.76.2021.12.03.01.59.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Dec 2021 01:59:13 -0800 (PST)
-Message-ID: <639583df-a54a-eb9b-91ad-a60612a930b0@redhat.com>
-Date:   Fri, 3 Dec 2021 10:59:12 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
-Content-Language: en-US
-To:     Jarrett Schultz <jaschultzms@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Gross <markgross@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Felipe Balbi <balbi@kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-References: <20211202191630.12450-1-jaschultz@microsoft.com>
- <20211202191630.12450-3-jaschultz@microsoft.com>
-From:   Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20211202191630.12450-3-jaschultz@microsoft.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Fri, 3 Dec 2021 05:05:09 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638525706; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Poi3Lwtka2EuPzEFZWmwCPLGlrT4nP9Y1F6XL+xb49g=; b=nmtpomK/6tf0H+d34cJtlAAwHG0R70gR8b09hjkcGpUyhgXDImcDejVqOh4hFL/XyTD1tqqI
+ v+dGJppWpcdv+P2Mxz34vhh0+Dti60qsfKBQPRmlnXk7uEvTul/xMajMNBgoNHjxg16txecy
+ m7zhnSrC+U7f8F4YM7yugmUdZK8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 61a9eb09135a8a9d0e08cf5c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Dec 2021 10:01:45
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E9D37C43616; Fri,  3 Dec 2021 10:01:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9E861C4338F;
+        Fri,  3 Dec 2021 10:01:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9E861C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
+        hemantg@codeaurora.org, rjliao@codeaurora.org,
+        zijuhu@codeaurora.org, tjiang@codeaurora.org,
+        Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH v3] Bluetooth: btusb: Add one more Bluetooth part for WCN6855
+Date:   Fri,  3 Dec 2021 18:01:37 +0800
+Message-Id: <1638525697-12436-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jarett,
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-On 12/2/21 20:16, Jarrett Schultz wrote:
-> Since the Surface XBL Driver does not depend on ACPI, the
-> platform/surface directory as a whole no longer depends on ACPI. With
-> respect to this, the ACPI dependency is moved into each config that depends
-> on ACPI individually.
-> 
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+Add a USB ID 0489:e0e3 of HP to usb_device_id table for WCN6855.
 
-I think I will already merge this patch into the pdx86 tree:
+-Device(0489:e0e3) from /sys/kernel/debug/usb/devices
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e0e3 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
-https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+---
+ drivers/bluetooth/btusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-While we are waiting for the rest of the series to get hashed out.
-
-But as already pointed out by Trilok Soni your From: and Signed-off-by
-email addresses don't match.
-
-I can fix up the From to match the Signed-off-by while I apply this,
-but before I do that I wanted to check with you that setting both
-to "Jarrett Schultz <jaschultz@microsoft.com>" is the right thing to do ?
-
-Regards,
-
-Hans
-
-
-
-
-
-
-> 
-> ---
-> 
-> Changes in v3:
->  - Further propagated ACPI dependecy to SURFACE_AGGREGATOR
-> 
-> ---
-> 
-> Changes in v2:
->  - Created to propagate ACPI dependency
-> ---
->  drivers/platform/surface/Kconfig            | 7 ++++++-
->  drivers/platform/surface/aggregator/Kconfig | 1 +
->  2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/platform/surface/Kconfig b/drivers/platform/surface/Kconfig
-> index 3105f651614f..5f0578e25f71 100644
-> --- a/drivers/platform/surface/Kconfig
-> +++ b/drivers/platform/surface/Kconfig
-> @@ -5,7 +5,6 @@
->  
->  menuconfig SURFACE_PLATFORMS
->  	bool "Microsoft Surface Platform-Specific Device Drivers"
-> -	depends on ACPI
->  	default y
->  	help
->  	  Say Y here to get to see options for platform-specific device drivers
-> @@ -30,12 +29,14 @@ config SURFACE3_WMI
->  
->  config SURFACE_3_BUTTON
->  	tristate "Power/home/volume buttons driver for Microsoft Surface 3 tablet"
-> +	depends on ACPI
->  	depends on KEYBOARD_GPIO && I2C
->  	help
->  	  This driver handles the power/home/volume buttons on the Microsoft Surface 3 tablet.
->  
->  config SURFACE_3_POWER_OPREGION
->  	tristate "Surface 3 battery platform operation region support"
-> +	depends on ACPI
->  	depends on I2C
->  	help
->  	  This driver provides support for ACPI operation
-> @@ -126,6 +127,7 @@ config SURFACE_DTX
->  
->  config SURFACE_GPE
->  	tristate "Surface GPE/Lid Support Driver"
-> +	depends on ACPI
->  	depends on DMI
->  	help
->  	  This driver marks the GPEs related to the ACPI lid device found on
-> @@ -135,6 +137,7 @@ config SURFACE_GPE
->  
->  config SURFACE_HOTPLUG
->  	tristate "Surface Hot-Plug Driver"
-> +	depends on ACPI
->  	depends on GPIOLIB
->  	help
->  	  Driver for out-of-band hot-plug event signaling on Microsoft Surface
-> @@ -154,6 +157,7 @@ config SURFACE_HOTPLUG
->  
->  config SURFACE_PLATFORM_PROFILE
->  	tristate "Surface Platform Profile Driver"
-> +	depends on ACPI
->  	depends on SURFACE_AGGREGATOR_REGISTRY
->  	select ACPI_PLATFORM_PROFILE
->  	help
-> @@ -176,6 +180,7 @@ config SURFACE_PLATFORM_PROFILE
->  
->  config SURFACE_PRO3_BUTTON
->  	tristate "Power/home/volume buttons driver for Microsoft Surface Pro 3/4 tablet"
-> +	depends on ACPI
->  	depends on INPUT
->  	help
->  	  This driver handles the power/home/volume buttons on the Microsoft Surface Pro 3/4 tablet.
-> diff --git a/drivers/platform/surface/aggregator/Kconfig b/drivers/platform/surface/aggregator/Kconfig
-> index fd6dc452f3e8..cab020324256 100644
-> --- a/drivers/platform/surface/aggregator/Kconfig
-> +++ b/drivers/platform/surface/aggregator/Kconfig
-> @@ -4,6 +4,7 @@
->  menuconfig SURFACE_AGGREGATOR
->  	tristate "Microsoft Surface System Aggregator Module Subsystem and Drivers"
->  	depends on SERIAL_DEV_BUS
-> +	depends on ACPI
->  	select CRC_CCITT
->  	help
->  	  The Surface System Aggregator Module (Surface SAM or SSAM) is an
-> 
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index ab169fc673ea..c0037932ecee 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -302,6 +302,9 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
++	{ USB_DEVICE(0x0489, 0xe0e3), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
+ 
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
