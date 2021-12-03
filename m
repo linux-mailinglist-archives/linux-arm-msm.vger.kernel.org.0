@@ -2,178 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14BDA467447
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 10:48:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB62D467467
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 10:59:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379643AbhLCJvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 04:51:55 -0500
-Received: from foss.arm.com ([217.140.110.172]:46382 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1379642AbhLCJvz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 04:51:55 -0500
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7B0A71435;
-        Fri,  3 Dec 2021 01:48:31 -0800 (PST)
-Received: from e123083-lin (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 398973F5A1;
-        Fri,  3 Dec 2021 01:48:30 -0800 (PST)
-Date:   Fri, 3 Dec 2021 10:48:24 +0100
-From:   Morten Rasmussen <morten.rasmussen@arm.com>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
- freq_factor
-Message-ID: <20211203094734.GA5838@e123083-lin>
-References: <20211115201010.68567-1-thara.gopinath@linaro.org>
- <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
- <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
- <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
- <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
- <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
- <20211202105027.GA1180274@e123083-lin>
- <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
+        id S1379706AbhLCKCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 05:02:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:54624 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1379680AbhLCKCl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Dec 2021 05:02:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1638525557;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=E2vHUFicrD9W5EZNJ7j2bhIPa83t3WB27STnfU5LVlc=;
+        b=cYFF2eyUyqqlnMl1uAqGb9uXQ5mz6jNKaajVs0A/d3eJnDqsTRwFvqgtekshGlbWghB2BZ
+        cpHnXkEltjXaOmkIJv5ecvVzJRSTXTFyh+sTSdef7MmL99fnWPyY1/hjSpPFQ3W5n97bEe
+        OkZOfqaSnMgRqTYx+8gK60H4yWwTa3M=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-160-mZk_g3jzPGO5_sVvskQZmQ-1; Fri, 03 Dec 2021 04:59:15 -0500
+X-MC-Unique: mZk_g3jzPGO5_sVvskQZmQ-1
+Received: by mail-ed1-f72.google.com with SMTP id eg20-20020a056402289400b003eb56fcf6easo2076458edb.20
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 01:59:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=E2vHUFicrD9W5EZNJ7j2bhIPa83t3WB27STnfU5LVlc=;
+        b=et80EyQUKrMHfecfNU6Jjo/ZmvOaB8Z6pVgFmVRhorJ1HbLrvoOeOKinws/iEQmSKS
+         nH2UMAR1iGnzALGeJqzxjGbOnnaTZGPDJQVZ4NL7vBKi+kxm2J8sT/pm0Bo0HPs47JbR
+         JAAqFF10nsfDfAeObUmhB3aaUvb+xJcb7mZvQOx39y9TT+QxHNRSfjKFFpgiT+M2UD5D
+         lzq5PSglf8+/cUYccvQ+gL3OL2bqpjFpiGk0Rh56Z5bbd/U7nHx/Whg1Uf8T41ky9Snr
+         acVZcN7lvUmw8b+C3m8sUIc+nlIapaN+Y5u9n2oovbQ12ebdM8vgQ+OhsId0+9huep9a
+         GhCQ==
+X-Gm-Message-State: AOAM531CJUJ6ibgHmjn4LYiUDY1V7uB9oX/rVqihCsQ3Q8NP0PHgBBYo
+        G10OmKT0kGFx/NFOI648YHfh/QqtJ8mOjnQn9OURQoffTAO/0ckswKJKBupHdVr1SHO8WXOXQCJ
+        RdM+5sJb1ZckzKhmNqPKZnV0vaQ==
+X-Received: by 2002:a17:907:6e1a:: with SMTP id sd26mr22168615ejc.529.1638525554681;
+        Fri, 03 Dec 2021 01:59:14 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxj4dSYWAn/t79ZE3IPK0+6KsZm/ZXFoRyrbGRKXkBJnWU58F0/RSRnchkbFfeKBydbL0tTFg==
+X-Received: by 2002:a17:907:6e1a:: with SMTP id sd26mr22168590ejc.529.1638525554442;
+        Fri, 03 Dec 2021 01:59:14 -0800 (PST)
+Received: from ?IPV6:2001:1c00:c1e:bf00:1054:9d19:e0f0:8214? (2001-1c00-0c1e-bf00-1054-9d19-e0f0-8214.cable.dynamic.v6.ziggo.nl. [2001:1c00:c1e:bf00:1054:9d19:e0f0:8214])
+        by smtp.gmail.com with ESMTPSA id z6sm1641678edc.76.2021.12.03.01.59.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Dec 2021 01:59:13 -0800 (PST)
+Message-ID: <639583df-a54a-eb9b-91ad-a60612a930b0@redhat.com>
+Date:   Fri, 3 Dec 2021 10:59:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
+Content-Language: en-US
+To:     Jarrett Schultz <jaschultzms@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Felipe Balbi <balbi@kernel.org>,
+        Jarrett Schultz <jaschultz@microsoft.com>
+References: <20211202191630.12450-1-jaschultz@microsoft.com>
+ <20211202191630.12450-3-jaschultz@microsoft.com>
+From:   Hans de Goede <hdegoede@redhat.com>
+In-Reply-To: <20211202191630.12450-3-jaschultz@microsoft.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 02, 2021 at 05:31:53PM +0100, Rafael J. Wysocki wrote:
-> On Thu, Dec 2, 2021 at 11:50 AM Morten Rasmussen
-> <morten.rasmussen@arm.com> wrote:
-> >
-> > On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
-> > > On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
-> > > <thara.gopinath@linaro.org> wrote:
-> > > >
-> > > > Hi,
-> > > >
-> > > > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
-> > > > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
-> > > > >>
-> > > > >> Hi Rafael,
-> > > > >>
-> > > > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
-> > > > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
-> > > > >>> <thara.gopinath@linaro.org> wrote:
-> > > > >>>>
-> > > > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
-> > > > >>>> we don't consider boost frequencies while calculating cpu capacities, use
-> > > > >>>> policy->max to populate the freq_factor during boot up.
-> > > > >>>
-> > > > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
-> > > > >>
-> > > > >> Agree it's tricky how we treat the boost frequencies and also combine
-> > > > >> them with thermal pressure.
-> > > > >> We probably would have consider these design bits:
-> > > > >> 1. Should thermal pressure include boost frequency?
-> > > > >
-> > > > > Well, I guess so.
-> > > > >
-> > > > > Running at a boost frequency certainly increases thermal pressure.
-> > > > >
-> > > > >> 2. Should max capacity 1024 be a boost frequency so scheduler
-> > > > >>      would see it explicitly?
-> > > > >
-> > > > > That's what it is now if cpuinfo.max_freq is a boost frequency.
-> > > > >
-> > > > >> - if no, then schedutil could still request boost freq thanks to
-> > > > >>     map_util_perf() where we add 25% to the util and then
-> > > > >>     map_util_freq() would return a boost freq when util was > 1024
-> > > > >>
-> > > > >>
-> > > > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
-> > > > >> get_next_freq(). If the value stored in there is a boost,
-> > > > >> then don't we get a higher freq value for the same util?
-> > > > >
-> > > > > Yes. we do, which basically is my point.
-> > > > >
-> > > > > The schedutil's response is proportional to cpuinfo.max_freq and that
-> > > > > needs to be taken into account for the results to be consistent.
-> > > >
-> > > > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
-> > > > frequency of a cpu, irrespective of whether boost is enabled or not.
-> > > > Where as policy->max is the currently available maximum cpu frequency
-> > > > which can be equal to cpuinfo.max_freq or lower (depending on whether
-> > > > boost is enabled, whether there is a constraint on policy->max placed by
-> > > > thermal etc).
-> > >
-> > > It may also depend on the limit set by user space.
-> > >
-> > > > So in this case isn't it better for schedutil to consider
-> > > > policy->max instead of cpuinfo.max ?
-> > >
-> > > Not really.
-> > >
-> > > In that case setting policy->max to 1/2 of cpuinfo.max_freq would
-> > > cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
-> > > which would be rather unexpected.
-> > >
-> > > policy->max is a cap, not the current maximum capacity.
-> > >
-> > > > Like you mentioned above same
-> > > > utilization will relate to different frequencies depending on the
-> > > > maximum frequency.
-> > >
-> > > Which is not how it is expected (and defined) to work, though.
-> > >
-> > > If you really want to play with the current maximum capacity, you need
-> > > to change it whenever boost is disabled or enabled - and there is a
-> > > mechanism for updating cpufinfo.max_freq in such cases.
-> >
-> > I don't see why we would want to change max capacity on the fly. It is
-> > not a cheap operation as we would need to normalize the capacity for all
-> > CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
-> > we even have to rebuild the sched_domain hierarchy to update flags. The
-> > update would also temporarily mess with load and utilization signals, so
-> > not a cheap operation.
+Hi Jarett,
+
+On 12/2/21 20:16, Jarrett Schultz wrote:
+> Since the Surface XBL Driver does not depend on ACPI, the
+> platform/surface directory as a whole no longer depends on ACPI. With
+> respect to this, the ACPI dependency is moved into each config that depends
+> on ACPI individually.
 > 
-> I didn't say it was cheap. :-)
+> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
 
-You didn't :-) But I thought it was worth pointing out in case someone
-would think we need to constantly renormalize to the highest achievable
-performance level taking all factors into account, including thermal
-capping.
+I think I will already merge this patch into the pdx86 tree:
 
-> However, boost frequencies are not disabled and enabled very often, so
-> it may be acceptable to do it then.  I actually don't know.
+https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/
 
-Agree.
+While we are waiting for the rest of the series to get hashed out.
+
+But as already pointed out by Trilok Soni your From: and Signed-off-by
+email addresses don't match.
+
+I can fix up the From to match the Signed-off-by while I apply this,
+but before I do that I wanted to check with you that setting both
+to "Jarrett Schultz <jaschultz@microsoft.com>" is the right thing to do ?
+
+Regards,
+
+Hans
+
+
+
+
+
 
 > 
-> The point is that if you set the max capacity to correspond to the max
-> boosted perf and it is never reached (because boost is disabled), the
-> scaling will cause CPUs to appear as underutilized, but in fact there
-> is no spare capacity in the system.
+> ---
+> 
+> Changes in v3:
+>  - Further propagated ACPI dependecy to SURFACE_AGGREGATOR
+> 
+> ---
+> 
+> Changes in v2:
+>  - Created to propagate ACPI dependency
+> ---
+>  drivers/platform/surface/Kconfig            | 7 ++++++-
+>  drivers/platform/surface/aggregator/Kconfig | 1 +
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/platform/surface/Kconfig b/drivers/platform/surface/Kconfig
+> index 3105f651614f..5f0578e25f71 100644
+> --- a/drivers/platform/surface/Kconfig
+> +++ b/drivers/platform/surface/Kconfig
+> @@ -5,7 +5,6 @@
+>  
+>  menuconfig SURFACE_PLATFORMS
+>  	bool "Microsoft Surface Platform-Specific Device Drivers"
+> -	depends on ACPI
+>  	default y
+>  	help
+>  	  Say Y here to get to see options for platform-specific device drivers
+> @@ -30,12 +29,14 @@ config SURFACE3_WMI
+>  
+>  config SURFACE_3_BUTTON
+>  	tristate "Power/home/volume buttons driver for Microsoft Surface 3 tablet"
+> +	depends on ACPI
+>  	depends on KEYBOARD_GPIO && I2C
+>  	help
+>  	  This driver handles the power/home/volume buttons on the Microsoft Surface 3 tablet.
+>  
+>  config SURFACE_3_POWER_OPREGION
+>  	tristate "Surface 3 battery platform operation region support"
+> +	depends on ACPI
+>  	depends on I2C
+>  	help
+>  	  This driver provides support for ACPI operation
+> @@ -126,6 +127,7 @@ config SURFACE_DTX
+>  
+>  config SURFACE_GPE
+>  	tristate "Surface GPE/Lid Support Driver"
+> +	depends on ACPI
+>  	depends on DMI
+>  	help
+>  	  This driver marks the GPEs related to the ACPI lid device found on
+> @@ -135,6 +137,7 @@ config SURFACE_GPE
+>  
+>  config SURFACE_HOTPLUG
+>  	tristate "Surface Hot-Plug Driver"
+> +	depends on ACPI
+>  	depends on GPIOLIB
+>  	help
+>  	  Driver for out-of-band hot-plug event signaling on Microsoft Surface
+> @@ -154,6 +157,7 @@ config SURFACE_HOTPLUG
+>  
+>  config SURFACE_PLATFORM_PROFILE
+>  	tristate "Surface Platform Profile Driver"
+> +	depends on ACPI
+>  	depends on SURFACE_AGGREGATOR_REGISTRY
+>  	select ACPI_PLATFORM_PROFILE
+>  	help
+> @@ -176,6 +180,7 @@ config SURFACE_PLATFORM_PROFILE
+>  
+>  config SURFACE_PRO3_BUTTON
+>  	tristate "Power/home/volume buttons driver for Microsoft Surface Pro 3/4 tablet"
+> +	depends on ACPI
+>  	depends on INPUT
+>  	help
+>  	  This driver handles the power/home/volume buttons on the Microsoft Surface Pro 3/4 tablet.
+> diff --git a/drivers/platform/surface/aggregator/Kconfig b/drivers/platform/surface/aggregator/Kconfig
+> index fd6dc452f3e8..cab020324256 100644
+> --- a/drivers/platform/surface/aggregator/Kconfig
+> +++ b/drivers/platform/surface/aggregator/Kconfig
+> @@ -4,6 +4,7 @@
+>  menuconfig SURFACE_AGGREGATOR
+>  	tristate "Microsoft Surface System Aggregator Module Subsystem and Drivers"
+>  	depends on SERIAL_DEV_BUS
+> +	depends on ACPI
+>  	select CRC_CCITT
+>  	help
+>  	  The Surface System Aggregator Module (Surface SAM or SSAM) is an
+> 
 
-We kind of have the problem already with thermal capping but addressed
-it by having the thermal pressure signal to indicate the some of the
-capacity is unavailable. Perhaps the thermal pressure signal should be extended
-to cover all reasons for capacity being unavailable, or we should have
-another signal to track boost frequencies not being delivered, manually
-disabled or not possible due to system circumstances?
-
-> Conversely, if the max capacity corresponds to the max non-boost perf
-> and boost is used very often, the scaling will cause the CPUs to
-> appear to be 100% loaded, but there may be still spare capacity in the
-> system.
-
-It is even worse than that. Allowing delivered performance to exceed the
-CPU capacity will break utilization scale invariance at it will make
-per-task utilization appear smaller than it really is potentially
-leading to wrong task placement.
-
-I think we have to ensure that the full performance range is visible to
-the OS. If part of it is often unachievable we need to track the gap
-between requested and delivered performance and somehow take that into
-account when making task placement decisions.
-
-Morten
