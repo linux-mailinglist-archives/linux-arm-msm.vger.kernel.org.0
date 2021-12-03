@@ -2,100 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 597CC467DCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 20:10:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F393B467E3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 20:33:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353230AbhLCTNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 14:13:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33574 "EHLO
+        id S1382876AbhLCTgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 14:36:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344093AbhLCTNf (ORCPT
+        with ESMTP id S1343888AbhLCTgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 14:13:35 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D261C061751;
-        Fri,  3 Dec 2021 11:10:10 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3A2ED62C68;
-        Fri,  3 Dec 2021 19:10:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C5B0C53FD0;
-        Fri,  3 Dec 2021 19:10:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638558609;
-        bh=60mi6p08U2wbwvB97Xgf4RVXwcC9c+P0q4JsuFDiPOI=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=uQZ/0KBBwOlmv3heoNYQUyaiMcNeBzGSS7RGwLrUa1wvnnZZQ6T1aiotEpZc9+H1z
-         suTSmGKxpgS0c6XVGVxaalBJmrlSSeOStYBqFjdMzEM6uEaV7mDiaiERaCljh6lClu
-         y4ZeXl8bU86S0Tlh1qM71hMLRLoJ42fEBPac2QnYi8LwMmxeQwBlOG69sUpBZ0dwu6
-         xIWcpHtOouVmuoukYE96Ve65pWnv8OAvBZnBZ7lis61qy71Izg3SQMHOwLTAYKOLk2
-         iFIkS8YvN30sqDOF+sQImtsnqnMxvHc1VQ8rHRM/6ZRUBTOBloBH7A1DsAO4wP+3JL
-         fMwQadF7d2iGQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 76F2C60A95;
-        Fri,  3 Dec 2021 19:10:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 3 Dec 2021 14:36:36 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EAAC061751;
+        Fri,  3 Dec 2021 11:33:12 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id u1so7726681wru.13;
+        Fri, 03 Dec 2021 11:33:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KkMqjzOv91kbEWcmfuXNAzPB98rsPnz33Du8jXmQo/4=;
+        b=DcmSX6dV1UHFCCY4ITz0D8zPXxmPFsUvlxPe6iW6SIA514KGHV5HhGZj+Eno5vldj2
+         7zefU34oP+H57TIKPBUoqNJOruzEoEDTlsxKPkUu5PQj/XhPbpLvqK6Rx6RPHNwvloVW
+         O/0ZuqWN5JG0qtzhgjlPD6TVGJbE+0kWVI22BMzPnjno2IVrQ7g0nZCy+iVJJzbr45vp
+         pGb8w3izUT+HzEyRBiT7OPBOaeWWzvr4V43d+3YtPMFC5FrLieJFZ1ZISwRyUNjD8ULL
+         Jzy+XjE5NPeRlTbLgYCLYz8BqVoxGQgDhjVrQlX99lQbS4WYmZ9yhUsRMZabT/22Koqj
+         wOpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KkMqjzOv91kbEWcmfuXNAzPB98rsPnz33Du8jXmQo/4=;
+        b=67XR64mwLE6TZgiUhWk5YTmCjq7RYjsbgxzMcxjF5kCaqtO8nTN3UW43gIaqCOSkQu
+         sX/Piyhuk0qF0Uh/0TTMdP5sCAJ9OnFm4wEB+D/Iz2jWNeQeD2YKCbKLa4WysZnJan5d
+         aZMuTV8L3T88/HqoyevfKzYPZHxtOYnK0TdI7yLD6fBYuI2HjsHeZKEZinCVUbfT7+D4
+         KcyK2peDOQHw7JWjohx1e1euOHih4SoGWsaYutkvwYpz9WHYHBJCekDo35mAluRw50pH
+         8rWeZXt30ngv3fbEwEEgBogP5KIlw7W1OTnfeIdgW5v2SzQiqbAQJHOhDTGPRsCInRFk
+         Kqxw==
+X-Gm-Message-State: AOAM530QkJ3UR2YWpqoSzhuUHnYsXDE8vRgIW+JyKpYuv1NygbqSFh9B
+        o1ZT73Me5K7rjEmxa6LtYVo=
+X-Google-Smtp-Source: ABdhPJwHkNocAxLPzcMPDuZ0QZvaPbQ/NHuFjMokG9Q5PoIIqWCWDfe347YQd6kuqYE2q3PRf3CMPg==
+X-Received: by 2002:a5d:4ac5:: with SMTP id y5mr23415302wrs.581.1638559990224;
+        Fri, 03 Dec 2021 11:33:10 -0800 (PST)
+Received: from localhost.localdomain ([39.48.194.133])
+        by smtp.gmail.com with ESMTPSA id l5sm4815155wrs.59.2021.12.03.11.33.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Dec 2021 11:33:09 -0800 (PST)
+From:   Ameer Hamza <amhamza.mgc@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        dmitry.baryshkov@linaro.org, amhamza.mgc@gmail.com
+Subject: [PATCH v2] drm/msm/dpu: removed logically dead code
+Date:   Sat,  4 Dec 2021 00:32:53 +0500
+Message-Id: <20211203193253.108813-1-amhamza.mgc@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
+References: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH bpf v2] treewide: add missing includes masked by cgroup -> bpf
- dependency
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <163855860948.24022.9001786774413649159.git-patchwork-notify@kernel.org>
-Date:   Fri, 03 Dec 2021 19:10:09 +0000
-References: <20211202203400.1208663-1-kuba@kernel.org>
-In-Reply-To: <20211202203400.1208663-1-kuba@kernel.org>
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     bpf@vger.kernel.org, kw@linux.com, peter.chen@kernel.org,
-        sj@kernel.org, jani.nikula@intel.com, axboe@kernel.dk,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@linux.ie, daniel@ffwll.ch,
-        jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
-        rodrigo.vivi@intel.com, yuq825@gmail.com, robdclark@gmail.com,
-        sean@poorly.run, christian.koenig@amd.com, ray.huang@amd.com,
-        sgoutham@marvell.com, gakula@marvell.com, sbhatta@marvell.com,
-        hkelam@marvell.com, jingoohan1@gmail.com,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, bhelgaas@google.com,
-        krzysztof.kozlowski@canonical.com, mani@kernel.org,
-        pawell@cadence.com, rogerq@kernel.org, a-govindraju@ti.com,
-        gregkh@linuxfoundation.org, ast@kernel.org, daniel@iogearbox.net,
-        andrii@kernel.org, kafai@fb.com, songliubraving@fb.com, yhs@fb.com,
-        john.fastabend@gmail.com, kpsingh@kernel.org,
-        akpm@linux-foundation.org, thomas.hellstrom@linux.intel.com,
-        matthew.auld@intel.com, colin.king@intel.com, geert@linux-m68k.org,
-        linux-block@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, lima@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-mm@kvack.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+Fixed coverity warning by removing the dead code
 
-This patch was applied to bpf/bpf.git (master)
-by Alexei Starovoitov <ast@kernel.org>:
+Addresses-Coverity: 1494147 ("Logically dead code")
 
-On Thu,  2 Dec 2021 12:34:00 -0800 you wrote:
-> cgroup.h (therefore swap.h, therefore half of the universe)
-> includes bpf.h which in turn includes module.h and slab.h.
-> Since we're about to get rid of that dependency we need
-> to clean things up.
-> 
-> v2: drop the cpu.h include from cacheinfo.h, it's not necessary
-> and it makes riscv sensitive to ordering of include files.
-> 
-> [...]
+Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
 
-Here is the summary with links:
-  - [bpf,v2] treewide: add missing includes masked by cgroup -> bpf dependency
-    https://git.kernel.org/bpf/bpf/c/8581fd402a0c
+---
+Changes in v2:
+removed the 'fail' part completely by moving DPU_ERROR and return statement in place of corresponding goto statements.
+---
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-You are awesome, thank you!
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 185379b18572..ddd9d89cd456 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -698,17 +698,17 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ {
+ 	struct dpu_encoder_phys *phys_enc = NULL;
+ 	struct dpu_encoder_irq *irq;
+-	int i, ret = 0;
++	int i;
+ 
+ 	if (!p) {
+-		ret = -EINVAL;
+-		goto fail;
++		DPU_ERROR("failed to create encoder due to invalid parameter\n");
++		return ERR_PTR(-EINVAL);
+ 	}
+ 
+ 	phys_enc = kzalloc(sizeof(*phys_enc), GFP_KERNEL);
+ 	if (!phys_enc) {
+-		ret = -ENOMEM;
+-		goto fail;
++		DPU_ERROR("failed to create encoder due to memory allocation error\n");
++		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+ 	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+@@ -748,11 +748,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
+ 
+ 	return phys_enc;
+-
+-fail:
+-	DPU_ERROR("failed to create encoder\n");
+-	if (phys_enc)
+-		dpu_encoder_phys_vid_destroy(phys_enc);
+-
+-	return ERR_PTR(ret);
+ }
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.25.1
 
