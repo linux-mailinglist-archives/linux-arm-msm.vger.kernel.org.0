@@ -2,74 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F01467AFF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 17:10:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD18B467B26
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 17:18:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234404AbhLCQNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 11:13:36 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:51390 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245403AbhLCQNf (ORCPT
+        id S235626AbhLCQWV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 11:22:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232415AbhLCQWU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 11:13:35 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 0FF81B828AA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 16:10:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C17B3C53FD0;
-        Fri,  3 Dec 2021 16:10:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638547808;
-        bh=QeRmcGrZQGLHrLKb6Wrp8WLN/p5ttKauzWtNT/IG1D8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ARMI6Fd1IRV3FR13ClTIh7w8917jGxbbGvlE4kaQ/b1yJBo3bjo5KXoD8an7dFp0K
-         zh8PM324J4s6Adhj14sGSHgt+4cNqpSqymgJ+K7y6VC0+3xeeSvmUbFtz1RCUODc1l
-         SclPwFHvTiVeouDpjLAHZuOy1l552HVYd0Wi+Yp06sDBlY4OCue1cfzFKIpSy4/xM0
-         UqTpxTL2pp4AaZnwzysEMOCKmFHVX5xWzijGEEoEmWCdc9biIf9s1gyDHTis1bv8EZ
-         zvFTME3d5UY11fUcQoNgFi9X1JZmQm+WplNWGKdJ42WL2ZIdFKrK/iJEnxvT6SnJnP
-         g7DoVi1evS1mQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id AE19D60A7E;
-        Fri,  3 Dec 2021 16:10:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Fri, 3 Dec 2021 11:22:20 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6733EC061751;
+        Fri,  3 Dec 2021 08:18:56 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id 137so2768933wma.1;
+        Fri, 03 Dec 2021 08:18:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/LPkN68tYspfEa2svzvg7iyj4T9p7CaSU3K6P782Fdw=;
+        b=g2S3EPebcJNAfwNc5v6rHce3p4JPeOX8jq2jgny1i7i6I0pQBv6ab0x055D8Qntl9g
+         sOCtaFKVUZIyDjf3TfGZQxEJW4utSuMpXeYfU9EtRwlCI3g7X7ByXchi/V00JiCuYxPW
+         ND1ZPpODaA1hifD8cwrXs+p5BP1Z3ojig+eShCqg3RouXry7hyfMYx9I0pIX6isk9TlE
+         rgRHNhmK0jL2uohPoDQ0mU2VsELYNz80QcQfGwIqkr1qGN0pijc41nBLieWYCkQ0VoYt
+         1kVyVu/GfknhgVr8yMsJfSgbAvnfFi+RpnqTJiGk7GDIFRsOTFdKaoLH17EgJua598li
+         JEaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/LPkN68tYspfEa2svzvg7iyj4T9p7CaSU3K6P782Fdw=;
+        b=wWf9/gZjQ/efR151M6jHigl0tadC3LTKdVvVBPiFGO3KsjAP/38t0jR+0E/FAvQ0zj
+         db70Bow0ZBsyr1t6FfF1nPsSUixjYyWawcRSXJyNskaCL+4MSnpl2fnT2QVcZb0T1Xky
+         Ep6kf4HM/TsB3JIHdyDjQMY5hgjEeK6DtG6OCj36VFMHTBfunYgGXJBYHi+Kr+yq58qX
+         3iF3FODuXfi9O2VpGmv6f2X8ghnzsgVYKY+/97OZIoanvFCeQ9zG9iOrHMqTonj7fS6P
+         6TwCj/wG1Cvfm/5pCtjkef6gt9Yo9WnMlv+ZLC76Jc+SEXB1tCyKOIymECW4AKq7UYUM
+         fLvQ==
+X-Gm-Message-State: AOAM531sAIpBJGNVUWhehjltYEf45kycN8wiWkC/pQ5vH0DeXZ+hObJ6
+        z2FoB4+3GN97ragQL+tJXKU=
+X-Google-Smtp-Source: ABdhPJzmcfbTgyWLQSHJ5e/BGnE3Pqje/jXItvJqco9AXkaN5rIXhT48X2OYs6JMnimTMbYjs6If7A==
+X-Received: by 2002:a05:600c:3d06:: with SMTP id bh6mr16326257wmb.40.1638548334048;
+        Fri, 03 Dec 2021 08:18:54 -0800 (PST)
+Received: from localhost.localdomain ([39.48.132.131])
+        by smtp.gmail.com with ESMTPSA id t17sm5665970wmq.15.2021.12.03.08.18.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Dec 2021 08:18:53 -0800 (PST)
+From:   Ameer Hamza <amhamza.mgc@gmail.com>
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        amhamza.mgc@gmail.com
+Subject: [PATCH] drm/msm/dpu: removed logically dead code
+Date:   Fri,  3 Dec 2021 21:18:46 +0500
+Message-Id: <20211203161846.37720-1-amhamza.mgc@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] MAINTAINERS: Add entry for Qualcomm clock drivers
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <163854780870.10151.17260560939307597918.git-patchwork-notify@kernel.org>
-Date:   Fri, 03 Dec 2021 16:10:08 +0000
-References: <20211203013901.3460496-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211203013901.3460496-1-bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+Fixed coverity warning by removing the dead code
 
-This patch was applied to qcom/linux.git (for-next)
-by Bjorn Andersson <bjorn.andersson@linaro.org>:
+Addresses-Coverity: 1494147 ("Logically dead code")
 
-On Thu,  2 Dec 2021 17:39:01 -0800 you wrote:
-> Most SoC specific clock drivers are picked by respective SoC maintainer
-> and then sent to the clock maintainers on their way upstream.
-> 
-> This has however not been the case for the Qualcomm clock drivers -
-> which doesn't actually have a maintainer per MAINTAINERS and where the
-> framework maintainers have just carried the Qualcomm effort as well,
-> presumably as a result of Stephen's history.
-> 
-> [...]
+Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Here is the summary with links:
-  - MAINTAINERS: Add entry for Qualcomm clock drivers
-    https://git.kernel.org/qcom/c/e3fd5f632cdd
-
-You are awesome, thank you!
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 185379b18572..75f0c0cee661 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -751,8 +751,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 
+ fail:
+ 	DPU_ERROR("failed to create encoder\n");
+-	if (phys_enc)
+-		dpu_encoder_phys_vid_destroy(phys_enc);
+ 
+ 	return ERR_PTR(ret);
+ }
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.25.1
 
