@@ -2,101 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECB00467D15
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 19:17:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26665467D81
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 19:51:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344034AbhLCSUe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 13:20:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49490 "EHLO
+        id S1344121AbhLCSyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 13:54:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237757AbhLCSUe (ORCPT
+        with ESMTP id S245699AbhLCSyj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 13:20:34 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9A2C061751
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 10:17:09 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id r26so8466319lfn.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 10:17:09 -0800 (PST)
+        Fri, 3 Dec 2021 13:54:39 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9A0C061353
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 10:51:15 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id l22so8671502lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 10:51:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Pvwka+nQK0UfHFY3XxiSjtliqkg8sD5ZuyxOIxv5Cbs=;
-        b=eIZxsWUwapXBrA560XcorJL8NqT1ntAWDUua+GJsnFNktaz/q6rhH2kj69fPiKJfme
-         wdsA+qXnTzMm73W0MJytDuUILbe1cjL926x4EcZmvL7yWKyZYQq6X2XgBubpBwvmTmjq
-         XNQ0A+Q+kK2S2rYPr91qC1zcozFLyrCVPLSWYZNotxJailRpu2aPFze12TNVTibkvJ2F
-         6euQtrTzFj7X0k3n9vBCk9eH4vuWcdd/bhb0kUh6y0INWm/+A8HsB2wPi62MFi6kt7Pr
-         j7gbIqKfj/j9qHACc9kMVWUpfReJcdcF8KuMZFF9dw+zyzoL4gPAjZQ+6avWwqM6O+tA
-         xkMA==
+        bh=AoGWj/bWqwFWdFDfAGCiZt2+Rrs0vhzQ2O7jMvIrWTE=;
+        b=i7hnxehXR4Qq6dr9FYM+t6kwmA5qmPA39SksNpMT3nrmhOGSEp0jngHnpulMw5gXXb
+         c+vskdcXt2UBcrbrvhsUNkWEIHIPFuVeBkFZmzot8MboOly04tZW5IK9Ex30bQYbYIFG
+         hHp8w43Fhec4OCyS0j5tlitqI9VhnlZXT3VRk+LlTfHxItKgMqvHBFstf4FzVH3fmSz4
+         5eSJ0v8ygAj24QW8Gp8v8JAW8GnU4VCOLeiKPBZo7FJsWbsNzpFbdSeApsYFHBWbeHjc
+         lpGJEBgwU9yn9FvkYpUN9XfL7eLmwuNYYHWGaxAZ+JPdAZ2RYeGwtsAxVwKDxx4sBJmY
+         IAjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Pvwka+nQK0UfHFY3XxiSjtliqkg8sD5ZuyxOIxv5Cbs=;
-        b=T1VpvYqC4if/1gwhLP+8RABovt7XRDI+Pps/blCU0aMO9EiXSnKoeGZmhVAUkc7LO1
-         CuSq3zJ/9VOiegDUqjTX6O+/xxr9vQIMmKT/KWLUqJ0Eo8x/hKt3LGvlfJnGWluJuwnB
-         JHErqGGOCGy3oZCYKVCDIa5ygNKQNs32HWny3+B8k0tA5OpyiR5r/47FUedWLY5unPRl
-         RFqKEXmqNJXzPQ5fCiQ0TxOqu2BG8hCh3ux1CA6E2g50dsGC8ib2PtfO7mRLapI2Z1WP
-         5DUzrnocJ1IuijlMMX2g+tJ+/ShlsIiSOivZ9wxNAYeIL7HfaA9WUsw6wrn1DsLrQoPW
-         fD/w==
-X-Gm-Message-State: AOAM533JeOh3HbufJyobBoJi2VC//hNhqKuIh7ROZZdSFNe/xgUFv/VZ
-        /VjchTFOcDRu8gK8UA/NHTg0og==
-X-Google-Smtp-Source: ABdhPJyKiAVCfe8d7jmNoqLFibh1Ce2dZGkb1WnECK82kC0o6EOkx6AYO0XZDzDfXVAgjTPEvo0Njg==
-X-Received: by 2002:a19:7408:: with SMTP id v8mr18384090lfe.392.1638555428078;
-        Fri, 03 Dec 2021 10:17:08 -0800 (PST)
+        bh=AoGWj/bWqwFWdFDfAGCiZt2+Rrs0vhzQ2O7jMvIrWTE=;
+        b=PXRbDl59W08EcptPmDFKRzgyQmHVg0E/AvhCyggiFJ/KijxYnwYFHejyGt+UrKuMUA
+         W8ulx2InLK5I9jUoha6k+4woCP18An+m2eYHQcT5+5S7fLsof/49oIWeqqt3ajieOUMl
+         UOGhPSzr2am8vlYaMRjFHsVzJ8Ic6TnGHAGUSVu5My3sQyJhc8V8WvYZQTGbSKfUCw29
+         nuKJTwklJk3/gxuvYwo4Jke/dOu/1qd6pppWqTQKLHErHvTxHzhhxQMRA0qh5jQsYKs1
+         NU3bGqd2hCYmRElu/+NjT03KWDbhHCJ+4X/yYTHsa5JaOZ2k8Ggd0mz2JdZ1hUD2l+ko
+         8vQw==
+X-Gm-Message-State: AOAM533zlXGLYIPsNPzJ2Mxlo2fMvrkAdn07gJGMM+PJJwr27kHcM6ND
+        t+bI42lMiVSdE6GoF2inBuXCCQ==
+X-Google-Smtp-Source: ABdhPJx3oNQ/pRiEn2+/u0ktbVPcBmU8snjmPDRzgL+8t9ORKohqKzHYrihygwoe+ybgKC2OUge75Q==
+X-Received: by 2002:ac2:55a6:: with SMTP id y6mr18888149lfg.406.1638557473337;
+        Fri, 03 Dec 2021 10:51:13 -0800 (PST)
 Received: from [192.168.1.8] ([185.24.52.156])
-        by smtp.gmail.com with ESMTPSA id p3sm456437lfh.124.2021.12.03.10.17.06
+        by smtp.gmail.com with ESMTPSA id c15sm465158lfb.154.2021.12.03.10.51.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Dec 2021 10:17:07 -0800 (PST)
-Message-ID: <93020f22-0048-e0e7-5df5-144c3e705b84@linaro.org>
-Date:   Fri, 3 Dec 2021 21:17:06 +0300
+        Fri, 03 Dec 2021 10:51:12 -0800 (PST)
+Message-ID: <8ee2b4d4-44f3-6d03-b674-613b5b04a754@linaro.org>
+Date:   Fri, 3 Dec 2021 21:51:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH -next] drm: remove node from list before freeing the node
+Subject: Re: [PATCH] drm/msm/a5xx: Add support for Adreno 506 GPU
 Content-Language: en-GB
-To:     Yang Li <yang.lee@linux.alibaba.com>, robdclark@gmail.com
-Cc:     sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <1638502612-113708-1-git-send-email-yang.lee@linux.alibaba.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20211022114349.102552-1-vladimir.lypak@gmail.com>
+ <YXL16V17upehvUwt@ripper>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1638502612-113708-1-git-send-email-yang.lee@linux.alibaba.com>
+In-Reply-To: <YXL16V17upehvUwt@ripper>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/12/2021 06:36, Yang Li wrote:
-> fix the following smatch warning:
-> drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1675 dpu_plane_init() warn:
-> '&pdpu->mplane_list' not removed from list
+On 22/10/2021 20:33, Bjorn Andersson wrote:
+> On Fri 22 Oct 04:43 PDT 2021, Vladimir Lypak wrote:
 > 
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+>> This GPU is found on SoCs such as MSM8953(650MHz), SDM450(600MHz),
+>> SDM632(725MHz).
+>>
+>> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c      | 34 ++++++++++++++--------
+>>   drivers/gpu/drm/msm/adreno/adreno_device.c | 18 ++++++++++++
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 ++++
+>>   3 files changed, 45 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> index 5e2750eb3810..249a0d8bc673 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+>> @@ -441,7 +441,7 @@ void a5xx_set_hwcg(struct msm_gpu *gpu, bool state)
+>>   	const struct adreno_five_hwcg_regs *regs;
+>>   	unsigned int i, sz;
+>>   
+>> -	if (adreno_is_a508(adreno_gpu)) {
+>> +	if (adreno_is_a506(adreno_gpu) || adreno_is_a508(adreno_gpu)) {
+>>   		regs = a50x_hwcg;
+>>   		sz = ARRAY_SIZE(a50x_hwcg);
+>>   	} else if (adreno_is_a509(adreno_gpu) || adreno_is_a512(adreno_gpu)) {
+>> @@ -485,7 +485,7 @@ static int a5xx_me_init(struct msm_gpu *gpu)
+>>   	OUT_RING(ring, 0x00000000);
+>>   
+>>   	/* Specify workarounds for various microcode issues */
+>> -	if (adreno_is_a530(adreno_gpu)) {
+>> +	if (adreno_is_a506(adreno_gpu) || adreno_is_a530(adreno_gpu)) {
+>>   		/* Workaround for token end syncs
+>>   		 * Force a WFI after every direct-render 3D mode draw and every
+>>   		 * 2D mode 3 draw
+>> @@ -620,8 +620,17 @@ static int a5xx_ucode_init(struct msm_gpu *gpu)
+>>   
+>>   static int a5xx_zap_shader_resume(struct msm_gpu *gpu)
+>>   {
+>> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>>   	int ret;
+>>   
+>> +	/*
+>> +	 * Adreno 506,508,512 have CPZ Retention feature and
+>> +	 * don't need to resume zap shader
+>> +	 */
+>> +	if (adreno_is_a506(adreno_gpu) || adreno_is_a508(adreno_gpu) ||
+>> +	    adreno_is_a512(adreno_gpu))
+>> +		return 0;
+> 
+> Afaict all other changes in the patch adds a506 support, but this hunk
+> changes a508 and a512 behavior.
+> 
+> I'm not saying that the change is wrong, but this hunk deserves to be in
+> it's own patch - so that if there's any impact on those other versions
+> it can be tracked down to that specific patch.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index ca190d9..aad238b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -1672,6 +1672,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
->   	if (pdpu && pdpu->pipe_hw)
->   		dpu_hw_sspp_destroy(pdpu->pipe_hw);
->   clean_plane:
-> +	list_del(&pdpu->mplane_list);
->   	kfree(pdpu);
->   	return ERR_PTR(ret);
->   }
-> 
+Vladimir, any plans to submit v2? This comment requests splitting the 
+patch in two.
 
 
 -- 
