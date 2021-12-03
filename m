@@ -2,122 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F393B467E3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 20:33:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16832467E87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 20:56:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382876AbhLCTgg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 14:36:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38930 "EHLO
+        id S1353741AbhLCT7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 14:59:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343888AbhLCTgg (ORCPT
+        with ESMTP id S1353705AbhLCT7a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 14:36:36 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EAAC061751;
-        Fri,  3 Dec 2021 11:33:12 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u1so7726681wru.13;
-        Fri, 03 Dec 2021 11:33:11 -0800 (PST)
+        Fri, 3 Dec 2021 14:59:30 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B6BC061751
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 11:56:06 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id f18so9050994lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 11:56:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=KkMqjzOv91kbEWcmfuXNAzPB98rsPnz33Du8jXmQo/4=;
-        b=DcmSX6dV1UHFCCY4ITz0D8zPXxmPFsUvlxPe6iW6SIA514KGHV5HhGZj+Eno5vldj2
-         7zefU34oP+H57TIKPBUoqNJOruzEoEDTlsxKPkUu5PQj/XhPbpLvqK6Rx6RPHNwvloVW
-         O/0ZuqWN5JG0qtzhgjlPD6TVGJbE+0kWVI22BMzPnjno2IVrQ7g0nZCy+iVJJzbr45vp
-         pGb8w3izUT+HzEyRBiT7OPBOaeWWzvr4V43d+3YtPMFC5FrLieJFZ1ZISwRyUNjD8ULL
-         Jzy+XjE5NPeRlTbLgYCLYz8BqVoxGQgDhjVrQlX99lQbS4WYmZ9yhUsRMZabT/22Koqj
-         wOpQ==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=4H1eLBe9s1nmrKvhDjTG1XwavkNeAlMoDJHIJMpv0no=;
+        b=RbgtGg0doc7ir1YCobj16fQLUkabnCClY11jyx/+4tLpMP6pKWDYot2dM4TuVXxZ2K
+         rEfbcpD9qpgM3ANOhJ7TvPCYpIy6KYfQ2VtUrPDd6Wf+2h+RJiprwZlh8IYuAAklbnhC
+         OH3e8MXAXahyh+C1iJRhimxhBvEi+YdAQnTB2FzZjdj4FJd18rXVY7tUTfRwCcYI9y0r
+         haLAzIwAfWsgqh2vS3tFwEvEmHL7VMqLj5U76YL4Zo5eft9u0MV21WHWHMlvZt++KnlS
+         pcCxsCLf6PBddzhht1uhQ9F6nb4bUqfjeds/gFHEdD9vb1q0WKLha+Z1QLlCx/9m8/8e
+         +oTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=KkMqjzOv91kbEWcmfuXNAzPB98rsPnz33Du8jXmQo/4=;
-        b=67XR64mwLE6TZgiUhWk5YTmCjq7RYjsbgxzMcxjF5kCaqtO8nTN3UW43gIaqCOSkQu
-         sX/Piyhuk0qF0Uh/0TTMdP5sCAJ9OnFm4wEB+D/Iz2jWNeQeD2YKCbKLa4WysZnJan5d
-         aZMuTV8L3T88/HqoyevfKzYPZHxtOYnK0TdI7yLD6fBYuI2HjsHeZKEZinCVUbfT7+D4
-         KcyK2peDOQHw7JWjohx1e1euOHih4SoGWsaYutkvwYpz9WHYHBJCekDo35mAluRw50pH
-         8rWeZXt30ngv3fbEwEEgBogP5KIlw7W1OTnfeIdgW5v2SzQiqbAQJHOhDTGPRsCInRFk
-         Kqxw==
-X-Gm-Message-State: AOAM530QkJ3UR2YWpqoSzhuUHnYsXDE8vRgIW+JyKpYuv1NygbqSFh9B
-        o1ZT73Me5K7rjEmxa6LtYVo=
-X-Google-Smtp-Source: ABdhPJwHkNocAxLPzcMPDuZ0QZvaPbQ/NHuFjMokG9Q5PoIIqWCWDfe347YQd6kuqYE2q3PRf3CMPg==
-X-Received: by 2002:a5d:4ac5:: with SMTP id y5mr23415302wrs.581.1638559990224;
-        Fri, 03 Dec 2021 11:33:10 -0800 (PST)
-Received: from localhost.localdomain ([39.48.194.133])
-        by smtp.gmail.com with ESMTPSA id l5sm4815155wrs.59.2021.12.03.11.33.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Dec 2021 11:33:09 -0800 (PST)
-From:   Ameer Hamza <amhamza.mgc@gmail.com>
-To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
-        airlied@linux.ie, daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, amhamza.mgc@gmail.com
-Subject: [PATCH v2] drm/msm/dpu: removed logically dead code
-Date:   Sat,  4 Dec 2021 00:32:53 +0500
-Message-Id: <20211203193253.108813-1-amhamza.mgc@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
-References: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=4H1eLBe9s1nmrKvhDjTG1XwavkNeAlMoDJHIJMpv0no=;
+        b=pwKekR+r8gwPyJ6PYXOYZ+hNICCicoPGMrKa3HBqAlNIjpkNfIwB+kjl0/WQDt37w7
+         N1Klsr75M/S80wmHEhyOpfUCoYrz/0q6bH5i2pM27iCHTgXX17vxXvDnmo8iOMoSaFCT
+         nQMyi2OVmHU6tSmWTbRqXGImAeTqFIfvlQVdXtSJDBQGWlUo5a5cEKHXhitm8fv4N61l
+         QCs6Ny5W63zJDV3xAgDS8oI47PbYE3onkoSKKqkO+QU4XREp69Q7vfrZ9c3sA7nu9Vkj
+         AUy/ttBA+z1vF4x96f3Da7nOo0wZ9WDK1kSCOdutYRn9eqV2XCj8nQtHli2LIOg3zTzH
+         FSqA==
+X-Gm-Message-State: AOAM532aqCkw/fGjeEVcmJtjwq6P821upIcdXMaq9OIlK3T/yroxm6m+
+        Sf0LVYn79e5OYcs1tWGkD8nQKw==
+X-Google-Smtp-Source: ABdhPJz93t7RN7l+dTqaVu2whsjRuX7bGg6LHYB05B+CsJzLMSvM4jypLNKNMW36naHc+f0JvzNARA==
+X-Received: by 2002:a05:6512:2350:: with SMTP id p16mr20243657lfu.482.1638561364332;
+        Fri, 03 Dec 2021 11:56:04 -0800 (PST)
+Received: from [192.168.1.8] ([185.24.52.156])
+        by smtp.gmail.com with ESMTPSA id j2sm482692lfr.109.2021.12.03.11.56.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Dec 2021 11:56:03 -0800 (PST)
+Message-ID: <234f41de-f34e-53ba-cf7e-e27f2bb21b6c@linaro.org>
+Date:   Fri, 3 Dec 2021 22:56:02 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2] drm/msm/dpu: removed logically dead code
+Content-Language: en-GB
+To:     Ameer Hamza <amhamza.mgc@gmail.com>, robdclark@gmail.com,
+        sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
+ <20211203193253.108813-1-amhamza.mgc@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211203193253.108813-1-amhamza.mgc@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixed coverity warning by removing the dead code
+On 03/12/2021 22:32, Ameer Hamza wrote:
+> Fixed coverity warning by removing the dead code
+> 
+> Addresses-Coverity: 1494147 ("Logically dead code")
+> 
+> Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
 
-Addresses-Coverity: 1494147 ("Logically dead code")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
+> 
+> ---
+> Changes in v2:
+> removed the 'fail' part completely by moving DPU_ERROR and return statement in place of corresponding goto statements.
+> ---
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    | 17 +++++------------
+>   1 file changed, 5 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index 185379b18572..ddd9d89cd456 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -698,17 +698,17 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+>   {
+>   	struct dpu_encoder_phys *phys_enc = NULL;
+>   	struct dpu_encoder_irq *irq;
+> -	int i, ret = 0;
+> +	int i;
+>   
+>   	if (!p) {
+> -		ret = -EINVAL;
+> -		goto fail;
+> +		DPU_ERROR("failed to create encoder due to invalid parameter\n");
+> +		return ERR_PTR(-EINVAL);
+>   	}
+>   
+>   	phys_enc = kzalloc(sizeof(*phys_enc), GFP_KERNEL);
+>   	if (!phys_enc) {
+> -		ret = -ENOMEM;
+> -		goto fail;
+> +		DPU_ERROR("failed to create encoder due to memory allocation error\n");
+> +		return ERR_PTR(-ENOMEM);
+>   	}
+>   
+>   	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+> @@ -748,11 +748,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+>   	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
+>   
+>   	return phys_enc;
+> -
+> -fail:
+> -	DPU_ERROR("failed to create encoder\n");
+> -	if (phys_enc)
+> -		dpu_encoder_phys_vid_destroy(phys_enc);
+> -
+> -	return ERR_PTR(ret);
+>   }
+> 
 
----
-Changes in v2:
-removed the 'fail' part completely by moving DPU_ERROR and return statement in place of corresponding goto statements.
----
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 185379b18572..ddd9d89cd456 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -698,17 +698,17 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- {
- 	struct dpu_encoder_phys *phys_enc = NULL;
- 	struct dpu_encoder_irq *irq;
--	int i, ret = 0;
-+	int i;
- 
- 	if (!p) {
--		ret = -EINVAL;
--		goto fail;
-+		DPU_ERROR("failed to create encoder due to invalid parameter\n");
-+		return ERR_PTR(-EINVAL);
- 	}
- 
- 	phys_enc = kzalloc(sizeof(*phys_enc), GFP_KERNEL);
- 	if (!phys_enc) {
--		ret = -ENOMEM;
--		goto fail;
-+		DPU_ERROR("failed to create encoder due to memory allocation error\n");
-+		return ERR_PTR(-ENOMEM);
- 	}
- 
- 	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
-@@ -748,11 +748,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
- 
- 	return phys_enc;
--
--fail:
--	DPU_ERROR("failed to create encoder\n");
--	if (phys_enc)
--		dpu_encoder_phys_vid_destroy(phys_enc);
--
--	return ERR_PTR(ret);
- }
 -- 
-2.25.1
-
+With best wishes
+Dmitry
