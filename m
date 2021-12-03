@@ -2,159 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4EE467094
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 04:13:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C1194670A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 04:19:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237886AbhLCDQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 22:16:48 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:58810 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232428AbhLCDQs (ORCPT
+        id S238410AbhLCDXN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 22:23:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42160 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231585AbhLCDXM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 22:16:48 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C800662929;
-        Fri,  3 Dec 2021 03:13:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211E5C00446;
-        Fri,  3 Dec 2021 03:13:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638501203;
-        bh=DdwSeerV2Xi07oZhGu9qh5VtX+ueZAwyzDuRtv+i7dI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=USBCYJlPryWKcuiJQe74WOwsbu1u2M+dTdS/X75xp89aVakbgPflKpJ9wGWC1Y+dX
-         kLYky5zJ2rcigzx4mDN/6DfyP72tR0sGogQNAeM2IoTa7xSh93cbsLLY8NRFfuZTUh
-         UP0M7SVlPnnpoLehZ+GJtFhlw/s9OvC4Z0qmntD7NeMNW/eP6B54cLfjhktl2D8Nag
-         PjfnhfxF3b1dGNLj4+uA0r6cxLWk3Z/gsjs31j18nLGf38bSPlA4bai8ak+M1uGIX1
-         Vq4+ZpfnIXVnz7xsVhVh6rftWAhjF0uZxwJvo8HXYHuc+pD0lnl3Vo6xfRGH/gg3HK
-         WE/WNTeMOpeFA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 2 Dec 2021 22:23:12 -0500
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA4CC061757
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 19:19:49 -0800 (PST)
+Received: by mail-oo1-xc2b.google.com with SMTP id r18-20020a4a7252000000b002c5f52d1834so659099ooe.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 19:19:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HDps2h2SWpU4Y94NDG4hPcR7AZPRkd1wfAyLJyas85E=;
+        b=iqgpLT8egn4PIMWsEDOkPYE+RgYdrE6libBZXgFiThm4cinKjw7geQDuINCFfWn09A
+         tIGLKTiGej1fB9A9oqta/iqAVKevU4g0Phacs2pjKP+4igkQzqvZAe1VsII8qFiQSR1I
+         YXIvlweVfBAbmJS8fDPZhYjhraL/YCEku3vCYPT3eO6rn7k0G8+J2MAFn2i6Hbc3yhbc
+         7Oq7ymRfxBprWwo6duLAEB/nO8VYoiL9XbkOhGHL0cvPxa7wfPWAVgFIQPMP8pt6UXY/
+         wYQVtlT/9h0Ps0zbDW7WiTswJh4yvhb4GRSYQ6j+EotrsNQNkPEx3M1GSFpludCOrarG
+         9BQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HDps2h2SWpU4Y94NDG4hPcR7AZPRkd1wfAyLJyas85E=;
+        b=a+g/5cpVfLYUV9CG4xNzzInmHk4jHTQ2dKGud+uPFiZ634NOtbIkduvq7FTbMmlpab
+         mKIJSgBhPSa60L5mG3HqXPkQt1PH4UdreLEWNssZMBxqqjTZgbLzkp01QlK1qU3wTW29
+         r+4ZpfToh5C8Y04O751XMQ6ewSMj9vDgBaFq0MJdraktNDI9pKL4WaGMK+EhzFRlxCaq
+         hq7kRCk5unXj+0U47LdIZSUXaz8wYbh3OKbJnlDk/jirY6jLppsJM4ERyFolUBvDDdv4
+         4KsVLAiN8T7oI1NVoZRTKM9Or0Pl/n4zASqqVK1kizGfWvIgPvZWlZRpP8CWdGe9DB0Z
+         yfUg==
+X-Gm-Message-State: AOAM532FeeUiCV3OH/UV2WcZ7gqz5+04upP2528Mtd0xKB92Nv8noLR/
+        4RYA9W3FbnpJIGZWxmB5ncLYjw==
+X-Google-Smtp-Source: ABdhPJyysufsZZCbU1g7sOlT62sjkNFODXgIPH+tINlFxiO0KOVS5s/AJ0HJthESGvOmoWsrPbnv3g==
+X-Received: by 2002:a4a:d486:: with SMTP id o6mr11038405oos.49.1638501588648;
+        Thu, 02 Dec 2021 19:19:48 -0800 (PST)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s9sm440136otg.42.2021.12.02.19.19.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Dec 2021 19:19:48 -0800 (PST)
+Date:   Thu, 2 Dec 2021 21:19:43 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] dt-bindings: phy: qcom,qmp: Add SM8450 UFS phy
+ compatible
+Message-ID: <YamMz3JYoyDh8O4B@yoga>
+References: <20211201074456.3969849-1-vkoul@kernel.org>
+ <20211201074456.3969849-3-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <9161450a-40e0-c84f-f529-c903d6f1d722@quicinc.com>
-References: <20211201072718.3969011-1-vkoul@kernel.org> <20211202230624.C05F3C00446@smtp.kernel.org> <9161450a-40e0-c84f-f529-c903d6f1d722@quicinc.com>
-Subject: Re: [PATCH] spmi: pmic-arb: Add support for PMIC v7
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        David Collins <quic_collinsd@quicinc.com>
-To:     David Collins <quic_collinsd@quicinc.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 02 Dec 2021 19:13:21 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211203031323.211E5C00446@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211201074456.3969849-3-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting David Collins (2021-12-02 15:51:18)
-> On 12/2/21 3:06 PM, Stephen Boyd wrote:
-> > Quoting Vinod Koul (2021-11-30 23:27:18)
-> >> @@ -1169,8 +1270,12 @@ static int spmi_pmic_arb_probe(struct platform_=
-device *pdev)
-> >>         pmic_arb =3D spmi_controller_get_drvdata(ctrl);
-> >>         pmic_arb->spmic =3D ctrl;
-> >> =20
-> >> +       /*
-> >> +        * Don't use devm_ioremap_resource() as the resources are shar=
-ed in
-> >> +        * PMIC v7 onwards, so causing failure when mapping
-> >> +        */
-> >>         res =3D platform_get_resource_byname(pdev, IORESOURCE_MEM, "co=
-re");
-> >> -       core =3D devm_ioremap_resource(&ctrl->dev, res);
-> >> +       core =3D devm_ioremap(&ctrl->dev, res->start, resource_size(re=
-s));
-> >=20
-> > What does this mean? We have two nodes in DT that have the same reg
-> > properties? How does that work?
->=20
-> PMIC Arbiter v7 has two SPMI bus master interfaces.  These are used to
-> communicate with two sets of PMICs.  The SPMI interfaces operate
-> independently; however, they share some register address ranges (e.g.
-> one common one is used for APID->PPID mapping).
+On Wed 01 Dec 01:44 CST 2021, Vinod Koul wrote:
 
-It looks like the two SPMI busses share the mapping table which is OK
-because it's read-only but then the 'chnls' and 'obsrvr' regions are
-also shared. There must be some global lock in place to make sure the
-two controllers aren't writing to the same register in there? Or are we
-saved because the mapping table splits the regions between the two
-busses?
+> Document the UFS phy compatible for QMP UFS phy found in SM8450 SoC.
+> 
 
-> The most
-> straightforward way to handle this is to treat them as two independent
-> top-level DT devices.
->=20
-> In this case the "cnfg" address is used in the DT node name as that is
-> unique between the two instances.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Nice trick. The reg properties aren't supposed to change order though so
-we shouldn't do that.
+Regards,
+Bjorn
 
->=20
-> Here are the DT nodes used downstream on a target with PMIC Arbiter v7:
->=20
-> spmi0_bus: qcom,spmi@c42d000 {
->         compatible =3D "qcom,spmi-pmic-arb";
->         reg =3D <0xc42d000 0x4000>,
->               <0xc400000 0x3000>,
->               <0xc500000 0x400000>,
->               <0xc440000 0x80000>,
->               <0xc4c0000 0x10000>;
->         reg-names =3D "cnfg", "core", "chnls", "obsrvr", "intr";
->         interrupts-extended =3D <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
->         interrupt-names =3D "periph_irq";
->         interrupt-controller;
->         #interrupt-cells =3D <4>;
->         #address-cells =3D <2>;
->         #size-cells =3D <0>;
->         cell-index =3D <0>;
->         qcom,channel =3D <0>;
->         qcom,ee =3D <0>;
->         qcom,bus-id =3D <0>;
-> };
->=20
-> spmi1_bus: qcom,spmi@c432000 {
->         compatible =3D "qcom,spmi-pmic-arb";
->         reg =3D <0xc432000 0x4000>,
->               <0xc400000 0x3000>,
->               <0xc500000 0x400000>,
->               <0xc440000 0x80000>,
->               <0xc4d0000 0x10000>;
->         reg-names =3D "cnfg", "core", "chnls", "obsrvr", "intr";
->         interrupts-extended =3D <&pdc 3 IRQ_TYPE_LEVEL_HIGH>;
->         interrupt-names =3D "periph_irq";
->         interrupt-controller;
->         #interrupt-cells =3D <4>;
->         #address-cells =3D <2>;
->         #size-cells =3D <0>;
->         cell-index =3D <0>;
->         qcom,channel =3D <0>;
->         qcom,ee =3D <0>;
->         qcom,bus-id =3D <1>;
-> };
-
-It feels like we should make a parent node that holds the core, chnls,
-obsrvr reg properties with a new compatible string and then have two
-child nodes for each bus. Then the various PMICs can hang off those two
-different bus nodes. Of course, it needs DT review to make sure nothing
-else goes wrong.
-
->=20
-> Note the inclusion of a new DT property: "qcom,bus-id".  This was
-> defined in a DT binding patch that isn't present in Vinod's submission.
-> Here is its definition:
->=20
-> - qcom,bus-id : Specifies which SPMI bus instance to use.  This property
->                 is only applicable for PMIC arbiter version 7 and
->                 beyond.
->                 Support values: 0 =3D primary bus, 1 =3D secondary bus
->                 Assumed to be 0 if unspecified.
->=20
-
-How is it used in the driver? Does something care what is primary and
-what is secondary?
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> index 630ceaf915e2..c59bbca9a900 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> @@ -50,6 +50,7 @@ properties:
+>        - qcom,sm8350-qmp-ufs-phy
+>        - qcom,sm8350-qmp-usb3-phy
+>        - qcom,sm8350-qmp-usb3-uni-phy
+> +      - qcom,sm8450-qmp-ufs-phy
+>        - qcom,sdx55-qmp-pcie-phy
+>        - qcom,sdx55-qmp-usb3-uni-phy
+>  
+> -- 
+> 2.31.1
+> 
