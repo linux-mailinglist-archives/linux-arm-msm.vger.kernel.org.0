@@ -2,71 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3941F466EE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 01:59:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E46E1466EEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 02:03:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231497AbhLCBCy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 20:02:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344077AbhLCBCy (ORCPT
+        id S1349882AbhLCBGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 20:06:35 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:58890 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349868AbhLCBGe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 20:02:54 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01D66C06174A;
-        Thu,  2 Dec 2021 16:59:31 -0800 (PST)
+        Thu, 2 Dec 2021 20:06:34 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B9E1EB82025;
-        Fri,  3 Dec 2021 00:59:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BEDC00446;
-        Fri,  3 Dec 2021 00:59:28 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 33694B825A0;
+        Fri,  3 Dec 2021 01:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F37C00446;
+        Fri,  3 Dec 2021 01:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638493168;
-        bh=gAszAJGGHye2RgWWyEPNSetu+idKR1JbBRTAAgjo8Bk=;
+        s=k20201202; t=1638493388;
+        bh=0vDgThgsCSpVdbfkrhNOTirLeaHU+i6DfoV0+C3plYo=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=rHPfzz0Ngj45MaTUdSw87sLOh6NZ6A922ZLOMQtP/7C0N6o6b9hTcZ7HN15YqRpqI
-         sGCwNZo/2LbqPg/rn4c1Ho7uyLeHrawQHHtcJ/+mk32kdhqN5EbynXNf/bWN12Mf6K
-         NNuNX1V8T7Ip217EQ3WdcIpVv92FkH+G8cjYLOYHwcHs3Yy88/RV1ItRuWnvdCaLd6
-         EQhuAIYeI6lFTGd34+k2QydiSv4s5uSzlhfsaSXk3lf+C8NIJcGiVgJwR3eE79xHiW
-         GwTfRuzrcAcq1g2j8rzDAoI0Q0BLb4UxVudOBaGwIj/WiHLli9nuzoEJRvdJ6x7TDa
-         /MbNv6nY2eXsA==
+        b=QX4UlwM2kClLpPwBZt9QZvfxibm0tWQc7JsGlYAVCjMX4ZtDKTK50cJ3JsdEcymp7
+         M+dl5siMSw39SB3psRIhtxd4EwWb5kzTKwgDIdg1ha8QqMiEn3F1OGbS8wNJbaQuoi
+         xkqei9qtYQDlH02rr8pa/V8XRAYvAiRwlqbYizhnNyQJDseOBsWnfPL5ZTCXDe/7yN
+         RD9MUgQGN+Vkn8wUII/kLay4zyzxvlF/s97s3/qVpsh9NmfYTlMw9lAMxuvnjqeEN6
+         VAhD/dL0R/0HAAZMZ1TVAXLT0yC/xvwGMw2v5ZvTcDqPzvG5H0qVeJL0XbnxWD8U5q
+         3GgUaMdhFTK2A==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211123162508.153711-1-bjorn.andersson@linaro.org>
-References: <20211123162508.153711-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: Don't reconfigure running Trion
+In-Reply-To: <20211130212015.25232-1-martin.botka@somainline.org>
+References: <20211130212015.25232-1-martin.botka@somainline.org>
+Subject: Re: [PATCH] clk: qcom: sm6125-gcc: Swap ops of ice and apps on sdcc1
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Robert Foss <robert.foss@linaro.org>,
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        konrad.dybcio@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        paul.bouchara@somainline.org,
+        Martin Botka <martin.botka@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 02 Dec 2021 16:59:27 -0800
+To:     Martin Botka <martin.botka@somainline.org>, martin.botka1@gmail.com
+Date:   Thu, 02 Dec 2021 17:03:07 -0800
 User-Agent: alot/0.9.1
-Message-Id: <20211203005928.52BEDC00446@smtp.kernel.org>
+Message-Id: <20211203010308.C7F37C00446@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-11-23 08:25:08)
-> In the event that the bootloader has configured the Trion PLL as source
-> for the display clocks, e.g. for the continuous splashscreen, then there
-> will also be RCGs that are clocked by this instance.
+Quoting Martin Botka (2021-11-30 13:20:15)
+> Without this change eMMC runs at overclocked freq.
+> Swap the ops to not OC the eMMC.
 >=20
-> Reconfiguring, and in particular disabling the output of, the PLL will
-> cause issues for these downstream RCGs and has been shown to prevent
-> them from being re-parented.
->=20
-> Follow downstream and skip configuration if it's determined that the PLL
-> is already running.
->=20
-> Fixes: 59128c20a6a9 ("clk: qcom: clk-alpha-pll: Add support for controlli=
-ng Lucid PLLs")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 > ---
 
-Applied to clk-fixes
+Any Fixes tag?
+
+>  drivers/clk/qcom/gcc-sm6125.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
+> index 543cfab7561f..431b55bb0d2f 100644
+> --- a/drivers/clk/qcom/gcc-sm6125.c
+> +++ b/drivers/clk/qcom/gcc-sm6125.c
+> @@ -1121,7 +1121,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src =3D {
+>                 .name =3D "gcc_sdcc1_apps_clk_src",
+>                 .parent_data =3D gcc_parent_data_1,
+>                 .num_parents =3D ARRAY_SIZE(gcc_parent_data_1),
+> -               .ops =3D &clk_rcg2_ops,
+> +               .ops =3D &clk_rcg2_floor_ops,
+>         },
+>  };
+> =20
+> @@ -1143,7 +1143,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src =
+=3D {
+>                 .name =3D "gcc_sdcc1_ice_core_clk_src",
+>                 .parent_data =3D gcc_parent_data_0,
+>                 .num_parents =3D ARRAY_SIZE(gcc_parent_data_0),
+> -               .ops =3D &clk_rcg2_floor_ops,
+> +               .ops =3D &clk_rcg2_ops,
+>         },
+>  };
+> =20
+> --=20
+> 2.34.0
+>
