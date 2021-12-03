@@ -2,134 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16832467E87
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 20:56:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 720AC467F25
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 22:13:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353741AbhLCT7b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 14:59:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44122 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353705AbhLCT7a (ORCPT
+        id S1358124AbhLCVQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 16:16:58 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:43655 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353164AbhLCVQ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 14:59:30 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B6BC061751
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 11:56:06 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id f18so9050994lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 11:56:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4H1eLBe9s1nmrKvhDjTG1XwavkNeAlMoDJHIJMpv0no=;
-        b=RbgtGg0doc7ir1YCobj16fQLUkabnCClY11jyx/+4tLpMP6pKWDYot2dM4TuVXxZ2K
-         rEfbcpD9qpgM3ANOhJ7TvPCYpIy6KYfQ2VtUrPDd6Wf+2h+RJiprwZlh8IYuAAklbnhC
-         OH3e8MXAXahyh+C1iJRhimxhBvEi+YdAQnTB2FzZjdj4FJd18rXVY7tUTfRwCcYI9y0r
-         haLAzIwAfWsgqh2vS3tFwEvEmHL7VMqLj5U76YL4Zo5eft9u0MV21WHWHMlvZt++KnlS
-         pcCxsCLf6PBddzhht1uhQ9F6nb4bUqfjeds/gFHEdD9vb1q0WKLha+Z1QLlCx/9m8/8e
-         +oTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4H1eLBe9s1nmrKvhDjTG1XwavkNeAlMoDJHIJMpv0no=;
-        b=pwKekR+r8gwPyJ6PYXOYZ+hNICCicoPGMrKa3HBqAlNIjpkNfIwB+kjl0/WQDt37w7
-         N1Klsr75M/S80wmHEhyOpfUCoYrz/0q6bH5i2pM27iCHTgXX17vxXvDnmo8iOMoSaFCT
-         nQMyi2OVmHU6tSmWTbRqXGImAeTqFIfvlQVdXtSJDBQGWlUo5a5cEKHXhitm8fv4N61l
-         QCs6Ny5W63zJDV3xAgDS8oI47PbYE3onkoSKKqkO+QU4XREp69Q7vfrZ9c3sA7nu9Vkj
-         AUy/ttBA+z1vF4x96f3Da7nOo0wZ9WDK1kSCOdutYRn9eqV2XCj8nQtHli2LIOg3zTzH
-         FSqA==
-X-Gm-Message-State: AOAM532aqCkw/fGjeEVcmJtjwq6P821upIcdXMaq9OIlK3T/yroxm6m+
-        Sf0LVYn79e5OYcs1tWGkD8nQKw==
-X-Google-Smtp-Source: ABdhPJz93t7RN7l+dTqaVu2whsjRuX7bGg6LHYB05B+CsJzLMSvM4jypLNKNMW36naHc+f0JvzNARA==
-X-Received: by 2002:a05:6512:2350:: with SMTP id p16mr20243657lfu.482.1638561364332;
-        Fri, 03 Dec 2021 11:56:04 -0800 (PST)
-Received: from [192.168.1.8] ([185.24.52.156])
-        by smtp.gmail.com with ESMTPSA id j2sm482692lfr.109.2021.12.03.11.56.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Dec 2021 11:56:03 -0800 (PST)
-Message-ID: <234f41de-f34e-53ba-cf7e-e27f2bb21b6c@linaro.org>
-Date:   Fri, 3 Dec 2021 22:56:02 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2] drm/msm/dpu: removed logically dead code
-Content-Language: en-GB
-To:     Ameer Hamza <amhamza.mgc@gmail.com>, robdclark@gmail.com,
-        sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <ffdf9007-d2cc-2437-684c-66c00bb0ceda@linaro.org>
- <20211203193253.108813-1-amhamza.mgc@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211203193253.108813-1-amhamza.mgc@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Fri, 3 Dec 2021 16:16:58 -0500
+Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 9129ACED1F;
+        Fri,  3 Dec 2021 22:13:30 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Subject: Re: [PATCH v3] Bluetooth: btusb: Add one more Bluetooth part for
+ WCN6855
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1638525697-12436-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Fri, 3 Dec 2021 22:13:30 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, c-hbandi@codeaurora.org,
+        Hemantg <hemantg@codeaurora.org>,
+        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org,
+        Zijun Hu <quic_zijuhu@quicinc.com>
 Content-Transfer-Encoding: 7bit
+Message-Id: <099C52EF-D192-4090-A345-9A63BFF0F26D@holtmann.org>
+References: <1638525697-12436-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/12/2021 22:32, Ameer Hamza wrote:
-> Fixed coverity warning by removing the dead code
-> 
-> Addresses-Coverity: 1494147 ("Logically dead code")
-> 
-> Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
+Hi Zijun,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Add a USB ID 0489:e0e3 of HP to usb_device_id table for WCN6855.
 > 
+> -Device(0489:e0e3) from /sys/kernel/debug/usb/devices
+> T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=0489 ProdID=e0e3 Rev= 0.01
+> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+> I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+> 
+> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 > ---
-> Changes in v2:
-> removed the 'fail' part completely by moving DPU_ERROR and return statement in place of corresponding goto statements.
-> ---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    | 17 +++++------------
->   1 file changed, 5 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index 185379b18572..ddd9d89cd456 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -698,17 +698,17 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
->   {
->   	struct dpu_encoder_phys *phys_enc = NULL;
->   	struct dpu_encoder_irq *irq;
-> -	int i, ret = 0;
-> +	int i;
->   
->   	if (!p) {
-> -		ret = -EINVAL;
-> -		goto fail;
-> +		DPU_ERROR("failed to create encoder due to invalid parameter\n");
-> +		return ERR_PTR(-EINVAL);
->   	}
->   
->   	phys_enc = kzalloc(sizeof(*phys_enc), GFP_KERNEL);
->   	if (!phys_enc) {
-> -		ret = -ENOMEM;
-> -		goto fail;
-> +		DPU_ERROR("failed to create encoder due to memory allocation error\n");
-> +		return ERR_PTR(-ENOMEM);
->   	}
->   
->   	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
-> @@ -748,11 +748,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
->   	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
->   
->   	return phys_enc;
-> -
-> -fail:
-> -	DPU_ERROR("failed to create encoder\n");
-> -	if (phys_enc)
-> -		dpu_encoder_phys_vid_destroy(phys_enc);
-> -
-> -	return ERR_PTR(ret);
->   }
-> 
+> drivers/bluetooth/btusb.c | 3 +++
+> 1 file changed, 3 insertions(+)
 
+patch has been applied to bluetooth-next tree.
 
--- 
-With best wishes
-Dmitry
+Regards
+
+Marcel
+
