@@ -2,94 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E46E1466EEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 02:03:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E708466F29
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 02:38:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349882AbhLCBGf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Dec 2021 20:06:35 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:58890 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349868AbhLCBGe (ORCPT
+        id S1377955AbhLCBlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Dec 2021 20:41:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47488 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1377959AbhLCBl2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Dec 2021 20:06:34 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 33694B825A0;
-        Fri,  3 Dec 2021 01:03:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F37C00446;
-        Fri,  3 Dec 2021 01:03:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638493388;
-        bh=0vDgThgsCSpVdbfkrhNOTirLeaHU+i6DfoV0+C3plYo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=QX4UlwM2kClLpPwBZt9QZvfxibm0tWQc7JsGlYAVCjMX4ZtDKTK50cJ3JsdEcymp7
-         M+dl5siMSw39SB3psRIhtxd4EwWb5kzTKwgDIdg1ha8QqMiEn3F1OGbS8wNJbaQuoi
-         xkqei9qtYQDlH02rr8pa/V8XRAYvAiRwlqbYizhnNyQJDseOBsWnfPL5ZTCXDe/7yN
-         RD9MUgQGN+Vkn8wUII/kLay4zyzxvlF/s97s3/qVpsh9NmfYTlMw9lAMxuvnjqeEN6
-         VAhD/dL0R/0HAAZMZ1TVAXLT0yC/xvwGMw2v5ZvTcDqPzvG5H0qVeJL0XbnxWD8U5q
-         3GgUaMdhFTK2A==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211130212015.25232-1-martin.botka@somainline.org>
-References: <20211130212015.25232-1-martin.botka@somainline.org>
-Subject: Re: [PATCH] clk: qcom: sm6125-gcc: Swap ops of ice and apps on sdcc1
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        paul.bouchara@somainline.org,
-        Martin Botka <martin.botka@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 2 Dec 2021 20:41:28 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09242C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Dec 2021 17:37:30 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id w6-20020a9d77c6000000b0055e804fa524so2123649otl.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Dec 2021 17:37:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0IX7VBvn7NWi1LknLBHaVLXoYOBoRawJUhOn065lnpw=;
+        b=JRJH2qlyWjZbCGhQsj/8MZq6Lwn0fIuLp/Dc1Samp2uQze8qQJtkyMuelJkep6VxAf
+         07DonGQBLaXjhnXmP5HDrxEoj95Z2AchZFeLQvFnk22ChVo1NeijWnOr3iHKAddd8NNu
+         LiunLfhDqJOW04xaWEtTAM5dSiBHXfOzdZ7PsoSu54qdleqHQDB17OXSzR+RSOrtmoAX
+         uwl4McTrMieSNk25VmvwZsDwkDOAp6OpuHz45ZspbhyVmXd0z8iwd0AL0LMIPsmAXAgm
+         zH99zOpZnkJPsBTlEFEs1z6GR1m3Bwk0xyg3ViNzmybwqemjcfbtYlfeT+XJqJSpp5HN
+         qGUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0IX7VBvn7NWi1LknLBHaVLXoYOBoRawJUhOn065lnpw=;
+        b=7YaiULpiL35yPLWG8vvpvCTd8jMHny1aPm2EN/63VzGNMmhtupmuoMkJhencY1DJsW
+         iWwk3w9dNBEn7Ks2k781SoLDdnR9anIxQkGqsZ8/P8NegdzNieBZZJvwiOXXKla+oOuw
+         fw0Q+ii7HcTNj5BAyILE4lJ6JEXUv6FW+3TTeueVPrgnm2qYIqv1c/TACZPanhsoWA1N
+         Kh9fizEs4Y+Xbx4T86u6wKRL+cD3swmTSrqUSwDDa2l0M0ET0bbjWarZcUVKj4iBZ5h9
+         vPz2AtDhFk7lCRjJ1HRbNK++euqEbq4Me0i9y8FsBk6squlJUvXZ68F1Tdssqb/v+9ED
+         iatA==
+X-Gm-Message-State: AOAM530F/aKVjaFnJ2HQ2/okNOrlB7/Fk0/oJuCAVmOSHKWsMQjwtSNP
+        7xPg/ik0+ek2n8ckP8Mm/SRm1w==
+X-Google-Smtp-Source: ABdhPJzb/5EkCMdfjL4J+cmlmwPkC7eXYxem6MJ509mG20Wcev7hszG6NX8Sle8RxgzOOMQ8KUN7SA==
+X-Received: by 2002:a9d:5185:: with SMTP id y5mr13898744otg.110.1638495450204;
+        Thu, 02 Dec 2021 17:37:30 -0800 (PST)
+Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e26sm321323oog.46.2021.12.02.17.37.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Dec 2021 17:37:29 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-To:     Martin Botka <martin.botka@somainline.org>, martin.botka1@gmail.com
-Date:   Thu, 02 Dec 2021 17:03:07 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211203010308.C7F37C00446@smtp.kernel.org>
+Subject: [PATCH] MAINTAINERS: Add entry for Qualcomm clock drivers
+Date:   Thu,  2 Dec 2021 17:39:01 -0800
+Message-Id: <20211203013901.3460496-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Martin Botka (2021-11-30 13:20:15)
-> Without this change eMMC runs at overclocked freq.
-> Swap the ops to not OC the eMMC.
->=20
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> ---
+Most SoC specific clock drivers are picked by respective SoC maintainer
+and then sent to the clock maintainers on their way upstream.
 
-Any Fixes tag?
+This has however not been the case for the Qualcomm clock drivers -
+which doesn't actually have a maintainer per MAINTAINERS and where the
+framework maintainers have just carried the Qualcomm effort as well,
+presumably as a result of Stephen's history.
 
->  drivers/clk/qcom/gcc-sm6125.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
-> index 543cfab7561f..431b55bb0d2f 100644
-> --- a/drivers/clk/qcom/gcc-sm6125.c
-> +++ b/drivers/clk/qcom/gcc-sm6125.c
-> @@ -1121,7 +1121,7 @@ static struct clk_rcg2 gcc_sdcc1_apps_clk_src =3D {
->                 .name =3D "gcc_sdcc1_apps_clk_src",
->                 .parent_data =3D gcc_parent_data_1,
->                 .num_parents =3D ARRAY_SIZE(gcc_parent_data_1),
-> -               .ops =3D &clk_rcg2_ops,
-> +               .ops =3D &clk_rcg2_floor_ops,
->         },
->  };
-> =20
-> @@ -1143,7 +1143,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src =
-=3D {
->                 .name =3D "gcc_sdcc1_ice_core_clk_src",
->                 .parent_data =3D gcc_parent_data_0,
->                 .num_parents =3D ARRAY_SIZE(gcc_parent_data_0),
-> -               .ops =3D &clk_rcg2_floor_ops,
-> +               .ops =3D &clk_rcg2_ops,
->         },
->  };
-> =20
-> --=20
-> 2.34.0
->
+Move the maintainership of the Qualcomm clock drivers to use the same
+model as other SoC vendors and document the ownership by actually
+introducing an entry in MAINTAINERS.
+
+Cc: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ MAINTAINERS | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 88fcc4e7ff37..a644e2a5e79f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -15671,6 +15671,15 @@ F:	Documentation/admin-guide/media/qcom_camss.rst
+ F:	Documentation/devicetree/bindings/media/*camss*
+ F:	drivers/media/platform/qcom/camss/
+ 
++QUALCOMM CLOCK DRIVERS
++M:	Bjorn Andersson <bjorn.andersson@linaro.org>
++L:	linux-arm-msm@vger.kernel.org
++S:	Supported
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
++F:	Documentation/devicetree/bindings/clock/qcom,*
++F:	drivers/clk/qcom/
++F:	include/dt-bindings/clock/qcom,*
++
+ QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER
+ M:	Niklas Cassel <nks@flawful.org>
+ L:	linux-pm@vger.kernel.org
+-- 
+2.33.1
+
