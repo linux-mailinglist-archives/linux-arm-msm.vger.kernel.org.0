@@ -2,120 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E55A2468007
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Dec 2021 23:54:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23DDB468032
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 00:16:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344064AbhLCW51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 17:57:27 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:54051 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233523AbhLCW51 (ORCPT
+        id S1376524AbhLCXUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Dec 2021 18:20:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233523AbhLCXUA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 17:57:27 -0500
+        Fri, 3 Dec 2021 18:20:00 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C55C061751
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 15:16:35 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id j3so8874550wrp.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 15:16:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638572042; x=1670108042;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=e4qZ64tdPXRrTX21Jx7vS5boXNuRbN7XPdFg7iiO9O4=;
-  b=Uu1pLx3XUFqqMi5b8KgtB6oQXMTcCWt1wHOOzTjHzdlW2DZmOxp0HJHH
-   fWhEVBox8FisyII77DJ5WdlSFAepLGH7FSkSOV/XwMqB4CQrP1GzW3zjY
-   7MQx1VZ+3HxIXtp6N04P+4AGxOdVXKV/F1hJvNszlBlRU4cZeu0SIki34
-   c=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Dec 2021 14:54:02 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Dec 2021 14:54:01 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 3 Dec 2021 14:54:01 -0800
-Received: from [10.110.99.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 3 Dec 2021
- 14:54:00 -0800
-Message-ID: <7c686adc-4288-f29a-c82a-5decab8db703@quicinc.com>
-Date:   Fri, 3 Dec 2021 14:53:59 -0800
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=sMVXZmEK+H09avKUHH3w2S8Bcher2YrYywIf+YnGSP0=;
+        b=IIFQ6b8AiRXlqvrxU56jGoRy3pBsNns6c9tQaXj9poQq7AYoj0Ds9OKJJOqVhZWf6/
+         kPk8Y4rnSqUXjrmHKX31+wmgjVH6Fg+iHWarcy1BtKzyyJWbpCHdZhtqP/0UljLzF9fT
+         EP+BNfCmVB0tr3buEu8pjtZg/ogNm8cRVkzX7mdDLHYUXuVvcPRAytCKATasIa7pd278
+         gIvS5fMg5NqegT7QqUeZQkkDvOPeHrj25hqaRJlrQiJOSJrNBO47q9lf8dNeSYQErBvZ
+         Wfg3wmxZkMqEJti3bUhvETGEUIuI0TCNcwtOBWWhar5OmCQ8i26UPinjlY92O7tgrMkp
+         ih6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=sMVXZmEK+H09avKUHH3w2S8Bcher2YrYywIf+YnGSP0=;
+        b=MaW6Jf9pFdMyTKqPqIu+aEcldKZFC69XYnS6ZV03OsFZ6eVvKhFw/xceTj0aRUexEj
+         Y56g/TtUGmnhw5C7A2CMhWdTSAgt/9fp4rQJzMo9MivwjrBFTGA6s7tiiVFX64fh/xXq
+         UwXQenKVQ4hif/2snABPxJzt1Of9y2IwsTrtjtTFQueDJQ5tDU3QJDAkSfQ9RIZUoQ6G
+         Qyvk2+s2Cn4t+JNUQG83S+1FWzP3hA1tNtdywaNViN9kpE2ISviH9Q5ivpNzn+EJ2wjs
+         TXxRaBvmC0gCu2iCa2gxcqo96Kq4wIz2+e+FbRctUYW2tI0oYZci5Z/dugjUHjYmYl0n
+         8zQA==
+X-Gm-Message-State: AOAM531UPvOpJzY+4t9RJZZFi5OjSJB0PWi1Vxcd9r6eCACKVhQNWR/T
+        +E8/QF8Qmqw2DWOfC1saMchqk5Hz2jBWPLbbpQw=
+X-Google-Smtp-Source: ABdhPJyLAGpNXPQUPvtrBdaKeDpzEQ3RWVxmmxjnSW2q7rsgkpMWhe8cLqhb2GVEe2tozKIMB7gs7uYItk8c9OhYIDQ=
+X-Received: by 2002:adf:f786:: with SMTP id q6mr25178077wrp.356.1638573394620;
+ Fri, 03 Dec 2021 15:16:34 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v4] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-References: <1636493893-7600-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n51-=qTWfBVPFEmpEb7md6cg5O__bhydXTUb+=8dRqCuqg@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n51-=qTWfBVPFEmpEb7md6cg5O__bhydXTUb+=8dRqCuqg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Received: by 2002:a05:6000:549:0:0:0:0 with HTTP; Fri, 3 Dec 2021 15:16:34
+ -0800 (PST)
+Reply-To: mrsbillchantal2022@mail.com
+From:   "Mrs. bill Chantal" <carlosagongo@gmail.com>
+Date:   Sat, 4 Dec 2021 00:16:34 +0100
+Message-ID: <CABQ_Ech0F0eDaZHhnJeWV4fKKsenfA1P_xftcPmsERZsjJ3kRQ@mail.gmail.com>
+Subject: Dear Friend
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dear Friend
+You have been compensated with the sum of 5.4 million dollars in this
+united nation the payment will be Issue into ATM visa card and send to
+you from the bank  we need your address, passport and your Whatsapp
+Number.
+Thanks
 
-On 12/2/2021 6:41 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-11-09 13:38:13)
->> From: Kuogee Hsieh <khsieh@codeaurora.org>
->>
->> Current DP drivers have regulators, clocks, irq and phy are grouped
->> together within a function and executed not in a symmetric manner.
->> This increase difficulty of code maintenance and limited code scalability.
->> This patch divided the driver life cycle of operation into four states,
->> resume (including booting up), dongle plugin, dongle unplugged and suspend.
->> Regulators, core clocks and irq are grouped together and enabled at resume
->> (or booting up) so that the DP controller is armed and ready to receive HPD
->> plugin interrupts. HPD plugin interrupt is generated when a dongle plugs
->> into DUT (device under test). Once HPD plugin interrupt is received, DP
->> controller will initialize phy so that dpcd read/write will function and
->> following link training can be proceeded successfully. DP phy will be
->> disabled after main link is teared down at end of unplugged HPD interrupt
->> handle triggered by dongle unplugged out of DUT. Finally regulators, code
->> clocks and irq are disabled at corresponding suspension.
->>
->> Changes in V2:
->> -- removed unnecessary dp_ctrl NULL check
->> -- removed unnecessary phy init_count and power_count DRM_DEBUG_DP logs
->> -- remove flip parameter out of dp_ctrl_irq_enable()
->> -- add fixes tag
->>
->> Changes in V3:
->> -- call dp_display_host_phy_init() instead of dp_ctrl_phy_init() at
->>          dp_display_host_init() for eDP
->>
->> Changes in V4:
->> -- rewording commit text to match this commit changes
->>
->> Fixes: e91e3065a806 ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
-> Can you please resend this based on the msm-next branch[1]? It doesn't
-> apply now that other patches have been applied.
->
-> [1] https://gitlab.freedesktop.org/drm/msm.git msm-next
-
-Stephen, below patches  missed at msm-next branch. Are there merged soon?
-
-1) WIP: drm/msm/dp: Detect the connector type based on reg property
-
-2) WIP: handle no-hpd property in DP driver
-
-
->>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 87 ++++++++++++++++---------------------
->>   drivers/gpu/drm/msm/dp/dp_ctrl.h    |  9 ++--
->>   drivers/gpu/drm/msm/dp/dp_display.c | 83 ++++++++++++++++++++++++++---------
->>   3 files changed, 105 insertions(+), 74 deletions(-)
->>
+Mrs.Bill Chantal
