@@ -2,103 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B7B2468794
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 21:55:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F433468802
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 23:03:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347285AbhLDU6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Dec 2021 15:58:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
+        id S1345372AbhLDWGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Dec 2021 17:06:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243137AbhLDU6p (ORCPT
+        with ESMTP id S229490AbhLDWGt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Dec 2021 15:58:45 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5DDC061751;
-        Sat,  4 Dec 2021 12:55:19 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id u1so13426286wru.13;
-        Sat, 04 Dec 2021 12:55:19 -0800 (PST)
+        Sat, 4 Dec 2021 17:06:49 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930DBC061751;
+        Sat,  4 Dec 2021 14:03:23 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id r26so15456429lfn.8;
+        Sat, 04 Dec 2021 14:03:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NTCctj97Zxd8lKdqZzyesNpAWdRl9W1/NJ/qFrT1pRE=;
-        b=fS0oh9ctQzndOqm0jVP3O08T57VGure0mAxIWUdyUTkVlAf+/OIAft2yHGV+G7RMct
-         eXtTq44Ex7CdmXw/veunUzn7H3xfo02CgN0RH9Z49vLn7Ri+X/l2lX8c8bHY4weRhBOd
-         Mr4fes+Exjy0dg13PCofcZEVqnRkKEk6txiVaYkgBgS5S1hMrS3G9RVIONVJnTOj++4p
-         L2VB9NcdumbWT37mPYJycdTk8MWBfONImVd9C0KE5fm8UKkVQt1WaakRUHdfZvgJRA26
-         9zimv0CIEYWWbGmr4QxwsCZFo3n26m4ZGtV9GnnD0WkGKCI7KT0k3NtMtjV/ds2e9vju
-         4h3g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eMHe3Mr6LOidgPDoC/df15qM+1WZASow9qgRZygvAe0=;
+        b=GJpxZnlAHgun4AwI+BDe9LpvpzMYi5ArV4gYl8b0TGTDbkFfWB/NBR+fz1E/MD3vVR
+         Ym14oe7Y6xHO3bjDzPS4P8iZTlxP5yZpXvDT0m7Uh0uHK2wFUdhI8bJm21lr5B+wl80O
+         7EsYsMaLUp8lYNQjxE+lbJ6WZT4TFQPZhxSY8onNZgd8EI9eGhJ14e2FRoP/yljh98la
+         NEEzD+QY7z1RkwQjek/UubPm1Ed09S+1y3xg2qrCiEthqubzlYVO99HnZtvq9zhtMafm
+         sm+1JA64jFBWD8w3GF/mTgXPQ2plmR8cOzaJG99qw8y3KUDtD47okb41CoxkEH/UoT2u
+         6S0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NTCctj97Zxd8lKdqZzyesNpAWdRl9W1/NJ/qFrT1pRE=;
-        b=LAMa/wtS+jrXeGi9e0eRAJB54vYDY9Z9GMZbmFUx4F+50YK4XrCISkGdm1UZZRRgFd
-         fgx1jKBbie0ln+jTxFj7zF65/XqO8N1AJiqEQOZE4xL5z+AsYZPaN5KqVFGG5iGkT6oC
-         M05QTvrRBqS3LqS+9ou8JeJkEAn3pCi/K+dj7lyb58/J5pPQBrTZXWrVL/PPUfbGJ3Vx
-         y3hdjfqYAPGxBnA7ZuX1q3aC4Jthbfql1fKQVV3EYjEzLuE2BbH5buJy4kj/G2mzVqs1
-         2YgWIx9fFNe0FrzuW3svityhcL63T0KMhdWqW/c/x0GaDxOkqcDj2adg+HGFQ6fmddN1
-         /Uew==
-X-Gm-Message-State: AOAM533PZNTtnv1QtPJpB3NYEuf+ivdwsNII9uThBLfSF3TpupbQIs4O
-        cPSM+7Jcm+78s6yHWm0vcdf+t9+JhE5UjIsb
-X-Google-Smtp-Source: ABdhPJyw4cDNytGSmcjYD5bX6H8SxpgosFXNztNh0HXmh0oSmGbkFx1V1FuYfQIcDSFdjG28Y5X9RQ==
-X-Received: by 2002:a5d:4909:: with SMTP id x9mr32215147wrq.313.1638651317618;
-        Sat, 04 Dec 2021 12:55:17 -0800 (PST)
-Received: from localhost.localdomain ([39.48.154.188])
-        by smtp.gmail.com with ESMTPSA id l5sm8826304wms.16.2021.12.04.12.55.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eMHe3Mr6LOidgPDoC/df15qM+1WZASow9qgRZygvAe0=;
+        b=UYEc6ekIfznkmf5UFb+bpPMVVEGxBUJBT6wWqVnzsvospOZJucOXnKSZX83hWxgH7C
+         mXA+x2lUcqAL2g5HUZIigPObm/6T9IuLRSxgUdKcHY9wN2T1aWfkaaPHaA9W6ljDnsSp
+         P+UdB53MduKDZUOFKlgGqj4bwLZu/dQR49wh7iMo5c3zNSaCdn6NJvtKFMB5FxE3thYM
+         U1/KiMX9DiDTSEKkPn14ySxOsuht4/WV8m/bQpnsYOdjHLoUZOGf2k/92yP5xSo82IzQ
+         gDzvHiv0Le7cMz5Uk2WjCrUmEF+ekmCbYMycbDF7fK1bMgYCzcvfD4g827zpDvGIj8cu
+         7CyQ==
+X-Gm-Message-State: AOAM531T98Z/b9HOZl2Lpv2uAGLkGiWS6mD8w4HZP5Bd1uWvUuaB6vFa
+        6IdTbwgTeYABknLXHR+BUek=
+X-Google-Smtp-Source: ABdhPJxL74LhMegN9fxBM+mprGiB+kzE/FjfYopkbFL7RPUSNJQUlackrL9jlGJehL6c65MK0xi9Pg==
+X-Received: by 2002:a05:6512:3212:: with SMTP id d18mr25827231lfe.285.1638655401893;
+        Sat, 04 Dec 2021 14:03:21 -0800 (PST)
+Received: from localhost.localdomain (h-155-4-221-129.NA.cust.bahnhof.se. [155.4.221.129])
+        by smtp.gmail.com with ESMTPSA id t19sm881143lfl.163.2021.12.04.14.03.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Dec 2021 12:55:17 -0800 (PST)
-From:   Ameer Hamza <amhamza.mgc@gmail.com>
-To:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kieran.bingham@ideasonboard.com,
-        amhamza.mgc@gmail.com
-Subject: [PATCH v2] media: venus: vdec: fixed possible memory leak issue
-Date:   Sun,  5 Dec 2021 01:55:04 +0500
-Message-Id: <20211204205504.6550-1-amhamza.mgc@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <163864977875.3153335.18099399866051099554@Monstersaurus>
-References: <163864977875.3153335.18099399866051099554@Monstersaurus>
+        Sat, 04 Dec 2021 14:03:21 -0800 (PST)
+From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>
+Subject: [PATCH] PCI: qcom-ep: Constify static dw_pcie_ep_ops
+Date:   Sat,  4 Dec 2021 23:03:16 +0100
+Message-Id: <20211204220316.88655-1-rikard.falkeborn@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixed coverity warning by freeing the allocated memory before return
+The only usage of pci_ep_ops is to assign its address to the ops field
+in the dw_pcie_ep struct which is a pointer to const struct dw_pcie_ep_ops.
+Make it const to allow the compiler to put it in read-only memory.
 
-Addresses-Coverity: 1494120 ("Resource leak")
-
-Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
-
+Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
 ---
-Changes in v2:
-move kfree() immediately after kfree() as suggested by Kieran Bingham
----
- drivers/media/platform/qcom/venus/helpers.c | 2 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 84c3a511ec31..0bca95d01650 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -189,7 +189,6 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
- 		buf->va = dma_alloc_attrs(dev, buf->size, &buf->da, GFP_KERNEL,
- 					  buf->attrs);
- 		if (!buf->va) {
--			kfree(buf);
- 			ret = -ENOMEM;
- 			goto fail;
- 		}
-@@ -209,6 +208,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
- 	return 0;
- 
- fail:
-+	kfree(buf);
- 	venus_helper_free_dpb_bufs(inst);
- 	return ret;
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 7b17da2f9b3f..c4c78ba7fba5 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -619,7 +619,7 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
+ 		dw_pcie_ep_reset_bar(pci, bar);
  }
+ 
+-static struct dw_pcie_ep_ops pci_ep_ops = {
++static const struct dw_pcie_ep_ops pci_ep_ops = {
+ 	.ep_init = qcom_pcie_ep_init,
+ 	.raise_irq = qcom_pcie_ep_raise_irq,
+ 	.get_features = qcom_pcie_epc_get_features,
 -- 
-2.25.1
+2.34.1
 
