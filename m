@@ -2,123 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 198D4468342
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 08:59:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D17A14684AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 13:11:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354890AbhLDICq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Dec 2021 03:02:46 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:12205 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240517AbhLDICq (ORCPT
+        id S1384876AbhLDMPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Dec 2021 07:15:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354819AbhLDMO6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Dec 2021 03:02:46 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638604761; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=RPYFRq2tetZ3XfrNaT2ZW8JmIgt6VIgZNLFs/5bLiyw=; b=uOmXhMS2/u6h7f0PR4bXf77c8QZi6dHIr9V2XHU3A7o6XWV35u/TXVKhWs+RYx8SXdw1DyWD
- Z1SOYhUU45iKQ2NFzqYKKC+bnlOZVzOcO8PfaWg2vOLfYhB7Oqf5ggvTrc020XRlnoGy8TB/
- t7IpnPSOFaKBdPHgPiGWMi6RrWw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 61ab1fd8903341b2e49c70f5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 04 Dec 2021 07:59:20
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 62BF0C43619; Sat,  4 Dec 2021 07:59:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.29.24] (unknown [49.37.168.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7A07C4338F;
-        Sat,  4 Dec 2021 07:59:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B7A07C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v8 09/10] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
-To:     Rob Herring <robh+dt@kernel.org>,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
-Cc:     alsa-devel@alsa-project.org, bjorn.andersson@linaro.org,
-        judyhsiao@chromium.org, tiwai@suse.com,
-        linux-kernel@vger.kernel.org, bgoswami@codeaurora.org,
-        agross@kernel.org, plai@codeaurora.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>,
-        perex@perex.cz, devicetree@vger.kernel.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        rohitkr@codeaurora.org, broonie@kernel.org,
-        srinivas.kandagatla@linaro.org
-References: <1638547658-22032-1-git-send-email-srivasam@codeaurora.com>
- <1638547658-22032-10-git-send-email-srivasam@codeaurora.com>
- <1638574455.248037.1043006.nullmailer@robh.at.kernel.org>
- <CAL_JsqKf4Y84+_PQqhwMEEiJNrR92urMUYSqYTEU0_c7fYnyhQ@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <07f5a5f2-cdf5-75de-9635-0edcd5e5c905@codeaurora.org>
-Date:   Sat, 4 Dec 2021 13:29:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Sat, 4 Dec 2021 07:14:58 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE03BC061751;
+        Sat,  4 Dec 2021 04:11:32 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u1so11519805wru.13;
+        Sat, 04 Dec 2021 04:11:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SA05gaA86ga0WnsWblVWGRk46vKTY7ejtnjWmzpvNMc=;
+        b=joDVMtGbkNsXydRbF2YXC0zcNZWbgqis5ocf0FfBBrcR/pUP51sB6rKuN9Xxm0cNoD
+         L8MCWyuQxQuBQocDKqS1BVcJhDKueN58XVn3F06eC9TjIoAItGomCRvgPMe+cba8i9FM
+         hF2XXbrdbeEP+nkgdKBjiKVcnh7GT4vDvN37Li1ELryFdRvpfc0eQpCwPK16KnBkQnHc
+         y0UxUp6alMXsCgkQDKtU4h08F8qoSbr1SR8eYJmAjPYuZK9ijCfRaNqofS26ruLCpYi0
+         3GJ0GJ/4o8exuqpZMUWD7Ky3umnh2pgmrjUxajBbcjKbd1QICE8PzH4aF3KaAStkvacE
+         6fSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SA05gaA86ga0WnsWblVWGRk46vKTY7ejtnjWmzpvNMc=;
+        b=RxepsC2sy7SLOzrBaX8fA+sQF5tqQSOiFNcKQ5COQgT7PJLIIC4JEpQn9X/LDed4CS
+         aOrR8CF7eiqSNZFJr7x/rlJiZ5nheU7fk0z+EnEXY4vsTcMcjKgdUC3pZh0xGWilVYRB
+         1E2YPfISOj99D8p83/H0tYdamyi6xYaQzu+vGmveIcqgV9vBnzEn5PPa7tsMe/IOBQEu
+         GbV11OFZ46guRasmjUv2SACmAWN+ArND6heOnP2xK+ScopqOo37hgVEQjmG/54F40YFI
+         zz1HgrUAw6DXxteOT3VyJ+2tVNvmxAIeOgoTmeSccyt/ZZpJ8urLtDmcdnlnoH5jugHZ
+         ezzA==
+X-Gm-Message-State: AOAM533JVJed5i/E7a/+JRPTJtfVRmOsYxRkh4pTkcPTEDP7rYJiyyv7
+        QXEd7jv5RUq+lPUPO+8qyW8=
+X-Google-Smtp-Source: ABdhPJw6I8weYg2ZSkP9PwcmLOJls7gRm5yFYrdnUjJ5EtQp4X+o1tRLoJcIuts5o4xNonHGM52LAA==
+X-Received: by 2002:adf:edc1:: with SMTP id v1mr29420024wro.170.1638619891417;
+        Sat, 04 Dec 2021 04:11:31 -0800 (PST)
+Received: from localhost.localdomain ([39.48.153.81])
+        by smtp.gmail.com with ESMTPSA id u23sm5444935wmc.7.2021.12.04.04.11.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Dec 2021 04:11:31 -0800 (PST)
+From:   Ameer Hamza <amhamza.mgc@gmail.com>
+To:     stanimir.varbanov@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, amhamza.mgc@gmail.com
+Subject: [PATCH] media: venus: vdec: fixed possible memory leak issue
+Date:   Sat,  4 Dec 2021 17:11:23 +0500
+Message-Id: <20211204121123.22180-1-amhamza.mgc@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqKf4Y84+_PQqhwMEEiJNrR92urMUYSqYTEU0_c7fYnyhQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Fixed coverity warning by freeing the allocated memory before return
 
-On 12/4/2021 5:08 AM, Rob Herring wrote:
-Thanks for your time and notifying the issue!!!
-> On Fri, Dec 3, 2021 at 5:34 PM Rob Herring <robh@kernel.org> wrote:
->> On Fri, 03 Dec 2021 21:37:37 +0530, Srinivasa Rao Mandadapu wrote:
->>> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->>>
->>> Add bindings for sc7280 lpass cpu driver which supports
->>> audio over i2s based speaker, soundwire based headset, msm dmics
->>> and HDMI Port.
->>>
->>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->>> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->>> ---
->>>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 70 +++++++++++++++++++---
->>>   1 file changed, 62 insertions(+), 8 deletions(-)
->>>
->> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
->> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->>
->> yamllint warnings/errors:
->>
->> dtschema/dtc warnings/errors:
->> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg: [[0, 1658351616, 0, 425984], [0, 1659895808, 0, 167936]] is too short
->>          From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-> Are you running the checks before you send out your patches. Because
-> it seems like you keep sending things with the same errors.
->
-> If there's errors, I'm not going to review this. If you need help
-> getting it to work, then ask.
-Actually, the too short name errors are coming for the existing names 
-also. could you please suggest on how to go ahead?
->
-> And what's with your email setup? codeaurora.com bounces.
+Addresses-Coverity: 1494120 ("Resource leak")
 
- From December 3 Qualcomm mail domain got changed to quicinc.com from 
-codeaurora.org.
+Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
+---
+ drivers/media/platform/qcom/venus/helpers.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-May be that's the reason for bouncing.
-
->
-> Rob
-
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 84c3a511ec31..344a42853898 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -197,6 +197,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+ 
+ 		id = ida_alloc_min(&inst->dpb_ids, VB2_MAX_FRAME, GFP_KERNEL);
+ 		if (id < 0) {
++			kfree(buf);
+ 			ret = id;
+ 			goto fail;
+ 		}
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.25.1
 
