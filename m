@@ -2,114 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 07C77468221
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 04:16:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 198D4468342
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 08:59:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384141AbhLDDUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Dec 2021 22:20:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56994 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1384139AbhLDDUP (ORCPT
+        id S1354890AbhLDICq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Dec 2021 03:02:46 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:12205 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240517AbhLDICq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Dec 2021 22:20:15 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4184AC061359
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Dec 2021 19:16:50 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso5882534ots.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Dec 2021 19:16:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=YmLyXgmtxlMO+L5DYAu6LZZ3Lz1Tih5zRqjYLEDPQpE=;
-        b=mY26ZkDvw5nZ7tN1moPi2UpMRaI7wJaNa0C2/TzJ0u7h4Hl0RPvqZsSO1PCEd8fyfC
-         jXChgp2m1scwNWIqh3qC+k3IinN/v6jdGcq5FVbdejVWfdUdRgbacX8L7bOG6r3mCBCn
-         v2pV1618UPGa0w8BJ4CAY3RIe27Ypo1x1mL5x2StyrEWh8dA+/wLM2qWsauzJRBPceeF
-         do8Lz8KM9xT8XlI6lxG/30+lKdMVZ2CVey0hWBVGvOYKNeI/GYuS9W8nWW1/Is6aMBdf
-         MQ0Zl1ImQ32Y/4ndoxQRMyjWbP5fZarxp0o60GxmWgCo9IrxcWi2Avis3uKtH51rJFyT
-         FW1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=YmLyXgmtxlMO+L5DYAu6LZZ3Lz1Tih5zRqjYLEDPQpE=;
-        b=0988zZUgvSa9sQrBicMrI+rwWe3Gg5DygIjWQDUCXXcKcL4YIZH5ok/ZcVlJ9Zgval
-         zr8lqUVZgemcftHXdkacQ7zhE8ULffKfOIQEmeNz5qynY8wmqXrV7kfv+suLL3+dhrTY
-         pckEnSO9NencorvfeFiPvJtvsLfhFSvOpTzB8VtpTF57Pl6Fy1kSUDyD+7OwqlZpEhsI
-         HOOdHRakz2XcpYxEmUi2Krv38Gov90vA+PCdQz+0uEiLJqTG3WsmCKxTt2+5RoPPQFZb
-         pNOP39eRFUUDvbqNBM2p97cs6F0Ryz9q1JrQWIXZPlLvv3GmqT8a6Z4oLxfsQWtSFkcr
-         HbHA==
-X-Gm-Message-State: AOAM532aMN0nVOKfILvd3eEa24C/BGk4z1uTH8B7dOe8RBOyhZ+smZAi
-        G8ESKnnBoVl8nwOTZWdzcw3tWg==
-X-Google-Smtp-Source: ABdhPJwjYwFZypL6KKboRlPe127KlLQjOWE+b/dda4B6oFxcNi0mgQEwYRXwPkU/7XQIPgPzVRQqRw==
-X-Received: by 2002:a9d:67d5:: with SMTP id c21mr19525756otn.128.1638587809540;
-        Fri, 03 Dec 2021 19:16:49 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id d3sm977300otc.0.2021.12.03.19.16.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Dec 2021 19:16:49 -0800 (PST)
-Message-ID: <1c366d77-49aa-07f3-4801-9374ad7e6016@kali.org>
-Date:   Fri, 3 Dec 2021 21:16:47 -0600
+        Sat, 4 Dec 2021 03:02:46 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638604761; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=RPYFRq2tetZ3XfrNaT2ZW8JmIgt6VIgZNLFs/5bLiyw=; b=uOmXhMS2/u6h7f0PR4bXf77c8QZi6dHIr9V2XHU3A7o6XWV35u/TXVKhWs+RYx8SXdw1DyWD
+ Z1SOYhUU45iKQ2NFzqYKKC+bnlOZVzOcO8PfaWg2vOLfYhB7Oqf5ggvTrc020XRlnoGy8TB/
+ t7IpnPSOFaKBdPHgPiGWMi6RrWw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 61ab1fd8903341b2e49c70f5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 04 Dec 2021 07:59:20
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 62BF0C43619; Sat,  4 Dec 2021 07:59:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.29.24] (unknown [49.37.168.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7A07C4338F;
+        Sat,  4 Dec 2021 07:59:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B7A07C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v8 09/10] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+To:     Rob Herring <robh+dt@kernel.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
+Cc:     alsa-devel@alsa-project.org, bjorn.andersson@linaro.org,
+        judyhsiao@chromium.org, tiwai@suse.com,
+        linux-kernel@vger.kernel.org, bgoswami@codeaurora.org,
+        agross@kernel.org, plai@codeaurora.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>,
+        perex@perex.cz, devicetree@vger.kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        rohitkr@codeaurora.org, broonie@kernel.org,
+        srinivas.kandagatla@linaro.org
+References: <1638547658-22032-1-git-send-email-srivasam@codeaurora.com>
+ <1638547658-22032-10-git-send-email-srivasam@codeaurora.com>
+ <1638574455.248037.1043006.nullmailer@robh.at.kernel.org>
+ <CAL_JsqKf4Y84+_PQqhwMEEiJNrR92urMUYSqYTEU0_c7fYnyhQ@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <07f5a5f2-cdf5-75de-9635-0edcd5e5c905@codeaurora.org>
+Date:   Sat, 4 Dec 2021 13:29:11 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.3.2
-Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
+In-Reply-To: <CAL_JsqKf4Y84+_PQqhwMEEiJNrR92urMUYSqYTEU0_c7fYnyhQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Amit Nischal <anischal@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
- <9f9ad753-a97c-b11c-4b8b-5ddad0508e0e@kali.org>
-In-Reply-To: <9f9ad753-a97c-b11c-4b8b-5ddad0508e0e@kali.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 12/3/21 6:39 PM, Steev Klimaszewski wrote:
+On 12/4/2021 5:08 AM, Rob Herring wrote:
+Thanks for your time and notifying the issue!!!
+> On Fri, Dec 3, 2021 at 5:34 PM Rob Herring <robh@kernel.org> wrote:
+>> On Fri, 03 Dec 2021 21:37:37 +0530, Srinivasa Rao Mandadapu wrote:
+>>> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>>>
+>>> Add bindings for sc7280 lpass cpu driver which supports
+>>> audio over i2s based speaker, soundwire based headset, msm dmics
+>>> and HDMI Port.
+>>>
+>>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>>> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>>> ---
+>>>   .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 70 +++++++++++++++++++---
+>>>   1 file changed, 62 insertions(+), 8 deletions(-)
+>>>
+>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>>
+>> yamllint warnings/errors:
+>>
+>> dtschema/dtc warnings/errors:
+>> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg: [[0, 1658351616, 0, 425984], [0, 1659895808, 0, 167936]] is too short
+>>          From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+> Are you running the checks before you send out your patches. Because
+> it seems like you keep sending things with the same errors.
 >
-> On 12/2/21 9:56 PM, Bjorn Andersson wrote:
->> As GDSCs are turned on and off some associated clocks are momentarily
->> enabled for house keeping purposes. Failure to enable these clocks seems
->> to have been silently ignored in the past, but starting in SM8350 this
->> failure will prevent the GDSC to turn on.
->>
->> At least on SM8350 this operation will enable the RCG per the
->> configuration in CFG_REG. This means that the current model where the
->> current configuration is written back to CF_REG immediately after
->> parking the RCG doesn't work.
->>
->> Instead, keep track of the currently requested rate of the clock and
->> upon enabling the clock reapply the configuration per the saved rate.
->>
->> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source 
->> as needed")
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
->>   drivers/clk/qcom/clk-rcg.h  |  2 ++
->>   drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
->>   2 files changed, 19 insertions(+), 15 deletions(-)
->>
->> <snip patch>
+> If there's errors, I'm not going to review this. If you need help
+> getting it to work, then ask.
+Actually, the too short name errors are coming for the existing names 
+also. could you please suggest on how to go ahead?
 >
-> With this applied, I'm getting
-> <snip>
+> And what's with your email setup? codeaurora.com bounces.
 
-Actually turns out, I had a testing patch in from Dmitry that I'd never 
-taken back out when it was decided it wasn't good enough. Apologies for 
-the useless message.  This does not actually cause the issue, just the 
-combination of them does.
+ From December 3 Qualcomm mail domain got changed to quicinc.com from 
+codeaurora.org.
 
-Tested on the Lenovo Yoga C630
+May be that's the reason for bouncing.
 
-Tested-By: Steev Klimaszewski <steev@kali.org>
+>
+> Rob
+
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
