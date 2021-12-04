@@ -2,88 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D17A14684AB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 13:11:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B49346850F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 14:34:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1384876AbhLDMPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Dec 2021 07:15:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
+        id S1344878AbhLDNiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Dec 2021 08:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354819AbhLDMO6 (ORCPT
+        with ESMTP id S229957AbhLDNiN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Dec 2021 07:14:58 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE03BC061751;
-        Sat,  4 Dec 2021 04:11:32 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u1so11519805wru.13;
-        Sat, 04 Dec 2021 04:11:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SA05gaA86ga0WnsWblVWGRk46vKTY7ejtnjWmzpvNMc=;
-        b=joDVMtGbkNsXydRbF2YXC0zcNZWbgqis5ocf0FfBBrcR/pUP51sB6rKuN9Xxm0cNoD
-         L8MCWyuQxQuBQocDKqS1BVcJhDKueN58XVn3F06eC9TjIoAItGomCRvgPMe+cba8i9FM
-         hF2XXbrdbeEP+nkgdKBjiKVcnh7GT4vDvN37Li1ELryFdRvpfc0eQpCwPK16KnBkQnHc
-         y0UxUp6alMXsCgkQDKtU4h08F8qoSbr1SR8eYJmAjPYuZK9ijCfRaNqofS26ruLCpYi0
-         3GJ0GJ/4o8exuqpZMUWD7Ky3umnh2pgmrjUxajBbcjKbd1QICE8PzH4aF3KaAStkvacE
-         6fSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=SA05gaA86ga0WnsWblVWGRk46vKTY7ejtnjWmzpvNMc=;
-        b=RxepsC2sy7SLOzrBaX8fA+sQF5tqQSOiFNcKQ5COQgT7PJLIIC4JEpQn9X/LDed4CS
-         aOrR8CF7eiqSNZFJr7x/rlJiZ5nheU7fk0z+EnEXY4vsTcMcjKgdUC3pZh0xGWilVYRB
-         1E2YPfISOj99D8p83/H0tYdamyi6xYaQzu+vGmveIcqgV9vBnzEn5PPa7tsMe/IOBQEu
-         GbV11OFZ46guRasmjUv2SACmAWN+ArND6heOnP2xK+ScopqOo37hgVEQjmG/54F40YFI
-         zz1HgrUAw6DXxteOT3VyJ+2tVNvmxAIeOgoTmeSccyt/ZZpJ8urLtDmcdnlnoH5jugHZ
-         ezzA==
-X-Gm-Message-State: AOAM533JVJed5i/E7a/+JRPTJtfVRmOsYxRkh4pTkcPTEDP7rYJiyyv7
-        QXEd7jv5RUq+lPUPO+8qyW8=
-X-Google-Smtp-Source: ABdhPJw6I8weYg2ZSkP9PwcmLOJls7gRm5yFYrdnUjJ5EtQp4X+o1tRLoJcIuts5o4xNonHGM52LAA==
-X-Received: by 2002:adf:edc1:: with SMTP id v1mr29420024wro.170.1638619891417;
-        Sat, 04 Dec 2021 04:11:31 -0800 (PST)
-Received: from localhost.localdomain ([39.48.153.81])
-        by smtp.gmail.com with ESMTPSA id u23sm5444935wmc.7.2021.12.04.04.11.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Dec 2021 04:11:31 -0800 (PST)
-From:   Ameer Hamza <amhamza.mgc@gmail.com>
-To:     stanimir.varbanov@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, amhamza.mgc@gmail.com
-Subject: [PATCH] media: venus: vdec: fixed possible memory leak issue
-Date:   Sat,  4 Dec 2021 17:11:23 +0500
-Message-Id: <20211204121123.22180-1-amhamza.mgc@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Sat, 4 Dec 2021 08:38:13 -0500
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5474EC061751;
+        Sat,  4 Dec 2021 05:34:46 -0800 (PST)
+Received: from [192.168.1.101] (83.6.167.217.neoplus.adsl.tpnet.pl [83.6.167.217])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B1BC320153;
+        Sat,  4 Dec 2021 14:34:41 +0100 (CET)
+Message-ID: <f0ae3d36-8317-b297-cc99-645adca1f25c@somainline.org>
+Date:   Sat, 4 Dec 2021 14:34:40 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH 1/3] thermal: qcom: lmh: Add support for sm8150
+Content-Language: en-US
+To:     Thara Gopinath <thara.gopinath@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, rui.zhang@intel.com, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211202223802.382068-1-thara.gopinath@linaro.org>
+ <20211202223802.382068-2-thara.gopinath@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20211202223802.382068-2-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixed coverity warning by freeing the allocated memory before return
+Hi,
 
-Addresses-Coverity: 1494120 ("Resource leak")
+On 02.12.2021 23:38, Thara Gopinath wrote:
+> Add compatible to support LMh for sm8150 SoC.
+> sm8150 does not require explicit enabling for various LMh subsystems.
+> Move this piece of code under condition that it is executed only
+> for sdm845 SoC.
+>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+>  drivers/thermal/qcom/lmh.c | 61 ++++++++++++++++++++------------------
+>  1 file changed, 32 insertions(+), 29 deletions(-)
 
-Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
----
- drivers/media/platform/qcom/venus/helpers.c | 1 +
- 1 file changed, 1 insertion(+)
+[...]
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 84c3a511ec31..344a42853898 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -197,6 +197,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
- 
- 		id = ida_alloc_min(&inst->dpb_ids, VB2_MAX_FRAME, GFP_KERNEL);
- 		if (id < 0) {
-+			kfree(buf);
- 			ret = id;
- 			goto fail;
- 		}
--- 
-2.25.1
+
+> -		return ret;
+> +	if (of_device_is_compatible(np, "qcom,sdm845-lmh")) {
+> +		if (!qcom_scm_lmh_dcvsh_available())
+> +			return -EINVAL;
+
+I don't believe this is the correct approach, as different SoCs may
+
+require different sequences of these writes (for example SDM660/MSM8998
+
+seems to only enable the thermal algorithm), and there will (hopefully) be interest
+
+in adding LMH support for more platforms, so perhaps separating this somehow
+
+could keep this a bit cleaner and easier to work with for the next person..
+
+
+
+Konrad
 
