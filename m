@@ -2,78 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5582468815
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Dec 2021 23:28:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1118468884
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Dec 2021 01:04:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229966AbhLDWcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Dec 2021 17:32:05 -0500
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:40667 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbhLDWcF (ORCPT
+        id S229582AbhLEAIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Dec 2021 19:08:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhLEAIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Dec 2021 17:32:05 -0500
-Received: by mail-wr1-f43.google.com with SMTP id t9so13735300wrx.7;
-        Sat, 04 Dec 2021 14:28:38 -0800 (PST)
+        Sat, 4 Dec 2021 19:08:20 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F04C0613F8
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Dec 2021 16:04:54 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id m27so15737364lfj.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Dec 2021 16:04:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=QHHT00VDKbwiouuYvA1Na4+bMK2mwHXPvhFSQ6VIIAQ=;
+        b=SwRQubzrVU07x/VktGwMithEDwR0OtcUO9ZRFHzLW29oKvJBZZrIj3BQgW4J1XqokR
+         rp2LCfezWTiENH43r57iXD7DQ5kMd/og8uEKihoNgjX9GfRuBouLkTgq5DNIASWEVZ5l
+         sah5gLr05evGtVIBNyJwZn3dmNmHwTD9luKmqnv7wSFkPyEnIc8XJ36qmg+DPYe6wEnQ
+         iH72RIuchoJnPUgGR6qo2f/CrIKy3SsJv7o69ZvmNc5qakkyvpo7/6s0buqpjodOXWhb
+         fnx13/BsnQtUKnwKlUaXH8m6oM3j8KTnEOnJTULiFm2WXKCS/AutviM7TzmrK5HXtVyO
+         ciDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Hi1hBN0ZZGAK29KBqWC91yf7Z/SKLKVcZrDZGGHDVmA=;
-        b=rCqXdNx8amEM97QNQgsyaVn304NUBqIt7X89Im+1lX748NqWEYMqu0k6J4lJARxxmO
-         OYtJ8MQ8WOAI2eIpFXAM+sZIKZz5pkdJwF3U8P2ejU8qG9vrCeM6h4i0GeizmayiiimV
-         C8Hssl1/IMdGYDGA2aQ6zJfdzIq/M3JFUuRyswMpapnpUsIgakJKaJ9tj7vX67Y0mLai
-         l7Gh351VFJrLswpxasEcIl5PyhpQaiIu5VkWCaHHr3WgFOgS6vhcU6bRZnknUnSLIuMT
-         qqQ3Wf1jdPrKIWvw3mPO2naSM6AmnGrEyFQxgIUN5Mp54rwM9Yu3CO0Xnb8iL2F/E06L
-         L1AQ==
-X-Gm-Message-State: AOAM531zfJthlKwgOFGqpXJ8RksEAuk3Ws4rrKdj62t8V4mAGjovKfyA
-        FH8Jgbiv28nOhGk4j1b8EG8=
-X-Google-Smtp-Source: ABdhPJxQt7PAQp8vz1RQgOpbsI+sp+5/9oe6Z2imLXJiwBNE7p4Nn2fjW3Qutx2HGvoUKL8aCTy7hw==
-X-Received: by 2002:a5d:588b:: with SMTP id n11mr31434291wrf.344.1638656917872;
-        Sat, 04 Dec 2021 14:28:37 -0800 (PST)
-Received: from rocinante ([95.155.85.46])
-        by smtp.gmail.com with ESMTPSA id c1sm6520469wrt.14.2021.12.04.14.28.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Dec 2021 14:28:37 -0800 (PST)
-Date:   Sat, 4 Dec 2021 23:28:36 +0100
-From:   Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Constify static dw_pcie_ep_ops
-Message-ID: <YavrlE+5LdvvefMP@rocinante>
-References: <20211204220316.88655-1-rikard.falkeborn@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=QHHT00VDKbwiouuYvA1Na4+bMK2mwHXPvhFSQ6VIIAQ=;
+        b=5qyRFAAfNR+prqKnjLrjRX21cR1c51bV4t75eelrJ56onaxhDgO+mpyBJTIBQbvmqV
+         OcOGOySXJkT9Fb5Byi/pymV4e+S0G0oErOzO4IjoaefNBaT63M426Z611lcBx/non6mw
+         Nk4K5lqWF/6t+h5pwsRUKPLAglJzvMkNn9pbEno9hZ3eS1XkYYAKG/wxnX0v4D8tT5EA
+         sajErBSkGVU+V72Ypbhp8hLjU+0lopkoTYT09L/RQVMTxL7Tcw8Kmje8pdsixZLoU4t1
+         iYIBlkVw+EHHjqXFkmewCo14KZkCE6++czyA/EheZmyJFFtwPK+4sUt1ms7MYwkk5Ic9
+         Pa6w==
+X-Gm-Message-State: AOAM532eUXSK8kFj8CLQEva6zdG3aGX2HFS0XEgWTifCmaOgHElhLy4l
+        0hIhMPLU8rKAFuwL9ZXhW85qfg==
+X-Google-Smtp-Source: ABdhPJyf0aWmyyXdQuK9tcW9hG+AZg5FYjzqR1EZHhkn86w8R8hWq3kojn/veWvo4kuYm0XtzbmClg==
+X-Received: by 2002:a05:6512:3f0c:: with SMTP id y12mr18196895lfa.579.1638662692680;
+        Sat, 04 Dec 2021 16:04:52 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x6sm910322lff.125.2021.12.04.16.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 04 Dec 2021 16:04:52 -0800 (PST)
+Message-ID: <9ef59b63-fb05-5a4b-4327-479eb48cf618@linaro.org>
+Date:   Sun, 5 Dec 2021 03:04:51 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211204220316.88655-1-rikard.falkeborn@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] drm/msm/dp: Add "qcom,sc7280-dp" to support display port.
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1638568959-7564-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1638568959-7564-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rikard,
+On 04/12/2021 01:02, Kuogee Hsieh wrote:
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-> The only usage of pci_ep_ops is to assign its address to the ops field
-> in the dw_pcie_ep struct which is a pointer to const struct dw_pcie_ep_ops.
-> Make it const to allow the compiler to put it in read-only memory.
+Reviewed by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[...]
-> @@ -619,7 +619,7 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
->  		dw_pcie_ep_reset_bar(pci, bar);
->  }
->  
-> -static struct dw_pcie_ep_ops pci_ep_ops = {
-> +static const struct dw_pcie_ep_ops pci_ep_ops = {
->  	.ep_init = qcom_pcie_ep_init,
->  	.raise_irq = qcom_pcie_ep_raise_irq,
->  	.get_features = qcom_pcie_epc_get_features,
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index d44f18b..91582d3 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -146,6 +146,7 @@ static const struct msm_dp_config sc7280_dp_cfg = {
+>   static const struct of_device_id dp_dt_match[] = {
+>   	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
+>   	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_cfg },
+> +	{ .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_cfg },
+>   	{}
+>   };
+>   
+> 
 
-Looks good, thank you!
 
-Reviewed-by: Krzysztof Wilczyński <kw@linux.com>
-
-	Krzysztof
+-- 
+With best wishes
+Dmitry
