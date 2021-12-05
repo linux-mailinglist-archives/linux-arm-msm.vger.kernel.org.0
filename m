@@ -2,88 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A0009468904
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Dec 2021 05:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2613C468A64
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Dec 2021 11:46:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbhLEEIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Dec 2021 23:08:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbhLEEIy (ORCPT
+        id S232909AbhLEKtf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Dec 2021 05:49:35 -0500
+Received: from bzq-84-110-109-230.cablep.bezeqint.net ([84.110.109.230]:47300
+        "EHLO mx.tkos.co.il" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S232844AbhLEKtf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Dec 2021 23:08:54 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C50C061751
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Dec 2021 20:05:28 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso9071115otr.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Dec 2021 20:05:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=AXzcZCKOBu/msJYDlg3Y+fzM95FhQ9eIvXKzuLg8CYs=;
-        b=AmuNcydbQKjrjST36znuG6aIEps8lr+NEoZm8GTsEJRrucyjgTzlxRG5CWPEAF5zLI
-         jQzT0P+RXN+fZz1zyegaxKmqkaob+q9Qx7NFgGzwYqMNNvPNLIv10p44avHxK1L5LOi3
-         bygNpdX9oJMohTtI3RY5UtfKzoaa+WypyAjpg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=AXzcZCKOBu/msJYDlg3Y+fzM95FhQ9eIvXKzuLg8CYs=;
-        b=Dz/6k6gPnxOG5VX8AFGSe2H47v3G4B3hfLgMZWjibnKy7+F26+Ton1nRhx9ErYugmn
-         mFMRXw4VRaTnoYlOyzvy6jM/dIgfuedux20JolsHbc0PLFLPd4CxQ6o+oe5XSdRj7Q0S
-         dBSZokH+dVfVJtZqib2zrGliiX7Sf+b9rNj5MkNTqv2NguJHvKOC9qAf6dZJ9ZJrfxvm
-         w3j/V71d0jkV/kuIy/6mekYdEruIUMFqAThSnVJFW7rdOmueKzCpMhzWt/59ZRfDYo+g
-         XDqITxJKS1Kap3N/QSinT8CBGu306kpGiBUnLGffGJaCb2qzuw5tmJebHKBCtAFD2enX
-         0MAw==
-X-Gm-Message-State: AOAM5304sP5MOlOBjHpHnqh3XG4wzlbSiNcORkvvz6FWMSUDfk1WaJCA
-        dGfTA2n8zUKQs12IgTN13QfwfStj/a5Utkc06TeUag==
-X-Google-Smtp-Source: ABdhPJxWcPtz+q1YJarR+oJWSUf3FTjY0xDPDQPv8K4vpWyix5KmjKghi6TmOgkMKNZ83F0NU4bIZDFmxzAfdegAiwA=
-X-Received: by 2002:a9d:2243:: with SMTP id o61mr23402340ota.126.1638677127497;
- Sat, 04 Dec 2021 20:05:27 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 4 Dec 2021 20:05:27 -0800
+        Sun, 5 Dec 2021 05:49:35 -0500
+Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id D60094409F0;
+        Sun,  5 Dec 2021 12:45:50 +0200 (IST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
+        s=default; t=1638701151;
+        bh=UwdlYousIPAAES5zZmOlQjQcd79JOwHjVsvCqp+rtm0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=kw8YNYcMaMGJIQvzxX9SPmGZLBW8noCBiZjkZj89Krjq/0+AwdFPtBN7iKi7BFLlo
+         QswRcpS0zNhk/Xcjl3Hz7sLOiSO/PoJbQjlBnSU0D02Ka50JBgGH738+G208G3l5Ya
+         Uc04U8kRfB5wUOWwsesW7tHdCd5AVMGj/2htwnB4qNGzitGo8ffzJ74jo/LrZ9psWY
+         FoHsq5XE/oHSYeFxZaKt2fA3WkDkqFyLtunimVoFDfR82WWSfwVxOwulfGJ0sDssjE
+         vS0ACdHhoXYaZam4NsYFJgEm6cVxcV1CKFb4wIVEOeSZmTuDgfjwArf7sq5X0qf0mf
+         Z3R5Y+bQwGpqw==
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Baruch Siach <baruch@tkos.co.il>,
+        Wesley Cheng <wcheng@codeaurora.org>
+Subject: [PATCH] usb: dwc3: dwc3-qcom: Fix registration when tx-fifo-resize exists
+Date:   Sun,  5 Dec 2021 12:45:45 +0200
+Message-Id: <e7ee9012055a4ba9afcb1ffbbeda25f113f171b6.1638701145.git.baruch@tkos.co.il>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <1638568959-7564-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1638568959-7564-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Sat, 4 Dec 2021 20:05:26 -0800
-Message-ID: <CAE-0n51TZG9SjjOaNmNJPhzOZmQLsywcAT7_Vf4uz4VPga5xhw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: Add "qcom,sc7280-dp" to support display port.
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-12-03 14:02:39)
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 1 +
->  1 file changed, 1 insertion(+)
+Commit cefdd52fa04 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
+property by default") added the tx-fifo-resize property. But when this
+property exists already, of_add_property() fails with -EEXIST, thus
+breaking core registration. This regresses the IPQ6018 platform that has
+tx-fifo-resize in its device-tree.
 
-One nit
+Don't fail when tx-fifo-resize exists.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: cefdd52fa045 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default")
+Cc: Wesley Cheng <wcheng@codeaurora.org>
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index d44f18b..91582d3 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -146,6 +146,7 @@ static const struct msm_dp_config sc7280_dp_cfg = {
->  static const struct of_device_id dp_dt_match[] = {
->         { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
->         { .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_cfg },
-> +       { .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_cfg },
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 9abbd01028c5..bbd8e401a82c 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -667,7 +667,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+ 
+ 	prop->name = "tx-fifo-resize";
+ 	ret = of_add_property(dwc3_np, prop);
+-	if (ret) {
++	if (ret && ret != -EEXIST) {
+ 		dev_err(dev, "unable to add property\n");
+ 		goto node_put;
+ 	}
+-- 
+2.33.0
 
-The letter d comes before e so it would be better to sort this
-alphanumerically and avoid conflicts later.
