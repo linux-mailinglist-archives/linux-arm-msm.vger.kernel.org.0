@@ -2,108 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D22AE46950B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 12:32:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E2D8469520
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 12:39:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242471AbhLFLf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 06:35:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60044 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231332AbhLFLf4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 06:35:56 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7620AC061746;
-        Mon,  6 Dec 2021 03:32:27 -0800 (PST)
-Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust3082.18-1.cable.virginm.net [86.31.172.11])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id DBE7AEE;
-        Mon,  6 Dec 2021 12:32:23 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1638790344;
-        bh=Rl8RZWbWzjXWNEacH6rhciAmEKhl7aRUVxoFGhBU+KM=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=gNDTRwKs6y+VX7MJoxeybmDaWrUCurehHD0HlVjAyysZ+IT5v7dyS94GvUOgRGK1p
-         dgUmpRm8b+O3mnNYQo+xhJqtj/8oGx2UGvNRFepOR2Hwq2aONTuie5EgeWHnkpDojB
-         ZGXSke6tCiQ3/eXWwK0HBiX8k+omwoZZ1bw685cU=
-Content-Type: text/plain; charset="utf-8"
+        id S242589AbhLFLnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 06:43:15 -0500
+Received: from foss.arm.com ([217.140.110.172]:54930 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241994AbhLFLnO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Dec 2021 06:43:14 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D76751042;
+        Mon,  6 Dec 2021 03:39:45 -0800 (PST)
+Received: from e123427-lin.arm.com (unknown [10.57.33.247])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5077B3F73D;
+        Mon,  6 Dec 2021 03:39:44 -0800 (PST)
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH linux-next] PCI: qcom-ep: Remove surplus dev_err() when using platform_get_irq_byname()
+Date:   Mon,  6 Dec 2021 11:39:36 +0000
+Message-Id: <163879076227.16791.16581448019672961369.b4-ty@arm.com>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20211027112931.37182-1-kw@linux.com>
+References: <20211027112931.37182-1-kw@linux.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211206104315.12516-1-amhamza.mgc@gmail.com>
-References: <163878547435.2211244.3536763956780138208@Monstersaurus> <20211206104315.12516-1-amhamza.mgc@gmail.com>
-Subject: Re: [PATCH v3] media: venus: vdec: fixed possible memory leak issue
-From:   Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        stanimir.varbanov@linaro.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        amhamza.mgc@gmail.com
-To:     Ameer Hamza <amhamza.mgc@gmail.com>
-Date:   Mon, 06 Dec 2021 11:32:21 +0000
-Message-ID: <163879034159.2211244.5962318772307516005@Monstersaurus>
-User-Agent: alot/0.10
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Ameer Hamza (2021-12-06 10:43:15)
-> The venus_helper_alloc_dpb_bufs() implementation allows an early return
-> on an error path when checking the id from ida_alloc_min() which would
-> not release the earlier buffer allocation.
->=20
-> Move the direct kfree() from the error checking of dma_alloc_attrs() to
-> the common fail path to ensure that allocations are released on all
-> error paths in this function.
->=20
-> Addresses-Coverity: 1494120 ("Resource leak")
->=20
-> Fixes: 40d87aafee29 ("media: venus: vdec: decoded picture buffer handling=
- during reconfig sequence")
->=20
+On Wed, 27 Oct 2021 11:29:31 +0000, Krzysztof Wilczyński wrote:
+> There is no need to call the dev_err() function directly to print a
+> custom message when handling an error from either the platform_get_irq()
+> or platform_get_irq_byname() functions as both are going to display an
+> appropriate error message in case of a failure.
+> 
+> This change is as per suggestions from Coccinelle, e.g.,
+>   drivers/pci/controller/dwc/pcie-qcom-ep.c:556:2-9: line 556 is redundant because platform_get_irq() already prints an error
+> 
+> [...]
 
-No need for blank lines between those tags, and when someone provides a
-Reviewed-by tag, you can collect it into your patch for future versions
-unless you feel you've modified the patch so much that it doesn't apply
-anymore.
+Applied to pci/dwc, thanks!
 
-So this can still be added (no need to repost to add to this patch, I
-believe the integration scripts likely pick up tags added to a patch,
-but won't pick up ones added to previous versions).
+[1/1] PCI: qcom-ep: Remove surplus dev_err() when using platform_get_irq_byname()
+      https://git.kernel.org/lpieralisi/pci/c/549bf94dd2
 
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-
-
-> Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
->=20
-> ---
-> Changes in v3:
-> Updated description and added fix tag
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/=
-platform/qcom/venus/helpers.c
-> index 84c3a511ec31..0bca95d01650 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -189,7 +189,6 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
-st)
->                 buf->va =3D dma_alloc_attrs(dev, buf->size, &buf->da, GFP=
-_KERNEL,
->                                           buf->attrs);
->                 if (!buf->va) {
-> -                       kfree(buf);
->                         ret =3D -ENOMEM;
->                         goto fail;
->                 }
-> @@ -209,6 +208,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
-st)
->         return 0;
-> =20
->  fail:
-> +       kfree(buf);
->         venus_helper_free_dpb_bufs(inst);
->         return ret;
->  }
-> --=20
-> 2.25.1
->
+Thanks,
+Lorenzo
