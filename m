@@ -2,99 +2,324 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF18D46A3F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 19:25:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382D346A534
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 19:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245546AbhLFS2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 13:28:50 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:58528 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231218AbhLFS2s (ORCPT
+        id S237245AbhLFS6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 13:58:50 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:9638 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237213AbhLFS6u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 13:28:48 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 3291BCE1760;
-        Mon,  6 Dec 2021 18:25:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D796FC341C2;
-        Mon,  6 Dec 2021 18:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638815116;
-        bh=8hgFqVDYqzqEOgGOxfFzJHvOC45GyBzsr6kNeWt9iz0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f/eBltJXoHicFKqe0ZEc8lbxaMDeyYtqqyGYikXOeCgIZ0Z+C8Wrs8t6hnphD985Y
-         RT6cPbqxnXMrHRAs+IfEcf4jscZ+HRW0+kHHnqyve5q42KdUHoZY1C1iVwtSaevMCS
-         d0RKqJet9x4VPHLqbyne83vwP1ucXL1PIuVj3zzKMQ8OOPVbXc6sCzK9WnpN/rgqM9
-         N2VKaj52QdNAmVvmLZFS3PoPTonTJMsGDdnagiLkL25iLkcxUouCRGP/2NOxNDYZ7M
-         CtOEqE1iqJKaicNYmfU/+e5e0MyD4Xk2bnpIjw6wiZcHJ0f8wR7KopEZLUVXBWvqHZ
-         NdddEoaS5fKPA==
-Date:   Mon, 6 Dec 2021 18:25:10 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, swboyd@chromium.org,
-        collinsd@codeaurora.org, subbaram@codeaurora.org,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V4 1/6] dt-bindings: regulator: Add
- "regulator-min-dropout-voltage-microvolt"
-Message-ID: <Ya5VhkggWdjYyTHL@sirena.org.uk>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-2-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+o9sQpECZSrieN@sirena.org.uk>
- <d828f2a1-03e8-d6ee-4ab7-39bf677093b7@quicinc.com>
+        Mon, 6 Dec 2021 13:58:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638816921; x=1670352921;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=z7WvmWdWQOJCI+kYLiYK4MSPMuxrEiLfyImGyc2vcgE=;
+  b=ic9PaHayE6ZCaXPZLDkXVpbYb9sIW/tWsCnjLKFxobEFZTz9EYZZLuHV
+   RmI8GlePPijY5OLHWsyZpGX8tUxPSol1CFkUqdKtSypiFiR6lHqFi8DDe
+   aRFIqyPA3bWoyY63offurmljrXH4NFdUrFZfPKd7uCu4Sk02g9BjU6XjY
+   o=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 06 Dec 2021 10:55:21 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 10:55:20 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 10:54:40 -0800
+Received: from [10.111.164.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
+ 10:54:36 -0800
+Message-ID: <ae600a78-aa7f-9c9e-949b-0e946869a032@quicinc.com>
+Date:   Mon, 6 Dec 2021 10:54:34 -0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="QXyE3CVvg7TRqRac"
-Content-Disposition: inline
-In-Reply-To: <d828f2a1-03e8-d6ee-4ab7-39bf677093b7@quicinc.com>
-X-Cookie: You will soon forget this.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v5] drm/msm/dp: employ bridge mechanism for display enable
+ and disable
+Content-Language: en-US
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     <aravindh@codeaurora.org>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1638205444-4616-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <1638205444-4616-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---QXyE3CVvg7TRqRac
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Mon, Dec 06, 2021 at 06:33:26PM +0530, Satya Priya Kakitapalli (Temp) wrote:
-> On 11/25/2021 8:47 PM, Mark Brown wrote:
-
-> > Usually this is a fixed property of the regulator rather than something
-> > that varies per board - why have a DT property?
-
-> The min-dropout value (headroom) varies with boards, that's why we have a DT
-> property for it. We overwrite the default value in driver with actual value
-> read from DT
-
-Interesting.  How exactly does that end up happening - presumably other
-systems are going to run into it?
-
-If you do have board designs which somehow managed to introduce
-additional dropouts (seems pretty concerning TBH) then I think the best
-way to handle that is to add a generic property for it and have that
-either added on to or override the requirements of the regulator itself
-which should continue to be defined in the driver.  That way only boards
-with issues need to do anything which will avoid bugs with the property
-being omitted in what should be the common case.
-
---QXyE3CVvg7TRqRac
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGuVYYACgkQJNaLcl1U
-h9C3WQf+K77xrkRiIBmIBf/V2boYm9+lY/DGgIZHn5D9szW12BeI8WtJy/UvUoQ4
-DXiAYZlHtTtYQ3aWxTvsOlkAcd3TDMzrAH2sOlwmOUc4zdjr+2cXXxyLt6VtNIpq
-cISFU5qK9dpEgufmbMsZG+rDd5lQn4pwIy93Kj0yaANprvAyRGtTUH4K7SqFxIR7
-PK9L2IwRIcI8yQZlb2GTetLhJ6zmSl81QSFSHHOYUGPCBgERJQR1tD1xKkmh/TAf
-zTt9t9r27QfwuOHnlApBE3foPBWBNE4Xvx8UIXvth7sB4tePKP4ei+W2m19AaiDk
-UQJo2djCLIZXswbGQk+9Mn1xGicstQ==
-=+APw
------END PGP SIGNATURE-----
-
---QXyE3CVvg7TRqRac--
+On 11/29/2021 9:04 AM, Kuogee Hsieh wrote:
+> Currently the msm_dp_*** functions implement the same sequence which would
+> happen when drm_bridge is used. hence get rid of this intermediate layer
+> and align with the drm_bridge usage to avoid customized implementation.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Changes in v2:
+> -- revise commit text
+> -- rename dp_bridge to msm_dp_bridge
+> -- delete empty functions
+> 
+> Changes in v3:
+> -- replace kzalloc() with devm_kzalloc()
+> -- replace __dp_display_enable() with dp_display_enable()
+> -- replace __dp_display_disable() with dp_display_disable()
+> 
+> Changes in v4:
+> -- msm_dp_bridge_init() called from msm_dp_modeset_init() same as dsi
+> 
+> Changes in v5:
+> -- delete attach, mode_fixup and pre_enable from dp_bridge_ops
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 21 --------
+>   drivers/gpu/drm/msm/dp/dp_display.c         | 16 +++++-
+>   drivers/gpu/drm/msm/dp/dp_display.h         |  1 +
+>   drivers/gpu/drm/msm/dp/dp_drm.c             | 77 +++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h               | 12 +++--
+>   5 files changed, 100 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 31050aa..c4e08c4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1003,9 +1003,6 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>   
+>   	trace_dpu_enc_mode_set(DRMID(drm_enc));
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
+> -		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
+> -
+>   	list_for_each_entry(conn_iter, connector_list, head)
+>   		if (conn_iter->encoder == drm_enc)
+>   			conn = conn_iter;
+> @@ -1181,14 +1178,6 @@ static void dpu_encoder_virt_enable(struct drm_encoder *drm_enc)
+>   
+>   	_dpu_encoder_virt_enable_helper(drm_enc);
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
+> -		if (ret) {
+> -			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
+> -				ret);
+> -			goto out;
+> -		}
+> -	}
+>   	dpu_enc->enabled = true;
+>   
+>   out:
+> @@ -1214,11 +1203,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+>   	/* wait for idle */
+>   	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
+> -			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
+> -	}
+> -
+>   	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
+>   
+>   	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> @@ -1243,11 +1227,6 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc)
+>   
+>   	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
+>   
+> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
+> -		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
+> -			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
+> -	}
+> -
+>   	mutex_unlock(&dpu_enc->enc_lock);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2f113ff..89a8d43 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1571,6 +1571,18 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>   	}
+>   
+>   	priv->connectors[priv->num_connectors++] = dp_display->connector;
+> +
+> +	dp_display->bridge = msm_dp_bridge_init(dp_display, dev, encoder);
+> +	if (IS_ERR(dp_display->bridge)) {
+> +		ret = PTR_ERR(dp_display->bridge);
+> +		DRM_DEV_ERROR(dev->dev,
+> +			"failed to create dp bridge: %d\n", ret);
+> +		dp_display->bridge = NULL;
+> +		return ret;
+> +	}
+> +
+> +	priv->bridges[priv->num_bridges++] = dp_display->bridge;
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1674,8 +1686,8 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
+>   }
+>   
+>   void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode)
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+>   {
+>   	struct dp_display_private *dp_display;
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 76f45f9..2237e80 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -13,6 +13,7 @@
+>   struct msm_dp {
+>   	struct drm_device *drm_dev;
+>   	struct device *codec_dev;
+> +	struct drm_bridge *bridge;
+>   	struct drm_connector *connector;
+>   	struct drm_encoder *encoder;
+>   	struct drm_panel *drm_panel;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index f33e315..15c0309e 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -5,12 +5,21 @@
+>   
+>   #include <drm/drm_atomic_helper.h>
+>   #include <drm/drm_atomic.h>
+> +#include <drm/drm_bridge.h>
+>   #include <drm/drm_crtc.h>
+>   
+>   #include "msm_drv.h"
+>   #include "msm_kms.h"
+>   #include "dp_drm.h"
+>   
+> +
+> +struct msm_dp_bridge {
+> +	struct drm_bridge bridge;
+> +	struct msm_dp *dp_display;
+> +};
+> +
+> +#define to_dp_display(x)     container_of((x), struct msm_dp_bridge, bridge)
+> +
+>   struct dp_connector {
+>   	struct drm_connector base;
+>   	struct msm_dp *dp_display;
+> @@ -162,3 +171,71 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+>   
+>   	return connector;
+>   }
+> +
+> +static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_mode_set(dp_display, drm_bridge->encoder, mode, adjusted_mode);
+> +}
+> +
+> +static void dp_bridge_enable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_enable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static void dp_bridge_disable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_pre_disable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static void dp_bridge_post_disable(struct drm_bridge *drm_bridge)
+> +{
+> +	struct msm_dp_bridge *dp_bridge = to_dp_display(drm_bridge);
+> +	struct msm_dp *dp_display = dp_bridge->dp_display;
+> +
+> +	msm_dp_display_disable(dp_display, drm_bridge->encoder);
+> +}
+> +
+> +static const struct drm_bridge_funcs dp_bridge_ops = {
+> +	.enable       = dp_bridge_enable,
+> +	.disable      = dp_bridge_disable,
+> +	.post_disable = dp_bridge_post_disable,
+> +	.mode_set     = dp_bridge_mode_set,
+> +};
+> +
+> +struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_device *dev,
+> +			struct drm_encoder *encoder)
+> +{
+> +	int rc;
+> +	struct msm_dp_bridge *dp_bridge;
+> +	struct drm_bridge *bridge;
+> +
+> +	dp_bridge = devm_kzalloc(dev->dev, sizeof(*dp_bridge), GFP_KERNEL);
+> +	if (!dp_bridge)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	dp_bridge->dp_display = dp_display;
+> +
+> +	bridge = &dp_bridge->bridge;
+> +	bridge->funcs = &dp_bridge_ops;
+> +	bridge->encoder = encoder;
+> +
+> +	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+> +	if (rc) {
+> +		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
+> +		kfree(dp_bridge);
+> +		return ERR_PTR(rc);
+> +	}
+> +
+> +	return bridge;
+> +}
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 4bb797e..c18a959 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -388,8 +388,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   int msm_dp_display_pre_disable(struct msm_dp *dp, struct drm_encoder *encoder);
+>   void msm_dp_display_mode_set(struct msm_dp *dp, struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode);
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode);
+> +
+> +struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display,
+> +					struct drm_device *dev,
+> +					struct drm_encoder *encoder);
+>   void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+>   
+> @@ -426,8 +430,8 @@ static inline int msm_dp_display_pre_disable(struct msm_dp *dp,
+>   }
+>   static inline void msm_dp_display_mode_set(struct msm_dp *dp,
+>   				struct drm_encoder *encoder,
+> -				struct drm_display_mode *mode,
+> -				struct drm_display_mode *adjusted_mode)
+> +				const struct drm_display_mode *mode,
+> +				const struct drm_display_mode *adjusted_mode)
+>   {
+>   }
+>   
+> 
