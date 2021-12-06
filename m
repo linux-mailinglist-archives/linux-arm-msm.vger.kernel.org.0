@@ -2,110 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52CB7469355
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 11:20:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E3584693F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 11:31:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232530AbhLFKYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 05:24:00 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:42730 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236370AbhLFKX7 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 05:23:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638786030; x=1670322030;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/BBlyPONAhSOL7obwvgzZzSGer12RlY8b5Kj0XHt0pI=;
-  b=jUEYNcWPtbU1mlWCsfpslyY7xmZAg58RprT5fJOGubUnVt89tMq5m3VO
-   pxv/QsXuUBKNedpWwZUjqbGP300Quo8A6AgWPPcAeSrupQqZMwh8JobH8
-   7w2h2VLPoY3omd66ozaGPIjuFk7nP1+9JrZzuBEGpEORZUhOsA5nlHlre
-   w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Dec 2021 02:20:28 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 02:20:28 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 02:20:28 -0800
-Received: from [10.50.43.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
- 02:20:22 -0800
-Message-ID: <7e5dbbf5-2385-ddb3-bf88-66e347d7d5e9@quicinc.com>
-Date:   Mon, 6 Dec 2021 15:50:18 +0530
+        id S238060AbhLFKen (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 05:34:43 -0500
+Received: from foss.arm.com ([217.140.110.172]:53566 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237997AbhLFKen (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Dec 2021 05:34:43 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2A29911FB;
+        Mon,  6 Dec 2021 02:31:14 -0800 (PST)
+Received: from e123427-lin.arm.com (unknown [10.57.33.247])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C0BFE3F73D;
+        Mon,  6 Dec 2021 02:31:11 -0800 (PST)
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        bhelgaas@google.com
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, robh@kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-pci@vger.kernel.org, svarbanov@mm-sol.com,
+        kernel test robot <lkp@intel.com>, bjorn.andersson@linaro.org
+Subject: Re: [PATCH v3] PCI: qcom: Use __be16 type to store return value from cpu_to_be16()
+Date:   Mon,  6 Dec 2021 10:31:02 +0000
+Message-Id: <163878663178.16251.482948854423649218.b4-ty@arm.com>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20211130080924.266116-1-manivannan.sadhasivam@linaro.org>
+References: <20211130080924.266116-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv5 4/4] asm-generic/io: Add logging support for MMIO
- accessors
-Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>
-CC:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Marc Zyngier <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        <quic_psodagud@quicinc.com>
-References: <cover.1638275062.git.quic_saipraka@quicinc.com>
- <99ecc64c6da3abb3ea2930082c40f1820655664c.1638275062.git.quic_saipraka@quicinc.com>
- <CAK8P3a1k-1_m7r-u0uO1nW1m43bt_hR9u+UeW=SqK40+Ltb+iA@mail.gmail.com>
- <0cd0bc8c-e3db-b3fb-5be4-c619d1d5d633@quicinc.com>
- <CAK8P3a0mxRshs=OrOK+NaMharykS0PffATq30wJTv4qe52_ecg@mail.gmail.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <CAK8P3a0mxRshs=OrOK+NaMharykS0PffATq30wJTv4qe52_ecg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/6/2021 3:31 PM, Arnd Bergmann wrote:
-> On Mon, Dec 6, 2021 at 10:52 AM Sai Prakash Ranjan
-> <quic_saipraka@quicinc.com> wrote:
->> Yes just the trace after read/write won't serve our usecase where we
->> expect crashes/hangs on accessing
->> these registers but internally we did have a log_post_read_mmio() as
->> well, if it is useful then I can add it.
-> Are there any downsides to tracing both before and after, besides another growth
-> in binary size? Aside from the 'value', that would also allow
-> measuring the time it
-> takes to complete a readl(), which may be valuable for other users as these
-> can be significant.
+On Tue, 30 Nov 2021 13:39:24 +0530, Manivannan Sadhasivam wrote:
+> cpu_to_be16() returns __be16 value but the driver uses u16 and that's
+> incorrect. Fix it by using __be16 as the data type of bdf_be variable.
+> 
+> The issue was spotted by the below sparse warning:
+> 
+> sparse warnings: (new ones prefixed by >>)
+> >> drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse: sparse: incorrect type in initializer (different base types) @@     expected unsigned short [usertype] bdf_be @@     got restricted __be16 [usertype] @@
+>    drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse:     expected unsigned short [usertype] bdf_be
+>    drivers/pci/controller/dwc/pcie-qcom.c:1305:30: sparse:     got restricted __be16 [usertype]
+> 
+> [...]
 
-Ah yes, that would be useful. No downsides as far as I know other than 
-the size
-but that should be fine given this depends on ftrace.
+Applied to pci/qcom, thanks!
 
->
-> Not sure how to best do that that, we could return a timestamp from the 'before'
-> tracepoint and pass it into the 'after' tracepoint in order to log the
-> difference, or just
-> rely on calculating the differences in user space based on the log.
-
-For trace events, timing information is already logged by ftrace 
-infrastructure. Most of the users do
-use these for timing information based on post processing these logs 
-looking at these timestamps,
-so we should be good using that as well.
-
-
-> For the 'write' style accessors, the timing data would be less interesting, at
-> least for posted PCI transactions, but it may be helpful to do the same for
-> symmetry reasons.
-
-Ok, I will add these post read/write logging in the next version.
+[1/1] PCI: qcom: Use __be16 type to store return value from cpu_to_be16()
+      https://git.kernel.org/lpieralisi/pci/c/3f13d611aa
 
 Thanks,
-Sai
-
-
+Lorenzo
