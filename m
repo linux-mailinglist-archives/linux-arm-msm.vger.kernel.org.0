@@ -2,94 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 878F7469B55
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:13:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 94424469C56
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:18:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348333AbhLFPO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:14:56 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:59228 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345843AbhLFPMz (ORCPT
+        id S1356135AbhLFPVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 10:21:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1358269AbhLFPTk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:12:55 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 10F5B61331;
-        Mon,  6 Dec 2021 15:09:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BEDC341C5;
-        Mon,  6 Dec 2021 15:09:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638803365;
-        bh=dw9XxwMU7Td04mZbDOSAvoqc7QfnAD/1a1RCoKpziy4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nji2GU1IHM4eYGvBFkSGnE7BzaMtdiEJBDL4bMPpAKPyodvXf2tijBvVijiSOOblb
-         8MGQXk94GUdVqTwjVsRCBdoAsEI0wyDhWI/b7bKr4vQZ7NkcL0KNwhkZwaZdQO4LTs
-         QTHTfqyKGGAv0J+DprafJPZdt6/kTkFpZhFU+Q8MItAYUe+PIwxlYa3BUhOcEw5P9n
-         mxdzpHELW+1VNgwdbZHCW8Y/EvM1c2FqJRXkI9Cr3K7X0Z3DVdl5VRDk0RjZUQkvbo
-         /2a6VLmyIvlU5RCJrZAhhR0NUdaa98lCck5xLCmj5zjsUGDioPDf/sWsa5NQEwUlsH
-         AVw6o/pLPUfJg==
-Date:   Mon, 6 Dec 2021 15:09:19 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, swboyd@chromium.org,
-        collinsd@codeaurora.org, subbaram@codeaurora.org,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V4 4/6] regulator: Add a regulator driver for the PM8008
- PMIC
-Message-ID: <Ya4nn0/qp5El8P0L@sirena.org.uk>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-5-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+vnV12gDCtia5S@sirena.org.uk>
- <d86e1a33-e7cf-58f7-d75b-23a0313ebde5@quicinc.com>
+        Mon, 6 Dec 2021 10:19:40 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24513C0698D0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:13:43 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id j6-20020a17090a588600b001a78a5ce46aso11092848pji.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:13:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cnQqBSAo+K5oxr9l26dxH3RShjXf+td6E+PHuLLI4y8=;
+        b=VQIiWgpFRexhnDvLc40hcuZW7IZloc67v1EO6pDc4gDJnAh0CPsQ5fznnTZhQcFJXW
+         ktjxw6RbnBpLiUVoQ/VacQo/TSIwujyyBjZaLSEgclpiWnMOU0wdE/lJEBphP9+pWKl1
+         MLh+Ujy0n3oE+c9MqT0iP4kmn7D/myUpNO+J5WgQ7hnBstrPn6rVBDc6ScOZQCYHYQoj
+         +aICtAZrE2isxEmPRNrM5erhDnCag58kMThzQA/slIoLTYR09wAa1WJmPubjtobDJ1XZ
+         9q3B9k6Z9uz/EgFWcroiQpydY7/DYNHpq0fI+n4mKDIt2+NZ47cNlDIXk/1cTE+i5Yn5
+         t7eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cnQqBSAo+K5oxr9l26dxH3RShjXf+td6E+PHuLLI4y8=;
+        b=b/opUsjqs8Re4txVQ72sCa8svCCWlY0vrPc3gJ9NQr6EQGc7F4jXswGbRMQvy3vsUl
+         NJj92xwki0ue3jZwRxuYI8UIoT5TCQd3wlfRo4lCz+oK4lfd8Frdo7V4MxjbPcwGGHGL
+         YJM6Il8ynbKVMaJX+RVNrHOUqlNFJ140Lj+PfXVcdxj7Rn56jczsJVWTQAy3zMpyK5B3
+         Y8vXo16ePdNlHVmIOsld4kTod1IL2+pA2W/BpMv5GKDUbWdZwC1R6Jm5/JqaW/eTI2f0
+         UKOTDHLVa8m9MEY5SSa8IjKSvfobo5PAts7vfkgNnpAHbsDyoaMsNo7WKANzRbBFvh2f
+         So6Q==
+X-Gm-Message-State: AOAM533JE9pWbHqLCxJmuCFmDgK78vp8/1faT2g11u/UFjQN572nkglA
+        DvZZLi1cLQPCfJBKVQRyk3tBvnPGrEvS2lWKEVoZxg==
+X-Google-Smtp-Source: ABdhPJxLJ6uUWWiSZlny/JEj/mVjhmgg6C7BE3VsA338kjFc2t92GnAbloeXMtJTb10Jeu46/eWHG5/ObtlkLgQyN8c=
+X-Received: by 2002:a17:903:2004:b0:142:6344:2c08 with SMTP id
+ s4-20020a170903200400b0014263442c08mr44072941pla.51.1638803620589; Mon, 06
+ Dec 2021 07:13:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Iup9tc3xCjeDkBkE"
-Content-Disposition: inline
-In-Reply-To: <d86e1a33-e7cf-58f7-d75b-23a0313ebde5@quicinc.com>
-X-Cookie: You will soon forget this.
+References: <20211118124819.1902427-1-robert.foss@linaro.org>
+ <20211118124819.1902427-4-robert.foss@linaro.org> <Ya4nEMnZ3zQiXbaR@ripper>
+In-Reply-To: <Ya4nEMnZ3zQiXbaR@ripper>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 6 Dec 2021 16:13:29 +0100
+Message-ID: <CAG3jFytNQHK=dTHGzd57V_m_6YNwtD2zRYgBSjykd3whzqy9pQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: apq8016-sbc: Remove clock-lanes
+ property from &camss node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
+        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 6 Dec 2021 at 16:05, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 18 Nov 04:48 PST 2021, Robert Foss wrote:
+>
+> > The clock-lanes property is no longer used as it is not programmable by
+> > the CSIPHY hardware block of Qcom ISPs and should be removed.
+> >
+> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> Although I'd be happy to take the two dts patches through the Qualcomm
+> tree, once the driver changes has landed.
 
---Iup9tc3xCjeDkBkE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Dec 06, 2021 at 08:13:57PM +0530, Satya Priya Kakitapalli (Temp) wrote:
-> On 11/25/2021 9:15 PM, Mark Brown wrote:
-> > On Fri, Nov 19, 2021 at 03:12:31PM +0530, Satya Priya wrote:
-
-> > > +		child_node = of_get_child_by_name(parent_node, reg->name);
-> > > +		if (!child_node) {
-> > > +			dev_err(dev, "child node %s not found\n", reg->name);
-> > > +			return -ENODEV;
-> > > +		}
-
-> > This could be pulled out of the array.
-
-> Not sure what you meant here. could you elaborate a bit?
-
-Why is this in every iteration of the loop?
-
---Iup9tc3xCjeDkBkE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGuJ54ACgkQJNaLcl1U
-h9BoCwf7B0e5FaSpbT2g+oY0Sk9qtf9WbFJ/Q0KFdvOUFoZMbUJFU696VOd5Y7PM
-E3Lv6SM02b2YHpyvMhc7ThkY76kH85jy4k2grAFyUf0g0BaUo+lqBJEZqdOftghL
-13IBaJ3EYEyELFG4+pRgnipVFvWGxbwbPdKSiti0UuutznglOo5UOsSeJUZcYlF8
-tkWuoKBHqHS4jwrEO0IT+HU5SOPuU7UkiJYKdD/L42vlPuBUqEKP0hYF0rirvbM+
-VJ8u16+Hs6teUB8V3Iu6x0kPSQRXy4s1uEBvdFrrXLY2Glnh1OaxH53Sp9p0vc0w
-XDoo1A+3CfAc4DBh3CqX6NxdKDVmZQ==
-=pBk6
------END PGP SIGNATURE-----
-
---Iup9tc3xCjeDkBkE--
+Thanks Bjorn. I'll split the series and submit two fully reviewed v4 series.
