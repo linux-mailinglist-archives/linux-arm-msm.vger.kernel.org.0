@@ -2,170 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C8BF46A0FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:15:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 440D746A113
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:17:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386802AbhLFQTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 11:19:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41540 "EHLO
+        id S1357476AbhLFQVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 11:21:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386106AbhLFQSq (ORCPT
+        with ESMTP id S1353085AbhLFQU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:18:46 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB80C08E845
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 08:11:07 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id g19so10591763pfb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 08:11:07 -0800 (PST)
+        Mon, 6 Dec 2021 11:20:59 -0500
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F13C061746
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 08:17:30 -0800 (PST)
+Received: by mail-yb1-xb29.google.com with SMTP id g17so32628383ybe.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 08:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/dZMe5fXW3JmkstQUnuTxaguikQO8croA43e/A9yBnw=;
-        b=wsxIo8iRiao/IrGDfq47xrllVJ4TjbrPMq5pi3ujnxN/VKCJ3gsfxKRCeoeCqPfYQu
-         kOwY5U32UUnpRggGW8w10rv9Qb+gMMChBODZE8cet49sqH0aXLIuy3Hy/fNcF2I49xtW
-         w/tPBkVH6OZ0gml4qbyNHA2LKoSRu2Duh75QZw7O02/WxlK7y7iu/eS+gRwq5vnZ0TMf
-         4NrQWs80FVlPsg+02Ay9mkBOTx6d4n9cp8+8F0Dpa7NfdGkA7BMrgrVXUDuNa+sp9Oa0
-         tBWh2Wm8WKIWHNKf1R7ackwqOJUltuACyxAA6XpX27PTUDAPkFN9K/s0tPCDvwcBdLVB
-         v8Ww==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ab6y7Qd/4ZmggRJljJmRlXHqMCde+8hb4OflbprAwok=;
+        b=jHmG0n0IXvKPDCYB612UXT2bfxLlP7VKzUzEUsFrA/y+3swLCx2UA4TvUoCyEXJ5DS
+         QCaUaHkDMf8OwjSlI8qG2cUOqth1kjQPQS09SwyvpcKZH3WL/nwadDL8xo3UT+lVbltd
+         qpIDl9KIygJqqDit3siJj3+aajOrztCuR6NxD3mRxce+lvw6+lLpKV7GBIf827pq0NiL
+         /QWTUDjBUujynDE/OVnIIDLVHexYCkrz2XRvtptXTHoyzE/hYA+0KEv/XC4oDWlp2ADJ
+         UP7QqZ2T1kd5CJS3hlvEQL/7qG5FI5GEoLC0AfaHKI++BnPDBfjfA/KYgIjC4y6ezd8q
+         6OHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/dZMe5fXW3JmkstQUnuTxaguikQO8croA43e/A9yBnw=;
-        b=GMLZ0gVavIZhZULkPFfaSOEpW118V90icMmlLsEgGwBBZ22C6qbyMdXQc1yAH/Ptff
-         TEIbDRiW15ONv8MAZ99Mg/1sehdIBmRF27RFzj4HBbndWTHWVWPca2y9oVkIYP3Ot7qY
-         RqCoQSJxt3klQHs/Nn0yDhQSY76oQ0N70VzncwDik1J++TAkn0bBjF76+e6yL1R3A0s/
-         Co1i5fX92cmog05dIABHXlHrHCat55Sj6Qjbc5Km6JlkS3ZaMm2JDQDhJniXYi+LehE0
-         B+2Farp0hGDqcdvZNloxjakX9QAUsogPvKfXfljK3I0Zq6rbavBKNKLGAhvWdIrGgZIc
-         /gIA==
-X-Gm-Message-State: AOAM533OwdS74DU0x02yWv6YsqrSu6fPSwUfDhDBI1UEjDq4GduH8eP1
-        lfMBEew3jVxt0YMKHCGkLMqV553oglrp
-X-Google-Smtp-Source: ABdhPJzHztOd8XGPiN1RUx+EQUVKeXqRT/D1cHtxog5GiB7PeT8WgTwjvv+39GKJ//C4Nqx58PR66g==
-X-Received: by 2002:a05:6a00:1594:b0:4ae:dc6:f344 with SMTP id u20-20020a056a00159400b004ae0dc6f344mr7919655pfk.56.1638807066912;
-        Mon, 06 Dec 2021 08:11:06 -0800 (PST)
-Received: from localhost.localdomain ([117.217.176.38])
-        by smtp.gmail.com with ESMTPSA id lr6sm11288968pjb.0.2021.12.06.08.11.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ab6y7Qd/4ZmggRJljJmRlXHqMCde+8hb4OflbprAwok=;
+        b=YeXgBp7th1qfFdrM7N0AcoL+KJilvNjno2DLFcX0kP3/T2fUcJJL6S98OEdibArs8n
+         pP8z0ys2WuBNAg57yU0UezQG8hEAb330NP75/xDtNc1XoOoQKiCEJSHSYMvp6eYCAQXe
+         QlVEvulzJZd97+YfK5E1rjXkp1Q7o82vWgqbs5NuqbdYLXbURx/KFXheZ4qA+Oo3mjdZ
+         6DOBQ7zVfKj7E2TMDNbzibiRR3skO8m98fTEvfs7iepZd3TC88XhrTyxJvPt/JDWIW6W
+         MpGMKycwSwOjInWwt+if/caeiZz0sJK/aeSgn2q3+yVr2e/2Yu9qPPNQ1IY0PVojJaRo
+         RKaw==
+X-Gm-Message-State: AOAM530Rq+onDPe/gzLKV5HfwddPiOqsr/gjUfKNQKcQX9z+c9Acm1Bg
+        hC42gv18ApLLRWNhLU2mFO+ObExZFnlVew==
+X-Google-Smtp-Source: ABdhPJxSl+B6hJMfpl8OQNxuJMuTbUZ6z3G9DZNePSTV+nh0S//5reDmAFW4aePjKrHJeuEund/Iuw==
+X-Received: by 2002:a9d:1727:: with SMTP id i39mr29932941ota.48.1638807146111;
+        Mon, 06 Dec 2021 08:12:26 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id j187sm2705481oih.5.2021.12.06.08.12.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 08:11:06 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, kvalo@codeaurora.org,
-        stable@vger.kernel.org, Pengyu Ma <mapengyu@gmail.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] bus: mhi: core: Add support for forced PM resume
-Date:   Mon,  6 Dec 2021 21:40:59 +0530
-Message-Id: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Mon, 06 Dec 2021 08:12:25 -0800 (PST)
+Date:   Mon, 6 Dec 2021 10:12:20 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 2/2] clk: qcom: Add MSM8226 Multimedia Clock Controller
+ support
+Message-ID: <Ya42ZAKupwKiWpJf@builder.lan>
+References: <20211113015844.92762-1-bartosz.dudziak@snejp.pl>
+ <20211113015844.92762-2-bartosz.dudziak@snejp.pl>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211113015844.92762-2-bartosz.dudziak@snejp.pl>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Loic Poulain <loic.poulain@linaro.org>
+On Fri 12 Nov 19:58 CST 2021, Bartosz Dudziak wrote:
+> diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+[..]
+>  static int mmcc_msm8974_probe(struct platform_device *pdev)
+>  {
+>  	struct regmap *regmap;
+> +	const struct of_device_id *match;
+> +
+> +	match = of_match_device(mmcc_msm8974_match_table, &pdev->dev);
 
-For whatever reason, some devices like QCA6390, WCN6855 using ath11k
-are not in M3 state during PM resume, but still functional. The
-mhi_pm_resume should then not fail in those cases, and let the higher
-level device specific stack continue resuming process.
+Could you please use of_device_get_match_data() instead?
 
-Add a new parameter to mhi_pm_resume, to force resuming, whatever the
-current MHI state is. This fixes a regression with non functional
-ath11k WiFi after suspend/resume cycle on some machines.
+> +	if (!match)
 
-Bug report: https://bugzilla.kernel.org/show_bug.cgi?id=214179
+As a general suggestion; I don't see how we would end up here with
+!match, but if we somehow do it would be during development and you
+would have an easier time debugging this by hitting a NULL pointer
+dereference with a callstack, than tracking down why your clocks are
+missing...
 
-Cc: stable@vger.kernel.org #5.13
-Fixes: 020d3b26c07a ("bus: mhi: Early MHI resume failure in non M3 state")
-Reported-by: Kalle Valo <kvalo@codeaurora.org>
-Reported-by: Pengyu Ma <mapengyu@gmail.com>
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-[mani: Added comment, bug report, added reported-by tags and CCed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/pm.c             | 10 +++++++---
- drivers/bus/mhi/pci_generic.c         |  2 +-
- drivers/net/wireless/ath/ath11k/mhi.c |  6 +++++-
- include/linux/mhi.h                   |  3 ++-
- 4 files changed, 15 insertions(+), 6 deletions(-)
+Thanks,
+Bjorn
 
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 7464f5d09973..4ddd266e042e 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -881,7 +881,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
- }
- EXPORT_SYMBOL_GPL(mhi_pm_suspend);
- 
--int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
-+int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
- {
- 	struct mhi_chan *itr, *tmp;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-@@ -898,8 +898,12 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
- 	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
- 		return -EIO;
- 
--	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3)
--		return -EINVAL;
-+	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3) {
-+		dev_warn(dev, "Resuming from non M3 state (%s)\n",
-+			 TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
-+		if (!force)
-+			return -EINVAL;
-+	}
- 
- 	/* Notify clients about exiting LPM */
- 	list_for_each_entry_safe(itr, tmp, &mhi_cntrl->lpm_chans, node) {
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 9ef41354237c..efd1da66fdf9 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -959,7 +959,7 @@ static int __maybe_unused mhi_pci_runtime_resume(struct device *dev)
- 		return 0; /* Nothing to do at MHI level */
- 
- 	/* Exit M3, transition to M0 state */
--	err = mhi_pm_resume(mhi_cntrl);
-+	err = mhi_pm_resume(mhi_cntrl, false);
- 	if (err) {
- 		dev_err(&pdev->dev, "failed to resume device: %d\n", err);
- 		goto err_recovery;
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index 26c7ae242db6..f1f2fa2d690d 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -533,7 +533,11 @@ static int ath11k_mhi_set_state(struct ath11k_pci *ab_pci,
- 		ret = mhi_pm_suspend(ab_pci->mhi_ctrl);
- 		break;
- 	case ATH11K_MHI_RESUME:
--		ret = mhi_pm_resume(ab_pci->mhi_ctrl);
-+		/* Do force MHI resume as some devices like QCA6390, WCN6855
-+		 * are not in M3 state but they are functional. So just ignore
-+		 * the MHI state while resuming.
-+		 */
-+		ret = mhi_pm_resume(ab_pci->mhi_ctrl, true);
- 		break;
- 	case ATH11K_MHI_TRIGGER_RDDM:
- 		ret = mhi_force_rddm_mode(ab_pci->mhi_ctrl);
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index 723985879035..102303288cee 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -660,8 +660,9 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl);
- /**
-  * mhi_pm_resume - Resume MHI from suspended state
-  * @mhi_cntrl: MHI controller
-+ * @force: Force resuming to M0 irrespective of the device MHI state
-  */
--int mhi_pm_resume(struct mhi_controller *mhi_cntrl);
-+int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force);
- 
- /**
-  * mhi_download_rddm_image - Download ramdump image from device for
--- 
-2.25.1
-
+> +		return -ENODEV;
+>  
+> -	regmap = qcom_cc_map(pdev, &mmcc_msm8974_desc);
+> +	regmap = qcom_cc_map(pdev, match->data);
+>  	if (IS_ERR(regmap))
+>  		return PTR_ERR(regmap);
+>  
+> -	clk_pll_configure_sr_hpm_lp(&mmpll1, regmap, &mmpll1_config, true);
+> -	clk_pll_configure_sr_hpm_lp(&mmpll3, regmap, &mmpll3_config, false);
+> +	if (match->data == &mmcc_msm8974_desc) {
+> +		clk_pll_configure_sr_hpm_lp(&mmpll1, regmap, &mmpll1_config, true);
+> +		clk_pll_configure_sr_hpm_lp(&mmpll3, regmap, &mmpll3_config, false);
+> +	} else {
+> +		msm8226_clock_override();
+> +	}
+>  
+> -	return qcom_cc_really_probe(pdev, &mmcc_msm8974_desc, regmap);
+> +	return qcom_cc_really_probe(pdev, match->data, regmap);
+>  }
+>  
+>  static struct platform_driver mmcc_msm8974_driver = {
+> -- 
+> 2.25.1
+> 
