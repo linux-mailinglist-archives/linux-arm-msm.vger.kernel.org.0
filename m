@@ -2,118 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28F6246976A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 14:47:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 549C9469778
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 14:48:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244736AbhLFNvH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 08:51:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244021AbhLFNvG (ORCPT
+        id S244784AbhLFNvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 08:51:46 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:53804 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244804AbhLFNvn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 08:51:06 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF53CC061746;
-        Mon,  6 Dec 2021 05:47:37 -0800 (PST)
+        Mon, 6 Dec 2021 08:51:43 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 79E18612C5;
-        Mon,  6 Dec 2021 13:47:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D854C341C5;
-        Mon,  6 Dec 2021 13:47:34 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 075C261231;
+        Mon,  6 Dec 2021 13:48:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524D8C341C1;
+        Mon,  6 Dec 2021 13:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638798456;
-        bh=1ervwJdtDJPGg/rvZhJpL4+9h2ZvVpzF/nR7EGyL3ic=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=h/Ik77XmFqiYyQozOVZv1nh1p8saCpt4w8b6Py1m4FQl6JTEAhQlFx0oHgelZIhDu
-         o9BK0Eybq6j/s/3GxapX7IhYTUapflBvswimxZp561yNt3gkstf9IDE64cKvSxUtUu
-         ifJqhuSr86HtnJY0HFnIsW9sl3qcdpvk4QU4Ty5tTkxuY2kPZzbZumitn7roM1qr3y
-         91b8Ppmy9cRJIxlqykNMmTPzyTUnDL/ao4gE6FKaxfBL6ZckIp7SrQbac8hq+UUdBW
-         G3k/HaU89hOpiphym1OU+nqOwqqIIDhg4utecAMBS3vxKkRSvuVgGFW7WaK6/LEsvm
-         1y0QVgc44i7aQ==
-Date:   Mon, 6 Dec 2021 13:47:31 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, swboyd@chromium.org,
-        collinsd@codeaurora.org, subbaram@codeaurora.org,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V4 2/6] dt-bindings: regulator: Add pm8008 regulator
- bindings
-Message-ID: <Ya4UcxxEq9t+isxS@sirena.org.uk>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-3-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+qn2hA4MzNEqM+@sirena.org.uk>
- <30b21a08-f7f7-f3a6-a3ac-156c7f8964b1@quicinc.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="s2Y/onyCi0oqM7Zy"
-Content-Disposition: inline
-In-Reply-To: <30b21a08-f7f7-f3a6-a3ac-156c7f8964b1@quicinc.com>
-X-Cookie: You will soon forget this.
+        s=k20201202; t=1638798494;
+        bh=ttL5G87B3UCT4xLevO/fXJpyjYkle78fMpCY2i7Pv6Q=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=OzZreho2Oh+PZW0q6cQgFa0PdMxD1XPa1k53X2fr3IUJWy/6vtPBEbs2ITZjXj6CJ
+         Tsui5Kq3vP0TRXK98dR+KwwRj84yXdaQHphUFnysJkE6jTqOTWmO+wKsKRZQb50JB4
+         MaP4TMvEE/FbctRZINhCbpGdWEmKUnT/zA8SDWqPWYWPP+9Xv18xuHRWNmNqTHgfRv
+         YUYwz84Z/ZkJqbBwQG5NKWkkEvNXgP59eeVLIct3DREl0azcweIdoPzPS92z0anMo5
+         KlyNaIgysuR4L6Xf4Vo4+wMxyNSvymT6H9ZWYGuDfqPGOJN4rYsuXt7XxBYdMOjqgH
+         RoXtdioZrrqVg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1muELk-00ABDP-DB; Mon, 06 Dec 2021 13:48:12 +0000
+Date:   Mon, 06 Dec 2021 13:48:12 +0000
+Message-ID: <87wnkh26ar.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] irqchip: Add Qualcomm MPM controller driver
+In-Reply-To: <20211206131530.GN10105@dragon>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+        <20211202122122.23548-4-shawn.guo@linaro.org>
+        <87wnkikqve.wl-maz@kernel.org>
+        <20211206131530.GN10105@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 06 Dec 2021 13:15:31 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> On Mon, Dec 06, 2021 at 09:46:29AM +0000, Marc Zyngier wrote:
+> [...]
+> > > +/* Triggered by RPM when system resumes from deep sleep */
+> > > +static irqreturn_t qcom_mpm_handler(int irq, void *dev_id)
+> > > +{
+> > > +	struct qcom_mpm_priv *priv = dev_id;
+> > > +	unsigned long enable, pending;
+> > > +	int i, j;
+> > > +
+> > > +	for (i = 0; i < priv->reg_stride; i++) {
+> > > +		enable = qcom_mpm_read(priv, MPM_REG_ENABLE, i);
+> > > +		pending = qcom_mpm_read(priv, MPM_REG_STATUS, i);
+> > > +		pending &= enable;
+> > > +
+> > > +		for_each_set_bit(j, &pending, 32) {
+> > > +			unsigned int pin = 32 * i + j;
+> > > +			struct irq_desc *desc =
+> > > +					irq_resolve_mapping(priv->domain, pin);
+> > 
+> > Assignments on a single line, please.
+> 
+> This is to avoid over 80 columns check patch warning.
 
---s2Y/onyCi0oqM7Zy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't care about what checkpatch says. This is unreadable and
+ungrepable.
 
-On Mon, Dec 06, 2021 at 07:13:02PM +0530, Satya Priya Kakitapalli (Temp) wr=
-ote:
->=20
-> On 11/25/2021 8:54 PM, Mark Brown wrote:
-> > On Fri, Nov 19, 2021 at 03:12:29PM +0530, Satya Priya wrote:
+> 
+> > 
+> > > +			struct irq_data *d = &desc->irq_data;
+> > > +
+> > > +			if (!irqd_is_level_type(d))
+> > > +				irq_set_irqchip_state(d->irq,
+> > > +						IRQCHIP_STATE_PENDING, true);
+> > > +
+> > > +		}
+> > > +	}
+> > > +
+> > > +	return IRQ_HANDLED;
+> > > +}
+> > > +
+> > > +static int qcom_mpm_enter_sleep(struct qcom_mpm_priv *priv)
+> > > +{
+> > > +	int i, ret;
+> > > +
+> > > +	for (i = 0; i < priv->reg_stride; i++)
+> > > +		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
+> > > +
+> > > +	/* Notify RPM to write vMPM into HW */
+> > 
+> > What do you mean by 'into HW'? We just did that, right? or are these
+> > registers just fake and most of the stuff is in the RPM?
+> 
+> I have a note about this in commit log.
+> 
+> - All the register settings are done by APSS on an internal memory
+>   region called vMPM, and RPM will flush them into hardware after it
+>   receives a mailbox/IPC notification from APSS.
+> 
+> So yes, these registers are fake/virtual in memory, and RPM will
+> actually flush the values into the MPM hardware block.
 
-> > > +properties:
-> > > +  compatible:
-> > > +    const: qcom,pm8008-regulators
-> > Why are we adding a separate compatible for this when we already know
-> > that this is a pm8008 based on the parent?
+Then why are you using MMIO accessors all over the place if this is
+just RAM? Who *owns* this memory? Is it normal DRAM? Or some flops
+exposed by a device? Why isn't the state simply communicated over the
+mailbox instead?
 
-> For the regulator driver to be probed we do need a separate compatible
-> right? may be I didn't get your question..
+> 
+> > 
+> > > +	ret = mbox_send_message(priv->mbox_chan, NULL);
+> > > +	if (ret < 0)
+> > > +		return ret;
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > > +static int qcom_mpm_cpu_pm_callback(struct notifier_block *nb,
+> > > +				    unsigned long action, void *data)
+> > > +{
+> > > +	struct qcom_mpm_priv *priv = container_of(nb, struct qcom_mpm_priv,
+> > > +						  pm_nb);
+> > > +	int ret = NOTIFY_OK;
+> > > +	int cpus_in_pm;
+> > > +
+> > > +	switch (action) {
+> > > +	case CPU_PM_ENTER:
+> > > +		cpus_in_pm = atomic_inc_return(&priv->cpus_in_pm);
+> > > +		/*
+> > > +		 * NOTE: comments for num_online_cpus() point out that it's
+> > > +		 * only a snapshot so we need to be careful. It should be OK
+> > > +		 * for us to use, though.  It's important for us not to miss
+> > > +		 * if we're the last CPU going down so it would only be a
+> > > +		 * problem if a CPU went offline right after we did the check
+> > > +		 * AND that CPU was not idle AND that CPU was the last non-idle
+> > > +		 * CPU. That can't happen. CPUs would have to come out of idle
+> > > +		 * before the CPU could go offline.
+> > > +		 */
+> > > +		if (cpus_in_pm < num_online_cpus())
+> > > +			return NOTIFY_OK;
+> > > +		break;
+> > 
+> > I'm really not keen on this sort of tracking in an irqchip driver.
+> > Nobody else needs this. This is also copy-pasted (without even
+> > mentioning it) from rpmh_rsc_cpu_pm_callback(). Why is that logic
+> > needed twice, given that the RPM is also involved is this sequence?
+> 
+> Yes, this is copy-pasted from rpmh-rsc and I should have mentioned that
+> in some way.  But rpmh-rsc is a driver specific to RPM-Hardened (RPMH)
+> which can be found on Qualcomm high-range SoCs like SDM845, SC7180.  And
+> on these RPMH based SoCs, PDC works as the wake-up interrupt controller.
+> However, on mid-range SoCs like SDM660, QCM2290, they run a different
+> combination, that is RPM + MPM.  Note - RPMH and RPM are two similar but
+> different and separate blocks.
+> 
+> What we are implementing is for RPM + MPM based SoCs, and rpmh-rsc is
+> irrelevant here.  The same cpu_pm tracking logic can be reused though.
 
-> My understanding is we should have a separate compatible for each periphe=
-ral
-> under the parent mfd node.. like gpios, temp alarm, regulators etc..
+No, I really don't think this is the right place for this.
 
-No, the MFD can register whatever children it likes without needing any
-help from the DT.
+This is generic CPU power management code (finding out who is the last
+man standing), and I don't want it buried into some random drivers. If
+you have a need for this kind of logic, build it *outside* of the
+driver infrastructure, and into the CPU PM code. Interrupt controllers
+have no business with this stuff.
 
-> > > +  vdd_l1_l2-supply:
-> > > +    description: Input supply phandle of ldo1 and ldo2 regulators.
+> > 
+> > > +	case CPU_PM_ENTER_FAILED:
+> > > +	case CPU_PM_EXIT:
+> > > +		atomic_dec(&priv->cpus_in_pm);
+> > > +		return NOTIFY_OK;
+> > > +	default:
+> > > +		return NOTIFY_DONE;
+> > > +	}
+> > > +
+> > > +	/*
+> > > +	 * It's likely we're on the last CPU. Grab the lock and write MPM for
+> > > +	 * sleep. Grabbing the lock means that if we race with another CPU
+> > > +	 * coming up we are still guaranteed to be safe.
+> > > +	 */
+> > > +	if (raw_spin_trylock(&priv->lock)) {
+> > > +		if (qcom_mpm_enter_sleep(priv))
+> > > +			ret = NOTIFY_BAD;
+> > > +		raw_spin_unlock(&priv->lock);
+> > > +	} else {
+> > > +		/* Another CPU must be up */
+> > > +		return NOTIFY_OK;
+> > > +	}
+> > > +
+> > > +	if (ret == NOTIFY_BAD) {
+> > > +		/* Double-check if we're here because someone else is up */
+> > > +		if (cpus_in_pm < num_online_cpus())
+> > > +			ret = NOTIFY_OK;
+> > > +		else
+> > > +			/* We won't be called w/ CPU_PM_ENTER_FAILED */
+> > > +			atomic_dec(&priv->cpus_in_pm);
+> > > +	}
+> > > +
+> > > +	return ret;
+> > > +}
+> 
+> [...]
+> 
+> > > +/*
+> > > + * The mapping between MPM_GIC pin and GIC SPI number on QCM2290.  It's taken
+> > > + * from downstream qcom-mpm-scuba.c with a little transform on the GIC
+> > > + * SPI numbers (the second column).  Due to the binding difference from
+> > > + * the downstream, where GIC SPI numbering starts from 32, we expect the
+> > > + * numbering starts from 0 here, and that's why we have the number minus 32
+> > > + * comparing to the downstream.
+> > 
+> > This doesn't answer my earlier question: is this list complete? Or is
+> > it likely to change?
+> 
+> Yes, it's complete for QCM2290.
+> 
+> > Also, why is that in not in the device tree,
+> > given that it is likely to change from one SoC to another?
+> 
+> Yes, this is a SoC specific data, and will be different from one SoC to
+> another.  Different subsystem maintainers have different views on such
+> SoC data.  Some think they belong to kernel/driver and can be matched
+> using SoC specific compatible, while others prefer to have them in DT.
+> 
+> As I mentioned in the commit log, this SoC data actually consists of two
+> parts:
+> 
+>  1) Map of MPM_GIC pin <--> GIC interrupt number
+>  2) Map of MPM_GPIO pin <--> GPIO number
+> 
+> Since we already have map 2) defined in pinctrl driver rather than DT,
+> I put map 1) in MPM driver.
 
-> > These supply nodes should be chip level, they're going into the chip and
-> > in general the expectation is that you should be able to describe the
-> > supplies going into a device without worrying about how or if any
-> > particular OS splits things up.
+That's a pinctrl decision. I don't want more static tables in random
+drivers on the irqchip side. You are just reinventing the board files
+we got rid of 10 years ago, only spread all over the various drivers
+instead of arch/arm/mach-*/... 
 
-> So, if i understand correctly, we don't have to mention these in the
-> documentation as these are handled at framework level?
+	M.
 
-No.  I'm saying you should document these at the chip level, they do
-need to be documented though.
-
---s2Y/onyCi0oqM7Zy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGuFHIACgkQJNaLcl1U
-h9Bh+Qf8DxGyOs3yJmQBLpsw7yd/avRnEQw0x5C0ke/0N3cOZMaLc+Rm3NGu3u7f
-DSxkpUYrbUdUy5AQLcsAFwVEF0rbEvi0QbXSbkYPxh4V/0sF5EF+dx6M6Rf7+fOY
-BWTs9A83UkUUaY3jkhyjKcF2fhz2uFfMTm9p20XECVX+MHEslddV0DprWo6AWVPY
-CtHx3z6ImfXWuMSIBWMo+KvtBi1Ywaw7Z6xYrY5MeSFM9RPiFYLCJVuQEWm0a4Zs
-rLhh74SRXi/3670xcy/DiDyflKvfePtmlAXTFyKDyKnN6GBCv215KR8EtudIw0ZM
-O8jUDRCSyVMn78Cx5FGhBPJxKJfvPg==
-=+A0G
------END PGP SIGNATURE-----
-
---s2Y/onyCi0oqM7Zy--
+-- 
+Without deviation from the norm, progress is not possible.
