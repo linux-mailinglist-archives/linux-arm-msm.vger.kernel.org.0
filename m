@@ -2,70 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 890FF46AB09
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 22:52:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF2C46AB54
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 23:21:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356089AbhLFV4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 16:56:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355929AbhLFVz5 (ORCPT
+        id S1349072AbhLFWYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 17:24:46 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:39780 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236193AbhLFWYq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 16:55:57 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FEAC0698C1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 13:52:28 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id d10so35336201ybe.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 13:52:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=U+wvXPwvhucTVlxnfZp7fdTxV1dqI6RrlYLlpej7n+A=;
-        b=A1drCu8/2EbCOqmoAFbJDuTr6v9X1LmPHk/OZr8jE5hpKtRWwd08YftifjBdbkXJUg
-         dmrMD5WSKv18qutIqdGjNuPq33qR9tmxMr9qPeukt9J7LC69eKS2z+NZ4jJJz9Xtr7VM
-         jC33eODMlgpvkNPoFT/fkcQ5Ake3Jxog6ZGc+wYd8KVA/hwp9vT00V5vDhH8f8XpX511
-         CA37p7jeqg1wSNk8BIPAwxzAjlidFTEmA5f+i1k6RS9O1Y3GhbXkQcI2oJ0W64HiQtwM
-         GlnIl/ToQ7+vQb78XcGhn3MvkzRXguXM0naRpVrVrb/310ivxeU424UB6QtcXPlhpNhp
-         WgQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=U+wvXPwvhucTVlxnfZp7fdTxV1dqI6RrlYLlpej7n+A=;
-        b=FORLm0XM/Kkzw5YmlDXacyQiGLP2L5T6KprZbgxQnopMeWq5AJ5cPsKsUwKD53U/fr
-         fHOCbowLKZ1t9k91b+N7RDFMdWOVgEpWfmMzEaBbc8tBlfbgXKZnVbJh+TdRi7MdCHws
-         EVd4Tth7ie/S5fVLhkT07hgsXX01JTNLFoqsTlovBOcn2ho7fCZ2DKsDs+b7wA9WBwbS
-         cE5gtdKHMOZtsIFp3AfltMfcxil+tuMVgHCFu9YHB+pOoh3szY6/VBx7ghtfozFKotF5
-         hd9pDnMdFBQSzV9d7haTJXP+pSPSJjkhhChud05BH74ROf1WSYC87JqKGXB7sPObuG0B
-         fGNQ==
-X-Gm-Message-State: AOAM530sNvhPGYEL9xNkNh1tOydIYYMVLqV/xZ2OH+/EoZBFkcR45vyK
-        dQq89jCZ/ySix+XQEr3qKMiUnkjZum7hDF9gosA=
-X-Google-Smtp-Source: ABdhPJwGP4XOziDvK97TQZ20UXdtswrtdpCxtQSBPll8g3OW2CZQ6HzzHIFnus1Qmz6FEozwBECx4TP8w+380fssLDk=
-X-Received: by 2002:a25:ad06:: with SMTP id y6mr43839851ybi.278.1638827547324;
- Mon, 06 Dec 2021 13:52:27 -0800 (PST)
+        Mon, 6 Dec 2021 17:24:46 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 27597B815AE;
+        Mon,  6 Dec 2021 22:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47C5C341C6;
+        Mon,  6 Dec 2021 22:21:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638829274;
+        bh=F8ejg9ujilnXLjN5vbT63HubpoxPpXXzuMEESv4d67U=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=jkYt58Xa3kuSS9fJfeEPEXJ/6T1lSPT+39FQSw5I1gqLweDsYjI/rsEpb+UeU2Yzb
+         5LcLGxyDrJihkAGqe1hbolCR8vq/MT14pSFwEKCkUKgfmhj5AzBFELX/aQ0Xuw8yHI
+         pICL46wRODVlVjpFXWLQGmIfuGxRqMJZcSTwZI+6ckgO2T8gSBXwKcZAsJfQzxCTxF
+         ZKrhV+Joerp/6Nnc0KdLWWv3zBtFji0CmV5DW7wQkan/NxdMzPD1Y2nwnJZ6m2EX4V
+         /A63auMXVuGOoiZDWr9V1ZLgdMTjSg3kTcIAuWB3FxDDEZtUyW0KDFTmRvRtz44SZL
+         t8Zrmrzj33BCA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Received: by 2002:a05:7110:91a4:b0:fe:6c12:9189 with HTTP; Mon, 6 Dec 2021
- 13:52:26 -0800 (PST)
-Reply-To: mauhin13@gmail.com
-From:   Maureen Hinckley <bonfacemuchoki111@gmail.com>
-Date:   Tue, 7 Dec 2021 00:52:26 +0300
-Message-ID: <CAGdddHJh=8bNKeNqihaaKsrWmz89kWsSk7ZPf1twu3_Ru7LkMg@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <Ya4rtHSS1tLm7Gbi@builder.lan>
+References: <20211031020715.21636-1-shawn.guo@linaro.org> <20211031020715.21636-4-shawn.guo@linaro.org> <Ya4rtHSS1tLm7Gbi@builder.lan>
+Subject: Re: [PATCH 3/3] clk: qcom: smd-rpm: Drop binary value handling for buffered clock
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Date:   Mon, 06 Dec 2021 14:21:13 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20211206222114.B47C5C341C6@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=20
-Hello,
+Quoting Bjorn Andersson (2021-12-06 07:26:44)
+> On Sat 30 Oct 21:07 CDT 2021, Shawn Guo wrote:
+>=20
+> > The buffered clock binary value handling added by commit 36354c32bd76
+> > ("clk: qcom: smd-rpm: Add .recalc_rate hook for clk_smd_rpm_branch_ops")
+> > is redundant, because buffered clock is branch type, and the binary
+> > value handling for branch clock has been handled by
+> > clk_smd_rpm_prepare/unprepare functions.
+> >=20
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+>=20
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I am Maureen Hinckley and my foundation is donating ($2.2 Million.
-Dollars) to you. Contact us via my email at (mauhin13@gmail.com) for
-further details.
-
-Best Regards,
-Mrs. Maureen Hinckley,
-Copyright =C2=A92021 The Maureen Hinckley Foundation All Rights Reserved.
+Does that mean you picked it up? Or you want me to pick it up?
