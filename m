@@ -2,127 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3A1A46989A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 15:22:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4C8446989F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 15:23:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240280AbhLFOZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 09:25:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43310 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245044AbhLFOZw (ORCPT
+        id S245129AbhLFO0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 09:26:37 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:50816 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242143AbhLFO0g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 09:25:52 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94767C061354
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 06:22:23 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id t83so11222772qke.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 06:22:23 -0800 (PST)
+        Mon, 6 Dec 2021 09:26:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kRncryoplbgaJpeV0eEsttn1Wbr7ZCHuVrWpcBNe94w=;
-        b=Xnyjr/h4PKcJrMEYIfxGKzmK2zKxryeOFNIVXSFxZj1awPEotWBG2ePd3id51lK/d8
-         msHza8noDMbrkBQqEHD1FfRPgLaMw7sSBB5O9CTpQcuPqFuqvPQBtspoo12K9UHUImpa
-         bcH7jUckFJCA4E+luCE8qjRMdWYWs7wPMwwyNA1BG7DHP3SmPhjENDR2+CM4VRbsUZ+g
-         WLnVR/XTHKDm+G9bDKskNNtkSz1e3a2sjxZAb08Ytxs81iydwUrOtUGLitZSsBF4Zk9M
-         OQzVSA6iu14FVK0roN0sKmIgJaYYY+XgU0V997ylxWGPaqUFaoP3jf4eIddtPMoLz6dy
-         h9Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kRncryoplbgaJpeV0eEsttn1Wbr7ZCHuVrWpcBNe94w=;
-        b=AFA0ph/cP6ogNEpsGeqdm2nyFunNk28h3C0j7DpX7oNA9/zDRe4tx2YiU8ImSUHUUw
-         73u4qODYOu07VtHbMuZuZywz5fxR28LiD/3l0u9Tqh8uYHCpDMR7TwDmQqu+bX6xXUD8
-         XHCPOczyHUgPMo78DSFl9dPKlommn4Xk9FkKMJMdDjCdVBit/xkCVlHMSu5Bljc/oL3C
-         er7lkqm21134cK8j/hQoAyNLGymmBEchsz+bDVcYYCX5sTFQmIAvYiQ9X5NdN7IUaziu
-         bBmhCqBq6r45WSV2RBlxJ+smWiv/z2A9w2/H9MKzNVohjSD+CLc6k90wKIcb7HFK6/ex
-         ox9w==
-X-Gm-Message-State: AOAM532tHQiI+Jd1+BN/yTsoDZyup+5YKOVbIcpa9uyYf4Il6/9vN0PQ
-        Dv2wjE5+tH1AIuGk9MabZ18QlA==
-X-Google-Smtp-Source: ABdhPJzqbwIJbL1QNoOo2PSy4XdmW3rAvUfZaFujGIJX62m6SEIXm+R9F5DJOTut1jzGyZ7SctFg2g==
-X-Received: by 2002:a37:f619:: with SMTP id y25mr33578687qkj.201.1638800542654;
-        Mon, 06 Dec 2021 06:22:22 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id f1sm7653268qtf.74.2021.12.06.06.22.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Dec 2021 06:22:22 -0800 (PST)
-Subject: Re: [PATCH 1/3] thermal: qcom: lmh: Add support for sm8150
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
-        rafael@kernel.org, rui.zhang@intel.com, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211202223802.382068-1-thara.gopinath@linaro.org>
- <20211202223802.382068-2-thara.gopinath@linaro.org>
- <f0ae3d36-8317-b297-cc99-645adca1f25c@somainline.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <6771fdd4-b863-6a63-8cf5-441e866f771c@linaro.org>
-Date:   Mon, 6 Dec 2021 09:22:21 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638800588; x=1670336588;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=oMjq8zFrglbyjH+zylWx61MB+80sU/3TxTg+wGA9w1M=;
+  b=cW8HkbTg2YCtY5nmH/h+NdaZaVdSd4+mLwrMjAhWNAD3AA/q32ipoJrf
+   eKqJdFwaR5/VxRFMABXUU+eNA2rbdhSkvM5kPltg78R1zJdHcGfCboBBF
+   dEXhkIDPgh9FefTK6VGELtsKOhjdZbkgOozikMP9xPHxuBeLrchkD/9o6
+   M=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 06:23:08 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 06:23:07 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 06:23:07 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 06:23:01 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <plai@codeaurora.org>, <bgoswami@codeaurora.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <rohitkr@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [RESEND, v9 00/10] Add support for audio on SC7280 based targets
+Date:   Mon, 6 Dec 2021 19:52:37 +0530
+Message-ID: <1638800567-27222-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <f0ae3d36-8317-b297-cc99-645adca1f25c@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+This patch set is to add support for Audio over wcd codec,
+digital mics, through digital codecs and without ADSP.
 
-Thanks for the review.
+Changes Since V8:
+    -- Fix errors in sc7280 lpass cpu dt-bindings.
+    -- Move to quicinc domain email id's.
+Changes Since V7:
+    -- Fix indentation errors.
+    -- Bisect patches to avoid interdependency.
+Changes Since V6:
+    -- Split cdc dma regmap config macros.
+    -- Add write dma reg fields for i2s path.
+    -- Add helper function to distinguish rxtx and va dma ports.
+    -- Optimizing clock and reg name in cpu dt-bindings.
+    -- Update buffer management for cdc dma path.
+    -- Remove Kconfig fields of machine driver.
+Changes Since V5:
+    -- Include MI2S primary node to snd_soc_dai_driver in lpass-sc7280 platform driver.
+    -- Move dependency patch list to corresponding patch.
+    -- Add support for missing cdc-dma ports.
+    -- Change if/else conditional statements to switch cases.
+    -- Add missing error handlings.
+    -- Typo errors fix.
+Changes Since V4:
+    -- Remove unused variable in lpass-sc7280 platform driver.
+Changes Since V3:
+    -- Remove redundant power domain controls. As power domains can be configured from dtsi.
+Changes Since V2:
+    -- Split lpass sc7280 cpu driver patch and create regmap config patch.
+    -- Create patches based on latest kernel tip.
+    -- Add helper function to get dma control and lpaif handle.
+    -- Remove unused variables.
+Changes Since V1:
+    -- Typo errors fix
+    -- CPU driver readable/writable apis optimization.
+    -- Add Missing config patch
+    -- Add Common api for repeated dmactl initialization.
 
-On 12/4/21 8:34 AM, Konrad Dybcio wrote:
-> Hi,
-> 
-> On 02.12.2021 23:38, Thara Gopinath wrote:
->> Add compatible to support LMh for sm8150 SoC.
->> sm8150 does not require explicit enabling for various LMh subsystems.
->> Move this piece of code under condition that it is executed only
->> for sdm845 SoC.
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>   drivers/thermal/qcom/lmh.c | 61 ++++++++++++++++++++------------------
->>   1 file changed, 32 insertions(+), 29 deletions(-)
-> 
-> [...]
-> 
-> 
->> -		return ret;
->> +	if (of_device_is_compatible(np, "qcom,sdm845-lmh")) {
->> +		if (!qcom_scm_lmh_dcvsh_available())
->> +			return -EINVAL;
-> 
-> I don't believe this is the correct approach, as different SoCs may
-> 
-> require different sequences of these writes (for example SDM660/MSM8998
-> 
-> seems to only enable the thermal algorithm), and there will (hopefully) be interest
-> 
-> in adding LMH support for more platforms, so perhaps separating this somehow
-> 
-> could keep this a bit cleaner and easier to work with for the next person..
+Srinivasa Rao Mandadapu (10):
+  ASoC: qcom: SC7280: Update config for building codec dma drivers
+  ASoC: qcom: Move lpass_pcm_data structure to lpass header
+  ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
+  ASoC: qcom: Add helper function to get dma control and lpaif handle
+  ASoC: qcom: Add register definition for codec rddma and wrdma
+  ASoC: qcom: Add regmap config support for codec dma driver
+  ASoC: qcom: Add support for codec dma driver
+  ASoC: qcom: Add lpass CPU driver for codec dma control
+  ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+  ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
 
-I have not looked at SDM660/MSM8998. Are you telling me that these SoCs 
-don't enable the current and BCL portion of LMh. Maybe they have an 
-earlier version of Lmh which does not support all the features. The 
-right approach in this case will be to add a match table with flags for 
-init based on SoC. I can send v2, adding a match table with a flag to 
-specify whether to do the init sequence or not. Since I am not adding 
-the support for any other SoC at the moment, I cannot put in flags 
-separating out thermal , current and BCL init.
-
-> 
-> 
-> 
-> Konrad
-> 
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  75 ++-
+ sound/soc/qcom/Kconfig                             |  11 +
+ sound/soc/qcom/Makefile                            |   4 +
+ sound/soc/qcom/lpass-cdc-dma.c                     | 275 +++++++++
+ sound/soc/qcom/lpass-cpu.c                         | 244 +++++++-
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 127 ++++-
+ sound/soc/qcom/lpass-platform.c                    | 617 ++++++++++++++++++---
+ sound/soc/qcom/lpass-sc7280.c                      | 441 +++++++++++++++
+ sound/soc/qcom/lpass.h                             | 162 ++++++
+ 9 files changed, 1869 insertions(+), 87 deletions(-)
+ create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
+ create mode 100644 sound/soc/qcom/lpass-sc7280.c
 
 -- 
-Warm Regards
-Thara (She/Her/Hers)
+2.7.4
+
