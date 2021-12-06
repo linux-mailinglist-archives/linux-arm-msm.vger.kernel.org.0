@@ -2,104 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CAE8469786
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 14:52:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3A1A46989A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 15:22:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244863AbhLFN40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 08:56:26 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:23180 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244764AbhLFN4Z (ORCPT
+        id S240280AbhLFOZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 09:25:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43310 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245044AbhLFOZw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 08:56:25 -0500
+        Mon, 6 Dec 2021 09:25:52 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94767C061354
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 06:22:23 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id t83so11222772qke.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 06:22:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638798777; x=1670334777;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=0i+M3Jc8NJo5yKv2qz+VLUGlxxp5kSxbqQoHK9Vfhgc=;
-  b=ZoV3nPw27fjzcoYFw91Cf6rqzwKAInpeH2ble3sXHl9jUzX5zNQtdlqG
-   AqpvF627sG7DzKM7xhj3gnFimM/BnEs4f4dJ8ji9SPzVRfFTs7Vu7X/rj
-   RUQ8j+c7VxA0IRcW7JzTP5waz9+7tIF+y0MQcyZBQiFxmxdDuWCh8/C+A
-   4=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 05:52:57 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 05:52:56 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 05:52:56 -0800
-Received: from [10.50.43.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
- 05:52:51 -0800
-Message-ID: <2efe933e-de1e-0dfc-959a-c0003e28f830@quicinc.com>
-Date:   Mon, 6 Dec 2021 19:22:47 +0530
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kRncryoplbgaJpeV0eEsttn1Wbr7ZCHuVrWpcBNe94w=;
+        b=Xnyjr/h4PKcJrMEYIfxGKzmK2zKxryeOFNIVXSFxZj1awPEotWBG2ePd3id51lK/d8
+         msHza8noDMbrkBQqEHD1FfRPgLaMw7sSBB5O9CTpQcuPqFuqvPQBtspoo12K9UHUImpa
+         bcH7jUckFJCA4E+luCE8qjRMdWYWs7wPMwwyNA1BG7DHP3SmPhjENDR2+CM4VRbsUZ+g
+         WLnVR/XTHKDm+G9bDKskNNtkSz1e3a2sjxZAb08Ytxs81iydwUrOtUGLitZSsBF4Zk9M
+         OQzVSA6iu14FVK0roN0sKmIgJaYYY+XgU0V997ylxWGPaqUFaoP3jf4eIddtPMoLz6dy
+         h9Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kRncryoplbgaJpeV0eEsttn1Wbr7ZCHuVrWpcBNe94w=;
+        b=AFA0ph/cP6ogNEpsGeqdm2nyFunNk28h3C0j7DpX7oNA9/zDRe4tx2YiU8ImSUHUUw
+         73u4qODYOu07VtHbMuZuZywz5fxR28LiD/3l0u9Tqh8uYHCpDMR7TwDmQqu+bX6xXUD8
+         XHCPOczyHUgPMo78DSFl9dPKlommn4Xk9FkKMJMdDjCdVBit/xkCVlHMSu5Bljc/oL3C
+         er7lkqm21134cK8j/hQoAyNLGymmBEchsz+bDVcYYCX5sTFQmIAvYiQ9X5NdN7IUaziu
+         bBmhCqBq6r45WSV2RBlxJ+smWiv/z2A9w2/H9MKzNVohjSD+CLc6k90wKIcb7HFK6/ex
+         ox9w==
+X-Gm-Message-State: AOAM532tHQiI+Jd1+BN/yTsoDZyup+5YKOVbIcpa9uyYf4Il6/9vN0PQ
+        Dv2wjE5+tH1AIuGk9MabZ18QlA==
+X-Google-Smtp-Source: ABdhPJzqbwIJbL1QNoOo2PSy4XdmW3rAvUfZaFujGIJX62m6SEIXm+R9F5DJOTut1jzGyZ7SctFg2g==
+X-Received: by 2002:a37:f619:: with SMTP id y25mr33578687qkj.201.1638800542654;
+        Mon, 06 Dec 2021 06:22:22 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id f1sm7653268qtf.74.2021.12.06.06.22.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Dec 2021 06:22:22 -0800 (PST)
+Subject: Re: [PATCH 1/3] thermal: qcom: lmh: Add support for sm8150
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, rui.zhang@intel.com, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211202223802.382068-1-thara.gopinath@linaro.org>
+ <20211202223802.382068-2-thara.gopinath@linaro.org>
+ <f0ae3d36-8317-b297-cc99-645adca1f25c@somainline.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <6771fdd4-b863-6a63-8cf5-441e866f771c@linaro.org>
+Date:   Mon, 6 Dec 2021 09:22:21 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO
- accessors
+In-Reply-To: <f0ae3d36-8317-b297-cc99-645adca1f25c@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>
-CC:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Marc Zyngier <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        <quic_psodagud@quicinc.com>
-References: <cover.1638275062.git.quic_saipraka@quicinc.com>
- <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
- <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com>
- <7b2b5888-c2ca-2ca0-8c0c-32128fcb37d2@quicinc.com>
- <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/6/2021 5:00 PM, Arnd Bergmann wrote:
-> On Mon, Dec 6, 2021 at 12:12 PM Sai Prakash Ranjan
-> <quic_saipraka@quicinc.com> wrote:
->> On 12/6/2021 2:20 PM, Arnd Bergmann wrote:
->>> I think it would be even better to flip these around and make the low-level
->>> definitions __io_ar() and __io_bw(), and then defining the arm64 specific
->>> macros based on those:
->>>
->>> /* arm64-specific, don't use in portable drivers */
->>> #define __iormb(v)     __io_ar(v)
->>> #define __iowmb()      __io_bw()
->>> #define __iomb()        dma_mb()
->>>
->>>
->> So __iormb on arm64 has some dummy control dependency stuff as well based on
->> ("arm64: io: Ensure calls to delay routines are ordered against prior
->> readX()") and then we would need to change __iormb definition to __io_ar which
->> doesn't seem like __iormb definition to be exact right?
-> I'm not sure what you are asking here. As far as I can tell, __io_ar()
-> and __iormb() have the same calling conventions and the same barrier
-> requirements, so they should be interchangeable, we just need to decide
-> which one is the primary definition.
->
->         Arnd
+Hi Konrad,
 
-Sorry, what I meant was the literal name of these macros, i.e., 
-__iormb() has more explicit naming as
-IO read memory barrier and __io_ar() is IO after read? So doesn't it 
-make more sense that __iormb()
-should be the primary definition which is already the case and ar/bw 
-should be based on them.
+Thanks for the review.
 
-Thanks,
-Sai
+On 12/4/21 8:34 AM, Konrad Dybcio wrote:
+> Hi,
+> 
+> On 02.12.2021 23:38, Thara Gopinath wrote:
+>> Add compatible to support LMh for sm8150 SoC.
+>> sm8150 does not require explicit enabling for various LMh subsystems.
+>> Move this piece of code under condition that it is executed only
+>> for sdm845 SoC.
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>   drivers/thermal/qcom/lmh.c | 61 ++++++++++++++++++++------------------
+>>   1 file changed, 32 insertions(+), 29 deletions(-)
+> 
+> [...]
+> 
+> 
+>> -		return ret;
+>> +	if (of_device_is_compatible(np, "qcom,sdm845-lmh")) {
+>> +		if (!qcom_scm_lmh_dcvsh_available())
+>> +			return -EINVAL;
+> 
+> I don't believe this is the correct approach, as different SoCs may
+> 
+> require different sequences of these writes (for example SDM660/MSM8998
+> 
+> seems to only enable the thermal algorithm), and there will (hopefully) be interest
+> 
+> in adding LMH support for more platforms, so perhaps separating this somehow
+> 
+> could keep this a bit cleaner and easier to work with for the next person..
+
+I have not looked at SDM660/MSM8998. Are you telling me that these SoCs 
+don't enable the current and BCL portion of LMh. Maybe they have an 
+earlier version of Lmh which does not support all the features. The 
+right approach in this case will be to add a match table with flags for 
+init based on SoC. I can send v2, adding a match table with a flag to 
+specify whether to do the init sequence or not. Since I am not adding 
+the support for any other SoC at the moment, I cannot put in flags 
+separating out thermal , current and BCL init.
+
+> 
+> 
+> 
+> Konrad
+> 
+
+-- 
+Warm Regards
+Thara (She/Her/Hers)
