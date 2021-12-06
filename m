@@ -2,722 +2,544 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A96B46A16B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:32:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2592446A18E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:39:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346443AbhLFQgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 11:36:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46740 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346104AbhLFQgZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 11:36:25 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 118EDC0611F7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 08:32:56 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id o4so22380886oia.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 08:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sfgp+Fzu90J2ESrAc1hGMPt/IEv7tpIqe4sIvD/5olo=;
-        b=u79JgjLO4Q2q+oV14ehsEuy8wb/hXAWf2HVJcPGLMLOUuDvQJuYbWsTXDHW1k86epO
-         H9lZxkYmuJCfG3Y15HvETTbLUnVX01naqcgeP+8qGAZkorNfwZFBunXxLjsM81MrQ9xN
-         CEBJ93aR1ElHqj5i0gMcR+lq0r6LFCHji3RTNeKPPfvBPQOCpPFheE+wl1YdeuW/YE/A
-         JCs5IqGnmAkYvGfaMh4BK0C3yIib6dgjpXGcOzuAdDnA1PotHi6eOYhIzu3fTRGo/wKJ
-         5s3aOskoBkLcLeGVt4iLOKipxaI4nrfIXv+eKYhBINnuvwmPPP1KRJwW76y2n8cjMMhj
-         5s5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sfgp+Fzu90J2ESrAc1hGMPt/IEv7tpIqe4sIvD/5olo=;
-        b=BAOQ3xW2RonrimfQYNdOpPuHqT68LnGPkrWKCgHgk3k/pOGfgfag7jswqEnEtbMJYa
-         n6QYlDHkbMOPMVyOVPqYmvXwr1+VevI2r4PSssFdrHAfYVLbOQLAwgb+pEQGy/UMDqW0
-         lycA4XftpmvAANWqqIQ7+is2j1w4Myx6ui1gRilcWnzdqAppqtIWWvp1wZVh3oqFO60f
-         XicTkeQwiJseLP4dSNMOJ4PIwBb9N6VVxpu5G6H3e76KCnaUAZ7jQrcDWqP+DtqlCnY3
-         QoTOQ6gK71WGHsVGggB4n//LdqI6hUE8fBVaaQgtl3mNDVQK+7q2WEGhbrEqCzIYtLAO
-         o8xA==
-X-Gm-Message-State: AOAM5323NctWK3d9vxdyZtMui4FnQm5+LXnkAoQio//1MP8JtZt+v+Wa
-        BncwJ4LBWO003zNNryMDEN2kmQ==
-X-Google-Smtp-Source: ABdhPJy41rIthToUAplwHDMF6jccequ0wGZkA3e4IH6TrLpN1TX5o1+cp7+qpeOlb9rsP4x/FPSVlg==
-X-Received: by 2002:a05:6808:1185:: with SMTP id j5mr24520157oil.16.1638808375202;
-        Mon, 06 Dec 2021 08:32:55 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h26sm2153764oor.17.2021.12.06.08.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 08:32:54 -0800 (PST)
-Date:   Mon, 6 Dec 2021 10:32:49 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: Re: [PATCH v4 3/5] pinctrl: qcom: Move chip specific functions to
- right files
-Message-ID: <Ya47MbYqG2mvQW7g@builder.lan>
-References: <1638531140-25899-1-git-send-email-srivasam@codeaurora.com>
- <1638531140-25899-4-git-send-email-srivasam@codeaurora.com>
+        id S229750AbhLFQmq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 11:42:46 -0500
+Received: from mga06.intel.com ([134.134.136.31]:27159 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234427AbhLFQmp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Dec 2021 11:42:45 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10190"; a="298151443"
+X-IronPort-AV: E=Sophos;i="5.87,292,1631602800"; 
+   d="scan'208";a="298151443"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 08:39:16 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,292,1631602800"; 
+   d="scan'208";a="461902736"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by orsmga006.jf.intel.com with ESMTP; 06 Dec 2021 08:39:13 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1muH1E-000LUC-C7; Mon, 06 Dec 2021 16:39:12 +0000
+Date:   Tue, 7 Dec 2021 00:39:01 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     kbuild-all@lists.01.org, gregkh <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, quic_psodagud@quicinc.com
+Subject: Re: [PATCHv5 3/4] tracing: Add register read/write tracing support
+Message-ID: <202112070036.AVohI56z-lkp@intel.com>
+References: <e088f4b4021f2e56093c7f73e77f556059e114b7.1638275062.git.quic_saipraka@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1638531140-25899-4-git-send-email-srivasam@codeaurora.com>
+In-Reply-To: <e088f4b4021f2e56093c7f73e77f556059e114b7.1638275062.git.quic_saipraka@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 03 Dec 05:32 CST 2021, Srinivasa Rao Mandadapu wrote:
+Hi Sai,
 
-I don't see anything _wrong_ with the current filename, so this patch
-isn't really moving chip function to the _right_ files.
+Thank you for the patch! Yet something to improve:
 
-May I suggest that you make $subject:
+[auto build test ERROR on arm64/for-next/core]
+[also build test ERROR on rostedt-trace/for-next arnd-asm-generic/master v5.16-rc4 next-20211206]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-"pinctrl: qcom: Extract chip specific LPASS LPI code"
+url:    https://github.com/0day-ci/linux/commits/Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
+config: parisc-allyesconfig (https://download.01.org/0day-ci/archive/20211207/202112070036.AVohI56z-lkp@intel.com/config)
+compiler: hppa-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/1b255eef866824f8925cc46d6b127d641f1c8982
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
+        git checkout 1b255eef866824f8925cc46d6b127d641f1c8982
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=parisc SHELL=/bin/bash
 
-> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> 
-> Update lpass lpi pin control driver to accommodate new lpass variant
-> SoC specific drivers.
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-I also have a hard time parsing this sentence.
+All errors (new ones prefixed by >>):
 
-> Move sm8250 SoC specific functions to pinctrl-sm8250-lpass-lpi.c file
-> and common declarations to pinctrl-lpass-lpi.h header file.
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:74:21: error: redefinition of '__raw_readb'
+      74 | #define __raw_readb __raw_readb
+         |                     ^~~~~~~~~~~
+   include/asm-generic/io.h:75:18: note: in expansion of macro '__raw_readb'
+      75 | static inline u8 __raw_readb(const volatile void __iomem *addr)
+         |                  ^~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:136:29: note: previous definition of '__raw_readb' with type 'unsigned char(const volatile void *)'
+     136 | static inline unsigned char __raw_readb(const volatile void __iomem *addr)
+         |                             ^~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:82:21: error: redefinition of '__raw_readw'
+      82 | #define __raw_readw __raw_readw
+         |                     ^~~~~~~~~~~
+   include/asm-generic/io.h:83:19: note: in expansion of macro '__raw_readw'
+      83 | static inline u16 __raw_readw(const volatile void __iomem *addr)
+         |                   ^~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:140:30: note: previous definition of '__raw_readw' with type 'short unsigned int(const volatile void *)'
+     140 | static inline unsigned short __raw_readw(const volatile void __iomem *addr)
+         |                              ^~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:90:21: error: redefinition of '__raw_readl'
+      90 | #define __raw_readl __raw_readl
+         |                     ^~~~~~~~~~~
+   include/asm-generic/io.h:91:19: note: in expansion of macro '__raw_readl'
+      91 | static inline u32 __raw_readl(const volatile void __iomem *addr)
+         |                   ^~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:144:28: note: previous definition of '__raw_readl' with type 'unsigned int(const volatile void *)'
+     144 | static inline unsigned int __raw_readl(const volatile void __iomem *addr)
+         |                            ^~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:108:22: error: redefinition of '__raw_writeb'
+     108 | #define __raw_writeb __raw_writeb
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:109:20: note: in expansion of macro '__raw_writeb'
+     109 | static inline void __raw_writeb(u8 value, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:153:20: note: previous definition of '__raw_writeb' with type 'void(unsigned char,  volatile void *)'
+     153 | static inline void __raw_writeb(unsigned char b, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:116:22: error: redefinition of '__raw_writew'
+     116 | #define __raw_writew __raw_writew
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:117:20: note: in expansion of macro '__raw_writew'
+     117 | static inline void __raw_writew(u16 value, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:157:20: note: previous definition of '__raw_writew' with type 'void(short unsigned int,  volatile void *)'
+     157 | static inline void __raw_writew(unsigned short b, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:124:22: error: redefinition of '__raw_writel'
+     124 | #define __raw_writel __raw_writel
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:125:20: note: in expansion of macro '__raw_writel'
+     125 | static inline void __raw_writel(u32 value, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:161:20: note: previous definition of '__raw_writel' with type 'void(unsigned int,  volatile void *)'
+     161 | static inline void __raw_writel(unsigned int b, volatile void __iomem *addr)
+         |                    ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:606:14: error: conflicting types for 'insb'; have 'void(long unsigned int,  void *, unsigned int)'
+     606 | #define insb insb
+         |              ^~~~
+   include/asm-generic/io.h:607:20: note: in expansion of macro 'insb'
+     607 | static inline void insb(unsigned long addr, void *buffer, unsigned int count)
+         |                    ^~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:284:13: note: previous declaration of 'insb' with type 'void(long unsigned int,  void *, long unsigned int)'
+     284 | extern void insb (unsigned long port, void *dst, unsigned long count);
+         |             ^~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:614:14: error: conflicting types for 'insw'; have 'void(long unsigned int,  void *, unsigned int)'
+     614 | #define insw insw
+         |              ^~~~
+   include/asm-generic/io.h:615:20: note: in expansion of macro 'insw'
+     615 | static inline void insw(unsigned long addr, void *buffer, unsigned int count)
+         |                    ^~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:285:13: note: previous declaration of 'insw' with type 'void(long unsigned int,  void *, long unsigned int)'
+     285 | extern void insw (unsigned long port, void *dst, unsigned long count);
+         |             ^~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:622:14: error: conflicting types for 'insl'; have 'void(long unsigned int,  void *, unsigned int)'
+     622 | #define insl insl
+         |              ^~~~
+   include/asm-generic/io.h:623:20: note: in expansion of macro 'insl'
+     623 | static inline void insl(unsigned long addr, void *buffer, unsigned int count)
+         |                    ^~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:286:13: note: previous declaration of 'insl' with type 'void(long unsigned int,  void *, long unsigned int)'
+     286 | extern void insl (unsigned long port, void *dst, unsigned long count);
+         |             ^~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:630:15: error: conflicting types for 'outsb'; have 'void(long unsigned int,  const void *, unsigned int)'
+     630 | #define outsb outsb
+         |               ^~~~~
+   include/asm-generic/io.h:631:20: note: in expansion of macro 'outsb'
+     631 | static inline void outsb(unsigned long addr, const void *buffer,
+         |                    ^~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:287:13: note: previous declaration of 'outsb' with type 'void(long unsigned int,  const void *, long unsigned int)'
+     287 | extern void outsb (unsigned long port, const void *src, unsigned long count);
+         |             ^~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:639:15: error: conflicting types for 'outsw'; have 'void(long unsigned int,  const void *, unsigned int)'
+     639 | #define outsw outsw
+         |               ^~~~~
+   include/asm-generic/io.h:640:20: note: in expansion of macro 'outsw'
+     640 | static inline void outsw(unsigned long addr, const void *buffer,
+         |                    ^~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+--
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:82:13: note: previous declaration of 'ioread8_rep' with type 'void(const void *, void *, long unsigned int)'
+      82 | extern void ioread8_rep(const void __iomem *port, void *buf, unsigned long count);
+         |             ^~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:838:22: error: conflicting types for 'ioread16_rep'; have 'void(const volatile void *, void *, unsigned int)'
+     838 | #define ioread16_rep ioread16_rep
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:839:20: note: in expansion of macro 'ioread16_rep'
+     839 | static inline void ioread16_rep(const volatile void __iomem *addr,
+         |                    ^~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:83:13: note: previous declaration of 'ioread16_rep' with type 'void(const void *, void *, long unsigned int)'
+      83 | extern void ioread16_rep(const void __iomem *port, void *buf, unsigned long count);
+         |             ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:847:22: error: conflicting types for 'ioread32_rep'; have 'void(const volatile void *, void *, unsigned int)'
+     847 | #define ioread32_rep ioread32_rep
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:848:20: note: in expansion of macro 'ioread32_rep'
+     848 | static inline void ioread32_rep(const volatile void __iomem *addr,
+         |                    ^~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:84:13: note: previous declaration of 'ioread32_rep' with type 'void(const void *, void *, long unsigned int)'
+      84 | extern void ioread32_rep(const void __iomem *port, void *buf, unsigned long count);
+         |             ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:867:22: error: conflicting types for 'iowrite8_rep'; have 'void(volatile void *, const void *, unsigned int)'
+     867 | #define iowrite8_rep iowrite8_rep
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:868:20: note: in expansion of macro 'iowrite8_rep'
+     868 | static inline void iowrite8_rep(volatile void __iomem *addr,
+         |                    ^~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:86:13: note: previous declaration of 'iowrite8_rep' with type 'void(void *, const void *, long unsigned int)'
+      86 | extern void iowrite8_rep(void __iomem *port, const void *buf, unsigned long count);
+         |             ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:877:23: error: conflicting types for 'iowrite16_rep'; have 'void(volatile void *, const void *, unsigned int)'
+     877 | #define iowrite16_rep iowrite16_rep
+         |                       ^~~~~~~~~~~~~
+   include/asm-generic/io.h:878:20: note: in expansion of macro 'iowrite16_rep'
+     878 | static inline void iowrite16_rep(volatile void __iomem *addr,
+         |                    ^~~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:87:13: note: previous declaration of 'iowrite16_rep' with type 'void(void *, const void *, long unsigned int)'
+      87 | extern void iowrite16_rep(void __iomem *port, const void *buf, unsigned long count);
+         |             ^~~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:887:23: error: conflicting types for 'iowrite32_rep'; have 'void(volatile void *, const void *, unsigned int)'
+     887 | #define iowrite32_rep iowrite32_rep
+         |                       ^~~~~~~~~~~~~
+   include/asm-generic/io.h:888:20: note: in expansion of macro 'iowrite32_rep'
+     888 | static inline void iowrite32_rep(volatile void __iomem *addr,
+         |                    ^~~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:88:13: note: previous declaration of 'iowrite32_rep' with type 'void(void *, const void *, long unsigned int)'
+      88 | extern void iowrite32_rep(void __iomem *port, const void *buf, unsigned long count);
+         |             ^~~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:1020:20: error: static declaration of 'ioport_map' follows non-static declaration
+    1020 | #define ioport_map ioport_map
+         |                    ^~~~~~~~~~
+   include/asm-generic/io.h:1021:29: note: in expansion of macro 'ioport_map'
+    1021 | static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
+         |                             ^~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:92:22: note: previous declaration of 'ioport_map' with type 'void *(long unsigned int,  unsigned int)'
+      92 | extern void __iomem *ioport_map(unsigned long port, unsigned int nr);
+         |                      ^~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+>> include/asm-generic/io.h:1030:22: error: static declaration of 'ioport_unmap' follows non-static declaration
+    1030 | #define ioport_unmap ioport_unmap
+         |                      ^~~~~~~~~~~~
+   include/asm-generic/io.h:1031:20: note: in expansion of macro 'ioport_unmap'
+    1031 | static inline void ioport_unmap(void __iomem *p)
+         |                    ^~~~~~~~~~~~
+   In file included from arch/parisc/include/asm/io.h:311,
+                    from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   include/asm-generic/iomap.h:93:13: note: previous declaration of 'ioport_unmap' with type 'void(void *)'
+      93 | extern void ioport_unmap(void __iomem *);
+         |             ^~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:1077:19: error: conflicting types for 'memset_io'; have 'void(volatile void *, int,  size_t)' {aka 'void(volatile void *, int,  unsigned int)'}
+    1077 | #define memset_io memset_io
+         |                   ^~~~~~~~~
+   include/asm-generic/io.h:1086:20: note: in expansion of macro 'memset_io'
+    1086 | static inline void memset_io(volatile void __iomem *addr, int value,
+         |                    ^~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:222:6: note: previous declaration of 'memset_io' with type 'void(volatile void *, unsigned char,  int)'
+     222 | void memset_io(volatile void __iomem *addr, unsigned char val, int count);
+         |      ^~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:1094:23: error: conflicting types for 'memcpy_fromio'; have 'void(void *, const volatile void *, size_t)' {aka 'void(void *, const volatile void *, unsigned int)'}
+    1094 | #define memcpy_fromio memcpy_fromio
+         |                       ^~~~~~~~~~~~~
+   include/asm-generic/io.h:1103:20: note: in expansion of macro 'memcpy_fromio'
+    1103 | static inline void memcpy_fromio(void *buffer,
+         |                    ^~~~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:223:6: note: previous declaration of 'memcpy_fromio' with type 'void(void *, const volatile void *, int)'
+     223 | void memcpy_fromio(void *dst, const volatile void __iomem *src, int count);
+         |      ^~~~~~~~~~~~~
+   In file included from kernel/trace/trace_readwrite.c:10:
+   include/asm-generic/io.h:1112:21: error: conflicting types for 'memcpy_toio'; have 'void(volatile void *, const void *, size_t)' {aka 'void(volatile void *, const void *, unsigned int)'}
+    1112 | #define memcpy_toio memcpy_toio
+         |                     ^~~~~~~~~~~
+   include/asm-generic/io.h:1121:20: note: in expansion of macro 'memcpy_toio'
+    1121 | static inline void memcpy_toio(volatile void __iomem *addr, const void *buffer,
+         |                    ^~~~~~~~~~~
+   In file included from include/linux/io.h:13,
+                    from include/linux/irq.h:20,
+                    from arch/parisc/include/asm/hardirq.h:13,
+                    from include/linux/hardirq.h:11,
+                    from include/linux/interrupt.h:11,
+                    from include/linux/trace_recursion.h:5,
+                    from include/linux/ftrace.h:10,
+                    from kernel/trace/trace_readwrite.c:8:
+   arch/parisc/include/asm/io.h:224:6: note: previous declaration of 'memcpy_toio' with type 'void(volatile void *, const void *, int)'
+     224 | void memcpy_toio(volatile void __iomem *dst, const void *src, int count);
+         |      ^~~~~~~~~~~
+   kernel/trace/trace_readwrite.c:16:6: warning: no previous prototype for 'log_write_mmio' [-Wmissing-prototypes]
+      16 | void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr)
+         |      ^~~~~~~~~~~~~~
+   kernel/trace/trace_readwrite.c:23:6: warning: no previous prototype for 'log_read_mmio' [-Wmissing-prototypes]
+      23 | void log_read_mmio(u8 width, const volatile void __iomem *addr)
+         |      ^~~~~~~~~~~~~
 
-How about simply:
 
-Extract the chip specific SM8250 data from the LPASS LPI pinctrl driver
-to allow reusing the common code in the addition of subsequent
-platforms.
+vim +/__raw_readb +74 include/asm-generic/io.h
 
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> ---
->  drivers/pinctrl/qcom/Kconfig                    |   8 +
->  drivers/pinctrl/qcom/Makefile                   |   1 +
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c        | 250 +-----------------------
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        |  98 ++++++++++
->  drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c | 166 ++++++++++++++++
->  5 files changed, 280 insertions(+), 243 deletions(-)
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-> 
-> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-> index 5ff4207..e750e10 100644
-> --- a/drivers/pinctrl/qcom/Kconfig
-> +++ b/drivers/pinctrl/qcom/Kconfig
-> @@ -320,4 +320,12 @@ config PINCTRL_LPASS_LPI
->  	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->  	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
->  
-> +config PINCTRL_SM8250_LPASS_LPI
-> +	tristate "Qualcomm Technologies Inc SM8250 LPASS LPI pin controller driver"
-> +	depends on PINCTRL_LPASS_LPI
-> +	help
-> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-> +	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-> +	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
-> +
->  endif
-> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-> index 7a12e8c..8bc877e 100644
-> --- a/drivers/pinctrl/qcom/Makefile
-> +++ b/drivers/pinctrl/qcom/Makefile
-> @@ -37,3 +37,4 @@ obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-sm8150.o
->  obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
->  obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
->  obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
-> +obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> index 2f19ab4..bcc12f6 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> @@ -4,237 +4,16 @@
->   * Copyright (c) 2020 Linaro Ltd.
->   */
->  
-> -#include <linux/bitops.h>
-> -#include <linux/bitfield.h>
->  #include <linux/clk.h>
->  #include <linux/gpio/driver.h>
-> -#include <linux/io.h>
->  #include <linux/module.h>
->  #include <linux/of_device.h>
-> -#include <linux/of.h>
->  #include <linux/pinctrl/pinconf-generic.h>
->  #include <linux/pinctrl/pinconf.h>
->  #include <linux/pinctrl/pinmux.h>
-> -#include <linux/platform_device.h>
-> -#include <linux/slab.h>
-> -#include <linux/types.h>
->  #include "../core.h"
->  #include "../pinctrl-utils.h"
-> -
-> -#define LPI_SLEW_RATE_CTL_REG		0xa000
-> -#define LPI_TLMM_REG_OFFSET		0x1000
-> -#define LPI_SLEW_RATE_MAX		0x03
-> -#define LPI_SLEW_BITS_SIZE		0x02
-> -#define LPI_SLEW_RATE_MASK		GENMASK(1, 0)
-> -#define LPI_GPIO_CFG_REG		0x00
-> -#define LPI_GPIO_PULL_MASK		GENMASK(1, 0)
-> -#define LPI_GPIO_FUNCTION_MASK		GENMASK(5, 2)
-> -#define LPI_GPIO_OUT_STRENGTH_MASK	GENMASK(8, 6)
-> -#define LPI_GPIO_OE_MASK		BIT(9)
-> -#define LPI_GPIO_VALUE_REG		0x04
-> -#define LPI_GPIO_VALUE_IN_MASK		BIT(0)
-> -#define LPI_GPIO_VALUE_OUT_MASK		BIT(1)
-> -
-> -#define LPI_GPIO_BIAS_DISABLE		0x0
-> -#define LPI_GPIO_PULL_DOWN		0x1
-> -#define LPI_GPIO_KEEPER			0x2
-> -#define LPI_GPIO_PULL_UP		0x3
-> -#define LPI_GPIO_DS_TO_VAL(v)		(v / 2 - 1)
-> -#define NO_SLEW				-1
-> -
-> -#define LPI_FUNCTION(fname)			                \
-> -	[LPI_MUX_##fname] = {		                \
-> -		.name = #fname,				\
-> -		.groups = fname##_groups,               \
-> -		.ngroups = ARRAY_SIZE(fname##_groups),	\
-> -	}
-> -
-> -#define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
-> -	{						\
-> -		.name = "gpio" #id,			\
-> -		.pins = gpio##id##_pins,		\
-> -		.pin = id,				\
-> -		.slew_offset = soff,			\
-> -		.npins = ARRAY_SIZE(gpio##id##_pins),	\
-> -		.funcs = (int[]){			\
-> -			LPI_MUX_gpio,			\
-> -			LPI_MUX_##f1,			\
-> -			LPI_MUX_##f2,			\
-> -			LPI_MUX_##f3,			\
-> -			LPI_MUX_##f4,			\
-> -		},					\
-> -		.nfuncs = 5,				\
-> -	}
-> -
-> -struct lpi_pingroup {
-> -	const char *name;
-> -	const unsigned int *pins;
-> -	unsigned int npins;
-> -	unsigned int pin;
-> -	/* Bit offset in slew register for SoundWire pins only */
-> -	int slew_offset;
-> -	unsigned int *funcs;
-> -	unsigned int nfuncs;
-> -};
-> -
-> -struct lpi_function {
-> -	const char *name;
-> -	const char * const *groups;
-> -	unsigned int ngroups;
-> -};
-> -
-> -struct lpi_pinctrl_variant_data {
-> -	const struct pinctrl_pin_desc *pins;
-> -	int npins;
-> -	const struct lpi_pingroup *groups;
-> -	int ngroups;
-> -	const struct lpi_function *functions;
-> -	int nfunctions;
-> -};
-> -
-> -#define MAX_LPI_NUM_CLKS	2
-> -
-> -struct lpi_pinctrl {
-> -	struct device *dev;
-> -	struct pinctrl_dev *ctrl;
-> -	struct gpio_chip chip;
-> -	struct pinctrl_desc desc;
-> -	char __iomem *tlmm_base;
-> -	char __iomem *slew_base;
-> -	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
-> -	struct mutex slew_access_lock;
-> -	const struct lpi_pinctrl_variant_data *data;
-> -};
-> -
-> -/* sm8250 variant specific data */
-> -static const struct pinctrl_pin_desc sm8250_lpi_pins[] = {
-> -	PINCTRL_PIN(0, "gpio0"),
-> -	PINCTRL_PIN(1, "gpio1"),
-> -	PINCTRL_PIN(2, "gpio2"),
-> -	PINCTRL_PIN(3, "gpio3"),
-> -	PINCTRL_PIN(4, "gpio4"),
-> -	PINCTRL_PIN(5, "gpio5"),
-> -	PINCTRL_PIN(6, "gpio6"),
-> -	PINCTRL_PIN(7, "gpio7"),
-> -	PINCTRL_PIN(8, "gpio8"),
-> -	PINCTRL_PIN(9, "gpio9"),
-> -	PINCTRL_PIN(10, "gpio10"),
-> -	PINCTRL_PIN(11, "gpio11"),
-> -	PINCTRL_PIN(12, "gpio12"),
-> -	PINCTRL_PIN(13, "gpio13"),
-> -};
-> -
-> -enum sm8250_lpi_functions {
-> -	LPI_MUX_dmic1_clk,
-> -	LPI_MUX_dmic1_data,
-> -	LPI_MUX_dmic2_clk,
-> -	LPI_MUX_dmic2_data,
-> -	LPI_MUX_dmic3_clk,
-> -	LPI_MUX_dmic3_data,
-> -	LPI_MUX_i2s1_clk,
-> -	LPI_MUX_i2s1_data,
-> -	LPI_MUX_i2s1_ws,
-> -	LPI_MUX_i2s2_clk,
-> -	LPI_MUX_i2s2_data,
-> -	LPI_MUX_i2s2_ws,
-> -	LPI_MUX_qua_mi2s_data,
-> -	LPI_MUX_qua_mi2s_sclk,
-> -	LPI_MUX_qua_mi2s_ws,
-> -	LPI_MUX_swr_rx_clk,
-> -	LPI_MUX_swr_rx_data,
-> -	LPI_MUX_swr_tx_clk,
-> -	LPI_MUX_swr_tx_data,
-> -	LPI_MUX_wsa_swr_clk,
-> -	LPI_MUX_wsa_swr_data,
-> -	LPI_MUX_gpio,
-> -	LPI_MUX__,
-> -};
-> -
-> -static const unsigned int gpio0_pins[] = { 0 };
-> -static const unsigned int gpio1_pins[] = { 1 };
-> -static const unsigned int gpio2_pins[] = { 2 };
-> -static const unsigned int gpio3_pins[] = { 3 };
-> -static const unsigned int gpio4_pins[] = { 4 };
-> -static const unsigned int gpio5_pins[] = { 5 };
-> -static const unsigned int gpio6_pins[] = { 6 };
-> -static const unsigned int gpio7_pins[] = { 7 };
-> -static const unsigned int gpio8_pins[] = { 8 };
-> -static const unsigned int gpio9_pins[] = { 9 };
-> -static const unsigned int gpio10_pins[] = { 10 };
-> -static const unsigned int gpio11_pins[] = { 11 };
-> -static const unsigned int gpio12_pins[] = { 12 };
-> -static const unsigned int gpio13_pins[] = { 13 };
-> -static const char * const swr_tx_clk_groups[] = { "gpio0" };
-> -static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-> -static const char * const swr_rx_clk_groups[] = { "gpio3" };
-> -static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-> -static const char * const dmic1_clk_groups[] = { "gpio6" };
-> -static const char * const dmic1_data_groups[] = { "gpio7" };
-> -static const char * const dmic2_clk_groups[] = { "gpio8" };
-> -static const char * const dmic2_data_groups[] = { "gpio9" };
-> -static const char * const i2s2_clk_groups[] = { "gpio10" };
-> -static const char * const i2s2_ws_groups[] = { "gpio11" };
-> -static const char * const dmic3_clk_groups[] = { "gpio12" };
-> -static const char * const dmic3_data_groups[] = { "gpio13" };
-> -static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-> -static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-> -static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
-> -static const char * const i2s1_clk_groups[] = { "gpio6" };
-> -static const char * const i2s1_ws_groups[] = { "gpio7" };
-> -static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-> -static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-> -static const char * const wsa_swr_data_groups[] = { "gpio11" };
-> -static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-> -
-> -static const struct lpi_pingroup sm8250_groups[] = {
-> -	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-> -	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-> -	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-> -	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-> -	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-> -	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
-> -	LPI_PINGROUP(6, NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-> -	LPI_PINGROUP(7, NO_SLEW, dmic1_data, i2s1_ws, _, _),
-> -	LPI_PINGROUP(8, NO_SLEW, dmic2_clk, i2s1_data, _, _),
-> -	LPI_PINGROUP(9, NO_SLEW, dmic2_data, i2s1_data, _, _),
-> -	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-> -	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-> -	LPI_PINGROUP(12, NO_SLEW, dmic3_clk, i2s2_data, _, _),
-> -	LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
-> -};
-> -
-> -static const struct lpi_function sm8250_functions[] = {
-> -	LPI_FUNCTION(dmic1_clk),
-> -	LPI_FUNCTION(dmic1_data),
-> -	LPI_FUNCTION(dmic2_clk),
-> -	LPI_FUNCTION(dmic2_data),
-> -	LPI_FUNCTION(dmic3_clk),
-> -	LPI_FUNCTION(dmic3_data),
-> -	LPI_FUNCTION(i2s1_clk),
-> -	LPI_FUNCTION(i2s1_data),
-> -	LPI_FUNCTION(i2s1_ws),
-> -	LPI_FUNCTION(i2s2_clk),
-> -	LPI_FUNCTION(i2s2_data),
-> -	LPI_FUNCTION(i2s2_ws),
-> -	LPI_FUNCTION(qua_mi2s_data),
-> -	LPI_FUNCTION(qua_mi2s_sclk),
-> -	LPI_FUNCTION(qua_mi2s_ws),
-> -	LPI_FUNCTION(swr_rx_clk),
-> -	LPI_FUNCTION(swr_rx_data),
-> -	LPI_FUNCTION(swr_tx_clk),
-> -	LPI_FUNCTION(swr_tx_data),
-> -	LPI_FUNCTION(wsa_swr_clk),
-> -	LPI_FUNCTION(wsa_swr_data),
-> -};
-> -
-> -static struct lpi_pinctrl_variant_data sm8250_lpi_data = {
-> -	.pins = sm8250_lpi_pins,
-> -	.npins = ARRAY_SIZE(sm8250_lpi_pins),
-> -	.groups = sm8250_groups,
-> -	.ngroups = ARRAY_SIZE(sm8250_groups),
-> -	.functions = sm8250_functions,
-> -	.nfunctions = ARRAY_SIZE(sm8250_functions),
-> -};
-> +#include "pinctrl-lpass-lpi.h"
->  
->  static int lpi_gpio_read(struct lpi_pinctrl *state, unsigned int pin,
->  			 unsigned int addr)
-> @@ -582,7 +361,7 @@ static const struct gpio_chip lpi_gpio_template = {
->  	.dbg_show		= lpi_gpio_dbg_show,
->  };
->  
-> -static int lpi_pinctrl_probe(struct platform_device *pdev)
-> +int lpi_pinctrl_probe(struct platform_device *pdev)
->  {
->  	const struct lpi_pinctrl_variant_data *data;
->  	struct device *dev = &pdev->dev;
-> @@ -661,8 +440,10 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
->  
->  	return ret;
->  }
-> +EXPORT_SYMBOL(lpi_pinctrl_probe);
->  
-> -static int lpi_pinctrl_remove(struct platform_device *pdev)
-> +
-> +int lpi_pinctrl_remove(struct platform_device *pdev)
->  {
->  	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
->  
-> @@ -671,25 +452,8 @@ static int lpi_pinctrl_remove(struct platform_device *pdev)
->  
->  	return 0;
->  }
-> +EXPORT_SYMBOL(lpi_pinctrl_remove);
->  
-> -static const struct of_device_id lpi_pinctrl_of_match[] = {
-> -	{
-> -	       .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
-> -	       .data = &sm8250_lpi_data,
-> -	},
-> -	{ }
-> -};
-> -MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-> -
-> -static struct platform_driver lpi_pinctrl_driver = {
-> -	.driver = {
-> -		   .name = "qcom-lpass-lpi-pinctrl",
-> -		   .of_match_table = lpi_pinctrl_of_match,
-> -	},
-> -	.probe = lpi_pinctrl_probe,
-> -	.remove = lpi_pinctrl_remove,
-> -};
-> -
-> -module_platform_driver(lpi_pinctrl_driver);
->  MODULE_DESCRIPTION("QTI LPI GPIO pin control driver");
->  MODULE_LICENSE("GPL");
-> +
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> new file mode 100644
-> index 0000000..ad84565
-> --- /dev/null
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> @@ -0,0 +1,98 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020 Linaro Ltd.
-> + */
-> +#ifndef __PINCTRL_LPASS_LPI_H__
-> +#define __PINCTRL_LPASS_LPI_H__
-> +
-> +#define LPI_SLEW_RATE_CTL_REG	0xa000
-> +#define LPI_TLMM_REG_OFFSET		0x1000
-> +#define LPI_SLEW_RATE_MAX		0x03
-> +#define LPI_SLEW_BITS_SIZE		0x02
-> +#define LPI_SLEW_RATE_MASK		GENMASK(1, 0)
-> +#define LPI_GPIO_CFG_REG		0x00
-> +#define LPI_GPIO_PULL_MASK		GENMASK(1, 0)
-> +#define LPI_GPIO_FUNCTION_MASK		GENMASK(5, 2)
-> +#define LPI_GPIO_OUT_STRENGTH_MASK	GENMASK(8, 6)
-> +#define LPI_GPIO_OE_MASK		BIT(9)
-> +#define LPI_GPIO_VALUE_REG		0x04
-> +#define LPI_GPIO_VALUE_IN_MASK		BIT(0)
-> +#define LPI_GPIO_VALUE_OUT_MASK		BIT(1)
-> +
-> +#define LPI_GPIO_BIAS_DISABLE		0x0
-> +#define LPI_GPIO_PULL_DOWN		0x1
-> +#define LPI_GPIO_KEEPER			0x2
-> +#define LPI_GPIO_PULL_UP		0x3
-> +#define LPI_GPIO_DS_TO_VAL(v)		(v / 2 - 1)
-> +#define NO_SLEW				-1
-> +
-> +#define LPI_FUNCTION(fname)			                \
-> +	[LPI_MUX_##fname] = {		                \
-> +		.name = #fname,				\
-> +		.groups = fname##_groups,               \
-> +		.ngroups = ARRAY_SIZE(fname##_groups),	\
-> +	}
-> +
-> +#define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
-> +	{						\
-> +		.name = "gpio" #id,			\
-> +		.pins = gpio##id##_pins,		\
-> +		.pin = id,				\
-> +		.slew_offset = soff,			\
-> +		.npins = ARRAY_SIZE(gpio##id##_pins),	\
-> +		.funcs = (int[]){			\
-> +			LPI_MUX_gpio,			\
-> +			LPI_MUX_##f1,			\
-> +			LPI_MUX_##f2,			\
-> +			LPI_MUX_##f3,			\
-> +			LPI_MUX_##f4,			\
-> +		},					\
-> +		.nfuncs = 5,				\
-> +	}
-> +
-> +struct lpi_pingroup {
-> +	const char *name;
-> +	const unsigned int *pins;
-> +	unsigned int npins;
-> +	unsigned int pin;
-> +	/* Bit offset in slew register for SoundWire pins only */
-> +	int slew_offset;
-> +	unsigned int *funcs;
-> +	unsigned int nfuncs;
-> +};
-> +
-> +struct lpi_function {
-> +	const char *name;
-> +	const char * const *groups;
-> +	unsigned int ngroups;
-> +};
-> +
-> +struct lpi_pinctrl_variant_data {
-> +	const struct pinctrl_pin_desc *pins;
-> +	int npins;
-> +	const struct lpi_pingroup *groups;
-> +	int ngroups;
-> +	const struct lpi_function *functions;
-> +	int nfunctions;
-> +};
-> +
-> +#define MAX_LPI_NUM_CLKS	2
-> +
-> +struct lpi_pinctrl {
+64e2c6738b4d49 Sinan Kaya     2018-04-05   63  
+64e2c6738b4d49 Sinan Kaya     2018-04-05   64  
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   65  /*
+9216efafc52ff9 Thierry Reding 2014-10-01   66   * __raw_{read,write}{b,w,l,q}() access memory in native endianness.
+9216efafc52ff9 Thierry Reding 2014-10-01   67   *
+9216efafc52ff9 Thierry Reding 2014-10-01   68   * On some architectures memory mapped IO needs to be accessed differently.
+9216efafc52ff9 Thierry Reding 2014-10-01   69   * On the simple architectures, we just read/write the memory location
+9216efafc52ff9 Thierry Reding 2014-10-01   70   * directly.
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   71   */
+9216efafc52ff9 Thierry Reding 2014-10-01   72  
+35dbc0e020c658 Mike Frysinger 2010-10-18   73  #ifndef __raw_readb
+9216efafc52ff9 Thierry Reding 2014-10-01  @74  #define __raw_readb __raw_readb
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   75  static inline u8 __raw_readb(const volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   76  {
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   77  	return *(const volatile u8 __force *)addr;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   78  }
+35dbc0e020c658 Mike Frysinger 2010-10-18   79  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   80  
+35dbc0e020c658 Mike Frysinger 2010-10-18   81  #ifndef __raw_readw
+9216efafc52ff9 Thierry Reding 2014-10-01  @82  #define __raw_readw __raw_readw
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   83  static inline u16 __raw_readw(const volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   84  {
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   85  	return *(const volatile u16 __force *)addr;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   86  }
+35dbc0e020c658 Mike Frysinger 2010-10-18   87  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   88  
+35dbc0e020c658 Mike Frysinger 2010-10-18   89  #ifndef __raw_readl
+9216efafc52ff9 Thierry Reding 2014-10-01  @90  #define __raw_readl __raw_readl
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   91  static inline u32 __raw_readl(const volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   92  {
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   93  	return *(const volatile u32 __force *)addr;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   94  }
+35dbc0e020c658 Mike Frysinger 2010-10-18   95  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13   96  
+9216efafc52ff9 Thierry Reding 2014-10-01   97  #ifdef CONFIG_64BIT
+9216efafc52ff9 Thierry Reding 2014-10-01   98  #ifndef __raw_readq
+9216efafc52ff9 Thierry Reding 2014-10-01   99  #define __raw_readq __raw_readq
+9216efafc52ff9 Thierry Reding 2014-10-01  100  static inline u64 __raw_readq(const volatile void __iomem *addr)
+7292e7e01cc98f Heiko Carstens 2013-01-07  101  {
+9216efafc52ff9 Thierry Reding 2014-10-01  102  	return *(const volatile u64 __force *)addr;
+7292e7e01cc98f Heiko Carstens 2013-01-07  103  }
+9216efafc52ff9 Thierry Reding 2014-10-01  104  #endif
+9216efafc52ff9 Thierry Reding 2014-10-01  105  #endif /* CONFIG_64BIT */
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  106  
+35dbc0e020c658 Mike Frysinger 2010-10-18  107  #ifndef __raw_writeb
+9216efafc52ff9 Thierry Reding 2014-10-01 @108  #define __raw_writeb __raw_writeb
+9216efafc52ff9 Thierry Reding 2014-10-01  109  static inline void __raw_writeb(u8 value, volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  110  {
+9216efafc52ff9 Thierry Reding 2014-10-01  111  	*(volatile u8 __force *)addr = value;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  112  }
+35dbc0e020c658 Mike Frysinger 2010-10-18  113  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  114  
+35dbc0e020c658 Mike Frysinger 2010-10-18  115  #ifndef __raw_writew
+9216efafc52ff9 Thierry Reding 2014-10-01 @116  #define __raw_writew __raw_writew
+9216efafc52ff9 Thierry Reding 2014-10-01  117  static inline void __raw_writew(u16 value, volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  118  {
+9216efafc52ff9 Thierry Reding 2014-10-01  119  	*(volatile u16 __force *)addr = value;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  120  }
+35dbc0e020c658 Mike Frysinger 2010-10-18  121  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  122  
+35dbc0e020c658 Mike Frysinger 2010-10-18  123  #ifndef __raw_writel
+9216efafc52ff9 Thierry Reding 2014-10-01 @124  #define __raw_writel __raw_writel
+9216efafc52ff9 Thierry Reding 2014-10-01  125  static inline void __raw_writel(u32 value, volatile void __iomem *addr)
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  126  {
+9216efafc52ff9 Thierry Reding 2014-10-01  127  	*(volatile u32 __force *)addr = value;
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  128  }
+35dbc0e020c658 Mike Frysinger 2010-10-18  129  #endif
+3f7e212df82ca0 Arnd Bergmann  2009-05-13  130  
 
-Afaict this is only used by the common code, if so there's no need to
-expose it in the header file.
-
-> +	struct device *dev;
-> +	struct pinctrl_dev *ctrl;
-> +	struct gpio_chip chip;
-> +	struct pinctrl_desc desc;
-> +	char __iomem *tlmm_base;
-> +	char __iomem *slew_base;
-> +	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
-> +	struct mutex slew_access_lock;
-> +	const struct lpi_pinctrl_variant_data *data;
-> +};
-> +
-> +int lpi_pinctrl_probe(struct platform_device *pdev);
-> +int lpi_pinctrl_remove(struct platform_device *pdev);
-> +
-> +#endif /*__PINCTRL_LPASS_LPI_H__*/
-> +
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-> new file mode 100644
-> index 0000000..9a5db15
-> --- /dev/null
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
-> @@ -0,0 +1,166 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2020 Linaro Ltd.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +
-> +#include "pinctrl-lpass-lpi.h"
-> +
-> +enum lpass_lpi_functions {
-> +	LPI_MUX_dmic1_clk,
-> +	LPI_MUX_dmic1_data,
-> +	LPI_MUX_dmic2_clk,
-> +	LPI_MUX_dmic2_data,
-> +	LPI_MUX_dmic3_clk,
-> +	LPI_MUX_dmic3_data,
-> +	LPI_MUX_i2s1_clk,
-> +	LPI_MUX_i2s1_data,
-> +	LPI_MUX_i2s1_ws,
-> +	LPI_MUX_i2s2_clk,
-> +	LPI_MUX_i2s2_data,
-> +	LPI_MUX_i2s2_ws,
-> +	LPI_MUX_qua_mi2s_data,
-> +	LPI_MUX_qua_mi2s_sclk,
-> +	LPI_MUX_qua_mi2s_ws,
-> +	LPI_MUX_swr_rx_clk,
-> +	LPI_MUX_swr_rx_data,
-> +	LPI_MUX_swr_tx_clk,
-> +	LPI_MUX_swr_tx_data,
-> +	LPI_MUX_wsa_swr_clk,
-> +	LPI_MUX_wsa_swr_data,
-> +	LPI_MUX_gpio,
-> +	LPI_MUX__,
-> +};
-> +
-> +static const unsigned int gpio0_pins[] = { 0 };
-> +static const unsigned int gpio1_pins[] = { 1 };
-> +static const unsigned int gpio2_pins[] = { 2 };
-> +static const unsigned int gpio3_pins[] = { 3 };
-> +static const unsigned int gpio4_pins[] = { 4 };
-> +static const unsigned int gpio5_pins[] = { 5 };
-> +static const unsigned int gpio6_pins[] = { 6 };
-> +static const unsigned int gpio7_pins[] = { 7 };
-> +static const unsigned int gpio8_pins[] = { 8 };
-> +static const unsigned int gpio9_pins[] = { 9 };
-> +static const unsigned int gpio10_pins[] = { 10 };
-> +static const unsigned int gpio11_pins[] = { 11 };
-> +static const unsigned int gpio12_pins[] = { 12 };
-> +static const unsigned int gpio13_pins[] = { 13 };
-> +
-> +/* sm8250 variant specific data */
-> +static const struct pinctrl_pin_desc sm8250_lpi_pins[] = {
-> +	PINCTRL_PIN(0, "gpio0"),
-> +	PINCTRL_PIN(1, "gpio1"),
-> +	PINCTRL_PIN(2, "gpio2"),
-> +	PINCTRL_PIN(3, "gpio3"),
-> +	PINCTRL_PIN(4, "gpio4"),
-> +	PINCTRL_PIN(5, "gpio5"),
-> +	PINCTRL_PIN(6, "gpio6"),
-> +	PINCTRL_PIN(7, "gpio7"),
-> +	PINCTRL_PIN(8, "gpio8"),
-> +	PINCTRL_PIN(9, "gpio9"),
-> +	PINCTRL_PIN(10, "gpio10"),
-> +	PINCTRL_PIN(11, "gpio11"),
-> +	PINCTRL_PIN(12, "gpio12"),
-> +	PINCTRL_PIN(13, "gpio13"),
-> +};
-> +
-> +static const char * const swr_tx_clk_groups[] = { "gpio0" };
-> +static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5" };
-> +static const char * const swr_rx_clk_groups[] = { "gpio3" };
-> +static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-> +static const char * const dmic1_clk_groups[] = { "gpio6" };
-> +static const char * const dmic1_data_groups[] = { "gpio7" };
-> +static const char * const dmic2_clk_groups[] = { "gpio8" };
-> +static const char * const dmic2_data_groups[] = { "gpio9" };
-> +static const char * const i2s2_clk_groups[] = { "gpio10" };
-> +static const char * const i2s2_ws_groups[] = { "gpio11" };
-> +static const char * const dmic3_clk_groups[] = { "gpio12" };
-> +static const char * const dmic3_data_groups[] = { "gpio13" };
-> +static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-> +static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-> +static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
-> +static const char * const i2s1_clk_groups[] = { "gpio6" };
-> +static const char * const i2s1_ws_groups[] = { "gpio7" };
-> +static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-> +static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-> +static const char * const wsa_swr_data_groups[] = { "gpio11" };
-> +static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
-> +
-> +static const struct lpi_pingroup sm8250_groups[] = {
-> +	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-> +	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-> +	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-> +	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
-> +	LPI_PINGROUP(6, NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-> +	LPI_PINGROUP(7, NO_SLEW, dmic1_data, i2s1_ws, _, _),
-> +	LPI_PINGROUP(8, NO_SLEW, dmic2_clk, i2s1_data, _, _),
-> +	LPI_PINGROUP(9, NO_SLEW, dmic2_data, i2s1_data, _, _),
-> +	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-> +	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-> +	LPI_PINGROUP(12, NO_SLEW, dmic3_clk, i2s2_data, _, _),
-> +	LPI_PINGROUP(13, NO_SLEW, dmic3_data, i2s2_data, _, _),
-> +};
-> +
-> +static const struct lpi_function sm8250_functions[] = {
-> +	LPI_FUNCTION(dmic1_clk),
-> +	LPI_FUNCTION(dmic1_data),
-> +	LPI_FUNCTION(dmic2_clk),
-> +	LPI_FUNCTION(dmic2_data),
-> +	LPI_FUNCTION(dmic3_clk),
-> +	LPI_FUNCTION(dmic3_data),
-> +	LPI_FUNCTION(i2s1_clk),
-> +	LPI_FUNCTION(i2s1_data),
-> +	LPI_FUNCTION(i2s1_ws),
-> +	LPI_FUNCTION(i2s2_clk),
-> +	LPI_FUNCTION(i2s2_data),
-> +	LPI_FUNCTION(i2s2_ws),
-> +	LPI_FUNCTION(qua_mi2s_data),
-> +	LPI_FUNCTION(qua_mi2s_sclk),
-> +	LPI_FUNCTION(qua_mi2s_ws),
-> +	LPI_FUNCTION(swr_rx_clk),
-> +	LPI_FUNCTION(swr_rx_data),
-> +	LPI_FUNCTION(swr_tx_clk),
-> +	LPI_FUNCTION(swr_tx_data),
-> +	LPI_FUNCTION(wsa_swr_clk),
-> +	LPI_FUNCTION(wsa_swr_data),
-> +};
-> +
-> +static struct lpi_pinctrl_variant_data sm8250_lpi_data = {
-> +	.pins = sm8250_lpi_pins,
-> +	.npins = ARRAY_SIZE(sm8250_lpi_pins),
-> +	.groups = sm8250_groups,
-> +	.ngroups = ARRAY_SIZE(sm8250_groups),
-> +	.functions = sm8250_functions,
-> +	.nfunctions = ARRAY_SIZE(sm8250_functions),
-> +};
-> +
-> +static const struct of_device_id lpi_pinctrl_of_match[] = {
-> +	{
-> +	       .compatible = "qcom,sm8250-lpass-lpi-pinctrl",
-> +	       .data = &sm8250_lpi_data,
-> +	},
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-> +
-> +static struct platform_driver lpi_pinctrl_driver = {
-> +	.driver = {
-> +		   .name = "qcom-sm8250-lpass-lpi-pinctrl",
-> +		   .of_match_table = lpi_pinctrl_of_match,
-> +	},
-> +	.probe = lpi_pinctrl_probe,
-> +	.remove = lpi_pinctrl_remove,
-> +};
-> +
-> +module_platform_driver(lpi_pinctrl_driver);
-> +MODULE_DESCRIPTION("QTI SM8250 LPI GPIO pin control driver");
-> +MODULE_LICENSE("GPL");
-> +
-
-Unnecessary empty line.
-
-Thanks,
-Bjorn
-
-> -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
