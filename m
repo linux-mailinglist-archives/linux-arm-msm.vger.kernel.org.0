@@ -2,124 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E25D946A07A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:03:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA47046A07B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:03:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381864AbhLFQEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 11:04:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37570 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387627AbhLFP7P (ORCPT
+        id S1388566AbhLFQEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 11:04:52 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:36202 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1444070AbhLFQCC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:59:15 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC49C08EB4B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:42:58 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id be32so22083523oib.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:42:58 -0800 (PST)
+        Mon, 6 Dec 2021 11:02:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hSfDh7txPsCycOs0HAwdmZonlUVK7JVMigsN8QRLArU=;
-        b=L639osgIuxzP6akD21MGy3O6Ndpnqd2XYz6qZEokZS29GfZRMZGA+s2YDzVOCqI79c
-         R+LFM6MRgCtbinRnAB+OwABEgwTPHAFf1m8nnFvyR4QR4GE1MPivd/DGCHyRd1sk7YTy
-         b81JHHZsgL9eQPOUhUVjYBF23yK+C4Yeoi7wYJDhpH3uwh+Y+upMCpesHgCqUw7l5kYw
-         mqSlLGK5Xi5K+m0bHdRVsgdqRM6vt02/N+WXxBZPxRBJHyczvtOisEt7aoD4N8Nn7BK8
-         zYXEwzXbwu2+f62F/ylU0gLVYDVlvt+snaxhwyT41wmdFJwBKufaqwht86wE9K0vpP9C
-         yl4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hSfDh7txPsCycOs0HAwdmZonlUVK7JVMigsN8QRLArU=;
-        b=OVHDEffCQ5hjbyaiPYGsWeLhdlvWCybkptjr6XruPOE/ppBYE/UMs+0YRVC0dcg/Se
-         wxhjnYwessVgwS/VHhus6I2j1BR2DJONKgzbf2vTb3JDioYY8O4XzesnOOoHysaE86xJ
-         zkXNfC6iBe6MwLzy7qeKUk6L4gFBoibBMj0AiuuQZ2d2qm6RqYzhypmWN2sDCOgfDYlH
-         GL/XZ3VynEuBm+y5GnKhfQQK8X1On6W7bepo7u0XXXUJjNaMIGeo56fMJ38RUH3huZ2+
-         ll64WrwDsx62cZ0PBkKycwPKASW+4Xo5AT39B4ambVbktabaPaTteWBVtEwxyCxffVT1
-         dzeA==
-X-Gm-Message-State: AOAM531tzjy1GSr9l4sbBQljAg31Sm1bSwejpUoucLPoRLwCPwtAAIjz
-        j3wJVRbNEBJ3L7P/8UztGYxv61Fsi7p2vA==
-X-Google-Smtp-Source: ABdhPJx5cAznI7khSOPAIAXSRq2RqYuzmYvaDs63fsXB+ucYlnOMXGc8z7DWJ0RPmuy3nPu6/PqEbw==
-X-Received: by 2002:aca:1b08:: with SMTP id b8mr23615727oib.148.1638805377692;
-        Mon, 06 Dec 2021 07:42:57 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id d8sm2791187oiw.24.2021.12.06.07.42.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:42:57 -0800 (PST)
-Date:   Mon, 6 Dec 2021 09:42:52 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] clk: qcom: smd-rpm: Report enable state to framework
-Message-ID: <Ya4vfCZ8UTVBRpYU@builder.lan>
-References: <20211109022558.14529-1-shawn.guo@linaro.org>
- <YYpMzau3CWRQYlkJ@gerhold.net>
- <20211110131507.GJ7231@dragon>
- <YYvNmrSeJNCE4BEC@ripper>
- <20211111093926.GL7231@dragon>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638806314; x=1670342314;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=eBsoCOieGRxUqBCU/SfO7UQSeK/mQGz2GwEs7g1Ifbo=;
+  b=KwRB70mSTljF7TwvhlzATMTdlsBTqKTrz1Fw+GMvodTcTErH+CaaO1Ze
+   tAmzlvP86HXHFQPZgihxSg+6cKxYlKXqBDwJyeoVNytY55H3GJUgOaekE
+   wjMtdBQkWgrQaypmLSHiVGJ6/FNzJdzi7APS2O8TPOGuQSw3LoBfHdYCb
+   s=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 06 Dec 2021 07:58:32 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 07:58:31 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 07:58:31 -0800
+Received: from [10.50.43.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
+ 07:58:23 -0800
+Message-ID: <7a8c0ef8-ce09-a3d7-90e9-d401f2feaec7@quicinc.com>
+Date:   Mon, 6 Dec 2021 21:27:48 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211111093926.GL7231@dragon>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO
+ accessors
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        <quic_psodagud@quicinc.com>
+References: <cover.1638275062.git.quic_saipraka@quicinc.com>
+ <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
+ <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com>
+ <7b2b5888-c2ca-2ca0-8c0c-32128fcb37d2@quicinc.com>
+ <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
+ <2efe933e-de1e-0dfc-959a-c0003e28f830@quicinc.com>
+ <CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 11 Nov 03:39 CST 2021, Shawn Guo wrote:
+On 12/6/2021 8:45 PM, Arnd Bergmann wrote:
+> On Mon, Dec 6, 2021 at 2:52 PM Sai Prakash Ranjan
+> <quic_saipraka@quicinc.com> wrote:
+>> Sorry, what I meant was the literal name of these macros, i.e.,
+>> __iormb() has more explicit naming as
+>> IO read memory barrier and __io_ar() is IO after read? So doesn't it
+>> make more sense that __iormb()
+>> should be the primary definition which is already the case and ar/bw
+>> should be based on them.
+> My reasoning was that we should ideally only have one set, and that
+> __io_ar()/__io_bw() are the ones used in architecture-independent code,
+> so I'd rather use those and deprecate the arm64 specific ones, eventually
+> moving all the arm64 specific code to use those directly where needed.
+>
+>          Arnd
 
-> On Wed, Nov 10, 2021 at 05:48:10AM -0800, Bjorn Andersson wrote:
-> > > IMHO, properly reporting enable state to framework is definitely the
-> > > right thing to do, and should have been done from day one.
-> > > 
-> > 
-> > I always thought is_enabled() should reflect the hardware state - in
-> > particular for clk_summary. The particular concern being that by
-> > initializing the is_enabled() state to either true or false, we're
-> > making an assumption about the hardware state. And if something where to
-> > do if (enabled) disable (or if (disabled) enable), we might skip a
-> > critical operation just because we tricked the logic.
-> 
-> That's probably why clk_smd_rpm_handoff() is called.  As there is no way
-> to query RPM for resource state, we send enable request for all RPM
-> clocks to get hardware and software state in sync.
-> 
+Ah ok, good enough. I will do this in the next version.
 
-clk_smd_rpm_handoff() will ensure that all SMD clocks are enabled, and
-at max speed during rpm_smd_clk_probe(). Once clients starts actually
-voting for rates that will change.
-
-(Un)fortunately as we don't provide an implementation of is_enabled()
-clk_disable_unused() won't try to turn them off. This similar to a
-problem I have elsewhere, for which I proposed:
-https://lore.kernel.org/linux-arm-msm/20211203035436.3505743-1-bjorn.andersson@linaro.org/
-
-We should at some point introduce this for the SMD clocks as well.
-
-
-However, we have two problems:
-1) Compiling e.g. the interconnect provider as a module would mean that
-clk_disable_unused() kicks in before the client has had a chance to vote
-for the clock.
-
-2) One client may enable the clock during its probe and then disable it.
-Being the last active user the clock framework happily turns off the
-clock.
-
-
-For both of these cases, we need to ensure that the clocks aren't
-disabled until sync_state() kicks in.
-
-Regards,
-Bjorn
-
-> > So, do you need it for anything other than clk_disable_unused()?
-> 
-> Not critical, but I need it for debugfs clk_summary as well.
-> 
-> Shawn
+Thanks,
+Sai
