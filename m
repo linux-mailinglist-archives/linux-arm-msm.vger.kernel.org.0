@@ -2,268 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B393746917D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 09:29:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB44646916E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 09:29:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239353AbhLFIdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 03:33:22 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:3267 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239398AbhLFIdN (ORCPT
+        id S239203AbhLFIco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 03:32:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239064AbhLFIco (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 03:33:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638779385; x=1670315385;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=VrUW0syZe2Tr4MdcSGs7TDS+dR+xRNasOAJKeONw8xk=;
-  b=F71rLC3TLjeCgUkFfc1nvv4qTcmQ9yQHROmoMYsAYc7aKA7xgELotagv
-   +Rct9KjzBPTLC8HzYMAG6ls6GxTGyssjm8gHINocdkzkobtBOFwaGkzCG
-   M9/R5rAdf+0rdDl9AyQWysT9ehWuvckZc4bmpEpsxwNYRKzwWv7hcWXtH
-   0=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 00:29:45 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 00:29:44 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 00:29:43 -0800
-Received: from blr-ubuntu-311.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 00:29:40 -0800
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        "Marc Zyngier" <maz@kernel.org>
-CC:     gregkh <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_psodagud@quicinc.com>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Subject: [PATCHv5 4/4] asm-generic/io: Add logging support for MMIO accessors
-Date:   Mon, 6 Dec 2021 13:58:06 +0530
-Message-ID: <99ecc64c6da3abb3ea2930082c40f1820655664c.1638275062.git.quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <cover.1638275062.git.quic_saipraka@quicinc.com>
-References: <cover.1638275062.git.quic_saipraka@quicinc.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Mon, 6 Dec 2021 03:32:44 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD1DC061746;
+        Mon,  6 Dec 2021 00:29:15 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CA35D611D2;
+        Mon,  6 Dec 2021 08:29:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3914BC341C7;
+        Mon,  6 Dec 2021 08:29:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638779354;
+        bh=dnJx9G/Cc3hqlcmsNivMKN+DHTvDe/PrQ54pAwm7O3k=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=NyXfOQ3CVyzi2KCEaUw4SFz9mB8RHQh6hoVVGMpxiA2CHcoOfLLpenWbU4ZWxJ5HQ
+         3WZEp3nEzwrXblKoIVMLCR1RAV4rh3mpnBHNrFB2LlhxHC7+QOBFkEWef7ji199XqI
+         f+x0RPi4uUsk9sNH6D9LqBdW+sjWbZslBc7xrbz/cZAftiF+aoJxxnx6QIOuQSjncM
+         ouQ2qKMc3njxUZwKsbeSENBj2deaFOPmU+joCx5JR+Rl8SxsEMxUwboNYxbd6Dduic
+         Ub/Kk91btY6NxbHkf83G13IxnNUZz7+0eEJHbvNJVT5nw1t860sG1/uHcfHFjajnbh
+         AEdM3WixV16Sg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1mu9N1-00A7kG-UF; Mon, 06 Dec 2021 08:29:12 +0000
+Date:   Mon, 06 Dec 2021 08:29:11 +0000
+Message-ID: <87y24ykug8.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Florian Fainelli <f.fainelli@gmail.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Neil Armstrong <narmstrong@baylibre.com>
+Subject: Re: [PATCH v3 1/3] irqchip: Pass platform_device pointer to init_cb
+In-Reply-To: <20211206064004.GL10105@dragon>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+        <20211202122122.23548-2-shawn.guo@linaro.org>
+        <b221fec0-43d0-537d-d78e-84da10a9c2d7@gmail.com>
+        <fa6ae407c1da16e571aaf04eb424fecd@kernel.org>
+        <20211206064004.GL10105@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, f.fainelli@gmail.com, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, claudiu.beznea@microchip.com, narmstrong@baylibre.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add logging support for MMIO high level accessors such as read{b,w,l,q}
-and their relaxed versions to aid in debugging unexpected crashes/hangs
-caused by the corresponding MMIO operation. Also add a generic flag
-(__DISABLE_TRACE_MMIO__) which is used to disable MMIO tracing in nVHE KVM
-and if required can be used to disable MMIO tracing for specific drivers.
+On Mon, 06 Dec 2021 06:40:05 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> On Thu, Dec 02, 2021 at 07:10:04PM +0000, Marc Zyngier wrote:
+> > On 2021-12-02 17:52, Florian Fainelli wrote:
+> > > On 12/2/21 4:21 AM, Shawn Guo wrote:
+> > > > It makes sense to just pass device_node for callback in
+> > > > IRQCHIP_DECLARE
+> > > > case, but not so much for IRQCHIP_PLATFORM_DRIVER one, because
+> > > > platform_driver probe/init usually needs device pointer for various
+> > > > purposes, e.g. resource allocation, service request, device prefixed
+> > > > message output, etc.  Create a new callback type irqchip_init_cb_t
+> > > > which
+> > > > takes platform_device pointer as parameter, and update the existing
+> > > > IRQCHIP_PLATFORM_DRIVER users accordingly.
+> > > > 
+> > > > Cc: Florian Fainelli <f.fainelli@gmail.com>
+> > > > Cc: Claudiu Beznea <claudiu.beznea@microchip.com>
+> > > > Cc: Neil Armstrong <narmstrong@baylibre.com>
+> > > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > 
+> > > Could you copy all recipients on all 3 patches plus your cover letter
+> > > next time so we have the full context? Thanks!
+> > > 
+> > > [snip]
+> > > 
+> > > > 
+> > > > -static int __init bcm7120_l2_intc_probe_7120(struct device_node *dn,
+> > > > +static int __init bcm7120_l2_intc_probe_7120(struct platform_device
+> > > > *pdev,
+> > > >  					     struct device_node *parent)
+> > > >  {
+> > > > -	return bcm7120_l2_intc_probe(dn, parent, bcm7120_l2_intc_iomap_7120,
+> > > > +	return bcm7120_l2_intc_probe(pdev->dev.of_node, parent,
+> > > > +				     bcm7120_l2_intc_iomap_7120,
+> > > >  				     "BCM7120 L2");
+> > > 
+> > > If you look further into that driver, you will see that we do something
+> > > like this in bcm7120_l2_intc_probe:
+> > > 
+> > >           pdev = of_find_device_by_node(dn);
+> > >           if (!pdev) {
+> > >                   ret = -ENODEV;
+> > >                   goto out_free_data;
+> > >           }
+> > > 
+> > > which would be completely superfluous now that we pass a platform_device
+> > > directly. Can you rework your patch so as to eliminate that
+> > > of_find_device_by_ndoe() (and the companion put_device call)?
+> > 
+> > Or just adopt the same construct in the MPM driver. At this stage, drivers
+> > requiring a platform_device are the minority.
+> 
+> Marc,
+> 
+> I need to ensure I understand you comment.  Are you suggesting that I
+> keep IRQCHIP_MATCH() unchanged, and go back to the MPM driver
+> construction I used in v2?
 
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
- arch/arm64/kvm/hyp/nvhe/Makefile |  7 ++++-
- include/asm-generic/io.h         | 49 ++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 1 deletion(-)
+No. I suggest that you leave the irqchip API as is (i.e. drop this
+patch) and use of_find_device_by_node() in the MPM driver, just like
+the Broadcom driver does. This should be enough for your use case.
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index c3c11974fa3b..2765ec38a269 100644
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -4,7 +4,12 @@
- #
- 
- asflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
--ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
-+
-+# Tracepoint and MMIO logging symbols should not be visible at nVHE KVM as
-+# there is no way to execute them and any such MMIO access from nVHE KVM
-+# will explode instantly (Words of Marc Zyngier). So introduce a generic flag
-+# __DISABLE_TRACE_MMIO__ to disable MMIO tracing for nVHE KVM.
-+ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS -D__DISABLE_TRACE_MMIO__
- 
- hostprogs := gen-hyprel
- HOST_EXTRACFLAGS += -I$(objtree)/include
-diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 7ce93aaf69f8..dd5a803c8479 100644
---- a/include/asm-generic/io.h
-+++ b/include/asm-generic/io.h
-@@ -61,6 +61,23 @@
- #define __io_par(v)     __io_ar(v)
- #endif
- 
-+#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
-+#include <linux/tracepoint-defs.h>
-+
-+DECLARE_TRACEPOINT(rwmmio_write);
-+DECLARE_TRACEPOINT(rwmmio_read);
-+
-+#define rwmmio_tracepoint_active(t) tracepoint_enabled(t)
-+void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr);
-+void log_read_mmio(u8 width, const volatile void __iomem *addr);
-+
-+#else
-+
-+#define rwmmio_tracepoint_active(t) false
-+static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr) {}
-+static inline void log_read_mmio(u8 width, const volatile void __iomem *addr) {}
-+
-+#endif /* CONFIG_TRACE_MMIO_ACCESS */
- 
- /*
-  * __raw_{read,write}{b,w,l,q}() access memory in native endianness.
-@@ -149,6 +166,8 @@ static inline u8 readb(const volatile void __iomem *addr)
- {
- 	u8 val;
- 
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(8, addr);
- 	__io_br();
- 	val = __raw_readb(addr);
- 	__io_ar(val);
-@@ -162,6 +181,8 @@ static inline u16 readw(const volatile void __iomem *addr)
- {
- 	u16 val;
- 
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(16, addr);
- 	__io_br();
- 	val = __le16_to_cpu((__le16 __force)__raw_readw(addr));
- 	__io_ar(val);
-@@ -175,6 +196,8 @@ static inline u32 readl(const volatile void __iomem *addr)
- {
- 	u32 val;
- 
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(32, addr);
- 	__io_br();
- 	val = __le32_to_cpu((__le32 __force)__raw_readl(addr));
- 	__io_ar(val);
-@@ -189,6 +212,8 @@ static inline u64 readq(const volatile void __iomem *addr)
- {
- 	u64 val;
- 
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(64, addr);
- 	__io_br();
- 	val = __le64_to_cpu(__raw_readq(addr));
- 	__io_ar(val);
-@@ -201,6 +226,8 @@ static inline u64 readq(const volatile void __iomem *addr)
- #define writeb writeb
- static inline void writeb(u8 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 8, addr);
- 	__io_bw();
- 	__raw_writeb(value, addr);
- 	__io_aw();
-@@ -211,6 +238,8 @@ static inline void writeb(u8 value, volatile void __iomem *addr)
- #define writew writew
- static inline void writew(u16 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 16, addr);
- 	__io_bw();
- 	__raw_writew((u16 __force)cpu_to_le16(value), addr);
- 	__io_aw();
-@@ -221,6 +250,8 @@ static inline void writew(u16 value, volatile void __iomem *addr)
- #define writel writel
- static inline void writel(u32 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 32, addr);
- 	__io_bw();
- 	__raw_writel((u32 __force)__cpu_to_le32(value), addr);
- 	__io_aw();
-@@ -232,6 +263,8 @@ static inline void writel(u32 value, volatile void __iomem *addr)
- #define writeq writeq
- static inline void writeq(u64 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 64, addr);
- 	__io_bw();
- 	__raw_writeq(__cpu_to_le64(value), addr);
- 	__io_aw();
-@@ -248,6 +281,8 @@ static inline void writeq(u64 value, volatile void __iomem *addr)
- #define readb_relaxed readb_relaxed
- static inline u8 readb_relaxed(const volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(8, addr);
- 	return __raw_readb(addr);
- }
- #endif
-@@ -256,6 +291,8 @@ static inline u8 readb_relaxed(const volatile void __iomem *addr)
- #define readw_relaxed readw_relaxed
- static inline u16 readw_relaxed(const volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(16, addr);
- 	return __le16_to_cpu(__raw_readw(addr));
- }
- #endif
-@@ -264,6 +301,8 @@ static inline u16 readw_relaxed(const volatile void __iomem *addr)
- #define readl_relaxed readl_relaxed
- static inline u32 readl_relaxed(const volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(32, addr);
- 	return __le32_to_cpu(__raw_readl(addr));
- }
- #endif
-@@ -272,6 +311,8 @@ static inline u32 readl_relaxed(const volatile void __iomem *addr)
- #define readq_relaxed readq_relaxed
- static inline u64 readq_relaxed(const volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_read))
-+		log_read_mmio(64, addr);
- 	return __le64_to_cpu(__raw_readq(addr));
- }
- #endif
-@@ -280,6 +321,8 @@ static inline u64 readq_relaxed(const volatile void __iomem *addr)
- #define writeb_relaxed writeb_relaxed
- static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 8, addr);
- 	__raw_writeb(value, addr);
- }
- #endif
-@@ -288,6 +331,8 @@ static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
- #define writew_relaxed writew_relaxed
- static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 16, addr);
- 	__raw_writew(cpu_to_le16(value), addr);
- }
- #endif
-@@ -296,6 +341,8 @@ static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
- #define writel_relaxed writel_relaxed
- static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 32, addr);
- 	__raw_writel(__cpu_to_le32(value), addr);
- }
- #endif
-@@ -304,6 +351,8 @@ static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
- #define writeq_relaxed writeq_relaxed
- static inline void writeq_relaxed(u64 value, volatile void __iomem *addr)
- {
-+	if (rwmmio_tracepoint_active(rwmmio_write))
-+		log_write_mmio(value, 64, addr);
- 	__raw_writeq(__cpu_to_le64(value), addr);
- }
- #endif
+	M.
+
 -- 
-2.33.1
-
+Without deviation from the norm, progress is not possible.
