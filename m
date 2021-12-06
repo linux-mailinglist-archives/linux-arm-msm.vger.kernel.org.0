@@ -2,112 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E03A469EF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:42:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CFB6469EF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:41:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358611AbhLFPoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:44:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390491AbhLFPm1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:42:27 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA59AC0A8871
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:26:47 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id u18-20020a9d7212000000b00560cb1dc10bso14024475otj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/+S7xZ/J/Lmw5RKCZEGldriwwUmxNSdBbdaMcU/rL8o=;
-        b=JmSlfFhAT0/2mdCUBUSKhokDy4aXZggCgULvDuVT0DFsALxohzGGyH6jrWWjXvqkll
-         R6UedoyhN40oSn1MuRtFP1CWBHok1MXxma3mBMmAOZor3Gqr4xL5OU6lmVoR5iKQtMHu
-         CjXuhRxoEKIPk0nI+0wAHGC+VrTY5JZQ9TjIdtFc2q3CxwyGbXIeMNyYE2/ShMy79mbe
-         IRfXJl1CD8JjiwDYSZZ0TqqKGTgl256Hqxcr1D6J8YLNEhUEi/r39eTsttAAN0eB2gf6
-         9m8QEREPUzxhgp9r5cUZrq+DB3hlqWTziP4HTkc8Te9etDJAvfFVebIQhe0NdqGv2BPG
-         U7Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/+S7xZ/J/Lmw5RKCZEGldriwwUmxNSdBbdaMcU/rL8o=;
-        b=Zh3SSsbkLobDl0VgyoYsGQsiPiZcr3bHffcKDMTdtjX3XVzO8egyl9Pdu5rd+yJ0kp
-         PDYAJksZeCfoGUl3xK2DF2de/sxZ17XVah//712L1vqCJlxMfbEwZLI4vwTpE0mS/Dc2
-         0FFff9VGIX9qatgdoFeXK/vwsFUBdJ6baVnhJpF/7eH/zHd3ZRUzAZrL3VpvyfkiP26k
-         LT+0Ay7g9b2n/i31KDpsLHYA5WxY/cFyeI70QsWLCfIitBFUHOkScx7rv0zr9tXdfGiX
-         khcU3JwBALASWta6KJNzLITO7Lwmc3UrSaj9tIwi+MNJ14xjqP9Mi0CmLmDhbps0H/Yt
-         LB6A==
-X-Gm-Message-State: AOAM533XgPX6eNZ5VJhK33Id05DOrYI1uFeDoCHKMn3Q9cYSQTt2BNkq
-        k58eJAVyBGpd5T1hEzXFOhJ2d8ejtE8qMg==
-X-Google-Smtp-Source: ABdhPJzA2CSSjQl/Lw0cnPULTz2iuoU+21d0RxySX2OUR0bgAghgm+7NcJcalSV9XX+Q5S8BltbO0g==
-X-Received: by 2002:a9d:f63:: with SMTP id 90mr30482398ott.268.1638804407124;
-        Mon, 06 Dec 2021 07:26:47 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bh12sm2770172oib.25.2021.12.06.07.26.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:26:46 -0800 (PST)
-Date:   Mon, 6 Dec 2021 09:26:44 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] clk: qcom: smd-rpm: Drop binary value handling for
- buffered clock
-Message-ID: <Ya4rtHSS1tLm7Gbi@builder.lan>
-References: <20211031020715.21636-1-shawn.guo@linaro.org>
- <20211031020715.21636-4-shawn.guo@linaro.org>
+        id S1386012AbhLFPow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 10:44:52 -0500
+Received: from mga03.intel.com ([134.134.136.65]:6476 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1389662AbhLFPkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Dec 2021 10:40:47 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10189"; a="237279939"
+X-IronPort-AV: E=Sophos;i="5.87,291,1631602800"; 
+   d="scan'208";a="237279939"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 07:37:14 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,291,1631602800"; 
+   d="scan'208";a="611276566"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by orsmga004.jf.intel.com with ESMTP; 06 Dec 2021 07:37:11 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1muG3C-000LPW-8u; Mon, 06 Dec 2021 15:37:10 +0000
+Date:   Mon, 6 Dec 2021 23:36:39 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>
+Cc:     kbuild-all@lists.01.org, gregkh <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, quic_psodagud@quicinc.com
+Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO
+ accessors
+Message-ID: <202112062304.8qIQUQyF-lkp@intel.com>
+References: <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211031020715.21636-4-shawn.guo@linaro.org>
+In-Reply-To: <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 30 Oct 21:07 CDT 2021, Shawn Guo wrote:
+Hi Sai,
 
-> The buffered clock binary value handling added by commit 36354c32bd76
-> ("clk: qcom: smd-rpm: Add .recalc_rate hook for clk_smd_rpm_branch_ops")
-> is redundant, because buffered clock is branch type, and the binary
-> value handling for branch clock has been handled by
-> clk_smd_rpm_prepare/unprepare functions.
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Thank you for the patch! Perhaps something to improve:
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+[auto build test WARNING on arm64/for-next/core]
+[also build test WARNING on rostedt-trace/for-next arnd-asm-generic/master arm-perf/for-next/perf v5.16-rc4 next-20211206]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-> ---
->  drivers/clk/qcom/clk-smd-rpm.c | 8 --------
->  1 file changed, 8 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-> index dd3d373a1309..ea28e45ca371 100644
-> --- a/drivers/clk/qcom/clk-smd-rpm.c
-> +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> @@ -189,10 +189,6 @@ static int clk_smd_rpm_set_rate_active(struct clk_smd_rpm *r,
->  		.value = cpu_to_le32(DIV_ROUND_UP(rate, 1000)), /* to kHz */
->  	};
->  
-> -	/* Buffered clock needs a binary value */
-> -	if (r->rpm_res_type == QCOM_SMD_RPM_CLK_BUF_A)
-> -		req.value = cpu_to_le32(!!req.value);
-> -
->  	return qcom_rpm_smd_write(r->rpm, QCOM_SMD_RPM_ACTIVE_STATE,
->  				  r->rpm_res_type, r->rpm_clk_id, &req,
->  				  sizeof(req));
-> @@ -207,10 +203,6 @@ static int clk_smd_rpm_set_rate_sleep(struct clk_smd_rpm *r,
->  		.value = cpu_to_le32(DIV_ROUND_UP(rate, 1000)), /* to kHz */
->  	};
->  
-> -	/* Buffered clock needs a binary value */
-> -	if (r->rpm_res_type == QCOM_SMD_RPM_CLK_BUF_A)
-> -		req.value = cpu_to_le32(!!req.value);
-> -
->  	return qcom_rpm_smd_write(r->rpm, QCOM_SMD_RPM_SLEEP_STATE,
->  				  r->rpm_res_type, r->rpm_clk_id, &req,
->  				  sizeof(req));
-> -- 
-> 2.17.1
-> 
+url:    https://github.com/0day-ci/linux/commits/Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
+config: arm64-randconfig-r014-20211206 (https://download.01.org/0day-ci/archive/20211206/202112062304.8qIQUQyF-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/0775ecf0f452d6b76b161d009dab52c90270755a
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
+        git checkout 0775ecf0f452d6b76b161d009dab52c90270755a
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/gpu/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/gpu/drm/meson/meson_viu.c:16:
+   drivers/gpu/drm/meson/meson_viu.c: In function 'meson_viu_init':
+>> drivers/gpu/drm/meson/meson_registers.h:1826:55: warning: conversion from 'long unsigned int' to 'u32' {aka 'unsigned int'} changes value from '18446744071814774785' to '2400190465' [-Woverflow]
+    1826 | #define         VIU_OSD_BLEND_REORDER(dest, src)      ((src) << (dest * 4))
+         |                                                       ^
+   drivers/gpu/drm/meson/meson_viu.c:472:32: note: in expansion of macro 'VIU_OSD_BLEND_REORDER'
+     472 |                 writel_relaxed(VIU_OSD_BLEND_REORDER(0, 1) |
+         |                                ^~~~~~~~~~~~~~~~~~~~~
+
+
+vim +1826 drivers/gpu/drm/meson/meson_registers.h
+
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1824  
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1825  #define VIU_OSD_BLEND_CTRL 0x39b0
+147ae1cbaa18429 Julien Masson  2019-06-24 @1826  #define		VIU_OSD_BLEND_REORDER(dest, src)      ((src) << (dest * 4))
+147ae1cbaa18429 Julien Masson  2019-06-24  1827  #define		VIU_OSD_BLEND_DIN_EN(bits)            ((bits & 0xf) << 20)
+147ae1cbaa18429 Julien Masson  2019-06-24  1828  #define		VIU_OSD_BLEND1_DIN3_BYPASS_TO_DOUT1   BIT(24)
+147ae1cbaa18429 Julien Masson  2019-06-24  1829  #define		VIU_OSD_BLEND1_DOUT_BYPASS_TO_BLEND2  BIT(25)
+147ae1cbaa18429 Julien Masson  2019-06-24  1830  #define		VIU_OSD_BLEND_DIN0_BYPASS_TO_DOUT0    BIT(26)
+147ae1cbaa18429 Julien Masson  2019-06-24  1831  #define		VIU_OSD_BLEND_BLEN2_PREMULT_EN(input) ((input & 0x3) << 27)
+147ae1cbaa18429 Julien Masson  2019-06-24  1832  #define		VIU_OSD_BLEND_HOLD_LINES(lines)       ((lines & 0x7) << 29)
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1833  #define VIU_OSD_BLEND_CTRL1 0x39c0
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1834  #define VIU_OSD_BLEND_DIN0_SCOPE_H 0x39b1
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1835  #define VIU_OSD_BLEND_DIN0_SCOPE_V 0x39b2
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1836  #define VIU_OSD_BLEND_DIN1_SCOPE_H 0x39b3
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1837  #define VIU_OSD_BLEND_DIN1_SCOPE_V 0x39b4
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1838  #define VIU_OSD_BLEND_DIN2_SCOPE_H 0x39b5
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1839  #define VIU_OSD_BLEND_DIN2_SCOPE_V 0x39b6
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1840  #define VIU_OSD_BLEND_DIN3_SCOPE_H 0x39b7
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1841  #define VIU_OSD_BLEND_DIN3_SCOPE_V 0x39b8
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1842  #define VIU_OSD_BLEND_DUMMY_DATA0 0x39b9
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1843  #define VIU_OSD_BLEND_DUMMY_ALPHA 0x39ba
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1844  #define VIU_OSD_BLEND_BLEND0_SIZE 0x39bb
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1845  #define VIU_OSD_BLEND_BLEND1_SIZE 0x39bc
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1846  #define VIU_OSD_BLEND_RO_CURRENT_XY 0x39bf
+b93a66faeea9ddf Neil Armstrong 2019-03-25  1847  
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
