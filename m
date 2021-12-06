@@ -2,106 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 27125469308
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 10:56:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415A1469316
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 10:59:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241607AbhLFJ70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 04:59:26 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:51312 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241537AbhLFJ70 (ORCPT
+        id S241440AbhLFKCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 05:02:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230400AbhLFKCi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 04:59:26 -0500
-Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust3082.18-1.cable.virginm.net [86.31.172.11])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id A231AEE;
-        Mon,  6 Dec 2021 10:55:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1638784556;
-        bh=2r2GbxKPhAXxZ+3+KQwXXGF+wPCJfkbsKIZdCqfP92s=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=jJk0GK7FHXCO6ICbi9MU00/GN5O9WqEm/xEaSgXHQD8qDzLHLcUE0s4IGD9Obv9+j
-         8F6bkzoTcayk7sOLiC9NC9lDW/1oXB+I/jLzMWNFJR66Y0RUAgwalqmjES2VBNkxBH
-         756RKU5JdlvejPdEu25vyLA0WvX+aEEwxfCN0XPc=
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211204205504.6550-1-amhamza.mgc@gmail.com>
-References: <163864977875.3153335.18099399866051099554@Monstersaurus> <20211204205504.6550-1-amhamza.mgc@gmail.com>
-Subject: Re: [PATCH v2] media: venus: vdec: fixed possible memory leak issue
-From:   Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, amhamza.mgc@gmail.com
-To:     Ameer Hamza <amhamza.mgc@gmail.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        stanimir.varbanov@linaro.org
-Date:   Mon, 06 Dec 2021 09:55:54 +0000
-Message-ID: <163878455464.147210.11589283989656931183@Monstersaurus>
-User-Agent: alot/0.10
+        Mon, 6 Dec 2021 05:02:38 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C05C061746;
+        Mon,  6 Dec 2021 01:59:10 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E9C70B81060;
+        Mon,  6 Dec 2021 09:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCD9C341C1;
+        Mon,  6 Dec 2021 09:59:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638784747;
+        bh=D00qaw2n3vUAXgoRBuifhG9xrGh5PkVr4X4wOQmpGwQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ONK54aA8ExcCU+u1ye/VNHduOSZKBLP7zVfxUyXOGvcy5GKqqw74TiMFcKiU5zzLW
+         nDmBIF/6Xue0eARA3rjsioezClCuJWJC0iN4oy4NgnkBpBsChSaOC0XQx//igiIZW7
+         4+ioY73K6rtopReNOXtQgZePtbn0+9hGsNqcHscTiwqdOQo/e29lgyhlVg0ekH+vSM
+         EwwUEdhEDvH0YvwlCy3JPesEhLHTgON6MbRF9m8uZw/G0jOmH6/rn7Gk5/oqgxK3ID
+         y/dB+o21xr2FLn1e3UGceE7stcHNbLwt50fq26vJ+l1Xp7uqn/mAcyc/vCrEYQgfep
+         npBc2GES1A7Ew==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1muAm1-00A8lt-Pm; Mon, 06 Dec 2021 09:59:05 +0000
+Date:   Mon, 06 Dec 2021 09:59:05 +0000
+Message-ID: <87v902kqae.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 0/2] Add Qualcomm MPM irqchip driver support
+In-Reply-To: <20211206092535.4476-1-shawn.guo@linaro.org>
+References: <20211206092535.4476-1-shawn.guo@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ameer,
+On Mon, 06 Dec 2021 09:25:33 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> It adds DT binding and driver support for Qualcomm MPM (MSM Power Manager)
+> interrupt controller.
 
-Thank you for investigating the alternative suggestion I made.
+That's the 4th version in exactly two weeks, and that still has all
+the problems I commented on in v3.
 
-Quoting Ameer Hamza (2021-12-04 20:55:04)
-> Fixed coverity warning by freeing the allocated memory before return
+I won't review a new version this week.
 
-We could probably say that fixing the coverity warning isn't so much the
-target of the patch as fixing the memory leak. It's just helpful that
-coverity spotted it for us.
+	M.
 
-
-I'd write:
-
-The venus_helper_alloc_dpb_bufs() implementation allows an early return
-on an error path when checking the id from ida_alloc_min() which would
-not release the earlier buffer allocation.
-
-Move the direct kfree() from the error checking of dma_alloc_attrs() to
-the common fail path to ensure that allocations are released on all
-error paths in this function.
-
-> Addresses-Coverity: 1494120 ("Resource leak")
->=20
-> Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
-
-Of course having suggested it, I believe this is the right fix so:
-
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-
-> ---
-> Changes in v2:
-> move kfree() immediately after kfree() as suggested by Kieran Bingham
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/=
-platform/qcom/venus/helpers.c
-> index 84c3a511ec31..0bca95d01650 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -189,7 +189,6 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
-st)
->                 buf->va =3D dma_alloc_attrs(dev, buf->size, &buf->da, GFP=
-_KERNEL,
->                                           buf->attrs);
->                 if (!buf->va) {
-> -                       kfree(buf);
->                         ret =3D -ENOMEM;
->                         goto fail;
->                 }
-> @@ -209,6 +208,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
-st)
->         return 0;
-> =20
->  fail:
-> +       kfree(buf);
->         venus_helper_free_dpb_bufs(inst);
->         return ret;
->  }
-> --=20
-> 2.25.1
->
+-- 
+Without deviation from the norm, progress is not possible.
