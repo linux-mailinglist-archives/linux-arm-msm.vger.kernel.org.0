@@ -2,36 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FD7946A9B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 22:15:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1B7B46A9E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 22:18:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350763AbhLFVTQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 16:19:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350642AbhLFVTC (ORCPT
+        id S1350740AbhLFVV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 16:21:26 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:48844 "EHLO
+        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350677AbhLFVVV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 16:19:02 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9883C061354;
-        Mon,  6 Dec 2021 13:15:32 -0800 (PST)
+        Mon, 6 Dec 2021 16:21:21 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B2C86B8110F;
-        Mon,  6 Dec 2021 21:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4619CC341C6;
-        Mon,  6 Dec 2021 21:15:27 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 752C3CE1410;
+        Mon,  6 Dec 2021 21:17:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27ED0C341C6;
+        Mon,  6 Dec 2021 21:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638825330;
-        bh=Sa+KGCq2/sHFHnova0dYBBp7RPzJf/V7LKGoUhjeFd0=;
+        s=k20201202; t=1638825468;
+        bh=GQokSa4i+2CGdyoT/xYJ7/ZpQkkuAmTHc9GaFqI9gjM=;
         h=From:To:Cc:Subject:Date:From;
-        b=X1LIr+6hycVxaRBH2OTHNbb4VIEbr1hOXOXeBWkFtKq5RC1nrkfeOLMiUieKVbrW+
-         Xz9lImeGp7aai3340OS4dWtOmpni56Vvc8aMxEXsRXxqFZPJC2xJvduY0zH1PUeA6S
-         ldkyCyWSSU3dPPw7SGVPLi6/FThChYyHpAyiOUjsQ+synEPsDkHlfzapOzb62B3QER
-         vM0cVGjfQGJ5gbJydrBTRm7fw1GrM/oV0CjEUfVCdfQ8DUVUltEPDUXRHcM046rJnc
-         NyyqnnUGmiRAwUw86JP30z6pwOcAb+BiB7J0mLRcypwo7UgC7lYpD6uQ+Tu1Wi1gra
-         RztVXPOkDLI8g==
+        b=hw0h4XJcMRZiMZvesxmxZjkplsz/TwU3qvxVzy40IMSPYWUExb5TgW1qCDsCNzImA
+         FFNVZa211SYV+AraTxGyNghzQNRBwMuhmv6J68gLqYOPNeZq+uwFcXjWLpk68sRGXd
+         nZGBPjrUcbqFNIKWoDpK5cu1fyYjiwgmc0W4UNUZDLAS0/R20sP/XjZwRD7Uq5WhMR
+         3VHuLhQVAc1C1+MiaJB3JwIyLWyNkSPHksMdRDv4lw4ODb80Xjp8eS7Mx9gNV3/57A
+         gxJ9NEQpYQMpdDpHi7v7DRq+zGdtrcrRcG6ovn8t9b9UmEC1g0TZD0oL1xZZX6BrFr
+         3pE9ZYWvCJeYw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Philip Chen <philipchen@chromium.org>,
@@ -45,9 +42,9 @@ Cc:     Philip Chen <philipchen@chromium.org>,
         jesszhan@codeaurora.org, vulab@iscas.ac.cn, tiny.windzz@gmail.com,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.10 01/15] drm/msm/dsi: set default num_data_lanes
-Date:   Mon,  6 Dec 2021 16:15:01 -0500
-Message-Id: <20211206211520.1660478-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 01/10] drm/msm/dsi: set default num_data_lanes
+Date:   Mon,  6 Dec 2021 16:17:20 -0500
+Message-Id: <20211206211738.1661003-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 X-stable: review
@@ -81,10 +78,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 96b5dcf8e4540..64454a63bbacf 100644
+index 5613234823f7d..423c4ae2be10d 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1692,6 +1692,8 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
+@@ -1669,6 +1669,8 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
  	if (!prop) {
  		DRM_DEV_DEBUG(dev,
  			"failed to find data lane mapping, using default\n");
