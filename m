@@ -2,83 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94424469C56
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:18:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B16F8469C43
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:18:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356135AbhLFPVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:21:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358269AbhLFPTk (ORCPT
+        id S1349853AbhLFPV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 10:21:29 -0500
+Received: from mout.kundenserver.de ([212.227.17.10]:35059 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346677AbhLFPTb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:19:40 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24513C0698D0
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:13:43 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id j6-20020a17090a588600b001a78a5ce46aso11092848pji.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:13:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cnQqBSAo+K5oxr9l26dxH3RShjXf+td6E+PHuLLI4y8=;
-        b=VQIiWgpFRexhnDvLc40hcuZW7IZloc67v1EO6pDc4gDJnAh0CPsQ5fznnTZhQcFJXW
-         ktjxw6RbnBpLiUVoQ/VacQo/TSIwujyyBjZaLSEgclpiWnMOU0wdE/lJEBphP9+pWKl1
-         MLh+Ujy0n3oE+c9MqT0iP4kmn7D/myUpNO+J5WgQ7hnBstrPn6rVBDc6ScOZQCYHYQoj
-         +aICtAZrE2isxEmPRNrM5erhDnCag58kMThzQA/slIoLTYR09wAa1WJmPubjtobDJ1XZ
-         9q3B9k6Z9uz/EgFWcroiQpydY7/DYNHpq0fI+n4mKDIt2+NZ47cNlDIXk/1cTE+i5Yn5
-         t7eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cnQqBSAo+K5oxr9l26dxH3RShjXf+td6E+PHuLLI4y8=;
-        b=b/opUsjqs8Re4txVQ72sCa8svCCWlY0vrPc3gJ9NQr6EQGc7F4jXswGbRMQvy3vsUl
-         NJj92xwki0ue3jZwRxuYI8UIoT5TCQd3wlfRo4lCz+oK4lfd8Frdo7V4MxjbPcwGGHGL
-         YJM6Il8ynbKVMaJX+RVNrHOUqlNFJ140Lj+PfXVcdxj7Rn56jczsJVWTQAy3zMpyK5B3
-         Y8vXo16ePdNlHVmIOsld4kTod1IL2+pA2W/BpMv5GKDUbWdZwC1R6Jm5/JqaW/eTI2f0
-         UKOTDHLVa8m9MEY5SSa8IjKSvfobo5PAts7vfkgNnpAHbsDyoaMsNo7WKANzRbBFvh2f
-         So6Q==
-X-Gm-Message-State: AOAM533JE9pWbHqLCxJmuCFmDgK78vp8/1faT2g11u/UFjQN572nkglA
-        DvZZLi1cLQPCfJBKVQRyk3tBvnPGrEvS2lWKEVoZxg==
-X-Google-Smtp-Source: ABdhPJxLJ6uUWWiSZlny/JEj/mVjhmgg6C7BE3VsA338kjFc2t92GnAbloeXMtJTb10Jeu46/eWHG5/ObtlkLgQyN8c=
-X-Received: by 2002:a17:903:2004:b0:142:6344:2c08 with SMTP id
- s4-20020a170903200400b0014263442c08mr44072941pla.51.1638803620589; Mon, 06
- Dec 2021 07:13:40 -0800 (PST)
+        Mon, 6 Dec 2021 10:19:31 -0500
+Received: from mail-wr1-f51.google.com ([209.85.221.51]) by
+ mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1Mzhax-1mhYFk0F2P-00vdcC; Mon, 06 Dec 2021 16:16:01 +0100
+Received: by mail-wr1-f51.google.com with SMTP id j3so23209474wrp.1;
+        Mon, 06 Dec 2021 07:16:00 -0800 (PST)
+X-Gm-Message-State: AOAM533Ki0OwtYOTWv1JV4700fjNSV1YhpZ/US+6siWVDUs4ZAFPipKD
+        1948UK22GrH5QVr5fUbOEYgMfN9y3NN2eQyTiYk=
+X-Google-Smtp-Source: ABdhPJw/ZXYF+K/CJn1HXgPjlPbQr4ytrnThyfQ8C9mdA4sndqRRwQaKMfw+ZhUv1DSh/BoBzDsj/99pArMtUx8ZXSs=
+X-Received: by 2002:a05:6000:110b:: with SMTP id z11mr43984765wrw.32.1638803760643;
+ Mon, 06 Dec 2021 07:16:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20211118124819.1902427-1-robert.foss@linaro.org>
- <20211118124819.1902427-4-robert.foss@linaro.org> <Ya4nEMnZ3zQiXbaR@ripper>
-In-Reply-To: <Ya4nEMnZ3zQiXbaR@ripper>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 6 Dec 2021 16:13:29 +0100
-Message-ID: <CAG3jFytNQHK=dTHGzd57V_m_6YNwtD2zRYgBSjykd3whzqy9pQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: apq8016-sbc: Remove clock-lanes
- property from &camss node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
-        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
+References: <cover.1638275062.git.quic_saipraka@quicinc.com>
+ <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
+ <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com>
+ <7b2b5888-c2ca-2ca0-8c0c-32128fcb37d2@quicinc.com> <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
+ <2efe933e-de1e-0dfc-959a-c0003e28f830@quicinc.com>
+In-Reply-To: <2efe933e-de1e-0dfc-959a-c0003e28f830@quicinc.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Mon, 6 Dec 2021 16:15:44 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com>
+Message-ID: <CAK8P3a0L2tLeF1Q0+0ijUxhGNaw+Z0fyPC1oW6_ELQfn0=i4iw@mail.gmail.com>
+Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO accessors
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>, Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        quic_psodagud@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:Wjrf/T3f5sUEsHPW/Ia8K03tSVda3MNopEC8jhYmXuEeo2L1uin
+ E4y80EPFSRu5qnUmBp5y3KJBp6Phm82gefMwn3cYekIVQ/WrU0S0gTsZpPXng7fR2q0luyj
+ OVFIPicdvi5JRwNPBe1wt0xpZi8CJ282sgmhRYlfK4LXhE+aDH3kfJKxBbJ6zQKAb8RYzoq
+ az6uJ+RepbWuEMAAyEZlg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:06KoaJJmiVM=:drZuR5Ja2h+TKyGMwaASIY
+ B9O2gT3GfCzTNNJ68hJOp/5QjimHR3N3U8Xv+Ejin559Z7bxEOrOUAOWgtVo4+XaoCOWwHBcZ
+ PAFOS3t/iSqhhfEETwFk+c9jCcm1RQwX87LS1DkSsfWON0bJK2XBNXakNRspx83xSSTUuxl8N
+ ih5bI/bivTOJ5MkRXqkeGqNUW+qcC6/HOv1XQkPKn0GeVBRYddLCxpQAZPRqqG+XCjqJeGqbz
+ uv8JRqkszm58/9mym+7FN0PW4otdoDsdcizuXDn7YNAQJ8bMNRsfCbK4SUjJKhdeEk3ZrUd1+
+ T+J2UMg2Pgz5D5u/eRFSUj2Z5tdouY+cs5CxZ7aVOh/KjGZJdAwJ6WjVNigzv2wGkFfxaXbJx
+ Ln59eK3E81nR1AdF1bDWC9bD+4oXvUS3MCMQH4MnMckILT6cj4QTXy2uXKlb69Vrv88Hx0g6h
+ Dj/1uYutCXTTS1Urm0I9uzdsYrxHXj9BJNHS/PcqsurZag5zDzuhwshtTUfA6QlP9GWx9tn/S
+ uYvZK8watBdn+Icn40qf0SwMBvIXlV/s5v840joKmLPn+SwJ8DQMU2HZfPGHbvkzOOSA0/HXz
+ KboY/M2i5WQpTdn9RjyRIkn0xSlJgNpv7Qllydyx4P+D4qqKdFlv8k9l7ohOJbrt7FAn3NLNb
+ Rqtxj4Ws1eG5+uvRRM9CZU2LLDhgbHSH8KjdnvFPzcnXUlAMJrlgIuQZJkzrZGkgBAQz7tCBW
+ fJY0wpXVawQEFRyu4F04igUOs8NXHzmt6RxF+zln9kz521KN8fG/3r+R2f1ebFBKq0O5wri1i
+ u8kZpAqOgCbveYx4/JzO4REhWRGDp3PP9qdgC2/iOARoufQ9+4=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Dec 2021 at 16:05, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+On Mon, Dec 6, 2021 at 2:52 PM Sai Prakash Ranjan
+<quic_saipraka@quicinc.com> wrote:
 >
-> On Thu 18 Nov 04:48 PST 2021, Robert Foss wrote:
->
-> > The clock-lanes property is no longer used as it is not programmable by
-> > the CSIPHY hardware block of Qcom ISPs and should be removed.
-> >
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Although I'd be happy to take the two dts patches through the Qualcomm
-> tree, once the driver changes has landed.
+> Sorry, what I meant was the literal name of these macros, i.e.,
+> __iormb() has more explicit naming as
+> IO read memory barrier and __io_ar() is IO after read? So doesn't it
+> make more sense that __iormb()
+> should be the primary definition which is already the case and ar/bw
+> should be based on them.
 
-Thanks Bjorn. I'll split the series and submit two fully reviewed v4 series.
+My reasoning was that we should ideally only have one set, and that
+__io_ar()/__io_bw() are the ones used in architecture-independent code,
+so I'd rather use those and deprecate the arm64 specific ones, eventually
+moving all the arm64 specific code to use those directly where needed.
+
+        Arnd
