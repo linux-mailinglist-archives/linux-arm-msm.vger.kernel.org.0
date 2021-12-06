@@ -2,119 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CFB6469EF1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:41:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9490D46A018
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:55:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386012AbhLFPow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:44:52 -0500
-Received: from mga03.intel.com ([134.134.136.65]:6476 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1389662AbhLFPkr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:40:47 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10189"; a="237279939"
-X-IronPort-AV: E=Sophos;i="5.87,291,1631602800"; 
-   d="scan'208";a="237279939"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 07:37:14 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,291,1631602800"; 
-   d="scan'208";a="611276566"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga004.jf.intel.com with ESMTP; 06 Dec 2021 07:37:11 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1muG3C-000LPW-8u; Mon, 06 Dec 2021 15:37:10 +0000
-Date:   Mon, 6 Dec 2021 23:36:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Marc Zyngier <maz@kernel.org>
-Cc:     kbuild-all@lists.01.org, gregkh <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, quic_psodagud@quicinc.com
-Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO
- accessors
-Message-ID: <202112062304.8qIQUQyF-lkp@intel.com>
-References: <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
+        id S1356861AbhLFP5q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 10:57:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1387818AbhLFPyh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Dec 2021 10:54:37 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E358C07E5E1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:40:07 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id v11so23254023wrw.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:40:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i6fTCBNWukPOt3wBrx1/7JFE0qpnlKKJtTP5y1N5eWU=;
+        b=RxHby9kH1VoJb9Mavi3ad3+GXfps5X3G1LKPuMIjtf+Zb1aHClTqcYNyg5Krknww6t
+         1H2nKGDO32TrXPHeygOJGP5wn8+GfTCati2UufXo8BI5N0SKKlom9T43GPB8UI00TG9C
+         OBKEJG6xLd9L5MCVCerxOPhb1k18si62jWzAQslmpLNE+n36xdgqnUQXs9o7MGbrG2lf
+         5xjSoJsesw5TzMyxyKcaQ3Q2/nhcvAwCMXEOENoYI8XiCgS+/jkmYIX9j+jpXp5zu7NM
+         PTpxBIhHvube4cF9QLG5T4fKKv649m+rnD3Nrs1UR9dA5rReoc91nnJoce8b4laJN2xd
+         PhsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i6fTCBNWukPOt3wBrx1/7JFE0qpnlKKJtTP5y1N5eWU=;
+        b=wFqQqrGUhYM58QNJYrW7nU0vVfqz/yi3vjrk4OlbgZC4ThJxGeD3K3Z5O5ulkFFc3X
+         wYjec8NaxozGvmOYaZsxWSfJz3xychDQ/22tEh0aZPw1z8x0m+ugtoFDgcHuMO1hyNqQ
+         jv3wA8tfjdKtz/U4klfnllg4bSzJhXDQL60Jxnfm09PAEkaCUvR5Os/dTCIBmIjw4xmx
+         03wX8DfRTqYiii7/kiXjKcWaHtEgSdKg1+wkCWTfK5DW4OppfD2m1uX6Jz1wwvBwdgy3
+         LvOc4NVajNG3n7E7t4lbrD6LtvNt+6GCaEHuDBF11LByoYNUnTOScjtMyi5Y0SqaC/qp
+         dluA==
+X-Gm-Message-State: AOAM530d2L3Gtjt1oGLsO92CspvxVk7qM/0R7F/6uaqg32EBn6rKLTzt
+        eAUHK1ck9bQfFuurIXh13I+3pFelQhjH3g==
+X-Google-Smtp-Source: ABdhPJy5DHLjTylMVXKYVxebk0J1FBmtxrTd2RWEg+LpY8jnOdFNCNZyU2lE4C8qXRuNHLfcSo3Sdw==
+X-Received: by 2002:adf:db47:: with SMTP id f7mr44845000wrj.113.1638805205923;
+        Mon, 06 Dec 2021 07:40:05 -0800 (PST)
+Received: from xps7590.. (freifunk-gw.bsa1-cpe1.syseleven.net. [176.74.57.43])
+        by smtp.gmail.com with ESMTPSA id g13sm15818962wrd.57.2021.12.06.07.40.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Dec 2021 07:40:05 -0800 (PST)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Mauro Carvalho <mchehab@kernel.org>
+Cc:     Robert Foss <robert.foss@linaro.org>
+Subject: [PATCH v4 0/2] Remove clock-lanes DT property from device trees
+Date:   Mon,  6 Dec 2021 16:40:01 +0100
+Message-Id: <20211206154003.39892-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+This series depends on the below series being merged.
+https://lore.kernel.org/all/20211206151811.39271-1-robert.foss@linaro.org/
 
-Thank you for the patch! Perhaps something to improve:
+Changes since v3:
+ - Bjorn: Added RBs for both patches
+ - Split series into two series for the ARM64 & Media trees
 
-[auto build test WARNING on arm64/for-next/core]
-[also build test WARNING on rostedt-trace/for-next arnd-asm-generic/master arm-perf/for-next/perf v5.16-rc4 next-20211206]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Changes since v2:
+ - Stephan: Rebased on v5.16-rc1
+ - Stephan: Fixed 3/4 commit message title
 
-url:    https://github.com/0day-ci/linux/commits/Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-next/core
-config: arm64-randconfig-r014-20211206 (https://download.01.org/0day-ci/archive/20211206/202112062304.8qIQUQyF-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/0775ecf0f452d6b76b161d009dab52c90270755a
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Sai-Prakash-Ranjan/tracing-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20211206-163212
-        git checkout 0775ecf0f452d6b76b161d009dab52c90270755a
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/gpu/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
-   In file included from drivers/gpu/drm/meson/meson_viu.c:16:
-   drivers/gpu/drm/meson/meson_viu.c: In function 'meson_viu_init':
->> drivers/gpu/drm/meson/meson_registers.h:1826:55: warning: conversion from 'long unsigned int' to 'u32' {aka 'unsigned int'} changes value from '18446744071814774785' to '2400190465' [-Woverflow]
-    1826 | #define         VIU_OSD_BLEND_REORDER(dest, src)      ((src) << (dest * 4))
-         |                                                       ^
-   drivers/gpu/drm/meson/meson_viu.c:472:32: note: in expansion of macro 'VIU_OSD_BLEND_REORDER'
-     472 |                 writel_relaxed(VIU_OSD_BLEND_REORDER(0, 1) |
-         |                                ^~~~~~~~~~~~~~~~~~~~~
+Changes since v1:
+ - Rob: Instead of documenting and fixing the use of the clock-lanes
+   property, remove it, since it is is not programmable and
+   therefore shouldn't be exposed in the DT.
 
 
-vim +1826 drivers/gpu/drm/meson/meson_registers.h
+Robert Foss (2):
+  arm64: dts: qcom: apq8016-sbc: Remove clock-lanes property from &camss
+    node
+  arm64: dts: qcom: sdm845-db845c: Remove clock-lanes property from
+    &camss node
 
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1824  
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1825  #define VIU_OSD_BLEND_CTRL 0x39b0
-147ae1cbaa18429 Julien Masson  2019-06-24 @1826  #define		VIU_OSD_BLEND_REORDER(dest, src)      ((src) << (dest * 4))
-147ae1cbaa18429 Julien Masson  2019-06-24  1827  #define		VIU_OSD_BLEND_DIN_EN(bits)            ((bits & 0xf) << 20)
-147ae1cbaa18429 Julien Masson  2019-06-24  1828  #define		VIU_OSD_BLEND1_DIN3_BYPASS_TO_DOUT1   BIT(24)
-147ae1cbaa18429 Julien Masson  2019-06-24  1829  #define		VIU_OSD_BLEND1_DOUT_BYPASS_TO_BLEND2  BIT(25)
-147ae1cbaa18429 Julien Masson  2019-06-24  1830  #define		VIU_OSD_BLEND_DIN0_BYPASS_TO_DOUT0    BIT(26)
-147ae1cbaa18429 Julien Masson  2019-06-24  1831  #define		VIU_OSD_BLEND_BLEN2_PREMULT_EN(input) ((input & 0x3) << 27)
-147ae1cbaa18429 Julien Masson  2019-06-24  1832  #define		VIU_OSD_BLEND_HOLD_LINES(lines)       ((lines & 0x7) << 29)
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1833  #define VIU_OSD_BLEND_CTRL1 0x39c0
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1834  #define VIU_OSD_BLEND_DIN0_SCOPE_H 0x39b1
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1835  #define VIU_OSD_BLEND_DIN0_SCOPE_V 0x39b2
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1836  #define VIU_OSD_BLEND_DIN1_SCOPE_H 0x39b3
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1837  #define VIU_OSD_BLEND_DIN1_SCOPE_V 0x39b4
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1838  #define VIU_OSD_BLEND_DIN2_SCOPE_H 0x39b5
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1839  #define VIU_OSD_BLEND_DIN2_SCOPE_V 0x39b6
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1840  #define VIU_OSD_BLEND_DIN3_SCOPE_H 0x39b7
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1841  #define VIU_OSD_BLEND_DIN3_SCOPE_V 0x39b8
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1842  #define VIU_OSD_BLEND_DUMMY_DATA0 0x39b9
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1843  #define VIU_OSD_BLEND_DUMMY_ALPHA 0x39ba
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1844  #define VIU_OSD_BLEND_BLEND0_SIZE 0x39bb
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1845  #define VIU_OSD_BLEND_BLEND1_SIZE 0x39bc
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1846  #define VIU_OSD_BLEND_RO_CURRENT_XY 0x39bf
-b93a66faeea9ddf Neil Armstrong 2019-03-25  1847  
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts   | 2 --
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 3 ---
+ 2 files changed, 5 deletions(-)
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+-- 
+2.32.0
+
