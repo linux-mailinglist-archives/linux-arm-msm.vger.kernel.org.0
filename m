@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85D1D4691DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 09:59:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34CDE469208
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 10:10:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237575AbhLFJDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 04:03:10 -0500
-Received: from mout.kundenserver.de ([212.227.126.131]:52073 "EHLO
+        id S240014AbhLFJNn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 04:13:43 -0500
+Received: from mout.kundenserver.de ([217.72.192.73]:53113 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230492AbhLFJDK (ORCPT
+        with ESMTP id S239987AbhLFJNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 04:03:10 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]) by
- mrelayeu.kundenserver.de (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1N17l4-1mRwoA2J2o-012bDT; Mon, 06 Dec 2021 09:59:40 +0100
-Received: by mail-wr1-f45.google.com with SMTP id l16so20848271wrp.11;
-        Mon, 06 Dec 2021 00:59:40 -0800 (PST)
-X-Gm-Message-State: AOAM532mbZVE5yyzbhp4Z5TuC7PMXaqq2csLbjtD9283/71CAJCBCTQG
-        hMv7u4MfMYpPnDlm6ZuDsDyi8zb4+Fi4clz4+8E=
-X-Google-Smtp-Source: ABdhPJw8rKwPBIOecacswxTOKMMxeoiEmBfy+YFh9g4vDQi3JLiqejiVdE79PUY+07qh6BJ/4t1a2LtifJmZTf8goHw=
-X-Received: by 2002:a5d:64ea:: with SMTP id g10mr42126554wri.137.1638781180234;
- Mon, 06 Dec 2021 00:59:40 -0800 (PST)
+        Mon, 6 Dec 2021 04:13:42 -0500
+Received: from mail-wm1-f48.google.com ([209.85.128.48]) by
+ mrelayeu.kundenserver.de (mreue107 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MLQgv-1nBxiA0nhL-00ISoJ; Mon, 06 Dec 2021 10:10:13 +0100
+Received: by mail-wm1-f48.google.com with SMTP id c6-20020a05600c0ac600b0033c3aedd30aso7079928wmr.5;
+        Mon, 06 Dec 2021 01:10:13 -0800 (PST)
+X-Gm-Message-State: AOAM5326jLZc6+fBuuiAvyXTKryO/ct4dTdiaGsnnVAVmQV2fP3Zmf9Q
+        9mboogtbdOSvS75PXtfqOfyBDkOXhrQji6NSC0Q=
+X-Google-Smtp-Source: ABdhPJwQALxSFGHAJpCTwYGyvqClDaiYYTas1sA1uWbg/iw2Yvzw12jV2HvaIzmKqWcSSqtnZmdh/GUH3epY4YRW3bY=
+X-Received: by 2002:a1c:1c1:: with SMTP id 184mr37374459wmb.1.1638781812875;
+ Mon, 06 Dec 2021 01:10:12 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1638275062.git.quic_saipraka@quicinc.com> <e088f4b4021f2e56093c7f73e77f556059e114b7.1638275062.git.quic_saipraka@quicinc.com>
-In-Reply-To: <e088f4b4021f2e56093c7f73e77f556059e114b7.1638275062.git.quic_saipraka@quicinc.com>
+References: <cover.1638275062.git.quic_saipraka@quicinc.com> <99ecc64c6da3abb3ea2930082c40f1820655664c.1638275062.git.quic_saipraka@quicinc.com>
+In-Reply-To: <99ecc64c6da3abb3ea2930082c40f1820655664c.1638275062.git.quic_saipraka@quicinc.com>
 From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 6 Dec 2021 09:59:24 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a1wOEkoteJRu+qpE0k3gJ0fRnwfn1Zrtcnmgn5wT4yQdw@mail.gmail.com>
-Message-ID: <CAK8P3a1wOEkoteJRu+qpE0k3gJ0fRnwfn1Zrtcnmgn5wT4yQdw@mail.gmail.com>
-Subject: Re: [PATCHv5 3/4] tracing: Add register read/write tracing support
+Date:   Mon, 6 Dec 2021 10:09:57 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a1k-1_m7r-u0uO1nW1m43bt_hR9u+UeW=SqK40+Ltb+iA@mail.gmail.com>
+Message-ID: <CAK8P3a1k-1_m7r-u0uO1nW1m43bt_hR9u+UeW=SqK40+Ltb+iA@mail.gmail.com>
+Subject: Re: [PATCHv5 4/4] asm-generic/io: Add logging support for MMIO accessors
 To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 Cc:     Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
@@ -40,58 +40,77 @@ Cc:     Will Deacon <will@kernel.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Linux ARM <linux-arm-kernel@lists.infradead.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        quic_psodagud@quicinc.com,
-        Prasad Sodagudi <psodagud@codeaurora.org>
+        quic_psodagud@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:GUNb41Or55BMKgt3KI9K6V9zMJAkWSqJJXgLrv6x1kHppH94xEQ
- PgyF+5Mk7vs9EWfDeTaMX9tkofqcx4c9eTJpf4c1VdW1PnJo3AN/qETUL3vL2V+/Kz9wC41
- dUnHx0VrMTR3eB8/V7Nb0+6Fdh1H43Bf82PJ50gn9GXDm5XuB4/4+MPSt/wEVwu2AYlGOFa
- gFpvkWp4VxU0ALpH4mOTA==
+X-Provags-ID: V03:K1:IOcYAtM7qffkpP480HHpYO3u3xHTvLxGrBEB7tDrndi5EpC0Yml
+ ilZWd+YWC6EuFHG6wK7wDJsnEOzbwJn9Ubv0/NUWW7/Je4xR/2mYI4Xu5IWNTU5TUkkWvg5
+ sd7YtZ7Uu0H1EgdmPbRpNtk7Xs4I8eY/Gq6AUBMFyYjUSK50VO86wpAixsi/kZWZuw3ih42
+ kY15jy1AeBPqfWf+n3Nuw==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oVDn6Z53ECM=:A+nmh7IzDW8YAKJXfImSD2
- YliO6ROxefTNNNkHeOh1hJAhjhdZEAAym2nwKwxL1ZFUiYJ5PMjIdEPeVAz/f7WiRi8or6TCX
- J8JQg3nLqkju2cswwKPdBx1Q6TOLvHvD53wAAclDS18X9P66Tn+0yIToTn/Gw7BHeF54AFXCA
- ebYTsIbq/TA+DMkxEvpBdlkMovfS0GTNhMJCQbDtyL72luJuehRGa/TsWIKcNABLXJ6r98/fO
- 4PGBBhvWX5ty6v8JqQpEo+ygtxa9cdXWbF50djilchCreTVvfSbzEZRV2Rwnpm61Jfn2eyLdm
- RRD2y8lhV6k4tXwvDQqGlvxlEPRGW2HT6Ex4A3Ebhx/ZS4Pkdc8U5GLywl6FuDdBuPp9QP80W
- PwZKDrX8n5Uwc1f3/pq2NxyvroB3zX86dqio/xyQnQoEmaINQ7rOSOxYdzv3nGqUtPu+QcA+1
- t2mOl98+S0FV/As9kJT7+L0LtYcfhF+CQA2txh9wfQcryhQa9gcwkA6w7Eqe6QYcNpxH9vMx9
- D7WzGJ1vD+N8WQ0Yq1Pep9bbjXZmnFar+5IV8OAN6FSpfaKXFAkgMZZ/Rbo88FM5nZFCOlETJ
- QVukfZ16DSJ5PWPwKEk43LQfg8Zjr6YwjLehJxvjSlqpcGr3SzkeIDF/r+Ll8qu7L4fOuu+PN
- ULKQaC79UDFfEIXlO1Jlfhvpn3O88q2p/krDY7yyuVY5hiWBf1Uq/Spunts+o5pKCT9pflPfC
- awHpHatG4KlEjBTCa5i5ohpX3OwHAxHo7v3h6NpCe0733Ahbh4lqan4kMoNXZYLIjew9uyLan
- PcNi5V8p2RvFeBqQgNef1m+6uwLbOU/9iSZo3yAm4prvbvj48c=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AQZt5Fu4oPQ=:G2RlFnMxnBQMjLx8aMro1p
+ s3VabJHQgntvbl2WP/P2lnpd1DLFQJ6jZlS1sT9qX0+pASE83y/BuFUa7f8AQlvuIy1QZpJd0
+ MjglrgbobS/wJzetxEBc/LmigyvDTKhKbhc0qAZnVcts2uyFE8OJkGPUbNGUOcBzCCIvojO+E
+ dDy31w69KXj3QarkriMnslAZ9SUbZ//76SdStXSoq+Ysqw3zFrP9BaWmyw/XmFn6/+Uk0s5G7
+ yarTE3fQhMAJqtmAOGCx+iis3iq8vBf/9gQpCM/4fVoxrSQYpq8NWgVgptA2eUENCplxKhtMx
+ O14E2lxdEnRMi6EbM1IhKt/W+GWaC0DpkFpYq0FRqXFb72atRSg+ZWgi3n6hKU3qRFW9ts2NO
+ Nbwm/HQbox8DtoQEBEv3xyKzftwFw2TZMtx0jw7fNwz5WpfsoJdfAtP7Hhh1raPO6CW4XhpVn
+ HU+WnqyVnCC6pAfTtOfq6jp4/F1Mtq8XWi2XKpAlnav6m0w9HfkWYHHGRp8VBhG0F84uYZd2I
+ b7kvDbzWboDQaenKLVRjfIx4UVycojX2CM6sSnrhDBRhS/KLw4dEWiS1bgZHDk980JsWiuvGN
+ /KiTfb4CQ8Dy8dLF9mb9WG2TZl7kEyIMvRNvhj1NVwQWn1Xcq38smvpsHsqHo/FAYmJJrJce/
+ 0UvO/iqjIoTYDiclSYWMTgUFONpRy5NQUMoaPDKXdxoXxPPO+/eimxGkECeNqw6C84fmVhRfv
+ yGqBX/2qCjRdjXNQvKKWw4WryHe1qZ+FqBYwVPGeaRchMIZ2f54Dkrg+X5CBQomucvt8vwtBM
+ +qxGJnypTSF/OQXyLUw4N/KnrxbsBnEQGe62VQPoeqlfWIDbgY=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon, Dec 6, 2021 at 9:28 AM Sai Prakash Ranjan
 <quic_saipraka@quicinc.com> wrote:
-> diff --git a/kernel/trace/Kconfig b/kernel/trace/Kconfig
-> index 420ff4bc67fd..9f55bcc51de1 100644
-> --- a/kernel/trace/Kconfig
-> +++ b/kernel/trace/Kconfig
-> @@ -95,6 +95,13 @@ config RING_BUFFER_ALLOW_SWAP
->          Allow the use of ring_buffer_swap_cpu.
->          Adds a very slight overhead to tracing when enabled.
+> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+> +#include <linux/tracepoint-defs.h>
+> +
+> +DECLARE_TRACEPOINT(rwmmio_write);
+> +DECLARE_TRACEPOINT(rwmmio_read);
+> +
+> +#define rwmmio_tracepoint_active(t) tracepoint_enabled(t)
+> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr);
+> +void log_read_mmio(u8 width, const volatile void __iomem *addr);
+> +
+> +#else
+> +
+> +#define rwmmio_tracepoint_active(t) false
+> +static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr) {}
+> +static inline void log_read_mmio(u8 width, const volatile void __iomem *addr) {}
+> +
+> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
 >
-> +config TRACE_MMIO_ACCESS
-> +       bool "Register read/write tracing"
-> +       depends on TRACING
-> +       help
-> +         Create tracepoints for MMIO read/write operations. These trace events
-> +         can be used for logging all MMIO read/write operations.
+>  /*
+>   * __raw_{read,write}{b,w,l,q}() access memory in native endianness.
+> @@ -149,6 +166,8 @@ static inline u8 readb(const volatile void __iomem *addr)
+>  {
+>         u8 val;
+>
+> +       if (rwmmio_tracepoint_active(rwmmio_read))
+> +               log_read_mmio(8, addr);
+>         __io_br();
+>         val = __raw_readb(addr);
+>         __io_ar(val);
 
-I think this needs a 'depends on ARCH_HAVE_TRACE_MMIO_ACCESS'
-or similar.
+For readability, it may be nicer to fold the two lines you add for each
+helper into one, such as
 
-> +void log_read_mmio(u8 width, const volatile void __iomem *addr)
-> +{
-> +       trace_rwmmio_read(CALLER_ADDR0, CALLER_ADDR1, width, addr);
-> +}
+void __log_write_mmio(u64 val, u8 width, volatile void __iomem *addr);
+#define log_write_mmio(val, widtg, addr) do { \
+     if (tracepoint_enabled(rwmmio_read)) \
+               __log_write_mmio((val), (width), (addr)); \
+} while (0)
 
-Here, it may be better to pass the caller address as an argument, I think
-CALLER_ADDR1 is not always reliable, though it's possible that it is
-in the configurations when this file gets enabled.
+I wonder if it may even be better to not check for tracepoint_active() in the
+inline function at all but always enter the external function when built-in.
+This means we do run into the branch, but it also reduces the i-cache footprint.
 
-       Arnd
+For general functionality, I think it would be better to trace the returned
+value from the read, but I don't know if that defeats the purpose you
+are interested in, since it requires the tracing to come after the __raw_read.
+
+         Arnd
