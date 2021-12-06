@@ -2,119 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7B9D469BAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:14:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 878F7469B55
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:13:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349410AbhLFPSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:18:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348100AbhLFPO3 (ORCPT
+        id S1348333AbhLFPO4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 10:14:56 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:59228 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345843AbhLFPMz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:14:29 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE783C0698C8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:06:33 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id t23so22011845oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:06:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qi+ACrBvsCQh4aeidtMrQGAwDrCcUC2mWJ4NwcOqezo=;
-        b=Lyk3ZV2G1kBXn1OTUhDPb6Rn1v2PiSF1kFXmGNPvzvrOKeWbWhReflgDjfQVo5FeXE
-         TDDmBx7k1iI9nH1Z/jP6bdzMXtGIsMcvopIW9O/RHPHJdpPRwm0K30aYzOd91ttnPoxQ
-         iDZPE9trErEVcn3KPgYPuFWNvxkDkBtNCuS7hmfYnbv3ufxTdNbAh9Qaq3q5z5p9TWiE
-         COM3CZtxqNQC3quUP9WS1jKJUKnw718D6NLTzK1O6xWFuxF8GhGv2DopuLxQTzUjKQcD
-         vxdUiD+/JzHGqRtUStIY9pJvG0EtMOqq6iuuILThXbz+5sxAkxbDZqcbAwbsQMiQXBAP
-         pPKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qi+ACrBvsCQh4aeidtMrQGAwDrCcUC2mWJ4NwcOqezo=;
-        b=E9kvIA5KM7GOXOM3qLy4f7Uuvr3wUFOcBcJTzg+CRxHGFPo9u4KlmIxR7o92+AyZP5
-         3Fvb5kRA9ClAyaoG4wgd97PPciXiTwSas+xI/fQ4j/6hw9epPrqzzOx6R44PuGEeDrZl
-         jM5ltxWHDxNUhxiryTQap/g9nxDWy+rwg17yaInSjk0iYd8Wwhd2kP6vk5SPgW0nPMR4
-         v+f81h6lmEcxobI7FYSmN4/lggn4rxhyH7ZHQQWw4V3HlJIbpolYNUOodLLxQJZTPMJP
-         whdEsqmo6KI4k9B7hwWb+KFJthKnj9B4JWji9SMX3eYMy20HyW6kqag4H4o+mD3YtCzq
-         vOKA==
-X-Gm-Message-State: AOAM532d+MIxUM9olQLdo53xB84/ftDIx0dwLM1a8Z5MRydmyrQyXwYd
-        xSefOcBtMW5EhTGhrpe7ZrGmmQ==
-X-Google-Smtp-Source: ABdhPJw7H4cDbriWhAuoWmCrnYAmNuZrdWJghA25VKturF79Pb3Ge5nU5PTGydomwKHccAy6npDTAQ==
-X-Received: by 2002:a05:6808:b08:: with SMTP id s8mr24691517oij.126.1638803193100;
-        Mon, 06 Dec 2021 07:06:33 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y12sm2838923oiv.49.2021.12.06.07.06.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:06:32 -0800 (PST)
-Date:   Mon, 6 Dec 2021 07:07:59 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Robert Foss <robert.foss@linaro.org>
-Cc:     agross@kernel.org, todor.too@gmail.com, mchehab@kernel.org,
-        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sdm845-db845c: Remove
- clock-lanes property from &camss node
-Message-ID: <Ya4nTzE5DC096i9/@ripper>
-References: <20211118124819.1902427-1-robert.foss@linaro.org>
- <20211118124819.1902427-5-robert.foss@linaro.org>
+        Mon, 6 Dec 2021 10:12:55 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 10F5B61331;
+        Mon,  6 Dec 2021 15:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BEDC341C5;
+        Mon,  6 Dec 2021 15:09:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638803365;
+        bh=dw9XxwMU7Td04mZbDOSAvoqc7QfnAD/1a1RCoKpziy4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nji2GU1IHM4eYGvBFkSGnE7BzaMtdiEJBDL4bMPpAKPyodvXf2tijBvVijiSOOblb
+         8MGQXk94GUdVqTwjVsRCBdoAsEI0wyDhWI/b7bKr4vQZ7NkcL0KNwhkZwaZdQO4LTs
+         QTHTfqyKGGAv0J+DprafJPZdt6/kTkFpZhFU+Q8MItAYUe+PIwxlYa3BUhOcEw5P9n
+         mxdzpHELW+1VNgwdbZHCW8Y/EvM1c2FqJRXkI9Cr3K7X0Z3DVdl5VRDk0RjZUQkvbo
+         /2a6VLmyIvlU5RCJrZAhhR0NUdaa98lCck5xLCmj5zjsUGDioPDf/sWsa5NQEwUlsH
+         AVw6o/pLPUfJg==
+Date:   Mon, 6 Dec 2021 15:09:19 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, swboyd@chromium.org,
+        collinsd@codeaurora.org, subbaram@codeaurora.org,
+        Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V4 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+Message-ID: <Ya4nn0/qp5El8P0L@sirena.org.uk>
+References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1637314953-4215-5-git-send-email-quic_c_skakit@quicinc.com>
+ <YZ+vnV12gDCtia5S@sirena.org.uk>
+ <d86e1a33-e7cf-58f7-d75b-23a0313ebde5@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Iup9tc3xCjeDkBkE"
 Content-Disposition: inline
-In-Reply-To: <20211118124819.1902427-5-robert.foss@linaro.org>
+In-Reply-To: <d86e1a33-e7cf-58f7-d75b-23a0313ebde5@quicinc.com>
+X-Cookie: You will soon forget this.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 18 Nov 04:48 PST 2021, Robert Foss wrote:
 
-> The clock-lanes property is no longer used as it is not programmable by
-> the CSIPHY hardware block of Qcom ISPs and should be removed.
-> 
-> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+--Iup9tc3xCjeDkBkE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Mon, Dec 06, 2021 at 08:13:57PM +0530, Satya Priya Kakitapalli (Temp) wrote:
+> On 11/25/2021 9:15 PM, Mark Brown wrote:
+> > On Fri, Nov 19, 2021 at 03:12:31PM +0530, Satya Priya wrote:
 
-Regards,
-Bjorn
+> > > +		child_node = of_get_child_by_name(parent_node, reg->name);
+> > > +		if (!child_node) {
+> > > +			dev_err(dev, "child node %s not found\n", reg->name);
+> > > +			return -ENODEV;
+> > > +		}
 
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 3 ---
->  1 file changed, 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> index 13f80a0b6faa..2cf4b932aee2 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-> @@ -1125,7 +1125,6 @@ ports {
->  		port@0 {
->  			reg = <0>;
->  			csiphy0_ep: endpoint {
-> -				clock-lanes = <7>;
->  				data-lanes = <0 1 2 3>;
->  				remote-endpoint = <&ov8856_ep>;
->  			};
-> @@ -1166,7 +1165,6 @@ camera@10 {
->  
->  		port {
->  			ov8856_ep: endpoint {
-> -				clock-lanes = <1>;
->  				link-frequencies = /bits/ 64
->  					<360000000 180000000>;
->  				data-lanes = <1 2 3 4>;
-> @@ -1211,7 +1209,6 @@ camera@60 {
->  
->  		port {
->  			ov7251_ep: endpoint {
-> -				clock-lanes = <1>;
->  				data-lanes = <0 1>;
->  //				remote-endpoint = <&csiphy3_ep>;
->  			};
-> -- 
-> 2.32.0
-> 
+> > This could be pulled out of the array.
+
+> Not sure what you meant here. could you elaborate a bit?
+
+Why is this in every iteration of the loop?
+
+--Iup9tc3xCjeDkBkE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmGuJ54ACgkQJNaLcl1U
+h9BoCwf7B0e5FaSpbT2g+oY0Sk9qtf9WbFJ/Q0KFdvOUFoZMbUJFU696VOd5Y7PM
+E3Lv6SM02b2YHpyvMhc7ThkY76kH85jy4k2grAFyUf0g0BaUo+lqBJEZqdOftghL
+13IBaJ3EYEyELFG4+pRgnipVFvWGxbwbPdKSiti0UuutznglOo5UOsSeJUZcYlF8
+tkWuoKBHqHS4jwrEO0IT+HU5SOPuU7UkiJYKdD/L42vlPuBUqEKP0hYF0rirvbM+
+VJ8u16+Hs6teUB8V3Iu6x0kPSQRXy4s1uEBvdFrrXLY2Glnh1OaxH53Sp9p0vc0w
+XDoo1A+3CfAc4DBh3CqX6NxdKDVmZQ==
+=pBk6
+-----END PGP SIGNATURE-----
+
+--Iup9tc3xCjeDkBkE--
