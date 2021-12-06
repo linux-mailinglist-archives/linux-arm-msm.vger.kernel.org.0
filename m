@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40D7B4691C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 09:50:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F35604691CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 09:51:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233328AbhLFIxt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 03:53:49 -0500
-Received: from mout.kundenserver.de ([217.72.192.73]:51205 "EHLO
+        id S239787AbhLFIzN convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Mon, 6 Dec 2021 03:55:13 -0500
+Received: from mout.kundenserver.de ([212.227.126.133]:60991 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbhLFIxs (ORCPT
+        with ESMTP id S239784AbhLFIzN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 03:53:48 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]) by
- mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1N3bfB-1mTrI01Eyh-010g4q; Mon, 06 Dec 2021 09:50:19 +0100
-Received: by mail-wm1-f47.google.com with SMTP id p3-20020a05600c1d8300b003334fab53afso9813899wms.3;
-        Mon, 06 Dec 2021 00:50:19 -0800 (PST)
-X-Gm-Message-State: AOAM533soufzpSMHOcVdqH0FKFqpFB62rKpZjEhD5BQ3cuYo56D2TQbZ
-        vMxEEU/lGI2NYU9lc0U5qE2xEjCSPY9fqvYm/OY=
-X-Google-Smtp-Source: ABdhPJxUxDhd2FdTBrY2LkWd3PHoMfBeT3PMYJLhtdmEIDValutbBwewsbhhcWEEDjBT5kLamtgi/ICPk+qTQ7QwsEw=
-X-Received: by 2002:a1c:770e:: with SMTP id t14mr36775318wmi.173.1638780618911;
- Mon, 06 Dec 2021 00:50:18 -0800 (PST)
+        Mon, 6 Dec 2021 03:55:13 -0500
+Received: from mail-wr1-f49.google.com ([209.85.221.49]) by
+ mrelayeu.kundenserver.de (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MNKuI-1nERUL1rAY-00OlZA; Mon, 06 Dec 2021 09:51:43 +0100
+Received: by mail-wr1-f49.google.com with SMTP id v11so20791488wrw.10;
+        Mon, 06 Dec 2021 00:51:43 -0800 (PST)
+X-Gm-Message-State: AOAM5339y0pHeraHMXwt7i/T5+JgNxSU9exLI5HUSgKI0zzLYs7EVMlg
+        FpizNg9yxXxvL25183GgZYD8D4VgBh4J6AHhoPM=
+X-Google-Smtp-Source: ABdhPJzyalCAhEEEFCjxqmdft1YmW7S1cmbW+6xqxZ82QAJeL5WvlG6LnjE0IMFTe+6YI4aKV+WE7uH0MQlJtdL87s8=
+X-Received: by 2002:a5d:64ea:: with SMTP id g10mr42087288wri.137.1638780703113;
+ Mon, 06 Dec 2021 00:51:43 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1638275062.git.quic_saipraka@quicinc.com> <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
-In-Reply-To: <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
+References: <cover.1638275062.git.quic_saipraka@quicinc.com> <d578f7a68d6f9c250e5305e677c1b732c94f7ec6.1638275062.git.quic_saipraka@quicinc.com>
+In-Reply-To: <d578f7a68d6f9c250e5305e677c1b732c94f7ec6.1638275062.git.quic_saipraka@quicinc.com>
 From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 6 Dec 2021 09:50:03 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com>
-Message-ID: <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com>
-Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO accessors
+Date:   Mon, 6 Dec 2021 09:51:27 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a05BPRhnKFO8_wTXfX6bbb2gV2xwjwgaYsDSNeQhHYCZw@mail.gmail.com>
+Message-ID: <CAK8P3a05BPRhnKFO8_wTXfX6bbb2gV2xwjwgaYsDSNeQhHYCZw@mail.gmail.com>
+Subject: Re: [PATCHv5 2/4] irqchip/tegra: Fix overflow implicit truncation warnings
 To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 Cc:     Will Deacon <will@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
@@ -42,24 +42,25 @@ Cc:     Will Deacon <will@kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         quic_psodagud@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:uYON4I4Cjn9nZOCSzD+SlEpr33MpNioz3E6qMLPoaFvTs0sml4q
- JTZyhnzyDs4vkSD76cUdb6dMohib2xYzZ3qyR6alVnIy9wB4PEBgHanVXSdglQ7n5Wn8kDO
- zpBGdNegTk9EMjSitWF8RLW8WPovgH4Teh/iDYccbICzQ/Y+1SlTUT601SnWOWeHcBxGyqh
- 8F1bQntIwRtOfNpLRSxtA==
+Content-Transfer-Encoding: 8BIT
+X-Provags-ID: V03:K1:yEqwBFW4eOMQF9x+kEzct8PISMOorGWfqoYQQttyZ+TTH7xg9xI
+ KdmFkw/frHrx9Ui4jRmMIPOcSOF6iZ2jbjI9vcCQ6Avu5sITa00EDABbIPh8gmb3FhHshPK
+ hfNokaDesZkqnG7weak2DXIeCsNQqm4Le920pr9WMTqrJerYIbvKGMGNTgR3T0HcfXl7Awy
+ UdTZICjvW0gZ5JdGDuKzg==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:t//w2yrjMrc=:4rfZmGLr4m4WCBFfonmZyX
- 4T7h75Zv+BB0SmjkO56KVZA7BzYSfJ9JPJByd2w8BzjjYXuoIWeKvwZ2WBY1Eti4BN7ifeQVD
- z5DUsAar028LSOX5CI9vR6ljU/9lmFOZPHArwPEC3m6eF+sCZbaA4NqY6Vt9qQCPJdvyxIYpR
- /adgt83NYpMzwVjFFEJvt3/aaPdrhYGal1KkhB1UZx0JeaILMg29uVGV+Aa7Tb+3a3SV1npmq
- YKAozv7xCEmpVImSk8PSXEHcs2wekUVGoajHAjgmXWwdyKZqSKGv6alFt0o1848Vem1NSPE4T
- fYZ43ol1CKGPQNvzYuoSJGEaeiqVnrZJUa4othfURQiYDKX7ScD72g9ahxAI85vqSYGlABs6a
- +GPYacLFcwCyxeB+2mjPdYPnhO6uUHdDUY+q86TXbHbpKiJsGUDziFBwwy8HSl6DClrn5Wyga
- Ya8pB08MAFPQg0rj8vGFwVziZ1bJSkDe1xxAYL4HIo4qA+3tlykFu4ZgZuGIuGbGSloo6EHn+
- XoZ0SSuB058AN5/fMdvzs+AJIEJpBQ7Mic+/2Lu0Bqj0S+gVnzCaNMKz51VEUsrVvAXIzNMZa
- 7Tn4GYXHdM1mPnLde1BF2zFciMJX2vXt028bMpo+A46/OFDnHrerm08TFwPJDi+syNfTTDOih
- MG3gGOBGezIMB1qTzfxVSUw7OVi5pJeS/jdZlLPTntHQwmkQzO0AHzh1MP/VRtTKMmcaI4gOJ
- 0rEWP7l9mS5R4UvPYAvhm8p+sm1uZYxsDc+frQH//agr1SQJNCLr2BXj7uEDOpEZ7IbPLAriP
- fF8LYAfnIsQYi4Iq1xzyke6KDIHg75dZP9HACc54FpI8NeaXFw=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:se6yjCSAFwo=:TgwPhBoK8clYU6HkE6Ns8y
+ LTthzW/8sTOlvjP/F9956cEludycwJcP/1uBhyhGdV2MOzsz71RsbQa7g3VgmyfeQf2LNOfVs
+ BGzA3rn5oKKPC36dhG3V+Sy+tlWWr4HgoeYU2VcgOtHNMKYM9N7MQZj2cxwH20XlG51IACZUF
+ RYaM7Q1Dw0DpP/XoiQB7ArirEGyzVFsHRE8hFU25p9J9DlR+zeY/ArAnyPU/WM7EJUoXnZTvN
+ pDaczF6CckcnTyRTx/BlwRs75opB59QFOviLCi4Cx7XbR4RjmcsCu5FhAo1fyDg2/GZO9PmCF
+ Sx9a1KifmeBGx4HsiPPZHYGtkEhmxfeXVjxKd/bgidDspGLb9b7PuMpjM1nBLkCdacNiqH7Ql
+ K1B7ZQI4kDara074Dm5XuSU3IitTj/3R2IEy2mGMUBB4UWePQptOFJgnGGsr4QLRtPT2WaNkR
+ HVTfuMJza9uPvwS6s7pLHjyxmq0E1ogrPwjnpVWgoyApSbp3xyamYqoyYCGOLmr6kGS5rzo+U
+ yU7i3mvRzNHX/Ef8YPi1ax9pIYTI/zMNH0T3qEtVzV8kOzAW6pOqvOR8ivdTrMJzbr+G+ZTrp
+ h1uiA6ZjVxZnEHk8KixNnDnREEdxqpX1jYOCzhFQG2mo6OQc3lUk0OcPHZPxaR0C0HIDQQkPi
+ 2I3ElxpsyUCDg67f5zJj9rc0UnqT6imAia7tEwDtFDU4+Jfk87ZxQBENSuWrZ/0NixFEJQi6v
+ iH3b6bjXlJhfBlSyVjWv3c+lSnsBwnFrMR4dF8lgC93XfBHLyk9yj142AIq5akZEsQOEGFmP2
+ sFChm+7Kb8qAh3vGdfOt7QQp/PztG36eWzIrOiUt/icjTgzUsw=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -67,31 +68,17 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Mon, Dec 6, 2021 at 9:28 AM Sai Prakash Ranjan
 <quic_saipraka@quicinc.com> wrote:
 >
-> Remove custom arm64 MMIO accessors read{b,w,l,q} and their relaxed
-> versions in support to use asm-generic ones. Also define arm64
-> barrier macros to override the asm-generic defined barriers.
+> Fix -Woverflow warnings for tegra irqchip driver which is a result
+> of moving arm64 custom MMIO accessor macros to asm-generic function
+> implementations giving a bonus type-checking now and uncovering these
+> overflow warnings.
 >
-> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+> drivers/irqchip/irq-tegra.c: In function ‘tegra_ictlr_suspend’:
+> drivers/irqchip/irq-tegra.c:151:18: warning: large integer implicitly truncated to unsigned type [-Woverflow]
+>    writel_relaxed(~0ul, ictlr + ICTLR_COP_IER_CLR);
+>                   ^
+>
+> Cc: Marc Zyngier <maz@kernel.org>
 > Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
 
-This looks correct, but I would change one detail:
-
-> +#define __io_ar(v)             __io_par(v)
-> +#define __io_bw()              __iowmb()
-> +#define __io_br(v)
-> +#define __io_aw(v)
-
-The default __io_par() is defined in terms of __io_ar(), so it would
-be more logical
-to remove the custom __io_par() and just define __io_ar() here.
-
-I think it would be even better to flip these around and make the low-level
-definitions __io_ar() and __io_bw(), and then defining the arm64 specific
-macros based on those:
-
-/* arm64-specific, don't use in portable drivers */
-#define __iormb(v)     __io_ar(v)
-#define __iowmb()      __io_bw()
-#define __iomb()        dma_mb()
-
-        Arnd
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
