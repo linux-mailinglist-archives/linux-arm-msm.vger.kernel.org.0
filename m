@@ -2,525 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 356A046967B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 14:12:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51AE146969D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 14:15:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244064AbhLFNPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 08:15:49 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:40906 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244039AbhLFNPr (ORCPT
+        id S244200AbhLFNTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 08:19:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55754 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244196AbhLFNTG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 08:15:47 -0500
+        Mon, 6 Dec 2021 08:19:06 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6529FC0613F8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 05:15:38 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id z6so10115028pfe.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 05:15:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638796339; x=1670332339;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=QVifXcCIcIWVJeJMZZG35Xn1blU8L+xVk+jCJw1zCWY=;
-  b=doxSIfLAXXXwrookeuZySt6NG61HGPVIQC3Gx4fAKb4t5nsGNwH5rbN3
-   8Y6TPjH/qV/orAjI+OiadurjvDqJf/f/A/x/clLZhZj+QmwRjsBhVzI9V
-   dSyGPRsuGIFVrllOuCW8x/s9FmZjfpOquPm2gN+dHF7uwrrYAxzQIWBXe
-   o=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 06 Dec 2021 05:12:19 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 05:12:18 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 05:12:17 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 6 Dec 2021 05:12:12 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <plai@codeaurora.org>, <bgoswami@codeaurora.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <rohitkr@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v9 10/10] ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
-Date:   Mon, 6 Dec 2021 18:40:59 +0530
-Message-ID: <1638796259-24813-11-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1638796259-24813-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1638796259-24813-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HwaHWN7G8+xCLyfssIqI43tmQKOkAF6o7H366O1fLaA=;
+        b=XSpi4ypOGQpTCnJuUcdZyw/iW8KBGaqlEr/2ayA8WbHvMliK8JSIK+DWSdfFbepHXs
+         LVO8eePip6LU+Rppjc+Pq8o27c4/J0S5kccPxkev99hYav5f/2ApghkD+dgYtUUGK1D0
+         O40q0AzK0KiEKVDD24SBXpYQ+W7CN26dXW9baGjvkDd9BQhPinWUwO9GvI8ayHLVCrH2
+         emFm+q7AqCOX8ERFCT9+/G+rXEyP7R8sXHBdhG0B2LXYC1WLKVbcGmjeVOOb9di7bdgt
+         P+VjvRrna+T9WFuBz+xlBYbm9Z2UTDMukNLKETEhV1f13Pl3Ibrd0JD9/yta8voILDhN
+         xspA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HwaHWN7G8+xCLyfssIqI43tmQKOkAF6o7H366O1fLaA=;
+        b=ROPgzZL5AzGN4hQ17vEe6pcL704nKiChSEYCuihU6rIta4DPxars4J95+lKjvMMzhP
+         6Z4V8ZrdbNkbtQf1rkAK+VngrsBDkZEWTxyBKX9fZ5wpPX8GChnwIpnwZx6aYVHOj1kJ
+         gMThgzQ4FXJZ1tCbuRQzauLS01fP82kJJkgbw4zSuXqepcn60wATrJH/vo0+F1Im4s55
+         LjC2bZkFfLu8UgAUuuSEXhh0q2kDE25+WhguNZL2sl5b/89hNncyDOqa8LW/Yd24gQn1
+         txw/K+BITzAWqiP8ht6ovAV6GIL65lpenJiKo3EkSfZi0mkiSRZOB8pQUMrtaqjMgBqo
+         MqkQ==
+X-Gm-Message-State: AOAM533qPYkSzncMPb302xZ5GBGecqc8JVXO3U1L/GltgSeJWaYQvJlL
+        N6cj8migiS9GzszEM3evPOZILq3U3iSDWBbz
+X-Google-Smtp-Source: ABdhPJyF2Stkv/D6QBdfAYev+oaGr18Jinm5jxI+qCYT0YELDtubbL9uNSOklbEalxT68/aRgvs7sA==
+X-Received: by 2002:a63:7103:: with SMTP id m3mr601552pgc.376.1638796537791;
+        Mon, 06 Dec 2021 05:15:37 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id t38sm5351975pfg.199.2021.12.06.05.15.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Dec 2021 05:15:37 -0800 (PST)
+Date:   Mon, 6 Dec 2021 21:15:31 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] irqchip: Add Qualcomm MPM controller driver
+Message-ID: <20211206131530.GN10105@dragon>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+ <20211202122122.23548-4-shawn.guo@linaro.org>
+ <87wnkikqve.wl-maz@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87wnkikqve.wl-maz@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add platform driver for configuring sc7280 lpass core I2S and
-DMA configuration to support playback & capture to external codecs
-connected over secondary MI2S interface and soundwire interface.
+On Mon, Dec 06, 2021 at 09:46:29AM +0000, Marc Zyngier wrote:
+[...]
+> > +/* Triggered by RPM when system resumes from deep sleep */
+> > +static irqreturn_t qcom_mpm_handler(int irq, void *dev_id)
+> > +{
+> > +	struct qcom_mpm_priv *priv = dev_id;
+> > +	unsigned long enable, pending;
+> > +	int i, j;
+> > +
+> > +	for (i = 0; i < priv->reg_stride; i++) {
+> > +		enable = qcom_mpm_read(priv, MPM_REG_ENABLE, i);
+> > +		pending = qcom_mpm_read(priv, MPM_REG_STATUS, i);
+> > +		pending &= enable;
+> > +
+> > +		for_each_set_bit(j, &pending, 32) {
+> > +			unsigned int pin = 32 * i + j;
+> > +			struct irq_desc *desc =
+> > +					irq_resolve_mapping(priv->domain, pin);
+> 
+> Assignments on a single line, please.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- sound/soc/qcom/lpass-sc7280.c | 441 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 441 insertions(+)
- create mode 100644 sound/soc/qcom/lpass-sc7280.c
+This is to avoid over 80 columns check patch warning.
 
-diff --git a/sound/soc/qcom/lpass-sc7280.c b/sound/soc/qcom/lpass-sc7280.c
-new file mode 100644
-index 0000000..5f53034
---- /dev/null
-+++ b/sound/soc/qcom/lpass-sc7280.c
-@@ -0,0 +1,441 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+ *
-+ * lpass-sc7180.c -- ALSA SoC platform-machine driver for QTi LPASS
-+ */
-+
-+#include <linux/module.h>
-+#include <sound/pcm.h>
-+#include <sound/soc.h>
-+#include <linux/pm_runtime.h>
-+
-+#include <dt-bindings/sound/sc7180-lpass.h>
-+
-+#include "lpass-lpaif-reg.h"
-+#include "lpass.h"
-+
-+static struct snd_soc_dai_driver sc7280_lpass_cpu_dai_driver[] = {
-+	{
-+		.id = MI2S_PRIMARY,
-+		.name = "Primary MI2S",
-+		.playback = {
-+			.stream_name = "Primary Playback",
-+			.formats	= SNDRV_PCM_FMTBIT_S16,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.capture = {
-+			.stream_name = "Primary Capture",
-+			.formats = SNDRV_PCM_FMTBIT_S16 |
-+				SNDRV_PCM_FMTBIT_S32,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.probe	= &asoc_qcom_lpass_cpu_dai_probe,
-+		.ops    = &asoc_qcom_lpass_cpu_dai_ops,
-+	}, {
-+		.id = MI2S_SECONDARY,
-+		.name = "Secondary MI2S",
-+		.playback = {
-+			.stream_name = "Secondary MI2S Playback",
-+			.formats = SNDRV_PCM_FMTBIT_S16,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.probe	= &asoc_qcom_lpass_cpu_dai_probe,
-+		.ops	= &asoc_qcom_lpass_cpu_dai_ops,
-+	}, {
-+		.id = LPASS_DP_RX,
-+		.name = "Hdmi",
-+		.playback = {
-+			.stream_name = "DP Playback",
-+			.formats = SNDRV_PCM_FMTBIT_S24,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.ops	= &asoc_qcom_lpass_hdmi_dai_ops,
-+	}, {
-+		.id = LPASS_CDC_DMA_RX0,
-+		.name = "CDC DMA RX",
-+		.playback = {
-+			.stream_name = "WCD Playback",
-+			.formats = SNDRV_PCM_FMTBIT_S16,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 2,
-+		},
-+		.ops	= &asoc_qcom_lpass_cdc_dma_dai_ops,
-+	}, {
-+		.id = LPASS_CDC_DMA_TX3,
-+		.name = "CDC DMA TX",
-+		.capture = {
-+			.stream_name = "WCD Capture",
-+			.formats = SNDRV_PCM_FMTBIT_S16,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 1,
-+			.channels_max	= 2,
-+		},
-+		.ops	= &asoc_qcom_lpass_cdc_dma_dai_ops,
-+	}, {
-+		.id = LPASS_CDC_DMA_VA_TX0,
-+		.name = "CDC DMA VA",
-+		.capture = {
-+			.stream_name = "DMIC Capture",
-+			.formats = SNDRV_PCM_FMTBIT_S16,
-+			.rates = SNDRV_PCM_RATE_48000,
-+			.rate_min	= 48000,
-+			.rate_max	= 48000,
-+			.channels_min	= 2,
-+			.channels_max	= 4,
-+		},
-+		.ops	= &asoc_qcom_lpass_cdc_dma_dai_ops,
-+	},
-+};
-+
-+static int sc7280_lpass_alloc_dma_channel(struct lpass_data *drvdata,
-+					  int direction, unsigned int dai_id)
-+{
-+	struct lpass_variant *v = drvdata->variant;
-+	int chan = 0;
-+
-+	switch (dai_id) {
-+	case MI2S_PRIMARY ... MI2S_QUINARY:
-+		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
-+			chan = find_first_zero_bit(&drvdata->dma_ch_bit_map,
-+						   v->rdma_channels);
-+
-+			if (chan >= v->rdma_channels)
-+				return -EBUSY;
-+		} else {
-+			chan = find_next_zero_bit(&drvdata->dma_ch_bit_map,
-+						  v->wrdma_channel_start +
-+						  v->wrdma_channels,
-+						  v->wrdma_channel_start);
-+
-+			if (chan >= v->wrdma_channel_start + v->wrdma_channels)
-+				return -EBUSY;
-+		}
-+		set_bit(chan, &drvdata->dma_ch_bit_map);
-+		break;
-+	case LPASS_DP_RX:
-+		chan = find_first_zero_bit(&drvdata->hdmi_dma_ch_bit_map,
-+					   v->hdmi_rdma_channels);
-+		if (chan >= v->hdmi_rdma_channels)
-+			return -EBUSY;
-+		set_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
-+		break;
-+	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-+		chan = find_first_zero_bit(&drvdata->rxtx_dma_ch_bit_map,
-+					   v->rxtx_rdma_channels);
-+		if (chan >= v->rxtx_rdma_channels)
-+			return -EBUSY;
-+		break;
-+	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-+		chan = find_next_zero_bit(&drvdata->rxtx_dma_ch_bit_map,
-+					  v->rxtx_wrdma_channel_start +
-+					  v->rxtx_wrdma_channels,
-+					  v->rxtx_wrdma_channel_start);
-+		if (chan >= v->rxtx_wrdma_channel_start + v->rxtx_wrdma_channels)
-+			return -EBUSY;
-+		set_bit(chan, &drvdata->rxtx_dma_ch_bit_map);
-+		break;
-+	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-+		chan = find_next_zero_bit(&drvdata->va_dma_ch_bit_map,
-+					  v->va_wrdma_channel_start +
-+					  v->va_wrdma_channels,
-+					  v->va_wrdma_channel_start);
-+		if (chan >= v->va_wrdma_channel_start + v->va_wrdma_channels)
-+			return -EBUSY;
-+		set_bit(chan, &drvdata->va_dma_ch_bit_map);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return chan;
-+}
-+
-+static int sc7280_lpass_free_dma_channel(struct lpass_data *drvdata, int chan, unsigned int dai_id)
-+{
-+	switch (dai_id) {
-+	case MI2S_PRIMARY ... MI2S_QUINARY:
-+		clear_bit(chan, &drvdata->dma_ch_bit_map);
-+		break;
-+	case LPASS_DP_RX:
-+		clear_bit(chan, &drvdata->hdmi_dma_ch_bit_map);
-+		break;
-+	case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
-+	case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
-+		clear_bit(chan, &drvdata->rxtx_dma_ch_bit_map);
-+		break;
-+	case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
-+		clear_bit(chan, &drvdata->va_dma_ch_bit_map);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_lpass_init(struct platform_device *pdev)
-+{
-+	struct lpass_data *drvdata = platform_get_drvdata(pdev);
-+	struct lpass_variant *variant = drvdata->variant;
-+	struct device *dev = &pdev->dev;
-+
-+	drvdata->clks = devm_kcalloc(dev, variant->num_clks,
-+				     sizeof(*drvdata->clks), GFP_KERNEL);
-+	if (!drvdata->clks)
-+		return -ENOMEM;
-+
-+	drvdata->num_clks = variant->num_clks;
-+
-+	drvdata->aon_cc_audio_hm_h = devm_clk_get(dev, "lpass_aon_cc_audio_hm_h_clk");
-+	if (IS_ERR(drvdata->aon_cc_audio_hm_h))
-+		return PTR_ERR(drvdata->aon_cc_audio_hm_h);
-+	drvdata->core_cc_sysnoc_mport_core = devm_clk_get(dev,
-+							  "lpass_core_cc_sysnoc_mport_core_clk");
-+	if (IS_ERR(drvdata->core_cc_sysnoc_mport_core))
-+		return PTR_ERR(drvdata->core_cc_sysnoc_mport_core);
-+
-+	clk_prepare_enable(drvdata->aon_cc_audio_hm_h);
-+	clk_prepare_enable(drvdata->core_cc_sysnoc_mport_core);
-+	return 0;
-+}
-+
-+static int sc7280_lpass_exit(struct platform_device *pdev)
-+{
-+	struct lpass_data *drvdata = platform_get_drvdata(pdev);
-+
-+	clk_disable_unprepare(drvdata->core_cc_sysnoc_mport_core);
-+	clk_disable_unprepare(drvdata->aon_cc_audio_hm_h);
-+
-+	return 0;
-+}
-+
-+static struct lpass_variant sc7280_data = {
-+	.i2sctrl_reg_base		= 0x1000,
-+	.i2sctrl_reg_stride		= 0x1000,
-+	.i2s_ports			= 3,
-+	.irq_reg_base			= 0x9000,
-+	.irq_reg_stride			= 0x1000,
-+	.irq_ports			= 3,
-+	.rdma_reg_base			= 0xC000,
-+	.rdma_reg_stride		= 0x1000,
-+	.rdma_channels			= 5,
-+	.rxtx_rdma_reg_base		= 0xC000,
-+	.rxtx_rdma_reg_stride		= 0x1000,
-+	.rxtx_rdma_channels		= 8,
-+	.hdmi_rdma_reg_base		= 0x64000,
-+	.hdmi_rdma_reg_stride		= 0x1000,
-+	.hdmi_rdma_channels		= 4,
-+	.dmactl_audif_start		= 1,
-+	.wrdma_reg_base			= 0x18000,
-+	.wrdma_reg_stride		= 0x1000,
-+	.wrdma_channel_start		= 5,
-+	.wrdma_channels			= 4,
-+	.rxtx_irq_reg_base		= 0x9000,
-+	.rxtx_irq_reg_stride		= 0x1000,
-+	.rxtx_irq_ports			= 3,
-+	.rxtx_wrdma_reg_base		= 0x18000,
-+	.rxtx_wrdma_reg_stride		= 0x1000,
-+	.rxtx_wrdma_channel_start	= 5,
-+	.rxtx_wrdma_channels		= 6,
-+	.va_wrdma_reg_base		= 0x18000,
-+	.va_wrdma_reg_stride		= 0x1000,
-+	.va_wrdma_channel_start		= 5,
-+	.va_wrdma_channels		= 3,
-+	.va_irq_reg_base		= 0x9000,
-+	.va_irq_reg_stride		= 0x1000,
-+	.va_irq_ports			= 3,
-+
-+	.loopback			= REG_FIELD_ID(0x1000, 17, 17, 3, 0x1000),
-+	.spken				= REG_FIELD_ID(0x1000, 16, 16, 3, 0x1000),
-+	.spkmode			= REG_FIELD_ID(0x1000, 11, 15, 3, 0x1000),
-+	.spkmono			= REG_FIELD_ID(0x1000, 10, 10, 3, 0x1000),
-+	.micen				= REG_FIELD_ID(0x1000, 9, 9, 3, 0x1000),
-+	.micmode			= REG_FIELD_ID(0x1000, 4, 8, 3, 0x1000),
-+	.micmono			= REG_FIELD_ID(0x1000, 3, 3, 3, 0x1000),
-+	.wssrc				= REG_FIELD_ID(0x1000, 2, 2, 3, 0x1000),
-+	.bitwidth			= REG_FIELD_ID(0x1000, 0, 1, 3, 0x1000),
-+
-+	.rdma_dyncclk			= REG_FIELD_ID(0xC000, 21, 21, 5, 0x1000),
-+	.rdma_bursten			= REG_FIELD_ID(0xC000, 20, 20, 5, 0x1000),
-+	.rdma_wpscnt			= REG_FIELD_ID(0xC000, 16, 19, 5, 0x1000),
-+	.rdma_intf			= REG_FIELD_ID(0xC000, 12, 15, 5, 0x1000),
-+	.rdma_fifowm			= REG_FIELD_ID(0xC000, 1, 5, 5, 0x1000),
-+	.rdma_enable			= REG_FIELD_ID(0xC000, 0, 0, 5, 0x1000),
-+
-+	.wrdma_dyncclk			= REG_FIELD_ID(0x18000, 22, 22, 4, 0x1000),
-+	.wrdma_bursten			= REG_FIELD_ID(0x18000, 21, 21, 4, 0x1000),
-+	.wrdma_wpscnt			= REG_FIELD_ID(0x18000, 17, 20, 4, 0x1000),
-+	.wrdma_intf			= REG_FIELD_ID(0x18000, 12, 16, 4, 0x1000),
-+	.wrdma_fifowm			= REG_FIELD_ID(0x18000, 1, 5, 4, 0x1000),
-+	.wrdma_enable			= REG_FIELD_ID(0x18000, 0, 0, 4, 0x1000),
-+
-+	.rxtx_rdma_enable		= REG_FIELD_ID(0xC000, 0, 0, 7, 0x1000),
-+	.rxtx_rdma_fifowm		= REG_FIELD_ID(0xC000, 1, 11, 7, 0x1000),
-+	.rxtx_rdma_intf			= REG_FIELD_ID(0xC000, 12, 15, 7, 0x1000),
-+	.rxtx_rdma_wpscnt		= REG_FIELD_ID(0xC000, 16, 19, 7, 0x1000),
-+	.rxtx_rdma_bursten		= REG_FIELD_ID(0xC000, 20, 20, 7, 0x1000),
-+	.rxtx_rdma_dyncclk		= REG_FIELD_ID(0xC000, 21, 21, 7, 0x1000),
-+
-+	.rxtx_rdma_codec_ch		= REG_FIELD_ID(0xC050, 0, 7, 7, 0x1000),
-+	.rxtx_rdma_codec_intf		= REG_FIELD_ID(0xC050, 16, 19, 7, 0x1000),
-+	.rxtx_rdma_codec_fs_delay	= REG_FIELD_ID(0xC050, 21, 24, 7, 0x1000),
-+	.rxtx_rdma_codec_fs_sel		= REG_FIELD_ID(0xC050, 25, 27, 7, 0x1000),
-+	.rxtx_rdma_codec_pack		= REG_FIELD_ID(0xC050, 29, 29, 5, 0x1000),
-+	.rxtx_rdma_codec_enable		= REG_FIELD_ID(0xC050, 30, 30, 7, 0x1000),
-+
-+	.rxtx_wrdma_enable		= REG_FIELD_ID(0x18000, 0, 0, 5, 0x1000),
-+	.rxtx_wrdma_fifowm		= REG_FIELD_ID(0x18000, 1, 11, 5, 0x1000),
-+	.rxtx_wrdma_intf		= REG_FIELD_ID(0x18000, 12, 16, 5, 0x1000),
-+	.rxtx_wrdma_wpscnt		= REG_FIELD_ID(0x18000, 17, 20, 5, 0x1000),
-+	.rxtx_wrdma_bursten		= REG_FIELD_ID(0x18000, 21, 21, 5, 0x1000),
-+	.rxtx_wrdma_dyncclk		= REG_FIELD_ID(0x18000, 22, 22, 5, 0x1000),
-+
-+	.rxtx_wrdma_codec_ch		= REG_FIELD_ID(0x18050, 0, 7, 5, 0x1000),
-+	.rxtx_wrdma_codec_intf		= REG_FIELD_ID(0x18050, 16, 19, 5, 0x1000),
-+	.rxtx_wrdma_codec_fs_delay	= REG_FIELD_ID(0x18050, 21, 24, 5, 0x1000),
-+	.rxtx_wrdma_codec_fs_sel	= REG_FIELD_ID(0x18050, 25, 27, 5, 0x1000),
-+	.rxtx_wrdma_codec_pack		= REG_FIELD_ID(0x18050, 29, 29, 5, 0x1000),
-+	.rxtx_wrdma_codec_enable	= REG_FIELD_ID(0x18050, 30, 30, 5, 0x1000),
-+
-+	.va_wrdma_enable		= REG_FIELD_ID(0x18000, 0, 0, 5, 0x1000),
-+	.va_wrdma_fifowm		= REG_FIELD_ID(0x18000, 1, 11, 5, 0x1000),
-+	.va_wrdma_intf			= REG_FIELD_ID(0x18000, 12, 16, 5, 0x1000),
-+	.va_wrdma_wpscnt		= REG_FIELD_ID(0x18000, 17, 20, 5, 0x1000),
-+	.va_wrdma_bursten		= REG_FIELD_ID(0x18000, 21, 21, 5, 0x1000),
-+	.va_wrdma_dyncclk		= REG_FIELD_ID(0x18000, 22, 22, 5, 0x1000),
-+
-+	.va_wrdma_codec_ch		= REG_FIELD_ID(0x18050, 0, 7, 5, 0x1000),
-+	.va_wrdma_codec_intf		= REG_FIELD_ID(0x18050, 16, 19, 5, 0x1000),
-+	.va_wrdma_codec_fs_delay	= REG_FIELD_ID(0x18050, 21, 24, 5, 0x1000),
-+	.va_wrdma_codec_fs_sel		= REG_FIELD_ID(0x18050, 25, 27, 5, 0x1000),
-+	.va_wrdma_codec_pack		= REG_FIELD_ID(0x18050, 29, 29, 5, 0x1000),
-+	.va_wrdma_codec_enable		= REG_FIELD_ID(0x18050, 30, 30, 5, 0x1000),
-+
-+	.hdmi_tx_ctl_addr		= 0x1000,
-+	.hdmi_legacy_addr		= 0x1008,
-+	.hdmi_vbit_addr			= 0x610c0,
-+	.hdmi_ch_lsb_addr		= 0x61048,
-+	.hdmi_ch_msb_addr		= 0x6104c,
-+	.ch_stride			= 0x8,
-+	.hdmi_parity_addr		= 0x61034,
-+	.hdmi_dmactl_addr		= 0x61038,
-+	.hdmi_dma_stride		= 0x4,
-+	.hdmi_DP_addr			= 0x610c8,
-+	.hdmi_sstream_addr		= 0x6101c,
-+	.hdmi_irq_reg_base		= 0x63000,
-+	.hdmi_irq_ports			= 1,
-+
-+	.hdmi_rdma_dyncclk		= REG_FIELD_ID(0x64000, 14, 14, 4, 0x1000),
-+	.hdmi_rdma_bursten		= REG_FIELD_ID(0x64000, 13, 13, 4, 0x1000),
-+	.hdmi_rdma_burst8		= REG_FIELD_ID(0x64000, 15, 15, 4, 0x1000),
-+	.hdmi_rdma_burst16		= REG_FIELD_ID(0x64000, 16, 16, 4, 0x1000),
-+	.hdmi_rdma_dynburst		= REG_FIELD_ID(0x64000, 18, 18, 4, 0x1000),
-+	.hdmi_rdma_wpscnt		= REG_FIELD_ID(0x64000, 10, 12, 4, 0x1000),
-+	.hdmi_rdma_fifowm		= REG_FIELD_ID(0x64000, 1, 5, 4, 0x1000),
-+	.hdmi_rdma_enable		= REG_FIELD_ID(0x64000, 0, 0, 4, 0x1000),
-+
-+	.sstream_en			= REG_FIELD(0x6101c, 0, 0),
-+	.dma_sel			= REG_FIELD(0x6101c, 1, 2),
-+	.auto_bbit_en			= REG_FIELD(0x6101c, 3, 3),
-+	.layout				= REG_FIELD(0x6101c, 4, 4),
-+	.layout_sp			= REG_FIELD(0x6101c, 5, 8),
-+	.set_sp_on_en			= REG_FIELD(0x6101c, 10, 10),
-+	.dp_audio			= REG_FIELD(0x6101c, 11, 11),
-+	.dp_staffing_en			= REG_FIELD(0x6101c, 12, 12),
-+	.dp_sp_b_hw_en			= REG_FIELD(0x6101c, 13, 13),
-+
-+	.mute				= REG_FIELD(0x610c8, 0, 0),
-+	.as_sdp_cc			= REG_FIELD(0x610c8, 1, 3),
-+	.as_sdp_ct			= REG_FIELD(0x610c8, 4, 7),
-+	.aif_db4			= REG_FIELD(0x610c8, 8, 15),
-+	.frequency			= REG_FIELD(0x610c8, 16, 21),
-+	.mst_index			= REG_FIELD(0x610c8, 28, 29),
-+	.dptx_index			= REG_FIELD(0x610c8, 30, 31),
-+
-+	.soft_reset			= REG_FIELD(0x1000, 31, 31),
-+	.force_reset			= REG_FIELD(0x1000, 30, 30),
-+
-+	.use_hw_chs			= REG_FIELD(0x61038, 0, 0),
-+	.use_hw_usr			= REG_FIELD(0x61038, 1, 1),
-+	.hw_chs_sel			= REG_FIELD(0x61038, 2, 4),
-+	.hw_usr_sel			= REG_FIELD(0x61038, 5, 6),
-+
-+	.replace_vbit			= REG_FIELD(0x610c0, 0, 0),
-+	.vbit_stream			= REG_FIELD(0x610c0, 1, 1),
-+
-+	.legacy_en			=  REG_FIELD(0x1008, 0, 0),
-+	.calc_en			=  REG_FIELD(0x61034, 0, 0),
-+	.lsb_bits			=  REG_FIELD(0x61048, 0, 31),
-+	.msb_bits			=  REG_FIELD(0x6104c, 0, 31),
-+
-+
-+	.clk_name			= (const char*[]) {
-+							"lpass_aon_cc_audio_hm_h_clk",
-+							"lpass_core_cc_sysnoc_mport_core_clk"
-+						},
-+	.num_clks			= 2,
-+	.cdc_dma_clk_names		= (const char*[]) {
-+							"lpass_audio_cc_codec_mem0_clk",
-+							"lpass_audio_cc_codec_mem1_clk",
-+							"lpass_audio_cc_codec_mem2_clk",
-+							"lpass_aon_cc_va_mem0_clk"
-+							},
-+	.cdc_dma_num_clks		= 4,
-+	.dai_driver			= sc7280_lpass_cpu_dai_driver,
-+	.num_dai			= ARRAY_SIZE(sc7280_lpass_cpu_dai_driver),
-+	.dai_osr_clk_names		= (const char *[]) {
-+							"null",
-+							"null"
-+							},
-+	.dai_bit_clk_names		= (const char *[]) {
-+							"lpass_core_cc_ext_if0_ibit_clk",
-+							"lpass_core_cc_ext_if1_ibit_clk"
-+							},
-+	.init				= sc7280_lpass_init,
-+	.exit				= sc7280_lpass_exit,
-+	.alloc_dma_channel		= sc7280_lpass_alloc_dma_channel,
-+	.free_dma_channel		= sc7280_lpass_free_dma_channel,
-+};
-+
-+static const struct of_device_id sc7280_lpass_cpu_device_id[] = {
-+	{.compatible = "qcom,sc7280-lpass-cpu", .data = &sc7280_data},
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, sc7280_lpass_cpu_device_id);
-+
-+static struct platform_driver sc7280_lpass_cpu_platform_driver = {
-+	.driver = {
-+		.name = "sc7280-lpass-cpu",
-+		.of_match_table = of_match_ptr(sc7280_lpass_cpu_device_id),
-+	},
-+	.probe = asoc_qcom_lpass_cpu_platform_probe,
-+	.remove = asoc_qcom_lpass_cpu_platform_remove,
-+	.shutdown = asoc_qcom_lpass_cpu_platform_shutdown,
-+};
-+
-+module_platform_driver(sc7280_lpass_cpu_platform_driver);
-+
-+MODULE_DESCRIPTION("SC7280 LPASS CPU DRIVER");
-+MODULE_LICENSE("GPL");
--- 
-2.7.4
+> 
+> > +			struct irq_data *d = &desc->irq_data;
+> > +
+> > +			if (!irqd_is_level_type(d))
+> > +				irq_set_irqchip_state(d->irq,
+> > +						IRQCHIP_STATE_PENDING, true);
+> > +
+> > +		}
+> > +	}
+> > +
+> > +	return IRQ_HANDLED;
+> > +}
+> > +
+> > +static int qcom_mpm_enter_sleep(struct qcom_mpm_priv *priv)
+> > +{
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < priv->reg_stride; i++)
+> > +		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
+> > +
+> > +	/* Notify RPM to write vMPM into HW */
+> 
+> What do you mean by 'into HW'? We just did that, right? or are these
+> registers just fake and most of the stuff is in the RPM?
 
+I have a note about this in commit log.
+
+- All the register settings are done by APSS on an internal memory
+  region called vMPM, and RPM will flush them into hardware after it
+  receives a mailbox/IPC notification from APSS.
+
+So yes, these registers are fake/virtual in memory, and RPM will
+actually flush the values into the MPM hardware block.
+
+> 
+> > +	ret = mbox_send_message(priv->mbox_chan, NULL);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int qcom_mpm_cpu_pm_callback(struct notifier_block *nb,
+> > +				    unsigned long action, void *data)
+> > +{
+> > +	struct qcom_mpm_priv *priv = container_of(nb, struct qcom_mpm_priv,
+> > +						  pm_nb);
+> > +	int ret = NOTIFY_OK;
+> > +	int cpus_in_pm;
+> > +
+> > +	switch (action) {
+> > +	case CPU_PM_ENTER:
+> > +		cpus_in_pm = atomic_inc_return(&priv->cpus_in_pm);
+> > +		/*
+> > +		 * NOTE: comments for num_online_cpus() point out that it's
+> > +		 * only a snapshot so we need to be careful. It should be OK
+> > +		 * for us to use, though.  It's important for us not to miss
+> > +		 * if we're the last CPU going down so it would only be a
+> > +		 * problem if a CPU went offline right after we did the check
+> > +		 * AND that CPU was not idle AND that CPU was the last non-idle
+> > +		 * CPU. That can't happen. CPUs would have to come out of idle
+> > +		 * before the CPU could go offline.
+> > +		 */
+> > +		if (cpus_in_pm < num_online_cpus())
+> > +			return NOTIFY_OK;
+> > +		break;
+> 
+> I'm really not keen on this sort of tracking in an irqchip driver.
+> Nobody else needs this. This is also copy-pasted (without even
+> mentioning it) from rpmh_rsc_cpu_pm_callback(). Why is that logic
+> needed twice, given that the RPM is also involved is this sequence?
+
+Yes, this is copy-pasted from rpmh-rsc and I should have mentioned that
+in some way.  But rpmh-rsc is a driver specific to RPM-Hardened (RPMH)
+which can be found on Qualcomm high-range SoCs like SDM845, SC7180.  And
+on these RPMH based SoCs, PDC works as the wake-up interrupt controller.
+However, on mid-range SoCs like SDM660, QCM2290, they run a different
+combination, that is RPM + MPM.  Note - RPMH and RPM are two similar but
+different and separate blocks.
+
+What we are implementing is for RPM + MPM based SoCs, and rpmh-rsc is
+irrelevant here.  The same cpu_pm tracking logic can be reused though.
+
+> 
+> > +	case CPU_PM_ENTER_FAILED:
+> > +	case CPU_PM_EXIT:
+> > +		atomic_dec(&priv->cpus_in_pm);
+> > +		return NOTIFY_OK;
+> > +	default:
+> > +		return NOTIFY_DONE;
+> > +	}
+> > +
+> > +	/*
+> > +	 * It's likely we're on the last CPU. Grab the lock and write MPM for
+> > +	 * sleep. Grabbing the lock means that if we race with another CPU
+> > +	 * coming up we are still guaranteed to be safe.
+> > +	 */
+> > +	if (raw_spin_trylock(&priv->lock)) {
+> > +		if (qcom_mpm_enter_sleep(priv))
+> > +			ret = NOTIFY_BAD;
+> > +		raw_spin_unlock(&priv->lock);
+> > +	} else {
+> > +		/* Another CPU must be up */
+> > +		return NOTIFY_OK;
+> > +	}
+> > +
+> > +	if (ret == NOTIFY_BAD) {
+> > +		/* Double-check if we're here because someone else is up */
+> > +		if (cpus_in_pm < num_online_cpus())
+> > +			ret = NOTIFY_OK;
+> > +		else
+> > +			/* We won't be called w/ CPU_PM_ENTER_FAILED */
+> > +			atomic_dec(&priv->cpus_in_pm);
+> > +	}
+> > +
+> > +	return ret;
+> > +}
+
+[...]
+
+> > +/*
+> > + * The mapping between MPM_GIC pin and GIC SPI number on QCM2290.  It's taken
+> > + * from downstream qcom-mpm-scuba.c with a little transform on the GIC
+> > + * SPI numbers (the second column).  Due to the binding difference from
+> > + * the downstream, where GIC SPI numbering starts from 32, we expect the
+> > + * numbering starts from 0 here, and that's why we have the number minus 32
+> > + * comparing to the downstream.
+> 
+> This doesn't answer my earlier question: is this list complete? Or is
+> it likely to change?
+
+Yes, it's complete for QCM2290.
+
+> Also, why is that in not in the device tree,
+> given that it is likely to change from one SoC to another?
+
+Yes, this is a SoC specific data, and will be different from one SoC to
+another.  Different subsystem maintainers have different views on such
+SoC data.  Some think they belong to kernel/driver and can be matched
+using SoC specific compatible, while others prefer to have them in DT.
+
+As I mentioned in the commit log, this SoC data actually consists of two
+parts:
+
+ 1) Map of MPM_GIC pin <--> GIC interrupt number
+ 2) Map of MPM_GPIO pin <--> GPIO number
+
+Since we already have map 2) defined in pinctrl driver rather than DT,
+I put map 1) in MPM driver.
+
+Shawn
+
+> 
+> > + */
+> > +const struct mpm_pin qcm2290_gic_pins[] = {
+> > +	{ 2, 275 },	/* tsens0_tsens_upper_lower_int */
+> > +	{ 5, 296 },	/* lpass_irq_out_sdc */
+> > +	{ 12, 422 },	/* b3_lfps_rxterm_irq */
+> > +	{ 24, 79 },	/* bi_px_lpi_1_aoss_mx */
+> > +	{ 86, 183 },	/* mpm_wake,spmi_m */
+> > +	{ 90, 260 },	/* eud_p0_dpse_int_mx */
+> > +	{ 91, 260 },	/* eud_p0_dmse_int_mx */
+> > +	{ -1 },
+> > +};
+> > +
+> > +const struct mpm_data qcm2290_data = {
+> > +	.pin_num = 96,
+> > +	.gic_pins = qcm2290_gic_pins,
+> > +};
+> > +
+> > +static int qcm2290_mpm_init(struct platform_device *pdev,
+> > +			    struct device_node *parent)
+> > +{
+> > +	return qcom_mpm_init(pdev, parent, &qcm2290_data);
+> > +}
+> > +
+> > +IRQCHIP_PLATFORM_DRIVER_BEGIN(qcom_mpm)
+> > +IRQCHIP_MATCH("qcom,qcm2290-mpm", qcm2290_mpm_init)
+> > +IRQCHIP_PLATFORM_DRIVER_END(qcom_mpm)
+> > +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. MSM Power Manager");
+> > +MODULE_LICENSE("GPL v2");
