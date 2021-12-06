@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94E7C46910E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 08:58:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 892D2469113
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 08:58:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238738AbhLFICJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 03:02:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39184 "EHLO
+        id S238739AbhLFICN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 03:02:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238739AbhLFICH (ORCPT
+        with ESMTP id S238766AbhLFICK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 03:02:07 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB266C0613F8
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Dec 2021 23:58:39 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id n15-20020a17090a160f00b001a75089daa3so10175385pja.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Dec 2021 23:58:39 -0800 (PST)
+        Mon, 6 Dec 2021 03:02:10 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94681C0698C1
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Dec 2021 23:58:42 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id g16so1260990pgi.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Dec 2021 23:58:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VyhuPuo3Dr6FLX90Yql2n8R2Vy9SBLHywkAT4A3YPD8=;
-        b=HLUZuFfIsWLv/iVa3/BaYyO+RmcLovtV6TM9aTnVUITCC6TEiM0lUFNrXqZWxILm01
-         99JX5Xg8ZbHNBvdhLkRu3HNw1u2qOsd4oqevuFunbYQu71h0PXQEMEzu9k8dkOvvB73r
-         u8B5hO9ldHmtVu/cJ96mbvZ4yqC9DNMULnoKOJiou/Cvqn488tm5OzqGSqVtJPH975kS
-         I5KpfN4Qx/EwJBxtE7ReinUJQUlf4m6uzMpe2jW2EE7sWjoQYepto9f7Tg90lADYM/dS
-         EsdxLIpnuZbcY/yiQOexsqyoCNnaLR8uYtTkjbMXjekmNiDn9nCokiKYuXlVnt2NOrJp
-         XB+g==
+        bh=id7DvGBlJbwLopapF2TpliiENdQPCEGHhQVDE16kcTQ=;
+        b=IOo5n81L4X8sOufuyxoiBhEMQP/Ta/G92ov/znSbutShHD7yUzr8tmqLiX07lQMUoC
+         UiaRSdmeNEs3clCInFDE27mhfQY/alW18GqTTzFU7xzPuBahyAUjpLIYxmR7SR+2xOgb
+         KrauDDO14UHjBptGzbLkI/fDu0p5Kn2mVvMFZN74ZVYuRJXX2ZQkIeKl9zTZgZyWliY7
+         v23XgoOuYrB6ZTTdVih3+/jE7kEhf+RAI9s5pR2kW0RtMWUI+BgnZJ0dJ9a6AjYfT+ch
+         fp60glxRspSiEmsH88cDS9tVykQ7M8c7bMndoGc5+7aITVjEP1GFlSzh1PrLIPtE70JF
+         QEdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VyhuPuo3Dr6FLX90Yql2n8R2Vy9SBLHywkAT4A3YPD8=;
-        b=3NTmah271nN2QrU9ahO7M0Y/5jqw1qDvjR0FXJZyTqQrMwQCwqMfUpSkFMNnvboP9v
-         TqsFdZw/fbyJ0HYxkzgQSev9UttFkX15bfRiyTFtsy7fiotdguD3w3iHGpUh5EeiZZgo
-         W87m1nK3DKa3I4KyP0xcff+i302QNcE6814LIXFA2Ehy3PTpc83VGcdNE9j/eHFuqcBJ
-         9XVF06vfXL33VgrLnSaM8Dho+EWMJ+MUf7L08Z9zugrYgGg+22t+cYx10zD1WWY9O8f8
-         o4uoZGnpaBjXIeG0K/IMiOKTuR25odvFXr/HJGQgIVz8FFhrk1fTFlk4R1Kcny/dooyO
-         9fhg==
-X-Gm-Message-State: AOAM533rg0n6GgN+RIS/pojcAhwjBb0TknbSs15lGWovEJkiNyzHaQ0n
-        Q9nIUomc4hjSA9mt0/HUlqQN7Q==
-X-Google-Smtp-Source: ABdhPJzgNpx/N7TJcWuoneXb1anHEXHMRGcKXIeCwXvI9mSDa+2d04t62sU9UVwUmBfaLgaZZKICbw==
-X-Received: by 2002:a17:902:e294:b0:143:86a8:c56d with SMTP id o20-20020a170902e29400b0014386a8c56dmr41565823plc.22.1638777519271;
-        Sun, 05 Dec 2021 23:58:39 -0800 (PST)
+        bh=id7DvGBlJbwLopapF2TpliiENdQPCEGHhQVDE16kcTQ=;
+        b=mgoHOqvQNWU7NNd1sRdY/ss7YIMt0KjYNMVAwLhaOnTZdp8gavIXowpEOxCCb4ZzuJ
+         lX+zJ0GoAS54yMTPiiNNBUlX3wtsYHLB4fm1WbGqU4A+cOgO3lPtauN475obzcohw/0H
+         5BbEAQJtIiyTr+3RMEg1LTvmvnT+ot98mgY3m//GKb4UyEzFCO1CqLHSaF3TMVYYw0cb
+         btbHiGHdWqr1UwCcVOXf3Kgkmn7rBGOO5xm180dcYIM/Tsb911P9v0yYF0ELmphOp0EJ
+         wV2uKcC9rIxyH6g8GDsP+4rwIfBtZ4uNg58vAtZo3XbRai252gQKpJ+9a/s1PiyK3Dng
+         sG2w==
+X-Gm-Message-State: AOAM531q6CEbw42FTuvE5el78V/Hh5oFkMbhd2miOcwPaOeZx5zETv1h
+        yDv4wbC21KKpLNQk/sRD7JzdqA==
+X-Google-Smtp-Source: ABdhPJydE8rwQNEkqZq95lFuHS7EM3yeZYSaPp5fQo56KmHN9dlgeJDkt3fp6WOWvztBp1hfQ2z0WQ==
+X-Received: by 2002:a63:8849:: with SMTP id l70mr17648733pgd.257.1638777522048;
+        Sun, 05 Dec 2021 23:58:42 -0800 (PST)
 Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id p15sm11794476pfo.143.2021.12.05.23.58.36
+        by smtp.gmail.com with ESMTPSA id p15sm11794476pfo.143.2021.12.05.23.58.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Dec 2021 23:58:39 -0800 (PST)
+        Sun, 05 Dec 2021 23:58:41 -0800 (PST)
 From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Georgi Djakov <djakov@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v3 3/6] interconnect: icc-rpm: Add QNOC type QoS support
-Date:   Mon,  6 Dec 2021 15:58:05 +0800
-Message-Id: <20211206075808.18124-4-shawn.guo@linaro.org>
+Subject: [PATCH v3 4/6] interconnect: icc-rpm: Support child NoC device probe
+Date:   Mon,  6 Dec 2021 15:58:06 +0800
+Message-Id: <20211206075808.18124-5-shawn.guo@linaro.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20211206075808.18124-1-shawn.guo@linaro.org>
 References: <20211206075808.18124-1-shawn.guo@linaro.org>
@@ -65,112 +65,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It adds QoS support for QNOC type device which can be found on QCM2290
-platform.  The downstream driver[1] includes support for priority,
-limiter, regulator and forwarding setup.  As QCM2290 support only
-requires priority and forwarding configuration, limiter and regulator
-support are omitted for this initial submission.
+As shown in downstream DT[1], the System NoC of QCM2290 is modelled
+using 4 fab/noc devices: sys_noc + qup_virt + mmnrt_virt + mmrt_virt.
+Among those 3 virtual devices, qup is owned by RPM and has no regmap
+resource, while mmnrt and mmrt are owned by AP and share the same
+regmap as sys_noc.  So it's logical to represent these virtual devices
+as child nodes of sys_noc in DT, so that such configuration can be
+supported with a couple of changes on qnoc_probe():
 
-[1] https://source.codeaurora.org/quic/la/kernel/msm-4.19/tree/drivers/soc/qcom/msm_bus/msm_bus_qnoc_adhoc.c?h=kernel.lnx.4.19.r22-rel
+- If there are child nodes, populate them.
+- If the device descriptor has .regmap_cfg but there is no IOMEM
+  resource for the device, use parent's regmap.
+
+[1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/tags/android-11.0.0_r0.56/qcom/scuba-bus.dtsi
 
 Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c | 38 ++++++++++++++++++++++++++---
- drivers/interconnect/qcom/icc-rpm.h |  3 +++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ drivers/interconnect/qcom/icc-rpm.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 264a9399fb28..22a98c0b29af 100644
+index 22a98c0b29af..2dfa79ba27bd 100644
 --- a/drivers/interconnect/qcom/icc-rpm.c
 +++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -17,6 +17,13 @@
- #include "smd-rpm.h"
- #include "icc-rpm.h"
+@@ -347,8 +347,13 @@ int qnoc_probe(struct platform_device *pdev)
+ 		void __iomem *mmio;
  
-+/* QNOC QoS */
-+#define QNOC_QOS_MCTL_LOWn_ADDR(n)	(0x8 + (n * 0x1000))
-+#define QNOC_QOS_MCTL_DFLT_PRIO_MASK	0x70
-+#define QNOC_QOS_MCTL_DFLT_PRIO_SHIFT	4
-+#define QNOC_QOS_MCTL_URGFWD_EN_MASK	0x8
-+#define QNOC_QOS_MCTL_URGFWD_EN_SHIFT	3
+ 		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-		if (!res)
++		if (!res) {
++			/* Try parent's regmap */
++			qp->regmap = dev_get_regmap(dev->parent, NULL);
++			if (qp->regmap)
++				goto regmap_done;
+ 			return -ENODEV;
++		}
+ 
+ 		mmio = devm_ioremap_resource(dev, res);
+ 
+@@ -364,6 +369,7 @@ int qnoc_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++regmap_done:
+ 	ret = devm_clk_bulk_get(dev, qp->num_clks, qp->bus_clks);
+ 	if (ret)
+ 		return ret;
+@@ -409,6 +415,10 @@ int qnoc_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, qp);
+ 
++	/* Populate child NoC devices if any */
++	if (of_get_child_count(dev->of_node) > 0)
++		return of_platform_populate(dev->of_node, NULL, NULL, dev);
 +
- /* BIMC QoS */
- #define M_BKE_REG_BASE(n)		(0x300 + (0x4000 * n))
- #define M_BKE_EN_ADDR(n)		(M_BKE_REG_BASE(n))
-@@ -39,6 +46,27 @@
- #define NOC_QOS_MODEn_ADDR(n)		(0xc + (n * 0x1000))
- #define NOC_QOS_MODEn_MASK		0x3
- 
-+static int qcom_icc_set_qnoc_qos(struct icc_node *src, u64 max_bw)
-+{
-+	struct icc_provider *provider = src->provider;
-+	struct qcom_icc_provider *qp = to_qcom_provider(provider);
-+	struct qcom_icc_node *qn = src->data;
-+	struct qcom_icc_qos *qos = &qn->qos;
-+	int rc;
-+
-+	rc = regmap_update_bits(qp->regmap,
-+			qp->qos_offset + QNOC_QOS_MCTL_LOWn_ADDR(qos->qos_port),
-+			QNOC_QOS_MCTL_DFLT_PRIO_MASK,
-+			qos->areq_prio << QNOC_QOS_MCTL_DFLT_PRIO_SHIFT);
-+	if (rc)
-+		return rc;
-+
-+	return regmap_update_bits(qp->regmap,
-+			qp->qos_offset + QNOC_QOS_MCTL_LOWn_ADDR(qos->qos_port),
-+			QNOC_QOS_MCTL_URGFWD_EN_MASK,
-+			!!qos->urg_fwd_en << QNOC_QOS_MCTL_URGFWD_EN_SHIFT);
-+}
-+
- static int qcom_icc_bimc_set_qos_health(struct qcom_icc_provider *qp,
- 					struct qcom_icc_qos *qos,
- 					int regnum)
-@@ -163,10 +191,14 @@ static int qcom_icc_qos_set(struct icc_node *node, u64 sum_bw)
- 
- 	dev_dbg(node->provider->dev, "Setting QoS for %s\n", qn->name);
- 
--	if (qp->type == QCOM_ICC_BIMC)
-+	switch (qp->type) {
-+	case QCOM_ICC_BIMC:
- 		return qcom_icc_set_bimc_qos(node, sum_bw);
--
--	return qcom_icc_set_noc_qos(node, sum_bw);
-+	case QCOM_ICC_QNOC:
-+		return qcom_icc_set_qnoc_qos(node, sum_bw);
-+	default:
-+		return qcom_icc_set_noc_qos(node, sum_bw);
-+	}
- }
- 
- static int qcom_icc_rpm_set(int mas_rpm_id, int slv_rpm_id, u64 sum_bw)
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index d8e77ce7fe06..66ce908a6e65 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -15,6 +15,7 @@
- enum qcom_icc_type {
- 	QCOM_ICC_NOC,
- 	QCOM_ICC_BIMC,
-+	QCOM_ICC_QNOC,
- };
- 
- /**
-@@ -43,6 +44,7 @@ struct qcom_icc_provider {
-  * @ap_owned: indicates if the node is owned by the AP or by the RPM
-  * @qos_mode: default qos mode for this node
-  * @qos_port: qos port number for finding qos registers of this node
-+ * @urg_fwd_en: enable urgent forwarding
-  */
- struct qcom_icc_qos {
- 	u32 areq_prio;
-@@ -51,6 +53,7 @@ struct qcom_icc_qos {
- 	bool ap_owned;
- 	int qos_mode;
- 	int qos_port;
-+	bool urg_fwd_en;
- };
- 
- /**
+ 	return 0;
+ err:
+ 	icc_nodes_remove(provider);
 -- 
 2.17.1
 
