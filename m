@@ -2,112 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F146E46A01B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 16:55:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E25D946A07A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 17:03:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1443069AbhLFP5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 10:57:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
+        id S1381864AbhLFQEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 11:04:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388278AbhLFPy5 (ORCPT
+        with ESMTP id S1387627AbhLFP7P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 10:54:57 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920B3C07E5E9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:40:09 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id u17so15969543wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:40:09 -0800 (PST)
+        Mon, 6 Dec 2021 10:59:15 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC49C08EB4B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 07:42:58 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id be32so22083523oib.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 07:42:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2GJDE2PlAe1SK4CWIqaNsGRDv9Fy2sK0QymkxrkRl9Q=;
-        b=vqXtM8dac/0SlC/DS4sp1pnEAS2lR73/xsVfG2VZt9Om7gEpBQLNKXRK6eMb4nN0vw
-         LI3VSmH7pqLRbW2sGBQ7jTT7Te8C3KGvPp+lsXr/Ku5kE/KDhB6C8a7kQbcQJxEQ0yLP
-         763BrPSx/gYz+nVXLPX5yQ8xWZt7iQ5BxW7toKejEAFGFzHm7MHv3JAJ5rk6IZMNeXiw
-         kbeiYgcXRc5LLZi8MjzDjOcGsJfc7cScQ+ZdSNlJTdD1wfSY4DdiqrGEniQGNjJ+VhVq
-         v5aqIRzZ0qkoU55gyfWZIs8WZPTJ3UAdaN4CkxbUZPlWiuInsOGrHjM3ZEoZ3hTo9qLu
-         lYqA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=hSfDh7txPsCycOs0HAwdmZonlUVK7JVMigsN8QRLArU=;
+        b=L639osgIuxzP6akD21MGy3O6Ndpnqd2XYz6qZEokZS29GfZRMZGA+s2YDzVOCqI79c
+         R+LFM6MRgCtbinRnAB+OwABEgwTPHAFf1m8nnFvyR4QR4GE1MPivd/DGCHyRd1sk7YTy
+         b81JHHZsgL9eQPOUhUVjYBF23yK+C4Yeoi7wYJDhpH3uwh+Y+upMCpesHgCqUw7l5kYw
+         mqSlLGK5Xi5K+m0bHdRVsgdqRM6vt02/N+WXxBZPxRBJHyczvtOisEt7aoD4N8Nn7BK8
+         zYXEwzXbwu2+f62F/ylU0gLVYDVlvt+snaxhwyT41wmdFJwBKufaqwht86wE9K0vpP9C
+         yl4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2GJDE2PlAe1SK4CWIqaNsGRDv9Fy2sK0QymkxrkRl9Q=;
-        b=almGgwRHgiXJZy10WGZRRwuZIL8eTqSHSpSljvqa2vfcDfvBNHkF2ZwVQSNXbRqXJZ
-         oDv02JHJsExR0vuKtpH/kV0Q23bdNCdZwXLClmgy955CUn3GkkpEzIwbYrRCek9CWk3n
-         ngbllytH3gARFWHAuSFQ0JpUhvKCYL4FItc/6vUpyZyOsPj7tRbQRQGkhzoFs7XDLznY
-         WtxsGCTEjeqGms7Rqg62DnZQZlDNY13qWkUiWYU36+NXJnnEua4fWFO8bXWy9ZDk60Gu
-         dEJbDnCEdxzI46g5B7CiQkeJIxw9qPqjO/Bv8B4ddT7cB0wypRzUFrxxaxH9xcgrRvzE
-         IS2w==
-X-Gm-Message-State: AOAM5339FCjLag0sK1mHg6P89a2v8rZbNP/80cvAuegwbo19EPdmzQAy
-        zvdu9oQyr42vbWjN3x/7nz1xew==
-X-Google-Smtp-Source: ABdhPJyATexF8UtrBdaev8nChUE8RNqxgsjAWoeHGQnhc+vMpNPzXPUV3Ql+fETfplfbig6ujPTsbg==
-X-Received: by 2002:a05:6000:11c3:: with SMTP id i3mr43243273wrx.426.1638805208160;
-        Mon, 06 Dec 2021 07:40:08 -0800 (PST)
-Received: from xps7590.. (freifunk-gw.bsa1-cpe1.syseleven.net. [176.74.57.43])
-        by smtp.gmail.com with ESMTPSA id g13sm15818962wrd.57.2021.12.06.07.40.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=hSfDh7txPsCycOs0HAwdmZonlUVK7JVMigsN8QRLArU=;
+        b=OVHDEffCQ5hjbyaiPYGsWeLhdlvWCybkptjr6XruPOE/ppBYE/UMs+0YRVC0dcg/Se
+         wxhjnYwessVgwS/VHhus6I2j1BR2DJONKgzbf2vTb3JDioYY8O4XzesnOOoHysaE86xJ
+         zkXNfC6iBe6MwLzy7qeKUk6L4gFBoibBMj0AiuuQZ2d2qm6RqYzhypmWN2sDCOgfDYlH
+         GL/XZ3VynEuBm+y5GnKhfQQK8X1On6W7bepo7u0XXXUJjNaMIGeo56fMJ38RUH3huZ2+
+         ll64WrwDsx62cZ0PBkKycwPKASW+4Xo5AT39B4ambVbktabaPaTteWBVtEwxyCxffVT1
+         dzeA==
+X-Gm-Message-State: AOAM531tzjy1GSr9l4sbBQljAg31Sm1bSwejpUoucLPoRLwCPwtAAIjz
+        j3wJVRbNEBJ3L7P/8UztGYxv61Fsi7p2vA==
+X-Google-Smtp-Source: ABdhPJx5cAznI7khSOPAIAXSRq2RqYuzmYvaDs63fsXB+ucYlnOMXGc8z7DWJ0RPmuy3nPu6/PqEbw==
+X-Received: by 2002:aca:1b08:: with SMTP id b8mr23615727oib.148.1638805377692;
+        Mon, 06 Dec 2021 07:42:57 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id d8sm2791187oiw.24.2021.12.06.07.42.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 07:40:07 -0800 (PST)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Mauro Carvalho <mchehab@kernel.org>
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sdm845-db845c: Remove clock-lanes property from &camss node
-Date:   Mon,  6 Dec 2021 16:40:03 +0100
-Message-Id: <20211206154003.39892-3-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211206154003.39892-1-robert.foss@linaro.org>
-References: <20211206154003.39892-1-robert.foss@linaro.org>
+        Mon, 06 Dec 2021 07:42:57 -0800 (PST)
+Date:   Mon, 6 Dec 2021 09:42:52 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] clk: qcom: smd-rpm: Report enable state to framework
+Message-ID: <Ya4vfCZ8UTVBRpYU@builder.lan>
+References: <20211109022558.14529-1-shawn.guo@linaro.org>
+ <YYpMzau3CWRQYlkJ@gerhold.net>
+ <20211110131507.GJ7231@dragon>
+ <YYvNmrSeJNCE4BEC@ripper>
+ <20211111093926.GL7231@dragon>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211111093926.GL7231@dragon>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The clock-lanes property is no longer used as it is not programmable by
-the CSIPHY hardware block of Qcom ISPs and should be removed.
+On Thu 11 Nov 03:39 CST 2021, Shawn Guo wrote:
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 3 ---
- 1 file changed, 3 deletions(-)
+> On Wed, Nov 10, 2021 at 05:48:10AM -0800, Bjorn Andersson wrote:
+> > > IMHO, properly reporting enable state to framework is definitely the
+> > > right thing to do, and should have been done from day one.
+> > > 
+> > 
+> > I always thought is_enabled() should reflect the hardware state - in
+> > particular for clk_summary. The particular concern being that by
+> > initializing the is_enabled() state to either true or false, we're
+> > making an assumption about the hardware state. And if something where to
+> > do if (enabled) disable (or if (disabled) enable), we might skip a
+> > critical operation just because we tricked the logic.
+> 
+> That's probably why clk_smd_rpm_handoff() is called.  As there is no way
+> to query RPM for resource state, we send enable request for all RPM
+> clocks to get hardware and software state in sync.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-index 13f80a0b6faa..2cf4b932aee2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1125,7 +1125,6 @@ ports {
- 		port@0 {
- 			reg = <0>;
- 			csiphy0_ep: endpoint {
--				clock-lanes = <7>;
- 				data-lanes = <0 1 2 3>;
- 				remote-endpoint = <&ov8856_ep>;
- 			};
-@@ -1166,7 +1165,6 @@ camera@10 {
- 
- 		port {
- 			ov8856_ep: endpoint {
--				clock-lanes = <1>;
- 				link-frequencies = /bits/ 64
- 					<360000000 180000000>;
- 				data-lanes = <1 2 3 4>;
-@@ -1211,7 +1209,6 @@ camera@60 {
- 
- 		port {
- 			ov7251_ep: endpoint {
--				clock-lanes = <1>;
- 				data-lanes = <0 1>;
- //				remote-endpoint = <&csiphy3_ep>;
- 			};
--- 
-2.32.0
+clk_smd_rpm_handoff() will ensure that all SMD clocks are enabled, and
+at max speed during rpm_smd_clk_probe(). Once clients starts actually
+voting for rates that will change.
 
+(Un)fortunately as we don't provide an implementation of is_enabled()
+clk_disable_unused() won't try to turn them off. This similar to a
+problem I have elsewhere, for which I proposed:
+https://lore.kernel.org/linux-arm-msm/20211203035436.3505743-1-bjorn.andersson@linaro.org/
+
+We should at some point introduce this for the SMD clocks as well.
+
+
+However, we have two problems:
+1) Compiling e.g. the interconnect provider as a module would mean that
+clk_disable_unused() kicks in before the client has had a chance to vote
+for the clock.
+
+2) One client may enable the clock during its probe and then disable it.
+Being the last active user the clock framework happily turns off the
+clock.
+
+
+For both of these cases, we need to ensure that the clocks aren't
+disabled until sync_state() kicks in.
+
+Regards,
+Bjorn
+
+> > So, do you need it for anything other than clk_disable_unused()?
+> 
+> Not critical, but I need it for debugfs clk_summary as well.
+> 
+> Shawn
