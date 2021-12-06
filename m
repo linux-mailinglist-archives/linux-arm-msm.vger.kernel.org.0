@@ -2,91 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13A79469507
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 12:31:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D22AE46950B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 12:32:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238753AbhLFLec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 06:34:32 -0500
-Received: from mout.kundenserver.de ([212.227.17.10]:34195 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231332AbhLFLeb (ORCPT
+        id S242471AbhLFLf4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 06:35:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60044 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231332AbhLFLf4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 06:34:31 -0500
-Received: from mail-wr1-f50.google.com ([209.85.221.50]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MStKq-1n09Ga101u-00UJXC; Mon, 06 Dec 2021 12:31:02 +0100
-Received: by mail-wr1-f50.google.com with SMTP id i5so21783240wrb.2;
-        Mon, 06 Dec 2021 03:31:02 -0800 (PST)
-X-Gm-Message-State: AOAM533KHtartIlMC6DVp1SLZb5kjydBUT95KhJMb7sHertR7WtaQxGw
-        Z5Io3Duy0WJ8ombemZxmbYPL7Agr1kPDy4o1gCQ=
-X-Google-Smtp-Source: ABdhPJw16WAm7wgvwNNb9nTOQaZy5OVqt+aN1W6z8NVgK3jqrVKeeh7oCCksIsCkQd3pen14ghmmMCL95nhGoAj6w3M=
-X-Received: by 2002:adf:d091:: with SMTP id y17mr44777548wrh.418.1638790261818;
- Mon, 06 Dec 2021 03:31:01 -0800 (PST)
+        Mon, 6 Dec 2021 06:35:56 -0500
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7620AC061746;
+        Mon,  6 Dec 2021 03:32:27 -0800 (PST)
+Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust3082.18-1.cable.virginm.net [86.31.172.11])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id DBE7AEE;
+        Mon,  6 Dec 2021 12:32:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1638790344;
+        bh=Rl8RZWbWzjXWNEacH6rhciAmEKhl7aRUVxoFGhBU+KM=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=gNDTRwKs6y+VX7MJoxeybmDaWrUCurehHD0HlVjAyysZ+IT5v7dyS94GvUOgRGK1p
+         dgUmpRm8b+O3mnNYQo+xhJqtj/8oGx2UGvNRFepOR2Hwq2aONTuie5EgeWHnkpDojB
+         ZGXSke6tCiQ3/eXWwK0HBiX8k+omwoZZ1bw685cU=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1638275062.git.quic_saipraka@quicinc.com>
- <cc649faf144fce439b7a341303b6cc73ac285949.1638275062.git.quic_saipraka@quicinc.com>
- <CAK8P3a2JSSJxs92uEiJQAa0iQOvA6NDuww3+Br5cAxYvXVOOAQ@mail.gmail.com> <7b2b5888-c2ca-2ca0-8c0c-32128fcb37d2@quicinc.com>
-In-Reply-To: <7b2b5888-c2ca-2ca0-8c0c-32128fcb37d2@quicinc.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 6 Dec 2021 12:30:45 +0100
-X-Gmail-Original-Message-ID: <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
-Message-ID: <CAK8P3a0TZp349d7xFvpa6rzGSa4Wj2cAhqOg9-BAewA-d+yvJA@mail.gmail.com>
-Subject: Re: [PATCHv5 1/4] arm64: io: Use asm-generic high level MMIO accessors
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Marc Zyngier <maz@kernel.org>,
-        gregkh <gregkh@linuxfoundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        quic_psodagud@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:3/j8d64qhzDw/fq9QUxhzyzgN1ZRYs/kcsRiMSRU5EiMPehgiej
- Gj8ZHjoLZCz9e79CCX7t3v25tv4RCuLOCsq06YvRfbjMIY4uz951aPiq2V9HvayFTOC8uCB
- 2VGxC7hfxFpeXynYPWMbIb1KV4VDUf016kd3mSUP2KKs9N7TtcvfJihrDDyUCqTRUQhxZUg
- xooslz2eD7W2qg4+s4wFw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XDv8maYSOO8=:23cgFAt5pFIGZDYs2u6jVJ
- Dwok92b2XfQANW3gq3jTvf6gkmKATlx7bpzSq4vQqzpR7jbwoln3AXQ7niJVgMBcucW3xukxz
- 6NhwMa00jmNm1Bf/wsBQ5o1doCHXZcK/zoLh8C7AoIUqc6rkjsZbvleTYxlor3FHVTKe6RTcp
- Ebfk9dbx73wKlZ+A6jdpk5ru2mWpE6lqpWZRGDk4rQCobr7ez4dROQTnE6wyWZT2VFWSCuJAu
- vALvEFFSu2ZyOcGH7TXWGs8uCJ9qln/G3ZWXrIQGWzAUlAPzxVfwqRQUv8w7lMjcok0tuPh+u
- uqBdmUa0uZ2ZGKCuXzGeZ6eNRd+sIKSf/bKuMruJqDZz3Ip57KW95o1RNkH9cHAFCPWv7ZkOX
- MmYkTJkLIavxp4cODyJeA4hHAJaQYk68UXNI5y8Qmqx2WjFcIN6inLxwGcxcYeoddl1ilLc1P
- iTGDaYYbYUh+UJa2+70botEb9Pe86QDBYVrwOH0bKMLgPyEQ1nty+FeukqbU6R0HiftOCyhqE
- QGcYr/5UGtMctqbe6kAzylWCTUqvaQVAWdFU8+fg+Hy0X+vKGMsDgI2gnfyoQmxzmeo8Cbajm
- oY3ZpzfSOzsthQJwrQtO609knT1vjEqqoYqGeCG3SFO3n9SGppbEziIdyXwcceBJX2P6lAjAN
- zsSJI4AiT66ogoTWKsi06R8zYl3ocUGQZFMpBFyLtkyhXgDrc4BFRpf0vdC/dO2Yrl8XpsipS
- qDm9CXdySDkBvIQR8zyvDqzBHMlxn6IAKkL4xI0xxRADO5iLUeLN7+x6lPl88X8Z30+3nuEvb
- 7mhPc4mW3bRnZA19SLwMzTXVWDoJ57nyCssN+adlUj7cHBTMc0=
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20211206104315.12516-1-amhamza.mgc@gmail.com>
+References: <163878547435.2211244.3536763956780138208@Monstersaurus> <20211206104315.12516-1-amhamza.mgc@gmail.com>
+Subject: Re: [PATCH v3] media: venus: vdec: fixed possible memory leak issue
+From:   Kieran Bingham <kieran.bingham@ideasonboard.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        stanimir.varbanov@linaro.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        amhamza.mgc@gmail.com
+To:     Ameer Hamza <amhamza.mgc@gmail.com>
+Date:   Mon, 06 Dec 2021 11:32:21 +0000
+Message-ID: <163879034159.2211244.5962318772307516005@Monstersaurus>
+User-Agent: alot/0.10
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 6, 2021 at 12:12 PM Sai Prakash Ranjan
-<quic_saipraka@quicinc.com> wrote:
-> On 12/6/2021 2:20 PM, Arnd Bergmann wrote:
-> > I think it would be even better to flip these around and make the low-level
-> > definitions __io_ar() and __io_bw(), and then defining the arm64 specific
-> > macros based on those:
-> >
-> > /* arm64-specific, don't use in portable drivers */
-> > #define __iormb(v)     __io_ar(v)
-> > #define __iowmb()      __io_bw()
-> > #define __iomb()        dma_mb()
-> >
-> >
+Quoting Ameer Hamza (2021-12-06 10:43:15)
+> The venus_helper_alloc_dpb_bufs() implementation allows an early return
+> on an error path when checking the id from ida_alloc_min() which would
+> not release the earlier buffer allocation.
+>=20
+> Move the direct kfree() from the error checking of dma_alloc_attrs() to
+> the common fail path to ensure that allocations are released on all
+> error paths in this function.
+>=20
+> Addresses-Coverity: 1494120 ("Resource leak")
+>=20
+> Fixes: 40d87aafee29 ("media: venus: vdec: decoded picture buffer handling=
+ during reconfig sequence")
+>=20
+
+No need for blank lines between those tags, and when someone provides a
+Reviewed-by tag, you can collect it into your patch for future versions
+unless you feel you've modified the patch so much that it doesn't apply
+anymore.
+
+So this can still be added (no need to repost to add to this patch, I
+believe the integration scripts likely pick up tags added to a patch,
+but won't pick up ones added to previous versions).
+
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+
+
+> Signed-off-by: Ameer Hamza <amhamza.mgc@gmail.com>
+>=20
+> ---
+> Changes in v3:
+> Updated description and added fix tag
+> ---
+>  drivers/media/platform/qcom/venus/helpers.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/=
+platform/qcom/venus/helpers.c
+> index 84c3a511ec31..0bca95d01650 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -189,7 +189,6 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
+st)
+>                 buf->va =3D dma_alloc_attrs(dev, buf->size, &buf->da, GFP=
+_KERNEL,
+>                                           buf->attrs);
+>                 if (!buf->va) {
+> -                       kfree(buf);
+>                         ret =3D -ENOMEM;
+>                         goto fail;
+>                 }
+> @@ -209,6 +208,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
+st)
+>         return 0;
+> =20
+>  fail:
+> +       kfree(buf);
+>         venus_helper_free_dpb_bufs(inst);
+>         return ret;
+>  }
+> --=20
+> 2.25.1
 >
-> So __iormb on arm64 has some dummy control dependency stuff as well based on
-> ("arm64: io: Ensure calls to delay routines are ordered against prior
-> readX()") and then we would need to change __iormb definition to __io_ar which
-> doesn't seem like __iormb definition to be exact right?
-
-I'm not sure what you are asking here. As far as I can tell, __io_ar()
-and __iormb() have the same calling conventions and the same barrier
-requirements, so they should be interchangeable, we just need to decide
-which one is the primary definition.
-
-       Arnd
