@@ -2,78 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E8054692F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 10:49:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 40F36469301
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 10:53:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241500AbhLFJwq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 04:52:46 -0500
-Received: from perceval.ideasonboard.com ([213.167.242.64]:51252 "EHLO
-        perceval.ideasonboard.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241479AbhLFJwq (ORCPT
+        id S241549AbhLFJ4f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 04:56:35 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:19403 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241535AbhLFJ4e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 04:52:46 -0500
-Received: from pendragon.ideasonboard.com (cpc89244-aztw30-2-0-cust3082.18-1.cable.virginm.net [86.31.172.11])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 640C5EE;
-        Mon,  6 Dec 2021 10:49:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1638784156;
-        bh=oaMhsWEtCze9B8DfhiYsjOO/yQpxK0/yYA47gj6keYw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=RGj8oAyx/Er6QO5rn12wQ615+iY+AJnk2SLKLZWR0Ne5mX24Y7P7sdb6TzZZtI2Pi
-         yNiBLgiKu+IP+VBDGoi591nX9I47M825kCbm9gpWz2P4dJvKpu+ovRErJ3INO20d6w
-         pdi2Sy/D+pYBLiWuGqSmKsKJz74iBa+CGpY6+yoY=
-Content-Type: text/plain; charset="utf-8"
+        Mon, 6 Dec 2021 04:56:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638784386; x=1670320386;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TfUheKrOCFb8cBYCHV4oO6MJPLAM3m4daldd6IgL5qw=;
+  b=YXk2G0ExtYv01clYrmxr+Gi9dZ8MIsQQrA8fMziJjHAOg3Lz/qBvs+sI
+   FMgkEvyndwV4frywttDoK3gSfjPX8UgZyzsie5Rk2/f+7u9y3f7UlXeLI
+   rv4zjwQv6jBW2svtp5XqDF+C39Q0UtrM0O0X7SSvN80SUT5PhDyIV4AKW
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 01:53:06 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 01:53:01 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 01:53:00 -0800
+Received: from [10.50.43.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
+ 01:52:56 -0800
+Message-ID: <0cd0bc8c-e3db-b3fb-5be4-c619d1d5d633@quicinc.com>
+Date:   Mon, 6 Dec 2021 15:22:51 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211205190415.19962-1-jose.exposito89@gmail.com>
-References: <20211205190415.19962-1-jose.exposito89@gmail.com>
-Subject: Re: [PATCH] media: venus: helpers: Fix memory leak in venus_helper_alloc_dpb_bufs
-From:   Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        =?utf-8?q?Jos=C3=A9_Exp=C3=B3sito?= <jose.exposito89@gmail.com>
-To:     =?utf-8?q?Jos=C3=A9_Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-        stanimir.varbanov@linaro.org, Ameer Hamza <amhamza.mgc@gmail.com>
-Date:   Mon, 06 Dec 2021 09:49:14 +0000
-Message-ID: <163878415444.147210.13155524098900308326@Monstersaurus>
-User-Agent: alot/0.10
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv5 4/4] asm-generic/io: Add logging support for MMIO
+ accessors
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@arndb.de>
+CC:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Marc Zyngier <maz@kernel.org>,
+        gregkh <gregkh@linuxfoundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        <quic_psodagud@quicinc.com>
+References: <cover.1638275062.git.quic_saipraka@quicinc.com>
+ <99ecc64c6da3abb3ea2930082c40f1820655664c.1638275062.git.quic_saipraka@quicinc.com>
+ <CAK8P3a1k-1_m7r-u0uO1nW1m43bt_hR9u+UeW=SqK40+Ltb+iA@mail.gmail.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <CAK8P3a1k-1_m7r-u0uO1nW1m43bt_hR9u+UeW=SqK40+Ltb+iA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jos=C3=A9
-
-Quoting Jos=C3=A9 Exp=C3=B3sito (2021-12-05 19:04:15)
-> Addresses-Coverity-ID: 1494120 ("Resource leaks")
-
-This was also recently posted by Ameer in https://lore.kernel.org/all/20211=
-204205504.6550-1-amhamza.mgc@gmail.com/
-
-Regards
---
-Kieran
-
-> Signed-off-by: Jos=C3=A9 Exp=C3=B3sito <jose.exposito89@gmail.com>
-> ---
->  drivers/media/platform/qcom/venus/helpers.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/=
-platform/qcom/venus/helpers.c
-> index 84c3a511ec31..344a42853898 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -197,6 +197,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *in=
-st)
-> =20
->                 id =3D ida_alloc_min(&inst->dpb_ids, VB2_MAX_FRAME, GFP_K=
-ERNEL);
->                 if (id < 0) {
-> +                       kfree(buf);
->                         ret =3D id;
->                         goto fail;
->                 }
-> --=20
-> 2.25.1
+On 12/6/2021 2:39 PM, Arnd Bergmann wrote:
+> On Mon, Dec 6, 2021 at 9:28 AM Sai Prakash Ranjan
+> <quic_saipraka@quicinc.com> wrote:
+>> +#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
+>> +#include <linux/tracepoint-defs.h>
+>> +
+>> +DECLARE_TRACEPOINT(rwmmio_write);
+>> +DECLARE_TRACEPOINT(rwmmio_read);
+>> +
+>> +#define rwmmio_tracepoint_active(t) tracepoint_enabled(t)
+>> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr);
+>> +void log_read_mmio(u8 width, const volatile void __iomem *addr);
+>> +
+>> +#else
+>> +
+>> +#define rwmmio_tracepoint_active(t) false
+>> +static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr) {}
+>> +static inline void log_read_mmio(u8 width, const volatile void __iomem *addr) {}
+>> +
+>> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
+>>
+>>   /*
+>>    * __raw_{read,write}{b,w,l,q}() access memory in native endianness.
+>> @@ -149,6 +166,8 @@ static inline u8 readb(const volatile void __iomem *addr)
+>>   {
+>>          u8 val;
+>>
+>> +       if (rwmmio_tracepoint_active(rwmmio_read))
+>> +               log_read_mmio(8, addr);
+>>          __io_br();
+>>          val = __raw_readb(addr);
+>>          __io_ar(val);
+> For readability, it may be nicer to fold the two lines you add for each
+> helper into one, such as
 >
+> void __log_write_mmio(u64 val, u8 width, volatile void __iomem *addr);
+> #define log_write_mmio(val, widtg, addr) do { \
+>       if (tracepoint_enabled(rwmmio_read)) \
+>                 __log_write_mmio((val), (width), (addr)); \
+> } while (0)
+>
+> I wonder if it may even be better to not check for tracepoint_active() in the
+> inline function at all but always enter the external function when built-in.
+> This means we do run into the branch, but it also reduces the i-cache footprint.
+
+Right, we don't need the tracepoint active check as we declare the 
+tracepoint only when the config is
+enabled so I can just call log_{read,write}_mmio directly.
+
+> For general functionality, I think it would be better to trace the returned
+> value from the read, but I don't know if that defeats the purpose you
+> are interested in, since it requires the tracing to come after the __raw_read.
+>
+>         
+
+Yes just the trace after read/write won't serve our usecase where we 
+expect crashes/hangs on accessing
+these registers but internally we did have a log_post_read_mmio() as 
+well, if it is useful then I can add it.
+
+Thanks,
+Sai
