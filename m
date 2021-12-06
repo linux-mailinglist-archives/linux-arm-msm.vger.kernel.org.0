@@ -2,104 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61F56469057
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 07:13:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E2CE469068
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Dec 2021 07:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237659AbhLFGQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 01:16:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44136 "EHLO
+        id S237742AbhLFGjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 01:39:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbhLFGQ3 (ORCPT
+        with ESMTP id S237741AbhLFGjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 01:16:29 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A17C0613F8;
-        Sun,  5 Dec 2021 22:13:00 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5D3A261179;
-        Mon,  6 Dec 2021 06:13:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B86C341C2;
-        Mon,  6 Dec 2021 06:12:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638771179;
-        bh=+4qlYgaMA0MihnPdhm4aqX/UJW902OE0TQ6SXWfLXqY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GmqnVsRtw3km0kxrYv10PAfcLLasB+AuglLYKUtgsa+YGygxd1WCekjyWW3CDJMmd
-         yKrIx6M9QGfPYhgocEe9qvAnQszb7MJumovYYUDakCsrCvbyFpwZ5EX5AmrwCEnkvV
-         XL6j8018leuR+EcT1YXy5lMG9PtHbWhRXhW726SYr6pHmRBta1VsMJaOrQFCVi2J7a
-         lWcXDiYqXXHW29GMBRFhxdZ3MvJbWAUf8+skDQUKUJXNwN2vFnX/Hdfyeo9VDE7L7d
-         p6bJPGOy5NNROgiyq2Fx+CWyTe1DZHyxy/MZ0Gph55UJbGC2VwGWDTEDNePvlziZOa
-         ODIqeajQn9AFg==
-Date:   Mon, 6 Dec 2021 11:42:55 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/15] arm64: dts: qcom: sm8450: add interconnect nodes
-Message-ID: <Ya2p55S4J6odMvGK@matsya>
-References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-11-vkoul@kernel.org>
- <99e88947-177c-2f39-7f88-de16c24c3e42@somainline.org>
+        Mon, 6 Dec 2021 01:39:10 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3516C061354
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Dec 2021 22:35:42 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id o14so6422480plg.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Dec 2021 22:35:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=KPdiesTGFrti81pgW4AEjO6kQFUIykLCsbuWcjx17rA=;
+        b=rZli6EDigXFG27bzDSZQq52FY8dmCj96XtbZHhJMK74MibdPrQXPvjYM8IFIBeoy7G
+         ELX67VAl1IhSwAsJyvpaDrK25ZagcRg/4EErvPzXoDyP3q8bHb+wOynD31OSykroYOxK
+         lfYN9OpzObX20WGnZ0F7+PByA1iBsyVA5L4kibkq/tGhd6M2RxeaBYS+76I0dFOtvdpD
+         h5LNbaGbq35rqy+8HlU/SDFPrMTE+nwU1OR/bCCwQOhBJoTEDHMbz+OUao0axYCtwLJn
+         cDmwfjgwj7ycRs0s49eqjcj8hGM8UtTAeYQ9Mkru3davaUViOj/92KLqpyRC61IrMbiN
+         rNJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KPdiesTGFrti81pgW4AEjO6kQFUIykLCsbuWcjx17rA=;
+        b=rAyIFa/N0WfiZsrERP0zYUH7DiF5qKIR3Zt6Ev0cxKoK6d800UYJpwgcm2aUQOIz15
+         I78yVQaj7O8wSh/kFVij/OlXJwLp1rACvJpOL4xR7poHuWsIXBkZYBTVSReb8VdWWvEB
+         CME3bkZOyEvrMAbsdB/Ah6DfWm9Y1xUAOnK7rtzTtDCwEXXSqVcvoPIj9j/QZ7mPqxWo
+         MB+1/bVk6Cwe5G7LPNlwK8tBoQd5g8WFH/4OzJJafyntiznCKJEaePfbT/Gitj8p1sb5
+         qC4V73KECdG+0HpAd8PguIf+lmwrNi1XnISWig69pu1FnfoI5lZIfD/iX3tvhuFuBNeE
+         c7AQ==
+X-Gm-Message-State: AOAM531VGdZtOgDcvON/ijYrbBg1puYS3oCwhfpUabOHO5h8jw99bhgL
+        PTReSwmjDaAKTsjR0PnhDOpP4+U3GJ0uiOmP
+X-Google-Smtp-Source: ABdhPJxIn+T1ulljaVquO7/zIEGGcd3t1MxTGYPJTWFTd/hcSgAywdj9YmAB95HC9kupiqItPilxxQ==
+X-Received: by 2002:a17:90b:155:: with SMTP id em21mr35817743pjb.12.1638772542189;
+        Sun, 05 Dec 2021 22:35:42 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id k2sm11945931pfc.53.2021.12.05.22.35.39
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 05 Dec 2021 22:35:41 -0800 (PST)
+Date:   Mon, 6 Dec 2021 14:35:35 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Florian Fainelli <f.fainelli@gmail.com>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Neil Armstrong <narmstrong@baylibre.com>
+Subject: Re: [PATCH v3 1/3] irqchip: Pass platform_device pointer to init_cb
+Message-ID: <20211206063534.GK10105@dragon>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+ <20211202122122.23548-2-shawn.guo@linaro.org>
+ <b221fec0-43d0-537d-d78e-84da10a9c2d7@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <99e88947-177c-2f39-7f88-de16c24c3e42@somainline.org>
+In-Reply-To: <b221fec0-43d0-537d-d78e-84da10a9c2d7@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-12-21, 16:20, Konrad Dybcio wrote:
+On Thu, Dec 02, 2021 at 09:52:55AM -0800, Florian Fainelli wrote:
+> On 12/2/21 4:21 AM, Shawn Guo wrote:
+> > It makes sense to just pass device_node for callback in IRQCHIP_DECLARE
+> > case, but not so much for IRQCHIP_PLATFORM_DRIVER one, because
+> > platform_driver probe/init usually needs device pointer for various
+> > purposes, e.g. resource allocation, service request, device prefixed
+> > message output, etc.  Create a new callback type irqchip_init_cb_t which
+> > takes platform_device pointer as parameter, and update the existing
+> > IRQCHIP_PLATFORM_DRIVER users accordingly.
+> > 
+> > Cc: Florian Fainelli <f.fainelli@gmail.com>
+> > Cc: Claudiu Beznea <claudiu.beznea@microchip.com>
+> > Cc: Neil Armstrong <narmstrong@baylibre.com>
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 > 
-> On 01.12.2021 08:29, Vinod Koul wrote:
-> > And the various interconnect nodes found in SM8450 SoC and use it for
-> > UFS controller.
-> >
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 80 ++++++++++++++++++++++++++++
-> >  1 file changed, 80 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > index 75827bbfb3ad..4c7cdcea33fa 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> > @@ -6,6 +6,7 @@
-> >  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> >  #include <dt-bindings/clock/qcom,gcc-sm8450.h>
-> >  #include <dt-bindings/clock/qcom,rpmh.h>
-> > +#include <dt-bindings/interconnect/qcom,sm8450.h>
-> >  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> >  
-> >  / {
-> > @@ -573,6 +574,61 @@ uart7: serial@99c000 {
-> >  			};
-> >  		};
-> >  
-> > +		config_noc: interconnect@1500000 {
-> > +			compatible = "qcom,sm8450-config-noc";
-> > +			reg = <0 0x01500000 0 0x1c000>;
-> > +			#interconnect-cells = <1>;
-> > +			qcom,bcm-voters = <&apps_bcm_voter>;
-> > +		};
-> > +
-> > +		mc_virt: interconnect@1580000 {
-> > +			compatible = "qcom,sm8450-mc-virt";
-> > +			reg = <0 0x01580000 0 0x1000>;
-> > +			#interconnect-cells = <1>;
-> > +			qcom,bcm-voters = <&apps_bcm_voter>;
-> > +		};
-> > +
-> > +		system_noc: interconnect@1680000 {
-> > +			reg = <0 0x01680000 0 0x1e200>;
-> > +			compatible = "qcom,sm8450-system-noc";
+> Could you copy all recipients on all 3 patches plus your cover letter
+> next time so we have the full context? Thanks!
 > 
-> Compatible first, please
+> [snip]
+> 
+> >  
+> > -static int __init bcm7120_l2_intc_probe_7120(struct device_node *dn,
+> > +static int __init bcm7120_l2_intc_probe_7120(struct platform_device *pdev,
+> >  					     struct device_node *parent)
+> >  {
+> > -	return bcm7120_l2_intc_probe(dn, parent, bcm7120_l2_intc_iomap_7120,
+> > +	return bcm7120_l2_intc_probe(pdev->dev.of_node, parent,
+> > +				     bcm7120_l2_intc_iomap_7120,
+> >  				     "BCM7120 L2");
+> 
+> If you look further into that driver, you will see that we do something
+> like this in bcm7120_l2_intc_probe:
+> 
+>           pdev = of_find_device_by_node(dn);
+>           if (!pdev) {
+>                   ret = -ENODEV;
+>                   goto out_free_data;
+>           }
+> 
+> which would be completely superfluous now that we pass a platform_device
+> directly. Can you rework your patch so as to eliminate that
+> of_find_device_by_ndoe() (and the companion put_device call)?
 
-will fix here and everywhere...
+Firstly, I do not see any companion put_device call in the driver.
+Secondly, the existing code seems to have some problem in the "out"
+order.  The out_unmap should go before out_free_l1_data, right?
 
--- 
-~Vinod
+@@ -329,13 +323,13 @@ static int __init bcm7120_l2_intc_probe(struct device_node *dn,
+ 
+ out_free_domain:
+        irq_domain_remove(data->domain);
+-out_free_l1_data:
+-       kfree(data->l1_data);
+ out_unmap:
+        for (idx = 0; idx < MAX_MAPPINGS; idx++) {
+                if (data->map_base[idx])
+                        iounmap(data->map_base[idx]);
+        }
++out_free_l1_data:
++       kfree(data->l1_data);
+ out_free_data:
+        kfree(data);
+        return ret;
+
+Shawn
