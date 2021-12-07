@@ -2,95 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50BEA46C3C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 20:41:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AA4246C3D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 20:43:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236342AbhLGTo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 14:44:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236310AbhLGTo6 (ORCPT
+        id S231892AbhLGTr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 14:47:28 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:42707 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229505AbhLGTr2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 14:44:58 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC26C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 11:41:27 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so263985otg.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 11:41:27 -0800 (PST)
+        Tue, 7 Dec 2021 14:47:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=L3MI+h0u5a63sfoKLcmo7CVjt1c80jtugNXNjUS8/Jk=;
-        b=d7Ya5eg8tOISCP0Ft13/S/sAUgMZ0KecWxiuHO43ptpK5siTHkYek/rSLNzRgz6/g/
-         URILtPjeVdASN+HVq+GmUwIcfNNyLHHW6oQmFbFf31z12fibKMkBrFeh/zceaib9GEAv
-         ejs5691m4x1KZV8lN/7mfGn3gPhSJcQyrP/u4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=L3MI+h0u5a63sfoKLcmo7CVjt1c80jtugNXNjUS8/Jk=;
-        b=62nzzVu3Y9LsuDCbpZaSuCIqAPUx4bE9cLcbtaXcdNBMJgkrbRS52xoW/qk8Zra6Rz
-         77cyHRcLJdpdlxad5o2aInraAVdx+FBJuv4OOu6EfDgxFVXm47cF6JZRy4KjFSqS+Axk
-         VP0yz/eYmlOJPgFxiCrGKzjr8D2Ay77ge8YgMIKJ18ypP0pgv7oiYFSjx4pPT47x2sRY
-         uk4OTbGCUggJqainjaa+7xiImJ3zp/ntbg/8l5wtWK0qJ53lRLiutLx61mQ4LR1jYhJE
-         TujE9Z0C2eVbMX9RXP0J3FmNYQF0vznju7feZXmlNJfgTcRojIVblNJXzxRjnN+1FckK
-         weSw==
-X-Gm-Message-State: AOAM5308iS+SztQqR6UkGZ2OncEP2iz7nrKUJ0nmHmpaS8/2okN1a1cr
-        hqwUPjsp7OY8ewNF7AkeuXiMryoDob8wbtrKk/bejw==
-X-Google-Smtp-Source: ABdhPJyWKZOZt61oBDBtwA1NmPAv5zfH9arDEDUBhs1KDK1dQBrwuJLt/m0bk+oDxA4rWbR6/PyO+Tok5lhmUB0tq04=
-X-Received: by 2002:a05:6830:30b7:: with SMTP id g23mr36355972ots.159.1638906087317;
- Tue, 07 Dec 2021 11:41:27 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 7 Dec 2021 14:41:26 -0500
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638906237; x=1670442237;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YTR5C36Iv0NLbFAwWr/Auteyk2sC+GCNuQxQ9IhJNig=;
+  b=L7ur2+kN+st0vWhq7B5A32AiDKVkYYaXWIw7ZMvWd3x4zAkbWyO8vn6p
+   TT2hIp97a3mWL/i+NXj/myvvyBt0hlNWlnbvhkhaEIKecYgzCEitQke2k
+   VM8w14d7wOSRIML1wRXqAp7SOVMTjBZEZaEr/gswdsSdYcRoNLTqZMWo8
+   Y=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Dec 2021 11:43:57 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 11:43:57 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 7 Dec 2021 11:43:56 -0800
+Received: from [10.111.164.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 7 Dec 2021
+ 11:43:54 -0800
+Message-ID: <1f7b374f-6231-ddde-0518-9f43e12d580f@quicinc.com>
+Date:   Tue, 7 Dec 2021 11:43:52 -0800
 MIME-Version: 1.0
-In-Reply-To: <20211207094327.1.Ie3cde3443039342e2963262a4c3ac36dc2c08b30@changeid>
-References: <20211207094327.1.Ie3cde3443039342e2963262a4c3ac36dc2c08b30@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 7 Dec 2021 14:41:26 -0500
-Message-ID: <CAE-0n53UzgtKop5KmkxvBRroO-zFHDUgmWU3di1=Xomtew2NJg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
- property by default"
-To:     Douglas Anderson <dianders@chromium.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>, robdclark@chromium.org,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 2/4] drm/msm/dpu: drop pe argument from
+ _dpu_hw_sspp_setup_scaler3
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        <freedreno@lists.freedesktop.org>,
+        Dan Carpenter <dan.carpenter@oracle.com>
+References: <20211201225140.2481577-1-dmitry.baryshkov@linaro.org>
+ <20211201225140.2481577-3-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211201225140.2481577-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2021-12-07 09:43:41)
-> This reverts commit cefdd52fa0455c0555c30927386ee466a108b060.
->
-> On sc7180-trogdor class devices with 'fw_devlink=permissive' and KASAN
-> enabled, you'll see a Use-After-Free reported at bootup.
->
-> The root of the problem is that dwc3_qcom_of_register_core() is adding
-> a devm-allocated "tx-fifo-resize" property to its device tree node
-> using of_add_property().
->
-> The issue is that of_add_property() makes a _permanent_ addition to
-> the device tree that lasts until reboot. That means allocating memory
-> for the property using "devm" managed memory is a terrible idea since
-> that memory will be freed upon probe deferral or device unbinding.
->
-> Let's revert the patch since the system is still functional without
-> it. The fact that of_add_property() makes a permanent change is extra
-> fodder for those folks who were aruging that the device tree isn't
-> really the right way to pass information between parts of the
-> driver. It is an exercise left to the reader to submit a patch
-> re-adding the new feature in a way that makes everyone happier.
->
-> Fixes: cefdd52fa045 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
++ Dan C for awareness as this is a follow up of our discussion on
+https://lore.kernel.org/linux-arm-msm/c1537b326b654f05be247ca61d21e9f0@codeaurora.org/T/
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On 12/1/2021 2:51 PM, Dmitry Baryshkov wrote:
+> The _dpu_hw_sspp_setup_scaler3 (hw_sspp->setup_scaler) does not use pe
+> argument. Let's remove it while we are cleaning scaled configuration.
+> 
+Thanks for pushing this.
+
+This was originally reported by Dan Carpenter.
+
+Hence, please add the Reported-by tag for Dan on this (Dan Carpenter 
+<dan.carpenter@oracle.com> )
+
+
+Apart from that,
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 2 +-
+>   3 files changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index d77eb7da5daf..7235605bfc9e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -413,13 +413,11 @@ static void dpu_hw_sspp_setup_pe_config(struct dpu_hw_pipe *ctx,
+>   
+>   static void _dpu_hw_sspp_setup_scaler3(struct dpu_hw_pipe *ctx,
+>   		struct dpu_hw_pipe_cfg *sspp,
+> -		struct dpu_hw_pixel_ext *pe,
+>   		void *scaler_cfg)
+>   {
+>   	u32 idx;
+>   	struct dpu_hw_scaler3_cfg *scaler3_cfg = scaler_cfg;
+>   
+> -	(void)pe;
+>   	if (_sspp_subblk_offset(ctx, DPU_SSPP_SCALER_QSEED3, &idx) || !sspp
+>   		|| !scaler3_cfg)
+>   		return;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> index e8939d7387cb..ad2002d75739 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+> @@ -334,12 +334,10 @@ struct dpu_hw_sspp_ops {
+>   	 * setup_scaler - setup scaler
+>   	 * @ctx: Pointer to pipe context
+>   	 * @pipe_cfg: Pointer to pipe configuration
+> -	 * @pe_cfg: Pointer to pixel extension configuration
+>   	 * @scaler_cfg: Pointer to scaler configuration
+>   	 */
+>   	void (*setup_scaler)(struct dpu_hw_pipe *ctx,
+>   		struct dpu_hw_pipe_cfg *pipe_cfg,
+> -		struct dpu_hw_pixel_ext *pe_cfg,
+>   		void *scaler_cfg);
+>   
+>   	/**
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 4c373abbe89c..c7b065b14c5c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -688,7 +688,7 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+>   	if (pdpu->pipe_hw->ops.setup_scaler &&
+>   			pstate->multirect_index != DPU_SSPP_RECT_1)
+>   		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> -				pipe_cfg, &pixel_ext,
+> +				pipe_cfg,
+>   				&scaler3_cfg);
+>   }
+>   
+> 
