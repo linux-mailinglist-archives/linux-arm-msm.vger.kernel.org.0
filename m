@@ -2,197 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06FCA46B351
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 08:00:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13CB846B35F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 08:07:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbhLGHEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 02:04:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbhLGHEB (ORCPT
+        id S230348AbhLGHKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 02:10:40 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:53138 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhLGHKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 02:04:01 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50349C061746
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 23:00:31 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id k4so8764506plx.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 23:00:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v2KD/Dfq+rnasKB8lmx/9vy0d1bpdTQ6pdlpbDm2cNY=;
-        b=eWk/izWrJiBMpzVzdMAdYwo/6UxhY/+bJYF5qccMSL8poHIFm3PiGWUsyomrJ1lCFi
-         7Ps6GZDPf0UTI/AykAQltm4aV9ukzLw5NBJyy0Y5LDhBBTIOQYuNIFYJoy49SlvhmzMB
-         TdLOSFyDbnKFXpkGTDK8F94WJRXPNqA7WbEcCkC0rethFXdUpNil1y2aPDTHmiPiR3p0
-         cBeqfiycNJvys+XfCzZd2zHyF2uRyyDZ8IEBoH0JlgPJhDhaIeAm7Zg3LmwVbusa6M1K
-         NoDYFXELniTyaNNuHEYHD/182M8ZeV6ew/IrB70sooXIM/gdLSiSJ7SXfkRiuJB/3ll9
-         vj1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=v2KD/Dfq+rnasKB8lmx/9vy0d1bpdTQ6pdlpbDm2cNY=;
-        b=7LgtpvvJa+uJheCfp3Rt/RnmuaswiFL6YWC6vC9zvYEzIwczo6NdjJ7g47NJnP7pja
-         4TBrMEc6N3D3A4hpmNz8ZcwkOZ6Dy5k5Ayzuvchh173lqQaIPzQyrontz71LYZI1ZikH
-         6TA+CeOlL9Aw6hM7KP1fJi7JA+nPCkMmtp1QCVztDcxei0assBvHWypZf92Fv7wkmWhu
-         MB6THDufi32VO493KUbN/WQLwIkhWJ8zDzTPPJP4+t8s17msQas85t+icUve8xYPws8k
-         6Vm/tn4Eugw4Gfr3Z9kuOtD923U0bYz0Yx/9L/NTXIH16g/zEXSaRi/B3BKqmUNV4TUa
-         bezA==
-X-Gm-Message-State: AOAM532nLsE/BFWnIOn0mmgtzBwN+nrr/NgiZ83f37xAvydN2XYJ/2Mp
-        lSgUxh7WVsS6UcMOjb5Oj6Z3
-X-Google-Smtp-Source: ABdhPJwkH2+F982zkzFbH3pqOLJ9QtawrtTVzIPRPRDf5DaQaZMX9AZVzN3QtPe9mTr5KSKs4UZL1A==
-X-Received: by 2002:a17:902:ab47:b0:141:95b2:7eaf with SMTP id ij7-20020a170902ab4700b0014195b27eafmr48733066plb.40.1638860430704;
-        Mon, 06 Dec 2021 23:00:30 -0800 (PST)
-Received: from localhost.localdomain ([117.217.176.38])
-        by smtp.gmail.com with ESMTPSA id d6sm11825211pgv.48.2021.12.06.23.00.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Dec 2021 23:00:30 -0800 (PST)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     aleksander@aleksander.es, loic.poulain@linaro.org,
-        thomas.perrot@bootlin.com, hemantk@codeaurora.org,
-        bbhatt@codeaurora.org, quic_jhugo@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        stable@vger.kernel.org
-Subject: [PATCH v5] bus: mhi: Fix race while handling SYS_ERR at power up
-Date:   Tue,  7 Dec 2021 12:30:18 +0530
-Message-Id: <20211207070018.115219-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Tue, 7 Dec 2021 02:10:40 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 63758B816A1;
+        Tue,  7 Dec 2021 07:07:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69468C341C1;
+        Tue,  7 Dec 2021 07:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638860828;
+        bh=+2G/X5h3+hoYNKZYrwC4jUbRuh1P7OkgWwsP4LDLnyQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=H2/t/5C1Y3UeAUtmCEQrkuXmrwdtbX/q4YuJ4wQ/NPupe2+6VWL7VtfORTwSJGQoc
+         Z2i7+ufESsn6D9DQ92u8u2ZFzAjiBOTz369/vdJbU+PSNuzk7l90Fw/cLGBQuSSxsJ
+         AXBm0cgYR+hSqQ2zd7As10LO0SM3IRrFousT89mPGPwus+TqWNST/lpmASShHY7gAe
+         E8QBfKRr8hmRdoJor0Se6aHdX3M3Mf2VmgAB4ZSq7ddj42XtzUiX9VvKikavdwrDap
+         72WCWwvElZhUNslWdQvw/ldIiw9iX8PGolJud10bT/cWiEjihkQPocp/8wfn+7DHsB
+         L3cdhFaIsbwOw==
+Date:   Tue, 7 Dec 2021 12:37:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Amit Nischal <anischal@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>, dmitry.baryshkov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
+Message-ID: <Ya8IGPJCBl+seblO@matsya>
+References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During SYS_ERR condition, as a response to the MHI_RESET from host, some
-devices tend to issue BHI interrupt without clearing the SYS_ERR state in
-the device. This creates a race condition and causes a failure in booting
-up the device.
+On 02-12-21, 19:56, Bjorn Andersson wrote:
+> As GDSCs are turned on and off some associated clocks are momentarily
+> enabled for house keeping purposes. Failure to enable these clocks seems
+> to have been silently ignored in the past, but starting in SM8350 this
+> failure will prevent the GDSC to turn on.
+> 
+> At least on SM8350 this operation will enable the RCG per the
+> configuration in CFG_REG. This means that the current model where the
+> current configuration is written back to CF_REG immediately after
 
-The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
-handling in mhi_async_power_up(). Once the host detects that the device
-is in SYS_ERR state, it issues MHI_RESET and waits for the device to
-process the reset request. During this time, the device triggers the BHI
-interrupt to the host without clearing SYS_ERR condition. So the host
-starts handling the SYS_ERR condition again.
+s/CF_REG/CFG_REG
 
-To fix this issue, let's register the IRQ handler only after handling the
-SYS_ERR check to avoid getting spurious IRQs from the device.
+> parking the RCG doesn't work.
+> 
+> Instead, keep track of the currently requested rate of the clock and
+> upon enabling the clock reapply the configuration per the saved rate.
 
-Cc: stable@vger.kernel.org
-Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
-Reported-by: Aleksander Morgado <aleksander@aleksander.es>
-Tested-by: Aleksander Morgado <aleksander@aleksander.es>
-Tested-by: Thomas Perrot <thomas.perrot@bootlin.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+With that fixed:
 
-Changes in v5:
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-* Rewored the commit message and used "error_exit" goto label for error
-  path
-
-Changes in v4:
-
-* Reverted the change that moved BHI_INTVEC as that was causing issue as
-  reported by Aleksander.
-
-Changes in v3:
-
-* Moved BHI_INTVEC setup after irq setup
-* Used interval_us as the delay for the polling API
-
-Changes in v2:
-
-* Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
-
- drivers/bus/mhi/core/pm.c | 35 ++++++++++++-----------------------
- 1 file changed, 12 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index 7464f5d09973..9ae8532df5a3 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -1038,7 +1038,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 	enum mhi_ee_type current_ee;
- 	enum dev_st_transition next_state;
- 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
--	u32 val;
-+	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
- 	int ret;
- 
- 	dev_info(dev, "Requested to power ON\n");
-@@ -1055,10 +1055,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 	mutex_lock(&mhi_cntrl->pm_mutex);
- 	mhi_cntrl->pm_state = MHI_PM_DISABLE;
- 
--	ret = mhi_init_irq_setup(mhi_cntrl);
--	if (ret)
--		goto error_setup_irq;
--
- 	/* Setup BHI INTVEC */
- 	write_lock_irq(&mhi_cntrl->pm_lock);
- 	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
-@@ -1072,7 +1068,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 		dev_err(dev, "%s is not a valid EE for power on\n",
- 			TO_MHI_EXEC_STR(current_ee));
- 		ret = -EIO;
--		goto error_async_power_up;
-+		goto error_exit;
- 	}
- 
- 	state = mhi_get_mhi_state(mhi_cntrl);
-@@ -1081,20 +1077,12 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	if (state == MHI_STATE_SYS_ERR) {
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
--		ret = wait_event_timeout(mhi_cntrl->state_event,
--				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
--					mhi_read_reg_field(mhi_cntrl,
--							   mhi_cntrl->regs,
--							   MHICTRL,
--							   MHICTRL_RESET_MASK,
--							   MHICTRL_RESET_SHIFT,
--							   &val) ||
--					!val,
--				msecs_to_jiffies(mhi_cntrl->timeout_ms));
--		if (!ret) {
--			ret = -EIO;
-+		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
-+				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
-+				 interval_us);
-+		if (ret) {
- 			dev_info(dev, "Failed to reset MHI due to syserr state\n");
--			goto error_async_power_up;
-+			goto error_exit;
- 		}
- 
- 		/*
-@@ -1104,6 +1092,10 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
- 	}
- 
-+	ret = mhi_init_irq_setup(mhi_cntrl);
-+	if (ret)
-+		goto error_exit;
-+
- 	/* Transition to next state */
- 	next_state = MHI_IN_PBL(current_ee) ?
- 		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
-@@ -1116,10 +1108,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	return 0;
- 
--error_async_power_up:
--	mhi_deinit_free_irq(mhi_cntrl);
--
--error_setup_irq:
-+error_exit:
- 	mhi_cntrl->pm_state = MHI_PM_DISABLE;
- 	mutex_unlock(&mhi_cntrl->pm_mutex);
- 
 -- 
-2.25.1
-
+~Vinod
