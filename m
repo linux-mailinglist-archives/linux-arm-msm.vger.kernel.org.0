@@ -2,80 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADD8146B3DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 08:27:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18BED46B3F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 08:33:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbhLGHar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 02:30:47 -0500
-Received: from bzq-84-110-109-230.cablep.bezeqint.net ([84.110.109.230]:49825
-        "EHLO mx.tkos.co.il" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S230073AbhLGHar (ORCPT
+        id S230237AbhLGHgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 02:36:37 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:40331 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230202AbhLGHgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 02:30:47 -0500
-Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 0679C4406F1;
-        Tue,  7 Dec 2021 09:26:59 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1638862019;
-        bh=co7ghAu45Uvxw9aXKApsiTm/77awZeWU6WVNI0cLlpE=;
-        h=From:To:Cc:Subject:Date:From;
-        b=cRNjc412eTqk7F4ps/Qup/kdBDd0ShbP18FiWeO4wYFP6PruCv+8TzlGgVAyX+Cpc
-         BCMIb0VEISIA04UPKwJ42yz+ufyH7YsRvlQfneBEHSOm2SOZHWwP+0oPJVC+FCO12P
-         pd522aGNUIjVeTsM7py1bhx9f5Iqet89FPvvyEpb0Ku74aATCRuIs3Z+V94HQhRH73
-         iaOD4isOzAzZly5U0mwsQRDWu4goNuEyuoEYrh4MdTurD6ksBYbSxNBRcD9zKI6Jr6
-         Xfq6oGjYQSsNhmvrpu3W6I21unZhohCwP0A6bmGe0Za38x8NAp+X0ri7n9KtpOPp4S
-         5OSoIDJoDmudw==
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Sricharan R <sricharan@codeaurora.org>
-Subject: [PATCH] arm64: dts: qcom: ipq6018: Fix gpio-ranges property
-Date:   Tue,  7 Dec 2021 09:27:10 +0200
-Message-Id: <8a744cfd96aff5754bfdcf7298d208ddca5b319a.1638862030.git.baruch@tkos.co.il>
-X-Mailer: git-send-email 2.33.0
+        Tue, 7 Dec 2021 02:36:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638862386; x=1670398386;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=EoBuBtj/CKp/HWzfb39zfxN4Nrr9d2HqG5zVFr+fPkQ=;
+  b=ZepunwatZ4O7Lu/v1MNc9jH/0RV8zvQ9Ejp+RYK3IPTtC2qhfAGDwm6E
+   wTfHct5b7vOJ+83U6FjCy54d1i9UWhQtjwQ/d4kJmQJ1ZrmxBk/72PwSE
+   X+vyHUDl6gCAWui0w80bvpBYcqUVECFmXqdTpatKJ+b1GnzRWQDKT8fm/
+   I=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 23:33:06 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 23:33:05 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 23:33:05 -0800
+Received: from hu-vamslank-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 23:33:04 -0800
+From:   <quic_vamslank@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+Subject: [PATCH v7 0/3] Add PLL and GCC clock support for SDX65 
+Date:   Mon, 6 Dec 2021 23:32:48 -0800
+Message-ID: <cover.1638861860.git.quic_vamslank@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There must be three parameters in gpio-ranges property. Fixes this not
-very helpful error message:
+From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 
-  OF: /soc/pinctrl@1000000: (null) = 3 found 3
+Hello,
+Changes from v6:
+ - Addressed stephen's comments related to GCC and PLL patches
+ - separated PLL and GCC patches from rpmh patches as suggested by Bjorn
 
-Fixes: 1e8277854b49 ("arm64: dts: Add ipq6018 SoC and CP01 board support")
-Cc: Sricharan R <sricharan@codeaurora.org>
-Signed-off-by: Baruch Siach <baruch@tkos.co.il>
----
+Changes from v5:
+ - Collected Vinod Koul's and Rob's Reviewed-by for the patches
+ - Rebased on the latest tip of Torvald's tree (MAINTAINERS: co-maintain random.c)
 
-The error message was improved in commit af3be70a321 ("of: Improve
-of_phandle_iterator_next() error message"), but there is evidently some
-more room for improvement. As I don't really understand the code, I
-added the commit author and the DT list to Cc.
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes from v4:
+ - Fixed comments from vinod koul on Clock Alpha PLL and GCC driver support patches
+ - Addressed Rob's comments related to GCC dt-binding patch
+ - Collected Vinod Koul's Reviewed-by for the dt-bindings patches
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 6a22bb5f42f4..a717fc17523d 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -220,7 +220,7 @@ tlmm: pinctrl@1000000 {
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
--			gpio-ranges = <&tlmm 0 80>;
-+			gpio-ranges = <&tlmm 0 0 80>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 
+Changes from v3:
+ - Fixed DTbindings and unused variables errors reported by kernel test bot
+ - Rebased on top of v5.16-rc1
+
+Changes from v2:
+ - Addressed Taniya Das and Vinod Koul's comments related to adding LUCID_EVO
+   PLL type and rpmh support patches
+ - Collected Rob's Acked-by for the dt-bindings patches
+
+Changes from v1:
+ - Addressed Bjorn's comments related to the GCC support patch
+ - Collected Bjorn's and Rob's Reviewed-by for the dt-bindings patches
+
+This patch series adds bindings and device driver changes for GCC, pdc and RPMh
+clock support for SDX65 Platform.
+
+Thanks,
+Vamsi
+
+Vamsi Krishna Lanka (2):
+  clk: qcom: Add LUCID_EVO PLL type for SDX65
+  clk: qcom: Add SDX65 GCC support
+
+Vamsi krishna Lanka (1):
+  dt-bindings: clock: Add SDX65 GCC clock bindings
+
+ .../bindings/clock/qcom,gcc-sdx65.yaml        |   80 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |  204 ++-
+ drivers/clk/qcom/clk-alpha-pll.h              |    3 +
+ drivers/clk/qcom/gcc-sdx65.c                  | 1611 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sdx65.h    |  122 ++
+ 7 files changed, 2003 insertions(+), 26 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx65.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sdx65.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx65.h
+
+
+base-commit: 58e1100fdc5990b0cc0d4beaf2562a92e621ac7d
 -- 
-2.33.0
+2.33.1
 
