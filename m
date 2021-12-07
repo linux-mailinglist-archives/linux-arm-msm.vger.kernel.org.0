@@ -2,148 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1CA246C6D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 22:42:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0EA946C6F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 22:52:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241948AbhLGVqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 16:46:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36994 "EHLO
+        id S237552AbhLGVz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 16:55:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232757AbhLGVqX (ORCPT
+        with ESMTP id S233575AbhLGVz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 16:46:23 -0500
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56006C061746
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 13:42:52 -0800 (PST)
-Received: by mail-io1-xd32.google.com with SMTP id p65so680100iof.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 13:42:52 -0800 (PST)
+        Tue, 7 Dec 2021 16:55:58 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C62C061574;
+        Tue,  7 Dec 2021 13:52:28 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id y14-20020a17090a2b4e00b001a5824f4918so2888294pjc.4;
+        Tue, 07 Dec 2021 13:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ld7GFu9I5ImAVII2taoKUmYqR/icJ65ORArYw4v0ttc=;
-        b=nAZjM66YrDrs8HfAa2iTCYIWgi9qc/YsUgO5VAYK6/eQVvUw5DJAifluaZXeUqd1iF
-         v0BFAkBj6IjQzFW0qnP8+30o9JfzzNyjPxxkAJp5859e/BduAVE136R8S7ATT6+5f4gn
-         9J302+HRh1jPhAbGJ2IgovUoCD7uc7m2N3OSo=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GWWlWBGNAUNv1KS12feNK4ETJNpX4Xg6FQdVVzeu2xo=;
+        b=Nm8DEfD4BkjVJuM8yaT5XZV5pFjaFUtE+3Gm3h/q/n34uOXG753dgC+aSxkBYkgV0m
+         1oqaKPjIzutHgzAKMvSylxYQ/fs4BkOzPpL1yuMOxGtHf0PvyNwWZ11d9GYAO/5u63iu
+         fZDh0owzBw6rmtpH1CnUNiXcHs0BLB+HqjQ5WF3GkEZmwJb+8Cdkipf/GnFOmyjdMCXt
+         fw2LWQN74aKyZq9W/s+JK5guLzWs46xtOV7eA7pQbeE2IzF5Nnvn6P8HLiIh43EY0r4N
+         qO7O/yQtH3DEYPf6nZ0hUkhn1/48R9g6vAb8+J/eQzOiDqgdhc72KAH+ZusJNfO3BTRA
+         tKEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ld7GFu9I5ImAVII2taoKUmYqR/icJ65ORArYw4v0ttc=;
-        b=UgNYr/0p1y4K770R78anRIBLOLH+0AlfKhyKESzG84ahMReV4qXCN7NOUJrNqMvYCe
-         qM+NWZnQaYPeH956hA6unW2rE43YsxVYBOMeR74SmXkmPbex1Q2bHKEnh2E7HzLRBiww
-         nzrT+8Mr636oNAcFZHoHgtlfFGQHOlDdv22tW8JgW5WjXGWmAtpBZYob8WRPTtverM9K
-         x99SLuFB1RJ0huXirAb3bHU47c8ECaJ0Zj+015gC+D7+ctrtP0r/ZEwK/VBLWRR36gL0
-         u2p2VnKLwb+tQ9nrGI09wYKn7cnVpVy5uMJd7Lol3Xg0vRG4b4CBA5hmy2ALHUQN2zRl
-         McdA==
-X-Gm-Message-State: AOAM532vK+GgK6rEXgbBtU4hy3XEIozV9Aub0xFleH3UM/LsHPVW7ceZ
-        bpchloZpMbgTzucNdoz8+in1Eg6nrZvscA==
-X-Google-Smtp-Source: ABdhPJwru9NCjRAyf5qpMLG4R13Q2FqWOKhXvmva0W11gHmEpJMztIHYKbwhfooRu9YduP2QnpGi+g==
-X-Received: by 2002:a05:6602:29c5:: with SMTP id z5mr2147877ioq.34.1638913370672;
-        Tue, 07 Dec 2021 13:42:50 -0800 (PST)
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com. [209.85.166.171])
-        by smtp.gmail.com with ESMTPSA id i26sm890754ila.12.2021.12.07.13.42.49
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Dec 2021 13:42:50 -0800 (PST)
-Received: by mail-il1-f171.google.com with SMTP id r2so377792ilb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 13:42:49 -0800 (PST)
-X-Received: by 2002:a92:ca0e:: with SMTP id j14mr2173215ils.27.1638913369355;
- Tue, 07 Dec 2021 13:42:49 -0800 (PST)
-MIME-Version: 1.0
-References: <20211207213830.625890-1-robdclark@gmail.com>
-In-Reply-To: <20211207213830.625890-1-robdclark@gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 7 Dec 2021 13:42:36 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VSRB45vFJZhVg7OTy2ZAv6UZ638YjQQiZemt9-AD1JXw@mail.gmail.com>
-Message-ID: <CAD=FV=VSRB45vFJZhVg7OTy2ZAv6UZ638YjQQiZemt9-AD1JXw@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/bridge: sn65dsi86: defer if there is no dsi host
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Maxime Ripard <maxime@cerno.tech>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GWWlWBGNAUNv1KS12feNK4ETJNpX4Xg6FQdVVzeu2xo=;
+        b=QwwWiwuv7aGnrjU1C6xnuO5ZOW1NAH041LihaTGnKionaOrVzhODjPgfZILguSdMPo
+         s8iGIJAUoaC8P5cxtVW3vfixq6FR1i32tBS2fOwkVO6M1jRWc0WxE8sgqDZrPmara2q1
+         rdQATiYjk52B7DmVocf/IIzq3RtQsvEgVDDFrVXjsTS1krffl5zKwhhdcudJrILwQPzC
+         JuQarqut6qpv4bwxddjpQO57Go3ost9n7627rlFFXJHpZ6GD/HL3ZsnZutqA3FxLLdp+
+         ykWwkbzzHorV9xmQdoEwAcdyAPkeL9Fsy+VkuHMP2ugYAFlHNLTDP3xJc/S24ya5XYVn
+         FkSA==
+X-Gm-Message-State: AOAM5304Mh/KcIDtj84/cz1V88Sc6Sdr/dA2lZ85jRK/d//bAjPaq0vk
+        D2dbUc2wrC/TsGMZTFHvRFg=
+X-Google-Smtp-Source: ABdhPJy4TxAKrkAuyTggCB3UfPBVw9hJa8a9UlhxxAwhC9f/AOhv3iTYP40Y8B2LXIbBsxxvX4Gx8Q==
+X-Received: by 2002:a17:90a:9a8e:: with SMTP id e14mr2104949pjp.231.1638913947604;
+        Tue, 07 Dec 2021 13:52:27 -0800 (PST)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id z16sm454496pgl.29.2021.12.07.13.52.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 13:52:26 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, Maxime Ripard <maxime@cerno.tech>,
+        Douglas Anderson <dianders@chromium.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        =?UTF-8?Q?Jernej_=C5=A0krabec?= <jernej.skrabec@gmail.com>,
+        =?UTF-8?q?Jernej=20=C5=A0krabec?= <jernej.skrabec@gmail.com>,
         Rob Clark <robdclark@chromium.org>,
         Andrzej Hajda <a.hajda@samsung.com>,
         Neil Armstrong <narmstrong@baylibre.com>,
         Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
         Jonas Karlman <jonas@kwiboo.se>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Sam Ravnborg <sam@ravnborg.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v3] drm/bridge: sn65dsi86: defer if there is no dsi host
+Date:   Tue,  7 Dec 2021 13:57:52 -0800
+Message-Id: <20211207215753.635841-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Rob Clark <robdclark@chromium.org>
 
-On Tue, Dec 7, 2021 at 1:33 PM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Otherwise we don't get another shot at it if the bridge probes before
-> the dsi host is registered.  It seems like this is what *most* (but not
-> all) of the other bridges do.
->
-> It looks like this was missed in the conversion to attach dsi host at
-> probe time.
->
-> Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
-> v2: Drop DRM_ERROR() in favor of drm_err_probe() and shift around the
->     spot where we report the error
->
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 02b490671f8f..8f1321ca819e 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -714,10 +714,8 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
->         };
->
->         host = of_find_mipi_dsi_host_by_node(pdata->host_node);
-> -       if (!host) {
-> -               DRM_ERROR("failed to find dsi host\n");
-> -               return -ENODEV;
-> -       }
-> +       if (!host)
-> +               return -EPROBE_DEFER;
->
->         dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
->         if (IS_ERR(dsi)) {
-> @@ -1267,8 +1265,10 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
->         drm_bridge_add(&pdata->bridge);
->
->         ret = ti_sn_attach_host(pdata);
-> -       if (ret)
-> +       if (ret) {
-> +               dev_err_probe(pdata->dev, ret, "failed to attach dsi host");
+Otherwise we don't get another shot at it if the bridge probes before
+the dsi host is registered.  It seems like this is what *most* (but not
+all) of the other bridges do.
 
-nit: Needs a "\n" at the end, doesn't it?
+It looks like this was missed in the conversion to attach dsi host at
+probe time.
 
+Fixes: c3b75d4734cb ("drm/bridge: sn65dsi86: Register and attach our DSI device at probe")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Doug Anderson <dianders@chromium.org>
+---
+v2: Drop DRM_ERROR() in favor of drm_err_probe() and shift around the
+    spot where we report the error
+v3: Add \n and cull error msgs a bit further
 
->                 goto err_remove_bridge;
-> +       }
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-It's going to be a little funny now because if the
-devm_mipi_dsi_attach() call fails you'll report "failed to attach dsi
-host" twice (once using DRM_ERROR in ti_sn_attach_host() and once
-here). Probably all the error messages could be removed from
-ti_sn_attach_host() and you could rely on this new one because:
-* devm_mipi_dsi_device_register_full() already appears plenty chatty.
-* this is the same message that devm_mipi_dsi_attach() was printing out anyway.
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 02b490671f8f..c2928a6409b1 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -714,16 +714,12 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 	};
+ 
+ 	host = of_find_mipi_dsi_host_by_node(pdata->host_node);
+-	if (!host) {
+-		DRM_ERROR("failed to find dsi host\n");
+-		return -ENODEV;
+-	}
++	if (!host)
++		return -EPROBE_DEFER;
+ 
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+-	if (IS_ERR(dsi)) {
+-		DRM_ERROR("failed to create dsi device\n");
++	if (IS_ERR(dsi))
+ 		return PTR_ERR(dsi);
+-	}
+ 
+ 	/* TODO: setting to 4 MIPI lanes always for now */
+ 	dsi->lanes = 4;
+@@ -740,10 +736,8 @@ static int ti_sn_attach_host(struct ti_sn65dsi86 *pdata)
+ 	pdata->dsi = dsi;
+ 
+ 	ret = devm_mipi_dsi_attach(dev, dsi);
+-	if (ret < 0) {
+-		DRM_ERROR("failed to attach dsi to host\n");
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	return 0;
+ }
+@@ -1267,8 +1261,10 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 	drm_bridge_add(&pdata->bridge);
+ 
+ 	ret = ti_sn_attach_host(pdata);
+-	if (ret)
++	if (ret) {
++		dev_err_probe(pdata->dev, ret, "failed to attach dsi host\n");
+ 		goto err_remove_bridge;
++	}
+ 
+ 	return 0;
+ 
+-- 
+2.33.1
 
-In any case, it's not really a big deal, so with the "\n" added I'm
-happy with my Reviewed-by.
-
-I'm happy to apply this to to drm-misc-next tomorrow if there are no
-objections. I can always add the "\n" myself unless you want to send a
-v3 with it and/or want to remove more error messages. ;-)
-
--Doug
