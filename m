@@ -2,139 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F3FBC46C205
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 18:44:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1189046C20F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 18:46:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240148AbhLGRrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 12:47:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35640 "EHLO
+        id S240207AbhLGRts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 12:49:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235019AbhLGRrg (ORCPT
+        with ESMTP id S240205AbhLGRts (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 12:47:36 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86B80C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 09:44:06 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id n15-20020a17090a160f00b001a75089daa3so2478327pja.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 09:44:06 -0800 (PST)
+        Tue, 7 Dec 2021 12:49:48 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55108C061748
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 09:46:17 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id m9so18277437iop.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 09:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bKVPunnAxyXz+rHlZKIN2IVzism2juiwgT6PKshCozU=;
-        b=g08A0M2bPh+rgy8MOJtpx32VGr1fMqLdHLNLt6aSdjaPt15hbIcTQFk/bW4I3pLqq6
-         3bncPVm4iyI579KugmfCswYGs3j/OsFo6Z7aT/IPaE/DN2mciknvfG/p5lcVESiKOPc5
-         vdQKnIIWxJtTYmUaUoxBERd33b+vCDz6aBk+Q=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y/6zTAyVv/z+aWbd0b0DW3DGaL6n4I9+Vw0UanLearM=;
+        b=NN2e7g6ksmtwR2dTQjJDioQvX5LXDpR3sDua1phHBIiki93TmmcNcp/94/Y+LuIZQx
+         vJtvye6PQmyLHDUdck+pv5U1cOdtNdWYH1PnPBNjEmLdAp/GhrHSPpw7wtbHs3B+Gpoe
+         RDy94vfzCPasH9HUtfJGXfkMVgw8b+A6WWYh8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=bKVPunnAxyXz+rHlZKIN2IVzism2juiwgT6PKshCozU=;
-        b=ImmFNxOftdIgFczsT8Z4b7L1wyBAj6X9HYd/M6ZlJCK756E7U6Ml8Rl3CAK5iq8/Wm
-         AU7CD3XMNZsoKjkqJd2I9UPvqLgKuScTpPmWcvVLCgGg736sx9kBB2oWBXHC/qOsYlJQ
-         Y0pl9HghfLvKdn87XFvGUj6Ab25Xb3vRAIEyFbeJ6nt07jc/MLVyDk7EjhEkZB2VRgc3
-         +ZN+5pR2SqSElZNgoVjOgviwEBRtNi9vAI03JPan2CclGVssVHxvFE+70BlsN5WP+wWP
-         yE3XNUK5x0wBmIJ/fKJYWgx45rmWH/lC06bg8H6XDf9sf7V58lj1+4GXytDJrqqmQ9pa
-         q6hw==
-X-Gm-Message-State: AOAM5301svak7RPQoWS3wQazYKzK8lcRuD6cRFv8HkfdMmnOQxcujfG1
-        3/d1Tiy2JAfTTsHIx7lRSl1e9g==
-X-Google-Smtp-Source: ABdhPJxJ31RcYOHwb6V87S7NxBD3mUEpOroWbvBAHYX1ZOU7pjTezVaWt/LZIWNtR5BxxWkOMrCVBA==
-X-Received: by 2002:a17:90a:1b63:: with SMTP id q90mr567550pjq.126.1638899046073;
-        Tue, 07 Dec 2021 09:44:06 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:a783:e7e8:acf6:96a5])
-        by smtp.gmail.com with ESMTPSA id z14sm334890pfh.60.2021.12.07.09.44.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 09:44:05 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>, swboyd@chromium.org,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y/6zTAyVv/z+aWbd0b0DW3DGaL6n4I9+Vw0UanLearM=;
+        b=aiuhEqbQR2wNxnVfgCfO7M/baITPYWUf9m2ldt52ag5kIy60zYvgjHLuCznEs8zWa4
+         dniI82VsXXZy+40sGucQnA65wFAEtd0UrAB8VBjLFZ42rLfyeAluXNADxR1H50R3Hm1C
+         i890zMmyklbN4YR+DnisG/cdESQF3vNi5G5Mbd2E3AYkaRHDhkhBuJqtIcB/eF+xCu2S
+         Hrc02GICDTuWs/Aoqe0ubT8fAYnT+1GugcLxfF2lHlMLqbyaeHb440tbL1MDNkWdRKyT
+         TKHP7y095O7XhV2IYr9wPDM5cTqFCTDjpQWaywHOAON2dKQCbIdt5aIauR6jPmJYj9Wu
+         ldwA==
+X-Gm-Message-State: AOAM531LwEFkvl2bez+6xNBwq1fOxp98pOubiRX6AWFboituM0mSehQs
+        3iR+1l8aRgFWQO1i84EwQTiKbby23QBbRQ==
+X-Google-Smtp-Source: ABdhPJyPCJaI8CqGQ9fbe9cN5vVCLF6Gust4eVE5gzkA1tCSJHP/NN+HH3yRdPSz1Cl40GxLpHBqEw==
+X-Received: by 2002:a05:6638:148b:: with SMTP id j11mr50766777jak.114.1638899176127;
+        Tue, 07 Dec 2021 09:46:16 -0800 (PST)
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com. [209.85.166.51])
+        by smtp.gmail.com with ESMTPSA id r8sm216353ilb.10.2021.12.07.09.46.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Dec 2021 09:46:15 -0800 (PST)
+Received: by mail-io1-f51.google.com with SMTP id p65so18208781iof.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 09:46:15 -0800 (PST)
+X-Received: by 2002:a05:6638:252:: with SMTP id w18mr52054124jaq.54.1638899174649;
+ Tue, 07 Dec 2021 09:46:14 -0800 (PST)
+MIME-Version: 1.0
+References: <20211206152844.1.I411110cc99c1dd66b01aa9aa25651acf8ff55da1@changeid>
+ <CAE-0n50n=JZEqz5aQW4FQwjO9eFN56vTmBrQ6qBWduFY5jNPJA@mail.gmail.com> <Ya7H+COf/Hbk6g5M@ripper>
+In-Reply-To: <Ya7H+COf/Hbk6g5M@ripper>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 7 Dec 2021 09:46:01 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Vzf8H=+MAMA895Csb1aU9h6LR8afOut2WqdUvKjF7QgA@mail.gmail.com>
+Message-ID: <CAD=FV=Vzf8H=+MAMA895Csb1aU9h6LR8afOut2WqdUvKjF7QgA@mail.gmail.com>
+Subject: Re: [PATCH] usb: dwc3: dwc3-qcom: Avoid use-after-free when USB
+ defers or unbinds
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
         Wesley Cheng <quic_wcheng@quicinc.com>, robdclark@chromium.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Wesley Cheng <wcheng@codeaurora.org>,
         linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: [PATCH] Revert "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default"
-Date:   Tue,  7 Dec 2021 09:43:41 -0800
-Message-Id: <20211207094327.1.Ie3cde3443039342e2963262a4c3ac36dc2c08b30@changeid>
-X-Mailer: git-send-email 2.34.1.400.ga245620fadb-goog
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit cefdd52fa0455c0555c30927386ee466a108b060.
+Hi,
 
-On sc7180-trogdor class devices with 'fw_devlink=permissive' and KASAN
-enabled, you'll see a Use-After-Free reported at bootup.
+On Mon, Dec 6, 2021 at 6:32 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 06 Dec 16:37 PST 2021, Stephen Boyd wrote:
+> > Quoting Douglas Anderson (2021-12-06 15:28:47)
+> [..]
+> > > +                       goto node_put;
+> > > +               }
+> > >
+> > > -       prop->name = "tx-fifo-resize";
+> > > -       ret = of_add_property(dwc3_np, prop);
+> >
+> > I don't understand why we can't tell dwc3 that we want to use
+> > tx-fifo-resize without adding a DT property. DT isn't the only way we
+> > could probe this qcom dwc3 device, there's also ACPI. And in dwc3 core
+> > where we check for this property couldn't we add a compatible check for
+> > qcom,dwc3 and then force the property? I see that a lot of this was
+> > already discussed when these patches got applied by gregkh directly[1].
+> >
+>
+> When the tx-fifo-resize property was introduced I made an effort to
+> convince the people involved about the prospect of passing this
+> information in the code, rather than using DT as some sort of parameter
+> store to pass information between the devices.
+>
+> And I still would like us to come up with some sort of code-level
+> mechanism for passing some state between dwc3-qcom and the dwc3-core,
+> because I really want to register some callback with the core so that we
+> don't need to duplicate extcon and usb_role_switch in both the core and
+> platform glue.
+>
+> See this discussion:
+> https://lore.kernel.org/linux-arm-msm/YSZCmDEedJaJyI0u@ripper/
+>
+> > Can we revert out this bad code instead?
+> >
+>
+> You definitely have my vote for that!
 
-The root of the problem is that dwc3_qcom_of_register_core() is adding
-a devm-allocated "tx-fifo-resize" property to its device tree node
-using of_add_property().
+Sure. I've posted a revert up, so either the revert or ${SUBJECT}
+patch will fix the problem. For the revert, see:
 
-The issue is that of_add_property() makes a _permanent_ addition to
-the device tree that lasts until reboot. That means allocating memory
-for the property using "devm" managed memory is a terrible idea since
-that memory will be freed upon probe deferral or device unbinding.
+https://lore.kernel.org/r/20211207094327.1.Ie3cde3443039342e2963262a4c3ac36dc2c08b30@changeid
 
-Let's revert the patch since the system is still functional without
-it. The fact that of_add_property() makes a permanent change is extra
-fodder for those folks who were aruging that the device tree isn't
-really the right way to pass information between parts of the
-driver. It is an exercise left to the reader to submit a patch
-re-adding the new feature in a way that makes everyone happier.
-
-Fixes: cefdd52fa045 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-This is an alternative to the patch ("usb: dwc3: dwc3-qcom: Avoid
-use-after-free when USB defers or unbinds") [1]. During the review of
-my patch fixing the use-after-free it was proposed that it would be
-better to revert the broken patch and it would be up to folks who
-cared about it to re-submit it without the problems.
-
-[1] https://lore.kernel.org/r/20211206152844.1.I411110cc99c1dd66b01aa9aa25651acf8ff55da1@changeid
-
- drivers/usb/dwc3/dwc3-qcom.c | 15 ---------------
- 1 file changed, 15 deletions(-)
-
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 9abbd01028c5..3cb01cdd02c2 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -649,7 +649,6 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
- 	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
- 	struct device		*dev = &pdev->dev;
--	struct property		*prop;
- 	int			ret;
- 
- 	dwc3_np = of_get_compatible_child(np, "snps,dwc3");
-@@ -658,20 +657,6 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
--	prop = devm_kzalloc(dev, sizeof(*prop), GFP_KERNEL);
--	if (!prop) {
--		ret = -ENOMEM;
--		dev_err(dev, "unable to allocate memory for property\n");
--		goto node_put;
--	}
--
--	prop->name = "tx-fifo-resize";
--	ret = of_add_property(dwc3_np, prop);
--	if (ret) {
--		dev_err(dev, "unable to add property\n");
--		goto node_put;
--	}
--
- 	ret = of_platform_populate(np, NULL, NULL, dev);
- 	if (ret) {
- 		dev_err(dev, "failed to register dwc3 core - %d\n", ret);
--- 
-2.34.1.400.ga245620fadb-goog
-
+-Doug
