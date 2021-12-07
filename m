@@ -2,114 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3A6C46BEF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:13:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7242546BF05
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:16:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbhLGPPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 10:15:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhLGPPu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 10:15:50 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62D8C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 07:12:19 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso18539602otf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 07:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2dXIPzvKXL/0XHAniN5ixw9zTONENlVQpVmdzuJjKmg=;
-        b=rqU6GY5ntjRkYqXxOUSIWtDihVOINk3LhHZh43bwBMPNnuJ3WuC+aS1nRzh0ORm/Vb
-         kaz/s2ej/8hT7+HIg19Sxq5L3xLusJw0wLSbk5pL+Ll8dEQJXeYJaxjB1oWQ2M+EgEOM
-         ivUnFPCiueTJuEmJBD7hp26Dq83JGSVwQAdEu1acZrPKzcO65JHZ1gLnzZfo17bxoSKr
-         XmduCeztcCSVNYJUcZC5f5cwpt74s7uEVrvHh1KKy0TmtOrUWqwgIgb4N89rqQkhnJ9P
-         RwXVSLG4jOLPWu4XIspwgblYuMZb+Dg6HSsaOHa6KX+S+cjp5rYWExUluuWuD2Dfet4G
-         BU0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2dXIPzvKXL/0XHAniN5ixw9zTONENlVQpVmdzuJjKmg=;
-        b=iiRoCOP22sUV1paBbICXVbqbLKFGapYHdwAIdoHPTwjyPH7qO6tKA+LKApP2bz/dty
-         GuidhUNO+C97IMKhoqFMSRGQ8ylcUY6Azcv2VUi6Poy2DuMrFeWRAxaGaBMF+YcMC9+w
-         mLm+hVMHtm4gpdHh8wmLZVibk3j6onBwK4rReAdVmqnlY5YgXeTT5t/UgnQFhcpE5Au2
-         3+eW1XPod02tBnNzp+7r6DLU9yP22fC1izOSwJ4XPc5/2/R+krx4MO0XzjPLfstwaUSx
-         yNZH9GdhQ9L4ZhNEfUWlIsuZcKrayFCsPdpnzgyBd0k3r9STBXzzctNTPBLY/j7BJ+py
-         1JLA==
-X-Gm-Message-State: AOAM5318+mMM70rW7LewiVsjV7X4SOU32eM6XJ4UQXc+iVTiEw0YTd7i
-        5WF9W4vQ/F0IwJzp7y5DfDE5sg==
-X-Google-Smtp-Source: ABdhPJxGDA5E1j8PGQLhg8Ah1uL+m+DMGpdwG4j76U73RL7cKyHVJyW8WuUHtQstdKAqDQV0LdXopw==
-X-Received: by 2002:a9d:4d0f:: with SMTP id n15mr35888387otf.125.1638889939138;
-        Tue, 07 Dec 2021 07:12:19 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q9sm2779689oti.32.2021.12.07.07.12.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 07:12:18 -0800 (PST)
-Date:   Tue, 7 Dec 2021 07:13:44 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Guo Zhengkui <guozhengkui@vivo.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>, kernel@vivo.com
-Subject: Re: [PATCH] phy: qcom: fix bug: application of sizeof to pointer
-Message-ID: <Ya96KOynsO478cVx@ripper>
-References: <20211207131642.5313-1-guozhengkui@vivo.com>
+        id S234440AbhLGPT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 10:19:58 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:17968 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234394AbhLGPT5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Dec 2021 10:19:57 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638890187; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=lhmLEurJtruYbgU84VYlYJYpIAj8F3QlaKT0LNANdlo=; b=xULvUiBI/JSmZk23O4Jk/koD3+UXPvrl8MITC95nSWWiOP88ZzTE0J3E45WiqYaxBzMt4wYn
+ crboqepW7aOjEXg4UqADnP1CDYeAi+/d2oSTy7iuudZTGLU3OrYCntguaTzH6yjEe8dIRxL5
+ 05HlYjEuSUrhLLrp5dfFPwxKEsE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 61af7aca4fca5da46dfa76aa (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Dec 2021 15:16:26
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A47D0C43635; Tue,  7 Dec 2021 15:16:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.3 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [10.242.143.72] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BD688C4338F;
+        Tue,  7 Dec 2021 15:16:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org BD688C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v4 4/5] pinctrl: qcom: Update clock voting as optional
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.com>
+Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
+        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1638531140-25899-1-git-send-email-srivasam@codeaurora.com>
+ <1638531140-25899-5-git-send-email-srivasam@codeaurora.com>
+ <Ya13Bl66oS1hgHFd@ripper>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <bf2b48fc-d97d-d5a5-e934-6c0a8cae72fe@codeaurora.org>
+Date:   Tue, 7 Dec 2021 20:46:16 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211207131642.5313-1-guozhengkui@vivo.com>
+In-Reply-To: <Ya13Bl66oS1hgHFd@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Dec 05:16 PST 2021, Guo Zhengkui wrote:
 
-> Fix following coccicheck error:
-> ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
-> ERROR: application of sizeof to pointer.
-> 
-> Use sizeof(*data) instead.
-> 
-> Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> index 17d5653b661d..5fe4eab9cac1 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> @@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
->  	struct clk_init_data init = { };
->  	int ret;
->  
-> -	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
-> +	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
+On 12/6/2021 8:05 AM, Bjorn Andersson wrote:
+Thanks for Your Time Bjorn!!!
+> On Fri 03 Dec 03:32 PST 2021, Srinivasa Rao Mandadapu wrote:
+>
+>> From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>>
+>> Update bulk clock voting to optional voting as ADSP bypass platform doesn't
+>> need macro and decodec clocks, these are maintained as power domains and
+>> operated from lpass audio core cc.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> Co-developed-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> index bcc12f6..c2a1110 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> @@ -394,7 +394,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
+>>   		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
+>>   				     "Slew resource not provided\n");
+>>   
+>> -	ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+>> +	ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+> If some platforms requires this clock and others doesn't have one, then
+> please make this statement conditional on the compatible, rather than
+> making it optional on both.
+>
+> Thanks,
+> Bjorn
+Okay. will add one flag in lpi_pinctrl_variant_data structure and handle 
+it accordingly.
+>>   	if (ret)
+>>   		return dev_err_probe(dev, ret, "Can't get clocks\n");
+>>   
+>> -- 
+>> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+>> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Ouch, thanks for catching that!
-
-But the clk_hw_onecell_data actually has a variable size array at the
-end and as you can see further down I store 2 items in that array.
-
-So that sizeof should be struct_size(data, hws, 2)
-
-Would you be willing to update your patch with that?
-
-And please add:
-Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
-
-Regards,
-Bjorn
-
->  	if (!data)
->  		return -ENOMEM;
->  
-> -- 
-> 2.20.1
-> 
