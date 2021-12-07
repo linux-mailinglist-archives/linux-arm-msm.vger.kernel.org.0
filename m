@@ -2,139 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E01046B1D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 05:28:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FBAE46B1E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 05:31:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235500AbhLGEcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 23:32:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233659AbhLGEcW (ORCPT
+        id S235687AbhLGEey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 23:34:54 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:9282 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233659AbhLGEey (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 23:32:22 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB335C061746;
-        Mon,  6 Dec 2021 20:28:52 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id CFBF6CE19C0;
-        Tue,  7 Dec 2021 04:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A447C341C3;
-        Tue,  7 Dec 2021 04:28:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638851328;
-        bh=baR953xcu0rbWYXyxFKXRDvT2g5U7pX8hmGqm6E+cyM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gc5wM0yh9ESbFyC07oNtW+2Do5mmMVet1+QUiljWH6zaeRHM9uTbwWvNjBOTGVS3t
-         lAKpBQoY6zYAWwWU3yG+t9vnQ2hlkB2kss/9MtU4S1DenAz0nHKluaYnz9ywxdAngL
-         N2NC/uh2IEKDLqf8QQDBX13/tuSf6yCJH+YmpkgLRXPdd1mdvek6SDn6ANbQG3EXQ/
-         sNo6aMkvKnCTkDZv2ePS3aNk/s2OFh9XneWwbecSbZvdqbYNyhw3X0UkOkVKAAWT5j
-         eDM3rDrPc9W1wvHYdSJbr1+PpCtyWBnfvDBJXzAtMFcox+K4tx8dPWpZEw1lX4oIhF
-         yv2RT/h/CxRdA==
-Date:   Tue, 7 Dec 2021 09:58:43 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] clk: qcom: Add clock driver for SM8450
-Message-ID: <Ya7i+zfHhuiHFlYX@matsya>
-References: <20211201072310.3968679-1-vkoul@kernel.org>
- <20211201072310.3968679-4-vkoul@kernel.org>
- <2649eada-3e80-cec3-5dca-bded67fa5f80@somainline.org>
+        Mon, 6 Dec 2021 23:34:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638851484; x=1670387484;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=adfjxvPtoTQBY1C+FT1LcQzKj4mW5Oha7NkxOuX1Y+I=;
+  b=rmoK23D1BpZzwqsZ4ASJEk4sUuqvSxpTKYLmz7Q3lCCbK8Pi41eL9mKU
+   8/tf8CZ6z0zashZ/lfMY4y4iiQROGoMAxHWpuw5hPXXMcJUelEVK+f/JZ
+   TSA/5D6ffiwe/TyiE1fQOHN474vo9cjiByCE3V1/K/U1xZFxgIzEWKj56
+   A=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Dec 2021 20:31:24 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Dec 2021 20:31:24 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 6 Dec 2021 20:31:23 -0800
+Received: from quicinc.com (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 6 Dec 2021
+ 20:31:23 -0800
+Date:   Mon, 6 Dec 2021 20:31:21 -0800
+From:   Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <maz@kernel.org>, <mturquette@baylibre.com>, <robh+dt@kernel.org>,
+        <tglx@linutronix.de>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v6 3/5] clk: qcom: Add SDX65 GCC support
+Message-ID: <20211207043121.GA28122@quicinc.com>
+References: <cover.1638402361.git.quic_vamslank@quicinc.com>
+ <475a055e403762e54a1cae6c2c97d4ada6064607.1638402361.git.quic_vamslank@quicinc.com>
+ <20211203002010.8225CC00446@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <2649eada-3e80-cec3-5dca-bded67fa5f80@somainline.org>
+In-Reply-To: <20211203002010.8225CC00446@smtp.kernel.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-12-21, 16:37, Konrad Dybcio wrote:
-> On 01.12.2021 08:23, Vinod Koul wrote:
-
-> > +static struct clk_alpha_pll gcc_gpll0 = {
-> > +	.offset = 0x0,
-> > +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-> > +	.clkr = {
-> > +		.enable_reg = 0x62018,
-> > +		.enable_mask = BIT(0),
-> > +		.hw.init = &(struct clk_init_data){
-> > +			.name = "gcc_gpll0",
-> > +			.parent_data = &(const struct clk_parent_data){
-> > +				.fw_name = "bi_tcxo",
-> > +				.name = "bi_tcxo",
-> 
-> I don't think we want .name for new drivers, as we do things cleanly
-> 
-> from the start and don't have DT incompatibility problems.
-
-Yes we need only fw_name here, I missed to remove this
-
-> > +static int gcc_sm8450_probe(struct platform_device *pdev)
-> > +{
-> > +	struct regmap *regmap;
-> > +	int ret;
+On Thu, Dec 02, 2021 at 04:20:09PM -0800, Stephen Boyd wrote:
+> Quoting quic_vamslank@quicinc.com (2021-12-01 16:21:33)
+> > +static struct clk_branch gcc_gp3_clk = {
+> > +       .halt_reg = 0x39000,
+> > +       .halt_check = BRANCH_HALT,
+> > +       .clkr = {
+> > +               .enable_reg = 0x39000,
+> > +               .enable_mask = BIT(0),
+> > +               .hw.init = &(struct clk_init_data){
+> > +                       .name = "gcc_gp3_clk",
+> > +                       .parent_data = &(const struct clk_parent_data){
+> > +                               .hw = &gcc_gp3_clk_src.clkr.hw,
+> > +                       },
+> > +                       .num_parents = 1,
+> > +                       .flags = CLK_SET_RATE_PARENT,
+> > +                       .ops = &clk_branch2_ops,
+> > +               },
+> > +       },
+> > +};
 > > +
-> > +	regmap = qcom_cc_map(pdev, &gcc_sm8450_desc);
-> > +	if (IS_ERR(regmap))
-> > +		return PTR_ERR(regmap);
-> > +
-> > +	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
-> > +				       ARRAY_SIZE(gcc_dfs_clocks));
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	/* FORCE_MEM_CORE_ON for ufs phy ice core clocks */
-> > +	regmap_update_bits(regmap, gcc_ufs_phy_ice_core_clk.halt_reg, BIT(14), BIT(14));
-> > +
-> > +	/* Keep the critical clock always-On
+> > +static struct clk_branch gcc_pcie_0_clkref_en = {
+> > +       .halt_reg = 0x88004,
+> > +       /* The clock controller does not handle the status bit for
 > 
-> I think the general style for multiline comments is to start with /* and then add a newline
+> Please leave /* on it's own line for multiline comments.
 
-Yes thanks for spotting, fixed
+Will do.
 
-> > +	 * gcc_camera_ahb_clk, gcc_camera_xo_clk, gcc_disp_ahb_clk,
-> > +	 * gcc_disp_xo_clk, gcc_gpu_cfg_ahb_clk, gcc_video_ahb_clk,
-> > +	 * gcc_video_xo_clk
-> > +	 */
-> > +	regmap_update_bits(regmap, 0x36004, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x36020, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x37004, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x3701c, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x81004, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x42004, BIT(0), BIT(0));
-> > +	regmap_update_bits(regmap, 0x42028, BIT(0), BIT(0));
-> > +
-> > +	ret = qcom_cc_really_probe(pdev, &gcc_sm8450_desc, regmap);
-> > +	if (ret) {
-> > +		dev_err(&pdev->dev, "Failed to register GCC clocks\n");
 > 
-> That's a bad downstream leftover that we don't want..
+> > +        * the clocks with gdscs(powerdomains) in hw controlled mode
+> > +        * and hence avoid checking for the status bit of those clocks
+> > +        * by setting the BRANCH_HALT_DELAY flag */
 > 
-> 
-> 
-> > +		return ret;
-> > +	}
-> > +
-> > +	dev_info(&pdev->dev, "Registered GCC clocks\n");
-> 
-> And so is this.
+> And */ too
 
-true will remove these
+Will do.
 
-> > +
-> > +	return ret;
 > 
-> You can simply return qcom_cc_really_probe(pdev, &gcc_sm8450_desc, regmap);
+> > +       .halt_check = BRANCH_HALT_DELAY,
+> > +       .clkr = {
+> > +               .enable_reg = 0x88004,
+> > +               .enable_mask = BIT(0),
+> > +               .hw.init = &(struct clk_init_data){
+> > +                       .name = "gcc_pcie_0_clkref_en",
+> > +                       .ops = &clk_branch2_ops,
+> > +               },
+> > +       },
+> > +};
 
-right!
-
--- 
-~Vinod
+Thanks,
+Vamsi
