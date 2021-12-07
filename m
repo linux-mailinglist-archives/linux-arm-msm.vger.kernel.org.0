@@ -2,87 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A88DE46C819
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 00:17:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B35D46C856
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 00:41:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233295AbhLGXVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 18:21:21 -0500
-Received: from linux.microsoft.com ([13.77.154.182]:46678 "EHLO
-        linux.microsoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231563AbhLGXVU (ORCPT
+        id S238367AbhLGXpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 18:45:16 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:50436 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238292AbhLGXpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 18:21:20 -0500
-Received: from thelio.attlocal.net (107-203-255-60.lightspeed.sntcca.sbcglobal.net [107.203.255.60])
-        by linux.microsoft.com (Postfix) with ESMTPSA id EE0A420B717A;
-        Tue,  7 Dec 2021 15:17:48 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EE0A420B717A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-        s=default; t=1638919069;
-        bh=oha1VeSwUeFUa2B9cR0SR6HEB75tFmVVaPn/zPq+B+Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WVyptJ25UDcJyQlt6TB6f8eexUMmyXAdnG88Xvum1B1ERQTfTcOPGMhUY7mGaE2/7
-         hlCIXOXan6U26W2CY8Ye7RlVTJPB3K6dOrOFw2/pvmYbZqhNO5LXFrKFxFUk1dPHue
-         X5PsodW5qhBGOp8vJat3qlqWd2RWcU7yDKram8pY=
-From:   Katherine Perez <kaperez@linux.microsoft.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Felipe Balbi <balbi@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/1] arm64: dts: qcom: sm8350-duo2: enable battery charger
-Date:   Tue,  7 Dec 2021 15:17:36 -0800
-Message-Id: <20211207231736.1762503-2-kaperez@linux.microsoft.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211207231736.1762503-1-kaperez@linux.microsoft.com>
-References: <20211207231736.1762503-1-kaperez@linux.microsoft.com>
+        Tue, 7 Dec 2021 18:45:16 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1638920505; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=DKZYj2D2ozIike5afQtrah0cMUGtTdAKUDAOIu8jYCg=; b=H4Qk6yngVWJ4uOB8/ir/mN8N9m8O8uBwEfCGHtNjeB2tGQH7MF0U12oA+slqTInRuHJ4qPb2
+ tBcH2nNOJHsWmhCwJb1x0mQyLFdZRGzBUZEzc4M/9RwBiFdmNq0KKS0e1+6oIQFgU9+qIaap
+ wSU8Ei5jZV/FRA2U9gqmpl62CAo=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 61aff1384fca5da46df1b36a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Dec 2021 23:41:44
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B3D60C43616; Tue,  7 Dec 2021 23:41:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.3 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.103.130] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C55B2C4338F;
+        Tue,  7 Dec 2021 23:41:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org C55B2C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH] bus: mhi: core: Add support for forced PM resume
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        mhi@lists.linux.dev
+Cc:     bbhatt@codeaurora.org, loic.poulain@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        kvalo@codeaurora.org, stable@vger.kernel.org,
+        Pengyu Ma <mapengyu@gmail.com>
+References: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <7eb05d7c-ddda-5ec1-73a0-e696d2b5a236@codeaurora.org>
+Date:   Tue, 7 Dec 2021 15:41:42 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the relevant qup and I2C nodes to enable the battery charger.
+Hi Mani,
 
-Signed-off-by: Katherine Perez <kaperez@linux.microsoft.com>
----
+On 12/6/2021 8:10 AM, Manivannan Sadhasivam wrote:
+> From: Loic Poulain <loic.poulain@linaro.org>
+> 
+> For whatever reason, some devices like QCA6390, WCN6855 using ath11k
+> are not in M3 state during PM resume, but still functional. The
+> mhi_pm_resume should then not fail in those cases, and let the higher
+> level device specific stack continue resuming process.
+> 
+> Add a new parameter to mhi_pm_resume, to force resuming, whatever the
+> current MHI state is. This fixes a regression with non functional
+> ath11k WiFi after suspend/resume cycle on some machines.
+> 
+> Bug report: https://bugzilla.kernel.org/show_bug.cgi?id=214179
+> 
+> Cc: stable@vger.kernel.org #5.13
+> Fixes: 020d3b26c07a ("bus: mhi: Early MHI resume failure in non M3 state")
+> Reported-by: Kalle Valo <kvalo@codeaurora.org>
+> Reported-by: Pengyu Ma <mapengyu@gmail.com>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> [mani: Added comment, bug report, added reported-by tags and CCed stable]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/bus/mhi/core/pm.c             | 10 +++++++---
+>   drivers/bus/mhi/pci_generic.c         |  2 +-
+>   drivers/net/wireless/ath/ath11k/mhi.c |  6 +++++-
+>   include/linux/mhi.h                   |  3 ++-
+>   4 files changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 7464f5d09973..4ddd266e042e 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -881,7 +881,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
+>   }
+>   EXPORT_SYMBOL_GPL(mhi_pm_suspend);
+>   
+> -int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+> +int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
+>   {
+>   	struct mhi_chan *itr, *tmp;
+>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> @@ -898,8 +898,12 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+>   	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
+>   		return -EIO;
+>   
+> -	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3)
+> -		return -EINVAL;
+> +	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3) {
+	in case if mhi_get_mhi_state(mhi_cntrl) returns SYS_ERR (assuming while 
+doing this check SYS_ERR is set) do we still want to continue pm resume 
+when force is true? Just want to make sure SYS_ERR handling with and 
+without this change remains the same or atleast does not cause any 
+regression with this change. or if we need to continue pm resume only 
+for MHI_STATE_RESET when MHI_STATE_M3 is not set?
+> +		dev_warn(dev, "Resuming from non M3 state (%s)\n",
+> +			 TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
+> +		if (!force)
+> +			return -EINVAL;
+> +	}
+>   
+[..]
 
-This patch depends on:
-- https://lore.kernel.org/linux-arm-msm/20211122190552.74073-2-kaperez@linux.microsoft.com/
-- https://lore.kernel.org/linux-arm-msm/20211114012755.112226-10-konrad.dybcio@somainline.org/
-
- .../boot/dts/qcom/sm8350-microsoft-surface-duo2.dts  | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-index d4963c9015cb..00e2129cec22 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-@@ -282,6 +282,14 @@ &cdsp {
- 	firmware-name = "qcom/sm8350/microsoft/cdsp.mbn";
- };
-
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+};
-+
- &ipa {
- 	status = "okay";
-
-@@ -297,6 +305,10 @@ &qupv3_id_0 {
- 	status = "okay";
- };
-
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &slpi {
- 	status = "okay";
- 	firmware-name = "qcom/sm8350/microsoft/slpi.mbn";
---
-2.31.1
-
+Thanks,
+Hemant
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
