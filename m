@@ -2,154 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 595AF46AEBF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 01:01:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C061746AEBC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 01:01:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377826AbhLGAFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 19:05:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
+        id S1353898AbhLGAEy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 19:04:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359871AbhLGAFM (ORCPT
+        with ESMTP id S1353893AbhLGAEx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 19:05:12 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6D65C061746
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 16:01:42 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id t11so12621454qtw.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 16:01:42 -0800 (PST)
+        Mon, 6 Dec 2021 19:04:53 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFD63C0613FE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 16:01:23 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso15758158otf.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 16:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RimBim2ZdnN1r478kYTmUZ/jBCYQVkhpHw/I4bytGeQ=;
-        b=ewJsTCpxQ04qK97kihZ6mdX0RSRnimlPmjdXk/Orn8TgiFS8kidhM2qac/dXOdPi3M
-         knQE4ZmBn4CFKLl4D57TTstKc/m7XwTo7lgXsfyFExi7S/ff9J8FfP4iubDvTPLZnBSr
-         STzT9VOHY5FlJBkcPOsx8vopX3W07pkFtOm1o=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BMx3q+Kfe+DjuBkGP2gx6f6ECT/xxrr/KpPYeMR6rqY=;
+        b=NFiU+B4iBWL13hKwzLmjIsvkDTb+/PdHPbMX3+qxkC3RPswW1q2PN+IhkSqlyZcDfb
+         QoVRaokY8QUqXMQ7W6c77dsShprJhkTKRGMSSNPv3Bgq7h14tbMa8Ruij5nMzA4CUU/w
+         kCYr27i4BR4lTQjvINB+IJWCet0My1EfN9n9TE01WSTOTIEKNrhYyqkc2QQmXO9EXmsR
+         PB7BmGRHCYrLfLY4rLy4jw8mo1w1RgDlqKB6Uj6HiGe5hPRQ0Q1AC1Nb0sD1zy8uCRVE
+         aFaYYwFo+e+Ub7Xes3ggKNBmnA9ZfHFVkjEjYWyD/K9mJaAVvad+x58SUyqN8rgn6Or1
+         RCeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RimBim2ZdnN1r478kYTmUZ/jBCYQVkhpHw/I4bytGeQ=;
-        b=AeoIp03UNGCUv8dduWHb0U79WBX8RM4iVWH8pqlSFoEPT/whxG32rlM7OBV4g1bIn1
-         DDOUMTzRKBPK9t0V7Q2EN2NmVi/HgnIddgB9zNW8Rt0SSq9Msoyg1Zj1j3UXBfb6Z6Ac
-         XSOcFTF8jE+fDxrRfVwUwqibMIyR1o2/y0CiVxqcaeKoXh2BE0XEXOmm8r67F1dj7bzZ
-         kxLa5Z0fCxUCpuXcuVNuIoZG+UHejX4ablN4sUyFTufH9+sglUmY3rWGJWr4HGwrPDAC
-         eqOSYGe4Azu++oTtrv0I25HlR9mT/zKG4NJAD43H5axbNfL/i2mlbn/mh39Ko2K2Bnsb
-         aV/A==
-X-Gm-Message-State: AOAM533PNP2+ep6+W6i7jkVuNuRGaqwpRBCEF83QmJg02zYxLWCoiNp6
-        R6f8UuXyDo5WfVHERy5zHtEKjnD42zZwUQ==
-X-Google-Smtp-Source: ABdhPJzH0gsvV7tChGbjWIALyAsgoaWYs7Lf+CQ4iQ4KZsaXAmJcxV3F3wV41afe7qz0Wpn18J/SNQ==
-X-Received: by 2002:a05:622a:510:: with SMTP id l16mr14014236qtx.619.1638835301814;
-        Mon, 06 Dec 2021 16:01:41 -0800 (PST)
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
-        by smtp.gmail.com with ESMTPSA id u11sm8508558qtw.29.2021.12.06.16.01.41
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Dec 2021 16:01:41 -0800 (PST)
-Received: by mail-yb1-f169.google.com with SMTP id 131so35928628ybc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 16:01:41 -0800 (PST)
-X-Received: by 2002:a05:6902:564:: with SMTP id a4mr46256085ybt.609.1638835300845;
- Mon, 06 Dec 2021 16:01:40 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BMx3q+Kfe+DjuBkGP2gx6f6ECT/xxrr/KpPYeMR6rqY=;
+        b=L7uARz7Rxc/eHUaL3kL23/I6GuKiJ1kpIQifsU3HskG5WVdBf4CiexQziCzs7kjxHM
+         bw3BCNDLBM0VBkAg1vEVxlj0Tlcp5kA+nKwQF2GlH2OFAmaKoZUr/teMoIOKlFagt1Em
+         EbJt1iVGYM5oyFoSDkJhsWc4Q1IobaJNzBQDWySdIY7QkKnABN2auJy2mRvFH4FypJAZ
+         0Ji5Qgwtvcic6f66pHdW8DcDRtOz9azo+M46ISJ1qOASbdUL5w5+4Z/fBQzV+cc/CxeH
+         Gz2qWTt4BsHcix6pk+VrG5jrP/59MkQR4UQl0S4M729DGod0wM9inYxiUD9mHvPwPAeo
+         gxag==
+X-Gm-Message-State: AOAM530PEO4VY2W+y/wpcPTkMgYUOpd/gWMs+MYPqW7dFh6y94XWJLhr
+        +0I2F98fEe4nshjnqWsal2IgRA==
+X-Google-Smtp-Source: ABdhPJyJVSzNU6F1HqOXYRJMj962C/4c6y+kX4SRPOFBKIuAkiZVa/wrgDOKiuQxf16isJv8mhxR3A==
+X-Received: by 2002:a9d:364b:: with SMTP id w69mr33095589otb.18.1638835282986;
+        Mon, 06 Dec 2021 16:01:22 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 49sm2443205oti.65.2021.12.06.16.01.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Dec 2021 16:01:22 -0800 (PST)
+Date:   Mon, 6 Dec 2021 16:02:48 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        swboyd@chromium.org, Wesley Cheng <quic_wcheng@quicinc.com>,
+        robdclark@chromium.org, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH] usb: dwc3: dwc3-qcom: Avoid use-after-free when USB
+ defers or unbinds
+Message-ID: <Ya6kqL3WzxjdtiSG@ripper>
+References: <20211206152844.1.I411110cc99c1dd66b01aa9aa25651acf8ff55da1@changeid>
 MIME-Version: 1.0
-References: <20211117065454.4142936-1-swboyd@chromium.org>
-In-Reply-To: <20211117065454.4142936-1-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Dec 2021 16:01:27 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XgV5=5mMuB5KbX38EFtZ6qxGGPMN6HFng_KJEc1KERxw@mail.gmail.com>
-Message-ID: <CAD=FV=XgV5=5mMuB5KbX38EFtZ6qxGGPMN6HFng_KJEc1KERxw@mail.gmail.com>
-Subject: Re: [PATCH] remoteproc: qcom: Don't memcpy_toio more than is provided
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211206152844.1.I411110cc99c1dd66b01aa9aa25651acf8ff55da1@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon 06 Dec 15:28 PST 2021, Douglas Anderson wrote:
 
-On Tue, Nov 16, 2021 at 10:55 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> If the string passed into qcom_pil_info_store() isn't as long as
-> PIL_RELOC_NAME_LEN we'll try to copy the string assuming the length is
-> PIL_RELOC_NAME_LEN to the io space and go beyond the bounds of the
-> string. Let's only copy as many byes as the string is long, ignoring the
-> NUL terminator.
->
-> This fixes the following KASAN error:
->
->  BUG: KASAN: global-out-of-bounds in __memcpy_toio+0x124/0x140
->  Read of size 1 at addr ffffffd35086e386 by task rmtfs/2392
->
->  CPU: 2 PID: 2392 Comm: rmtfs Tainted: G        W         5.16.0-rc1-lockdep+ #10
->  Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
->  Call trace:
->   dump_backtrace+0x0/0x410
->   show_stack+0x24/0x30
->   dump_stack_lvl+0x7c/0xa0
->   print_address_description+0x78/0x2bc
->   kasan_report+0x160/0x1a0
->   __asan_report_load1_noabort+0x44/0x50
->   __memcpy_toio+0x124/0x140
->   qcom_pil_info_store+0x298/0x358 [qcom_pil_info]
->   q6v5_start+0xdf0/0x12e0 [qcom_q6v5_mss]
->   rproc_start+0x178/0x3a0
->   rproc_boot+0x5f0/0xb90
->   state_store+0x78/0x1bc
->   dev_attr_store+0x70/0x90
->   sysfs_kf_write+0xf4/0x118
->   kernfs_fop_write_iter+0x208/0x300
->   vfs_write+0x55c/0x804
->   ksys_pwrite64+0xc8/0x134
->   __arm64_compat_sys_aarch32_pwrite64+0xc4/0xdc
->   invoke_syscall+0x78/0x20c
->   el0_svc_common+0x11c/0x1f0
->   do_el0_svc_compat+0x50/0x60
->   el0_svc_compat+0x5c/0xec
->   el0t_32_sync_handler+0xc0/0xf0
->   el0t_32_sync+0x1a4/0x1a8
->
->  The buggy address belongs to the variable:
->   .str.59+0x6/0xffffffffffffec80 [qcom_q6v5_mss]
->
->  Memory state around the buggy address:
->   ffffffd35086e280: 00 00 00 00 02 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
->   ffffffd35086e300: 00 02 f9 f9 f9 f9 f9 f9 00 00 00 06 f9 f9 f9 f9
->  >ffffffd35086e380: 06 f9 f9 f9 05 f9 f9 f9 00 00 00 00 00 06 f9 f9
->                     ^
->   ffffffd35086e400: f9 f9 f9 f9 01 f9 f9 f9 04 f9 f9 f9 00 00 01 f9
->   ffffffd35086e480: f9 f9 f9 f9 00 00 00 00 00 00 00 01 f9 f9 f9 f9
->
-> Fixes: 549b67da660d ("remoteproc: qcom: Introduce helper to store pil info in IMEM")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> On sc7180-trogdor class devices with 'fw_devlink=permissive' and KASAN
+> enabled, you'll see a Use-After-Free reported at bootup.
+> 
+> The root of the problem is that dwc3_qcom_of_register_core() is adding
+> a devm-allocated "tx-fifo-resize" property to its device tree node
+> using of_add_property().
+> 
+> The issue is that of_add_property() makes a _permanent_ addition to
+> the device tree that lasts until reboot. That means allocating memory
+> for the property using "devm" managed memory is a terrible idea since
+> that memory will be freed upon probe deferral or device
+> unbinding. Let's change to just allocate memory once and never free
+> it. This sorta looks like a leak but isn't truly one, since only one
+> property will be allocated per device tree node per boot.
+> 
+> NOTE: one would think that perhaps it would be better to use
+> of_remove_property() and then be able to free the property on device
+> remove. That sounds good until you read the comments for
+> of_remove_property(), which says that properties are never really
+> removed and they're just moved to the side.
+> 
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Fixes: cefdd52fa045 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  drivers/remoteproc/qcom_pil_info.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/remoteproc/qcom_pil_info.c b/drivers/remoteproc/qcom_pil_info.c
-> index 7c007dd7b200..aca21560e20b 100644
-> --- a/drivers/remoteproc/qcom_pil_info.c
-> +++ b/drivers/remoteproc/qcom_pil_info.c
-> @@ -104,7 +104,7 @@ int qcom_pil_info_store(const char *image, phys_addr_t base, size_t size)
->         return -ENOMEM;
->
->  found_unused:
-> -       memcpy_toio(entry, image, PIL_RELOC_NAME_LEN);
-> +       memcpy_toio(entry, image, strnlen(image, PIL_RELOC_NAME_LEN));
-
-The above seems slightly sketchy...
-
-Let's say:
-
-image = "modem" (5 characters plus null termination)
-PIL_RELOC_NAME_LEN = 8
-
-...so strnlen(image, 8) = 5, right?
-...so we'll copy characters _not_ including the NULL termination.
-
-I guess that's OK as long as we're certain that the destination was
-zero-initted, but maybe it would be better/safer to write:
-
-memcpy_toio(entry, image, strnlen(image, PIL_RELOC_NAME_LEN - 1) + 1);
-
--Doug
+> 
+>  drivers/usb/dwc3/dwc3-qcom.c | 32 +++++++++++++++++++++-----------
+>  1 file changed, 21 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 9abbd01028c5..34b054033116 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -658,18 +658,28 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+>  		return -ENODEV;
+>  	}
+>  
+> -	prop = devm_kzalloc(dev, sizeof(*prop), GFP_KERNEL);
+> -	if (!prop) {
+> -		ret = -ENOMEM;
+> -		dev_err(dev, "unable to allocate memory for property\n");
+> -		goto node_put;
+> -	}
+> +	/*
+> +	 * Permanently add the "tx-fifo-resize" to the device tree. Even if
+> +	 * our device is unregistered this property will still be part
+> +	 * of the device tree until reboot. Because this is a "permanent"
+> +	 * change, we allocate memory _without_ devm. For some context, see
+> +	 * the fact that of_remove_property() doesn't actually remove things.
+> +	 */
+> +	if (!of_find_property(dwc3_np, "tx-fifo-resize", NULL)) {
+> +		prop = kzalloc(sizeof(*prop), GFP_KERNEL);
+> +		if (!prop) {
+> +			ret = -ENOMEM;
+> +			dev_err(dev, "unable to allocate memory for property\n");
+> +			goto node_put;
+> +		}
+>  
+> -	prop->name = "tx-fifo-resize";
+> -	ret = of_add_property(dwc3_np, prop);
+> -	if (ret) {
+> -		dev_err(dev, "unable to add property\n");
+> -		goto node_put;
+> +		prop->name = "tx-fifo-resize";
+> +		ret = of_add_property(dwc3_np, prop);
+> +		if (ret) {
+> +			dev_err(dev, "unable to add property\n");
+> +			kfree(prop);
+> +			goto node_put;
+> +		}
+>  	}
+>  
+>  	ret = of_platform_populate(np, NULL, NULL, dev);
+> -- 
+> 2.34.1.400.ga245620fadb-goog
+> 
