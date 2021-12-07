@@ -2,299 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FBD646C017
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:56:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0C8046C022
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:59:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239301AbhLGQAH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 11:00:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37982 "EHLO
+        id S238974AbhLGQD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 11:03:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239265AbhLGQAH (ORCPT
+        with ESMTP id S238825AbhLGQDZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 11:00:07 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA1EC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 07:56:36 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id o13so30373480wrs.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 07:56:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=s04DWXu5NLwyK43+n0H/Fmx6iCKArUlT2QSk1QCIXEA=;
-        b=leLkaw4Wq4nrnYqRR9i+abimOSRyJ+xJHXAVfqjj+KuC25tQnYy5B0vVrQS/qMzUfv
-         Nzx0Yc1/d8FmVVwS6NNwL81AmJmkekro1sv4KyZcFuf5jb+l3iQQ9lQk6kCK1ld3pvr1
-         dMnxEv9T1vJTd9yaSL8QI8qOi/YqngfClRtusBdrp2eD85vVar9OmInaq8LtUAXrzbqB
-         x2iYS+0r4q9sXr5Owqi3XjZXwMC0tOOYiLSPKJl62VOEL0rpErsrHTYOm5lzHy5tjOL2
-         jiF7lRj7rSuVlNwYEensr/mIw6DHml4OQsxn7aicDRaCL2JCH/4JMQH4nEdm372RUWHy
-         1H+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=s04DWXu5NLwyK43+n0H/Fmx6iCKArUlT2QSk1QCIXEA=;
-        b=gx+1Zalb1chR0hqYEQsS4x4XEXKE1SBJr1zoYFFX6lzfVeDQHIlsvl4g+IRbqQdlVn
-         nuSOr9q5S04xqRgeJRAvS38NqO18LFj7OK5ekokqqysTvSgdH/SZGu2KSnYL6HliHjZK
-         fZil/ICmVTCxNjdscgjwu6ozAelU28VtjGPIA946mIjhDCndXOTdbAj6oXsh9qJbuQty
-         MRNykGTL/c4ox/O7PdTw/K8j5z1vCA0xSk1XWAqsCpU8QVBkccCgWXdnn1hhI2rBwa/b
-         8rkbkS15g/xHgHG3rxML+MQWtennKKFm67nT5GGesnae0/UwRidCq4+6shdxtm83UtJs
-         XZbA==
-X-Gm-Message-State: AOAM530Q4JIn72qqaPcft5oRi8QKLrfbVRszwwp/Xzs69RusosjS7Xfk
-        RwijFAmIIhfF31PcasxdbyFqnA==
-X-Google-Smtp-Source: ABdhPJxQBhRnVCXcNj/xSOYLWlR2ziSKQKPnBd1I2FJAjBpy539Q0U8rvPoTbp2fFBr9e85jDnZDXQ==
-X-Received: by 2002:adf:ed83:: with SMTP id c3mr50812916wro.169.1638892595418;
-        Tue, 07 Dec 2021 07:56:35 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id j17sm11346wmq.41.2021.12.07.07.56.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Dec 2021 07:56:34 -0800 (PST)
-Subject: Re: [PATCH] dt-bindings: misc: convert Qualcomm FastRPC bindings to
- the YAML schema
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211206193849.109079-1-david@ixit.cz>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <4f631075-85d0-7362-e3d6-b3abaec465e0@linaro.org>
-Date:   Tue, 7 Dec 2021 15:56:33 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Tue, 7 Dec 2021 11:03:25 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C485C061574;
+        Tue,  7 Dec 2021 07:59:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 852CECE1A75;
+        Tue,  7 Dec 2021 15:59:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63153C341C3;
+        Tue,  7 Dec 2021 15:59:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638892791;
+        bh=jXPELv0o2jpQFlhHf8mOp3vr/2KfUVmH5k+AGH8oqas=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=P1SHtTcPedW9bZhHNJtQt46bAJLPlvrIsAGRGkbfeJtYlFnmzaPAVev7rvsSOSvae
+         V5NKnebwOmakTfN1Cpag7YSpydo49rg3bimXTFdYUOOgP3WtH2PIEILs9HSEZCd2pk
+         3n9V2D8jVWZyhQFmLnNeUcRcNG1pu4bQElxFzI+smujwnHpU4Phxqck0HiyFWaKyAg
+         AaqO+gSGz7gXYurDe9Fd4s+6BPk78+QBvUT/+b6/SsVAFEILETsu5wlNKyP8QYSEdn
+         5hgwhQrh/E7k/Bn3YzXCD2lJaXE8VxKVkb8NGFeKsg6ny+2w6pDvJRWg519xZJtON9
+         f7k86qgHx9Qeg==
+Date:   Tue, 7 Dec 2021 07:59:50 -0800
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     "David S . Miller" <davem@davemloft.net>, loic.poulain@linaro.org,
+        hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        mhi@lists.linux.dev
+Subject: Re: [PATCH v2] bus: mhi: core: Add an API for auto queueing buffers
+ for DL channel
+Message-ID: <20211207075950.243a5099@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20211207071939.GA70121@thinkpad>
+References: <20211207071339.123794-1-manivannan.sadhasivam@linaro.org>
+        <20211207071939.GA70121@thinkpad>
 MIME-Version: 1.0
-In-Reply-To: <20211206193849.109079-1-david@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi David,
-
-Thanks for the patch,
-
-
-On 06/12/2021 19:38, David Heidelberg wrote:
-> Switch the DT binding to a YAML schema to enable the DT validation.
+On Tue, 7 Dec 2021 12:49:39 +0530 Manivannan Sadhasivam wrote:
+> On Tue, Dec 07, 2021 at 12:43:39PM +0530, Manivannan Sadhasivam wrote:
+> > Add a new API "mhi_prepare_for_transfer_autoqueue" for using with client
+> > drivers like QRTR to request MHI core to autoqueue buffers for the DL
+> > channel along with starting both UL and DL channels.
+> > 
+> > So far, the "auto_queue" flag specified by the controller drivers in
+> > channel definition served this purpose but this will be removed at some
+> > point in future.
+> > 
+> > Cc: netdev@vger.kernel.org
+> > Cc: Jakub Kicinski <kuba@kernel.org>
+> > Cc: David S. Miller <davem@davemloft.net>
+> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Co-developed-by: Loic Poulain <loic.poulain@linaro.org>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> > 
+> > Changes in v2:
+> > 
+> > * Rebased on top of 5.16-rc1
+> > * Fixed an issue reported by kernel test bot
+> > * CCed netdev folks and Greg  
 > 
-> Also:
->   - simplify example
->   - embrace compute-cb@ subnodes instead of just cb@
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Dave, Jakub, this patch should go through the MHI tree. Since it touches the
+> QRTR driver, can you please give an ACK?
 
-
-There is already a similar patch [1] in the list. If you have noticed 
-it, Its better to let the author know about your plans so that we do not 
-duplicate the same thing.
-
-Your patch seems to have addressed issues with subnode names and example.
-
-so am okay with this patch.
-
-Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
-FastRPC patches normally go via char-misc tree, so if Rob acks can you 
-send it to Greg as well.
-
-
---srini
-
-
-> ---
->   .../devicetree/bindings/misc/qcom,fastrpc.txt | 78 ---------------
->   .../bindings/misc/qcom,fastrpc.yaml           | 94 +++++++++++++++++++
->   2 files changed, 94 insertions(+), 78 deletions(-)
->   delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
->   create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-> deleted file mode 100644
-> index 2a1827ab50d2..000000000000
-> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-> +++ /dev/null
-> @@ -1,78 +0,0 @@
-> -Qualcomm Technologies, Inc. FastRPC Driver
-> -
-> -The FastRPC implements an IPC (Inter-Processor Communication)
-> -mechanism that allows for clients to transparently make remote method
-> -invocations across DSP and APPS boundaries. This enables developers
-> -to offload tasks to the DSP and free up the application processor for
-> -other tasks.
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <stringlist>
-> -	Definition: must be "qcom,fastrpc"
-> -
-> -- label
-> -	Usage: required
-> -	Value type: <string>
-> -	Definition: should specify the dsp domain name this fastrpc
-> -	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
-> -
-> -- #address-cells
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: Must be 1
-> -
-> -- #size-cells
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: Must be 0
-> -
-> -= COMPUTE BANKS
-> -Each subnode of the Fastrpc represents compute context banks available
-> -on the dsp.
-> -- All Compute context banks MUST contain the following properties:
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <stringlist>
-> -	Definition: must be "qcom,fastrpc-compute-cb"
-> -
-> -- reg
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: Context Bank ID.
-> -
-> -- qcom,nsessions:
-> -	Usage: Optional
-> -	Value type: <u32>
-> -	Defination: A value indicating how many sessions can share this
-> -		    context bank. Defaults to 1 when this property
-> -		    is not specified.
-> -
-> -Example:
-> -
-> -adsp-pil {
-> -	compatible = "qcom,msm8996-adsp-pil";
-> -	...
-> -	smd-edge {
-> -		label = "lpass";
-> -		fastrpc {
-> -			compatible = "qcom,fastrpc";
-> -			qcom,smd-channels = "fastrpcsmd-apps-dsp";
-> -			label = "adsp";
-> -			#address-cells = <1>;
-> -			#size-cells = <0>;
-> -
-> -			cb@1 {
-> -				compatible = "qcom,fastrpc-compute-cb";
-> -				reg = <1>;
-> -			};
-> -
-> -			cb@2 {
-> -				compatible = "qcom,fastrpc-compute-cb";
-> -				reg = <2>;
-> -			};
-> -			...
-> -		};
-> -	};
-> -};
-> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-> new file mode 100644
-> index 000000000000..f42ab208a7fc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-> @@ -0,0 +1,94 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Qualcomm FastRPC Driver
-> +
-> +maintainers:
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +
-> +description: |
-> +  The FastRPC implements an IPC (Inter-Processor Communication)
-> +  mechanism that allows for clients to transparently make remote method
-> +  invocations across DSP and APPS boundaries. This enables developers
-> +  to offload tasks to the DSP and free up the application processor for
-> +  other tasks.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,fastrpc
-> +
-> +  label:
-> +    items:
-> +      enum:
-> +        - adsp
-> +        - mdsp
-> +        - sdsp
-> +        - cdsp
-> +
-> +  '#address-cells':
-> +    const: 1
-> +
-> +  '#size-cells':
-> +    const: 0
-> +
-> +patternProperties:
-> +  "(compute-)?cb@[0-9]$":
-> +    type: object
-> +
-> +    description: >
-> +      Each subnode of the Fastrpc represents compute context banks available on the dsp.
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - const: qcom,fastrpc-compute-cb
-> +
-> +      reg:
-> +        maxItems: 1
-> +
-> +      qcom,nsession:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        default: 1
-> +        description: >
-> +          A value indicating how many sessions can share this context bank.
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +
-> +    additionalProperties: true
-> +
-> +required:
-> +  - compatible
-> +  - label
-> +  - '#address-cells'
-> +  - '#size-cells'
-> +
-> +additionalProperties: true
-> +
-> +examples:
-> +  - |
-> +    smd-edge {
-> +        label = "lpass";
-> +        fastrpc {
-> +            compatible = "qcom,fastrpc";
-> +            label = "adsp";
-> +            qcom,smd-channels = "fastrpcsmd-apps-dsp";
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            compute-cb@1 {
-> +                compatible = "qcom,fastrpc-compute-cb";
-> +                reg = <1>;
-> +            };
-> +
-> +            compute-cb@2 {
-> +                compatible = "qcom,fastrpc-compute-cb";
-> +                reg = <2>;
-> +            };
-> +        };
-> +    };
-> 
-[1] 
-https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20211130092846.18804-1-srinivas.kandagatla@linaro.org/
+Acked-by: Jakub Kicinski <kuba@kernel.org>
