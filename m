@@ -2,96 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C516D46BE9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:06:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D3A6C46BEF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 16:13:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233889AbhLGPJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 10:09:53 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:32970 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233762AbhLGPJx (ORCPT
+        id S229483AbhLGPPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 10:15:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55258 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229510AbhLGPPu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 10:09:53 -0500
+        Tue, 7 Dec 2021 10:15:50 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C62D8C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 07:12:19 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso18539602otf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 07:12:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638889583; x=1670425583;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=fU//TcKKhH46diZheIx8cFcX5pnBOhrdWPeL3XWH9KA=;
-  b=w/EMEwB0VWuvH/3jttBEDNWtSrMLFvGoIDbW4JQrCFtCu5PVqqXPeXhQ
-   Mia/EE0xnCG+Tzpjbwy8Jp7w/p7OnzJ7EnSs1ZRH8Pyum6hBv3JzWY1PO
-   xG5RySNouPt7WJS2N+gzQ22CwN29tdyUdW4q8EgH2Yq6VJjITxGkxBhls
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Dec 2021 07:06:22 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 07:06:21 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 7 Dec 2021 07:06:21 -0800
-Received: from [10.216.26.1] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 7 Dec 2021
- 07:06:16 -0800
-Subject: Re: [PATCH V4 1/6] dt-bindings: regulator: Add
- "regulator-min-dropout-voltage-microvolt"
-To:     Mark Brown <broonie@kernel.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, <swboyd@chromium.org>,
-        <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Lee Jones" <lee.jones@linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-2-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+o9sQpECZSrieN@sirena.org.uk>
- <d828f2a1-03e8-d6ee-4ab7-39bf677093b7@quicinc.com>
- <Ya5VhkggWdjYyTHL@sirena.org.uk>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <6a44cb99-6894-c9ce-4f1e-5dee0939598c@quicinc.com>
-Date:   Tue, 7 Dec 2021 20:36:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2dXIPzvKXL/0XHAniN5ixw9zTONENlVQpVmdzuJjKmg=;
+        b=rqU6GY5ntjRkYqXxOUSIWtDihVOINk3LhHZh43bwBMPNnuJ3WuC+aS1nRzh0ORm/Vb
+         kaz/s2ej/8hT7+HIg19Sxq5L3xLusJw0wLSbk5pL+Ll8dEQJXeYJaxjB1oWQ2M+EgEOM
+         ivUnFPCiueTJuEmJBD7hp26Dq83JGSVwQAdEu1acZrPKzcO65JHZ1gLnzZfo17bxoSKr
+         XmduCeztcCSVNYJUcZC5f5cwpt74s7uEVrvHh1KKy0TmtOrUWqwgIgb4N89rqQkhnJ9P
+         RwXVSLG4jOLPWu4XIspwgblYuMZb+Dg6HSsaOHa6KX+S+cjp5rYWExUluuWuD2Dfet4G
+         BU0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2dXIPzvKXL/0XHAniN5ixw9zTONENlVQpVmdzuJjKmg=;
+        b=iiRoCOP22sUV1paBbICXVbqbLKFGapYHdwAIdoHPTwjyPH7qO6tKA+LKApP2bz/dty
+         GuidhUNO+C97IMKhoqFMSRGQ8ylcUY6Azcv2VUi6Poy2DuMrFeWRAxaGaBMF+YcMC9+w
+         mLm+hVMHtm4gpdHh8wmLZVibk3j6onBwK4rReAdVmqnlY5YgXeTT5t/UgnQFhcpE5Au2
+         3+eW1XPod02tBnNzp+7r6DLU9yP22fC1izOSwJ4XPc5/2/R+krx4MO0XzjPLfstwaUSx
+         yNZH9GdhQ9L4ZhNEfUWlIsuZcKrayFCsPdpnzgyBd0k3r9STBXzzctNTPBLY/j7BJ+py
+         1JLA==
+X-Gm-Message-State: AOAM5318+mMM70rW7LewiVsjV7X4SOU32eM6XJ4UQXc+iVTiEw0YTd7i
+        5WF9W4vQ/F0IwJzp7y5DfDE5sg==
+X-Google-Smtp-Source: ABdhPJxGDA5E1j8PGQLhg8Ah1uL+m+DMGpdwG4j76U73RL7cKyHVJyW8WuUHtQstdKAqDQV0LdXopw==
+X-Received: by 2002:a9d:4d0f:: with SMTP id n15mr35888387otf.125.1638889939138;
+        Tue, 07 Dec 2021 07:12:19 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q9sm2779689oti.32.2021.12.07.07.12.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 07:12:18 -0800 (PST)
+Date:   Tue, 7 Dec 2021 07:13:44 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Guo Zhengkui <guozhengkui@vivo.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>, kernel@vivo.com
+Subject: Re: [PATCH] phy: qcom: fix bug: application of sizeof to pointer
+Message-ID: <Ya96KOynsO478cVx@ripper>
+References: <20211207131642.5313-1-guozhengkui@vivo.com>
 MIME-Version: 1.0
-In-Reply-To: <Ya5VhkggWdjYyTHL@sirena.org.uk>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211207131642.5313-1-guozhengkui@vivo.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue 07 Dec 05:16 PST 2021, Guo Zhengkui wrote:
 
-On 12/6/2021 11:55 PM, Mark Brown wrote:
-> On Mon, Dec 06, 2021 at 06:33:26PM +0530, Satya Priya Kakitapalli (Temp) wrote:
->> On 11/25/2021 8:47 PM, Mark Brown wrote:
->>> Usually this is a fixed property of the regulator rather than something
->>> that varies per board - why have a DT property?
->> The min-dropout value (headroom) varies with boards, that's why we have a DT
->> property for it. We overwrite the default value in driver with actual value
->> read from DT
-> Interesting.  How exactly does that end up happening - presumably other
-> systems are going to run into it?
+> Fix following coccicheck error:
+> ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
+> ERROR: application of sizeof to pointer.
+> 
+> Use sizeof(*data) instead.
+> 
+> Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+> index 17d5653b661d..5fe4eab9cac1 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+> @@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
+>  	struct clk_init_data init = { };
+>  	int ret;
+>  
+> -	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
+> +	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
 
+Ouch, thanks for catching that!
 
-The parent supplies such as "vdd-l1-l2" are coming from other pmic 
-regulators, which are shared supplies with other subsystems like BT, 
-Display etc, they vary between boards as per requirements, so we cannot 
-expect these to be fixed and so are the headroom values. We get the 
-headroom values from PMIC systems team for every target.
+But the clk_hw_onecell_data actually has a variable size array at the
+end and as you can see further down I store 2 items in that array.
 
+So that sizeof should be struct_size(data, hws, 2)
 
-> If you do have board designs which somehow managed to introduce
-> additional dropouts (seems pretty concerning TBH) then I think the best
-> way to handle that is to add a generic property for it and have that
-> either added on to or override the requirements of the regulator itself
-> which should continue to be defined in the driver.  That way only boards
-> with issues need to do anything which will avoid bugs with the property
-> being omitted in what should be the common case.
+Would you be willing to update your patch with that?
+
+And please add:
+Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
+
+Regards,
+Bjorn
+
+>  	if (!data)
+>  		return -ENOMEM;
+>  
+> -- 
+> 2.20.1
+> 
