@@ -2,85 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7950446B00E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 02:52:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2821B46B09D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 03:32:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234826AbhLGBzl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Dec 2021 20:55:41 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:24663 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230223AbhLGBzl (ORCPT
+        id S234700AbhLGCff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Dec 2021 21:35:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47734 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232135AbhLGCfe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Dec 2021 20:55:41 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1638841931; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=o/E0WPb3DgfSNjgnfDH6dTjCGZn7mfElYZOu6xLSZiA=; b=BZvO4xw/pOmJNqIOq6Q0gkb6bMKMD214ZtFIxR2quHd0Dqv6nxR46U27i4yR0/HOc5o7bldQ
- qV756GD/YLZZOJIrRNNeUoiWZ8igL1O+HP3APpZeHdiOhPFOKo9eBS8JQ/0kxyqxFkJ+6r3L
- EkAxzoWyXQoOTXnAi6+4hVuEwp0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n09.prod.us-east-1.postgun.com with SMTP id
- 61aebe4b7d878c8ded334c0d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Dec 2021 01:52:11
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 60F5BC4361C; Tue,  7 Dec 2021 01:52:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.0
-Received: from [10.110.103.130] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0E1FC4338F;
-        Tue,  7 Dec 2021 01:52:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A0E1FC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 01/20] bus: mhi: Move host MHI code to "host" directory
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mhi@lists.linux.dev
-Cc:     bbhatt@codeaurora.org, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, skananth@codeaurora.org,
-        vpernami@codeaurora.org, vbadigan@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211202113553.238011-1-manivannan.sadhasivam@linaro.org>
- <20211202113553.238011-2-manivannan.sadhasivam@linaro.org>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <1701ade0-4f75-1407-2741-cd792d3e78fe@codeaurora.org>
-Date:   Mon, 6 Dec 2021 17:52:02 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 6 Dec 2021 21:35:34 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11553C061746
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Dec 2021 18:32:05 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id s139so25036791oie.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Dec 2021 18:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7yIt0H2BJia1n1RdLgy9XsiVyWHb2gj2JpRcgtxqXlo=;
+        b=pFJa90TXfUzK+34x5n+LqtuDXUXuNklDwQGWBogvco1A+5NE5S/MB8+hE15xeRqggf
+         +hsj4kE8GOXrEQTh4EcQLY13ApN3mC/pFuasgI6VA3+7nuJpg78vBM4w/kj7gVlzcQ7w
+         k908aizran+2sJ3iS9aP+ed/zUqgs6Mwgjxnn2wauCaAjJ9rC9jGWsvPR5h6kOPcc7K5
+         HIbXnYKxnonKq/H1a7Xp/9IB/Ey4lGlVcoyNzaQ6g1EFRmsM9b5rayXyk5nxDMh8k0Ce
+         uF+B5XUz5bDaxpnL4h0CKSFVRFktnXiKRlVXZBsJEtKXcljsAHGjbViYLAdPJ8BLgEB3
+         qvBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7yIt0H2BJia1n1RdLgy9XsiVyWHb2gj2JpRcgtxqXlo=;
+        b=qvGowfxAG0U2MUUIZmrs3dPwRugzxjLV+I+yFSAOXeA+NuFe5xilRbHAvtul9jD6iO
+         RTfIwHft2lJ8ic3UUV/fSUf3AIcxKFGaFRI7fyJxSIicLYkgVgGfX6V1h2E2fOfrk8M8
+         jOevphHdRejoFW/tQMnHv0ZL7yODsPgorB9CNCuxX4gBVE7CiXos/Z2y9b1DDo7GGne1
+         MjDhFdPTEt85VKb4+oFdCpJMS8yD7NDTtcz9ZNpJfgh5b7DYmfmRCrp6E8GIA+7knXDq
+         yTgVRbIFClE0pYLepnXCqQ8FWx6OBA4AXKY1DAxwbmtrCh7KPgvOjryEQULV/xR8rp9f
+         pVSA==
+X-Gm-Message-State: AOAM533pzDaVRFszYicDxsnUrNIuKrl9NlHRHDpFotnqsZeNHKESRUBM
+        MsHnLKSFyMuZsKa1BzKwWrQWig==
+X-Google-Smtp-Source: ABdhPJw5b2Eojwp5CDWYULGnVErVQDMpMC7MfWDggUfrlQeEV1KtPN5iO4llP+D8PSYWDRlntP9Kgg==
+X-Received: by 2002:a05:6808:218b:: with SMTP id be11mr2719314oib.80.1638844324398;
+        Mon, 06 Dec 2021 18:32:04 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m2sm2556218oop.12.2021.12.06.18.32.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Dec 2021 18:32:03 -0800 (PST)
+Date:   Mon, 6 Dec 2021 18:33:28 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, robdclark@chromium.org,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH] usb: dwc3: dwc3-qcom: Avoid use-after-free when USB
+ defers or unbinds
+Message-ID: <Ya7H+COf/Hbk6g5M@ripper>
+References: <20211206152844.1.I411110cc99c1dd66b01aa9aa25651acf8ff55da1@changeid>
+ <CAE-0n50n=JZEqz5aQW4FQwjO9eFN56vTmBrQ6qBWduFY5jNPJA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20211202113553.238011-2-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n50n=JZEqz5aQW4FQwjO9eFN56vTmBrQ6qBWduFY5jNPJA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12/2/2021 3:35 AM, Manivannan Sadhasivam wrote:
-> In preparation of the endpoint MHI support, let's move the host MHI code
-> to its own "host" directory and adjust the toplevel MHI Kconfig & Makefile.
+On Mon 06 Dec 16:37 PST 2021, Stephen Boyd wrote:
+> Quoting Douglas Anderson (2021-12-06 15:28:47)
+[..]
+> > +                       goto node_put;
+> > +               }
+> >
+> > -       prop->name = "tx-fifo-resize";
+> > -       ret = of_add_property(dwc3_np, prop);
 > 
-> While at it, let's also move the "pci_generic" driver to "host" directory
-> as it is a host MHI controller driver.
+> I don't understand why we can't tell dwc3 that we want to use
+> tx-fifo-resize without adding a DT property. DT isn't the only way we
+> could probe this qcom dwc3 device, there's also ACPI. And in dwc3 core
+> where we check for this property couldn't we add a compatible check for
+> qcom,dwc3 and then force the property? I see that a lot of this was
+> already discussed when these patches got applied by gregkh directly[1].
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+When the tx-fifo-resize property was introduced I made an effort to
+convince the people involved about the prospect of passing this
+information in the code, rather than using DT as some sort of parameter
+store to pass information between the devices.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+And I still would like us to come up with some sort of code-level
+mechanism for passing some state between dwc3-qcom and the dwc3-core,
+because I really want to register some callback with the core so that we
+don't need to duplicate extcon and usb_role_switch in both the core and
+platform glue.
+
+See this discussion:
+https://lore.kernel.org/linux-arm-msm/YSZCmDEedJaJyI0u@ripper/
+
+> Can we revert out this bad code instead?
+> 
+
+You definitely have my vote for that!
+
+Regards,
+Bjorn
+
+> > -       if (ret) {
+> > -               dev_err(dev, "unable to add property\n");
+> > -               goto node_put;
+> > +               prop->name = "tx-fifo-resize";
+> > +               ret = of_add_property(dwc3_np, prop);
+> 
+> [1] https://lore.kernel.org/all/b5917fc0-c916-0a51-dc4c-315d7f02cafa@codeaurora.org/
