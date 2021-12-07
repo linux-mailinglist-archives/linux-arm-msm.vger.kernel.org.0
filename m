@@ -2,463 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A81146C2EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 19:34:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C56D346C3AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 20:30:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232601AbhLGSiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 13:38:20 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:33723 "EHLO
+        id S229625AbhLGTeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 14:34:14 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:51005 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbhLGSiT (ORCPT
+        with ESMTP id S229490AbhLGTeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 13:38:19 -0500
+        Tue, 7 Dec 2021 14:34:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638902089; x=1670438089;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=sWh8yU3fot/mgjt7cYkS/eLOk6VLCRquU0OYM5BxnuM=;
-  b=lw2kikz4sgx9XTSDmYCl76xaZ9lo+QrSXyWAbJUKq9xh05Vk18TgVP38
-   JvR9Rw6blcp6NpV+nwloVEmjyReofgrP1nD2v+tfgoJXpgqae8Sa8dpV1
-   oX/ujyoBtAxMcnBqLiglJHfFPEPF9iGv0tUcfwvJ9jGqJ3mblFBjYi6wl
-   M=;
+  t=1638905443; x=1670441443;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=2+8+9+n+/aGNN1L02U2FSrNSkxhVLZ6+6C8+ofOOfN4=;
+  b=FAKdPqX7NbmXyPc6Vl0W8Tu3s+ZU44G8WXTDR9Kh7991IkqoSnV0uUm1
+   7acliypz2Q1TLJ3HFY3sdXV601SJjRuIO3i/nWtoP0BSo7DMpX4ToeWa+
+   X4/MyQN1OYUJAcvmvQtn9DOnK/ag1H1uUOWH/g0Hs8WoYoXbRP4qezCc0
+   E=;
 Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 07 Dec 2021 10:34:49 -0800
+  by alexa-out.qualcomm.com with ESMTP; 07 Dec 2021 11:30:43 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 10:34:48 -0800
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 11:30:42 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 7 Dec 2021 10:33:47 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 7 Dec 2021 10:33:47 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5] drm/msm/dp: do not initialize phy until plugin interrupt received
-Date:   Tue, 7 Dec 2021 10:33:37 -0800
-Message-ID: <1638902017-24044-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.922.19; Tue, 7 Dec 2021 11:30:42 -0800
+Received: from [10.111.164.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 7 Dec 2021
+ 11:30:40 -0800
+Message-ID: <9ca7a443-49ed-8eec-de0a-d95552988a0e@quicinc.com>
+Date:   Tue, 7 Dec 2021 11:30:38 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 1/4] drm/msm/dpu: drop scaler config from plane state
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20211201225140.2481577-1-dmitry.baryshkov@linaro.org>
+ <20211201225140.2481577-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211201225140.2481577-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Current DP drivers have regulators, clocks, irq and phy are grouped
-together within a function and executed not in a symmetric manner.
-This increase difficulty of code maintenance and limited code scalability.
-This patch divided the driver life cycle of operation into four states,
-resume (including booting up), dongle plugin, dongle unplugged and suspend.
-Regulators, core clocks and irq are grouped together and enabled at resume
-(or booting up) so that the DP controller is armed and ready to receive HPD
-plugin interrupts. HPD plugin interrupt is generated when a dongle plugs
-into DUT (device under test). Once HPD plugin interrupt is received, DP
-controller will initialize phy so that dpcd read/write will function and
-following link training can be proceeded successfully. DP phy will be
-disabled after main link is teared down at end of unplugged HPD interrupt
-handle triggered by dongle unplugged out of DUT. Finally regulators, code
-clocks and irq are disabled at corresponding suspension.
 
-Changes in V2:
--- removed unnecessary dp_ctrl NULL check
--- removed unnecessary phy init_count and power_count DRM_DEBUG_DP logs
--- remove flip parameter out of dp_ctrl_irq_enable()
--- add fixes tag
 
-Changes in V3:
--- call dp_display_host_phy_init() instead of dp_ctrl_phy_init() at
-        dp_display_host_init() for eDP
+On 12/1/2021 2:51 PM, Dmitry Baryshkov wrote:
+> Scaler and pixel_ext configuration does not contain a long living state,
+> it is used only during plane update, so remove these two fiels from
+> dpu_plane_state and allocate them on stack.
+s/fiels/fields
 
-Changes in V4:
--- rewording commit text to match this commit changes
-
-Changes in V5:
--- rebase on top of msm-next branch
-
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 87 ++++++++++++++++---------------------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  9 ++--
- drivers/gpu/drm/msm/dp/dp_display.c | 80 ++++++++++++++++++++++++++--------
- 3 files changed, 104 insertions(+), 72 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c724cb0..7f0d647 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1365,60 +1365,54 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
-+void dp_ctrl_irq_enable(struct dp_ctrl *dp_ctrl)
-+{
-+	struct dp_ctrl_private *ctrl;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	dp_catalog_ctrl_reset(ctrl->catalog);
-+
-+	dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
-+}
-+
-+void dp_ctrl_irq_disable(struct dp_ctrl *dp_ctrl)
-+{
-+	struct dp_ctrl_private *ctrl;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	dp_catalog_ctrl_reset(ctrl->catalog);
-+
-+	dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-+}
-+
-+void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
- 	struct phy *phy;
- 
--	if (!dp_ctrl) {
--		DRM_ERROR("Invalid input data\n");
--		return -EINVAL;
--	}
--
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 	dp_io = &ctrl->parser->io;
- 	phy = dp_io->phy;
- 
--	ctrl->dp_ctrl.orientation = flip;
--
--	if (reset)
--		dp_catalog_ctrl_reset(ctrl->catalog);
--
--	DRM_DEBUG_DP("flip=%d\n", flip);
- 	dp_catalog_ctrl_phy_reset(ctrl->catalog);
- 	phy_init(phy);
--	dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
--
--	return 0;
- }
- 
--/**
-- * dp_ctrl_host_deinit() - Uninitialize DP controller
-- * @dp_ctrl: Display Port Driver data
-- *
-- * Perform required steps to uninitialize DP controller
-- * and its resources.
-- */
--void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
-+void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
- 	struct phy *phy;
- 
--	if (!dp_ctrl) {
--		DRM_ERROR("Invalid input data\n");
--		return;
--	}
--
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 	dp_io = &ctrl->parser->io;
- 	phy = dp_io->phy;
- 
--	dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-+	dp_catalog_ctrl_phy_reset(ctrl->catalog);
- 	phy_exit(phy);
--
--	DRM_DEBUG_DP("Host deinitialized successfully\n");
- }
- 
- static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
-@@ -1893,8 +1887,14 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 		return ret;
- 	}
- 
-+	DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	phy_power_off(phy);
- 
-+	DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	/* aux channel down, reinit phy */
- 	phy_exit(phy);
- 	phy_init(phy);
-@@ -1903,23 +1903,6 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 	return ret;
- }
- 
--void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
--{
--	struct dp_ctrl_private *ctrl;
--	struct dp_io *dp_io;
--	struct phy *phy;
--
--	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
--	dp_io = &ctrl->parser->io;
--	phy = dp_io->phy;
--
--	dp_catalog_ctrl_reset(ctrl->catalog);
--
--	phy_exit(phy);
--
--	DRM_DEBUG_DP("DP off phy done\n");
--}
--
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
-@@ -1947,10 +1930,14 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- 		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
- 	}
- 
-+	DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	phy_power_off(phy);
--	phy_exit(phy);
- 
--	DRM_DEBUG_DP("DP off done\n");
-+	DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2363a2d..30f9414 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -19,12 +19,9 @@ struct dp_ctrl {
- 	u32 pixel_rate;
- };
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
--void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
--void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-@@ -34,4 +31,10 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
- 			struct dp_power *power, struct dp_catalog *catalog,
- 			struct dp_parser *parser);
- 
-+void dp_ctrl_irq_enable(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_irq_disable(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_irq_phy_exit(struct dp_ctrl *dp_ctrl);
-+
- #endif /* _DP_CTRL_H_ */
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d44f18b..0261640 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -83,6 +83,7 @@ struct dp_display_private {
- 
- 	/* state variables */
- 	bool core_initialized;
-+	bool phy_initialized;
- 	bool hpd_irq_on;
- 	bool audio_supported;
- 
-@@ -375,7 +376,29 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	return rc;
- }
- 
--static void dp_display_host_init(struct dp_display_private *dp, int reset)
-+static void dp_display_host_phy_init(struct dp_display_private *dp)
-+{
-+	DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-+			dp->core_initialized, dp->phy_initialized);
-+
-+	if (!dp->phy_initialized) {
-+		dp_ctrl_phy_init(dp->ctrl);
-+		dp->phy_initialized = true;
-+	}
-+}
-+
-+static void dp_display_host_phy_exit(struct dp_display_private *dp)
-+{
-+	DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-+			dp->core_initialized, dp->phy_initialized);
-+
-+	if (dp->phy_initialized) {
-+		dp_ctrl_phy_exit(dp->ctrl);
-+		dp->phy_initialized = false;
-+	}
-+}
-+
-+static void dp_display_host_init(struct dp_display_private *dp)
- {
- 	bool flip = false;
- 
-@@ -388,8 +411,16 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
- 	if (dp->usbpd->orientation == ORIENTATION_CC2)
- 		flip = true;
- 
--	dp_power_init(dp->power, flip);
--	dp_ctrl_host_init(dp->ctrl, flip, reset);
-+	dp_power_init(dp->power, false);
-+	dp_ctrl_irq_enable(dp->ctrl);
-+
-+	/*
-+	 * eDP is the embedded primary display and has its own phy
-+	 * initialize phy immediately
-+	 */
-+	if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
-+		dp_display_host_phy_init(dp);
-+
- 	dp_aux_init(dp->aux);
- 	dp->core_initialized = true;
- }
-@@ -401,7 +432,7 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
- 		return;
- 	}
- 
--	dp_ctrl_host_deinit(dp->ctrl);
-+	dp_ctrl_irq_disable(dp->ctrl);
- 	dp_aux_deinit(dp->aux);
- 	dp_power_deinit(dp->power);
- 
-@@ -412,7 +443,7 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
- {
- 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
- 
--	dp_display_host_init(dp, false);
-+	dp_display_host_phy_init(dp);
- 
- 	return dp_display_process_hpd_high(dp);
- }
-@@ -536,7 +567,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 		dp->hpd_state = ST_DISCONNECTED;
- 
- 		if (ret == -ECONNRESET) { /* cable unplugged */
--			dp->core_initialized = false;
-+			dp->phy_initialized = false;
- 		}
- 
- 	} else {
-@@ -608,8 +639,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	if (state == ST_DISCONNECTED) {
- 		/* triggered by irq_hdp with sink_count = 0 */
- 		if (dp->link->sink_count == 0) {
--			dp_ctrl_off_phy(dp->ctrl);
--			dp->core_initialized = false;
-+			dp_display_host_phy_exit(dp);
- 		}
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
-@@ -698,7 +728,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 
- 	ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
- 	if (ret == -ECONNRESET) { /* cable unplugged */
--		dp->core_initialized = false;
-+		dp->phy_initialized = false;
- 	}
- 	DRM_DEBUG_DP("hpd_state=%d\n", state);
- 
-@@ -890,12 +920,19 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
- 
- 	dp_display->audio_enabled = false;
- 
--	/* triggered by irq_hpd with sink_count = 0 */
- 	if (dp->link->sink_count == 0) {
-+		/*
-+		 * irq_hpd with sink_count = 0
-+		 * hdmi unplugged out of dongle
-+		 */
- 		dp_ctrl_off_link_stream(dp->ctrl);
- 	} else {
-+		/*
-+		 * unplugged interrupt
-+		 * dongle unplugged out of DUT
-+		 */
- 		dp_ctrl_off(dp->ctrl);
--		dp->core_initialized = false;
-+		dp_display_host_phy_exit(dp);
- 	}
- 
- 	dp_display->power_on = false;
-@@ -1025,7 +1062,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
- static void dp_display_config_hpd(struct dp_display_private *dp)
- {
- 
--	dp_display_host_init(dp, true);
-+	dp_display_host_init(dp);
- 	dp_catalog_ctrl_hpd_config(dp->catalog);
- 
- 	/* Enable interrupt first time
-@@ -1304,20 +1341,23 @@ static int dp_pm_resume(struct device *dev)
- 	dp->hpd_state = ST_DISCONNECTED;
- 
- 	/* turn on dp ctrl/phy */
--	dp_display_host_init(dp, true);
-+	dp_display_host_init(dp);
- 
- 	dp_catalog_ctrl_hpd_config(dp->catalog);
- 
--	/*
--	 * set sink to normal operation mode -- D0
--	 * before dpcd read
--	 */
--	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
- 
- 	if (dp_catalog_link_is_connected(dp->catalog)) {
-+		/*
-+		 * set sink to normal operation mode -- D0
-+		 * before dpcd read
-+		 */
-+		dp_display_host_phy_init(dp);
-+		dp_link_psm_config(dp->link, &dp->panel->link_info, false);
- 		sink_count = drm_dp_read_sink_count(dp->aux);
- 		if (sink_count < 0)
- 			sink_count = 0;
-+
-+		dp_display_host_phy_exit(dp);
- 	}
- 
- 	dp->link->sink_count = sink_count;
-@@ -1364,6 +1404,8 @@ static int dp_pm_suspend(struct device *dev)
- 		dp_display_host_deinit(dp);
- 	}
- 
-+	dp_display_host_phy_exit(dp);
-+
- 	dp->hpd_state = ST_SUSPENDED;
- 
- 	/* host_init will be called at pm_resume */
-@@ -1521,7 +1563,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 	state =  dp_display->hpd_state;
- 
- 	if (state == ST_DISPLAY_OFF)
--		dp_display_host_init(dp_display, true);
-+		dp_display_host_phy_init(dp_display);
- 
- 	dp_display_enable(dp_display, 0);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+apart from that,
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 59 ++++++++++-------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  6 ---
+>   2 files changed, 26 insertions(+), 39 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index ca190d92f0d5..4c373abbe89c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -536,14 +536,12 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+>   		struct dpu_plane_state *pstate,
+>   		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
+>   		struct dpu_hw_scaler3_cfg *scale_cfg,
+> +		struct dpu_hw_pixel_ext *pixel_ext,
+>   		const struct dpu_format *fmt,
+>   		uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
+>   {
+>   	uint32_t i;
+>   
+> -	memset(scale_cfg, 0, sizeof(*scale_cfg));
+> -	memset(&pstate->pixel_ext, 0, sizeof(struct dpu_hw_pixel_ext));
+> -
+>   	scale_cfg->phase_step_x[DPU_SSPP_COMP_0] =
+>   		mult_frac((1 << PHASE_STEP_SHIFT), src_w, dst_w);
+>   	scale_cfg->phase_step_y[DPU_SSPP_COMP_0] =
+> @@ -582,9 +580,9 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+>   			scale_cfg->preload_y[i] = DPU_QSEED3_DEFAULT_PRELOAD_V;
+>   		}
+>   
+> -		pstate->pixel_ext.num_ext_pxls_top[i] =
+> +		pixel_ext->num_ext_pxls_top[i] =
+>   			scale_cfg->src_height[i];
+> -		pstate->pixel_ext.num_ext_pxls_left[i] =
+> +		pixel_ext->num_ext_pxls_left[i] =
+>   			scale_cfg->src_width[i];
+>   	}
+>   	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
+> @@ -662,6 +660,11 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+>   		struct dpu_hw_pipe_cfg *pipe_cfg)
+>   {
+>   	const struct drm_format_info *info = drm_format_info(fmt->base.pixel_format);
+> +	struct dpu_hw_scaler3_cfg scaler3_cfg;
+> +	struct dpu_hw_pixel_ext pixel_ext;
+> +
+> +	memset(&scaler3_cfg, 0, sizeof(scaler3_cfg));
+> +	memset(&pixel_ext, 0, sizeof(pixel_ext));
+>   
+>   	/* don't chroma subsample if decimating */
+>   	/* update scaler. calculate default config for QSEED3 */
+> @@ -670,8 +673,23 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+>   			drm_rect_height(&pipe_cfg->src_rect),
+>   			drm_rect_width(&pipe_cfg->dst_rect),
+>   			drm_rect_height(&pipe_cfg->dst_rect),
+> -			&pstate->scaler3_cfg, fmt,
+> +			&scaler3_cfg, &pixel_ext, fmt,
+>   			info->hsub, info->vsub);
+> +
+> +	if (pdpu->pipe_hw->ops.setup_pe)
+> +		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> +				&pixel_ext);
+> +
+> +	/**
+> +	 * when programmed in multirect mode, scalar block will be
+> +	 * bypassed. Still we need to update alpha and bitwidth
+> +	 * ONLY for RECT0
+> +	 */
+> +	if (pdpu->pipe_hw->ops.setup_scaler &&
+> +			pstate->multirect_index != DPU_SSPP_RECT_1)
+> +		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> +				pipe_cfg, &pixel_ext,
+> +				&scaler3_cfg);
+>   }
+>   
+>   /**
+> @@ -712,7 +730,6 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+>   			drm_rect_width(&pipe_cfg.dst_rect);
+>   		pipe_cfg.src_rect.y2 =
+>   			drm_rect_height(&pipe_cfg.dst_rect);
+> -		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
+>   
+>   		if (pdpu->pipe_hw->ops.setup_format)
+>   			pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw,
+> @@ -724,15 +741,7 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
+>   					&pipe_cfg,
+>   					pstate->multirect_index);
+>   
+> -		if (pdpu->pipe_hw->ops.setup_pe)
+> -			pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> -					&pstate->pixel_ext);
+> -
+> -		if (pdpu->pipe_hw->ops.setup_scaler &&
+> -				pstate->multirect_index != DPU_SSPP_RECT_1)
+> -			pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> -					&pipe_cfg, &pstate->pixel_ext,
+> -					&pstate->scaler3_cfg);
+> +		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
+>   	}
+>   
+>   	return 0;
+> @@ -1129,8 +1138,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   
+>   	pipe_cfg.dst_rect = state->dst;
+>   
+> -	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
+> -
+>   	/* override for color fill */
+>   	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
+>   		/* skip remaining processing on color fill */
+> @@ -1143,21 +1150,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+>   				pstate->multirect_index);
+>   	}
+>   
+> -	if (pdpu->pipe_hw->ops.setup_pe &&
+> -			(pstate->multirect_index != DPU_SSPP_RECT_1))
+> -		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+> -				&pstate->pixel_ext);
+> -
+> -	/**
+> -	 * when programmed in multirect mode, scalar block will be
+> -	 * bypassed. Still we need to update alpha and bitwidth
+> -	 * ONLY for RECT0
+> -	 */
+> -	if (pdpu->pipe_hw->ops.setup_scaler &&
+> -			pstate->multirect_index != DPU_SSPP_RECT_1)
+> -		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
+> -				&pipe_cfg, &pstate->pixel_ext,
+> -				&pstate->scaler3_cfg);
+> +	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
+>   
+>   	if (pdpu->pipe_hw->ops.setup_multirect)
+>   		pdpu->pipe_hw->ops.setup_multirect(
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index 52792526e904..1ee5ca5fcdf7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -23,8 +23,6 @@
+>    * @multirect_index: index of the rectangle of SSPP
+>    * @multirect_mode: parallel or time multiplex multirect mode
+>    * @pending:	whether the current update is still pending
+> - * @scaler3_cfg: configuration data for scaler3
+> - * @pixel_ext: configuration data for pixel extensions
+>    * @plane_fetch_bw: calculated BW per plane
+>    * @plane_clk: calculated clk per plane
+>    */
+> @@ -37,10 +35,6 @@ struct dpu_plane_state {
+>   	uint32_t multirect_mode;
+>   	bool pending;
+>   
+> -	/* scaler configuration */
+> -	struct dpu_hw_scaler3_cfg scaler3_cfg;
+> -	struct dpu_hw_pixel_ext pixel_ext;
+> -
+>   	u64 plane_fetch_bw;
+>   	u64 plane_clk;
+>   };
+> 
