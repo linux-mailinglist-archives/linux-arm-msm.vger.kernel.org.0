@@ -2,134 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3464B46BDD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 15:36:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0968346BE1A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Dec 2021 15:47:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233444AbhLGOjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 09:39:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        id S238209AbhLGOvW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 09:51:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233433AbhLGOje (ORCPT
+        with ESMTP id S238208AbhLGOvW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 09:39:34 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0534C061748
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 06:36:04 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso18251400ots.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 06:36:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ca/ZfVcUU8maYjpZU9kIokWeUgbOFULJH3lKSEdkVJ4=;
-        b=Smp16oE41OT4RZ7NYx1mmQJkQUSTLC8DhW/PDPMu1ZRkCZ3sdae5MCFcRPxyPvzdXq
-         EVkzkGSg59ygUTFwR7ES+fyPpZKMwR1FTZ7lKeP8bwSAm6uF7vGyBT+3OT5hGAYpHx4I
-         u/L/C7IAmbnQNJuEGTwQ5OAYzvS7G+neUF4i3Zf4wsPCHwCRX++dwi+DSPoqpNflkdGz
-         wfBUKA7eG+uaBRKzz1UUbshqpvWxYP2dIBPOUYizQ6P3m6jwx2PoMyGLNkOyR1RbT1Bi
-         6EUdL/SIim4EeOThLfHxi9FAEtKzPmtTz4EvjiIOIIFT8y8j7Gy85WMNN2E2N5k6FQDE
-         Ydgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ca/ZfVcUU8maYjpZU9kIokWeUgbOFULJH3lKSEdkVJ4=;
-        b=eVgl2fDiEXFXwnjigqjEb3RI/lkaD2yk/BVWCJN5xBl3pNJlDbP0My+JzKUxYU2qXZ
-         A4gwqJ9XpNMdIFA7gQw/9PxXBtn1qOhJ9t8L1zcGmynHYrP1lKTSqxH3J4Y+owWj/2c6
-         lPMjUzUKH2u9iWvBqnlaIFssMoARya85tiwWnIIh/mMVEkGVAs53Sf1Gepff0UuX7vr7
-         yZ/rZAjx1x5+2WSBpMf8C06NZfTRnDeMp++aqOfF0OOUmD7xlaUscOx+16N41+IMNeJv
-         XoJayn9iDA+JnNS7WrgfUunGL44qz1hDiEapQKS7kjLvm9ejo3c5jKRkINq2fn3MlMMm
-         5GhA==
-X-Gm-Message-State: AOAM532Ua/CsAuuU0wi/KfZxDf8MsijngLNTGbuW9ZRZZz2lyvn/hRAM
-        Q1HOserVXF0uZN4oz4GJOXcwoemjrp9/Hg==
-X-Google-Smtp-Source: ABdhPJzHJhrjhZAdmpGWiPf/jWB2MNrH/VVlJFPVle9dCIUU6hLaq07NInEaQmlN6pLDndblmOTKeg==
-X-Received: by 2002:a05:6830:1e57:: with SMTP id e23mr35505970otj.16.1638887764000;
-        Tue, 07 Dec 2021 06:36:04 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v10sm2790947oor.33.2021.12.07.06.36.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 06:36:03 -0800 (PST)
-Date:   Tue, 7 Dec 2021 06:37:29 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/15] arm64: dts: qcom: sm8450: Add tlmm nodes
-Message-ID: <Ya9xqfuN/4dCrLxr@ripper>
-References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-4-vkoul@kernel.org>
+        Tue, 7 Dec 2021 09:51:22 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB652C061574;
+        Tue,  7 Dec 2021 06:47:51 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 91D6CCE1B19;
+        Tue,  7 Dec 2021 14:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E422C341C5;
+        Tue,  7 Dec 2021 14:47:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1638888467;
+        bh=u4WpnIP/o6TXEfTfxB1pdkIBKTMxbE9JzDtO7Q8LGY8=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=BHwzZaUvYEJBPdkY29edXrrIzNxbqF3c2GIHQhelBbf0o83fviJEkGmWTcjamgyqm
+         mrgcdS4nNcZdIC+5w7HVXtKw33DnoQLYytjDdEoz459JmfnOLhg7QDmxQ2AlQG4CY/
+         DwucZPElGRLQMCkh936aYOUdUogaDvh+fYCKTrc9q2XLcbWr/kQKWuO5D/sRVsaf5y
+         nrqvOuLYM0/r+MCq+ZgPXDgZO7y672LcoUblh1I3jiiKGbF2Mmu+fdtGRwTK0PywMe
+         lGgv7c6AD40cKjRWSdIJc47ZIIEWiAhlGvc0vZxCm6MjV3EY6M9OIEndS9Gj79UJPt
+         +8bvZikxOHiyQ==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, stable@vger.kernel.org,
+        Pengyu Ma <mapengyu@gmail.com>
+Subject: Re: [PATCH] bus: mhi: core: Add support for forced PM resume
+References: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
+Date:   Tue, 07 Dec 2021 16:47:42 +0200
+In-Reply-To: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
+        (Manivannan Sadhasivam's message of "Mon, 6 Dec 2021 21:40:59 +0530")
+Message-ID: <871r2otqsx.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211201072915.3969178-4-vkoul@kernel.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 30 Nov 23:29 PST 2021, Vinod Koul wrote:
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
 
-> Add tlmm node found in SM8450 SoC and uart pin configuration
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 29 ++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index d838283bde4b..f0b9e80238a2 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -343,6 +343,8 @@ uart7: serial@99c000 {
->  				reg = <0 0x0099c000 0 0x4000>;
->  				clock-names = "se";
->  				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&qup_uart7_default_state>;
->  				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
->  				#address-cells = <1>;
->  				#size-cells = <0>;
-> @@ -366,6 +368,33 @@ pdc: interrupt-controller@b220000 {
->  			interrupt-controller;
->  		};
->  
-> +		tlmm: pinctrl@f100000 {
-> +			compatible = "qcom,sm8450-tlmm";
-> +			reg = <0 0x0f100000 0 0x300000>;
-> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +			gpio-ranges = <&tlmm 0 0 211>;
-> +			wakeup-parent = <&pdc>;
-> +
-> +			qup_uart7_default_state: qup-uart3-default-state {
+> From: Loic Poulain <loic.poulain@linaro.org>
+>
+> For whatever reason, some devices like QCA6390, WCN6855 using ath11k
+> are not in M3 state during PM resume, but still functional. The
+> mhi_pm_resume should then not fail in those cases, and let the higher
+> level device specific stack continue resuming process.
+>
+> Add a new parameter to mhi_pm_resume, to force resuming, whatever the
+> current MHI state is. This fixes a regression with non functional
+> ath11k WiFi after suspend/resume cycle on some machines.
+>
+> Bug report: https://bugzilla.kernel.org/show_bug.cgi?id=214179
+>
+> Cc: stable@vger.kernel.org #5.13
+> Fixes: 020d3b26c07a ("bus: mhi: Early MHI resume failure in non M3 state")
+> Reported-by: Kalle Valo <kvalo@codeaurora.org>
+> Reported-by: Pengyu Ma <mapengyu@gmail.com>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> [mani: Added comment, bug report, added reported-by tags and CCed stable]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-There's a '3' in the node name.
+Thanks! I now tested this patch on top v5.16-rc4 using QCA6390 and
+firmware WLAN.HST.1.0.1-01740-QCAHSTSWPLZ_V2_TO_X86-1, no issues found:
 
-Loos good otherwise.
+Tested-by: Kalle Valo <kvalo@kernel.org>
 
-Thanks,
-Bjorn
+I'm not expecting any conflicts with ath11k, so please take this via the
+mhi tree. It would be really good to get this regression fixed in v5.16,
+so is it possible to send this to -rc releases?
 
-> +				rx {
-> +					pins = "gpio26";
-> +					function = "qup7";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +				tx {
-> +					pins = "gpio27";
-> +					function = "qup7";
-> +					drive-strength = <2>;
-> +					bias-disable;
-> +				};
-> +			};
-> +		};
-> +
->  		intc: interrupt-controller@17100000 {
->  			compatible = "arm,gic-v3";
->  			#interrupt-cells = <3>;
-> -- 
-> 2.31.1
-> 
+For the ath11k part:
+
+Acked-by: Kalle Valo <kvalo@kernel.org>
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
