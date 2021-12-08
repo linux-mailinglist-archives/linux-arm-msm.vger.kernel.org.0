@@ -2,147 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B05546C973
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 01:42:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C91446C9C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 02:03:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbhLHAqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 19:46:16 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:7408 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbhLHAqP (ORCPT
+        id S229882AbhLHBHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 20:07:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54950 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229531AbhLHBHI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 19:46:15 -0500
+        Tue, 7 Dec 2021 20:07:08 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1443EC061574;
+        Tue,  7 Dec 2021 17:03:38 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id y7so489905plp.0;
+        Tue, 07 Dec 2021 17:03:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638924165; x=1670460165;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=IOXhzLbAbOjYfOtaCa+yYMGoFtzfVki0B97LX03IghI=;
-  b=I8a9ajy6EbV3HF1+91ugGlXoe7WaasH5AwbWmULR/WrMQUmlp1GnBTI2
-   QSfNHCXapxJrvadAp8j8KP4dxhkbFDK3CZNfC5i7OwGmcVJ/xGUTc1DVt
-   WFr26dgG5Cdpp13vN4PzhqsE1ldbMLM1rjaKjGJnsdMT6Cp7Hi+dU4rlw
-   g=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 07 Dec 2021 16:42:45 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 16:42:44 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 7 Dec 2021 16:42:43 -0800
-Received: from [10.111.164.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 7 Dec 2021
- 16:42:41 -0800
-Message-ID: <8c9c4f59-cef0-baa6-0a40-0a3c1fce3470@quicinc.com>
-Date:   Tue, 7 Dec 2021 16:42:39 -0800
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wODOQzkVh9zeQYxZgNd/y4oFz1Y6sLQfoGixvntFcCA=;
+        b=Lf2hx3I/SvE2sHOji9nxHNaQtgVWWL1zxDGhD7Ya18brrer+ZE5vYgqMK7DaBOTAoa
+         PwTkgvmCFjKk0tz6Ypnk2GnKCa8qV+w8H1ffcAfHJKNOb/m9zEaIg6+aCawRrZzBvRvo
+         qzEcy2rgdsk/9ypreMnVJV2HwNpvHrjiTv4Hb8Yi4cV3F4KY3mxjcg2h5Prjot5IMF7t
+         qzbq5H9kWRhW95QVmFy3XbUgkRmL0V4bJ8BYyXz5PnOHS9WaHpzjmT6LTQXZPisyNQZR
+         NmuqqH/WeMpzwokICTf6ibHS4KM2QyxL8jO7T0fNBgK2MNGd9v609ppwWMcUD6NYC9+G
+         +45A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wODOQzkVh9zeQYxZgNd/y4oFz1Y6sLQfoGixvntFcCA=;
+        b=p+PvmrXbNMbI9vYZvIzY/z2d8mfCd/5paKQ8DNH7BdsrBJBoDH5ssj+XXNBSuPnZCb
+         AljGdVkfER1C/3HXJCwgh9BuV6/zWHILzujHZu6qSLFxNDKJPSovFGmOT2wfv4KOXZwP
+         oqd4zFmeQ/L1/Sc5UsJo9PRrjZoHay7azYv4pj+93po2dECLeicEj+IGI96d0L56WjUq
+         QMiyyYywOBPjYOKU8sFFtOLKQksoq28yDBcXkk0R14wz1WKKD5BXnlIy35arvKkX6eIk
+         IWaGrVI7Euceh022TFfRVWLKfynNzKWwllCbj/JEXsYZNeBNmYHiJY9faJ/hH/nVxNht
+         qN/g==
+X-Gm-Message-State: AOAM533QS4+N99nUXuMI7opUxzOb2LgWldRyLNMRhKx0getREP5cM9M1
+        he9+400/8SB/aHSI6IJRTDs=
+X-Google-Smtp-Source: ABdhPJzH0lW1WLXdtj1vSfMyFvfaeoThFV6rkXNWWx5Uz/1mg3AcNrzLx0TII9mIwkKubGompnNpBQ==
+X-Received: by 2002:a17:90b:4c44:: with SMTP id np4mr3299329pjb.195.1638925417652;
+        Tue, 07 Dec 2021 17:03:37 -0800 (PST)
+Received: from debian11-dev-61.localdomain (192.243.120.180.16clouds.com. [192.243.120.180])
+        by smtp.gmail.com with ESMTPSA id y25sm631911pgk.47.2021.12.07.17.03.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 17:03:37 -0800 (PST)
+From:   davidcomponentone@gmail.com
+To:     agross@kernel.org
+Cc:     davidcomponentone@gmail.com, bjorn.andersson@linaro.org,
+        kishon@ti.com, vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Zeal Robot <zealci@zte.com.cn>,
+        Yang Guang <yang.guang5@zte.com.cn>
+Subject: [PATCH] pyh: qcom: fix the application of sizeof to pointer
+Date:   Wed,  8 Dec 2021 09:03:21 +0800
+Message-Id: <c74d05d5197fa4fba96c4bd1cd597cd644c694b6.1638924754.git.davidcomponentone@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH] drm/msm/dsi: fix initialization in the bonded DSI case
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        <freedreno@lists.freedesktop.org>
-References: <20211125180114.561278-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20211125180114.561278-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: David Yang <davidcomponentone@gmail.com>
 
+The coccinelle check report:
+./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
+ERROR: application of sizeof to pointer
 
-On 11/25/2021 10:01 AM, Dmitry Baryshkov wrote:
-> Commit 739b4e7756d3 ("drm/msm/dsi: Fix an error code in
-> msm_dsi_modeset_init()") changed msm_dsi_modeset_init() to return an
-> error code in case msm_dsi_manager_validate_current_config() returns
-> false. However this is not an error case, but a slave DSI of the bonded
-> DSI link. In this case msm_dsi_modeset_init() should return 0, but just
-> skip connector and bridge initialization.
-> 
-> To reduce possible confusion, drop the
-> msm_dsi_manager_validate_current_config() function, and specif 'bonded
-> && !master' condition directly in the msm_dsi_modeset_init().
-> 
-> Fixes: 739b4e7756d3 ("drm/msm/dsi: Fix an error code in msm_dsi_modeset_init()")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi.c         | 10 +++++++---
->   drivers/gpu/drm/msm/dsi/dsi.h         |  1 -
->   drivers/gpu/drm/msm/dsi/dsi_manager.c | 17 -----------------
->   3 files changed, 7 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 75ae3008b68f..fc280cc43494 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -215,9 +215,13 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   		goto fail;
->   	}
->   
-> -	if (!msm_dsi_manager_validate_current_config(msm_dsi->id)) {
-> -		ret = -EINVAL;
-> -		goto fail;
-> +	if (msm_dsi_is_bonded_dsi(msm_dsi) &&
-> +	    !msm_dsi_is_master_dsi(msm_dsi)) {
-> +		/*
-> +		 * Do not return an eror here,
-> +		 * Just skip creating encoder/connector for the slave-DSI.
-> +		 */
-> +		return 0;
->   	}
->   
->   	msm_dsi->encoder = encoder;
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 66443dc98500..ef8212990254 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -82,7 +82,6 @@ int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
->   bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
->   int msm_dsi_manager_register(struct msm_dsi *msm_dsi);
->   void msm_dsi_manager_unregister(struct msm_dsi *msm_dsi);
-> -bool msm_dsi_manager_validate_current_config(u8 id);
->   void msm_dsi_manager_tpg_enable(void);
->   
->   /* msm dsi */
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index a152dbf63038..a73cfeb93e90 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -645,23 +645,6 @@ struct drm_connector *msm_dsi_manager_connector_init(u8 id)
->   	return ERR_PTR(ret);
->   }
->   
-> -bool msm_dsi_manager_validate_current_config(u8 id)
-> -{
-> -	bool is_bonded_dsi = IS_BONDED_DSI();
-> -
-> -	/*
-> -	 * For bonded DSI, we only have one drm panel. For this
-> -	 * use case, we register only one bridge/connector.
-> -	 * Skip bridge/connector initialisation if it is
-> -	 * slave-DSI for bonded DSI configuration.
-> -	 */
-> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id)) {
-> -		DBG("Skip bridge registration for slave DSI->id: %d\n", id);
-> -		return false;
-> -	}
-> -	return true;
-> -}
-> -
->   /* initialize bridge */
->   struct drm_bridge *msm_dsi_manager_bridge_init(u8 id)
->   {
-> 
+Using the real size to fix it.
+
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Yang Guang <yang.guang5@zte.com.cn>
+Signed-off-by: David Yang <davidcomponentone@gmail.com>
+---
+ drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+index 17d5653b661d..5fe4eab9cac1 100644
+--- a/drivers/phy/qualcomm/phy-qcom-edp.c
++++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+@@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
+ 	struct clk_init_data init = { };
+ 	int ret;
+ 
+-	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
++	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-- 
+2.30.2
+
