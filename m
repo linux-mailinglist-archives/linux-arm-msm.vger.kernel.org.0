@@ -2,266 +2,434 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 807DC46DD92
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 22:22:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C057946DD80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 22:18:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234810AbhLHV0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 16:26:23 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:28021 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234458AbhLHV0W (ORCPT
+        id S237041AbhLHVWI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 16:22:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231419AbhLHVWI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 16:26:22 -0500
+        Wed, 8 Dec 2021 16:22:08 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CC5C061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 13:18:35 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id n33-20020a05600c502100b0032fb900951eso5139640wmr.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 13:18:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638998571; x=1670534571;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=hqpydbPnhf4XmZ6nW5JaL1/4pn7jf3q2e68Be7I46M4=;
-  b=nrSbJQB4q3B7dZhcOud7nDwGpp6e3fNGRv0pUqoD2JfV4bmRea+03BaC
-   +8RYALjx/MavLwT5OXrF8kUq3B4MPSabccPzsGrOq4iocSYOc+H/YIO9P
-   zZFHOelPf5gSQu5Em7Bz3+R9j4kukNmy4p1jHsQfS+WQ7vQ1eCQJm0LLW
-   o=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 08 Dec 2021 13:22:50 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 13:22:49 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 8 Dec 2021 13:22:32 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 8 Dec 2021 13:22:31 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kishon@ti.com>, <p.zabel@pengutronix.de>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Subject: [PATCH v6] phy: qcom-qmp: add display port v4 voltage and pre-emphasis swing tables
-Date:   Wed, 8 Dec 2021 13:22:13 -0800
-Message-ID: <1638998533-3729-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dlbYpoSKO9x9xOta/SqdU2ga4RHODfjAO08CwtmOgVA=;
+        b=LXLYO3cQQbqZMEbCvMQ+1HKV8OPhYl8pwKb8a1/b5lGdGiNCD+4KbQKCxHWdMSdnIr
+         5U9B05w0In4B4g7LXt76xKxw/LpWRVs4WNQtd/IchG69pkyLXVKusFnoqduzFJx0blJ+
+         vUAxS35tVajhZqx5rKz74CYcSnbX5o+Ny2NUUTXDDlhNQllnWrQO+G34dJIQz1YCVMZK
+         vmFpe7uzKTHV1uP5tOH0kfXx5mv5aHxgf5mro2H2TMEc70vJlA1RebMLi+75eRjj1e47
+         58nwAlukr/dbB12sjvTnEcppvTmszeTgzNg9QfMeb3sI97gTMcxNRaBSgj5WwfnVdmQQ
+         NiKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dlbYpoSKO9x9xOta/SqdU2ga4RHODfjAO08CwtmOgVA=;
+        b=kLrGQOQvHAXE37nJwZ9N1tj8Njthx3Xfbfx6d6x6Kc2ztxHjsiyIoQRGc3YOTjt/5r
+         xSnHXXBBT0+r8rTX5u5EgbJle5qPw+nwlwcjphI+qBAlnBzGkEmQ3V3iDSJgv1j/G7nW
+         fFLRGiARHCMF7CqQf+QkCV6p7Kq3zSwoBtNG4s4vHfDgfFqcO6xBAD1ddEAiPXQT9K+Y
+         dIJbwdj8A7qmqhWcu5tJ7XU/wqGAjJODMI4AnHWIdSe2Gk5qqSPnijtANuRwN4rJG4gM
+         tFlqQoFyDv0wuwAGqnpvrdwiLNH2MbBeDpQVx/lg0zgJD93PLhEZTpsiHACatgQUpDef
+         GKPA==
+X-Gm-Message-State: AOAM5302C86DC1wHKklcnV/LCFU6R72CH4mKkFbjzCB5DM0qb6liQ2j7
+        IQxyBNOzK2uPgNluqtj227o5FJv2tPsynSj2AqXpt+we
+X-Google-Smtp-Source: ABdhPJwnX9WFkhtM9xLB7IzjgOFPoiHEExHYLhsg21+UFP1WoG09s8sjatdTwovF9YeSRKtg3LazaJiQCgOQ6Y+QsOQ=
+X-Received: by 2002:a05:600c:4f4b:: with SMTP id m11mr1408344wmq.151.1638998314012;
+ Wed, 08 Dec 2021 13:18:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20211208180101.1337300-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211208180101.1337300-1-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 8 Dec 2021 13:23:50 -0800
+Message-ID: <CAF6AEGuX0UHrC+c4+0GUywL7oDuVaJS4H19=ksKYNgC+Bbu12w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: drop dbgname argument from msm_ioremap*()
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Kuogee Hsieh <khsieh@codeaurora.org>
+On Wed, Dec 8, 2021 at 10:01 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> msm_ioremap() functions take additional argument dbgname used to output
+> single debug line telling IO range. Drop that extra argument, use
+> resource name instead.
 
-"add support for sm8250-usb3-dp phy" patch added functions to support V4
-phy. But it did not update voltage and pre-emphasis tables accordingly.
-This patch add v4 voltage and pre-emphasis swing tables to complete v4
-phy implementation. Both voltage and pre-emphasis swing level are set
-during link training negotiation between host and sink. There are totally
-four tables added.  A voltage swing table for both hbr and hbr1, a voltage
-table for both hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1
-and a pre-emphasis table for both hbr2 and hbr3. In addition, write 0x0a
-to TX_TX_POL_INV is added to complete the sequence of configure dp phy
-base on HPG.
+For some history, the dbgname traces were used by an older tool that
+could decode the register read/write reglog traces based on the xml
+register definitions.. so the dbgname matched up to domain names in
+the xml.  I had hacked up the downstream fbdev(ish) driver to generate
+similar traces, so I could compare sequences of programming and values
+(which was kind of easier that finding my way around the downstream
+code).
 
-Chnages in v2:
--- revise commit test
--- add Fixes tag
--- replaced voltage_swing_cfg with voltage
--- replaced pre_emphasis_cfg with emphasis
--- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_v4_phy_configure_dp_swing()
--- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_phy_configure_dp_swing()
+That said, the tooling was never updated to deal with mdp5 and later,
+with various different sub-blocks having their own base addresses.
+And it looks like I dropped the demsm.c tool when importing the other
+freedreno tools + xml into mesa.  So probably no great loss to drop
+this and the reglog stuff.
 
-Changes in V3:
--- add __qcom_qmp_phy_configure_dp_swing() to commit swing/pre-emphasis level
+BR,
+-R
 
-Changes in V4:
--- pass 2D array to __qcom_qmp_phy_configure_dp_swing()
-
-Changes in V5:
--- rebase on msm-next
-
-Changes in V6:
--- change commit text title
--- re wording commit text
-
-Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 97 +++++++++++++++++++++++++------------
- 1 file changed, 66 insertions(+), 31 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 456a59d..1f3585d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -4283,12 +4283,17 @@ static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
- 	{ 0x1f, 0xff, 0xff, 0xff }
- };
- 
--static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
--		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
-+static int __qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
-+				unsigned int drv_lvl_reg,
-+				unsigned int emp_post_reg,
-+				const u8 voltage_swing_hbr_rbr[4][4],
-+				const u8 pre_emphasis_hbr_rbr[4][4],
-+				const u8 voltage_swing_hbr3_hbr2[4][4],
-+				const u8 pre_emphasis_hbr3_hbr2[4][4])
- {
- 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
- 	unsigned int v_level = 0, p_level = 0;
--	u8 voltage_swing_cfg, pre_emphasis_cfg;
-+	u8 voltage, emphasis;
- 	int i;
- 
- 	for (i = 0; i < dp_opts->lanes; i++) {
-@@ -4297,26 +4302,25 @@ static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
- 	}
- 
- 	if (dp_opts->link_rate <= 2700) {
--		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
--		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
-+		voltage = voltage_swing_hbr_rbr[v_level][p_level];
-+		emphasis = pre_emphasis_hbr_rbr[v_level][p_level];
- 	} else {
--		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
--		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
-+		voltage = voltage_swing_hbr3_hbr2[v_level][p_level];
-+		emphasis = pre_emphasis_hbr3_hbr2[v_level][p_level];
- 	}
- 
- 	/* TODO: Move check to config check */
--	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
-+	if (voltage == 0xFF && emphasis == 0xFF)
- 		return -EINVAL;
- 
- 	/* Enable MUX to use Cursor values from these registers */
--	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
--	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
--
--	writel(voltage_swing_cfg, qphy->tx + drv_lvl_reg);
--	writel(pre_emphasis_cfg, qphy->tx + emp_post_reg);
--	writel(voltage_swing_cfg, qphy->tx2 + drv_lvl_reg);
--	writel(pre_emphasis_cfg, qphy->tx2 + emp_post_reg);
-+	voltage |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
-+	emphasis |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
- 
-+	writel(voltage, qphy->tx + drv_lvl_reg);
-+	writel(emphasis, qphy->tx + emp_post_reg);
-+	writel(voltage, qphy->tx2 + drv_lvl_reg);
-+	writel(emphasis, qphy->tx2 + emp_post_reg);
- 	return 0;
- }
- 
-@@ -4325,9 +4329,13 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
- 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
- 	u32 bias_en, drvr_en;
- 
--	if (qcom_qmp_phy_configure_dp_swing(qphy,
--				QSERDES_V3_TX_TX_DRV_LVL,
--				QSERDES_V3_TX_TX_EMP_POST1_LVL) < 0)
-+	if (__qcom_qmp_phy_configure_dp_swing(qphy,
-+			QSERDES_V3_TX_TX_DRV_LVL,
-+			QSERDES_V3_TX_TX_EMP_POST1_LVL,
-+			qmp_dp_v3_voltage_swing_hbr_rbr,
-+			qmp_dp_v3_pre_emphasis_hbr_rbr,
-+			qmp_dp_v3_voltage_swing_hbr3_hbr2,
-+			qmp_dp_v3_pre_emphasis_hbr3_hbr2) < 0)
- 		return;
- 
- 	if (dp_opts->lanes == 1) {
-@@ -4465,6 +4473,35 @@ static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy)
- 	return 0;
- }
- 
-+/* The values in these tables are given without MUX_EN (0x20) bit set */
-+static const u8 qmp_dp_v4_pre_emphasis_hbr3_hbr2[4][4] = {
-+	{ 0x00, 0x0c, 0x15, 0x1b },
-+	{ 0x02, 0x0e, 0x16, 0xff },
-+	{ 0x02, 0x11, 0xff, 0xff },
-+	{ 0x04, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_voltage_swing_hbr3_hbr2[4][4] = {
-+	{ 0x02, 0x12, 0x16, 0x1a },
-+	{ 0x09, 0x19, 0x1f, 0xff },
-+	{ 0x10, 0x1f, 0xff, 0xff },
-+	{ 0x1f, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_pre_emphasis_hbr_rbr[4][4] = {
-+	{ 0x00, 0x0e, 0x15, 0x1b },
-+	{ 0x00, 0x0e, 0x15, 0xff },
-+	{ 0x00, 0x0e, 0xff, 0xff },
-+	{ 0x04, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_voltage_swing_hbr_rbr[4][4] = {
-+	{ 0x08, 0x0f, 0x16, 0x1f },
-+	{ 0x11, 0x1e, 0x1f, 0xff },
-+	{ 0x16, 0x1f, 0xff, 0xff },
-+	{ 0x1f, 0xff, 0xff, 0xff }
-+};
-+
- static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
- {
- 	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_PSR_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-@@ -4494,16 +4531,13 @@ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
- 
- static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy)
- {
--	/* Program default values before writing proper values */
--	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
--	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
--
--	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
--	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
--
--	qcom_qmp_phy_configure_dp_swing(qphy,
-+	__qcom_qmp_phy_configure_dp_swing(qphy,
- 			QSERDES_V4_TX_TX_DRV_LVL,
--			QSERDES_V4_TX_TX_EMP_POST1_LVL);
-+			QSERDES_V4_TX_TX_EMP_POST1_LVL,
-+			qmp_dp_v4_voltage_swing_hbr_rbr,
-+			qmp_dp_v4_pre_emphasis_hbr_rbr,
-+			qmp_dp_v4_voltage_swing_hbr3_hbr2,
-+			qmp_dp_v4_pre_emphasis_hbr3_hbr2);
- }
- 
- static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
-@@ -4622,6 +4656,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
- 	writel(drvr1_en, qphy->tx2 + QSERDES_V4_TX_HIGHZ_DRVR_EN);
- 	writel(bias1_en, qphy->tx2 + QSERDES_V4_TX_TRANSCEIVER_BIAS_EN);
- 
-+	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
-+	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
-+
- 	writel(0x18, qphy->pcs + QSERDES_DP_PHY_CFG);
- 	udelay(2000);
- 	writel(0x19, qphy->pcs + QSERDES_DP_PHY_CFG);
-@@ -4633,11 +4670,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
- 			10000))
- 		return -ETIMEDOUT;
- 
--	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
--	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
- 
--	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
--	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
-+	writel(0x22, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
-+	writel(0x22, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
- 
- 	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
- 	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  8 ++++----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c  |  2 +-
+>  drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  2 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  |  2 +-
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c |  4 ++--
+>  drivers/gpu/drm/msm/dsi/dsi_host.c        |  2 +-
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  8 ++++----
+>  drivers/gpu/drm/msm/hdmi/hdmi.c           |  5 ++---
+>  drivers/gpu/drm/msm/hdmi/hdmi_phy.c       |  2 +-
+>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c  |  7 +++----
+>  drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c  |  2 +-
+>  drivers/gpu/drm/msm/msm_drv.c             | 18 ++++++++----------
+>  drivers/gpu/drm/msm/msm_drv.h             |  8 +++-----
+>  drivers/gpu/drm/msm/msm_gpu.c             |  2 +-
+>  15 files changed, 34 insertions(+), 40 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 51b83776951b..5750a3af126d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1506,7 +1506,7 @@ static void a6xx_llc_slices_init(struct platform_device *pdev,
+>         if (a6xx_gpu->have_mmu500)
+>                 a6xx_gpu->llc_mmio = NULL;
+>         else
+> -               a6xx_gpu->llc_mmio = msm_ioremap(pdev, "cx_mem", "gpu_cx");
+> +               a6xx_gpu->llc_mmio = msm_ioremap(pdev, "cx_mem");
+>
+>         a6xx_gpu->llc_slice = llcc_slice_getd(LLCC_GPU);
+>         a6xx_gpu->htw_llc_slice = llcc_slice_getd(LLCC_GPUHTW);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 2bd258eaf334..f86419cb2b4b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -959,7 +959,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>
+>         atomic_set(&dpu_kms->bandwidth_ref, 0);
+>
+> -       dpu_kms->mmio = msm_ioremap(dpu_kms->pdev, "mdp", "mdp");
+> +       dpu_kms->mmio = msm_ioremap(dpu_kms->pdev, "mdp");
+>         if (IS_ERR(dpu_kms->mmio)) {
+>                 rc = PTR_ERR(dpu_kms->mmio);
+>                 DPU_ERROR("mdp register memory map failed: %d\n", rc);
+> @@ -968,20 +968,20 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>         }
+>         DRM_DEBUG("mapped dpu address space @%pK\n", dpu_kms->mmio);
+>
+> -       dpu_kms->vbif[VBIF_RT] = msm_ioremap(dpu_kms->pdev, "vbif", "vbif");
+> +       dpu_kms->vbif[VBIF_RT] = msm_ioremap(dpu_kms->pdev, "vbif");
+>         if (IS_ERR(dpu_kms->vbif[VBIF_RT])) {
+>                 rc = PTR_ERR(dpu_kms->vbif[VBIF_RT]);
+>                 DPU_ERROR("vbif register memory map failed: %d\n", rc);
+>                 dpu_kms->vbif[VBIF_RT] = NULL;
+>                 goto error;
+>         }
+> -       dpu_kms->vbif[VBIF_NRT] = msm_ioremap_quiet(dpu_kms->pdev, "vbif_nrt", "vbif_nrt");
+> +       dpu_kms->vbif[VBIF_NRT] = msm_ioremap_quiet(dpu_kms->pdev, "vbif_nrt");
+>         if (IS_ERR(dpu_kms->vbif[VBIF_NRT])) {
+>                 dpu_kms->vbif[VBIF_NRT] = NULL;
+>                 DPU_DEBUG("VBIF NRT is not defined");
+>         }
+>
+> -       dpu_kms->reg_dma = msm_ioremap_quiet(dpu_kms->pdev, "regdma", "regdma");
+> +       dpu_kms->reg_dma = msm_ioremap_quiet(dpu_kms->pdev, "regdma");
+>         if (IS_ERR(dpu_kms->reg_dma)) {
+>                 dpu_kms->reg_dma = NULL;
+>                 DPU_DEBUG("REG_DMA is not defined");
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> index 131c1f1a869c..5bdb1504035c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> @@ -222,7 +222,7 @@ int dpu_mdss_init(struct platform_device *pdev)
+>         if (!dpu_mdss)
+>                 return -ENOMEM;
+>
+> -       dpu_mdss->mmio = msm_ioremap(pdev, "mdss", "mdss");
+> +       dpu_mdss->mmio = msm_ioremap(pdev, "mdss");
+>         if (IS_ERR(dpu_mdss->mmio))
+>                 return PTR_ERR(dpu_mdss->mmio);
+>
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> index 5a33bb148e9e..3cf476c55158 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+> @@ -418,7 +418,7 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
+>
+>         mdp4_kms->dev = dev;
+>
+> -       mdp4_kms->mmio = msm_ioremap(pdev, NULL, "MDP4");
+> +       mdp4_kms->mmio = msm_ioremap(pdev, NULL);
+>         if (IS_ERR(mdp4_kms->mmio)) {
+>                 ret = PTR_ERR(mdp4_kms->mmio);
+>                 goto fail;
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 12a5f81e402b..81bd434980cf 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -827,7 +827,7 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+>         if (ret)
+>                 goto fail;
+>
+> -       mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys", "MDP5");
+> +       mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys");
+>         if (IS_ERR(mdp5_kms->mmio)) {
+>                 ret = PTR_ERR(mdp5_kms->mmio);
+>                 goto fail;
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> index b3f79c2277e9..049c6784a531 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> @@ -210,13 +210,13 @@ int mdp5_mdss_init(struct platform_device *pdev)
+>
+>         mdp5_mdss->base.dev = &pdev->dev;
+>
+> -       mdp5_mdss->mmio = msm_ioremap(pdev, "mdss_phys", "MDSS");
+> +       mdp5_mdss->mmio = msm_ioremap(pdev, "mdss_phys");
+>         if (IS_ERR(mdp5_mdss->mmio)) {
+>                 ret = PTR_ERR(mdp5_mdss->mmio);
+>                 goto fail;
+>         }
+>
+> -       mdp5_mdss->vbif = msm_ioremap(pdev, "vbif_phys", "VBIF");
+> +       mdp5_mdss->vbif = msm_ioremap(pdev, "vbif_phys");
+>         if (IS_ERR(mdp5_mdss->vbif)) {
+>                 ret = PTR_ERR(mdp5_mdss->vbif);
+>                 goto fail;
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 5b4bb722f750..4e2dfc53ca28 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1813,7 +1813,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+>                 goto fail;
+>         }
+>
+> -       msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", "DSI CTRL", &msm_host->ctrl_size);
+> +       msm_host->ctrl_base = msm_ioremap_size(pdev, "dsi_ctrl", &msm_host->ctrl_size);
+>         if (IS_ERR(msm_host->ctrl_base)) {
+>                 pr_err("%s: unable to map Dsi ctrl base\n", __func__);
+>                 ret = PTR_ERR(msm_host->ctrl_base);
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index 0b2ae5c15240..6425b6c34f4c 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -709,14 +709,14 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+>         if (!of_property_read_u32(dev->of_node, "phy-type", &phy_type))
+>                 phy->cphy_mode = (phy_type == PHY_TYPE_CPHY);
+>
+> -       phy->base = msm_ioremap_size(pdev, "dsi_phy", "DSI_PHY", &phy->base_size);
+> +       phy->base = msm_ioremap_size(pdev, "dsi_phy", &phy->base_size);
+>         if (IS_ERR(phy->base)) {
+>                 DRM_DEV_ERROR(dev, "%s: failed to map phy base\n", __func__);
+>                 ret = -ENOMEM;
+>                 goto fail;
+>         }
+>
+> -       phy->pll_base = msm_ioremap_size(pdev, "dsi_pll", "DSI_PLL", &phy->pll_size);
+> +       phy->pll_base = msm_ioremap_size(pdev, "dsi_pll", &phy->pll_size);
+>         if (IS_ERR(phy->pll_base)) {
+>                 DRM_DEV_ERROR(&pdev->dev, "%s: failed to map pll base\n", __func__);
+>                 ret = -ENOMEM;
+> @@ -724,7 +724,7 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+>         }
+>
+>         if (phy->cfg->has_phy_lane) {
+> -               phy->lane_base = msm_ioremap_size(pdev, "dsi_phy_lane", "DSI_PHY_LANE", &phy->lane_size);
+> +               phy->lane_base = msm_ioremap_size(pdev, "dsi_phy_lane", &phy->lane_size);
+>                 if (IS_ERR(phy->lane_base)) {
+>                         DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy lane base\n", __func__);
+>                         ret = -ENOMEM;
+> @@ -733,7 +733,7 @@ static int dsi_phy_driver_probe(struct platform_device *pdev)
+>         }
+>
+>         if (phy->cfg->has_phy_regulator) {
+> -               phy->reg_base = msm_ioremap_size(pdev, "dsi_phy_regulator", "DSI_PHY_REG", &phy->reg_size);
+> +               phy->reg_base = msm_ioremap_size(pdev, "dsi_phy_regulator", &phy->reg_size);
+>                 if (IS_ERR(phy->reg_base)) {
+>                         DRM_DEV_ERROR(&pdev->dev, "%s: failed to map phy regulator base\n", __func__);
+>                         ret = -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 3acdeae25caf..3eb45cde0330 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -128,7 +128,7 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+>         hdmi->config = config;
+>         spin_lock_init(&hdmi->reg_lock);
+>
+> -       hdmi->mmio = msm_ioremap(pdev, config->mmio_name, "HDMI");
+> +       hdmi->mmio = msm_ioremap(pdev, config->mmio_name);
+>         if (IS_ERR(hdmi->mmio)) {
+>                 ret = PTR_ERR(hdmi->mmio);
+>                 goto fail;
+> @@ -139,8 +139,7 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+>                 config->mmio_name);
+>         hdmi->mmio_phy_addr = res->start;
+>
+> -       hdmi->qfprom_mmio = msm_ioremap(pdev,
+> -               config->qfprom_mmio_name, "HDMI_QFPROM");
+> +       hdmi->qfprom_mmio = msm_ioremap(pdev, config->qfprom_mmio_name);
+>         if (IS_ERR(hdmi->qfprom_mmio)) {
+>                 DRM_DEV_INFO(&pdev->dev, "can't find qfprom resource\n");
+>                 hdmi->qfprom_mmio = NULL;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+> index 16b0e8836d27..9780107e1cc9 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+> @@ -144,7 +144,7 @@ static int msm_hdmi_phy_probe(struct platform_device *pdev)
+>         if (!phy->cfg)
+>                 return -ENODEV;
+>
+> -       phy->mmio = msm_ioremap(pdev, "hdmi_phy", "HDMI_PHY");
+> +       phy->mmio = msm_ioremap(pdev, "hdmi_phy");
+>         if (IS_ERR(phy->mmio)) {
+>                 DRM_DEV_ERROR(dev, "%s: failed to map phy base\n", __func__);
+>                 return -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> index 99c7853353fd..b06d9d25a189 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+> @@ -716,19 +716,18 @@ int msm_hdmi_pll_8996_init(struct platform_device *pdev)
+>
+>         pll->pdev = pdev;
+>
+> -       pll->mmio_qserdes_com = msm_ioremap(pdev, "hdmi_pll", "HDMI_PLL");
+> +       pll->mmio_qserdes_com = msm_ioremap(pdev, "hdmi_pll");
+>         if (IS_ERR(pll->mmio_qserdes_com)) {
+>                 DRM_DEV_ERROR(dev, "failed to map pll base\n");
+>                 return -ENOMEM;
+>         }
+>
+>         for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++) {
+> -               char name[32], label[32];
+> +               char name[32];
+>
+>                 snprintf(name, sizeof(name), "hdmi_tx_l%d", i);
+> -               snprintf(label, sizeof(label), "HDMI_TX_L%d", i);
+>
+> -               pll->mmio_qserdes_tx[i] = msm_ioremap(pdev, name, label);
+> +               pll->mmio_qserdes_tx[i] = msm_ioremap(pdev, name);
+>                 if (IS_ERR(pll->mmio_qserdes_tx[i])) {
+>                         DRM_DEV_ERROR(dev, "failed to map pll base\n");
+>                         return -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> index 562dfac67792..be4b0b67e797 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+> @@ -434,7 +434,7 @@ int msm_hdmi_pll_8960_init(struct platform_device *pdev)
+>         if (!pll)
+>                 return -ENOMEM;
+>
+> -       pll->mmio = msm_ioremap(pdev, "hdmi_pll", "HDMI_PLL");
+> +       pll->mmio = msm_ioremap(pdev, "hdmi_pll");
+>         if (IS_ERR(pll->mmio)) {
+>                 DRM_DEV_ERROR(dev, "failed to map pll base\n");
+>                 return -ENOMEM;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index ad35a5d94053..d593c5d7dbc7 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -124,7 +124,7 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+>  }
+>
+>  static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+> -                                 const char *dbgname, bool quiet, phys_addr_t *psize)
+> +                                 bool quiet, phys_addr_t *psize)
+>  {
+>         struct resource *res;
+>         unsigned long size;
+> @@ -151,7 +151,7 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+>         }
+>
+>         if (reglog)
+> -               printk(KERN_DEBUG "IO:region %s %p %08lx\n", dbgname, ptr, size);
+> +               printk(KERN_DEBUG "IO:region %s %p %08lx\n", name, ptr, size);
+>
+>         if (psize)
+>                 *psize = size;
+> @@ -159,22 +159,20 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+>         return ptr;
+>  }
+>
+> -void __iomem *msm_ioremap(struct platform_device *pdev, const char *name,
+> -                         const char *dbgname)
+> +void __iomem *msm_ioremap(struct platform_device *pdev, const char *name)
+>  {
+> -       return _msm_ioremap(pdev, name, dbgname, false, NULL);
+> +       return _msm_ioremap(pdev, name, false, NULL);
+>  }
+>
+> -void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
+> -                               const char *dbgname)
+> +void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name)
+>  {
+> -       return _msm_ioremap(pdev, name, dbgname, true, NULL);
+> +       return _msm_ioremap(pdev, name, true, NULL);
+>  }
+>
+>  void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
+> -                         const char *dbgname, phys_addr_t *psize)
+> +                         phys_addr_t *psize)
+>  {
+> -       return _msm_ioremap(pdev, name, dbgname, false, psize);
+> +       return _msm_ioremap(pdev, name, false, psize);
+>  }
+>
+>  void msm_writel(u32 data, void __iomem *addr)
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index d7574e6bd4e4..56d1242efcc1 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -480,12 +480,10 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name);
+>
+>  struct clk *msm_clk_bulk_get_clock(struct clk_bulk_data *bulk, int count,
+>         const char *name);
+> -void __iomem *msm_ioremap(struct platform_device *pdev, const char *name,
+> -               const char *dbgname);
+> +void __iomem *msm_ioremap(struct platform_device *pdev, const char *name);
+>  void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
+> -               const char *dbgname, phys_addr_t *size);
+> -void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name,
+> -               const char *dbgname);
+> +               phys_addr_t *size);
+> +void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name);
+>  void msm_writel(u32 data, void __iomem *addr);
+>  u32 msm_readl(const void __iomem *addr);
+>  void msm_rmw(void __iomem *addr, u32 mask, u32 or);
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 0f78c2615272..c4debc8ea3ba 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -858,7 +858,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>
+>
+>         /* Map registers: */
+> -       gpu->mmio = msm_ioremap(pdev, config->ioname, name);
+> +       gpu->mmio = msm_ioremap(pdev, config->ioname);
+>         if (IS_ERR(gpu->mmio)) {
+>                 ret = PTR_ERR(gpu->mmio);
+>                 goto fail;
+> --
+> 2.33.0
+>
