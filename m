@@ -2,253 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4E1146D0CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 11:18:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17A0B46D468
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 14:28:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231433AbhLHKVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 05:21:45 -0500
-Received: from ixit.cz ([94.230.151.217]:60090 "EHLO ixit.cz"
+        id S233008AbhLHNcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 08:32:21 -0500
+Received: from mga01.intel.com ([192.55.52.88]:64107 "EHLO mga01.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231423AbhLHKVp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 05:21:45 -0500
-Received: from localhost.localdomain (unknown [213.151.89.154])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 45A2F21F5E;
-        Wed,  8 Dec 2021 11:18:10 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1638958690;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=QJ2xEIeX42XFq2W7dJr/T6LZGzm+TwSyalep9iOyqKQ=;
-        b=u+iDm3qsiBKaRMPieLRRF9atqBQDKJv2T5k8iTz1FadF1HGK9M7wNd1V58WNHuoGFudbm+
-        C9HQd+c9UuWZtqxm32gskCfXuvltLdrjk6F0YDga+t3t6fes2IfxqjebvhOUtcogrYuILa
-        AZ56vlh+fo2vM7QUR9TGzpyJ3bm3jBg=
-From:   David Heidelberg <david@ixit.cz>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4] dt-bindings: misc: fastrpc convert bindings to yaml
-Date:   Wed,  8 Dec 2021 11:15:08 +0100
-Message-Id: <20211208101508.24582-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S229747AbhLHNcV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 08:32:21 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="261904785"
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="261904785"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 05:28:48 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="462759940"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by orsmga006.jf.intel.com with ESMTP; 08 Dec 2021 05:28:45 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1mux00-0000b2-5s; Wed, 08 Dec 2021 13:28:44 +0000
+Date:   Wed, 8 Dec 2021 21:27:46 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>, marcel@holtmann.org,
+        johan.hedberg@gmail.com
+Cc:     kbuild-all@lists.01.org, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        quic_hemantg@quicinc.com, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
+        hbandi@codeaurora.org
+Subject: Re: [PATCH] Bluetooth: btqca: sequential validation
+Message-ID: <202112082154.jFxxuDI4-lkp@intel.com>
+References: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm FastRPC bindings to yaml format, so that we could validate
-dt-entries correctly and any future additions can go into yaml format.
+Hi Sai,
 
-Also:
- - simplify example
- - embrace compute-cb@ subnodes instead of just cb@
+Thank you for the patch! Perhaps something to improve:
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
+[auto build test WARNING on bluetooth-next/master]
+[also build test WARNING on linux/master linus/master v5.16-rc4 next-20211208]
+[cannot apply to bluetooth/master]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Sai-Teja-Aluvala/Bluetooth-btqca-sequential-validation/20211208-162834
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+config: nds32-allyesconfig (https://download.01.org/0day-ci/archive/20211208/202112082154.jFxxuDI4-lkp@intel.com/config)
+compiler: nds32le-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/1d58d86c5374c4c82aa1ec8638036667c114f83e
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Sai-Teja-Aluvala/Bluetooth-btqca-sequential-validation/20211208-162834
+        git checkout 1d58d86c5374c4c82aa1ec8638036667c114f83e
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=nds32 SHELL=/bin/bash drivers/bluetooth/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/bluetooth/btqca.c:144:5: warning: no previous prototype for 'qca_send_patch_config_cmd' [-Wmissing-prototypes]
+     144 | int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
+         |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/qca_send_patch_config_cmd +144 drivers/bluetooth/btqca.c
+
+   143	
+ > 144	int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
+   145	{
+   146		struct sk_buff *skb;
+   147		int err = 0;
+   148		u8 cmd[5] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
+   149		u8 rlen = 0x02;
+   150		struct edl_event_hdr *edl;
+   151		u8 rtype = EDL_PATCH_CONFIG_CMD;
+   152	
+   153		bt_dev_dbg(hdev, "QCA Patch config");
+   154	
+   155		skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CONFIG_CMD_LEN,
+   156				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
+   157		if (IS_ERR(skb)) {
+   158			err = PTR_ERR(skb);
+   159			bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
+   160			return err;
+   161		}
+   162		if (skb->len != rlen) {
+   163			bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
+   164			err = -EILSEQ;
+   165			goto out;
+   166		}
+   167		edl = (struct edl_event_hdr *)(skb->data);
+   168		if (!edl) {
+   169			bt_dev_err(hdev, "QCA Patch config with no header");
+   170			err = -EILSEQ;
+   171			goto out;
+   172		}
+   173		if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != rtype) {
+   174			bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+   175			 edl->rtype);
+   176			err = -EIO;
+   177			goto out;
+   178		}
+   179	out:
+   180		kfree(skb);
+   181		if (err)
+   182			bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
+   183	
+   184		return err;
+   185	}
+   186	
+
 ---
- v4:
- - combined mine and Srinivas versions of the patch
- - previously found issues should be fixed
-
- .../devicetree/bindings/misc/qcom,fastrpc.txt | 78 ---------------
- .../bindings/misc/qcom,fastrpc.yaml           | 94 +++++++++++++++++++
- 2 files changed, 94 insertions(+), 78 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
- create mode 100644 Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt b/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-deleted file mode 100644
-index 2a1827ab50d2..000000000000
---- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.txt
-+++ /dev/null
-@@ -1,78 +0,0 @@
--Qualcomm Technologies, Inc. FastRPC Driver
--
--The FastRPC implements an IPC (Inter-Processor Communication)
--mechanism that allows for clients to transparently make remote method
--invocations across DSP and APPS boundaries. This enables developers
--to offload tasks to the DSP and free up the application processor for
--other tasks.
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc"
--
--- label
--	Usage: required
--	Value type: <string>
--	Definition: should specify the dsp domain name this fastrpc
--	corresponds to. must be one of this: "adsp", "mdsp", "sdsp", "cdsp"
--
--- #address-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 1
--
--- #size-cells
--	Usage: required
--	Value type: <u32>
--	Definition: Must be 0
--
--= COMPUTE BANKS
--Each subnode of the Fastrpc represents compute context banks available
--on the dsp.
--- All Compute context banks MUST contain the following properties:
--
--- compatible:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "qcom,fastrpc-compute-cb"
--
--- reg
--	Usage: required
--	Value type: <u32>
--	Definition: Context Bank ID.
--
--- qcom,nsessions:
--	Usage: Optional
--	Value type: <u32>
--	Defination: A value indicating how many sessions can share this
--		    context bank. Defaults to 1 when this property
--		    is not specified.
--
--Example:
--
--adsp-pil {
--	compatible = "qcom,msm8996-adsp-pil";
--	...
--	smd-edge {
--		label = "lpass";
--		fastrpc {
--			compatible = "qcom,fastrpc";
--			qcom,smd-channels = "fastrpcsmd-apps-dsp";
--			label = "adsp";
--			#address-cells = <1>;
--			#size-cells = <0>;
--
--			cb@1 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <1>;
--			};
--
--			cb@2 {
--				compatible = "qcom,fastrpc-compute-cb";
--				reg = <2>;
--			};
--			...
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-new file mode 100644
-index 000000000000..f42ab208a7fc
---- /dev/null
-+++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
-@@ -0,0 +1,94 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/misc/qcom,fastrpc.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm FastRPC Driver
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  The FastRPC implements an IPC (Inter-Processor Communication)
-+  mechanism that allows for clients to transparently make remote method
-+  invocations across DSP and APPS boundaries. This enables developers
-+  to offload tasks to the DSP and free up the application processor for
-+  other tasks.
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,fastrpc
-+
-+  label:
-+    items:
-+      enum:
-+        - adsp
-+        - mdsp
-+        - sdsp
-+        - cdsp
-+
-+  '#address-cells':
-+    const: 1
-+
-+  '#size-cells':
-+    const: 0
-+
-+patternProperties:
-+  "(compute-)?cb@[0-9]$":
-+    type: object
-+
-+    description: >
-+      Each subnode of the Fastrpc represents compute context banks available on the dsp.
-+
-+    properties:
-+      compatible:
-+        items:
-+          - const: qcom,fastrpc-compute-cb
-+
-+      reg:
-+        maxItems: 1
-+
-+      qcom,nsession:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        default: 1
-+        description: >
-+          A value indicating how many sessions can share this context bank.
-+
-+    required:
-+      - compatible
-+      - reg
-+
-+    additionalProperties: true
-+
-+required:
-+  - compatible
-+  - label
-+  - '#address-cells'
-+  - '#size-cells'
-+
-+additionalProperties: true
-+
-+examples:
-+  - |
-+    smd-edge {
-+        label = "lpass";
-+        fastrpc {
-+            compatible = "qcom,fastrpc";
-+            label = "adsp";
-+            qcom,smd-channels = "fastrpcsmd-apps-dsp";
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            compute-cb@1 {
-+                compatible = "qcom,fastrpc-compute-cb";
-+                reg = <1>;
-+            };
-+
-+            compute-cb@2 {
-+                compatible = "qcom,fastrpc-compute-cb";
-+                reg = <2>;
-+            };
-+        };
-+    };
--- 
-2.33.0
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
