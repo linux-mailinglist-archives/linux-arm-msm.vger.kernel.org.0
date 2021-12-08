@@ -2,157 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9DEE46D472
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 14:30:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FD9346D4D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 14:51:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234311AbhLHNeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 08:34:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55830 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234289AbhLHNeK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 08:34:10 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D128C061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 05:30:39 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id w1so2134424ilh.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 05:30:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=iWfBbC7QhR5OPwWGNWFkv98J0dCoDSaq0A4LB4NYFN8=;
-        b=gf4o0MMp0qkVQAUuJxCHXHTFGP82gITzRvHtqK+aKS1A58gZeKUN1tTNF1XyKHTKum
-         U3LIf6q0TSABwK2hw6+NdfUzF5t9s3h8MMbfyXB+Q4Q6xCUBZqJYO5jkH2sqZoOvJpu1
-         UinD1XaYhOzC1Ev5ERdf+jjjOuw7THwr3DcQmBCw6cyyji4Qv5FagOg6PpIZKvEd3+UH
-         De1AyZMa3nEbGV3YGKylerbld36ce2XtOdX419AOykNGLrz43HBNr8xX+TROXThtjIvr
-         dIcDJqFJqNCiTjwKZG6ZL2BXYBXqpvhC+uB3QMqS3Ent4RyG3YcxASnauWg1ot+anB1L
-         75lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iWfBbC7QhR5OPwWGNWFkv98J0dCoDSaq0A4LB4NYFN8=;
-        b=Jm6tt3jNBrAmff4wWzYquEi0cSoZmYQvc4KW5m3vYnC5WWeIydtU9LKt+A10bcCUwm
-         h+vxccFwSBiVxPBpUuPGs8m01w4HhlNX9ENrKURxt/Y/z2DwD1FXmbmYBhJma7dHgJe1
-         6FEZcx5e8CAMIZlv++atooROkmwlm8MDc2HW6n0QJcQ6LtsM2v7jpA18W2UEnYUfYIxu
-         fol0nl0V2oWmW7zphXQJVXaab91hQzPQq8LnL5Ylk8VlDGcHAD4OGdqccBGyUtzNcrQE
-         5bkOUv4DgayPhwcN8dcFWMiBWQ7WMPodtEy52BNI9d8dL2VFcQHv+0B1ecBCrL0SD/gw
-         6dLQ==
-X-Gm-Message-State: AOAM533bSAQ9t7IAXUegWV54ZtFPsqqNv4X9xnE5wapKVVwtPyYfKzQS
-        nR8oyR8Ef/mZ5Ui/MpH0zjFBlg==
-X-Google-Smtp-Source: ABdhPJw/1qZee6e0QouIINRk3opN8f9rvzGBPmi9P3MeuDSRjqUHFSwvCXCCbZb9HmXy48q4HZigMw==
-X-Received: by 2002:a05:6e02:2191:: with SMTP id j17mr6341614ila.120.1638970238491;
-        Wed, 08 Dec 2021 05:30:38 -0800 (PST)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id b8sm2198305ilj.0.2021.12.08.05.30.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Dec 2021 05:30:37 -0800 (PST)
-Message-ID: <6ec5aa90-6a7c-0efe-558f-44c5cde8ca14@linaro.org>
-Date:   Wed, 8 Dec 2021 07:30:36 -0600
+        id S234412AbhLHNyt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 08:54:49 -0500
+Received: from mga02.intel.com ([134.134.136.20]:9516 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232916AbhLHNyt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 08:54:49 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="225089517"
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="225089517"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 05:50:53 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="564104799"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by fmsmga008.fm.intel.com with ESMTP; 08 Dec 2021 05:50:45 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1muxLI-0000cC-JB; Wed, 08 Dec 2021 13:50:44 +0000
+Date:   Wed, 8 Dec 2021 21:50:04 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>, marcel@holtmann.org,
+        johan.hedberg@gmail.com
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        quic_hemantg@quicinc.com, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
+        hbandi@codeaurora.org
+Subject: Re: [PATCH] Bluetooth: btqca: sequential validation
+Message-ID: <202112082116.coCA1rOT-lkp@intel.com>
+References: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH 3/3] firmware: qcom: scm: Add function to set IOMMU
- pagetable addressing
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211208083423.22037-1-marijn.suijten@somainline.org>
- <20211208083423.22037-4-marijn.suijten@somainline.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20211208083423.22037-4-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/8/21 2:34 AM, Marijn Suijten wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> 
-> Add a function to change the IOMMU pagetable addressing to
-> AArch32 LPAE or AArch64. If doing that, then this must be
-> done for each IOMMU context (not necessarily at the same time).
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> [Marijn: ported from 5.3 to the unified architecture in 5.11]
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Hi Sai,
 
-Are there no users of this function?	-Alex
+Thank you for the patch! Perhaps something to improve:
 
-> ---
->   drivers/firmware/qcom_scm.c | 16 ++++++++++++++++
->   drivers/firmware/qcom_scm.h |  1 +
->   include/linux/qcom_scm.h    |  1 +
->   3 files changed, 18 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index d5a9ba15e2ba..6f7096120023 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1140,6 +1140,22 @@ int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt, u32 *resp)
->   }
->   EXPORT_SYMBOL(qcom_scm_hdcp_req);
->   
-> +int qcom_scm_iommu_set_pt_format(u32 sec_id, u32 ctx_num, u32 pt_fmt)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_SMMU_PROGRAM,
-> +		.cmd = QCOM_SCM_SMMU_PT_FORMAT,
-> +		.arginfo = QCOM_SCM_ARGS(3),
-> +		.args[0] = sec_id,
-> +		.args[1] = ctx_num,
-> +		.args[2] = pt_fmt, /* 0: LPAE AArch32 - 1: AArch64 */
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	return qcom_scm_call(__scm->dev, &desc, NULL);
-> +}
-> +EXPORT_SYMBOL(qcom_scm_iommu_set_pt_format);
-> +
->   int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
->   {
->   	struct qcom_scm_desc desc = {
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index bb627941702b..a348f2c214e5 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -120,6 +120,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->   #define QCOM_SCM_LMH_LIMIT_DCVSH		0x10
->   
->   #define QCOM_SCM_SVC_SMMU_PROGRAM		0x15
-> +#define QCOM_SCM_SMMU_PT_FORMAT			0x01
->   #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
->   #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
->   
-> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-> index 8a065f8660c1..ca4a88d7cbdc 100644
-> --- a/include/linux/qcom_scm.h
-> +++ b/include/linux/qcom_scm.h
-> @@ -108,6 +108,7 @@ extern bool qcom_scm_hdcp_available(void);
->   extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
->   			     u32 *resp);
->   
-> +extern int qcom_scm_iommu_set_pt_format(u32 sec_id, u32 ctx_num, u32 pt_fmt);
->   extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
->   
->   extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
-> 
+[auto build test WARNING on bluetooth-next/master]
+[also build test WARNING on linux/master linus/master v5.16-rc4 next-20211208]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
+url:    https://github.com/0day-ci/linux/commits/Sai-Teja-Aluvala/Bluetooth-btqca-sequential-validation/20211208-162834
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
+config: x86_64-randconfig-a015-20211207 (https://download.01.org/0day-ci/archive/20211208/202112082116.coCA1rOT-lkp@intel.com/config)
+compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 097a1cb1d5ebb3a0ec4bcaed8ba3ff6a8e33c00a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/1d58d86c5374c4c82aa1ec8638036667c114f83e
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Sai-Teja-Aluvala/Bluetooth-btqca-sequential-validation/20211208-162834
+        git checkout 1d58d86c5374c4c82aa1ec8638036667c114f83e
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/bluetooth/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/bluetooth/btqca.c:144:5: warning: no previous prototype for function 'qca_send_patch_config_cmd' [-Wmissing-prototypes]
+   int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
+       ^
+   drivers/bluetooth/btqca.c:144:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
+   ^
+   static 
+   1 warning generated.
+
+
+vim +/qca_send_patch_config_cmd +144 drivers/bluetooth/btqca.c
+
+   143	
+ > 144	int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
+   145	{
+   146		struct sk_buff *skb;
+   147		int err = 0;
+   148		u8 cmd[5] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
+   149		u8 rlen = 0x02;
+   150		struct edl_event_hdr *edl;
+   151		u8 rtype = EDL_PATCH_CONFIG_CMD;
+   152	
+   153		bt_dev_dbg(hdev, "QCA Patch config");
+   154	
+   155		skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CONFIG_CMD_LEN,
+   156				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
+   157		if (IS_ERR(skb)) {
+   158			err = PTR_ERR(skb);
+   159			bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
+   160			return err;
+   161		}
+   162		if (skb->len != rlen) {
+   163			bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
+   164			err = -EILSEQ;
+   165			goto out;
+   166		}
+   167		edl = (struct edl_event_hdr *)(skb->data);
+   168		if (!edl) {
+   169			bt_dev_err(hdev, "QCA Patch config with no header");
+   170			err = -EILSEQ;
+   171			goto out;
+   172		}
+   173		if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != rtype) {
+   174			bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+   175			 edl->rtype);
+   176			err = -EIO;
+   177			goto out;
+   178		}
+   179	out:
+   180		kfree(skb);
+   181		if (err)
+   182			bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
+   183	
+   184		return err;
+   185	}
+   186	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
