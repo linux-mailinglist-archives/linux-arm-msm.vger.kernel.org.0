@@ -2,416 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BE5646CFC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 10:10:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0499546CFF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 10:20:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230253AbhLHJOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 04:14:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbhLHJOU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 04:14:20 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC8AC061A72;
-        Wed,  8 Dec 2021 01:10:48 -0800 (PST)
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 698BF20421;
-        Wed,  8 Dec 2021 10:10:46 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        id S230088AbhLHJXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 04:23:47 -0500
+Received: from foss.arm.com ([217.140.110.172]:54960 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229687AbhLHJXr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 04:23:47 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E75FED1;
+        Wed,  8 Dec 2021 01:20:15 -0800 (PST)
+Received: from e123083-lin (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 87A663F5A1;
+        Wed,  8 Dec 2021 01:20:13 -0800 (PST)
+Date:   Wed, 8 Dec 2021 10:20:10 +0100
+From:   Morten Rasmussen <morten.rasmussen@arm.com>
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v6 1/2] dt-bindings: clk: qcom: Document MSM8976 Global Clock Controller
-Date:   Wed,  8 Dec 2021 10:10:35 +0100
-Message-Id: <20211208091036.132334-2-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20211208091036.132334-1-marijn.suijten@somainline.org>
-References: <20211208091036.132334-1-marijn.suijten@somainline.org>
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] base: arch_topology: Use policy->max to calculate
+ freq_factor
+Message-ID: <20211208091513.GB5838@e123083-lin>
+References: <20211115201010.68567-1-thara.gopinath@linaro.org>
+ <CAJZ5v0gezoJZVH69Y7fDwa-uLhE0PaqFrzM=0bequxpE_749zg@mail.gmail.com>
+ <8f7397e3-4e92-c84d-9168-087967f4d683@arm.com>
+ <CAJZ5v0iRDtr5yae5UndwU2SmVL4cak=BN0irVGbgNzQiS8K3mA@mail.gmail.com>
+ <af59de78-49b0-d2e6-4bf0-7c897c2fccb1@linaro.org>
+ <CAJZ5v0h3O_rSR38X4fV1FC2O2DYQnxzeLbxcSqh1vpnE65Nd+A@mail.gmail.com>
+ <20211202105027.GA1180274@e123083-lin>
+ <CAJZ5v0hRvsoEZj45OWe34uhAPj+J1rJWq5Wff4R0f_BYEuU5wA@mail.gmail.com>
+ <20211203094734.GA5838@e123083-lin>
+ <CAJZ5v0iGa=YErmDgLPCO1h=gOjkD6sRVonqPEUN1uf8sxpQ0qQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJZ5v0iGa=YErmDgLPCO1h=gOjkD6sRVonqPEUN1uf8sxpQ0qQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the required properties and firmware clocks for gcc-msm8976 to
-operate nominally, and add header definitions for referencing the clocks
-from firmware.
+On Fri, Dec 03, 2021 at 04:07:30PM +0100, Rafael J. Wysocki wrote:
+> On Fri, Dec 3, 2021 at 10:48 AM Morten Rasmussen
+> <morten.rasmussen@arm.com> wrote:
+> >
+> > On Thu, Dec 02, 2021 at 05:31:53PM +0100, Rafael J. Wysocki wrote:
+> > > On Thu, Dec 2, 2021 at 11:50 AM Morten Rasmussen
+> > > <morten.rasmussen@arm.com> wrote:
+> > > >
+> > > > On Wed, Nov 17, 2021 at 06:59:05PM +0100, Rafael J. Wysocki wrote:
+> > > > > On Wed, Nov 17, 2021 at 6:01 PM Thara Gopinath
+> > > > > <thara.gopinath@linaro.org> wrote:
+> > > > > >
+> > > > > > Hi,
+> > > > > >
+> > > > > > On 11/17/21 7:49 AM, Rafael J. Wysocki wrote:
+> > > > > > > On Wed, Nov 17, 2021 at 11:46 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
+> > > > > > >>
+> > > > > > >> Hi Rafael,
+> > > > > > >>
+> > > > > > >> On 11/16/21 7:05 PM, Rafael J. Wysocki wrote:
+> > > > > > >>> On Mon, Nov 15, 2021 at 9:10 PM Thara Gopinath
+> > > > > > >>> <thara.gopinath@linaro.org> wrote:
+> > > > > > >>>>
+> > > > > > >>>> cpuinfo.max_freq can reflect boost frequency if enabled during boot.  Since
+> > > > > > >>>> we don't consider boost frequencies while calculating cpu capacities, use
+> > > > > > >>>> policy->max to populate the freq_factor during boot up.
+> > > > > > >>>
+> > > > > > >>> I'm not sure about this.  schedutil uses cpuinfo.max_freq as the max frequency.
+> > > > > > >>
+> > > > > > >> Agree it's tricky how we treat the boost frequencies and also combine
+> > > > > > >> them with thermal pressure.
+> > > > > > >> We probably would have consider these design bits:
+> > > > > > >> 1. Should thermal pressure include boost frequency?
+> > > > > > >
+> > > > > > > Well, I guess so.
+> > > > > > >
+> > > > > > > Running at a boost frequency certainly increases thermal pressure.
+> > > > > > >
+> > > > > > >> 2. Should max capacity 1024 be a boost frequency so scheduler
+> > > > > > >>      would see it explicitly?
+> > > > > > >
+> > > > > > > That's what it is now if cpuinfo.max_freq is a boost frequency.
+> > > > > > >
+> > > > > > >> - if no, then schedutil could still request boost freq thanks to
+> > > > > > >>     map_util_perf() where we add 25% to the util and then
+> > > > > > >>     map_util_freq() would return a boost freq when util was > 1024
+> > > > > > >>
+> > > > > > >>
+> > > > > > >> I can see in schedutil only one place when cpuinfo.max_freq is used:
+> > > > > > >> get_next_freq(). If the value stored in there is a boost,
+> > > > > > >> then don't we get a higher freq value for the same util?
+> > > > > > >
+> > > > > > > Yes. we do, which basically is my point.
+> > > > > > >
+> > > > > > > The schedutil's response is proportional to cpuinfo.max_freq and that
+> > > > > > > needs to be taken into account for the results to be consistent.
+> > > > > >
+> > > > > > So IIUC, cpuinfo.max_freq is always supposed to be the highest supported
+> > > > > > frequency of a cpu, irrespective of whether boost is enabled or not.
+> > > > > > Where as policy->max is the currently available maximum cpu frequency
+> > > > > > which can be equal to cpuinfo.max_freq or lower (depending on whether
+> > > > > > boost is enabled, whether there is a constraint on policy->max placed by
+> > > > > > thermal etc).
+> > > > >
+> > > > > It may also depend on the limit set by user space.
+> > > > >
+> > > > > > So in this case isn't it better for schedutil to consider
+> > > > > > policy->max instead of cpuinfo.max ?
+> > > > >
+> > > > > Not really.
+> > > > >
+> > > > > In that case setting policy->max to 1/2 of cpuinfo.max_freq would
+> > > > > cause schedutil to choose 1/4 of cpuinfo.max_freq for 50% utilization
+> > > > > which would be rather unexpected.
+> > > > >
+> > > > > policy->max is a cap, not the current maximum capacity.
+> > > > >
+> > > > > > Like you mentioned above same
+> > > > > > utilization will relate to different frequencies depending on the
+> > > > > > maximum frequency.
+> > > > >
+> > > > > Which is not how it is expected (and defined) to work, though.
+> > > > >
+> > > > > If you really want to play with the current maximum capacity, you need
+> > > > > to change it whenever boost is disabled or enabled - and there is a
+> > > > > mechanism for updating cpufinfo.max_freq in such cases.
+> > > >
+> > > > I don't see why we would want to change max capacity on the fly. It is
+> > > > not a cheap operation as we would need to normalize the capacity for all
+> > > > CPUs if the CPU(s) with capacity = 1024 changes its capacity. Worst case
+> > > > we even have to rebuild the sched_domain hierarchy to update flags. The
+> > > > update would also temporarily mess with load and utilization signals, so
+> > > > not a cheap operation.
+> > >
+> > > I didn't say it was cheap. :-)
+> >
+> > You didn't :-) But I thought it was worth pointing out in case someone
+> > would think we need to constantly renormalize to the highest achievable
+> > performance level taking all factors into account, including thermal
+> > capping.
+> >
+> > > However, boost frequencies are not disabled and enabled very often, so
+> > > it may be acceptable to do it then.  I actually don't know.
+> >
+> > Agree.
+> >
+> > >
+> > > The point is that if you set the max capacity to correspond to the max
+> > > boosted perf and it is never reached (because boost is disabled), the
+> > > scaling will cause CPUs to appear as underutilized, but in fact there
+> > > is no spare capacity in the system.
+> >
+> > We kind of have the problem already with thermal capping but addressed
+> > it by having the thermal pressure signal to indicate the some of the
+> > capacity is unavailable. Perhaps the thermal pressure signal should be extended
+> > to cover all reasons for capacity being unavailable, or we should have
+> > another signal to track boost frequencies not being delivered, manually
+> > disabled or not possible due to system circumstances?
+> 
+> Well, even without boost frequencies, the capacity that's effectively
+> available may not be the advertised max.  For example,
+> scaling_max_freq may be set below the advertised max value (and that's
+> applied after the governor has produced its output), there may be
+> power capping in place etc.
+> 
+> Taking the thermal pressure in particular into account helps to reduce
+> it, but that may just be part of the difference between the advertised
+> max and the effectively available perf, and not even the dominating
+> one for that matter.
+> 
+> And boost frequencies complicate the picture even further, because
+> they are more-or-less unsustainable and as a rule there's no
+> information on how sustainable they are or how much time it takes to
+> get to the max boost perf (and that may be configurable even).
+> 
+> So IMO the advertised max ought to be treated as the upper bound in
+> general, but it makes sense to adjust it when it is known to be too
+> large and it may stay so forever (which is the case when boost
+> frequencies are disabled).
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- .../bindings/clock/qcom,gcc-msm8976.yaml      |  97 +++++++
- include/dt-bindings/clock/qcom,gcc-msm8976.h  | 240 ++++++++++++++++++
- 2 files changed, 337 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
- create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8976.h
+I agree that max performance level should be treated as upper bound.
+Thermal capping help us somewhat to figure out the currently achievable
+performance level. Removing disabled boost levels would help too. There
+might still be quite a gap between requested and delivered performance
+though.
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
-new file mode 100644
-index 000000000000..f3430b159caa
---- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
-@@ -0,0 +1,97 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/qcom,gcc-msm8976.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Global Clock & Reset Controller Binding for MSM8976
-+
-+maintainers:
-+  - Stephen Boyd <sboyd@kernel.org>
-+  - Taniya Das <tdas@codeaurora.org>
-+
-+description: |
-+  Qualcomm global clock control module which supports the clocks, resets and
-+  power domains on MSM8976.
-+
-+  See also:
-+  - dt-bindings/clock/qcom,gcc-msm8976.h
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,gcc-msm8976
-+      - qcom,gcc-msm8976-v1.1
-+
-+  clocks:
-+    items:
-+      - description: XO source
-+      - description: Always-on XO source
-+      - description: Pixel clock from DSI PHY0
-+      - description: Byte clock from DSI PHY0
-+      - description: Pixel clock from DSI PHY1
-+      - description: Byte clock from DSI PHY1
-+
-+  clock-names:
-+    items:
-+      - const: xo
-+      - const: xo_a
-+      - const: dsi0pll
-+      - const: dsi0pllbyte
-+      - const: dsi1pll
-+      - const: dsi1pllbyte
-+
-+  vdd_gfx-supply:
-+    description:
-+      Phandle to voltage regulator providing power to the GX domain.
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+  '#power-domain-cells':
-+    const: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - vdd_gfx-supply
-+  - '#clock-cells'
-+  - '#reset-cells'
-+  - '#power-domain-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    clock-controller@1800000 {
-+      compatible = "qcom,gcc-msm8976";
-+      #clock-cells = <1>;
-+      #reset-cells = <1>;
-+      #power-domain-cells = <1>;
-+      reg = <0x1800000 0x80000>;
-+
-+      clocks = <&xo_board>,
-+               <&xo_board>,
-+               <&dsi0_phy 1>,
-+               <&dsi0_phy 0>,
-+               <&dsi1_phy 1>,
-+               <&dsi1_phy 0>;
-+
-+      clock-names = "xo",
-+                    "xo_a",
-+                    "dsi0pll",
-+                    "dsi0pllbyte",
-+                    "dsi1pll",
-+                    "dsi1pllbyte";
-+
-+      vdd_gfx-supply = <&pm8004_s5>;
-+    };
-+...
-diff --git a/include/dt-bindings/clock/qcom,gcc-msm8976.h b/include/dt-bindings/clock/qcom,gcc-msm8976.h
-new file mode 100644
-index 000000000000..51955fd49426
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,gcc-msm8976.h
-@@ -0,0 +1,240 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (C) 2016, The Linux Foundation. All rights reserved.
-+ * Copyright (C) 2016-2021, AngeloGioacchino Del Regno
-+ *                     <angelogioacchino.delregno@somainline.org>
-+ */
-+
-+#ifndef _DT_BINDINGS_CLK_MSM_GCC_8976_H
-+#define _DT_BINDINGS_CLK_MSM_GCC_8976_H
-+
-+#define GPLL0					0
-+#define GPLL2					1
-+#define GPLL3					2
-+#define GPLL4					3
-+#define GPLL6					4
-+#define GPLL0_CLK_SRC				5
-+#define GPLL2_CLK_SRC				6
-+#define GPLL3_CLK_SRC				7
-+#define GPLL4_CLK_SRC				8
-+#define GPLL6_CLK_SRC				9
-+#define GCC_BLSP1_QUP1_SPI_APPS_CLK		10
-+#define GCC_BLSP1_QUP1_I2C_APPS_CLK		11
-+#define GCC_BLSP1_QUP2_I2C_APPS_CLK		12
-+#define GCC_BLSP1_QUP2_SPI_APPS_CLK		13
-+#define GCC_BLSP1_QUP3_I2C_APPS_CLK		14
-+#define GCC_BLSP1_QUP3_SPI_APPS_CLK		15
-+#define GCC_BLSP1_QUP4_I2C_APPS_CLK		16
-+#define GCC_BLSP1_QUP4_SPI_APPS_CLK		17
-+#define GCC_BLSP1_UART1_APPS_CLK		18
-+#define GCC_BLSP1_UART2_APPS_CLK		19
-+#define GCC_BLSP2_QUP1_I2C_APPS_CLK		20
-+#define GCC_BLSP2_QUP1_SPI_APPS_CLK		21
-+#define GCC_BLSP2_QUP2_I2C_APPS_CLK		22
-+#define GCC_BLSP2_QUP2_SPI_APPS_CLK		23
-+#define GCC_BLSP2_QUP3_I2C_APPS_CLK		24
-+#define GCC_BLSP2_QUP3_SPI_APPS_CLK		25
-+#define GCC_BLSP2_QUP4_I2C_APPS_CLK		26
-+#define GCC_BLSP2_QUP4_SPI_APPS_CLK		27
-+#define GCC_BLSP2_UART1_APPS_CLK		28
-+#define GCC_BLSP2_UART2_APPS_CLK		29
-+#define GCC_CAMSS_CCI_AHB_CLK			30
-+#define GCC_CAMSS_CCI_CLK			31
-+#define GCC_CAMSS_CPP_AHB_CLK			32
-+#define GCC_CAMSS_CPP_AXI_CLK			33
-+#define GCC_CAMSS_CPP_CLK			34
-+#define GCC_CAMSS_CSI0_AHB_CLK			35
-+#define GCC_CAMSS_CSI0_CLK			36
-+#define GCC_CAMSS_CSI0PHY_CLK			37
-+#define GCC_CAMSS_CSI0PIX_CLK			38
-+#define GCC_CAMSS_CSI0RDI_CLK			39
-+#define GCC_CAMSS_CSI1_AHB_CLK			40
-+#define GCC_CAMSS_CSI1_CLK			41
-+#define GCC_CAMSS_CSI1PHY_CLK			42
-+#define GCC_CAMSS_CSI1PIX_CLK			43
-+#define GCC_CAMSS_CSI1RDI_CLK			44
-+#define GCC_CAMSS_CSI2_AHB_CLK			45
-+#define GCC_CAMSS_CSI2_CLK			46
-+#define GCC_CAMSS_CSI2PHY_CLK			47
-+#define GCC_CAMSS_CSI2PIX_CLK			48
-+#define GCC_CAMSS_CSI2RDI_CLK			49
-+#define GCC_CAMSS_CSI_VFE0_CLK			50
-+#define GCC_CAMSS_CSI_VFE1_CLK			51
-+#define GCC_CAMSS_GP0_CLK			52
-+#define GCC_CAMSS_GP1_CLK			53
-+#define GCC_CAMSS_ISPIF_AHB_CLK			54
-+#define GCC_CAMSS_JPEG0_CLK			55
-+#define GCC_CAMSS_JPEG_AHB_CLK			56
-+#define GCC_CAMSS_JPEG_AXI_CLK			57
-+#define GCC_CAMSS_MCLK0_CLK			58
-+#define GCC_CAMSS_MCLK1_CLK			59
-+#define GCC_CAMSS_MCLK2_CLK			60
-+#define GCC_CAMSS_MICRO_AHB_CLK			61
-+#define GCC_CAMSS_CSI0PHYTIMER_CLK		62
-+#define GCC_CAMSS_CSI1PHYTIMER_CLK		63
-+#define GCC_CAMSS_AHB_CLK			64
-+#define GCC_CAMSS_TOP_AHB_CLK			65
-+#define GCC_CAMSS_VFE0_CLK			66
-+#define GCC_CAMSS_VFE_AHB_CLK			67
-+#define GCC_CAMSS_VFE_AXI_CLK			68
-+#define GCC_CAMSS_VFE1_AHB_CLK			69
-+#define GCC_CAMSS_VFE1_AXI_CLK			70
-+#define GCC_CAMSS_VFE1_CLK			71
-+#define GCC_DCC_CLK				72
-+#define GCC_GP1_CLK				73
-+#define GCC_GP2_CLK				74
-+#define GCC_GP3_CLK				75
-+#define GCC_MDSS_AHB_CLK			76
-+#define GCC_MDSS_AXI_CLK			77
-+#define GCC_MDSS_ESC0_CLK			78
-+#define GCC_MDSS_ESC1_CLK			79
-+#define GCC_MDSS_MDP_CLK			80
-+#define GCC_MDSS_VSYNC_CLK			81
-+#define GCC_MSS_CFG_AHB_CLK			82
-+#define GCC_MSS_Q6_BIMC_AXI_CLK			83
-+#define GCC_PDM2_CLK				84
-+#define GCC_PRNG_AHB_CLK			85
-+#define GCC_PDM_AHB_CLK				86
-+#define GCC_RBCPR_GFX_AHB_CLK			87
-+#define GCC_RBCPR_GFX_CLK			88
-+#define GCC_SDCC1_AHB_CLK			89
-+#define GCC_SDCC1_APPS_CLK			90
-+#define GCC_SDCC1_ICE_CORE_CLK			91
-+#define GCC_SDCC2_AHB_CLK			92
-+#define GCC_SDCC2_APPS_CLK			93
-+#define GCC_SDCC3_AHB_CLK			94
-+#define GCC_SDCC3_APPS_CLK			95
-+#define GCC_USB2A_PHY_SLEEP_CLK			96
-+#define GCC_USB_HS_PHY_CFG_AHB_CLK		97
-+#define GCC_USB_FS_AHB_CLK			98
-+#define GCC_USB_FS_IC_CLK			99
-+#define GCC_USB_FS_SYSTEM_CLK			100
-+#define GCC_USB_HS_AHB_CLK			101
-+#define GCC_USB_HS_SYSTEM_CLK			102
-+#define GCC_VENUS0_AHB_CLK			103
-+#define GCC_VENUS0_AXI_CLK			104
-+#define GCC_VENUS0_CORE0_VCODEC0_CLK		105
-+#define GCC_VENUS0_CORE1_VCODEC0_CLK		106
-+#define GCC_VENUS0_VCODEC0_CLK			107
-+#define GCC_APSS_AHB_CLK			108
-+#define GCC_APSS_AXI_CLK			109
-+#define GCC_BLSP1_AHB_CLK			110
-+#define GCC_BLSP2_AHB_CLK			111
-+#define GCC_BOOT_ROM_AHB_CLK			112
-+#define GCC_CRYPTO_AHB_CLK			113
-+#define GCC_CRYPTO_AXI_CLK			114
-+#define GCC_CRYPTO_CLK				115
-+#define GCC_CPP_TBU_CLK				116
-+#define GCC_APSS_TCU_CLK			117
-+#define GCC_JPEG_TBU_CLK			118
-+#define GCC_MDP_RT_TBU_CLK			119
-+#define GCC_MDP_TBU_CLK				120
-+#define GCC_SMMU_CFG_CLK			121
-+#define GCC_VENUS_1_TBU_CLK			122
-+#define GCC_VENUS_TBU_CLK			123
-+#define GCC_VFE1_TBU_CLK			124
-+#define GCC_VFE_TBU_CLK				125
-+#define GCC_APS_0_CLK				126
-+#define GCC_APS_1_CLK				127
-+#define APS_0_CLK_SRC				128
-+#define APS_1_CLK_SRC				129
-+#define APSS_AHB_CLK_SRC			130
-+#define BLSP1_QUP1_I2C_APPS_CLK_SRC		131
-+#define BLSP1_QUP1_SPI_APPS_CLK_SRC		132
-+#define BLSP1_QUP2_I2C_APPS_CLK_SRC		133
-+#define BLSP1_QUP2_SPI_APPS_CLK_SRC		134
-+#define BLSP1_QUP3_I2C_APPS_CLK_SRC		135
-+#define BLSP1_QUP3_SPI_APPS_CLK_SRC		136
-+#define BLSP1_QUP4_I2C_APPS_CLK_SRC		137
-+#define BLSP1_QUP4_SPI_APPS_CLK_SRC		138
-+#define BLSP1_UART1_APPS_CLK_SRC		139
-+#define BLSP1_UART2_APPS_CLK_SRC		140
-+#define BLSP2_QUP1_I2C_APPS_CLK_SRC		141
-+#define BLSP2_QUP1_SPI_APPS_CLK_SRC		142
-+#define BLSP2_QUP2_I2C_APPS_CLK_SRC		143
-+#define BLSP2_QUP2_SPI_APPS_CLK_SRC		144
-+#define BLSP2_QUP3_I2C_APPS_CLK_SRC		145
-+#define BLSP2_QUP3_SPI_APPS_CLK_SRC		146
-+#define BLSP2_QUP4_I2C_APPS_CLK_SRC		147
-+#define BLSP2_QUP4_SPI_APPS_CLK_SRC		148
-+#define BLSP2_UART1_APPS_CLK_SRC		149
-+#define BLSP2_UART2_APPS_CLK_SRC		150
-+#define CCI_CLK_SRC				151
-+#define CPP_CLK_SRC				152
-+#define CSI0_CLK_SRC				153
-+#define CSI1_CLK_SRC				154
-+#define CSI2_CLK_SRC				155
-+#define CAMSS_GP0_CLK_SRC			156
-+#define CAMSS_GP1_CLK_SRC			157
-+#define JPEG0_CLK_SRC				158
-+#define MCLK0_CLK_SRC				159
-+#define MCLK1_CLK_SRC				160
-+#define MCLK2_CLK_SRC				161
-+#define CSI0PHYTIMER_CLK_SRC			162
-+#define CSI1PHYTIMER_CLK_SRC			163
-+#define CAMSS_TOP_AHB_CLK_SRC			164
-+#define VFE0_CLK_SRC				165
-+#define VFE1_CLK_SRC				166
-+#define CRYPTO_CLK_SRC				167
-+#define GP1_CLK_SRC				168
-+#define GP2_CLK_SRC				169
-+#define GP3_CLK_SRC				170
-+#define ESC0_CLK_SRC				171
-+#define ESC1_CLK_SRC				172
-+#define MDP_CLK_SRC				173
-+#define VSYNC_CLK_SRC				174
-+#define PDM2_CLK_SRC				175
-+#define RBCPR_GFX_CLK_SRC			176
-+#define SDCC1_APPS_CLK_SRC			177
-+#define SDCC1_ICE_CORE_CLK_SRC			178
-+#define SDCC2_APPS_CLK_SRC			179
-+#define SDCC3_APPS_CLK_SRC			180
-+#define USB_FS_IC_CLK_SRC			181
-+#define USB_FS_SYSTEM_CLK_SRC			182
-+#define USB_HS_SYSTEM_CLK_SRC			183
-+#define VCODEC0_CLK_SRC				184
-+#define GCC_MDSS_BYTE0_CLK_SRC			185
-+#define GCC_MDSS_BYTE1_CLK_SRC			186
-+#define GCC_MDSS_BYTE0_CLK			187
-+#define GCC_MDSS_BYTE1_CLK			188
-+#define GCC_MDSS_PCLK0_CLK_SRC			189
-+#define GCC_MDSS_PCLK1_CLK_SRC			190
-+#define GCC_MDSS_PCLK0_CLK			191
-+#define GCC_MDSS_PCLK1_CLK			192
-+#define GCC_GFX3D_CLK_SRC			193
-+#define GCC_GFX3D_OXILI_CLK			194
-+#define GCC_GFX3D_BIMC_CLK			195
-+#define GCC_GFX3D_OXILI_AHB_CLK			196
-+#define GCC_GFX3D_OXILI_AON_CLK			197
-+#define GCC_GFX3D_OXILI_GMEM_CLK		198
-+#define GCC_GFX3D_OXILI_TIMER_CLK		199
-+#define GCC_GFX3D_TBU0_CLK			200
-+#define GCC_GFX3D_TBU1_CLK			201
-+#define GCC_GFX3D_TCU_CLK			202
-+#define GCC_GFX3D_GTCU_AHB_CLK			203
-+
-+/* GCC block resets */
-+#define RST_CAMSS_MICRO_BCR			0
-+#define RST_USB_HS_BCR				1
-+#define RST_QUSB2_PHY_BCR			2
-+#define RST_USB2_HS_PHY_ONLY_BCR		3
-+#define RST_USB_HS_PHY_CFG_AHB_BCR		4
-+#define RST_USB_FS_BCR				5
-+#define RST_CAMSS_CSI1PIX_BCR			6
-+#define RST_CAMSS_CSI_VFE1_BCR			7
-+#define RST_CAMSS_VFE1_BCR			8
-+#define RST_CAMSS_CPP_BCR			9
-+
-+/* GDSCs */
-+#define VENUS_GDSC				0
-+#define VENUS_CORE0_GDSC			1
-+#define VENUS_CORE1_GDSC			2
-+#define MDSS_GDSC				3
-+#define JPEG_GDSC				4
-+#define VFE0_GDSC				5
-+#define VFE1_GDSC				6
-+#define CPP_GDSC				7
-+#define OXILI_GX_GDSC				8
-+#define OXILI_CX_GDSC				9
-+
-+#endif /* _DT_BINDINGS_CLK_MSM_GCC_8976_H */
---
-2.34.1
+> 
+> > > Conversely, if the max capacity corresponds to the max non-boost perf
+> > > and boost is used very often, the scaling will cause the CPUs to
+> > > appear to be 100% loaded, but there may be still spare capacity in the
+> > > system.
+> >
+> > It is even worse than that. Allowing delivered performance to exceed the
+> > CPU capacity will break utilization scale invariance at it will make
+> > per-task utilization appear smaller than it really is potentially
+> > leading to wrong task placement.
+> >
+> > I think we have to ensure that the full performance range is visible to
+> > the OS. If part of it is often unachievable we need to track the gap
+> > between requested and delivered performance and somehow take that into
+> > account when making task placement decisions.
+> 
+> I generally agree, but let me say that correlating what was asked for
+> with the delivered perf need not be straightforward.
 
+Yes, it won't necessarily be very accurate. I'm just wondering if we can
+do better than only taking thermal capping and maybe disabled boost
+levels into account? Tracking delivered vs requested performance avoids
+the problem of having to deal explicitly with every kind of mechanism
+that can reduce delivered performance. Delivered performance can't be
+taken as a true upper limit for performance as it might change very
+quickly.
+
+Morten
