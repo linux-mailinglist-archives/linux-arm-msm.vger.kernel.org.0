@@ -2,163 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7B6746D082
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 11:05:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A3B46D0A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 11:11:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbhLHKIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 05:08:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35650 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbhLHKIg (ORCPT
+        id S229649AbhLHKPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 05:15:08 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:28708 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229515AbhLHKPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 05:08:36 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DCF0C061A72
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 02:05:04 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id b13so1221325plg.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 02:05:04 -0800 (PST)
+        Wed, 8 Dec 2021 05:15:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3VlG0X5C2WeyX62N3377xKRJt9eBMbxFbqphE60v0Zo=;
-        b=JF0JorBuS7waBsNX1Vyr42oERYkJrVZRUdV0jvc7XdomrqGUOY/GNfu1KwU47VEu0v
-         hjeoibKSHTTwr7sL2XFbFfX8xZFpRJVijBSi1bli8YlzzstbmrLOrGAZk21mKBeUNyEn
-         O+drSal5sw7Ao083EyjuGm9oobIpuflPwGIjhD0viNvtn/d1akVcl6L1b/0sJ+9xOUfk
-         +kegVX6NWT0Zb65YMhyx4YTsJy6ZTQvNFKImtiuA74bi7MV9SfQqj5ANnjBqThbyFt6u
-         R0GNGLTtRNRiuu1/t1FwFT5tU6g9xTJ6y8YR4Sh40HNZPoxKWYwmTKKFcWseAwjjknlz
-         AJjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3VlG0X5C2WeyX62N3377xKRJt9eBMbxFbqphE60v0Zo=;
-        b=klDIMP8pyhqX4eY3Ej0HyijVCnIFfChwAddz0Dlqfa7vjPE8tBH9eAP7SQaurAlKst
-         GIMcvFj9/Cejr8s4Nx1p0tfcpRTuxWjqHs1BMuXTN2ntjn6ebnYqUKxpRLB8e8R12SfR
-         plq5PfcUj3cCgT9MjS/CZ1UCLaAE4p8LJ8Q/utqTVwrsX0fqHDGJsgLHB10HrVeS7QYV
-         rNSvH7xDd1OzRQh/5lL/3eeYmGdvpsWJbTQxGqx4JM0TTuMJ5KVuvg1kij8KZAWICXKI
-         hdzbgYUumpsNufpLEc46O9oy+5UfMpRerWJXnwsoCglrGH6xt9vOkbDg1ZOhi8EpR3Pe
-         3MOg==
-X-Gm-Message-State: AOAM532ikazAuVo+waDjw/GSwxRQAjzE+lwPvrMgjk/OdM8R/7gT9MfU
-        ULZN38Pou8ap3hQDf6lCTNApxNk0/c8DaShP
-X-Google-Smtp-Source: ABdhPJx5Ac6tG/98nAHlbbqQTdRfRG3D54wN5oyRq6vR/bzlWA1R+wqlFKh/I3S7dhraNdFJWGHzIg==
-X-Received: by 2002:a17:902:9a4a:b0:146:8ce2:672 with SMTP id x10-20020a1709029a4a00b001468ce20672mr13552754plv.29.1638957903838;
-        Wed, 08 Dec 2021 02:05:03 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id g22sm3183890pfj.29.2021.12.08.02.05.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Dec 2021 02:05:03 -0800 (PST)
-Date:   Wed, 8 Dec 2021 18:04:57 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20211208100453.GP10105@dragon>
-References: <20211202122122.23548-1-shawn.guo@linaro.org>
- <20211202122122.23548-4-shawn.guo@linaro.org>
- <87wnkikqve.wl-maz@kernel.org>
- <20211206131530.GN10105@dragon>
- <87wnkh26ar.wl-maz@kernel.org>
- <20211207094835.GO10105@dragon>
- <87mtlc1zzz.wl-maz@kernel.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638958296; x=1670494296;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=l+S2zXe567w1avDULeOZ2N9QauXrEcklwudDamCl2o8=;
+  b=a9xOkG/wDJdbcd2j2jA4ByQ3igX3A95xLrwzqbL++WM67NX+4pRfYxs5
+   r5GP3tuilxopAIYQBdJSVy+qiGeEBSS2W0HEV7d91dNCBPKrD8stOJYpT
+   YcBc0em6Nv57B+FMQnCtWwgYRocBqUbXXI2AFwSKz8iv2HyFRvjW85UTT
+   s=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Dec 2021 02:11:35 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 02:11:35 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 8 Dec 2021 02:11:34 -0800
+Received: from [10.216.32.99] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 8 Dec 2021
+ 02:11:28 -0800
+Subject: Re: [PATCH v5 2/5] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi
+ pinctrl bindings
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <plai@codeaurora.org>, <bgoswami@codeaurora.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1638891339-21806-1-git-send-email-quic_srivasam@quicinc.com>
+ <1638891339-21806-3-git-send-email-quic_srivasam@quicinc.com>
+ <7ae29aa1-34da-c362-5712-4b787474d7f2@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+Message-ID: <bde0c8b0-7244-1bd1-84b6-8efab4f01fa2@quicinc.com>
+Date:   Wed, 8 Dec 2021 15:41:25 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87mtlc1zzz.wl-maz@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <7ae29aa1-34da-c362-5712-4b787474d7f2@linaro.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 07, 2021 at 10:16:32AM +0000, Marc Zyngier wrote:
-> On Tue, 07 Dec 2021 09:48:36 +0000,
-> Shawn Guo <shawn.guo@linaro.org> wrote:
-> > 
-> > On Mon, Dec 06, 2021 at 01:48:12PM +0000, Marc Zyngier wrote:
-> > > > > > +static int qcom_mpm_enter_sleep(struct qcom_mpm_priv *priv)
-> > > > > > +{
-> > > > > > +	int i, ret;
-> > > > > > +
-> > > > > > +	for (i = 0; i < priv->reg_stride; i++)
-> > > > > > +		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
-> > > > > > +
-> > > > > > +	/* Notify RPM to write vMPM into HW */
-> > > > > 
-> > > > > What do you mean by 'into HW'? We just did that, right? or are these
-> > > > > registers just fake and most of the stuff is in the RPM?
-> > > > 
-> > > > I have a note about this in commit log.
-> > > > 
-> > > > - All the register settings are done by APSS on an internal memory
-> > > >   region called vMPM, and RPM will flush them into hardware after it
-> > > >   receives a mailbox/IPC notification from APSS.
-> > > > 
-> > > > So yes, these registers are fake/virtual in memory, and RPM will
-> > > > actually flush the values into the MPM hardware block.
-> > > 
-> > > Then why are you using MMIO accessors all over the place if this is
-> > > just RAM? Who *owns* this memory? Is it normal DRAM? Or some flops
-> > > exposed by a device? Why isn't the state simply communicated over the
-> > > mailbox instead?
-> > 
-> > It's a piece of internal memory (SRAM) which can be access by AP and
-> > RPM.  The communication mechanism is defined by SoC/RPM design, and we
-> > can do nothing but following the procedure.
-> 
-> Then the procedure needs to be documented:
 
-Maulik, I'm trying my best to answer Marc's questions based on my
-limited knowledges about the hardware.  Please clarify if there is
-anything incorrect.
-
-> - Who owns the memory at any given time?
-
-The memory is owned by APSS when system is awake, and owned by RPM when
-APSS gets power collapsed.  RPM is on the always-on domain and will be
-managing resources and monitoring wake-up interrupts during sleep, with
-the help of MPM.  MPM is not a core/master but a hardware
-controller/block.
-
-> - What are the events that trigger a change of ownership?
-
-When APSS is about to get power collapsed, it sends a mailbox
-notification to RPM, and RPM will take the ownership.  And when APSS is
-woken up by a MPM pin/interrupt, APSS takes back the ownership.
-
-> - What are the messages exchanged between these entities?
-
-The messages exchanged are documented as "vMPM register layout" in the
-beginning of the driver.  Basically, they are values of MPM registers
-related to wake-up interrupt configurations, which will be directly
-dumped into physical MPM registers by RPM, when RPM gets the ownership.
-On wake-up, RPM will copy STATUS registers into vMPM memory and return
-the ownership back to APSS.
-
-> - What is the synchronisation mechanism between the various processing
->   entities (MPM. RPM, APSS...)?
-
-A hardware IPC/mailbox channel is being used by APSS to tell RPM to take
-over the ownership.  On wake-up, the wake-up event itself would be the
-synchronisation.
-
-> - Is the per-interrupt tracking a HW requirement or a SW
->   implementation choice? Could this instead be a one-shot operation
->   iterating over the whole state?
-
-I do not quite sure what "per-interrupt tracking" means.  The HW
-requirement is just that, when RPM takes the ownership of vMPM memory
-region, the memory contains the MPM register values, that RPM can
-directly dump into MPM registers.
-
-> All this needs to be explained so that it is maintainable, because I'm
-> getting tired of drivers that mimic the QC downstream code without
-> justification nor documentation to support the implementation.
-
-I really appreciate all your review comments and questions which are
-driving for good and maintainable code!
-
-Shawn 
+On 12/8/2021 2:54 PM, Srinivas Kandagatla wrote:
+Thanks froYour time Srini!!!
+>
+> On 07/12/2021 15:35, Srinivasa Rao Mandadapu wrote:
+>> Add device tree binding Documentation details for Qualcomm SC7280
+>> LPASS LPI pinctrl driver.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>
+>
+> I remember in my previous review that I requested you to use git mv 
+> for renaming this
+Yes. Created patch with "git mv" and commit. Not sure why diff is not as 
+expected.
+>
+> If you do that you will endup diff stat something like this:
+>
+> ------------------------->cut<-----------------------------
+> diff --git 
+> a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml 
+> b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml 
+>
+> similarity index 97%
+> rename from 
+> Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+> rename to 
+> Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> index e47ebf934daf..76f205a47640 100644
+> --- 
+> a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+> +++ 
+> b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+> @@ -1,7 +1,7 @@
+>  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
+> +$id: 
+> http://devicetree.org/schemas/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>
+>  title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
+> ------------------------->cut<-----------------------------
+>
+> --srini
+>
+>> .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml     | 115 
+>> +++++++++++++++++++++
+>>   1 file changed, 115 insertions(+)
+>>   create mode 100644 
+>> Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>>
+>> diff --git 
+>> a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml 
+>> b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml 
+>>
+>> new file mode 100644
+>> index 0000000..d32ee32
+>> --- /dev/null
+>> +++ 
+>> b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+>> @@ -0,0 +1,115 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: 
+>> http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
+>> +  Low Power Island (LPI) TLMM block
+>> +
+>> +maintainers:
+>> +  - Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> +
+>> +description: |
+>> +  This binding describes the Top Level Mode Multiplexer block found 
+>> in the
+>> +  LPASS LPI IP on most Qualcomm SoCs
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sc7280-lpass-lpi-pinctrl
+>> +
+>> +  reg:
+>> +    minItems: 2
+>> +    maxItems: 2
+>> +
+>> +  gpio-controller: true
+>> +
+>> +  '#gpio-cells':
+>> +    description: Specifying the pin number and flags, as defined in
+>> +      include/dt-bindings/gpio/gpio.h
+>> +    const: 2
+>> +
+>> +  gpio-ranges:
+>> +    maxItems: 1
+>> +
+>> +#PIN CONFIGURATION NODES
+>> +patternProperties:
+>> +  '-pins$':
+>> +    type: object
+>> +    description:
+>> +      Pinctrl node's client devices use subnodes for desired pin 
+>> configuration.
+>> +      Client device subnodes use below standard properties.
+>> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+>> +
+>> +    properties:
+>> +      pins:
+>> +        description:
+>> +          List of gpio pins affected by the properties specified in 
+>> this
+>> +          subnode.
+>> +        items:
+>> +          oneOf:
+>> +            - pattern: "^gpio([0-9]|[1-9][0-9])$"
+>> +        minItems: 1
+>> +        maxItems: 15
+>> +
+>> +      function:
+>> +        enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data, 
+>> qua_mi2s_ws,
+>> +                qua_mi2s_data, swr_rx_clk, swr_rx_data, dmic1_clk, 
+>> i2s1_clk,
+>> +                dmic1_data, i2s1_ws, dmic2_clk, dmic2_data, i2s1_data,
+>> +                i2s2_clk, wsa_swr_clk, i2s2_ws, wsa_swr_data, 
+>> dmic3_clk,
+>> +                dmic3_data, i2s2_data ]
+>> +        description:
+>> +          Specify the alternative function to be configured for the 
+>> specified
+>> +          pins.
+>> +
+>> +      drive-strength:
+>> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+>> +        default: 2
+>> +        description:
+>> +          Selects the drive strength for the specified pins, in mA.
+>> +
+>> +      slew-rate:
+>> +        enum: [0, 1, 2, 3]
+>> +        default: 0
+>> +        description: |
+>> +            0: No adjustments
+>> +            1: Higher Slew rate (faster edges)
+>> +            2: Lower Slew rate (slower edges)
+>> +            3: Reserved (No adjustments)
+>> +
+>> +      bias-pull-down: true
+>> +
+>> +      bias-pull-up: true
+>> +
+>> +      bias-disable: true
+>> +
+>> +      output-high: true
+>> +
+>> +      output-low: true
+>> +
+>> +    required:
+>> +      - pins
+>> +      - function
+>> +
+>> +    additionalProperties: false
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - gpio-controller
+>> +  - '#gpio-cells'
+>> +  - gpio-ranges
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    lpass_tlmm: pinctrl@33c0000 {
+>> +        compatible = "qcom,sc7280-lpass-lpi-pinctrl";
+>> +        reg = <0x33c0000 0x20000>,
+>> +              <0x3550000 0x10000>;
+>> +        gpio-controller;
+>> +        #gpio-cells = <2>;
+>> +        gpio-ranges = <&lpass_tlmm 0 0 15>;
+>> +    };
+>>
