@@ -2,130 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BDA546D819
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 17:27:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 958E646D81D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 17:28:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234311AbhLHQbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 11:31:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
+        id S236897AbhLHQcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 11:32:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234301AbhLHQbK (ORCPT
+        with ESMTP id S232478AbhLHQcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 11:31:10 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49049C061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 08:27:38 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id u74so4771292oie.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 08:27:38 -0800 (PST)
+        Wed, 8 Dec 2021 11:32:22 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0916CC061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 08:28:51 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so3228699otu.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 08:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=0fAvDAwGpb762D3N/F1VLQfiE3umHXccn2rzhXlp0Ls=;
-        b=EEKwi1Fw20jkO8Xpm3cAziHmdaBpBVXKz/ESMqULbMZM4gNHi2Zvy/8tFvDv5DYFB7
-         w1G+/5pBHSxaRFW4fEyTo62ojvZ5Q7Ql4tFfaODQRnLIX2gLdDt4lae30AhhbohX3WDe
-         rMcmNOLW+aeaIhc6UZKOTwy2H1odq2H8bVlUS3BX4ThLao3qLDd5RLD5ok1VTFOgHK8N
-         UIS9tl+u++15uA8TmCqtlMOhorp40jCDjZmoDTJ1wJW7+pSZSOm1V1Rl2SYg8ykaP312
-         0I4I4WHmmTYI+LMJ67SwHzAqVjhzLT1HVu3Gjfd4bfUA4Blfc1lum2oJmeqO/7Y7Q9X/
-         NfQg==
+        bh=0uojmEd83LkJuzCYT6podOVDiCxgCvMKz9HRzNZD9MY=;
+        b=AxhCixMlmNZ/PTZOHbbF1wFDPddUi6YRqetROQzhA1iabJnNk1vIbl0cW1+PFlYtHg
+         VEIvFrYuVZTbSZXE0ECPRMPgMVVzPJgeUQZ81su5/4DJWxbGRW72oJQwM0BTb79f/qlP
+         iUByQXI0brVZLSUcmhku6RnYtGKJJtbHnt6qfN1XuLaQ5oVYaB0hJpZDfsX1h20p0ZUV
+         x9yZHRSPWwXIA1sxc9LNBg2xT6o+glgO2agkDrY6IIVdnle476kqREw4cA0ARHVWk22I
+         i+23PtpdBDozZmiuc1FyGTy9LPkLVvo3ecQW59Wr9Hn2Eg30OrUz5GCit99Y+t2sv1XF
+         t+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=0fAvDAwGpb762D3N/F1VLQfiE3umHXccn2rzhXlp0Ls=;
-        b=ralXbIclhZB8daseMpFja+Z+jyeXESEcOPpI73hdBgTNp2jZONtj2EXAc3wpmVk/s0
-         JTi4KzXu3M+rqWtpSPCGtLz2SPZ6QyePflft4a1ZZ+X6VdkaRY0Bj1deXhYvMHOSktdM
-         TwjKbWYL9EPMhAJLzOD6xesEZ5wKqUgm4zBnTO2oCvz7slhyPS3tSd0pJXeAYeusjBEf
-         LVTRk6fKEe1tUmaaB7wZ7unF9+l18FHD6wUGOmr0e6vSxaK8H6gxQiUCc3Nf7BKyEoyq
-         y2dnuKumwFD3otHJ9bODPcUg+CLRko6LM0JMzB8ejPAiKFjM7leAby3rVNjoLIQnB2W5
-         Gknw==
-X-Gm-Message-State: AOAM533JcmrcQEnI/+TJZWdLDWDpKVqfYV1LtDujU3PKpuX//l08WOwj
-        s3LTvzuRFUF6x59UiQeoTLQTvg==
-X-Google-Smtp-Source: ABdhPJz90quyj/viO/1nla9+Xqqxnquzwkzrm4WXkfrltwO+V5B8UZQX6LgsE8CxCZB5o+hD7puIAQ==
-X-Received: by 2002:a05:6808:228c:: with SMTP id bo12mr379407oib.93.1638980857561;
-        Wed, 08 Dec 2021 08:27:37 -0800 (PST)
+        bh=0uojmEd83LkJuzCYT6podOVDiCxgCvMKz9HRzNZD9MY=;
+        b=jrUFgaim6eZmqIyN1vVgn5SlYQPSrmzH3lHXRVhhDR5t2P6oxBvDX7cDoDIJi1w98z
+         5CS1tEdVEcKQIRpl5tlg6+OjSKah8BK/8aIKkg3hv5vhyn5fcVl/KjgiN+lT4DqH221g
+         BzM7kFEn/Yov1DvYz6PtwqkINrhluZq/I8K+D2vNT7Ae1kKPQNDdiJxrtpggedqI5A2w
+         HikTkvXi99AAg1NhEKJZkGCaGp8tZKlL6QpnjTYxISjrPubt7AuR4c638uW78ej0afu9
+         HOUVSy3AUZ9yRoNaHfNa1wSzTk1c7bqUuIPrmt77N6KeAOfE+KF4SKcMV3aVXpAS/VSC
+         PYCA==
+X-Gm-Message-State: AOAM532NAQh7+dZQge8ThogveVA7ZY96YFHCksgGLOvXogJ7XnCEORCA
+        RAVep0V5ImT8tltSGoEp02djPQ==
+X-Google-Smtp-Source: ABdhPJzxeuG+wEfmBti/OH0rRqnpL9CyfVvwdbxvKCiXcuU4YQtjtCJxFoyuWwVl6g9gwc/PSVd6NQ==
+X-Received: by 2002:a05:6830:2712:: with SMTP id j18mr490847otu.302.1638980930305;
+        Wed, 08 Dec 2021 08:28:50 -0800 (PST)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bk41sm770522oib.31.2021.12.08.08.27.36
+        by smtp.gmail.com with ESMTPSA id bh12sm745103oib.25.2021.12.08.08.28.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 08:27:37 -0800 (PST)
-Date:   Wed, 8 Dec 2021 08:29:01 -0800
+        Wed, 08 Dec 2021 08:28:49 -0800 (PST)
+Date:   Wed, 8 Dec 2021 08:30:16 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Guo Zhengkui <guozhengkui@vivo.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        kernel <kernel@vivo.com>
-Subject: Re: [PATCH] phy: qcom: fix bug: application of sizeof to pointer
-Message-ID: <YbDdTYny9VXtmzb7@ripper>
-References: <20211207131642.5313-1-guozhengkui@vivo.com>
- <AO6AKgBME5Y4PNQLIg0Wlap9.9.1638889943341.Hmail.guozhengkui@vivo.com.@PFlhOTZLT3luc080NzhjVnhAcmlwcGVyPg==>
- <f0a6ae0e-4a6c-7db5-7924-a957f1a0b70b@vivo.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8450 pinctrl
+ bindings
+Message-ID: <YbDdmHnHTU45OOXI@ripper>
+References: <20211201072434.3968768-1-vkoul@kernel.org>
+ <20211201072434.3968768-2-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f0a6ae0e-4a6c-7db5-7924-a957f1a0b70b@vivo.com>
+In-Reply-To: <20211201072434.3968768-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Dec 22:56 PST 2021, Guo Zhengkui wrote:
+On Tue 30 Nov 23:24 PST 2021, Vinod Koul wrote:
 
-> On 2021/12/7 23:13, Bjorn Andersson wrote:
-> > On Tue 07 Dec 05:16 PST 2021, Guo Zhengkui wrote:
-> > 
-> > > Fix following coccicheck error:
-> > > ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
-> > > ERROR: application of sizeof to pointer.
-> > > 
-> > > Use sizeof(*data) instead.
-> > > 
-> > > Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
-> > > ---
-> > >   drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> > > index 17d5653b661d..5fe4eab9cac1 100644
-> > > --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> > > +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> > > @@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
-> > >   	struct clk_init_data init = { };
-> > >   	int ret;
-> > > -	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
-> > > +	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
-> > 
-> > Ouch, thanks for catching that!
-> > 
-> > But the clk_hw_onecell_data actually has a variable size array at the
-> > end and as you can see further down I store 2 items in that array.
-> > 
-> > So that sizeof should be struct_size(data, hws, 2)
-> > 
-> > Would you be willing to update your patch with that?
-> > 
+> Add device tree binding Documentation details for Qualcomm SM8450
+> TLMM device
 > 
-> OK, I will commit another patch. Do you mind I add a "Suggested-by" tag of
-> your name in the new patch?
-> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-I don't mind.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> Zhengkui
+> ---
+>  .../bindings/pinctrl/qcom,sm8450-pinctrl.yaml | 143 ++++++++++++++++++
+>  1 file changed, 143 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8450-pinctrl.yaml
 > 
-> > And please add:
-> > Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > >   	if (!data)
-> > >   		return -ENOMEM;
-> > > -- 
-> > > 2.20.1
-> > > 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..9c891246245b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-pinctrl.yaml
+> @@ -0,0 +1,143 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm8450-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SM8450 TLMM block
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
+> +  in the SM8450 platform.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm8450-tlmm
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  gpio-reserved-ranges: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sm8450-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
+> +            $ref: "#/$defs/qcom-sm8450-tlmm-state"
+> +
+> +$defs:
+> +  qcom-sm8450-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-9])$"
+> +            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +        enum: [ aon_cam, atest_char, atest_usb, audio_ref, cam_mclk, cci_async,
+> +                cci_i2c, cci_timer, cmu_rng, coex_uart1, coex_uart2, cri_trng,
+> +                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
+> +                ddr_pxi2, ddr_pxi3, dp_hot, gcc_gp1, gcc_gp2, gcc_gp3,
+> +                gpio, ibi_i3c, jitter_bist, mdp_vsync, mdp_vsync0, mdp_vsync1,
+> +                mdp_vsync2, mdp_vsync3, mi2s0_data0, mi2s0_data1, mi2s0_sck,
+> +                mi2s0_ws, mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws,
+> +                mss_grfc0, mss_grfc1, mss_grfc10, mss_grfc11, mss_grfc12,
+> +                mss_grfc2, mss_grfc3, mss_grfc4, mss_grfc5, mss_grfc6,
+> +                mss_grfc7, mss_grfc8, mss_grfc9, nav, pcie0_clkreqn,
+> +                pcie1_clkreqn, phase_flag, pll_bist, pll_clk, pri_mi2s,
+> +                prng_rosc, qdss_cti, qdss_gpio, qlink0_enable, qlink0_request,
+> +                qlink0_wmss, qlink1_enable, qlink1_request, qlink1_wmss,
+> +                qlink2_enable, qlink2_request, qlink2_wmss, qspi0, qspi1,
+> +                qspi2, qspi3, qspi_clk, qspi_cs, qup0, qup1, qup10, qup11,
+> +                qup12, qup13, qup14, qup15, qup16, qup17, qup18, qup19, qup2,
+> +                qup20, qup21, qup3, qup4, qup5, qup6, qup7, qup8, qup9, qup_l4,
+> +                qup_l5, qup_l6, sd_write, sdc40, sdc41, sdc42, sdc43, sdc4_clk,
+> +                sdc4_cmd, sec_mi2s, tb_trig, tgu_ch0, tgu_ch1, tgu_ch2,
+> +                tgu_ch3, tmess_prng0, tmess_prng1, tmess_prng2, tmess_prng3,
+> +                tsense_pwm1, tsense_pwm2, uim0_clk, uim0_data, uim0_present,
+> +                uim0_reset, uim1_clk, uim1_data, uim1_present, uim1_reset,
+> +                usb2phy_ac, usb_phy, vfr_0, vfr_1, vsense_trigger ]
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        pinctrl@f100000 {
+> +                compatible = "qcom,sm8450-tlmm";
+> +                reg = <0x0f100000 0x300000>;
+> +                gpio-controller;
+> +                #gpio-cells = <2>;
+> +                gpio-ranges = <&tlmm 0 0 211>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                gpio-wo-subnode-state {
+> +                        pins = "gpio1";
+> +                        function = "gpio";
+> +                };
+> +
+> +                uart-w-subnodes-state {
+> +                    rx {
+> +                            pins = "gpio26";
+> +                            function = "qup7";
+> +                            bias-pull-up;
+> +                    };
+> +
+> +                    tx {
+> +                            pins = "gpio27";
+> +                            function = "qup7";
+> +                            bias-disable;
+> +                    };
+> +               };
+> +        };
+> +...
+> -- 
+> 2.31.1
+> 
