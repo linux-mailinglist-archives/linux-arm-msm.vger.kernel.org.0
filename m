@@ -2,171 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E54FC46D60D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 15:48:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BDA546D819
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 17:27:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231587AbhLHOvp convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 8 Dec 2021 09:51:45 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:56592 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbhLHOvo (ORCPT
+        id S234311AbhLHQbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 11:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234301AbhLHQbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 09:51:44 -0500
-Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 18D3DCED27;
-        Wed,  8 Dec 2021 15:48:11 +0100 (CET)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: [PATCH] Bluetooth: btqca: sequential validation
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
-Date:   Wed, 8 Dec 2021 15:48:10 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        quic_hemantg@quicinc.com, MSM <linux-arm-msm@vger.kernel.org>,
-        quic_bgodavar@quicinc.com, Rocky Liao <rjliao@codeaurora.org>,
-        hbandi@codeaurora.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>, quic_pharish@quicinc.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <2DFAE4A9-5101-49B9-86BB-2D82883E930C@holtmann.org>
-References: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
-To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+        Wed, 8 Dec 2021 11:31:10 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49049C061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 08:27:38 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id u74so4771292oie.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 08:27:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0fAvDAwGpb762D3N/F1VLQfiE3umHXccn2rzhXlp0Ls=;
+        b=EEKwi1Fw20jkO8Xpm3cAziHmdaBpBVXKz/ESMqULbMZM4gNHi2Zvy/8tFvDv5DYFB7
+         w1G+/5pBHSxaRFW4fEyTo62ojvZ5Q7Ql4tFfaODQRnLIX2gLdDt4lae30AhhbohX3WDe
+         rMcmNOLW+aeaIhc6UZKOTwy2H1odq2H8bVlUS3BX4ThLao3qLDd5RLD5ok1VTFOgHK8N
+         UIS9tl+u++15uA8TmCqtlMOhorp40jCDjZmoDTJ1wJW7+pSZSOm1V1Rl2SYg8ykaP312
+         0I4I4WHmmTYI+LMJ67SwHzAqVjhzLT1HVu3Gjfd4bfUA4Blfc1lum2oJmeqO/7Y7Q9X/
+         NfQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0fAvDAwGpb762D3N/F1VLQfiE3umHXccn2rzhXlp0Ls=;
+        b=ralXbIclhZB8daseMpFja+Z+jyeXESEcOPpI73hdBgTNp2jZONtj2EXAc3wpmVk/s0
+         JTi4KzXu3M+rqWtpSPCGtLz2SPZ6QyePflft4a1ZZ+X6VdkaRY0Bj1deXhYvMHOSktdM
+         TwjKbWYL9EPMhAJLzOD6xesEZ5wKqUgm4zBnTO2oCvz7slhyPS3tSd0pJXeAYeusjBEf
+         LVTRk6fKEe1tUmaaB7wZ7unF9+l18FHD6wUGOmr0e6vSxaK8H6gxQiUCc3Nf7BKyEoyq
+         y2dnuKumwFD3otHJ9bODPcUg+CLRko6LM0JMzB8ejPAiKFjM7leAby3rVNjoLIQnB2W5
+         Gknw==
+X-Gm-Message-State: AOAM533JcmrcQEnI/+TJZWdLDWDpKVqfYV1LtDujU3PKpuX//l08WOwj
+        s3LTvzuRFUF6x59UiQeoTLQTvg==
+X-Google-Smtp-Source: ABdhPJz90quyj/viO/1nla9+Xqqxnquzwkzrm4WXkfrltwO+V5B8UZQX6LgsE8CxCZB5o+hD7puIAQ==
+X-Received: by 2002:a05:6808:228c:: with SMTP id bo12mr379407oib.93.1638980857561;
+        Wed, 08 Dec 2021 08:27:37 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id bk41sm770522oib.31.2021.12.08.08.27.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 08:27:37 -0800 (PST)
+Date:   Wed, 8 Dec 2021 08:29:01 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Guo Zhengkui <guozhengkui@vivo.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        kernel <kernel@vivo.com>
+Subject: Re: [PATCH] phy: qcom: fix bug: application of sizeof to pointer
+Message-ID: <YbDdTYny9VXtmzb7@ripper>
+References: <20211207131642.5313-1-guozhengkui@vivo.com>
+ <AO6AKgBME5Y4PNQLIg0Wlap9.9.1638889943341.Hmail.guozhengkui@vivo.com.@PFlhOTZLT3luc080NzhjVnhAcmlwcGVyPg==>
+ <f0a6ae0e-4a6c-7db5-7924-a957f1a0b70b@vivo.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f0a6ae0e-4a6c-7db5-7924-a957f1a0b70b@vivo.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+On Tue 07 Dec 22:56 PST 2021, Guo Zhengkui wrote:
 
-> This change will have sequential validation support
-> & patch config command is added
+> On 2021/12/7 23:13, Bjorn Andersson wrote:
+> > On Tue 07 Dec 05:16 PST 2021, Guo Zhengkui wrote:
+> > 
+> > > Fix following coccicheck error:
+> > > ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
+> > > ERROR: application of sizeof to pointer.
+> > > 
+> > > Use sizeof(*data) instead.
+> > > 
+> > > Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
+> > > ---
+> > >   drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+> > > index 17d5653b661d..5fe4eab9cac1 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+> > > @@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
+> > >   	struct clk_init_data init = { };
+> > >   	int ret;
+> > > -	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
+> > > +	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
+> > 
+> > Ouch, thanks for catching that!
+> > 
+> > But the clk_hw_onecell_data actually has a variable size array at the
+> > end and as you can see further down I store 2 items in that array.
+> > 
+> > So that sizeof should be struct_size(data, hws, 2)
+> > 
+> > Would you be willing to update your patch with that?
+> > 
 > 
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
-> ---
-> drivers/bluetooth/btqca.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
-> drivers/bluetooth/btqca.h |  3 +++
-> 2 files changed, 48 insertions(+)
+> OK, I will commit another patch. Do you mind I add a "Suggested-by" tag of
+> your name in the new patch?
 > 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index be04d74..9a2fd17 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -141,6 +141,49 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
-> 	return err;
-> }
+
+I don't mind.
+
+Regards,
+Bjorn
+
+> Zhengkui
 > 
-> +int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
-> +{
-
-look, I have limited understanding for people ignoring warnings. The missing static declaration is obvious and when you compile the code it will actually tell you about it.
-
-> +	struct sk_buff *skb;
-> +	int err = 0;
-> +	u8 cmd[5] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
-
-const u8 cmd[] = { EDL.., .., 0 };
-
-> +	u8 rlen = 0x02;
-> +	struct edl_event_hdr *edl;
-> +	u8 rtype = EDL_PATCH_CONFIG_CMD;
-> +
-> +	bt_dev_dbg(hdev, "QCA Patch config");
-> +
-> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CONFIG_CMD_LEN,
-
-sizeof(cmd)
-
-> +			cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-
-Indentation is wrong.
-
-> +	if (IS_ERR(skb)) {
-> +		err = PTR_ERR(skb);
-> +		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-> +		return err;
-> +	}
-> +	if (skb->len != rlen) {
-> +		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-> +		err = -EILSEQ;
-> +		goto out;
-> +	}
-
-Extra empty line,
-
-> +	edl = (struct edl_event_hdr *)(skb->data);
-> +	if (!edl) {
-> +		bt_dev_err(hdev, "QCA Patch config with no header");
-> +		err = -EILSEQ;
-> +		goto out;
-> +	}
-
-Here as well.
-
-> +	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != rtype) {
-> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-> +		 edl->rtype);
-
-Wrong indentation.
-
-> +		err = -EIO;
-> +		goto out;
-> +	}
-> +out:
-> +	kfree(skb);
-> +	if (err)
-> +		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
-> +
-> +	return err;
-> +}
-> +
-> static int qca_send_reset(struct hci_dev *hdev)
-> {
-> 	struct sk_buff *skb;
-> @@ -551,6 +594,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> 	 */
-> 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
-> 
-> +	if (soc_type == QCA_WCN6750)
-> +		qca_send_patch_config_cmd(hdev, soc_type);
-
-Extra empty line.
-
-If you are not using the soc_type, then don’t add it as parameter.
-
-
-> 	/* Download rampatch file */
-> 	config.type = TLV_TYPE_PATCH;
-> 	if (qca_is_wcn399x(soc_type)) {
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index 30afa77..8fbb4c7 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -13,6 +13,8 @@
-> #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
-> #define EDL_GET_BUILD_INFO_CMD		(0x20)
-> #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-> +#define EDL_PATCH_CONFIG_CMD_LEN	(0x05)
-
-Not needed.
-
-> +#define EDL_PATCH_CONFIG_CMD		(0x28)
-> #define MAX_SIZE_PER_TLV_SEGMENT	(243)
-> #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
-> #define QCA_DISABLE_LOGGING		(0xFC17)
-> @@ -24,6 +26,7 @@
-> #define EDL_CMD_EXE_STATUS_EVT		(0x00)
-> #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
-> #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
-> +#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
-> #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
-> 
-> #define EDL_TAG_ID_HCI			(17)
-
-Regards
-
-Marcel
-
+> > And please add:
+> > Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > >   	if (!data)
+> > >   		return -ENOMEM;
+> > > -- 
+> > > 2.20.1
+> > > 
