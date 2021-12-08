@@ -2,162 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78D6246DF02
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 00:23:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3237446DF15
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 00:44:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237948AbhLHX1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 18:27:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52630 "EHLO
+        id S238078AbhLHXsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 18:48:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237964AbhLHX1H (ORCPT
+        with ESMTP id S238277AbhLHXsN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 18:27:07 -0500
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3569C061746;
-        Wed,  8 Dec 2021 15:23:34 -0800 (PST)
+        Wed, 8 Dec 2021 18:48:13 -0500
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 878FFC0617A1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 15:44:40 -0800 (PST)
 Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3A64820407;
-        Thu,  9 Dec 2021 00:23:33 +0100 (CET)
-Date:   Thu, 9 Dec 2021 00:23:32 +0100
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C5E412036B;
+        Thu,  9 Dec 2021 00:44:37 +0100 (CET)
+Date:   Thu, 9 Dec 2021 00:44:36 +0100
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Alex Elder <elder@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 08/11] clk: qcom: gcc-msm8996: drop unsupported clock
- sources
-Message-ID: <20211208232332.opace4qmdcukl4uv@SoMainline.org>
-References: <20211208175430.1333594-1-dmitry.baryshkov@linaro.org>
- <20211208175430.1333594-9-dmitry.baryshkov@linaro.org>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] firmware: qcom: scm: Add function to set the maximum
+ IOMMU pool size
+Message-ID: <20211208234436.ktagmcfj6jl5jct5@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Alex Elder <elder@linaro.org>, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>, Arnd Bergmann <arnd@arndb.de>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211208083423.22037-1-marijn.suijten@somainline.org>
+ <20211208083423.22037-3-marijn.suijten@somainline.org>
+ <b21686fc-3662-1ed4-8ba3-8ed5ca6eda13@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211208175430.1333594-9-dmitry.baryshkov@linaro.org>
+In-Reply-To: <b21686fc-3662-1ed4-8ba3-8ed5ca6eda13@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-12-08 20:54:27, Dmitry Baryshkov wrote:
-> In preparation of updating the msm8996 gcc driver, drop all unsupported
-> GPLL sources (gpll1/gpll1_early_div, gpll2/gpll2_early and gpll3).
-> Downstream kernel also does not provide support for these GPLL sources,
-> so it is safe to drop them.
+On 2021-12-08 07:30:28, Alex Elder wrote:
+> On 12/8/21 2:34 AM, Marijn Suijten wrote:
+> > From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > 
+> > This is not necessary for basic functionality of the IOMMU, but
+> > it's an optimization that tells to the TZ what's the maximum
+> > mappable size for the secure IOMMUs, so that it can optimize
+> > the data structures in the TZ itself.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/gcc-msm8996.c | 55 ++++------------------------------
->  1 file changed, 6 insertions(+), 49 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
-> index 9b1674b28d45..3acefe16355c 100644
-> --- a/drivers/clk/qcom/gcc-msm8996.c
-> +++ b/drivers/clk/qcom/gcc-msm8996.c
-> @@ -27,15 +27,10 @@
->  enum {
->  	P_XO,
->  	P_GPLL0,
-> -	P_GPLL2,
-> -	P_GPLL3,
-> -	P_GPLL1,
-> -	P_GPLL2_EARLY,
->  	P_GPLL0_EARLY_DIV,
->  	P_SLEEP_CLK,
->  	P_GPLL4,
->  	P_AUD_REF_CLK,
-> -	P_GPLL1_EARLY_DIV
->  };
->  
->  static const struct parent_map gcc_sleep_clk_map[] = {
-> @@ -130,44 +125,6 @@ static const char * const gcc_xo_gpll0_gpll4_gpll0_early_div[] = {
->  	"gpll0_early_div"
->  };
->  
-> -static const struct parent_map gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div_map[] = {
-> -	{ P_XO, 0 },
-> -	{ P_GPLL0, 1 },
-> -	{ P_GPLL1_EARLY_DIV, 3 },
-> -	{ P_GPLL1, 4 },
-> -	{ P_GPLL4, 5 },
-> -	{ P_GPLL0_EARLY_DIV, 6 }
-> -};
-> -
-> -static const char * const gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div[] = {
-> -	"xo",
-> -	"gpll0",
-> -	"gpll1_early_div",
-> -	"gpll1",
-> -	"gpll4",
-> -	"gpll0_early_div"
-> -};
-> -
-> -static const struct parent_map gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early_div_map[] = {
-> -	{ P_XO, 0 },
-> -	{ P_GPLL0, 1 },
-> -	{ P_GPLL2, 2 },
-> -	{ P_GPLL3, 3 },
-> -	{ P_GPLL1, 4 },
-> -	{ P_GPLL2_EARLY, 5 },
-> -	{ P_GPLL0_EARLY_DIV, 6 }
-> -};
-> -
-> -static const char * const gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early_div[] = {
-> -	"xo",
-> -	"gpll0",
-> -	"gpll2",
-> -	"gpll3",
-> -	"gpll1",
-> -	"gpll2_early",
-> -	"gpll0_early_div"
-> -};
-> -
->  static struct clk_fixed_factor xo = {
->  	.mult = 1,
->  	.div = 1,
-> @@ -285,12 +242,12 @@ static const struct freq_tbl ftbl_system_noc_clk_src[] = {
->  static struct clk_rcg2 system_noc_clk_src = {
->  	.cmd_rcgr = 0x0401c,
->  	.hid_width = 5,
-> -	.parent_map = gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early_div_map,
-> +	.parent_map = gcc_xo_gpll0_gpll0_early_div_map,
->  	.freq_tbl = ftbl_system_noc_clk_src,
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "system_noc_clk_src",
-> -		.parent_names = gcc_xo_gpll0_gpll2_gpll3_gpll1_gpll2_early_gpll0_early_div,
-> -		.num_parents = 7,
-> +		.parent_names = gcc_xo_gpll0_gpll0_early_div,
-> +		.num_parents = 3,
+> Are there no users of this function?	-Alex
 
-Is it perhaps preferred to perform the ARRAY_SIZE conversion _before_
-this patch, such that num_parents doesn't need to be updated
-temporarily?  That said, yes the name would have to be updated in two
-places then, but that seems less fragile than the hardcoded numbers we'd
-like to avoid.
+I should have probably mentioned in the cover letter that this function
+and the one introduced in patch 3/3 are going to be used in upcoming
+patches for IOMMUs found in msm8976, msm8974 and related SoCs (with the
+side-note that I don't see this particular set_cp_pool_size used in the
+branch that this was submitted from, but it's most likely used elsewhere
+or planned ahead to be used in the near future - I expect Angelo to be
+able to comment on that more accurately).
 
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> @@ -1257,12 +1214,12 @@ static const struct freq_tbl ftbl_qspi_ser_clk_src[] = {
->  static struct clk_rcg2 qspi_ser_clk_src = {
->  	.cmd_rcgr = 0x8b00c,
->  	.hid_width = 5,
-> -	.parent_map = gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div_map,
-> +	.parent_map = gcc_xo_gpll0_gpll4_gpll0_early_div_map,
->  	.freq_tbl = ftbl_qspi_ser_clk_src,
->  	.clkr.hw.init = &(struct clk_init_data){
->  		.name = "qspi_ser_clk_src",
-> -		.parent_names = gcc_xo_gpll0_gpll1_early_div_gpll1_gpll4_gpll0_early_div,
-> -		.num_parents = 6,
-> +		.parent_names = gcc_xo_gpll0_gpll4_gpll0_early_div,
-> +		.num_parents = 4,
->  		.ops = &clk_rcg2_ops,
->  	},
->  };
-> -- 
-> 2.33.0
+> > 
+> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > [Marijn: ported from 5.3 to the unified architecture in 5.11]
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > ---
+> >   drivers/firmware/qcom_scm.c | 15 +++++++++++++++
+> >   drivers/firmware/qcom_scm.h |  1 +
+> >   include/linux/qcom_scm.h    |  1 +
+> >   3 files changed, 17 insertions(+)
+> > 
+> > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> > index 3f67bf774821..d5a9ba15e2ba 100644
+> > --- a/drivers/firmware/qcom_scm.c
+> > +++ b/drivers/firmware/qcom_scm.c
+> > @@ -759,6 +759,21 @@ int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare)
+> >   }
+> >   EXPORT_SYMBOL(qcom_scm_iommu_secure_ptbl_init);
+> >   
+> > +int qcom_scm_iommu_set_cp_pool_size(u32 spare, u32 size)
+> > +{
+> > +	struct qcom_scm_desc desc = {
+> > +		.svc = QCOM_SCM_SVC_MP,
+> > +		.cmd = QCOM_SCM_MP_IOMMU_SET_CP_POOL_SIZE,
+> > +		.arginfo = QCOM_SCM_ARGS(2),
+> > +		.args[0] = size,
+> > +		.args[1] = spare,
+> > +		.owner = ARM_SMCCC_OWNER_SIP,
+> > +	};
+> > +
+> > +	return qcom_scm_call(__scm->dev, &desc, NULL);
+> > +}
+> > +EXPORT_SYMBOL(qcom_scm_iommu_set_cp_pool_size);
+> > +
+> >   int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+> >   				   u32 cp_nonpixel_start,
+> >   				   u32 cp_nonpixel_size)
+> > diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> > index d92156ceb3ac..bb627941702b 100644
+> > --- a/drivers/firmware/qcom_scm.h
+> > +++ b/drivers/firmware/qcom_scm.h
+> > @@ -100,6 +100,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+> >   #define QCOM_SCM_MP_RESTORE_SEC_CFG		0x02
+> >   #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_SIZE	0x03
+> >   #define QCOM_SCM_MP_IOMMU_SECURE_PTBL_INIT	0x04
+> > +#define QCOM_SCM_MP_IOMMU_SET_CP_POOL_SIZE	0x05
+> >   #define QCOM_SCM_MP_VIDEO_VAR			0x08
+> >   #define QCOM_SCM_MP_ASSIGN			0x16
+> >   
+> > diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> > index 81cad9e1e412..8a065f8660c1 100644
+> > --- a/include/linux/qcom_scm.h
+> > +++ b/include/linux/qcom_scm.h
+> > @@ -83,6 +83,7 @@ extern bool qcom_scm_restore_sec_cfg_available(void);
+> >   extern int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
+> >   extern int qcom_scm_iommu_secure_ptbl_size(u32 spare, size_t *size);
+> >   extern int qcom_scm_iommu_secure_ptbl_init(u64 addr, u32 size, u32 spare);
+> > +extern int qcom_scm_iommu_set_cp_pool_size(u32 spare, u32 size);
+> >   extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
+> >   					  u32 cp_nonpixel_start,
+> >   					  u32 cp_nonpixel_size);
+> > 
 > 
