@@ -2,160 +2,258 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97B9246DB7F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 19:47:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 272F046DB8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 19:50:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239319AbhLHSuw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 13:50:52 -0500
-Received: from ixit.cz ([94.230.151.217]:33394 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229528AbhLHSuw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 13:50:52 -0500
-Received: from localhost.localdomain (unknown [213.151.89.154])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 5A52E21F5E;
-        Wed,  8 Dec 2021 19:47:18 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1638989238;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=hwrzPLL5SzauVvYQ1kSBw48oMc8sX9Kq7XOHEcZhJFo=;
-        b=z50Sp5oTCAEZUkvsprVfcG5lwSXWsiMGTBEyVoPNZgoS/qOJfVdt4eTEGkHhqSNYSdAgy4
-        b79wM4pKJ0g+b9qKeghs7O6d/d4yTGvPuGIVM8XbaWeb15ulV/AmKmBeHmMyEwY6P8fO/I
-        gMTgujoznods0ZRTlQrjD4c4e8yu6yU=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: qcom: dts: drop legacy property #stream-id-cells
-Date:   Wed,  8 Dec 2021 19:47:06 +0100
-Message-Id: <20211208184707.100716-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S239391AbhLHSyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 13:54:14 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:26627 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239398AbhLHSyN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 13:54:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638989441; x=1670525441;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=fCWhZU/BkWfiRCJOiM0b0H8ORbVYBJwhzmIKHt5AUR4=;
+  b=Zdoc8br/Q3k44TYZZQTQVTL+TDdt60qSyQyn+YCAlqVmErEW598ye5kI
+   4scOoNTim1tYBlxilNQ4ra0oeS0hmBE34QkNMbiFMSqI5AaqR9fjvhW+b
+   vvM5yNSu/mbJNyihV9CCeMSv9ImQiKDO/V31W4laD7en4t56XSTIKSwjb
+   M=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Dec 2021 10:50:41 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 10:50:41 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 8 Dec 2021 10:50:40 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 8 Dec 2021 10:50:39 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kishon@ti.com>, <p.zabel@pengutronix.de>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH v5] phy: qcom-qmp: add support for display port voltage and pre-emphasis swing
+Date:   Wed, 8 Dec 2021 10:50:31 -0800
+Message-ID: <1638989431-24811-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Property #stream-id-cells is legacy leftover and isn't currently
-documented nor used.
+From: Kuogee Hsieh <khsieh@codeaurora.org>
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Both voltage and pre-emphasis swing level are set during link training
+negotiation between host and sink. There are totally four tables added.
+A voltage swing table for both hbr and hbr1, a voltage table for both
+hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1 and a pre-emphasis
+table for both hbr2 and hbr3. In addition, write 0x0a to TX_TX_POL_INV is
+added to complete the sequence of configure dp phy base on HPG.
+
+Chnages in v2:
+-- revise commit test
+-- add Fixes tag
+-- replaced voltage_swing_cfg with voltage
+-- replaced pre_emphasis_cfg with emphasis
+-- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_v4_phy_configure_dp_swing()
+-- delete drv_lvl_reg and emp_post_reg parameters from qcom_qmp_phy_configure_dp_swing()
+
+Changes in V3:
+-- add __qcom_qmp_phy_configure_dp_swing() to commit swing/pre-emphasis level
+
+Changes in V4:
+-- pass 2D array to __qcom_qmp_phy_configure_dp_swing()
+
+Changes in V5:
+-- rebase on msm-next
+
+Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
-v2:
- - split qcom and xilinx
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 1 -
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 -
- arch/arm64/boot/dts/qcom/sc7180.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sc7280.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 1 -
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 1 -
- 8 files changed, 8 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 97 +++++++++++++++++++++++++------------
+ 1 file changed, 66 insertions(+), 31 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 1ac78d9909ab..91bc974aeb0a 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -962,7 +962,6 @@ hdmi_phy: hdmi-phy@9a0600 {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 456a59d..1f3585d 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -4283,12 +4283,17 @@ static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
+ 	{ 0x1f, 0xff, 0xff, 0xff }
+ };
  
- 		gpu: gpu@b00000 {
- 			compatible = "qcom,adreno-530.2", "qcom,adreno";
--			#stream-id-cells = <16>;
+-static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
+-		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
++static int __qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
++				unsigned int drv_lvl_reg,
++				unsigned int emp_post_reg,
++				const u8 voltage_swing_hbr_rbr[4][4],
++				const u8 pre_emphasis_hbr_rbr[4][4],
++				const u8 voltage_swing_hbr3_hbr2[4][4],
++				const u8 pre_emphasis_hbr3_hbr2[4][4])
+ {
+ 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+ 	unsigned int v_level = 0, p_level = 0;
+-	u8 voltage_swing_cfg, pre_emphasis_cfg;
++	u8 voltage, emphasis;
+ 	int i;
  
- 			reg = <0x00b00000 0x3f000>;
- 			reg-names = "kgsl_3d0_reg_memory";
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 408f265e277b..f273bc1ff629 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1446,7 +1446,6 @@ adreno_gpu: gpu@5000000 {
- 			iommus = <&adreno_smmu 0>;
- 			operating-points-v2 = <&gpu_opp_table>;
- 			power-domains = <&rpmpd MSM8998_VDDMX>;
--			#stream-id-cells = <16>;
- 			status = "disabled";
+ 	for (i = 0; i < dp_opts->lanes; i++) {
+@@ -4297,26 +4302,25 @@ static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
+ 	}
  
- 			gpu_opp_table: opp-table {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index faf8b807d0ff..2151cd8c8c7a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1952,7 +1952,6 @@ glink-edge {
+ 	if (dp_opts->link_rate <= 2700) {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
++		voltage = voltage_swing_hbr_rbr[v_level][p_level];
++		emphasis = pre_emphasis_hbr_rbr[v_level][p_level];
+ 	} else {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
++		voltage = voltage_swing_hbr3_hbr2[v_level][p_level];
++		emphasis = pre_emphasis_hbr3_hbr2[v_level][p_level];
+ 	}
  
- 		gpu: gpu@5000000 {
- 			compatible = "qcom,adreno-618.0", "qcom,adreno";
--			#stream-id-cells = <16>;
- 			reg = <0 0x05000000 0 0x40000>, <0 0x0509e000 0 0x1000>,
- 				<0 0x05061000 0 0x800>;
- 			reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 40b409f279f5..937c2e0e93eb 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1753,7 +1753,6 @@ lpass_ag_noc: interconnect@3c40000 {
+ 	/* TODO: Move check to config check */
+-	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
++	if (voltage == 0xFF && emphasis == 0xFF)
+ 		return -EINVAL;
  
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-635.0", "qcom,adreno";
--			#stream-id-cells = <16>;
- 			reg = <0 0x03d00000 0 0x40000>,
- 			      <0 0x03d9e000 0 0x1000>,
- 			      <0 0x03d61000 0 0x800>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index b75bb87ed290..9217c3a51f79 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1019,7 +1019,6 @@ sd-cd {
+ 	/* Enable MUX to use Cursor values from these registers */
+-	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
+-	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
+-
+-	writel(voltage_swing_cfg, qphy->tx + drv_lvl_reg);
+-	writel(pre_emphasis_cfg, qphy->tx + emp_post_reg);
+-	writel(voltage_swing_cfg, qphy->tx2 + drv_lvl_reg);
+-	writel(pre_emphasis_cfg, qphy->tx2 + emp_post_reg);
++	voltage |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
++	emphasis |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
  
- 		adreno_gpu: gpu@5000000 {
- 			compatible = "qcom,adreno-508.0", "qcom,adreno";
--			#stream-id-cells = <16>;
++	writel(voltage, qphy->tx + drv_lvl_reg);
++	writel(emphasis, qphy->tx + emp_post_reg);
++	writel(voltage, qphy->tx2 + drv_lvl_reg);
++	writel(emphasis, qphy->tx2 + emp_post_reg);
+ 	return 0;
+ }
  
- 			reg = <0x05000000 0x40000>;
- 			reg-names = "kgsl_3d0_reg_memory";
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 526087586ba4..ff344a9a81a6 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4415,7 +4415,6 @@ dsi1_phy: dsi-phy@ae96400 {
+@@ -4325,9 +4329,13 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
+ 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+ 	u32 bias_en, drvr_en;
  
- 		gpu: gpu@5000000 {
- 			compatible = "qcom,adreno-630.2", "qcom,adreno";
--			#stream-id-cells = <16>;
+-	if (qcom_qmp_phy_configure_dp_swing(qphy,
+-				QSERDES_V3_TX_TX_DRV_LVL,
+-				QSERDES_V3_TX_TX_EMP_POST1_LVL) < 0)
++	if (__qcom_qmp_phy_configure_dp_swing(qphy,
++			QSERDES_V3_TX_TX_DRV_LVL,
++			QSERDES_V3_TX_TX_EMP_POST1_LVL,
++			qmp_dp_v3_voltage_swing_hbr_rbr,
++			qmp_dp_v3_pre_emphasis_hbr_rbr,
++			qmp_dp_v3_voltage_swing_hbr3_hbr2,
++			qmp_dp_v3_pre_emphasis_hbr3_hbr2) < 0)
+ 		return;
  
- 			reg = <0 0x5000000 0 0x40000>, <0 0x509e000 0 0x10>;
- 			reg-names = "kgsl_3d0_reg_memory", "cx_mem";
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 81b4ff2cc4cd..6012322a5984 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1785,7 +1785,6 @@ gpu: gpu@2c00000 {
- 			compatible = "qcom,adreno-640.1",
- 				     "qcom,adreno",
- 				     "amd,imageon";
--			#stream-id-cells = <16>;
+ 	if (dp_opts->lanes == 1) {
+@@ -4465,6 +4473,35 @@ static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy)
+ 	return 0;
+ }
  
- 			reg = <0 0x02c00000 0 0x40000>;
- 			reg-names = "kgsl_3d0_reg_memory";
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 40f18d539d80..5617a46e5ccd 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2399,7 +2399,6 @@ data2 {
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-650.2",
- 				     "qcom,adreno";
--			#stream-id-cells = <16>;
++/* The values in these tables are given without MUX_EN (0x20) bit set */
++static const u8 qmp_dp_v4_pre_emphasis_hbr3_hbr2[4][4] = {
++	{ 0x00, 0x0c, 0x15, 0x1b },
++	{ 0x02, 0x0e, 0x16, 0xff },
++	{ 0x02, 0x11, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_voltage_swing_hbr3_hbr2[4][4] = {
++	{ 0x02, 0x12, 0x16, 0x1a },
++	{ 0x09, 0x19, 0x1f, 0xff },
++	{ 0x10, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_pre_emphasis_hbr_rbr[4][4] = {
++	{ 0x00, 0x0e, 0x15, 0x1b },
++	{ 0x00, 0x0e, 0x15, 0xff },
++	{ 0x00, 0x0e, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_voltage_swing_hbr_rbr[4][4] = {
++	{ 0x08, 0x0f, 0x16, 0x1f },
++	{ 0x11, 0x1e, 0x1f, 0xff },
++	{ 0x16, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
+ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
+ {
+ 	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_PSR_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+@@ -4494,16 +4531,13 @@ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
  
- 			reg = <0 0x03d00000 0 0x40000>;
- 			reg-names = "kgsl_3d0_reg_memory";
+ static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy)
+ {
+-	/* Program default values before writing proper values */
+-	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+-	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+-
+-	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+-	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+-
+-	qcom_qmp_phy_configure_dp_swing(qphy,
++	__qcom_qmp_phy_configure_dp_swing(qphy,
+ 			QSERDES_V4_TX_TX_DRV_LVL,
+-			QSERDES_V4_TX_TX_EMP_POST1_LVL);
++			QSERDES_V4_TX_TX_EMP_POST1_LVL,
++			qmp_dp_v4_voltage_swing_hbr_rbr,
++			qmp_dp_v4_pre_emphasis_hbr_rbr,
++			qmp_dp_v4_voltage_swing_hbr3_hbr2,
++			qmp_dp_v4_pre_emphasis_hbr3_hbr2);
+ }
+ 
+ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+@@ -4622,6 +4656,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+ 	writel(drvr1_en, qphy->tx2 + QSERDES_V4_TX_HIGHZ_DRVR_EN);
+ 	writel(bias1_en, qphy->tx2 + QSERDES_V4_TX_TRANSCEIVER_BIAS_EN);
+ 
++	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
++	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
++
+ 	writel(0x18, qphy->pcs + QSERDES_DP_PHY_CFG);
+ 	udelay(2000);
+ 	writel(0x19, qphy->pcs + QSERDES_DP_PHY_CFG);
+@@ -4633,11 +4670,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+ 			10000))
+ 		return -ETIMEDOUT;
+ 
+-	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
+-	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
+ 
+-	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+-	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
++	writel(0x22, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
++	writel(0x22, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+ 
+ 	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+ 	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
 -- 
-2.33.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
