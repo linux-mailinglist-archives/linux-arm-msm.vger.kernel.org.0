@@ -2,93 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF9EF46CC05
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 05:11:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A267B46CC89
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 05:28:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244126AbhLHEOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 23:14:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40934 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244120AbhLHEOv (ORCPT
+        id S240242AbhLHEbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 23:31:46 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:41322 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S240029AbhLHEbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 23:14:51 -0500
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C47CC0617A1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 20:11:20 -0800 (PST)
-Received: by mail-il1-x141.google.com with SMTP id w4so1024988ilv.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 20:11:20 -0800 (PST)
+        Tue, 7 Dec 2021 23:31:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
-        b=CutUi/r6lKIoJjLP2bKTPbdDwhETyEFLP1nH/f7tvCrk1D7qPFSC5JRsw7j8CoO0zm
-         dRYtIvSq3VBVEHuI4jhmwDm1IURo7ecEVE5W+U5L5VzEnrHmt1Y8ZB3G9Fy10YLjnPAm
-         Ek0r5KC4mvOY2CD/U3S6pkqBE6iv+0uQFzHwIuOl76VfJxuUPH0WSMZVjZcautTMYmTn
-         1RQobfMFgSDgYXJGHFPA3aOzPm+SH+ajl7dL2+W7XuIR8J8S/V1ffF/4nkQzM3Y6yUpn
-         yaDKfHXr8AruzzSPerufLyIVTAFov2PGYSu3+4YGiZiI00GL7ra4uTn/Wd6Rh9zmXkQc
-         MhnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
-        b=cjh2RImLgJC2XkHOX9QWxlEY16vXOslettxRY/95fXaL1rDlbBn+FUPI5Ov+ONbt3e
-         ATiKBV9ZtixMa04z1NLNquO7kItIF6RBTT73V7ueOLZijmdKxoNo4u0Y+QP9Nb+1RiMs
-         rhxXwwhzgNKQqUiwVfldVOjXcD9jpofkVNXDkVvRQsYBDrgOZHIEy1foJDYLhmjQN8gP
-         nfhtM9QfVO+fIhvu5+81d9WySWW8LcSPjG1ois8phOtO3q2cMRHRVGIfpd9PGEW3CoDT
-         AD+LM5cmoWCC06A/bv/KCArrO3tDBL+To2gjPFW74v5k0zqOeTzrgQKSmVHW4D3SFiAY
-         lRRQ==
-X-Gm-Message-State: AOAM530rN3iZRRFZKZw+8rcGxT0GUdg4VzjYSigb9ug47LGF7jJ0OYIa
-        Ar5ZxgK2H8oOL0LpF6iU1D+Z02HZHthhf2VU3/M=
-X-Google-Smtp-Source: ABdhPJzhb1y1AIlUvd97u1v5bkva7AmRbKBstEOI25Zv9QP//bzNtmStIOPnKQrCUoF0WLInKwt2YXin8B2MhgoyPAI=
-X-Received: by 2002:a92:600f:: with SMTP id u15mr3948508ilb.292.1638936679742;
- Tue, 07 Dec 2021 20:11:19 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638937694; x=1670473694;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Y8QArEmQd4wIqJHYMNAaWpNMCN3hJO20hg1WwlGuZDM=;
+  b=TXrSbAoS2HsVHo9scuC3uz12ZuKw3K+WWROCmJ+ZpPV/7thprMnQypYN
+   2wyaR+4ch+dTEw15D22/D2vTgHb+pA/Wwc/JQ/2s2j66G8JLzCQCiRa0g
+   o5qK0riGI2JnsPq5malQ78B6PCJ5+Qef4BhVbvJTm7gbISjWcL0ryq4xN
+   g=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Dec 2021 20:28:14 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 20:28:14 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 7 Dec 2021 20:28:13 -0800
+Received: from blr-ubuntu-311.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 7 Dec 2021 20:28:09 -0800
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_eberman@quicinc.com>,
+        "Shanker Donthineni" <shankerd@codeaurora.org>,
+        Adam Wallis <awallis@codeaurora.org>,
+        Timur Tabi <timur@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Subject: [PATCHv2] tty: hvc: dcc: Bind driver to core0 for reads and writes
+Date:   Wed, 8 Dec 2021 09:55:42 +0530
+Message-ID: <20211208042542.2905-1-quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Received: by 2002:a05:6e02:1a07:0:0:0:0 with HTTP; Tue, 7 Dec 2021 20:11:19
- -0800 (PST)
-Reply-To: dj0015639@gmail.com
-From:   David Jackson <enkenpaul@gmail.com>
-Date:   Wed, 8 Dec 2021 05:11:19 +0100
-Message-ID: <CAG7-cQ8DY3yKJUkHdXFz5B2Npn4frRu3Q4JJjd1c=_NMoWd7tw@mail.gmail.com>
-Subject: FEDERAL BUREAU OF INVESTIGATION
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Our Ref: RTB /SNT/STB
-To: Beneficiary
+From: Shanker Donthineni <shankerd@codeaurora.org>
 
-This is FBI special agents, David Jackson. I was delegated along side
-others by the United Nations to investigate scammers who has been in
-the business of swindling foreigners especially those that has one
-form of transaction/contracts and another. Please be informed that in
-the course of our investigation, we detected that your name and
-details in our Scammed Monitoring Network. We also found out that you
-were scammed of a huge sum of money by scammers via Western union and
-MoneyGram. Be informed here that in a bid to alleviate the suffering
-of scammed victims, the United Nations initiated this compensation
-program and therefore, you are entitled to the sum of Five Million Two
-Hundred Thousand United States Dollars ($5,200,000.00 USD) for being a
-victim.
+Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
+reads/writes from/to DCC on secondary cores. Each core has its
+own DCC device registers, so when a core reads or writes from/to DCC,
+it only accesses its own DCC device. Since kernel code can run on
+any core, every time the kernel wants to write to the console, it
+might write to a different DCC.
 
-Note that the said fund will be transfer to you via the Citibank being
-the paying bank mandated by the United Nations officials.
+In SMP mode, Trace32 creates multiple windows, and each window shows
+the DCC output only from that core's DCC. The result is that console
+output is either lost or scattered across windows.
 
-However, we have to inform you that we have been able to arrest some
-of the swindlers who has been in this illicit business and will all be
-prosecuted accordingly. Be informed as well that we have limited time
-to stay back here, so we will advice that you urgently respond to this
-message ASAP. And do not inform any of the people that collected money
-from you before now about this new development to avoid jeopardizing
-our investigation. All you need to do is to follow our instruction and
-receive your compensation accordingly as directed by the United
-Nations.
+Selecting this option will enable code that serializes all console
+input and output to core 0. The DCC driver will create input and
+output FIFOs that all cores will use. Reads and writes from/to DCC
+are handled by a workqueue that runs only core 0.
 
-We urgently wait to receive your response.
+Link: https://lore.kernel.org/lkml/1435344756-20901-1-git-send-email-timur@codeaurora.org/
+Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
+Acked-by: Adam Wallis <awallis@codeaurora.org>
+Signed-off-by: Timur Tabi <timur@codeaurora.org>
+Signed-off-by: Elliot Berman <eberman@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+---
 
-Regards,
-DAVID JACKSON
-FEDERAL BUREAU OF INVESTIGATION
-INVESTIGATION ON ALL ONLINE WIRE TRANSFER
+Changes in v2:
+ * Checkpatch warning fixes.
+ * Use of IS_ENABLED macros instead of ifdefs.
+
+I also thought of making it depends on !HOTPLUG_CPU since it is broken
+in case core0 is hotplugged off, but apparently HOTPLUG_CPU kconfig
+has weird dependency issues, i.e., gets selected by CONFIG_PM and others.
+So it will be almost like this feature won't be selectable at all if
+I add !HOTPLUG_CPU kconfig dependency. Also HVC_DCC is a debug feature
+where we need Trace32 like tools to access DCC windows in which case
+these shortcomings can be expected since manual intervention is required
+anyways for attaching a core to Trace32, so it won't matter much.
+
+---
+ drivers/tty/hvc/Kconfig   |  20 +++++
+ drivers/tty/hvc/hvc_dcc.c | 155 +++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 174 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
+index 8d60e0ff67b4..c0754a2e3fe4 100644
+--- a/drivers/tty/hvc/Kconfig
++++ b/drivers/tty/hvc/Kconfig
+@@ -87,6 +87,26 @@ config HVC_DCC
+ 	  driver. This console is used through a JTAG only on ARM. If you don't have
+ 	  a JTAG then you probably don't want this option.
+ 
++config HVC_DCC_SERIALIZE_SMP
++	bool "Use DCC only on core 0"
++	depends on SMP && HVC_DCC
++	help
++	  Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
++	  reads/writes from/to DCC on more than one core. Each core has its
++	  own DCC device registers, so when a core reads or writes from/to DCC,
++	  it only accesses its own DCC device. Since kernel code can run on
++	  any core, every time the kernel wants to write to the console, it
++	  might write to a different DCC.
++
++	  In SMP mode, Trace32 creates multiple windows, and each window shows
++	  the DCC output only from that core's DCC. The result is that console
++	  output is either lost or scattered across windows.
++
++	  Selecting this option will enable code that serializes all console
++	  input and output to core 0. The DCC driver will create input and
++	  output FIFOs that all cores will use. Reads and writes from/to DCC
++	  are handled by a workqueue that runs only core 0.
++
+ config HVC_RISCV_SBI
+ 	bool "RISC-V SBI console support"
+ 	depends on RISCV_SBI_V01
+diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
+index 8e0edb7d93fd..ccd64edf7bcb 100644
+--- a/drivers/tty/hvc/hvc_dcc.c
++++ b/drivers/tty/hvc/hvc_dcc.c
+@@ -3,8 +3,10 @@
+ 
+ #include <linux/console.h>
+ #include <linux/init.h>
++#include <linux/kfifo.h>
+ #include <linux/serial.h>
+ #include <linux/serial_core.h>
++#include <linux/spinlock.h>
+ 
+ #include <asm/dcc.h>
+ #include <asm/processor.h>
+@@ -67,26 +69,177 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
+ 	return i;
+ }
+ 
++/*
++ * Check if the DCC is enabled.  If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
++ * then we assume then this function will be called first on core 0.  That
++ * way, dcc_core0_available will be true only if it's available on core 0.
++ */
+ static bool hvc_dcc_check(void)
+ {
+ 	unsigned long time = jiffies + (HZ / 10);
++	static bool dcc_core0_available;
++
++	/*
++	 * If we're not on core 0, but we previously confirmed that DCC is
++	 * active, then just return true.
++	 */
++	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && smp_processor_id() &&
++	    dcc_core0_available)
++		return true;
+ 
+ 	/* Write a test character to check if it is handled */
+ 	__dcc_putchar('\n');
+ 
+ 	while (time_is_after_jiffies(time)) {
+-		if (!(__dcc_getstatus() & DCC_STATUS_TX))
++		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
++			if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
++				dcc_core0_available = true;
+ 			return true;
++		}
+ 	}
+ 
+ 	return false;
+ }
+ 
++#if defined(CONFIG_HVC_DCC_SERIALIZE_SMP)
++
++static void dcc_put_work_fn(struct work_struct *work);
++static void dcc_get_work_fn(struct work_struct *work);
++static DECLARE_WORK(dcc_pwork, dcc_put_work_fn);
++static DECLARE_WORK(dcc_gwork, dcc_get_work_fn);
++static DEFINE_SPINLOCK(dcc_lock);
++static DEFINE_KFIFO(inbuf, unsigned char, 128);
++static DEFINE_KFIFO(outbuf, unsigned char, 1024);
++
++/*
++ * Workqueue function that writes the output FIFO to the DCC on core 0.
++ */
++static void dcc_put_work_fn(struct work_struct *work)
++{
++	unsigned char ch;
++	unsigned long irqflags;
++
++	spin_lock_irqsave(&dcc_lock, irqflags);
++
++	/* While there's data in the output FIFO, write it to the DCC */
++	while (kfifo_get(&outbuf, &ch))
++		hvc_dcc_put_chars(0, &ch, 1);
++
++	/* While we're at it, check for any input characters */
++	while (!kfifo_is_full(&inbuf)) {
++		if (!hvc_dcc_get_chars(0, &ch, 1))
++			break;
++		kfifo_put(&inbuf, ch);
++	}
++
++	spin_unlock_irqrestore(&dcc_lock, irqflags);
++}
++
++/*
++ * Workqueue function that reads characters from DCC and puts them into the
++ * input FIFO.
++ */
++static void dcc_get_work_fn(struct work_struct *work)
++{
++	unsigned char ch;
++	unsigned long irqflags;
++
++	/*
++	 * Read characters from DCC and put them into the input FIFO, as
++	 * long as there is room and we have characters to read.
++	 */
++	spin_lock_irqsave(&dcc_lock, irqflags);
++
++	while (!kfifo_is_full(&inbuf)) {
++		if (!hvc_dcc_get_chars(0, &ch, 1))
++			break;
++		kfifo_put(&inbuf, ch);
++	}
++	spin_unlock_irqrestore(&dcc_lock, irqflags);
++}
++
++/*
++ * Write characters directly to the DCC if we're on core 0 and the FIFO
++ * is empty, or write them to the FIFO if we're not.
++ */
++static int hvc_dcc0_put_chars(u3 vt, const char *buf, int count)
++{
++	int len;
++	unsigned long irqflags;
++
++	spin_lock_irqsave(&dcc_lock, irqflags);
++	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
++		len = kfifo_in(&outbuf, buf, count);
++		spin_unlock_irqrestore(&dcc_lock, irqflags);
++		/*
++		 * We just push data to the output FIFO, so schedule the
++		 * workqueue that will actually write that data to DCC.
++		 */
++		schedule_work_on(0, &dcc_pwork);
++		return len;
++	}
++
++	/*
++	 * If we're already on core 0, and the FIFO is empty, then just
++	 * write the data to DCC.
++	 */
++	len = hvc_dcc_put_chars(vt, buf, count);
++	spin_unlock_irqrestore(&dcc_lock, irqflags);
++
++	return len;
++}
++
++/*
++ * Read characters directly from the DCC if we're on core 0 and the FIFO
++ * is empty, or read them from the FIFO if we're not.
++ */
++static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
++{
++	int len;
++	unsigned long irqflags;
++
++	spin_lock_irqsave(&dcc_lock, irqflags);
++
++	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
++		len = kfifo_out(&inbuf, buf, count);
++		spin_unlock_irqrestore(&dcc_lock, irqflags);
++
++		/*
++		 * If the FIFO was empty, there may be characters in the DCC
++		 * that we haven't read yet.  Schedule a workqueue to fill
++		 * the input FIFO, so that the next time this function is
++		 * called, we'll have data.
++		 */
++		if (!len)
++			schedule_work_on(0, &dcc_gwork);
++
++		return len;
++	}
++
++	/*
++	 * If we're already on core 0, and the FIFO is empty, then just
++	 * read the data from DCC.
++	 */
++	len = hvc_dcc_get_chars(vt, buf, count);
++	spin_unlock_irqrestore(&dcc_lock, irqflags);
++
++	return len;
++}
++
++static const struct hv_ops hvc_dcc_get_put_ops = {
++	.get_chars = hvc_dcc0_get_chars,
++	.put_chars = hvc_dcc0_put_chars,
++};
++
++#else
++
+ static const struct hv_ops hvc_dcc_get_put_ops = {
+ 	.get_chars = hvc_dcc_get_chars,
+ 	.put_chars = hvc_dcc_put_chars,
+ };
+ 
++#endif
++
+ static int __init hvc_dcc_console_init(void)
+ {
+ 	int ret;
+-- 
+2.33.1
+
