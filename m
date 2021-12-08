@@ -2,109 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62D0146CCDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 06:15:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BBCC46CDBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 07:29:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231325AbhLHFSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 00:18:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55298 "EHLO
+        id S240012AbhLHGcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 01:32:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbhLHFSf (ORCPT
+        with ESMTP id S239648AbhLHGcc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 00:18:35 -0500
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61227C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Dec 2021 21:15:04 -0800 (PST)
-Received: by mail-oo1-xc35.google.com with SMTP id w15-20020a4a9d0f000000b002c5cfa80e84so456396ooj.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Dec 2021 21:15:04 -0800 (PST)
+        Wed, 8 Dec 2021 01:32:32 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DDAFC061574;
+        Tue,  7 Dec 2021 22:29:01 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id v1so4876377edx.2;
+        Tue, 07 Dec 2021 22:29:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dfMISllvOyWeVC+M/Lt3oKRlwVYRNEKwNNcO13cHMrM=;
-        b=w7gbnGzi2TRt1kl7Ye3Z2EYtK7pcvLy3h8DtGE8yu71lLVdrLfLjnLhs/ofVGC+wQL
-         aDFSUtexED6u1bVPnz7CGBIKKivW/u6/EftnTLM3i7mJ+DD0ioOaN878DbmMICsMcPbc
-         MkrTq6tpeW+Amee4Kyzlxe767YdqHvGBQ/m1RsOjfmvD6mtyN9FSoXM+T/lB279emjKg
-         cmWvPCc2/6dN2JbeRPzeNHFYeG/eGbVp2RObbNHxRTfUriUSYIuIg3p636d3YtzWe2Pq
-         k6Tn5JSy8N3Gg81/7SncEQj+p+tgAF/ob/2rRwdAsR5unY1ltFqgzSyQpST/4s4o8g78
-         u1VQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ge8duN4sNFU8LlP54a+ac/TMCJbGoRstlWztgA2oT2k=;
+        b=p7Tlb9qJ5H1ZRRcrMS0mlr42Jn6hA8VP2orglLASnbMQBgx1S1WeBr/AMrOSeesXnQ
+         FRluYxOh0U5Ov4HWvBNuv3hTTSzYgFlsq7AC/NSoeEDrdP722tiB+4a45G8ysaCsuumR
+         N25uK9AtBpGiUL2MR7tvUHfXrY4R+C7lwVL22UrSyvojE1/GcpIkz0ZhSJhVcQc3EXuo
+         t1K8/XnGJZowgX+uPrPPkDOfUFvdLzuLndBaVJDj8uHnw9dAq+q/5vmn6PfqnXlaHXkV
+         GC9QBRXfkEqG4YTtx0xMcskL1XccmQ2vBPQsdaCDfBrNPvXnr2YcsX+X7j2hq+9RRlQs
+         VBPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dfMISllvOyWeVC+M/Lt3oKRlwVYRNEKwNNcO13cHMrM=;
-        b=WDLe2K2s6SkPIeDJBjAzIP+a4+3EitLaWHZbUoqlC+9G0K7j5eahQfVbuzktvsdlmY
-         xMaRiJqMemsgAM0vvHhmDH5BulS0YQH5O/3+1Jc3PqOHPhFzMOr/PwfWoONa80EWNWTa
-         AMnNjtZsmKvApj/lCYs63i4bRi8F9l+etLv9podQkTqJZHPl7LnnYa7UiK4h+9zF2i6D
-         UP2BxLOd5NFgew6efvbpEZjWD4cKS+QQTHPqGBacu97VFXcqJvg3aZWjbcAuKxl1ocGP
-         l9r0Y95qOV/l5rvE2tP0nIOyUcw071LGKT+2HZZskG8z4yn9FLybmU0PpyFSrS5NudzE
-         SOgA==
-X-Gm-Message-State: AOAM533ZTAJBR2VeEQ0GkV16ynXVm0K2cSzdJ8eTwlnpedTAXztbOIfB
-        bX0hs2+nH72sdu3/8FkESJs2GQ==
-X-Google-Smtp-Source: ABdhPJyWLHJDdtX55Elxz47dPEkRUd9l59nFSHL4yGwZIVmqFg4uYvT1tdiVUtNZ8gwkJ4vASweeIQ==
-X-Received: by 2002:a4a:300f:: with SMTP id q15mr13770211oof.36.1638940503654;
-        Tue, 07 Dec 2021 21:15:03 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c9sm389389oog.43.2021.12.07.21.15.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Dec 2021 21:15:03 -0800 (PST)
-Date:   Tue, 7 Dec 2021 21:16:27 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     davidcomponentone@gmail.com
-Cc:     agross@kernel.org, kishon@ti.com, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Zeal Robot <zealci@zte.com.cn>,
-        Yang Guang <yang.guang5@zte.com.cn>
-Subject: Re: [PATCH] pyh: qcom: fix the application of sizeof to pointer
-Message-ID: <YbA/q+dYoIh5qdbb@ripper>
-References: <c74d05d5197fa4fba96c4bd1cd597cd644c694b6.1638924754.git.davidcomponentone@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ge8duN4sNFU8LlP54a+ac/TMCJbGoRstlWztgA2oT2k=;
+        b=VdYQ0oU03AZwKpXahwajRVV4LroqulA2PGSpUZqmqlIuSY4KaXAinPX2Uji7J7nYp+
+         +mp5LpkVDPLhH025ik/i8kIsL0I9wzPdPPsFmIesJuOgLkU8/fEF4XMNdtAUpX5Pl24n
+         nnseltVNIybMF8CFQzn949OGV3wRwCZojijzWD+bif7wIevvIY/Cth3ownKEPO/hP6Oh
+         V7IxvZcN+xl5W8p+0Oyd47N9YwTfqcOIgCyct/JfYLci1EYyGZYuewyAyUk4SqWYC2n1
+         9JpMex3ew6zh8dVXDOniuznghPIKf4OMkH+RoUby6NMbYnRBIAL5RbWatzGPB/rpxQJR
+         p8wQ==
+X-Gm-Message-State: AOAM533efU7HrkYJZ/UBBJePJPJChS91EyW3bT2Wj7hlPG/BWTW8CZBe
+        vXy/QyHkrExGNCYMD5szQk/4rtQbQVPNRXHzIgE=
+X-Google-Smtp-Source: ABdhPJzGz+VCI7qEgxFax+wzk8JXXv7V0YRLbnxVV2888/gXpKyM/ex1MlxEgxzSYFGBmpSEppU47Zmhh0wuCDsftjc=
+X-Received: by 2002:a17:906:489b:: with SMTP id v27mr4989169ejq.567.1638944939879;
+ Tue, 07 Dec 2021 22:28:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c74d05d5197fa4fba96c4bd1cd597cd644c694b6.1638924754.git.davidcomponentone@gmail.com>
+References: <1638891339-21806-1-git-send-email-quic_srivasam@quicinc.com> <1638891339-21806-4-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1638891339-21806-4-git-send-email-quic_srivasam@quicinc.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Wed, 8 Dec 2021 08:28:23 +0200
+Message-ID: <CAHp75Vd=47Tv9Sf+styPhxS2=O1H2KUDeKQXTULUYU5fDgGwwA@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] pinctrl: qcom: Extract chip specific LPASS LPI code
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, plai@codeaurora.org,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
+        devicetree <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>, judyhsiao@chromium.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Dec 17:03 PST 2021, davidcomponentone@gmail.com wrote:
+On Wed, Dec 8, 2021 at 2:39 AM Srinivasa Rao Mandadapu
+<quic_srivasam@quicinc.com> wrote:
+>
+> Extract the chip specific SM8250 data from the LPASS LPI pinctrl driver
+> to allow reusing the common code in the addition of subsequent
+> platforms.
 
-> From: David Yang <davidcomponentone@gmail.com>
-> 
-> The coccinelle check report:
-> ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
-> ERROR: application of sizeof to pointer
-> 
-> Using the real size to fix it.
-> 
+...
 
-Thanks for the fix David.
+> @@ -661,8 +454,10 @@ static int lpi_pinctrl_probe(struct platform_device *pdev)
+>
+>         return ret;
+>  }
+> +EXPORT_SYMBOL(lpi_pinctrl_probe);
 
-Please see my answer here
-https://lore.kernel.org/all/Ya96KOynsO478cVx@ripper/
+> +
 
-Regards,
-Bjorn
+Stray change.
 
-> Reported-by: Zeal Robot <zealci@zte.com.cn>
-> Signed-off-by: Yang Guang <yang.guang5@zte.com.cn>
-> Signed-off-by: David Yang <davidcomponentone@gmail.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-edp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> index 17d5653b661d..5fe4eab9cac1 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> @@ -571,7 +571,7 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
->  	struct clk_init_data init = { };
->  	int ret;
->  
-> -	data = devm_kzalloc(edp->dev, sizeof(data), GFP_KERNEL);
-> +	data = devm_kzalloc(edp->dev, sizeof(*data), GFP_KERNEL);
->  	if (!data)
->  		return -ENOMEM;
->  
-> -- 
-> 2.30.2
-> 
+...
+
+> +#ifndef __PINCTRL_LPASS_LPI_H__
+> +#define __PINCTRL_LPASS_LPI_H__
+
+Missed headers.
+At least bits.h.
+
+...
+
+> +#define NO_SLEW                                -1
+
+Naming sucks for the header.
+
+LPI_NO_SLEW ?
+
+...
+
+> +struct lpi_pingroup {
+> +       const char *name;
+> +       const unsigned int *pins;
+> +       unsigned int npins;
+> +       unsigned int pin;
+> +       /* Bit offset in slew register for SoundWire pins only */
+> +       int slew_offset;
+> +       unsigned int *funcs;
+> +       unsigned int nfuncs;
+> +};
+
+Are you going to convert this to use struct group_desc?
+
+...
+
+> +       LPI_MUX__,
+
+Strange naming. Besides, if it is the terminator, drop the comma.
+
+-- 
+With Best Regards,
+Andy Shevchenko
