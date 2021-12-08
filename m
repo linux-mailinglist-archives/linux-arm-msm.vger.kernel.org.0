@@ -2,74 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BEAE546C89C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 01:23:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B05546C973
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 01:42:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242793AbhLHA0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Dec 2021 19:26:50 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:53508 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242784AbhLHA0t (ORCPT
+        id S229643AbhLHAqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Dec 2021 19:46:16 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:7408 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229630AbhLHAqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Dec 2021 19:26:49 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 275DFCE1ECD;
-        Wed,  8 Dec 2021 00:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1151DC341C3;
-        Wed,  8 Dec 2021 00:23:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1638922994;
-        bh=0ZNt76/nvy/Rqz+ZKBk5k6H1mK9LdC/GVtTbQ4FcSLw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Isx9oospbcHINu/yBa+FlYf26Ceaq8XFoWJ5pUqYhBY9t0eMc4FGLJuUTrJma/UwH
-         0+3Ye9kjKtg+uqEMSmOVP/t7TApEJcGU+RHDtGRJqH3D8ZHVbiX26fVCigHZfXSwQg
-         l8ijbht+pecHIkJNCy43T8tuGQ0P1j1jNiEe5bZJ+m4d/GGvaew1+TbocpUIpbOj1l
-         xr/3RByIR06tfvIx1cH0sSFlf7G+vRCwv5dPhsCY/q11Y9vaJ8qquLKa3bu0iiOovM
-         AzZVmLQ4FLjce4+OPJOe46AljvQhQwDSM21ccGbG909BXMTCA6xpkGAIbPZHVnFUmI
-         RLlCwYmeuHlRg==
-Date:   Tue, 7 Dec 2021 16:23:12 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Gaurav Kashyap <gaurkash@qti.qualcomm.com>
-Cc:     "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>,
-        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-        "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>,
-        "thara.gopinath@linaro.org" <thara.gopinath@linaro.org>,
-        "asutoshd@codeaurora.org" <asutoshd@codeaurora.org>
-Subject: Re: [PATCH 0/4] Adds wrapped key support for inline storage
- encryption
-Message-ID: <Ya/68GveS/hWhJD3@sol.localdomain>
-References: <20211103231840.115521-1-quic_gaurkash@quicinc.com>
- <YYRjbCDhEt8Vh1xv@gmail.com>
- <BYAPR02MB4071BFEFB87D0B2E4FC98C9EE26F9@BYAPR02MB4071.namprd02.prod.outlook.com>
+        Tue, 7 Dec 2021 19:46:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1638924165; x=1670460165;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=IOXhzLbAbOjYfOtaCa+yYMGoFtzfVki0B97LX03IghI=;
+  b=I8a9ajy6EbV3HF1+91ugGlXoe7WaasH5AwbWmULR/WrMQUmlp1GnBTI2
+   QSfNHCXapxJrvadAp8j8KP4dxhkbFDK3CZNfC5i7OwGmcVJ/xGUTc1DVt
+   WFr26dgG5Cdpp13vN4PzhqsE1ldbMLM1rjaKjGJnsdMT6Cp7Hi+dU4rlw
+   g=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 07 Dec 2021 16:42:45 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2021 16:42:44 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 7 Dec 2021 16:42:43 -0800
+Received: from [10.111.164.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 7 Dec 2021
+ 16:42:41 -0800
+Message-ID: <8c9c4f59-cef0-baa6-0a40-0a3c1fce3470@quicinc.com>
+Date:   Tue, 7 Dec 2021 16:42:39 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BYAPR02MB4071BFEFB87D0B2E4FC98C9EE26F9@BYAPR02MB4071.namprd02.prod.outlook.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] drm/msm/dsi: fix initialization in the bonded DSI case
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        <freedreno@lists.freedesktop.org>
+References: <20211125180114.561278-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211125180114.561278-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 08, 2021 at 12:09:03AM +0000, Gaurav Kashyap wrote:
-> Hey Eric, here are the answers to some of the questions across all the patches
-> 
-> > Also, at runtime, does any of the Qualcomm hardware support multiple key
-> > types, and if so can they be used at the same time?
-> 
-> Currently, with hardware key manager data path, there is no support for
-> standard keys. So, when HWKM is being used, only wrapped keys are supported.
-> If standard keys need to be supported, it can be, but modifications are
-> required within trustzone.
 
-Do the SoCs support both key types though, just not at the same time?  E.g. when
-the ufs_qcom driver loads on SM8350, could it choose to expose either standard
-key support or wrapped key support, or is it predetermined by the hardware
-and/or firmware?  If the driver has a choice, then there should be a kernel
-module parameter (module_param()) that controls it, so that the user can choose
-which key type they want when they boot their kernel.
 
-- Eric
+On 11/25/2021 10:01 AM, Dmitry Baryshkov wrote:
+> Commit 739b4e7756d3 ("drm/msm/dsi: Fix an error code in
+> msm_dsi_modeset_init()") changed msm_dsi_modeset_init() to return an
+> error code in case msm_dsi_manager_validate_current_config() returns
+> false. However this is not an error case, but a slave DSI of the bonded
+> DSI link. In this case msm_dsi_modeset_init() should return 0, but just
+> skip connector and bridge initialization.
+> 
+> To reduce possible confusion, drop the
+> msm_dsi_manager_validate_current_config() function, and specif 'bonded
+> && !master' condition directly in the msm_dsi_modeset_init().
+> 
+> Fixes: 739b4e7756d3 ("drm/msm/dsi: Fix an error code in msm_dsi_modeset_init()")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/dsi/dsi.c         | 10 +++++++---
+>   drivers/gpu/drm/msm/dsi/dsi.h         |  1 -
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 17 -----------------
+>   3 files changed, 7 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+> index 75ae3008b68f..fc280cc43494 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+> @@ -215,9 +215,13 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+>   		goto fail;
+>   	}
+>   
+> -	if (!msm_dsi_manager_validate_current_config(msm_dsi->id)) {
+> -		ret = -EINVAL;
+> -		goto fail;
+> +	if (msm_dsi_is_bonded_dsi(msm_dsi) &&
+> +	    !msm_dsi_is_master_dsi(msm_dsi)) {
+> +		/*
+> +		 * Do not return an eror here,
+> +		 * Just skip creating encoder/connector for the slave-DSI.
+> +		 */
+> +		return 0;
+>   	}
+>   
+>   	msm_dsi->encoder = encoder;
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index 66443dc98500..ef8212990254 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -82,7 +82,6 @@ int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
+>   bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
+>   int msm_dsi_manager_register(struct msm_dsi *msm_dsi);
+>   void msm_dsi_manager_unregister(struct msm_dsi *msm_dsi);
+> -bool msm_dsi_manager_validate_current_config(u8 id);
+>   void msm_dsi_manager_tpg_enable(void);
+>   
+>   /* msm dsi */
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index a152dbf63038..a73cfeb93e90 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -645,23 +645,6 @@ struct drm_connector *msm_dsi_manager_connector_init(u8 id)
+>   	return ERR_PTR(ret);
+>   }
+>   
+> -bool msm_dsi_manager_validate_current_config(u8 id)
+> -{
+> -	bool is_bonded_dsi = IS_BONDED_DSI();
+> -
+> -	/*
+> -	 * For bonded DSI, we only have one drm panel. For this
+> -	 * use case, we register only one bridge/connector.
+> -	 * Skip bridge/connector initialisation if it is
+> -	 * slave-DSI for bonded DSI configuration.
+> -	 */
+> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id)) {
+> -		DBG("Skip bridge registration for slave DSI->id: %d\n", id);
+> -		return false;
+> -	}
+> -	return true;
+> -}
+> -
+>   /* initialize bridge */
+>   struct drm_bridge *msm_dsi_manager_bridge_init(u8 id)
+>   {
+> 
