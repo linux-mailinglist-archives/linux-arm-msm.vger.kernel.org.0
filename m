@@ -2,248 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E0746CFFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 10:24:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD7A146D03F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 10:40:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbhLHJ2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 04:28:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54828 "EHLO
+        id S229834AbhLHJoO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 04:44:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhLHJ2P (ORCPT
+        with ESMTP id S229774AbhLHJoO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 04:28:15 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AB5C061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 01:24:43 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u17so2941796wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 01:24:43 -0800 (PST)
+        Wed, 8 Dec 2021 04:44:14 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D93C0617A2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 01:40:42 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so3945403pju.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 01:40:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3mFT/g8kDKWO3RXXQBJgCEppq9+tS0OcXbhAndJlbwc=;
-        b=WHRXXER2O3rJ4A2VcAWr/DwhUSR5L/tE4J5yUMThcd01KomQLmU3zFWdohVBwpg8Ll
-         sC79Ur1YnCEod0L4D9AXUhM5EiPedIUoI5X/y7p4FqNf3W7oGxw+W8QOWUB8CHCvga1x
-         Q9NAFxhBNCQuz+g8fu60utXMrEmJx7ln/ElzigSgVCTn1eGLw/fm2x/fpzxAMvSOIv4V
-         YPiBbFLUwSxgLEZ4paCOLhWRq4qxoIxqxQW93TRL+yfvQW9yd8slq936wB60hw9fZvpd
-         9ZOhmduuctSkUCTAmJF01x4/OUzT7ol58tRmm8Iu/3MVkTLK4/HQQzzhKY1Un7+6wobr
-         Qexg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uWzgpmLO9VHXp6lkhDz4fGQuJhk+6AV1KCdyKpRVolA=;
+        b=eklJrKPspZKgFntWvR8NP54NwQ8qG9W7uiXo01EKKwoa95j2iAUFx3U7hp1/NRj0Hk
+         pMzMbCnYAeN6rcmH8z0OoZ9IrY3Vn8oXyN2v560dOkdSDmjglk83e3k8FXyfqczZ5CIw
+         t9hQ0m3WCP3YpUyUBzvUpDZ8Z3tZvQ6z6Gh3183oI0URu+IM+mgkpJ4i94RqgMxp5Pok
+         8bLc1kzZ64MmWeZr6PhCHsJ8jsnAmvYw/SMN8KPYzC8093jmt/ojLQ40sYoUjFgDSPgC
+         dDSIpyYAuHq1KnX5E3AotD2yr20k/VX2GVMaHm8q6AdAsI5Ip+PBbEpi1BfNb0o2GZJB
+         kEMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=3mFT/g8kDKWO3RXXQBJgCEppq9+tS0OcXbhAndJlbwc=;
-        b=NrorA/BepCt2u0PuiaFUqAOA8FouQNRrVNH/YjwjCgn3JbHVcm2J0LmaT8Fg7M5J3Q
-         rlqHhAV2eB1BNqd52qe+IsKc/vKN891dofGKwLqQiPQRhNnREXTwztniX0xgjEwPAgmp
-         grWdVz4EEfZS+6Gkd9l+LdQ5Gcb2U9d3Qiv6mssTD1UoygueooTQrk2K3/6xzX1K/Mxm
-         5AC0CHeAvKrkQXDGiLz6YuuVNg+PhNcZuIqHe3+lrnE2bOueSmPcBZ0fV1DUmGYk9k7j
-         n2BNLbo7LO9Aw4vMjr29Xx6WPP+oGGT/JEn84bA9zDlhtRTwFCapFNyluiAh/KFh/Y0d
-         57ag==
-X-Gm-Message-State: AOAM531H2cr5m7ogkWsxdDBWqwoNbcTM0lLuSPFIWzz33ekvwoczRSWP
-        xGlgzxwTejjGbEa6Z9UI7r1E5g==
-X-Google-Smtp-Source: ABdhPJz4c9t4wMsA/G3koT+zmv/oSJewsTgYyqs8g57t6he/F8MwgK+Mv6qagBFmdxpLd0ECZWxfGg==
-X-Received: by 2002:a5d:54d0:: with SMTP id x16mr58385764wrv.606.1638955482132;
-        Wed, 08 Dec 2021 01:24:42 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id ay21sm5088751wmb.7.2021.12.08.01.24.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Dec 2021 01:24:41 -0800 (PST)
-Subject: Re: [PATCH v5 2/5] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi
- pinctrl bindings
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1638891339-21806-1-git-send-email-quic_srivasam@quicinc.com>
- <1638891339-21806-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <7ae29aa1-34da-c362-5712-4b787474d7f2@linaro.org>
-Date:   Wed, 8 Dec 2021 09:24:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uWzgpmLO9VHXp6lkhDz4fGQuJhk+6AV1KCdyKpRVolA=;
+        b=x5MTFVEdMP10LBCZorL/OVaiviqojB2IfMLJgS+ZeT54ikOMVRFWYi4sbMMaHpyWgz
+         hf7u66ba6QLKkgR88iSDtYGug/eZj45CHw9sTq29oHUo4V65y1wIjUkEXxnnM+m1ywQG
+         iy/kwGCYwcQuVrSmd49EC1NOm/AHbY3cwe9tZTSGpNSQs4qEhDhMhxZT6bUMovRaoP/O
+         bphV95u9hU801iXFuA41KsPlHtMcsrrAq8I++OSXrKGFL0HFEdC/ItUAxaZ8xls1G+TG
+         zttgxdAyV9OlfygjSwu1FW+10LCG9HCjCBSC18gKjm6uo/X3h+UfgnvO9dLSYf7VWVRN
+         bCSg==
+X-Gm-Message-State: AOAM533aISZJKlozk+SXeu59kJfMzXYOq3+w9KRox4S0tfQVKIkOpxAv
+        yWjsvRPis7xQu5o8vWCDur57
+X-Google-Smtp-Source: ABdhPJwY9fZqXfhGo0Ye9iDFCgcftn45DiXQoZqA9ZqPx12EMWK3W9uiY/cX0pUiVc1nQAu2Bgj8Mg==
+X-Received: by 2002:a17:90b:1d90:: with SMTP id pf16mr5910775pjb.93.1638956441917;
+        Wed, 08 Dec 2021 01:40:41 -0800 (PST)
+Received: from thinkpad ([117.202.189.59])
+        by smtp.gmail.com with ESMTPSA id 13sm2600661pfp.216.2021.12.08.01.40.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 01:40:41 -0800 (PST)
+Date:   Wed, 8 Dec 2021 15:10:35 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, kvalo@codeaurora.org,
+        stable@vger.kernel.org, Pengyu Ma <mapengyu@gmail.com>,
+        Kalle Valo <kvalo@kernel.org>
+Subject: Re: [PATCH 1/1] bus: mhi: core: Add support for forced PM resume
+Message-ID: <20211208094035.GF70121@thinkpad>
+References: <20211208085735.196394-1-manivannan.sadhasivam@linaro.org>
+ <20211208085735.196394-2-manivannan.sadhasivam@linaro.org>
+ <YbB11M0FZ+AdELPa@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <1638891339-21806-3-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YbB11M0FZ+AdELPa@kroah.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Dec 08, 2021 at 10:07:32AM +0100, Greg KH wrote:
 
+[...]
 
-On 07/12/2021 15:35, Srinivasa Rao Mandadapu wrote:
-> Add device tree binding Documentation details for Qualcomm SC7280
-> LPASS LPI pinctrl driver.
+> > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> > index 723985879035..102303288cee 100644
+> > --- a/include/linux/mhi.h
+> > +++ b/include/linux/mhi.h
+> > @@ -660,8 +660,9 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl);
+> >  /**
+> >   * mhi_pm_resume - Resume MHI from suspended state
+> >   * @mhi_cntrl: MHI controller
+> > + * @force: Force resuming to M0 irrespective of the device MHI state
+> >   */
+> > -int mhi_pm_resume(struct mhi_controller *mhi_cntrl);
+> > +int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force);
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
-
-
-I remember in my previous review that I requested you to use git mv for 
-renaming this
-
-If you do that you will endup diff stat something like this:
-
-------------------------->cut<-----------------------------
-diff --git 
-a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml 
-b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
-similarity index 97%
-rename from 
-Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-rename to 
-Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
-index e47ebf934daf..76f205a47640 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
-+++ 
-b/Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
-@@ -1,7 +1,7 @@
-  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-  %YAML 1.2
-  ---
--$id: http://devicetree.org/schemas/pinctrl/qcom,lpass-lpi-pinctrl.yaml#
-+$id: 
-http://devicetree.org/schemas/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml#
-  $schema: http://devicetree.org/meta-schemas/core.yaml#
-
-  title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
-------------------------->cut<-----------------------------
-
---srini
-
->   .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml     | 115 +++++++++++++++++++++
->   1 file changed, 115 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+> apis like this are horrid to work with over time.
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-> new file mode 100644
-> index 0000000..d32ee32
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
-> @@ -0,0 +1,115 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. Low Power Audio SubSystem (LPASS)
-> +  Low Power Island (LPI) TLMM block
-> +
-> +maintainers:
-> +  - Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> +  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer block found in the
-> +  LPASS LPI IP on most Qualcomm SoCs
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sc7280-lpass-lpi-pinctrl
-> +
-> +  reg:
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  gpio-controller: true
-> +
-> +  '#gpio-cells':
-> +    description: Specifying the pin number and flags, as defined in
-> +      include/dt-bindings/gpio/gpio.h
-> +    const: 2
-> +
-> +  gpio-ranges:
-> +    maxItems: 1
-> +
-> +#PIN CONFIGURATION NODES
-> +patternProperties:
-> +  '-pins$':
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9])$"
-> +        minItems: 1
-> +        maxItems: 15
-> +
-> +      function:
-> +        enum: [ gpio, swr_tx_clk, qua_mi2s_sclk, swr_tx_data, qua_mi2s_ws,
-> +                qua_mi2s_data, swr_rx_clk, swr_rx_data, dmic1_clk, i2s1_clk,
-> +                dmic1_data, i2s1_ws, dmic2_clk, dmic2_data, i2s1_data,
-> +                i2s2_clk, wsa_swr_clk, i2s2_ws, wsa_swr_data, dmic3_clk,
-> +                dmic3_data, i2s2_data ]
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +      drive-strength:
-> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
-> +        default: 2
-> +        description:
-> +          Selects the drive strength for the specified pins, in mA.
-> +
-> +      slew-rate:
-> +        enum: [0, 1, 2, 3]
-> +        default: 0
-> +        description: |
-> +            0: No adjustments
-> +            1: Higher Slew rate (faster edges)
-> +            2: Lower Slew rate (slower edges)
-> +            3: Reserved (No adjustments)
-> +
-> +      bias-pull-down: true
-> +
-> +      bias-pull-up: true
-> +
-> +      bias-disable: true
-> +
-> +      output-high: true
-> +
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +      - function
-> +
-> +    additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - gpio-controller
-> +  - '#gpio-cells'
-> +  - gpio-ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    lpass_tlmm: pinctrl@33c0000 {
-> +        compatible = "qcom,sc7280-lpass-lpi-pinctrl";
-> +        reg = <0x33c0000 0x20000>,
-> +              <0x3550000 0x10000>;
-> +        gpio-controller;
-> +        #gpio-cells = <2>;
-> +        gpio-ranges = <&lpass_tlmm 0 0 15>;
-> +    };
+> Why not just have:
+> 	mhi_pm_resume_force()
+> which then internally can set a flag that does this?  That way the
+> driver author does not have to stop every time they see this call and
+> look up exactly what the true/false field means in the function call in
+> their driver.
 > 
+
+Okay.
+
+> It also lets you leave alone the existing calls to mhi_pm_suspend() that
+> do not want to "force" anything.
+> 
+> self-documenting code is good, this is not self-documenting at all.
+> 
+> Also, is "force" really what you are doing here?  This is a "normal"
+> resume call, which should always work.
+
+The normal resume here is resuming with M3 state only.
+
+> The "force" option here really
+> is just "ignore the current state of suspend for the device".  So
+> perhaps mhi_pm_resume_ignore_current_state() might be better?  Or
+> something shorter?
+> 
+
+And we are actually forcing here. As per the MHI spec, the devices has to be in
+M3 state during resume. So if we allow any device to go through resume without
+being in M3, that implies we are doing a force resume.
+
+I'll use the mhi_pm_resume_force() API as you suggested.
+
+Thanks,
+Mani
+
+> Naming is hard, sorry.
+> 
+> thanks,
+> 
+> greg k-h
