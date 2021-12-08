@@ -2,127 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB4B46DDF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 23:01:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5277146DE8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 23:45:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237707AbhLHWFA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 17:05:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34202 "EHLO
+        id S240640AbhLHWsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 17:48:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbhLHWFA (ORCPT
+        with ESMTP id S240636AbhLHWse (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 17:05:00 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A60C061746;
-        Wed,  8 Dec 2021 14:01:28 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id i8-20020a7bc948000000b0030db7b70b6bso5230346wml.1;
-        Wed, 08 Dec 2021 14:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=78Ifs23TtoxatfN7VFvq9AEVPiNcwkeZ+FD9JLKmw8c=;
-        b=eoOfS+6CmChrGqIET8UbG2Mcyt7PpnxNsqQBcTKKvvFva2oPLikaLax+o6UFRiitOo
-         F75w0TsDGEYb+iHtNj/MgluUFT8K+9sdMVBYHdnKn5GGTM4IuGFSYqfLbj6lKsZVw3cG
-         jkY6YDhnrUB/XZ8F7VksJaZbQUZWqAPSCh/CTY1a+j5/SNACoVhI16F5r8rjuQ+8b68t
-         RlDrDjlTixZBpkLzx/KRMVrwiNoSvRbJdoOr7k33A/FURILhHfRcEoENHTDBQoChozph
-         8NGQBK13gFNv9z3teV47WwN0Voj2yeN7eK9RoFG8b2QlNdIn6hIX4dOGfm0uf5tiwJKZ
-         w2Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=78Ifs23TtoxatfN7VFvq9AEVPiNcwkeZ+FD9JLKmw8c=;
-        b=Y6WU6el+J/Vrq+CMe9Z7DA8dXzOZiaTc9gHm885EXex5K0hl3qQxZ/XpNpkKafdoQB
-         mwXF4eO81/uqCLa/tAHJ9ACJLvDLRFfl3Qh5XV2ZrO+ghjqkJ4Ez6DWIkVhA/2ZH0l0l
-         iCwghNp/hARpQZDk3EavLf3xvdXyTKvkcl8AO4xFY24hVK2fya6w7HprRNB6Gm9o+TYz
-         JIRhf8jxsHts2QqCKEIQrWqxxrxKeg5y/GJlc0aTbCiSjKr/91tuBmNF3kZMEjyAgwQV
-         RUm7JPpfTu2KWL/FxSpLZccVP/PCQLeqScN31aA49d/suP20V/1LkTBVWGlgNBvI1yrI
-         kKpQ==
-X-Gm-Message-State: AOAM532ky9U06wFoj597pDX6HdlMwPGrw2CsIa77WT4BBTAmjKoKOTUt
-        I2U6lqFadCJuSdM1LmQ5f9LDlMM14pON2tGSp9c=
-X-Google-Smtp-Source: ABdhPJx4+51IKWNFMWdRf7kFk0fQGiVNH4ObQU0Pt5G58JOq7C+3hI5cdOhoebAHEgcFR4QJtJpoZ99D+N6A9Eu9azc=
-X-Received: by 2002:a05:600c:4f4b:: with SMTP id m11mr1665243wmq.151.1639000886773;
- Wed, 08 Dec 2021 14:01:26 -0800 (PST)
+        Wed, 8 Dec 2021 17:48:34 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 547EFC061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 14:45:01 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4CB5C3ED5F;
+        Wed,  8 Dec 2021 23:44:58 +0100 (CET)
+Date:   Wed, 8 Dec 2021 23:44:51 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 02/11] clk: qcom: gpucc-sdm660: use parent_hws instead of
+ parent_data
+Message-ID: <20211208224451.b64bxukxygunlceo@SoMainline.org>
+References: <20211208175430.1333594-1-dmitry.baryshkov@linaro.org>
+ <20211208175430.1333594-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-References: <20211105030434.2828845-1-sean@poorly.run> <20211105030434.2828845-14-sean@poorly.run>
-In-Reply-To: <20211105030434.2828845-14-sean@poorly.run>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 8 Dec 2021 14:06:43 -0800
-Message-ID: <CAF6AEGv9ghHcd1zhWiBQ40pwx1uMeJ=Y_T5EVo2EV5gTRTtAew@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v4 13/14] arm64: dts: qcom: sc7180: Add
- support for HDCP in dp-controller
-To:     Sean Paul <sean@poorly.run>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Jani Nikula <jani.nikula@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211208175430.1333594-3-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 4, 2021 at 8:05 PM Sean Paul <sean@poorly.run> wrote:
->
-> From: Sean Paul <seanpaul@chromium.org>
->
-> This patch adds the register ranges required for HDCP key injection and
-> HDCP TrustZone interaction as described in the dt-bindings for the
-> sc7180 dp controller. Now that these are supported, change the
-> compatible string to "dp-hdcp".
->
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-15-sean@poorly.run #v1
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-14-sean@poorly.run #v2
-> Link: https://patchwork.freedesktop.org/patch/msgid/20211001151145.55916-14-sean@poorly.run #v3
->
-> Changes in v3:
-> -Split off into a new patch containing just the dts change (Stephen)
-> -Add hdcp compatible string (Stephen)
-> Changes in v4:
-> -Rebase on Bjorn's multi-dp patchset
+On 2021-12-08 20:54:21, Dmitry Baryshkov wrote:
+> If all parents are specified as clk_hw, we can use parent_hws instead of
+> parent_data.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
 > ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index c8921e2d6480..838270f70b62 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -3088,7 +3088,13 @@ mdss_dp: displayport-controller@ae90000 {
->                                 compatible = "qcom,sc7180-dp";
->                                 status = "disabled";
->
-> -                               reg = <0 0x0ae90000 0 0x1400>;
-> +                               reg = <0 0x0ae90000 0 0x200>,
-> +                                     <0 0x0ae90200 0 0x200>,
-> +                                     <0 0x0ae90400 0 0xc00>,
-> +                                     <0 0x0ae91000 0 0x400>,
-> +                                     <0 0x0ae91400 0 0x400>,
-> +                                     <0 0x0aed1000 0 0x175>,
-> +                                     <0 0x0aee1000 0 0x2c>;
-
-So one small issue, if someone tries to get linux running on a sc7180
-windows laptop (which uses qcom's tz instead of the CrOS tz), things
-will go BOOM!
-
-We might want instead to move this somewhere chromebook specific,
-maybe sc7180-trogdor.dtsi?
-
-BR,
--R
-
->
->                                 interrupt-parent = <&mdss>;
->                                 interrupts = <12>;
-> --
-> Sean Paul, Software Engineer, Google / Chromium OS
->
+>  drivers/clk/qcom/gpucc-sdm660.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gpucc-sdm660.c b/drivers/clk/qcom/gpucc-sdm660.c
+> index 26e17f349a77..27a506a78a25 100644
+> --- a/drivers/clk/qcom/gpucc-sdm660.c
+> +++ b/drivers/clk/qcom/gpucc-sdm660.c
+> @@ -65,8 +65,8 @@ static struct clk_alpha_pll gpu_pll0_pll_out_main = {
+>  	.num_vco = ARRAY_SIZE(gpu_vco),
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gpu_pll0_pll_out_main",
+> -		.parent_data =  &(const struct clk_parent_data){
+> -			.hw = &gpucc_cxo_clk.clkr.hw,
+> +		.parent_hws = (const struct clk_hw*[]){
+> +			&gpucc_cxo_clk.clkr.hw,
+>  		},
+>  		.num_parents = 1,
+>  		.ops = &clk_alpha_pll_ops,
+> @@ -80,8 +80,8 @@ static struct clk_alpha_pll gpu_pll1_pll_out_main = {
+>  	.num_vco = ARRAY_SIZE(gpu_vco),
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gpu_pll1_pll_out_main",
+> -		.parent_data = &(const struct clk_parent_data){
+> -			.hw = &gpucc_cxo_clk.clkr.hw,
+> +		.parent_hws = (const struct clk_hw*[]){
+> +			&gpucc_cxo_clk.clkr.hw,
+>  		},
+>  		.num_parents = 1,
+>  		.ops = &clk_alpha_pll_ops,
+> @@ -134,8 +134,8 @@ static struct clk_branch gpucc_gfx3d_clk = {
+>  		.enable_mask = BIT(0),
+>  		.hw.init = &(struct clk_init_data){
+>  			.name = "gpucc_gfx3d_clk",
+> -			.parent_data = &(const struct clk_parent_data){
+> -				.hw = &gfx3d_clk_src.rcg.clkr.hw,
+> +			.parent_hws = (const struct clk_hw*[]){
+> +				&gfx3d_clk_src.rcg.clkr.hw,
+>  			},
+>  			.num_parents = 1,
+>  			.ops = &clk_branch2_ops,
+> -- 
+> 2.33.0
+> 
