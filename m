@@ -2,130 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7A146D03F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 10:40:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E7B6746D082
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 11:05:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbhLHJoO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 04:44:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58472 "EHLO
+        id S230267AbhLHKIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 05:08:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhLHJoO (ORCPT
+        with ESMTP id S230017AbhLHKIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 04:44:14 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D93C0617A2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 01:40:42 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id p18-20020a17090ad31200b001a78bb52876so3945403pju.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 01:40:42 -0800 (PST)
+        Wed, 8 Dec 2021 05:08:36 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DCF0C061A72
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 02:05:04 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id b13so1221325plg.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 02:05:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=uWzgpmLO9VHXp6lkhDz4fGQuJhk+6AV1KCdyKpRVolA=;
-        b=eklJrKPspZKgFntWvR8NP54NwQ8qG9W7uiXo01EKKwoa95j2iAUFx3U7hp1/NRj0Hk
-         pMzMbCnYAeN6rcmH8z0OoZ9IrY3Vn8oXyN2v560dOkdSDmjglk83e3k8FXyfqczZ5CIw
-         t9hQ0m3WCP3YpUyUBzvUpDZ8Z3tZvQ6z6Gh3183oI0URu+IM+mgkpJ4i94RqgMxp5Pok
-         8bLc1kzZ64MmWeZr6PhCHsJ8jsnAmvYw/SMN8KPYzC8093jmt/ojLQ40sYoUjFgDSPgC
-         dDSIpyYAuHq1KnX5E3AotD2yr20k/VX2GVMaHm8q6AdAsI5Ip+PBbEpi1BfNb0o2GZJB
-         kEMQ==
+         :content-disposition:in-reply-to:user-agent;
+        bh=3VlG0X5C2WeyX62N3377xKRJt9eBMbxFbqphE60v0Zo=;
+        b=JF0JorBuS7waBsNX1Vyr42oERYkJrVZRUdV0jvc7XdomrqGUOY/GNfu1KwU47VEu0v
+         hjeoibKSHTTwr7sL2XFbFfX8xZFpRJVijBSi1bli8YlzzstbmrLOrGAZk21mKBeUNyEn
+         O+drSal5sw7Ao083EyjuGm9oobIpuflPwGIjhD0viNvtn/d1akVcl6L1b/0sJ+9xOUfk
+         +kegVX6NWT0Zb65YMhyx4YTsJy6ZTQvNFKImtiuA74bi7MV9SfQqj5ANnjBqThbyFt6u
+         R0GNGLTtRNRiuu1/t1FwFT5tU6g9xTJ6y8YR4Sh40HNZPoxKWYwmTKKFcWseAwjjknlz
+         AJjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=uWzgpmLO9VHXp6lkhDz4fGQuJhk+6AV1KCdyKpRVolA=;
-        b=x5MTFVEdMP10LBCZorL/OVaiviqojB2IfMLJgS+ZeT54ikOMVRFWYi4sbMMaHpyWgz
-         hf7u66ba6QLKkgR88iSDtYGug/eZj45CHw9sTq29oHUo4V65y1wIjUkEXxnnM+m1ywQG
-         iy/kwGCYwcQuVrSmd49EC1NOm/AHbY3cwe9tZTSGpNSQs4qEhDhMhxZT6bUMovRaoP/O
-         bphV95u9hU801iXFuA41KsPlHtMcsrrAq8I++OSXrKGFL0HFEdC/ItUAxaZ8xls1G+TG
-         zttgxdAyV9OlfygjSwu1FW+10LCG9HCjCBSC18gKjm6uo/X3h+UfgnvO9dLSYf7VWVRN
-         bCSg==
-X-Gm-Message-State: AOAM533aISZJKlozk+SXeu59kJfMzXYOq3+w9KRox4S0tfQVKIkOpxAv
-        yWjsvRPis7xQu5o8vWCDur57
-X-Google-Smtp-Source: ABdhPJwY9fZqXfhGo0Ye9iDFCgcftn45DiXQoZqA9ZqPx12EMWK3W9uiY/cX0pUiVc1nQAu2Bgj8Mg==
-X-Received: by 2002:a17:90b:1d90:: with SMTP id pf16mr5910775pjb.93.1638956441917;
-        Wed, 08 Dec 2021 01:40:41 -0800 (PST)
-Received: from thinkpad ([117.202.189.59])
-        by smtp.gmail.com with ESMTPSA id 13sm2600661pfp.216.2021.12.08.01.40.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Dec 2021 01:40:41 -0800 (PST)
-Date:   Wed, 8 Dec 2021 15:10:35 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, kvalo@codeaurora.org,
-        stable@vger.kernel.org, Pengyu Ma <mapengyu@gmail.com>,
-        Kalle Valo <kvalo@kernel.org>
-Subject: Re: [PATCH 1/1] bus: mhi: core: Add support for forced PM resume
-Message-ID: <20211208094035.GF70121@thinkpad>
-References: <20211208085735.196394-1-manivannan.sadhasivam@linaro.org>
- <20211208085735.196394-2-manivannan.sadhasivam@linaro.org>
- <YbB11M0FZ+AdELPa@kroah.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3VlG0X5C2WeyX62N3377xKRJt9eBMbxFbqphE60v0Zo=;
+        b=klDIMP8pyhqX4eY3Ej0HyijVCnIFfChwAddz0Dlqfa7vjPE8tBH9eAP7SQaurAlKst
+         GIMcvFj9/Cejr8s4Nx1p0tfcpRTuxWjqHs1BMuXTN2ntjn6ebnYqUKxpRLB8e8R12SfR
+         plq5PfcUj3cCgT9MjS/CZ1UCLaAE4p8LJ8Q/utqTVwrsX0fqHDGJsgLHB10HrVeS7QYV
+         rNSvH7xDd1OzRQh/5lL/3eeYmGdvpsWJbTQxGqx4JM0TTuMJ5KVuvg1kij8KZAWICXKI
+         hdzbgYUumpsNufpLEc46O9oy+5UfMpRerWJXnwsoCglrGH6xt9vOkbDg1ZOhi8EpR3Pe
+         3MOg==
+X-Gm-Message-State: AOAM532ikazAuVo+waDjw/GSwxRQAjzE+lwPvrMgjk/OdM8R/7gT9MfU
+        ULZN38Pou8ap3hQDf6lCTNApxNk0/c8DaShP
+X-Google-Smtp-Source: ABdhPJx5Ac6tG/98nAHlbbqQTdRfRG3D54wN5oyRq6vR/bzlWA1R+wqlFKh/I3S7dhraNdFJWGHzIg==
+X-Received: by 2002:a17:902:9a4a:b0:146:8ce2:672 with SMTP id x10-20020a1709029a4a00b001468ce20672mr13552754plv.29.1638957903838;
+        Wed, 08 Dec 2021 02:05:03 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id g22sm3183890pfj.29.2021.12.08.02.05.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Dec 2021 02:05:03 -0800 (PST)
+Date:   Wed, 8 Dec 2021 18:04:57 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] irqchip: Add Qualcomm MPM controller driver
+Message-ID: <20211208100453.GP10105@dragon>
+References: <20211202122122.23548-1-shawn.guo@linaro.org>
+ <20211202122122.23548-4-shawn.guo@linaro.org>
+ <87wnkikqve.wl-maz@kernel.org>
+ <20211206131530.GN10105@dragon>
+ <87wnkh26ar.wl-maz@kernel.org>
+ <20211207094835.GO10105@dragon>
+ <87mtlc1zzz.wl-maz@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YbB11M0FZ+AdELPa@kroah.com>
+In-Reply-To: <87mtlc1zzz.wl-maz@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 08, 2021 at 10:07:32AM +0100, Greg KH wrote:
-
-[...]
-
-> > diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> > index 723985879035..102303288cee 100644
-> > --- a/include/linux/mhi.h
-> > +++ b/include/linux/mhi.h
-> > @@ -660,8 +660,9 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl);
-> >  /**
-> >   * mhi_pm_resume - Resume MHI from suspended state
-> >   * @mhi_cntrl: MHI controller
-> > + * @force: Force resuming to M0 irrespective of the device MHI state
-> >   */
-> > -int mhi_pm_resume(struct mhi_controller *mhi_cntrl);
-> > +int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force);
+On Tue, Dec 07, 2021 at 10:16:32AM +0000, Marc Zyngier wrote:
+> On Tue, 07 Dec 2021 09:48:36 +0000,
+> Shawn Guo <shawn.guo@linaro.org> wrote:
+> > 
+> > On Mon, Dec 06, 2021 at 01:48:12PM +0000, Marc Zyngier wrote:
+> > > > > > +static int qcom_mpm_enter_sleep(struct qcom_mpm_priv *priv)
+> > > > > > +{
+> > > > > > +	int i, ret;
+> > > > > > +
+> > > > > > +	for (i = 0; i < priv->reg_stride; i++)
+> > > > > > +		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
+> > > > > > +
+> > > > > > +	/* Notify RPM to write vMPM into HW */
+> > > > > 
+> > > > > What do you mean by 'into HW'? We just did that, right? or are these
+> > > > > registers just fake and most of the stuff is in the RPM?
+> > > > 
+> > > > I have a note about this in commit log.
+> > > > 
+> > > > - All the register settings are done by APSS on an internal memory
+> > > >   region called vMPM, and RPM will flush them into hardware after it
+> > > >   receives a mailbox/IPC notification from APSS.
+> > > > 
+> > > > So yes, these registers are fake/virtual in memory, and RPM will
+> > > > actually flush the values into the MPM hardware block.
+> > > 
+> > > Then why are you using MMIO accessors all over the place if this is
+> > > just RAM? Who *owns* this memory? Is it normal DRAM? Or some flops
+> > > exposed by a device? Why isn't the state simply communicated over the
+> > > mailbox instead?
+> > 
+> > It's a piece of internal memory (SRAM) which can be access by AP and
+> > RPM.  The communication mechanism is defined by SoC/RPM design, and we
+> > can do nothing but following the procedure.
 > 
-> apis like this are horrid to work with over time.
-> 
-> Why not just have:
-> 	mhi_pm_resume_force()
-> which then internally can set a flag that does this?  That way the
-> driver author does not have to stop every time they see this call and
-> look up exactly what the true/false field means in the function call in
-> their driver.
-> 
+> Then the procedure needs to be documented:
 
-Okay.
+Maulik, I'm trying my best to answer Marc's questions based on my
+limited knowledges about the hardware.  Please clarify if there is
+anything incorrect.
 
-> It also lets you leave alone the existing calls to mhi_pm_suspend() that
-> do not want to "force" anything.
-> 
-> self-documenting code is good, this is not self-documenting at all.
-> 
-> Also, is "force" really what you are doing here?  This is a "normal"
-> resume call, which should always work.
+> - Who owns the memory at any given time?
 
-The normal resume here is resuming with M3 state only.
+The memory is owned by APSS when system is awake, and owned by RPM when
+APSS gets power collapsed.  RPM is on the always-on domain and will be
+managing resources and monitoring wake-up interrupts during sleep, with
+the help of MPM.  MPM is not a core/master but a hardware
+controller/block.
 
-> The "force" option here really
-> is just "ignore the current state of suspend for the device".  So
-> perhaps mhi_pm_resume_ignore_current_state() might be better?  Or
-> something shorter?
-> 
+> - What are the events that trigger a change of ownership?
 
-And we are actually forcing here. As per the MHI spec, the devices has to be in
-M3 state during resume. So if we allow any device to go through resume without
-being in M3, that implies we are doing a force resume.
+When APSS is about to get power collapsed, it sends a mailbox
+notification to RPM, and RPM will take the ownership.  And when APSS is
+woken up by a MPM pin/interrupt, APSS takes back the ownership.
 
-I'll use the mhi_pm_resume_force() API as you suggested.
+> - What are the messages exchanged between these entities?
 
-Thanks,
-Mani
+The messages exchanged are documented as "vMPM register layout" in the
+beginning of the driver.  Basically, they are values of MPM registers
+related to wake-up interrupt configurations, which will be directly
+dumped into physical MPM registers by RPM, when RPM gets the ownership.
+On wake-up, RPM will copy STATUS registers into vMPM memory and return
+the ownership back to APSS.
 
-> Naming is hard, sorry.
-> 
-> thanks,
-> 
-> greg k-h
+> - What is the synchronisation mechanism between the various processing
+>   entities (MPM. RPM, APSS...)?
+
+A hardware IPC/mailbox channel is being used by APSS to tell RPM to take
+over the ownership.  On wake-up, the wake-up event itself would be the
+synchronisation.
+
+> - Is the per-interrupt tracking a HW requirement or a SW
+>   implementation choice? Could this instead be a one-shot operation
+>   iterating over the whole state?
+
+I do not quite sure what "per-interrupt tracking" means.  The HW
+requirement is just that, when RPM takes the ownership of vMPM memory
+region, the memory contains the MPM register values, that RPM can
+directly dump into MPM registers.
+
+> All this needs to be explained so that it is maintainable, because I'm
+> getting tired of drivers that mimic the QC downstream code without
+> justification nor documentation to support the implementation.
+
+I really appreciate all your review comments and questions which are
+driving for good and maintainable code!
+
+Shawn 
