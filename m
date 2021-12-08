@@ -2,145 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFA7B46CED9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 09:27:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9627F46CF03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 09:30:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240521AbhLHIbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 03:31:00 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:34718 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbhLHIbA (ORCPT
+        id S244861AbhLHIeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 03:34:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42234 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244849AbhLHIeQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 03:31:00 -0500
+        Wed, 8 Dec 2021 03:34:16 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F1C4C0617A1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 00:30:45 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id u80so1815179pfc.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 00:30:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1638952049; x=1670488049;
-  h=from:to:cc:subject:date:message-id;
-  bh=07rYLKZoPVhTW49a+38rxxijE9s6Ji8YzFDjY44poMI=;
-  b=rndiCqOFye0cQYpAb1bDgdiza0biPxcCn1aF8hC36AbYBt2jbwwBaV+8
-   Yw9xBk7zF0yTXv5PduAgOgxdcPlMuhQTCwZ8Rn0P70kauGOfDeTTZQJ77
-   pN7NChncZyZEkXRgQAgwnbGwq2pthSkCvF+dhBQcgrS5WQZW7LY6/9ZV2
-   0=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 08 Dec 2021 00:27:28 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Dec 2021 00:27:26 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 08 Dec 2021 13:57:08 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id 921DF210F6; Wed,  8 Dec 2021 13:57:07 +0530 (IST)
-From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        quic_pharish@quicinc.com,
-        Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Subject: [PATCH] Bluetooth: btqca: sequential validation
-Date:   Wed,  8 Dec 2021 13:56:47 +0530
-Message-Id: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RRzI4Iei17Ahggjstaqb1wov493fOuSguTH2Wc+bkwI=;
+        b=ZlrqYumsXJ26Tvh0dTMnaSXivpjkDZvaj8K4es5g8PFBhjcf2pkZlVXbThCYAHMYYC
+         7RLoLdhOwvUfYhlBz1G8UAR0hw2PN/hACdXrH8Nmcw9ZpvUhons9s9mA8jE3crhs75Fm
+         /wcNAZ27E9xS/UXTiCeNQU7zq/5wDyZexd0kUoHpBeIy7tqdxGtuCdPzhkDTTwUnis6R
+         se8Tanwa/vMQhFUrN+gpQRIM6zEWKTcyE19eNULgZb/000Y4GhCulAe9rBfskrk2pTdq
+         Pp1NrDl5o6c2uCpfLk1++rDpJNB6NdRNw+D56AJbKnOx/rsxrSEE2v3J1sV/ZJHkX4gC
+         69VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RRzI4Iei17Ahggjstaqb1wov493fOuSguTH2Wc+bkwI=;
+        b=fiCV7XY4SN+nnvkIgvyO1Kso6YBjHWDq4mbOUwOosKUX/7onrg6EZ8jlZEoOr15M8p
+         HXH+ioMPaxCJ55WQMyEnq101npNsADItpvshSuwonXVOLpx7YSsx8eTSYlP1Y0oZkZ9J
+         4YbvCtcxFfYi9wnX4svMj9N6bWtORNUOtiLCr1jMS18PneOLzfU1Jew8Plci1y0LZaih
+         J+G4Ies0RhHC3V7MKxWld15I+BSGo+oM2JcyFKhOs3MtP+ignMmqAt0UJuQNoi+l47yQ
+         sjphWeqqkE8lVQVcMRtPlLJaFeQM3tMGaD6L/yaF+22xtKA1j5+5Fh2lfx4qis5J1qiO
+         niOw==
+X-Gm-Message-State: AOAM530gHIWmCU8EeTeMndTdXnktUP6wkQZ3RREKa7i/o3rGn0CKgO/u
+        ayBTPMqxDv0YaywduqfO85XB
+X-Google-Smtp-Source: ABdhPJxGzy9Z2ZMkn1bf7beooiLm6AWWW1bSqP0UhkmlyfZ2EcXB2dbbvnFb/xvteJJ/lcrb/FdDHw==
+X-Received: by 2002:a63:5b24:: with SMTP id p36mr15366637pgb.258.1638952244983;
+        Wed, 08 Dec 2021 00:30:44 -0800 (PST)
+Received: from thinkpad ([117.202.189.59])
+        by smtp.gmail.com with ESMTPSA id s19sm2408544pfu.104.2021.12.08.00.30.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Dec 2021 00:30:44 -0800 (PST)
+Date:   Wed, 8 Dec 2021 14:00:37 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     mhi@lists.linux.dev, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, kvalo@codeaurora.org,
+        stable@vger.kernel.org, Pengyu Ma <mapengyu@gmail.com>
+Subject: Re: [PATCH] bus: mhi: core: Add support for forced PM resume
+Message-ID: <20211208083037.GD70121@thinkpad>
+References: <20211206161059.107007-1-manivannan.sadhasivam@linaro.org>
+ <7eb05d7c-ddda-5ec1-73a0-e696d2b5a236@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7eb05d7c-ddda-5ec1-73a0-e696d2b5a236@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This change will have sequential validation support
-& patch config command is added
+On Tue, Dec 07, 2021 at 03:41:42PM -0800, Hemant Kumar wrote:
+> Hi Mani,
+> 
+> On 12/6/2021 8:10 AM, Manivannan Sadhasivam wrote:
+> > From: Loic Poulain <loic.poulain@linaro.org>
+> > 
+> > For whatever reason, some devices like QCA6390, WCN6855 using ath11k
+> > are not in M3 state during PM resume, but still functional. The
+> > mhi_pm_resume should then not fail in those cases, and let the higher
+> > level device specific stack continue resuming process.
+> > 
+> > Add a new parameter to mhi_pm_resume, to force resuming, whatever the
+> > current MHI state is. This fixes a regression with non functional
+> > ath11k WiFi after suspend/resume cycle on some machines.
+> > 
+> > Bug report: https://bugzilla.kernel.org/show_bug.cgi?id=214179
+> > 
+> > Cc: stable@vger.kernel.org #5.13
+> > Fixes: 020d3b26c07a ("bus: mhi: Early MHI resume failure in non M3 state")
+> > Reported-by: Kalle Valo <kvalo@codeaurora.org>
+> > Reported-by: Pengyu Ma <mapengyu@gmail.com>
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > [mani: Added comment, bug report, added reported-by tags and CCed stable]
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/mhi/core/pm.c             | 10 +++++++---
+> >   drivers/bus/mhi/pci_generic.c         |  2 +-
+> >   drivers/net/wireless/ath/ath11k/mhi.c |  6 +++++-
+> >   include/linux/mhi.h                   |  3 ++-
+> >   4 files changed, 15 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > index 7464f5d09973..4ddd266e042e 100644
+> > --- a/drivers/bus/mhi/core/pm.c
+> > +++ b/drivers/bus/mhi/core/pm.c
+> > @@ -881,7 +881,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
+> >   }
+> >   EXPORT_SYMBOL_GPL(mhi_pm_suspend);
+> > -int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+> > +int mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
+> >   {
+> >   	struct mhi_chan *itr, *tmp;
+> >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > @@ -898,8 +898,12 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
+> >   	if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
+> >   		return -EIO;
+> > -	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3)
+> > -		return -EINVAL;
+> > +	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3) {
+> 	in case if mhi_get_mhi_state(mhi_cntrl) returns SYS_ERR (assuming while
+> doing this check SYS_ERR is set) do we still want to continue pm resume when
+> force is true? Just want to make sure SYS_ERR handling with and without this
+> change remains the same or atleast does not cause any regression with this
+> change. or if we need to continue pm resume only for MHI_STATE_RESET when
+> MHI_STATE_M3 is not set?
 
-Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
----
- drivers/bluetooth/btqca.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h |  3 +++
- 2 files changed, 48 insertions(+)
+SYS_ERR state is a valid case while resuming from suspend. The "force" flag is
+supposed to be used by controllers that goes to a weird state like RESET. If we
+just add check for RESET, then we might get another scenario in future. That's
+why the "force" flag made sense to me.
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index be04d74..9a2fd17 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -141,6 +141,49 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
- 	return err;
- }
- 
-+int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
-+{
-+	struct sk_buff *skb;
-+	int err = 0;
-+	u8 cmd[5] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
-+	u8 rlen = 0x02;
-+	struct edl_event_hdr *edl;
-+	u8 rtype = EDL_PATCH_CONFIG_CMD;
-+
-+	bt_dev_dbg(hdev, "QCA Patch config");
-+
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CONFIG_CMD_LEN,
-+			cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-+		return err;
-+	}
-+	if (skb->len != rlen) {
-+		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+	edl = (struct edl_event_hdr *)(skb->data);
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA Patch config with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != rtype) {
-+		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-+		 edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+out:
-+	kfree(skb);
-+	if (err)
-+		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
-+
-+	return err;
-+}
-+
- static int qca_send_reset(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -551,6 +594,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 */
- 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
- 
-+	if (soc_type == QCA_WCN6750)
-+		qca_send_patch_config_cmd(hdev, soc_type);
- 	/* Download rampatch file */
- 	config.type = TLV_TYPE_PATCH;
- 	if (qca_is_wcn399x(soc_type)) {
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 30afa77..8fbb4c7 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -13,6 +13,8 @@
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
- #define EDL_GET_BUILD_INFO_CMD		(0x20)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-+#define EDL_PATCH_CONFIG_CMD_LEN	(0x05)
-+#define EDL_PATCH_CONFIG_CMD		(0x28)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
- #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
- #define QCA_DISABLE_LOGGING		(0xFC17)
-@@ -24,6 +26,7 @@
- #define EDL_CMD_EXE_STATUS_EVT		(0x00)
- #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
- #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
-+#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
- #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
- 
- #define EDL_TAG_ID_HCI			(17)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
+If we want to handle SYS_ERR then we need to check for that before M3 and that
+can be done in a separate patch. But since we didn't hit this scenario till now,
+let's handle it later if needed.
 
+Thanks,
+Mani
+
+> > +		dev_warn(dev, "Resuming from non M3 state (%s)\n",
+> > +			 TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
+> > +		if (!force)
+> > +			return -EINVAL;
+> > +	}
+> [..]
+> 
+> Thanks,
+> Hemant
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a
+> Linux Foundation Collaborative Project
