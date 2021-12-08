@@ -2,103 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D10146D537
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 15:08:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6272D46D5B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Dec 2021 15:32:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234909AbhLHOLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 09:11:30 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:58544 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234849AbhLHOL3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 09:11:29 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 6814EB8210D;
-        Wed,  8 Dec 2021 14:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883AAC00446;
-        Wed,  8 Dec 2021 14:07:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1638972475;
-        bh=6Fmc/O6IWh4KKiblSsLfPo3G5MJCj6eVA7GE+x9omuI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OUmag+9mNSiymWKwgDU6vNUcMMbCtppZ8KkmGiqIG+gHFI5fN6ZFZtJt2UB9utSKq
-         yZar2z4iCNOkNiiOwZJ87EBaEKnl3rYVtdO2AENxbNUTOMmhOncaSNutG7eDrNIiMG
-         OvjsLVhFDYZsZx7mZg0iEIVcJCb01m+pr1GODB8o=
-Date:   Wed, 8 Dec 2021 15:07:51 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Yihao Han <hanyihao@vivo.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Carl Yin <carl.yin@quectel.com>,
-        Carl Huang <cjhuang@codeaurora.org>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@vivo.com
-Subject: Re: [PATCH] bus: mhi: core: replace snprintf with sysfs_emit
-Message-ID: <YbC8N/Y1Z0CJbWnY@kroah.com>
-References: <20211208080816.43351-1-hanyihao@vivo.com>
- <AJgA9gCdE-A6eTTRwvPvy4qL.9.1638951289781.Hmail.hanyihao@vivo.com.@PFliQnBjSkxVUVVZSHlnR01Aa3JvYWguY29tPg==>
- <a0f8b64e-7086-b23a-acc6-dd3255d33fc7@vivo.com>
+        id S235144AbhLHOfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 09:35:38 -0500
+Received: from mga03.intel.com ([134.134.136.65]:25321 "EHLO mga03.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231398AbhLHOfi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 09:35:38 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10191"; a="237780795"
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="237780795"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 06:31:49 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,189,1635231600"; 
+   d="scan'208";a="612105379"
+Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
+  by orsmga004.jf.intel.com with ESMTP; 08 Dec 2021 06:31:46 -0800
+Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1muxyz-0000fQ-Eg; Wed, 08 Dec 2021 14:31:45 +0000
+Date:   Wed, 8 Dec 2021 22:31:25 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
+Message-ID: <202112082235.Hpn8OyQQ-lkp@intel.com>
+References: <20211207114003.100693-3-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a0f8b64e-7086-b23a-acc6-dd3255d33fc7@vivo.com>
+In-Reply-To: <20211207114003.100693-3-vkoul@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 08, 2021 at 10:03:30PM +0800, Yihao Han wrote:
-> 
-> 
-> On 2021/12/8 16:14, Greg Kroah-Hartman wrote:
-> > On Wed, Dec 08, 2021 at 12:07:53AM -0800, Yihao Han wrote:
-> > > coccinelle report:
-> > > ./drivers/bus/mhi/core/init.c:97:8-16:
-> > > WARNING: use scnprintf or sprintf
-> > > Use sysfs_emit instead of scnprintf or sprintf makes more sense.
-> > > 
-> > > Signed-off-by: Yihao Han <hanyihao@vivo.com>
-> > > ---
-> > >   drivers/bus/mhi/core/init.c | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> > > index 5aaca6d0f52b..a5a5c722731e 100644
-> > > --- a/drivers/bus/mhi/core/init.c
-> > > +++ b/drivers/bus/mhi/core/init.c
-> > > @@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
-> > >   	struct mhi_device *mhi_dev = to_mhi_device(dev);
-> > >   	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> > > -	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-> > > +	return sysfs_emit(buf, "Serial Number: %u\n",
-> > >   			mhi_cntrl->serial_number);
-> > >   }
-> > >   static DEVICE_ATTR_RO(serial_number);
-> > > -- 
-> > > 2.17.1
-> > > 
-> > 
-> > Why are you only changing one function in this file?  If you realyl want
-> > to make a change like this, fix ALL sysfs show functions.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> Because "sysfs_emit()" is "scnprintf()" equivalent with "size" parameter
-> equals to PAGE_SIZE,So sysfs_emit can only be used here in this file. And
-> "scnprintf" is better than "snprintf" because the former returns number of
-> characters written to "buf". So I think we can use "sysfs_emit()" instead of
-> "snprintf()".
+Hi Vinod,
 
-I am not disagreeing with changing this at all that is is incorrect.  I
-am complaining that you are only changing ONE of the functions in this
-file and not ALL of them.  If this type of change is so important to
-make, please do it for all places it is needed in the file, and in all
-of the drivers/bus/mhi/ code.
+I love your patch! Yet something to improve:
 
-thanks,
+[auto build test ERROR on clk/clk-next]
+[also build test ERROR on robh/for-next v5.16-rc4 next-20211208]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-greg k-h
+url:    https://github.com/0day-ci/linux/commits/Vinod-Koul/clk-qcom-Add-clocks-for-SM8450-SoC/20211207-194218
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
+config: riscv-randconfig-c006-20211208 (https://download.01.org/0day-ci/archive/20211208/202112082235.Hpn8OyQQ-lkp@intel.com/config)
+compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 097a1cb1d5ebb3a0ec4bcaed8ba3ff6a8e33c00a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install riscv cross compiling tool for clang build
+        # apt-get install binutils-riscv64-linux-gnu
+        # https://github.com/0day-ci/linux/commit/42c0d6d58aceb3d76e99fd9738235962ab7a8e87
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Vinod-Koul/clk-qcom-Add-clocks-for-SM8450-SoC/20211207-194218
+        git checkout 42c0d6d58aceb3d76e99fd9738235962ab7a8e87
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash drivers/clk/qcom/ drivers/iio/proximity/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> drivers/clk/qcom/gcc-sm8450.c:40:29: error: use of undeclared identifier 'CLK_ALPHA_PLL_TYPE_LUCID_EVO'; did you mean 'CLK_ALPHA_PLL_TYPE_LUCID'?
+           .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                      CLK_ALPHA_PLL_TYPE_LUCID
+   drivers/clk/qcom/clk-alpha-pll.h:17:2: note: 'CLK_ALPHA_PLL_TYPE_LUCID' declared here
+           CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+           ^
+>> drivers/clk/qcom/gcc-sm8450.c:50:12: error: use of undeclared identifier 'clk_alpha_pll_fixed_lucid_evo_ops'; did you mean 'clk_alpha_pll_fixed_lucid_5lpe_ops'?
+                           .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                   clk_alpha_pll_fixed_lucid_5lpe_ops
+   drivers/clk/qcom/clk-alpha-pll.h:149:29: note: 'clk_alpha_pll_fixed_lucid_5lpe_ops' declared here
+   extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
+                               ^
+   drivers/clk/qcom/gcc-sm8450.c:66:29: error: use of undeclared identifier 'CLK_ALPHA_PLL_TYPE_LUCID_EVO'; did you mean 'CLK_ALPHA_PLL_TYPE_LUCID'?
+           .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                      CLK_ALPHA_PLL_TYPE_LUCID
+   drivers/clk/qcom/clk-alpha-pll.h:17:2: note: 'CLK_ALPHA_PLL_TYPE_LUCID' declared here
+           CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+           ^
+>> drivers/clk/qcom/gcc-sm8450.c:73:11: error: use of undeclared identifier 'clk_alpha_pll_postdiv_lucid_evo_ops'
+                   .ops = &clk_alpha_pll_postdiv_lucid_evo_ops,
+                           ^
+   drivers/clk/qcom/gcc-sm8450.c:79:29: error: use of undeclared identifier 'CLK_ALPHA_PLL_TYPE_LUCID_EVO'; did you mean 'CLK_ALPHA_PLL_TYPE_LUCID'?
+           .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                      CLK_ALPHA_PLL_TYPE_LUCID
+   drivers/clk/qcom/clk-alpha-pll.h:17:2: note: 'CLK_ALPHA_PLL_TYPE_LUCID' declared here
+           CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+           ^
+   drivers/clk/qcom/gcc-sm8450.c:89:12: error: use of undeclared identifier 'clk_alpha_pll_fixed_lucid_evo_ops'; did you mean 'clk_alpha_pll_fixed_lucid_5lpe_ops'?
+                           .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                   clk_alpha_pll_fixed_lucid_5lpe_ops
+   drivers/clk/qcom/clk-alpha-pll.h:149:29: note: 'clk_alpha_pll_fixed_lucid_5lpe_ops' declared here
+   extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
+                               ^
+   drivers/clk/qcom/gcc-sm8450.c:96:29: error: use of undeclared identifier 'CLK_ALPHA_PLL_TYPE_LUCID_EVO'; did you mean 'CLK_ALPHA_PLL_TYPE_LUCID'?
+           .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                      CLK_ALPHA_PLL_TYPE_LUCID
+   drivers/clk/qcom/clk-alpha-pll.h:17:2: note: 'CLK_ALPHA_PLL_TYPE_LUCID' declared here
+           CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+           ^
+   drivers/clk/qcom/gcc-sm8450.c:106:12: error: use of undeclared identifier 'clk_alpha_pll_fixed_lucid_evo_ops'; did you mean 'clk_alpha_pll_fixed_lucid_5lpe_ops'?
+                           .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                   clk_alpha_pll_fixed_lucid_5lpe_ops
+   drivers/clk/qcom/clk-alpha-pll.h:149:29: note: 'clk_alpha_pll_fixed_lucid_5lpe_ops' declared here
+   extern const struct clk_ops clk_alpha_pll_fixed_lucid_5lpe_ops;
+                               ^
+   8 errors generated.
+
+
+vim +40 drivers/clk/qcom/gcc-sm8450.c
+
+    37	
+    38	static struct clk_alpha_pll gcc_gpll0 = {
+    39		.offset = 0x0,
+  > 40		.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+    41		.clkr = {
+    42			.enable_reg = 0x62018,
+    43			.enable_mask = BIT(0),
+    44			.hw.init = &(struct clk_init_data){
+    45				.name = "gcc_gpll0",
+    46				.parent_data = &(const struct clk_parent_data){
+    47					.fw_name = "bi_tcxo",
+    48				},
+    49				.num_parents = 1,
+  > 50				.ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+    51			},
+    52		},
+    53	};
+    54	
+    55	static const struct clk_div_table post_div_table_gcc_gpll0_out_even[] = {
+    56		{ 0x1, 2 },
+    57		{ }
+    58	};
+    59	
+    60	static struct clk_alpha_pll_postdiv gcc_gpll0_out_even = {
+    61		.offset = 0x0,
+    62		.post_div_shift = 10,
+    63		.post_div_table = post_div_table_gcc_gpll0_out_even,
+    64		.num_post_div = ARRAY_SIZE(post_div_table_gcc_gpll0_out_even),
+    65		.width = 4,
+    66		.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+    67		.clkr.hw.init = &(struct clk_init_data){
+    68			.name = "gcc_gpll0_out_even",
+    69			.parent_data = &(const struct clk_parent_data){
+    70				.hw = &gcc_gpll0.clkr.hw,
+    71			},
+    72			.num_parents = 1,
+  > 73			.ops = &clk_alpha_pll_postdiv_lucid_evo_ops,
+    74		},
+    75	};
+    76	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
