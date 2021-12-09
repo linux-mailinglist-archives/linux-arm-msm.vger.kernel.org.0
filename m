@@ -2,124 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7412946F58E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 22:04:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EB846F598
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 22:10:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232576AbhLIVIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 16:08:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232608AbhLIVH7 (ORCPT
+        id S232373AbhLIVNe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 16:13:34 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:32384 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230304AbhLIVNe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 16:07:59 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F703C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 13:04:25 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id bu18so14572661lfb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 13:04:25 -0800 (PST)
+        Thu, 9 Dec 2021 16:13:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lZp3hok6ihhGHif3grQz+Gnqmz/u+UpVJtw5fpnKmkg=;
-        b=GbfIL5ruUB3nEW/Q1DyRYUIShr0DN3k5n9hGWBV40VRJn+IRTs6ctzPZJtHXeoGs1p
-         dMRB4TnAwETRjizy2m39ldnU+SoQ6FeUSepHnQpVZxT0jJQ+ZCPWjC+RttIHpkMzeknz
-         SOl+kkc7BaPWICIRBjEr4wvS39z9NUGd4RZ7QxrY95APXNX9kAK87tEJUd8/1DWF8rCO
-         TzXtxWQP/4RuEIjyvX7ppMj00cI46Qrw7yPtCslgS4by88N1FAkF//ElBMbbfWfHS4BH
-         C9tZYnIiCcCN+xLL/XN5CPNTIo5U/AKVDPt1ozn2fj/ZdOaAXgEsCWA240EPSgxdmW/o
-         PEvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=lZp3hok6ihhGHif3grQz+Gnqmz/u+UpVJtw5fpnKmkg=;
-        b=zWxUK0FJ8L5+y+NF0cpTsRIvV1QwnEzoBbgKXWMuPDc4QXJdXQuuVN+B3etLWGsJbv
-         Jm1zCWr2dO/6peWHAFr4G4LgIWbxbRwYr22b1Fuu+YZx2wDY3HyZYCNsScDq3PAXQq0W
-         SOgouOSQp2MFlcPhNf/z034rZCsfuuCQVTwp165oCKRCw+yHsWoCseF52Pikn3paTJDD
-         ithhGd0saCeyIolewhsz1Q7NuB2OPvpv9zbiglff9qKgBiYQ89jbW9zcsLmUhDrtyFCq
-         2g/NECddqt846pRMkyKc6U64cgjN9hDbAYZA1UyNH8t6rPOX/EbKnmgkKtiwIC5QFNrN
-         5pjQ==
-X-Gm-Message-State: AOAM533ruaa9kpWansLZ30YA+XHeAM/yhkDlIl43VYpnMXdi68kUTN9m
-        fdx/N4nsDOIYngzYakEI4od4mA==
-X-Google-Smtp-Source: ABdhPJwDvgi99jlWiY+uJbdbh1F+ibWffgmIxwYECFrg7ndkPbcjjcobb/JswtGdFKvZQJ+2opRLOg==
-X-Received: by 2002:a05:6512:2286:: with SMTP id f6mr8378555lfu.368.1639083863351;
-        Thu, 09 Dec 2021 13:04:23 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j18sm113427lfg.60.2021.12.09.13.04.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Dec 2021 13:04:22 -0800 (PST)
-Message-ID: <a2c9efed-7fc0-ec13-c08c-314d32353c91@linaro.org>
-Date:   Fri, 10 Dec 2021 00:04:21 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1639084200; x=1670620200;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=rcug5uSlXbopzbAcjZO7NNHIVRfMktSazlLTvwyab+E=;
+  b=uuJrXjQM8a3e/hOAYZJ36TMmogAocMAJ6/ObnlZdJN4prQpIX44WRBIT
+   15VHiCysnLHqRY1ZgDBmydfEu6fQsHXTrYSfXGRq39/ROCKjg7ze829A7
+   PuKcSP1QzzmzjHUMfXlmNAVJyrQE2UUr2wfQBRa5Rdt1N/FgnbPXDfhkP
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 09 Dec 2021 13:10:00 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 13:09:59 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 9 Dec 2021 13:09:50 -0800
+Received: from [10.111.171.222] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 9 Dec 2021
+ 13:09:47 -0800
+Message-ID: <2e24295c-d595-ad65-5fa8-db27ef86a5e4@quicinc.com>
+Date:   Thu, 9 Dec 2021 13:09:45 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sdm845: park
- disp_cc_mdss_mdp_clk_src
-Content-Language: en-GB
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org>
- <20211208022210.1300773-3-dmitry.baryshkov@linaro.org>
- <YbJNp+tnD6kEQAzt@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <YbJNp+tnD6kEQAzt@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [Freedreno] [PATCH v1 1/8] drm/msm/dpu: move disable_danger out
+ of plane subdir
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>
+References: <20211201222633.2476780-1-dmitry.baryshkov@linaro.org>
+ <20211201222633.2476780-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211201222633.2476780-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2021 21:40, Bjorn Andersson wrote:
-> On Tue 07 Dec 18:22 PST 2021, Dmitry Baryshkov wrote:
-> 
->> To stop disp_cc_mdss_mdp_clk_src from getting stuck during boot if it
->> was enabled by the bootloader, part it to the TCXO clock source.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/clk/qcom/dispcc-sdm845.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
->> index 735adfefc379..f2afbba7bc72 100644
->> --- a/drivers/clk/qcom/dispcc-sdm845.c
->> +++ b/drivers/clk/qcom/dispcc-sdm845.c
->> @@ -858,6 +858,9 @@ static int disp_cc_sdm845_probe(struct platform_device *pdev)
->>   
->>   	clk_fabia_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
->>   
->> +	/* Park disp_cc_mdss_mdp_clk_src */
->> +	clk_rcg2_park_safely(regmap, 0x2088, 0);
-> 
-> Today booting the system with "clk_ignore_unused" will give you a
-> working efifb up until the point where the display driver kicks in and
-> reinitializes the hardware state - which during development might be
-> indefinite.
-> 
-> If we blindly cut the mdp_clk_src here that will no longer be possible.
-
-Yep. There is an opposite issue. I was getting the rcg2 stuck messages 
-_before_ the clk_disable_unused kicks in. So we definitely need 
-something more complex than both our proposals. Not to mention that 
-Steev tested that this does not fix the issue on C630.
-
-> 
-> Regards,
-> Bjorn
-> 
->> +
->>   	/* Enable hardware clock gating for DSI and MDP clocks */
->>   	regmap_update_bits(regmap, 0x8000, 0x7f0, 0x7f0);
->>   
->> -- 
->> 2.33.0
->>
 
 
--- 
-With best wishes
-Dmitry
+On 12/1/2021 2:26 PM, Dmitry Baryshkov wrote:
+> The disable_danger debugfs file is not related to a single plane.
+> Instead it is used by all registered planes. Move it from plane subtree
+> to the global subtree next to danger_status and safe_status files,
+> so that the new file supplements them.
+> 
+the danger_safe itself is a per-plane feature as each SSPP can be 
+controlled individually.
+
+In todays code, yes we do it for all the active planes together.
+Since this is the same behavior
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   | 70 +++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 74 +----------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  6 ++
+>   3 files changed, 77 insertions(+), 73 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 6c457c419412..259d438bc6e8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -101,6 +101,73 @@ static int dpu_debugfs_safe_stats_show(struct seq_file *s, void *v)
+>   }
+>   DEFINE_SHOW_ATTRIBUTE(dpu_debugfs_safe_stats);
+>   
+> +static ssize_t _dpu_plane_danger_read(struct file *file,
+> +			char __user *buff, size_t count, loff_t *ppos)
+> +{
+> +	struct dpu_kms *kms = file->private_data;
+> +	int len;
+> +	char buf[40];
+> +
+> +	len = scnprintf(buf, sizeof(buf), "%d\n", !kms->has_danger_ctrl);
+> +
+> +	return simple_read_from_buffer(buff, count, ppos, buf, len);
+> +}
+> +
+> +static void _dpu_plane_set_danger_state(struct dpu_kms *kms, bool enable)
+> +{
+> +	struct drm_plane *plane;
+> +
+> +	drm_for_each_plane(plane, kms->dev) {
+> +		if (plane->fb && plane->state) {
+> +			dpu_plane_danger_signal_ctrl(plane, enable);
+> +			DPU_DEBUG("plane:%d img:%dx%d ",
+> +				plane->base.id, plane->fb->width,
+> +				plane->fb->height);
+> +			DPU_DEBUG("src[%d,%d,%d,%d] dst[%d,%d,%d,%d]\n",
+> +				plane->state->src_x >> 16,
+> +				plane->state->src_y >> 16,
+> +				plane->state->src_w >> 16,
+> +				plane->state->src_h >> 16,
+> +				plane->state->crtc_x, plane->state->crtc_y,
+> +				plane->state->crtc_w, plane->state->crtc_h);
+> +		} else {
+> +			DPU_DEBUG("Inactive plane:%d\n", plane->base.id);
+> +		}
+> +	}
+> +}
+> +
+> +static ssize_t _dpu_plane_danger_write(struct file *file,
+> +		    const char __user *user_buf, size_t count, loff_t *ppos)
+> +{
+> +	struct dpu_kms *kms = file->private_data;
+> +	int disable_panic;
+> +	int ret;
+> +
+> +	ret = kstrtouint_from_user(user_buf, count, 0, &disable_panic);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (disable_panic) {
+> +		/* Disable panic signal for all active pipes */
+> +		DPU_DEBUG("Disabling danger:\n");
+> +		_dpu_plane_set_danger_state(kms, false);
+> +		kms->has_danger_ctrl = false;
+> +	} else {
+> +		/* Enable panic signal for all active pipes */
+> +		DPU_DEBUG("Enabling danger:\n");
+> +		kms->has_danger_ctrl = true;
+> +		_dpu_plane_set_danger_state(kms, true);
+> +	}
+> +
+> +	return count;
+> +}
+> +
+> +static const struct file_operations dpu_plane_danger_enable = {
+> +	.open = simple_open,
+> +	.read = _dpu_plane_danger_read,
+> +	.write = _dpu_plane_danger_write,
+> +};
+> +
+>   static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+>   		struct dentry *parent)
+>   {
+> @@ -110,6 +177,9 @@ static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+>   			dpu_kms, &dpu_debugfs_danger_stats_fops);
+>   	debugfs_create_file("safe_status", 0600, entry,
+>   			dpu_kms, &dpu_debugfs_safe_stats_fops);
+> +	debugfs_create_file("disable_danger", 0600, entry,
+> +			dpu_kms, &dpu_plane_danger_enable);
+> +
+>   }
+>   
+>   static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index ca190d92f0d5..6ea4db061c9f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1350,7 +1350,7 @@ static void dpu_plane_reset(struct drm_plane *plane)
+>   }
+>   
+>   #ifdef CONFIG_DEBUG_FS
+> -static void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+> +void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+>   {
+>   	struct dpu_plane *pdpu = to_dpu_plane(plane);
+>   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> @@ -1363,73 +1363,6 @@ static void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
+>   	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+>   }
+>   
+> -static ssize_t _dpu_plane_danger_read(struct file *file,
+> -			char __user *buff, size_t count, loff_t *ppos)
+> -{
+> -	struct dpu_kms *kms = file->private_data;
+> -	int len;
+> -	char buf[40];
+> -
+> -	len = scnprintf(buf, sizeof(buf), "%d\n", !kms->has_danger_ctrl);
+> -
+> -	return simple_read_from_buffer(buff, count, ppos, buf, len);
+> -}
+> -
+> -static void _dpu_plane_set_danger_state(struct dpu_kms *kms, bool enable)
+> -{
+> -	struct drm_plane *plane;
+> -
+> -	drm_for_each_plane(plane, kms->dev) {
+> -		if (plane->fb && plane->state) {
+> -			dpu_plane_danger_signal_ctrl(plane, enable);
+> -			DPU_DEBUG("plane:%d img:%dx%d ",
+> -				plane->base.id, plane->fb->width,
+> -				plane->fb->height);
+> -			DPU_DEBUG("src[%d,%d,%d,%d] dst[%d,%d,%d,%d]\n",
+> -				plane->state->src_x >> 16,
+> -				plane->state->src_y >> 16,
+> -				plane->state->src_w >> 16,
+> -				plane->state->src_h >> 16,
+> -				plane->state->crtc_x, plane->state->crtc_y,
+> -				plane->state->crtc_w, plane->state->crtc_h);
+> -		} else {
+> -			DPU_DEBUG("Inactive plane:%d\n", plane->base.id);
+> -		}
+> -	}
+> -}
+> -
+> -static ssize_t _dpu_plane_danger_write(struct file *file,
+> -		    const char __user *user_buf, size_t count, loff_t *ppos)
+> -{
+> -	struct dpu_kms *kms = file->private_data;
+> -	int disable_panic;
+> -	int ret;
+> -
+> -	ret = kstrtouint_from_user(user_buf, count, 0, &disable_panic);
+> -	if (ret)
+> -		return ret;
+> -
+> -	if (disable_panic) {
+> -		/* Disable panic signal for all active pipes */
+> -		DPU_DEBUG("Disabling danger:\n");
+> -		_dpu_plane_set_danger_state(kms, false);
+> -		kms->has_danger_ctrl = false;
+> -	} else {
+> -		/* Enable panic signal for all active pipes */
+> -		DPU_DEBUG("Enabling danger:\n");
+> -		kms->has_danger_ctrl = true;
+> -		_dpu_plane_set_danger_state(kms, true);
+> -	}
+> -
+> -	return count;
+> -}
+> -
+> -static const struct file_operations dpu_plane_danger_enable = {
+> -	.open = simple_open,
+> -	.read = _dpu_plane_danger_read,
+> -	.write = _dpu_plane_danger_write,
+> -};
+> -
+>   static int _dpu_plane_init_debugfs(struct drm_plane *plane)
+>   {
+>   	struct dpu_plane *pdpu = to_dpu_plane(plane);
+> @@ -1498,11 +1431,6 @@ static int _dpu_plane_init_debugfs(struct drm_plane *plane)
+>   			pdpu->debugfs_root,
+>   			(u32 *) &sblk->danger_vblank);
+>   
+> -	debugfs_create_file("disable_danger",
+> -			0600,
+> -			pdpu->debugfs_root,
+> -			kms, &dpu_plane_danger_enable);
+> -
+>   	return 0;
+>   }
+>   #else
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index 52792526e904..7667b1f81bd4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -132,4 +132,10 @@ void dpu_plane_clear_multirect(const struct drm_plane_state *drm_state);
+>   int dpu_plane_color_fill(struct drm_plane *plane,
+>   		uint32_t color, uint32_t alpha);
+>   
+> +#ifdef CONFIG_DEBUG_FS
+> +void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable);
+> +#else
+> +static inline void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable) {}
+> +#endif
+> +
+>   #endif /* _DPU_PLANE_H_ */
+> 
