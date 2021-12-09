@@ -2,96 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D9AC46EC4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:53:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53B7A46EC61
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:59:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236451AbhLIP5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 10:57:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54188 "EHLO
+        id S240688AbhLIQCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 11:02:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240275AbhLIP5K (ORCPT
+        with ESMTP id S240687AbhLIQCd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 10:57:10 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFC5C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:53:36 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id v15-20020a9d604f000000b0056cdb373b82so6611901otj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 07:53:36 -0800 (PST)
+        Thu, 9 Dec 2021 11:02:33 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371F0C061746
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:59:00 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id n66so9235640oia.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 07:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=teCAGr085bdZ4lPWE27L7iqOE1BiGOFh69OcRYHaJr8=;
-        b=pGyjg0/+xZVng2cVQXWWsKUc88C6swklcuvBgvdA111gyYqgJNG5z2ptXZwADZsFLr
-         N3BYsYYT9VmRYqZox6QoxvtnjB7Ya+a6r2CwuqnTlPuWqv/AQs1i/mWPPyhBmWziItVN
-         +yi7NtPOBOPgzeAhNm8qDvmj/VIBhH8VXb/rgaGJeFfInDzuwgpSl1gYBpsDnqYXUey4
-         gQS2+GJoko5doX4eCIeDwnfVdBwDLtlzBdwegQ5sQu6viS/EpuTiyR4+42Aq2BxQ3DxG
-         +aoqXQ+rPMNs7c2yUjbaNRY9t+jTjVpELEyWL5pJrtxwGFpBWcaYic1yBGLrLHZHw/70
-         kp4g==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=WEBXCg63/1ndpAn4Hf4CWTdEmyqEB2Cq5tKcfasSKaM=;
+        b=MTMyKanHvXgcpD5Y4aoLcpiV9BABi6Fv9K3SZSoi81WY3g4hxC5xr5SD/DIRE68C9g
+         a6yR80YU3CaktwS99Yxx74NFE+PFP/ItG9o9HXMSVbSxqkxy1Dlw5bTyziPsh8t8FFa8
+         ksYoetY4N7bxfS81/IKH6BqFarz7fiMqUmagKWw+0D+VBm5x1x2NT3tnGmFdqyGONXLW
+         8AHFZdDWbjGR4Egw5gju/fxBnjqCb0gZMj4UolHhoMp0rTqU8h/RZWZ1amXlZu9Bp43S
+         UZo5wFbo6vEUkrXDRqQ/SOvHkKrYClGmOJ1J8iodXEklJVLd5Et0P9H82YoyfptiHMNV
+         KQBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=teCAGr085bdZ4lPWE27L7iqOE1BiGOFh69OcRYHaJr8=;
-        b=c2wVMpjIjvdlxOEacorCaBRd7L0wcrL8fs8WDbSfVncA9l2kwPyCYaNCtkbBitlZuy
-         bN12A1Ev9OVx5VsFLGaRywWARRwZM2mdyL236Jwo439lJNJhdjog4PhezLVUYNpuIaWz
-         qPa13Q+9YGGZ2KXTbcgVLWOJWfVvo5Bua7LxORF3Z90FBhTEcLYwP3DXYa8kveROg8aS
-         UsxgbyNz97sPCkeTOLdDl11rqFHTfGbgosMQEzOPr6jslNduZ9qUtD2ABwzhKHkIH32k
-         FKTDFaV33MZpK80fHruF9+jCr5QIlk0wbBvKuLNjMmb8YS6/RW1ZJZw5EfSnL7XuOLqF
-         0G7g==
-X-Gm-Message-State: AOAM5305DBJP3UXAZvUn+0zkcsPl6dIZP2xauVJMN6Vj1ZprlyOTZAm8
-        PlV2oI7hxlfWsQfvLNzN4HKBEg==
-X-Google-Smtp-Source: ABdhPJwYlieaUMEQSN7A+roUw7LnHpjqAoycTJXj2RAf9b0rCTv3PWHP0FnyuVcmdtKQYTXjKPBDVw==
-X-Received: by 2002:a9d:17cc:: with SMTP id j70mr5960254otj.313.1639065215683;
-        Thu, 09 Dec 2021 07:53:35 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x16sm43682ott.8.2021.12.09.07.53.34
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=WEBXCg63/1ndpAn4Hf4CWTdEmyqEB2Cq5tKcfasSKaM=;
+        b=lP42s+EEVG2UXaYXEAvgAo52s4Ie3AoscDX51FUZvxFPlxgPSx5Q6mw4yTMNN6UQxw
+         AyVE1QGdNTGOZqEEYPIAhcQSmIGpdL1W9FoOVeLg3/ZFsyDny50kajGyV1TaX7RqUB4S
+         /rfY5gOoZIWRu14qkTH5RHiwJh1Qqg4tkdGJP5R0IFoGeS8eKK6h3u78CGQ3Qodc3g0N
+         b0Fjbxz2c6x3tGCkXj4mkaZAy8zr4NR1RgVeeEF5KNPFv4t6tgEGtN9pJoGotsEW2EIk
+         TG6Avgshh2kx60U5yqOaVqXhWqRdZzbdhA7Io5j4c8TBZj/DvTGDk6BRMwkmZ8oOkVYr
+         VglA==
+X-Gm-Message-State: AOAM530k8uj9dY/HtsCZAChn+LvlEMBLVS8HHTUcooXvLFONNFvIl5VX
+        xbR+DJfeF1cjW6iDVNdez96sqw==
+X-Google-Smtp-Source: ABdhPJzGy18u+6jGOo7I/JChqTU/nV/2Mtb8tEVBIKC9A/gytWXK4d97gYg2XHqPsCXWke/d2zZQ4Q==
+X-Received: by 2002:a05:6808:1210:: with SMTP id a16mr6470172oil.161.1639065539512;
+        Thu, 09 Dec 2021 07:58:59 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a17sm55207oiw.43.2021.12.09.07.58.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 07:53:35 -0800 (PST)
-Date:   Thu, 9 Dec 2021 09:53:32 -0600
+        Thu, 09 Dec 2021 07:58:59 -0800 (PST)
+Date:   Thu, 9 Dec 2021 08:00:22 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rajendra Nayak <quic_rjendra@quicinc.com>
 Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, swboyd@chromium.org, mka@chromium.org
-Subject: Re: [PATCH v3 0/4] soc: qcom: rpmhpd: Cleanups and fixups for
- sc7280/sm8450
-Message-ID: <YbImfOvIpO4ujxTx@builder.lan>
-References: <1639063917-9011-1-git-send-email-quic_rjendra@quicinc.com>
+Subject: Re: [PATCH v2 2/3] soc: qcom: rpmhpd: Remove mx/cx relationship on
+ sc7280
+Message-ID: <YbIoFjh9QbdsPnQh@ripper>
+References: <1638871712-18636-1-git-send-email-quic_rjendra@quicinc.com>
+ <1638871712-18636-3-git-send-email-quic_rjendra@quicinc.com>
+ <YbEYyGHqaHGeRXsV@builder.lan>
+ <7e9f6cbe-17c9-53ff-95a8-2f2bbdeb1d23@quicinc.com>
+ <7b8f359f-de8d-4ace-d28d-8242683e1f8c@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1639063917-9011-1-git-send-email-quic_rjendra@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b8f359f-de8d-4ace-d28d-8242683e1f8c@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Dec 09:31 CST 2021, Rajendra Nayak wrote:
+On Thu 09 Dec 07:37 PST 2021, Rajendra Nayak wrote:
 
-> v3:
-> * used the _w_<parent-name>_parent suffix instead of _no_parent
-> * Added a minor fix for sm8450 while rebasing 
 > 
-> v2:
-> * Fixed the wrong assumption in v1 that only sdm845 needed mx to be
-> parent of cx, turned out all existing upstream SoCs need it except sc7280
-> * Added another cleanup patch to sort power-domain defines and lists in
-> alphabetical order as suggested by Matthias
+> On 12/9/2021 12:29 PM, Rajendra Nayak wrote:
+> > 
+> > On 12/9/2021 2:12 AM, Bjorn Andersson wrote:
+> > > On Tue 07 Dec 04:08 CST 2021, Rajendra Nayak wrote:
+> > > 
+> > > > While the requirement to specify the active + sleep and active-only MX
+> > > > power-domains as the parents of the corresponding CX power domains is
+> > > > applicable for most SoCs, we have some like the sc7280 where this
+> > > > dependency is not applicable.
+> > > > Define new rpmhpd structs for cx and cx_ao without the mx as
+> > > > parent and use them for sc7280.
+> > > > 
+> > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> > > > ---
+> > > >   drivers/soc/qcom/rpmhpd.c | 18 ++++++++++++++++--
+> > > >   1 file changed, 16 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+> > > > index c71481d..4599efe 100644
+> > > > --- a/drivers/soc/qcom/rpmhpd.c
+> > > > +++ b/drivers/soc/qcom/rpmhpd.c
+> > > > @@ -120,6 +120,20 @@ static struct rpmhpd cx_ao = {
+> > > >       .res_name = "cx.lvl",
+> > > >   };
+> > > > +static struct rpmhpd cx_ao_no_parent;
+> > > > +static struct rpmhpd cx_no_parent = {
+> > > 
+> > > There are multiple variations of how each of these can be parented, but
+> > > only one way they can be without a parent. So how about we turn this the
+> > > other way around?
+> > > 
+> > > I.e. let's name this one "cx" and the existing one "cx_w_mx_parent".
+> > > 
+> > > 
+> > > This will be particularly useful when you look at mmcx, which on
+> > > 8150/8180 has mx as parent and on 8450 has cx as parent.
 > 
-> Mostly cleanups, with a fixup to remove the parent/child relationship
-> across mx/cx for sc7280 SoC, and a fixup to add missing .peer for sm8450
+> I noticed mmcx on 8150/8180 does not have mx as parent, nevertheless
+> I went ahead and moved to the _w_<parent-name>_parent suffix because
+> it made sense if we did run into a situation like this in the future.
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+You're correct, the 8150/8180 mmcx are wrong, let's fix that once your
+patches has settled (probably later today).
 
-> Rajendra Nayak (4):
->   soc: qcom: rpmhpd: sm8450: Add the missing .peer for sm8450_cx_ao
->   soc: qcom: rpmhpd: Rename rpmhpd struct names
->   soc: qcom: rpmhpd: Remove mx/cx relationship on sc7280
->   soc: qcom: rpmhpd: Sort power-domain definitions and lists
-> 
->  drivers/soc/qcom/rpmhpd.c | 358 +++++++++++++++++++++++-----------------------
->  1 file changed, 181 insertions(+), 177 deletions(-)
-> 
-> -- 
-> 2.7.4
-> 
+Thanks for cleaning up the driver!
+
+Regards,
+Bjorn
+
+> > > 
+> > > 
+> > > PS. Unfortunately I had merged 8450 since you wrote this series, I tried
+> > > to just fix it up as I applied your patch, but noticed 8450_cx and
+> > > 8450_mmcx and wanted to get your opinion on this first.
+> > 
+> > I agree that sounds like a reasonable thing to do, I hadn't looked at 8450
+> > so did not notice it, I will rebase my patches on top and repost.
+> > 
+> > > 
+> > > Regards,
+> > > Bjorn
+> > > 
+> > > > +    .pd = { .name = "cx", },
+> > > > +    .peer = &cx_ao_no_parent,
+> > > > +    .res_name = "cx.lvl",
+> > > > +};
+> > > > +
+> > > > +static struct rpmhpd cx_ao_no_parent = {
+> > > > +    .pd = { .name = "cx_ao", },
+> > > > +    .active_only = true,
+> > > > +    .peer = &cx_no_parent,
+> > > > +    .res_name = "cx.lvl",
+> > > > +};
+> > > > +
+> > > >   static struct rpmhpd mmcx_ao;
+> > > >   static struct rpmhpd mmcx = {
+> > > >       .pd = { .name = "mmcx", },
+> > > > @@ -273,8 +287,8 @@ static const struct rpmhpd_desc sc7180_desc = {
+> > > >   /* SC7280 RPMH powerdomains */
+> > > >   static struct rpmhpd *sc7280_rpmhpds[] = {
+> > > > -    [SC7280_CX] = &cx,
+> > > > -    [SC7280_CX_AO] = &cx_ao,
+> > > > +    [SC7280_CX] = &cx_no_parent,
+> > > > +    [SC7280_CX_AO] = &cx_ao_no_parent,
+> > > >       [SC7280_EBI] = &ebi,
+> > > >       [SC7280_GFX] = &gfx,
+> > > >       [SC7280_MX] = &mx,
+> > > > -- 
+> > > > 2.7.4
+> > > > 
