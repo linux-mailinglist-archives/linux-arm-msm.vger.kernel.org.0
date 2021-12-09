@@ -2,113 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D46846E304
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 08:13:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BFC946E322
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 08:23:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232171AbhLIHRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 02:17:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45004 "EHLO
+        id S233731AbhLIH0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 02:26:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232101AbhLIHR3 (ORCPT
+        with ESMTP id S233730AbhLIH0g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 02:17:29 -0500
+        Thu, 9 Dec 2021 02:26:36 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6BEC061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 23:13:56 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068A3C0617A1;
+        Wed,  8 Dec 2021 23:23:04 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4F4EEB823BF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:13:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29082C341C3;
-        Thu,  9 Dec 2021 07:13:52 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C43C2B823C2;
+        Thu,  9 Dec 2021 07:23:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C254C341C8;
+        Thu,  9 Dec 2021 07:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639034034;
-        bh=KVyJqYLC0Jq4xEDs+GKSjnFSo1blIp+bjpWv6b4k1Bs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VwnwMuYyHE0RhpXvpGfmBJkjIvLZrg/O8eEA2CI5wFwCqtT2UqjxYjyFErUuEf7xK
-         p6V35GB9gTlF1Pm2N2U27C6Lzfqc4zzReSpKVc6OgdPuc99/t++qSc38s0D7cVOiXX
-         CS9cZ4qTI9NkHEL4a0vVQcDKA8zEd8ZsK/CqOSQhl3igsijWPgO26FQHANuuXbhxhj
-         2N4dR+e25Yn6nQmqb7VCkQJ9R4fDsPsTEOc52YvL+/N/uJwx3xSTNGcEXBaLZbbIm8
-         +xfVckGLmS01m00k39zQ5520ibtllOOqwmMsHMtBIlrv9lg5arwWAzp6v+ENO8uafp
-         XrVI9rorDDM/A==
-Date:   Thu, 9 Dec 2021 12:43:50 +0530
+        s=k20201202; t=1639034581;
+        bh=rSW675GEEHzgpyGcUELORk6fFIYbBlwxF84ODxVvsZY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=rcXf27U3U4J8SlR1UurnnqzenR8fOOyPTVoFFK0swifEF1THOqt3QJyy+UeOheaaO
+         HtH4fPQ628DAm+sXT8pSNI6/hsqp6ED6eYvLeHGNTEdd1WF7m4cNkoc/gR+HEVXr62
+         Oq88dUmz1fP1/3K3lwsHHdHS5P7L60jW5i1Qgu0N/w4xCuNUmpAJcioCocsDrg4wuC
+         4x2rG8LDBtkM8DoahG8xGQqLPkqNjUmvceoACfenFfDlOqHUmqOJCICim2E1YzFAC1
+         AdQQ/U/mcQdHfWigjHecV8Rm4oah5a0FCYt2WaF6YBE795nuKuKs6PsKYD3yhlCSG6
+         tr2NfItXqXyvg==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     Georgi Djakov <djakov@kernel.org>, Rob Herring <robh+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm8450: add i2c13 and i2c14
- device nodes
-Message-ID: <YbGsrqxC6cSGqjZ+@matsya>
-References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-16-vkoul@kernel.org>
- <ee38afe9-0e9e-cae1-c4c5-70db9f166a38@somainline.org>
+        Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
+        Odelu Kukatla <okukatla@codeaurora.org>, viveka@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/2] Add interconnect support for SM8450
+Date:   Thu,  9 Dec 2021 12:52:49 +0530
+Message-Id: <20211209072251.185634-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ee38afe9-0e9e-cae1-c4c5-70db9f166a38@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-12-21, 16:30, Konrad Dybcio wrote:
-> 
-> On 01.12.2021 08:29, Vinod Koul wrote:
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Add device tree nodes for two i2c blocks: i2c13 and i2c14.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 64 ++++++++++++++++++++++++++++
-> >  1 file changed, 64 insertions(+)
-> >
-> [...]
-> 
-> 
-> >  		config_noc: interconnect@1500000 {
-> >  			compatible = "qcom,sm8450-config-noc";
-> >  			reg = <0 0x01500000 0 0x1c000>;
-> > @@ -687,6 +725,32 @@ tlmm: pinctrl@f100000 {
-> >  			gpio-ranges = <&tlmm 0 0 211>;
-> >  			wakeup-parent = <&pdc>;
-> >  
-> > +			qup_i2c13_default_state: qup-i2c13-default-state {
-> > +				mux {
-> > +					pins = "gpio48", "gpio49";
-> > +					function = "qup13";
-> > +				};
-> > +
-> > +				config {
-> > +					pins = "gpio48", "gpio49";
-> > +					drive-strength = <2>;
-> > +					bias-pull-up;
-> > +				};
-> > +			};
-> > +
-> 
-> This should be collapsed into:
-> 
-> 
-> qup_i2c13_default_state: qup-i2c13-default-state {
-> 
->         pins = "..."
-> 
->         function = "..."
-> 
->         drive-strength = <2>
-> 
->         bias-pull-up;
-> 
-> };
-> 
-> 
-> And the same goes for the rest of the pins.
+This add device tree binding and driver for interconnect providers found in
+SM8450 SoC.
 
-Yeah that looks neater and done that now
+Changes in v2:
+ - remove sync state call
+ - Make dt binding dual license
+ - Fix the indexes to start from 0
+
+Vinod Koul (2):
+  dt-bindings: interconnect: Add Qualcomm SM8450 DT bindings
+  interconnect: qcom: Add SM8450 interconnect provider driver
+
+ .../bindings/interconnect/qcom,rpmh.yaml      |   11 +
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/sm8450.c            | 1987 +++++++++++++++++
+ drivers/interconnect/qcom/sm8450.h            |  169 ++
+ .../dt-bindings/interconnect/qcom,sm8450.h    |  171 ++
+ 6 files changed, 2349 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/sm8450.c
+ create mode 100644 drivers/interconnect/qcom/sm8450.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,sm8450.h
 
 -- 
-~Vinod
+2.31.1
+
