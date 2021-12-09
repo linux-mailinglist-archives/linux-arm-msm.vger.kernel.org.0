@@ -2,107 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0D0346F349
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 19:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8016C46F3E4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 20:26:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229504AbhLISmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 13:42:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38906 "EHLO
+        id S229379AbhLIT3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 14:29:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbhLISmv (ORCPT
+        with ESMTP id S229487AbhLIT3e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 13:42:51 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21306C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 10:39:18 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id h19-20020a9d3e53000000b0056547b797b2so7147287otg.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 10:39:18 -0800 (PST)
+        Thu, 9 Dec 2021 14:29:34 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709E4C061746;
+        Thu,  9 Dec 2021 11:26:00 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id 133so5944142pgc.12;
+        Thu, 09 Dec 2021 11:26:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3Sn2+7MDJO3cjYGn8rzHVVGgbKOroIrbj25OALkURQ0=;
-        b=RektemzBcVJ+OueCG11Q6mbEt6SCJb7yk7K91WMvCsuwEMclDw/TOu/ALHkvDw3hNN
-         kxTVvwm1IQoOxovWXmYhvy4pdIsCw4OOQyALJjbinC2YiwccJ4flSBKzY+hiiebrv+5H
-         enlqMV75rl46RgdtkHjz9cCbI7PZDE0nUtbu4le7R6JZa3rJVB3Yr10o+1WhjGxGrL/e
-         ZMMiemBidsR6lqLO1TppJO6fyMBpzhwTgM5oc4BalhZQbYgBNnCk9CkdQ9z0KcE5xr4b
-         7eHJGDbb/jNVuZpoHOpZRUwSXYW9S5O/IxnL1EnKE9/k6QljKqZfXb59IxqsFLFgxD8w
-         y/fg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AkH8G74nuWliFsm56RBshmsnPHnGtaW2iQYxsG6KvQw=;
+        b=Q4FTRkOslqkiYzs3+L+pSSEDFqt2hwbAbCHgGrusaS25Te/F1xLyzKgOHvu5ZGUFtl
+         D+VxfsGK/ZOTstV5sEeTmwNjppmlfAbdvX+BrDm3GqG8OK0vAdVTgt2KM/73Lilk3hBb
+         MaHdU8aTPgunUuzcdCFWU96rZP6ujD4iORQZidXzkZ6L3thNwT9MDq53i2M9QGMAWd5y
+         SdTHPge5DyFSSdJXFZx/UY6fX29pgV1Ar4FlDQEtwPdxgexgBbN5bCOqB7Yj9PUvJK4Z
+         UD666kuGXIh8aM2aTO88ErtQ+p2v4pFt03NMJxANn5VWD7kntlrD+hpi7fDw7fXlkTSL
+         lDtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3Sn2+7MDJO3cjYGn8rzHVVGgbKOroIrbj25OALkURQ0=;
-        b=ReTLSKx88OrUxnpWtknHfkFIIcJYHJcOUUf9UZqyO4zrNj6NTpcUCR55GoQz3rf6a3
-         AhLOlDrE/pco6ZSI95qNlqJYNa7e0T+5euFv2zSMlODrpZE/x38BBVAtFG7Y0WpAhVCK
-         5W7CvEIWDmW8veO3dwlW/9iUhEg5q3PjhmClOBXXuC6cEWs0MvefRiab4oTUI10a3ISC
-         t+OFsUhb/fyIigS1jeoFxp9sg/EZpu6eU98jLUN/JZy+Ho3DQ+2n3rnIxF9YiS2MvAGQ
-         U0kOOPDkaymcA1quCB1bCEWU0FMSsd8NkrrrMA1XDFmGso5kXQIeR3n6OwVZrnh/Io0y
-         mgwg==
-X-Gm-Message-State: AOAM530/M1bv1w2TmCFV1Jb1D6oCIpb9uL4AwXstV/PKfYmtOgpkCGHD
-        /9DS24o113hHorqHzZSJw1RDHw==
-X-Google-Smtp-Source: ABdhPJxz1XTm0VpC6tKn9XVTH26bVDpJeZGMyEZWt8PIxc/YVR1WqWX9PkiTbHf0xBp/2srjqBx/AQ==
-X-Received: by 2002:a05:6830:2806:: with SMTP id w6mr6980232otu.382.1639075157381;
-        Thu, 09 Dec 2021 10:39:17 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bg38sm143272oib.40.2021.12.09.10.39.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AkH8G74nuWliFsm56RBshmsnPHnGtaW2iQYxsG6KvQw=;
+        b=UMG/GI+brPFN4LxcQr7GtRI9pWFG6DXEO+oPU7Lzc6bq5DcqrHlEjNamK0Sry63RQc
+         IyCa6VMtRnYuQselyd2pAsJWwZA2Wf35Wn96hl2qXnMoh2pLuYoFqBl5eBIAx/4NMh/m
+         mce/Slc+7I9n8Gt4jTkNDEniSwE7MDBYc5vWevdf3VxliVAm8N16orgS5RW5r6cwCop9
+         PyNmEB2cq9iPhoUp7iXoQyEPyetXBVSViVEiV+UcZP7iI8jb1jVSk+w5Th7Z+pukkup3
+         rN9yBNlZ0ZV2zAW/CQfnKqiFSQQE7p8prAYOWNnVCLwKSBJuRGfnRUGiZKlgzaUDEre0
+         B2QA==
+X-Gm-Message-State: AOAM533PIooyOswHXLLUsfYKBSl8Q7siEqEe8VYOSLsQPhl7/arBDOFg
+        ixqTts9B/Co4IB/IAsrDZ08=
+X-Google-Smtp-Source: ABdhPJydqKflGOi1hge6N+O2b3mSxiXuASG9UA2XUCgDxjYLtu6lIBMKfmCnDSSHCzjQQZ+uk1Qx9A==
+X-Received: by 2002:a63:4f42:: with SMTP id p2mr36200370pgl.381.1639077959882;
+        Thu, 09 Dec 2021 11:25:59 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id pc1sm11107656pjb.5.2021.12.09.11.25.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 10:39:16 -0800 (PST)
-Date:   Thu, 9 Dec 2021 10:40:39 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sdm845: park
- disp_cc_mdss_mdp_clk_src
-Message-ID: <YbJNp+tnD6kEQAzt@ripper>
-References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org>
- <20211208022210.1300773-3-dmitry.baryshkov@linaro.org>
+        Thu, 09 Dec 2021 11:25:58 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Skip crashdumper state if GPU needs_hw_init
+Date:   Thu,  9 Dec 2021 11:31:13 -0800
+Message-Id: <20211209193118.1163248-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211208022210.1300773-3-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 07 Dec 18:22 PST 2021, Dmitry Baryshkov wrote:
+From: Rob Clark <robdclark@chromium.org>
 
-> To stop disp_cc_mdss_mdp_clk_src from getting stuck during boot if it
-> was enabled by the bootloader, part it to the TCXO clock source.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/dispcc-sdm845.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
-> index 735adfefc379..f2afbba7bc72 100644
-> --- a/drivers/clk/qcom/dispcc-sdm845.c
-> +++ b/drivers/clk/qcom/dispcc-sdm845.c
-> @@ -858,6 +858,9 @@ static int disp_cc_sdm845_probe(struct platform_device *pdev)
->  
->  	clk_fabia_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
->  
-> +	/* Park disp_cc_mdss_mdp_clk_src */
-> +	clk_rcg2_park_safely(regmap, 0x2088, 0);
+I am seeing some crash logs which imply that we are trying to use
+crashdumper hw to read back GPU state when the GPU isn't initialized.
+This doesn't go well (for example, GPU could be in 32b address mode
+and ignoring the upper bits of buffer that it is trying to dump state
+to).
 
-Today booting the system with "clk_ignore_unused" will give you a
-working efifb up until the point where the display driver kicks in and
-reinitializes the hardware state - which during development might be
-indefinite.
+I'm not *quite* sure how we get into this state in the first place,
+but lets not make a bad situation worse by triggering iova fault
+crashes.
 
-If we blindly cut the mdp_clk_src here that will no longer be possible.
+While we're at it, also add the information about whether the GPU is
+initialized to the devcore dump to make this easier to see in the
+logs (which makes the WARN_ON() redundant and even harmful because
+it fills up the small bit of dmesg we get with the crash report).
 
-Regards,
-Bjorn
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 9 ++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     | 1 -
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-> +
->  	/* Enable hardware clock gating for DSI and MDP clocks */
->  	regmap_update_bits(regmap, 0x8000, 0x7f0, 0x7f0);
->  
-> -- 
-> 2.33.0
-> 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index bdd0059a81ff..55f443328d8e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -49,6 +49,8 @@ struct a6xx_gpu_state {
+ 	s32 hfi_queue_history[2][HFI_HISTORY_SZ];
+ 
+ 	struct list_head objs;
++
++	bool gpu_initialized;
+ };
+ 
+ static inline int CRASHDUMP_WRITE(u64 *in, u32 reg, u32 val)
+@@ -1001,7 +1003,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+ 	 * write out GPU state, so we need to skip this when the SMMU is
+ 	 * stalled in response to an iova fault
+ 	 */
+-	if (!stalled && !a6xx_crashdumper_init(gpu, &_dumper)) {
++	if (!stalled && !gpu->needs_hw_init &&
++	    !a6xx_crashdumper_init(gpu, &_dumper)) {
+ 		dumper = &_dumper;
+ 	}
+ 
+@@ -1018,6 +1021,8 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
+ 	if (snapshot_debugbus)
+ 		a6xx_get_debugbus(gpu, a6xx_state);
+ 
++	a6xx_state->gpu_initialized = !gpu->needs_hw_init;
++
+ 	return  &a6xx_state->base;
+ }
+ 
+@@ -1246,6 +1251,8 @@ void a6xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 	if (IS_ERR_OR_NULL(state))
+ 		return;
+ 
++	drm_printf(p, "gpu-initialized: %d\n", a6xx_state->gpu_initialized);
++
+ 	adreno_show(gpu, state, p);
+ 
+ 	drm_puts(p, "gmu-log:\n");
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 47cb40bdbd43..f33cfa4ef1c8 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -504,7 +504,6 @@ int adreno_gpu_state_get(struct msm_gpu *gpu, struct msm_gpu_state *state)
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	int i, count = 0;
+ 
+-	WARN_ON(gpu->needs_hw_init);
+ 	WARN_ON(!mutex_is_locked(&gpu->lock));
+ 
+ 	kref_init(&state->ref);
+-- 
+2.33.1
+
