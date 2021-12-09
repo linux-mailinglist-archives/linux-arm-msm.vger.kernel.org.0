@@ -2,229 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C333746F0B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 18:07:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4CF246F1A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 18:24:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242248AbhLIRK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 12:10:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242299AbhLIRKZ (ORCPT
+        id S229501AbhLIR2Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 12:28:25 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:27697 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242818AbhLIR2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 12:10:25 -0500
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3135FC061746
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 09:06:52 -0800 (PST)
-Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 7FBD3501;
-        Thu,  9 Dec 2021 18:06:50 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1639069610;
-        bh=yNwFtN4UZqrX1pWDaFgyjWhDAPXyR01p6ak4ComdBno=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IXz12hUj74QRkzkIQs37Q8mrHclLSE6TsetQHvsKymfzSYnU74MDjFeW+ejIwRsR8
-         rm/O30celv1Ifr1sLzC4loUTFY2Ie84kD5IGLMenCQMxxLfzr0YTY9aw72GzHzpAZU
-         Y7YdXZLWWSIJsPdOBlSRpWJQ4aoIdktbjmPaSQGM=
-Date:   Thu, 9 Dec 2021 19:06:21 +0200
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        DRI Development <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: Re: [PATCH 1/2] drm/ bridge: tc358762: move bridge init to enable
- callback
-Message-ID: <YbI3jUIDf2GIuvDv@pendragon.ideasonboard.com>
-References: <20211126003227.1031347-1-dmitry.baryshkov@linaro.org>
- <CAPY8ntBrhYAmsraDqJGuTrSL6VjGXBAMVoN7xweV7E4qZv+v3Q@mail.gmail.com>
- <CAA8EJpoDw1R=gBrtMM9_AjufViJE3h10dYoEic19wE6mSKMxvg@mail.gmail.com>
+        Thu, 9 Dec 2021 12:28:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1639070691; x=1670606691;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=78oQEXrjSn1hMXODsRQ3zKsRQxXW1fXXIMYKZCpi+qk=;
+  b=Y5qBcvbuDcQrRgX5GIg9VAW46A+7Ej7V87I5MpN2f8K1CJBlVHdkSlBC
+   4bYJBsQ3vRjHiHLkzbGeSB5fKLCLUp6qoBxfteIQsJCaVJKxMlPT6Quei
+   A9A5q+GJyJyKyoHEPsGTGGrIEZuMK1RUuaa/a2xMBducVUV55EOtDSrwg
+   0=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Dec 2021 09:24:50 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 09:24:49 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 9 Dec 2021 09:24:49 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 9 Dec 2021 09:24:48 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kishon@ti.com>, <p.zabel@pengutronix.de>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH v7] phy: qcom-qmp: add display port v4 voltage and pre-emphasis swing tables
+Date:   Thu, 9 Dec 2021 09:24:39 -0800
+Message-ID: <1639070679-28348-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoDw1R=gBrtMM9_AjufViJE3h10dYoEic19wE6mSKMxvg@mail.gmail.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+From: Kuogee Hsieh <khsieh@codeaurora.org>
 
-(CC'ing Tomi)
+The previous patch from Fixes (aff188feb5e1) added functions to support V4
+phy. But it did not update voltage and pre-emphasis tables accordingly.
+This patch add v4 voltage and pre-emphasis swing tables to complete v4
+phy implementation. Both voltage and pre-emphasis swing level are set
+during link training negotiation between host and sink. There are totally
+four tables added.  A voltage swing table for both hbr and hbr1, a voltage
+table for both hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1
+and a pre-emphasis table for both hbr2 and hbr3. In addition, write 0x0a
+to TX_TX_POL_INV is added to complete the sequence of configure dp phy
+base on HPG.
 
-On Thu, Dec 09, 2021 at 07:53:43PM +0300, Dmitry Baryshkov wrote:
-> On Fri, 26 Nov 2021 at 14:56, Dave Stevenson wrote:
-> > On Fri, 26 Nov 2021 at 00:32, Dmitry Baryshkov wrote:
-> > >
-> > > During the pre_enable time the previous bridge (e.g. DSI host) might be
-> > > not initialized yet. Move the regulator enablement and bridge init to
-> > > te enable callback (and consequently regulator disblement to disable).
-> >
-> > Except that in the enable callback the DSI host has video enabled too,
-> > so the data lanes may be in HS mode too, and the bridge may not be
-> > prepared to accept that during power on / initialisation. That means
-> > you've got a race condition over how quickly the composition hardware
-> > starts producing pixel data vs when this enable callback is called. I
-> > suspect that is why we had [1] for the rare case when the race
-> > condition failed.
-> > There's also seems to be no guarantee that a host can do LP commands
-> > between HS video packets (eg sunxi [2])
-> 
-> I see.
-> 
-> > This is the same issue that was being hacked around in [3], and is one
-> > of the questions I'd raised back in July [4].
-> > The DSI support is broken when it comes to accommodating
-> > initialisation sequences, but in trying to ensure all possible
-> > sequences can be accomodated, all currently proposed solutions have
-> > been shot down.
-> > Some platforms have worked around it by powering up the DSI host in
-> > mode_set (dw-mipi-dsi),
-> 
-> Looks like this approach is supported by panel-bridge, so I have
-> proposed a similar change to the msm dsi driver. [5]
-> 
-> > others have broken the bridge chain apart so
-> > their pre_enable gets called first (exynos and currently vc4) except
-> > that approach is broken for the atomic API.
-> >
-> > There is a need for some form of resolution, even if it is only
-> > documenting the correct hack to implement in the DSI host driver.
-> > Hacking bridge or panel drivers to try and workaround it seems wrong.
-> 
-> Thank you for this lengthy explanation, background and pointers. This
-> helped a lot.
-> 
-> It really looks like we need a separate callback between pre-enable
-> and enable (or before pre-enable, but that would break the 'clocks not
-> enabled' constraint.
-> 
-> Another option would be to move video mode enablement from bridge ops
-> to dsi host interface, making the panel/bridge implicitly tell the
-> host to switch from LP to HS mode.
+Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 112 +++++++++++++++++++++++++-----------
+ 1 file changed, 77 insertions(+), 35 deletions(-)
 
-Do you mean explicitly ?
-
-> This way the bridge's enable() callback would start with the DSI host
-> powered up, but not sending the video, so the DSI device can send
-> setup commands. Then it'd enable the video/cmd mode on the DSI host
-> and then make final adjustments (like enabling the backlight/etc, so
-> that the video is visible/sent to the next item in a chain. WDYT?
-
-This is how the omapdrm driver originally implemented support for
-bridges (as custom omapdrm components, before it was ported to
-drm_bridge), with an that allowed downstream components to explicitly
-control the enable/disable sequence of upstream components. I'm
-beginning to think it's a better model, but switching drm_bridge to that
-is likely an impossible task. Keeping it specific to the DSI interface
-could be a good middle-ground, although some DSI encoders may need to
-propagate any control operation they receive from the downstream
-component up to their upstream component (for instance instructing the
-CRTC to enable video when the panel requests video to be enabled).
-Still, it's probably worth being investigated.
-
-I can't agree more with Dave about the need for documentation, DSI
-drivers (both on the TX and RX side) are very creative these days,
-causing lots of interoperability issues. This wild west situation really
-needs some policing.
-
-If anyone documents rules that can be enforced, I'll be very happy to
-buy them a few rounds of drinks in any conference we'll happen to both
-attend (even more so because that will mean travel restrictions will be
-lifted :-)).
-
-> > [1] https://lists.freedesktop.org/archives/dri-devel/2021-September/322119.html
-> > [2] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c#n776
-> > [3] https://lists.freedesktop.org/archives/dri-devel/2021-November/332003.html
-> > [4] https://lists.freedesktop.org/archives/dri-devel/2021-July/313576.html
-> 
-> [5] https://patchwork.freedesktop.org/patch/465764/?series=97688&rev=1
-> 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/bridge/tc358762.c | 20 ++++++++++----------
-> > >  1 file changed, 10 insertions(+), 10 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/bridge/tc358762.c b/drivers/gpu/drm/bridge/tc358762.c
-> > > index 7104828024fd..ebdf771a1e49 100644
-> > > --- a/drivers/gpu/drm/bridge/tc358762.c
-> > > +++ b/drivers/gpu/drm/bridge/tc358762.c
-> > > @@ -64,7 +64,7 @@ struct tc358762 {
-> > >         struct drm_connector connector;
-> > >         struct regulator *regulator;
-> > >         struct drm_bridge *panel_bridge;
-> > > -       bool pre_enabled;
-> > > +       bool enabled;
-> > >         int error;
-> > >  };
-> > >
-> > > @@ -125,26 +125,26 @@ static int tc358762_init(struct tc358762 *ctx)
-> > >         return tc358762_clear_error(ctx);
-> > >  }
-> > >
-> > > -static void tc358762_post_disable(struct drm_bridge *bridge)
-> > > +static void tc358762_disable(struct drm_bridge *bridge)
-> > >  {
-> > >         struct tc358762 *ctx = bridge_to_tc358762(bridge);
-> > >         int ret;
-> > >
-> > >         /*
-> > > -        * The post_disable hook might be called multiple times.
-> > > +        * The disable hook might be called multiple times.
-> > >          * We want to avoid regulator imbalance below.
-> > >          */
-> > > -       if (!ctx->pre_enabled)
-> > > +       if (!ctx->enabled)
-> > >                 return;
-> > >
-> > > -       ctx->pre_enabled = false;
-> > > +       ctx->enabled = false;
-> > >
-> > >         ret = regulator_disable(ctx->regulator);
-> > >         if (ret < 0)
-> > >                 dev_err(ctx->dev, "error disabling regulators (%d)\n", ret);
-> > >  }
-> > >
-> > > -static void tc358762_pre_enable(struct drm_bridge *bridge)
-> > > +static void tc358762_enable(struct drm_bridge *bridge)
-> > >  {
-> > >         struct tc358762 *ctx = bridge_to_tc358762(bridge);
-> > >         int ret;
-> > > @@ -157,7 +157,7 @@ static void tc358762_pre_enable(struct drm_bridge *bridge)
-> > >         if (ret < 0)
-> > >                 dev_err(ctx->dev, "error initializing bridge (%d)\n", ret);
-> > >
-> > > -       ctx->pre_enabled = true;
-> > > +       ctx->enabled = true;
-> > >  }
-> > >
-> > >  static int tc358762_attach(struct drm_bridge *bridge,
-> > > @@ -170,8 +170,8 @@ static int tc358762_attach(struct drm_bridge *bridge,
-> > >  }
-> > >
-> > >  static const struct drm_bridge_funcs tc358762_bridge_funcs = {
-> > > -       .post_disable = tc358762_post_disable,
-> > > -       .pre_enable = tc358762_pre_enable,
-> > > +       .disable = tc358762_disable,
-> > > +       .enable = tc358762_enable,
-> > >         .attach = tc358762_attach,
-> > >  };
-> > >
-> > > @@ -218,7 +218,7 @@ static int tc358762_probe(struct mipi_dsi_device *dsi)
-> > >         mipi_dsi_set_drvdata(dsi, ctx);
-> > >
-> > >         ctx->dev = dev;
-> > > -       ctx->pre_enabled = false;
-> > > +       ctx->enabled = false;
-> > >
-> > >         /* TODO: Find out how to get dual-lane mode working */
-> > >         dsi->lanes = 1;
-
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 456a59d..d41e30c 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -4255,40 +4255,50 @@ static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy)
+ 	       qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
+ }
+ 
+-static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
++#define MAX_SWING_LEVEL 4
++#define MAX_VOLTAGE_LEVEL 4
++#define MAX_EMPHASIS_LEVEL 4
++
++static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+ 	{ 0x00, 0x0c, 0x15, 0x1a },
+ 	{ 0x02, 0x0e, 0x16, 0xff },
+ 	{ 0x02, 0x11, 0xff, 0xff },
+ 	{ 0x04, 0xff, 0xff, 0xff }
+ };
+ 
+-static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
++static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+ 	{ 0x02, 0x12, 0x16, 0x1a },
+ 	{ 0x09, 0x19, 0x1f, 0xff },
+ 	{ 0x10, 0x1f, 0xff, 0xff },
+ 	{ 0x1f, 0xff, 0xff, 0xff }
+ };
+ 
+-static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
++static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+ 	{ 0x00, 0x0c, 0x14, 0x19 },
+ 	{ 0x00, 0x0b, 0x12, 0xff },
+ 	{ 0x00, 0x0b, 0xff, 0xff },
+ 	{ 0x04, 0xff, 0xff, 0xff }
+ };
+ 
+-static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
++static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+ 	{ 0x08, 0x0f, 0x16, 0x1f },
+ 	{ 0x11, 0x1e, 0x1f, 0xff },
+ 	{ 0x19, 0x1f, 0xff, 0xff },
+ 	{ 0x1f, 0xff, 0xff, 0xff }
+ };
+ 
+-static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
+-		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
++static int __qcom_qmp_phy_configure_dp_swing
++			(struct qmp_phy *qphy,
++			unsigned int drv_lvl_reg,
++			unsigned int emp_post_reg,
++			const u8 voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
++			const u8 pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL],
++			const u8 voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
++			const u8 pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL])
+ {
+ 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+ 	unsigned int v_level = 0, p_level = 0;
+-	u8 voltage_swing_cfg, pre_emphasis_cfg;
++	u8 voltage, emphasis;
+ 	int i;
+ 
+ 	for (i = 0; i < dp_opts->lanes; i++) {
+@@ -4297,26 +4307,25 @@ static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
+ 	}
+ 
+ 	if (dp_opts->link_rate <= 2700) {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
++		voltage = voltage_swing_hbr_rbr[v_level][p_level];
++		emphasis = pre_emphasis_hbr_rbr[v_level][p_level];
+ 	} else {
+-		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
+-		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
++		voltage = voltage_swing_hbr3_hbr2[v_level][p_level];
++		emphasis = pre_emphasis_hbr3_hbr2[v_level][p_level];
+ 	}
+ 
+ 	/* TODO: Move check to config check */
+-	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
++	if (voltage == 0xFF && emphasis == 0xFF)
+ 		return -EINVAL;
+ 
+ 	/* Enable MUX to use Cursor values from these registers */
+-	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
+-	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
+-
+-	writel(voltage_swing_cfg, qphy->tx + drv_lvl_reg);
+-	writel(pre_emphasis_cfg, qphy->tx + emp_post_reg);
+-	writel(voltage_swing_cfg, qphy->tx2 + drv_lvl_reg);
+-	writel(pre_emphasis_cfg, qphy->tx2 + emp_post_reg);
++	voltage |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
++	emphasis |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
+ 
++	writel(voltage, qphy->tx + drv_lvl_reg);
++	writel(emphasis, qphy->tx + emp_post_reg);
++	writel(voltage, qphy->tx2 + drv_lvl_reg);
++	writel(emphasis, qphy->tx2 + emp_post_reg);
+ 	return 0;
+ }
+ 
+@@ -4325,9 +4334,14 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
+ 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+ 	u32 bias_en, drvr_en;
+ 
+-	if (qcom_qmp_phy_configure_dp_swing(qphy,
+-				QSERDES_V3_TX_TX_DRV_LVL,
+-				QSERDES_V3_TX_TX_EMP_POST1_LVL) < 0)
++	if (__qcom_qmp_phy_configure_dp_swing
++			(qphy,
++			QSERDES_V3_TX_TX_DRV_LVL,
++			QSERDES_V3_TX_TX_EMP_POST1_LVL,
++			qmp_dp_v3_voltage_swing_hbr_rbr,
++			qmp_dp_v3_pre_emphasis_hbr_rbr,
++			qmp_dp_v3_voltage_swing_hbr3_hbr2,
++			qmp_dp_v3_pre_emphasis_hbr3_hbr2) < 0)
+ 		return;
+ 
+ 	if (dp_opts->lanes == 1) {
+@@ -4465,6 +4479,35 @@ static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy)
+ 	return 0;
+ }
+ 
++/* The values in these tables are given without MUX_EN (0x20) bit set */
++static const u8 qmp_dp_v4_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
++	{ 0x00, 0x0c, 0x15, 0x1b },
++	{ 0x02, 0x0e, 0x16, 0xff },
++	{ 0x02, 0x11, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
++	{ 0x02, 0x12, 0x16, 0x1a },
++	{ 0x09, 0x19, 0x1f, 0xff },
++	{ 0x10, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
++	{ 0x00, 0x0e, 0x15, 0x1b },
++	{ 0x00, 0x0e, 0x15, 0xff },
++	{ 0x00, 0x0e, 0xff, 0xff },
++	{ 0x04, 0xff, 0xff, 0xff }
++};
++
++static const u8 qmp_dp_v4_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
++	{ 0x08, 0x0f, 0x16, 0x1f },
++	{ 0x11, 0x1e, 0x1f, 0xff },
++	{ 0x16, 0x1f, 0xff, 0xff },
++	{ 0x1f, 0xff, 0xff, 0xff }
++};
++
+ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
+ {
+ 	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_PSR_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+@@ -4494,16 +4537,14 @@ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
+ 
+ static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy)
+ {
+-	/* Program default values before writing proper values */
+-	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+-	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+-
+-	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+-	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+-
+-	qcom_qmp_phy_configure_dp_swing(qphy,
++	__qcom_qmp_phy_configure_dp_swing
++			(qphy,
+ 			QSERDES_V4_TX_TX_DRV_LVL,
+-			QSERDES_V4_TX_TX_EMP_POST1_LVL);
++			QSERDES_V4_TX_TX_EMP_POST1_LVL,
++			qmp_dp_v4_voltage_swing_hbr_rbr,
++			qmp_dp_v4_pre_emphasis_hbr_rbr,
++			qmp_dp_v4_voltage_swing_hbr3_hbr2,
++			qmp_dp_v4_pre_emphasis_hbr3_hbr2);
+ }
+ 
+ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+@@ -4622,6 +4663,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+ 	writel(drvr1_en, qphy->tx2 + QSERDES_V4_TX_HIGHZ_DRVR_EN);
+ 	writel(bias1_en, qphy->tx2 + QSERDES_V4_TX_TRANSCEIVER_BIAS_EN);
+ 
++	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
++	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
++
+ 	writel(0x18, qphy->pcs + QSERDES_DP_PHY_CFG);
+ 	udelay(2000);
+ 	writel(0x19, qphy->pcs + QSERDES_DP_PHY_CFG);
+@@ -4633,11 +4677,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+ 			10000))
+ 		return -ETIMEDOUT;
+ 
+-	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
+-	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
+ 
+-	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+-	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
++	writel(0x22, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
++	writel(0x22, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+ 
+ 	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+ 	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
 -- 
-Regards,
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Laurent Pinchart
