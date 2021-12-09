@@ -2,61 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50B4146F5A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 22:11:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E14A46F5FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 22:34:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232631AbhLIVPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 16:15:30 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:5596 "EHLO
+        id S232541AbhLIVhw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 16:37:52 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:23733 "EHLO
         alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232400AbhLIVP3 (ORCPT
+        by vger.kernel.org with ESMTP id S229505AbhLIVhw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 16:15:29 -0500
+        Thu, 9 Dec 2021 16:37:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639084315; x=1670620315;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=bxqcNgelakS2Sn/VK9ZIj3BlsM3fX3wAeAOn9QccZzU=;
-  b=ZZ5IC0tDpn3/otZ06qHYb7i8Z8AG8S5L9P6+WjYOjTKntk+vgDGBTPNF
-   ZkNlkYOU1LVjipqaD4U6fmh7hWR8cwAuVtbWmiBgn6lworKzpp2TY/+gj
-   INXJzSL9gtHfqMI7N3ClM5upNwPF2OzcR3NxqNPMzXc4fMuDASXRBFD+K
-   o=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Dec 2021 13:11:55 -0800
+  t=1639085658; x=1670621658;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=ZsgLJndpLvwXmWTrpAtIHRV7ZxELnn8+rKqh9Mjotck=;
+  b=QdztFc554EDT3xeT9vAcLKGvbK4VlfcXPp5FUEgAObQJGWE8dGQRPQf+
+   A+QqAlJI1Dx79574wVLeFcFjxGaoTGDi2nRFesPIpV6w1c2pmGk392iG2
+   /XnDve9gqmufQWyDZwGss7s3BCbjvZd0zoxUdSeSxpnJFbOjVxGlEs25P
+   c=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Dec 2021 13:34:18 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 13:11:54 -0800
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 13:34:17 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 9 Dec 2021 13:11:54 -0800
-Received: from [10.111.171.222] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 9 Dec 2021
- 13:11:52 -0800
-Message-ID: <ebb421f7-2f6f-4cd8-3faa-3e2dd4561fc9@quicinc.com>
-Date:   Thu, 9 Dec 2021 13:11:50 -0800
+ 15.2.922.19; Thu, 9 Dec 2021 13:34:17 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 9 Dec 2021 13:34:16 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v7 1/2] drm/msm/dp: dp_link_parse_sink_count() return immediately if aux read failed
+Date:   Thu, 9 Dec 2021 13:34:08 -0800
+Message-ID: <1639085648-27757-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [Freedreno] [PATCH v1 6/8] drm/msm/dpu: stop manually removing
- debugfs files for the DPU CRTC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        <freedreno@lists.freedesktop.org>
-References: <20211201222633.2476780-1-dmitry.baryshkov@linaro.org>
- <20211201222633.2476780-7-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20211201222633.2476780-7-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -64,84 +57,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add checking aux read/write status at both dp_link_parse_sink_count()
+and dp_link_parse_sink_status_filed() to avoid long timeout delay if
+dp aux read/write failed at timeout due to cable unplugged. Also make
+sure dp controller had been initialized before start dpcd read and write.
 
+Changes in V4:
+-- split this patch as stand alone patch
 
-On 12/1/2021 2:26 PM, Dmitry Baryshkov wrote:
-> DRM code handles removing all debugfs recursively. Drop CRTC-specific
-> code to perform that.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 15 ++++-----------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h |  3 ---
->   2 files changed, 4 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index d290809d59bd..9899f7424131 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1424,15 +1424,16 @@ DEFINE_SHOW_ATTRIBUTE(dpu_crtc_debugfs_state);
->   static int _dpu_crtc_init_debugfs(struct drm_crtc *crtc)
->   {
->   	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> +	struct dentry *debugfs_root;
->   
-> -	dpu_crtc->debugfs_root = debugfs_create_dir(dpu_crtc->name,
-> +	debugfs_root = debugfs_create_dir(dpu_crtc->name,
->   			crtc->dev->primary->debugfs_root);
->   
->   	debugfs_create_file("status", 0400,
-> -			dpu_crtc->debugfs_root,
-> +			debugfs_root,
->   			dpu_crtc, &_dpu_debugfs_status_fops);
->   	debugfs_create_file("state", 0600,
-> -			dpu_crtc->debugfs_root,
-> +			debugfs_root,
->   			&dpu_crtc->base,
->   			&dpu_crtc_debugfs_state_fops);
->   
-> @@ -1450,13 +1451,6 @@ static int dpu_crtc_late_register(struct drm_crtc *crtc)
->   	return _dpu_crtc_init_debugfs(crtc);
->   }
->   
-> -static void dpu_crtc_early_unregister(struct drm_crtc *crtc)
-> -{
-> -	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
-> -
-> -	debugfs_remove_recursive(dpu_crtc->debugfs_root);
-> -}
-> -
->   static const struct drm_crtc_funcs dpu_crtc_funcs = {
->   	.set_config = drm_atomic_helper_set_config,
->   	.destroy = dpu_crtc_destroy,
-> @@ -1465,7 +1459,6 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
->   	.atomic_duplicate_state = dpu_crtc_duplicate_state,
->   	.atomic_destroy_state = dpu_crtc_destroy_state,
->   	.late_register = dpu_crtc_late_register,
-> -	.early_unregister = dpu_crtc_early_unregister,
->   	.verify_crc_source = dpu_crtc_verify_crc_source,
->   	.set_crc_source = dpu_crtc_set_crc_source,
->   	.enable_vblank  = msm_crtc_enable_vblank,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> index 4328e133d71c..b8785c394fcc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-> @@ -129,7 +129,6 @@ struct dpu_crtc_frame_event {
->    * @drm_requested_vblank : Whether vblanks have been enabled in the encoder
->    * @property_info : Opaque structure for generic property support
->    * @property_defaults : Array of default values for generic property support
-> - * @debugfs_root  : Parent of debugfs node
->    * @vblank_cb_count : count of vblank callback since last reset
->    * @play_count    : frame count between crtc enable and disable
->    * @vblank_cb_time  : ktime at vblank count reset
-> @@ -160,8 +159,6 @@ struct dpu_crtc {
->   	struct drm_pending_vblank_event *event;
->   	u32 vsync_count;
->   
-> -	struct dentry *debugfs_root;
-> -
->   	u32 vblank_cb_count;
->   	u64 play_count;
->   	ktime_t vblank_cb_time;
-> 
+Changes in v5:
+-- rebase on msm-next branch
+
+Changes in v6:
+-- add more details commit text
+
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 12 +++++++++---
+ drivers/gpu/drm/msm/dp/dp_link.c    | 19 ++++++++++++++-----
+ 2 files changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 3d61459..0766752 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -692,9 +692,15 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
+ 
+-	ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
+-	if (ret == -ECONNRESET) { /* cable unplugged */
+-		dp->core_initialized = false;
++	/*
++	 * dp core (ahb/aux clks) must be initialized before
++	 * irq_hpd be handled
++	 */
++	if (dp->core_initialized) {
++		ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
++		if (ret == -ECONNRESET) { /* cable unplugged */
++			dp->core_initialized = false;
++		}
+ 	}
+ 	DRM_DEBUG_DP("hpd_state=%d\n", state);
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index a5bdfc5..d4d31e5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -737,18 +737,25 @@ static int dp_link_parse_sink_count(struct dp_link *dp_link)
+ 	return 0;
+ }
+ 
+-static void dp_link_parse_sink_status_field(struct dp_link_private *link)
++static int dp_link_parse_sink_status_field(struct dp_link_private *link)
+ {
+ 	int len = 0;
+ 
+ 	link->prev_sink_count = link->dp_link.sink_count;
+-	dp_link_parse_sink_count(&link->dp_link);
++	len = dp_link_parse_sink_count(&link->dp_link);
++	if (len < 0) {
++		DRM_ERROR("DP parse sink count failed\n");
++		return len;
++	}
+ 
+ 	len = drm_dp_dpcd_read_link_status(link->aux,
+ 		link->link_status);
+-	if (len < DP_LINK_STATUS_SIZE)
++	if (len < DP_LINK_STATUS_SIZE) {
+ 		DRM_ERROR("DP link status read failed\n");
+-	dp_link_parse_request(link);
++		return len;
++	}
++
++	return dp_link_parse_request(link);
+ }
+ 
+ /**
+@@ -1023,7 +1030,9 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 
+ 	dp_link_reset_data(link);
+ 
+-	dp_link_parse_sink_status_field(link);
++	ret = dp_link_parse_sink_status_field(link);
++	if (ret)
++		return ret;
+ 
+ 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
+ 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
