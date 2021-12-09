@@ -2,128 +2,461 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF8DB46EA35
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 15:42:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E07E46EAB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:09:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238813AbhLIOqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 09:46:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36698 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233825AbhLIOqO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 09:46:14 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EFADC0617A1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 06:42:41 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id y8so4053226plg.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 06:42:41 -0800 (PST)
+        id S239243AbhLIPMr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 10:12:47 -0500
+Received: from smtp1.axis.com ([195.60.68.17]:43283 "EHLO smtp1.axis.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239250AbhLIPMq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Dec 2021 10:12:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=DlIzAa6h2Qdf88CQ4XAT+zAj7QyEiJFQv1x54NsjTKU=;
-        b=izB4Ze5IwkTdDFN2UPnu25PTURU5BM0L76lRpnraNW9aOiFCIfT4kGA9KN4Hsp9dMI
-         5yc45D+bNrTlgL5C6Ns35vhPzcgiVqugDyrdKVBl3GWVdyX7aH9sJ2i2mH2PkzvVFpfp
-         FMB917/z54Wigzhm2+DyrWiRkYoIHWWOX/zgAVL3aB4rpx/GZM3/vGM6N0eWJ33hutyk
-         cUzhIVJRdLGS1R6INlxbilcEnv2sI9plsP0iJ0PcxwL8zJooz2xqotKh3rt6BZUpHseP
-         esFGUNhzXQuhALatzTkkVnEAVh3AG3FQzSy8RCUqvAmqnmf7IyCgQOFebnZCQFUodlQp
-         EHFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=DlIzAa6h2Qdf88CQ4XAT+zAj7QyEiJFQv1x54NsjTKU=;
-        b=mKwlZDRI4VKJLCDOrELMnXyjQ30dOY1Yq+JeKGc9dUwxQo8bJozF8dg/6Ph2PG4cIQ
-         YLS77Vocm28MZNZUzme0brLWRdswaOxgBhs9u76FmcmJ3HR4aF1MMK4nYUtRylRdK60G
-         EFbV09r80gN0KYwgh6B5VPP/3BWY+an3pCGGApMh9nhl15AcxDZ9nM1uICbzLH/lPHk9
-         Cm4DWyhik8IWGh6Mjbii+wmQiuaALgBb6/QLeKD0OlnL7S41PqT6tvaWrcJA4TFYd6dV
-         l+iUThAVUNnQXl1ZihEsjwnHcSWb52Thu78xqYY4XXxB65wFMKbv+lnn2DXCRInOYM6c
-         arjA==
-X-Gm-Message-State: AOAM5308SAzm8FxObe5ppRGUE8zabQCCgTvNofhQYWTrmGvGhqqor9rH
-        j/b4xxuV0KqFk6Hsdwl/14hR
-X-Google-Smtp-Source: ABdhPJxBp3vk9RdIYD+lyw7hUsxgLabInUSRiWT7uujnDncQbAcGGL+tWLA/fU6V5Iel2x2ks7eahA==
-X-Received: by 2002:a17:90b:3149:: with SMTP id ip9mr16188630pjb.77.1639060960427;
-        Thu, 09 Dec 2021 06:42:40 -0800 (PST)
-Received: from thinkpad ([2409:4072:902:fac4:6231:3e3b:50a6:33a7])
-        by smtp.gmail.com with ESMTPSA id b1sm5985623pgk.37.2021.12.09.06.42.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 06:42:39 -0800 (PST)
-Date:   Thu, 9 Dec 2021 20:12:33 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Kalle Valo <kvalo@kernel.org>
-Cc:     gregkh@linuxfoundation.org, mhi@lists.linux.dev,
-        hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ath11k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, stable@vger.kernel.org,
-        Pengyu Ma <mapengyu@gmail.com>
-Subject: Re: [PATCH v2] bus: mhi: core: Add support for forced PM resume
-Message-ID: <20211209144233.GA9253@thinkpad>
-References: <20211209131633.4168-1-manivannan.sadhasivam@linaro.org>
- <87fsr13kya.fsf@codeaurora.org>
+  d=axis.com; q=dns/txt; s=axis-central1; t=1639062552;
+  x=1670598552;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=W2ubuTB0lhYmOjPQa69hEhEIuxyUGZeyP9M+nuyzdoI=;
+  b=cHCAu2nF7Bl2Tq/QEzjewIpcx+W9wP0qgcSjKTmkLPbXDa3C42xvglxO
+   ZsoW5NQyq6CAA4fQLqWMrQrqFm7hpBq+07yw5bAtiuDyyo+nCh22Hvi1D
+   umBPEuPqXyFcVx+H4a+bQoeHMB0K52EVlIXbuVMM1hVke/yed4bnqyzIP
+   F1n7s+Pur+Ud5bzsckIwR3x6Ho7T9/Z6B3NlMbGzTCsvOIcW8unW4HRtC
+   XQI6JNcKgpyyqViYV3roX0pdIoEET/Vm5cTC/zIz3VcXmH3lgE81OHY5j
+   DIHKniBY707fj5PvxZV3hk+TnsKGk4/NUBFcilXXybA1Z2kd6/CW6trY+
+   A==;
+Date:   Thu, 9 Dec 2021 16:09:10 +0100
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     "jim.cromie@gmail.com" <jim.cromie@gmail.com>
+CC:     Steven Rostedt <rostedt@goodmis.org>,
+        Jason Baron <jbaron@akamai.com>,
+        Greg KH <gregkh@linuxfoundation.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Sean Paul <seanpaul@chromium.org>,
+        "lyude@redhat.com" <lyude@redhat.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "mathieu.desnoyers@efficios.com" <mathieu.desnoyers@efficios.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        amd-gfx mailing list <amd-gfx@lists.freedesktop.org>,
+        "intel-gvt-dev@lists.freedesktop.org" 
+        <intel-gvt-dev@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        "quic_saipraka@quicinc.com" <quic_saipraka@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        "quic_psodagud@quicinc.com" <quic_psodagud@quicinc.com>,
+        "maz@kernel.org" <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Ingo Molnar <mingo@redhat.com>
+Subject: Re: [PATCH v10 08/10] dyndbg: add print-to-tracefs, selftest with it
+ - RFC
+Message-ID: <20211209150910.GA23668@axis.com>
+References: <20211111220206.121610-1-jim.cromie@gmail.com>
+ <20211111220206.121610-9-jim.cromie@gmail.com>
+ <20211112114953.GA1381@axis.com>
+ <CAJfuBxxnuXAR7Jgn74MNQC7MLRc0xcDLw1cCidUJ9Xyar+O_2g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <87fsr13kya.fsf@codeaurora.org>
+In-Reply-To: <CAJfuBxxnuXAR7Jgn74MNQC7MLRc0xcDLw1cCidUJ9Xyar+O_2g@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 09, 2021 at 04:35:25PM +0200, Kalle Valo wrote:
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+On Wed, Dec 08, 2021 at 06:16:10AM +0100, jim.cromie@gmail.com wrote:
+> are you planning to dust this patchset off and resubmit it ?
 > 
-> > From: Loic Poulain <loic.poulain@linaro.org>
-> >
-> > For whatever reason, some devices like QCA6390, WCN6855 using ath11k
-> > are not in M3 state during PM resume, but still functional. The
-> > mhi_pm_resume should then not fail in those cases, and let the higher
-> > level device specific stack continue resuming process.
-> >
-> > Add an API mhi_pm_resume_force(), to force resuming irrespective of the
-> > current MHI state. This fixes a regression with non functional ath11k WiFi
-> > after suspend/resume cycle on some machines.
-> >
-> > Bug report: https://bugzilla.kernel.org/show_bug.cgi?id=214179
-> >
-> > Fixes: 020d3b26c07a ("bus: mhi: Early MHI resume failure in non M3 state")
-> > Cc: stable@vger.kernel.org #5.13
-> > Link: https://lore.kernel.org/regressions/871r5p0x2u.fsf@codeaurora.org/
-> > Reported-by: Kalle Valo <kvalo@codeaurora.org>
-> > Reported-by: Pengyu Ma <mapengyu@gmail.com>
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > [mani: Switched to API, added bug report, reported-by tags and CCed stable]
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >
-> > Changes in v2:
-> >
-> > * Switched to a new API "mhi_pm_resume_force()" instead of the "force" flag as
-> >   suggested by Greg. The "force" flag is now used inside the API.
-> >
-> > Greg: I'm sending this patch directly to you so that you can apply it to
-> > char-misc once we get an ACK from Kalle.
+> Ive been playing with it and learning ftrace (decade+ late),
+> I found your boot-line example very helpful as 1st steps
+> (still havent even tried the filtering)
 > 
-> Thanks! I now tested this patch on top v5.16-rc4 using QCA6390 and
-> firmware WLAN.HST.1.0.1-01740-QCAHSTSWPLZ_V2_TO_X86-1, no issues found:
 > 
-> Tested-by: Kalle Valo <kvalo@kernel.org>
+> with these adjustments (voiced partly to test my understanding)
+> I would support it, and rework my patchset to use it.
 > 
-> I'm not expecting any conflicts with ath11k, so please take this via
-> Greg's tree. It would be really good to get this regression fixed in
-> v5.16, so is it possible to send this to -rc releases?
-> 
-> For the ath11k part:
-> 
-> Acked-by: Kalle Valo <kvalo@kernel.org>
+> - change flag to -e, good mnemonics for event/trace-event
+>    T is good too, but uppercase, no need to go there.
 
-Thanks. If this patch looks good to Greg, then it will be queued for the next
--rc release.
+Any flag name works for me.
 
-Thanks,
-Mani
+> - include/trace/events/dyndbg.h - separate file, not mixed with print.h
+>   dyndbg class, so trace_event=dyndbg:*
+> 
+> - 1 event type per pr_debug, dev_dbg, netdev_dbg ? ibdev_dbg ?
+>   with the extra args: descriptor that Steven wanted,
+>   probably also struct <|net|ib>dev
 
-> 
-> -- 
-> https://patchwork.kernel.org/project/linux-wireless/list/
-> 
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+For my use cases I don't see much value in having separate events for
+the different debug functions, but since all of them can be easily
+enabled (dyndbg:*, as you noted), that works for me too.
+
+> If youre too busy for a while, I'd eventually take a (slow) run at it.
+
+You're welcome to have a go.  I think you've already rebased the
+patchset, but here's a diff top of v5.16-rc4 for reference.  I noticed a
+bug inside the CONFIG_JUMP_LABEL handling (also present in the last
+version I posted) which should be fixed as part of the diff below (I've
+added a comment).  Proper tests for this, like the ones you are adding
+in your patchset, would certainly be a good idea.  Thanks.
+
+8<-------------
+diff --git a/Documentation/admin-guide/dynamic-debug-howto.rst b/Documentation/admin-guide/dynamic-debug-howto.rst
+index a89cfa083155..b9c4e808befc 100644
+--- a/Documentation/admin-guide/dynamic-debug-howto.rst
++++ b/Documentation/admin-guide/dynamic-debug-howto.rst
+@@ -228,6 +228,7 @@ of the characters::
+ The flags are::
+ 
+   p    enables the pr_debug() callsite.
++  x    enables trace to the printk:dyndbg event
+   f    Include the function name in the printed message
+   l    Include line number in the printed message
+   m    Include module name in the printed message
+diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debug.h
+index dce631e678dd..bc21bfb0fdc6 100644
+--- a/include/linux/dynamic_debug.h
++++ b/include/linux/dynamic_debug.h
+@@ -27,7 +27,7 @@ struct _ddebug {
+ 	 * writes commands to <debugfs>/dynamic_debug/control
+ 	 */
+ #define _DPRINTK_FLAGS_NONE	0
+-#define _DPRINTK_FLAGS_PRINT	(1<<0) /* printk() a message using the format */
++#define _DPRINTK_FLAGS_PRINTK	(1<<0) /* printk() a message using the format */
+ #define _DPRINTK_FLAGS_INCL_MODNAME	(1<<1)
+ #define _DPRINTK_FLAGS_INCL_FUNCNAME	(1<<2)
+ #define _DPRINTK_FLAGS_INCL_LINENO	(1<<3)
+@@ -37,8 +37,11 @@ struct _ddebug {
+ 	(_DPRINTK_FLAGS_INCL_MODNAME | _DPRINTK_FLAGS_INCL_FUNCNAME |\
+ 	 _DPRINTK_FLAGS_INCL_LINENO  | _DPRINTK_FLAGS_INCL_TID)
+ 
++#define _DPRINTK_FLAGS_TRACE		(1<<5)
++#define _DPRINTK_FLAGS_ENABLE		(_DPRINTK_FLAGS_PRINTK | \
++					 _DPRINTK_FLAGS_TRACE)
+ #if defined DEBUG
+-#define _DPRINTK_FLAGS_DEFAULT _DPRINTK_FLAGS_PRINT
++#define _DPRINTK_FLAGS_DEFAULT _DPRINTK_FLAGS_PRINTK
+ #else
+ #define _DPRINTK_FLAGS_DEFAULT 0
+ #endif
+@@ -120,10 +123,10 @@ void __dynamic_ibdev_dbg(struct _ddebug *descriptor,
+ 
+ #ifdef DEBUG
+ #define DYNAMIC_DEBUG_BRANCH(descriptor) \
+-	likely(descriptor.flags & _DPRINTK_FLAGS_PRINT)
++	likely(descriptor.flags & _DPRINTK_FLAGS_ENABLE)
+ #else
+ #define DYNAMIC_DEBUG_BRANCH(descriptor) \
+-	unlikely(descriptor.flags & _DPRINTK_FLAGS_PRINT)
++	unlikely(descriptor.flags & _DPRINTK_FLAGS_ENABLE)
+ #endif
+ 
+ #endif /* CONFIG_JUMP_LABEL */
+diff --git a/include/trace/events/printk.h b/include/trace/events/printk.h
+index 13d405b2fd8b..1f78bd237a91 100644
+--- a/include/trace/events/printk.h
++++ b/include/trace/events/printk.h
+@@ -7,7 +7,7 @@
+ 
+ #include <linux/tracepoint.h>
+ 
+-TRACE_EVENT(console,
++DECLARE_EVENT_CLASS(printk,
+ 	TP_PROTO(const char *text, size_t len),
+ 
+ 	TP_ARGS(text, len),
+@@ -31,6 +31,16 @@ TRACE_EVENT(console,
+ 
+ 	TP_printk("%s", __get_str(msg))
+ );
++
++DEFINE_EVENT(printk, console,
++	TP_PROTO(const char *text, size_t len),
++	TP_ARGS(text, len)
++);
++
++DEFINE_EVENT(printk, dyndbg,
++	TP_PROTO(const char *text, size_t len),
++	TP_ARGS(text, len)
++);
+ #endif /* _TRACE_PRINTK_H */
+ 
+ /* This part must be outside protection */
+diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+index dd7f56af9aed..161454fa0af8 100644
+--- a/lib/dynamic_debug.c
++++ b/lib/dynamic_debug.c
+@@ -36,6 +36,7 @@
+ #include <linux/sched.h>
+ #include <linux/device.h>
+ #include <linux/netdevice.h>
++#include <trace/events/printk.h>
+ 
+ #include <rdma/ib_verbs.h>
+ 
+@@ -86,11 +87,12 @@ static inline const char *trim_prefix(const char *path)
+ }
+ 
+ static struct { unsigned flag:8; char opt_char; } opt_array[] = {
+-	{ _DPRINTK_FLAGS_PRINT, 'p' },
++	{ _DPRINTK_FLAGS_PRINTK, 'p' },
+ 	{ _DPRINTK_FLAGS_INCL_MODNAME, 'm' },
+ 	{ _DPRINTK_FLAGS_INCL_FUNCNAME, 'f' },
+ 	{ _DPRINTK_FLAGS_INCL_LINENO, 'l' },
+ 	{ _DPRINTK_FLAGS_INCL_TID, 't' },
++	{ _DPRINTK_FLAGS_TRACE, 'x' },
+ 	{ _DPRINTK_FLAGS_NONE, '_' },
+ };
+ 
+@@ -210,11 +212,23 @@ static int ddebug_change(const struct ddebug_query *query,
+ 			if (newflags == dp->flags)
+ 				continue;
+ #ifdef CONFIG_JUMP_LABEL
+-			if (dp->flags & _DPRINTK_FLAGS_PRINT) {
+-				if (!(modifiers->flags & _DPRINTK_FLAGS_PRINT))
++			if (dp->flags & _DPRINTK_FLAGS_ENABLE) {
++				/*
++				 * The newflags check is to ensure that the
++				 * static branch doesn't get disabled in step
++				 * 3:
++				 *
++				 * (1) +pf
++				 * (2) +x
++				 * (3) -pf
++				 */
++				if (!(modifiers->flags & _DPRINTK_FLAGS_ENABLE) &&
++				    !(newflags & _DPRINTK_FLAGS_ENABLE)) {
+ 					static_branch_disable(&dp->key.dd_key_true);
+-			} else if (modifiers->flags & _DPRINTK_FLAGS_PRINT)
++				}
++			} else if (modifiers->flags & _DPRINTK_FLAGS_ENABLE) {
+ 				static_branch_enable(&dp->key.dd_key_true);
++			}
+ #endif
+ 			dp->flags = newflags;
+ 			v4pr_info("changed %s:%d [%s]%s =%s\n",
+@@ -621,6 +635,96 @@ static char *__dynamic_emit_prefix(const struct _ddebug *desc, char *buf)
+ 	return buf;
+ }
+ 
++/*
++ * This code is heavily based on __ftrace_trace_stack().
++ *
++ * Allow 4 levels of nesting: normal, softirq, irq, NMI.
++ */
++#define DYNAMIC_TRACE_NESTING	4
++
++struct dynamic_trace_buf {
++	char buf[256];
++};
++
++struct dynamic_trace_bufs {
++	struct dynamic_trace_buf bufs[DYNAMIC_TRACE_NESTING];
++};
++
++static DEFINE_PER_CPU(struct dynamic_trace_bufs, dynamic_trace_bufs);
++static DEFINE_PER_CPU(int, dynamic_trace_reserve);
++
++static void dynamic_trace(const char *fmt, va_list args)
++{
++	struct dynamic_trace_buf *buf;
++	int bufidx;
++	int len;
++
++	preempt_disable_notrace();
++
++	bufidx = __this_cpu_inc_return(dynamic_trace_reserve) - 1;
++
++	if (WARN_ON_ONCE(bufidx > DYNAMIC_TRACE_NESTING))
++		goto out;
++
++	/* For the same reasons as in __ftrace_trace_stack(). */
++	barrier();
++
++	buf = this_cpu_ptr(dynamic_trace_bufs.bufs) + bufidx;
++
++	len = vscnprintf(buf->buf, sizeof(buf->buf), fmt, args);
++	trace_dyndbg(buf->buf, len);
++
++out:
++	/* As above. */
++	barrier();
++	__this_cpu_dec(dynamic_trace_reserve);
++	preempt_enable_notrace();
++}
++
++static void dynamic_printk(unsigned int flags, const char *fmt, ...)
++{
++	if (flags & _DPRINTK_FLAGS_TRACE) {
++		va_list args;
++
++		va_start(args, fmt);
++		/*
++		 * All callers include the KERN_DEBUG prefix to keep the
++		 * vprintk case simple; strip it out for tracing.
++		 */
++		dynamic_trace(fmt + strlen(KERN_DEBUG), args);
++		va_end(args);
++	}
++
++	if (flags & _DPRINTK_FLAGS_PRINTK) {
++		va_list args;
++
++		va_start(args, fmt);
++		vprintk(fmt, args);
++		va_end(args);
++	}
++}
++
++static void dynamic_dev_printk(unsigned int flags, const struct device *dev,
++			       const char *fmt, ...)
++{
++
++	if (flags & _DPRINTK_FLAGS_TRACE) {
++		va_list args;
++
++		va_start(args, fmt);
++		dynamic_trace(fmt, args);
++		va_end(args);
++	}
++
++	if (flags & _DPRINTK_FLAGS_PRINTK) {
++		va_list args;
++
++		va_start(args, fmt);
++		dev_vprintk_emit(LOGLEVEL_DEBUG, dev, fmt, args);
++		va_end(args);
++	}
++}
++
+ static inline char *dynamic_emit_prefix(struct _ddebug *desc, char *buf)
+ {
+ 	if (unlikely(desc->flags & _DPRINTK_FLAGS_INCL_ANY))
+@@ -642,7 +746,8 @@ void __dynamic_pr_debug(struct _ddebug *descriptor, const char *fmt, ...)
+ 	vaf.fmt = fmt;
+ 	vaf.va = &args;
+ 
+-	printk(KERN_DEBUG "%s%pV", dynamic_emit_prefix(descriptor, buf), &vaf);
++	dynamic_printk(descriptor->flags, KERN_DEBUG "%s%pV",
++		       dynamic_emit_prefix(descriptor, buf), &vaf);
+ 
+ 	va_end(args);
+ }
+@@ -652,6 +757,7 @@ void __dynamic_dev_dbg(struct _ddebug *descriptor,
+ 		      const struct device *dev, const char *fmt, ...)
+ {
+ 	struct va_format vaf;
++	unsigned int flags;
+ 	va_list args;
+ 
+ 	BUG_ON(!descriptor);
+@@ -661,16 +767,18 @@ void __dynamic_dev_dbg(struct _ddebug *descriptor,
+ 
+ 	vaf.fmt = fmt;
+ 	vaf.va = &args;
++	flags = descriptor->flags;
+ 
+ 	if (!dev) {
+-		printk(KERN_DEBUG "(NULL device *): %pV", &vaf);
++		dynamic_printk(flags, KERN_DEBUG "(NULL device *): %pV",
++			      &vaf);
+ 	} else {
+ 		char buf[PREFIX_SIZE] = "";
+ 
+-		dev_printk_emit(LOGLEVEL_DEBUG, dev, "%s%s %s: %pV",
+-				dynamic_emit_prefix(descriptor, buf),
+-				dev_driver_string(dev), dev_name(dev),
+-				&vaf);
++		dynamic_dev_printk(flags, dev, "%s%s %s: %pV",
++				   dynamic_emit_prefix(descriptor, buf),
++				   dev_driver_string(dev), dev_name(dev),
++				   &vaf);
+ 	}
+ 
+ 	va_end(args);
+@@ -683,6 +791,7 @@ void __dynamic_netdev_dbg(struct _ddebug *descriptor,
+ 			  const struct net_device *dev, const char *fmt, ...)
+ {
+ 	struct va_format vaf;
++	unsigned int flags;
+ 	va_list args;
+ 
+ 	BUG_ON(!descriptor);
+@@ -692,22 +801,24 @@ void __dynamic_netdev_dbg(struct _ddebug *descriptor,
+ 
+ 	vaf.fmt = fmt;
+ 	vaf.va = &args;
++	flags = descriptor->flags;
+ 
+ 	if (dev && dev->dev.parent) {
+ 		char buf[PREFIX_SIZE] = "";
+ 
+-		dev_printk_emit(LOGLEVEL_DEBUG, dev->dev.parent,
+-				"%s%s %s %s%s: %pV",
+-				dynamic_emit_prefix(descriptor, buf),
+-				dev_driver_string(dev->dev.parent),
+-				dev_name(dev->dev.parent),
+-				netdev_name(dev), netdev_reg_state(dev),
+-				&vaf);
++		dynamic_dev_printk(flags, dev->dev.parent,
++				   "%s%s %s %s%s: %pV",
++				   dynamic_emit_prefix(descriptor, buf),
++				   dev_driver_string(dev->dev.parent),
++				   dev_name(dev->dev.parent),
++				   netdev_name(dev), netdev_reg_state(dev),
++				   &vaf);
+ 	} else if (dev) {
+-		printk(KERN_DEBUG "%s%s: %pV", netdev_name(dev),
+-		       netdev_reg_state(dev), &vaf);
++		dynamic_printk(flags, KERN_DEBUG "%s%s: %pV",
++			       netdev_name(dev), netdev_reg_state(dev), &vaf);
+ 	} else {
+-		printk(KERN_DEBUG "(NULL net_device): %pV", &vaf);
++		dynamic_printk(flags, KERN_DEBUG "(NULL net_device): %pV",
++			       &vaf);
+ 	}
+ 
+ 	va_end(args);
+@@ -722,27 +833,31 @@ void __dynamic_ibdev_dbg(struct _ddebug *descriptor,
+ 			 const struct ib_device *ibdev, const char *fmt, ...)
+ {
+ 	struct va_format vaf;
++	unsigned int flags;
+ 	va_list args;
+ 
+ 	va_start(args, fmt);
+ 
+ 	vaf.fmt = fmt;
+ 	vaf.va = &args;
++	flags = descriptor->flags;
+ 
+ 	if (ibdev && ibdev->dev.parent) {
+ 		char buf[PREFIX_SIZE] = "";
+ 
+-		dev_printk_emit(LOGLEVEL_DEBUG, ibdev->dev.parent,
+-				"%s%s %s %s: %pV",
+-				dynamic_emit_prefix(descriptor, buf),
+-				dev_driver_string(ibdev->dev.parent),
+-				dev_name(ibdev->dev.parent),
+-				dev_name(&ibdev->dev),
+-				&vaf);
++		dynamic_dev_printk(flags, ibdev->dev.parent,
++				   "%s%s %s %s: %pV",
++				   dynamic_emit_prefix(descriptor, buf),
++				   dev_driver_string(ibdev->dev.parent),
++				   dev_name(ibdev->dev.parent),
++				   dev_name(&ibdev->dev),
++				   &vaf);
+ 	} else if (ibdev) {
+-		printk(KERN_DEBUG "%s: %pV", dev_name(&ibdev->dev), &vaf);
++		dynamic_printk(flags, KERN_DEBUG "%s: %pV",
++			       dev_name(&ibdev->dev), &vaf);
+ 	} else {
+-		printk(KERN_DEBUG "(NULL ib_device): %pV", &vaf);
++		dynamic_printk(flags, KERN_DEBUG "(NULL ib_device): %pV",
++			       &vaf);
+ 	}
+ 
+ 	va_end(args);
