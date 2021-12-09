@@ -2,70 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FEF846E426
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 09:26:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69D2D46E451
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 09:36:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234808AbhLII3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 03:29:46 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:54450 "EHLO
+        id S232832AbhLIIj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 03:39:57 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:58648 "EHLO
         sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234799AbhLII3n (ORCPT
+        with ESMTP id S230330AbhLIIj4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 03:29:43 -0500
+        Thu, 9 Dec 2021 03:39:56 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id DCC97CE2504;
-        Thu,  9 Dec 2021 08:26:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06929C004DD;
-        Thu,  9 Dec 2021 08:26:06 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 24744CE241B;
+        Thu,  9 Dec 2021 08:36:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624DFC004DD;
+        Thu,  9 Dec 2021 08:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639038367;
-        bh=ZON+4u+q2F+Fa8whstAYeDuG7BMfCupQp2IyL4eIE6A=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=pn439sS9qvx5uBNoFPe9ptDWRL8pbZ9zvyijRzF+POy3u8NrZfMEzY0g3PG6e1iXA
-         VchtdngaJspHdM8nElC8WqGELW0HpONMxF5mXylhM7ODCpex5Jr/09MMUgg3fhkvOp
-         n7yqsceIAFbue9Oi0MbqLCTogu5JFdJrPlYGrOcCj2k4SLIzP2Z7IFYijQd1vCKUB6
-         Etx0kQO21ym622ju5mVusSSGFZEmbOjmPssjC0fCLL4ATL2DYZE4UzajaLJ8gnfYXP
-         L211Z3/ZfZZnCPWo/d6nycJW7yjvSIDMvstqS3zsFcqmrXGwQVDVxS628d5eTed8Tx
-         noCcJjRkYq/ew==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211207114003.100693-3-vkoul@kernel.org>
-References: <20211207114003.100693-1-vkoul@kernel.org> <20211207114003.100693-3-vkoul@kernel.org>
-Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        s=k20201202; t=1639038980;
+        bh=clIsXRKT2fHFWGkYWamNyTRV+mWRk4qf67lnV8HVxo8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jMjw0hIo0Fp05eonFBLeqUA2vHen3V9ZK7yzzqqfK8YZdEmAY+Cod3GnabM5U1TzU
+         ynmporZRTUiRmd8ZlAra/cZgRmNtVlsdQQDY3mhhbmH3MyhhCz3+tcjy4scZWCEosY
+         9s/rtIlYlC+VLNhNk4BUtPlVz1MHZDyXI5fHjVBqSJHZN7bkQePuj1CaJyDt2dsw6r
+         hBuiNqaStrppL1lpIdHlCzyPmXPOVsjWqxIJLTpUxqwBlfvjxCK9k2BKCt4+h/ixJg
+         HwVwa0nXvq/W6+zGs8UtK3MKbSQPJezJ7xiH4BJ2n+/aj62yQOSLD7zSkQB9vSXY88
+         DV00+GP0tjMNw==
+Date:   Thu, 9 Dec 2021 14:06:16 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Georgi Djakov <djakov@kernel.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Odelu Kukatla <okukatla@codeaurora.org>, viveka@codeaurora.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 09 Dec 2021 00:26:05 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211209082607.06929C004DD@smtp.kernel.org>
+Subject: Re: [PATCH v2 0/2] Add interconnect support for SM8450
+Message-ID: <YbHAALDqcFBtRZlS@matsya>
+References: <20211209072251.185634-1-vkoul@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211209072251.185634-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2021-12-07 03:40:03)
-> diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
-> new file mode 100644
-> index 000000000000..82ac419718d7
-> --- /dev/null
-> +++ b/drivers/clk/qcom/gcc-sm8450.c
-> @@ -0,0 +1,3303 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2021, Linaro Limited
-> + */
-> +
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/regmap.h>
+On 09-12-21, 12:52, Vinod Koul wrote:
+> This add device tree binding and driver for interconnect providers found in
+> SM8450 SoC.
+> 
+> Changes in v2:
+>  - remove sync state call
+>  - Make dt binding dual license
+>  - Fix the indexes to start from 0
 
-BTW, clk providers need to include clk-provider.h
+I have sent the wrong version, pls ignore, will resend the corrected one
+
+> 
+> Vinod Koul (2):
+>   dt-bindings: interconnect: Add Qualcomm SM8450 DT bindings
+>   interconnect: qcom: Add SM8450 interconnect provider driver
+> 
+>  .../bindings/interconnect/qcom,rpmh.yaml      |   11 +
+>  drivers/interconnect/qcom/Kconfig             |    9 +
+>  drivers/interconnect/qcom/Makefile            |    2 +
+>  drivers/interconnect/qcom/sm8450.c            | 1987 +++++++++++++++++
+>  drivers/interconnect/qcom/sm8450.h            |  169 ++
+>  .../dt-bindings/interconnect/qcom,sm8450.h    |  171 ++
+>  6 files changed, 2349 insertions(+)
+>  create mode 100644 drivers/interconnect/qcom/sm8450.c
+>  create mode 100644 drivers/interconnect/qcom/sm8450.h
+>  create mode 100644 include/dt-bindings/interconnect/qcom,sm8450.h
+> 
+> -- 
+> 2.31.1
+
+-- 
+~Vinod
