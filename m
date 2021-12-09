@@ -2,75 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5A3546E7FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 13:04:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14AFF46E809
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 13:07:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235989AbhLIMHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 07:07:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56458 "EHLO
+        id S237075AbhLIMKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 07:10:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbhLIMHy (ORCPT
+        with ESMTP id S232748AbhLIMKb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 07:07:54 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19244C061746;
-        Thu,  9 Dec 2021 04:04:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9E686CE24D7;
-        Thu,  9 Dec 2021 12:04:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48231C341C6;
-        Thu,  9 Dec 2021 12:04:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639051457;
-        bh=pguoaYTdAlZwqo3FoVAuUSGuWCNb7rD363z+iOENWZ0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bOQtgDpIrlwJhsubJAJjaf3rbV38BDe3GuCNQmnoI0AY64eatGbEf5DJ8UYsot+db
-         9s8VQq1JCIoUS1RilfbnzFWdzdM2vScomQtuodoeGkb2KIjL7obKV4oIRoo25TC7sj
-         ojCJKKuEEYEIt3A/z63Aagcv7psXAGus9/to0QR5gndZNz3og8TxRYVINCTJkWIGLw
-         LW937LQd5YD8GNOiqSmZQOxplsLVmLerHZUOlXu6QNIfsOOBUXahrLXlGmQnorFuac
-         dJHVR4PqEsjU693twUyQIODL4gLrm6Lgz1HTCgXFCQ9lqn7LipberAKxB9h5thqjTT
-         RmYU28zQ5beow==
-Date:   Thu, 9 Dec 2021 17:34:13 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] clk: qcom: Add clocks for SM8450 SoC
-Message-ID: <YbHwvQFtg992DlgL@matsya>
-References: <20211207114003.100693-1-vkoul@kernel.org>
- <20211209081946.4B3D8C004DD@smtp.kernel.org>
+        Thu, 9 Dec 2021 07:10:31 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7BB7C061746
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 04:06:57 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id d9so9318347wrw.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 04:06:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=B4jzaZ5YOJWu9qAvUf9/4CV89gWjgVfjWYj9x/kP2HA=;
+        b=hfcRJLtLiVbPbRF4KYYE1ebR7ZfnDM508HNZLaUNAsnv084HrNTvRgeGbymQrsP73F
+         7kCWBmRE9/FvmBifXPnF2YXbpkkq9DlCwcUtAJrOvmirv0o9uf2sk5TQao+YraIO8ivr
+         +piXSH2QVbamvpDna+Ce5yv9dAP3k2h0RJEbvDshABs2AlnMVSBpmW0yPus18bMBQ/Ke
+         x/UQWvsQKMpRV0DpLMaq9xuIvtpv537/muuMZ7Zhl8WBAt/icnPvY3RVdBeaF7VGX532
+         KkA9hHn6i5Pb/UgUwxSMHehCI5kw1mfUxuUf1nQPEqgXHZGKnezghXiDTIHFIj8bTl2u
+         XdKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=B4jzaZ5YOJWu9qAvUf9/4CV89gWjgVfjWYj9x/kP2HA=;
+        b=IUGq8svTgumEkwvNKL62eqwo1oZ4kN0Df58oINeyLGHRvwCGWYegRo2HeXXXh1YGOK
+         wP610e8/9yW35rI4EIbi5fNAw+ncl/QcHf1lvARiTQqK6fnrnMzzfj6trLnKeYHc5vyQ
+         gFV4zNE4XipQz06MtyDTK8cCy/1rbdKlhRlaQUWV5A9pq/L6f4FlZkrWXRssd2JWqzWM
+         poUmoEUAUkIVYWwuUpt+0nZCwC+LDKb0o5nN7Kd6SN/abzmbTx7AYP4O3FtEOR150v2Y
+         cNsmjBm5a6fXw8jTEY7ssGycN0kETHha+lWf1SD6efdB8EhdYSMWa4dj2EHd300oc2ft
+         Jd2g==
+X-Gm-Message-State: AOAM533XU5kvxwI0uFoqebjd2vFodY5rPnU4nDPlNcxtLh5wbW1XhjcI
+        kqfjNTiBR+0dSq/NVrn1D1cPLw==
+X-Google-Smtp-Source: ABdhPJzZfw3mlbeipW3+11C2/S0zlS2fPPTFDvdDIuXdoewUGyedFIfxJ3HNrw1JuefDqKtL1WiY8g==
+X-Received: by 2002:adf:d1e2:: with SMTP id g2mr6212838wrd.105.1639051616283;
+        Thu, 09 Dec 2021 04:06:56 -0800 (PST)
+Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.gmail.com with ESMTPSA id 4sm7513289wrz.90.2021.12.09.04.06.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 04:06:55 -0800 (PST)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
+Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/8] misc: fastrpc: Add missing DSP FastRPC features
+Date:   Thu,  9 Dec 2021 12:06:18 +0000
+Message-Id: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211209081946.4B3D8C004DD@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-12-21, 00:19, Stephen Boyd wrote:
-> Quoting Vinod Koul (2021-12-07 03:40:01)
-> > This series adds the GCC clock support required for SM8450 SoC
-> > along with devicetree binding for these clocks.
-> > 
-> > Please note that the GCC driver patch depends on new alpha LUCID_EVO
-> > introduced by Vamsi in [1]. That would be required to be picked before this
-> > patch can be applied.
-> > 
-> > [1]: https://lore.kernel.org/all/a0b04869a20a0afef99dd457ebb6474f50591210.1637302009.git.quic_vamslank@quicinc.com/
-> 
-> Can you use --base with format-patch please so that kbuild robot doesn't
-> get angry? I think the robot may be able to find the patches and apply
-> them now if you tell it what to base it on.
+This patchset adds below DSP FastRPC features that have been missing in
+upstream fastrpc driver and also cleans up channel context structure with kref.
 
-Aha, it would be interesting if bot is able to pick a patch using
---base, let me try that for next rev and see if it is happy
+- Add ablity to reflect if the DSP domain is secure/unsecure by creating
+ seperate device nodes for secured domain, this would used by SE policy
+ to restrict applications loading process on the DSP.
+- Add new IOCTL to get DSP capabilites
+- Add IOCTL to support mapping memory on the DSP.
+
+Tested this series on DragonBoard 845c with TensorFlow.
+
+dt bindings patch has dependency this yaml conversion patch:
+"dt-bindings: misc: fastrpc convert bindings to yaml"
+https://lore.kernel.org/lkml/20211208101508.24582-1-david@ixit.cz/T/
+
+Jeya R (6):
+  misc: fastrpc: add remote process attributes
+  misc: fastrpc: add support for FASTRPC_IOCTL_MEM_MAP/UNMAP
+  misc: fastrpc: Add support to get DSP capabilities
+  dt-bindings: misc: add property to support non-secure DSP
+  misc: fastrpc: check before loading process to the DSP
+  arm64: dts: qcom: add non-secure domain property to fastrpc nodes
+
+Srinivas Kandagatla (2):
+  misc: fastrpc: separate fastrpc device from channel context
+  misc: fastrpc: add secure domain support
+
+ .../bindings/misc/qcom,fastrpc.yaml           |   5 +
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |   1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   3 +
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   3 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |   3 +
+ drivers/misc/fastrpc.c                        | 390 +++++++++++++++++-
+ include/uapi/misc/fastrpc.h                   |  76 ++++
+ 8 files changed, 470 insertions(+), 13 deletions(-)
 
 -- 
-~Vinod
+2.21.0
+
