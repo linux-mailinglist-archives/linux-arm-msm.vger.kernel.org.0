@@ -2,39 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B61446E403
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 09:19:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0587F46E40C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 09:21:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234578AbhLIIXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 03:23:22 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:44380 "EHLO
+        id S234628AbhLIIZD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 03:25:03 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:45116 "EHLO
         ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234509AbhLIIXV (ORCPT
+        with ESMTP id S230064AbhLIIZD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 03:23:21 -0500
+        Thu, 9 Dec 2021 03:25:03 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AFD36B823D0;
-        Thu,  9 Dec 2021 08:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3D8C004DD;
-        Thu,  9 Dec 2021 08:19:46 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C5D6CB823D2;
+        Thu,  9 Dec 2021 08:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0EBC004DD;
+        Thu,  9 Dec 2021 08:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639037986;
-        bh=hfXj6sEyMGh7apbVadKjPkQJEvpUksXZWQAcf6+Il2Y=;
+        s=k20201202; t=1639038087;
+        bh=/epx/kj5/UGqlUpvoeF11GwQs9DJoP5bPmmJQsxb+Lw=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=KhsEMYlx5JBk+yFLyBd29T8lc96x2Xr0zBDQ4g4QozYrKVC1E2HXSIDDz0kgGC8ro
-         mOBx+JemsX8yvFI0gJL5FGURT8Lu+YleMfkdqn1a2mgImq3KXGOlcsvb0cnWOi8ifV
-         ysDk43Ir2O8hedk09y68gUFOJw+JJJQKa63nRnIv69kWKvKIl4esYbQw4t5uutDgNV
-         OLtzlH5kymnZL4dP+Z516m7cNb7TBeCloqt985C+CPxqiyWHyQ2zBJuxmo2ZhHWnGC
-         y7xzczdNgK1pynhdMBgGTVb5ZXL66zH2YwJSeokpM01bn+/eERYci8MujG6820fGSA
-         5Q+jZFwYyGhvw==
+        b=axTWbOD9oty4jLJP6aofzyvGPzvRzD5JbrmrEDLkyblqMgJL73uJpB9yRh8n2vZrj
+         q94wObpXvhdyYkM1sl4SOTuQYx6HpliOY4IbYlWX0WgxzBbIeP/nL+HcbtsDRDlahl
+         KcTZnyqDrwPNkAv+KNwkaP5mv1Qn/QKLAMt/tCs83wrz6RwpHfCcO84Y0wG/fM3Mdj
+         rTHHxsQ5ST599jNzfa1o/iUoUyVqu87MQm0KaumHooJQ4OdkM4QYqjqgENelMOl4qL
+         ho+zzcig5yOjGLWb/8CmJ+tgRLxxKatAOYVljrlKf5165YMf4bw8jQxkz9LaqFGOg/
+         VSThHqtwb6jzw==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211207114003.100693-1-vkoul@kernel.org>
-References: <20211207114003.100693-1-vkoul@kernel.org>
-Subject: Re: [PATCH v2 0/2] clk: qcom: Add clocks for SM8450 SoC
+In-Reply-To: <20211207114003.100693-2-vkoul@kernel.org>
+References: <20211207114003.100693-1-vkoul@kernel.org> <20211207114003.100693-2-vkoul@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add SM8450 GCC clock bindings
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -44,25 +44,17 @@ Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
         linux-kernel@vger.kernel.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Date:   Thu, 09 Dec 2021 00:19:44 -0800
+Date:   Thu, 09 Dec 2021 00:21:26 -0800
 User-Agent: alot/0.9.1
-Message-Id: <20211209081946.4B3D8C004DD@smtp.kernel.org>
+Message-Id: <20211209082127.7C0EBC004DD@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2021-12-07 03:40:01)
-> This series adds the GCC clock support required for SM8450 SoC
-> along with devicetree binding for these clocks.
+Quoting Vinod Koul (2021-12-07 03:40:02)
+> Add device tree bindings for global clock controller on SM8450 SoCs.
 >=20
-> Please note that the GCC driver patch depends on new alpha LUCID_EVO
-> introduced by Vamsi in [1]. That would be required to be picked before th=
-is
-> patch can be applied.
->=20
-> [1]: https://lore.kernel.org/all/a0b04869a20a0afef99dd457ebb6474f50591210=
-.1637302009.git.quic_vamslank@quicinc.com/
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
 
-Can you use --base with format-patch please so that kbuild robot doesn't
-get angry? I think the robot may be able to find the patches and apply
-them now if you tell it what to base it on.
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
