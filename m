@@ -2,98 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD16C46EF61
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 18:00:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D29F46F002
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 18:03:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238086AbhLIREO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 12:04:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
+        id S242136AbhLIRGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 12:06:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236740AbhLIREF (ORCPT
+        with ESMTP id S242138AbhLIRGS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 12:04:05 -0500
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44024C061353
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 09:00:32 -0800 (PST)
-Received: by mail-ua1-x936.google.com with SMTP id o1so11968082uap.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 09:00:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Nr5wuPhhGNTWonGmo2iX/gwdOzJ5S4cBCmGZ538zbok=;
-        b=NuDQEGrch6pNlNwYhNqd2wRy3q6W+rwMD/HsJRZhVNBHkpuPJoUbjulXl1homoseF7
-         1kKcr1HS2zoHGQQbixwftxedLSup7HNF2iiDJ04EHLOs1thMrn+1EWilS7DaRl119Jwi
-         I153BpHn87yCHVAxsHrI3Ecf6L6WByIvOdyJj2cG6+dHgYw6WJrs6MeuBGLDZ5gqRThH
-         nrZjKsu0OEOd1GBpvvojAC3FEXgHsQeK3gKQS6RdVvw/H4Z3Qamyvkc79HPUFzLMAXdH
-         6qJVFSWpexQi3VDB9BTMZyxVICvTBg7F9Fz4+ic625GPauuEelloWtYlTBlIZ1E3BU3u
-         BHOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Nr5wuPhhGNTWonGmo2iX/gwdOzJ5S4cBCmGZ538zbok=;
-        b=d6RPV/08aZFu7JWKu7J2/W0dKVwVd5VSwXmYbMoJeP4mfuy+tFzq/bGg1OjezQDA/b
-         XmD0eFJVYFwznjsPJTCvLVPgHjOKmdxg6BoICt2SGHnCIIMn5qLBiYuTUK7b+NVTEBi5
-         r138vzy/XTPg4xc7LbyKhH3PjZsGJ6rZdOjSFn8AcwXl834tR35SSpPOkdXVNWsaXrRc
-         slhWVEnqOUzPsH0bbnNpKluA4wcSOM2OhD7uQyvnzqHyGVZck0Wgi650K/J+3tdGHi2W
-         y0v4eeR1W11IEo3prFNgO8cnzLKK3WfcRoqC0Gue4hEBUCXLK+iZd83uxz7BIrPCWnlB
-         N1dw==
-X-Gm-Message-State: AOAM530OIvFEBKJAMhWdFE4kHcsoDr1kIRJX94knN7FTqA+kZVVtXwN+
-        P8aCEFILkpjPb9gAWAY4F11XEVaHhWcc35EVdv/qztA82MLMIyVlPtg=
-X-Google-Smtp-Source: ABdhPJz0iRDOuw/M+YaSvjbo97c5cFzgJ2BQX0SuXLvY44zzegatZmpXZ1bu6kLKl5yEfvfXxPxcTI41wUiGmm6vGZg=
-X-Received: by 2002:a0c:fb09:: with SMTP id c9mr17896098qvp.119.1639069220198;
- Thu, 09 Dec 2021 09:00:20 -0800 (PST)
+        Thu, 9 Dec 2021 12:06:18 -0500
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB7AC061353
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 09:02:44 -0800 (PST)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 45AE63F63F;
+        Thu,  9 Dec 2021 18:02:41 +0100 (CET)
+Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Fix timeout issues on command mode
+ panels
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>, robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org
+References: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
+ <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
+ <b325fc8d-e06b-36de-b40a-b5ffbcebb1c5@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <94bedea3-0e5f-5ae8-79d1-ceb17ccdea23@somainline.org>
+Date:   Thu, 9 Dec 2021 18:02:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <1639063917-9011-1-git-send-email-quic_rjendra@quicinc.com> <1639063917-9011-2-git-send-email-quic_rjendra@quicinc.com>
-In-Reply-To: <1639063917-9011-2-git-send-email-quic_rjendra@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 9 Dec 2021 20:00:09 +0300
-Message-ID: <CAA8EJpqVtGQCzQwkZ2jJ5EnhtANNRPuFOYQhQkFvHJ30xU8quQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] soc: qcom: rpmhpd: sm8450: Add the missing .peer
- for sm8450_cx_ao
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, mka@chromium.org,
-        Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b325fc8d-e06b-36de-b40a-b5ffbcebb1c5@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 9 Dec 2021 at 18:32, Rajendra Nayak <quic_rjendra@quicinc.com> wrote:
->
-> sm8450_cx and sm8450_cx_ao should be peers of each other, add the
-> missing .peer entry for sm8450_cx_ao
->
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Il 02/10/21 00:33, Dmitry Baryshkov ha scritto:
+> On 11/09/2021 19:39, AngeloGioacchino Del Regno wrote:
+>> In function dpu_encoder_phys_cmd_wait_for_commit_done we are always
+>> checking if the relative CTL is started by waiting for an interrupt
+>> to fire: it is fine to do that, but then sometimes we call this
+>> function while the CTL is up and has never been put down, but that
+>> interrupt gets raised only when the CTL gets a state change from
+>> 0 to 1 (disabled to enabled), so we're going to wait for something
+>> that will never happen on its own.
+>>
+>> Solving this while avoiding to restart the CTL is actually possible
+>> and can be done by just checking if it is already up and running
+>> when the wait_for_commit_done function is called: in this case, so,
+>> if the CTL was already running, we can say that the commit is done
+>> if the command transmission is complete (in other terms, if the
+>> interface has been flushed).
+> 
+> I've compared this with the MDP5 driver, where we always wait for PP_DONE 
+> interrupt. Would it be enough to always wait for it (= always call 
+> dpu_encoder_phys_cmd_wait_for_tx_complete())?
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This sets my delay record to reply to two months. Great achievement!
 
-> ---
->  drivers/soc/qcom/rpmhpd.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> index e7e150c..2032cf3 100644
-> --- a/drivers/soc/qcom/rpmhpd.c
-> +++ b/drivers/soc/qcom/rpmhpd.c
-> @@ -264,6 +264,7 @@ static struct rpmhpd sm8450_cx = {
->  static struct rpmhpd sm8450_cx_ao = {
->         .pd = { .name = "cx_ao", },
->         .active_only = true,
-> +       .peer = &sm8450_cx,
->         .res_name = "cx.lvl",
->  };
->
-> --
-> 2.7.4
->
-
-
--- 
-With best wishes
-Dmitry
+Jokes apart, yes it would make sense to do that, it's something that works
+at least... but we should verify that such a thing doesn't break new platforms
+(like sm8150 and newer).
