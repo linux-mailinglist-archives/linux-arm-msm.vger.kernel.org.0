@@ -2,90 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5878B46E06D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 02:51:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58CB446E0A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 03:02:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235365AbhLIByi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Dec 2021 20:54:38 -0500
-Received: from mga18.intel.com ([134.134.136.126]:51646 "EHLO mga18.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233346AbhLIByi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Dec 2021 20:54:38 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10192"; a="224863196"
-X-IronPort-AV: E=Sophos;i="5.88,190,1635231600"; 
-   d="scan'208";a="224863196"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Dec 2021 17:51:05 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,190,1635231600"; 
-   d="scan'208";a="612325895"
-Received: from lkp-server02.sh.intel.com (HELO 9e1e9f9b3bcb) ([10.239.97.151])
-  by orsmga004.jf.intel.com with ESMTP; 08 Dec 2021 17:51:02 -0800
-Received: from kbuild by 9e1e9f9b3bcb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mv8aM-0001JT-47; Thu, 09 Dec 2021 01:51:02 +0000
-Date:   Thu, 9 Dec 2021 09:50:16 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Loic Poulain <loic.poulain@linaro.org>, bjorn.andersson@linaro.org,
-        agross@kernel.org
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        shawn.guo@linaro.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: Re: [PATCH 1/2] clk: qcom: Add display clock controller driver for
- QCM2290
-Message-ID: <202112090948.3tbho958-lkp@intel.com>
-References: <1638983841-23773-1-git-send-email-loic.poulain@linaro.org>
+        id S229718AbhLICFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Dec 2021 21:05:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60094 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229604AbhLICFg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Dec 2021 21:05:36 -0500
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48FF2C061353
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 18:02:04 -0800 (PST)
+Received: by mail-oo1-xc30.google.com with SMTP id d1-20020a4a3c01000000b002c2612c8e1eso1364708ooa.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Dec 2021 18:02:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6jF6qRe5SRMSQZX8Z8oZJBZNxo3XePJj0xDc5654/qk=;
+        b=wCoIOYuGPwfhnh5mM8AFZxRvgEPnUsc5SsVISnljiYoCtEFEY5OwxVjc2qHSvDoVHl
+         5rUPE3/+8tOvWbZXMrYYgorbcYEd6PUoM/KOi8ic4/04344sX2XQlY4rHOGCB0mievKi
+         inqa6tXO3P2+P/g4H1Uh4RLYO/DioOGyKOPgxXPGRjlfoxpqMGNxWBY3oQkA6IO1sArM
+         6T1q2W4a6EmzJ6yZgOmHkbV7bx3hcM5cDvkM5NnnnZ0GvwwpIjNv+P40xLsrzveaj4Ej
+         cE7fWuY+j7j5wtbh6IAtAONqSvAz+mWIIHBfSTnoqdu58vD5zkJWZ2oSXv8KVKkHsbcY
+         xJPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6jF6qRe5SRMSQZX8Z8oZJBZNxo3XePJj0xDc5654/qk=;
+        b=Fh7Lz+P2+SQVatFmYTKs4h9Ii039zx/hGC7gNzU9Z2g6qIu06YmPQFbF2vvVZueqD1
+         k3Z+YuDL3blnniB0Bb4nj8Tc+1+YRpgkaaean4F/DTG9C4f9SewL0ymXKKoY5iWv07Lc
+         vYJC/VeRjwcdUVSJ4WanHd0LLsjthluP93vYEp4LR7RyulGvPix+UaWKYdCc5MDn1BR5
+         P0iW2ELD57kVfQvFSTUZ655Io9Ej0iwqSVvxK/ctjIVZOHVjF58u6tgqbuJlInk8n08u
+         M3HOv/OBQXfaaRRLzvAYc9n084gYK4GTtNNwiHYhLfDCAWifdPkor6Wrd6p2MT/oaBIB
+         La0w==
+X-Gm-Message-State: AOAM531kXPWWu7FDwtI0UJuUTVXzR6FJlQxTcuhKnMpGRcRWftKmN7WO
+        uuU/+iAGVPHysIonI3Nb7c4kZFFhxlF1+G+Fza2Nfg==
+X-Google-Smtp-Source: ABdhPJwwJMv8SYHU3EkSbYrgYngnVgHQ4AO8cwD1tYGgWSvzZ9StW1TExuN282563HLeY7phJa9zhbYnSnz/V5tFY1k=
+X-Received: by 2002:a4a:aa8f:: with SMTP id d15mr2221617oon.86.1639015323501;
+ Wed, 08 Dec 2021 18:02:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1638983841-23773-1-git-send-email-loic.poulain@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20211201072434.3968768-1-vkoul@kernel.org> <20211201072434.3968768-2-vkoul@kernel.org>
+In-Reply-To: <20211201072434.3968768-2-vkoul@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 9 Dec 2021 03:01:51 +0100
+Message-ID: <CACRpkdZP7Po9JaozB7s7--qoM90a1YBdu0bwTHYPuDi-Cr0sXw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM8450 pinctrl bindings
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Loic,
+On Wed, Dec 1, 2021 at 8:24 AM Vinod Koul <vkoul@kernel.org> wrote:
 
-I love your patch! Yet something to improve:
+> Add device tree binding Documentation details for Qualcomm SM8450
+> TLMM device
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on v5.16-rc4 next-20211208]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Patch applied!
 
-url:    https://github.com/0day-ci/linux/commits/Loic-Poulain/clk-qcom-Add-display-clock-controller-driver-for-QCM2290/20211209-010708
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: arc-allyesconfig (https://download.01.org/0day-ci/archive/20211209/202112090948.3tbho958-lkp@intel.com/config)
-compiler: arceb-elf-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/132fa9b498019a624b89dec6e53e34b480eb4be2
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Loic-Poulain/clk-qcom-Add-display-clock-controller-driver-for-QCM2290/20211209-010708
-        git checkout 132fa9b498019a624b89dec6e53e34b480eb4be2
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arc SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/dispcc-qcm2290.c:16:10: fatal error: dt-bindings/clock/qcom,dispcc-qcm2290.h: No such file or directory
-      16 | #include <dt-bindings/clock/qcom,dispcc-qcm2290.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
-
-
-vim +16 drivers/clk/qcom/dispcc-qcm2290.c
-
-    15	
-  > 16	#include <dt-bindings/clock/qcom,dispcc-qcm2290.h>
-    17	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Yours,
+Linus Walleij
