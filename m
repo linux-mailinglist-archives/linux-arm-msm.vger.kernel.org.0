@@ -2,62 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFAF846EC25
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:48:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D9AC46EC4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:53:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240351AbhLIPvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 10:51:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52796 "EHLO
+        id S236451AbhLIP5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 10:57:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234711AbhLIPvf (ORCPT
+        with ESMTP id S240275AbhLIP5K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 10:51:35 -0500
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BDCFC061746
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:48:01 -0800 (PST)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9B577200DE;
-        Thu,  9 Dec 2021 16:47:59 +0100 (CET)
-Message-ID: <dbc46d99-cb29-f92b-39ed-4fd612140dbe@somainline.org>
-Date:   Thu, 9 Dec 2021 16:47:59 +0100
+        Thu, 9 Dec 2021 10:57:10 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AFC5C0617A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:53:36 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id v15-20020a9d604f000000b0056cdb373b82so6611901otj.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 07:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=teCAGr085bdZ4lPWE27L7iqOE1BiGOFh69OcRYHaJr8=;
+        b=pGyjg0/+xZVng2cVQXWWsKUc88C6swklcuvBgvdA111gyYqgJNG5z2ptXZwADZsFLr
+         N3BYsYYT9VmRYqZox6QoxvtnjB7Ya+a6r2CwuqnTlPuWqv/AQs1i/mWPPyhBmWziItVN
+         +yi7NtPOBOPgzeAhNm8qDvmj/VIBhH8VXb/rgaGJeFfInDzuwgpSl1gYBpsDnqYXUey4
+         gQS2+GJoko5doX4eCIeDwnfVdBwDLtlzBdwegQ5sQu6viS/EpuTiyR4+42Aq2BxQ3DxG
+         +aoqXQ+rPMNs7c2yUjbaNRY9t+jTjVpELEyWL5pJrtxwGFpBWcaYic1yBGLrLHZHw/70
+         kp4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=teCAGr085bdZ4lPWE27L7iqOE1BiGOFh69OcRYHaJr8=;
+        b=c2wVMpjIjvdlxOEacorCaBRd7L0wcrL8fs8WDbSfVncA9l2kwPyCYaNCtkbBitlZuy
+         bN12A1Ev9OVx5VsFLGaRywWARRwZM2mdyL236Jwo439lJNJhdjog4PhezLVUYNpuIaWz
+         qPa13Q+9YGGZ2KXTbcgVLWOJWfVvo5Bua7LxORF3Z90FBhTEcLYwP3DXYa8kveROg8aS
+         UsxgbyNz97sPCkeTOLdDl11rqFHTfGbgosMQEzOPr6jslNduZ9qUtD2ABwzhKHkIH32k
+         FKTDFaV33MZpK80fHruF9+jCr5QIlk0wbBvKuLNjMmb8YS6/RW1ZJZw5EfSnL7XuOLqF
+         0G7g==
+X-Gm-Message-State: AOAM5305DBJP3UXAZvUn+0zkcsPl6dIZP2xauVJMN6Vj1ZprlyOTZAm8
+        PlV2oI7hxlfWsQfvLNzN4HKBEg==
+X-Google-Smtp-Source: ABdhPJwYlieaUMEQSN7A+roUw7LnHpjqAoycTJXj2RAf9b0rCTv3PWHP0FnyuVcmdtKQYTXjKPBDVw==
+X-Received: by 2002:a9d:17cc:: with SMTP id j70mr5960254otj.313.1639065215683;
+        Thu, 09 Dec 2021 07:53:35 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x16sm43682ott.8.2021.12.09.07.53.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Dec 2021 07:53:35 -0800 (PST)
+Date:   Thu, 9 Dec 2021 09:53:32 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org, mka@chromium.org
+Subject: Re: [PATCH v3 0/4] soc: qcom: rpmhpd: Cleanups and fixups for
+ sc7280/sm8450
+Message-ID: <YbImfOvIpO4ujxTx@builder.lan>
+References: <1639063917-9011-1-git-send-email-quic_rjendra@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH v2 13/13] arm64: dts: qcom: sm8450: add i2c13 and i2c14
- device nodes
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211209103505.197453-1-vkoul@kernel.org>
- <20211209103505.197453-14-vkoul@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-In-Reply-To: <20211209103505.197453-14-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1639063917-9011-1-git-send-email-quic_rjendra@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/12/2021 11:35, Vinod Koul wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Add device tree nodes for two i2c blocks: i2c13 and i2c14.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 52 ++++++++++++++++++++++++++++
->   1 file changed, 52 insertions(+)
+On Thu 09 Dec 09:31 CST 2021, Rajendra Nayak wrote:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> v3:
+> * used the _w_<parent-name>_parent suffix instead of _no_parent
+> * Added a minor fix for sm8450 while rebasing 
+> 
+> v2:
+> * Fixed the wrong assumption in v1 that only sdm845 needed mx to be
+> parent of cx, turned out all existing upstream SoCs need it except sc7280
+> * Added another cleanup patch to sort power-domain defines and lists in
+> alphabetical order as suggested by Matthias
+> 
+> Mostly cleanups, with a fixup to remove the parent/child relationship
+> across mx/cx for sc7280 SoC, and a fixup to add missing .peer for sm8450
+> 
 
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Konrad
-
+> Rajendra Nayak (4):
+>   soc: qcom: rpmhpd: sm8450: Add the missing .peer for sm8450_cx_ao
+>   soc: qcom: rpmhpd: Rename rpmhpd struct names
+>   soc: qcom: rpmhpd: Remove mx/cx relationship on sc7280
+>   soc: qcom: rpmhpd: Sort power-domain definitions and lists
+> 
+>  drivers/soc/qcom/rpmhpd.c | 358 +++++++++++++++++++++++-----------------------
+>  1 file changed, 181 insertions(+), 177 deletions(-)
+> 
+> -- 
+> 2.7.4
+> 
