@@ -2,210 +2,763 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D969746E926
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 14:30:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68C3746E980
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 14:57:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237977AbhLINeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 08:34:20 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32]:21926 "EHLO
-        mx0a-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233327AbhLINeT (ORCPT
+        id S238270AbhLIOAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 09:00:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231816AbhLIOAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 08:34:19 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1B9DDsYp028912;
-        Thu, 9 Dec 2021 13:30:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : content-type : in-reply-to : mime-version;
- s=corp-2021-07-09; bh=t/YeX/c0gvO9cwdKiipW4oEUyDOnsZ4gPMW/M/jr7Cw=;
- b=q565+A7x7MTgO2pkQ00q9MSTB+D18Tadvx/2wAZ3cPLlkWMVXAeytH3hiSKl1QY6pssh
- fkM1Wv33f/XoRqP8DK5CQN5Nqo66tPWAwdNWxAMH9wVS5b85no01PvFbRgHI5Zud3yhL
- k7wnLIPpuwI9AvJkPj2WFYkekIjmszHrGLook81f9KEQbo7WDNcC9ETKyeZFxYmuiy75
- +Qd43bN5Vhug2CyJ91Ds4d59YNXTM+PlkvX1xFaBNSwssNfoGMzC+DDbADyTYcs3ANv6
- kfj5lCEWLCGHrbAZ4tjgMdKi6gpY/9iJUMA4mPcDxSQ8VxkffvxWv1MM5XzA8oQsSkjT Uw== 
-Received: from userp3020.oracle.com (userp3020.oracle.com [156.151.31.79])
-        by mx0b-00069f02.pphosted.com with ESMTP id 3ctse1kb2e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 09 Dec 2021 13:30:35 +0000
-Received: from pps.filterd (userp3020.oracle.com [127.0.0.1])
-        by userp3020.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 1B9DGmsF112367;
-        Thu, 9 Dec 2021 13:30:34 GMT
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2168.outbound.protection.outlook.com [104.47.59.168])
-        by userp3020.oracle.com with ESMTP id 3cr1sshbwj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 09 Dec 2021 13:30:34 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kh8yJuSvi+7KuQVK4CO1QUf7oYzKCQutDpgUI7qVG3PWhDaW9NM4es/DIFNk1iMIF2Gtkjobq0eanySYs1rIEsUkJpn7Uc3Oib/g4PZnUFWRa9/8dwhN/3RbG65hp9GYH7Om6ZzyvsaddrGVI9r8KS5IyGtwxkDoqIm7jwBTQj6VD+qzu9vyTLJyZRWeh7D6jaQiEsDadKIo4Hkxd7Lo/YAlIfRKniPgw6w5n1WSZLVElAn57uPnqKoKtXG2uUodAKW421MmreIO2fDolEhPC89XdD4MBvXZVoIq6wW+fSDcGEEde4+/V1trR6XVTKxdoWkInI/qiqLAaGWGkTIyJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t/YeX/c0gvO9cwdKiipW4oEUyDOnsZ4gPMW/M/jr7Cw=;
- b=chD4G4AxRUrWyC+rFL7GzSRQADIJRO3EU5tVmluKIo21yiuyBaYoXvUHIBxBxbPwKYBSmRsgHnMynypoVbGOkPBv4q7qJIE/ZudexGewMMYRauVk5Kt0S0TvliWgbYwmo/w6ZT/mTq7vY+GJSHKxm2HZLEzc/LPp7VgLc40GIKGmxdzBKkt5LvEKQopDKmoK8XSmC3mI8Ey5G5CHGgz+muR2Hyh1AUQgcqeOcgAAIkd38WaSpYeSzN5XA6+7+CCoYauUHtJOT1hV3st0kpOOkTBYwoTE3vy9FRaIrFx96T3HW3sVRhVirwZaNR7d0KltEeeyu4/RSxAmSkIYTiGccg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+        Thu, 9 Dec 2021 09:00:42 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D80CC061746
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 05:57:08 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id 77-20020a1c0450000000b0033123de3425so6657200wme.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 05:57:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t/YeX/c0gvO9cwdKiipW4oEUyDOnsZ4gPMW/M/jr7Cw=;
- b=z64N5QhxabS3OBRM3fyHQJQUsU2hfDZDPKN+ZIW013RhxjprF6BGr0YZeqk79zPRafhDaYbx8+QRvP1P9AlxDIHIHjQIGwwzbTgpZkGMUkUjjn/2ZPcQAa0cRjc6t9asrWXgrchJs59qXpqdv0QQiklzjyCkoYMRCiYE5cAj7jc=
-Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
- (2603:10b6:301:2d::28) by MWHPR10MB1565.namprd10.prod.outlook.com
- (2603:10b6:300:24::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.21; Thu, 9 Dec
- 2021 13:30:32 +0000
-Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
- ([fe80::7194:c377:36cc:d9f0]) by MWHPR1001MB2365.namprd10.prod.outlook.com
- ([fe80::7194:c377:36cc:d9f0%6]) with mapi id 15.20.4755.024; Thu, 9 Dec 2021
- 13:30:32 +0000
-Date:   Thu, 9 Dec 2021 16:30:03 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     kbuild@lists.01.org, Sai Teja Aluvala <quic_saluvala@quicinc.com>,
-        marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     lkp@intel.com, kbuild-all@lists.01.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        quic_hemantg@quicinc.com, linux-arm-msm@vger.kernel.org,
-        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
-        hbandi@codeaurora.org
-Subject: [kbuild] Re: [PATCH] Bluetooth: btqca: sequential validation
-Message-ID: <202112090340.ohuHwTLx-lkp@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1638952007-32222-1-git-send-email-quic_saluvala@quicinc.com>
-Message-ID-Hash: QE3P43AIAF2DSHCYIZOO4N7NCULSVGIY
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-ClientProxiedBy: JNXP275CA0001.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:19::13)
- To MWHPR1001MB2365.namprd10.prod.outlook.com (2603:10b6:301:2d::28)
-MIME-Version: 1.0
-Received: from kadam (102.222.70.114) by JNXP275CA0001.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:19::13) with Microsoft SMTP Server (version=TLS1_2, cipher=) via Frontend Transport; Thu, 9 Dec 2021 13:30:20 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 9ee910da-fed9-40f3-24a3-08d9bb1812d7
-X-MS-TrafficTypeDiagnostic: MWHPR10MB1565:EE_
-X-Microsoft-Antispam-PRVS: <MWHPR10MB1565005108DA3D2C94588AD48E709@MWHPR10MB1565.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2512;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hXXBNJvJdTaxpzrqX1SfZSgU4Y6RkfKcF+WhpcN3+PEQAurRscNm2TqlmaO1qPJD9IzFL0dv01ZiwP8qvpGGufonJpCss3jLOfIu1NNq/opH731QUM0f7rBbfFvW3pthlDvNeZEleHJjWDiRkndqHV4UzmWIaYaFzNqLSbs42r9koR9M38WNhxV/axbEgeRRH8Hs4UuZMwmIdbqutqj8vEhJ28q2jV65fywRq7f8gjQ1hnAj1By3ASkYU/wZ2jSBsFFLIDB8nhYfrpCZBZEwh46loY0H6qSaG4lipGoS7u550U3bz9So4mJK13lgpImUutvYQJPhnF7dHKJadh3oM81VV2Lv+rxJGw7p6DHzC+F8AZrDBmHqnvswGayo78la7e0OXkaKgieePmGXSz2mpSpl8I6kzKZhL7NjzF/YTpp4CN7DXjgejE87PfQT0Pnzh4N7uCl+5Ob8fFYmlkHI/o68vMvx2Jwaw42EW5wWwifTwN0FC7gs15WJZsoQiL4fPsN9dhNG7O4UPDH9WW8pBzOAt1tMLPOr8Bn5WnIZ54WRvHfvp5TpCZgP1wex/kDPro/MbzkrMD1ldt5AWa33g9VzAdAmxYNA0rxhhdCZZmgVopKtBFB6ZCaITaR+DHRlOHnKpUbcMjnzdlv+vpfz8eevv4Ntc6EbxnSW/6h3uPE8zk5YS+PLqLBqPYyTUbSn4dHXnLHNsthEuL96PemHHmjniPNOMOcBUBcLeqf1NPSJBNIaYa/YYF/lNGZ8UKJ994ISUC/5pgkHdZl/Bdjf5oqu4xWow7yzGNSbRhtTq8ZlcX+ZL3b2OwyTJoHeDxGSmiQBP10zChr/W9hKCkJghA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(66556008)(66476007)(956004)(66946007)(26005)(86362001)(4326008)(6496006)(8936002)(5660300002)(7416002)(52116002)(8676002)(6666004)(9686003)(6486002)(83380400001)(36756003)(316002)(1076003)(2906002)(44832011)(38100700002)(38350700002)(508600001)(966005)(186003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?a6iDx1pcMI0WmszEVr8xV+rdrbYEdE6NDyK5tyfsCSzabzyAEztslak16RpK?=
- =?us-ascii?Q?eJoyMBLsHkCQEI9GJWDnzWl+YDLmPp3nBaMOGaAnYbboqT/EG86D3KUPBJbH?=
- =?us-ascii?Q?OTLz8RxqTB9NZLDvcZeSI1WW52VeeOMC6rnqy6dzRfNF84ughEbK9ijQRnYy?=
- =?us-ascii?Q?axJdx9wk5RO1e3VbERuSowXXCS3q/gykrG79FBp44EhwZsEXfAzCVJgZju7s?=
- =?us-ascii?Q?QWxqLq0b1DnCXoylHyeefxKEUPXOthcTMGdko6v6mYpC8QG8rClA7M7kIIt+?=
- =?us-ascii?Q?h/VWpd3d7b2bIk5u3NAQlpQ51KWn/rAU+eMpS0OaP+GDT0S8TPCbf/6j8DSS?=
- =?us-ascii?Q?j8SHhWbidqp8auESZnmTJ+1v/KJ4RTWBgRGvACNo6pn7ldx2+SEERsW5dBrL?=
- =?us-ascii?Q?iofmRb5MM0cTjAtdC6W3HIxUMp95e/Zt+AFzw+KLCSonpa6m+zJ0m2h+tCLx?=
- =?us-ascii?Q?EVFsBjt+Z7Mjv97BljjK54m+y5zyx/7g2XEzVZMfoeCLSzs2Zbv39BS7b/9E?=
- =?us-ascii?Q?fl/7ndKJp4eTpEOYCudWc7lbxrK6aW7YClqNbfIX/g/VPzhtH00PvKjPwGFm?=
- =?us-ascii?Q?1EmqnRbTqUCdfr5wvZ10wywR0E8W8hiK43GjwpBXVRaL1zUjVpnbJ8RAq6yK?=
- =?us-ascii?Q?kjXNNtI6StE0kmupdVL8+XVVI2G0qwePkyDgYfNXEkmAGVP5P3Udq1GSvq/j?=
- =?us-ascii?Q?aQ7YvK1xXJUc+2jLuLvEMxqV6+m7NPCn8uxGCF5tru36s46cs/j+HY22lRgt?=
- =?us-ascii?Q?A60dq0bWHK4rt6VZR5puFpRnuX2pmS5CJnjETgLFFW3EeC7DEXyMkz0GyqR3?=
- =?us-ascii?Q?bsD63sVfsRvUPDCPfzBz1Cd5xggYAO3THz+vjqOHxq1Z8+rzOr2a8Fo7iuxX?=
- =?us-ascii?Q?YWXWpKivP3c8CiFPWaMLHZh8TzmISZ3ENRHGLXZr8uFLmSopyuP/nKDMg4mO?=
- =?us-ascii?Q?AUfDJgPk7tqC8FHcuvwDmzG7xaUlrZs3zqJmGGpS28G56+PJjfZe0aLHBH9O?=
- =?us-ascii?Q?bY0oPM1mTHHxooSqWUsRFWLRhugszXXEZvTYjTFdqRzXMhOjCtJElwdN5BWW?=
- =?us-ascii?Q?QFmjPzE2nZvaPMyLQyk2/dUaqMEUJhvkkik7v6vsoDXw0VY4JTR5URQfvt4n?=
- =?us-ascii?Q?tquoDqvKMkAgtjzkuFjWBCJwV9sg6/zJwRupHriWZXFu5zMi/hHt1B1LfSLe?=
- =?us-ascii?Q?eIZ3OQvRlr02eRGDqxisyxetTCyrPI+POnd1Rcv71Ws4FH+YqetSxtveCA2q?=
- =?us-ascii?Q?N2Um8ysYBtpm8MAHndco3NeymPtBw47RRCf8fu1JjPBxhW+UxwZ3r99vQIs5?=
- =?us-ascii?Q?cXtaCa4myIX3EhNeG+nb+BE4ftHoeaT9nA/uVz12dWI0QOmYkr47zIkCp0a7?=
- =?us-ascii?Q?rZUGCat/NyGenKe3MxbKJ6TlP5TtxemHrFO1v/AmR4kWz94BsLehav9rvwbv?=
- =?us-ascii?Q?adP7uk+rlS3sFIP0wN5ke6haqQIjLnxxAdsv83DIpi95z69g55WyxNsQNZot?=
- =?us-ascii?Q?JT2Ok5IG+D9J6r1FC8bJgrup/G+XPrQQIj+mKUnj0qYVyeeaxklJOwjnAub5?=
- =?us-ascii?Q?dPgjIeIZxtrP5n4Itlz5JxFCzbto+uFZw7GnVmYWhfGZZCTCG8+3bTeWQ0dY?=
- =?us-ascii?Q?LwHsc9lgtu8HSf5qbbDxB/HvA5i9EK6SLHrYXUfNtfjYftzyDW26393Ngy6O?=
- =?us-ascii?Q?I4EPrcHZJZTPBJDu+lqSaE14UGo=3D?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9ee910da-fed9-40f3-24a3-08d9bb1812d7
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2021 13:30:32.1423
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WKL8AWcUNvJMawsIzh7NukNzf10HMvycuHnydS6ooiw+wwlI7sNJicyCfIFT0JwXCGrrc54KyfAQ72+AvmKiNIV+wb/K7Uynq9Stlpy82zE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR10MB1565
-X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10192 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 mlxscore=0 spamscore=0
- phishscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2110150000
- definitions=main-2112090074
-X-Proofpoint-GUID: m9hK36aB0Cbk6Wn2HRExCHwFJikrosx_
-X-Proofpoint-ORIG-GUID: m9hK36aB0Cbk6Wn2HRExCHwFJikrosx_
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=TBNhGlllmUbAX6HtRMScHMG+1gsQALOODIRuUGKeltk=;
+        b=IrTfNnMuJ3bhAxmvEN+KO0bigLnii6EbYhNXM21uALsBNT6IcOE76c5L0qT409Mi0h
+         PFJ2SUC3zdj6oCHDTfFUXs/jw7xDTyr3AW8VQLv9qyXj0nlZxGFt7JqFoqEykTxSWaui
+         cruZaHofgo4s+bcUzXpVz/0CVJ290SYzRlEQP0zZeI52v5z9HWi1bCieiqCv4rgtUMom
+         +NWhESXynCCPTkGw9H24mXTj5xDA2Qq6iJ89p9J+mzw6WhopKmJB1e9vXXvnMvlvwspd
+         Bm8IKrTqkEydCGpy08RefuQl44LjEiCMICNkUw6IcL5OTZp4bkjAppqlEGFlETty85t8
+         +L9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=TBNhGlllmUbAX6HtRMScHMG+1gsQALOODIRuUGKeltk=;
+        b=6l14ciJovCLdx6lIBSQhG16seq1b4Sj01NhfTyILrSo6O7P0JnpLOgT/2ZpBqtWum4
+         D/DBXhvH6aaB23D0Egh9dx5ZP5MobcGCKRco/aJ2KGtS+sLJ+nDEkJSKTGkdtDgJugj3
+         paB8oNu2unNNtdZr7RAIabPGQT4GrKHXFjo5ItE+XacUsZppzYmgITmBQL1iuMAbSnXg
+         AjgzPRWdrZ7slE4iN5sRif66sY48uVSlmJTpzwR2N51zcdOpckaEWrFI7GoXap8jPEuz
+         aI4UZcGEGe7a6OVyherWE6G2or5hzV/EsLVXw1nFNrQNNouQySXpLgcQPk79AMYk5vNK
+         bqRQ==
+X-Gm-Message-State: AOAM530hFKfn3IJ0Q1sq6CjgqboAu1SQ2icrb7t6yWwV4bN/bykf3c20
+        73stJZsecYpKkdpDLw995BZi5g==
+X-Google-Smtp-Source: ABdhPJySEu2SpiWXkpBOblpNjjl6LYTDCQZG6bVywZwVCZKWcjaF1ifsbKOWupsH0Wx6jg2RlfvVfw==
+X-Received: by 2002:a7b:c844:: with SMTP id c4mr7240539wml.148.1639058226821;
+        Thu, 09 Dec 2021 05:57:06 -0800 (PST)
+Received: from localhost.localdomain ([88.160.176.23])
+        by smtp.gmail.com with ESMTPSA id d15sm7919295wri.50.2021.12.09.05.57.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Dec 2021 05:57:06 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, shawn.guo@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH v2 1/2] clk: qcom: Add display clock controller driver for QCM2290
+Date:   Thu,  9 Dec 2021 15:09:10 +0100
+Message-Id: <1639058951-12660-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+Add support for the display clock controller found in QCM2290
+based devices. This clock controller feeds the Multimedia Display
+SubSystem (MDSS).
 
-url:    https://github.com/0day-ci/linux/commits/Sai-Teja-Aluvala/Bluetooth-btqca-sequential-validation/20211208-162834 
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git  master
-config: arc-randconfig-m031-20211207 (https://download.01.org/0day-ci/archive/20211209/202112090340.ohuHwTLx-lkp@intel.com/config )
-compiler: arceb-elf-gcc (GCC) 11.2.0
+It's a porting of dispcc-scuba GPL-2.0 driver from CAF msm-4.19 kernel:
+https://source.codeaurora.org/quic/la/kernel/msm-4.19/tree/drivers/clk/qcom/dispcc-scuba.c?h=LE.UM.4.4.1.r3
+Global clock name references (parent_names) have been replaced by
+parent_data and parent_hws.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-
-New smatch warnings:
-drivers/bluetooth/btqca.c:180 qca_send_patch_config_cmd() error: use kfree_skb() here instead of kfree(skb)
-
-vim +180 drivers/bluetooth/btqca.c
-
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  144  int qca_send_patch_config_cmd(struct hci_dev *hdev, enum qca_btsoc_type soc_type)
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  145  {
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  146  	struct sk_buff *skb;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  147  	int err = 0;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  148  	u8 cmd[5] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  149  	u8 rlen = 0x02;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  150  	struct edl_event_hdr *edl;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  151  	u8 rtype = EDL_PATCH_CONFIG_CMD;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  152  
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  153  	bt_dev_dbg(hdev, "QCA Patch config");
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  154  
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  155  	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CONFIG_CMD_LEN,
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  156  			cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  157  	if (IS_ERR(skb)) {
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  158  		err = PTR_ERR(skb);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  159  		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  160  		return err;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  161  	}
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  162  	if (skb->len != rlen) {
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  163  		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  164  		err = -EILSEQ;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  165  		goto out;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  166  	}
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  167  	edl = (struct edl_event_hdr *)(skb->data);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  168  	if (!edl) {
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  169  		bt_dev_err(hdev, "QCA Patch config with no header");
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  170  		err = -EILSEQ;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  171  		goto out;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  172  	}
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  173  	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != rtype) {
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  174  		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  175  		 edl->rtype);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  176  		err = -EIO;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  177  		goto out;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  178  	}
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  179  out:
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08 @180  	kfree(skb);
-                                                                ^^^^^^^^^^
-kfree_skb(skb);
-
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  181  	if (err)
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  182  		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  183  
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  184  	return err;
-1d58d86c5374c4 Sai Teja Aluvala               2021-12-08  185  }
-
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org 
-_______________________________________________
-kbuild mailing list -- kbuild@lists.01.org
-To unsubscribe send an email to kbuild-leave@lists.01.org
+ v2: Added missing dispcc-qcm2290.h header file
+
+ drivers/clk/qcom/Kconfig                        |   8 +
+ drivers/clk/qcom/Makefile                       |   1 +
+ drivers/clk/qcom/dispcc-qcm2290.c               | 602 ++++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,dispcc-qcm2290.h |  34 ++
+ 4 files changed, 645 insertions(+)
+ create mode 100644 drivers/clk/qcom/dispcc-qcm2290.c
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-qcm2290.h
+
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 74efc82..b136cd2 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -332,6 +332,14 @@ config QCM_GCC_2290
+ 	  Say Y if you want to use multimedia devices or peripheral
+ 	  devices such as UART, SPI, I2C, USB, SD/eMMC etc.
+ 
++config QCM_DISPCC_2290
++	tristate "QCM2290 Display Clock Controller"
++	help
++	  Support for the display clock controller on Qualcomm Technologies, Inc
++	  QCM2290 devices.
++	  Say Y if you want to support display devices and functionality such as
++	  splash screen.
++
+ config QCS_GCC_404
+ 	tristate "QCS404 Global Clock Controller"
+ 	help
+diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+index 1718c34..348d012 100644
+--- a/drivers/clk/qcom/Makefile
++++ b/drivers/clk/qcom/Makefile
+@@ -55,6 +55,7 @@ obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
+ obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
+ obj-$(CONFIG_QCOM_CLK_SMD_RPM) += clk-smd-rpm.o
+ obj-$(CONFIG_QCM_GCC_2290) += gcc-qcm2290.o
++obj-$(CONFIG_QCM_DISPCC_2290) += dispcc-qcm2290.o
+ obj-$(CONFIG_QCS_GCC_404) += gcc-qcs404.o
+ obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
+ obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
+diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
+new file mode 100644
+index 00000000..8aa5d31
+--- /dev/null
++++ b/drivers/clk/qcom/dispcc-qcm2290.c
+@@ -0,0 +1,602 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2020, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021, Linaro Ltd.
++ */
++
++#include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/err.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/of.h>
++#include <linux/regmap.h>
++
++#include <dt-bindings/clock/qcom,dispcc-qcm2290.h>
++
++#include "clk-alpha-pll.h"
++#include "clk-branch.h"
++#include "clk-rcg.h"
++#include "clk-regmap.h"
++#include "clk-regmap-divider.h"
++#include "common.h"
++#include "reset.h"
++#include "gdsc.h"
++
++enum {
++	P_BI_TCXO,
++	P_CORE_BI_PLL_TEST_SE,
++	P_DISP_CC_PLL0_OUT_MAIN,
++	P_DSI0_PHY_PLL_OUT_BYTECLK,
++	P_DSI0_PHY_PLL_OUT_DSICLK,
++	P_DSI1_PHY_PLL_OUT_DSICLK,
++	P_GPLL0_OUT_MAIN,
++	P_SLEEP_CLK,
++};
++
++static struct pll_vco spark_vco[] = {
++	{ 500000000, 1000000000, 2 },
++};
++
++/* 768MHz configuration */
++static const struct alpha_pll_config disp_cc_pll0_config = {
++	.l = 0x28,
++	.alpha = 0x0,
++	.alpha_en_mask = BIT(24),
++	.vco_val = 0x2 << 20,
++	.vco_mask = GENMASK(21, 20),
++	.main_output_mask = BIT(0),
++	.config_ctl_val = 0x4001055B,
++};
++
++static struct clk_alpha_pll disp_cc_pll0 = {
++	.offset = 0x0,
++	.vco_table = spark_vco,
++	.num_vco = ARRAY_SIZE(spark_vco),
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
++	.clkr = {
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_pll0",
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "bi_tcxo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_ops,
++		},
++	},
++};
++
++static const struct parent_map disp_cc_parent_map_0[] = {
++	{ P_BI_TCXO, 0 },
++	{ P_DSI0_PHY_PLL_OUT_BYTECLK, 1 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_0[] = {
++	{ .fw_name = "bi_tcxo" },
++	{ .fw_name = "dsi0_phy_pll_out_byteclk" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct parent_map disp_cc_parent_map_1[] = {
++	{ P_BI_TCXO, 0 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_1[] = {
++	{ .fw_name = "bi_tcxo" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_1_ao[] = {
++	{ .fw_name = "bi_tcxo_ao" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct parent_map disp_cc_parent_map_2[] = {
++	{ P_BI_TCXO, 0 },
++	{ P_GPLL0_OUT_MAIN, 4 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_2[] = {
++	{ .fw_name = "bi_tcxo_ao" },
++	{ .fw_name = "gcc_disp_gpll0_div_clk_src" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct parent_map disp_cc_parent_map_3[] = {
++	{ P_BI_TCXO, 0 },
++	{ P_DISP_CC_PLL0_OUT_MAIN, 1 },
++	{ P_GPLL0_OUT_MAIN, 4 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_3[] = {
++	{ .fw_name = "bi_tcxo" },
++	{ .hw = &disp_cc_pll0.clkr.hw },
++	{ .fw_name = "gcc_disp_gpll0_clk_src" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct parent_map disp_cc_parent_map_4[] = {
++	{ P_BI_TCXO, 0 },
++	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
++	{ P_DSI1_PHY_PLL_OUT_DSICLK, 2 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_4[] = {
++	{ .fw_name = "bi_tcxo" },
++	{ .fw_name = "dsi0_phy_pll_out_dsiclk" },
++	{ .fw_name = "dsi1_phy_pll_out_dsiclk" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static const struct parent_map disp_cc_parent_map_5[] = {
++	{ P_SLEEP_CLK, 0 },
++	{ P_CORE_BI_PLL_TEST_SE, 7 },
++};
++
++static const struct clk_parent_data disp_cc_parent_data_5[] = {
++	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
++	{ .fw_name = "core_bi_pll_test_se" },
++};
++
++static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
++	.cmd_rcgr = 0x20a4,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_0,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_byte0_clk_src",
++		.parent_data = disp_cc_parent_data_0,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
++		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE | CLK_OPS_PARENT_ENABLE,
++		.ops = &clk_byte2_ops,
++	},
++};
++
++static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
++	.reg = 0x20bc,
++	.shift = 0,
++	.width = 2,
++	.clkr.hw.init = &(struct clk_init_data) {
++		.name = "disp_cc_mdss_byte0_div_clk_src",
++		.parent_hws = (const struct clk_hw*[]){
++			&disp_cc_mdss_byte0_clk_src.clkr.hw,
++		},
++		.num_parents = 1,
++		.flags = CLK_GET_RATE_NOCACHE,
++		.ops = &clk_regmap_div_ops,
++	},
++};
++
++static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
++	F(19200000, P_BI_TCXO, 1, 0, 0),
++	F(37500000, P_GPLL0_OUT_MAIN, 8, 0, 0),
++	F(75000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
++	{ }
++};
++
++static struct clk_rcg2 disp_cc_mdss_ahb_clk_src = {
++	.cmd_rcgr = 0x2154,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_2,
++	.freq_tbl = ftbl_disp_cc_mdss_ahb_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_ahb_clk_src",
++		.parent_data = disp_cc_parent_data_2,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_2),
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static const struct freq_tbl ftbl_disp_cc_mdss_esc0_clk_src[] = {
++	F(19200000, P_BI_TCXO, 1, 0, 0),
++	{ }
++};
++
++static struct clk_rcg2 disp_cc_mdss_esc0_clk_src = {
++	.cmd_rcgr = 0x20c0,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_0,
++	.freq_tbl = ftbl_disp_cc_mdss_esc0_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_esc0_clk_src",
++		.parent_data = disp_cc_parent_data_0,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src[] = {
++	F(19200000, P_BI_TCXO, 1, 0, 0),
++	F(192000000, P_DISP_CC_PLL0_OUT_MAIN, 4, 0, 0),
++	F(256000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	F(307200000, P_DISP_CC_PLL0_OUT_MAIN, 2.5, 0, 0),
++	F(384000000, P_DISP_CC_PLL0_OUT_MAIN, 2, 0, 0),
++	{ }
++};
++
++static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
++	.cmd_rcgr = 0x2074,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_3,
++	.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_mdp_clk_src",
++		.parent_data = disp_cc_parent_data_3,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
++		.flags = CLK_SET_RATE_PARENT,
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
++	.cmd_rcgr = 0x205c,
++	.mnd_width = 8,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_4,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_pclk0_clk_src",
++		.parent_data = disp_cc_parent_data_4,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_4),
++		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE | CLK_OPS_PARENT_ENABLE,
++		.ops = &clk_pixel_ops,
++	},
++};
++
++static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
++	.cmd_rcgr = 0x208c,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_1,
++	.freq_tbl = ftbl_disp_cc_mdss_esc0_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_mdss_vsync_clk_src",
++		.parent_data = disp_cc_parent_data_1,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
++		.flags = CLK_SET_RATE_PARENT,
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static const struct freq_tbl ftbl_disp_cc_sleep_clk_src[] = {
++	F(32764, P_SLEEP_CLK, 1, 0, 0),
++	{ }
++};
++
++static struct clk_rcg2 disp_cc_sleep_clk_src = {
++	.cmd_rcgr = 0x6050,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_5,
++	.freq_tbl = ftbl_disp_cc_sleep_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_sleep_clk_src",
++		.parent_data = disp_cc_parent_data_5,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static struct clk_rcg2 disp_cc_xo_clk_src = {
++	.cmd_rcgr = 0x6034,
++	.mnd_width = 0,
++	.hid_width = 5,
++	.parent_map = disp_cc_parent_map_1,
++	.freq_tbl = ftbl_disp_cc_mdss_esc0_clk_src,
++	.clkr.hw.init = &(struct clk_init_data){
++		.name = "disp_cc_xo_clk_src",
++		.parent_data = disp_cc_parent_data_1_ao,
++		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1_ao),
++		.ops = &clk_rcg2_ops,
++	},
++};
++
++static struct clk_branch disp_cc_mdss_ahb_clk = {
++	.halt_reg = 0x2044,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2044,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_ahb_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_ahb_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_byte0_clk = {
++	.halt_reg = 0x201c,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x201c,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_byte0_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_byte0_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_byte0_intf_clk = {
++	.halt_reg = 0x2020,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2020,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_byte0_intf_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_byte0_div_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_esc0_clk = {
++	.halt_reg = 0x2024,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2024,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_esc0_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_esc0_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_mdp_clk = {
++	.halt_reg = 0x2008,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2008,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_mdp_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_mdp_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_mdp_lut_clk = {
++	.halt_reg = 0x2010,
++	.halt_check = BRANCH_HALT_VOTED,
++	.clkr = {
++		.enable_reg = 0x2010,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_mdp_lut_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_mdp_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_non_gdsc_ahb_clk = {
++	.halt_reg = 0x4004,
++	.halt_check = BRANCH_HALT_VOTED,
++	.clkr = {
++		.enable_reg = 0x4004,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_non_gdsc_ahb_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_ahb_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_pclk0_clk = {
++	.halt_reg = 0x2004,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2004,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_pclk0_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_pclk0_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_mdss_vsync_clk = {
++	.halt_reg = 0x2018,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x2018,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_mdss_vsync_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_mdss_vsync_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_sleep_clk = {
++	.halt_reg = 0x6068,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x6068,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_sleep_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_sleep_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch disp_cc_xo_clk = {
++	.halt_reg = 0x604c,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x604c,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "disp_cc_xo_clk",
++			.parent_hws = (const struct clk_hw*[]){
++				&disp_cc_xo_clk_src.clkr.hw,
++			},
++			.num_parents = 1,
++			.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct gdsc mdss_gdsc = {
++	.gdscr = 0x3000,
++	.pd = {
++		.name = "mdss_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = HW_CTRL,
++};
++
++static struct gdsc *disp_cc_qcm2290_gdscs[] = {
++	[MDSS_GDSC] = &mdss_gdsc,
++};
++
++static struct clk_regmap *disp_cc_qcm2290_clocks[] = {
++	[DISP_CC_MDSS_AHB_CLK] = &disp_cc_mdss_ahb_clk.clkr,
++	[DISP_CC_MDSS_AHB_CLK_SRC] = &disp_cc_mdss_ahb_clk_src.clkr,
++	[DISP_CC_MDSS_BYTE0_CLK] = &disp_cc_mdss_byte0_clk.clkr,
++	[DISP_CC_MDSS_BYTE0_CLK_SRC] = &disp_cc_mdss_byte0_clk_src.clkr,
++	[DISP_CC_MDSS_BYTE0_DIV_CLK_SRC] = &disp_cc_mdss_byte0_div_clk_src.clkr,
++	[DISP_CC_MDSS_BYTE0_INTF_CLK] = &disp_cc_mdss_byte0_intf_clk.clkr,
++	[DISP_CC_MDSS_ESC0_CLK] = &disp_cc_mdss_esc0_clk.clkr,
++	[DISP_CC_MDSS_ESC0_CLK_SRC] = &disp_cc_mdss_esc0_clk_src.clkr,
++	[DISP_CC_MDSS_MDP_CLK] = &disp_cc_mdss_mdp_clk.clkr,
++	[DISP_CC_MDSS_MDP_CLK_SRC] = &disp_cc_mdss_mdp_clk_src.clkr,
++	[DISP_CC_MDSS_MDP_LUT_CLK] = &disp_cc_mdss_mdp_lut_clk.clkr,
++	[DISP_CC_MDSS_NON_GDSC_AHB_CLK] = &disp_cc_mdss_non_gdsc_ahb_clk.clkr,
++	[DISP_CC_MDSS_PCLK0_CLK] = &disp_cc_mdss_pclk0_clk.clkr,
++	[DISP_CC_MDSS_PCLK0_CLK_SRC] = &disp_cc_mdss_pclk0_clk_src.clkr,
++	[DISP_CC_MDSS_VSYNC_CLK] = &disp_cc_mdss_vsync_clk.clkr,
++	[DISP_CC_MDSS_VSYNC_CLK_SRC] = &disp_cc_mdss_vsync_clk_src.clkr,
++	[DISP_CC_PLL0] = &disp_cc_pll0.clkr,
++	[DISP_CC_SLEEP_CLK] = &disp_cc_sleep_clk.clkr,
++	[DISP_CC_SLEEP_CLK_SRC] = &disp_cc_sleep_clk_src.clkr,
++	[DISP_CC_XO_CLK] = &disp_cc_xo_clk.clkr,
++	[DISP_CC_XO_CLK_SRC] = &disp_cc_xo_clk_src.clkr,
++};
++
++static const struct regmap_config disp_cc_qcm2290_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.max_register = 0x10000,
++	.fast_io = true,
++};
++
++static const struct qcom_cc_desc disp_cc_qcm2290_desc = {
++	.config = &disp_cc_qcm2290_regmap_config,
++	.clks = disp_cc_qcm2290_clocks,
++	.num_clks = ARRAY_SIZE(disp_cc_qcm2290_clocks),
++	.gdscs = disp_cc_qcm2290_gdscs,
++	.num_gdscs = ARRAY_SIZE(disp_cc_qcm2290_gdscs),
++};
++
++static const struct of_device_id disp_cc_qcm2290_match_table[] = {
++	{ .compatible = "qcom,qcm2290-dispcc" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, disp_cc_qcm2290_match_table);
++
++static int disp_cc_qcm2290_probe(struct platform_device *pdev)
++{
++	struct regmap *regmap;
++	int ret;
++
++	regmap = qcom_cc_map(pdev, &disp_cc_qcm2290_desc);
++	if (IS_ERR(regmap))
++		return PTR_ERR(regmap);
++
++	clk_alpha_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
++
++	ret = qcom_cc_really_probe(pdev, &disp_cc_qcm2290_desc, regmap);
++	if (ret) {
++		dev_err(&pdev->dev, "Failed to register DISP CC clocks\n");
++		return ret;
++	}
++
++	dev_info(&pdev->dev, "Registered DISP CC clocks\n");
++
++	return ret;
++}
++
++static struct platform_driver disp_cc_qcm2290_driver = {
++	.probe = disp_cc_qcm2290_probe,
++	.driver = {
++		.name = "dispcc-qcm2290",
++		.of_match_table = disp_cc_qcm2290_match_table,
++	},
++};
++
++static int __init disp_cc_qcm2290_init(void)
++{
++	return platform_driver_register(&disp_cc_qcm2290_driver);
++}
++subsys_initcall(disp_cc_qcm2290_init);
++
++static void __exit disp_cc_qcm2290_exit(void)
++{
++	platform_driver_unregister(&disp_cc_qcm2290_driver);
++}
++module_exit(disp_cc_qcm2290_exit);
++
++MODULE_DESCRIPTION("QTI DISP_CC qcm2290 Driver");
++MODULE_LICENSE("GPL v2");
+diff --git a/include/dt-bindings/clock/qcom,dispcc-qcm2290.h b/include/dt-bindings/clock/qcom,dispcc-qcm2290.h
+new file mode 100644
+index 00000000..ef50c17
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,dispcc-qcm2290.h
+@@ -0,0 +1,34 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SCUBA_H
++#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SCUBA_H
++
++/* DISP_CC clocks */
++#define DISP_CC_PLL0				0
++#define DISP_CC_MDSS_AHB_CLK			1
++#define DISP_CC_MDSS_AHB_CLK_SRC		2
++#define DISP_CC_MDSS_BYTE0_CLK			3
++#define DISP_CC_MDSS_BYTE0_CLK_SRC		4
++#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC		5
++#define DISP_CC_MDSS_BYTE0_INTF_CLK		6
++#define DISP_CC_MDSS_ESC0_CLK			7
++#define DISP_CC_MDSS_ESC0_CLK_SRC		8
++#define DISP_CC_MDSS_MDP_CLK			9
++#define DISP_CC_MDSS_MDP_CLK_SRC		10
++#define DISP_CC_MDSS_MDP_LUT_CLK		11
++#define DISP_CC_MDSS_NON_GDSC_AHB_CLK		12
++#define DISP_CC_MDSS_PCLK0_CLK			13
++#define DISP_CC_MDSS_PCLK0_CLK_SRC		14
++#define DISP_CC_MDSS_VSYNC_CLK			15
++#define DISP_CC_MDSS_VSYNC_CLK_SRC		16
++#define DISP_CC_SLEEP_CLK			17
++#define DISP_CC_SLEEP_CLK_SRC			18
++#define DISP_CC_XO_CLK				19
++#define DISP_CC_XO_CLK_SRC			20
++
++#define MDSS_GDSC				0
++
++#endif
+-- 
+2.7.4
 
