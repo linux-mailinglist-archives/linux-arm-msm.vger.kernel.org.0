@@ -2,127 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 375AC46EC7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 17:03:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7142E46ED56
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 17:45:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240733AbhLIQHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 11:07:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240565AbhLIQH3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 11:07:29 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65018C061746;
-        Thu,  9 Dec 2021 08:03:55 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id k23so9753310lje.1;
-        Thu, 09 Dec 2021 08:03:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:to:cc:references
-         :from:in-reply-to:content-transfer-encoding;
-        bh=cb7DP4xQRrR7eaEbn0nK2nl/RVqJ7P0xuMj6assZJek=;
-        b=WvfEK1oUK7PCmcUwb7qqB5b7t/tqkKwJy25w5G2ZpXi9fXnA0lP0F0Zd13IgPsYYzv
-         DUg3NLq35vVC3ZDxjMlvNaZHaOB6NDNSSf5a57QJWhGMdeApCnf+6Rj2h80bD+exo2S8
-         SJrKkZqx0gEFhuWgsTYdhUovek/wQQtM7FtXIr6y4qN8x4o//npz3+R1UEaq6LIh0BCG
-         hE+UiJvUe14c1LY39MaWNn0b0EKiaxXhsoA5GerX4dnXXKXMN4eKP1DoXEJcPwfTrVi8
-         RFQ7LhCc1viLLw+Azet7F7wpbMKj9g4f9RtCQu6mt80N86GW7YKpizYxVeGhXeIjOUFu
-         NBkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :to:cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=cb7DP4xQRrR7eaEbn0nK2nl/RVqJ7P0xuMj6assZJek=;
-        b=ZddFJUPny/aVwaEfNkAmITqDVgsGv6ByTbjIwzF/NWBT0zS1HKcQBzcXrLOz9enQD7
-         e4MU2iAKn1pcfEcCT3fSizSMlihNWYOOV9w+jgzsJEbX9WTc3ou1YoidZxNwoVnaOW/Y
-         MKb5UtUt7cG2iDO8AMNpGO1mt/8ukNCaGTLnVRYHzC1ssuL0RD1DEpO9NfHATyDcsaLM
-         oqRJGEGq0RFVnA2oBi3lJewSaqgQ67mZoZQE5v6/EgO467dDLiO2q776VJOOrluKDiwI
-         Rt5vfaUxaOsMwtgdfImZBhScRIt6AjUQX6O4YdimA+hoiHtYE63vmaB/73dBV/aYWNux
-         gApw==
-X-Gm-Message-State: AOAM5338Q4C+kZMRcD7xq9N8QoXFO3KTdGNkrNy0AkZqdVIb8/OPp6QH
-        J7H5qWHrCnHIVg14blJqI8PcbRy8I5o=
-X-Google-Smtp-Source: ABdhPJyu5x+iWP19CiNhQXm3GIHUzijm71lS2NrxLaKYKseR9zAb0054+UU1XlOdD9NYHK6SloByPw==
-X-Received: by 2002:a2e:7114:: with SMTP id m20mr7092240ljc.229.1639065833168;
-        Thu, 09 Dec 2021 08:03:53 -0800 (PST)
-Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl. [194.29.137.1])
-        by smtp.gmail.com with ESMTPSA id x18sm16645ljd.110.2021.12.09.08.03.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Dec 2021 08:03:52 -0800 (PST)
-Message-ID: <2697db33-753c-ead8-019f-5e2ef1773693@gmail.com>
-Date:   Thu, 9 Dec 2021 17:03:50 +0100
+        id S240469AbhLIQsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 11:48:38 -0500
+Received: from box.trvn.ru ([194.87.146.52]:33545 "EHLO box.trvn.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233501AbhLIQsh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Dec 2021 11:48:37 -0500
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Dec 2021 11:48:36 EST
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id C6DF84016B;
+        Thu,  9 Dec 2021 21:37:29 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1639067851; bh=N8tokcRkGkUEgrS4jlQxlIHSVtgsxGpTaqS1h2mb4lc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=yi6N61QarMoBQVbS3Ed4HOfmqG0FoJuzV4dlw6CI12M6ERDdoff+bvKYVLzQYPnew
+         7zw2sk6xMtLxsxvO0bucktXOdJeYf6nQdCQbZyoDVdmpjOa1wAwYAss6gUeEA12N+B
+         jslyyx+5vcSBQm+138tphWhSQdLjntJl5/WvvFdeBn8eFFW9QPpX6LBOvxmJ53JzhX
+         CZiyb3qFF9tXjjnsHHOLtqqc+grSAUpt/b91f/UYcDv30ld9FDpa8CilQkZKloScUu
+         eHDEZokj/e73Ms9HvlJI6+nmXXiOMNfZFjrPWWRq7Vyf8KQhSngiJ4fosI0wGNNB2K
+         gwKzHSVBDJ5yw==
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     mturquette@baylibre.com, sboyd@kernel.org, linus.walleij@linaro.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, tdas@codeaurora.org,
+        joonwoop@codeaurora.org, svarbanov@mm-sol.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH 0/4] Prepare general purpose clocks on msm8916
+Date:   Thu,  9 Dec 2021 21:37:16 +0500
+Message-Id: <20211209163720.106185-1-nikita@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH v3 1/1] arm64: dts: add minimal DTS for Microsoft Surface
- Duo 2
-To:     Katherine Perez <kaperez@linux.microsoft.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Felipe Balbi <balbi@kernel.org>
-References: <20211208235137.2751003-1-kaperez@linux.microsoft.com>
- <20211208235137.2751003-2-kaperez@linux.microsoft.com>
-From:   Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20211208235137.2751003-2-kaperez@linux.microsoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi!
+Some devices make use of general purpose clocks as PWM outputs by
+controlling their duty cycle.
 
-On 09/12/2021 00:51, Katherine Perez wrote:
-> This is a minimal devicetree for Microsoft Surface Duo 2 with SM8350
-> Chipset
->
-> Signed-off-by: Katherine Perez <kaperez@linux.microsoft.com>
-> Reviewed-by: Vinod Koul <vkoul@kernel.org>
-> ---
->
-> Changes since v1:
-> - Change remoteprocs firmware-naming scheme to qcom/sm8350/microsft/*
-> - Add chassis-type
->
->   arch/arm64/boot/dts/qcom/Makefile             |   1 +
->   .../qcom/sm8350-microsoft-surface-duo2.dts    | 369 ++++++++++++++++++
->   2 files changed, 370 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
->
-> --
-> 2.31.1
+Notably, many devices (e.g. Samsung A3/A5, LG G Watch R and probably
+many others) use clock based PWM to control the haptic feedback,
+some other can control backlight or flash/torch LED brightness.
 
-[...]
+As a follow-up to a proposed clock based PWM output driver [1],
+this series contains various fixes to make it useful on msm8916
+based devices.
 
+[1] - https://lore.kernel.org/lkml/20211209162020.105255-1-nikita@trvn.ru/T/
 
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-> @@ -0,0 +1,369 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (C) 2021, Microsoft Corporation
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/gpio.h>
+Nikita Travkin (4):
+  clk: qcom: clk-rcg2: Fail Duty-Cycle configuration if MND divider is
+    not enabled.
+  clk: qcom: clk-rcg2: Make sure to not write d=0 to the NMD register
+  pinctrl: qcom: msm8916: Allow CAMSS GP clocks to be muxed
+  clk: qcom: gcc-msm8916: Add rates to the GP clocks
 
-This is now included in sm8350.dtsi
+ drivers/clk/qcom/clk-rcg2.c            | 11 +++++++-
+ drivers/clk/qcom/gcc-msm8916.c         | 35 ++++++++++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-msm8916.c |  4 +--
+ 3 files changed, 47 insertions(+), 3 deletions(-)
 
-
-[...]
-
-> +&usb_1 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-
-Looks like you forgot to enable usb_1, but other than these two nits:
-
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-
-Konrad
+-- 
+2.30.2
 
