@@ -2,94 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DA246E2FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 08:11:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D46846E304
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 08:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233560AbhLIHOw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 02:14:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44416 "EHLO
+        id S232171AbhLIHRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 02:17:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231664AbhLIHOw (ORCPT
+        with ESMTP id S232101AbhLIHR3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 02:14:52 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9937BC061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 23:11:19 -0800 (PST)
+        Thu, 9 Dec 2021 02:17:29 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6BEC061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Dec 2021 23:13:56 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 1D314CE12A7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88927C004DD;
-        Thu,  9 Dec 2021 07:11:14 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4F4EEB823BF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:13:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29082C341C3;
+        Thu,  9 Dec 2021 07:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639033875;
-        bh=jlx92J9zgJBMQB1Ium6NTFonzF/oKa2rqvYrXd0exxw=;
+        s=k20201202; t=1639034034;
+        bh=KVyJqYLC0Jq4xEDs+GKSjnFSo1blIp+bjpWv6b4k1Bs=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bJCaoV7m/JowpwFrrJGJoyzf2ajRtxI7UxwPEL4K1/BfgL4XXsb9osxDYB8Y1eN3H
-         jk+hsbC21uvSbC97/wrb1VLtPFeBqtNPSBwNmFln5wVO+sCX5Ed8gqbjzUJitf7e1v
-         dqo/5bHxkAZRRo8FkW4xiDv7nvKOYYi/h4v2nUVzIP64OkWqjyNnZgMY1C4K5FLcef
-         FbY3qBYjFD1Icz5a8vzunYBfOUFymQS07hT8UgWrCfJSO0vP4io+xU1gGlYQoCQzBu
-         AEMYQOvL81Q9Ew0ecHJKjKufp15PtKpIKkXMckekHOnGlen5hIbQUyF4y19jQpXVRp
-         /WK8bev+Jf3cw==
-Date:   Thu, 9 Dec 2021 12:41:11 +0530
+        b=VwnwMuYyHE0RhpXvpGfmBJkjIvLZrg/O8eEA2CI5wFwCqtT2UqjxYjyFErUuEf7xK
+         p6V35GB9gTlF1Pm2N2U27C6Lzfqc4zzReSpKVc6OgdPuc99/t++qSc38s0D7cVOiXX
+         CS9cZ4qTI9NkHEL4a0vVQcDKA8zEd8ZsK/CqOSQhl3igsijWPgO26FQHANuuXbhxhj
+         2N4dR+e25Yn6nQmqb7VCkQJ9R4fDsPsTEOc52YvL+/N/uJwx3xSTNGcEXBaLZbbIm8
+         +xfVckGLmS01m00k39zQ5520ibtllOOqwmMsHMtBIlrv9lg5arwWAzp6v+ENO8uafp
+         XrVI9rorDDM/A==
+Date:   Thu, 9 Dec 2021 12:43:50 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH 14/15] arm64: dts: qcom: sm8450: add cpufreq support
-Message-ID: <YbGsD4gbO2zGuVVy@matsya>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: sm8450: add i2c13 and i2c14
+ device nodes
+Message-ID: <YbGsrqxC6cSGqjZ+@matsya>
 References: <20211201072915.3969178-1-vkoul@kernel.org>
- <20211201072915.3969178-15-vkoul@kernel.org>
- <725e7ac2-c4b1-8908-585f-d05d72bc7a95@somainline.org>
+ <20211201072915.3969178-16-vkoul@kernel.org>
+ <ee38afe9-0e9e-cae1-c4c5-70db9f166a38@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <725e7ac2-c4b1-8908-585f-d05d72bc7a95@somainline.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ee38afe9-0e9e-cae1-c4c5-70db9f166a38@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-12-21, 16:28, Konrad Dybcio wrote:
+On 01-12-21, 16:30, Konrad Dybcio wrote:
 > 
 > On 01.12.2021 08:29, Vinod Koul wrote:
-> > From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > >
-> > The change adds a description of a SM8450 cpufreq-epss controller and
-> > references to it from CPU nodes.
+> > Add device tree nodes for two i2c blocks: i2c13 and i2c14.
 > >
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > > ---
-> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 27 +++++++++++++++++++++++++++
-> >  1 file changed, 27 insertions(+)
+> >  arch/arm64/boot/dts/qcom/sm8450.dtsi | 64 ++++++++++++++++++++++++++++
+> >  1 file changed, 64 insertions(+)
 > >
 > [...]
 > 
 > 
+> >  		config_noc: interconnect@1500000 {
+> >  			compatible = "qcom,sm8450-config-noc";
+> >  			reg = <0 0x01500000 0 0x1c000>;
+> > @@ -687,6 +725,32 @@ tlmm: pinctrl@f100000 {
+> >  			gpio-ranges = <&tlmm 0 0 211>;
+> >  			wakeup-parent = <&pdc>;
 > >  
-> > +			cluster1 {
-> >  				core4 {
-> >  					cpu = <&CPU4>;
-> >  				};
-> > @@ -182,7 +192,9 @@ core5 {
-> >  				core6 {
-> >  					cpu = <&CPU6>;
-> >  				};
+> > +			qup_i2c13_default_state: qup-i2c13-default-state {
+> > +				mux {
+> > +					pins = "gpio48", "gpio49";
+> > +					function = "qup13";
+> > +				};
+> > +
+> > +				config {
+> > +					pins = "gpio48", "gpio49";
+> > +					drive-strength = <2>;
+> > +					bias-pull-up;
+> > +				};
 > > +			};
-> >  
-> > +			cluster2 {
-> >  				core7 {
-> >  					cpu = <&CPU7>;
-> >  				};
+> > +
 > 
-> Weren't DynamIQ-enabled SoCs supposed to be treated as single-cluster
+> This should be collapsed into:
 > 
-> from the Linux POV? Or has it changed again with the new chips?
+> 
+> qup_i2c13_default_state: qup-i2c13-default-state {
+> 
+>         pins = "..."
+> 
+>         function = "..."
+> 
+>         drive-strength = <2>
+> 
+>         bias-pull-up;
+> 
+> };
+> 
+> 
+> And the same goes for the rest of the pins.
 
-I discussed with Bjorn and yes we should have a single cluster for this.
-will fix
+Yeah that looks neater and done that now
 
 -- 
 ~Vinod
