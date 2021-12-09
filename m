@@ -2,206 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6DF246E81A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 13:07:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E1D046E857
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 13:21:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237141AbhLIMKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 07:10:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57154 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237201AbhLIMKl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 07:10:41 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E4D8C0698C4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 04:07:07 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id i5so9334181wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 04:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/yLbHMPc4fjBfcCF0phtg6VZEZ5ftsCYoS5ciOiSFeU=;
-        b=ms6+lIoVD5aNOBnWiJw4l8WclwmAL7F9FXiPl6e5amw+1IiTB9DzQcs8uYLiV+cUGE
-         KKuSfDkp8HRA+czZK5aK4t9wvKGjTbl5NH+bJaVVDVBsvrUKRe1qDyD+hN9ViINoWD6+
-         lqZTxLzaoHIJTVtKByCfFSTXexbI0FiJ+v56DmllxdtiBagBRLBv3oOZyBQWhAGgfzYB
-         KeQGO7euVmv/mCmkMFo1OfiShZRmJMaErnWCMBb2yyEgmsRtikNs9EIqymf+QHijb7pl
-         b6PbVEX4J9T0xLpKdq4bO/XHFaQQ7DNpwE/8S3MI+nfQvvBpyxBiYIgZv6V44dVcLUHB
-         XVrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/yLbHMPc4fjBfcCF0phtg6VZEZ5ftsCYoS5ciOiSFeU=;
-        b=0A9T0le1yrKalAomG0hZE4pFLr3zrjf1sVkAOzfA2cGWtFwfJ5U/Fs0eY5EcylxEfj
-         kAL05nsHIvlfr70RVI/uEKVbTq+40/7Emv3WjidAQvAOO1ZazRxI1JpXP/kf1F7ay6YC
-         Z97a/ZnY3x2KlC//SOgWGnZWmZybXkkGfqSn4Q56tM7mGzBrwoS7Jw9+COi1ZonmiErC
-         5wKpzyNimNc1fsYA7C+wn6pp1yDogZ9lbudPZigk5z6zqlFA+XFVST1ftzFkaz734hDH
-         w67/vVQizsWCiJw6urcfVKl11m8cnxRH1OtpsTyN68PEMg0NbZpAVuzIzKLmeTF5UPYL
-         9fLw==
-X-Gm-Message-State: AOAM530Sue2KDONmTAaFRPjVqDfjwkGUK6Is4G5Grf4mdoZF5fuHr95k
-        MMRFDyrWyNpCE8dI9/Zka1QLCA==
-X-Google-Smtp-Source: ABdhPJw8A0ceeX5B3052YIiAS+wQV5uUHv/XXGVeWUYkOE3fe0yKYjHZPtOjTtTjlS00CW7zJOohqQ==
-X-Received: by 2002:adf:c5d1:: with SMTP id v17mr5748532wrg.571.1639051626129;
-        Thu, 09 Dec 2021 04:07:06 -0800 (PST)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id 4sm7513289wrz.90.2021.12.09.04.07.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 04:07:05 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2 8/8] arm64: dts: qcom: add non-secure domain property to fastrpc nodes
-Date:   Thu,  9 Dec 2021 12:06:26 +0000
-Message-Id: <20211209120626.26373-9-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
-References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+        id S229508AbhLIMZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 07:25:13 -0500
+Received: from mail-sgaapc01on2091.outbound.protection.outlook.com ([40.107.215.91]:8353
+        "EHLO APC01-SG2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231833AbhLIMZM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Dec 2021 07:25:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LYDh6c3pwwufVYsZJr9s9FBarPg6V0I/lGK6rQRFnsta9z9jHtqpqvm3KtZgZsBfRfSvgxeoCqu9JrppnMNi2x9lesFBoxjjkDEcgZDg/HmkQPMCnd4m4SUgllgTK5BhSCaJu4YO3Qf4CWymYijwpcUYmNaTNK9TtgWFu5oDq3QxYJNqy1P1RvhWJ/Rk8Uoira+/lmcQQ9yenjKOlUNfiZ44ArgGeei/Byq0NWOb7yJVEIlxfy1vMRq7dNbZW92s74OZSWrP4IfeF4VNgFQKCaCsOuj2eCzKGYUp+QwQm7jVNtgEQvV+D0e7U5CC7/AxMY45/53vahSPykOrw4tCWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=59GP2WHQ8BxU7YSSYYCBFKIN0oDj9Og0UxaceOAvRpk=;
+ b=Gc4HXTOJ6V9G2F5S5zBcUXKEIZUJb8oUSCq+/CC2UJL6exsuUYGBfrhL0lFXKKfd6OrssrizfRGyOtTYdFKdKWr80zJambmolUiyLQX7TJVokuJB6VfEeBs4wtGWt6lUTFPpAgNCfdQXtzvc9a4K3bYZ168dVcAmoIYR06Wg6+kmqPRrju2hoYe/K3Ap/c1QX0KFHZjM2T5u8FaQYQmeFg8iWUwfYFkkp/AXIN7L009DfNeDnVc31TSsvu9TBsOMPJXzclAIPnA+H32/kZsLSYaTVB1IrUvN8MgLhY0csvJmmjPIDQwAvouJE79uuZATIxmL/h/luNXL9EMiH8N0pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
+ s=selector2-vivo0-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=59GP2WHQ8BxU7YSSYYCBFKIN0oDj9Og0UxaceOAvRpk=;
+ b=hdUO7cDf31xkXNBsT2Pcx9oaeaMkuhZhFzHDfTAhjgsYYP/+z73OER9bMEHX1iMav31AWAryqsdHnv16lrMA3RVdNKKDRhKYgCj9WPd5693u5lv6X4YW5nK1N71a+J2N96lvG7tXyz1moKgDTiZbZ1na+ug9EgOyAUYx5hnPG1Q=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SL2PR06MB3082.apcprd06.prod.outlook.com (2603:1096:100:37::17)
+ by SL2PR06MB3180.apcprd06.prod.outlook.com (2603:1096:100:34::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.21; Thu, 9 Dec
+ 2021 12:21:36 +0000
+Received: from SL2PR06MB3082.apcprd06.prod.outlook.com
+ ([fe80::a0cf:a0e2:ee48:a396]) by SL2PR06MB3082.apcprd06.prod.outlook.com
+ ([fe80::a0cf:a0e2:ee48:a396%4]) with mapi id 15.20.4755.023; Thu, 9 Dec 2021
+ 12:21:36 +0000
+From:   Qing Wang <wangqing@vivo.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Wang Qing <wangqing@vivo.com>
+Subject: [PATCH] cpuidle: qcom-spm: add missing put_device() call in spm_cpuidle_register()
+Date:   Thu,  9 Dec 2021 04:21:24 -0800
+Message-Id: <1639052485-23414-1-git-send-email-wangqing@vivo.com>
+X-Mailer: git-send-email 2.7.4
+Content-Type: text/plain
+X-ClientProxiedBy: HK2PR03CA0054.apcprd03.prod.outlook.com
+ (2603:1096:202:17::24) To SL2PR06MB3082.apcprd06.prod.outlook.com
+ (2603:1096:100:37::17)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: from ubuntu.localdomain (103.220.76.181) by HK2PR03CA0054.apcprd03.prod.outlook.com (2603:1096:202:17::24) with Microsoft SMTP Server (version=TLS1_2, cipher=) via Frontend Transport; Thu, 9 Dec 2021 12:21:35 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 17cfd057-924a-4b2f-e2a2-08d9bb0e71af
+X-MS-TrafficTypeDiagnostic: SL2PR06MB3180:EE_
+X-Microsoft-Antispam-PRVS: <SL2PR06MB3180FE63E2032E1D57C0073DBD709@SL2PR06MB3180.apcprd06.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1923;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: C22IWv2ZbdoLgCevmNwzbPCCudmHp3M82VEV7JxtwfNcB40ZOAmHI/3qTrRJvLlO4C0Ej1qov46ASiDxo8RGgLQNK4M/JjbgcVhNkVlpCV9rHA+znxQ6xUoU4uFeStJhvIQAmOdeOd0Pz+82oevCfQxchr61lbXD3F5RKex7utPDnvN4kzugNHOH9iVRdmqn8pVhKTOXxX0GEQyRS3EHCMc4EOlyfxgyPyzh4xw6lt0EORy6rkcDi6ZWFV5dgfymB7fn9ga4zHPFk1Ha6xS9i1m5swBPb+AouSCMmxgr94g51HsB+mSJP+5MiP7zQU2wMJa25alf0slHGh19cU1EPDOQ91hv5VqOqrfAhH3gq8d0yz17Q3ZcIIbZDRoySHbepzWVqFBuXKVuvHWG0Xa1Bzjh3o3Bax7wNjoQf92NLE+mXGvJmxboNhFDAdMgbgAX6rAyDvuEjL/l10Qfsw0VUNZ25G7+qUQZgWGdHIe+kJM3zAakf0EtYsAJeHlM+EJUFtVsR2+NfbkFlS38riRyljOnPEizlWW6o1tuKehy0QmH1xuTEvloM7sRVvyF8B/mP1TLqIjgq36PanQZD0fjxa9004cALAtywtaxeL+Qa4rq+08eK8Xd5SJMIYGlgab/uc45j/1KZPfpPPP+pxe9VHz44JxN307ju5OBrAML8qSfJsheLKtCYaTv43/Vkx45ns/Qw3Gw9n26VctnDxEamQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SL2PR06MB3082.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(956004)(107886003)(6666004)(83380400001)(4744005)(110136005)(36756003)(66946007)(6486002)(316002)(2616005)(4326008)(52116002)(6506007)(8936002)(26005)(186003)(508600001)(6512007)(38100700002)(5660300002)(38350700002)(86362001)(2906002)(66476007)(66556008)(8676002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wsFk6Zy0GgSZqU66BS6kX39q94Eox3e549UWtie0l2CcecuQS1ygARc7eoDL?=
+ =?us-ascii?Q?4NlfpifDiuynsUDmIsvuh+ba4mvMGsN0sqCqA9k2+tSAhHPplpmxlgk4QwoM?=
+ =?us-ascii?Q?EDhewcVD64tOhGzYWufnIi2xjsoYCuBE8ZVvslQYW7j/vr9EVvcePVk2qxsU?=
+ =?us-ascii?Q?yJQyKdjOkWFqREwiKdohAWvE+n1ZI3Sg8yO+QQitBrnc/zoEdFhB5tql8rAG?=
+ =?us-ascii?Q?qqwZ6nB2jm8Ze4jvu92YGNty2BiutEpQ5F4ISXDgHo6f369WBgGrMpPWF7tS?=
+ =?us-ascii?Q?xhOtruqE9JXVIv/cjuF/BFxOP0pwx6CNtdQV22qHB8lWDqnvNlejo10bkqHG?=
+ =?us-ascii?Q?PNBJFQA74wtC5KyvVWFCAQegwf77JeiYueC3qhO6dla6LQ2M682iokQP8WHT?=
+ =?us-ascii?Q?4kYtx+5UXNXjOgW5b3Ygi4CSK9A23AF51MKClwNJcnZOmskZ3fIU+aKy4GJI?=
+ =?us-ascii?Q?n0k+xbdXeqH8UrqL3rlSAei/CqN/ISfdbxkt8LvnRVyHDx6LECeJnIlT98//?=
+ =?us-ascii?Q?bpaaWteBa9Yz//ZjynsI528r8YbCPgMaZsvf6TELvMSuF6OFHDgudcjryHKN?=
+ =?us-ascii?Q?rCcdB1sOj59ISrgttaYdjRG+XPuWngK6RhKY7uwR/2OUZ3WuGgZ8L/Wfk0wR?=
+ =?us-ascii?Q?fyN+CxIxKgrcDrxdLY3R4hv/OTYzzFMsQQUZbqjzEaVq+Wig6ClopMgiU6AB?=
+ =?us-ascii?Q?0QmeUzTLp2i3TsM0HXPDogH8GbUy0HjxXbd684pJyM81Oaoi7LFKlXSY08E9?=
+ =?us-ascii?Q?+8PpLWlAG11w2NFg202yYZR+olghePNXLZ49dPQRlrm/hKc3EKYv9pac/VKs?=
+ =?us-ascii?Q?8uMSy7v+57ZXZs8Owes7dkubxjv/+sy+S9YuuIP4cokeYdfWGAz8wTmgg4BF?=
+ =?us-ascii?Q?jq0tda4EetQ9WpW4mgsMg9S9LIUWvRwdNy3tDvmZymLQPj51s1XOxSf0EWrW?=
+ =?us-ascii?Q?TdmbYDWPkdNj+dwP4/z+mFlT1Kv8gnPAzRK/rqfcwjkpJHhiqnr89HgLu6vH?=
+ =?us-ascii?Q?TxlTd+/XPU4q5EqV94WzGyon7ZgpfS5lz/sy19/XVtms9O0xDghBjvQMLoMC?=
+ =?us-ascii?Q?2whKYU/TdYTxSWOLDGFI15uDmPLauMSIvohZ2Jd+dsRu0VmZ8FfwmvnQYG4x?=
+ =?us-ascii?Q?RbuG/rLaAeX9k5hkB8tjwV9+vAwyFZIb4HFm/mOT4XFcYjHbSf9P+dZLqG3V?=
+ =?us-ascii?Q?TU9hZI5VOMdhzNkDINxDfGwVd1Y3aRUr64QJkM12HRNJZ4ZUB4/+fh3GvKFO?=
+ =?us-ascii?Q?AVzg++ZDoVaoLKd+AaFoNvSFdImaTZBJ/0UXT0VuYeJiKtPY8Z/ub2aPLljU?=
+ =?us-ascii?Q?BRRHNEGFDvba1CQ7CBCiI9KXjPk7lZ6KrF04aKvmEZaOnfuGI0EJozTak01H?=
+ =?us-ascii?Q?DNJmOiPcSyzaVFR2BftMkUGfG4NpQOFChnWYjcNQaRhwhQsz8DegvIcgDve7?=
+ =?us-ascii?Q?tGGZ5hsxSkQXuz1HB5XpqMcoOm18F4g55tyrTZZYwRQmHci7OnrirTqjR6Cv?=
+ =?us-ascii?Q?B4TJLVJF6uxfVRF7uO2T2y2h4UdfLtNbIOglF7s0F5Nubqr+1HO48k+Xh69S?=
+ =?us-ascii?Q?CVd9LaGQScN+/lDgbx3mHAT1xCwRINda6v36k4QOpGSbsANXBOUV4QDENAhS?=
+ =?us-ascii?Q?P6F3g34weFr0t89guplLIe8=3D?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 17cfd057-924a-4b2f-e2a2-08d9bb0e71af
+X-MS-Exchange-CrossTenant-AuthSource: SL2PR06MB3082.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2021 12:21:36.2701
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JXjyhdHzk7SWBuIUqvOjg3qR3fa3tg+FnhawpJIx2oSCoI6Nh8C1rfnCxhj0FWVqA6UOGtqCud5Slu/nlQ932g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SL2PR06MB3180
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeya R <jeyr@codeaurora.org>
+From: Wang Qing <wangqing@vivo.com>
 
-FastRPC DSP domain would be set as secure if non-secure dsp property is not
-added to the fastrpc DT node. Add this property to DT files of msm8916,
-sdm845, sm8150, sm8250 and sm8350 so that nothing is broken after secure
-domain patchset.
+of_find_device_by_node() takes a reference to the embedded struct device 
+which needs to be dropped when error return.
 
-This patch is purely for backward compatibility reasons.
-
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Wang Qing <wangqing@vivo.com>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
- 5 files changed, 12 insertions(+)
+ drivers/cpuidle/cpuidle-qcom-spm.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index c1c42f26b61e..137a479449d4 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1365,6 +1365,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,smd-channels = "fastrpcsmd-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
+diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+index 01e7791..6638c1d
+--- a/drivers/cpuidle/cpuidle-qcom-spm.c
++++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+@@ -107,12 +107,16 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
+ 		return -ENODEV;
  
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 526087586ba4..4aebfed4ec00 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -838,6 +838,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "adsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+ 	data = devm_kzalloc(cpuidle_dev, sizeof(*data), GFP_KERNEL);
+-	if (!data)
++	if (!data) {
++		put_device(&pdev->dev);
+ 		return -ENOMEM;
++	}
  
-@@ -888,6 +889,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "cdsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+ 	data->spm = dev_get_drvdata(&pdev->dev);
+-	if (!data->spm)
++	if (!data->spm) {
++		put_device(&pdev->dev);
+ 		return -EINVAL;
++	}
  
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 81b4ff2cc4cd..9ac213bb96b7 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1751,6 +1751,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2994,6 +2995,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -3439,6 +3441,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index f0d342aa662d..06be221ad5b6 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2265,6 +2265,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2330,6 +2331,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -4100,6 +4102,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index d134280e2939..80f753cbe91c 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1278,6 +1278,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1347,6 +1348,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1643,6 +1645,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
+ 	data->cpuidle_driver = qcom_spm_idle_driver;
+ 	data->cpuidle_driver.cpumask = (struct cpumask *)cpumask_of(cpu);
 -- 
-2.21.0
+2.7.4
 
