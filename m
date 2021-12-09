@@ -2,54 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2671146F604
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 22:35:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 559BE46F661
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 23:02:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbhLIViy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 16:38:54 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:44979 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbhLIViy (ORCPT
+        id S233142AbhLIWFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 17:05:52 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:6073 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231286AbhLIWFv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 16:38:54 -0500
+        Thu, 9 Dec 2021 17:05:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639085720; x=1670621720;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=Y7gcDNayPePeiBoVEl6fqeNNJlAzYDOTNq/FzvyRAt8=;
-  b=lW3vLBLPHcrxkPSbTC7pSy2B1F84zseOPGTyW6O8Yd9Pscvpmh6pBSwz
-   jJOSR49kbPwnj+gpkWSskGG6hVeRPwCNPvLU1Aqu0RHbDpEBTRi3EToj7
-   slWxGMqDUX91zjUsRlwqBgCTWCPV9EX1W/cB4qGG7p7WWc/r2+RJC1Z3L
+  t=1639087337; x=1670623337;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=mlxFHPwyn031NG3Bea8qphpci8XmwSamaHtwrEbF7/E=;
+  b=aUummwRZ585DjmobMzBuHwwVwTIJ2O8R4AhB2bAgj3Y1RR1iuJQ7ACIn
+   aIb1uuIh2DZpq+gxxgHU6sUrFeX3uEA2G8gfhKVPQUa2IlKICdCS+6Z6Z
+   2xPAFFVSjBVe7qEIp9+wgdum112Yjt86zOQ9B0OBjFmmhDqw8wUz4ahlM
    Q=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 09 Dec 2021 13:35:20 -0800
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Dec 2021 14:02:17 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 13:35:19 -0800
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 14:02:17 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 9 Dec 2021 13:35:19 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 9 Dec 2021 13:35:18 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 2/2] drm/msm/dp: do not initialize phy until plugin interrupt received
-Date:   Thu, 9 Dec 2021 13:35:07 -0800
-Message-ID: <1639085707-27845-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.922.19; Thu, 9 Dec 2021 14:02:16 -0800
+Received: from [10.111.171.222] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 9 Dec 2021
+ 14:02:14 -0800
+Message-ID: <5b537a80-818b-0763-8ce7-be53e0519e77@quicinc.com>
+Date:   Thu, 9 Dec 2021 14:02:12 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [Freedreno] [PATCH v1 7/8] drm/msm/dpu: simplify DPU's regset32
+ code
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>
+References: <20211201222633.2476780-1-dmitry.baryshkov@linaro.org>
+ <20211201222633.2476780-8-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211201222633.2476780-8-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -57,408 +64,199 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Current DP drivers have regulators, clocks, irq and phy are grouped
-together within a function and executed not in a symmetric manner.
-This increase difficulty of code maintenance and limited code scalability.
-This patch divides the driver life cycle of operation into four states,
-resume (including booting up), dongle plugin, dongle unplugged and suspend.
-Regulators, core clocks and irq are grouped together and enabled at resume
-(or booting up) so that the DP controller is armed and ready to receive HPD
-plugin interrupts. HPD plugin interrupt is generated when a dongle plugs
-into DUT (device under test). Once HPD plugin interrupt is received, DP
-controller will initialize phy so that dpcd read/write will function and
-following link training can be proceeded successfully. DP phy will be
-disabled after main link is teared down at end of unplugged HPD interrupt
-handle triggered by dongle unplugged out of DUT. Finally regulators, code
-clocks and irq are disabled at corresponding suspension.
 
-Changes in V2:
--- removed unnecessary dp_ctrl NULL check
--- removed unnecessary phy init_count and power_count DRM_DEBUG_DP logs
--- remove flip parameter out of dp_ctrl_irq_enable()
--- add fixes tag
 
-Changes in V3:
--- call dp_display_host_phy_init() instead of dp_ctrl_phy_init() at
-        dp_display_host_init() for eDP
-
-Changes in V4:
--- rewording commit text to match this commit changes
-
-Changes in V5:
--- rebase on top of msm-next branch
-
-Changes in V6:
--- delete flip variable
-
-Changes in V7:
--- dp_ctrl_irq_enable/disabe() merged into dp_ctrl_reset_irq_ctrl()
-
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 77 ++++++++++++----------------------
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  8 ++--
- drivers/gpu/drm/msm/dp/dp_display.c | 84 ++++++++++++++++++++++++++-----------
- 3 files changed, 92 insertions(+), 77 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c724cb0..39558a2 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1365,60 +1365,44 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
- 	return ret;
- }
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
-+void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable)
-+{
-+	struct dp_ctrl_private *ctrl;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+
-+	dp_catalog_ctrl_reset(ctrl->catalog);
-+
-+	if (enable)
-+		dp_catalog_ctrl_enable_irq(ctrl->catalog, enable);
-+}
-+
-+void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
- 	struct phy *phy;
- 
--	if (!dp_ctrl) {
--		DRM_ERROR("Invalid input data\n");
--		return -EINVAL;
--	}
--
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 	dp_io = &ctrl->parser->io;
- 	phy = dp_io->phy;
- 
--	ctrl->dp_ctrl.orientation = flip;
--
--	if (reset)
--		dp_catalog_ctrl_reset(ctrl->catalog);
--
--	DRM_DEBUG_DP("flip=%d\n", flip);
- 	dp_catalog_ctrl_phy_reset(ctrl->catalog);
- 	phy_init(phy);
--	dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
--
--	return 0;
- }
- 
--/**
-- * dp_ctrl_host_deinit() - Uninitialize DP controller
-- * @dp_ctrl: Display Port Driver data
-- *
-- * Perform required steps to uninitialize DP controller
-- * and its resources.
-- */
--void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl)
-+void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
- 	struct phy *phy;
- 
--	if (!dp_ctrl) {
--		DRM_ERROR("Invalid input data\n");
--		return;
--	}
--
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 	dp_io = &ctrl->parser->io;
- 	phy = dp_io->phy;
- 
--	dp_catalog_ctrl_enable_irq(ctrl->catalog, false);
-+	dp_catalog_ctrl_phy_reset(ctrl->catalog);
- 	phy_exit(phy);
--
--	DRM_DEBUG_DP("Host deinitialized successfully\n");
- }
- 
- static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
-@@ -1893,8 +1877,14 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 		return ret;
- 	}
- 
-+	DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	phy_power_off(phy);
- 
-+	DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	/* aux channel down, reinit phy */
- 	phy_exit(phy);
- 	phy_init(phy);
-@@ -1903,23 +1893,6 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 	return ret;
- }
- 
--void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl)
--{
--	struct dp_ctrl_private *ctrl;
--	struct dp_io *dp_io;
--	struct phy *phy;
--
--	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
--	dp_io = &ctrl->parser->io;
--	phy = dp_io->phy;
--
--	dp_catalog_ctrl_reset(ctrl->catalog);
--
--	phy_exit(phy);
--
--	DRM_DEBUG_DP("DP off phy done\n");
--}
--
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
-@@ -1947,10 +1920,14 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- 		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
- 	}
- 
-+	DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	phy_power_off(phy);
--	phy_exit(phy);
- 
--	DRM_DEBUG_DP("DP off done\n");
-+	DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2363a2d..2433edb 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -19,12 +19,9 @@ struct dp_ctrl {
- 	u32 pixel_rate;
- };
- 
--int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
--void dp_ctrl_host_deinit(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
--void dp_ctrl_off_phy(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-@@ -34,4 +31,9 @@ struct dp_ctrl *dp_ctrl_get(struct device *dev, struct dp_link *link,
- 			struct dp_power *power, struct dp_catalog *catalog,
- 			struct dp_parser *parser);
- 
-+void dp_ctrl_reset_irq_ctrl(struct dp_ctrl *dp_ctrl, bool enable);
-+void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl);
-+void dp_ctrl_irq_phy_exit(struct dp_ctrl *dp_ctrl);
-+
- #endif /* _DP_CTRL_H_ */
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0766752..cfbc5e4 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -83,6 +83,7 @@ struct dp_display_private {
- 
- 	/* state variables */
- 	bool core_initialized;
-+	bool phy_initialized;
- 	bool hpd_irq_on;
- 	bool audio_supported;
- 
-@@ -371,21 +372,46 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
- 	return rc;
- }
- 
--static void dp_display_host_init(struct dp_display_private *dp, int reset)
-+static void dp_display_host_phy_init(struct dp_display_private *dp)
- {
--	bool flip = false;
-+	DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-+			dp->core_initialized, dp->phy_initialized);
- 
-+	if (!dp->phy_initialized) {
-+		dp_ctrl_phy_init(dp->ctrl);
-+		dp->phy_initialized = true;
-+	}
-+}
-+
-+static void dp_display_host_phy_exit(struct dp_display_private *dp)
-+{
-+	DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-+			dp->core_initialized, dp->phy_initialized);
-+
-+	if (dp->phy_initialized) {
-+		dp_ctrl_phy_exit(dp->ctrl);
-+		dp->phy_initialized = false;
-+	}
-+}
-+
-+static void dp_display_host_init(struct dp_display_private *dp)
-+{
- 	DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
- 	if (dp->core_initialized) {
- 		DRM_DEBUG_DP("DP core already initialized\n");
- 		return;
- 	}
- 
--	if (dp->usbpd->orientation == ORIENTATION_CC2)
--		flip = true;
-+	dp_power_init(dp->power, false);
-+	dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
-+
-+	/*
-+	 * eDP is the embedded primary display and has its own phy
-+	 * initialize phy immediately
-+	 */
-+	if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
-+		dp_display_host_phy_init(dp);
- 
--	dp_power_init(dp->power, flip);
--	dp_ctrl_host_init(dp->ctrl, flip, reset);
- 	dp_aux_init(dp->aux);
- 	dp->core_initialized = true;
- }
-@@ -397,7 +423,7 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
- 		return;
- 	}
- 
--	dp_ctrl_host_deinit(dp->ctrl);
-+	dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
- 	dp_aux_deinit(dp->aux);
- 	dp_power_deinit(dp->power);
- 
-@@ -408,7 +434,7 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
- {
- 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
- 
--	dp_display_host_init(dp, false);
-+	dp_display_host_phy_init(dp);
- 
- 	return dp_display_process_hpd_high(dp);
- }
-@@ -532,7 +558,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 		dp->hpd_state = ST_DISCONNECTED;
- 
- 		if (ret == -ECONNRESET) { /* cable unplugged */
--			dp->core_initialized = false;
-+			dp->phy_initialized = false;
- 		}
- 
- 	} else {
-@@ -604,8 +630,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	if (state == ST_DISCONNECTED) {
- 		/* triggered by irq_hdp with sink_count = 0 */
- 		if (dp->link->sink_count == 0) {
--			dp_ctrl_off_phy(dp->ctrl);
--			dp->core_initialized = false;
-+			dp_display_host_phy_exit(dp);
- 		}
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
-@@ -698,9 +723,8 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 	 */
- 	if (dp->core_initialized) {
- 		ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
--		if (ret == -ECONNRESET) { /* cable unplugged */
--			dp->core_initialized = false;
--		}
-+		if (ret == -ECONNRESET)	/* cable unplugged */
-+			dp->phy_initialized = false;
- 	}
- 	DRM_DEBUG_DP("hpd_state=%d\n", state);
- 
-@@ -892,12 +916,19 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
- 
- 	dp_display->audio_enabled = false;
- 
--	/* triggered by irq_hpd with sink_count = 0 */
- 	if (dp->link->sink_count == 0) {
-+		/*
-+		 * irq_hpd with sink_count = 0
-+		 * hdmi unplugged out of dongle
-+		 */
- 		dp_ctrl_off_link_stream(dp->ctrl);
- 	} else {
-+		/*
-+		 * unplugged interrupt
-+		 * dongle unplugged out of DUT
-+		 */
- 		dp_ctrl_off(dp->ctrl);
--		dp->core_initialized = false;
-+		dp_display_host_phy_exit(dp);
- 	}
- 
- 	dp_display->power_on = false;
-@@ -1027,7 +1058,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
- static void dp_display_config_hpd(struct dp_display_private *dp)
- {
- 
--	dp_display_host_init(dp, true);
-+	dp_display_host_init(dp);
- 	dp_catalog_ctrl_hpd_config(dp->catalog);
- 
- 	/* Enable interrupt first time
-@@ -1306,20 +1337,23 @@ static int dp_pm_resume(struct device *dev)
- 	dp->hpd_state = ST_DISCONNECTED;
- 
- 	/* turn on dp ctrl/phy */
--	dp_display_host_init(dp, true);
-+	dp_display_host_init(dp);
- 
- 	dp_catalog_ctrl_hpd_config(dp->catalog);
- 
--	/*
--	 * set sink to normal operation mode -- D0
--	 * before dpcd read
--	 */
--	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
- 
- 	if (dp_catalog_link_is_connected(dp->catalog)) {
-+		/*
-+		 * set sink to normal operation mode -- D0
-+		 * before dpcd read
-+		 */
-+		dp_display_host_phy_init(dp);
-+		dp_link_psm_config(dp->link, &dp->panel->link_info, false);
- 		sink_count = drm_dp_read_sink_count(dp->aux);
- 		if (sink_count < 0)
- 			sink_count = 0;
-+
-+		dp_display_host_phy_exit(dp);
- 	}
- 
- 	dp->link->sink_count = sink_count;
-@@ -1366,6 +1400,8 @@ static int dp_pm_suspend(struct device *dev)
- 		dp_display_host_deinit(dp);
- 	}
- 
-+	dp_display_host_phy_exit(dp);
-+
- 	dp->hpd_state = ST_SUSPENDED;
- 
- 	/* host_init will be called at pm_resume */
-@@ -1523,7 +1559,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 	state =  dp_display->hpd_state;
- 
- 	if (state == ST_DISPLAY_OFF)
--		dp_display_host_init(dp_display, true);
-+		dp_display_host_phy_init(dp_display);
- 
- 	dp_display_enable(dp_display, 0);
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+On 12/1/2021 2:26 PM, Dmitry Baryshkov wrote:
+> Squash dpu_debugfs_setup_regset32() into dpu_debugfs_create_regset32().
+> it makes little sense to have separate function to just setup the
+> structure.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   | 32 ++++++++++++-------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   | 38 +++--------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 27 +++++-----------
+>   3 files changed, 33 insertions(+), 64 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 4c04982c71b2..7e7a619769a8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -182,6 +182,15 @@ static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
+>   
+>   }
+>   
+> +/*
+> + * Companion structure for dpu_debugfs_create_regset32.
+> + */
+> +struct dpu_debugfs_regset32 {
+> +	uint32_t offset;
+> +	uint32_t blk_len;
+> +	struct dpu_kms *dpu_kms;
+> +};
+> +
+>   static int _dpu_debugfs_show_regset32(struct seq_file *s, void *data)
+>   {
+>   	struct dpu_debugfs_regset32 *regset = s->private;
+> @@ -229,24 +238,23 @@ static const struct file_operations dpu_fops_regset32 = {
+>   	.release =	single_release,
+>   };
+>   
+> -void dpu_debugfs_setup_regset32(struct dpu_debugfs_regset32 *regset,
+> +void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+> +		void *parent,
+>   		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms)
+>   {
+> -	if (regset) {
+> -		regset->offset = offset;
+> -		regset->blk_len = length;
+> -		regset->dpu_kms = dpu_kms;
+> -	}
+> -}
+> +	struct dpu_debugfs_regset32 *regset;
+>   
+> -void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+> -		void *parent, struct dpu_debugfs_regset32 *regset)
+> -{
+> -	if (!name || !regset || !regset->dpu_kms || !regset->blk_len)
+> +	if (WARN_ON(!name || !dpu_kms || !length))
+> +		return;
+> +
+> +	regset = devm_kzalloc(&dpu_kms->pdev->dev, sizeof(*regset), GFP_KERNEL);
+> +	if (!regset)
+>   		return;
+>   
+>   	/* make sure offset is a multiple of 4 */
+> -	regset->offset = round_down(regset->offset, 4);
+> +	regset->offset = round_down(offset, 4);
+> +	regset->blk_len = length;
+> +	regset->dpu_kms = dpu_kms;
+>   
+>   	debugfs_create_file(name, mode, parent, regset, &dpu_fops_regset32);
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index 775bcbda860f..b53cdeb1b5c4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -160,33 +160,9 @@ struct dpu_global_state
+>    *
+>    * Documentation/filesystems/debugfs.rst
+>    *
+> - * @dpu_debugfs_setup_regset32: Initialize data for dpu_debugfs_create_regset32
+>    * @dpu_debugfs_create_regset32: Create 32-bit register dump file
+> - * @dpu_debugfs_get_root: Get root dentry for DPU_KMS's debugfs node
+>    */
+>   
+> -/**
+> - * Companion structure for dpu_debugfs_create_regset32. Do not initialize the
+> - * members of this structure explicitly; use dpu_debugfs_setup_regset32 instead.
+> - */
+> -struct dpu_debugfs_regset32 {
+> -	uint32_t offset;
+> -	uint32_t blk_len;
+> -	struct dpu_kms *dpu_kms;
+> -};
+> -
+> -/**
+> - * dpu_debugfs_setup_regset32 - Initialize register block definition for debugfs
+> - * This function is meant to initialize dpu_debugfs_regset32 structures for use
+> - * with dpu_debugfs_create_regset32.
+> - * @regset: opaque register definition structure
+> - * @offset: sub-block offset
+> - * @length: sub-block length, in bytes
+> - * @dpu_kms: pointer to dpu kms structure
+> - */
+> -void dpu_debugfs_setup_regset32(struct dpu_debugfs_regset32 *regset,
+> -		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms);
+> -
+>   /**
+>    * dpu_debugfs_create_regset32 - Create register read back file for debugfs
+>    *
+> @@ -195,20 +171,16 @@ void dpu_debugfs_setup_regset32(struct dpu_debugfs_regset32 *regset,
+>    * names/offsets do not need to be provided. The 'read' function simply outputs
+>    * sequential register values over a specified range.
+>    *
+> - * Similar to the related debugfs_create_regset32 API, the structure pointed to
+> - * by regset needs to persist for the lifetime of the created file. The calling
+> - * code is responsible for initialization/management of this structure.
+> - *
+> - * The structure pointed to by regset is meant to be opaque. Please use
+> - * dpu_debugfs_setup_regset32 to initialize it.
+> - *
+>    * @name:   File name within debugfs
+>    * @mode:   File mode within debugfs
+>    * @parent: Parent directory entry within debugfs, can be NULL
+> - * @regset: Pointer to persistent register block definition
+> + * @offset: sub-block offset
+> + * @length: sub-block length, in bytes
+> + * @dpu_kms: pointer to dpu kms structure
+>    */
+>   void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+> -		void *parent, struct dpu_debugfs_regset32 *regset);
+> +		void *parent,
+> +		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms);
+>   
+>   /**
+>    * dpu_debugfs_get_root - Return root directory entry for KMS's debugfs
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index d3176f58708e..ef66af696a40 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -108,11 +108,6 @@ struct dpu_plane {
+>   	bool is_virtual;
+>   	struct list_head mplane_list;
+>   	struct dpu_mdss_cfg *catalog;
+> -
+> -	/* debugfs related stuff */
+> -	struct dpu_debugfs_regset32 debugfs_src;
+> -	struct dpu_debugfs_regset32 debugfs_scaler;
+> -	struct dpu_debugfs_regset32 debugfs_csc;
+>   };
+>   
+>   static const uint64_t supported_format_modifiers[] = {
+> @@ -1379,35 +1374,29 @@ static int _dpu_plane_init_debugfs(struct drm_plane *plane)
+>   			debugfs_root, (unsigned long *)&pdpu->pipe_hw->cap->features);
+>   
+>   	/* add register dump support */
+> -	dpu_debugfs_setup_regset32(&pdpu->debugfs_src,
+> +	dpu_debugfs_create_regset32("src_blk", 0400,
+> +			debugfs_root,
+>   			sblk->src_blk.base + cfg->base,
+>   			sblk->src_blk.len,
+>   			kms);
+> -	dpu_debugfs_create_regset32("src_blk", 0400,
+> -			debugfs_root, &pdpu->debugfs_src);
+>   
+>   	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+>   			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+>   			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
+> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4)) {
+> -		dpu_debugfs_setup_regset32(&pdpu->debugfs_scaler,
+> +			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
+> +		dpu_debugfs_create_regset32("scaler_blk", 0400,
+> +				debugfs_root,
+>   				sblk->scaler_blk.base + cfg->base,
+>   				sblk->scaler_blk.len,
+>   				kms);
+> -		dpu_debugfs_create_regset32("scaler_blk", 0400,
+> -				debugfs_root,
+> -				&pdpu->debugfs_scaler);
+> -	}
+>   
+>   	if (cfg->features & BIT(DPU_SSPP_CSC) ||
+> -			cfg->features & BIT(DPU_SSPP_CSC_10BIT)) {
+> -		dpu_debugfs_setup_regset32(&pdpu->debugfs_csc,
+> +			cfg->features & BIT(DPU_SSPP_CSC_10BIT))
+> +		dpu_debugfs_create_regset32("csc_blk", 0400,
+> +				debugfs_root,
+>   				sblk->csc_blk.base + cfg->base,
+>   				sblk->csc_blk.len,
+>   				kms);
+> -		dpu_debugfs_create_regset32("csc_blk", 0400,
+> -				debugfs_root, &pdpu->debugfs_csc);
+> -	}
+>   
+>   	debugfs_create_u32("xin_id",
+>   			0400,
+> 
