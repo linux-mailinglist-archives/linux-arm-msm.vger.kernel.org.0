@@ -2,166 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53B7A46EC61
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 16:59:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 375AC46EC7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Dec 2021 17:03:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240688AbhLIQCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 11:02:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55482 "EHLO
+        id S240733AbhLIQHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 11:07:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240687AbhLIQCd (ORCPT
+        with ESMTP id S240565AbhLIQH3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 11:02:33 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371F0C061746
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 07:59:00 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id n66so9235640oia.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 07:59:00 -0800 (PST)
+        Thu, 9 Dec 2021 11:07:29 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65018C061746;
+        Thu,  9 Dec 2021 08:03:55 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id k23so9753310lje.1;
+        Thu, 09 Dec 2021 08:03:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=WEBXCg63/1ndpAn4Hf4CWTdEmyqEB2Cq5tKcfasSKaM=;
-        b=MTMyKanHvXgcpD5Y4aoLcpiV9BABi6Fv9K3SZSoi81WY3g4hxC5xr5SD/DIRE68C9g
-         a6yR80YU3CaktwS99Yxx74NFE+PFP/ItG9o9HXMSVbSxqkxy1Dlw5bTyziPsh8t8FFa8
-         ksYoetY4N7bxfS81/IKH6BqFarz7fiMqUmagKWw+0D+VBm5x1x2NT3tnGmFdqyGONXLW
-         8AHFZdDWbjGR4Egw5gju/fxBnjqCb0gZMj4UolHhoMp0rTqU8h/RZWZ1amXlZu9Bp43S
-         UZo5wFbo6vEUkrXDRqQ/SOvHkKrYClGmOJ1J8iodXEklJVLd5Et0P9H82YoyfptiHMNV
-         KQBg==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:to:cc:references
+         :from:in-reply-to:content-transfer-encoding;
+        bh=cb7DP4xQRrR7eaEbn0nK2nl/RVqJ7P0xuMj6assZJek=;
+        b=WvfEK1oUK7PCmcUwb7qqB5b7t/tqkKwJy25w5G2ZpXi9fXnA0lP0F0Zd13IgPsYYzv
+         DUg3NLq35vVC3ZDxjMlvNaZHaOB6NDNSSf5a57QJWhGMdeApCnf+6Rj2h80bD+exo2S8
+         SJrKkZqx0gEFhuWgsTYdhUovek/wQQtM7FtXIr6y4qN8x4o//npz3+R1UEaq6LIh0BCG
+         hE+UiJvUe14c1LY39MaWNn0b0EKiaxXhsoA5GerX4dnXXKXMN4eKP1DoXEJcPwfTrVi8
+         RFQ7LhCc1viLLw+Azet7F7wpbMKj9g4f9RtCQu6mt80N86GW7YKpizYxVeGhXeIjOUFu
+         NBkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=WEBXCg63/1ndpAn4Hf4CWTdEmyqEB2Cq5tKcfasSKaM=;
-        b=lP42s+EEVG2UXaYXEAvgAo52s4Ie3AoscDX51FUZvxFPlxgPSx5Q6mw4yTMNN6UQxw
-         AyVE1QGdNTGOZqEEYPIAhcQSmIGpdL1W9FoOVeLg3/ZFsyDny50kajGyV1TaX7RqUB4S
-         /rfY5gOoZIWRu14qkTH5RHiwJh1Qqg4tkdGJP5R0IFoGeS8eKK6h3u78CGQ3Qodc3g0N
-         b0Fjbxz2c6x3tGCkXj4mkaZAy8zr4NR1RgVeeEF5KNPFv4t6tgEGtN9pJoGotsEW2EIk
-         TG6Avgshh2kx60U5yqOaVqXhWqRdZzbdhA7Io5j4c8TBZj/DvTGDk6BRMwkmZ8oOkVYr
-         VglA==
-X-Gm-Message-State: AOAM530k8uj9dY/HtsCZAChn+LvlEMBLVS8HHTUcooXvLFONNFvIl5VX
-        xbR+DJfeF1cjW6iDVNdez96sqw==
-X-Google-Smtp-Source: ABdhPJzGy18u+6jGOo7I/JChqTU/nV/2Mtb8tEVBIKC9A/gytWXK4d97gYg2XHqPsCXWke/d2zZQ4Q==
-X-Received: by 2002:a05:6808:1210:: with SMTP id a16mr6470172oil.161.1639065539512;
-        Thu, 09 Dec 2021 07:58:59 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a17sm55207oiw.43.2021.12.09.07.58.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 07:58:59 -0800 (PST)
-Date:   Thu, 9 Dec 2021 08:00:22 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org, mka@chromium.org
-Subject: Re: [PATCH v2 2/3] soc: qcom: rpmhpd: Remove mx/cx relationship on
- sc7280
-Message-ID: <YbIoFjh9QbdsPnQh@ripper>
-References: <1638871712-18636-1-git-send-email-quic_rjendra@quicinc.com>
- <1638871712-18636-3-git-send-email-quic_rjendra@quicinc.com>
- <YbEYyGHqaHGeRXsV@builder.lan>
- <7e9f6cbe-17c9-53ff-95a8-2f2bbdeb1d23@quicinc.com>
- <7b8f359f-de8d-4ace-d28d-8242683e1f8c@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :to:cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=cb7DP4xQRrR7eaEbn0nK2nl/RVqJ7P0xuMj6assZJek=;
+        b=ZddFJUPny/aVwaEfNkAmITqDVgsGv6ByTbjIwzF/NWBT0zS1HKcQBzcXrLOz9enQD7
+         e4MU2iAKn1pcfEcCT3fSizSMlihNWYOOV9w+jgzsJEbX9WTc3ou1YoidZxNwoVnaOW/Y
+         MKb5UtUt7cG2iDO8AMNpGO1mt/8ukNCaGTLnVRYHzC1ssuL0RD1DEpO9NfHATyDcsaLM
+         oqRJGEGq0RFVnA2oBi3lJewSaqgQ67mZoZQE5v6/EgO467dDLiO2q776VJOOrluKDiwI
+         Rt5vfaUxaOsMwtgdfImZBhScRIt6AjUQX6O4YdimA+hoiHtYE63vmaB/73dBV/aYWNux
+         gApw==
+X-Gm-Message-State: AOAM5338Q4C+kZMRcD7xq9N8QoXFO3KTdGNkrNy0AkZqdVIb8/OPp6QH
+        J7H5qWHrCnHIVg14blJqI8PcbRy8I5o=
+X-Google-Smtp-Source: ABdhPJyu5x+iWP19CiNhQXm3GIHUzijm71lS2NrxLaKYKseR9zAb0054+UU1XlOdD9NYHK6SloByPw==
+X-Received: by 2002:a2e:7114:: with SMTP id m20mr7092240ljc.229.1639065833168;
+        Thu, 09 Dec 2021 08:03:53 -0800 (PST)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl. [194.29.137.1])
+        by smtp.gmail.com with ESMTPSA id x18sm16645ljd.110.2021.12.09.08.03.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Dec 2021 08:03:52 -0800 (PST)
+Message-ID: <2697db33-753c-ead8-019f-5e2ef1773693@gmail.com>
+Date:   Thu, 9 Dec 2021 17:03:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b8f359f-de8d-4ace-d28d-8242683e1f8c@quicinc.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH v3 1/1] arm64: dts: add minimal DTS for Microsoft Surface
+ Duo 2
+To:     Katherine Perez <kaperez@linux.microsoft.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Felipe Balbi <balbi@kernel.org>
+References: <20211208235137.2751003-1-kaperez@linux.microsoft.com>
+ <20211208235137.2751003-2-kaperez@linux.microsoft.com>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <20211208235137.2751003-2-kaperez@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Dec 07:37 PST 2021, Rajendra Nayak wrote:
+Hi!
 
-> 
-> On 12/9/2021 12:29 PM, Rajendra Nayak wrote:
-> > 
-> > On 12/9/2021 2:12 AM, Bjorn Andersson wrote:
-> > > On Tue 07 Dec 04:08 CST 2021, Rajendra Nayak wrote:
-> > > 
-> > > > While the requirement to specify the active + sleep and active-only MX
-> > > > power-domains as the parents of the corresponding CX power domains is
-> > > > applicable for most SoCs, we have some like the sc7280 where this
-> > > > dependency is not applicable.
-> > > > Define new rpmhpd structs for cx and cx_ao without the mx as
-> > > > parent and use them for sc7280.
-> > > > 
-> > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > > > ---
-> > > >   drivers/soc/qcom/rpmhpd.c | 18 ++++++++++++++++--
-> > > >   1 file changed, 16 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-> > > > index c71481d..4599efe 100644
-> > > > --- a/drivers/soc/qcom/rpmhpd.c
-> > > > +++ b/drivers/soc/qcom/rpmhpd.c
-> > > > @@ -120,6 +120,20 @@ static struct rpmhpd cx_ao = {
-> > > >       .res_name = "cx.lvl",
-> > > >   };
-> > > > +static struct rpmhpd cx_ao_no_parent;
-> > > > +static struct rpmhpd cx_no_parent = {
-> > > 
-> > > There are multiple variations of how each of these can be parented, but
-> > > only one way they can be without a parent. So how about we turn this the
-> > > other way around?
-> > > 
-> > > I.e. let's name this one "cx" and the existing one "cx_w_mx_parent".
-> > > 
-> > > 
-> > > This will be particularly useful when you look at mmcx, which on
-> > > 8150/8180 has mx as parent and on 8450 has cx as parent.
-> 
-> I noticed mmcx on 8150/8180 does not have mx as parent, nevertheless
-> I went ahead and moved to the _w_<parent-name>_parent suffix because
-> it made sense if we did run into a situation like this in the future.
-> 
+On 09/12/2021 00:51, Katherine Perez wrote:
+> This is a minimal devicetree for Microsoft Surface Duo 2 with SM8350
+> Chipset
+>
+> Signed-off-by: Katherine Perez <kaperez@linux.microsoft.com>
+> Reviewed-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>
+> Changes since v1:
+> - Change remoteprocs firmware-naming scheme to qcom/sm8350/microsft/*
+> - Add chassis-type
+>
+>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>   .../qcom/sm8350-microsoft-surface-duo2.dts    | 369 ++++++++++++++++++
+>   2 files changed, 370 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
+>
+> --
+> 2.31.1
 
-You're correct, the 8150/8180 mmcx are wrong, let's fix that once your
-patches has settled (probably later today).
+[...]
 
-Thanks for cleaning up the driver!
 
-Regards,
-Bjorn
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
+> @@ -0,0 +1,369 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (C) 2021, Microsoft Corporation
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
 
-> > > 
-> > > 
-> > > PS. Unfortunately I had merged 8450 since you wrote this series, I tried
-> > > to just fix it up as I applied your patch, but noticed 8450_cx and
-> > > 8450_mmcx and wanted to get your opinion on this first.
-> > 
-> > I agree that sounds like a reasonable thing to do, I hadn't looked at 8450
-> > so did not notice it, I will rebase my patches on top and repost.
-> > 
-> > > 
-> > > Regards,
-> > > Bjorn
-> > > 
-> > > > +    .pd = { .name = "cx", },
-> > > > +    .peer = &cx_ao_no_parent,
-> > > > +    .res_name = "cx.lvl",
-> > > > +};
-> > > > +
-> > > > +static struct rpmhpd cx_ao_no_parent = {
-> > > > +    .pd = { .name = "cx_ao", },
-> > > > +    .active_only = true,
-> > > > +    .peer = &cx_no_parent,
-> > > > +    .res_name = "cx.lvl",
-> > > > +};
-> > > > +
-> > > >   static struct rpmhpd mmcx_ao;
-> > > >   static struct rpmhpd mmcx = {
-> > > >       .pd = { .name = "mmcx", },
-> > > > @@ -273,8 +287,8 @@ static const struct rpmhpd_desc sc7180_desc = {
-> > > >   /* SC7280 RPMH powerdomains */
-> > > >   static struct rpmhpd *sc7280_rpmhpds[] = {
-> > > > -    [SC7280_CX] = &cx,
-> > > > -    [SC7280_CX_AO] = &cx_ao,
-> > > > +    [SC7280_CX] = &cx_no_parent,
-> > > > +    [SC7280_CX_AO] = &cx_ao_no_parent,
-> > > >       [SC7280_EBI] = &ebi,
-> > > >       [SC7280_GFX] = &gfx,
-> > > >       [SC7280_MX] = &mx,
-> > > > -- 
-> > > > 2.7.4
-> > > > 
+This is now included in sm8350.dtsi
+
+
+[...]
+
+> +&usb_1 {
+> +	dr_mode = "peripheral";
+> +};
+> +
+
+Looks like you forgot to enable usb_1, but other than these two nits:
+
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+
+Konrad
+
