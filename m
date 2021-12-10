@@ -2,227 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3751346FB18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 08:07:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98D4346FCE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 09:42:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234835AbhLJHKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 02:10:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37866 "EHLO
+        id S238652AbhLJIqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 03:46:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233454AbhLJHKi (ORCPT
+        with ESMTP id S235808AbhLJIqS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 02:10:38 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCCCC0617A1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Dec 2021 23:07:04 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id l18so2593098pgj.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Dec 2021 23:07:04 -0800 (PST)
+        Fri, 10 Dec 2021 03:46:18 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED98C0617A1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 00:42:43 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id k6-20020a17090a7f0600b001ad9d73b20bso6929740pjl.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 00:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/dQLnEh2Ps1sBa0Skws70D/cK3Q/WSmNsGUWpZrbG/A=;
-        b=XQ6OibmOlk5JlVdQmWNPoO8Ju1Oy1svtjJOCaHrz8s1F/9xiGfRfJVJ+ELBDnIu3I5
-         kWFn8a31Q1XG8njuiW23H/u5Trwz89hub2HHO9RSnSrybA2vmPuPd5m8Ni2VbNfN3wg3
-         d0T/wg5qguqZd1XIM9KTGCSyekIGkxbUHNEsz3jlQ9sezR1yv5nux6b7i1ACAvsla4Z6
-         TZFeWXl1pDDRk90mSwfXN4jkoDj7OuTP5NFsksPjECXYPeFPGG0Qn3ZE6ESxmgV1IRnV
-         wjRmxLyUTXOGNchdlwGYLmmoneyXhajNlMGG4RduHSMkTHfEgdO1bl7zkhobkbt4cZa2
-         7Zpw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=iL7mOU+kitDPtrRKqArvbH60/+cnDzNjLmcoW2AtGv8=;
+        b=Kn+06usMQB33IwA5I8bQKXQS+e/n3AJWpOKKu7uXCu5+USqg9l4zOket+sf3r2UqKB
+         QIEGEw+2UzVdbEO3BjUXZOASgbNP6scRJSWJccO6pdgsyZqxxl6j1KRBqD2LbW0btNED
+         T30lqDRPQWXhDLRMNx8wWxNyexfx6zAl+sSCnBOgfbAMAXopP/ZXLSKGOonrgKeaClpo
+         4G2grqzyj+JMz2MEq8Auz0MnqjyaPjiXrTFqyRsEyKez6jEnNt5aSBcsa68q7TQF6ajH
+         z/1c3AvS2FVkmmfaflH9tqKIOm7+gMYYcC6ht+jnkHSv9lbboUiJtxTeGjM/uwba1Plh
+         aVXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/dQLnEh2Ps1sBa0Skws70D/cK3Q/WSmNsGUWpZrbG/A=;
-        b=NjZGZmIIedmqMAgx4bAV4S+qsj4OTwlbdICo4+mRsZdm5O+wAbxiRqwMgqGohN34yR
-         uqbW2N/nLjCdA6AaTO5ikPvMu1XRdA4PrLOOaDLY/Sa28g6xWIiNfNJ8R2APuVvGWLdK
-         1sMqpmrkmjRri8ZTRr+KQ/UgLuvUGBDAphYL/zXRrYMeiM/Jbm0udZ91gbPZT/bjZ0L6
-         7xN/kUNjAKRUVQfgBYN9yIUfnUwnyJ1KKbOGVfOPF7SEMiEiI/QcgV4sxzUwl33npY1Y
-         fBNnIOjzFR24FrtTZ7bnURehyGAZFfLJs+A0Fr3tiix0y+fRwsTOMHKwXUH9xrCDzOkc
-         ubEw==
-X-Gm-Message-State: AOAM532dCrmKXD1oJFb+t5O9HQILRJR9hJ/pXb9NPaYbX6DUUzI0UjVY
-        IGR9RxXK6wE0CumDx6jq3evo
-X-Google-Smtp-Source: ABdhPJx96kBOUOEL79P/rFK0J0v3F/7gqFaO9Jxv6fT0nwAfRoxhsTNLDFsercJ0LSOjJm6hPcSrYQ==
-X-Received: by 2002:a65:558c:: with SMTP id j12mr30010773pgs.373.1639120023679;
-        Thu, 09 Dec 2021 23:07:03 -0800 (PST)
-Received: from localhost.localdomain ([202.21.42.75])
-        by smtp.gmail.com with ESMTPSA id b10sm1823849pft.179.2021.12.09.23.06.59
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iL7mOU+kitDPtrRKqArvbH60/+cnDzNjLmcoW2AtGv8=;
+        b=1dwd5pWUVr1o95Rgp3f/Vj+M/qt2Th/4WIhr7xU6Zdv3Tgrnxndn/wIj+aQGaIuQQb
+         oq6KolZJiYC+V7EgJUIuAYChG+ElD4pPpaHcrC7IPoYoevnorCLjqlmmxDeTmMo6Lbyl
+         T5d0oSyC9u3fzW+ZCjY2WGXB9pI4KbRn7D/MorSgA9Xtn5qGMPFOHrz78AV4JooEEXPV
+         4MB/akUlPPyaxpb0V1R7gBGy5zZONNNE174EUz5NBpGImUSKT2U98A8wSb00eL5Y9Hia
+         NoiOf1SSKkOIFl6ZEuljyr3kS5VBowWctJKUQoSOsNuiC+zXlF67qOOEN7Skt/hl6h/Y
+         7Pwg==
+X-Gm-Message-State: AOAM531xRt5WBGzCkC+5CTldCHFWofBjuNGMS2sSkXGmdagCdv6uhzMQ
+        jzMI8b0agCCXipuS0fq9NLIE
+X-Google-Smtp-Source: ABdhPJxCkfYuZGgUkkQZ5vdBcYUkq96FOqKrJjrFMUk0zk2eAVuV+BTHqaenlibjF+gjU3sSZDM5JA==
+X-Received: by 2002:a17:902:8544:b0:142:66e7:afbb with SMTP id d4-20020a170902854400b0014266e7afbbmr74471786plo.62.1639125763119;
+        Fri, 10 Dec 2021 00:42:43 -0800 (PST)
+Received: from thinkpad ([202.21.42.75])
+        by smtp.gmail.com with ESMTPSA id y11sm2192234pfg.204.2021.12.10.00.42.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Dec 2021 23:07:03 -0800 (PST)
+        Fri, 10 Dec 2021 00:42:42 -0800 (PST)
+Date:   Fri, 10 Dec 2021 14:12:36 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com
-Cc:     linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] PCI: qcom-ep: Move enable/disable resources code to common functions
-Date:   Fri, 10 Dec 2021 12:36:56 +0530
-Message-Id: <20211210070656.18988-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 01/10] dt-bindings: pci: qcom: Document PCIe bindings
+ for SM8450
+Message-ID: <20211210084236.GC1734@thinkpad>
+References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
+ <20211208171442.1327689-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211208171442.1327689-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Wed, Dec 08, 2021 at 08:14:33PM +0300, Dmitry Baryshkov wrote:
+> Document the PCIe DT bindings for SM8450 SoC.The PCIe IP is similar
+> to the one used on SM8250. Add the compatible for SM8450.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Remove code duplication by moving the code related to enabling/disabling
-the resources (PHY, CLK, Reset) to common functions so that they can be
-called from multiple places.
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-[mani: renamed the functions and reworded the commit message]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 86 ++++++++++++-----------
- 1 file changed, 45 insertions(+), 41 deletions(-)
+Note to self: This binding should be converted to YAML very soon.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 05fa776615c0..f3f429e3192c 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -222,11 +222,8 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
- 	disable_irq(pcie_ep->perst_irq);
- }
- 
--static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
-+static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
- {
--	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
--	struct device *dev = pci->dev;
--	u32 val, offset;
- 	int ret;
- 
- 	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qcom_pcie_ep_clks),
-@@ -246,6 +243,38 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 	if (ret)
- 		goto err_phy_exit;
- 
-+	return 0;
-+
-+err_phy_exit:
-+	phy_exit(pcie_ep->phy);
-+err_disable_clk:
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
-+				   qcom_pcie_ep_clks);
-+
-+	return ret;
-+}
-+
-+static void qcom_pcie_disable_resources(struct qcom_pcie_ep *pcie_ep)
-+{
-+	phy_power_off(pcie_ep->phy);
-+	phy_exit(pcie_ep->phy);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
-+				   qcom_pcie_ep_clks);
-+}
-+
-+static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
-+{
-+	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-+	struct device *dev = pci->dev;
-+	u32 val, offset;
-+	int ret;
-+
-+	ret = qcom_pcie_enable_resources(pcie_ep);
-+	if (ret) {
-+		dev_err(dev, "Failed to enable resources: %d\n", ret);
-+		return ret;
-+	}
-+
- 	/* Assert WAKE# to RC to indicate device is ready */
- 	gpiod_set_value_cansleep(pcie_ep->wake, 1);
- 	usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
-@@ -334,7 +363,7 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 	ret = dw_pcie_ep_init_complete(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
--		goto err_phy_power_off;
-+		goto err_disable_resources;
- 	}
- 
- 	/*
-@@ -354,13 +383,8 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 
- 	return 0;
- 
--err_phy_power_off:
--	phy_power_off(pcie_ep->phy);
--err_phy_exit:
--	phy_exit(pcie_ep->phy);
--err_disable_clk:
--	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
--				   qcom_pcie_ep_clks);
-+err_disable_resources:
-+	qcom_pcie_disable_resources(pcie_ep);
- 
- 	return ret;
- }
-@@ -375,10 +399,7 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
- 		return;
- 	}
- 
--	phy_power_off(pcie_ep->phy);
--	phy_exit(pcie_ep->phy);
--	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
--				   qcom_pcie_ep_clks);
-+	qcom_pcie_disable_resources(pcie_ep);
- 	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
- }
- 
-@@ -646,43 +667,26 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = clk_bulk_prepare_enable(ARRAY_SIZE(qcom_pcie_ep_clks),
--				      qcom_pcie_ep_clks);
--	if (ret)
-+	ret = qcom_pcie_enable_resources(pcie_ep);
-+	if (ret) {
-+		dev_err(dev, "Failed to enable resources: %d\n", ret);
- 		return ret;
--
--	ret = qcom_pcie_ep_core_reset(pcie_ep);
--	if (ret)
--		goto err_disable_clk;
--
--	ret = phy_init(pcie_ep->phy);
--	if (ret)
--		goto err_disable_clk;
--
--	/* PHY needs to be powered on for dw_pcie_ep_init() */
--	ret = phy_power_on(pcie_ep->phy);
--	if (ret)
--		goto err_phy_exit;
-+	}
- 
- 	ret = dw_pcie_ep_init(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize endpoint: %d\n", ret);
--		goto err_phy_power_off;
-+		goto err_disable_resources;
- 	}
- 
- 	ret = qcom_pcie_ep_enable_irq_resources(pdev, pcie_ep);
- 	if (ret)
--		goto err_phy_power_off;
-+		goto err_disable_resources;
- 
- 	return 0;
- 
--err_phy_power_off:
--	phy_power_off(pcie_ep->phy);
--err_phy_exit:
--	phy_exit(pcie_ep->phy);
--err_disable_clk:
--	clk_bulk_disable_unprepare(ARRAY_SIZE(qcom_pcie_ep_clks),
--				   qcom_pcie_ep_clks);
-+err_disable_resources:
-+	qcom_pcie_disable_resources(pcie_ep);
- 
- 	return ret;
- }
--- 
-2.25.1
+Thanks,
+Mani
 
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.txt     | 21 ++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> index a0ae024c2d0c..73bc763c5009 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> @@ -15,6 +15,7 @@
+>  			- "qcom,pcie-sc8180x" for sc8180x
+>  			- "qcom,pcie-sdm845" for sdm845
+>  			- "qcom,pcie-sm8250" for sm8250
+> +			- "qcom,pcie-sm8450" for sm8450
+>  			- "qcom,pcie-ipq6018" for ipq6018
+>  
+>  - reg:
+> @@ -169,6 +170,24 @@
+>  			- "ddrss_sf_tbu" PCIe SF TBU clock
+>  			- "pipe"	PIPE clock
+>  
+> +- clock-names:
+> +	Usage: required for sm8450
+> +	Value type: <stringlist>
+> +	Definition: Should contain the following entries
+> +			- "aux"         Auxiliary clock
+> +			- "cfg"         Configuration clock
+> +			- "bus_master"  Master AXI clock
+> +			- "bus_slave"   Slave AXI clock
+> +			- "slave_q2a"   Slave Q2A clock
+> +			- "tbu"         PCIe TBU clock
+> +			- "ddrss_sf_tbu" PCIe SF TBU clock
+> +			- "pipe"        PIPE clock
+> +			- "pipe_mux"    PIPE MUX
+> +			- "phy_pipe"    PIPE output clock
+> +			- "ref"         REFERENCE clock
+> +			- "aggre0"	Aggre NoC PCIe0 AXI clock
+> +			- "aggre1"	Aggre NoC PCIe1 AXI clock
+> +
+>  - resets:
+>  	Usage: required
+>  	Value type: <prop-encoded-array>
+> @@ -246,7 +265,7 @@
+>  			- "ahb"			AHB reset
+>  
+>  - reset-names:
+> -	Usage: required for sc8180x, sdm845 and sm8250
+> +	Usage: required for sc8180x, sdm845, sm8250 and sm8450
+>  	Value type: <stringlist>
+>  	Definition: Should contain the following entries
+>  			- "pci"			PCIe core reset
+> -- 
+> 2.33.0
+> 
