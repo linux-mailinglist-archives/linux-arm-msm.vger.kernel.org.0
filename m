@@ -2,160 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5523746F8D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 02:55:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86EA046F8E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 03:01:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235310AbhLJB6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 20:58:48 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:45209 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232642AbhLJB6s (ORCPT
+        id S234069AbhLJCF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 21:05:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231148AbhLJCF0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 20:58:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639101314; x=1670637314;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=lHW3hLnV/NwAlPaJvWLZeYHn/Z13jsz9Dd88QrFizYA=;
-  b=yXpZJEv1P74MIOw/Imy21QPGgBU8TUIBWhisf3jWKdLvz1Lx7V/s/RaO
-   WG9nCeMLLntbK1vxqEtFydtkB7Bs/vRSAx+yoJ3xUNpEIbJwQ8Kx8fQ87
-   rdCM2EGV26CWHwMzjABmdMVTNpX8BJ9jP1HsoYj0kivOVDJetXkPFLNra
-   4=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Dec 2021 17:55:14 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 17:55:14 -0800
-Received: from collinsd-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 9 Dec 2021 17:55:13 -0800
-From:   David Collins <quic_collinsd@quicinc.com>
-To:     Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-CC:     David Collins <quic_collinsd@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-Subject: [PATCH 2/2] regulator: scmi: add support for registering SCMI regulators by name
-Date:   Thu, 9 Dec 2021 17:54:42 -0800
-Message-ID: <916966958cc63e9509f94fb263ad8d3c3ec768da.1639099631.git.quic_collinsd@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1639099631.git.quic_collinsd@quicinc.com>
-References: <cover.1639099631.git.quic_collinsd@quicinc.com>
+        Thu, 9 Dec 2021 21:05:26 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 717DEC061746;
+        Thu,  9 Dec 2021 18:01:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 975D7CE2832;
+        Fri, 10 Dec 2021 02:01:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EA6C004DD;
+        Fri, 10 Dec 2021 02:01:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639101708;
+        bh=0/QEsc6oFsMgq2zkSyb2IGxgS1BlU/Yso8DEj/Z4yno=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=XI3DioNwF432jswb1OPdH2Ws8xHqwfgQpGXtXN73lv6JVM9SfiTBe3Tda/esQ9Z0Z
+         bqEGgoK/h0pgU8RTpuprrzN0p4xMXDCk9Tf7ginICuiT94M/IQi5VQPRslNAfFjLrO
+         9r1dgUAMdp3ozCvCK5jnn59fSq5h97zxVGh34xS/W5Z6C/yKPerOy5F3mrdvi8PWCX
+         lselrF5WVsUZhVp5105CFZLqxZWOesR9PNNB6STJMz1mYjLGYPL7Ag64+6GgsLBu0e
+         fhh4w9QMKlOQ5t3hSZXgEscwM+nvnsu4gZin7avmpnpICalOimojlD0hM2Y5fKbI+G
+         fslSRNRX2/mIA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <Ya9K/sF1YDCYCp2Y@matsya>
+References: <20211201072718.3969011-1-vkoul@kernel.org> <20211202230624.C05F3C00446@smtp.kernel.org> <9161450a-40e0-c84f-f529-c903d6f1d722@quicinc.com> <20211203031323.211E5C00446@smtp.kernel.org> <1fb0553b-eca5-a537-4dc3-77437feffc69@quicinc.com> <Ya9K/sF1YDCYCp2Y@matsya>
+Subject: Re: [PATCH] spmi: pmic-arb: Add support for PMIC v7
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+To:     David Collins <quic_collinsd@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>
+Date:   Thu, 09 Dec 2021 18:01:47 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20211210020148.B2EA6C004DD@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to register SCMI regulator subnodes based on an SCMI
-Voltage Domain name specified via the 'regulator-name' device tree
-property.  In doing so, make the 'reg' property optional with the
-constraint that at least one of 'reg' or 'regulator-name' must be
-specified.  If both are specified, then both must match the
-Voltage Domain data exposed by the SCMI platform.
+Quoting Vinod Koul (2021-12-07 03:52:30)
+> On 03-12-21, 16:45, David Collins wrote:
+> > On 12/2/21 7:13 PM, Stephen Boyd wrote:
+> > > Quoting David Collins (2021-12-02 15:51:18)
+> > >> On 12/2/21 3:06 PM, Stephen Boyd wrote:
+> > >>> Quoting Vinod Koul (2021-11-30 23:27:18)
+>=20
+> > > It feels like we should make a parent node that holds the core, chnls,
+> > > obsrvr reg properties with a new compatible string and then have two
+> > > child nodes for each bus. Then the various PMICs can hang off those t=
+wo
+> > > different bus nodes. Of course, it needs DT review to make sure nothi=
+ng
+> > > else goes wrong.
+> >=20
+> > We considered this alternative DT layout when implementing PMIC arbiter
+> > v7 support downstream.  The benefit is allowing common register ranges
+> > to be specified once instead of in both SPMI bus nodes.  However, this
+> > approach has several downsides.
+> >=20
+> > It results in substantially more complex device tree binding
+> > documentation that requires a different layout for SPMI buses for PMIC
+> > arbiter v7 (and above) vs early versions even though support can be
+> > provided with only a minimal modification (i.e. "qcom,bus-id").
+> > Complexity is also increased inside of the spmi-pmic-arb driver.  There,
+> > special data structures and logic would be needed to handle the shared
+> > vs independent register addresses and data.
+> >=20
+> > The SPMI framework currently uses a one-to-one mapping between SPMI
+> > buses and struct device pointers.  This would not work if the new
+> > top-level node represents the true struct device and the per-bus
+> > subnodes are not true devices.  Also, platform_get_resource_byname()
+> > (used in the spmi-pmic-arb probe function) needs a struct
+> > platform_device pointer to read address ranges using "reg" +
+> > "reg-names".  That wouldn't work for the subnodes.
+> >=20
+> > I suppose that "compatible" could be specified for the top-level node
+> > and the per bus subnodes so that all three get probed as struct devices.
+> >  However, that makes things even more complicated and convoluted in the
+> > driver (and DT).
+> >=20
+> > I would prefer to stay with the approach of the two bus instances being
+> > specified independently in DT.
 
-Name based SCMI regulator registration helps ensure that an SCMI
-agent doesn't need to be aware of the numbering scheme used for
-Voltage Domains by the SCMI platform.  It also ensures that the
-correct Voltage Domain is selected for a given physical regulator.
-This cannot be guaranteed with numeric Voltage Domain IDs alone.
+The driver is already pretty hard to read because it combines so many
+generations of spmi arbiter hardware from qcom into one file. It would
+probably be better to start over and simplify the new version of the
+driver, possibly sharing code between the two files if possible, but
+otherwise dropping lots of cruft along the way and simplifying review
+burden.
 
-Signed-off-by: David Collins <quic_collinsd@quicinc.com>
----
- drivers/regulator/scmi-regulator.c | 57 ++++++++++++++++++++++++++++--
- 1 file changed, 54 insertions(+), 3 deletions(-)
+>=20
+> Steve, David,
+>=20
+> Is this the way we are recommending for this to be move forward with?
+>=20
 
-diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
-index 1f02f60ad136..c3287901975e 100644
---- a/drivers/regulator/scmi-regulator.c
-+++ b/drivers/regulator/scmi-regulator.c
-@@ -31,6 +31,7 @@
- #include <linux/regulator/of_regulator.h>
- #include <linux/scmi_protocol.h>
- #include <linux/slab.h>
-+#include <linux/string.h>
- #include <linux/types.h>
- 
- static const struct scmi_voltage_proto_ops *voltage_ops;
-@@ -252,16 +253,66 @@ static int scmi_regulator_common_init(struct scmi_regulator *sreg)
- 	return 0;
- }
- 
-+static int scmi_regulator_map_name(struct scmi_protocol_handle *ph,
-+				   struct scmi_regulator_info *rinfo,
-+				   const char *name)
-+{
-+	const struct scmi_voltage_info *vinfo;
-+	int i;
-+
-+	for (i = 0; i < rinfo->num_doms; i++) {
-+		vinfo = voltage_ops->info_get(ph, i);
-+		if (!vinfo)
-+			continue;
-+		if (!strncmp(vinfo->name, name, sizeof(vinfo->name)))
-+			return i;
-+	}
-+
-+	return -ENODEV;
-+}
-+
- static int process_scmi_regulator_of_node(struct scmi_device *sdev,
- 					  struct scmi_protocol_handle *ph,
- 					  struct device_node *np,
- 					  struct scmi_regulator_info *rinfo)
- {
- 	u32 dom, ret;
-+	int name_dom;
-+	const char *name;
- 
--	ret = of_property_read_u32(np, "reg", &dom);
--	if (ret)
--		return ret;
-+	dom = rinfo->num_doms;
-+	if (of_find_property(np, "reg", NULL)) {
-+		ret = of_property_read_u32(np, "reg", &dom);
-+		if (ret)
-+			return ret;
-+
-+		if (dom >= rinfo->num_doms)
-+			return -ENODEV;
-+	}
-+
-+	if (of_find_property(np, "regulator-name", NULL)) {
-+		ret = of_property_read_string(np, "regulator-name", &name);
-+		if (ret)
-+			return ret;
-+
-+		name_dom = scmi_regulator_map_name(ph, rinfo, name);
-+		if (name_dom < 0) {
-+			dev_err(&sdev->dev,
-+				"No SCMI Voltage Domain found named %s. Skipping: %s\n",
-+				name, np->full_name);
-+			return name_dom;
-+		}
-+
-+		if (dom >= rinfo->num_doms)
-+			dom = name_dom;
-+
-+		if (name_dom != dom) {
-+			dev_err(&sdev->dev,
-+				"SCMI Voltage Domain %s ID mismatch, %u (DT) != %d (firmware). Skipping: %s\n",
-+				name, dom, name_dom, np->full_name);
-+			return -EINVAL;
-+		}
-+	}
- 
- 	if (dom >= rinfo->num_doms)
- 		return -ENODEV;
--- 
-2.17.1
-
+Please send the yamlification or update to the yamlification of the
+binding.
