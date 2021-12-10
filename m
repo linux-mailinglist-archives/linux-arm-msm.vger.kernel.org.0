@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B262B46F927
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 03:27:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 594D646F92B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 03:27:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236002AbhLJCa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 21:30:57 -0500
-Received: from mail-4317.proton.ch ([185.70.43.17]:63245 "EHLO
-        mail-4317.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235984AbhLJCa5 (ORCPT
+        id S236012AbhLJCbB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 21:31:01 -0500
+Received: from mail-0301.mail-europe.com ([188.165.51.139]:37369 "EHLO
+        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236009AbhLJCbB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 21:30:57 -0500
-Date:   Fri, 10 Dec 2021 02:27:12 +0000
+        Thu, 9 Dec 2021 21:31:01 -0500
+Date:   Fri, 10 Dec 2021 02:27:16 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1639103241;
-        bh=a0+Jz0H6sQZMpPuU3UqfLhqyuZtoBJw/JSFKhEbbxIA=;
+        s=protonmail; t=1639103244;
+        bh=vRyw/Mk1pPGhOpHZt/19uH6fr0dEklnMVGC8i+6yKLU=;
         h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
-        b=grdJgxmRmlu4EmTOesk+7cyeKqoAS693Hwh8iToPVZ7tC0YxZ2RAyIJw7QgISx7rH
-         hfQrnUON/hwZ/MWNkZAVgfgYIy1Twgl3TFEirBoFHaZe32zb05bUSztz+CmuBVrfu8
-         j6dj55r89CIBd7fcwMl2wyZEkcE0utyqN9TTkyWY=
+        b=oLGbUBbHSsSrL8Yok1F45y1DFHeQmYRoIZCxVfAjVIqOcmEiAQHbXl4O8auBTqpal
+         iXbp8WNChbW55xepER7vqW8ZAapMShZGeWrnXtt4Km7ycWR8IlgOLhJp7299rOFSe3
+         wQo4Nbmhh51enb4XSC7bYJ7sLU4pusG3rx66Ozlo=
 To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Torokhov <dmitry.torokhov@gmail.com>,
@@ -30,8 +30,8 @@ From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Jami Kettunen <jami.kettunen@somainline.org>,
         Joel Selvaraj <jo@jsfamily.in>
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH v4 4/6] arm64: dts: qcom: sdm845-oneplus-common: add haptics
-Message-ID: <20211210022639.2779173-5-caleb@connolly.tech>
+Subject: [PATCH v4 5/6] arm64: dts: qcom: sdm845-xiaomi-beryllium: add haptics
+Message-ID: <20211210022639.2779173-6-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -44,32 +44,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Joel Selvaraj <jo@jsfamily.in>
+
 Enable the pmi8998 SPMI haptics driver and configure the play rate for the
 hardware.
 
+Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
 Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
-64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 3e04aeb479d1..1cba765f7a02 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -450,6 +450,12 @@ pinconf {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/ar=
+m64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index 580d4cc1296f..981711e535d2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -312,6 +312,11 @@ resin {
  =09};
  };
 
 +&pmi8998_haptics {
 +=09status =3D "okay";
-+
-+=09qcom,wave-play-rate-us =3D <4255>;
++=09qcom,wave-play-rate-us =3D <4878>;
 +};
 +
- &qupv3_id_1 {
- =09status =3D "okay";
- };
+ /* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
+ &q6afedai {
+ =09qi2s@22 {
 --
 2.34.1
 
