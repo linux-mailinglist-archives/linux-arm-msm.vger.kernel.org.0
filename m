@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9059A47002B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 12:37:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1C9647006D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 13:06:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240695AbhLJLlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 06:41:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44528 "EHLO
+        id S240865AbhLJMK3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 07:10:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240687AbhLJLlD (ORCPT
+        with ESMTP id S234861AbhLJMK2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 06:41:03 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F895C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 03:37:28 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id i12so8230587pfd.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 03:37:28 -0800 (PST)
+        Fri, 10 Dec 2021 07:10:28 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7784C061746
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 04:06:53 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id x7so6737098pjn.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 04:06:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=qi2ii7axpVPM6M5j9yKMozSkF/k3GbmTDPLNt+E5MLk=;
-        b=acwYIZDGWQoJ31rdBIRmigTvMAK5hGgUACwg6gzz1XMlcC9WQ8kOCqLsqu8YRJMOa5
-         vrOQL9I+1esExYHfkA0CK1Qy5Mr7ckRp/7xgLfEvhia4KNQBgRP2yhHnAD+36zUSmKei
-         xVbkcpaE4FvukexOVlXNRY4NSx2BnFPjIwOAPqbU14ON2flSKlOfUYL5yxT1j5wLSQrq
-         mdoOIYNV0uY0aDoFDE2p7Q0CFWl7RcDiz2r+u9sl7I+ulHus7icfWSLBkqtkVSnVCKMF
-         uiASmCzf0QK1EF7/KPUQuTmBDxJobM6ofAZ505tFZF4q3NBX3z5a2/hO21VgfFgzMwzh
-         c5Xw==
+        bh=3A4XI+OFHkyTdDyIpE0tdpctLpghaRi+j3fzJm/k30s=;
+        b=NxQO28OFAuO1x8qjWF6ClHK13UOKJcSviAZySdHLBXdSYHiauW02iC2EoRwL7haQlC
+         ca+qRFCH80Ilal+g/OQz+DdOnDtPvdE8By0Gz6WT6mw+DbyoAJWYyVX35cr6NEmsx30r
+         92ATxeNcv/eIBmrbrfF1JnKHvHKRYJ+TeUTl164OK1luGH2Yp4YETlFZxLXqxPT3okOK
+         DQJv6d42Jb8Gf9GV2OhWk3/5aVMB06dJPSx8MR+BI1GFMMuba7mpOiDFc9F3utLyiZgE
+         QJwG2Lat6CfcbvWCXyC54RwTQclJic4ufQJNOtTTGZy5/DZvtJjLgyWA1CHN4rG/HI69
+         hw4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=qi2ii7axpVPM6M5j9yKMozSkF/k3GbmTDPLNt+E5MLk=;
-        b=z6DnV0xSUZyAlx0A0oGgJFwUSbBVfNrjRPZDwufndtJ+BmT5Qb9cNcgN6vDcBzCRQx
-         mzlkGTAyp1aPG4wH3lP2RzwzsTdMo5a6FlEGiTd0d01TBambzdmjzrxZ0BZCvAWxFkLe
-         83l+8s7MLScwInLJvAfSzKZzUzPbRrVvEMpyZq1gC5LFF7E9BN0uO1ZpiHSurIFVstJ4
-         rejKsa69gRbEASu9WgNfz4tkkcFSbf2ieKo4WUhs5Nd4zhXyKJbxnbPcKA8ELeI1UPNt
-         UfYyIvS/9zRtHAqtpQIpt0CxLDUNDDEf1unbckYyCIARi3nJzY8a+7uXJ4i/oRwRPAdR
-         AKPA==
-X-Gm-Message-State: AOAM531ZPeG/1aVr6Ju7auslo9Y021A7Eb2u+rxmGVRIqYZOzy38zulX
-        VzFae0Kaa6Cf9dPJJlH7eVyh
-X-Google-Smtp-Source: ABdhPJwZJzp1BvF7xLuULGMdYqjjGXpKYnPljTi18kLCPgfMUUNFpVqPsqgVa6itGcnUd1l3myVGpg==
-X-Received: by 2002:a62:1a03:0:b0:494:64b5:3e01 with SMTP id a3-20020a621a03000000b0049464b53e01mr17584648pfa.35.1639136247602;
-        Fri, 10 Dec 2021 03:37:27 -0800 (PST)
+        bh=3A4XI+OFHkyTdDyIpE0tdpctLpghaRi+j3fzJm/k30s=;
+        b=r+jVgWS1pP/AFv+3vAO84q57Zwt2C7JDAwEgI+WgfuCzOnsTa46zv9bmCBoM8hUooF
+         ASgqNzGTBfvKzxtpQXhTzeXMgrKUw5hIFUZTbBPLIsyxE1l3Q4sEdG/LhU/UlgXSpnpX
+         /D5doTNPTHNXUbKCHu7tsx4AjlgcbXmgdnNypP8k9RysL/P0jKFgPG2A9jUVlUeaP58b
+         7kR0bet/fKmbeyMfXNZrx2N93W7zhBLovlZL2L5mz013tvBUvLbV8foEV+Ny/mvo7Gxu
+         qK2jT8DkCHvioWn7/ZcKoDeLENenrRHBbAgu1th1GOGJPcwOQZpKr0g4e1BnhePns/tf
+         tVLw==
+X-Gm-Message-State: AOAM5300lZ5FmA/T4FpwNvQaJrZmDAx2RAhcMi8bwMRg7ACu8Egc1O8o
+        N+n6p3IB1wCHcDeLTOY5wp0c
+X-Google-Smtp-Source: ABdhPJx7NRQ9KL4sHfSAmZceTnS+zlwI6FhjUAfWc3FXiSkZtyVwqnhSfrm25oAxMvD0xotqRn+QyQ==
+X-Received: by 2002:a17:902:bcc4:b0:141:bfc4:ada with SMTP id o4-20020a170902bcc400b00141bfc40adamr74670339pls.20.1639138013322;
+        Fri, 10 Dec 2021 04:06:53 -0800 (PST)
 Received: from thinkpad ([202.21.42.75])
-        by smtp.gmail.com with ESMTPSA id kk7sm14517702pjb.19.2021.12.10.03.37.23
+        by smtp.gmail.com with ESMTPSA id j20sm12273440pjl.3.2021.12.10.04.06.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 03:37:27 -0800 (PST)
-Date:   Fri, 10 Dec 2021 17:07:20 +0530
+        Fri, 10 Dec 2021 04:06:52 -0800 (PST)
+Date:   Fri, 10 Dec 2021 17:36:44 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -62,96 +62,155 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 07/10] arm64: dts: qcom: sm8450: add PCIe0 PHY node
-Message-ID: <20211210113720.GG1734@thinkpad>
+Subject: Re: [PATCH v2 08/10] arm64: dts: qcom: sm8450: add PCIe0 RC device
+Message-ID: <20211210120644.GH1734@thinkpad>
 References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
- <20211208171442.1327689-8-dmitry.baryshkov@linaro.org>
+ <20211208171442.1327689-9-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211208171442.1327689-8-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211208171442.1327689-9-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 08, 2021 at 08:14:39PM +0300, Dmitry Baryshkov wrote:
-> Add device tree node for the first PCIe PHY device found on the Qualcomm
+On Wed, Dec 08, 2021 at 08:14:40PM +0300, Dmitry Baryshkov wrote:
+> Add device tree node for the first PCIe host found on the Qualcomm
 > SM8450 platform.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 42 ++++++++++++++++++++++++++--
->  1 file changed, 40 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 101 +++++++++++++++++++++++++++
+>  1 file changed, 101 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 16a789cacb65..a047d8a22897 100644
+> index a047d8a22897..09087a34a007 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -558,8 +558,12 @@ gcc: clock-controller@100000 {
->  			#clock-cells = <1>;
->  			#reset-cells = <1>;
->  			#power-domain-cells = <1>;
-> -			clock-names = "bi_tcxo", "sleep_clk";
-> -			clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&pcie0_lane>,
-> +				 <&sleep_clk>;
-> +			clock-names = "bi_tcxo",
-> +				      "pcie_0_pipe_clk",
-> +				      "sleep_clk";
->  		};
->  
->  		qupv3_id_0: geniqup@9c0000 {
-> @@ -625,6 +629,40 @@ i2c14: i2c@a98000 {
+> @@ -627,6 +627,84 @@ i2c14: i2c@a98000 {
+>  				#size-cells = <0>;
+>  				status = "disabled";
 >  			};
->  		};
->  
-> +		pcie0_phy: phy@1c06000 {
-> +			compatible = "qcom,sm8450-qmp-gen3x1-pcie-phy";
-> +			reg = <0 0x01c06000 0 0x200>;
-> +			#address-cells = <2>;
+> +		];
+> +
+> +		pcie0: pci@1c00000 {
+> +			compatible = "qcom,pcie-sm8450";
+> +			reg = <0 0x01c00000 0 0x3000>,
+> +			      <0 0x60000000 0 0xf1d>,
+> +			      <0 0x60000f20 0 0xa8>,
+> +			      <0 0x60001000 0 0x1000>,
+> +			      <0 0x60100000 0 0x100000>;
+> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
+> +			device_type = "pci";
+> +			linux,pci-domain = <0>;
+> +			bus-range = <0x00 0xff>;
+> +			num-lanes = <1>;
+> +
+> +			#address-cells = <3>;
 > +			#size-cells = <2>;
-> +			ranges;
-> +			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+> +
+> +			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+> +				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
+> +
+> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "msi";
+> +			#interrupt-cells = <1>;
+> +			interrupt-map-mask = <0 0 0 0x7>;
+> +			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> +					<0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> +					<0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> +					<0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> +
+> +			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+> +				 <&gcc GCC_PCIE_0_PIPE_CLK_SRC>,
+> +				 <&pcie0_lane>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_PCIE_0_AUX_CLK>,
 > +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_0_CLKREF_EN>,
-> +				 <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
+> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
+> +			clock-names = "pipe",
+> +				      "pipe_mux",
+> +				      "phy_pipe",
+> +				      "ref",
+> +				      "aux",
+> +				      "cfg",
+> +				      "bus_master",
+> +				      "bus_slave",
+> +				      "slave_q2a",
+> +				      "ddrss_sf_tbu",
+> +				      "aggre0",
+> +				      "aggre1";
 > +
-> +			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
-> +			reset-names = "phy";
+> +			iommus = <&apps_smmu 0x1c00 0x7f>;
+> +			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+> +				    <0x100 &apps_smmu 0x1c01 0x1>;
 > +
-> +			assigned-clocks = <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
+> +			resets = <&gcc GCC_PCIE_0_BCR>;
+> +			reset-names = "pci";
 > +
-> +			status = "disabled";
+> +			power-domains = <&gcc PCIE_0_GDSC>;
+> +			power-domain-names = "gdsc";
 > +
-> +			pcie0_lane: lanes@1c06200 {
-> +				reg = <0 0x1c06e00 0 0x200>, /* tx */
-> +				      <0 0x1c07000 0 0x200>, /* rx */
-> +				      <0 0x1c06200 0 0x200>, /* pcs */
+> +			phys = <&pcie0_lane>;
+> +			phy-names = "pciephy";
+> +
+> +			perst-gpio = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +			enable-gpio = <&tlmm 96 GPIO_ACTIVE_HIGH>;
 
-Oh, so this platform has "PCS" at the starting offset? This is different
-compared to other platforms as "TX" always comes first.
+Wondering if this configuration varies between boards. If then, this should be
+moved to board dts. Other than this,
 
-And the size is "0x200" for all?
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Thanks,
 Mani
 
-> +				      <0 0x1c06600 0 0x200>; /* pcs_pcie */
-> +				clocks = <&gcc GCC_PCIE_0_PIPE_CLK>;
-> +				clock-names = "pipe0";
 > +
-> +				#clock-cells = <0>;
-> +				#phy-cells = <0>;
-> +				clock-output-names = "pcie_0_pipe_clk";
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&pcie0_default_state>;
+> +
+> +			interconnects = <&pcie_noc MASTER_PCIE_0 &mc_virt SLAVE_EBI1>;
+> +			interconnect-names = "pci";
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		pcie0_phy: phy@1c06000 {
+> @@ -763,6 +841,29 @@ tlmm: pinctrl@f100000 {
+>  			gpio-ranges = <&tlmm 0 0 211>;
+>  			wakeup-parent = <&pdc>;
+>  
+> +			pcie0_default_state: pcie0-default {
+> +				perst {
+> +					pins = "gpio94";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +
+> +				clkreq {
+> +					pins = "gpio95";
+> +					function = "pcie0_clkreqn";
+> +					drive-strength = <2>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				wake {
+> +					pins = "gpio96";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-pull-up;
+> +				};
 > +			};
-> +		};
 > +
->  		config_noc: interconnect@1500000 {
->  			compatible = "qcom,sm8450-config-noc";
->  			reg = <0 0x01500000 0 0x1c000>;
+>  			qup_i2c13_default_state: qup-i2c13-default-state {
+>  				mux {
+>  					pins = "gpio48", "gpio49";
 > -- 
 > 2.33.0
 > 
