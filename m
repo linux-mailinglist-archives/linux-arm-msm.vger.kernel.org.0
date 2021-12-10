@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CFE470DE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 23:31:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13587470DE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 23:31:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243505AbhLJWfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 17:35:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57578 "EHLO
+        id S243356AbhLJWfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 17:35:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243282AbhLJWfE (ORCPT
+        with ESMTP id S243624AbhLJWfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 17:35:04 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42412C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 14:31:29 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id 14so11976349ioe.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 14:31:29 -0800 (PST)
+        Fri, 10 Dec 2021 17:35:07 -0500
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52712C061A72
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 14:31:31 -0800 (PST)
+Received: by mail-io1-xd32.google.com with SMTP id p23so12027106iod.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 14:31:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=n3CDcI54wXBndnATfaMcGfwDIMzZa57DanUaHDpclF8=;
-        b=o8M4SZ7mWsYVn86WRR22X4eQ9uxP4xAWg8haWDPgrSCHziuBNVj1wsRLcdsA7n3t1r
-         Dq5eFx5BKVOYa2qVIQOX1Pl8gjasvbZ2FhKvPnJvcWyTWDwa7sYArYRpAB69Nj9yb0Pl
-         3+AKieNBzo52YzD8gL04HlJPyPCTPgDnJs1zrQ2Tr4ngkW3tW61jVgM2r4eHx6h5yeH3
-         1lYb+Lo7+pgRSnGWm3ReLtLj6ru2rjoNKaBv+aSIAm+CmhFWKUWDerRYOJhVZCLKNmwO
-         lYupo4f9BWBSvjisjKxFD5rFczMwK4a6bXkHhqVylKs8XEA3fwLUnkP/PAvTQ7OTUg+i
-         fWCg==
+        bh=CgSHoGMd3MZ0+RwfUhTHIWklywVMelQpZkd8mqp/LWA=;
+        b=e/JZEyXrKeEX9SR7YbajTX+JIlRKoyFcw5w6VW20SGiQT9UomhQ4hygaYNTaU4Bn01
+         8jkk0VcLBji3os506FJaVgwZgwj1N5OTLELoMWFtOCmdV1p/3vIWe9StYftFRvleNBVR
+         JgOtgzxPgk06gSQijatDKzxM2Z1y9E0wL1MwVw/IYiEeBdmpl8sZWi4fTEZzIp33r3MQ
+         0aXJHS/klf7yMjqp6LONi1tpQuxmjiq9OKWEKeFgLJqWIZllL2VvUP+ortPwC8KV2RYa
+         Pr6OJVg0oMChDBpG1wJ9T4l74ObuanDiExVOjlNC/9UeVZXYVSFBO5ZIqQM1yc3WbCXX
+         rdzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=n3CDcI54wXBndnATfaMcGfwDIMzZa57DanUaHDpclF8=;
-        b=mjE96Jueezmd+Fby5fqk1dfwt5Bl0kjEMvEV1COTBPfzw9TLWQDz9NLk4dsa/4KOrT
-         xxomQ1pkyrxoalJpltRY2irHTIjo+/AAAWnwsNaPotEQ2ubn4ikU9hqr7TL1tnTOTGKS
-         V22l32emK49xI5Hbbe+jUSIzKHRKBkGmEz8ycSXc4CJeKHm9FTMwWVJVH1ehoIIAV5QL
-         20Mvki/udsvYImwisX7Of6P+RdGgrBwuQy/cuv6w4yLgNW3zObyqgJKquuLlNqAzISTU
-         L5c3utXmR4FSjL2hAHe/EyInzJSQu0XndztHXS9SxkSQCiqsu7C9KXhSmlwD1mJbpId8
-         SKXQ==
-X-Gm-Message-State: AOAM531qKmm/YgyFCEy9Jp1wn0guS+BY4QLHk8QFVCxcngBvmpT3OjTn
-        B/8PiO52JJsWLEHj3TsBLIQ2NA==
-X-Google-Smtp-Source: ABdhPJyyLLSCekIZe3yICmuby9smBp5YObETfN2s6lRD6b2dMQUnWR38JKhM79s3xeRHZV4vCnHg+Q==
-X-Received: by 2002:a05:6638:190f:: with SMTP id p15mr20310863jal.82.1639175488661;
-        Fri, 10 Dec 2021 14:31:28 -0800 (PST)
+        bh=CgSHoGMd3MZ0+RwfUhTHIWklywVMelQpZkd8mqp/LWA=;
+        b=0uOrwV2keizPTDGdxg+NBbkNJOEyMI74+lCBZiiPwRRBwReF5W+b9S8ak/Bu7RwDUa
+         nUjDtAx1UujH8yG/+1mJg6ij6SbQoJ5eHgIqaxepUNzZ+62RdOsDNtxZd4TwVI5ZuRn8
+         NHT44CfNz7avNdTpBjs7p6F6P3Eu6ptPPvTjz73VsMwH8jM8MR+XM1Wputdk/JXskJ10
+         DUE8LTyw5tb0UT8+mDfbvnBk3+KgY0+lKxqEN5ZH5bv7Npjq/solJ1jerXG1ZoxrumtH
+         6SAsgH7wDcUBAhwJTYV67NQTlSWG2Hmt7WYKcIl6gJbn4eDQC71F+IQBbM3eblJBHDLP
+         FcAA==
+X-Gm-Message-State: AOAM533/+hn3Q0Drf29SkdadDxNiGL09a5hoGTdJO1RZajr/vhtvqQ8E
+        JQazhADqMzmQ8X80p/4+yVcPPw==
+X-Google-Smtp-Source: ABdhPJxJ2HPs8UlogyZ2Gs+icjZDUujFP0Gufzb4kOzlxXhOdNOSdtIYeCNaL34gHEkxdg3928jdGQ==
+X-Received: by 2002:a05:6638:130f:: with SMTP id r15mr20409986jad.19.1639175490311;
+        Fri, 10 Dec 2021 14:31:30 -0800 (PST)
 Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id q4sm1279879ilv.56.2021.12.10.14.31.27
+        by smtp.gmail.com with ESMTPSA id q4sm1279879ilv.56.2021.12.10.14.31.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 14:31:28 -0800 (PST)
+        Fri, 10 Dec 2021 14:31:29 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
-To:     davem@davemloft.net, kuba@kernel.org, robh+dt@kernel.org
+To:     davem@davemloft.net, kuba@kernel.org
 Cc:     david@ixit.cz, manivannan.sadhasivam@linaro.org,
         jponduru@codeaurora.org, avuyyuru@codeaurora.org,
-        bjorn.andersson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
         cpratapa@codeaurora.org, subashab@codeaurora.org, mka@chromium.org,
         evgreen@chromium.org, elder@kernel.org, netdev@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH net-next v2 1/2] ARM: dts: qcom: sdx55: fix IPA interconnect definitions
-Date:   Fri, 10 Dec 2021 16:31:22 -0600
-Message-Id: <20211210223123.98586-2-elder@linaro.org>
+Subject: [PATCH net-next v2 2/2] net: ipa: fix IPA v4.5 interconnect data
+Date:   Fri, 10 Dec 2021 16:31:23 -0600
+Message-Id: <20211210223123.98586-3-elder@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20211210223123.98586-1-elder@linaro.org>
 References: <20211210223123.98586-1-elder@linaro.org>
@@ -69,39 +69,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The first two interconnects defined for IPA on the SDX55 SoC are
-really two parts of what should be represented as a single path
-between IPA and system memory.
+Update the definition of the IPA interconnects for IPA v4.5 so
+the path between IPA and system memory is represented by a single
+"memory" interconnect.
 
-Fix this by combining the "memory-a" and "memory-b" interconnects
-into a single "memory" interconnect.
-
-Reported-by: David Heidelberg <david@ixit.cz>
 Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ipa/ipa_data-v4.5.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 44526ad9d210b..eee2f63b9bbab 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -333,12 +333,10 @@ ipa: ipa@1e40000 {
- 			clocks = <&rpmhcc RPMH_IPA_CLK>;
- 			clock-names = "core";
- 
--			interconnects = <&system_noc MASTER_IPA &system_noc SLAVE_SNOC_MEM_NOC_GC>,
--					<&mem_noc MASTER_SNOC_GC_MEM_NOC &mc_virt SLAVE_EBI_CH0>,
-+			interconnects = <&system_noc MASTER_IPA &mc_virt SLAVE_EBI_CH0>,
- 					<&system_noc MASTER_IPA &system_noc SLAVE_OCIMEM>,
- 					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_IPA_CFG>;
--			interconnect-names = "memory-a",
--					     "memory-b",
-+			interconnect-names = "memory",
- 					     "imem",
- 					     "config";
- 
+diff --git a/drivers/net/ipa/ipa_data-v4.5.c b/drivers/net/ipa/ipa_data-v4.5.c
+index e62ab9c3ac672..2da2c4194f2e6 100644
+--- a/drivers/net/ipa/ipa_data-v4.5.c
++++ b/drivers/net/ipa/ipa_data-v4.5.c
+@@ -420,15 +420,10 @@ static const struct ipa_mem_data ipa_mem_data = {
+ /* Interconnect rates are in 1000 byte/second units */
+ static const struct ipa_interconnect_data ipa_interconnect_data[] = {
+ 	{
+-		.name			= "memory-a",
++		.name			= "memory",
+ 		.peak_bandwidth		= 600000,	/* 600 MBps */
+ 		.average_bandwidth	= 150000,	/* 150 MBps */
+ 	},
+-	{
+-		.name			= "memory-b",
+-		.peak_bandwidth		= 1804000,	/* 1.804 GBps */
+-		.average_bandwidth	= 150000,	/* 150 MBps */
+-	},
+ 	/* Average rate is unused for the next two interconnects */
+ 	{
+ 		.name			= "imem",
 -- 
 2.32.0
 
