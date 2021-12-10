@@ -2,124 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A846446F837
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 02:03:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4456E46F8D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 02:55:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233286AbhLJBHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 20:07:17 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:64281 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbhLJBHR (ORCPT
+        id S233728AbhLJB6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 20:58:48 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:45209 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230172AbhLJB6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 20:07:17 -0500
+        Thu, 9 Dec 2021 20:58:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639098223; x=1670634223;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=GX8+2zIdCqzjzOePDlyWE6qkeEZ7FtSm4Y1naB/0RZs=;
-  b=WWUYyXbov6wmZR07G4ZmYkS0/JAeAfsPvkaSHiPl9PFIXq/bRPrQjbIY
-   HUp83Vy1+J2KVhCMgoIMgsqcp+9Z5v5vnLnLkCXbnqubQhkwycFB8161N
-   TV0BnPLBK075/JyY+6UnN3uuKZNMyzSzKwvv2lRSoiAE2qhFLL0w1iY4O
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 09 Dec 2021 17:03:43 -0800
+  t=1639101314; x=1670637314;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=muJislQo56JK8jPw5RkQCrGtoGCd3t6/rtkh2XIwz6w=;
+  b=AuOBczOGLpULJGb4QetP9lnQBPli724acNSH0ojv7Ead4lfbbsPPWmyv
+   NG0/5VUxZXOD7pWMA+GFZwjjSFmJTlJ/ywaRNsykTzdtan9aEYoteY3vC
+   3Vi4ElsJjVPrGU0VtfqiH/5d/IcUICo+6D5b0dXnlRMppZxXqUJqKBldU
+   Y=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Dec 2021 17:55:14 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 17:03:42 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2021 17:55:13 -0800
+Received: from collinsd-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 9 Dec 2021 17:03:42 -0800
-Received: from [10.253.38.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 9 Dec 2021
- 17:03:37 -0800
-Message-ID: <4701e5d9-24d5-5d63-cf68-8988d6fbe306@quicinc.com>
-Date:   Fri, 10 Dec 2021 09:03:31 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v2 6/9] docs: sysfs: coresight: Add sysfs ABI
- documentation for TPDM
-Content-Language: en-US
-To:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC:     Mike Leach <mike.leach@linaro.org>, Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
+ 15.2.922.19; Thu, 9 Dec 2021 17:55:13 -0800
+From:   David Collins <quic_collinsd@quicinc.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        <devicetree@vger.kernel.org>
+CC:     David Collins <quic_collinsd@quicinc.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
         <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
- <20211209141543.21314-7-quic_jinlmao@quicinc.com>
- <f8553de9-9a28-2624-0257-777f05ef6010@quicinc.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <f8553de9-9a28-2624-0257-777f05ef6010@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>
+Subject: [PATCH 0/2] regulator: scmi: add support for registering SCMI regulators by name
+Date:   Thu, 9 Dec 2021 17:54:40 -0800
+Message-ID: <cover.1639099631.git.quic_collinsd@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Trilok,
+Add support to register SCMI regulator subnodes based on an SCMI
+Voltage Domain name specified via the 'regulator-name' device tree
+property.  In doing so, make the 'reg' property optional with the
+constraint that at least one of 'reg' or 'regulator-name' must be
+specified.  If both are specified, then both must match the
+Voltage Domain data exposed by the SCMI platform.
 
-Thanks for the review.
+Name based SCMI regulator registration helps ensure that an SCMI
+agent doesn't need to be aware of the numbering scheme used for
+Voltage Domains by the SCMI platform.  It also ensures that the
+correct Voltage Domain is selected for a given physical regulator.
+This cannot be guaranteed with numeric Voltage Domain IDs alone.
 
-On 12/10/2021 2:34 AM, Trilok Soni wrote:
->
-> Hello Jinlong,
->
-> On 12/9/2021 6:15 AM, Mao Jinlong wrote:
->> Add API usage document for sysfs API in TPDM driver.
->>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm     | 12 ++++++++++++
->>   MAINTAINERS                                          |  1 +
->>   2 files changed, 13 insertions(+)
->>   create mode 100644 
->> Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>
->> diff --git 
->> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
->> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> new file mode 100644
->> index 000000000000..fdd0bd0e1c33
->> --- /dev/null
->> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> @@ -0,0 +1,12 @@
->> +What: /sys/bus/coresight/devices/<tpdm-name>/available_datasets
->> +Date:        December 2021
->> +KernelVersion    5.16
->> +Contact:    Jinlong Mao or Tao Zhang
->
-> Just keep one name? I am not sure if we are adding multiple names for 
-> other files.
+David Collins (2):
+  dt-bindings: firmware: arm,scmi: define support for name based
+    regulators
+  regulator: scmi: add support for registering SCMI regulators by name
 
-Yes. available_datasets need to be removed here as there is no changes 
-for available_dataset.
+ .../bindings/firmware/arm,scmi.yaml           | 11 +++-
+ drivers/regulator/scmi-regulator.c            | 57 ++++++++++++++++++-
+ 2 files changed, 62 insertions(+), 6 deletions(-)
 
-I forgot to remove it after removing he available_dataset changes. I 
-will update in next version.
-
->
->> +Description:    (Read) Show available datasets for TPDM.
->> +
->> +What: /sys/bus/coresight/devices/<tpdm-name>/integration_test
->> +Date:        December 2020
->>
->
-> December 2021?
-
-I will update it.
-
+-- 
+2.17.1
 
