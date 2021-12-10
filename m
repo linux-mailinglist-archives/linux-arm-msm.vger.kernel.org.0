@@ -2,142 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D4346FCE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 09:42:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F206C46FDF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 10:38:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238652AbhLJIqS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 03:46:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235808AbhLJIqS (ORCPT
+        id S234560AbhLJJld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 04:41:33 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:38360 "EHLO
+        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236751AbhLJJl3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 03:46:18 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED98C0617A1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 00:42:43 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id k6-20020a17090a7f0600b001ad9d73b20bso6929740pjl.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 00:42:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iL7mOU+kitDPtrRKqArvbH60/+cnDzNjLmcoW2AtGv8=;
-        b=Kn+06usMQB33IwA5I8bQKXQS+e/n3AJWpOKKu7uXCu5+USqg9l4zOket+sf3r2UqKB
-         QIEGEw+2UzVdbEO3BjUXZOASgbNP6scRJSWJccO6pdgsyZqxxl6j1KRBqD2LbW0btNED
-         T30lqDRPQWXhDLRMNx8wWxNyexfx6zAl+sSCnBOgfbAMAXopP/ZXLSKGOonrgKeaClpo
-         4G2grqzyj+JMz2MEq8Auz0MnqjyaPjiXrTFqyRsEyKez6jEnNt5aSBcsa68q7TQF6ajH
-         z/1c3AvS2FVkmmfaflH9tqKIOm7+gMYYcC6ht+jnkHSv9lbboUiJtxTeGjM/uwba1Plh
-         aVXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iL7mOU+kitDPtrRKqArvbH60/+cnDzNjLmcoW2AtGv8=;
-        b=1dwd5pWUVr1o95Rgp3f/Vj+M/qt2Th/4WIhr7xU6Zdv3Tgrnxndn/wIj+aQGaIuQQb
-         oq6KolZJiYC+V7EgJUIuAYChG+ElD4pPpaHcrC7IPoYoevnorCLjqlmmxDeTmMo6Lbyl
-         T5d0oSyC9u3fzW+ZCjY2WGXB9pI4KbRn7D/MorSgA9Xtn5qGMPFOHrz78AV4JooEEXPV
-         4MB/akUlPPyaxpb0V1R7gBGy5zZONNNE174EUz5NBpGImUSKT2U98A8wSb00eL5Y9Hia
-         NoiOf1SSKkOIFl6ZEuljyr3kS5VBowWctJKUQoSOsNuiC+zXlF67qOOEN7Skt/hl6h/Y
-         7Pwg==
-X-Gm-Message-State: AOAM531xRt5WBGzCkC+5CTldCHFWofBjuNGMS2sSkXGmdagCdv6uhzMQ
-        jzMI8b0agCCXipuS0fq9NLIE
-X-Google-Smtp-Source: ABdhPJxCkfYuZGgUkkQZ5vdBcYUkq96FOqKrJjrFMUk0zk2eAVuV+BTHqaenlibjF+gjU3sSZDM5JA==
-X-Received: by 2002:a17:902:8544:b0:142:66e7:afbb with SMTP id d4-20020a170902854400b0014266e7afbbmr74471786plo.62.1639125763119;
-        Fri, 10 Dec 2021 00:42:43 -0800 (PST)
-Received: from thinkpad ([202.21.42.75])
-        by smtp.gmail.com with ESMTPSA id y11sm2192234pfg.204.2021.12.10.00.42.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 00:42:42 -0800 (PST)
-Date:   Fri, 10 Dec 2021 14:12:36 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v2 01/10] dt-bindings: pci: qcom: Document PCIe bindings
- for SM8450
-Message-ID: <20211210084236.GC1734@thinkpad>
-References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
- <20211208171442.1327689-2-dmitry.baryshkov@linaro.org>
+        Fri, 10 Dec 2021 04:41:29 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 2FA35CE28A2;
+        Fri, 10 Dec 2021 09:37:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBDAC341C8;
+        Fri, 10 Dec 2021 09:37:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639129070;
+        bh=wRKuYYJKuw1ebIvxw48pFuiBZnozL0DgSyvF4pTa46c=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=dicbruZtf0j2yGls3KVEuV63MM9K5HE+yQuVgJR/4RTlaFVEEP0xOuY2f3fzxQ0gw
+         SrdN9M1ao2t56+3fCA7QQSVgpV5AACHzUZSwr2clvO52EtOfO/ZgtuY5cw/FGaoTuu
+         rcoXgTUxYcsyMUs7c5y6zTWTQbq1ht3xJKQACZNUpmhXne+mo2+B1ynA7eAp4OrNM3
+         GxSbAc+hVon6tJhvccsLCIJIKNUkMNk7IoThvNZhA1JarMbiekCr+JSQVlZ5nUdmbj
+         ryHbpPxLECQATsdSpnz6ifmzUosInDC4vKH6heuAOJX4qN3jlUFvk8oWchmRE2lcvo
+         oK9EJybDWKvjA==
+Message-ID: <c9b64943-a92f-f2f9-b149-33a51a97d7a3@kernel.org>
+Date:   Fri, 10 Dec 2021 11:37:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211208171442.1327689-2-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 09/13] arm64: dts: qcom: sm8450: add interconnect nodes
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        viveka@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211209103505.197453-1-vkoul@kernel.org>
+ <20211209103505.197453-10-vkoul@kernel.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20211209103505.197453-10-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 08, 2021 at 08:14:33PM +0300, Dmitry Baryshkov wrote:
-> Document the PCIe DT bindings for SM8450 SoC.The PCIe IP is similar
-> to the one used on SM8250. Add the compatible for SM8450.
+Hi Vinod,
+
+On 9.12.21 12:35, Vinod Koul wrote:
+> And the various interconnect nodes found in SM8450 SoC and use it for
+> UFS controller.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 80 ++++++++++++++++++++++++++++
+>   1 file changed, 80 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 9556d2fc46e0..f75de777f6ea 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -7,6 +7,7 @@
+>   #include <dt-bindings/clock/qcom,gcc-sm8450.h>
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/interconnect/qcom,sm8450.h>
+>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>   
+>   / {
+> @@ -573,6 +574,61 @@ uart7: serial@99c000 {
+>   			};
+>   		};
+>   
+> +		config_noc: interconnect@1500000 {
+> +			compatible = "qcom,sm8450-config-noc";
+> +			reg = <0 0x01500000 0 0x1c000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		mc_virt: interconnect@1580000 {
+> +			compatible = "qcom,sm8450-mc-virt";
+> +			reg = <0 0x01580000 0 0x1000>;
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Is there really a register space for this noc?
 
-Note to self: This binding should be converted to YAML very soon.
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		system_noc: interconnect@1680000 {
+> +			compatible = "qcom,sm8450-system-noc";
+> +			reg = <0 0x01680000 0 0x1e200>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		pcie_noc: interconnect@16c0000 {
+> +			compatible = "qcom,sm8450-pcie-anoc";
+> +			reg = <0 0x016c0000 0 0xe280>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre1_noc: interconnect@16e0000 {
+> +			compatible = "qcom,sm8450-aggre1-noc";
+> +			reg = <0 0x016e0000 0 0x1c080>;
+> +			#interconnect-cells = <1>;
+> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre2_noc: interconnect@1700000 {
+> +			compatible = "qcom,sm8450-aggre2-noc";
+> +			reg = <0 0x01700000 0 0x31080>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +			clocks = <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&rpmhcc RPMH_IPA_CLK>;
+> +		};
+> +
+> +		mmss_noc: interconnect@1740000 {
+> +			compatible = "qcom,sm8450-mmss-noc";
+> +			reg = <0 0x01740000 0 0x1f080>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		tcsr_mutex: hwlock@1f40000 {
+>   			compatible = "qcom,tcsr-mutex";
+>   			reg = <0x0 0x01f40000 0x0 0x40000>;
+> @@ -816,6 +872,13 @@ rpmhcc: clock-controller {
+>   			};
+>   		};
+>   
+> +		gem_noc: interconnect@19100000 {
+> +			compatible = "qcom,sm8450-gem-noc";
+> +			reg = <0 0x19100000 0 0xbb800>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		ufs_mem_hc: ufshc@1d84000 {
+>   			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
+>   				     "jedec,ufs-2.0";
+> @@ -832,6 +895,9 @@ ufs_mem_hc: ufshc@1d84000 {
+>   
+>   			iommus = <&apps_smmu 0xe0 0x0>;
+>   
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
+> +					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+>   			clock-names =
+>   				"core_clk",
+>   				"bus_aggr_clk",
+> @@ -887,6 +953,20 @@ ufs_mem_phy_lanes: lanes@1d87400 {
+>   				#clock-cells = <0>;
+>   			};
+>   		};
+> +
+> +		nsp_noc: interconnect@320c0000 {
+> +			compatible = "qcom,sm8450-nsp-noc";
+> +			reg = <0 0x320c0000 0 0x10000>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		lpass_ag_noc: interconnect@3c40000 {
+
+Nit: This should move up, if we want to order them by node address.
+
+> +			compatible = "qcom,sm8450-lpass-ag-noc";
+> +			reg = <0 0x3c40000 0 0x17200>;
+> +			#interconnect-cells = <1>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+>   	};
+
+I don't see a DT node for clk_virt, are you planning to add this later?
 
 Thanks,
-Mani
+Georgi
 
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.txt     | 21 ++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> index a0ae024c2d0c..73bc763c5009 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> @@ -15,6 +15,7 @@
->  			- "qcom,pcie-sc8180x" for sc8180x
->  			- "qcom,pcie-sdm845" for sdm845
->  			- "qcom,pcie-sm8250" for sm8250
-> +			- "qcom,pcie-sm8450" for sm8450
->  			- "qcom,pcie-ipq6018" for ipq6018
->  
->  - reg:
-> @@ -169,6 +170,24 @@
->  			- "ddrss_sf_tbu" PCIe SF TBU clock
->  			- "pipe"	PIPE clock
->  
-> +- clock-names:
-> +	Usage: required for sm8450
-> +	Value type: <stringlist>
-> +	Definition: Should contain the following entries
-> +			- "aux"         Auxiliary clock
-> +			- "cfg"         Configuration clock
-> +			- "bus_master"  Master AXI clock
-> +			- "bus_slave"   Slave AXI clock
-> +			- "slave_q2a"   Slave Q2A clock
-> +			- "tbu"         PCIe TBU clock
-> +			- "ddrss_sf_tbu" PCIe SF TBU clock
-> +			- "pipe"        PIPE clock
-> +			- "pipe_mux"    PIPE MUX
-> +			- "phy_pipe"    PIPE output clock
-> +			- "ref"         REFERENCE clock
-> +			- "aggre0"	Aggre NoC PCIe0 AXI clock
-> +			- "aggre1"	Aggre NoC PCIe1 AXI clock
-> +
->  - resets:
->  	Usage: required
->  	Value type: <prop-encoded-array>
-> @@ -246,7 +265,7 @@
->  			- "ahb"			AHB reset
->  
->  - reset-names:
-> -	Usage: required for sc8180x, sdm845 and sm8250
-> +	Usage: required for sc8180x, sdm845, sm8250 and sm8450
->  	Value type: <stringlist>
->  	Definition: Should contain the following entries
->  			- "pci"			PCIe core reset
-> -- 
-> 2.33.0
-> 
