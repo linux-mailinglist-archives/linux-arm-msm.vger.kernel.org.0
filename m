@@ -2,85 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 331DF46F8F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 03:05:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6C546F91C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 03:27:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235737AbhLJCJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Dec 2021 21:09:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229761AbhLJCJ1 (ORCPT
+        id S231149AbhLJCad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Dec 2021 21:30:33 -0500
+Received: from mail-4317.proton.ch ([185.70.43.17]:51054 "EHLO
+        mail-4317.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235928AbhLJCad (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Dec 2021 21:09:27 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66992C061746;
-        Thu,  9 Dec 2021 18:05:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id B1F98CE2997;
-        Fri, 10 Dec 2021 02:05:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA4DC004DD;
-        Fri, 10 Dec 2021 02:05:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639101949;
-        bh=n8sUWaojW+htl7NSLd54cmcp05O+wNy2FaoS7mT4384=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=lr/ZjvJzpGDYyRNWbaZolttNd06leFWgfEieqKY8FNO4dNWx58jAA8vrIEHagAjaC
-         Y3iO+a3J2L/Q6FJfmBj2/nOyw+waHF4l/L81nnZEgZbT4IO+CmlBAb5EFQEbHwDOKQ
-         +eIYb0tn+VyJiFQ2dnaWc5lK3pMGM7XzoO/jZaId1kEY9Fbsgmj6H2BTuDqGGsNhSC
-         BGXK3ENBG/Zc9ZZ8WrVu/2kD6h3drZQGGJMic32dhyNpLjrv9hqN4SBh3txZ4MsSi/
-         FMtTSd58v84IzJWfwzb25FZnJAZxEqQ5ez3h4oeUUTdNmAoX6oYpzEcnEtGEf/o/tW
-         3Vt61vL59FI/Q==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1638453489.532760.3736891.nullmailer@robh.at.kernel.org>
-References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com> <1638403212-29265-11-git-send-email-quic_fenglinw@quicinc.com> <1638453489.532760.3736891.nullmailer@robh.at.kernel.org>
-Subject: Re: [RESEND PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-kernel@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        collinsd@codeaurora.org, Andy Gross <agross@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        subbaram@codeaurora.org, tglx@linutronix.de, maz@kernel.org,
+        Thu, 9 Dec 2021 21:30:33 -0500
+Date:   Fri, 10 Dec 2021 02:26:47 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1639103217;
+        bh=mu0sqQvUggygf7jKzEWPGl0UelkYU3w40dJw8wgxBlw=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
+        b=GNF8V+oQyEMMQAWhqMvw0m37ieasw0tmQ/6vl1VeJG9LqdAWQNa2nj6aMZQ205H1X
+         sdyB3eNYCd9kFOy+8NZlDc/u0MQtw9zwvU2NWsqll7bmvWpm9yPgbbNul04+k5uOC+
+         djvMa/6ak9/KlsYwyImgjxiQoOMNhNlX5/pGYgrU=
+To:     caleb@connolly.tech, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Date:   Thu, 09 Dec 2021 18:05:48 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211210020549.BFA4DC004DD@smtp.kernel.org>
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     Jami Kettunen <jami.kettunen@somainline.org>,
+        Joel Selvaraj <jo@jsfamily.in>
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: [PATCH v4 0/6] input: Introduce support for SPMI haptics found on Qcom PMICs
+Message-ID: <20211210022639.2779173-1-caleb@connolly.tech>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Herring (2021-12-02 05:58:09)
-> On Thu, 02 Dec 2021 08:00:12 +0800, Fenglin Wu wrote:
-> > Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
-> > update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
-> > it and update it with a smaller range.
-> >=20
-> > Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> > ---
-> >  .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
-> >  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++=
-++++++++
-> >  Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
-> >  3 files changed, 130 insertions(+), 68 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pm=
-ic-arb.txt
-> >  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pm=
-ic-arb.yaml
-> >=20
->=20
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
->=20
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
->=20
-> Full log is available here: https://patchwork.ozlabs.org/patch/1562483
+This series introduces a driver for the SPMI haptics hardware block
+found in Qualcomm PMICs. SPMI haptics support LRA (Linear Resonant
+Actuator) style haptics, as well as ERM (Eccentric Rotating Mass).
+It also supports several modes of driving the haptics, e.g. by loading
+the pattern to play into an internal buffer, or using PWM.
 
-Are any of these problems going to be fixed?
+More information about the hardware can be found here:
+        https://gitlab.com/sdm845-mainline/linux/-/wikis/PMI8998-QPNP-Hapti=
+cs
+
+This driver has been written based on downstream sources as no public
+documentation is available. It includes initial support for LRA haptics
+in buffer mode, this combination seems to be the most common and will
+enable haptics on the OnePlus 6 and 6T, PocoPhone F1, OnePlus 5 and
+several other Qualcomm devices with mainline kernel support.
+
+The driver is implemented using the ff-memless (forcefeedback) input
+framework and makes an attempt to control the strength of vibration relativ=
+e
+to the magnitude set from userspace.
+
+Changes since v3:
+ - Adjust example DTS to avoid creating new warnings in dt_binding_check
+ - Address warnings from kernel test robot.
+
+Changes since v2:
+ - Addressed Rob's comments on dt-bindings (I'm not sure what to do
+   about the pmic compatible?)
+ - Fixed some typos
+
+Changes since v1:
+ - Replace old QPNP naming with SPMI
+ - Address Bjorn's comments on the driver, various style and code cleanups
+ - Address Bjorn's comments on the DT bindings and DTS
+ - Pickup patches from Joel and Jami to enable haptics on the OnePlus 5
+   and Poco F1.
+
+Caleb Connolly (4):
+  dt-bindings: input: add Qualcomm SPMI haptics driver
+  input: add Qualcomm SPMI haptics driver
+  arm64: dts: qcom: pmi8998: introduce spmi haptics
+  arm64: dts: qcom: sdm845-oneplus-common: add haptics
+
+Jami Kettunen (1):
+  arm64: dts: qcom: msm8998-oneplus-common: Enable PMI8998 haptics
+
+Joel Selvaraj (1):
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: add haptics
+
+ .../bindings/input/qcom,spmi-haptics.yaml     | 123 +++
+ .../boot/dts/qcom/msm8998-oneplus-common.dtsi |   6 +
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |  15 +
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |   6 +
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |   5 +
+ drivers/input/misc/Kconfig                    |  12 +
+ drivers/input/misc/Makefile                   |   1 +
+ drivers/input/misc/qcom-spmi-haptics.c        | 977 ++++++++++++++++++
+ include/dt-bindings/input/qcom,spmi-haptics.h |  32 +
+ 9 files changed, 1177 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/input/qcom,spmi-hapti=
+cs.yaml
+ create mode 100644 drivers/input/misc/qcom-spmi-haptics.c
+ create mode 100644 include/dt-bindings/input/qcom,spmi-haptics.h
+
+--
+2.34.1
+
+
