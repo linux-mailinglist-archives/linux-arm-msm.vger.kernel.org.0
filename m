@@ -2,122 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 54431470893
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 19:23:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1B2E4708BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 19:30:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239113AbhLJS0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 13:26:44 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:40184 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235682AbhLJS0o (ORCPT
+        id S241939AbhLJSeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 13:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57768 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237290AbhLJSeE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 13:26:44 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 60A19CE2C88;
-        Fri, 10 Dec 2021 18:23:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB134C00446;
-        Fri, 10 Dec 2021 18:23:03 +0000 (UTC)
-Date:   Fri, 10 Dec 2021 18:23:00 +0000
-From:   Catalin Marinas <catalin.marinas@arm.com>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        gregkh <gregkh@linuxfoundation.org>, quic_psodagud@quicinc.com,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Fri, 10 Dec 2021 13:34:04 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71102C0617A1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 10:30:29 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id n26so9207519pff.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 10:30:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e5UF0v0pRJ3BBctlRwMcx8kqkF/zxc0LiqUCJM1Ey1Y=;
+        b=UI0vfay4J/HvqefT+gOHa5yc4eAwcee+tx8Qx1NavkyDo3RqtikTAWOd92z2isdQR1
+         aFYAlN6xdMtMLymuWWLuv/xyyDKDGrMrwqE9+1qqz9hKuCB7gbFSs7Sm4TdF+Ve3PyI3
+         GMuuGfDgstkRRY19jqyS/4pUmdB0OcZdFCq5M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e5UF0v0pRJ3BBctlRwMcx8kqkF/zxc0LiqUCJM1Ey1Y=;
+        b=byow9+WEBCyJbOcky1DawOvZmrjl26FVwlsAQx/6ruPVjxRYrWmOjfvgZigEgiORv+
+         GDzDDT851nacwmX+HDqjc6XS91jJjejldT9mD5AEElc/Z5SgV6e/TmhIVPqZB88rq3Sy
+         avpGNB4lvizEeVLbGM/VutKnRbW/AuWpwaWpLVXtMc21tnxl09T3xhqoq4GmSY3Wbg+L
+         34huh0FwHzrE0459kq/fXE5sI6u8S3aR/Xhz1a06bqlP//LTjNxGRRq5cqS/CgjTDT2g
+         beVEgP2TOtVlspYnO/KcQxvXYw0Wwns2S7XgO1CvDeJMbNudvKc8xv4dXUZiyHuTFfzV
+         Hgiw==
+X-Gm-Message-State: AOAM5308gcCNQUKXk9UYvaMg4j9M4IJ8H8Zuqh3vRPYBpkCclHtrzORE
+        mtlPCuwJuZmgMrGc8VFNhAUvkw==
+X-Google-Smtp-Source: ABdhPJy7dl7SiqDb8r+5i0XpAnsEFGh2HW8mkwc90RbUiLT/XAN3/K37A8kbwNp/4kI8jwh9cdHrfg==
+X-Received: by 2002:a63:1754:: with SMTP id 20mr39724542pgx.559.1639161028901;
+        Fri, 10 Dec 2021 10:30:28 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:d386:8bb1:aaa7:a294])
+        by smtp.gmail.com with UTF8SMTPSA id t4sm4186959pfj.168.2021.12.10.10.30.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Dec 2021 10:30:28 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     Peter Chen <peter.chen@kernel.org>, linux-kernel@vger.kernel.org,
+        Bastien Nocera <hadess@hadess.net>, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andrey Konovalov <andreyknvl@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Li Jun <jun.li@nxp.com>, Peter Chen <peter.chen@nxp.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sasha Levin <sashal@kernel.org>,
+        Sergey Shtylyov <s.shtylyov@omp.ru>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCHv6 1/5] arm64: io: Use asm-generic high level MMIO
- accessors
-Message-ID: <YbObBCB2+9hei7ZM@arm.com>
-References: <cover.1638858746.git.quic_saipraka@quicinc.com>
- <a5287f999f7e42e66de0729f367959fdb28462e0.1638858746.git.quic_saipraka@quicinc.com>
- <YbOZi+akT0+1EIoi@arm.com>
+Subject: [PATCH v18 0/5] usb: misc: Add onboard_usb_hub driver
+Date:   Fri, 10 Dec 2021 10:30:16 -0800
+Message-Id: <20211210183021.3500376-1-mka@chromium.org>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YbOZi+akT0+1EIoi@arm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 06:16:43PM +0000, Catalin Marinas wrote:
-> On Tue, Dec 07, 2021 at 12:24:45PM +0530, Sai Prakash Ranjan wrote:
-> > Remove custom arm64 MMIO accessors read{b,w,l,q} and their relaxed
-> > versions in support to use asm-generic defined accessors. Also define
-> > one set of IO barriers (ar/bw version) used by asm-generic code to
-> > override the arm64 specific variants.
-> > 
-> > Suggested-by: Arnd Bergmann <arnd@arndb.de>
-> > Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-> > ---
-> >  arch/arm64/include/asm/io.h | 41 ++++++++-----------------------------
-> >  1 file changed, 8 insertions(+), 33 deletions(-)
-> > 
-> > diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-> > index 7fd836bea7eb..1b436810d779 100644
-> > --- a/arch/arm64/include/asm/io.h
-> > +++ b/arch/arm64/include/asm/io.h
-> > @@ -91,7 +91,7 @@ static inline u64 __raw_readq(const volatile void __iomem *addr)
-> >  }
-> >  
-> >  /* IO barriers */
-> > -#define __iormb(v)							\
-> > +#define __io_ar(v)							\
-> >  ({									\
-> >  	unsigned long tmp;						\
-> >  									\
-> > @@ -108,39 +108,14 @@ static inline u64 __raw_readq(const volatile void __iomem *addr)
-> >  		     : "memory");					\
-> >  })
-> >  
-> > -#define __io_par(v)		__iormb(v)
-> > -#define __iowmb()		dma_wmb()
-> > -#define __iomb()		dma_mb()
-> > -
-> > -/*
-> > - * Relaxed I/O memory access primitives. These follow the Device memory
-> > - * ordering rules but do not guarantee any ordering relative to Normal memory
-> > - * accesses.
-> > - */
-> > -#define readb_relaxed(c)	({ u8  __r = __raw_readb(c); __r; })
-> > -#define readw_relaxed(c)	({ u16 __r = le16_to_cpu((__force __le16)__raw_readw(c)); __r; })
-> > -#define readl_relaxed(c)	({ u32 __r = le32_to_cpu((__force __le32)__raw_readl(c)); __r; })
-> > -#define readq_relaxed(c)	({ u64 __r = le64_to_cpu((__force __le64)__raw_readq(c)); __r; })
-> > +#define __io_bw()		dma_wmb()
-> > +#define __io_br(v)
-> > +#define __io_aw(v)
-> >  
-> > -#define writeb_relaxed(v,c)	((void)__raw_writeb((v),(c)))
-> > -#define writew_relaxed(v,c)	((void)__raw_writew((__force u16)cpu_to_le16(v),(c)))
-> > -#define writel_relaxed(v,c)	((void)__raw_writel((__force u32)cpu_to_le32(v),(c)))
-> > -#define writeq_relaxed(v,c)	((void)__raw_writeq((__force u64)cpu_to_le64(v),(c)))
-> > -
-> > -/*
-> > - * I/O memory access primitives. Reads are ordered relative to any
-> > - * following Normal memory access. Writes are ordered relative to any prior
-> > - * Normal memory access.
-> > - */
-> > -#define readb(c)		({ u8  __v = readb_relaxed(c); __iormb(__v); __v; })
-> > -#define readw(c)		({ u16 __v = readw_relaxed(c); __iormb(__v); __v; })
-> > -#define readl(c)		({ u32 __v = readl_relaxed(c); __iormb(__v); __v; })
-> > -#define readq(c)		({ u64 __v = readq_relaxed(c); __iormb(__v); __v; })
-> > -
-> > -#define writeb(v,c)		({ __iowmb(); writeb_relaxed((v),(c)); })
-> > -#define writew(v,c)		({ __iowmb(); writew_relaxed((v),(c)); })
-> > -#define writel(v,c)		({ __iowmb(); writel_relaxed((v),(c)); })
-> > -#define writeq(v,c)		({ __iowmb(); writeq_relaxed((v),(c)); })
-> > +/* arm64-specific, don't use in portable drivers */
-> > +#define __iormb(v)		__io_ar(v)
-> > +#define __iowmb()		__io_bw()
-> > +#define __iomb()		dma_mb()
-> 
-> More of a nitpick but I'd keep the __iormb()/__iowmb() as they currently
-> are and just define the generic __io_ar() etc. in terms of the former.
+This series adds:
+- the onboard_usb_hub_driver
+- glue in the generic HCD code to create and destroy the
+  onboard_usb_hub platform devices if needed
+- device tree changes that add RTS5411 entries for the QCA SC7180
+  based boards trogdor and lazor
+- a couple of stubs for platform device functions to avoid
+  unresolved symbols with certain kernel configs
 
-Ah, I now noticed this was discussed in v5. Well, you can leave it as
-here and hopefully we get to remove the __io*mb() from various drivers.
+The main issue the driver addresses is that a USB hub needs to be
+powered before it can be discovered. For discrete onboard hubs (an
+example for such a hub is the Realtek RTS5411) this is often solved
+by supplying the hub with an 'always-on' regulator, which is kind
+of a hack. Some onboard hubs may require further initialization
+steps, like changing the state of a GPIO or enabling a clock, which
+requires even more hacks. This driver creates a platform device
+representing the hub which performs the necessary initialization.
+Currently it only supports switching on a single regulator, support
+for multiple regulators or other actions can be added as needed.
+Different initialization sequences can be supported based on the
+compatible string.
+
+Besides performing the initialization the driver can be configured
+to power the hub off during system suspend. This can help to extend
+battery life on battery powered devices which have no requirements
+to keep the hub powered during suspend. The driver can also be
+configured to leave the hub powered when a wakeup capable USB device
+is connected when suspending, and power it off otherwise.
+
+Changes in v18:
+- introduced hidden Kconfig option to align module vs. builtin
+  choice with CONFIG_USB (thanks Doug!)
+- added patch 'driver core: Export device_is_bound()'
+- also adjust device tree of pompom rev1
+- dropped the following patches, which aren't needed anymore by this
+  series (though they might still be useful on their own):
+  - usb: Specify dependencies on USB_XHCI_PLATFORM with 'depends on'
+  - arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM
+  - ARM: configs: Explicitly enable USB_XHCI_PLATFORM where needed
+
+Changes in v17:
+- rebased on top of v5.16-rc1
+- moved creation of onboard_hub platform devices from xhci_platform
+  to the generic HCD code
+- addressed review comments for the onboard_hub driver
+- moved Kconfig/defconfig changes to the end of the series. The
+  onboard_hub driver doesn't depend on XHCI_PLATFORM anymore,
+  hence these changes aren't really required for the driver, but
+  they still seem to be a worthwhile improvement
+
+Changes in v16:
+- added patch 'ARM: configs: Explicitly enable USB_XHCI_PLATFORM
+  where needed' to keep arm32 defconfigs effectively unchanged
+
+Changes in v15:
+- adjusted dependencies of USB_DWC3_CORE to make sure it can only
+  be enabled when at least one of USB_DWC3_HOST, USB_DWC3_GADGET
+  or USB_DWC3_DUAL_ROLE is selectable
+
+Changes in v14:
+- rebased on top of v5.14-rc1
+- dropped DT binding patch which landed in v5.13
+
+Changes in v13:
+- added patch "usb: Specify dependency on USB_XHCI_PLATFORM with
+  'depends on'" to the series to avoid Kconfig conflicts
+- added patch "arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM"
+  to the series to keep effective defconfig unchanged
+
+Changes in v12:
+- onboard_hub driver: use IS_ENABLED(CONFIG_USB_ONBOARD_HUB_MODULE)
+  in onboard_hub.h to also check for the driver built as module
+- onboard_hub_driver: include onboard_hub.h again to make sure there
+  are prototype declarations for the public functions
+
+Changes in v11:
+- support multiple onboard hubs connected to the same parent
+- don't include ‘onboard_hub.h’ from the onboard hub driver
+
+Changes in v10:
+- always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+- keep 'regulator-boot-on' property for pp3300_hub
+
+Changes in v9:
+- added dependency on ONBOARD_USB_HUB (or !ONBOARD_USB_HUB) to
+  USB_PLATFORM_XHCI
+
+Changes in v7:
+- updated DT binding
+- series rebased on qcom/arm64-for-5.13
+
+Changes in v6:
+- updated summary
+
+Changes in v5:
+- cover letter added
+
+Matthias Kaehlcke (5):
+  of/platform: Add stubs for of_platform_device_create/destroy()
+  driver core: Export device_is_bound()
+  usb: misc: Add onboard_usb_hub driver
+  usb: core: hcd: Create platform devices for onboard hubs in probe()
+  arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+
+ .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  12 +-
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     |  11 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+ drivers/base/dd.c                             |   1 +
+ drivers/usb/core/hcd.c                        |   6 +
+ drivers/usb/misc/Kconfig                      |  23 +
+ drivers/usb/misc/Makefile                     |   1 +
+ drivers/usb/misc/onboard_usb_hub.c            | 490 ++++++++++++++++++
+ include/linux/of_platform.h                   |  22 +-
+ include/linux/usb/hcd.h                       |   1 +
+ include/linux/usb/onboard_hub.h               |  18 +
+ 15 files changed, 616 insertions(+), 41 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+ create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+ create mode 100644 include/linux/usb/onboard_hub.h
 
 -- 
-Catalin
+2.34.1.173.g76aa8bc2d0-goog
+
