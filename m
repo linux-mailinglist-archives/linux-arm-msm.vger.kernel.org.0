@@ -2,192 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F206C46FDF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 10:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E83E246FF9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 12:15:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234560AbhLJJld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 04:41:33 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:38360 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236751AbhLJJl3 (ORCPT
+        id S237637AbhLJLTX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 06:19:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233079AbhLJLTX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 04:41:29 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 2FA35CE28A2;
-        Fri, 10 Dec 2021 09:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBDAC341C8;
-        Fri, 10 Dec 2021 09:37:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639129070;
-        bh=wRKuYYJKuw1ebIvxw48pFuiBZnozL0DgSyvF4pTa46c=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=dicbruZtf0j2yGls3KVEuV63MM9K5HE+yQuVgJR/4RTlaFVEEP0xOuY2f3fzxQ0gw
-         SrdN9M1ao2t56+3fCA7QQSVgpV5AACHzUZSwr2clvO52EtOfO/ZgtuY5cw/FGaoTuu
-         rcoXgTUxYcsyMUs7c5y6zTWTQbq1ht3xJKQACZNUpmhXne+mo2+B1ynA7eAp4OrNM3
-         GxSbAc+hVon6tJhvccsLCIJIKNUkMNk7IoThvNZhA1JarMbiekCr+JSQVlZ5nUdmbj
-         ryHbpPxLECQATsdSpnz6ifmzUosInDC4vKH6heuAOJX4qN3jlUFvk8oWchmRE2lcvo
-         oK9EJybDWKvjA==
-Message-ID: <c9b64943-a92f-f2f9-b149-33a51a97d7a3@kernel.org>
-Date:   Fri, 10 Dec 2021 11:37:45 +0200
-MIME-Version: 1.0
-Subject: Re: [PATCH v2 09/13] arm64: dts: qcom: sm8450: add interconnect nodes
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>,
+        Fri, 10 Dec 2021 06:19:23 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BCBC061353
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 03:15:48 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id fv9-20020a17090b0e8900b001a6a5ab1392so7252943pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 03:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qYllIsVSqbDs4dUz+zHNMI4+DHlEEtES2AFLDR4RsZs=;
+        b=lJMJZNQwKKu3LXLTLiiAMsOb/MOH+BlpVy5hjylkJ5ZbqhJVb+i9WuizTmYNqqHd8i
+         GU+rvIFnESSUy8bcVLcsBqzhh9Xe7ZKHtd66uad0C+bNYUCVUZEXQU2FfQhH64QHf+w2
+         DZeQs6EI23KdzoHltL53EfUJLeAwCbNOvO2A9AS4OzfacF6kMvd1ADO9icjkU3oMmLfG
+         Ug7mI0GUaQpoLPuBMGo/gfOLKrpONc+ZCH/T+Ss+ffigflymQglRnDhkSdOY3r18eteM
+         4BZDg3PbylTiHWEKQ82AojRHPaVn4EbqpMAFJQkBcq569ZFD3oTvthmgOnuO2rL7h3q/
+         LXow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qYllIsVSqbDs4dUz+zHNMI4+DHlEEtES2AFLDR4RsZs=;
+        b=PhQ9iUqh6y6bJJUdKl0nitaqLbo6Xepi//e1sgR0EDzcxcGotVSie7DCK/qBOcgBWs
+         2qCehP/LnEb2TG1x7/jfSL6cdH3pSEtQlVYNWzOLlcL2C8CU3/NJISwE5bZFB7/+FMQL
+         xquO5SyWe3pm4SWENQKZPxYD7ccdheTT3S3bs4K5gfYe4lbtrwosvrXFSPxWuMNFev6m
+         WL4TQOrxv3uPshO7bG8cFjAIoStZ6OUuQqJempW2dj4FWdpgxNQejGaWkdmYhha2I0C4
+         9SvJ43uHHjcUVWqpBOha4Sggy/98iITSMNFqtG7IuMwtvP30e3FsKiAhOUDso+5dU0SX
+         4/bQ==
+X-Gm-Message-State: AOAM533h3XGSLGUFnR35eCYpf4syugIMzuWd74U1nu8SDK3cTu1wb4u7
+        x0zXK6FZ+5qhZzOqV+oSdnJb
+X-Google-Smtp-Source: ABdhPJzERHijcXGBjTizLrbvJuz4CCYCfVW96LQWzIIDzO445NjwhkHNujDFBQnjjnIQB6Atf/1YQw==
+X-Received: by 2002:a17:902:e842:b0:142:dbc:bade with SMTP id t2-20020a170902e84200b001420dbcbademr75107587plg.45.1639134948281;
+        Fri, 10 Dec 2021 03:15:48 -0800 (PST)
+Received: from thinkpad ([202.21.42.75])
+        by smtp.gmail.com with ESMTPSA id s19sm2944131pfu.104.2021.12.10.03.15.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Dec 2021 03:15:47 -0800 (PST)
+Date:   Fri, 10 Dec 2021 16:45:41 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        viveka@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211209103505.197453-1-vkoul@kernel.org>
- <20211209103505.197453-10-vkoul@kernel.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20211209103505.197453-10-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 04/10] PCI: qcom: Remove redundancy between qcom_pcie
+ and qcom_pcie_cfg
+Message-ID: <20211210111541.GD1734@thinkpad>
+References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
+ <20211208171442.1327689-5-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211208171442.1327689-5-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
-
-On 9.12.21 12:35, Vinod Koul wrote:
-> And the various interconnect nodes found in SM8450 SoC and use it for
-> UFS controller.
+On Wed, Dec 08, 2021 at 08:14:36PM +0300, Dmitry Baryshkov wrote:
+> In preparation to adding more flags to configuration data, use struct
+> qcom_pcie_cfg directly inside struct qcom_pcie, rather than duplicating
+> all its fields. This would save us from the boilerplate code that just
+> copies flags values from one sruct to another one.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 80 ++++++++++++++++++++++++++++
->   1 file changed, 80 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 39 +++++++++++---------------
+>  1 file changed, 17 insertions(+), 22 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 9556d2fc46e0..f75de777f6ea 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -7,6 +7,7 @@
->   #include <dt-bindings/clock/qcom,gcc-sm8450.h>
->   #include <dt-bindings/clock/qcom,rpmh.h>
->   #include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/interconnect/qcom,sm8450.h>
->   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->   
->   / {
-> @@ -573,6 +574,61 @@ uart7: serial@99c000 {
->   			};
->   		};
->   
-> +		config_noc: interconnect@1500000 {
-> +			compatible = "qcom,sm8450-config-noc";
-> +			reg = <0 0x01500000 0 0x1c000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		mc_virt: interconnect@1580000 {
-> +			compatible = "qcom,sm8450-mc-virt";
-> +			reg = <0 0x01580000 0 0x1000>;
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 1c3d1116bb60..51a0475173fb 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -204,8 +204,7 @@ struct qcom_pcie {
+>  	union qcom_pcie_resources res;
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+> -	const struct qcom_pcie_ops *ops;
+> -	unsigned int pipe_clk_need_muxing:1;
+> +	const struct qcom_pcie_cfg *cfg;
 
-Is there really a register space for this noc?
-
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		system_noc: interconnect@1680000 {
-> +			compatible = "qcom,sm8450-system-noc";
-> +			reg = <0 0x01680000 0 0x1e200>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		pcie_noc: interconnect@16c0000 {
-> +			compatible = "qcom,sm8450-pcie-anoc";
-> +			reg = <0 0x016c0000 0 0xe280>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		aggre1_noc: interconnect@16e0000 {
-> +			compatible = "qcom,sm8450-aggre1-noc";
-> +			reg = <0 0x016e0000 0 0x1c080>;
-> +			#interconnect-cells = <1>;
-> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		aggre2_noc: interconnect@1700000 {
-> +			compatible = "qcom,sm8450-aggre2-noc";
-> +			reg = <0 0x01700000 0 0x31080>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +			clocks = <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +				 <&rpmhcc RPMH_IPA_CLK>;
-> +		};
-> +
-> +		mmss_noc: interconnect@1740000 {
-> +			compatible = "qcom,sm8450-mmss-noc";
-> +			reg = <0 0x01740000 0 0x1f080>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
->   		tcsr_mutex: hwlock@1f40000 {
->   			compatible = "qcom,tcsr-mutex";
->   			reg = <0x0 0x01f40000 0x0 0x40000>;
-> @@ -816,6 +872,13 @@ rpmhcc: clock-controller {
->   			};
->   		};
->   
-> +		gem_noc: interconnect@19100000 {
-> +			compatible = "qcom,sm8450-gem-noc";
-> +			reg = <0 0x19100000 0 0xbb800>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
->   		ufs_mem_hc: ufshc@1d84000 {
->   			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
->   				     "jedec,ufs-2.0";
-> @@ -832,6 +895,9 @@ ufs_mem_hc: ufshc@1d84000 {
->   
->   			iommus = <&apps_smmu 0xe0 0x0>;
->   
-> +			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
-> +					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
-> +			interconnect-names = "ufs-ddr", "cpu-ufs";
->   			clock-names =
->   				"core_clk",
->   				"bus_aggr_clk",
-> @@ -887,6 +953,20 @@ ufs_mem_phy_lanes: lanes@1d87400 {
->   				#clock-cells = <0>;
->   			};
->   		};
-> +
-> +		nsp_noc: interconnect@320c0000 {
-> +			compatible = "qcom,sm8450-nsp-noc";
-> +			reg = <0 0x320c0000 0 0x10000>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
-> +
-> +		lpass_ag_noc: interconnect@3c40000 {
-
-Nit: This should move up, if we want to order them by node address.
-
-> +			compatible = "qcom,sm8450-lpass-ag-noc";
-> +			reg = <0 0x3c40000 0 0x17200>;
-> +			#interconnect-cells = <1>;
-> +			qcom,bcm-voters = <&apps_bcm_voter>;
-> +		};
->   	};
-
-I don't see a DT node for clk_virt, are you planning to add this later?
+There is no change in this patch that adds "pipe_clk_need_muxing" to
+qcom_pcie_cfg.
 
 Thanks,
-Georgi
+Mani
 
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -229,8 +228,8 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>  
+>  	/* Enable Link Training state machine */
+> -	if (pcie->ops->ltssm_enable)
+> -		pcie->ops->ltssm_enable(pcie);
+> +	if (pcie->cfg->ops->ltssm_enable)
+> +		pcie->cfg->ops->ltssm_enable(pcie);
+>  
+>  	return 0;
+>  }
+> @@ -1176,7 +1175,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> -	if (pcie->pipe_clk_need_muxing) {
+> +	if (pcie->cfg->pipe_clk_need_muxing) {
+>  		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+>  		if (IS_ERR(res->pipe_clk_src))
+>  			return PTR_ERR(res->pipe_clk_src);
+> @@ -1209,7 +1208,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	}
+>  
+>  	/* Set TCXO as clock source for pcie_pipe_clk_src */
+> -	if (pcie->pipe_clk_need_muxing)
+> +	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+>  
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+> @@ -1284,7 +1283,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>  
+>  	/* Set pipe clock as clock source for pcie_pipe_clk_src */
+> -	if (pcie->pipe_clk_need_muxing)
+> +	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+>  
+>  	return clk_prepare_enable(res->pipe_clk);
+> @@ -1384,7 +1383,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  
+>  	qcom_ep_reset_assert(pcie);
+>  
+> -	ret = pcie->ops->init(pcie);
+> +	ret = pcie->cfg->ops->init(pcie);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -1392,16 +1391,16 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  	if (ret)
+>  		goto err_deinit;
+>  
+> -	if (pcie->ops->post_init) {
+> -		ret = pcie->ops->post_init(pcie);
+> +	if (pcie->cfg->ops->post_init) {
+> +		ret = pcie->cfg->ops->post_init(pcie);
+>  		if (ret)
+>  			goto err_disable_phy;
+>  	}
+>  
+>  	qcom_ep_reset_deassert(pcie);
+>  
+> -	if (pcie->ops->config_sid) {
+> -		ret = pcie->ops->config_sid(pcie);
+> +	if (pcie->cfg->ops->config_sid) {
+> +		ret = pcie->cfg->ops->config_sid(pcie);
+>  		if (ret)
+>  			goto err;
+>  	}
+> @@ -1410,12 +1409,12 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  
+>  err:
+>  	qcom_ep_reset_assert(pcie);
+> -	if (pcie->ops->post_deinit)
+> -		pcie->ops->post_deinit(pcie);
+> +	if (pcie->cfg->ops->post_deinit)
+> +		pcie->cfg->ops->post_deinit(pcie);
+>  err_disable_phy:
+>  	phy_power_off(pcie->phy);
+>  err_deinit:
+> -	pcie->ops->deinit(pcie);
+> +	pcie->cfg->ops->deinit(pcie);
+>  
+>  	return ret;
+>  }
+> @@ -1531,7 +1530,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	struct pcie_port *pp;
+>  	struct dw_pcie *pci;
+>  	struct qcom_pcie *pcie;
+> -	const struct qcom_pcie_cfg *pcie_cfg;
+>  	int ret;
+>  
+>  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+> @@ -1553,15 +1551,12 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pcie->pci = pci;
+>  
+> -	pcie_cfg = of_device_get_match_data(dev);
+> -	if (!pcie_cfg || !pcie_cfg->ops) {
+> +	pcie->cfg = of_device_get_match_data(dev);
+> +	if (!pcie->cfg || !pcie->cfg->ops) {
+>  		dev_err(dev, "Invalid platform data\n");
+>  		return -EINVAL;
+>  	}
+>  
+> -	pcie->ops = pcie_cfg->ops;
+> -	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
+> -
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset)) {
+>  		ret = PTR_ERR(pcie->reset);
+> @@ -1586,7 +1581,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> -	ret = pcie->ops->get_resources(pcie);
+> +	ret = pcie->cfg->ops->get_resources(pcie);
+>  	if (ret)
+>  		goto err_pm_runtime_put;
+>  
+> -- 
+> 2.33.0
+> 
