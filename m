@@ -2,136 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A7D470CB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 22:45:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1AED470CDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Dec 2021 23:10:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244173AbhLJVsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 16:48:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233208AbhLJVsh (ORCPT
+        id S1344609AbhLJWNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 17:13:47 -0500
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:39585 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230078AbhLJWNq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 16:48:37 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD40C061746
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 13:45:02 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id j7so9636963ilk.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 13:45:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=twSZcP3mfT9b/ZypuoNY+BMMl0lomCjpqlD3pIkCMVk=;
-        b=bwTgLlu5ayICV2oRruJfhchWzCMSfHhBCodMQOwyhgYl/hTdov/P/dpEioeiZgwA8L
-         XbXc2E4w2vHRlih0oxJVVva20CRtJmcCvC6Wy7kaDCYd4tB8v48PxJ++2l+Io5HaYPTX
-         fLPrC7HgLWiGamqyyf6+itveeWSmVBqTOMT8ssWNc9c3es1+ntEDK6TleEXqaWJZP6hU
-         OpginV9JT8Fll+zzaBDYh1BSmXWSzLJ5K9PrchWmDZkJoFbYJq63yHRHVfU5Gzgc6BWe
-         xXtckl37/mUgpph2S8bAjCo9opUVovfuXHzyznvPSQ7AbRhISx2ars2msdiF5tqtbdLh
-         yDaQ==
+        Fri, 10 Dec 2021 17:13:46 -0500
+Received: by mail-oi1-f175.google.com with SMTP id bf8so15121616oib.6;
+        Fri, 10 Dec 2021 14:10:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=twSZcP3mfT9b/ZypuoNY+BMMl0lomCjpqlD3pIkCMVk=;
-        b=iHs8CE2shezFCLRPEHZNCrycnbOCRYvWk0JrdEhb9zX+CLQTdO2yZJP6bfyrSKBoSC
-         0Jsp6suADr5o0OM0HsfiQJSlBtEI+c3jh735aF1ZIRzXzdr7XDoBJq3/IK8OfjgS2eJ4
-         jk+ntOvvDFv6nQMgOyetI2nbs4LM8AXl1AnGfQIrQyWfo772hnuGmwInsgTZhrV3qRPq
-         eTY1uNrfmgEPbBHuWJJYCHSnMLCARV6Zb3KWDvt4RTuI9EgquYuHxF9LinYdrSpBfVn6
-         ECOrhiCdFzLg46bgqdW/DOuNPk+pAONiOHge+kIeDwUndy1VA5a3MaC2OoFJJ7GUKIlk
-         tUgg==
-X-Gm-Message-State: AOAM533hu3+bidmyl/rOHmCdRBrDOx975A0Joo7EKB2SnHH9UKwNIJWh
-        SQI5z4mYZuknfxmS6KwIyY1IBQ==
-X-Google-Smtp-Source: ABdhPJyh4LXFMt7xtDpViOu223o6K21uy/0CVGrUz8kUYRG7TJ06//3d2q/c2WKdXgTwLXUoYRoWuQ==
-X-Received: by 2002:a92:cda4:: with SMTP id g4mr20168487ild.159.1639172701177;
-        Fri, 10 Dec 2021 13:45:01 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id t6sm2498690ios.13.2021.12.10.13.44.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Dec 2021 13:45:00 -0800 (PST)
-Message-ID: <c206a619-a40c-8c2b-8dfe-484f2b0eba92@linaro.org>
-Date:   Fri, 10 Dec 2021 15:44:58 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH 2/3] firmware: qcom: scm: Add function to set the maximum
- IOMMU pool size
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UI69fhIlE5XSdCKJ2yMxqg1dIhXQ3tzeJCksSrXFyqs=;
+        b=dZRbekPlPrQRu6qQjV/3j/hsdWXFRXCuueAZ+bh8cLVcr2yhLgCaqfmPcLRaotqNM8
+         gvKVCPxzZAwzNDPhhHU78qYI9yUh4ocjMxmf+Aqy7F22NvpXjC+3dXk/uzUmyLRQJKaX
+         CrKLaHbpXsCHtDYPOgMOGxingtVXEv1Q0ri518IpJSNO1Ik0hbVnh9LZv85i4puVwtPr
+         W+mEefmyl929fSo97jB3TS2IZ8qzy6JXW0DDPgloz6+e/We6YBjH9KV9Lx2aR15uiQ5r
+         aIiqEmUv0US9pUkRaZ1PNTpp2RI/6hJJ2JIwHVf5yYz/0KxNS8SckJXzhc9zeW6/0kd6
+         Dxuw==
+X-Gm-Message-State: AOAM531SYHtJXBhHFQe7Eoow9mgkVK+5dnf7M2nNJL+FDrBbh+4dVXkk
+        y/0ypUXOHVEVKtMQU7Y/Yg==
+X-Google-Smtp-Source: ABdhPJyuH5wrjmW02k4zGvufnnUCm+yF6g/3zXu5CgTcTDxczhAk1nmsNkvG9DN2qh3G2mtjVBOmkw==
+X-Received: by 2002:a05:6808:1509:: with SMTP id u9mr15617399oiw.13.1639174210918;
+        Fri, 10 Dec 2021 14:10:10 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id y17sm747594ote.48.2021.12.10.14.10.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Dec 2021 14:10:10 -0800 (PST)
+Received: (nullmailer pid 2017305 invoked by uid 1000);
+        Fri, 10 Dec 2021 22:10:09 -0000
+Date:   Fri, 10 Dec 2021 16:10:09 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     sboyd@kernel.org, devicetree@vger.kernel.org,
+        collinsd@codeaurora.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211208083423.22037-1-marijn.suijten@somainline.org>
- <20211208083423.22037-3-marijn.suijten@somainline.org>
- <b21686fc-3662-1ed4-8ba3-8ed5ca6eda13@linaro.org>
- <20211208234436.ktagmcfj6jl5jct5@SoMainline.org>
- <fb1005b6-e610-407f-39bb-7cd6a198f9d6@somainline.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <fb1005b6-e610-407f-39bb-7cd6a198f9d6@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, subbaram@codeaurora.org,
+        maz@kernel.org, linux-kernel@vger.kernel.org, tglx@linutronix.de
+Subject: Re: [RESEND PATCH v3 07/10] bindings: spmi: spmi-pmic-arb: mark
+ interrupt properties as optional
+Message-ID: <YbPQQdXbJOO1gGDp@robh.at.kernel.org>
+References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1638403212-29265-8-git-send-email-quic_fenglinw@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1638403212-29265-8-git-send-email-quic_fenglinw@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/10/21 10:28 AM, AngeloGioacchino Del Regno wrote:
-> Il 09/12/21 00:44, Marijn Suijten ha scritto:
->> On 2021-12-08 07:30:28, Alex Elder wrote:
->>> On 12/8/21 2:34 AM, Marijn Suijten wrote:
->>>> From: AngeloGioacchino Del Regno 
->>>> <angelogioacchino.delregno@somainline.org>
->>>>
->>>> This is not necessary for basic functionality of the IOMMU, but
->>>> it's an optimization that tells to the TZ what's the maximum
->>>> mappable size for the secure IOMMUs, so that it can optimize
->>>> the data structures in the TZ itself.
->>>
->>> Are there no users of this function?    -Alex
->>
->> I should have probably mentioned in the cover letter that this function
->> and the one introduced in patch 3/3 are going to be used in upcoming
->> patches for IOMMUs found in msm8976, msm8974 and related SoCs (with the
->> side-note that I don't see this particular set_cp_pool_size used in the
->> branch that this was submitted from, but it's most likely used elsewhere
->> or planned ahead to be used in the near future - I expect Angelo to be
->> able to comment on that more accurately).
->>
+On Thu, 02 Dec 2021 08:00:09 +0800, Fenglin Wu wrote:
+> From: David Collins <collinsd@codeaurora.org>
 > 
-> This function is used in the secured iommu pagetable setup, but not for
-> all of the "SCM feature versions" (only for version >= 1.1.1, downstream
-> reads it with a call to scm_feat_version()).
+> Mark all interrupt related properties as optional instead of
+> required.  Some boards do not required PMIC IRQ support and it
+> isn't needed to handle SPMI bus transactions, so specify it as
+> optional.
 > 
-> It's not strictly necessary for functionality, hence why Marijn isn't
-> seeing any call to this in the branch that he was browsing: the spirit here
-> is to first introduce code that does a minimal (but, of course, working)
-> setup of the IOMMUs found in MSM8956/76 (which can be adapted with very
-> minimal changes to other SoCs), and *only then* to add these performance
-> enhancements to the mix.
+> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> ...and this is why this commit is here :))
-> 
-> By the way, if my memory isn't failing me, that SCM call should be usable
-> on all AArch64 SoCs (so, 8956, 8994 and the rest).
 
-Thanks for your responses.  I don't actually know what
-you use as downstream for this.  If I did, I might
-compare what I see there to what you do and confirm
-it does the same thing...
-
-So I'm not offering any review on this or patch 3.
-But I'm glad to know the users of these functions
-will be coming soon.
-
-					-Alex
+Acked-by: Rob Herring <robh@kernel.org>
