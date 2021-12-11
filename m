@@ -2,100 +2,230 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55B3A4710EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 03:23:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4267F4710F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 03:24:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345864AbhLKC0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 21:26:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53238 "EHLO
+        id S244379AbhLKC2J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 21:28:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345640AbhLKC0Y (ORCPT
+        with ESMTP id S243779AbhLKC2I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 21:26:24 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D653DC061D76
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 18:22:42 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id x10so17916854edd.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 18:22:42 -0800 (PST)
+        Fri, 10 Dec 2021 21:28:08 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F5AC061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 18:24:32 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id p8so16221246ljo.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 18:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0vlB+HiEimZ6SFp79jIcvOvjtvYaAMP5gG+NgcNA//0=;
-        b=E8WLMnqlqi3ACFoJKLNiHy64aVtWVahCGk3XSkM4+Gj1AKqY8yUQXP4NxFQ+EoGttv
-         +VEfKy3BIz8rGTfT5X45U0pCuboIphd4ViM2KV7SpzI1xp/QtdMrTh53lTbYhuN0ezCQ
-         EBqxpl6AsXz1VSHS/MTM5HrQ1utHW+agxgn5KeOdtFTjM9C5lRjurfVLFAY6fDvP6VoR
-         8dZvFC6yPlB6dsWH0OwM8uO5g+pZULcKUXPkBlBbBRFtwaez6obdRnMspW1Mz6GiMott
-         8zhhCmG7YQdq95VNWNkZb+5HMc44fhhwCh8IhDC9PIKUvQ96iw96zlqQfff9cihYqoKL
-         ImIg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=46Capt1NdMKRXfeHqWY9CqoHe0Vz4X6baJbRZWInt5g=;
+        b=ti1hD/EkNCYesIDwRgGRY9sPsXSsrTRQmYeNaTUnCnXp8sSe9EG0joA0B3Oe3ND4Oj
+         s6ZfxutlIJldF933/PeZnZ7v6zSFpzCAbcx0bQvmvH0Og2NwNh5cdoSZRQG0XhSGKqtb
+         f3sv24TxJLtBYT4c/TyZW/oayqqIMGrzcFNFy+5qEH2G5qN2dLhg8hCtX97Yeg1ZH8r2
+         iK7iSnOvJj2fr4IN3aejT6HrGSR/iONvz3g7eG51z/IRKaDE76L7XLic9U/fcr6KS/gu
+         6hMTmIYKAerTR3gVpzI7m475G9f2k6xy8aID2CUfgRMNbga72MnVCk3RQEj92k35mtV4
+         LBJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0vlB+HiEimZ6SFp79jIcvOvjtvYaAMP5gG+NgcNA//0=;
-        b=eqyu398DSqtX9ZXBawZLPV6TehZOzG8KivXYHp2r79fIiyPgFA6JU5R70V/mjsOKr+
-         ujYLf2Cuc0os29HUxCW10q0bVwcAtinKDlAmvEXsTGr4LZAD6/BWLa2VYj4koJs4xc6A
-         KB6/f6okb08Td/apkIgNsYntzXfEp5LoVLoSyqyU9N32k7+DiOMIlIUGVNb1/gUc5cBI
-         4t5BWUkFgMWjwCFuCVuTpMPubC3kc5hYREUPHnGr4BpKO39HWc/a1CKWGjRN7eqE6eiI
-         BBIw0zekQD+l+V4Gssv+iz4VYPml+B9BrFLqX+xzBZyJi+1S1WaA2v3jnkiG76hmXZlf
-         r2vA==
-X-Gm-Message-State: AOAM533TkF/Ac2tHTjo5zF74nG2ZB0CKOQEfC+GodGjuucyWaBPHaVXp
-        Jw4WpQkEqj8N2svJBzyezdO3Iw==
-X-Google-Smtp-Source: ABdhPJyiAnrPpCTVsSwW8avW1hpdLBXljsuaiNw0xjlqwJ32+D65jaQsRiBBs8U/PfFh4oL0lTYONg==
-X-Received: by 2002:a17:906:4fc8:: with SMTP id i8mr28474735ejw.427.1639189361412;
-        Fri, 10 Dec 2021 18:22:41 -0800 (PST)
-Received: from lion.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id s2sm2449424ejn.96.2021.12.10.18.22.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Dec 2021 18:22:41 -0800 (PST)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-X-Google-Original-From: Caleb Connolly <caleb@connolly.tech>
-To:     caleb.connolly@linaro.org, sumit.semwal@linaro.org,
-        amit.pundir@linaro.org, john.stultz@linaro.org
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 7/7] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable RRADC
-Date:   Sat, 11 Dec 2021 02:22:24 +0000
-Message-Id: <20211211022224.3488860-8-caleb@connolly.tech>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20211211022224.3488860-1-caleb@connolly.tech>
-References: <20211211022224.3488860-1-caleb@connolly.tech>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=46Capt1NdMKRXfeHqWY9CqoHe0Vz4X6baJbRZWInt5g=;
+        b=J1TENmBHA6V0uDTLhkKiB4DrhVPUWgXQvdmQf9btPaPY2pz6bcMno0PyyXaFHTao38
+         xDd/TCOAORN/5WII+6YNIRAD5WFxdLAhV7q0G9QXu0aptReMrUEsDAkAZOlRP8YD+sTr
+         NH4m/bRvUQpsF1uAEAbavCfFFiRcy6IVMUySLYVc8DVcEpLY76ZjPMDkTUYPdsKDyBjs
+         uVEZJh6J2qcuG8F0GGds0B+2dr7lHh4EmPLNxtoLgGZf9RK30cbf8YWhuOG1694kNeoQ
+         Na6KcNifAZZ/CqkRNDT0Y49njwvi/pad+e9TV7Ex8cUFspn6FMpnfOalQ/8Tisu12ag/
+         Biyg==
+X-Gm-Message-State: AOAM530rFoU3kc3FfXbmVTV7MReR5uqUpKKT2sZFciEOsND2qhyyEC7n
+        FnRF2OgTQtF9jdzgbjQuDYqBKQ==
+X-Google-Smtp-Source: ABdhPJxWXy+bbDnhSbbazsV7daUAe9M0vB2j9JkY07f36OuWyVg5U2Z1osNm6mSsViXx0kozYju3Xw==
+X-Received: by 2002:a2e:3304:: with SMTP id d4mr16027150ljc.377.1639189470883;
+        Fri, 10 Dec 2021 18:24:30 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m8sm475492lfq.27.2021.12.10.18.24.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Dec 2021 18:24:30 -0800 (PST)
+Message-ID: <c8f4298a-a229-c4a9-0f04-9c326ba116a1@linaro.org>
+Date:   Sat, 11 Dec 2021 05:24:29 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 08/10] arm64: dts: qcom: sm8450: add PCIe0 RC device
+Content-Language: en-GB
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
+ <20211208171442.1327689-9-dmitry.baryshkov@linaro.org>
+ <20211210120644.GH1734@thinkpad>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211210120644.GH1734@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+On 10/12/2021 15:06, Manivannan Sadhasivam wrote:
+> On Wed, Dec 08, 2021 at 08:14:40PM +0300, Dmitry Baryshkov wrote:
+>> Add device tree node for the first PCIe host found on the Qualcomm
+>> SM8450 platform.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 101 +++++++++++++++++++++++++++
+>>   1 file changed, 101 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> index a047d8a22897..09087a34a007 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>> @@ -627,6 +627,84 @@ i2c14: i2c@a98000 {
+>>   				#size-cells = <0>;
+>>   				status = "disabled";
+>>   			};
+>> +		];
+>> +
+>> +		pcie0: pci@1c00000 {
+>> +			compatible = "qcom,pcie-sm8450";
+>> +			reg = <0 0x01c00000 0 0x3000>,
+>> +			      <0 0x60000000 0 0xf1d>,
+>> +			      <0 0x60000f20 0 0xa8>,
+>> +			      <0 0x60001000 0 0x1000>,
+>> +			      <0 0x60100000 0 0x100000>;
+>> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
+>> +			device_type = "pci";
+>> +			linux,pci-domain = <0>;
+>> +			bus-range = <0x00 0xff>;
+>> +			num-lanes = <1>;
+>> +
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +
+>> +			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+>> +				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
+>> +
+>> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "msi";
+>> +			#interrupt-cells = <1>;
+>> +			interrupt-map-mask = <0 0 0 0x7>;
+>> +			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+>> +					<0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+>> +					<0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>> +					<0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>> +
+>> +			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+>> +				 <&gcc GCC_PCIE_0_PIPE_CLK_SRC>,
+>> +				 <&pcie0_lane>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_PCIE_0_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+>> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+>> +				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+>> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
+>> +				 <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+>> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
+>> +			clock-names = "pipe",
+>> +				      "pipe_mux",
+>> +				      "phy_pipe",
+>> +				      "ref",
+>> +				      "aux",
+>> +				      "cfg",
+>> +				      "bus_master",
+>> +				      "bus_slave",
+>> +				      "slave_q2a",
+>> +				      "ddrss_sf_tbu",
+>> +				      "aggre0",
+>> +				      "aggre1";
+>> +
+>> +			iommus = <&apps_smmu 0x1c00 0x7f>;
+>> +			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+>> +				    <0x100 &apps_smmu 0x1c01 0x1>;
+>> +
+>> +			resets = <&gcc GCC_PCIE_0_BCR>;
+>> +			reset-names = "pci";
+>> +
+>> +			power-domains = <&gcc PCIE_0_GDSC>;
+>> +			power-domain-names = "gdsc";
+>> +
+>> +			phys = <&pcie0_lane>;
+>> +			phy-names = "pciephy";
+>> +
+>> +			perst-gpio = <&tlmm 94 GPIO_ACTIVE_LOW>;
+>> +			enable-gpio = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+> 
+> Wondering if this configuration varies between boards. If then, this should be
+> moved to board dts. Other than this,
 
-Enable the PMI8998 RRADC.
+Judging from other platforms, these GPIOs will be used in this way by 
+most if not all of sm8450 devices.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+> 
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Thanks,
+> Mani
+> 
+>> +
+>> +			pinctrl-names = "default";
+>> +			pinctrl-0 = <&pcie0_default_state>;
+>> +
+>> +			interconnects = <&pcie_noc MASTER_PCIE_0 &mc_virt SLAVE_EBI1>;
+>> +			interconnect-names = "pci";
+>> +
+>> +			status = "disabled";
+>>   		};
+>>   
+>>   		pcie0_phy: phy@1c06000 {
+>> @@ -763,6 +841,29 @@ tlmm: pinctrl@f100000 {
+>>   			gpio-ranges = <&tlmm 0 0 211>;
+>>   			wakeup-parent = <&pdc>;
+>>   
+>> +			pcie0_default_state: pcie0-default {
+>> +				perst {
+>> +					pins = "gpio94";
+>> +					function = "gpio";
+>> +					drive-strength = <2>;
+>> +					bias-pull-down;
+>> +				};
+>> +
+>> +				clkreq {
+>> +					pins = "gpio95";
+>> +					function = "pcie0_clkreqn";
+>> +					drive-strength = <2>;
+>> +					bias-pull-up;
+>> +				};
+>> +
+>> +				wake {
+>> +					pins = "gpio96";
+>> +					function = "gpio";
+>> +					drive-strength = <2>;
+>> +					bias-pull-up;
+>> +				};
+>> +			};
+>> +
+>>   			qup_i2c13_default_state: qup-i2c13-default-state {
+>>   				mux {
+>>   					pins = "gpio48", "gpio49";
+>> -- 
+>> 2.33.0
+>>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 580d4cc1296f..481132b0cee4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -312,6 +312,10 @@ resin {
- 	};
- };
- 
-+&pmi8998_rradc {
-+	status = "okay";
-+};
-+
- /* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
- &q6afedai {
- 	qi2s@22 {
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
