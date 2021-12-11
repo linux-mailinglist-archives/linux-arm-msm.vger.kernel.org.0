@@ -2,288 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB370470F28
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 01:03:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41144471000
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 02:56:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243881AbhLKAHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Dec 2021 19:07:13 -0500
-Received: from m-r2.th.seeweb.it ([5.144.164.171]:52145 "EHLO
-        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345372AbhLKAHD (ORCPT
+        id S244300AbhLKB7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Dec 2021 20:59:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229462AbhLKB7v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Dec 2021 19:07:03 -0500
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E9DC43EEF3;
-        Sat, 11 Dec 2021 01:03:22 +0100 (CET)
-Date:   Sat, 11 Dec 2021 01:03:15 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v3 12/13] drm/msm/dsi: Add support for DSC configuration
-Message-ID: <20211211000315.pavmcc7cc73ilb6l@SoMainline.org>
-References: <20211116062256.2417186-1-vkoul@kernel.org>
- <20211116062256.2417186-13-vkoul@kernel.org>
+        Fri, 10 Dec 2021 20:59:51 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4706C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 17:56:15 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id m27so21076174lfj.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Dec 2021 17:56:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=WRjOyjdU++vZzJyPE3S61Z0gYV1Whs2PzLmzy5FdXJg=;
+        b=ZaxWZeXWVTwZbvlqCJwFZBJhWZveUZlzT842tLSzv48iFtLKRg+b5D6Fx4LqAm48C3
+         HoIyon/LG5uLTUy5oqKIIAGnyY8SjfMIbWdskSAR++WSgowWlPZoOQJbbfP6YyKEuH8w
+         S9YM06aZhl6X29tp1tsovavbR/AVQQzXfcZgzisAHeFkoja0lY0ENlL3FGEwvAK0wN6J
+         Wbr0ePqsSLNlzOSCiaZYBWpoQTTFHyXeWYO2Qk48i9n51NtC1gxyXZa9f20m+OF2Mkjv
+         DbBdxtDeNBzJ2cdQFYZNUxFdRPzdq1HU/JtAgyL/Q8Tj0iMDKu6J+ekMM8n9rVAof+kC
+         B+RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=WRjOyjdU++vZzJyPE3S61Z0gYV1Whs2PzLmzy5FdXJg=;
+        b=RnW2tX3MOWZtL0ZtYnWS57ihfTqva/6jcywz2KoL+jlJnSpHAsVrlsaIQcPmnbxIXv
+         hc6mkWp2ummCiPIk/AhZ/X0LHaQP6/bGaL49KtlIs1LwPrXSYaSwmnqhivNn0heFM/2F
+         xZcYhB05UgUv2dbIgmmi/VtyJHrnRBOO6Y8ILwjc19ykTnS69rQHE3w9kUHF99j18E4W
+         vhUnvcFIgvjo5sdi5YDMAT/fSmgm096w6Zh4VeMBrlFiNc/XLTdCdygrWNuGv5R5jrgw
+         NPisGiwVYcSa5gXSStdAf/NCp8e6wgBeN+/uD/qGXoXep0uMOeL8/+xgMUf8S/3UutTf
+         hGSw==
+X-Gm-Message-State: AOAM5333vrVmNYRlyHh5YdzENr3i/7sNJXgZPDfugvY4+F2dWrRbeoKW
+        6ZVG6tlGd0T/M5ra1ww2t+qCAQ==
+X-Google-Smtp-Source: ABdhPJwfOp7OXGZI/vDNdRclH1f+rwGeKRcQE06pGa3xs3MT1bopg4iV+Mc8Rg82dc6o1JLXLUTAHQ==
+X-Received: by 2002:ac2:4281:: with SMTP id m1mr15222537lfh.168.1639187773888;
+        Fri, 10 Dec 2021 17:56:13 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a21sm468867lfk.172.2021.12.10.17.56.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Dec 2021 17:56:13 -0800 (PST)
+Message-ID: <14387e8c-c014-852d-c664-ad92d415a004@linaro.org>
+Date:   Sat, 11 Dec 2021 04:56:12 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211116062256.2417186-13-vkoul@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 04/10] PCI: qcom: Remove redundancy between qcom_pcie
+ and qcom_pcie_cfg
+Content-Language: en-GB
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org>
+ <20211208171442.1327689-5-dmitry.baryshkov@linaro.org>
+ <20211210111541.GD1734@thinkpad>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211210111541.GD1734@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
-
-On 2021-11-16 11:52:55, Vinod Koul wrote:
-> When DSC is enabled, we need to configure DSI registers accordingly and
-> configure the respective stream compression registers.
+On 10/12/2021 14:15, Manivannan Sadhasivam wrote:
+> On Wed, Dec 08, 2021 at 08:14:36PM +0300, Dmitry Baryshkov wrote:
+>> In preparation to adding more flags to configuration data, use struct
+>> qcom_pcie_cfg directly inside struct qcom_pcie, rather than duplicating
+>> all its fields. This would save us from the boilerplate code that just
+>> copies flags values from one sruct to another one.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 39 +++++++++++---------------
+>>   1 file changed, 17 insertions(+), 22 deletions(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 1c3d1116bb60..51a0475173fb 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -204,8 +204,7 @@ struct qcom_pcie {
+>>   	union qcom_pcie_resources res;
+>>   	struct phy *phy;
+>>   	struct gpio_desc *reset;
+>> -	const struct qcom_pcie_ops *ops;
+>> -	unsigned int pipe_clk_need_muxing:1;
+>> +	const struct qcom_pcie_cfg *cfg;
 > 
-> Add support to calculate the register setting based on DSC params and
-> timing information and configure these registers.
+> There is no change in this patch that adds "pipe_clk_need_muxing" to
+> qcom_pcie_cfg.
+
+pipe_clk_need_muxing is already a part of the qcom_pcie_cfg structure.
+
+
+> Thanks,
+> Mani
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 113 ++++++++++++++++++++++++++++-
->  2 files changed, 122 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> index 49b551ad1bff..c1c85df58c4b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
->  #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
->  
->  
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-> +
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
+>>   };
+>>   
+>>   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+>> @@ -229,8 +228,8 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>>   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>>   
+>>   	/* Enable Link Training state machine */
+>> -	if (pcie->ops->ltssm_enable)
+>> -		pcie->ops->ltssm_enable(pcie);
+>> +	if (pcie->cfg->ops->ltssm_enable)
+>> +		pcie->cfg->ops->ltssm_enable(pcie);
+>>   
+>>   	return 0;
+>>   }
+>> @@ -1176,7 +1175,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>>   	if (ret < 0)
+>>   		return ret;
+>>   
+>> -	if (pcie->pipe_clk_need_muxing) {
+>> +	if (pcie->cfg->pipe_clk_need_muxing) {
+>>   		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+>>   		if (IS_ERR(res->pipe_clk_src))
+>>   			return PTR_ERR(res->pipe_clk_src);
+>> @@ -1209,7 +1208,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>>   	}
+>>   
+>>   	/* Set TCXO as clock source for pcie_pipe_clk_src */
+>> -	if (pcie->pipe_clk_need_muxing)
+>> +	if (pcie->cfg->pipe_clk_need_muxing)
+>>   		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+>>   
+>>   	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>> @@ -1284,7 +1283,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>>   	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>>   
+>>   	/* Set pipe clock as clock source for pcie_pipe_clk_src */
+>> -	if (pcie->pipe_clk_need_muxing)
+>> +	if (pcie->cfg->pipe_clk_need_muxing)
+>>   		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+>>   
+>>   	return clk_prepare_enable(res->pipe_clk);
+>> @@ -1384,7 +1383,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>>   
+>>   	qcom_ep_reset_assert(pcie);
+>>   
+>> -	ret = pcie->ops->init(pcie);
+>> +	ret = pcie->cfg->ops->init(pcie);
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> @@ -1392,16 +1391,16 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>>   	if (ret)
+>>   		goto err_deinit;
+>>   
+>> -	if (pcie->ops->post_init) {
+>> -		ret = pcie->ops->post_init(pcie);
+>> +	if (pcie->cfg->ops->post_init) {
+>> +		ret = pcie->cfg->ops->post_init(pcie);
+>>   		if (ret)
+>>   			goto err_disable_phy;
+>>   	}
+>>   
+>>   	qcom_ep_reset_deassert(pcie);
+>>   
+>> -	if (pcie->ops->config_sid) {
+>> -		ret = pcie->ops->config_sid(pcie);
+>> +	if (pcie->cfg->ops->config_sid) {
+>> +		ret = pcie->cfg->ops->config_sid(pcie);
+>>   		if (ret)
+>>   			goto err;
+>>   	}
+>> @@ -1410,12 +1409,12 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>>   
+>>   err:
+>>   	qcom_ep_reset_assert(pcie);
+>> -	if (pcie->ops->post_deinit)
+>> -		pcie->ops->post_deinit(pcie);
+>> +	if (pcie->cfg->ops->post_deinit)
+>> +		pcie->cfg->ops->post_deinit(pcie);
+>>   err_disable_phy:
+>>   	phy_power_off(pcie->phy);
+>>   err_deinit:
+>> -	pcie->ops->deinit(pcie);
+>> +	pcie->cfg->ops->deinit(pcie);
+>>   
+>>   	return ret;
+>>   }
+>> @@ -1531,7 +1530,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>   	struct pcie_port *pp;
+>>   	struct dw_pcie *pci;
+>>   	struct qcom_pcie *pcie;
+>> -	const struct qcom_pcie_cfg *pcie_cfg;
+>>   	int ret;
+>>   
+>>   	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+>> @@ -1553,15 +1551,12 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>   
+>>   	pcie->pci = pci;
+>>   
+>> -	pcie_cfg = of_device_get_match_data(dev);
+>> -	if (!pcie_cfg || !pcie_cfg->ops) {
+>> +	pcie->cfg = of_device_get_match_data(dev);
+>> +	if (!pcie->cfg || !pcie->cfg->ops) {
+>>   		dev_err(dev, "Invalid platform data\n");
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> -	pcie->ops = pcie_cfg->ops;
+>> -	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
+>> -
+>>   	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>>   	if (IS_ERR(pcie->reset)) {
+>>   		ret = PTR_ERR(pcie->reset);
+>> @@ -1586,7 +1581,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>>   		goto err_pm_runtime_put;
+>>   	}
+>>   
+>> -	ret = pcie->ops->get_resources(pcie);
+>> +	ret = pcie->cfg->ops->get_resources(pcie);
+>>   	if (ret)
+>>   		goto err_pm_runtime_put;
+>>   
+>> -- 
+>> 2.33.0
+>>
 
-I presume you are aware that these files are autogenerated, but there
-does not seem to be any link to patches adding these registers to the
-XML files in either envytools to mesa, nor could I find any merge/pull
-requests on the matter.  Would you mind posting those?  Before doing so
-though, consider the comment below about register mapping.
 
-> +
->  #endif /* DSI_XML */
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 31d385d8d834..2c14c36f0b3d 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->  		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
->  }
->  
-> +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> +				  int pic_width, int pic_height)
-
-This function - adopted from downstream - does not seem to perform a
-whole lot, especially without the modulo checks against the slice size.
-Perhaps it can be inlined?
-
-> +{
-> +	if (!dsc || !pic_width || !pic_height) {
-> +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> +		return -EINVAL;
-> +	}
-> +
-> +	dsc->drm->pic_width = pic_width;
-> +	dsc->drm->pic_height = pic_height;
-> +
-> +	return 0;
-> +}
-> +
->  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  {
->  	struct drm_display_mode *mode = msm_host->mode;
-> @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  		hdisplay /= 2;
->  	}
->  
-> +	if (msm_host->dsc) {
-> +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +
-> +		/* update dsc params with timing params */
-> +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-
-This seems to be pretty non-standard and perhaps unnecessary debug code,
-with a stray dash in there.  Is is needed here, and if so how about
-using %dx%d\n to format width and height?
-
-> +
-> +		/* we do the calculations for dsc parameters here so that
-> +		 * panel can use these parameters
-> +		 */
-> +		dsi_populate_dsc_params(dsc);
-> +
-> +		/* Divide the display by 3 but keep back/font porch and
-> +		 * pulse width same
-> +		 */
-
-A more general nit on the comments in this patch series: it is
-appreciated if comments explain the rationale rather than - or in
-addition to - merely paraphrasing the code that follows.
-
-> +		h_total -= hdisplay;
-> +		hdisplay /= 3;
-> +		h_total += hdisplay;
-> +		ha_end = ha_start + hdisplay;
-> +	}
-> +
->  	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, intf_width, slice_per_intf;
-> +			u32 total_bytes_per_intf;
-> +
-> +			/* first calculate dsc parameters and then program
-> +			 * compress mode registers
-> +			 */
-> +			intf_width = hdisplay;
-> +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> +
-> +			dsc->drm->slice_count = 1;
-> +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-
-If I am not mistaken this is the same value as dsc->drm->slice_width,
-since a multiple of 8 is inherently "a multiple of 8" and hence needs no
-rounding when divided by 8 again.
-
-Also note that the cmdmode variant below uses bits_per_pixel here; is
-that discrepancy intended?
-
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-> +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = dsc->bytes_per_pkt << 16;
-> +			reg |= (0x0b << 8);    /* dtype of compressed image */
-> +
-> +			/* pkt_per_line:
-> +			 * 0 == 1 pkt
-> +			 * 1 == 2 pkt
-> +			 * 2 == 4 pkt
-> +			 * 3 pkt is not supported
-> +			 * above translates to ffs() - 1
-> +			 */
-> +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-
-This was already calculated and assigned just a couple lines above.
-
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-
-Note that the XML register file exists to map out the layout of these
-registers, including bit offset, size, and (enum) constant values.  It
-is appreciated if you can replace all these magical shifts and magic
-flags/bits with the appropriate enum constants and constructor
-functions, after mapping them out in the XML file.
-
-> +
-> +			dsi_write(msm_host,
-> +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-> +		}
-> +
->  		dsi_write(msm_host, REG_DSI_ACTIVE_H,
->  			DSI_ACTIVE_H_START(ha_start) |
->  			DSI_ACTIVE_H_END(ha_end));
-> @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
->  			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
->  	} else {		/* command mode */
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, reg_ctrl, reg_ctrl2;
-> +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-> +
-> +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-> +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-
-Shouldn't old values be masked out first, before writing new bits or
-values below?  The video-mode variant doesn't read back old register
-values.
-
-> +
-> +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-> +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-> +						      dsc->drm->bits_per_pixel, 8);
-> +			dsc->drm->slice_chunk_size = bytes_in_slice;
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = 0x39 << 8;
-
-Same comment about moving magic constants and shifts into the XML file.
-
-> +			reg |= ffs(dsc->pkt_per_line) << 6;
-
-Doesn't the calculation need -1 here just like video mode?
-
-Thanks!
-
-- Marijn
-
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-> +
-> +			reg_ctrl |= reg;
-> +			reg_ctrl2 |= bytes_in_slice;
-> +
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-> +		}
-> +
->  		/* image data and 1 byte write_memory_start cmd */
-> -		wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		if (!msm_host->dsc)
-> +			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		else
-> +			wc = mode->hdisplay / 2 + 1;
->  
->  		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->  			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-> @@ -2051,9 +2158,13 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
->  {
->  	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->  	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
-> +	struct msm_drm_private *priv;
->  	int ret;
->  
->  	msm_host->dev = dev;
-> +	priv = dev->dev_private;
-> +	priv->dsc = msm_host->dsc;
-> +
->  	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
->  	if (ret) {
->  		pr_err("%s: alloc tx gem obj failed, %d\n", __func__, ret);
-> -- 
-> 2.31.1
-> 
+-- 
+With best wishes
+Dmitry
