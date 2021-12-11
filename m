@@ -2,65 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47341471311
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 10:06:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0CA047154E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 19:13:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbhLKJGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Dec 2021 04:06:50 -0500
-Received: from smtpbg128.qq.com ([106.55.201.39]:38400 "EHLO smtpbg587.qq.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229455AbhLKJGu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Dec 2021 04:06:50 -0500
-X-QQ-mid: bizesmtp51t1639213589tbwl2pau
-Received: from localhost.localdomain (unknown [182.132.179.213])
-        by esmtp6.qq.com (ESMTP) with 
-        id ; Sat, 11 Dec 2021 17:06:28 +0800 (CST)
-X-QQ-SSF: 01000000008000D0H000B00A0000000
-X-QQ-FEAT: ie7/mGF6PjxdogPfbWWDX7lv3icigX8bJipwRduE0TbOlEwBUh91eIai5nHA/
-        baJiQkpR7urnnn9pVudrq6sQN+FzDVIPvEtWWtLZW6+DnccHf5ik/lohFkMizzz1kSXupFw
-        TFSZk7WEjCoOehTH8iYTK+qCmMFfS8oi9MnKU8sGV2yUoNfSarJQUg4iSfDXEiPm//OuUY0
-        Do8i4LLGf9piyDrRqfQnaEblHGM3SMkOLWd+SOFsxRAmOYTnrfJNUow4K95Bdc0KrXstTaR
-        RbF4MhEH1yAngWvb6d1MveRDVSiLQNVg2aZqpGdkRwjKdLBH253bzOdHfVcgxw6ertapLct
-        iFiRNJr2uhQL8F5gk1llZ0FWH9jeV97IMp8F6O+
-X-QQ-GoodBg: 0
-From:   Jason Wang <wangborong@cdjrlc.com>
-To:     bjorn.andersson@linaro.org
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jason Wang <wangborong@cdjrlc.com>
-Subject: [PATCH] soc: qcom: rpmh-rsc: Fix typo in a comment
-Date:   Sat, 11 Dec 2021 17:06:26 +0800
-Message-Id: <20211211090626.248801-1-wangborong@cdjrlc.com>
-X-Mailer: git-send-email 2.34.1
+        id S231705AbhLKSN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Dec 2021 13:13:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231680AbhLKSNY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Dec 2021 13:13:24 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77358C061714
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Dec 2021 10:13:24 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id bk14so17637280oib.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Dec 2021 10:13:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZKuXDdMqteEEKXb+96og2uMkZKlBM9xGB/3xrHMNNJ4=;
+        b=aWs1p9AyHBbvhMn//ieXmew23uafLMJkWDAEFpKLr/y3EDFmf/hAW9aqurfWekiYJa
+         5Y1mrm8+8O1+DctJZZ2x203nP/1PwLA1IforTxfWsg3iai7cKVIsegSiJtT77NzfsMxN
+         i3OAM1FhXsDcRi3Rl7pQZccNNGGmSlpGrh3CYXLV2Ka1U4baeL3O5R54nGYFWtIaq5Cq
+         IguHuhJ2jT5eEkAx5asn/T8vP7onjdwjd+qEmmL8QPvjHD6nlYJSopu5rLo2RVp7/kEZ
+         lZ6fMoyk0ht++uIEsgPGXNbCGBJAHDdAhzgeDYkqtfz7WC9AEbkZvfrZHVXfDsofSoF6
+         lMnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZKuXDdMqteEEKXb+96og2uMkZKlBM9xGB/3xrHMNNJ4=;
+        b=3tetd5y/qLaxX3dTDOC6TodZv8VPuCBs4UdtvgbURmfBUiClmvHLILTG2nLD+rbpN4
+         /gSA00hdPsPT+Nku9hv4HCFpspjn3cI9hQsOaRl1SfJ48KzBRNP3smAm8mNGr1tDAWaB
+         Bqy1TBciLGgkP9bsKZxB5hZilMKnLs7cv17HOH1WeMx+LpIs7fpNw8miA8uKS91XYRE9
+         7vfRbKosYQkL3pFOGKCWhVT8V9M6PAoSXy5Vi10dZBSPMpuQlqe7tRTvCP9aYWF8BTxh
+         XY7rYYtXLu3Qq9Jm1KFcO7TMA/QnejRxBrDQkummVt/PfrweQksPFP3VgDE+zqa1Q0ce
+         2X7A==
+X-Gm-Message-State: AOAM532uQpDp0MRR3cRqI6oGsafEfAcZCl1deGPWe+XNLMnaTmTdu7WB
+        97v6BgkQa3CfvFuURyEA6VLpUQ==
+X-Google-Smtp-Source: ABdhPJwJgs25lTgbpqlRe9kzvrGm41yKRcwXPaPnmvLa062O2KlX0HXEsj/sNKm6DJR4tJAdo1WZPA==
+X-Received: by 2002:a05:6808:1a2a:: with SMTP id bk42mr19079854oib.118.1639246402724;
+        Sat, 11 Dec 2021 10:13:22 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id y12sm1641771oiv.49.2021.12.11.10.13.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Dec 2021 10:13:22 -0800 (PST)
+Date:   Sat, 11 Dec 2021 12:13:17 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
+Message-ID: <YbTqPfs7026l6LFE@builder.lan>
+References: <20211207114003.100693-1-vkoul@kernel.org>
+ <20211207114003.100693-3-vkoul@kernel.org>
+ <20211209082537.1AF6CC341C8@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:cdjrlc.com:qybgspam:qybgspam5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211209082537.1AF6CC341C8@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The double `for' in the comment in line 694 is repeated. Remove one
-of them from the comment.
+On Thu 09 Dec 02:25 CST 2021, Stephen Boyd wrote:
 
-Signed-off-by: Jason Wang <wangborong@cdjrlc.com>
----
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Quoting Vinod Koul (2021-12-07 03:40:03)
+> > diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
+> > new file mode 100644
+> > index 000000000000..82ac419718d7
+> > --- /dev/null
+> > +++ b/drivers/clk/qcom/gcc-sm8450.c
+> > @@ -0,0 +1,3303 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> > + * Copyright (c) 2021, Linaro Limited
+> > + */
+> > +
+> > +#include <linux/module.h>
+> > +#include <linux/of_device.h>
+> > +#include <linux/regmap.h>
+> > +
+> > +#include <dt-bindings/clock/qcom,gcc-sm8450.h>
+> > +
+> > +#include "clk-alpha-pll.h"
+> > +#include "clk-branch.h"
+> > +#include "clk-rcg.h"
+> > +#include "clk-regmap.h"
+> > +#include "clk-regmap-divider.h"
+> > +#include "clk-regmap-mux.h"
+> > +#include "gdsc.h"
+> > +#include "reset.h"
+> > +
+> > +enum {
+> > +       P_BI_TCXO,
+> > +       P_GCC_GPLL0_OUT_EVEN,
+> > +       P_GCC_GPLL0_OUT_MAIN,
+> > +       P_GCC_GPLL4_OUT_MAIN,
+> > +       P_GCC_GPLL9_OUT_MAIN,
+> > +       P_PCIE_0_PIPE_CLK,
+> > +       P_PCIE_1_PHY_AUX_CLK,
+> > +       P_PCIE_1_PIPE_CLK,
+> > +       P_SLEEP_CLK,
+> > +       P_UFS_PHY_RX_SYMBOL_0_CLK,
+> > +       P_UFS_PHY_RX_SYMBOL_1_CLK,
+> > +       P_UFS_PHY_TX_SYMBOL_0_CLK,
+> > +       P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK,
+> > +};
+> > +
+> > +static struct clk_alpha_pll gcc_gpll0 = {
+> > +       .offset = 0x0,
+> > +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
+> > +       .clkr = {
+> > +               .enable_reg = 0x62018,
+> > +               .enable_mask = BIT(0),
+> > +               .hw.init = &(struct clk_init_data){
+> > +                       .name = "gcc_gpll0",
+> > +                       .parent_data = &(const struct clk_parent_data){
+> > +                               .fw_name = "bi_tcxo",
+> 
+> Maybe you want to drop these strings and use the dt index directly? That
+> may actually be faster because we don't do as many string comparisons
+> and the code may be smaller if we don't have to store bi_tcxo. I suppose
+> to make it more readable we could have #defines for each DT index like
+> 
+>  #define DT_BI_TCXO	0
+>  #define DT_SLEEP_CLK	1
+> 
+> Blaze a new trail!
+> 
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 3a12a482f6b2..01c2f50cb97e 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -691,7 +691,7 @@ static int find_slots(struct tcs_group *tcs, const struct tcs_request *msg,
-  * @drv: The controller.
-  * @msg: The data to be written to the controller.
-  *
-- * This should only be called for for sleep/wake state, never active-only
-+ * This should only be called for sleep/wake state, never active-only
-  * state.
-  *
-  * The caller must ensure that no other RPMH actions are happening and the
--- 
-2.34.1
+I like the idea, and iiuc it's just a matter of replacing .fw_name with
+.index?
 
+I am however worried that people will get the order wrong as they are
+hacking on their dts/drivers, because (at least in my view) the order of
+clocks & clock-names has been seen as "a dt binding requirement" up
+until such change. But if we replace the names with indices such enum
+would have to be kept in sync with the DT binding and there's no way to
+validate it.
 
+If we do this we should force the driver and dts-writers to rely on the
+binding document by omitting clock-names from the binding (and hence
+dts). Otherwise people will (I will) assume that the clock-names are
+still what matters...
+
+Regards,
+Bjorn
+
+> > +                       },
+> > +                       .num_parents = 1,
+> > +                       .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
+> > +               },
+> > +       },
+> > +};
