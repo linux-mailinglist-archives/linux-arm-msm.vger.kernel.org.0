@@ -2,163 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0CA047154E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 19:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B7504716C4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Dec 2021 22:35:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbhLKSN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Dec 2021 13:13:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231680AbhLKSNY (ORCPT
+        id S230345AbhLKVff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Dec 2021 16:35:35 -0500
+Received: from relay03.th.seeweb.it ([5.144.164.164]:47129 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230356AbhLKVfe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Dec 2021 13:13:24 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77358C061714
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Dec 2021 10:13:24 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id bk14so17637280oib.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Dec 2021 10:13:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZKuXDdMqteEEKXb+96og2uMkZKlBM9xGB/3xrHMNNJ4=;
-        b=aWs1p9AyHBbvhMn//ieXmew23uafLMJkWDAEFpKLr/y3EDFmf/hAW9aqurfWekiYJa
-         5Y1mrm8+8O1+DctJZZ2x203nP/1PwLA1IforTxfWsg3iai7cKVIsegSiJtT77NzfsMxN
-         i3OAM1FhXsDcRi3Rl7pQZccNNGGmSlpGrh3CYXLV2Ka1U4baeL3O5R54nGYFWtIaq5Cq
-         IguHuhJ2jT5eEkAx5asn/T8vP7onjdwjd+qEmmL8QPvjHD6nlYJSopu5rLo2RVp7/kEZ
-         lZ6fMoyk0ht++uIEsgPGXNbCGBJAHDdAhzgeDYkqtfz7WC9AEbkZvfrZHVXfDsofSoF6
-         lMnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZKuXDdMqteEEKXb+96og2uMkZKlBM9xGB/3xrHMNNJ4=;
-        b=3tetd5y/qLaxX3dTDOC6TodZv8VPuCBs4UdtvgbURmfBUiClmvHLILTG2nLD+rbpN4
-         /gSA00hdPsPT+Nku9hv4HCFpspjn3cI9hQsOaRl1SfJ48KzBRNP3smAm8mNGr1tDAWaB
-         Bqy1TBciLGgkP9bsKZxB5hZilMKnLs7cv17HOH1WeMx+LpIs7fpNw8miA8uKS91XYRE9
-         7vfRbKosYQkL3pFOGKCWhVT8V9M6PAoSXy5Vi10dZBSPMpuQlqe7tRTvCP9aYWF8BTxh
-         XY7rYYtXLu3Qq9Jm1KFcO7TMA/QnejRxBrDQkummVt/PfrweQksPFP3VgDE+zqa1Q0ce
-         2X7A==
-X-Gm-Message-State: AOAM532uQpDp0MRR3cRqI6oGsafEfAcZCl1deGPWe+XNLMnaTmTdu7WB
-        97v6BgkQa3CfvFuURyEA6VLpUQ==
-X-Google-Smtp-Source: ABdhPJwJgs25lTgbpqlRe9kzvrGm41yKRcwXPaPnmvLa062O2KlX0HXEsj/sNKm6DJR4tJAdo1WZPA==
-X-Received: by 2002:a05:6808:1a2a:: with SMTP id bk42mr19079854oib.118.1639246402724;
-        Sat, 11 Dec 2021 10:13:22 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id y12sm1641771oiv.49.2021.12.11.10.13.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Dec 2021 10:13:22 -0800 (PST)
-Date:   Sat, 11 Dec 2021 12:13:17 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
-Message-ID: <YbTqPfs7026l6LFE@builder.lan>
-References: <20211207114003.100693-1-vkoul@kernel.org>
- <20211207114003.100693-3-vkoul@kernel.org>
- <20211209082537.1AF6CC341C8@smtp.kernel.org>
+        Sat, 11 Dec 2021 16:35:34 -0500
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1BA26202F2;
+        Sat, 11 Dec 2021 22:35:30 +0100 (CET)
+Date:   Sat, 11 Dec 2021 22:35:28 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, abhinavk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org
+Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Fix timeout issues on command mode
+ panels
+Message-ID: <20211211213528.uroqfdksvokspbxf@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, robdclark@gmail.com,
+        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, paul.bouchara@somainline.org
+References: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
+ <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
+ <b325fc8d-e06b-36de-b40a-b5ffbcebb1c5@linaro.org>
+ <94bedea3-0e5f-5ae8-79d1-ceb17ccdea23@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211209082537.1AF6CC341C8@smtp.kernel.org>
+In-Reply-To: <94bedea3-0e5f-5ae8-79d1-ceb17ccdea23@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Dec 02:25 CST 2021, Stephen Boyd wrote:
-
-> Quoting Vinod Koul (2021-12-07 03:40:03)
-> > diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8450.c
-> > new file mode 100644
-> > index 000000000000..82ac419718d7
-> > --- /dev/null
-> > +++ b/drivers/clk/qcom/gcc-sm8450.c
-> > @@ -0,0 +1,3303 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> > + * Copyright (c) 2021, Linaro Limited
-> > + */
-> > +
-> > +#include <linux/module.h>
-> > +#include <linux/of_device.h>
-> > +#include <linux/regmap.h>
-> > +
-> > +#include <dt-bindings/clock/qcom,gcc-sm8450.h>
-> > +
-> > +#include "clk-alpha-pll.h"
-> > +#include "clk-branch.h"
-> > +#include "clk-rcg.h"
-> > +#include "clk-regmap.h"
-> > +#include "clk-regmap-divider.h"
-> > +#include "clk-regmap-mux.h"
-> > +#include "gdsc.h"
-> > +#include "reset.h"
-> > +
-> > +enum {
-> > +       P_BI_TCXO,
-> > +       P_GCC_GPLL0_OUT_EVEN,
-> > +       P_GCC_GPLL0_OUT_MAIN,
-> > +       P_GCC_GPLL4_OUT_MAIN,
-> > +       P_GCC_GPLL9_OUT_MAIN,
-> > +       P_PCIE_0_PIPE_CLK,
-> > +       P_PCIE_1_PHY_AUX_CLK,
-> > +       P_PCIE_1_PIPE_CLK,
-> > +       P_SLEEP_CLK,
-> > +       P_UFS_PHY_RX_SYMBOL_0_CLK,
-> > +       P_UFS_PHY_RX_SYMBOL_1_CLK,
-> > +       P_UFS_PHY_TX_SYMBOL_0_CLK,
-> > +       P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK,
-> > +};
-> > +
-> > +static struct clk_alpha_pll gcc_gpll0 = {
-> > +       .offset = 0x0,
-> > +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-> > +       .clkr = {
-> > +               .enable_reg = 0x62018,
-> > +               .enable_mask = BIT(0),
-> > +               .hw.init = &(struct clk_init_data){
-> > +                       .name = "gcc_gpll0",
-> > +                       .parent_data = &(const struct clk_parent_data){
-> > +                               .fw_name = "bi_tcxo",
+On 2021-12-09 18:02:40, AngeloGioacchino Del Regno wrote:
+> Il 02/10/21 00:33, Dmitry Baryshkov ha scritto:
+> > On 11/09/2021 19:39, AngeloGioacchino Del Regno wrote:
+> >> [..]
+> > I've compared this with the MDP5 driver, where we always wait for PP_DONE 
+> > interrupt. Would it be enough to always wait for it (= always call 
+> > dpu_encoder_phys_cmd_wait_for_tx_complete())?
+> > 
 > 
-> Maybe you want to drop these strings and use the dt index directly? That
-> may actually be faster because we don't do as many string comparisons
-> and the code may be smaller if we don't have to store bi_tcxo. I suppose
-> to make it more readable we could have #defines for each DT index like
-> 
->  #define DT_BI_TCXO	0
->  #define DT_SLEEP_CLK	1
-> 
-> Blaze a new trail!
-> 
+> Jokes apart, yes it would make sense to do that, it's something that works
+> at least... but we should verify that such a thing doesn't break new platforms
+> (like sm8150 and newer).
 
-I like the idea, and iiuc it's just a matter of replacing .fw_name with
-.index?
+On sm6125 (keeping in mind that we're on llvmpipe, will bring up the GPU
+later) none of this hurts the display:
 
-I am however worried that people will get the order wrong as they are
-hacking on their dts/drivers, because (at least in my view) the order of
-clocks & clock-names has been seen as "a dt binding requirement" up
-until such change. But if we replace the names with indices such enum
-would have to be kept in sync with the DT binding and there's no way to
-validate it.
+- Without this patch, so only checking for wait_for_ctl_start;
+- With this patch, checking for idle if it was already started;
+- With this patch altered to only ever call wait_for_tx_complete (wait
+  for idle), in place of wait_for_ctl_start.
 
-If we do this we should force the driver and dts-writers to rely on the
-binding document by omitting clock-names from the binding (and hence
-dts). Otherwise people will (I will) assume that the clock-names are
-still what matters...
+Working in the sense that glxgears, which actually reports a framerate
+of approx 170 despite being on llvmpipe on an SoC that is still in
+snail-mode, seems to update (commit) the panel smoothly on every
+occasion.
 
-Regards,
-Bjorn
+On this note, does it perhaps make more sense to call the "internal"
+_dpu_encoder_phys_cmd_wait_for_idle function directly, instead of going
+through the "public" dpu_encoder_phys_cmd_wait_for_tx_complete which
+seems solely intended to handle the wait_for_tx_complete callback?
 
-> > +                       },
-> > +                       .num_parents = 1,
-> > +                       .ops = &clk_alpha_pll_fixed_lucid_evo_ops,
-> > +               },
-> > +       },
-> > +};
+- Marijn
