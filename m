@@ -2,157 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C4BD471E14
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Dec 2021 22:35:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29E97471ECA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 00:28:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229624AbhLLVfN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Dec 2021 16:35:13 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:43676 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbhLLVfM (ORCPT
+        id S229790AbhLLX2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Dec 2021 18:28:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32790 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229794AbhLLX2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Dec 2021 16:35:12 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 21EA0CE0DAF;
-        Sun, 12 Dec 2021 21:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1E4C341CF;
-        Sun, 12 Dec 2021 21:35:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639344909;
-        bh=R64tI2obkn7D7ySHmCBqe8ERpEC1vgc5+gMcn2gXCyQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=VCStpCbdtQLeBBXpPGGNddTVoIseGMsPCb5lmBU211PHB7CrkORpHBekoZXCatwc3
-         2UHNMofHvhdwljSU/+n/NMLxG6fxpCoTTlcqNVan2hw4e6KlbJye4BBOEbF51hg0QC
-         fsu8hCqsIo8tQAwBpstPQZ2ncdiedETu53QQ0kCtehQvB+5AhBPeS5iZwpiu2dzBI7
-         BiDpijsVj+jCtqB7z2OFDCUzoZh1hSZnA+4Q9H2g40dII1U4t8oTDjVqX3cy64cfKf
-         SUR1zQ5oSxW4Ex9Wa26gtS6TRewE5d6WY22dtfCP9C15YOZHdDYhaxIBdSjPQI/wft
-         YHMU9T/XDXGvQ==
-Received: by mail-ed1-f47.google.com with SMTP id o20so46662640eds.10;
-        Sun, 12 Dec 2021 13:35:09 -0800 (PST)
-X-Gm-Message-State: AOAM531Qwfb0f3eyEQSsmYfMu1ypnukMGVRw/vf5j8TBoBJQbLWmH5a6
-        43FfHOmBzY4bRfBPKkhQSFbMmzl240yAY4k+fg==
-X-Google-Smtp-Source: ABdhPJy8jBV8Z7Zm670HYzJ6GiPP9GdoIEKXiQCXJy+EoSSoHt9vu9UNSWi++JgvLz6Vozp0wbphEs/18l5vDT5cOMg=
-X-Received: by 2002:a17:906:5e14:: with SMTP id n20mr39429708eju.466.1639344907565;
- Sun, 12 Dec 2021 13:35:07 -0800 (PST)
+        Sun, 12 Dec 2021 18:28:38 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE42AC0613F8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 15:28:37 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id r26so21080771oiw.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 15:28:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=vh/wbUgkfdUKYGNf++vDHtfUUGTEz/aDqpk4svRd0AU=;
+        b=eFCYdoOnvicz305xpH32Kg8EG8w2nlSE/gKoZN+QDT0H8gjFjq9u+UK7t6hsKx9edk
+         vycsb162kCx//Be7+ctj2oHH4iauI1LBvJQhhDPhvIYRy0SN7EsFY7NBZBKVtFGP0FwZ
+         onqFNZlUwxK+y4f2a/dpfmjZJYOUgNVFC4EArWVnCp4TR5jT2yitkffWtafNPDXgSrg+
+         bu1bjOzNBu2mdMSGt+u7HPKjQGtC4PR2livr67HoE3RUrdGTx4GmW1Bk5t4M7f5MQf43
+         FlPvugwqwS0nsPToCBWxkbGHQahSkjIUBxStx3nZtbc/iFKRHG2yve04vvANPQzzG+Qa
+         Vmsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=vh/wbUgkfdUKYGNf++vDHtfUUGTEz/aDqpk4svRd0AU=;
+        b=zeXKmyhQfSq+sX1QoQZBrcnChFqdTTNU50O5KCYUc5Ffz9/u4JBwh2uUSR6dh0uZnQ
+         tyj5SDsAc9DQOPxXoiuNtAj1s1TOlj386acCWYZ6EEbJxtXsSWKkJv+ZNmVY20dhp8tX
+         otGfIGSITb/XQ8k1QOpA9cCDDNg2cCSiPGMj/oUiPO4/lfA1NlloPq9V3e7o2vR1cGv3
+         rYPLxqXBsO6PI5ADY1oZ/0aFHgi1Dpng7Y7PdqNOrfSs9U5BqBzN9l3/AfLAmc97rf/4
+         8VDP+M1aTguK4UvidXRWLLSnzuy7hdYot0dakIw7O9TAzHM5IheLQo7Xx0Q8EMnX5nxR
+         ZcQg==
+X-Gm-Message-State: AOAM532DxmHmZecq6/i7+1f/f0nGQvhm5MBTmpCzMQDDQeysFFb+ChFg
+        ttlr/1xPzkLK9spOhu44g15LDg==
+X-Google-Smtp-Source: ABdhPJynYL4sOmYh81k1oyCXWiDgoSrW3Neq8jhKGC61PeMkyTcbrmEIWYxN8k2HFvsYnGzbWYIlbg==
+X-Received: by 2002:aca:eb53:: with SMTP id j80mr23670708oih.85.1639351717273;
+        Sun, 12 Dec 2021 15:28:37 -0800 (PST)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id c8sm1933033otk.40.2021.12.12.15.28.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Dec 2021 15:28:36 -0800 (PST)
+Message-ID: <89dfda08-a7cf-0acb-4b3d-6c57577a548e@kali.org>
+Date:   Sun, 12 Dec 2021 17:28:30 -0600
 MIME-Version: 1.0
-References: <20211208171442.1327689-1-dmitry.baryshkov@linaro.org> <20211208171442.1327689-9-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211208171442.1327689-9-dmitry.baryshkov@linaro.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Sun, 12 Dec 2021 15:34:55 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLiRPy7App3ooWKOeb87DXN2HpirO0-vEoAOfFx-4FbDw@mail.gmail.com>
-Message-ID: <CAL_JsqLiRPy7App3ooWKOeb87DXN2HpirO0-vEoAOfFx-4FbDw@mail.gmail.com>
-Subject: Re: [PATCH v2 08/10] arm64: dts: qcom: sm8450: add PCIe0 RC device
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        PCI <linux-pci@vger.kernel.org>, devicetree@vger.kernel.org,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Amit Nischal <anischal@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 8, 2021 at 11:15 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+
+On 12/2/21 9:56 PM, Bjorn Andersson wrote:
+> As GDSCs are turned on and off some associated clocks are momentarily
+> enabled for house keeping purposes. Failure to enable these clocks seems
+> to have been silently ignored in the past, but starting in SM8350 this
+> failure will prevent the GDSC to turn on.
 >
-> Add device tree node for the first PCIe host found on the Qualcomm
-> SM8450 platform.
+> At least on SM8350 this operation will enable the RCG per the
+> configuration in CFG_REG. This means that the current model where the
+> current configuration is written back to CF_REG immediately after
+> parking the RCG doesn't work.
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Instead, keep track of the currently requested rate of the clock and
+> upon enabling the clock reapply the configuration per the saved rate.
+>
+> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 101 +++++++++++++++++++++++++++
->  1 file changed, 101 insertions(+)
+>   drivers/clk/qcom/clk-rcg.h  |  2 ++
+>   drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
+>   2 files changed, 19 insertions(+), 15 deletions(-)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index a047d8a22897..09087a34a007 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -627,6 +627,84 @@ i2c14: i2c@a98000 {
->                                 #size-cells = <0>;
->                                 status = "disabled";
->                         };
-> +               ];
+> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> index 99efcc7f8d88..6939f4e62768 100644
+> --- a/drivers/clk/qcom/clk-rcg.h
+> +++ b/drivers/clk/qcom/clk-rcg.h
+> @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
+>    * @freq_tbl: frequency table
+>    * @clkr: regmap clock handle
+>    * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
+> + * @current_rate: cached rate for parked RCGs
+>    */
+>   struct clk_rcg2 {
+>   	u32			cmd_rcgr;
+> @@ -149,6 +150,7 @@ struct clk_rcg2 {
+>   	const struct freq_tbl	*freq_tbl;
+>   	struct clk_regmap	clkr;
+>   	u8			cfg_off;
+> +	unsigned long		current_rate;
+>   };
+>   
+>   #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index e1b1b426fae4..b574b38dcbd5 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -167,6 +167,7 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+>   {
+>   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>   	u32 cfg, hid_div, m = 0, n = 0, mode = 0, mask;
+> +	unsigned long rate;
+>   
+>   	regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
+>   
+> @@ -186,7 +187,11 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+>   	hid_div = cfg >> CFG_SRC_DIV_SHIFT;
+>   	hid_div &= mask;
+>   
+> -	return calc_rate(parent_rate, m, n, mode, hid_div);
+> +	rate = calc_rate(parent_rate, m, n, mode, hid_div);
+> +	if (!rcg->current_rate)
+> +		rcg->current_rate = rate;
 > +
-> +               pcie0: pci@1c00000 {
-> +                       compatible = "qcom,pcie-sm8450";
-> +                       reg = <0 0x01c00000 0 0x3000>,
-> +                             <0 0x60000000 0 0xf1d>,
-> +                             <0 0x60000f20 0 0xa8>,
-> +                             <0 0x60001000 0 0x1000>,
-> +                             <0 0x60100000 0 0x100000>;
-> +                       reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +                       device_type = "pci";
-> +                       linux,pci-domain = <0>;
-> +                       bus-range = <0x00 0xff>;
-> +                       num-lanes = <1>;
+> +	return rate;
+>   }
+>   
+>   static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
+> @@ -968,12 +973,14 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
+>   	if (!f)
+>   		return -EINVAL;
+>   
+> +	rcg->current_rate = rate;
 > +
-> +                       #address-cells = <3>;
-> +                       #size-cells = <2>;
+>   	/*
+> -	 * In case clock is disabled, update the CFG, M, N and D registers
+> -	 * and don't hit the update bit of CMD register.
+> +	 * In the case that the shared RCG is parked, current_rate will be
+> +	 * applied as the clock is unparked again, so just return here.
+>   	 */
+>   	if (!__clk_is_enabled(hw->clk))
+> -		return __clk_rcg2_configure(rcg, f);
+> +		return 0;
+>   
+>   	return clk_rcg2_shared_force_enable_clear(hw, f);
+>   }
+> @@ -987,8 +994,13 @@ static int clk_rcg2_shared_set_rate_and_parent(struct clk_hw *hw,
+>   static int clk_rcg2_shared_enable(struct clk_hw *hw)
+>   {
+>   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> +	const struct freq_tbl *f = NULL;
+>   	int ret;
+>   
+> +	f = qcom_find_freq(rcg->freq_tbl, rcg->current_rate);
+> +	if (!f)
+> +		return -EINVAL;
 > +
-> +                       ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
-> +                                <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-> +
-> +                       interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupt-names = "msi";
-> +                       #interrupt-cells = <1>;
-> +                       interrupt-map-mask = <0 0 0 0x7>;
-> +                       interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-> +                                       <0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-> +                                       <0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-> +                                       <0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-> +
-> +                       clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
-> +                                <&gcc GCC_PCIE_0_PIPE_CLK_SRC>,
-> +                                <&pcie0_lane>,
-> +                                <&rpmhcc RPMH_CXO_CLK>,
-> +                                <&gcc GCC_PCIE_0_AUX_CLK>,
-> +                                <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-> +                                <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-> +                                <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-> +                                <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
-> +                                <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
-> +                                <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
-> +                                <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
-> +                       clock-names = "pipe",
-> +                                     "pipe_mux",
-> +                                     "phy_pipe",
-> +                                     "ref",
-> +                                     "aux",
-> +                                     "cfg",
-> +                                     "bus_master",
-> +                                     "bus_slave",
-> +                                     "slave_q2a",
-> +                                     "ddrss_sf_tbu",
-> +                                     "aggre0",
-> +                                     "aggre1";
-> +
-> +                       iommus = <&apps_smmu 0x1c00 0x7f>;
-> +                       iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
-> +                                   <0x100 &apps_smmu 0x1c01 0x1>;
-> +
-> +                       resets = <&gcc GCC_PCIE_0_BCR>;
-> +                       reset-names = "pci";
-> +
-> +                       power-domains = <&gcc PCIE_0_GDSC>;
-> +                       power-domain-names = "gdsc";
-> +
-> +                       phys = <&pcie0_lane>;
-> +                       phy-names = "pciephy";
-> +
-> +                       perst-gpio = <&tlmm 94 GPIO_ACTIVE_LOW>;
-> +                       enable-gpio = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+>   	/*
+>   	 * Set the update bit because required configuration has already
+>   	 * been written in clk_rcg2_shared_set_rate()
+> @@ -997,7 +1009,7 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
+>   	if (ret)
+>   		return ret;
+>   
+> -	ret = update_config(rcg);
+> +	ret = clk_rcg2_configure(rcg, f);
+>   	if (ret)
+>   		return ret;
+>   
+> @@ -1007,13 +1019,6 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
+>   static void clk_rcg2_shared_disable(struct clk_hw *hw)
+>   {
+>   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> -	u32 cfg;
+> -
+> -	/*
+> -	 * Store current configuration as switching to safe source would clear
+> -	 * the SRC and DIV of CFG register
+> -	 */
+> -	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
+>   
+>   	/*
+>   	 * Park the RCG at a safe configuration - sourced off of safe source.
+> @@ -1031,9 +1036,6 @@ static void clk_rcg2_shared_disable(struct clk_hw *hw)
+>   	update_config(rcg);
+>   
+>   	clk_rcg2_clear_force_enable(hw);
+> -
+> -	/* Write back the stored configuration corresponding to current rate */
+> -	regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
+>   }
+>   
+>   const struct clk_ops clk_rcg2_shared_ops = {
 
--gpios is the preferred form.
+Revisiting this...
 
-And 'enable-gpios' is not documented.
+With Dmitry's patches applied ( 
+https://lore.kernel.org/linux-arm-msm/20211208022210.1300773-1-dmitry.baryshkov@linaro.org/ 
+) as well as these, and clk_ignore_unused, I get both
 
-Rob
+[ 4.767487] ------------[ cut here ]------------ [ 4.767495] 
+disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration.
+
+and
+
+
+[ 6.449518] ------------[ cut here ]------------ [ 6.449525] 
+video_cc_venus_clk_src: rcg didn't update its configuration.
+
+This includes after modifying Dmitry's patches to park the above 2 clocks.
+
+Removing "clk_ignore_unused" from the kernel command line, while keeping 
+Dmitry's patchset as well as this patch,
+
+results in the disp_cc_mdss_pclk0_clk_src going away, but the 
+video_cc_venus_clk_src still shows up.
+
+Applying Dmitry's patches, removing this one, and removing 
+"clk_ignore_unused" from command line arguments ends up
+
+with none of these rcg didn't update its configuration messages. As can 
+be seen in http://paste.debian.net/1222931
+
+-- steev
+
