@@ -2,159 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E881471A0A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Dec 2021 13:35:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F929471A47
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Dec 2021 14:03:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230373AbhLLMfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Dec 2021 07:35:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45076 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbhLLMfm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Dec 2021 07:35:42 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9678EC061714;
-        Sun, 12 Dec 2021 04:35:41 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id b40so26117832lfv.10;
-        Sun, 12 Dec 2021 04:35:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pQx1BqhBorBJ+//DcHPTf2i5wSW2AXCJx+6ojtYTS24=;
-        b=c4m7usWougVAshzHmUAaPl6c0Y9WlruaqYs5cG7sd/HjAn9+p3bJd7tLAlteMJbopX
-         K7ar3NjAWgcW4+diHxVN0yEb+afTw6p18WmP9DwoRUorCzXo0aIhxhXJmMMGSBoPeFop
-         TK0fwne6yWd6yG2i+/0Vzdhfe9el1U6FiE57Msy3CcMhjN18tg1dfezHNLeE0I770w2d
-         lv2OSVrbC/xmea8ySNNZn0TqC/3Gv1U3UfKyhigXaBi05zbGTPoLkYViqZroomkzDrh8
-         2JeHZsIy+zynYi0kVglWyTsC9HbE0sODBvczsvlyUjSFeY0cjy9L9c+OUTb23uoSaAE6
-         uUhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pQx1BqhBorBJ+//DcHPTf2i5wSW2AXCJx+6ojtYTS24=;
-        b=RUYb4jdBBOWrbAb1QJWdwglxiU+zoOPrIbLR72kMlH4PQ7la3fumz9A/4f+5VrlyJp
-         OItJYYrFMiG+RqbSyYb0nxEexLVaADYdluaUc2XDHf8s1suQ7kf4w1rqJHQX2HFn4ULN
-         nzH4ohCSXj+3dyR+EfQd+S7+GMOO0VJk0S5RwQtua/FykY0HISH9G9ktB+FExXuLUV4l
-         4V8hHjRYpHWDLF2knboQrU1YMPpn5AC2T4WDX1CAEngcx8q8HlLWUlvosS+OgsrbVtGA
-         7TqvzxycJN0T+UrAYShlSnXsd0K8bptXdBLtVB9KwjOlHgxJ8FRXxJuXAIqz3vcoSzBX
-         8dMw==
-X-Gm-Message-State: AOAM531YNxvoy0bmp7ilG9VThtz6mKbhx/3TAb9TxCHiUblvC1rs0szT
-        WIQGuKFsAWBfUb8aW49YyZiDu5GRtp8=
-X-Google-Smtp-Source: ABdhPJz3q7hvbeME5MhYOX8Jg8ui+2KSpcLZPl5dXaG7zOY9lghqPn4lTTSpqlsyQF61GeY8r+Kj2w==
-X-Received: by 2002:a05:6512:3f04:: with SMTP id y4mr25045765lfa.227.1639312539536;
-        Sun, 12 Dec 2021 04:35:39 -0800 (PST)
-Received: from localhost.localdomain (h-155-4-221-129.NA.cust.bahnhof.se. [155.4.221.129])
-        by smtp.gmail.com with ESMTPSA id o15sm1024230lfk.175.2021.12.12.04.35.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 04:35:39 -0800 (PST)
-From:   Rikard Falkeborn <rikard.falkeborn@gmail.com>
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        id S230489AbhLLNDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Dec 2021 08:03:44 -0500
+Received: from ixit.cz ([94.230.151.217]:43348 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229739AbhLLNDo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 12 Dec 2021 08:03:44 -0500
+Received: from [127.0.0.1] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id E3EE224AF0;
+        Sun, 12 Dec 2021 14:03:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1639314222;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=LKBncOiJrAHylK3jJuEOyh8VWLh2/06IDh/2G+b3Wfs=;
+        b=MJHP/g7q9tdOQEMWaPGFSmG6dQik3NCZKybeE1k3hiD8mX3PTwBxnCsKS2fgvxXbcssenu
+        C7SdAtf3HXzHjn0hxcBrNJjtR4hJMAamfEbIr77yaEcqKsf43xwl5n248roJEPfFKpNILa
+        PT61dew0EOqa5d5KOu1TrbQqsOaJyv0=
+Date:   Sun, 12 Dec 2021 13:03:40 +0000
+From:   David Heidelberg <david@ixit.cz>
+To:     Rob Herring <robh@kernel.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Subject: [PATCH] media: venus: hfi: Constify {dec,enc}_bufsize_ops
-Date:   Sun, 12 Dec 2021 13:35:34 +0100
-Message-Id: <20211212123534.4473-1-rikard.falkeborn@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] dt-bindings: misc: fastrpc convert bindings to yaml
+In-Reply-To: <YbPIM9OXyuU5hfHY@robh.at.kernel.org>
+References: <20211208101508.24582-1-david@ixit.cz> <YbPIM9OXyuU5hfHY@robh.at.kernel.org>
+Message-ID: <7A333484-F1D4-4D0E-97D5-6A40DEC44BFE@ixit.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The dec_bufsize_ops and enc_bufsize_ops are never modified. Make them
-const to allow the compiler to put them in read-only memory.
+Well, since this is a subnode, some nodes are not converted yet and at leas=
+t know it'll bash about iommus, qcom,glink-channels and qcom,smd-channels=
+=2E I can change it to false, bit it'll print these additional warnings, un=
+til other binding don't get converted=2E
 
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
----
- .../platform/qcom/venus/hfi_plat_bufs_v6.c    | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+David
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-index ea25c451222b..e42546d7f3dc 100644
---- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-@@ -1063,51 +1063,51 @@ struct enc_bufsize_ops {
- 	u32 (*persist)(void);
- };
- 
--static struct dec_bufsize_ops dec_h264_ops = {
-+static const struct dec_bufsize_ops dec_h264_ops = {
- 	.scratch = h264d_scratch_size,
- 	.scratch1 = h264d_scratch1_size,
- 	.persist1 = h264d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_h265_ops = {
-+static const struct dec_bufsize_ops dec_h265_ops = {
- 	.scratch = h265d_scratch_size,
- 	.scratch1 = h265d_scratch1_size,
- 	.persist1 = h265d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_vp8_ops = {
-+static const struct dec_bufsize_ops dec_vp8_ops = {
- 	.scratch = vpxd_scratch_size,
- 	.scratch1 = vp8d_scratch1_size,
- 	.persist1 = vp8d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_vp9_ops = {
-+static const struct dec_bufsize_ops dec_vp9_ops = {
- 	.scratch = vpxd_scratch_size,
- 	.scratch1 = vp9d_scratch1_size,
- 	.persist1 = vp9d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_mpeg2_ops = {
-+static const struct dec_bufsize_ops dec_mpeg2_ops = {
- 	.scratch = mpeg2d_scratch_size,
- 	.scratch1 = mpeg2d_scratch1_size,
- 	.persist1 = mpeg2d_persist1_size,
- };
- 
--static struct enc_bufsize_ops enc_h264_ops = {
-+static const struct enc_bufsize_ops enc_h264_ops = {
- 	.scratch = h264e_scratch_size,
- 	.scratch1 = h264e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
- 	.persist = enc_persist_size,
- };
- 
--static struct enc_bufsize_ops enc_h265_ops = {
-+static const struct enc_bufsize_ops enc_h265_ops = {
- 	.scratch = h265e_scratch_size,
- 	.scratch1 = h265e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
- 	.persist = enc_persist_size,
- };
- 
--static struct enc_bufsize_ops enc_vp8_ops = {
-+static const struct enc_bufsize_ops enc_vp8_ops = {
- 	.scratch = vp8e_scratch_size,
- 	.scratch1 = vp8e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
-@@ -1185,7 +1185,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
- 	enum hfi_version version = params->version;
- 	u32 codec = params->codec;
- 	u32 width = params->width, height = params->height, out_min_count;
--	struct dec_bufsize_ops *dec_ops;
-+	const struct dec_bufsize_ops *dec_ops;
- 	bool is_secondary_output = params->dec.is_secondary_output;
- 	bool is_interlaced = params->dec.is_interlaced;
- 	u32 max_mbs_per_frame = params->dec.max_mbs_per_frame;
-@@ -1255,7 +1255,7 @@ static int bufreq_enc(struct hfi_plat_buffers_params *params, u32 buftype,
- 		      struct hfi_buffer_requirements *bufreq)
- {
- 	enum hfi_version version = params->version;
--	struct enc_bufsize_ops *enc_ops;
-+	const struct enc_bufsize_ops *enc_ops;
- 	u32 width = params->width;
- 	u32 height = params->height;
- 	bool is_tenbit = params->enc.is_tenbit;
--- 
-2.34.1
+
+> +    required:
+> +      - compatible
+> +      - reg
+> +
+> +    additionalProperties: true
+
+Why? What other properties are present=2E
+
+> +
+> +required:
+> +  - compatible
+> +  - label
+> +  - '#address-cells'
+> +  - '#size-cells'
+> +
+> +additionalProperties: true
+
+Why? What other properties are present=2E This is generally never correct=
+=2E
+
+Rob
 
