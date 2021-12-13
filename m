@@ -2,217 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B07534730A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:34:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6699D4730C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:45:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235648AbhLMPeq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 10:34:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233095AbhLMPeq (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 10:34:46 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F201AC061748
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:34:45 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso17756513otf.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:34:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9UxEcNSwKoN2mFJyfZRLVmjwVvQHZtyiCY9mygjt3b0=;
-        b=hT1cyNUIs/Cld053RUbQRay51RV52B4dNNPvh5M6K0oE9LtogP9309HzTGyNDfD65Z
-         Fm3Y9VnMX7sLl0MytXQHC2w05h/HfkaELfBLJkh2FSfu+BRaxZ2dRpx6eXP33TsOg0gJ
-         pQ7RZXVIDCg7wbvlZZmOWj7bUCVXNLKMCpM1CP/kVaGiytaiK6cYVu/0oEtMc9zLV6kc
-         ZIC/n08WmpDBMBvIP8WLbnBO3RAB0Hd2ktu1pgtpOD2PCRMmqDHYZrWymDpdebEMdK/P
-         yDYQKW9tSwyss7oWRjShhuRgke66Kj6RbH9nXIOkBNeJktjFv8C7kebjvc8zzPejvmEM
-         fQNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9UxEcNSwKoN2mFJyfZRLVmjwVvQHZtyiCY9mygjt3b0=;
-        b=djpiu/B0MY5m3XA2cwNDxsDWXMGx3szPF42puNMM0/JiNtELjjiXmcHBsCwHtPqF1q
-         5tm9aQndZWK+CiuIHNs99L9mfh4lhCQSCupaLmhQcjx1PqbjGrzHE5iZw21HiQG8J2M/
-         Jf2HUIHYzF8dFtO5fgycJ2jOaSliyl1fRg0TVcEX/qUvZgwq2cZO16509UVgAQ2goxok
-         i50Rm9ZNNvxwV0EwXekc1S2xNXJIhQ/1K+piJ60VB4MyOFKwL5JBMgmoddxmym70semK
-         tPQ2pDDOJ79uqxLsxJUItJRF05yXAqYxeIPpy/bxYdQdX2h3MohJDYVJ40aMf1fW5HBV
-         CmOw==
-X-Gm-Message-State: AOAM532oWAjWsl+pNcW+Zptz9f049JopwdogLd2NQ8KO2QQDV9jP5JCN
-        2iz1FAjnfTkLufutYrtqb/ynJQ==
-X-Google-Smtp-Source: ABdhPJx81QSenwwldv/3J3MLPwfG5VTKRajH0fC/WJKcz6OkMHMJkY3dRqn27AaWUvRHqQKD7PX9tw==
-X-Received: by 2002:a05:6830:3185:: with SMTP id p5mr26271701ots.222.1639409685194;
-        Mon, 13 Dec 2021 07:34:45 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a17sm2838627oiw.43.2021.12.13.07.34.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 07:34:44 -0800 (PST)
-Date:   Mon, 13 Dec 2021 07:36:03 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
-        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: add non-secure domain property
- to fastrpc nodes
-Message-ID: <YbdoY9PgvZO7AX1T@ripper>
-References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
- <20211209120626.26373-9-srinivas.kandagatla@linaro.org>
+        id S238567AbhLMPpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 10:45:44 -0500
+Received: from mga07.intel.com ([134.134.136.100]:9316 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231132AbhLMPpo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 10:45:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1639410344; x=1670946344;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=21nKNVcV8KSqzdESBthYUCCZKtWtFQyHDWyeHHzae70=;
+  b=PlLPB4TJAQfDwbFZuwNDCA7uFA9LMFXmZ2QbUbch5Hex20UFGEHGYaMK
+   z4/hVvnd8evUSftdZOafrw0a25FFEXxEVOZxxno8KXK6+rjf49ilvFtke
+   klll0zGNhxP3SCW7LlVHPEmfEf/zxBCOjsWcA8mPwRyadlsqwZd8pg4d2
+   B3Sp5G9OkszuBOLEX5K1C7WuvtyQZJh3SCHlv5xgPFm6itY5wM3Ban6yY
+   lH0j8zXnOwxpdn+IQw97tlNbDS2A0GAZMjig079OtoiiotvDyEuCW2RnE
+   gdBZFYYcTZnjbCiydpkyhTD/1mT3bVkZXMHwMOHPWGz7F10/59cTe6Yz/
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10196"; a="302140086"
+X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
+   d="scan'208";a="302140086"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 07:45:44 -0800
+X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
+   d="scan'208";a="463418510"
+Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 07:45:43 -0800
+Date:   Mon, 13 Dec 2021 07:45:43 -0800
+From:   Ira Weiny <ira.weiny@intel.com>
+To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org
+Subject: Re: [PATCH 1/7] drm/i915: Replace kmap() with kmap_local_page()
+Message-ID: <20211213154543.GM3538886@iweiny-DESK2.sc.intel.com>
+References: <20211210232404.4098157-1-ira.weiny@intel.com>
+ <20211210232404.4098157-2-ira.weiny@intel.com>
+ <Ybc/HwaG2vgbdkQr@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20211209120626.26373-9-srinivas.kandagatla@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Ybc/HwaG2vgbdkQr@intel.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
+On Mon, Dec 13, 2021 at 02:39:59PM +0200, Ville Syrjälä wrote:
+> On Fri, Dec 10, 2021 at 03:23:58PM -0800, ira.weiny@intel.com wrote:
+> > From: Ira Weiny <ira.weiny@intel.com>
+> > 
+> > kmap() is being deprecated and these usages are all local to the thread
+> > so there is no reason kmap_local_page() can't be used.
+> > 
+> > Replace kmap() calls with kmap_local_page().
+> > 
+> > Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+> > ---
+> >  drivers/gpu/drm/i915/gem/i915_gem_shmem.c          | 4 ++--
+> >  drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
+> >  drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c       | 4 ++--
+> >  drivers/gpu/drm/i915/gt/shmem_utils.c              | 4 ++--
+> >  drivers/gpu/drm/i915/i915_gem.c                    | 8 ++++----
+> >  drivers/gpu/drm/i915/i915_gpu_error.c              | 4 ++--
+> >  6 files changed, 16 insertions(+), 16 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> > index d77da59fae04..fa8b820e14aa 100644
+> > --- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> > +++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> > @@ -597,9 +597,9 @@ i915_gem_object_create_shmem_from_data(struct drm_i915_private *dev_priv,
+> >  		if (err < 0)
+> >  			goto fail;
+> >  
+> > -		vaddr = kmap(page);
+> > +		vaddr = kmap_local_page(page);
+> >  		memcpy(vaddr, data, len);
+> > -		kunmap(page);
+> > +		kunmap_local(vaddr);
+> >  
+> >  		err = pagecache_write_end(file, file->f_mapping,
+> >  					  offset, len, len,
+> > diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> > index 6d30cdfa80f3..e59e1725e29d 100644
+> > --- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> > +++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> > @@ -144,7 +144,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
+> >  	intel_gt_flush_ggtt_writes(&to_i915(obj->base.dev)->gt);
+> >  
+> >  	p = i915_gem_object_get_page(obj, offset >> PAGE_SHIFT);
+> > -	cpu = kmap(p) + offset_in_page(offset);
+> > +	cpu = kmap_local_page(p) + offset_in_page(offset);
+> 
+> Does kunmap_local() do some magic to make it work even when you
+> don't pass in the same value you got from kmap_local_page()?
 
-> From: Jeya R <jeyr@codeaurora.org>
-> 
-> FastRPC DSP domain would be set as secure if non-secure dsp property is not
-> added to the fastrpc DT node. Add this property to DT files of msm8916,
-> sdm845, sm8150, sm8250 and sm8350 so that nothing is broken after secure
-> domain patchset.
-> 
-> This patch is purely for backward compatibility reasons.
-> 
-> Signed-off-by: Jeya R <jeyr@codeaurora.org>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
->  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
->  arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
->  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
->  arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
->  5 files changed, 12 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> index c1c42f26b61e..137a479449d4 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-> @@ -1365,6 +1365,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,smd-channels = "fastrpcsmd-apps-dsp";
->  					label = "adsp";
-> +					qcom,non-secure-domain;
+Yes.  It sounds like a patch like this would be nice to clarify?
 
-I was under the impression that the support for loading unsigned fastrpc
-applications was introduced in SM8150 or SM8250, can you confirm that
-this has been possible all along?
+Ira
 
-Regards,
-Bjorn
+diff --git a/include/linux/highmem-internal.h b/include/linux/highmem-internal.h
+index 0a0b2b09b1b8..fb2d3e033c01 100644
+--- a/include/linux/highmem-internal.h
++++ b/include/linux/highmem-internal.h
+@@ -246,6 +246,17 @@ do {                                                               \
+        __kunmap_atomic(__addr);                                \
+ } while (0)
+ 
++/**
++ * kunmap_local - Unmap a page mapped via kmap_local_page().
++ * @__addr: An address within the page mapped
++ *
++ * __addr is often an address returned from kmap_local_page().  However,
++ * this address can be any address within the mapped page.  It does not need to
++ * be the exact address returned from kmap_local_page()
++ *
++ * Unmapping should be done in the reverse order of the mapping.  See
++ * kmap_local_page() for details.
++ */
+ #define kunmap_local(__addr)                                   \
+ do {                                                           \
+        BUILD_BUG_ON(__same_type((__addr), struct page *));     \
 
->  
->  					#address-cells = <1>;
->  					#size-cells = <0>;
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 526087586ba4..4aebfed4ec00 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -838,6 +838,7 @@
->  				compatible = "qcom,fastrpc";
->  				qcom,glink-channels = "fastrpcglink-apps-dsp";
->  				label = "adsp";
-> +				qcom,non-secure-domain;
->  				#address-cells = <1>;
->  				#size-cells = <0>;
->  
-> @@ -888,6 +889,7 @@
->  				compatible = "qcom,fastrpc";
->  				qcom,glink-channels = "fastrpcglink-apps-dsp";
->  				label = "cdsp";
-> +				qcom,non-secure-domain;
->  				#address-cells = <1>;
->  				#size-cells = <0>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 81b4ff2cc4cd..9ac213bb96b7 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -1751,6 +1751,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "sdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -2994,6 +2995,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "cdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -3439,6 +3441,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "adsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index f0d342aa662d..06be221ad5b6 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2265,6 +2265,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "sdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -2330,6 +2331,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "cdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -4100,6 +4102,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "adsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index d134280e2939..80f753cbe91c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -1278,6 +1278,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "sdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -1347,6 +1348,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "cdsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> @@ -1643,6 +1645,7 @@
->  					compatible = "qcom,fastrpc";
->  					qcom,glink-channels = "fastrpcglink-apps-dsp";
->  					label = "adsp";
-> +					qcom,non-secure-domain;
->  					#address-cells = <1>;
->  					#size-cells = <0>;
->  
-> -- 
-> 2.21.0
-> 
