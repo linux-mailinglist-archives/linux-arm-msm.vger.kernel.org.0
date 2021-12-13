@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11AEB4737D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDF9A4737E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:47:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243799AbhLMWpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 17:45:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
+        id S243854AbhLMWrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 17:47:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231303AbhLMWpt (ORCPT
+        with ESMTP id S243846AbhLMWrs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:45:49 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F82CC06173F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:45:49 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id o4so25112437oia.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:45:49 -0800 (PST)
+        Mon, 13 Dec 2021 17:47:48 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53C1C061748
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:47:47 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso19014793otf.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:47:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=4oGFXYmh6Jbw90ZFgNxjbZIzzl0iLtM+OcafP4Vavxg=;
-        b=SCDDmx9l2S444HDT3R6mPqIk37JUT6G/MATUDMNWhJhAOijEK/TShP2dx2iTfwl9Lx
-         FrxR+abiZUQAVcnDLKAmwqk8Y4Uh3OULV+g4wUgbe4SW7trpGGsT+4VfvNEmYOtpEilf
-         nop+CO9uopWFeOr5A+gz4hOKwoREyqqK+01Zvws8PwNeyuXRnV9S9TAXSBbGIl1E7aGG
-         y6phbKTAtu7VSW5VzKCPCuVkWjPsevck9OE+OgB8R4LRE5CeEE2Rrr4od5zuGPbaAFV3
-         1sYHkVzYtuO/8OeQzZUz0WKyd9affKRtCEtVxIVS3xZCcJm3BpGBL76IgW/DZqVhrUpk
-         sVvw==
+        bh=5H0qbzaIjgpKRl661XZSUbngEcJPf590BIus7cp6ncA=;
+        b=R8VoYyyDTSEuy9f0P5FaPR1C53Xu7aozxo+dMc2TKIiQHU8WDK78rkYLFGz2W9PvW7
+         Rc6ms+egFX7SkYxyk7zzCTGkoqVk2nv4iJcBSAVQj1h8PBYGZW8JwRQJdKGgD8Phe932
+         KV+utJuCmcnQ+tcsjSsktrHTtmEtTFAqyiYB9vzPdDOXCru6cQ6mPlh836V1XKUKnDqh
+         SWcROoMM2fPmQt51gazWdN+qK6SYOMXNj+hYfjdhxrdV+6XREu1aVl6wOX68d3Yj2D4L
+         +b1zOkEAWEoX/dF7bR6efzQ6uCVkvOcDlAzh8/KQIUx1KIdaiFUSMNQm3qSSXPga45Nr
+         p1QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=4oGFXYmh6Jbw90ZFgNxjbZIzzl0iLtM+OcafP4Vavxg=;
-        b=uY3YPFNC8t3vFR5cGIIwBTKsEAf6sObEcSi0xoHKXecQa1YkXzb5gJvdzZbyoTP3is
-         H0vhsyfQm/hXXMAE2UGM+fx9jMRYXD+QeGjW5c+E+W+CDZ8leGlD9tGXLpWahfonPbqY
-         eVh3tRJI3gj0gps7aN05WszTiTREeotN3aWcSBBqWvFMFPbkDOr3fZG/qJ05dulvntp1
-         V8Aab3HR0MrueJdTXHjkzpbDd8rjIANCHDRTS1sohONe0S8QxCWHwGvaOhod/l8uTdvL
-         Fzjn5wdqAlYgYoiQcDSm1z38hpWHWULX7tNwMkqsH7jq4zFGx/gK5KNUseJPZe9AJ47f
-         R+kw==
-X-Gm-Message-State: AOAM530YOenRClPhq7Y4m4n2zsIRPqI5peaUDgzSjotS0Q7sCGTUQ8r7
-        +z5TnRA9pIicFp7wOaXAIDjeyg==
-X-Google-Smtp-Source: ABdhPJyyHrUjlJku2arlsBiiTSFRGXNctI86S7Qx4Y5Xbi6fuOvx6TZHmxRTkflT5OmWmBe6kNIalA==
-X-Received: by 2002:aca:ab86:: with SMTP id u128mr1301830oie.41.1639435548463;
-        Mon, 13 Dec 2021 14:45:48 -0800 (PST)
+        bh=5H0qbzaIjgpKRl661XZSUbngEcJPf590BIus7cp6ncA=;
+        b=b5BlXstFzZnJ/3ZUBSd2aiNQux9pGX0Qy5kP1lZHsZ6nnc+Bv2UHUrPftAkzVL5eE6
+         8JcUj2C4wb4ITD2RQZOVkvRld1+bXi16YJ9D/6bd6k91rYfrK5krp8d/Ivkj1CASSgXE
+         gMPJSh4HVNYvaKvOjXCFX6JxZnsMQH3Zh3g1wNY+JHKLPunwsD/dBlGsCOaokWXm1pmK
+         LhOSQuFmAVrYB1IG4bi017/INSM8vARYujw8ytmzMWNrHq2orYoWcg2ZscKwgYZYrJqR
+         /TVLA3RKnAHXH56d4vUrxuF88zVcyrQeBd3YuJi2+ht4F5ZXdFE8nuAy9kIsD1xhFxec
+         j+cQ==
+X-Gm-Message-State: AOAM532iufETyg/jXjBrBFmRc3h3H4FfH72ibxunw4qWsbaZaFGe7tdU
+        lSJzzrNQ4ClqudZvzcUgaAK1UA==
+X-Google-Smtp-Source: ABdhPJxwfsPGVsS6Hn+ISBirM7ASf+Uy53iWfLYPVPoMDB+x0HE6I2kdL1NxQdLYbPLt8fOLBERuOw==
+X-Received: by 2002:a9d:6254:: with SMTP id i20mr1172374otk.343.1639435667299;
+        Mon, 13 Dec 2021 14:47:47 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r3sm2394109oti.51.2021.12.13.14.45.47
+        by smtp.gmail.com with ESMTPSA id t14sm2473150oth.81.2021.12.13.14.47.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 14:45:48 -0800 (PST)
-Date:   Mon, 13 Dec 2021 16:45:43 -0600
+        Mon, 13 Dec 2021 14:47:46 -0800 (PST)
+Date:   Mon, 13 Dec 2021 16:47:42 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
@@ -57,42 +57,49 @@ Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         Wesley Cheng <wcheng@codeaurora.org>,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: phy: qcom,qmp: Add SM8450 USB3 PHY
-Message-ID: <YbfNF+CtucLaYnDT@builder.lan>
+Subject: Re: [PATCH 3/3] phy: qcom-qmp: Add SM8450 USB QMP PHYs
+Message-ID: <YbfNji+glICLDy76@builder.lan>
 References: <20211213131450.535775-1-vkoul@kernel.org>
- <20211213131450.535775-2-vkoul@kernel.org>
+ <20211213131450.535775-3-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211213131450.535775-2-vkoul@kernel.org>
+In-Reply-To: <20211213131450.535775-3-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 13 Dec 07:14 CST 2021, Vinod Koul wrote:
 
-> Add compatible string for USB QMP phy in Qualcomm SM8450 SoC
+> Add support for the USB DP & UNI PHYs found on SM8450. This is same as
+> the phy version used on SM8350 and sequences turned out to be same, so
+> use the same table from SM8350 for this as well.
 > 
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
+Regards,
+Bjorn
+
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index c59bbca9a900..d625a6fe0205 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -51,6 +51,7 @@ properties:
->        - qcom,sm8350-qmp-usb3-phy
->        - qcom,sm8350-qmp-usb3-uni-phy
->        - qcom,sm8450-qmp-ufs-phy
-> +      - qcom,sm8450-qmp-usb3-phy
->        - qcom,sdx55-qmp-pcie-phy
->        - qcom,sdx55-qmp-usb3-uni-phy
->  
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index a959c97a699f..13a249ec8ab6 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -5777,6 +5777,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
+>  	}, {
+>  		.compatible = "qcom,sm8450-qmp-ufs-phy",
+>  		.data = &sm8450_ufsphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,sm8450-qmp-usb3-phy",
+> +		.data = &sm8350_usb3phy_cfg,
+>  	}, {
+>  		.compatible = "qcom,qcm2290-qmp-usb3-phy",
+>  		.data = &qcm2290_usb3phy_cfg,
 > -- 
 > 2.31.1
 > 
