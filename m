@@ -2,130 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBBDE472268
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 09:24:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC9C047227F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 09:27:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232906AbhLMIYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 03:24:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37358 "EHLO
+        id S230006AbhLMI1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 03:27:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232946AbhLMIYE (ORCPT
+        with ESMTP id S229897AbhLMI1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 03:24:04 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FECC061748
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 00:24:04 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id l25so49746275eda.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 00:24:03 -0800 (PST)
+        Mon, 13 Dec 2021 03:27:12 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1717C0617A2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 00:27:11 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id x15so50189312edv.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 00:27:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wJEEqyKISVmLwrKECRv9O+FIMtzdnCM3vrfkv5xHbbc=;
-        b=sEYiyL1t89Df2d2P9CNXHEX3r/4uu2WX6F+I0KEAC+I7PCIernl8hkV7r+MEwiKTRR
-         RqZS/NVJjvek2//+pd2bvuIxaaO99wbk7KF5DHUWLwEh5eWgy+ZV+u5ycLeF51OuJWxu
-         1zpWFPEOmFmaOq5I4y9FEcgpK9qEaDirikActt/MrVdhqXlT5qsPIdwwjaA2E3klstyq
-         5F6VxXlilh6cXL2MC8HFYnMtRJujRBqvp7aIqTMFkj6Rv09cSN7mF6sPVASZ35M3yZ+n
-         Epq13luQ+2oHZgtk5wml7yedMgZOfHm5xjB401+oZ2ptZxcsU4qNtDiJ8vr3G6825HIl
-         Me3w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9qNVJJUEkc7Dcqq+w3jXBP/JOAXOW45KnRjiowBHvGk=;
+        b=lGsG+RSK6fKMObsJQ7Iti5lpYgJ6YDHFJh2yVwO4XuHD8dveHSTYe/H5vctCR3EceI
+         XqKuogxu2fO0A5lqmYqIOpALu/ZAlwyN5MpiGyuxrhGT4dFdyWMvGpLMx8bvZsddP9hp
+         uygNMnJ/yqA/HLuo9RxL3P+UaNjwUw8FVJxoH5ME1qus3y9LosZQt6MPD+Go9ivr+x+I
+         5NBCzSlBofWA0sfijE46EUYppcRu4UKN9UbgQuwQlhr8/MVWSyaIoK6EGtTLTPMvbQQ1
+         YS5aqS6H4kpadwXpvOh44y1zf//CCrxgItwxZNG/CI17aEzqwFI/8ITqQJIsV4zBY6wg
+         c6OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wJEEqyKISVmLwrKECRv9O+FIMtzdnCM3vrfkv5xHbbc=;
-        b=CdkLftczbVI45qYIQQUUaDVcIpq7axs8++8EplcAmxGBcttgoGI3tVxvcJrIbuR7DF
-         w19dK2zpZP3k7V3FnWdjfl23rpuW5z8/U1kH9ttkx+u6iQQIWw/q7OS0DpPhdQo0740Z
-         yVfch3KGezGvikKtyRKtuHOnWy+qOQHyLkXMcO6dQPnCDZaWeQSFPXBbZEl2Lgq73b/w
-         9yvyK+dbCzA7ndD/Gyv54UMRJW5PrTn/rhVjJTFzcJ/f3yr4j6ukoxFqZJeF81HYR92p
-         gXrce4pvIkb5nbHqxUVHVCbibZsIevljnO7yiYAhPWYFRl8SuKkoi/NTgeY1kZodKRQO
-         u/OQ==
-X-Gm-Message-State: AOAM5331Jibas8DYlRdDKo3kJlxsMpPDpikGQDJa/bWd15Mdkb0xRf/b
-        nEyAXbmqhzTN4DIiRolKlcTWwUPhVyH2sULpdVM=
-X-Google-Smtp-Source: ABdhPJxXH0Xjx9BHfJBCZNxrhpzIndXfY4yXe4yX22wm5K4vyrOQfvlwQcXd5uuh0zbYEkjW+Is7gQ==
-X-Received: by 2002:a17:906:c156:: with SMTP id dp22mr42976858ejc.36.1639383842380;
-        Mon, 13 Dec 2021 00:24:02 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9qNVJJUEkc7Dcqq+w3jXBP/JOAXOW45KnRjiowBHvGk=;
+        b=xIyUvIInvQ1Eilvz0A1Vw+j05k1H0M4cjZxnWYxi9vlCHeKYE+jUVSBBrmjYAGVza8
+         6TQRSZAqkTqd3SFVTFxtgg/JybVuC0mZjbtjhqfOMB0OKjmpoCOqYtbG4u6M0KbPtUdt
+         qjWNPx08fKfhp1nZVkvkF6kKxCBYNGpNDP/K3UzClzgPG5iOK1Zo3gTxJTPQTDYjcO8h
+         Rxt16vUIpUQ/ruCup8SXtatEAk+eVO74LVI+clKvxmCVoxuKtkc/aoNoD2IAZqlsqyMs
+         r1uRk52N8AVtF00otm9FNE7CA0CEZS+fVeYKwgvWNtCqPnWcmB3LwBHIuoJT9xt51rfK
+         f/0w==
+X-Gm-Message-State: AOAM533u51beYbOJGc88oaSn+JQ0OmeUyMycNF5ooawiRcpe+r6pzxZJ
+        DzpJunVxcc/wRGaDfraT+I754CLLxWI+hRpdNuI=
+X-Google-Smtp-Source: ABdhPJzJQzH9IbD0iKwzxP+OhiHo4OBp+NQ23YW0riJPC6Agdl1/DHF8upIV5V9+Kb8bNnWCgPyEyg==
+X-Received: by 2002:a17:907:608f:: with SMTP id ht15mr41645248ejc.300.1639384030231;
+        Mon, 13 Dec 2021 00:27:10 -0800 (PST)
 Received: from localhost.localdomain ([2a02:a210:20c5:8c80:7d0a:cd68:c339:f426])
-        by smtp.gmail.com with ESMTPSA id nb17sm5535561ejc.7.2021.12.13.00.24.01
+        by smtp.gmail.com with ESMTPSA id b11sm6062432ede.62.2021.12.13.00.27.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 00:24:02 -0800 (PST)
+        Mon, 13 Dec 2021 00:27:09 -0800 (PST)
 From:   Luca Weiss <luca.weiss@fairphone.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Luca Weiss <luca.weiss@fairphone.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] arm64: dts: qcom: sm7225-fairphone-fp4: Enable ADSP, CDSP & MPSS
-Date:   Mon, 13 Dec 2021 09:22:08 +0100
-Message-Id: <20211213082208.21492-9-luca.weiss@fairphone.com>
+        de Goede <hdegoede@redhat.com>, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-watchdog@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Rob Herring <robh@kernel.org>, Zhang Rui <rui.zhang@intel.com>
+Subject: [PATCH 00/10] dt-binding patches for sm6350
+Date:   Mon, 13 Dec 2021 09:26:01 +0100
+Message-Id: <20211213082614.22651-1-luca.weiss@fairphone.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20211213082208.21492-1-luca.weiss@fairphone.com>
-References: <20211213082208.21492-1-luca.weiss@fairphone.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the remoteprocs found on the SoC and add a qcom,rmtfs-mem node.
+This series adds compatibles to the dt-bindings documentation where it
+was missed before.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 31 +++++++++++++++++++
- 1 file changed, 31 insertions(+)
+Finally, the last patch solves some further dtbs_check errors by
+modifying the sm6350.dtsi to match the binding docs more closely.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index ff07b7e8d64f..1ce606e66474 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -53,6 +53,27 @@ volume-up {
- 			gpios = <&pm6350_gpios 2 GPIO_ACTIVE_LOW>;
- 		};
- 	};
-+
-+	reserved-memory {
-+		/*
-+		 * The rmtfs memory region in downstream is 'dynamically allocated'
-+		 * but given the same address every time. Hard code it as this address is
-+		 * where the modem firmware expects it to be.
-+		 */
-+		memory@efe01000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xefe01000 0 0x600000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <15>;
-+		};
-+	};
-+};
-+
-+&adsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm7225/fairphone4/adsp.mdt";
- };
- 
- &apps_rsc {
-@@ -269,6 +290,16 @@ vreg_bob: bob {
- 	};
- };
- 
-+&cdsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm7225/fairphone4/cdsp.mdt";
-+};
-+
-+&mpss {
-+	status = "okay";
-+	firmware-name = "qcom/sm7225/fairphone4/modem.mdt";
-+};
-+
- &pm6150l_wled {
- 	status = "okay";
- 
+Please note, that the first patch from Konrad is a resend that wasn't
+picked up when sent to the lists in August 2021.
+
+Konrad Dybcio (1):
+  dt-bindings: arm: msm: Add LLCC for SM6350
+
+Luca Weiss (9):
+  dt-bindings: firmware: scm: Add SM6350 compatible
+  dt-bindings: qcom,pdc: Add SM6350 compatible
+  dt-bindings: phy: qcom,qusb2: Add SM6350 compatible
+  dt-bindings: thermal: tsens: Add SM6350 compatible
+  dt-bindings: usb: qcom,dwc3: Add SM6350 compatible
+  dt-bindings: watchdog: Add SM6350 and SM8250 compatible
+  dt-bindings: arm: msm: Don't mark LLCC interrupt as required
+  dt-bindings: simple-framebuffer: allow standalone compatible
+  arm64: dts: qcom: sm6350: Fix validation errors
+
+ .../devicetree/bindings/arm/msm/qcom,llcc.yaml   |  2 +-
+ .../bindings/display/simple-framebuffer.yaml     | 12 +++++++-----
+ .../devicetree/bindings/firmware/qcom,scm.txt    |  1 +
+ .../bindings/interrupt-controller/qcom,pdc.txt   |  5 +++--
+ .../devicetree/bindings/phy/qcom,qusb2-phy.yaml  |  1 +
+ .../devicetree/bindings/thermal/qcom-tsens.yaml  |  1 +
+ .../devicetree/bindings/usb/qcom,dwc3.yaml       |  1 +
+ .../devicetree/bindings/watchdog/qcom-wdt.yaml   |  2 ++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi             | 16 ++++++++--------
+ 9 files changed, 25 insertions(+), 16 deletions(-)
+
 -- 
 2.34.1
 
