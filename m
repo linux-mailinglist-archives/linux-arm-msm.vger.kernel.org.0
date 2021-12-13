@@ -2,239 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A87C247381F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44C16473863
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 00:23:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244021AbhLMWzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 17:55:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46488 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237506AbhLMWzr (ORCPT
+        id S244184AbhLMXXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 18:23:54 -0500
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:35488 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237678AbhLMXXx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:55:47 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF47C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:55:46 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id r11so56371773edd.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:55:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/nvhxeMTi05OGmz1DsmtB7RmMc0RwaHnCA/LhMCRmZs=;
-        b=HrJDI8IX0mMlJsutIPoMjb+Oc6sUOW4+n6t8+j0m7VBiYBUYJzZllbSW2pZyEEpsT9
-         rTGVg4xUaLUsYajEll9J6CRYLXMG5ephiRE/Y697Quu56dy1kJUEh1PCpGjQd1SEtuIO
-         jyFid9OUZE87cBCbgQFFu0713nbb0y9ssTyyb9FEjhzu/lC8D8nAjCtKjeHwW8N+t7rL
-         nOM0Okjaaf4oA14Rrr8g2bHgVBnUeRFX8EpMH5hHaeqNjEJE7mcFHHTKAAIvbCY05fap
-         YVG6TU6NuMHdYO949vw5cwp1LGCnyA98gIGuDUqiXRC4g/O+cZRV0GRVYfBdf/PA1E6W
-         KedA==
+        Mon, 13 Dec 2021 18:23:53 -0500
+Received: by mail-ot1-f53.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso19170357otr.2;
+        Mon, 13 Dec 2021 15:23:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/nvhxeMTi05OGmz1DsmtB7RmMc0RwaHnCA/LhMCRmZs=;
-        b=V9lERJb2pRNs2abRKD9h5fV9Xk/42ItdvA8jmDIDTjZgX8Ype0sjNztK/uc5ozpbKf
-         ccKP10vcCzmeM+HMgu9VlCKtmITX1dXDwU6/fKt8It2m5/JQ0LFnlxSlODf3yc6zK/67
-         AWVNBahSfRESiiERdP4HsSdW+3g0uvI8O0go1RnkG2RiILO2Qcf8B83E9L+YLND4Nfpv
-         Q9Goly3Pz5wrpUwTND8H8u8219HQQiT6nB4/fIbeOcGcLV1NM2U16WuM4VcfBlB9dbjj
-         sC6TDV9jt/C/enBQq00tTxX9FkHCuRwVkAjjhYsZ+/At9I2UmySvxUyBJzyiaYrakrz4
-         mAjg==
-X-Gm-Message-State: AOAM5334YGa3dOlkk7E7lxlgJ4ya0fz8GZWYViKSAMILe6es0n9g/QER
-        NOn+c4C1CosdQbNSCTomsYlH3Q==
-X-Google-Smtp-Source: ABdhPJyOuKQfGjttoEpTXUX47uqhRj3Qnn0Z9g70ETG9oc780+wOIHeV4mG3irsYY0uFJAP8XiurHA==
-X-Received: by 2002:a17:907:d89:: with SMTP id go9mr1516948ejc.330.1639436145433;
-        Mon, 13 Dec 2021 14:55:45 -0800 (PST)
-Received: from [192.168.1.15] (hst-221-97.medicom.bg. [84.238.221.97])
-        by smtp.googlemail.com with ESMTPSA id a13sm6882861edk.29.2021.12.13.14.55.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Dec 2021 14:55:45 -0800 (PST)
-Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
- and enc/dec
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Tadeusz Struk <tadeusz.struk@linaro.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=MN07U4V1fbFM28Uah7L22YfdYwHkREoQZ5ADmY6LxmE=;
+        b=rSIVAvCmRlEKecklB/83Nk5Zt2JVCJ2KYc2JG5Js++zZkyfZt0b1gXnZvhcjlMMWq7
+         1UgDvmtqynKTst6eEGjcPyWgEM0oD5rVQBu72pRVnnXD1z4MRxWrjwyoFNjpajFJeHmx
+         +BZRMBOJDI2ndfsEywAN0fKpsbTiDJRlkCfTIc3FMXLnhNEXt9X8Ijj1HZnadBFMIrkt
+         /D021ucbYg1B49fl4RyPN5cEIbqgKFlMp6e/pvjVVjWG47pQ3YjSX2TK5GOsM2OTnUCS
+         rsr6LRGerbk6IP6yygudk+zcSjFloxZTEgHw8iZLiliT67DDiyL+/xD+B8dxvLm4iRYd
+         sNjQ==
+X-Gm-Message-State: AOAM5312dwZJqGB6+yn/7adYo2vbhrS9XP8uWcvKVLAwNRJj5fZZaAEJ
+        xOLyu5R96dmZznEIKkCpm+gR/erfdQ==
+X-Google-Smtp-Source: ABdhPJygG9UxSLszfKCq3BJLXLaO6nhd2/v54vOpy5+rwpMfGis0qNScFE8ZLYHpZVfIYMEj9h8b8g==
+X-Received: by 2002:a9d:2085:: with SMTP id x5mr1371352ota.228.1639437832980;
+        Mon, 13 Dec 2021 15:23:52 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id e16sm2431958ook.38.2021.12.13.15.23.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Dec 2021 15:23:52 -0800 (PST)
+Received: (nullmailer pid 1773614 invoked by uid 1000);
+        Mon, 13 Dec 2021 23:23:49 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Caleb Connolly <caleb@connolly.tech>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
- <YZ2x+xuvnHC48MHg@ripper>
- <CALAqxLV7YzuHLzNFSWawjpoJGb3WwO4bgnMN_5mWoHmB582kZw@mail.gmail.com>
- <CALAqxLWjK4h-ghF5s8qV6Q3Wp3K1N816dTfiLNatBTms6NDe3A@mail.gmail.com>
- <fee96315-28cb-58a1-7f2d-eb82d9ecb56a@linaro.org>
-Message-ID: <906cfb55-3f9a-e7ab-355c-ba4f02029f93@linaro.org>
-Date:   Tue, 14 Dec 2021 00:55:44 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <fee96315-28cb-58a1-7f2d-eb82d9ecb56a@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Satya Priya <skakit@codeaurora.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        linux-rtc@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20211213192946.111320-1-david@ixit.cz>
+References: <20211213192946.111320-1-david@ixit.cz>
+Subject: Re: [PATCH] dt-bindings: rtc: qcom-pm8xxx-rtc: update register numbers
+Date:   Mon, 13 Dec 2021 17:23:49 -0600
+Message-Id: <1639437829.348405.1773613.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12/14/21 12:50 AM, Stanimir Varbanov wrote:
-> From 9bfb69026374fa010d36680554e2634d5d435681 Mon Sep 17 00:00:00 2001
-> From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> Date: Tue, 14 Dec 2021 00:45:18 +0200
-> Subject: [PATCH] venus: WIP: Rework and reorder firmware load
+On Mon, 13 Dec 2021 20:29:45 +0100, David Heidelberg wrote:
+> Extend registers up to 2, also document their names.
 > 
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> Also fixes warnings generated by `make qcom/sdm845-oneplus-fajita.dtb`:
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: reg: [[24576], [24832]] is too long
+>         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: 'reg-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+>         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
->  drivers/media/platform/qcom/venus/core.c     |  8 +++----
->  drivers/media/platform/qcom/venus/core.h     |  2 ++
->  drivers/media/platform/qcom/venus/firmware.c | 22 +++++++++++++++++++-
->  drivers/media/platform/qcom/venus/vdec.c     |  3 ++-
->  drivers/media/platform/qcom/venus/venc.c     |  3 ++-
->  5 files changed, 31 insertions(+), 7 deletions(-)
+>  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.c
-> b/drivers/media/platform/qcom/venus/core.c
-> index 877eca125803..7f65b08b2bac 100644
-> --- a/drivers/media/platform/qcom/venus/core.c
-> +++ b/drivers/media/platform/qcom/venus/core.c
-> @@ -344,10 +344,6 @@ static int venus_probe(struct platform_device *pdev)
->  	if (ret < 0)
->  		goto err_runtime_disable;
-> 
-> -	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> -	if (ret)
-> -		goto err_runtime_disable;
-> -
->  	ret = venus_firmware_init(core);
->  	if (ret)
->  		goto err_of_depopulate;
-> @@ -372,6 +368,10 @@ static int venus_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_venus_shutdown;
-> 
-> +	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-> +	if (ret)
-> +		goto err_venus_shutdown;
-> +
->  	ret = pm_runtime_put_sync(dev);
->  	if (ret) {
->  		pm_runtime_get_noresume(dev);
-> diff --git a/drivers/media/platform/qcom/venus/core.h
-> b/drivers/media/platform/qcom/venus/core.h
-> index 7c3bac01cd49..6455efb35168 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -182,6 +182,8 @@ struct venus_core {
->  	atomic_t insts_count;
->  	unsigned int state;
->  	struct completion done;
-> +	struct completion fwload_done;
-> +	bool fwload_success;
->  	unsigned int error;
->  	unsigned long sys_error;
->  	wait_queue_head_t sys_err_done;
-> diff --git a/drivers/media/platform/qcom/venus/firmware.c
-> b/drivers/media/platform/qcom/venus/firmware.c
-> index 14b6f1d05991..d523fbeb9d56 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.c
-> +++ b/drivers/media/platform/qcom/venus/firmware.c
-> @@ -76,6 +76,14 @@ int venus_set_hw_state(struct venus_core *core, bool
-> resume)
->  	return 0;
->  }
-> 
-> +static void firmware_async_load(const struct firmware *fw, void *context)
-> +{
-> +	struct venus_core *core = context;
-> +
-> +	core->fwload_success = true;
 
-this should be
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-	if (fw)
-		core->fwload_success = true;
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-> +	complete(&core->fwload_done);
-> +}
-> +
->  static int venus_load_fw(struct venus_core *core, const char *fwname,
->  			 phys_addr_t *mem_phys, size_t *mem_size)
->  {
-> @@ -101,10 +109,22 @@ static int venus_load_fw(struct venus_core *core,
-> const char *fwname,
->  	if (ret)
->  		goto err_put_node;
-> 
-> -	ret = request_firmware(&mdt, fwname, dev);
-> +	init_completion(&core->fwload_done);
-> +	core->fwload_success = false;
-> +
-> +	ret = request_firmware_nowait(THIS_MODULE, FW_ACTION_NOUEVENT, fwname,
-> +				      dev, GFP_KERNEL, core,
-> +				      firmware_async_load);
->  	if (ret < 0)
->  		goto err_put_node;
-> 
-> +	wait_for_completion(&core->fwload_done);
-> +
-> +	if (!core->fwload_success) {
-> +		ret = -ENOENT;
-> +		goto err_put_node;
-> +	}
-> +
->  	fw_size = qcom_mdt_get_size(mdt);
->  	if (fw_size < 0) {
->  		ret = fw_size;
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c
-> b/drivers/media/platform/qcom/venus/vdec.c
-> index 91da3f509724..0e718d24a3b3 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1718,6 +1718,8 @@ static int vdec_probe(struct platform_device *pdev)
->  	if (!vdev)
->  		return -ENOMEM;
-> 
-> +	core->dev_dec = dev;
-> +
->  	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
->  	vdev->release = video_device_release;
->  	vdev->fops = &vdec_fops;
-> @@ -1731,7 +1733,6 @@ static int vdec_probe(struct platform_device *pdev)
->  		goto err_vdev_release;
-> 
->  	core->vdev_dec = vdev;
-> -	core->dev_dec = dev;
-> 
->  	video_set_drvdata(vdev, core);
->  	pm_runtime_set_autosuspend_delay(dev, 2000);
-> diff --git a/drivers/media/platform/qcom/venus/venc.c
-> b/drivers/media/platform/qcom/venus/venc.c
-> index 84bafc3118cc..1b3fb927eb16 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1448,6 +1448,8 @@ static int venc_probe(struct platform_device *pdev)
->  	if (!vdev)
->  		return -ENOMEM;
-> 
-> +	core->dev_enc = dev;
-> +
->  	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
->  	vdev->release = video_device_release;
->  	vdev->fops = &venc_fops;
-> @@ -1461,7 +1463,6 @@ static int venc_probe(struct platform_device *pdev)
->  		goto err_vdev_release;
-> 
->  	core->vdev_enc = vdev;
-> -	core->dev_enc = dev;
-> 
->  	video_set_drvdata(vdev, core);
->  	pm_runtime_set_autosuspend_delay(dev, 2000);
-> -- 2.25.1
+Full log is available here: https://patchwork.ozlabs.org/patch/1567467
 
--- 
-regards,
-Stan
+
+rtc@11d: compatible: Additional items are not allowed ('qcom,pm8921-rtc' was unexpected)
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
