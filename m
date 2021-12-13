@@ -2,175 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A57AE472DED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 14:51:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 00459472DC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 14:49:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238145AbhLMNvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 08:51:19 -0500
-Received: from smtp-out1.suse.de ([195.135.220.28]:39720 "EHLO
-        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238085AbhLMNvN (ORCPT
+        id S234644AbhLMNtY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 08:49:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233860AbhLMNtX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 08:51:13 -0500
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 1C632212B6;
-        Mon, 13 Dec 2021 13:51:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1639403472; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=3pbPGUydyhh3UOGI/DKu1/UXH5BGZJalpxxCmIrkR4A=;
-        b=BCVhQ2evX5ANkYcI7wTxdKLQflZOUvTsBBQts9UCbV/9fl0Bt8miDo965wV8vno8yAOzSC
-        abtG0JI8yU63CAQPPn3XvFVaIYnYZqCclRs/TpcfLYOsi+bl94UM26V2D2ESj1k65BJAL6
-        skT0avAgWwA0USl3ecnuAOLVq4AZZpc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1639403472;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=3pbPGUydyhh3UOGI/DKu1/UXH5BGZJalpxxCmIrkR4A=;
-        b=IgN/KYzwiLXuwz8uXiYC+yyAUbgKd9iazcuZF6RAYxHs22CpZUA6P8WSh8aNKyXXUwRNPx
-        ioUWTUxf74Ehk0AQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id D138713D90;
-        Mon, 13 Dec 2021 13:51:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id XQEOMs9Pt2HRGgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 13 Dec 2021 13:51:11 +0000
-Message-ID: <83ab4452-3744-20fe-e3ba-5bd4b48622e3@suse.de>
-Date:   Mon, 13 Dec 2021 14:51:11 +0100
+        Mon, 13 Dec 2021 08:49:23 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B43C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 05:49:23 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d9so27181858wrw.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 05:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QECQ6kqhHviAQtdtRKaAbYshAGcjCs6cTEfH6Tz7Hwo=;
+        b=KzwC1FA5zu+86ujmBvGnpIVdk/Ci5O1hqkruifGFiHvYRWJ0vQPA9CEjOj/BJyWAug
+         YbFxIeh/nE79CSUJYEJAz7FvGBesjKYAVbQUtP7szPFJe2gQAMbOFIYDCyNgPUK+tusr
+         LHWBPbO8pS8uFMfUVgPeMUTRDggr+pNjsQKMbexc/xiwlzvn2uGlngVfCsWmImkLFT07
+         jeNDpcv4SXgB0MBCq5xAG9iBwqoOfn9L3cQPgg/WJ75IHLfjTWp+BStrXjw5BTeCsp9l
+         ZdmdsQ0FjvN3lYJ2DMaEqHyaNKPNK6/fcuE8nh70Ce9vp+MklkWJRTkq29Ot1u2i4fNm
+         ieug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QECQ6kqhHviAQtdtRKaAbYshAGcjCs6cTEfH6Tz7Hwo=;
+        b=D/AWLD0MHA4Y3zyLc21/0NqMHTUboQ+eY+flkFfBiNdipe221Z6oGztR4KgCqbeNwv
+         MhjsOchuicp22J5fYNaM0Jcm/5AhV7RKabwTPu914/u9D5LyrBfTEPnq32ITAzZdjHFL
+         Hv+uWeCA4ElYTHhEWqOxP7b+IHh+QluQ0J5vDBvhO8mwG66wr8dAaZfvIs3Ygys3kx1O
+         YGbuRLaCrPTG1kZv6OQslKj/wbdstNDB1rWz4iZxv3S4rn8aw081zIXULYb0ij6YwK36
+         Qn3QMPD7jLNKn+ek4+MCGdOVmob7CKWVZDcqsgU+l2EVb7cX3KHjDO7IYXiWTgFUaFOh
+         8jaw==
+X-Gm-Message-State: AOAM531MpyoPF7tnaW3VEugCG9OWC5Jts6ZT7fTrAFuod4ZIOSrQbAtM
+        xMuz7qwy+YG/x+rQEhh6pfMjAA==
+X-Google-Smtp-Source: ABdhPJxXiPHuwOEG2QN2S/5NByN4OIph8gXGV26HqIsalSKcPXhIFq71jLKc/T5LFynHe5foFfyXAg==
+X-Received: by 2002:a5d:59a2:: with SMTP id p2mr31987440wrr.252.1639403361952;
+        Mon, 13 Dec 2021 05:49:21 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m9sm7366621wmq.1.2021.12.13.05.49.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Dec 2021 05:49:21 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     loic.poulain@linaro.org, benl@squareup.com,
+        bryan.odonoghue@linaro.org
+Subject: [PATCH 0/3] wcn36xx: Implement explicit beacon filter tables
+Date:   Mon, 13 Dec 2021 13:51:24 +0000
+Message-Id: <20211213135127.1656258-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH 0/3] drm/dp: Move DisplayPort helpers into own module
-Content-Language: en-US
-To:     Jani Nikula <jani.nikula@linux.intel.com>, mripard@kernel.org,
-        maarten.lankhorst@linux.intel.com, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20211213093650.19598-1-tzimmermann@suse.de>
- <87lf0o7hnv.fsf@intel.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <87lf0o7hnv.fsf@intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Sx5n4XU3nlxLAa0gCfsogVHd"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Sx5n4XU3nlxLAa0gCfsogVHd
-Content-Type: multipart/mixed; boundary="------------LAoMFDIye50DiRbbkDojKm0B";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Jani Nikula <jani.nikula@linux.intel.com>, mripard@kernel.org,
- maarten.lankhorst@linux.intel.com, airlied@linux.ie, daniel@ffwll.ch
-Cc: nouveau@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org
-Message-ID: <83ab4452-3744-20fe-e3ba-5bd4b48622e3@suse.de>
-Subject: Re: [PATCH 0/3] drm/dp: Move DisplayPort helpers into own module
-References: <20211213093650.19598-1-tzimmermann@suse.de>
- <87lf0o7hnv.fsf@intel.com>
-In-Reply-To: <87lf0o7hnv.fsf@intel.com>
+Downstream provides the ability to directly program the beacon filter
+tables. Currently in upstream we rely on whatever is the default filtration
+table in firmware.
 
---------------LAoMFDIye50DiRbbkDojKm0B
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+A trivial packing fixup is required for the SMD structure. The downstream
+filtration table from the Linux driver is applied but, we are not
+necessarily constrained to using this table forever.
 
-SGkNCg0KQW0gMTMuMTIuMjEgdW0gMTQ6MzQgc2NocmllYiBKYW5pIE5pa3VsYToNCj4gT24g
-TW9uLCAxMyBEZWMgMjAyMSwgVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2Uu
-ZGU+IHdyb3RlOg0KPj4gU3BsaXQtb2ZmIERpc3BsYXlQb3J0IGZ1bmN0aW9ucyBmcm9tIEtN
-UyBoZWxwZXIgbGlicmFyeSBhbmQgbW92ZSB0aGVtDQo+PiBpbnRvIHRoZWlyIG93biBtb2R1
-bGUuIFJlZHVjZXMgdGhlIHNpemUgb2YgZHJtX2ttc19oZWxwZXIua28gYnkgfjUwJS4NCj4+
-DQo+PiBUaGlzIHBhdGNoc2V0IGlzIHBhcnQgb2YgYW4gb24tZ29pbmcgZWZmb3J0IHRvIHJl
-ZHVjZSB0aGUgbWluaW11bQ0KPj4gYmluYXJ5IHNpemUgb2YgdGhlIERSTSBjb3JlIGFuZCBo
-ZWxwZXJzLiBJdCdzIGhlbHBmdWwgZm9yIHN5c3RlbXMgd2l0aA0KPj4gZWFybHktYm9vdCBE
-Uk0gZ3JhcGhpY3MsIHdoaWNoIHJlcXVpcmVzIERSTSB0byBiZSBsaW5rZWQgaW50byB0aGUN
-Cj4+IGtlcm5lbCBpbWFnZS4NCj4gDQo+IFdvdWxkIGl0IGJlIHRpbWUgdG8gYWRkIGEgc3Vi
-ZGlyZWN0b3J5IGZvciBlYWNoIG5vbi1kcml2ZXIsIG5vbi1jb3JlIGRybQ0KPiBtb2R1bGU/
-IFdlJ3ZlIHRvdWNoZWQgdGhpcyB0b3BpYyBiZWZvcmUuIEkgZmluZCBpdCBpbmNyZWFzaW5n
-bHkgaGFyZCB0bw0KPiByZW1lbWJlciB3aGljaCBmaWxlcyBhcmUgcGFydCBvZiBoZWxwZXJz
-LiBUaGlzIHdvdWxkIGFsc28gaGVscCB3aXRoIHRoZQ0KPiBhcmJpdHJhcnkgZHJtX2RwX2hl
-bHBlcl9tb2QuYyBuYW1pbmcuDQo+IA0KPiBQZXJoYXBzIGRyaXZlcnMvZ3B1L2RybS9kcm1f
-ZHAvPw0KDQpJdCdzIHByb2JhYmx5IHdvcnRoIGl0LCBidXQgSSdkIHByZWZlciBhIHNlcGFy
-YXRlIHBhdGNoc2V0IGFuZCANCmRpc2N1c3Npb24gb3ZlciB0aGlzLiBJdCBhZmZlY3RzIHNl
-dmVyYWwgbW9kdWxlcy4NCg0KSWYgYWRkaW5nIGRybV9kcF9oZWxwZXJfbW9kLmMgaXMgb3Zl
-cmtpbGwsIHRoYXQgbW9kdWxlIGNvZGUgY2FuIGFsc28gYmUgDQphZGRlZCB0byBkcm1fZHAu
-YyBmb3Igbm93Lg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPiBCUiwNCj4gSmFu
-aS4NCj4gDQo+IA0KPiANCj4+DQo+PiBUaG9tYXMgWmltbWVybWFubiAoMyk6DQo+PiAgICBk
-cm0vZHBfbXN0OiBSZW1vdmUgdHJhaWxpbmcgd2hpdGVzcGFjZS4NCj4+ICAgIGRybS9kcDog
-TW92ZSBEUCBkZWNsYXJhdGlvbnMgaW50byBzZXBhcmF0ZSBoZWFkZXIgZmlsZQ0KPj4gICAg
-ZHJtL2RwOiBNb3ZlIERpc3BsYXlQb3J0IGhlbHBlcnMgaW50byBzZXBhcmF0ZSBoZWxwZXIg
-bW9kdWxlDQo+Pg0KPj4gICBkcml2ZXJzL2dwdS9kcm0vS2NvbmZpZyAgICAgICAgICAgICAg
-ICAgICAgICAgfCAgOCArKysrKysNCj4+ICAgZHJpdmVycy9ncHUvZHJtL01ha2VmaWxlICAg
-ICAgICAgICAgICAgICAgICAgIHwgMTQgKysrKysrLS0tLQ0KPj4gICBkcml2ZXJzL2dwdS9k
-cm0vYnJpZGdlL0tjb25maWcgICAgICAgICAgICAgICAgfCAgNCArKysNCj4+ICAgZHJpdmVy
-cy9ncHUvZHJtL2JyaWRnZS9hbmFsb2dpeC9LY29uZmlnICAgICAgIHwgIDIgKysNCj4+ICAg
-ZHJpdmVycy9ncHUvZHJtL2JyaWRnZS9jYWRlbmNlL0tjb25maWcgICAgICAgIHwgIDEgKw0K
-Pj4gICBkcml2ZXJzL2dwdS9kcm0vZHJtX2NydGNfaGVscGVyX2ludGVybmFsLmggICAgfCAy
-NyAtLS0tLS0tLS0tLS0tLS0tLS0NCj4+ICAgZHJpdmVycy9ncHUvZHJtL3tkcm1fZHBfaGVs
-cGVyLmMgPT4gZHJtX2RwLmN9IHwgIDIgKy0NCj4+ICAgZHJpdmVycy9ncHUvZHJtL2RybV9k
-cF9hdXhfZGV2LmMgICAgICAgICAgICAgIHwgIDIgKy0NCj4+ICAgZHJpdmVycy9ncHUvZHJt
-L2RybV9kcF9oZWxwZXJfaW50ZXJuYWwuaCAgICAgIHwgMjggKysrKysrKysrKysrKysrKysr
-Kw0KPj4gICBkcml2ZXJzL2dwdS9kcm0vZHJtX2RwX2hlbHBlcl9tb2QuYyAgICAgICAgICAg
-fCAyMiArKysrKysrKysrKysrKysNCj4+ICAgZHJpdmVycy9ncHUvZHJtL2RybV9kcF9tc3Rf
-dG9wb2xvZ3kuYyAgICAgICAgIHwgIDQgKy0tDQo+PiAgIGRyaXZlcnMvZ3B1L2RybS9kcm1f
-a21zX2hlbHBlcl9jb21tb24uYyAgICAgICB8IDE0IC0tLS0tLS0tLS0NCj4+ICAgZHJpdmVy
-cy9ncHUvZHJtL2k5MTUvS2NvbmZpZyAgICAgICAgICAgICAgICAgIHwgIDEgKw0KPj4gICBk
-cml2ZXJzL2dwdS9kcm0vbXNtL0tjb25maWcgICAgICAgICAgICAgICAgICAgfCAgMSArDQo+
-PiAgIGRyaXZlcnMvZ3B1L2RybS9ub3V2ZWF1L0tjb25maWcgICAgICAgICAgICAgICB8ICAx
-ICsNCj4+ICAgZHJpdmVycy9ncHUvZHJtL3JvY2tjaGlwL0tjb25maWcgICAgICAgICAgICAg
-IHwgIDEgKw0KPj4gICBkcml2ZXJzL2dwdS9kcm0vdGVncmEvS2NvbmZpZyAgICAgICAgICAg
-ICAgICAgfCAgMSArDQo+PiAgIGRyaXZlcnMvZ3B1L2RybS94bG54L0tjb25maWcgICAgICAg
-ICAgICAgICAgICB8ICAxICsNCj4+ICAgMTggZmlsZXMgY2hhbmdlZCwgODMgaW5zZXJ0aW9u
-cygrKSwgNTEgZGVsZXRpb25zKC0pDQo+PiAgIHJlbmFtZSBkcml2ZXJzL2dwdS9kcm0ve2Ry
-bV9kcF9oZWxwZXIuYyA9PiBkcm1fZHAuY30gKDk5JSkNCj4+ICAgY3JlYXRlIG1vZGUgMTAw
-NjQ0IGRyaXZlcnMvZ3B1L2RybS9kcm1fZHBfaGVscGVyX2ludGVybmFsLmgNCj4+ICAgY3Jl
-YXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvZ3B1L2RybS9kcm1fZHBfaGVscGVyX21vZC5jDQo+
-Pg0KPj4NCj4+IGJhc2UtY29tbWl0OiAzZjQyMjgyODIyMWQ5Y2VlZmNkZGVmMGJlMzM1NjFi
-MTY0NmExY2JlDQo+PiBwcmVyZXF1aXNpdGUtcGF0Y2gtaWQ6IGMyYjJmMDhmMGVjY2M5ZjVk
-ZjBjMGRhNDlmYTFkMzYyNjdkZWIxMWQNCj4+IHByZXJlcXVpc2l0ZS1wYXRjaC1pZDogYzY3
-ZTVkODg2YTQ3YjdkMDI2NmQ4MTEwMDgzNzU1N2ZkYTM0Y2IyNA0KPj4gLS0NCj4+IDIuMzQu
-MQ0KPj4NCj4gDQoNCi0tIA0KVGhvbWFzIFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZlciBE
-ZXZlbG9wZXINClNVU0UgU29mdHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KTWF4ZmVs
-ZHN0ci4gNSwgOTA0MDkgTsO8cm5iZXJnLCBHZXJtYW55DQooSFJCIDM2ODA5LCBBRyBOw7xy
-bmJlcmcpDQpHZXNjaMOkZnRzZsO8aHJlcjogSXZvIFRvdGV2DQo=
+Tested on wcn3620 and wcn3680b.
 
---------------LAoMFDIye50DiRbbkDojKm0B--
+Bryan O'Donoghue (3):
+  wcn36xx: Fix beacon filter structure definitions
+  wcn36xx: Fix physical location of beacon filter comment
+  wcn36xx: Implement downstream compliant beacon filtering
 
---------------Sx5n4XU3nlxLAa0gCfsogVHd
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+ drivers/net/wireless/ath/wcn36xx/hal.h  |  29 +++++--
+ drivers/net/wireless/ath/wcn36xx/main.c |   1 +
+ drivers/net/wireless/ath/wcn36xx/smd.c  | 104 ++++++++++++++++++++++++
+ drivers/net/wireless/ath/wcn36xx/smd.h  |   3 +
+ 4 files changed, 131 insertions(+), 6 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.33.0
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmG3T88FAwAAAAAACgkQlh/E3EQov+Bz
-FQ/9HqIxcguCQf8aqbHkJ6mtF97KK0U0NSUTx3DJFKTQ+2G1hYqxb9ppDhpR4EwKojU5lo44cj8G
-7IBTc+FaDUl3/7qn406FW0BELJKUvy9863kX6yYzB99lROIfYfkAVJt8Wm4ahbdBVYq8Wzu5UsZr
-2dInmA9TrCz6g+yhBUPvUC/zIgaCTVsKV7fSV1GQwgb3lcHTNQ6bfEBR6mnDU2C/pDJOFY/U4p4m
-NWD0j+O8UHugJ+tNO3O8IaqlCc+2RADZUMY6YMTrR9/tJkyqcbOE88m9RJR3dLOIFtoL+99LDZLd
-Ac0z/dvDzn2Ni3PEfwwxMv7pEmzHYT+Eh++xFal5XsG00EIfrwatre8EB277IzCLc9oHmmPwPihu
-QVbJhcJnrV7c7fgjL7wIrQDM0oOAoTeBRjgxG6FjpAGThRdPPsSkjOBCSme5V0Kjqvp13egOs/sE
-YonoYvYaVF57b1Tinv9/m7VTNYfUceeAnpxfyvdgtsBOlbsioHayxO6a5cvHyaN0MU79Khq0qsUk
-DfoBzzXK1+5OBkufOZN8X6TMJl21hO4fWgt83KGmZ9GGZvdqsIicpZZYhjX/YPv242gu48EWT1PR
-AQYHkWRRG/7OecpNC3inhi9zDTTIcq5BokW4wgePEeeg8/hGO7THg3qsOhj/4dZP1WvWIoXnEXh9
-78A=
-=j7+c
------END PGP SIGNATURE-----
-
---------------Sx5n4XU3nlxLAa0gCfsogVHd--
