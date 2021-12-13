@@ -2,104 +2,282 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDF9A4737E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:47:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D7E04737F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:50:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243854AbhLMWrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 17:47:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44640 "EHLO
+        id S243952AbhLMWuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 17:50:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243846AbhLMWrs (ORCPT
+        with ESMTP id S243943AbhLMWuT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:47:48 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53C1C061748
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:47:47 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso19014793otf.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:47:47 -0800 (PST)
+        Mon, 13 Dec 2021 17:50:19 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47348C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:50:19 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id r11so56338556edd.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5H0qbzaIjgpKRl661XZSUbngEcJPf590BIus7cp6ncA=;
-        b=R8VoYyyDTSEuy9f0P5FaPR1C53Xu7aozxo+dMc2TKIiQHU8WDK78rkYLFGz2W9PvW7
-         Rc6ms+egFX7SkYxyk7zzCTGkoqVk2nv4iJcBSAVQj1h8PBYGZW8JwRQJdKGgD8Phe932
-         KV+utJuCmcnQ+tcsjSsktrHTtmEtTFAqyiYB9vzPdDOXCru6cQ6mPlh836V1XKUKnDqh
-         SWcROoMM2fPmQt51gazWdN+qK6SYOMXNj+hYfjdhxrdV+6XREu1aVl6wOX68d3Yj2D4L
-         +b1zOkEAWEoX/dF7bR6efzQ6uCVkvOcDlAzh8/KQIUx1KIdaiFUSMNQm3qSSXPga45Nr
-         p1QA==
+        h=from:subject:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=2ipG1LSQW/9iSSyZPDhT+k/6HhSVjRHiJ4NqSSlt+/Q=;
+        b=P54pk2ScxjqT1erEgAkw3DXcI3w/8DTUShx6W4nfWiJRVaTF5gt1TydA6z1Qi53XHS
+         tSwg/SYixG593nPDc0YGoWtSEqHmFQjiwyQLZMyCOGz4pxKKWvxu151u2FMe6zu6CHRz
+         ewky1NEjOYUV0sa1Emzr401Irp5Ij/jrnnntwkxb5S506fIeh+u1iNtj3cMz3iGXZMm/
+         Ij/JwZZjaokl0zwFg/OkMkT+EG43/3G0b1Zg595s/N9QIgE/MkaGnXE3AEslIzOgZnd9
+         mV15EXkh3z/v2ua1dMA7Is6pGeSlBaP3U9Fe33ON4srV+nWmFPuO9SMSct4K5Ii5x9qD
+         yw+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5H0qbzaIjgpKRl661XZSUbngEcJPf590BIus7cp6ncA=;
-        b=b5BlXstFzZnJ/3ZUBSd2aiNQux9pGX0Qy5kP1lZHsZ6nnc+Bv2UHUrPftAkzVL5eE6
-         8JcUj2C4wb4ITD2RQZOVkvRld1+bXi16YJ9D/6bd6k91rYfrK5krp8d/Ivkj1CASSgXE
-         gMPJSh4HVNYvaKvOjXCFX6JxZnsMQH3Zh3g1wNY+JHKLPunwsD/dBlGsCOaokWXm1pmK
-         LhOSQuFmAVrYB1IG4bi017/INSM8vARYujw8ytmzMWNrHq2orYoWcg2ZscKwgYZYrJqR
-         /TVLA3RKnAHXH56d4vUrxuF88zVcyrQeBd3YuJi2+ht4F5ZXdFE8nuAy9kIsD1xhFxec
-         j+cQ==
-X-Gm-Message-State: AOAM532iufETyg/jXjBrBFmRc3h3H4FfH72ibxunw4qWsbaZaFGe7tdU
-        lSJzzrNQ4ClqudZvzcUgaAK1UA==
-X-Google-Smtp-Source: ABdhPJxwfsPGVsS6Hn+ISBirM7ASf+Uy53iWfLYPVPoMDB+x0HE6I2kdL1NxQdLYbPLt8fOLBERuOw==
-X-Received: by 2002:a9d:6254:: with SMTP id i20mr1172374otk.343.1639435667299;
-        Mon, 13 Dec 2021 14:47:47 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t14sm2473150oth.81.2021.12.13.14.47.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 14:47:46 -0800 (PST)
-Date:   Mon, 13 Dec 2021 16:47:42 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2ipG1LSQW/9iSSyZPDhT+k/6HhSVjRHiJ4NqSSlt+/Q=;
+        b=nZZhJY4fLNJvjJSKZqxAPmDespv9AqvdpvGtXtCf3BlbR27qkNj288fj8tv88Rftzr
+         soHhFPFrLRhdO/XENzwH9bZnsUTrcDWPKkHvhi9RYk6K/g2YGDtPQk7G0kvIDSJ9h69S
+         OcoaBGZ21gbC/L/a6/be2S5REOuIBxtUeeEpAlBHJr7iKpkYMz1QoI9kOfcEwfCa3pod
+         jFBzjbcaUkV0UopVMiWgg0YFYeTHFvoHu3htE27C4+OEysfKa4hYVY6MEluLxK8gH91n
+         Ya+avhThV4sCSqF9pRMplMQE1ZfApTOJ4/L6E8wOJoMGnY2+1qXIqm71eOWIbtmChH97
+         6YeA==
+X-Gm-Message-State: AOAM532eV8yPQcA2TwjgiJ7p7a7ccRLTkHBbP1pls4Ooiw6lr8Y7a1+a
+        GdBT3jJC0VMAVNLIELBChd56Qg==
+X-Google-Smtp-Source: ABdhPJz2VBMgM9w832l5AdMpUctZB2V9HaWMLRqF7VOMSvexz2Pn/o1U5WneCvxu9NsrPbtwMXJIZA==
+X-Received: by 2002:a17:906:7e0a:: with SMTP id e10mr1461121ejr.404.1639435817774;
+        Mon, 13 Dec 2021 14:50:17 -0800 (PST)
+Received: from [192.168.1.15] (hst-221-97.medicom.bg. [84.238.221.97])
+        by smtp.googlemail.com with ESMTPSA id e20sm578110ejl.189.2021.12.13.14.50.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Dec 2021 14:50:17 -0800 (PST)
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Subject: Re: [PATCH v2] media: venus: Synchronize probe() between venus_core
+ and enc/dec
+To:     John Stultz <john.stultz@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Tadeusz Struk <tadeusz.struk@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] phy: qcom-qmp: Add SM8450 USB QMP PHYs
-Message-ID: <YbfNji+glICLDy76@builder.lan>
-References: <20211213131450.535775-1-vkoul@kernel.org>
- <20211213131450.535775-3-vkoul@kernel.org>
+References: <20211029214833.2615274-1-tadeusz.struk@linaro.org>
+ <YZ2x+xuvnHC48MHg@ripper>
+ <CALAqxLV7YzuHLzNFSWawjpoJGb3WwO4bgnMN_5mWoHmB582kZw@mail.gmail.com>
+ <CALAqxLWjK4h-ghF5s8qV6Q3Wp3K1N816dTfiLNatBTms6NDe3A@mail.gmail.com>
+Message-ID: <fee96315-28cb-58a1-7f2d-eb82d9ecb56a@linaro.org>
+Date:   Tue, 14 Dec 2021 00:50:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211213131450.535775-3-vkoul@kernel.org>
+In-Reply-To: <CALAqxLWjK4h-ghF5s8qV6Q3Wp3K1N816dTfiLNatBTms6NDe3A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 13 Dec 07:14 CST 2021, Vinod Koul wrote:
+Hi John,
 
-> Add support for the USB DP & UNI PHYs found on SM8450. This is same as
-> the phy version used on SM8350 and sequences turned out to be same, so
-> use the same table from SM8350 for this as well.
+On 12/9/21 5:11 AM, John Stultz wrote:
+> On Tue, Nov 30, 2021 at 8:49 PM John Stultz <john.stultz@linaro.org> wrote:
+>> On Tue, Nov 23, 2021 at 7:29 PM Bjorn Andersson
+>> <bjorn.andersson@linaro.org> wrote:
+>>> Rather than trying to synchronize away the side effects of
+>>> of_platform_populate() I think we should stop using it.
+>>>
+>>> I had the very same problem in the qcom_wcnss remoteproc driver and
+>>> in below change I got rid of that by manually initializing a struct
+>>> device for the child node. In the event that the child probe defer I
+>>> would just probe defer the parent as well.
+>>>
+>>> 1fcef985c8bd ("remoteproc: qcom: wcnss: Fix race with iris probe")
+>>>
+>>> The change might look a little bit messy, but the end result it much
+>>> cleaner than relying on various locks etc.
+>>>
+>>>
+>>> But in the qcom_wcnss case I have a child _device_ because I need
+>>> something to do e.g. regulator_get() on. I fail to see why venc and vdec
+>>> are devices in the first place.
+>>
+>> I definitely agree with Bjorn that all this asynchronous component
+>> probing feels overly complicated, and a rework is probably the better
+>> solution.
+>>
+>> Though my only question is:  is someone planning to do this rework?
+>>
+>> In the meantime, Tadeusz' patch does resolve a *very* frequent boot
+>> crash seen when the venus driver is enabled.
+>> So Stanimir, should we consider merging this as a stop gap until the
+>> larger probe rework is done?
+> 
+> Stanimir? Does the above sound reasonable?
+
+Apologize for the delay.
+
+I'd like to avoid one more mutex in the driver,  I think some reordering
+in the .probe and changing the firmware_request API could help. I'll
+spend some time to dig more deeply into the problem.
+
+See untested patch below (I have to simulate firmware load from ufs
+partition on Debian).
+
+> 
+> thanks
+> -john
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+-- 
+regards,
+Stan
 
-Regards,
-Bjorn
+From 9bfb69026374fa010d36680554e2634d5d435681 Mon Sep 17 00:00:00 2001
+From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Date: Tue, 14 Dec 2021 00:45:18 +0200
+Subject: [PATCH] venus: WIP: Rework and reorder firmware load
 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> index a959c97a699f..13a249ec8ab6 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> @@ -5777,6 +5777,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
->  	}, {
->  		.compatible = "qcom,sm8450-qmp-ufs-phy",
->  		.data = &sm8450_ufsphy_cfg,
-> +	}, {
-> +		.compatible = "qcom,sm8450-qmp-usb3-phy",
-> +		.data = &sm8350_usb3phy_cfg,
->  	}, {
->  		.compatible = "qcom,qcm2290-qmp-usb3-phy",
->  		.data = &qcm2290_usb3phy_cfg,
-> -- 
-> 2.31.1
-> 
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ drivers/media/platform/qcom/venus/core.c     |  8 +++----
+ drivers/media/platform/qcom/venus/core.h     |  2 ++
+ drivers/media/platform/qcom/venus/firmware.c | 22 +++++++++++++++++++-
+ drivers/media/platform/qcom/venus/vdec.c     |  3 ++-
+ drivers/media/platform/qcom/venus/venc.c     |  3 ++-
+ 5 files changed, 31 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/core.c
+b/drivers/media/platform/qcom/venus/core.c
+index 877eca125803..7f65b08b2bac 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -344,10 +344,6 @@ static int venus_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto err_runtime_disable;
+
+-	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
+-	if (ret)
+-		goto err_runtime_disable;
+-
+ 	ret = venus_firmware_init(core);
+ 	if (ret)
+ 		goto err_of_depopulate;
+@@ -372,6 +368,10 @@ static int venus_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_venus_shutdown;
+
++	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (ret)
++		goto err_venus_shutdown;
++
+ 	ret = pm_runtime_put_sync(dev);
+ 	if (ret) {
+ 		pm_runtime_get_noresume(dev);
+diff --git a/drivers/media/platform/qcom/venus/core.h
+b/drivers/media/platform/qcom/venus/core.h
+index 7c3bac01cd49..6455efb35168 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -182,6 +182,8 @@ struct venus_core {
+ 	atomic_t insts_count;
+ 	unsigned int state;
+ 	struct completion done;
++	struct completion fwload_done;
++	bool fwload_success;
+ 	unsigned int error;
+ 	unsigned long sys_error;
+ 	wait_queue_head_t sys_err_done;
+diff --git a/drivers/media/platform/qcom/venus/firmware.c
+b/drivers/media/platform/qcom/venus/firmware.c
+index 14b6f1d05991..d523fbeb9d56 100644
+--- a/drivers/media/platform/qcom/venus/firmware.c
++++ b/drivers/media/platform/qcom/venus/firmware.c
+@@ -76,6 +76,14 @@ int venus_set_hw_state(struct venus_core *core, bool
+resume)
+ 	return 0;
+ }
+
++static void firmware_async_load(const struct firmware *fw, void *context)
++{
++	struct venus_core *core = context;
++
++	core->fwload_success = true;
++	complete(&core->fwload_done);
++}
++
+ static int venus_load_fw(struct venus_core *core, const char *fwname,
+ 			 phys_addr_t *mem_phys, size_t *mem_size)
+ {
+@@ -101,10 +109,22 @@ static int venus_load_fw(struct venus_core *core,
+const char *fwname,
+ 	if (ret)
+ 		goto err_put_node;
+
+-	ret = request_firmware(&mdt, fwname, dev);
++	init_completion(&core->fwload_done);
++	core->fwload_success = false;
++
++	ret = request_firmware_nowait(THIS_MODULE, FW_ACTION_NOUEVENT, fwname,
++				      dev, GFP_KERNEL, core,
++				      firmware_async_load);
+ 	if (ret < 0)
+ 		goto err_put_node;
+
++	wait_for_completion(&core->fwload_done);
++
++	if (!core->fwload_success) {
++		ret = -ENOENT;
++		goto err_put_node;
++	}
++
+ 	fw_size = qcom_mdt_get_size(mdt);
+ 	if (fw_size < 0) {
+ 		ret = fw_size;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c
+b/drivers/media/platform/qcom/venus/vdec.c
+index 91da3f509724..0e718d24a3b3 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1718,6 +1718,8 @@ static int vdec_probe(struct platform_device *pdev)
+ 	if (!vdev)
+ 		return -ENOMEM;
+
++	core->dev_dec = dev;
++
+ 	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+ 	vdev->fops = &vdec_fops;
+@@ -1731,7 +1733,6 @@ static int vdec_probe(struct platform_device *pdev)
+ 		goto err_vdev_release;
+
+ 	core->vdev_dec = vdev;
+-	core->dev_dec = dev;
+
+ 	video_set_drvdata(vdev, core);
+ 	pm_runtime_set_autosuspend_delay(dev, 2000);
+diff --git a/drivers/media/platform/qcom/venus/venc.c
+b/drivers/media/platform/qcom/venus/venc.c
+index 84bafc3118cc..1b3fb927eb16 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1448,6 +1448,8 @@ static int venc_probe(struct platform_device *pdev)
+ 	if (!vdev)
+ 		return -ENOMEM;
+
++	core->dev_enc = dev;
++
+ 	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+ 	vdev->fops = &venc_fops;
+@@ -1461,7 +1463,6 @@ static int venc_probe(struct platform_device *pdev)
+ 		goto err_vdev_release;
+
+ 	core->vdev_enc = vdev;
+-	core->dev_enc = dev;
+
+ 	video_set_drvdata(vdev, core);
+ 	pm_runtime_set_autosuspend_delay(dev, 2000);
+-- 
+2.25.1
+
