@@ -2,233 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CCAC473421
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 19:36:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A9E8473491
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 20:02:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241913AbhLMSgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 13:36:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237355AbhLMSgQ (ORCPT
+        id S236301AbhLMTCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 14:02:08 -0500
+Received: from mail-oi1-f178.google.com ([209.85.167.178]:36610 "EHLO
+        mail-oi1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232697AbhLMTCI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 13:36:16 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AADC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 10:36:16 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id t23so24369040oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 10:36:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=RKnW0CJ8QtZOwXTWz01u2sxEnEsigtwIbEpGidlLzFM=;
-        b=cM2pfTVjOfN48+d2BFuLmg/I8038RTUIXfQhvmtCfl7T8tbRo1tSqVgAsWMbhfuBj5
-         kHjaLSxxoEZYkHs7luwT8C4f5xEqCjSqQC8F4VMdiejkpe+w0WnAIdI6GueXaiT7/VjR
-         veN4O/RBJTdy4QG2iPmJ3h0hJNSC451FpqGAIIqB3WogV9hC7plHXMHiyY5+f5m0Wwr8
-         PCEZDq9EdJKEUJuh2+iDglw4r7daVN7tcVcTTVtMCjKNLmEZuxB2BfjmNTdLVUAdjFHx
-         Mg99+E+6Xn7/B7gHjqVNVeAu7RaBBkB8Xo6NqcO3v7P2S2tElFHNYAUVbQOssTUT+ZFv
-         uvvQ==
+        Mon, 13 Dec 2021 14:02:08 -0500
+Received: by mail-oi1-f178.google.com with SMTP id t23so24456883oiw.3;
+        Mon, 13 Dec 2021 11:02:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=RKnW0CJ8QtZOwXTWz01u2sxEnEsigtwIbEpGidlLzFM=;
-        b=FkldUggCT8t5p2j/or96adGxacXUlIzfizxPePpaSqnOP6kWpfFZ5o5z1X3fkrJ9qj
-         d64wvZyvsdFACu9Bs9UoEu6SufP1TsZ5bKAO+D9vfr/ssAUp2++ezQLSvl2fMDtjN125
-         rkTp8oSlW2RY1ebAEwJTMIq9wmApnkoKwteqQTehWbTja3DyrJcenYroDhkBpFgy2V01
-         y+Edbam20++G61UdRFtnpEUyz4rpSlgdekSwMDDfwoEzAkXTxQvG9YXmOUDHW6DjV3Ro
-         Rg5fDG5rslBbYoJTZzfGwqZp0bhqkiEWi+21rvPSz13J4sC+BrX7nUgCE5GjxbViat3M
-         Megg==
-X-Gm-Message-State: AOAM533qGQ6e0psTqc72IkWc34XtvxBS6+3nkBGiwMAmaNRCD5uIjJ7v
-        LpzRmqFNWgmT8KCxFNSOh6tZtw==
-X-Google-Smtp-Source: ABdhPJw6Si4lJQdVRuNx4RALSbSMB6q1TJ49keENLeWB/e+mU1SwF2YAHKiQaZCWgWALMTsS45tFjg==
-X-Received: by 2002:aca:eb0b:: with SMTP id j11mr29165889oih.51.1639420575644;
-        Mon, 13 Dec 2021 10:36:15 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m12sm2310879ots.59.2021.12.13.10.36.14
+        bh=tEbAdn5YlO0byAH0oTEvYwIYFWP4wTzxxA3rKsMqgPI=;
+        b=u36KqmyV6dkY02q5LDaZEHXGo8MV8d4BQeUxcGScFTcLU6lHR5Xjwq4QSme7yeijbn
+         Q3sveiw2kawjod1CYcDx7h1zMqobyMJWctqZdKgQe1jLA+9KGbkLQgFrmKn7XADT9YlO
+         B3IrT+ChlxamKQdJAz8UbU0AeZj8tMUeGjCQq9/OEAaRIcxTdvK/Hbj8S09kmy6J0l/N
+         zvzsc7Z1VMSHrfxd/wy5MXWRsCCdRGU3YZolgNaZhW3CXOfv+Ed9Y4NfpDFNDLikEsQw
+         rs1NtuBZf75q5H6SzflXmtYhYVwS5jKQOqJb/psa3Ajz7caOOzd7KEfw3SprmsD/x4Ce
+         TMpg==
+X-Gm-Message-State: AOAM531vZwjKKFh2dLhB9KeN7wpS6ZhXin4h32hwY5//ATbJkw2o+kSE
+        cDoRFKGr3Eeyn6uJdWxw2MTRnW5GYw==
+X-Google-Smtp-Source: ABdhPJwfmZKhTcyermRckjwVUR51Q+PIrNv5i9wFZsuWFt3sXBmR8hmteTCR1F2dx8sSDJV29rTUsg==
+X-Received: by 2002:aca:581:: with SMTP id 123mr440392oif.13.1639422127396;
+        Mon, 13 Dec 2021 11:02:07 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id a17sm2989012oiw.43.2021.12.13.11.02.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 10:36:15 -0800 (PST)
-Date:   Mon, 13 Dec 2021 10:37:33 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
-        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 6/8] misc: fastrpc: add secure domain support
-Message-ID: <YbeS7KXj1slU2qgf@ripper>
-References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
- <20211209120626.26373-7-srinivas.kandagatla@linaro.org>
+        Mon, 13 Dec 2021 11:02:06 -0800 (PST)
+Received: (nullmailer pid 1386389 invoked by uid 1000);
+        Mon, 13 Dec 2021 19:02:05 -0000
+Date:   Mon, 13 Dec 2021 13:02:05 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Will Deacon <will@kernel.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Joerg Roedel <joro@8bytes.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Add compatible for SM8450 SoC
+Message-ID: <YbeYrZmavBECxE/O@robh.at.kernel.org>
+References: <20211201073943.3969549-1-vkoul@kernel.org>
+ <20211201073943.3969549-2-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211209120626.26373-7-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20211201073943.3969549-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
-
-> ADSP/MDSP/SDSP are by default secured, which means it can only be loaded
-> with a Signed process.
-> Where as CDSP can be either be secured/unsecured. non-secured Compute DSP
-> would allow users to load unsigned process and run hexagon instructions,
-> but blocking access to secured hardware within the DSP. Where as signed
-> process with secure CDSP would be allowed to access all the dsp resources.
+On Wed, 01 Dec 2021 13:09:42 +0530, Vinod Koul wrote:
+> Add the SoC specific compatible for SM8450 implementing
+> arm,mmu-500.
 > 
-> This patch adds basic code to create device nodes as per device tree property.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  drivers/misc/fastrpc.c | 61 +++++++++++++++++++++++++++++++++++-------
->  1 file changed, 51 insertions(+), 10 deletions(-)
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 79fc59caacef..50f8e23b6b04 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -240,12 +240,15 @@ struct fastrpc_channel_ctx {
->  	/* Flag if dsp attributes are cached */
->  	bool valid_attributes;
->  	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
-> +	struct fastrpc_device *secure_fdevice;
->  	struct fastrpc_device *fdevice;
-> +	bool secure;
->  };
->  
->  struct fastrpc_device {
->  	struct fastrpc_channel_ctx *cctx;
->  	struct miscdevice miscdev;
-> +	bool secure;
->  };
->  
->  struct fastrpc_user {
-> @@ -1876,7 +1879,7 @@ static struct platform_driver fastrpc_cb_driver = {
->  };
->  
->  static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ctx *cctx,
-> -				   const char *domain)
-> +				   bool is_secured, const char *domain)
->  {
->  	struct fastrpc_device *fdev;
->  	int err;
-> @@ -1885,15 +1888,21 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
->  	if (!fdev)
->  		return -ENOMEM;
->  
-> +	fdev->secure = is_secured;
->  	fdev->cctx = cctx;
->  	fdev->miscdev.minor = MISC_DYNAMIC_MINOR;
->  	fdev->miscdev.fops = &fastrpc_fops;
-> -	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s", domain);
-> +	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s%s",
-> +					    domain, is_secured ? "-secure" : "");
 
-Will this not result in existing userspace using the wrong misc device?
-
->  	err = misc_register(&fdev->miscdev);
-> -	if (err)
-> +	if (err) {
->  		kfree(fdev);
-> -	else
-> -		cctx->fdevice = fdev;
-> +	} else {
-> +		if (is_secured)
-> +			cctx->secure_fdevice = fdev;
-> +		else
-> +			cctx->fdevice = fdev;
-> +	}
->  
->  	return err;
->  }
-> @@ -1904,6 +1913,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	struct fastrpc_channel_ctx *data;
->  	int i, err, domain_id = -1;
->  	const char *domain;
-> +	bool secure_dsp = false;
-
-Afaict this is only every accessed after first being written. So no need
-to initialize it.
-
->  
->  	err = of_property_read_string(rdev->of_node, "label", &domain);
->  	if (err) {
-> @@ -1927,10 +1937,31 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	if (!data)
->  		return -ENOMEM;
->  
-> -	err = fastrpc_device_register(rdev, data, domains[domain_id]);
-> -	if (err) {
-> -		kfree(data);
-> -		return err;
-> +
-> +	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
-> +	data->secure = secure_dsp;
-> +
-> +	switch (domain_id) {
-> +	case ADSP_DOMAIN_ID:
-> +	case MDSP_DOMAIN_ID:
-> +	case SDSP_DOMAIN_ID:
-> +		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
-> +		if (err)
-> +			goto fdev_error;
-> +		break;
-> +	case CDSP_DOMAIN_ID:
-> +		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
-> +		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
-> +		if (err)
-> +			goto fdev_error;
-> +
-> +		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
-> +		if (err)
-> +			goto fdev_error;
-> +		break;
-> +	default:
-> +		err = -EINVAL;
-> +		goto fdev_error;
->  	}
->  
->  	kref_init(&data->refcount);
-> @@ -1943,7 +1974,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	data->domain_id = domain_id;
->  	data->rpdev = rpdev;
->  
-> -	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-> +	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
-> +	dev_info(rdev, "%s complete for %s with secure flag(%d) return: %d\n",
-> +			__func__, domains[domain_id], secure_dsp, err);
-
-I would prefer that we don't spam the kernel log with such useful
-information, in particular since it will happen every time we start or
-restart a remoteproc with fastrpc. So dev_dbg perhaps?
-
-> +	return err;
-
-I think that in the event that of_platform_populate() actually failed,
-you will return an error here, fastrpc_rpmsg_remove() won't be called,
-so you won't release the misc device or release &data->refcount. This
-issue exists in the code today though...
-
-Regards,
-Bjorn
-
-> +
-> +fdev_error:
-> +	kfree(data);
-> +	return err;
->  }
->  
->  static void fastrpc_notify_users(struct fastrpc_user *user)
-> @@ -1970,6 +2008,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->  	if (cctx->fdevice)
->  		misc_deregister(&cctx->fdevice->miscdev);
->  
-> +	if (cctx->secure_fdevice)
-> +		misc_deregister(&cctx->secure_fdevice->miscdev);
-> +
->  	of_platform_depopulate(&rpdev->dev);
->  
->  	cctx->rpdev = NULL;
-> -- 
-> 2.21.0
-> 
+Acked-by: Rob Herring <robh@kernel.org>
