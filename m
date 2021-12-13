@@ -2,134 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6699D4730C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:45:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 183814730C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:45:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238567AbhLMPpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 10:45:44 -0500
-Received: from mga07.intel.com ([134.134.136.100]:9316 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231132AbhLMPpo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 10:45:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1639410344; x=1670946344;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=21nKNVcV8KSqzdESBthYUCCZKtWtFQyHDWyeHHzae70=;
-  b=PlLPB4TJAQfDwbFZuwNDCA7uFA9LMFXmZ2QbUbch5Hex20UFGEHGYaMK
-   z4/hVvnd8evUSftdZOafrw0a25FFEXxEVOZxxno8KXK6+rjf49ilvFtke
-   klll0zGNhxP3SCW7LlVHPEmfEf/zxBCOjsWcA8mPwRyadlsqwZd8pg4d2
-   B3Sp5G9OkszuBOLEX5K1C7WuvtyQZJh3SCHlv5xgPFm6itY5wM3Ban6yY
-   lH0j8zXnOwxpdn+IQw97tlNbDS2A0GAZMjig079OtoiiotvDyEuCW2RnE
-   gdBZFYYcTZnjbCiydpkyhTD/1mT3bVkZXMHwMOHPWGz7F10/59cTe6Yz/
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10196"; a="302140086"
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="302140086"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 07:45:44 -0800
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="463418510"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 07:45:43 -0800
-Date:   Mon, 13 Dec 2021 07:45:43 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH 1/7] drm/i915: Replace kmap() with kmap_local_page()
-Message-ID: <20211213154543.GM3538886@iweiny-DESK2.sc.intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20211210232404.4098157-2-ira.weiny@intel.com>
- <Ybc/HwaG2vgbdkQr@intel.com>
+        id S238091AbhLMPpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 10:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58488 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237812AbhLMPpZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 10:45:25 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030F2C06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:45:25 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso17791876otf.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:45:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dQ0iYUP0JWxWxyVvkeGeGLlGPIXkHbinLcx5o3bfw2o=;
+        b=GT2LUf8AZMMbJBvm19dhzHYN+vNChABVOEFBTkozsYpZC7hM/deocMT5X5GMYIDOek
+         5LBXg6Ot9xO7cq/Jk7zgArH4zvnKvrbCFxFNX8dsF13FJEKUga57PYX+I8Hi1ZfJAIK/
+         lbC6PuujBugYWprOiaNoUFWcBjLuSQX8QIWYLTNOIErrR3PFA/R/NZ5OZ1BQe0cyH2u0
+         nAxuEZuXTWTPI8uD3iiMIhXC+C6hwff7Bfdc2WEeE81/t/APcJ7o3YcoRbMbC+3Gxrb6
+         F71aYRG/1GESx3DTZCuueBZ/iX706Ujvo4hj5uB/ty469INRnDEZrTlkBjMLNWhE+0OQ
+         nJPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dQ0iYUP0JWxWxyVvkeGeGLlGPIXkHbinLcx5o3bfw2o=;
+        b=61kw/ko9E7VJgN91ceUqh788gVnW+bQ60WyIpUlRVaP9WkD6d8cHY7egwXjjQEtdaO
+         xFbkaRfIub3ZmKmHv1zN59XUozR3/d8ouzzNMtV7khvCUdbtZikiT1CHpO2xq0NmY06f
+         tb3yF53VDJq8CYvdssBeSjwptwOBaocO3JYBFP5FzwrOnf6wd1eaCkQm/HQE90jrjhWs
+         FDJBq7UrxxS3F15OalxchLCOpYIbwk16fB0Q3XnuLfMtTbakh5bGnattXA5dpeAcvFvE
+         uRtcS93EoYbVBDFAYvrTQHdSKn9Lb0XUru5ZDi0faSO/HWyeZ+KdgW5jcOAzUOpPHpMJ
+         vjEA==
+X-Gm-Message-State: AOAM532YPgq6UrZO4FXyIsXHHKHnaqj/2Fq6stN+4k6FbRI0uCyiIWMT
+        PPv3IMnkPmWECt+sU7S6pSPIXw==
+X-Google-Smtp-Source: ABdhPJzNsAq/rJmgcNdCPksFNXX6L/lDEXt5jzOfIQryTdTz3diL0hIrAXJ+3WKe0bwcch9hGMFEwQ==
+X-Received: by 2002:a9d:6f13:: with SMTP id n19mr24707012otq.317.1639410324291;
+        Mon, 13 Dec 2021 07:45:24 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c8sm2281168otk.40.2021.12.13.07.45.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Dec 2021 07:45:23 -0800 (PST)
+Date:   Mon, 13 Dec 2021 07:46:42 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 5/8] dt-bindings: misc: add property to support
+ non-secure DSP
+Message-ID: <Ybdq4qAeqK8C8Yvc@ripper>
+References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+ <20211209120626.26373-6-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Ybc/HwaG2vgbdkQr@intel.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+In-Reply-To: <20211209120626.26373-6-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 02:39:59PM +0200, Ville Syrjälä wrote:
-> On Fri, Dec 10, 2021 at 03:23:58PM -0800, ira.weiny@intel.com wrote:
-> > From: Ira Weiny <ira.weiny@intel.com>
-> > 
-> > kmap() is being deprecated and these usages are all local to the thread
-> > so there is no reason kmap_local_page() can't be used.
-> > 
-> > Replace kmap() calls with kmap_local_page().
-> > 
-> > Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-> > ---
-> >  drivers/gpu/drm/i915/gem/i915_gem_shmem.c          | 4 ++--
-> >  drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
-> >  drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c       | 4 ++--
-> >  drivers/gpu/drm/i915/gt/shmem_utils.c              | 4 ++--
-> >  drivers/gpu/drm/i915/i915_gem.c                    | 8 ++++----
-> >  drivers/gpu/drm/i915/i915_gpu_error.c              | 4 ++--
-> >  6 files changed, 16 insertions(+), 16 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> > index d77da59fae04..fa8b820e14aa 100644
-> > --- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> > +++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> > @@ -597,9 +597,9 @@ i915_gem_object_create_shmem_from_data(struct drm_i915_private *dev_priv,
-> >  		if (err < 0)
-> >  			goto fail;
-> >  
-> > -		vaddr = kmap(page);
-> > +		vaddr = kmap_local_page(page);
-> >  		memcpy(vaddr, data, len);
-> > -		kunmap(page);
-> > +		kunmap_local(vaddr);
-> >  
-> >  		err = pagecache_write_end(file, file->f_mapping,
-> >  					  offset, len, len,
-> > diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> > index 6d30cdfa80f3..e59e1725e29d 100644
-> > --- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> > +++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> > @@ -144,7 +144,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
-> >  	intel_gt_flush_ggtt_writes(&to_i915(obj->base.dev)->gt);
-> >  
-> >  	p = i915_gem_object_get_page(obj, offset >> PAGE_SHIFT);
-> > -	cpu = kmap(p) + offset_in_page(offset);
-> > +	cpu = kmap_local_page(p) + offset_in_page(offset);
+On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
+
+> From: Jeya R <jeyr@codeaurora.org>
 > 
-> Does kunmap_local() do some magic to make it work even when you
-> don't pass in the same value you got from kmap_local_page()?
+> Add property to set DSP domain as non-secure.
+> 
+> ADSP/MDSP/SDSP are by default secured, where as CDSP can be either be
+> secured/unsecured.
+> non-secured Compute DSP would allow users to load unsigned process
+> and run hexagon instructions, but limiting access to secured hardware
+> within the DSP.
+> 
+> Based on this flag device nodes for secured and unsecured are created.
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+> 
+> This patch has dependency this yaml conversion patch:
+> https://lore.kernel.org/lkml/20211208101508.24582-1-david@ixit.cz/T/
+> 
+>  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> index f42ab208a7fc..f0df0a3bf69f 100644
+> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> @@ -29,6 +29,11 @@ properties:
+>          - sdsp
+>          - cdsp
+>  
+> +  qcom,non-secure-domain:
+> +    type: boolean
+> +    description: >
+> +      Property to specify that dsp domain is non-secure.
 
-Yes.  It sounds like a patch like this would be nice to clarify?
+"non-secure" feels vague, how about expressing it as "Specifies that the
+domains of this DSP instance may run unsigned programs."
 
-Ira
+Perhaps even go so far to name the property
+qcom,allow-unsigned-programs? (Or some other word for "program"?)
 
-diff --git a/include/linux/highmem-internal.h b/include/linux/highmem-internal.h
-index 0a0b2b09b1b8..fb2d3e033c01 100644
---- a/include/linux/highmem-internal.h
-+++ b/include/linux/highmem-internal.h
-@@ -246,6 +246,17 @@ do {                                                               \
-        __kunmap_atomic(__addr);                                \
- } while (0)
- 
-+/**
-+ * kunmap_local - Unmap a page mapped via kmap_local_page().
-+ * @__addr: An address within the page mapped
-+ *
-+ * __addr is often an address returned from kmap_local_page().  However,
-+ * this address can be any address within the mapped page.  It does not need to
-+ * be the exact address returned from kmap_local_page()
-+ *
-+ * Unmapping should be done in the reverse order of the mapping.  See
-+ * kmap_local_page() for details.
-+ */
- #define kunmap_local(__addr)                                   \
- do {                                                           \
-        BUILD_BUG_ON(__same_type((__addr), struct page *));     \
+Regards,
+Bjorn
 
+> +
+>    '#address-cells':
+>      const: 1
+>  
+> -- 
+> 2.21.0
+> 
