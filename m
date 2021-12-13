@@ -2,88 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44C16473863
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 00:23:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 453F9473868
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 00:24:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244184AbhLMXXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 18:23:54 -0500
-Received: from mail-ot1-f53.google.com ([209.85.210.53]:35488 "EHLO
-        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237678AbhLMXXx (ORCPT
+        id S237922AbhLMXYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 18:24:20 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:48554 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237209AbhLMXYU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 18:23:53 -0500
-Received: by mail-ot1-f53.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso19170357otr.2;
-        Mon, 13 Dec 2021 15:23:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=MN07U4V1fbFM28Uah7L22YfdYwHkREoQZ5ADmY6LxmE=;
-        b=rSIVAvCmRlEKecklB/83Nk5Zt2JVCJ2KYc2JG5Js++zZkyfZt0b1gXnZvhcjlMMWq7
-         1UgDvmtqynKTst6eEGjcPyWgEM0oD5rVQBu72pRVnnXD1z4MRxWrjwyoFNjpajFJeHmx
-         +BZRMBOJDI2ndfsEywAN0fKpsbTiDJRlkCfTIc3FMXLnhNEXt9X8Ijj1HZnadBFMIrkt
-         /D021ucbYg1B49fl4RyPN5cEIbqgKFlMp6e/pvjVVjWG47pQ3YjSX2TK5GOsM2OTnUCS
-         rsr6LRGerbk6IP6yygudk+zcSjFloxZTEgHw8iZLiliT67DDiyL+/xD+B8dxvLm4iRYd
-         sNjQ==
-X-Gm-Message-State: AOAM5312dwZJqGB6+yn/7adYo2vbhrS9XP8uWcvKVLAwNRJj5fZZaAEJ
-        xOLyu5R96dmZznEIKkCpm+gR/erfdQ==
-X-Google-Smtp-Source: ABdhPJygG9UxSLszfKCq3BJLXLaO6nhd2/v54vOpy5+rwpMfGis0qNScFE8ZLYHpZVfIYMEj9h8b8g==
-X-Received: by 2002:a9d:2085:: with SMTP id x5mr1371352ota.228.1639437832980;
-        Mon, 13 Dec 2021 15:23:52 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id e16sm2431958ook.38.2021.12.13.15.23.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 15:23:52 -0800 (PST)
-Received: (nullmailer pid 1773614 invoked by uid 1000);
-        Mon, 13 Dec 2021 23:23:49 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Caleb Connolly <caleb@connolly.tech>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Satya Priya <skakit@codeaurora.org>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        linux-rtc@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-In-Reply-To: <20211213192946.111320-1-david@ixit.cz>
-References: <20211213192946.111320-1-david@ixit.cz>
-Subject: Re: [PATCH] dt-bindings: rtc: qcom-pm8xxx-rtc: update register numbers
-Date:   Mon, 13 Dec 2021 17:23:49 -0600
-Message-Id: <1639437829.348405.1773613.nullmailer@robh.at.kernel.org>
+        Mon, 13 Dec 2021 18:24:20 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1E933B816E1;
+        Mon, 13 Dec 2021 23:24:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB36C34601;
+        Mon, 13 Dec 2021 23:24:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639437857;
+        bh=A9pKYsIk8sVgWhuPxxwl6CXmwAOIQO9QyUcOm4pfpSY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=fI/qqDW72TRDXIw9jcT0c5ByYhyLm7Wlw22TzOKpb9YX8lNF8qHEWcs9pjP9oKegc
+         ZZu9byNHqjd27HrCqz6iNi+gBLEswNRHbb5Ds29H99f/RtsYSA1dPkHb/eqT0KfIDb
+         ugnclVHE205t21hoDIJMrIkqSRO1PzyPtjkyVifsv92oGqGLdYeuJgpzugQ7hGJW78
+         sCeVDoWLX+JBq0lrq8yvUEOJjqo0Ee81o1LHdcXm/2haSs5b0zPFZ00VFcLH0ty7Z3
+         Yg4S98c3MMNi0R5912j6QrJPqbms/kPBGyL1OMJvc04IAQ9hhzafi2Dy5Baoqm8Kf/
+         gGYkjsT4wPkqg==
+Date:   Mon, 13 Dec 2021 17:24:16 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 04/10] PCI: qcom: Remove redundancy between qcom_pcie
+ and qcom_pcie_cfg
+Message-ID: <20211213232416.GA554939@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211211021758.1712299-5-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Dec 2021 20:29:45 +0100, David Heidelberg wrote:
-> Extend registers up to 2, also document their names.
-> 
-> Also fixes warnings generated by `make qcom/sdm845-oneplus-fajita.dtb`:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: reg: [[24576], [24832]] is too long
->         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: 'reg-names' does not match any of the regexes: 'pinctrl-[0-9]+'
->         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
+On Sat, Dec 11, 2021 at 05:17:52AM +0300, Dmitry Baryshkov wrote:
+> In preparation to adding more flags to configuration data, use struct
+> qcom_pcie_cfg directly inside struct qcom_pcie, rather than duplicating
+> all its fields. This would save us from the boilerplate code that just
+> copies flags values from one sruct to another one.
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
-
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/1567467
-
-
-rtc@11d: compatible: Additional items are not allowed ('qcom,pm8921-rtc' was unexpected)
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
-rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
-	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
-
+s/flags values/flag values/
+s/sruct/struct/
