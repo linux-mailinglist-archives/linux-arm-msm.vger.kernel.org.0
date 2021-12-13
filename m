@@ -2,111 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BA33472C5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 13:35:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DA32472C66
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 13:40:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233222AbhLMMfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 07:35:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40858 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235986AbhLMMfo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 07:35:44 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84F7BC061748
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 04:35:44 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id p27-20020a05600c1d9b00b0033bf8532855so11493733wms.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 04:35:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NrWrAIpe9pazUTQmEvEFnlsq/023oiBWdv/1eOA6n3M=;
-        b=MQCEDJBkg3Ajjpv5LYNOqOuZLyedRNoejBeFXa5x14PbGoTrrXzqvnsX17CG2Hb6lG
-         MTwIFVwJoy27YGmhJ04sMR7gc1xX5bAA8PPEM4+YrWm2zLMgBdiLGI468k8fzgGMjq1X
-         HOK21Ua7FAxgylS8IM2MJYHZfBitWQs3JOFJH0TCe0tWBLVbB4Zqy1xQi34MFTCT3Mqz
-         TqQA6XqOPutIzc+KaEB+fAL8Von7GUuEdxEmK1RWLkOBiBrO3mxc7UcWE93NeUnADyep
-         K6m6awe/wldz8gwib4qZ6PRPoa2+TKGANOMQGh+Onrxp+X33rok56sRCy7rHEjpLPhNm
-         Eakg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NrWrAIpe9pazUTQmEvEFnlsq/023oiBWdv/1eOA6n3M=;
-        b=TW5mxf3RFyXPAVAJ7qbwbBcpdPH/07RFQfSIumNHb5FM76Fn74CZBz9LuYKxemPc4T
-         549l+/aq5w/gvak/zcQsEz1rfaM87PhbbgCOnxgiex9pdmXLGmODTbaOjgLPlrOaeEZd
-         nBhxKsPrf7u58emv1+zGcQjdJcRr1AjED+U8+OdAjUlFr8f9WjkkAKbVIi1lgmaK034H
-         4dqVRAqybLYE/3yAGfLiS8dgvSilyQzlFP0L6nO8FW7Gc8/c4kVM/8/iZefz2Qr2XYdI
-         OQLpReItkXAoI5Vuqlks7c+K/tdV44vumUx67Z8lgzQ3VXy4Ah0hIsLeZuMtLizg6ddh
-         nzMQ==
-X-Gm-Message-State: AOAM531PP/fiQpKa/cmXQH7kWOCjSqajgYOjxGmpPN/8HPe+U8jqADtz
-        2I3oEwUdpcGwDeCwQcaaHH3FXqYofSCjeA==
-X-Google-Smtp-Source: ABdhPJx0AXHwveAoTUXAXQKi0oi8oGYQ7n7A1Y9V9fOzQY0WMPHI2NB1pIAmtMURkWklpfKXbmFu9Q==
-X-Received: by 2002:a05:600c:1083:: with SMTP id e3mr36980938wmd.167.1639398942534;
-        Mon, 13 Dec 2021 04:35:42 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id u13sm8260902wmq.14.2021.12.13.04.35.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Dec 2021 04:35:42 -0800 (PST)
-Subject: Re: [PATCH v2 5/8] dt-bindings: misc: add property to support
- non-secure DSP
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
-        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org
-References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
- <20211209120626.26373-6-srinivas.kandagatla@linaro.org>
- <YbcnEp5+4y5qXC60@gerhold.net>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <ac2e9f8f-ea52-5676-baaa-9439e8b35d8f@linaro.org>
-Date:   Mon, 13 Dec 2021 12:35:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S236804AbhLMMkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 07:40:05 -0500
+Received: from mga17.intel.com ([192.55.52.151]:22890 "EHLO mga17.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233894AbhLMMkE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 07:40:04 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10196"; a="219405372"
+X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
+   d="scan'208";a="219405372"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 04:40:04 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
+   d="scan'208";a="481495980"
+Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.171])
+  by orsmga002.jf.intel.com with SMTP; 13 Dec 2021 04:40:00 -0800
+Received: by stinkbox (sSMTP sendmail emulation); Mon, 13 Dec 2021 14:39:59 +0200
+Date:   Mon, 13 Dec 2021 14:39:59 +0200
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     ira.weiny@intel.com
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org
+Subject: Re: [PATCH 1/7] drm/i915: Replace kmap() with kmap_local_page()
+Message-ID: <Ybc/HwaG2vgbdkQr@intel.com>
+References: <20211210232404.4098157-1-ira.weiny@intel.com>
+ <20211210232404.4098157-2-ira.weiny@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <YbcnEp5+4y5qXC60@gerhold.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211210232404.4098157-2-ira.weiny@intel.com>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 13/12/2021 10:57, Stephan Gerhold wrote:
-> On Thu, Dec 09, 2021 at 12:06:23PM +0000, Srinivas Kandagatla wrote:
->> From: Jeya R <jeyr@codeaurora.org>
->>
->> Add property to set DSP domain as non-secure.
->>
->> ADSP/MDSP/SDSP are by default secured, where as CDSP can be either be
->> secured/unsecured.
+On Fri, Dec 10, 2021 at 03:23:58PM -0800, ira.weiny@intel.com wrote:
+> From: Ira Weiny <ira.weiny@intel.com>
 > 
-> Wouldn't it be easier to avoid the negation and add a "qcom,secure-domain"
-> property instead? Given PATCH 8/8 ("arm64: dts: qcom: add non-secure
-> domain property to fastrpc nodes") it looks like you are intentionally
-> breaking DT compatibility here, but this patch does not justify why this
-> is necessary.
-
-By default all ADSP/MDSP/SDSP are secured, so this property is only 
-required for something that is not default. Only case that is 
-configurable is the CDSP case where in by adding this flag we should be 
-able to load an unsigned process to dsp using unsecured node.
-
-Having said that, TBH When we first added the fastrpc patchset we did 
-not take care of this security feature properly :-)
-
- From security point of view, its better to keep the default as secured 
-rather than unsecured in DT too.
-
-With this DTS patch older dts should continue to work.
-
---srini
-
+> kmap() is being deprecated and these usages are all local to the thread
+> so there is no reason kmap_local_page() can't be used.
 > 
-> Thanks,
-> Stephan
+> Replace kmap() calls with kmap_local_page().
 > 
+> Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+> ---
+>  drivers/gpu/drm/i915/gem/i915_gem_shmem.c          | 4 ++--
+>  drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
+>  drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c       | 4 ++--
+>  drivers/gpu/drm/i915/gt/shmem_utils.c              | 4 ++--
+>  drivers/gpu/drm/i915/i915_gem.c                    | 8 ++++----
+>  drivers/gpu/drm/i915/i915_gpu_error.c              | 4 ++--
+>  6 files changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> index d77da59fae04..fa8b820e14aa 100644
+> --- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> +++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+> @@ -597,9 +597,9 @@ i915_gem_object_create_shmem_from_data(struct drm_i915_private *dev_priv,
+>  		if (err < 0)
+>  			goto fail;
+>  
+> -		vaddr = kmap(page);
+> +		vaddr = kmap_local_page(page);
+>  		memcpy(vaddr, data, len);
+> -		kunmap(page);
+> +		kunmap_local(vaddr);
+>  
+>  		err = pagecache_write_end(file, file->f_mapping,
+>  					  offset, len, len,
+> diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> index 6d30cdfa80f3..e59e1725e29d 100644
+> --- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> +++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> @@ -144,7 +144,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
+>  	intel_gt_flush_ggtt_writes(&to_i915(obj->base.dev)->gt);
+>  
+>  	p = i915_gem_object_get_page(obj, offset >> PAGE_SHIFT);
+> -	cpu = kmap(p) + offset_in_page(offset);
+> +	cpu = kmap_local_page(p) + offset_in_page(offset);
+
+Does kunmap_local() do some magic to make it work even when you
+don't pass in the same value you got from kmap_local_page()?
+
+>  	drm_clflush_virt_range(cpu, sizeof(*cpu));
+>  	if (*cpu != (u32)page) {
+>  		pr_err("Partial view for %lu [%u] (offset=%llu, size=%u [%llu, row size %u], fence=%d, tiling=%d, stride=%d) misalignment, expected write to page (%llu + %u [0x%llx]) of 0x%x, found 0x%x\n",
+> @@ -162,7 +162,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
+>  	}
+>  	*cpu = 0;
+>  	drm_clflush_virt_range(cpu, sizeof(*cpu));
+> -	kunmap(p);
+> +	kunmap_local(cpu);
+>  
+>  out:
+>  	__i915_vma_put(vma);
+
+-- 
+Ville Syrjälä
+Intel
