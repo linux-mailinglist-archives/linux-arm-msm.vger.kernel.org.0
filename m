@@ -2,266 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75027473068
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:26:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B07534730A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 16:34:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240077AbhLMP0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 10:26:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
+        id S235648AbhLMPeq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 10:34:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240076AbhLMP0q (ORCPT
+        with ESMTP id S233095AbhLMPeq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 10:26:46 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE2C1C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:26:45 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id g14so52469070edb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:26:45 -0800 (PST)
+        Mon, 13 Dec 2021 10:34:46 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F201AC061748
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:34:45 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso17756513otf.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 07:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ykkCfpUCbjjXmzdVAFFI6PyGKVCkNC1OacqXq6G77HY=;
-        b=mKYJ7J9JJvPO7j+1dDJkTeHC5vQ3hnO6crbtDgCbOWsRrWMGMvtc3VTqhnHGCbNdIf
-         fzUFuBTVZiFs4HuSuL97X/+Q/OVi4jcapjmKqVhNr4Qtq7B9vvxZ1G+pJV7lxjqQla71
-         0rkpj66OD2QNSY0mI3WMpEN+1izzvD+H7RIkffKzqKQGxzoVmgh3GP0REP2gQ45hM69y
-         U+VcFqX4A0ENmMoTDSGXp27WdncdpXFbeBZgVHpJV1vwD4+CnXXP859Rn1aIzQcv34fZ
-         MEN/oCuyue4xAMSHoNcJ2NWiDkxtGBsDAbgfDsQRGtxYcgDQh9jKR8b1b8NaGIRt3DyQ
-         pjyw==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9UxEcNSwKoN2mFJyfZRLVmjwVvQHZtyiCY9mygjt3b0=;
+        b=hT1cyNUIs/Cld053RUbQRay51RV52B4dNNPvh5M6K0oE9LtogP9309HzTGyNDfD65Z
+         Fm3Y9VnMX7sLl0MytXQHC2w05h/HfkaELfBLJkh2FSfu+BRaxZ2dRpx6eXP33TsOg0gJ
+         pQ7RZXVIDCg7wbvlZZmOWj7bUCVXNLKMCpM1CP/kVaGiytaiK6cYVu/0oEtMc9zLV6kc
+         ZIC/n08WmpDBMBvIP8WLbnBO3RAB0Hd2ktu1pgtpOD2PCRMmqDHYZrWymDpdebEMdK/P
+         yDYQKW9tSwyss7oWRjShhuRgke66Kj6RbH9nXIOkBNeJktjFv8C7kebjvc8zzPejvmEM
+         fQNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ykkCfpUCbjjXmzdVAFFI6PyGKVCkNC1OacqXq6G77HY=;
-        b=QNQ8ERjZsmfwnw4f7swzyjlkF191myukDI59LxXHpayY0362pPebVqcFWZoF3TdTc3
-         RZUvtBYKC4UhOMY09fwX+IO+tc9ssWMX+BXLPahEOkkReRK4pQDBKx9NSqYeB3AE3ji2
-         NRWJLtr2WFJLG/eq782WmAspyDP74BcVfWmzUk7IdC2tn21RXnUEMwLSuAMFS/aJmP82
-         2stNdnSza2Xww1lf3zEVdByG6HwTrz+FR9H4zRyz0QbRjYSf7RgFHlBI7g40qVw+1CDs
-         8OIFWqcp23EMWqKO+TZRaWA+TfIlU3Bc9qqPrZVuQ8sAPqbkN2t1k3bheFXTRNYXpcth
-         cK0Q==
-X-Gm-Message-State: AOAM5322T/no8rEcKl7MGF176hgWidloX5hSw5honakXGfwZWVZG+ueU
-        bLs1LaPu6uaYMLAn7/kH3SKDOkPkh8dfo+yB+Lo=
-X-Google-Smtp-Source: ABdhPJwfcROAMxl6G//QP4UkM3xWqf63ZVQfLQhuB0yv1Pf5CmNj2ufYa0WccjhDdfU5KxPsNoPqmw==
-X-Received: by 2002:a05:6402:4396:: with SMTP id o22mr65766072edc.263.1639409189575;
-        Mon, 13 Dec 2021 07:26:29 -0800 (PST)
-Received: from localhost.localdomain ([2a02:a210:20c5:8c80:7d0a:cd68:c339:f426])
-        by smtp.gmail.com with ESMTPSA id c13sm221291ejj.144.2021.12.13.07.26.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9UxEcNSwKoN2mFJyfZRLVmjwVvQHZtyiCY9mygjt3b0=;
+        b=djpiu/B0MY5m3XA2cwNDxsDWXMGx3szPF42puNMM0/JiNtELjjiXmcHBsCwHtPqF1q
+         5tm9aQndZWK+CiuIHNs99L9mfh4lhCQSCupaLmhQcjx1PqbjGrzHE5iZw21HiQG8J2M/
+         Jf2HUIHYzF8dFtO5fgycJ2jOaSliyl1fRg0TVcEX/qUvZgwq2cZO16509UVgAQ2goxok
+         i50Rm9ZNNvxwV0EwXekc1S2xNXJIhQ/1K+piJ60VB4MyOFKwL5JBMgmoddxmym70semK
+         tPQ2pDDOJ79uqxLsxJUItJRF05yXAqYxeIPpy/bxYdQdX2h3MohJDYVJ40aMf1fW5HBV
+         CmOw==
+X-Gm-Message-State: AOAM532oWAjWsl+pNcW+Zptz9f049JopwdogLd2NQ8KO2QQDV9jP5JCN
+        2iz1FAjnfTkLufutYrtqb/ynJQ==
+X-Google-Smtp-Source: ABdhPJx81QSenwwldv/3J3MLPwfG5VTKRajH0fC/WJKcz6OkMHMJkY3dRqn27AaWUvRHqQKD7PX9tw==
+X-Received: by 2002:a05:6830:3185:: with SMTP id p5mr26271701ots.222.1639409685194;
+        Mon, 13 Dec 2021 07:34:45 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a17sm2838627oiw.43.2021.12.13.07.34.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Dec 2021 07:26:29 -0800 (PST)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH] dt-bindings: qcom,pdc: convert to YAML
-Date:   Mon, 13 Dec 2021 16:22:08 +0100
-Message-Id: <20211213152208.290923-1-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.34.1
+        Mon, 13 Dec 2021 07:34:44 -0800 (PST)
+Date:   Mon, 13 Dec 2021 07:36:03 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: add non-secure domain property
+ to fastrpc nodes
+Message-ID: <YbdoY9PgvZO7AX1T@ripper>
+References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+ <20211209120626.26373-9-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211209120626.26373-9-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the PDC interrupt controller bindings to YAML.
+On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
-This patch depends on the following patch, which fixed sm8250 & sm8350
-compatibles and adds sm6350.
-https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
+> From: Jeya R <jeyr@codeaurora.org>
+> 
+> FastRPC DSP domain would be set as secure if non-secure dsp property is not
+> added to the fastrpc DT node. Add this property to DT files of msm8916,
+> sdm845, sm8150, sm8250 and sm8350 so that nothing is broken after secure
+> domain patchset.
+> 
+> This patch is purely for backward compatibility reasons.
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
+>  5 files changed, 12 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index c1c42f26b61e..137a479449d4 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -1365,6 +1365,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,smd-channels = "fastrpcsmd-apps-dsp";
+>  					label = "adsp";
+> +					qcom,non-secure-domain;
 
-Also, if somebody has a better suggestion for the register names,
-the second one is pulled from downstream commit message which calls it
-both "SPI config registers" and "interface registers":
-https://source.codeaurora.org/quic/la/kernel/msm-4.19/commit/?id=cdefb63745e051a5bcf69663ac9d084d7da1eeec
+I was under the impression that the support for loading unsigned fastrpc
+applications was introduced in SM8150 or SM8250, can you confirm that
+this has been possible all along?
 
- .../interrupt-controller/qcom,pdc.txt         | 77 -----------------
- .../interrupt-controller/qcom,pdc.yaml        | 86 +++++++++++++++++++
- 2 files changed, 86 insertions(+), 77 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
- create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+Regards,
+Bjorn
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
-deleted file mode 100644
-index 3b7b1134dea9..000000000000
---- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
-+++ /dev/null
-@@ -1,77 +0,0 @@
--PDC interrupt controller
--
--Qualcomm Technologies Inc. SoCs based on the RPM Hardened architecture have a
--Power Domain Controller (PDC) that is on always-on domain. In addition to
--providing power control for the power domains, the hardware also has an
--interrupt controller that can be used to help detect edge low interrupts as
--well detect interrupts when the GIC is non-operational.
--
--GIC is parent interrupt controller at the highest level. Platform interrupt
--controller PDC is next in hierarchy, followed by others. Drivers requiring
--wakeup capabilities of their device interrupts routed through the PDC, must
--specify PDC as their interrupt controller and request the PDC port associated
--with the GIC interrupt. See example below.
--
--Properties:
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: Should contain "qcom,<soc>-pdc" and "qcom,pdc"
--		    - "qcom,sc7180-pdc": For SC7180
--		    - "qcom,sc7280-pdc": For SC7280
--		    - "qcom,sdm845-pdc": For SDM845
--		    - "qcom,sm6350-pdc": For SM6350
--		    - "qcom,sm8250-pdc": For SM8250
--		    - "qcom,sm8350-pdc": For SM8350
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: Specifies the base physical address for PDC hardware.
--
--- interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: Specifies the number of cells needed to encode an interrupt
--		    source.
--		    Must be 2.
--		    The first element of the tuple is the PDC pin for the
--		    interrupt.
--		    The second element is the trigger type.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <bool>
--	Definition: Identifies the node as an interrupt controller.
--
--- qcom,pdc-ranges:
--	Usage: required
--	Value type: <u32 array>
--	Definition: Specifies the PDC pin offset and the number of PDC ports.
--		    The tuples indicates the valid mapping of valid PDC ports
--		    and their hwirq mapping.
--		    The first element of the tuple is the starting PDC port.
--		    The second element is the GIC hwirq number for the PDC port.
--		    The third element is the number of interrupts in sequence.
--
--Example:
--
--	pdc: interrupt-controller@b220000 {
--		compatible = "qcom,sdm845-pdc";
--		reg = <0xb220000 0x30000>;
--		qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
--		#interrupt-cells = <2>;
--		interrupt-parent = <&intc>;
--		interrupt-controller;
--	};
--
--DT binding of a device that wants to use the GIC SPI 514 as a wakeup
--interrupt, must do -
--
--	wake-device {
--		interrupts-extended = <&pdc 2 IRQ_TYPE_LEVEL_HIGH>;
--	};
--
--In this case interrupt 514 would be mapped to port 2 on the PDC as defined by
--the qcom,pdc-ranges property.
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-new file mode 100644
-index 000000000000..8465d79945ca
---- /dev/null
-+++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-@@ -0,0 +1,86 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/interrupt-controller/qcom,pdc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: PDC interrupt controller
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Qualcomm Technologies Inc. SoCs based on the RPM Hardened architecture have a
-+  Power Domain Controller (PDC) that is on always-on domain. In addition to
-+  providing power control for the power domains, the hardware also has an
-+  interrupt controller that can be used to help detect edge low interrupts as
-+  well detect interrupts when the GIC is non-operational.
-+
-+  GIC is parent interrupt controller at the highest level. Platform interrupt
-+  controller PDC is next in hierarchy, followed by others. Drivers requiring
-+  wakeup capabilities of their device interrupts routed through the PDC, must
-+  specify PDC as their interrupt controller and request the PDC port associated
-+  with the GIC interrupt. See example below.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,sc7180-pdc
-+          - qcom,sc7280-pdc
-+          - qcom,sdm845-pdc
-+          - qcom,sm6350-pdc
-+          - qcom,sm8250-pdc
-+          - qcom,sm8350-pdc
-+      - const: qcom,pdc
-+
-+  reg:
-+    minItems: 1
-+    items:
-+      - description: PDC base register region
-+      - description: PDC interface register region
-+
-+  '#interrupt-cells':
-+    const: 2
-+
-+  interrupt-controller: true
-+
-+  qcom,pdc-ranges:
-+    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+    minItems: 1
-+    maxItems: 32 # no hard limit
-+    items:
-+      items:
-+        - description: starting PDC port
-+        - description: GIC hwirq number for the PDC port
-+        - description: number of interrupts in sequence
-+    description: |
-+      Specifies the PDC pin offset and the number of PDC ports.
-+      The tuples indicates the valid mapping of valid PDC ports
-+      and their hwirq mapping.
-+
-+required:
-+  - compatible
-+  - reg
-+  - '#interrupt-cells'
-+  - interrupt-controller
-+  - qcom,pdc-ranges
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pdc: interrupt-controller@b220000 {
-+        compatible = "qcom,sdm845-pdc", "qcom,pdc";
-+        reg = <0xb220000 0x30000>;
-+        qcom,pdc-ranges = <0 512 94>, <94 641 15>, <115 662 7>;
-+        #interrupt-cells = <2>;
-+        interrupt-parent = <&intc>;
-+        interrupt-controller;
-+    };
-+
-+    wake-device {
-+        interrupts-extended = <&pdc 2 IRQ_TYPE_LEVEL_HIGH>;
-+    };
--- 
-2.34.1
-
+>  
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 526087586ba4..4aebfed4ec00 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -838,6 +838,7 @@
+>  				compatible = "qcom,fastrpc";
+>  				qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  				label = "adsp";
+> +				qcom,non-secure-domain;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+>  
+> @@ -888,6 +889,7 @@
+>  				compatible = "qcom,fastrpc";
+>  				qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  				label = "cdsp";
+> +				qcom,non-secure-domain;
+>  				#address-cells = <1>;
+>  				#size-cells = <0>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 81b4ff2cc4cd..9ac213bb96b7 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1751,6 +1751,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "sdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -2994,6 +2995,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "cdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -3439,6 +3441,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "adsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index f0d342aa662d..06be221ad5b6 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -2265,6 +2265,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "sdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -2330,6 +2331,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "cdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -4100,6 +4102,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "adsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> index d134280e2939..80f753cbe91c 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> @@ -1278,6 +1278,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "sdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -1347,6 +1348,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "cdsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> @@ -1643,6 +1645,7 @@
+>  					compatible = "qcom,fastrpc";
+>  					qcom,glink-channels = "fastrpcglink-apps-dsp";
+>  					label = "adsp";
+> +					qcom,non-secure-domain;
+>  					#address-cells = <1>;
+>  					#size-cells = <0>;
+>  
+> -- 
+> 2.21.0
+> 
