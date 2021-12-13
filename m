@@ -2,77 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E923F472CFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 14:15:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9460E472D15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 14:19:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237321AbhLMNPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 08:15:13 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:60924 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233544AbhLMNPM (ORCPT
+        id S237152AbhLMNTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 08:19:50 -0500
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:27711 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233448AbhLMNTu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 08:15:12 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 04874B80ED7;
-        Mon, 13 Dec 2021 13:15:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B571C34601;
-        Mon, 13 Dec 2021 13:15:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639401309;
-        bh=cZk+G/uxRdIcbS2qNHDTMvTAAHkt6iWHVXw+x9mtf1M=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=pF+jHNSMao4zvFaYgX3+GJAXuQFv0OanSosnITkQs70StQQ+aYiheXr1f+slSMCl5
-         +gS3ZqJszfK2RRfkC7IBb8sZTA3hWUUigfwthydOEvqrKdUtnCZKGk/wYjr2B0nsw/
-         jrywZ+A7bQohMCabyvwxKtkvCYcfQcuM6rl+LoWl9NwVcmOmWaodL0tTSWbpeWMh2t
-         7OLk9NOt+pZPXeC0RE3Ix+JJ+KuS4HbCovcaJD84BRfPaSdH3jv6H1uYNfPOJMaHoK
-         rDMTYs83dDuZGv+YTC77gJcb3efyhHpMSWnhLHe3xpcVwougEi7wVfZnhHLyFxEZyY
-         H0ccv95hvjm2w==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] phy: qcom-qmp: Add SM8450 USB QMP PHYs
-Date:   Mon, 13 Dec 2021 18:44:50 +0530
-Message-Id: <20211213131450.535775-3-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211213131450.535775-1-vkoul@kernel.org>
-References: <20211213131450.535775-1-vkoul@kernel.org>
+        Mon, 13 Dec 2021 08:19:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1639401582;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oXVz7j6O/sdvqTEmJzhaOnnNzeCFuCaYipshwhsdL/Q=;
+    b=BCQNJer+iBZnxYMyTRXMMbQrkgmxAC1RqtoT3/g9wCPqC+c7cHTtDqAclvXOZUwGgP
+    qcvxWtN5OE7qeBtN8fSMnwIdw6EjF/FJfYrJo723/1aD4HO4Us9AktnXT5W1/jAjsSL3
+    IbIpIHOUob281s5DXg93H22UTpHO23kbfyfyFoL6n525Ogkte1GW9f8QovS4XZOMPmju
+    7HuzzUpLuJKS8sG3Re0JFP5uOzUl8QYv4Hj2gBYac74oYuuhYUube0GWFhYRXaCQhDh4
+    LJqJL4qU3rtDONERW3/jc20za0b3eEDUI959TJoRcv9iHBrfQq6X5oQEula8O3Ozr+Kj
+    aIPg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrKw5+aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.35.3 SBL|AUTH)
+    with ESMTPSA id j080d2xBDDJgK7d
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 13 Dec 2021 14:19:42 +0100 (CET)
+Date:   Mon, 13 Dec 2021 14:19:38 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 5/8] dt-bindings: misc: add property to support
+ non-secure DSP
+Message-ID: <YbdIas4QE1z7alAc@gerhold.net>
+References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+ <20211209120626.26373-6-srinivas.kandagatla@linaro.org>
+ <YbcnEp5+4y5qXC60@gerhold.net>
+ <ac2e9f8f-ea52-5676-baaa-9439e8b35d8f@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ac2e9f8f-ea52-5676-baaa-9439e8b35d8f@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the USB DP & UNI PHYs found on SM8450. This is same as
-the phy version used on SM8350 and sequences turned out to be same, so
-use the same table from SM8350 for this as well.
+On Mon, Dec 13, 2021 at 12:35:40PM +0000, Srinivas Kandagatla wrote:
+> On 13/12/2021 10:57, Stephan Gerhold wrote:
+> > On Thu, Dec 09, 2021 at 12:06:23PM +0000, Srinivas Kandagatla wrote:
+> > > From: Jeya R <jeyr@codeaurora.org>
+> > > 
+> > > Add property to set DSP domain as non-secure.
+> > > 
+> > > ADSP/MDSP/SDSP are by default secured, where as CDSP can be either be
+> > > secured/unsecured.
+> > 
+> > Wouldn't it be easier to avoid the negation and add a "qcom,secure-domain"
+> > property instead? Given PATCH 8/8 ("arm64: dts: qcom: add non-secure
+> > domain property to fastrpc nodes") it looks like you are intentionally
+> > breaking DT compatibility here, but this patch does not justify why this
+> > is necessary.
+> 
+> By default all ADSP/MDSP/SDSP are secured, so this property is only required
+> for something that is not default. Only case that is configurable is the
+> CDSP case where in by adding this flag we should be able to load an unsigned
+> process to dsp using unsecured node.
+> 
+> Having said that, TBH When we first added the fastrpc patchset we did not
+> take care of this security feature properly :-)
+> 
+> From security point of view, its better to keep the default as secured
+> rather than unsecured in DT too.
+> 
+> With this DTS patch older dts should continue to work.
+> 
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 3 +++
- 1 file changed, 3 insertions(+)
+Is this a "default" on newer platforms only? Why do the existing
+platforms not use the "secure" setup then? Or is this perhaps firmware
+version/configuration specific?
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index a959c97a699f..13a249ec8ab6 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -5777,6 +5777,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm8450-qmp-ufs-phy",
- 		.data = &sm8450_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8450-qmp-usb3-phy",
-+		.data = &sm8350_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,qcm2290-qmp-usb3-phy",
- 		.data = &qcm2290_usb3phy_cfg,
--- 
-2.31.1
+Basically I'm confused because you say that the "default" is the secured
+setup, but DT patch (8/8) suggests that non-secure is the default on
+pretty much all currently supported platforms (msm8916, sdm845, sm8150,
+sm8250, sm8350). :)
 
+Thanks,
+Stephan
