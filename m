@@ -2,333 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DF5A472E91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 15:10:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B071472F6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 15:35:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237623AbhLMOKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 09:10:40 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:26770 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231394AbhLMOKk (ORCPT
+        id S239487AbhLMOf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 09:35:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235358AbhLMOf2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 09:10:40 -0500
+        Mon, 13 Dec 2021 09:35:28 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F20C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 06:35:28 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id m25-20020a7bcb99000000b0033aa12cdd33so11002531wmi.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 06:35:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639404639; x=1670940639;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=vqM9fSIdoWdqg4zybd9Gi6IM3ieGDxtQMzw6LA6D9s4=;
-  b=Y71newvPXMQD3vFRpcWBW1041a7rM8dOnivlXwOyk/1LvLA1msjJub/q
-   ilaJyzyLbOlvhr4m3BCP3tMmljI7gSv+yKCAXebfYttCis2qdx/PN77Fv
-   QH2/LvySu0ZJqLnKzK8YoNe+UK8clwPXDEkXiXaNgBQ7B4rTL022j5kOU
-   0=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Dec 2021 06:10:39 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 06:10:39 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 13 Dec 2021 06:10:39 -0800
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 13 Dec 2021 06:10:34 -0800
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Jiri Slaby <jirislaby@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_tsoni@quicinc.com>,
-        Shanker Donthineni <shankerd@codeaurora.org>,
-        "Adam Wallis" <awallis@codeaurora.org>,
-        Timur Tabi <timur@codeaurora.org>,
-        "Elliot Berman" <eberman@codeaurora.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Subject: [PATCHv3] tty: hvc: dcc: Bind driver to core0 for reads and writes
-Date:   Mon, 13 Dec 2021 19:40:13 +0530
-Message-ID: <20211213141013.21464-1-quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
+        d=nexus-software-ie.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hGa1tSiahrJ9UO+MvLTG7oTsaKn16PQ8xkumFgtJ4UU=;
+        b=oMikDdlidS+K4P/Bb7GbM3BRSVuZg3hQkjJ+c31tZFJUuGOP79hlBLJ65klzuSzVZA
+         30nCYnLKucoPUVZDHBVNBrLl4B291Sn0c4sF9Lcpw4I9GbP28NZPre/R1Tn33ffFENuh
+         uji9oLfhCiP3fkIF4BxPdHFc0ImI7x1bH+Hq5G4kwfAupkqbW7YJzzPSjasMhjQyJYlU
+         5c4uGnOXmxivvPnGCxZYV+YqKne6EeOa82OlAV7/O3Cfabf0qi9FhTGy7gNe269fxwYS
+         mPVcbDS+EKSU4EMphRNkAaWNAOti9MaCOk6cGL5PdDD/HXss0S4+9Nm/qmYLcSSporoK
+         CUHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hGa1tSiahrJ9UO+MvLTG7oTsaKn16PQ8xkumFgtJ4UU=;
+        b=wrGYSVSNHxaoOuYVHDmGZjYs2HC5joVUPc7mxsCriQKQaamWoCK/DEI8U8Mc++JAgO
+         EmYFfbHHbDhEFCe7dnVWP+sGb4O7PcnggXMozD3UI9BlRblsOk6QMVGdV4WV2JvnAfaH
+         FWWm9J0hHIgi2lQeeAdxqC208IcfMy80RXvy/0+0J9qPudKizfq6ENcNRCp9KVPMeFu5
+         FruQAeUjskRxDBw9Ia1Hp6KQ8HWeWIZRypJWRTX0oSxFHB3kcXUwt0drRhf9lROTjSv/
+         OTTD2kknR64Je++9wTzOy9hokKwjWPw/LEU9Geg3XBneP6zXOhH7BsJ9Gn5nZ3Z4678x
+         tKUQ==
+X-Gm-Message-State: AOAM531wCI5vZzAMxyT6/Lo2PCw7eDxiMFAy9hUKftYhNg+NkHNDYc0c
+        pqUv5sib2xcBWBdrFba+Y2HQwg==
+X-Google-Smtp-Source: ABdhPJyqZm+YLpbl5LPiojs3H2Nqcf7sM+3AN0becZa1sqSHRPmhysBisPeYM6roIsyi7zU48YOm8g==
+X-Received: by 2002:a1c:7d8e:: with SMTP id y136mr37952474wmc.121.1639406126795;
+        Mon, 13 Dec 2021 06:35:26 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id t189sm7262040wma.8.2021.12.13.06.35.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Dec 2021 06:35:26 -0800 (PST)
+Message-ID: <66ea3601-cf75-eccf-d5f9-f85ffb392f4c@nexus-software.ie>
+Date:   Mon, 13 Dec 2021 14:37:33 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH 3/3] wcn36xx: Implement downstream compliant beacon
+ filtering
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     loic.poulain@linaro.org, benl@squareup.com
+References: <20211213135127.1656258-1-bryan.odonoghue@linaro.org>
+ <20211213135127.1656258-4-bryan.odonoghue@linaro.org>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20211213135127.1656258-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shanker Donthineni <shankerd@codeaurora.org>
+On 13/12/2021 13:51, Bryan O'Donoghue wrote:
+> Downstream facilitates the direct programming of beacon filter tables via
+> SMD commands.
+> 
+> The purpose of beacon filters is quote:
+> 
+> /* When beacon filtering is enabled, firmware will
+>   * analyze the selected beacons received during BMPS,
+>   * and monitor any changes in the IEs as listed below.
+>   * The format of the table is:
+>   *    - EID
+>   *    - Check for IE presence
+>   *    - Byte offset
+>   *    - Byte value
+>   *    - Bit Mask
+>   *    - Byte reference
+>   */
+> 
+> The default downstream firmware filter table looks something like this:
+> tBeaconFilterIe gaBcnFilterTable[12] =
+> {
+>    { WLAN_EID_DS_PARAMS, 0u, { 0u, 0u, 0u, 0u } },
+>    { WLAN_EID_ERP_INFO, 0u, { 0u, 0u, 248u, 0u } },
+>    { WLAN_EID_EDCA_PARAM_SET, 0u, { 0u, 0u, 240u, 0u } },
+>    { WLAN_EID_QOS_CAPA, 0u, { 0u, 0u, 240u, 0u } },
+>    { WLAN_EID_CHANNEL_SWITCH, 1u, { 0u, 0u, 0u, 0u } },
+>    { WLAN_EID_QUIET, 1u, { 0u, 0u, 0u, 0u } },
+>    { WLAN_EID_HT_OPERATION, 0u, { 0u, 0u, 0u, 0u } },
+>    { WLAN_EID_HT_OPERATION, 0u, { 1u, 0u, 248u, 0u } },
+>    { WLAN_EID_HT_OPERATION, 0u, { 2u, 0u, 235u, 0u } },
+>    { WLAN_EID_HT_OPERATION, 0u, { 5u, 0u, 253u, 0u } },
+>    { WLAN_EID_PWR_CONSTRAINT, 0u, { 0u, 0u, 0u, 0u } },
+>    { WLAN_EID_OPMODE_NOTIF, 0u, { 0u, 0u, 0u, 0u } }
+> };
+> 
+> Add in an equivalent filter set as present in the downstream Linux driver.
+> For now omit the beacon filter "rem" command as downstream does not have an
+> explicit call to that SMD command. The filter mask should only count when
+> we are inside BMPS anyway.
+> 
+> Replicating the downstream ability to program the filter table gives us
+> scope to add and remove elements in future. For now though this patch
+> makes the rote-copy of the downstream Linux beacon filter table, which we
+> can tweak as desired from now on.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   drivers/net/wireless/ath/wcn36xx/hal.h  |  16 ++++
+>   drivers/net/wireless/ath/wcn36xx/main.c |   1 +
+>   drivers/net/wireless/ath/wcn36xx/smd.c  | 104 ++++++++++++++++++++++++
+>   drivers/net/wireless/ath/wcn36xx/smd.h  |   3 +
+>   4 files changed, 124 insertions(+)
+> 
+> diff --git a/drivers/net/wireless/ath/wcn36xx/hal.h b/drivers/net/wireless/ath/wcn36xx/hal.h
+> index e9fec110721b5..3351aaf5140df 100644
+> --- a/drivers/net/wireless/ath/wcn36xx/hal.h
+> +++ b/drivers/net/wireless/ath/wcn36xx/hal.h
+> @@ -3468,6 +3468,22 @@ struct beacon_filter_ie {
+>   	u8 ref;
+>   } __packed;
+>   
+> +/* Downstream values for the bitmask field */
+> +#define WCN36XX_FILTER_CAPABILITY_MASK		0x73cf
+> +#define WCN36XX_FILTER_IE_DS_CHANNEL_MASK	0x00
+> +#define WCN36XX_FILTER_IE_ERP_FILTER_MASK	0xF8
+> +#define WCN36XX_FILTER_IE_EDCA_FILTER_MASK	0xF0
+> +#define WCN36XX_FILTER_IE_QOS_FILTER_MASK	0xF0
+> +#define WCN36XX_FILTER_IE_CHANNEL_SWITCH_MASK	0x00
+> +#define WCN36XX_FILTER_IE_HT_BYTE0_FILTER_MASK	0x00
+> +#define WCN36XX_FILTER_IE_HT_BYTE1_FILTER_MASK	0xF8
+> +#define WCN36XX_FILTER_IE_HT_BYTE2_FILTER_MASK	0xEB
+> +#define WCN36XX_FILTER_IE_HT_BYTE5_FILTER_MASK	0xFD
+> +#define WCN36XX_FILTER_IE_OPMODE_NOTIF_MASK	0x00
+> +#define WCN36XX_FILTER_IE_VHTOP_CHWIDTH_MASK	0xFC
+> +#define WCN36XX_FILTER_IE_RSN_MASK		0x00
+> +#define WCN36XX_FILTER_IE_VENDOR_MASK		0x00
+> +
 
-Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-reads/writes from/to DCC on secondary cores. Each core has its
-own DCC device registers, so when a core reads or writes from/to DCC,
-it only accesses its own DCC device. Since kernel code can run on
-any core, every time the kernel wants to write to the console, it
-might write to a different DCC.
+> diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+> index b05d10f9f6005..e6ee14adbe0da 100644
+> --- a/drivers/net/wireless/ath/wcn36xx/smd.c
+> +++ b/drivers/net/wireless/ath/wcn36xx/smd.c
 
-In SMP mode, Trace32 creates multiple windows, and each window shows
-the DCC output only from that core's DCC. The result is that console
-output is either lost or scattered across windows.
+> +/* Downstream values for the bitmask field */
+> +#define WCN36XX_FILTER_CAPABILITY_MASK		0x73cf
+> +#define WCN36XX_FILTER_IE_DS_CHANNEL_MASK	0x00
+> +#define WCN36XX_FILTER_IE_ERP_FILTER_MASK	0xF8
+> +#define WCN36XX_FILTER_IE_EDCA_FILTER_MASK	0xF0
+> +#define WCN36XX_FILTER_IE_QOS_FILTER_MASK	0xF0
+> +#define WCN36XX_FILTER_IE_CHANNEL_SWITCH_MASK	0x00
+> +#define WCN36XX_FILTER_IE_HT_BYTE0_FILTER_MASK	0x00
+> +#define WCN36XX_FILTER_IE_HT_BYTE1_FILTER_MASK	0xF8
+> +#define WCN36XX_FILTER_IE_HT_BYTE2_FILTER_MASK	0xEB
+> +#define WCN36XX_FILTER_IE_HT_BYTE5_FILTER_MASK	0xFD
+> +#define WCN36XX_FILTER_IE_PWR_CONSTRAINT_MASK	0x00
+> +#define WCN36XX_FILTER_IE_OPMODE_NOTIF_MASK	0x00
+> +#define WCN36XX_FILTER_IE_VHTOP_CHWIDTH_MASK	0xFC
+> +#define WCN36XX_FILTER_IE_RSN_MASK		0x00
+> +#define WCN36XX_FILTER_IE_VENDOR_MASK		0x00
 
-Selecting this option will enable code that serializes all console
-input and output to core 0. The DCC driver will create input and
-output FIFOs that all cores will use. Reads and writes from/to DCC
-are handled by a workqueue that runs only core 0.
-
-Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
-Acked-by: Adam Wallis <awallis@codeaurora.org>
-Signed-off-by: Timur Tabi <timur@codeaurora.org>
-Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
-
-Changes in v3:
- * Handle case where core0 is not online.
-
-Changes in v2:
- * Checkpatch warning fixes.
- * Use of IS_ENABLED macros instead of ifdefs.
-
----
- drivers/tty/hvc/Kconfig   |  20 +++++
- drivers/tty/hvc/hvc_dcc.c | 161 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 180 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
-index 8d60e0ff67b4..c0754a2e3fe4 100644
---- a/drivers/tty/hvc/Kconfig
-+++ b/drivers/tty/hvc/Kconfig
-@@ -87,6 +87,26 @@ config HVC_DCC
- 	  driver. This console is used through a JTAG only on ARM. If you don't have
- 	  a JTAG then you probably don't want this option.
- 
-+config HVC_DCC_SERIALIZE_SMP
-+	bool "Use DCC only on core 0"
-+	depends on SMP && HVC_DCC
-+	help
-+	  Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-+	  reads/writes from/to DCC on more than one core. Each core has its
-+	  own DCC device registers, so when a core reads or writes from/to DCC,
-+	  it only accesses its own DCC device. Since kernel code can run on
-+	  any core, every time the kernel wants to write to the console, it
-+	  might write to a different DCC.
-+
-+	  In SMP mode, Trace32 creates multiple windows, and each window shows
-+	  the DCC output only from that core's DCC. The result is that console
-+	  output is either lost or scattered across windows.
-+
-+	  Selecting this option will enable code that serializes all console
-+	  input and output to core 0. The DCC driver will create input and
-+	  output FIFOs that all cores will use. Reads and writes from/to DCC
-+	  are handled by a workqueue that runs only core 0.
-+
- config HVC_RISCV_SBI
- 	bool "RISC-V SBI console support"
- 	depends on RISCV_SBI_V01
-diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
-index 8e0edb7d93fd..24e3770219bc 100644
---- a/drivers/tty/hvc/hvc_dcc.c
-+++ b/drivers/tty/hvc/hvc_dcc.c
-@@ -2,9 +2,12 @@
- /* Copyright (c) 2010, 2014 The Linux Foundation. All rights reserved.  */
- 
- #include <linux/console.h>
-+#include <linux/cpumask.h>
- #include <linux/init.h>
-+#include <linux/kfifo.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
-+#include <linux/spinlock.h>
- 
- #include <asm/dcc.h>
- #include <asm/processor.h>
-@@ -67,26 +70,182 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
- 	return i;
- }
- 
-+/*
-+ * Check if the DCC is enabled.  If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
-+ * then we assume then this function will be called first on core 0.  That
-+ * way, dcc_core0_available will be true only if it's available on core 0.
-+ */
- static bool hvc_dcc_check(void)
- {
- 	unsigned long time = jiffies + (HZ / 10);
-+	static bool dcc_core0_available;
-+
-+	/*
-+	 * If we're not on core 0, but we previously confirmed that DCC is
-+	 * active, then just return true.
-+	 */
-+	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && smp_processor_id() &&
-+	    dcc_core0_available)
-+		return true;
- 
- 	/* Write a test character to check if it is handled */
- 	__dcc_putchar('\n');
- 
- 	while (time_is_after_jiffies(time)) {
--		if (!(__dcc_getstatus() & DCC_STATUS_TX))
-+		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
-+			if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-+				dcc_core0_available = true;
- 			return true;
-+		}
- 	}
- 
- 	return false;
- }
- 
-+#if defined(CONFIG_HVC_DCC_SERIALIZE_SMP)
-+
-+static void dcc_put_work_fn(struct work_struct *work);
-+static void dcc_get_work_fn(struct work_struct *work);
-+static DECLARE_WORK(dcc_pwork, dcc_put_work_fn);
-+static DECLARE_WORK(dcc_gwork, dcc_get_work_fn);
-+static DEFINE_SPINLOCK(dcc_lock);
-+static DEFINE_KFIFO(inbuf, unsigned char, 128);
-+static DEFINE_KFIFO(outbuf, unsigned char, 1024);
-+
-+/*
-+ * Workqueue function that writes the output FIFO to the DCC on core 0.
-+ */
-+static void dcc_put_work_fn(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	/* While there's data in the output FIFO, write it to the DCC */
-+	while (kfifo_get(&outbuf, &ch))
-+		hvc_dcc_put_chars(0, &ch, 1);
-+
-+	/* While we're at it, check for any input characters */
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+/*
-+ * Workqueue function that reads characters from DCC and puts them into the
-+ * input FIFO.
-+ */
-+static void dcc_get_work_fn(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	/*
-+	 * Read characters from DCC and put them into the input FIFO, as
-+	 * long as there is room and we have characters to read.
-+	 */
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+/*
-+ * Write characters directly to the DCC if we're on core 0 and the FIFO
-+ * is empty, or write them to the FIFO if we're not.
-+ */
-+static int hvc_dcc0_put_chars(u32 vt, const char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
-+		len = kfifo_in(&outbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		if (!cpu_online(0))
-+			return 0;
-+		/*
-+		 * We just push data to the output FIFO, so schedule the
-+		 * workqueue that will actually write that data to DCC.
-+		 */
-+		schedule_work_on(0, &dcc_pwork);
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * write the data to DCC.
-+	 */
-+	len = hvc_dcc_put_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
-+/*
-+ * Read characters directly from the DCC if we're on core 0 and the FIFO
-+ * is empty, or read them from the FIFO if we're not.
-+ */
-+static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
-+		len = kfifo_out(&inbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		if (!cpu_online(0))
-+			return 0;
-+		/*
-+		 * If the FIFO was empty, there may be characters in the DCC
-+		 * that we haven't read yet.  Schedule a workqueue to fill
-+		 * the input FIFO, so that the next time this function is
-+		 * called, we'll have data.
-+		 */
-+		if (!len)
-+			schedule_work_on(0, &dcc_gwork);
-+
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * read the data from DCC.
-+	 */
-+	len = hvc_dcc_get_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
-+static const struct hv_ops hvc_dcc_get_put_ops = {
-+	.get_chars = hvc_dcc0_get_chars,
-+	.put_chars = hvc_dcc0_put_chars,
-+};
-+
-+#else
-+
- static const struct hv_ops hvc_dcc_get_put_ops = {
- 	.get_chars = hvc_dcc_get_chars,
- 	.put_chars = hvc_dcc_put_chars,
- };
- 
-+#endif
-+
- static int __init hvc_dcc_console_init(void)
- {
- 	int ret;
--- 
-2.33.1
-
+Well, I didn't mean to do that..
