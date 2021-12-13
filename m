@@ -2,110 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DA32472C66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 13:40:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73D42472C96
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 13:50:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236804AbhLMMkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 07:40:05 -0500
-Received: from mga17.intel.com ([192.55.52.151]:22890 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233894AbhLMMkE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 07:40:04 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10196"; a="219405372"
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="219405372"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 04:40:04 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="481495980"
-Received: from stinkbox.fi.intel.com (HELO stinkbox) ([10.237.72.171])
-  by orsmga002.jf.intel.com with SMTP; 13 Dec 2021 04:40:00 -0800
-Received: by stinkbox (sSMTP sendmail emulation); Mon, 13 Dec 2021 14:39:59 +0200
-Date:   Mon, 13 Dec 2021 14:39:59 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     ira.weiny@intel.com
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH 1/7] drm/i915: Replace kmap() with kmap_local_page()
-Message-ID: <Ybc/HwaG2vgbdkQr@intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20211210232404.4098157-2-ira.weiny@intel.com>
+        id S236995AbhLMMuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 07:50:14 -0500
+Received: from sin.source.kernel.org ([145.40.73.55]:53248 "EHLO
+        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232942AbhLMMuN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 07:50:13 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id E052ECE0FFC;
+        Mon, 13 Dec 2021 12:50:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 145D9C34604;
+        Mon, 13 Dec 2021 12:50:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639399810;
+        bh=IkIPZYonsJrPkJsvdsaXOjan0FkyBQOEN9tyVjgrePY=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=mJgt1mcJoa1JhZsWsgT/COClnMIeql9OrHcucwsi+qy6kCWdcrgAbNZXTIMGvDljs
+         MB+t7kR+WEoGz8lMRLWI1D7oKDqofFQZrzL+GFwqmFr6mgFsOb/G372xxiiAAwP9UM
+         Pbd0k2cHcI/03S/6NcaAro13KH/JbEJhy5/s+WYnvueHNDR7CP+2b+iLEKDf1v48oP
+         1IPTTwD9KPgxopjPKvEMrcWJL8z7OovrsndMf1y1+9s2JHVa+qkSVGXTNyDXW6P1Fh
+         XDK5hIY6E3fd4psTARWYZwiROh8eFpRlf9Yhr2LhPLDiLez3eDZIqFaAaAA9r4xU6Z
+         H2072T+NZ6E8Q==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id E6DDA609CD;
+        Mon, 13 Dec 2021 12:50:09 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20211210232404.4098157-2-ira.weiny@intel.com>
-X-Patchwork-Hint: comment
+Subject: Re: [PATCH net-next v2 0/2] net: ipa: fix SDX55 interconnects
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <163939980994.30215.13765984961619992251.git-patchwork-notify@kernel.org>
+Date:   Mon, 13 Dec 2021 12:50:09 +0000
+References: <20211210223123.98586-1-elder@linaro.org>
+In-Reply-To: <20211210223123.98586-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, kuba@kernel.org, david@ixit.cz,
+        manivannan.sadhasivam@linaro.org, jponduru@codeaurora.org,
+        avuyyuru@codeaurora.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, robh+dt@kernel.org, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, mka@chromium.org, evgreen@chromium.org,
+        elder@kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 03:23:58PM -0800, ira.weiny@intel.com wrote:
-> From: Ira Weiny <ira.weiny@intel.com>
-> 
-> kmap() is being deprecated and these usages are all local to the thread
-> so there is no reason kmap_local_page() can't be used.
-> 
-> Replace kmap() calls with kmap_local_page().
-> 
-> Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-> ---
->  drivers/gpu/drm/i915/gem/i915_gem_shmem.c          | 4 ++--
->  drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
->  drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c       | 4 ++--
->  drivers/gpu/drm/i915/gt/shmem_utils.c              | 4 ++--
->  drivers/gpu/drm/i915/i915_gem.c                    | 8 ++++----
->  drivers/gpu/drm/i915/i915_gpu_error.c              | 4 ++--
->  6 files changed, 16 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> index d77da59fae04..fa8b820e14aa 100644
-> --- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> +++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-> @@ -597,9 +597,9 @@ i915_gem_object_create_shmem_from_data(struct drm_i915_private *dev_priv,
->  		if (err < 0)
->  			goto fail;
->  
-> -		vaddr = kmap(page);
-> +		vaddr = kmap_local_page(page);
->  		memcpy(vaddr, data, len);
-> -		kunmap(page);
-> +		kunmap_local(vaddr);
->  
->  		err = pagecache_write_end(file, file->f_mapping,
->  					  offset, len, len,
-> diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> index 6d30cdfa80f3..e59e1725e29d 100644
-> --- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> +++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
-> @@ -144,7 +144,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
->  	intel_gt_flush_ggtt_writes(&to_i915(obj->base.dev)->gt);
->  
->  	p = i915_gem_object_get_page(obj, offset >> PAGE_SHIFT);
-> -	cpu = kmap(p) + offset_in_page(offset);
-> +	cpu = kmap_local_page(p) + offset_in_page(offset);
+Hello:
 
-Does kunmap_local() do some magic to make it work even when you
-don't pass in the same value you got from kmap_local_page()?
+This series was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
->  	drm_clflush_virt_range(cpu, sizeof(*cpu));
->  	if (*cpu != (u32)page) {
->  		pr_err("Partial view for %lu [%u] (offset=%llu, size=%u [%llu, row size %u], fence=%d, tiling=%d, stride=%d) misalignment, expected write to page (%llu + %u [0x%llx]) of 0x%x, found 0x%x\n",
-> @@ -162,7 +162,7 @@ static int check_partial_mapping(struct drm_i915_gem_object *obj,
->  	}
->  	*cpu = 0;
->  	drm_clflush_virt_range(cpu, sizeof(*cpu));
-> -	kunmap(p);
-> +	kunmap_local(cpu);
->  
->  out:
->  	__i915_vma_put(vma);
+On Fri, 10 Dec 2021 16:31:21 -0600 you wrote:
+> The SDX55 SoC has IPA v4.5.  It currently represents the path
+> between IPA and main memory using two consecutive interconnects.
+> This was an optimization--not required for correct operation--and
+> complicates things unnecessarily.  It also does not conform to the
+> IPA binding (as pointed out by David Heidelberg).
+> 
+> This series fixes this by combining the two interconnects into one.
+> 
+> [...]
 
+Here is the summary with links:
+  - [net-next,v2,1/2] ARM: dts: qcom: sdx55: fix IPA interconnect definitions
+    https://git.kernel.org/netdev/net-next/c/c0d6316c238b
+  - [net-next,v2,2/2] net: ipa: fix IPA v4.5 interconnect data
+    https://git.kernel.org/netdev/net-next/c/97884b07122a
+
+You are awesome, thank you!
 -- 
-Ville Syrjälä
-Intel
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
