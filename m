@@ -2,238 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29E97471ECA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 00:28:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CA992471F57
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 03:36:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229790AbhLLX2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Dec 2021 18:28:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32790 "EHLO
+        id S231315AbhLMCgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Dec 2021 21:36:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229794AbhLLX2i (ORCPT
+        with ESMTP id S229436AbhLMCge (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Dec 2021 18:28:38 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE42AC0613F8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 15:28:37 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id r26so21080771oiw.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 15:28:37 -0800 (PST)
+        Sun, 12 Dec 2021 21:36:34 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E4EC06173F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 18:36:34 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id i12so13673323pfd.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 18:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=vh/wbUgkfdUKYGNf++vDHtfUUGTEz/aDqpk4svRd0AU=;
-        b=eFCYdoOnvicz305xpH32Kg8EG8w2nlSE/gKoZN+QDT0H8gjFjq9u+UK7t6hsKx9edk
-         vycsb162kCx//Be7+ctj2oHH4iauI1LBvJQhhDPhvIYRy0SN7EsFY7NBZBKVtFGP0FwZ
-         onqFNZlUwxK+y4f2a/dpfmjZJYOUgNVFC4EArWVnCp4TR5jT2yitkffWtafNPDXgSrg+
-         bu1bjOzNBu2mdMSGt+u7HPKjQGtC4PR2livr67HoE3RUrdGTx4GmW1Bk5t4M7f5MQf43
-         FlPvugwqwS0nsPToCBWxkbGHQahSkjIUBxStx3nZtbc/iFKRHG2yve04vvANPQzzG+Qa
-         Vmsw==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0eGpjRTIP8qpbTlDU+W5IxnYYFEbazG3/WvSvG64SbY=;
+        b=d+fB4mREgTBzUf4Z9dFsrcew+QdCLjO1S5SnVbfZtKQ/874Tw0pD9aZON8/hNsbBMA
+         mbk3JtnGzTypSPLqHakybnBn7roMWN61Df0HjxFyxWb1KpSttOCafZxQjRsrUtKZUy9j
+         oC1FSTGTyCpXrXIrF0duoKt+uh8ttPG/CWreM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=vh/wbUgkfdUKYGNf++vDHtfUUGTEz/aDqpk4svRd0AU=;
-        b=zeXKmyhQfSq+sX1QoQZBrcnChFqdTTNU50O5KCYUc5Ffz9/u4JBwh2uUSR6dh0uZnQ
-         tyj5SDsAc9DQOPxXoiuNtAj1s1TOlj386acCWYZ6EEbJxtXsSWKkJv+ZNmVY20dhp8tX
-         otGfIGSITb/XQ8k1QOpA9cCDDNg2cCSiPGMj/oUiPO4/lfA1NlloPq9V3e7o2vR1cGv3
-         rYPLxqXBsO6PI5ADY1oZ/0aFHgi1Dpng7Y7PdqNOrfSs9U5BqBzN9l3/AfLAmc97rf/4
-         8VDP+M1aTguK4UvidXRWLLSnzuy7hdYot0dakIw7O9TAzHM5IheLQo7Xx0Q8EMnX5nxR
-         ZcQg==
-X-Gm-Message-State: AOAM532DxmHmZecq6/i7+1f/f0nGQvhm5MBTmpCzMQDDQeysFFb+ChFg
-        ttlr/1xPzkLK9spOhu44g15LDg==
-X-Google-Smtp-Source: ABdhPJynYL4sOmYh81k1oyCXWiDgoSrW3Neq8jhKGC61PeMkyTcbrmEIWYxN8k2HFvsYnGzbWYIlbg==
-X-Received: by 2002:aca:eb53:: with SMTP id j80mr23670708oih.85.1639351717273;
-        Sun, 12 Dec 2021 15:28:37 -0800 (PST)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id c8sm1933033otk.40.2021.12.12.15.28.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Dec 2021 15:28:36 -0800 (PST)
-Message-ID: <89dfda08-a7cf-0acb-4b3d-6c57577a548e@kali.org>
-Date:   Sun, 12 Dec 2021 17:28:30 -0600
+        bh=0eGpjRTIP8qpbTlDU+W5IxnYYFEbazG3/WvSvG64SbY=;
+        b=QMGScuYbI67Tpj/Q7ESw4cKFbMj9p+9qedBQ2o4gtIMVMMktmRgxDf5hrXIWYdydXX
+         IiSAXYA1fUUQSl1eaioLPksQDpvkpyo1GEPJUzwqF5kjjCmRiO9ljRVf/hZ03WVy/Gvw
+         4OpwCZCUl8fWX+ZUIn1canVNaEEveaI1XdgiBb9J3EpkK8mkj7ylRDFySfuOhWcXupNs
+         wTU4cgNjRazIUDm9vfRYLG6rPDUUoJj3C7D0qyHJT8SjcJanj/mAekaQrl+hJcp+7eLA
+         xXuuA07fomBqcQBAXEodnCPLVELvTC3jxNmvupj/k5hJnObSKzg92aJdtLCMOytU6szQ
+         r/Ag==
+X-Gm-Message-State: AOAM532BwhhbAXk0kNqNl5AaDtusVgXhwu7Nx3myRjKpsA3oruLoLdV4
+        oWJB0b3OnL4DhCrdyKXZVTDerQ==
+X-Google-Smtp-Source: ABdhPJw42hvVIex26E9A8al5w6XIMNezym+bf8FY/TihY8Zzop3YBNQewE7sGpZXTNKtHwSxJpmsYQ==
+X-Received: by 2002:a05:6a00:1744:b0:4a4:f4e6:1cc0 with SMTP id j4-20020a056a00174400b004a4f4e61cc0mr30856823pfc.15.1639362994108;
+        Sun, 12 Dec 2021 18:36:34 -0800 (PST)
+Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:f443:6b46:47e0:4f53])
+        by smtp.gmail.com with ESMTPSA id c21sm10156927pfl.138.2021.12.12.18.36.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Dec 2021 18:36:33 -0800 (PST)
+From:   Judy Hsiao <judyhsiao@chromium.org>
+To:     broonie@kernel.org
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
+        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
+Subject: [v2] SoC: qcom: Distinguish headset codec by codec_dai->name
+Date:   Mon, 13 Dec 2021 10:36:26 +0800
+Message-Id: <20211213023626.673323-1-judyhsiao@chromium.org>
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
-Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Amit Nischal <anischal@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Distinguish which headset codec is on the board by codec_dai->name
+instead of card->name.
 
-On 12/2/21 9:56 PM, Bjorn Andersson wrote:
-> As GDSCs are turned on and off some associated clocks are momentarily
-> enabled for house keeping purposes. Failure to enable these clocks seems
-> to have been silently ignored in the past, but starting in SM8350 this
-> failure will prevent the GDSC to turn on.
->
-> At least on SM8350 this operation will enable the RCG per the
-> configuration in CFG_REG. This means that the current model where the
-> current configuration is written back to CF_REG immediately after
-> parking the RCG doesn't work.
->
-> Instead, keep track of the currently requested rate of the clock and
-> upon enabling the clock reapply the configuration per the saved rate.
->
-> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->   drivers/clk/qcom/clk-rcg.h  |  2 ++
->   drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
->   2 files changed, 19 insertions(+), 15 deletions(-)
->
-> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> index 99efcc7f8d88..6939f4e62768 100644
-> --- a/drivers/clk/qcom/clk-rcg.h
-> +++ b/drivers/clk/qcom/clk-rcg.h
-> @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
->    * @freq_tbl: frequency table
->    * @clkr: regmap clock handle
->    * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
-> + * @current_rate: cached rate for parked RCGs
->    */
->   struct clk_rcg2 {
->   	u32			cmd_rcgr;
-> @@ -149,6 +150,7 @@ struct clk_rcg2 {
->   	const struct freq_tbl	*freq_tbl;
->   	struct clk_regmap	clkr;
->   	u8			cfg_off;
-> +	unsigned long		current_rate;
->   };
->   
->   #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index e1b1b426fae4..b574b38dcbd5 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -167,6 +167,7 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
->   {
->   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
->   	u32 cfg, hid_div, m = 0, n = 0, mode = 0, mask;
-> +	unsigned long rate;
->   
->   	regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
->   
-> @@ -186,7 +187,11 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
->   	hid_div = cfg >> CFG_SRC_DIV_SHIFT;
->   	hid_div &= mask;
->   
-> -	return calc_rate(parent_rate, m, n, mode, hid_div);
-> +	rate = calc_rate(parent_rate, m, n, mode, hid_div);
-> +	if (!rcg->current_rate)
-> +		rcg->current_rate = rate;
-> +
-> +	return rate;
->   }
->   
->   static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
-> @@ -968,12 +973,14 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
->   	if (!f)
->   		return -EINVAL;
->   
-> +	rcg->current_rate = rate;
-> +
->   	/*
-> -	 * In case clock is disabled, update the CFG, M, N and D registers
-> -	 * and don't hit the update bit of CMD register.
-> +	 * In the case that the shared RCG is parked, current_rate will be
-> +	 * applied as the clock is unparked again, so just return here.
->   	 */
->   	if (!__clk_is_enabled(hw->clk))
-> -		return __clk_rcg2_configure(rcg, f);
-> +		return 0;
->   
->   	return clk_rcg2_shared_force_enable_clear(hw, f);
->   }
-> @@ -987,8 +994,13 @@ static int clk_rcg2_shared_set_rate_and_parent(struct clk_hw *hw,
->   static int clk_rcg2_shared_enable(struct clk_hw *hw)
->   {
->   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> +	const struct freq_tbl *f = NULL;
->   	int ret;
->   
-> +	f = qcom_find_freq(rcg->freq_tbl, rcg->current_rate);
-> +	if (!f)
-> +		return -EINVAL;
-> +
->   	/*
->   	 * Set the update bit because required configuration has already
->   	 * been written in clk_rcg2_shared_set_rate()
-> @@ -997,7 +1009,7 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
->   	if (ret)
->   		return ret;
->   
-> -	ret = update_config(rcg);
-> +	ret = clk_rcg2_configure(rcg, f);
->   	if (ret)
->   		return ret;
->   
-> @@ -1007,13 +1019,6 @@ static int clk_rcg2_shared_enable(struct clk_hw *hw)
->   static void clk_rcg2_shared_disable(struct clk_hw *hw)
->   {
->   	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> -	u32 cfg;
-> -
-> -	/*
-> -	 * Store current configuration as switching to safe source would clear
-> -	 * the SRC and DIV of CFG register
-> -	 */
-> -	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
->   
->   	/*
->   	 * Park the RCG at a safe configuration - sourced off of safe source.
-> @@ -1031,9 +1036,6 @@ static void clk_rcg2_shared_disable(struct clk_hw *hw)
->   	update_config(rcg);
->   
->   	clk_rcg2_clear_force_enable(hw);
-> -
-> -	/* Write back the stored configuration corresponding to current rate */
-> -	regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
->   }
->   
->   const struct clk_ops clk_rcg2_shared_ops = {
+It fixes the crash of being unable to handle kernel paging requests
+at virtual address ADDR by initializing the correct audio codec on
+the board.
 
-Revisiting this...
+Call stack of the crash:
+```
+ Unable to handle kernel paging request at virtual address ffffffbfe7bba9ce
+ Mem abort info:
+   ESR = 0x96000005
+   EC = 0x25: DABT (current EL), IL = 32 bits
+   SET = 0, FnV = 0
+   EA = 0, S1PTW = 0
+ Data abort info:
+   ISV = 0, ISS = 0x00000005
+   CM = 0, WnR = 0
+ swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000008379a000
+ [ffffffbfe7bba9ce] pgd=0000000000000000, pud=0000000000000000
+ Internal error: Oops: 96000005 [#1] PREEMPT SMP
+ Modules linked in: ip6table_nat fuse uvcvideo videobuf2_vmalloc [trimmed]
+ CPU: 7 PID: 2168 Comm: cras Not tainted 5.4.163-lockdep-17364-gfe3d4f499cf1 #1
+ Hardware name: Google Pompom (rev2) with LTE (DT)
+ pstate: 00400009 (nzcv daif +PAN -UAO)
+ pc : rt5682_set_component_pll+0xcc/0xb78 [snd_soc_rt5682]
+ lr : rt5682_set_component_pll+0xbc/0xb78 [snd_soc_rt5682]
+ sp : ffffff808ed7f320
+ x29: ffffff808ed7f390 x28: dfffffd000000000
+ x27: ffffff80b1409550 x26: 00000000aaaaaaaa
+ x25: ffffff80d0a0b820 x24: ffffff80bc1f7098
+ x23: ffffff809332a080 x22: 00000000aaaaaaaa
+ x21: 1ffffff01783ee13 x20: 00000000aaaaaaaa
+ x19: 00000000aaaaaaaa x18: 1ffffff011dafe18
+ x17: 0000000000000000 x16: 0000000000000201
+ x15: 0000000000000000 x14: 0000000062f77d15
+ x13: dfffffd000000000 x12: ffffffd01302ed7c
+ x11: 0000000000000000 x10: ffffff7f3ddd4e74
+ x9 : 0000000000000000 x8 : 1fffffefe7bba9ce
+ x7 : aaaaaaaaaaaaaaaa x6 : 0000000000000000
+ x5 : 0000000000000000 x4 : 0000000000000008
+ x3 : 0000000000000000 x2 : 0000000000000008
+ x1 : 00000000000000aa x0 : ffffff808ed7f358
+ Call trace:
+  rt5682_set_component_pll+0xcc/0xb78 [snd_soc_rt5682]
+  snd_soc_component_set_pll+0x90/0x154
+  snd_soc_dai_set_pll+0xf4/0x1ac
+  sc7180_snd_startup+0x268/0x3c0 [snd_soc_sc7180]
+  snd_soc_link_startup+0xa4/0x180
+  soc_pcm_open+0x35c/0x15c8
+  snd_pcm_open_substream+0xa90/0x13b0
+  snd_pcm_open+0x1a4/0x55c
+  snd_pcm_capture_open+0x7c/0xe8
+  snd_open+0x2b8/0x2e4
+  chrdev_open+0x364/0x3d4
+  do_dentry_open+0x66c/0xc58
+  vfs_open+0x7c/0x8c
+  path_openat+0x108c/0x2bbc
+  do_filp_open+0x15c/0x258
+  do_sys_open+0x278/0x62c
+  __arm64_compat_sys_openat+0x9c/0xb0
+  el0_svc_common+0x1c0/0x3dc
+  el0_svc_compat_handler+0x88/0xd4
+  el0_svc_compat+0x8/0x2c
+ Code: 8b3acae8 910d310a d343fd48 a9012be8 (38fc6908)
+```
 
-With Dmitry's patches applied ( 
-https://lore.kernel.org/linux-arm-msm/20211208022210.1300773-1-dmitry.baryshkov@linaro.org/ 
-) as well as these, and clk_ignore_unused, I get both
+Fixes: 425c5fce8a03 ("ASoC: qcom: Add support for ALC5682I-VS codec")
+Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+---
+ sound/soc/qcom/sc7180.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-[ 4.767487] ------------[ cut here ]------------ [ 4.767495] 
-disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration.
-
-and
-
-
-[ 6.449518] ------------[ cut here ]------------ [ 6.449525] 
-video_cc_venus_clk_src: rcg didn't update its configuration.
-
-This includes after modifying Dmitry's patches to park the above 2 clocks.
-
-Removing "clk_ignore_unused" from the kernel command line, while keeping 
-Dmitry's patchset as well as this patch,
-
-results in the disp_cc_mdss_pclk0_clk_src going away, but the 
-video_cc_venus_clk_src still shows up.
-
-Applying Dmitry's patches, removing this one, and removing 
-"clk_ignore_unused" from command line arguments ends up
-
-with none of these rcg didn't update its configuration messages. As can 
-be seen in http://paste.debian.net/1222931
-
--- steev
+diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
+index 2fff764a00a7..37225ef2563a 100644
+--- a/sound/soc/qcom/sc7180.c
++++ b/sound/soc/qcom/sc7180.c
+@@ -131,13 +131,13 @@ static int sc7180_snd_startup(struct snd_pcm_substream *substream)
+ 	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+ 	int pll_id, pll_source, pll_in, pll_out, clk_id, ret;
+ 
+-	if (!(strcmp(card->name, "sc7180-rt5682-max98357a-1mic"))) {
++	if (!strcmp(codec_dai->name, "rt5682-aif1")) {
+ 		pll_source = RT5682_PLL1_S_MCLK;
+ 		pll_id = 0;
+ 		clk_id = RT5682_SCLK_S_PLL1;
+ 		pll_out = RT5682_PLL1_FREQ;
+ 		pll_in = DEFAULT_MCLK_RATE;
+-	} else if (!(strcmp(card->name, "sc7180-rt5682s-max98357a-1mic"))) {
++	} else if (!strcmp(codec_dai->name, "rt5682s-aif1")) {
+ 		pll_source = RT5682S_PLL_S_MCLK;
+ 		pll_id = RT5682S_PLL2;
+ 		clk_id = RT5682S_SCLK_S_PLL2;
+-- 
+2.31.0
 
