@@ -2,75 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D36DF473122
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 17:03:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF08447313C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 17:06:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240412AbhLMQDC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 11:03:02 -0500
-Received: from mga07.intel.com ([134.134.136.100]:10837 "EHLO mga07.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240386AbhLMQC4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 11:02:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1639411376; x=1670947376;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=980G/17/cPf9ib/kPiRwCuEEfBn5w1Rt8kaFq1oJ674=;
-  b=ct1d8MIPc4y/5nj7WEDT+vo98yenVnpUt1hYqoF3m7NigsTQzDOMXLMT
-   uoyVk9JBL/rcjVOIWwPxcogiHnxkwo38W3QMWv24yGTkK+35RIqjHVYCN
-   O9/+gtB2iSpTYKid6YjAD0tV/eLxjEuuM4sig9C+qzXEVgLWlqTR6SfIN
-   JcXiZwP+G6eGGZzpdw2dUT3f8LEIKk4fFYYjugOBG7l1kZjBHs/8fkIY3
-   1um7naHKrAZRzYnacW3rX4YQB22L0Ax+gOL1y7R1jsLPBp1mu4zg5zUUS
-   IVHZwFdhkY+8uUHoq7x6jSFoTV/Vy4oj/uCGl3of90aqkhwn3JV1lFyfd
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10196"; a="302143278"
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="302143278"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 08:02:25 -0800
-X-IronPort-AV: E=Sophos;i="5.88,202,1635231600"; 
-   d="scan'208";a="660894514"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 08:02:24 -0800
-Date:   Mon, 13 Dec 2021 08:02:23 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     Christoph Hellwig <hch@infradead.org>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/7] drm/i915: Replace kmap() with kmap_local_page()
-Message-ID: <20211213160223.GN3538886@iweiny-DESK2.sc.intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20211210232404.4098157-2-ira.weiny@intel.com>
- <YbcMhzfm31aL5fzx@infradead.org>
+        id S239397AbhLMQGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 11:06:33 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:55146 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233834AbhLMQGd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 11:06:33 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 269AF61164
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 16:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72DAC34603;
+        Mon, 13 Dec 2021 16:06:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639411592;
+        bh=rXnBsVxcBXElloKji2ajbsyDvwCJ0DSAlp3vgNJE2sA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TuIuJ3psaUqDh/BYj7qu+hKMs8MDyw8/VX5hq8v4ZYL87HI2zrK4KuKQu0yvxt5iI
+         s57+N+p/2NOsMBHcBQkbGwXDj6XneJFQZcYXhMgd7VYL4IvmoCl/gVPxiWcGMZNxM/
+         nUIFceByrJh4KecFGjPFi1Y7bXTUioW/Flcw31c7fsNIer/CkeMnvi3uG/TXKJybEH
+         YNjaWTuXR4ODiLFAPwB7U82Vx14mHtiQ0mpe3d95Cx1tJti99T6gLPcYYp/jXU8u94
+         4zpch+4U58euj0h7WuafSaX7wmLXwHn4WWSAox57OUz5sOsTEeu5FHpWOl9yl0iT1r
+         CrXdkilVWw2Zg==
+Date:   Mon, 13 Dec 2021 16:06:26 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
+        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Subject: Re: [v2] SoC: qcom: Distinguish headset codec by codec_dai->name
+Message-ID: <YbdvgsxMThr0e8zl@sirena.org.uk>
+References: <20211213023626.673323-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="LeBiO8fVW2rW6wdM"
 Content-Disposition: inline
-In-Reply-To: <YbcMhzfm31aL5fzx@infradead.org>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+In-Reply-To: <20211213023626.673323-1-judyhsiao@chromium.org>
+X-Cookie: No solicitors.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 01:04:07AM -0800, Christoph Hellwig wrote:
-> On Fri, Dec 10, 2021 at 03:23:58PM -0800, ira.weiny@intel.com wrote:
-> > -		vaddr = kmap(page);
-> > +		vaddr = kmap_local_page(page);
-> >  		memcpy(vaddr, data, len);
-> > -		kunmap(page);
-> > +		kunmap_local(vaddr);
-> 
-> memcpy_to_page?
 
-Opps!  Yea!
+--LeBiO8fVW2rW6wdM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-David, Daniel,
+On Mon, Dec 13, 2021 at 10:36:26AM +0800, Judy Hsiao wrote:
 
-Do you prefer me to resent the entire series or reply to this message with a
-V2?
+> Call stack of the crash:
+> ```
+>  Unable to handle kernel paging request at virtual address ffffffbfe7bba9ce
+>  Mem abort info:
 
-Ira
+Please think hard before including complete backtraces in upstream
+reports, they are very large and contain almost no useful information
+relative to their size so often obscure the relevant content in your
+message. If part of the backtrace is usefully illustrative (it often is
+for search engines if nothing else) then it's usually better to pull out
+the relevant sections.
+
+--LeBiO8fVW2rW6wdM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmG3b4IACgkQJNaLcl1U
+h9CGawf/bxYlM8BIwZISWj9XwYRJQ4xszBtDniunG9Ubh5idc8v3okv0ft3yEG0j
+/dEv2lEEY5geJV2dACTlAUbzdIHd44K7K+SoqTtZar+3p08mzTImfCaXwNvBD5qa
+ftA8YH3EyMDxTnqS5f25632WrBfIgvbIL8enlfIqIMRf6UCDmKDIl4eVmN13Wk5w
+k82/PDyXplEWTxQ3zyvhbv82g9XzZtkCrT+uqqs3s35ORP1V9Ay4qxc/2Z+CARQi
+BfeSbE0RsjZkcnKWSQrDE/msrvaeW34tdL8rCm47Uc2C/FXsrNn46wOUlBaG/Tol
+yyyDBjvmziEWRJeqm+8KYwXjZM8x2Q==
+=IL/Z
+-----END PGP SIGNATURE-----
+
+--LeBiO8fVW2rW6wdM--
