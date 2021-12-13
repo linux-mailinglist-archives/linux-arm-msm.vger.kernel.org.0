@@ -2,162 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA992471F57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 03:36:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 736BB471F90
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 04:28:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbhLMCgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 12 Dec 2021 21:36:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbhLMCge (ORCPT
+        id S229547AbhLMD23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 12 Dec 2021 22:28:29 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:24478 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229510AbhLMD22 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 12 Dec 2021 21:36:34 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E4EC06173F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 18:36:34 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id i12so13673323pfd.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Dec 2021 18:36:34 -0800 (PST)
+        Sun, 12 Dec 2021 22:28:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0eGpjRTIP8qpbTlDU+W5IxnYYFEbazG3/WvSvG64SbY=;
-        b=d+fB4mREgTBzUf4Z9dFsrcew+QdCLjO1S5SnVbfZtKQ/874Tw0pD9aZON8/hNsbBMA
-         mbk3JtnGzTypSPLqHakybnBn7roMWN61Df0HjxFyxWb1KpSttOCafZxQjRsrUtKZUy9j
-         oC1FSTGTyCpXrXIrF0duoKt+uh8ttPG/CWreM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0eGpjRTIP8qpbTlDU+W5IxnYYFEbazG3/WvSvG64SbY=;
-        b=QMGScuYbI67Tpj/Q7ESw4cKFbMj9p+9qedBQ2o4gtIMVMMktmRgxDf5hrXIWYdydXX
-         IiSAXYA1fUUQSl1eaioLPksQDpvkpyo1GEPJUzwqF5kjjCmRiO9ljRVf/hZ03WVy/Gvw
-         4OpwCZCUl8fWX+ZUIn1canVNaEEveaI1XdgiBb9J3EpkK8mkj7ylRDFySfuOhWcXupNs
-         wTU4cgNjRazIUDm9vfRYLG6rPDUUoJj3C7D0qyHJT8SjcJanj/mAekaQrl+hJcp+7eLA
-         xXuuA07fomBqcQBAXEodnCPLVELvTC3jxNmvupj/k5hJnObSKzg92aJdtLCMOytU6szQ
-         r/Ag==
-X-Gm-Message-State: AOAM532BwhhbAXk0kNqNl5AaDtusVgXhwu7Nx3myRjKpsA3oruLoLdV4
-        oWJB0b3OnL4DhCrdyKXZVTDerQ==
-X-Google-Smtp-Source: ABdhPJw42hvVIex26E9A8al5w6XIMNezym+bf8FY/TihY8Zzop3YBNQewE7sGpZXTNKtHwSxJpmsYQ==
-X-Received: by 2002:a05:6a00:1744:b0:4a4:f4e6:1cc0 with SMTP id j4-20020a056a00174400b004a4f4e61cc0mr30856823pfc.15.1639362994108;
-        Sun, 12 Dec 2021 18:36:34 -0800 (PST)
-Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:10:f443:6b46:47e0:4f53])
-        by smtp.gmail.com with ESMTPSA id c21sm10156927pfl.138.2021.12.12.18.36.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Dec 2021 18:36:33 -0800 (PST)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     broonie@kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
-        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
-Subject: [v2] SoC: qcom: Distinguish headset codec by codec_dai->name
-Date:   Mon, 13 Dec 2021 10:36:26 +0800
-Message-Id: <20211213023626.673323-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1639366108; x=1670902108;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=1iIGBwZfqdyU2oIDOWAaYh9Xk7ZCowRlfURdZiu48XQ=;
+  b=yJG6j5HWnEj7IMLi2LoWbJ40vi1GkwXglYmqzdzYPm/cMB6iZXX9r3FK
+   iFpryyfakHjGWyyagFT+slhOKKwv2POYO53JEJd0XtkBqTiPEFygEJ1Pe
+   jwQVpNHIfsD4snqtJla0QbBNETNiv5N1wo14zRvNfe4d7UNGOUIWpcwVk
+   4=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 Dec 2021 19:28:28 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2021 19:28:28 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 12 Dec 2021 19:28:27 -0800
+Received: from [10.50.12.43] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 12 Dec
+ 2021 19:28:24 -0800
+Message-ID: <93ef32a5-013a-fdcf-11bb-6f3c9bc34628@quicinc.com>
+Date:   Mon, 13 Dec 2021 08:58:20 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv6 0/5] tracing/rwmmio/arm64: Add support to trace register
+ reads/writes
+Content-Language: en-US
+To:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>
+CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <cover.1638858746.git.quic_saipraka@quicinc.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <cover.1638858746.git.quic_saipraka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Distinguish which headset codec is on the board by codec_dai->name
-instead of card->name.
+Hi Arnd,
 
-It fixes the crash of being unable to handle kernel paging requests
-at virtual address ADDR by initializing the correct audio codec on
-the board.
+On 12/7/2021 12:24 PM, Sai Prakash Ranjan wrote:
+> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+> are typically used to read/write from/to memory mapped registers
+> and can cause hangs or some undefined behaviour in following cases,
+>
+> * If the access to the register space is unclocked, for example: if
+>    there is an access to multimedia(MM) block registers without MM
+>    clocks.
+>
+> * If the register space is protected and not set to be accessible from
+>    non-secure world, for example: only EL3 (EL: Exception level) access
+>    is allowed and any EL2/EL1 access is forbidden.
+>
+> * If xPU(memory/register protection units) is controlling access to
+>    certain memory/register space for specific clients.
+>
+> and more...
+>
+> Such cases usually results in instant reboot/SErrors/NOC or interconnect
+> hangs and tracing these register accesses can be very helpful to debug
+> such issues during initial development stages and also in later stages.
+>
+> So use ftrace trace events to log such MMIO register accesses which
+> provides rich feature set such as early enablement of trace events,
+> filtering capability, dumping ftrace logs on console and many more.
+>
+> Sample output:
+>
+> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+>
+> This series is a follow-up for the series [1] and a recent series [2] making use
+> of both.
+>
+> [1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
+> [2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
+>
+> Note in previous v4 version, Arnd suggested to benchmark and compare size with callback
+> based implementation, please see [3] for more details on that with brief comparison below.
+>
+>
+> **Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+> $ size vmlinux
+>     text           data             bss     dec             hex         filename
+>   23884219        14284468         532568 38701255        24e88c7        vmlinux
+>
+> **Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+> $ size vmlinux
+>      text          data             bss     dec             hex        filename
+>   24108179        14279596         532568 38920343        251e097       vmlinux
+>
+> $ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
+> add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
+> Total: Before=25812612, After=26043292, chg +0.89%
+>
+> [3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
+>
+> Changes in v6:
+>   * Implemented suggestions by Arnd Bergmann:
+>     - Use arch independent IO barriers in arm64/asm
+>     - Add ARCH_HAVE_TRACE_MMIO_ACCESS
+>     - Add post read and post write logging support
+>     - Remove tracepoint_active check
+>   * Fix build error reported by kernel test robot.
+>
+> Changes in v5:
+>   * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
+>   * Add inline logging for MMIO relaxed and non-relaxed accessors.
+>   * Move nVHE KVM comment to makefile (Marc).
+>   * Fix overflow warning due to switch to inline accessors instead of macro.
+>   * Modify trace event field to include caller and parent details for more detailed logs.
+>
+> Changes in v4:
+>   * Drop dynamic debug based filter support since that will be developed later with
+>     the help from Steven (Ftrace maintainer).
+>   * Drop value passed to writel as it is causing hangs when tracing is enabled.
+>   * Code cleanup for trace event as suggested by Steven for earlier version.
+>   * Fixed some build errors reported by 0-day bot.
+>
+> Changes in v3:
+>   * Create a generic mmio header for instrumented version (Earlier suggested in [1]
+>     by Will Deacon and recently [2] by Greg to have a generic version first).
+>   * Add dynamic debug support to filter out traces which can be very useful for targeted
+>     debugging specific to subsystems or drivers.
+>   * Few modifications to the rwmmio trace event fields to include the mmio width and print
+>     addresses in hex.
+>   * Rewrote commit msg to explain some more about usecases.
+>
+> Prasad Sodagudi (1):
+>    tracing: Add register read/write tracing support
+>
+> Sai Prakash Ranjan (4):
+>    arm64: io: Use asm-generic high level MMIO accessors
+>    irqchip/tegra: Fix overflow implicit truncation warnings
+>    drm/meson: Fix overflow implicit truncation warnings
+>    asm-generic/io: Add logging support for MMIO accessors
+>
+>   arch/Kconfig                      |   3 +
+>   arch/arm64/Kconfig                |   1 +
+>   arch/arm64/include/asm/io.h       |  41 +++--------
+>   arch/arm64/kvm/hyp/nvhe/Makefile  |   7 +-
+>   drivers/gpu/drm/meson/meson_viu.c |  22 +++---
+>   drivers/irqchip/irq-tegra.c       |  10 +--
+>   include/asm-generic/io.h          |  81 +++++++++++++++++++--
+>   include/trace/events/rwmmio.h     | 112 ++++++++++++++++++++++++++++++
+>   kernel/trace/Kconfig              |   7 ++
+>   kernel/trace/Makefile             |   1 +
+>   kernel/trace/trace_readwrite.c    |  47 +++++++++++++
+>   11 files changed, 278 insertions(+), 54 deletions(-)
+>   create mode 100644 include/trace/events/rwmmio.h
+>   create mode 100644 kernel/trace/trace_readwrite.c
+>
 
-Call stack of the crash:
-```
- Unable to handle kernel paging request at virtual address ffffffbfe7bba9ce
- Mem abort info:
-   ESR = 0x96000005
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
- Data abort info:
-   ISV = 0, ISS = 0x00000005
-   CM = 0, WnR = 0
- swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000008379a000
- [ffffffbfe7bba9ce] pgd=0000000000000000, pud=0000000000000000
- Internal error: Oops: 96000005 [#1] PREEMPT SMP
- Modules linked in: ip6table_nat fuse uvcvideo videobuf2_vmalloc [trimmed]
- CPU: 7 PID: 2168 Comm: cras Not tainted 5.4.163-lockdep-17364-gfe3d4f499cf1 #1
- Hardware name: Google Pompom (rev2) with LTE (DT)
- pstate: 00400009 (nzcv daif +PAN -UAO)
- pc : rt5682_set_component_pll+0xcc/0xb78 [snd_soc_rt5682]
- lr : rt5682_set_component_pll+0xbc/0xb78 [snd_soc_rt5682]
- sp : ffffff808ed7f320
- x29: ffffff808ed7f390 x28: dfffffd000000000
- x27: ffffff80b1409550 x26: 00000000aaaaaaaa
- x25: ffffff80d0a0b820 x24: ffffff80bc1f7098
- x23: ffffff809332a080 x22: 00000000aaaaaaaa
- x21: 1ffffff01783ee13 x20: 00000000aaaaaaaa
- x19: 00000000aaaaaaaa x18: 1ffffff011dafe18
- x17: 0000000000000000 x16: 0000000000000201
- x15: 0000000000000000 x14: 0000000062f77d15
- x13: dfffffd000000000 x12: ffffffd01302ed7c
- x11: 0000000000000000 x10: ffffff7f3ddd4e74
- x9 : 0000000000000000 x8 : 1fffffefe7bba9ce
- x7 : aaaaaaaaaaaaaaaa x6 : 0000000000000000
- x5 : 0000000000000000 x4 : 0000000000000008
- x3 : 0000000000000000 x2 : 0000000000000008
- x1 : 00000000000000aa x0 : ffffff808ed7f358
- Call trace:
-  rt5682_set_component_pll+0xcc/0xb78 [snd_soc_rt5682]
-  snd_soc_component_set_pll+0x90/0x154
-  snd_soc_dai_set_pll+0xf4/0x1ac
-  sc7180_snd_startup+0x268/0x3c0 [snd_soc_sc7180]
-  snd_soc_link_startup+0xa4/0x180
-  soc_pcm_open+0x35c/0x15c8
-  snd_pcm_open_substream+0xa90/0x13b0
-  snd_pcm_open+0x1a4/0x55c
-  snd_pcm_capture_open+0x7c/0xe8
-  snd_open+0x2b8/0x2e4
-  chrdev_open+0x364/0x3d4
-  do_dentry_open+0x66c/0xc58
-  vfs_open+0x7c/0x8c
-  path_openat+0x108c/0x2bbc
-  do_filp_open+0x15c/0x258
-  do_sys_open+0x278/0x62c
-  __arm64_compat_sys_openat+0x9c/0xb0
-  el0_svc_common+0x1c0/0x3dc
-  el0_svc_compat_handler+0x88/0xd4
-  el0_svc_compat+0x8/0x2c
- Code: 8b3acae8 910d310a d343fd48 a9012be8 (38fc6908)
-```
+Does this version look good to you? From the other mail thread it seems 
+Catalin
+is ok with your suggested change. Kernel test robot hasn't come with any 
+build error
+reports so far, I have fixed the previous reported one in meson drm driver.
 
-Fixes: 425c5fce8a03 ("ASoC: qcom: Add support for ALC5682I-VS codec")
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
----
- sound/soc/qcom/sc7180.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/sound/soc/qcom/sc7180.c b/sound/soc/qcom/sc7180.c
-index 2fff764a00a7..37225ef2563a 100644
---- a/sound/soc/qcom/sc7180.c
-+++ b/sound/soc/qcom/sc7180.c
-@@ -131,13 +131,13 @@ static int sc7180_snd_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
- 	int pll_id, pll_source, pll_in, pll_out, clk_id, ret;
- 
--	if (!(strcmp(card->name, "sc7180-rt5682-max98357a-1mic"))) {
-+	if (!strcmp(codec_dai->name, "rt5682-aif1")) {
- 		pll_source = RT5682_PLL1_S_MCLK;
- 		pll_id = 0;
- 		clk_id = RT5682_SCLK_S_PLL1;
- 		pll_out = RT5682_PLL1_FREQ;
- 		pll_in = DEFAULT_MCLK_RATE;
--	} else if (!(strcmp(card->name, "sc7180-rt5682s-max98357a-1mic"))) {
-+	} else if (!strcmp(codec_dai->name, "rt5682s-aif1")) {
- 		pll_source = RT5682S_PLL_S_MCLK;
- 		pll_id = RT5682S_PLL2;
- 		clk_id = RT5682S_SCLK_S_PLL2;
--- 
-2.31.0
-
+Thanks,
+Sai
