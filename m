@@ -2,87 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75F67472B89
+	by mail.lfdr.de (Postfix) with ESMTP id A26F0472B8A
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 12:34:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236113AbhLMLet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 06:34:49 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.166]:18534 "EHLO
+        id S231521AbhLMLeu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 06:34:50 -0500
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:21024 "EHLO
         mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232836AbhLMLet (ORCPT
+        with ESMTP id S235966AbhLMLeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 06:34:49 -0500
+        Mon, 13 Dec 2021 06:34:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1639395281;
     s=strato-dkim-0002; d=gerhold.net;
-    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=SxcCTrNtjzCKwAcZga1F6tHkCXqerDXPqqI4x3rRDKw=;
-    b=Mdr8LXg+a4Cvd2YZPfr2YqU/gtw0O6rkEE8Bg5RRPnPCnwP/eyDJvoqXV9sWVxo4gn
-    iMCgCMv8FnxWzLls62IyTEck4+ptaSBra+uZg/KGdsxSjsMpN7uI7cOmA0+CKSyrTd3U
-    ImvkwIrme7EK1If3sBForPuHn4AdWkKGYj93YOCI/ISSJnvH2+oFzXQk/bdRoWPBZziE
-    U9G0Or9V8ai6UDPJPR946IfwSEdeTGaZLQmrpl8Mvuj8keJnV29wneW3aZDDkBAr/Zlj
-    iBIq/j0ENH/4RAVgKbN3o9a9WMudTvX4n8FSwXJQlWyPVns1ir13sQzTOVDF42HSBPUP
-    q94w==
+    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=yx4OND4XZ/UoBvD9jKN0hZ1Ukb9XdC+uOXmtavLgj3w=;
+    b=GLO5KsntEfC8y7nNLHAh0HeSMBZ1Nk3vu4aEyQHcvkYWlVAAq08OgmCDIAvtxRwaBE
+    EyqYFkrj/DiEL6dz/THIxZ365Cwg7NNYO4lxvv42CuWwnDMuCYErMhrzUgcDcfIbQ723
+    0XjabzSuNisimYc9zslOL47x/6xmsSLVDy5hcGWHKkEVQQBAAal4g1HpU3FRqHz5lRPF
+    ySLT2UHWUltln6hoQY+cDMddP8aaE1fYHyyBrjT5BDs8juPVe91DL6g964v5MhMt6Soj
+    a4+lPShxKpts5SshI4MKxOKDsUaEvfTBRBdIBTo99ANS8I+ZkFW/AxKT1PNtPBycInwm
+    xzdg==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL1OfxR"
 X-RZG-CLASS-ID: mo00
 Received: from droid..
     by smtp.strato.de (RZmta 47.35.3 SBL|AUTH)
-    with ESMTPSA id j080d2xBDBYeJK9
+    with ESMTPSA id j080d2xBDBYfJKA
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Mon, 13 Dec 2021 12:34:40 +0100 (CET)
+    Mon, 13 Dec 2021 12:34:41 +0100 (CET)
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 1/2] ARM: dts: qcom: Build apq8016-sbc/DragonBoard 410c DTB on ARM32
-Date:   Mon, 13 Dec 2021 12:32:49 +0100
-Message-Id: <20211213113250.4249-1-stephan@gerhold.net>
+Subject: [PATCH 2/2] ARM: multi_v7_defconfig: Enable drivers for DragonBoard 410c
+Date:   Mon, 13 Dec 2021 12:32:50 +0100
+Message-Id: <20211213113250.4249-2-stephan@gerhold.net>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20211213113250.4249-1-stephan@gerhold.net>
+References: <20211213113250.4249-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DragonBoard 410c is a convenient device for testing and debugging.
-Since there is support for using ARM32 kernels on MSM8916 now, also
-build the DB410c DTB on ARM32 so it can be used for testing. ARM64
-is still the main supported architecture for DB410c but it actually
-works great on ARM32 as well.
+The DragonBoard 410c is mainly supported by the ARM64 architecture
+and defconfig, but it can also run well on the ARM32 architecture.
+Add the necessary options to the multi_v7_defconfig to simplify
+building an ARM32 kernel for DragonBoard 410c.
 
-The "apq8016-sbc.dts" is simply included as-is from ARM64 similar
-to the approach used for Raspberry Pi (e.g. bcm2711-rpi-4-b.dts).
+This is also a possible opportunity to slightly increase CI coverage
+for older Qualcomm-based ARM32 platforms that are currently not
+represented well in automated CI setups. The APQ8016 SoC used in DB410c
+is still quite similar to those. DB410c is already used in some CI systems
+so the same hardware could be re-used to get some basic ARM32 boot testing.
+
+When deciding between built-in (y) and module (m), I usually used the
+same that is already being used (and functional) in the ARM64 defconfig.
 
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- arch/arm/boot/dts/Makefile             | 1 +
- arch/arm/boot/dts/qcom-apq8016-sbc.dts | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-apq8016-sbc.dts
+ arch/arm/configs/multi_v7_defconfig | 57 ++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 0de64f237cd8..bba17ee51e29 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -954,6 +954,7 @@ dtb-$(CONFIG_ARCH_OXNAS) += \
- 	ox810se-wd-mbwe.dtb \
- 	ox820-cloudengines-pogoplug-series-3.dtb
- dtb-$(CONFIG_ARCH_QCOM) += \
-+	qcom-apq8016-sbc.dtb \
- 	qcom-apq8026-lg-lenok.dtb \
- 	qcom-apq8060-dragonboard.dtb \
- 	qcom-apq8064-cm-qs600.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8016-sbc.dts b/arch/arm/boot/dts/qcom-apq8016-sbc.dts
-new file mode 100644
-index 000000000000..4ccd2dca74a2
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-apq8016-sbc.dts
-@@ -0,0 +1,2 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "arm64/qcom/apq8016-sbc.dts"
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index c951aeed2138..ae227d309dc1 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -75,6 +75,7 @@ CONFIG_SOC_AM43XX=y
+ CONFIG_SOC_DRA7XX=y
+ CONFIG_ARCH_QCOM=y
+ CONFIG_ARCH_MSM8X60=y
++CONFIG_ARCH_MSM8916=y
+ CONFIG_ARCH_MSM8960=y
+ CONFIG_ARCH_MSM8974=y
+ CONFIG_ARCH_ROCKCHIP=y
+@@ -109,11 +110,13 @@ CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m
+ CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
+ CONFIG_CPUFREQ_DT=y
+ CONFIG_ARM_IMX6Q_CPUFREQ=y
++CONFIG_ARM_QCOM_CPUFREQ_NVMEM=y
+ CONFIG_ARM_RASPBERRYPI_CPUFREQ=y
+ CONFIG_ARM_SCMI_CPUFREQ=y
+ CONFIG_QORIQ_CPUFREQ=y
+ CONFIG_CPU_IDLE=y
+ CONFIG_ARM_CPUIDLE=y
++CONFIG_ARM_PSCI_CPUIDLE=y
+ CONFIG_ARM_ZYNQ_CPUIDLE=y
+ CONFIG_ARM_EXYNOS_CPUIDLE=y
+ CONFIG_ARM_TEGRA_CPUIDLE=y
+@@ -157,6 +160,8 @@ CONFIG_IPV6_MIP6=m
+ CONFIG_IPV6_TUNNEL=m
+ CONFIG_IPV6_MULTIPLE_TABLES=y
+ CONFIG_NET_DSA=m
++CONFIG_QRTR=m
++CONFIG_QRTR_SMD=m
+ CONFIG_CAN=y
+ CONFIG_CAN_AT91=m
+ CONFIG_CAN_FLEXCAN=m
+@@ -169,6 +174,7 @@ CONFIG_BT_HCIUART=m
+ CONFIG_BT_HCIUART_BCM=y
+ CONFIG_BT_MRVL=m
+ CONFIG_BT_MRVL_SDIO=m
++CONFIG_BT_QCOMSMD=m
+ CONFIG_CFG80211=m
+ CONFIG_MAC80211=m
+ CONFIG_RFKILL=y
+@@ -225,6 +231,7 @@ CONFIG_AD525X_DPOT_I2C=y
+ CONFIG_ICS932S401=y
+ CONFIG_ATMEL_SSC=m
+ CONFIG_QCOM_COINCELL=m
++CONFIG_QCOM_FASTRPC=m
+ CONFIG_APDS9802ALS=y
+ CONFIG_ISL29003=y
+ CONFIG_PCI_ENDPOINT_TEST=m
+@@ -288,6 +295,7 @@ CONFIG_USB_LAN78XX=m
+ CONFIG_USB_USBNET=y
+ CONFIG_USB_NET_SMSC75XX=y
+ CONFIG_USB_NET_SMSC95XX=y
++CONFIG_WCN36XX=m
+ CONFIG_BRCMFMAC=m
+ CONFIG_MWIFIEX=m
+ CONFIG_MWIFIEX_SDIO=m
+@@ -316,6 +324,7 @@ CONFIG_TOUCHSCREEN_ST1232=m
+ CONFIG_TOUCHSCREEN_STMPE=y
+ CONFIG_TOUCHSCREEN_SUN4I=y
+ CONFIG_INPUT_MISC=y
++CONFIG_INPUT_PM8941_PWRKEY=y
+ CONFIG_INPUT_MAX77693_HAPTIC=m
+ CONFIG_INPUT_MAX8997_HAPTIC=m
+ CONFIG_INPUT_CPCAP_PWRBUTTON=m
+@@ -397,6 +406,8 @@ CONFIG_I2C_IMX=y
+ CONFIG_I2C_MESON=y
+ CONFIG_I2C_MV64XXX=y
+ CONFIG_I2C_OWL=y
++CONFIG_I2C_QCOM_CCI=m
++CONFIG_I2C_QUP=y
+ CONFIG_I2C_RIIC=y
+ CONFIG_I2C_RK3X=y
+ CONFIG_I2C_S3C2410=y
+@@ -425,6 +436,7 @@ CONFIG_SPI_ORION=y
+ CONFIG_SPI_PL022=y
+ CONFIG_SPI_ROCKCHIP=m
+ CONFIG_SPI_RSPI=y
++CONFIG_SPI_QUP=m
+ CONFIG_SPI_S3C64XX=m
+ CONFIG_SPI_SH_MSIOF=m
+ CONFIG_SPI_SH_HSPI=y
+@@ -475,6 +487,8 @@ CONFIG_GPIO_TWL4030=y
+ CONFIG_POWER_RESET_AS3722=y
+ CONFIG_POWER_RESET_GPIO=y
+ CONFIG_POWER_RESET_GPIO_RESTART=y
++CONFIG_POWER_RESET_MSM=y
++CONFIG_POWER_RESET_QCOM_PON=y
+ CONFIG_POWER_RESET_ST=y
+ CONFIG_POWER_RESET_KEYSTONE=y
+ CONFIG_POWER_RESET_RMOBILE=y
+@@ -515,6 +529,7 @@ CONFIG_ST_THERMAL_MEMMAP=y
+ CONFIG_TEGRA_SOCTHERM=m
+ CONFIG_TEGRA30_TSENSOR=m
+ CONFIG_GENERIC_ADC_THERMAL=m
++CONFIG_QCOM_TSENS=y
+ CONFIG_UNIPHIER_THERMAL=y
+ CONFIG_DA9063_WATCHDOG=m
+ CONFIG_XILINX_WATCHDOG=y
+@@ -530,11 +545,13 @@ CONFIG_SUNXI_WATCHDOG=y
+ CONFIG_IMX2_WDT=y
+ CONFIG_ST_LPC_WATCHDOG=y
+ CONFIG_TEGRA_WATCHDOG=m
++CONFIG_QCOM_WDT=m
+ CONFIG_MESON_WATCHDOG=y
+ CONFIG_DIGICOLOR_WATCHDOG=y
+ CONFIG_RENESAS_WDT=m
+ CONFIG_RENESAS_RZAWDT=m
+ CONFIG_STPMIC1_WATCHDOG=y
++CONFIG_PM8916_WATCHDOG=m
+ CONFIG_BCM47XX_WDT=y
+ CONFIG_BCM2835_WDT=y
+ CONFIG_BCM_KONA_WDT=y
+@@ -601,7 +618,8 @@ CONFIG_REGULATOR_PALMAS=y
+ CONFIG_REGULATOR_PBIAS=y
+ CONFIG_REGULATOR_PWM=y
+ CONFIG_REGULATOR_QCOM_RPM=y
+-CONFIG_REGULATOR_QCOM_SMD_RPM=m
++CONFIG_REGULATOR_QCOM_SMD_RPM=y
++CONFIG_REGULATOR_QCOM_SPMI=y
+ CONFIG_REGULATOR_RK808=y
+ CONFIG_REGULATOR_RN5T618=y
+ CONFIG_REGULATOR_S2MPA01=m
+@@ -687,6 +705,7 @@ CONFIG_DRM_PANEL_ORISETECH_OTM8009A=m
+ CONFIG_DRM_PANEL_RAYDIUM_RM68200=m
+ CONFIG_DRM_PANEL_SAMSUNG_S6E63J0X03=m
+ CONFIG_DRM_PANEL_SAMSUNG_S6E8AA0=m
++CONFIG_DRM_DISPLAY_CONNECTOR=m
+ CONFIG_DRM_NXP_PTN3460=m
+ CONFIG_DRM_PARADE_PS8622=m
+ CONFIG_DRM_SII902X=m
+@@ -736,6 +755,8 @@ CONFIG_SND_SOC_FSL_SAI=m
+ CONFIG_SND_PXA_SOC_SSP=m
+ CONFIG_SND_MMP_SOC_SSPA=m
+ CONFIG_SND_PXA910_SOC=m
++CONFIG_SND_SOC_QCOM=m
++CONFIG_SND_SOC_APQ8016_SBC=m
+ CONFIG_SND_SOC_ROCKCHIP=m
+ CONFIG_SND_SOC_ROCKCHIP_SPDIF=m
+ CONFIG_SND_SOC_ROCKCHIP_MAX98090=m
+@@ -768,6 +789,8 @@ CONFIG_SND_SOC_TEGRA_MAX98090=m
+ CONFIG_SND_SOC_AK4642=m
+ CONFIG_SND_SOC_CPCAP=m
+ CONFIG_SND_SOC_CS42L51_I2C=m
++CONFIG_SND_SOC_MSM8916_WCD_ANALOG=m
++CONFIG_SND_SOC_MSM8916_WCD_DIGITAL=m
+ CONFIG_SND_SOC_SGTL5000=m
+ CONFIG_SND_SOC_STI_SAS=m
+ CONFIG_SND_SOC_WM8978=m
+@@ -930,6 +953,7 @@ CONFIG_RTC_DRV_AT91SAM9=m
+ CONFIG_RTC_DRV_VT8500=y
+ CONFIG_RTC_DRV_SUNXI=y
+ CONFIG_RTC_DRV_MV=y
++CONFIG_RTC_DRV_PM8XXX=m
+ CONFIG_RTC_DRV_TEGRA=y
+ CONFIG_RTC_DRV_ST_LPC=y
+ CONFIG_RTC_DRV_STM32=y
+@@ -977,26 +1001,47 @@ CONFIG_COMMON_CLK_SCMI=y
+ CONFIG_COMMON_CLK_S2MPS11=m
+ CONFIG_CLK_RASPBERRYPI=y
+ CONFIG_COMMON_CLK_QCOM=y
++CONFIG_QCOM_A53PLL=y
++CONFIG_QCOM_CLK_APCS_MSM8916=y
+ CONFIG_QCOM_CLK_RPM=y
++CONFIG_QCOM_CLK_SMD_RPM=y
+ CONFIG_APQ_MMCC_8084=y
+ CONFIG_MSM_GCC_8660=y
++CONFIG_MSM_GCC_8916=y
+ CONFIG_MSM_MMCC_8960=y
+ CONFIG_MSM_MMCC_8974=y
++CONFIG_HWSPINLOCK=y
++CONFIG_HWSPINLOCK_QCOM=y
+ CONFIG_MICROCHIP_PIT64B=y
+ CONFIG_BCM2835_MBOX=y
++CONFIG_QCOM_APCS_IPC=y
++CONFIG_QCOM_IPCC=y
+ CONFIG_ROCKCHIP_IOMMU=y
+ CONFIG_TEGRA_IOMMU_GART=y
+ CONFIG_TEGRA_IOMMU_SMMU=y
+ CONFIG_EXYNOS_IOMMU=y
++CONFIG_QCOM_IOMMU=y
+ CONFIG_REMOTEPROC=y
++CONFIG_QCOM_Q6V5_MSS=m
++CONFIG_QCOM_SYSMON=m
++CONFIG_QCOM_WCNSS_PIL=m
+ CONFIG_ST_REMOTEPROC=m
++CONFIG_RPMSG_QCOM_SMD=y
+ CONFIG_RPMSG_VIRTIO=m
+ CONFIG_ASPEED_LPC_CTRL=m
+ CONFIG_ASPEED_LPC_SNOOP=m
+ CONFIG_ASPEED_P2A_CTRL=m
+ CONFIG_RASPBERRYPI_POWER=y
++CONFIG_QCOM_CPR=y
+ CONFIG_QCOM_GSBI=y
+-CONFIG_QCOM_SMD_RPM=m
++CONFIG_QCOM_RMTFS_MEM=m
++CONFIG_QCOM_RPMPD=y
++CONFIG_QCOM_SMEM=y
++CONFIG_QCOM_SMD_RPM=y
++CONFIG_QCOM_SMP2P=y
++CONFIG_QCOM_SMSM=y
++CONFIG_QCOM_SOCINFO=m
++CONFIG_QCOM_STATS=m
+ CONFIG_QCOM_WCNSS_CTRL=m
+ CONFIG_ARCH_EMEV2=y
+ CONFIG_ARCH_R8A7794=y
+@@ -1029,6 +1074,7 @@ CONFIG_DEVFREQ_EVENT_EXYNOS_NOCP=m
+ CONFIG_EXTCON_MAX14577=m
+ CONFIG_EXTCON_MAX77693=m
+ CONFIG_EXTCON_MAX8997=m
++CONFIG_EXTCON_USB_GPIO=y
+ CONFIG_TI_AEMIF=y
+ CONFIG_STM32_FMC2_EBI=y
+ CONFIG_EXYNOS5422_DMC=m
+@@ -1041,6 +1087,7 @@ CONFIG_BERLIN2_ADC=m
+ CONFIG_CPCAP_ADC=m
+ CONFIG_EXYNOS_ADC=m
+ CONFIG_MESON_SARADC=m
++CONFIG_QCOM_SPMI_VADC=m
+ CONFIG_ROCKCHIP_SARADC=m
+ CONFIG_STM32_ADC_CORE=m
+ CONFIG_STM32_ADC=m
+@@ -1086,6 +1133,7 @@ CONFIG_PHY_BERLIN_USB=y
+ CONFIG_PHY_MMP3_USB=m
+ CONFIG_PHY_CPCAP_USB=m
+ CONFIG_PHY_QCOM_APQ8064_SATA=m
++CONFIG_PHY_QCOM_USB_HS=y
+ CONFIG_PHY_RCAR_GEN2=m
+ CONFIG_PHY_ROCKCHIP_DP=m
+ CONFIG_PHY_ROCKCHIP_USB=y
+@@ -1103,6 +1151,7 @@ CONFIG_TI_PIPE3=y
+ CONFIG_TWL4030_USB=m
+ CONFIG_RAS=y
+ CONFIG_NVMEM_IMX_OCOTP=y
++CONFIG_QCOM_QFPROM=y
+ CONFIG_ROCKCHIP_EFUSE=m
+ CONFIG_NVMEM_SUNXI_SID=y
+ CONFIG_NVMEM_VF610_OCOTP=y
+@@ -1115,6 +1164,8 @@ CONFIG_FSI_MASTER_ASPEED=m
+ CONFIG_FSI_SCOM=m
+ CONFIG_FSI_SBEFIFO=m
+ CONFIG_FSI_OCC=m
++CONFIG_INTERCONNECT_QCOM=y
++CONFIG_INTERCONNECT_QCOM_MSM8916=y
+ CONFIG_COUNTER=m
+ CONFIG_STM32_TIMER_CNT=m
+ CONFIG_STM32_LPTIMER_CNT=m
+@@ -1154,6 +1205,8 @@ CONFIG_CRYPTO_DEV_ATMEL_AES=m
+ CONFIG_CRYPTO_DEV_ATMEL_TDES=m
+ CONFIG_CRYPTO_DEV_ATMEL_SHA=m
+ CONFIG_CRYPTO_DEV_MARVELL_CESA=m
++CONFIG_CRYPTO_DEV_QCE=m
++CONFIG_CRYPTO_DEV_QCOM_RNG=m
+ CONFIG_CRYPTO_DEV_ROCKCHIP=m
+ CONFIG_CRYPTO_DEV_STM32_CRC=m
+ CONFIG_CRYPTO_DEV_STM32_HASH=m
 -- 
 2.34.1
 
