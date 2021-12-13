@@ -2,105 +2,233 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6E62473377
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 19:00:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CCAC473421
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 19:36:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241597AbhLMSAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 13:00:48 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:45642 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236059AbhLMSAm (ORCPT
+        id S241913AbhLMSgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 13:36:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42484 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237355AbhLMSgQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 13:00:42 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B13D611B4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 18:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A8C34605;
-        Mon, 13 Dec 2021 18:00:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639418440;
-        bh=YFqukNs+Og9qk/2yG+rJxGiiz5BS2yPPUMTffwav1QQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WS8oyyYJycmr/sHk2TzEhrQCrgB4i8oxjN1gHssg56OEA4uFh0e1Qcb3zeO/9zQzk
-         9TJ6u045thOyEFuoROv4LUx6AUE/4OLunHZsnL36PLNrvdHJx8RzOozEkVUVP9wXXQ
-         hJK9iWG58HESVEptEBCgqVRP4F0v2nu5biOt13n9WV7wJEpYr5Su4xjNpbzeX9xQmz
-         f5c40IoCYaJ97q7HIY8WTPJAa3Zv976LaBlCs2/pBHfXjs8TZOExMrI2P99raOnnio
-         ZtqlgWfRn3hnFLGsAon6sFtCuBh3gOjdMf7e586/ic/IMJTrIE7Yan3bnbeUbkv4yH
-         hXPnZVJUye5Dg==
-Date:   Mon, 13 Dec 2021 18:00:35 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Judy Hsiao <judyhsiao@chromium.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
-        cychiang@google.com, judyhsiao@google.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH] SoC: qcom: Distinguish headset codec by codec_dai->name
-Message-ID: <YbeKQ3mLqe1RoUWJ@sirena.org.uk>
-References: <20211210051907.3870109-1-judyhsiao@chromium.org>
- <CAE-0n52z=wRS3rXM=zQzcy1yryvzwW6iGA75UYBiYSkR_5edTA@mail.gmail.com>
+        Mon, 13 Dec 2021 13:36:16 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AADC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 10:36:16 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id t23so24369040oiw.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 10:36:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RKnW0CJ8QtZOwXTWz01u2sxEnEsigtwIbEpGidlLzFM=;
+        b=cM2pfTVjOfN48+d2BFuLmg/I8038RTUIXfQhvmtCfl7T8tbRo1tSqVgAsWMbhfuBj5
+         kHjaLSxxoEZYkHs7luwT8C4f5xEqCjSqQC8F4VMdiejkpe+w0WnAIdI6GueXaiT7/VjR
+         veN4O/RBJTdy4QG2iPmJ3h0hJNSC451FpqGAIIqB3WogV9hC7plHXMHiyY5+f5m0Wwr8
+         PCEZDq9EdJKEUJuh2+iDglw4r7daVN7tcVcTTVtMCjKNLmEZuxB2BfjmNTdLVUAdjFHx
+         Mg99+E+6Xn7/B7gHjqVNVeAu7RaBBkB8Xo6NqcO3v7P2S2tElFHNYAUVbQOssTUT+ZFv
+         uvvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RKnW0CJ8QtZOwXTWz01u2sxEnEsigtwIbEpGidlLzFM=;
+        b=FkldUggCT8t5p2j/or96adGxacXUlIzfizxPePpaSqnOP6kWpfFZ5o5z1X3fkrJ9qj
+         d64wvZyvsdFACu9Bs9UoEu6SufP1TsZ5bKAO+D9vfr/ssAUp2++ezQLSvl2fMDtjN125
+         rkTp8oSlW2RY1ebAEwJTMIq9wmApnkoKwteqQTehWbTja3DyrJcenYroDhkBpFgy2V01
+         y+Edbam20++G61UdRFtnpEUyz4rpSlgdekSwMDDfwoEzAkXTxQvG9YXmOUDHW6DjV3Ro
+         Rg5fDG5rslBbYoJTZzfGwqZp0bhqkiEWi+21rvPSz13J4sC+BrX7nUgCE5GjxbViat3M
+         Megg==
+X-Gm-Message-State: AOAM533qGQ6e0psTqc72IkWc34XtvxBS6+3nkBGiwMAmaNRCD5uIjJ7v
+        LpzRmqFNWgmT8KCxFNSOh6tZtw==
+X-Google-Smtp-Source: ABdhPJw6Si4lJQdVRuNx4RALSbSMB6q1TJ49keENLeWB/e+mU1SwF2YAHKiQaZCWgWALMTsS45tFjg==
+X-Received: by 2002:aca:eb0b:: with SMTP id j11mr29165889oih.51.1639420575644;
+        Mon, 13 Dec 2021 10:36:15 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m12sm2310879ots.59.2021.12.13.10.36.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Dec 2021 10:36:15 -0800 (PST)
+Date:   Mon, 13 Dec 2021 10:37:33 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 6/8] misc: fastrpc: add secure domain support
+Message-ID: <YbeS7KXj1slU2qgf@ripper>
+References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+ <20211209120626.26373-7-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="WyxKWAijYORUCs4s"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAE-0n52z=wRS3rXM=zQzcy1yryvzwW6iGA75UYBiYSkR_5edTA@mail.gmail.com>
-X-Cookie: No solicitors.
+In-Reply-To: <20211209120626.26373-7-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
 
---WyxKWAijYORUCs4s
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> ADSP/MDSP/SDSP are by default secured, which means it can only be loaded
+> with a Signed process.
+> Where as CDSP can be either be secured/unsecured. non-secured Compute DSP
+> would allow users to load unsigned process and run hexagon instructions,
+> but blocking access to secured hardware within the DSP. Where as signed
+> process with secure CDSP would be allowed to access all the dsp resources.
+> 
+> This patch adds basic code to create device nodes as per device tree property.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  drivers/misc/fastrpc.c | 61 +++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 51 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 79fc59caacef..50f8e23b6b04 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -240,12 +240,15 @@ struct fastrpc_channel_ctx {
+>  	/* Flag if dsp attributes are cached */
+>  	bool valid_attributes;
+>  	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
+> +	struct fastrpc_device *secure_fdevice;
+>  	struct fastrpc_device *fdevice;
+> +	bool secure;
+>  };
+>  
+>  struct fastrpc_device {
+>  	struct fastrpc_channel_ctx *cctx;
+>  	struct miscdevice miscdev;
+> +	bool secure;
+>  };
+>  
+>  struct fastrpc_user {
+> @@ -1876,7 +1879,7 @@ static struct platform_driver fastrpc_cb_driver = {
+>  };
+>  
+>  static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ctx *cctx,
+> -				   const char *domain)
+> +				   bool is_secured, const char *domain)
+>  {
+>  	struct fastrpc_device *fdev;
+>  	int err;
+> @@ -1885,15 +1888,21 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+>  	if (!fdev)
+>  		return -ENOMEM;
+>  
+> +	fdev->secure = is_secured;
+>  	fdev->cctx = cctx;
+>  	fdev->miscdev.minor = MISC_DYNAMIC_MINOR;
+>  	fdev->miscdev.fops = &fastrpc_fops;
+> -	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s", domain);
+> +	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s%s",
+> +					    domain, is_secured ? "-secure" : "");
 
-On Fri, Dec 10, 2021 at 03:15:49PM -0800, Stephen Boyd wrote:
-> Quoting Judy Hsiao (2021-12-09 21:19:07)
+Will this not result in existing userspace using the wrong misc device?
 
-> > Fixes: 425c5fce8a03 ("ASoC: qcom: Add support for ALC5682I-VS codec")
+>  	err = misc_register(&fdev->miscdev);
+> -	if (err)
+> +	if (err) {
+>  		kfree(fdev);
+> -	else
+> -		cctx->fdevice = fdev;
+> +	} else {
+> +		if (is_secured)
+> +			cctx->secure_fdevice = fdev;
+> +		else
+> +			cctx->fdevice = fdev;
+> +	}
+>  
+>  	return err;
+>  }
+> @@ -1904,6 +1913,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	struct fastrpc_channel_ctx *data;
+>  	int i, err, domain_id = -1;
+>  	const char *domain;
+> +	bool secure_dsp = false;
 
-> It fixes something so what is it fixing? Can you add the call stack of
-> the failure and explain how this patch fixes it? We have that patch
-> backported to our chromeos 5.4 kernel tree but I assume this reproduces
-> upstream.
+Afaict this is only every accessed after first being written. So no need
+to initialize it.
 
-Please don't encourage people to just paste entire panics into things,
-what you've included here is vastly larger than the entire original
-patch which overwhelms the content in the message.
+>  
+>  	err = of_property_read_string(rdev->of_node, "label", &domain);
+>  	if (err) {
+> @@ -1927,10 +1937,31 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	if (!data)
+>  		return -ENOMEM;
+>  
+> -	err = fastrpc_device_register(rdev, data, domains[domain_id]);
+> -	if (err) {
+> -		kfree(data);
+> -		return err;
+> +
+> +	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+> +	data->secure = secure_dsp;
+> +
+> +	switch (domain_id) {
+> +	case ADSP_DOMAIN_ID:
+> +	case MDSP_DOMAIN_ID:
+> +	case SDSP_DOMAIN_ID:
+> +		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+> +		if (err)
+> +			goto fdev_error;
+> +		break;
+> +	case CDSP_DOMAIN_ID:
+> +		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
+> +		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+> +		if (err)
+> +			goto fdev_error;
+> +
+> +		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+> +		if (err)
+> +			goto fdev_error;
+> +		break;
+> +	default:
+> +		err = -EINVAL;
+> +		goto fdev_error;
+>  	}
+>  
+>  	kref_init(&data->refcount);
+> @@ -1943,7 +1974,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	data->domain_id = domain_id;
+>  	data->rpdev = rpdev;
+>  
+> -	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+> +	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+> +	dev_info(rdev, "%s complete for %s with secure flag(%d) return: %d\n",
+> +			__func__, domains[domain_id], secure_dsp, err);
 
->  Unable to handle kernel paging request at virtual address ffffffbfe7bba9ce
->  Mem abort info:
->    ESR = 0x96000005
->    EC = 0x25: DABT (current EL), IL = 32 bits
->    SET = 0, FnV = 0
->    EA = 0, S1PTW = 0
->  Data abort info:
->    ISV = 0, ISS = 0x00000005
->    CM = 0, WnR = 0
+I would prefer that we don't spam the kernel log with such useful
+information, in particular since it will happen every time we start or
+restart a remoteproc with fastrpc. So dev_dbg perhaps?
 
-Information like the above or the register contents is not adding any
-value here, it just makes it harder to find the actual content in the
-message.  Sometimes a relevant portion of the stack can be useful but
-that's not what's happening here.
+> +	return err;
 
---WyxKWAijYORUCs4s
-Content-Type: application/pgp-signature; name="signature.asc"
+I think that in the event that of_platform_populate() actually failed,
+you will return an error here, fastrpc_rpmsg_remove() won't be called,
+so you won't release the misc device or release &data->refcount. This
+issue exists in the code today though...
 
------BEGIN PGP SIGNATURE-----
+Regards,
+Bjorn
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmG3ikIACgkQJNaLcl1U
-h9DEvgf/SGigxmX4RClSIJHxCB78eNZyY+qRHmxY3ooT5MmdyLd4mqYAHxGvUnfC
-EU8ca4McwbTvDom1GS0+Dwt2ICBJ1zW090xrQuP3QhfIoCG9x+G5uAfWVBBUBi1o
-Rt0nYzMzvUSn0qbcaDt2UMjQBObE45kr+GUdvi8D/JwI/IjSNbe+swI3uMqi9YMx
-71+yCi0ujwvds+EN8243AqAbKlSa84TTrA+EaQItnu/6q5/rZ4wGw0C03Uz4i4Mr
-WjC6UHT3ReggqRqDsrJEzMdopnv5CF5LuByjWz/yBXKbNzpvMta2RyJ1hY7itOBZ
-p73/f3DFGRpsB21CdaJvPV6FevqduA==
-=zoNv
------END PGP SIGNATURE-----
-
---WyxKWAijYORUCs4s--
+> +
+> +fdev_error:
+> +	kfree(data);
+> +	return err;
+>  }
+>  
+>  static void fastrpc_notify_users(struct fastrpc_user *user)
+> @@ -1970,6 +2008,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>  	if (cctx->fdevice)
+>  		misc_deregister(&cctx->fdevice->miscdev);
+>  
+> +	if (cctx->secure_fdevice)
+> +		misc_deregister(&cctx->secure_fdevice->miscdev);
+> +
+>  	of_platform_depopulate(&rpdev->dev);
+>  
+>  	cctx->rpdev = NULL;
+> -- 
+> 2.21.0
+> 
