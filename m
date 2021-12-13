@@ -2,97 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5462F47376F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:28:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CBBDE473779
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 23:31:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243567AbhLMW2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 17:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39980 "EHLO
+        id S240188AbhLMWbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 17:31:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239112AbhLMW2x (ORCPT
+        with ESMTP id S235263AbhLMWbt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 17:28:53 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1B3C061574;
-        Mon, 13 Dec 2021 14:28:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 06ACDB80499;
-        Mon, 13 Dec 2021 22:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8D1C34600;
-        Mon, 13 Dec 2021 22:28:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639434530;
-        bh=6ZHHElkpTM3plJJ+I8iwEra/ETUWjpU6A2mPMoWT/H0=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=glzDrBZ3Vk0WvTyoNLzRduZlDCT6i0QGDRX/AM1/F7UFKcRWeanc1auT1wEWmmomv
-         OOeZvjIhbVNm5qM90rmdq8eggRkSRyq/GCC4ZVvUwJRmp9p6P8KmYv6hyouKGyIVdP
-         YUaqaroaGCfFOVHoBkG3ZMsAfMx4KqlChkcIoaZXCywfnVSa5qsfKsHOC+Vw0RP7qw
-         rxvo7Op+LZzHRnJ1UrYXwehxQWnmbxlf0ufaTO9T2A2ZPFr4GdQb6x1DoOLlrDZYGD
-         fdXstLhtlnkcGzNdMKeaiGeA2K/M30VLj216x068TNEVXNer5O+/E90VIINGUkrcPh
-         /5yRJ8tXKpwag==
-Message-ID: <be465db1-ed27-6111-71fb-9ef86b6ed6c0@kernel.org>
-Date:   Tue, 14 Dec 2021 00:28:46 +0200
+        Mon, 13 Dec 2021 17:31:49 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C984EC06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:31:48 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id n104-20020a9d2071000000b005799790cf0bso19048362ota.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 14:31:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7GNt3+ytkxOOCBKUiZb2RI1k+EL5kuClexcB/h1/ebo=;
+        b=HlXAnJWV0V5Zijv7Z6WiL8LWTUjhLwICYWwfF9xns9m4JefYgv3J/DyoRJBL9e+95g
+         CN6BmgcwJ0XRebobnOTYhZNjbTmYt8eYiTbBEJ6NUNwU8K+Ge2Sf6grD/7t18AoJTYL1
+         VYmsiao7NTonfa5aAlQxOX+0k+4ejwnaw/pJJ1fLIoJSPPzpDRx6mqn4IMo1owSyEaXn
+         dRRkpzOvHE9H7Ec7wLESedOsR89tRHAOrtK31YhsqEo4lNHeaf8OhcuBSzRk1qCcxkgq
+         xPligA/+9NnYnaR3N4Le3CplJHOazw4oA9UwAoXoUPz900s2UZuD8qFABwGNa0CyvyzF
+         sfRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=7GNt3+ytkxOOCBKUiZb2RI1k+EL5kuClexcB/h1/ebo=;
+        b=4YHxOCytEUHQot6zYilcGki5q57NRzenu3eRMedjtmstq/Ssu/qeASjV6lTnSqdhOu
+         /h4jpGT1q6wyIx+cZhRPH0/fcr76Dsysohkdh0ofe6w0T4YfZkc9Ua+2VWLhU/4Pogwr
+         0uve9nXGva+CssF/Qd0q0r+F6BKXMOxRzDN9BRFxJPSgjdwNtIiTEgTv3oaSzJICvW6E
+         VZe3e/vlyDvKjYtUCARGQtseWrNhwRo6ANHcghp6IyD8C9/scdmJ+eKLF25OIUcN0kPO
+         aSMfaMcN1k20SgUfhhOIEruAdgz8U2mupiOvWvH4ZhJU+VWyaW3lo/LP3QGz+mKAcBp1
+         8hCQ==
+X-Gm-Message-State: AOAM5302XZLtVs8DzDJOTCc0wlRLFMKAnR0JuP0B7EcDzfidg4Cjng91
+        tHwOmD7titUNGNtvqBYJ8P+Qsw==
+X-Google-Smtp-Source: ABdhPJwuCHh8yAGFAx4GVCYKrGZNBwGBwCiHyaa8Wc1qTy6ZEj29vhik8ncIkCG7LYsTyYoqDTUBUQ==
+X-Received: by 2002:a05:6830:270c:: with SMTP id j12mr1140169otu.231.1639434708148;
+        Mon, 13 Dec 2021 14:31:48 -0800 (PST)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id h14sm2462401ots.22.2021.12.13.14.31.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Dec 2021 14:31:47 -0800 (PST)
+Message-ID: <bf54a838-b053-8a55-92f1-91bd3199489f@kali.org>
+Date:   Mon, 13 Dec 2021 16:31:43 -0600
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/6] Add QCM2290 interconnect support
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845: fix microphone bias properties
+ and values
 Content-Language: en-US
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211206075808.18124-1-shawn.guo@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20211206075808.18124-1-shawn.guo@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Caleb Connolly <caleb@connolly.tech>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211213195105.114596-1-david@ixit.cz>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20211213195105.114596-1-david@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
 
-On 6.12.21 9:58, Shawn Guo wrote:
-> The series begins with a separate cleanup on icc-rpm, followed by a few
-> prep changes for QCM2290 support, and then adds bindings and
-> interconnect driver for QCM2290 platform.
+On 12/13/21 1:51 PM, David Heidelberg wrote:
+> replace millivolt with correct microvolt and adjust value to
+> the minimal value allowed by documentation.
+>
+> Found with `make qcom/sdm845-oneplus-fajita.dtb`.
+>
+> Fixes:
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: codec@1: 'qcom,micbias1-microvolt' is a required property
+>          From schema: Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: codec@1: 'qcom,micbias2-microvolt' is a required property
+>          From schema: Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: codec@1: 'qcom,micbias3-microvolt' is a required property
+>          From schema: Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: codec@1: 'qcom,micbias4-microvolt' is a required property
+>          From schema: Documentation/devicetree/bindings/sound/qcom,wcd934x.yaml
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: codec@1: 'qcom,micbias1-millivolt', 'qcom,micbias2-millivolt', 'qcom,micbias3-millivolt', 'qcom,micbias4-millivolt' do not match any of the regexes: '^.*@[0-9a-f]+$', 'pinctrl-[0-9]+'
+>
+> Fixes: 27ca1de07dc3 ("arm64: dts: qcom: sdm845: add slimbus nodes")
+>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index cfdeaa81f1bb..1bb4d98db96f 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -3613,10 +3613,10 @@ wcd9340: codec@1{
+>   					#clock-cells = <0>;
+>   					clock-frequency = <9600000>;
+>   					clock-output-names = "mclk";
+> -					qcom,micbias1-millivolt = <1800>;
+> -					qcom,micbias2-millivolt = <1800>;
+> -					qcom,micbias3-millivolt = <1800>;
+> -					qcom,micbias4-millivolt = <1800>;
+> +					qcom,micbias1-microvolt = <1800000>;
+> +					qcom,micbias2-microvolt = <1800000>;
+> +					qcom,micbias3-microvolt = <1800000>;
+> +					qcom,micbias4-microvolt = <1800000>;
+>   
+>   					#address-cells = <1>;
+>   					#size-cells = <1>;
 
-Thanks for working on this! I have applied patch 1/6. Please rebase the
-rest on linux-next.
+Tested on the Lenovo Yoga C630
 
-BR,
-Georgi
-
-> Changes for v3:
-> - Update bindings to define child interconnect provider nodes
-> 
-> Changes for v2:
-> - Drop unneeded include of <dt-bindings/clock/qcom,gcc-qcm2290.h> from
->    bindings.
-> 
-> Shawn Guo (6):
->    interconnect: icc-rpm: Use NOC_QOS_MODE_INVALID for qos_mode check
->    interconnect: icc-rpm: Define ICC device type
->    interconnect: icc-rpm: Add QNOC type QoS support
->    interconnect: icc-rpm: Support child NoC device probe
->    dt-bindings: interconnect: Add Qualcomm QCM2290 NoC support
->    interconnect: qcom: Add QCM2290 driver support
-> 
->   .../bindings/interconnect/qcom,qcm2290.yaml   |  137 ++
->   drivers/interconnect/qcom/Kconfig             |    9 +
->   drivers/interconnect/qcom/Makefile            |    2 +
->   drivers/interconnect/qcom/icc-rpm.c           |   56 +-
->   drivers/interconnect/qcom/icc-rpm.h           |   14 +-
->   drivers/interconnect/qcom/msm8916.c           |    4 +-
->   drivers/interconnect/qcom/msm8939.c           |    5 +-
->   drivers/interconnect/qcom/qcm2290.c           | 1363 +++++++++++++++++
->   drivers/interconnect/qcom/sdm660.c            |    7 +-
->   .../dt-bindings/interconnect/qcom,qcm2290.h   |   94 ++
->   10 files changed, 1678 insertions(+), 13 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcm2290.yaml
->   create mode 100644 drivers/interconnect/qcom/qcm2290.c
->   create mode 100644 include/dt-bindings/interconnect/qcom,qcm2290.h
-> 
+Tested-By: Steev Klimaszewski <steev@kali.org>
 
