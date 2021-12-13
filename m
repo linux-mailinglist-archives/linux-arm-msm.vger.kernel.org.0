@@ -2,84 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7DF4732CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 18:19:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6E62473377
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Dec 2021 19:00:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237971AbhLMRTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 12:19:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236018AbhLMRTy (ORCPT
+        id S241597AbhLMSAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 13:00:48 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:45642 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236059AbhLMSAm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 12:19:54 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A284C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 09:19:54 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id u17so28316091wrt.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 09:19:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=075Yk0+y68GloxUXTf/Thww/w+qmHUDekOuz0aOcf0Q=;
-        b=nZYah+y0wyEUy8U0mi7D03PliOVEhrN1pu022fo9i4e3eWzjTSNbSlinRNb/0NXafy
-         XT7ziMe+yLbCMrIcuayBK8VbSmgL2NtC1UeLEX5OI3itfszWki6RdPrQ2HnVul1/1OkO
-         AVWpG/1hJq6zGRq9q4KBieqKv88PvK2XYG9bVPP2CjpGC7eBLIQvRWsLafAyadnLq5at
-         HCPhJYNJIfLsFbBGuiMlDPAA3gZ1OPp3R1IYWG9CkmHU+pCgAcXOe6/3/fmduxF0tnAY
-         1Ir52p8mjepyrDZJXuYX+rWQSYX3PalLJPe0E73+Kf84op4pNfKVvMnAbhi0YlOjmeVe
-         nu0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=075Yk0+y68GloxUXTf/Thww/w+qmHUDekOuz0aOcf0Q=;
-        b=gJ7QxSjfPIupk9moECNS1bpntc+Eknzz28cKberEO5gWRksEeXCE1eSqrHyJpQhTAM
-         bn3KZBNzx9c8wrIG3aqb81OjAMztUdbO02C1swWsvY0fwQlQYCLXiIqRnbYbhwFoyBbt
-         KG9gZSpwriQI3vLX6HZC/wJtKJZQc5VRTWXT6CETtcNdiAJIgER8D7kxJDGb5NhDboN8
-         464O8b9t/p8Z/+SAxI7HUYVsIkBjx6Jc+f7cNYR+Y9KDsIIFnDMmaxJZygUK8/OQnPFM
-         +jxMVKD29aYj+50AFR0N8tyOL9Gq9KcRXLEP5t1CpA5XuFJTn3XHw4h07T5XINoc9h/p
-         Gd3w==
-X-Gm-Message-State: AOAM532SR2blxMytSvVHohCo36NW99R702KsgZM5AePfuphpjP5aiaU1
-        EoQaIXX3e4iZXhaoTpNnEzzP1A==
-X-Google-Smtp-Source: ABdhPJyAwS+zgaTzXAAzYkD2cTgfRy9evWiBsjvc4LqUC01XO/9zVqQaVozt6C9tDubEy5gAsmZ9qw==
-X-Received: by 2002:a5d:618f:: with SMTP id j15mr32718756wru.506.1639415992703;
-        Mon, 13 Dec 2021 09:19:52 -0800 (PST)
-Received: from localhost.localdomain ([88.160.176.23])
-        by smtp.gmail.com with ESMTPSA id u10sm8483283wrs.99.2021.12.13.09.19.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Dec 2021 09:19:52 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, shawn.guo@linaro.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: msm: dsi: Add QCM2290 DSI phy
-Date:   Mon, 13 Dec 2021 18:32:00 +0100
-Message-Id: <1639416720-6732-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1639416720-6732-1-git-send-email-loic.poulain@linaro.org>
-References: <1639416720-6732-1-git-send-email-loic.poulain@linaro.org>
+        Mon, 13 Dec 2021 13:00:42 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B13D611B4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Dec 2021 18:00:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417A8C34605;
+        Mon, 13 Dec 2021 18:00:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639418440;
+        bh=YFqukNs+Og9qk/2yG+rJxGiiz5BS2yPPUMTffwav1QQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WS8oyyYJycmr/sHk2TzEhrQCrgB4i8oxjN1gHssg56OEA4uFh0e1Qcb3zeO/9zQzk
+         9TJ6u045thOyEFuoROv4LUx6AUE/4OLunHZsnL36PLNrvdHJx8RzOozEkVUVP9wXXQ
+         hJK9iWG58HESVEptEBCgqVRP4F0v2nu5biOt13n9WV7wJEpYr5Su4xjNpbzeX9xQmz
+         f5c40IoCYaJ97q7HIY8WTPJAa3Zv976LaBlCs2/pBHfXjs8TZOExMrI2P99raOnnio
+         ZtqlgWfRn3hnFLGsAon6sFtCuBh3gOjdMf7e586/ic/IMJTrIE7Yan3bnbeUbkv4yH
+         hXPnZVJUye5Dg==
+Date:   Mon, 13 Dec 2021 18:00:35 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Judy Hsiao <judyhsiao@chromium.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
+        cychiang@google.com, judyhsiao@google.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+Subject: Re: [PATCH] SoC: qcom: Distinguish headset codec by codec_dai->name
+Message-ID: <YbeKQ3mLqe1RoUWJ@sirena.org.uk>
+References: <20211210051907.3870109-1-judyhsiao@chromium.org>
+ <CAE-0n52z=wRS3rXM=zQzcy1yryvzwW6iGA75UYBiYSkR_5edTA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="WyxKWAijYORUCs4s"
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52z=wRS3rXM=zQzcy1yryvzwW6iGA75UYBiYSkR_5edTA@mail.gmail.com>
+X-Cookie: No solicitors.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCM2290 platform uses the 14nm DSI PHY driver.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+--WyxKWAijYORUCs4s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-index 81dbee4..1617efc 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-@@ -18,6 +18,7 @@ properties:
-       - qcom,dsi-phy-14nm
-       - qcom,dsi-phy-14nm-660
-       - qcom,dsi-phy-14nm-8953
-+      - qcom,dsi-phy-14nm-2290
- 
-   reg:
-     items:
--- 
-2.7.4
+On Fri, Dec 10, 2021 at 03:15:49PM -0800, Stephen Boyd wrote:
+> Quoting Judy Hsiao (2021-12-09 21:19:07)
 
+> > Fixes: 425c5fce8a03 ("ASoC: qcom: Add support for ALC5682I-VS codec")
+
+> It fixes something so what is it fixing? Can you add the call stack of
+> the failure and explain how this patch fixes it? We have that patch
+> backported to our chromeos 5.4 kernel tree but I assume this reproduces
+> upstream.
+
+Please don't encourage people to just paste entire panics into things,
+what you've included here is vastly larger than the entire original
+patch which overwhelms the content in the message.
+
+>  Unable to handle kernel paging request at virtual address ffffffbfe7bba9ce
+>  Mem abort info:
+>    ESR = 0x96000005
+>    EC = 0x25: DABT (current EL), IL = 32 bits
+>    SET = 0, FnV = 0
+>    EA = 0, S1PTW = 0
+>  Data abort info:
+>    ISV = 0, ISS = 0x00000005
+>    CM = 0, WnR = 0
+
+Information like the above or the register contents is not adding any
+value here, it just makes it harder to find the actual content in the
+message.  Sometimes a relevant portion of the stack can be useful but
+that's not what's happening here.
+
+--WyxKWAijYORUCs4s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmG3ikIACgkQJNaLcl1U
+h9DEvgf/SGigxmX4RClSIJHxCB78eNZyY+qRHmxY3ooT5MmdyLd4mqYAHxGvUnfC
+EU8ca4McwbTvDom1GS0+Dwt2ICBJ1zW090xrQuP3QhfIoCG9x+G5uAfWVBBUBi1o
+Rt0nYzMzvUSn0qbcaDt2UMjQBObE45kr+GUdvi8D/JwI/IjSNbe+swI3uMqi9YMx
+71+yCi0ujwvds+EN8243AqAbKlSa84TTrA+EaQItnu/6q5/rZ4wGw0C03Uz4i4Mr
+WjC6UHT3ReggqRqDsrJEzMdopnv5CF5LuByjWz/yBXKbNzpvMta2RyJ1hY7itOBZ
+p73/f3DFGRpsB21CdaJvPV6FevqduA==
+=zoNv
+-----END PGP SIGNATURE-----
+
+--WyxKWAijYORUCs4s--
