@@ -2,102 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC0E1473B96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 04:37:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72978473C2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 05:47:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbhLNDh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 22:37:28 -0500
-Received: from mga06.intel.com ([134.134.136.31]:56386 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229979AbhLNDh0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 22:37:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1639453046; x=1670989046;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=zvW0rVDOsw3A1J3iTHRC/yuQ7RJV1sqF+QY7pKkw/jo=;
-  b=NL+FGO5wvCayZ6Aw0ljgMnQv23VZJ3yPrQ2yyNQxXtft5hvgcfpfLQXY
-   kUnTuuzHNwlipZi9uS6OW1gQZP5wNrQdLLZt2iT8R1MTz9CrpXN4Hydaz
-   OsMqoZg7B9FGXjg9SIqPm7UieAapP3bXecE1yOKlDIE2qGDRmhhzFxshY
-   LE0A61M2BQS0N5lKTCfz4yI4DfkNHgsbe5zwT8UEGsBMGt7Kl0yr4V+6w
-   jUtK6SASVy3XVAGobAKAnxPUDPvDlCvf8zXqTYsFSHF+wiEnLaff3O98O
-   IFXtWoXYKQFB5x3zGfLmw9xSzr8+zfVwdBxTd+xds2JP5EtODFeGu918k
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10197"; a="299668591"
-X-IronPort-AV: E=Sophos;i="5.88,204,1635231600"; 
-   d="scan'208";a="299668591"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 19:37:26 -0800
-X-IronPort-AV: E=Sophos;i="5.88,204,1635231600"; 
-   d="scan'208";a="505190229"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 19:37:26 -0800
-Date:   Mon, 13 Dec 2021 19:37:25 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH 6/7] drm/amdgpu: Ensure kunmap is called on error
-Message-ID: <20211214033725.GR3538886@iweiny-DESK2.sc.intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20211210232404.4098157-7-ira.weiny@intel.com>
- <5bbd3c48-1388-9469-8b6f-deed64406d7d@amd.com>
+        id S229600AbhLNEr4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 23:47:56 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:40967 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229436AbhLNEr4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Dec 2021 23:47:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1639457276; x=1670993276;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=9OVG4T7CGFREDUL/6qfTIna/U9LQMnLfxCuu0AOCp2A=;
+  b=Gn7mHpiIv8SQT6F6VJJEVSLjZx0qOJ6hODWA423hAky0TN7a1jKAc97G
+   hSO3UhxeVfDGjLVXKzWksGen2VplQJWjfVwd6Mezd4p7rbcG9IiT4t7LR
+   eGS1Bd73OI2my/NEF4OYOViAKw4OImpdCT4n7BjBDd8c7QvUR2sN1m5nu
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Dec 2021 20:47:55 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 20:47:55 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 13 Dec 2021 20:47:55 -0800
+Received: from [10.216.56.164] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 13 Dec
+ 2021 20:47:51 -0800
+Subject: Re: [PATCH v3] usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk for
+ DWC3 controller
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>
+References: <1638339338-6731-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1638339338-6731-2-git-send-email-quic_c_sanm@quicinc.com>
+ <CAE-0n50YLsHhqoNQDNnGUYhHQSbMc7qnS5nGB-Nk2Z2J13xBVQ@mail.gmail.com>
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Message-ID: <eeeedcb4-d444-5402-2822-0fe942bcb83a@quicinc.com>
+Date:   Tue, 14 Dec 2021 10:17:48 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <CAE-0n50YLsHhqoNQDNnGUYhHQSbMc7qnS5nGB-Nk2Z2J13xBVQ@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5bbd3c48-1388-9469-8b6f-deed64406d7d@amd.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 09:37:32PM +0100, Christian K�nig wrote:
-> Am 11.12.21 um 00:24 schrieb ira.weiny@intel.com:
-> > From: Ira Weiny <ira.weiny@intel.com>
-> > 
-> > The default case leaves the buffer object mapped in error.
-> > 
-> > Add amdgpu_bo_kunmap() to that case to ensure the mapping is cleaned up.
-> 
-> Mhm, good catch. But why do you want to do this in the first place?
 
-I'm not sure I understand the question.
+On 12/2/2021 8:47 AM, Stephen Boyd wrote:
+> Quoting Sandeep Maheswaram (2021-11-30 22:15:38)
+>> Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
+>> Runtime suspend of phy drivers was failing from DWC3 driver as
+>> runtime usage value is 2 because the phy is initialized from
+>> DWC3 core and HCD core.
+>> DWC3 manages phy in their core drivers.
+> This looks wrapped weirdly.
+>
+>> Set this quirk to avoid phy initialization in HCD core.
+>>
+>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Any Fixes tag?
+Not sure about the commit id to be used here.
+>
+>> ---
+>>   drivers/usb/host/xhci-plat.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+>> index c1edcc9..9bbd939 100644
+>> --- a/drivers/usb/host/xhci-plat.c
+>> +++ b/drivers/usb/host/xhci-plat.c
+>> @@ -327,6 +327,9 @@ static int xhci_plat_probe(struct platform_device *pdev)
+>>                                           &xhci->imod_interval);
+>>          }
+>>
+>> +       if (of_device_is_compatible(pdev->dev.parent->of_node, "snps,dwc3"))
+> Are we sure that pdev->dev.parent isn't NULL here?
 
-Any mapping of memory should be paired with an unmapping when no longer needed.
-And this is supported by the call to amdgpu_bo_kunmap() in the other
-non-default cases.
++    if (of_device_is_compatible(to_of_node(sysdev->fwnode), "snps,dwc3"))
 
-Do you believe the mapping is not needed?
+Will this be ok ?
 
-Ira
-
-> 
-> Christian.
-> 
-> > 
-> > Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-> > 
-> > ---
-> > NOTE: It seems like this function could use a fair bit of refactoring
-> > but this is the easiest way to fix the actual bug.
-> > ---
-> >   drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> > nice
-> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-> > index 6f8de11a17f1..b3ffd0f6b35f 100644
-> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-> > @@ -889,6 +889,7 @@ static int amdgpu_uvd_cs_msg(struct amdgpu_uvd_cs_ctx *ctx,
-> >   		return 0;
-> >   	default:
-> > +		amdgpu_bo_kunmap(bo);
-> >   		DRM_ERROR("Illegal UVD message type (%d)!\n", msg_type);
-> >   	}
-> 
+>
+>> +               xhci->quirks |= XHCI_SKIP_PHY_INIT;
+>> +
+>>          hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev, "usb-phy", 0);
+>>          if (IS_ERR(hcd->usb_phy)) {
