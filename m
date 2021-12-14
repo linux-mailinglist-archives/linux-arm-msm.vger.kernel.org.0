@@ -2,121 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99B6C474785
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 17:20:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 254664747C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 17:24:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbhLNQUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 11:20:35 -0500
-Received: from guitar.tcltek.co.il ([84.110.109.230]:39105 "EHLO mx.tkos.co.il"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229542AbhLNQUf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 11:20:35 -0500
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Dec 2021 11:20:34 EST
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S235929AbhLNQXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 11:23:22 -0500
+Received: from ixit.cz ([94.230.151.217]:53922 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235873AbhLNQXF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 11:23:05 -0500
+Received: from [192.168.1.138] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 886E8440F2F;
-        Tue, 14 Dec 2021 18:13:54 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1639498435;
-        bh=1fwIRY6SB3en15B126frdgqHFepu3cN45gLKiln9Nso=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=cdw3xqZFuSgR1xxHE6O8fkXx9pMF+xk8tQ4fd2t34wC3GLOUi6slFaBkrhOZNwZof
-         0Da0Bn179QiOLwtMxT96UQn6kOmlZYnKd1ZvmN/j3x520pCiIdEpThimWCewQP2g2o
-         sC3eA5WO9r3E+iR/vzHSjhxfqj8i2hFAHHySxrLyC4Kfx4U/UNB0e7jDb0shTjLJFc
-         g8arPYBAoONPTa0twWhLU6KeISS2rTuWrEfo+ZedJlVSsT6zFvj8DMIp8Yjh6/OT9F
-         Ve/LaPoDVVXD05Q7I9ajmRr+3w+ZjTSMUbzNx/NYpRbkVgOzcEfvbVhX1olHPhEjRV
-         tAVJKnN9qK5Pg==
-References: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
- <bdc61569e4068490f53f347dcf29ee9539a8bc0b.1630323987.git.baruch@tkos.co.il>
- <20210914124959.spwjiifvysposhls@pengutronix.de>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Lee Jones <lee.jones@linaro.org>,
+        by ixit.cz (Postfix) with ESMTPSA id 5B1522243C;
+        Tue, 14 Dec 2021 17:23:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1639498982;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZktYTD9EM17d3mZGc7bB98tBUNT5vMvozHbm6QejS+U=;
+        b=jbjT/cxAuBYI2jZmaJLbC05eA+vLArOWkFQ2k8DA3OLQsXDyZb1+bv+6sor5Oub7PXTnYk
+        LGsB6MEGaIzAy08N0gc6Jcoy+Wmf5LikcDkPksFo4vvOI41zGC7RBJrmiyQ7bp3Y/oge4s
+        GIK1yKcjfvozF/oS+hLQtwx5HpCrSSs=
+Date:   Tue, 14 Dec 2021 17:22:55 +0100
+From:   David Heidelberg <david@ixit.cz>
+Subject: Re: [PATCH] dt-bindings: rtc: qcom-pm8xxx-rtc: update register
+ numbers
+To:     Rob Herring <robh@kernel.org>
+Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Caleb Connolly <caleb@connolly.tech>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de
-Subject: Re: [PATCH v8 2/4] pwm: driver for qualcomm ipq6018 pwm block
-Date:   Tue, 14 Dec 2021 18:05:08 +0200
-In-reply-to: <20210914124959.spwjiifvysposhls@pengutronix.de>
-Message-ID: <87pmpzmaf1.fsf@tarshish>
+        Satya Priya <skakit@codeaurora.org>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        linux-rtc@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Message-Id: <7I544R.923UO8WZHK48@ixit.cz>
+In-Reply-To: <1639437829.348405.1773613.nullmailer@robh.at.kernel.org>
+References: <20211213192946.111320-1-david@ixit.cz>
+        <1639437829.348405.1773613.nullmailer@robh.at.kernel.org>
+X-Mailer: geary/40.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe,
 
-On Tue, Sep 14 2021, Uwe Kleine-K=C3=B6nig wrote:
-> On Mon, Aug 30, 2021 at 02:46:25PM +0300, Baruch Siach wrote:
->> +	for (; pre_div <=3D IPQ_PWM_MAX_DIV; pre_div++) {
->> +		pwm_div =3D DIV64_U64_ROUND_UP(period_ns * rate,
->> +				(u64)NSEC_PER_SEC * (pre_div + 1));
->> +		pwm_div--;
->
-> Can it happen that pwm_div is zero before it is decreased by one? Also
-> you need to round down here; with rounding up the resulting period is
-> bigger than the requested period (unless the division yields an exact
-> integer).
 
-I followed your round down advice on v9, but it turned out to be
-wrong. Round down means that the divider is smaller so the period is
-larger. This means that 'diff' below can not be positive. So only exact
-match (diff =3D=3D 0) works. When there is no exact match, best_* values are
-left in their initial setting.
 
-I'll fix that in v10 along with another bug I introduced in v9.
+On Mon, Dec 13 2021 at 17:23:49 -0600, Rob Herring <robh@kernel.org> 
+wrote:
+> On Mon, 13 Dec 2021 20:29:45 +0100, David Heidelberg wrote:
+>>  Extend registers up to 2, also document their names.
+>> 
+>>  Also fixes warnings generated by `make 
+>> qcom/sdm845-oneplus-fajita.dtb`:
+>>  arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: 
+>> reg: [[24576], [24832]] is too long
+>>          From schema: 
+>> Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+>>  arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: 
+>> 'reg-names' does not match any of the regexes: 'pinctrl-[0-9]+'
+>>          From schema: 
+>> Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
+>> 
+>>  Signed-off-by: David Heidelberg <david@ixit.cz>
+>>  ---
+>>   .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 9 
+>> ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>> 
+> 
+> Running 'make dtbs_check' with the schema in this patch gives the
+> following warnings. Consider if they are expected or the schema is
+> incorrect. These may not be new warnings.
+> 
+> Note that it is not yet a requirement to have 0 warnings for 
+> dtbs_check.
+> This will change in the future.
+> 
+> Full log is available here: https://patchwork.ozlabs.org/patch/1567467
+> 
+> 
+> rtc@11d: compatible: Additional items are not allowed 
+> ('qcom,pm8921-rtc' was unexpected)
+> 	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+> 
+> rtc@11d: compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too 
+> long
+> 	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-baruch
 
->> +		if (pre_div > pwm_div)
->> +			break;
->
-> A comment here why we can end the search would be good.
->
->> +		/*
->> +		 * Make sure we can do 100% duty cycle where
->> +		 * hi_dur =3D=3D pwm_div + 1
->> +		 */
->> +		if (pwm_div > IPQ_PWM_MAX_DIV - 1)
->> +			continue;
->> +
->> +		diff =3D ((uint64_t)freq * (pre_div + 1) * (pwm_div + 1))
->> +			- (uint64_t)rate;
->> +
->> +		if (diff < 0) /* period larger than requested */
->> +			continue;
->> +		if (diff =3D=3D 0) { /* bingo */
->> +			best_pre_div =3D pre_div;
->> +			best_pwm_div =3D pwm_div;
->> +			break;
->> +		}
->> +		if (diff < min_diff) {
->> +			min_diff =3D diff;
->> +			best_pre_div =3D pre_div;
->> +			best_pwm_div =3D pwm_div;
->> +		}
->> +	}
->> +
->> +	/* config divider values for the closest possible frequency */
->> +	config_div_and_duty(pwm, best_pre_div, best_pwm_div,
->> +			    rate, duty_ns, state->enabled);
->> +
->> +	return 0;
->> +}
+Would you consider safe, if I sent patch to remove redundant 
+`qcom,pm8921-rtc` from arch/arm/boot/dts/qcom-mdm9615.dtsi?
 
---=20
-                                                     ~. .~   Tk Open Systems
-=3D}------------------------------------------------ooO--U--Ooo------------=
-{=3D
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+David
+
+
