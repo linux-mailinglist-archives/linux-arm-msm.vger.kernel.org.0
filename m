@@ -2,62 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4CB6473DBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 08:38:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE3D0473E66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 09:40:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231397AbhLNHiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 02:38:46 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:53424 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231233AbhLNHiq (ORCPT
+        id S231905AbhLNIkp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 03:40:45 -0500
+Received: from mail.thebizzie.pl ([192.236.147.111]:41136 "EHLO
+        mail.thebizzie.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231886AbhLNIkn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 02:38:46 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D9242B8172C;
-        Tue, 14 Dec 2021 07:38:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D416AC34601;
-        Tue, 14 Dec 2021 07:38:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639467523;
-        bh=LYVbEp6oDnQQyqbRxWbmjublt79R3Y2q0XjQOAruDPo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GmMBhJUGo6F6Qe4ZRZt1z3TfBX33FlvvhhmwITzLoGqwtZIz/tDVjFZv2qB8CV2Ou
-         JXbCY22GdcGxDWBiAVY69uF3lwz9bbnJT/q583DFkwYzRw5TuMmCZjDvWXqOS3OBiQ
-         v4OqOKTEDUXqGR5Pr6fOax2Fu2ju4eHtojgiXlWXnCWMlnYV0o7Y+/AuSufy2cJ1hJ
-         sbaTjprawXUxoieIcBJ7+nRhJs6KGmGJfwuoa0rorIrs113da/IT4fh6EKuyNSvsZe
-         HJdFR4CeExfxWd5nNR0z9knZ4Atrq9Gr+KkW/Nth5rOWAXzgFG3+kSEssQq/HElZdh
-         5K1vaq0P+CvwQ==
-Date:   Tue, 14 Dec 2021 13:08:39 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 04/10] dt-bindings: phy: qcom,qusb2: Add SM6350 compatible
-Message-ID: <YbhJ/zNI8EgD15TN@matsya>
-References: <20211213082614.22651-1-luca.weiss@fairphone.com>
- <20211213082614.22651-5-luca.weiss@fairphone.com>
+        Tue, 14 Dec 2021 03:40:43 -0500
+Received: by mail.thebizzie.pl (Postfix, from userid 1002)
+        id 24804181750; Tue, 14 Dec 2021 08:32:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thebizzie.pl; s=mail;
+        t=1639470843; bh=kU+//Lu71IqgcFfjayWXuIc0mZtoyrYJc2YuqyU8eS8=;
+        h=Date:From:To:Subject:From;
+        b=CsEzKb0/NcfB3yIbOd5Maqvftpq7HwaZiod1kxGAP5NS81/vNF6QnetDEV0QUpRm+
+         kGk6xfVTnYA9Va8y4yIQDrHE2lVvEmDj78IkpebnmWgTy5hhWv1nx0zZaQIA4AuTI2
+         6OWAQP7mrof7ANdskmck7DTSNCTQtZxUDY12kREPwu5KOZ6QHjqKGQvHROq5fKxaNT
+         mB6XiPvEYe6Cz5nAU+2NFvgb1HDb85jPc354qvpSGirF5S5+wd4A52bL9nXYxj4B/h
+         t5ooiC7PK/o+7VGh+lfHHY0K4XjrNtn6zRUl6s2OcHomZHcTtpteNbPBgqbCOLvIEb
+         fooCosIUYN3vQ==
+Received: by mail.thebizzie.pl for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 08:31:44 GMT
+Message-ID: <20211214074500-0.1.7.27t.0.c3o5nxqtkg@thebizzie.pl>
+Date:   Tue, 14 Dec 2021 08:31:44 GMT
+From:   "Mateusz Adamczyk" <mateusz.adamczyk@thebizzie.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Wycena paneli fotowoltaicznych
+X-Mailer: mail.thebizzie.pl
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211213082614.22651-5-luca.weiss@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13-12-21, 09:26, Luca Weiss wrote:
-> Add devicetree compatible for the usb phy on SM6350 SoC.
+Dzie=C5=84 dobry,
 
-Applied to phy-next, thanks
+dostrzegam mo=C5=BCliwo=C5=9B=C4=87 wsp=C3=B3=C5=82pracy z Pa=C5=84stwa f=
+irm=C4=85.
 
--- 
-~Vinod
+=C5=9Awiadczymy kompleksow=C4=85 obs=C5=82ug=C4=99 inwestycji w fotowolta=
+ik=C4=99, kt=C3=B3ra obni=C5=BCa koszty energii elektrycznej nawet o 90%.
+
+Czy s=C4=85 Pa=C5=84stwo zainteresowani weryfikacj=C4=85 wst=C4=99pnych p=
+ropozycji?
+
+
+Pozdrawiam,
+Mateusz Adamczyk
