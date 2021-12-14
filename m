@@ -2,156 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36CBF473CBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 06:50:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EC46473D3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 07:32:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230053AbhLNFuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 00:50:25 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:24086 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229889AbhLNFuZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 00:50:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639461025; x=1670997025;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=jmsxtLcVGJrU2P7eH+4CDEuducZWSqhxMyBLil7wn5I=;
-  b=cYEnej/ps8NeE0JShDwUWPIapjz6802SYwVinLtX1cg/qBMJARdXhTs1
-   C0n/97DbhW0fAuPE8vwGSM4f06cLqhggDcJZfqiFtGVHShGf0aNbu1mKT
-   dqYY3+zvbUrz4tEoSPzTrtkZYEb0oXW00m8qQzqa9/2WIEym+3TRo+PTC
-   Y=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Dec 2021 21:50:25 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 21:50:24 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 13 Dec 2021 21:50:15 -0800
-Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 13 Dec
- 2021 21:50:12 -0800
-Message-ID: <3b320028-33a7-4d3a-c671-8db80d061e47@quicinc.com>
-Date:   Tue, 14 Dec 2021 13:50:10 +0800
+        id S230314AbhLNGca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 01:32:30 -0500
+Received: from todd.t-8ch.de ([159.69.126.157]:46969 "EHLO todd.t-8ch.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231148AbhLNGc3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 01:32:29 -0500
+Date:   Tue, 14 Dec 2021 07:32:24 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=weissschuh.net;
+        s=mail; t=1639463546;
+        bh=hXNmItZsiKD0JSzD3KLOMTWJ0jfOkfqH2sC/iJs9ifQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aVzPSGvhvMtDzpZu8H+5eMmlIaQMiZ6jwn54ESTR8wnz5CWXaXVh2zu6lEwYx4DyO
+         ThvFjIP8z06A3xU/pqfxu7vYsMRr004taJ5ooPRRrnF6pFe+Qy6ks30idZXa6yUH9z
+         +133zoqds57ZIix5p5EEwjI35QuLXXnBNyUFEtAw=
+From:   Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To:     Hemant Kumar <hemantk@codeaurora.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Mario Limonciello <Mario.Limonciello@amd.com>,
+        Richard Hughes <hughsient@gmail.com>
+Subject: Re: [RFC] bus: mhi: core: Load firmware asynchronous
+Message-ID: <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
+References: <20211210161645.10925-1-linux@weissschuh.net>
+ <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [RESEND PATCH v3 10/10] dt-bindings: convert qcom,spmi-pmic-arb
- binding to YAML format
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        <collinsd@codeaurora.org>, Andy Gross <agross@kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <subbaram@codeaurora.org>, <tglx@linutronix.de>, <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <1638403212-29265-1-git-send-email-quic_fenglinw@quicinc.com>
- <1638403212-29265-11-git-send-email-quic_fenglinw@quicinc.com>
- <1638453489.532760.3736891.nullmailer@robh.at.kernel.org>
- <20211210020549.BFA4DC004DD@smtp.kernel.org>
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <20211210020549.BFA4DC004DD@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+In-Reply-To: <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
+Jabber-ID: thomas@t-8ch.de
+X-Accept: text/plain, text/html;q=0.2, text/*;q=0.1
+X-Accept-Language: en-us, en;q=0.8, de-de;q=0.7, de;q=0.6
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry for late response. I had a check in the log and tried "make 
-dtbs_check" at my side.
-There are 5 types of warnings, I guess I can fix two types of them.
+On 2021-12-13 16:07-0800, Hemant Kumar wrote:
+> On 12/10/2021 8:16 AM, Thomas Weißschuh wrote:
+> > This gives userspace the possibility to provide the firehose bootloader
+> > via the sysfs-firmware-API instead of having to modify the global
+> > firmware loadpath.
+> > 
+> > Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+> > 
+> > ---
+> > 
+> > Please note that this is not tested yet, as I don't have access to a matching
+> > firmware file.
+> > This submission is to gather general feedback from the maintainers and then
+> > Richard will do the actual testing, while I'll do the development.
+> > 
+> > This patch is should not have any impact beyond moving from request_firmware()
+> > to request_firmware_nowait() and the involved code reshuffle.
+> what are we achieving by moving to async ver of the firmware load ? MHI boot
+> flow can not do anything until BHI load is over. Is the intention eventually
+> to enable firmware fallback mechanism  and manually load the firmware ?
 
-1) : qcom,spmi@400f000: 'pmic@0', 'pmic@1', 'pmic@2', 'pmic@3' do not 
-match any of the regexes: 'pinctrl-[0-9]+'
+The goal is to provide the firehose bootloader (qcom/prog_firehose_sdx24.mbn)
+via the firmware fallback mechanism when upgrading the firmware on the device
+via the firehose protocol.
 
-This indicates the child nodes devices are not recognized, this can be 
-fixed by adding pattern
-properties similar to what defines in spmi.yaml. I will address it in 
-next patchset.
+This bootloader firmware is not part of linux-firmware but provided as part of
+each firmware update package, so it is not installed statically on the system.
 
-2) qcom,spmi@400f000: reg-names: 'oneOf' conditional failed, one must be 
-fixed:
+I will extend the commit message with this information.
 
-This is because of the "items" defined in "reg-name" does not match 
-between the dtsi nodes
-and the schema in sequence wise. I will update the scheme for "reg-name" 
-like this to fix it in
-next patchset:
-   reg-names:
-     anyOf:
-       - minItems: 3
-       - maxItems: 3
-       - enum: ["core", "intr", "cnfg"]
-
-       - minItems: 5
-       - maxItems: 5
-       - enum: ["core", "intr", "cnfg", "chnls", "obsrvr"]
-
-3) qcom,spmi@400f000: $nodename:0: 'qcom,spmi@400f000' does not match 
-'^spmi@.*'
-
-This indicates the mismatch of the device node name between the dtsi and 
-schema, I guess
-the fix should be in dtsi file instead of this binding, the spmi.yaml 
-file has defined
-the nodename with "spmi@" prefix, qcom,spmi-pmic-arb.yaml should follow 
-this.
-Should I make the change and update all the nodes names in dtsi file 
-like this? Or can this
-be ignored and leave it to dtsi file owners to update them accordingly?
-
-4) spmi@c440000: #address-cells:0:0: 2 was expected
-   spmi@c440000: #size-cells:0:0: 0 was expected
-
-Some of the spmi device nodes specify #address-cell = < 1>, and 
-#size-cell = <1>, the original
-.txt binding specified #address-cell = < 2>, and #size-cell = <0>. The 
-change should be in dtsi
-to update them following the binding. Let me know if I should do this, 
-or I can leave itto the
-dtsi file owners to update them accordingly.
-
-5) spmi@1c40000: 'cell-index' does not match any of the regexes: 
-'pinctrl-[0-9]+'
-
-"cell-index" is not used in the driver, also it doesn't exist in the 
-.txt binding, so this should
-be fixedin the corresponding dtsi file. Let me know if I need to fix it.
-
-Thanks
-
-
-On 2021/12/10 10:05, Stephen Boyd wrote:
-> Quoting Rob Herring (2021-12-02 05:58:09)
->> On Thu, 02 Dec 2021 08:00:12 +0800, Fenglin Wu wrote:
->>> Convert the SPMI PMIC arbiter documentation to JSON/yaml. While at it,
->>> update SPMI bus "reg" items constraint for SPMI PMIC arbiter to carry
->>> it and update it with a smaller range.
->>>
->>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
->>> ---
->>>   .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 -----------
->>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 128 +++++++++++++++++++++
->>>   Documentation/devicetree/bindings/spmi/spmi.yaml   |   3 +-
->>>   3 files changed, 130 insertions(+), 68 deletions(-)
->>>   delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->>>   create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
->>>
->> Running 'make dtbs_check' with the schema in this patch gives the
->> following warnings. Consider if they are expected or the schema is
->> incorrect. These may not be new warnings.
->>
->> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
->> This will change in the future.
->>
->> Full log is available here: https://patchwork.ozlabs.org/patch/1562483
-> Are any of these problems going to be fixed?
+PS: The current patch is missing 'return' after calls to
+'mhi_fw_load_finish()', this will be corrected in v2.
