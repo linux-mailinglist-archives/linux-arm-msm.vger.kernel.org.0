@@ -2,247 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B850474376
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:28:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C200D47439F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:38:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234363AbhLNN2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 08:28:02 -0500
-Received: from ixit.cz ([94.230.151.217]:50230 "EHLO ixit.cz"
+        id S234474AbhLNNiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 08:38:00 -0500
+Received: from mga12.intel.com ([192.55.52.136]:47058 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232253AbhLNN2A (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 08:28:00 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 09F6A24AF0;
-        Tue, 14 Dec 2021 14:27:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1639488477;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=Bv9IMdk7PirNLUGfvz44l53MYOu+yMfaHuir8Nj0crw=;
-        b=tq6vc/DlnhqweQukweehbE68N8VmWn1McPvEbICZ2Xj/5VcoRxvxu0FFgNtMzPZ2GHKzxg
-        YMZ2Qx7U4xKqXAaH0j5S62nhI1MfQTPiG9nq316vnVs0oupx0gC097Pjnx953UfcllpX02
-        opvOAbanFHv6g7znMHxfmNP/017AGJU=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
+        id S234445AbhLNNh7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 08:37:59 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10197"; a="218993114"
+X-IronPort-AV: E=Sophos;i="5.88,205,1635231600"; 
+   d="scan'208";a="218993114"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2021 05:37:59 -0800
+X-IronPort-AV: E=Sophos;i="5.88,205,1635231600"; 
+   d="scan'208";a="604284845"
+Received: from smile.fi.intel.com ([10.237.72.184])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2021 05:37:49 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+        (envelope-from <andriy.shevchenko@linux.intel.com>)
+        id 1mx7z9-0068is-01;
+        Tue, 14 Dec 2021 15:36:51 +0200
+Date:   Tue, 14 Dec 2021 15:36:50 +0200
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Sam Shih <sam.shih@mediatek.com>,
+        Zhiyong Tao <zhiyong.tao@mediatek.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Radim Pavlik <radim.pavlik@tbs-biometrics.com>,
+        Kavyasree Kotagiri <kavyasree.kotagiri@microchip.com>,
+        Colin Foster <colin.foster@in-advantage.com>,
+        Douglas Anderson <dianders@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: fix thermal zones naming
-Date:   Tue, 14 Dec 2021 14:27:49 +0100
-Message-Id: <20211214132750.69782-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Herve Codina <herve.codina@bootlin.com>,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
+        bcm-kernel-feedback-list@broadcom.com,
+        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
+        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+        linux-oxnas@groups.io, linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+Cc:     Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Richard Fitzgerald <rf@opensource.cirrus.com>,
+        Sean Wang <sean.wang@kernel.org>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Support Opensource <support.opensource@diasemi.com>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andy Gross <agross@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org
+Subject: Re: [PATCH v2 2/2] pinctrl: Propagate firmware node from a parent
+ device
+Message-ID: <Ybid8lFy8aS1cTVI@smile.fi.intel.com>
+References: <20211214125855.33207-1-andriy.shevchenko@linux.intel.com>
+ <20211214125855.33207-2-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211214125855.33207-2-andriy.shevchenko@linux.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename thermal zones according to dt-schema.
-Fixes multiple `make dtbs_check` warnings about name convetion.
+On Tue, Dec 14, 2021 at 02:58:55PM +0200, Andy Shevchenko wrote:
+> When creating MFD platform devices the firmware node is left unset.
+> This, in particular, prevents GPIO library to use it for different
+> purposes. Propagate firmware node from the parent device and let
+> GPIO library do the right thing.
+> 
+> While at it, slightly modify the headers to reflect the usage of APIs.
+> 
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+> v2: fixed compilation bug (LKP), due to above reshuffle headers in the rest
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi |  4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi |  4 ++--
- arch/arm64/boot/dts/qcom/sdm845.dtsi  |  4 ++--
- arch/arm64/boot/dts/qcom/sm8150.dtsi  |  4 ++--
- arch/arm64/boot/dts/qcom/sm8250.dtsi  |  4 ++--
- arch/arm64/boot/dts/qcom/sm8350.dtsi  | 16 ++++++++--------
- 6 files changed, 18 insertions(+), 18 deletions(-)
+...
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 01643a1f574d..7eff331572f2 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3273,7 +3273,7 @@ cpu3_crit: cpu_crit {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3295,7 +3295,7 @@ map0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f273bc1ff629..453a049f693d 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -674,7 +674,7 @@ cpu7_crit: cpu_crit {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -689,7 +689,7 @@ gpu1_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 5d1d38eb1dfb..5fac82f026fd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -5258,7 +5258,7 @@ cluster1_crit: cluster1_crit {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -5273,7 +5273,7 @@ gpu1_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 6012322a5984..c1067b31b299 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -4265,7 +4265,7 @@ cluster1_crit: cluster1_crit {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -4445,7 +4445,7 @@ modem_scl_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 2272efd1506b..93570a61c2af 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -5172,7 +5172,7 @@ cluster1_crit: cluster1_crit {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -5307,7 +5307,7 @@ npu_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 7323ed74f41a..eb5c5bd9909c 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -2991,7 +2991,7 @@ aoss1_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-top {
-+		gpu-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3006,7 +3006,7 @@ gpu1_alert0: trip-point0 {
- 			};
- 		};
- 
--		gpu-thermal-bottom {
-+		gpu-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3096,7 +3096,7 @@ mem_alert0: trip-point0 {
- 			};
- 		};
- 
--		modem1-thermal-top {
-+		modem1-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3111,7 +3111,7 @@ modem1_alert0: trip-point0 {
- 			};
- 		};
- 
--		modem2-thermal-top {
-+		modem2-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3126,7 +3126,7 @@ modem2_alert0: trip-point0 {
- 			};
- 		};
- 
--		modem3-thermal-top {
-+		modem3-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3141,7 +3141,7 @@ modem3_alert0: trip-point0 {
- 			};
- 		};
- 
--		modem4-thermal-top {
-+		modem4-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3156,7 +3156,7 @@ modem4_alert0: trip-point0 {
- 			};
- 		};
- 
--		camera-thermal-top {
-+		camera-top-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
-@@ -3171,7 +3171,7 @@ camera1_alert0: trip-point0 {
- 			};
- 		};
- 
--		cam-thermal-bottom {
-+		cam-bottom-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <1000>;
- 
+> +#include <linux/mod_device_table.h>
+
+He-h, updated code, updated bugs...
+
+Linus, can you, please, apply the first patch if you have no objections, so I
+won't spam a lot of people again with no changes beneath?
+
 -- 
-2.33.0
+With Best Regards,
+Andy Shevchenko
+
 
