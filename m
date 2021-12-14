@@ -2,108 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD40A4749CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 18:39:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46CBB474978
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 18:33:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236526AbhLNRjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 12:39:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49822 "EHLO
+        id S236404AbhLNRd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 12:33:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbhLNRjS (ORCPT
+        with ESMTP id S229673AbhLNRdz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 12:39:18 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43B6BC061574;
-        Tue, 14 Dec 2021 09:39:18 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id e3so66608189edu.4;
-        Tue, 14 Dec 2021 09:39:18 -0800 (PST)
+        Tue, 14 Dec 2021 12:33:55 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBDAC061574;
+        Tue, 14 Dec 2021 09:33:55 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id u80so18433572pfc.9;
+        Tue, 14 Dec 2021 09:33:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LxAuJbLvvTcbumNHXWVkWEBJhfQUVBNZ5jnWFkaTSsc=;
-        b=e1SoDw3pmy2JdP7IPrREK0jG2cn8uEHq3kXD6m0PSAb9xnBxyMJyQpXBuTIRSFH5vr
-         zyVEsFVTqd8MSQXyp/MfyJksmCCFXUXB3qV/Bd+PLR+/NTMM/ADSF7xFeohIHOGpC9pC
-         1B6mV275t3/L/9afXznLmVGlBQImU+BRr3+n5eA21JyFwyPeXmog12j6S9Yzg2bWa6Aq
-         ObcgC3XZAAwTmxxPyK9EO4f2TaErwdSTGDwH9EGwFNkvfiUGH9oQBnMJZ3VHG96cKHrE
-         fp4YSAkbRfctF07IF/z2x+J7CaDV+15TqPXg62JDKZZtjF8pE3JfNgMFqDcoH+Gb3PkO
-         il4Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aiq9nNSvlZRUirau9B4I1N3QBcTBVS4NyHnI1Y/cwlI=;
+        b=mZkyLk6P3Fp0rIPqxiycuhn3j5MLBRUp2miZAgxJhL0SIlwWwjdR6y+PuFOQi9pg1z
+         f0vJkHft1DfFaFyxh6nB/BI4Gs1M0f+ceJtVSg7dkI+oSnL3GdC/wf7mVgx2w1BuHacQ
+         xvAW3TzawJRnN2JZdJvyzSIZiM4F7cN4CGmQmv6cUvVUr929Uu+KQwSHu6iYWMUttB1M
+         LUBk/9EjVuw/g8bSyY2jiYlfmONM/IGUNnI3qYluzJfcTSdAb8c1e35D6beJPwcROSdO
+         /h41ViHPDrk9Fu4pH8fdaQuHdLBhSwiAhmAtfDwe02wAAmTUqVbTCtyeIMlBDaTybmrX
+         Xnvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LxAuJbLvvTcbumNHXWVkWEBJhfQUVBNZ5jnWFkaTSsc=;
-        b=M0hUVhia5wQqWt64dsCOsWbIWiNx1bJLMMYohWmlmnE4qehoKINyU4PStQq4x6AVDE
-         e3Qg8RFMaDPTDr5mcWuRc+m5fdcGEFU9F3QRwXK8GO5ZU/nKbnE4q8FfzqCbF5oHP/Sc
-         O/iddlry7W3rdzStn+KrQ1Nq3hAZ1rHOQENx3tZQOySjyYDNPxqRUvy5uus4kGC3Ec8C
-         pip1/XtIfHVnBTz8s2drDzHO+VpLWI3kGlwClS1c1vCJjsjdS+t4NAcg+/LwcwEqUDem
-         a41BNyFcJZmb1dmD1HaA9rom60AUE0H+suwMiS3eXu8Cg0aCzIrcrQD0a2oS50MTwHBM
-         VcVQ==
-X-Gm-Message-State: AOAM5322bQUzs39506mnTtZrKxJWFEpuAOiu3VSShgCEGk17ESOHjnsb
-        7BvuWxEYSvuv/zL2SGqEkD+sXREFCj92ECXdK3g=
-X-Google-Smtp-Source: ABdhPJyfe+m1TWfKEDr/wqXpFTcnF2opPxqMTsYASJHjTvEd+Gg2pPTfJJac6JIWJDSG3LI8qCeW4TcStTKIuDs6H+E=
-X-Received: by 2002:a17:906:a3c6:: with SMTP id ca6mr2672214ejb.639.1639503556811;
- Tue, 14 Dec 2021 09:39:16 -0800 (PST)
-MIME-Version: 1.0
-References: <1638891339-21806-1-git-send-email-quic_srivasam@quicinc.com>
- <1638891339-21806-4-git-send-email-quic_srivasam@quicinc.com>
- <CAHp75Vd=47Tv9Sf+styPhxS2=O1H2KUDeKQXTULUYU5fDgGwwA@mail.gmail.com>
- <0f6621e5-f014-27c9-be8b-6c32ab994304@quicinc.com> <CAHp75VdL3hmr23CcJLDpvbHaKv5HrDZjmVQpCnRNmPM7nEx6WQ@mail.gmail.com>
- <4bcfadd0-8abb-e9e9-ad18-a5b1d3d46308@quicinc.com>
-In-Reply-To: <4bcfadd0-8abb-e9e9-ad18-a5b1d3d46308@quicinc.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Tue, 14 Dec 2021 19:37:47 +0200
-Message-ID: <CAHp75Vcnc96QYy5_mzYCbhrsJ=iEghKR0Z8XaX+DnVeNN3DthQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] pinctrl: qcom: Extract chip specific LPASS LPI code
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aiq9nNSvlZRUirau9B4I1N3QBcTBVS4NyHnI1Y/cwlI=;
+        b=ZzwnLr1rJhPjeVC6Fozow4bYH3EstS4arpXLEE1osQpE8PKMDElx6JAwfGzH5dZmmy
+         eQ2QkHZBUYnkQWUD1kwRb+eQ3qlj8xOrqp5OhNOE1KNUS9goXfOdFQSEPJfwvVE9PhDT
+         Jr4Drr95FidqRuN1yz5z/PtctmJqfdk58m14wkC418GXvlUMF6wgU7Bq9lpISlms2bNT
+         Mfnk7tq6GhPO1RMRgSxQxhDoGHUrgTfdcRJqi9NiKQvr7XMqZmBA104mR14TJ8OmgPhy
+         ybkq9E4L1jVGnpuCgAwCzHWBtfhkCV5T1dyItDtXDk2zBBSs0fmiEBd/OH5iCZttNlQk
+         9EHg==
+X-Gm-Message-State: AOAM533MlF4Xz0o6FJbg8eLFuOyQ247yopahqAY5/Qm22gkgPBs85Mva
+        BMGHxPg7bJPNTQkmwscBCWQ=
+X-Google-Smtp-Source: ABdhPJxQRcmEWi0VOIERaMxn3AGDNXnCT28ghoDG1tX8uXegK9zrHvboi8MntbRDd9WYTe1yrWhwCA==
+X-Received: by 2002:a05:6a00:809:b0:4b1:33bd:82f5 with SMTP id m9-20020a056a00080900b004b133bd82f5mr5350689pfk.71.1639503234457;
+        Tue, 14 Dec 2021 09:33:54 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id l13sm438617pfu.149.2021.12.14.09.33.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 09:33:53 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Alexey Dobriyan <adobriyan@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, plai@codeaurora.org,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        devicetree <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, judyhsiao@chromium.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Fernando Ramos <greenfoo@u92.eu>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        linux-kernel@vger.kernel.org (open list),
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Sean Paul <seanpaul@chromium.org>
+Subject: [PATCH 0/3] drm/msm: Add display snapshot debugfs
+Date:   Tue, 14 Dec 2021 09:38:58 -0800
+Message-Id: <20211214173917.1496290-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 14, 2021 at 7:22 PM Srinivasa Rao Mandadapu
-<quic_srivasam@quicinc.com> wrote:
-> On 12/14/2021 10:46 PM, Andy Shevchenko wrote:
-> > On Tue, Dec 14, 2021 at 7:15 PM Srinivasa Rao Mandadapu
-> > <quic_srivasam@quicinc.com> wrote:
-> >> On 12/8/2021 11:58 AM, Andy Shevchenko wrote:
+From: Rob Clark <robdclark@chromium.org>
 
-...
+This series adds a "kms" debugfs file to dump display register + atomic
+state, which is useful for debugging issues that don't trigger a display
+error irq (such as dsi phy misconfiguration).
 
-> >>>> +struct lpi_pingroup {
-> >>>> +       const char *name;
-> >>>> +       const unsigned int *pins;
-> >>>> +       unsigned int npins;
-> >>>> +       unsigned int pin;
-> >>>> +       /* Bit offset in slew register for SoundWire pins only */
-> >>>> +       int slew_offset;
-> >>>> +       unsigned int *funcs;
-> >>>> +       unsigned int nfuncs;
-> >>>> +};
-> >>> Are you going to convert this to use struct group_desc?
-> > Any comments on this? It sounds like further improvements.
-> Actually this also needs as separate patch. these patches will do as
-> separate series.
+Rob Clark (3):
+  drm/msm/disp: Tweak display snapshot to match gpu snapshot
+  drm/msm/disp: Export helper for capturing snapshot
+  drm/msm/debugfs: Add display/kms state snapshot
 
-Of course, that's why I put  the second sentence after the question in my reply.
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.c  | 28 ++++--
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot.h  | 14 ++-
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  9 +-
+ drivers/gpu/drm/msm/msm_debugfs.c             | 90 +++++++++++++++++++
+ 4 files changed, 129 insertions(+), 12 deletions(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
+2.33.1
+
