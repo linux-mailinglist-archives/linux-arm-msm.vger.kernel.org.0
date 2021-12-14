@@ -2,144 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65163474C6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 21:04:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 35C0C474E3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 23:55:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237567AbhLNUEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 15:04:52 -0500
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:34727 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230188AbhLNUEw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 15:04:52 -0500
-Received: by mail-oi1-f181.google.com with SMTP id t19so28720262oij.1;
-        Tue, 14 Dec 2021 12:04:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=RJqjtodrdvg+GjFlTR3WmiDMbCMbLHzHFKDDXT45/9Q=;
-        b=k+3fC2Ntwd3C0FvFBVgzKsyLANZeLh5chw1XUFCk4atO2wnl64KlbYh79kUANZ7BQ/
-         L0REUVqYwiLgxY+LMtULc+x8iTP2CzHWdhzY/z1YqxnZE2stvM5Pk5ca86wzD5ObmOA2
-         IcurzyEFMxj9uSazgS+AhZmpJZRmHfhohlFHEp2tPRIuBoCqa7I3ytb/htnMi8y/0FzY
-         zdqX0Vyd5JcRbvAQiRydpJFSXLASfdjoHmnNBTpUPV1HcjglpwMZha5Hy9wqwbUN3FkQ
-         aY5xrtNt50vV/PYWHLPrQON1HDdPkZTV1bOXEEId/6oo8MD5nSJ3LiIlmuKT1Xyi0Qab
-         /OdA==
-X-Gm-Message-State: AOAM532Fd1fzkDk3hj2WuunQyb+OZNJt6Vnrsy8NSCisNcTeyFC1f2tV
-        UGmZybSpx5QAyD9fVXmUyg==
-X-Google-Smtp-Source: ABdhPJxyuWusHlo7VZe3TYTWV8m+4S+pvP/3wRQxB6XqQu8wB10s/8LoKvS0LuyEz0e6B3WOTMaVxg==
-X-Received: by 2002:a05:6808:158d:: with SMTP id t13mr6133558oiw.31.1639512291886;
-        Tue, 14 Dec 2021 12:04:51 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id s1sm158309ooo.11.2021.12.14.12.04.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 12:04:51 -0800 (PST)
-Received: (nullmailer pid 3819894 invoked by uid 1000);
-        Tue, 14 Dec 2021 20:04:50 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        devicetree@vger.kernel.org,
-        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-arm-kernel@lists.infradead.org
-In-Reply-To: <b5053b42f73e574f48cf860a8e225d6b1939d216.1639499239.git.baruch@tkos.co.il>
-References: <ab2a4c345844f66aa22a847e522b2f4ee0786d8b.1639499239.git.baruch@tkos.co.il> <b5053b42f73e574f48cf860a8e225d6b1939d216.1639499239.git.baruch@tkos.co.il>
-Subject: Re: [PATCH v10 2/3] dt-bindings: pwm: add IPQ6018 binding
-Date:   Tue, 14 Dec 2021 14:04:50 -0600
-Message-Id: <1639512290.319512.3819893.nullmailer@robh.at.kernel.org>
+        id S234973AbhLNWzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 17:55:42 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:31155 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234991AbhLNWzl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 17:55:41 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1639522541; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=j5mv+bwGF9Jb+6wwuoo79SpCjZvRHCfajqRMmmEmvBk=; b=NEw4wv/ZEdyW7X43XhGE9zR82jD+EXgSL6U1bltzwuDDthaYd/k7+x7Wbt7aDpaZgUGlwRbr
+ tASWjR+VuV8pI/C5qKRohUxOP3bNhLU1o0ND5dQcaGJCOgbBW9TKOUAekdiYyJh5JlhZbPlV
+ QU5W+NhPlzf56x1MMkjSPHixgkY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
+ 61b920d886d0e4d888a7a017 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Dec 2021 22:55:20
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 202E5C4360C; Tue, 14 Dec 2021 22:55:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.114.105] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BF48C4338F;
+        Tue, 14 Dec 2021 22:55:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1BF48C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [RFC] bus: mhi: core: Load firmware asynchronous
+To:     =?UTF-8?Q?Thomas_Wei=c3=9fschuh?= <linux@weissschuh.net>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Mario Limonciello <Mario.Limonciello@amd.com>,
+        Richard Hughes <hughsient@gmail.com>
+References: <20211210161645.10925-1-linux@weissschuh.net>
+ <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
+ <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <6c805ecd-4542-5533-7852-ecd9cea27955@codeaurora.org>
+Date:   Tue, 14 Dec 2021 14:55:16 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Dec 2021 18:27:18 +0200, Baruch Siach wrote:
-> From: Baruch Siach <baruch.siach@siklu.com>
+
+
+On 12/13/2021 10:32 PM, Thomas Weißschuh wrote:
+> On 2021-12-13 16:07-0800, Hemant Kumar wrote:
+>> On 12/10/2021 8:16 AM, Thomas Weißschuh wrote:
+>>> This gives userspace the possibility to provide the firehose bootloader
+>>> via the sysfs-firmware-API instead of having to modify the global
+>>> firmware loadpath.
+>>>
+>>> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+>>>
+>>> ---
+>>>
+>>> Please note that this is not tested yet, as I don't have access to a matching
+>>> firmware file.
+>>> This submission is to gather general feedback from the maintainers and then
+>>> Richard will do the actual testing, while I'll do the development.
+>>>
+>>> This patch is should not have any impact beyond moving from request_firmware()
+>>> to request_firmware_nowait() and the involved code reshuffle.
+>> what are we achieving by moving to async ver of the firmware load ? MHI boot
+>> flow can not do anything until BHI load is over. Is the intention eventually
+>> to enable firmware fallback mechanism  and manually load the firmware ?
 > 
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> The goal is to provide the firehose bootloader (qcom/prog_firehose_sdx24.mbn)
+> via the firmware fallback mechanism when upgrading the firmware on the device
+> via the firehose protocol.
 > 
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> ---
-> This series does not convert the TCSR binding documentation to YAML. As
-> a result, this commit adds new a dt_binding_check warning:
+> This bootloader firmware is not part of linux-firmware but provided as part of
+> each firmware update package, so it is not installed statically on the system.
 > 
-> /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq 6018', 'syscon', 'simple-mfd']
+> I will extend the commit message with this information.
+
+For my understanding i have follow up question. As per the kernel doc
+https://www.kernel.org/doc/html/latest/driver-api/firmware/fallback-mechanisms.html
+
+If CONFIG_FW_LOADER_USER_HELPER enabled but 
+CONFIG_FW_LOADER_USER_HELPER_FALLBACK is disabled, only the custom 
+fallback mechanism is available and for the request_firmware_nowait() call.
+
+Custom fall back mechanism says
+Users of the request_firmware_nowait() call have yet another option 
+available at their disposal: rely on the sysfs fallback mechanism but 
+request that no kobject uevents be issued to userspace. Original logic 
+behind this was that utilities other than udev might be required to 
+lookup firmware in non-traditional paths
+
+Your patch is passing uevent flag as true which means you are relying on 
+uevent to be issued to userspace. How do you plan to update the firmware 
+path ? Alternatively firmware class provides a module param to specify 
+the firmware path /sys/module/firmware_class/parameters/path.
 > 
-> If that is a blocker to IPQ6018 PWM support, so be it. Patches will wait
-> for someone else to push them further.
-> 
-> v10:
-> 
->   No change
-> 
-> v9:
-> 
->   Add 'ranges' property to example (Rob)
-> 
->   Drop label in example (Rob)
-> 
-> v8:
-> 
->   Add size cell to 'reg' (Rob)
-> 
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> PS: The current patch is missing 'return' after calls to
+> 'mhi_fw_load_finish()', this will be corrected in v2.
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0: /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1567793
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Thanks,
+Hemant
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
