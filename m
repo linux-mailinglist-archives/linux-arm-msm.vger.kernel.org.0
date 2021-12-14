@@ -2,112 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E896B474066
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:25:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FD58474043
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:19:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233007AbhLNKZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 05:25:02 -0500
-Received: from ixit.cz ([94.230.151.217]:50014 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233009AbhLNKZC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 05:25:02 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 5BFCB24AF0;
-        Tue, 14 Dec 2021 11:24:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1639477498;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=KkE7Nfnr8jW/EIQ5AgAa4MvzHf9ta7Po9dg+ts2Qm4c=;
-        b=XPtEFpH/nv+GlvJcer59kF8bdIPmi99yL0TZ2Z+Oudx2MJb00DChvNM2QnJLS0qODnJNoy
-        OYM8ZBmf3zq9VJ4q6CZCvep++wzNIavK28q73/kFizil86WyztVPjmxNT769CAdDwCucLz
-        jfDH5HrK7DLOZjCijG30rMNadjsqWso=
-From:   David Heidelberg <david@ixit.cz>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: update qcom,domain property
-Date:   Tue, 14 Dec 2021 11:24:50 +0100
-Message-Id: <20211214102451.29084-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S232948AbhLNKTa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 05:19:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59290 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231191AbhLNKT3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 05:19:29 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09410C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:19:29 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id u17so13204545plg.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:19:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=c9+mpZERBOVfw7BDmwfN5jn1RukuhFcqR1QOuIWL/IE=;
+        b=JxAMdWA6XYXJINZEOoxRseFOQG7Q1zbpjV59y1udb0hr9rAjYAR7LoDwG8EvTM9t2d
+         D46IONV/l2hKmA1PEh7PpR/gCOYZg/e+MQvzyD3LMktulYaZciDaGQtZ/kRRmxMtHPLz
+         utaRfG8X1ojBFPCZVJ2nQuS16m2mAmx3nG2YMPX7binHxKh5ffNBGJwNa9vAwfSHTsXR
+         MBQQJ5ohwavpyThMsJdd2Jt7CA5K905f9pv7Xt00uRWfrbRCKvYviVsA6Dl9ZFhZpitK
+         AYB5kB+TwlMzAvIjaWSZjv43v+B9+hEB9QuEJwgn+nvxek3dSTq/uWZdZcpnBb279TJQ
+         nnLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c9+mpZERBOVfw7BDmwfN5jn1RukuhFcqR1QOuIWL/IE=;
+        b=rk9axdp5oJTMd3Ayg30B9q0bY4TIfebaj4BU9xegmigf8AaDo0p/fmiW7wFA2uERv8
+         7z4+U9p1Yh2aeJI1b97YoY/nzvquL09/m4dy4dUWNPonLThRARsdBZFOd1NUGB4Oj208
+         dne9X8qDHK7qhD8o1yy9U6KKuQcEOhBNb3qCYjo/rm4giPB14/h2pSfxXyCLwOYtrGGy
+         A8qA3lFDM+0SKsD7MYCjswN8Z0jWZgV/U56iQ9Ps7zUwFN53eVh4RcWkHX9CHcmGdnaR
+         8oxgodqvFPh/8DRN5LIUhZzno4vZKRUynkR/uI9jT6zP1/X0N+7uoZpjoHQ4epk+cXNS
+         YRnA==
+X-Gm-Message-State: AOAM530+nnbGo9Jd377ThZQhL/dSALt+M0lAWSppq8jBHHZwc6Pm5rCa
+        0tYa3PAVcUKoPBxP/8Ufr07T+GRFTQFRPMEbemfXpA==
+X-Google-Smtp-Source: ABdhPJzl3Y58sHlHCffknr3LuxaOD8r6Jg/ya+rPmjBfsJ7EiHWBtchQvSBlGiqKX+n4PccX0FQTunl0MeN20Ow/E/M=
+X-Received: by 2002:a17:90a:690d:: with SMTP id r13mr4717492pjj.40.1639477168226;
+ Tue, 14 Dec 2021 02:19:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211213135127.1656258-1-bryan.odonoghue@linaro.org> <20211213135127.1656258-4-bryan.odonoghue@linaro.org>
+In-Reply-To: <20211213135127.1656258-4-bryan.odonoghue@linaro.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 14 Dec 2021 11:31:02 +0100
+Message-ID: <CAMZdPi82xqRGn+oZwVX5wgutEDO1qpufSra2oBW9S4pALHHAdw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] wcn36xx: Implement downstream compliant beacon filtering
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        benl@squareup.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since 'qcom,apr-domain' is deprecated in favor of 'qcom,domain',
-update accordingly.
+On Mon, 13 Dec 2021 at 14:49, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> Downstream facilitates the direct programming of beacon filter tables via
+> SMD commands.
+>
+> The purpose of beacon filters is quote:
+>
+> /* When beacon filtering is enabled, firmware will
+>  * analyze the selected beacons received during BMPS,
+>  * and monitor any changes in the IEs as listed below.
+>  * The format of the table is:
+>  *    - EID
+>  *    - Check for IE presence
+>  *    - Byte offset
+>  *    - Byte value
+>  *    - Bit Mask
+>  *    - Byte reference
+>  */
+>
+> The default downstream firmware filter table looks something like this:
+> tBeaconFilterIe gaBcnFilterTable[12] =
+> {
+>   { WLAN_EID_DS_PARAMS, 0u, { 0u, 0u, 0u, 0u } },
+>   { WLAN_EID_ERP_INFO, 0u, { 0u, 0u, 248u, 0u } },
+>   { WLAN_EID_EDCA_PARAM_SET, 0u, { 0u, 0u, 240u, 0u } },
+>   { WLAN_EID_QOS_CAPA, 0u, { 0u, 0u, 240u, 0u } },
+>   { WLAN_EID_CHANNEL_SWITCH, 1u, { 0u, 0u, 0u, 0u } },
+>   { WLAN_EID_QUIET, 1u, { 0u, 0u, 0u, 0u } },
+>   { WLAN_EID_HT_OPERATION, 0u, { 0u, 0u, 0u, 0u } },
+>   { WLAN_EID_HT_OPERATION, 0u, { 1u, 0u, 248u, 0u } },
+>   { WLAN_EID_HT_OPERATION, 0u, { 2u, 0u, 235u, 0u } },
+>   { WLAN_EID_HT_OPERATION, 0u, { 5u, 0u, 253u, 0u } },
+>   { WLAN_EID_PWR_CONSTRAINT, 0u, { 0u, 0u, 0u, 0u } },
+>   { WLAN_EID_OPMODE_NOTIF, 0u, { 0u, 0u, 0u, 0u } }
+> };
+>
+> Add in an equivalent filter set as present in the downstream Linux driver.
+> For now omit the beacon filter "rem" command as downstream does not have an
+> explicit call to that SMD command. The filter mask should only count when
+> we are inside BMPS anyway.
+>
+> Replicating the downstream ability to program the filter table gives us
+> scope to add and remove elements in future. For now though this patch
+> makes the rote-copy of the downstream Linux beacon filter table, which we
+> can tweak as desired from now on.
+>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/net/wireless/ath/wcn36xx/hal.h  |  16 ++++
+>  drivers/net/wireless/ath/wcn36xx/main.c |   1 +
+>  drivers/net/wireless/ath/wcn36xx/smd.c  | 104 ++++++++++++++++++++++++
+>  drivers/net/wireless/ath/wcn36xx/smd.h  |   3 +
+>  4 files changed, 124 insertions(+)
+>
+[...]
+> diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
+> index f59eb1119da88..a4510f144041f 100644
+> --- a/drivers/net/wireless/ath/wcn36xx/main.c
+> +++ b/drivers/net/wireless/ath/wcn36xx/main.c
+> @@ -934,6 +934,7 @@ static void wcn36xx_bss_info_changed(struct ieee80211_hw *hw,
+>                          * place where AID is available.
+>                          */
+>                         wcn36xx_smd_config_sta(wcn, vif, sta);
+> +                       wcn36xx_smd_add_beacon_filter(wcn, vif);
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Shouldn't this be configured only if the vif type is NL80211_IFTYPE_STATION?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 91bc974aeb0a..01643a1f574d 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3054,7 +3054,7 @@ apr {
- 					power-domains = <&gcc HLOS1_VOTE_LPASS_ADSP_GDSC>;
- 					compatible = "qcom,apr-v2";
- 					qcom,smd-channels = "apr_audio_svc";
--					qcom,apr-domain = <APR_DOMAIN_ADSP>;
-+					qcom,domain = <APR_DOMAIN_ADSP>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 9217c3a51f79..240293592ef9 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -2160,7 +2160,7 @@ glink-edge {
- 				apr {
- 					compatible = "qcom,apr-v2";
- 					qcom,glink-channels = "apr_audio_svc";
--					qcom,apr-domain = <APR_DOMAIN_ADSP>;
-+					qcom,domain = <APR_DOMAIN_ADSP>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 1bb4d98db96f..5d1d38eb1dfb 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -787,7 +787,7 @@ glink-edge {
- 			apr {
- 				compatible = "qcom,apr-v2";
- 				qcom,glink-channels = "apr_audio_svc";
--				qcom,apr-domain = <APR_DOMAIN_ADSP>;
-+				qcom,domain = <APR_DOMAIN_ADSP>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				qcom,intents = <512 20>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 5617a46e5ccd..2272efd1506b 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -4320,7 +4320,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 				apr {
- 					compatible = "qcom,apr-v2";
- 					qcom,glink-channels = "apr_audio_svc";
--					qcom,apr-domain = <APR_DOMAIN_ADSP>;
-+					qcom,domain = <APR_DOMAIN_ADSP>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
--- 
-2.33.0
-
+Regards,
+Loic
