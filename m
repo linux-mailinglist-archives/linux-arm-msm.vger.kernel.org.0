@@ -2,72 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2891147402A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:12:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E896B474066
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:25:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232885AbhLNKMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 05:12:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232865AbhLNKMh (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 05:12:37 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B61C06173F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:12:37 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id k64so17415982pfd.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:12:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yJQrGlgOA8dqtlV7JMau63SOZ8ZTw0fQmfKynxB6xQ8=;
-        b=GYnIW2upq5GacPk614tRuRLtAlKe1wvWjWW7FrGyv/z6NW5OXHKQNlpDXQe6iA0O41
-         o0uPSrMOfWXXpc9ToCfk+qiLpDWC7CiZgKhmJVmE1cdDLzg3NcnhUfma23DndRlF1mdC
-         2U+lyn/h7QRMiQ8NERxETJX7S7sJcqLQxdi4F7GSwbiF6guj+srlbkBrL4Uq7krkoWqo
-         5lDXBcfRihR71cwvghWZBriJirZxRayNcYIWpI19MfO7KeP5ZcueOzPmNrrj6kOXpNDA
-         Zb1YgdKi5tg+cneHoVc5GqL+t09NfyflZ8wiVIlRPJZNRRXnRzDXAPnNsB53maa7reLK
-         Wqdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yJQrGlgOA8dqtlV7JMau63SOZ8ZTw0fQmfKynxB6xQ8=;
-        b=fMu8Qp1Eb87fCxOpb6ENpTYrtxVYa8C669rFo9XuVzYIW7LYecEPrJkz9luhX6rihH
-         JJUM26I9uCdp4GbJLD02Q8QVW92A/VTDxg+XmJjFBZ4MmyvEjhhyJEOo5FI4HeYK5H+c
-         sjfMz5BNX9Zro/FLoER1ScigQTn7ABUmEGQB2zbsC6Frw0+49XLA85KDjjjDSjACSDm3
-         XxAzEq3at7hY7zuq+N+b3zKFeEhr/Nq9ZqYBiDkXaBaT9xeVy5wjP/gE8MM+1bCKADbB
-         q01gMSboAqgkOR2Dp4ugbiHiBstYps8B6ZnUZKqj5tKU/7Lp+N/wmsWQ/6GFxvXrIFjm
-         SFYQ==
-X-Gm-Message-State: AOAM531KrDLXHkgBdEJ9ii6Dd1eoTSElc3sTOqEXHwjTYf/xEHBj9Lgk
-        Uj24utjqyD2UtNkPPOZVtx4jVuchykEuQAtKNeV8ew==
-X-Google-Smtp-Source: ABdhPJxsyxh37uq/D/8gqSDSjQwyE6u6hAEvFfFQkuxG2F+KH9I6cd3fGgHSs3M5xMjVzHrgQQVnZxJ41G0xwUXVEWA=
-X-Received: by 2002:aa7:8b07:0:b0:4a4:d003:92a9 with SMTP id
- f7-20020aa78b07000000b004a4d00392a9mr3271031pfd.61.1639476756794; Tue, 14 Dec
- 2021 02:12:36 -0800 (PST)
+        id S233007AbhLNKZC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 05:25:02 -0500
+Received: from ixit.cz ([94.230.151.217]:50014 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233009AbhLNKZC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 05:25:02 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 5BFCB24AF0;
+        Tue, 14 Dec 2021 11:24:58 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1639477498;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=KkE7Nfnr8jW/EIQ5AgAa4MvzHf9ta7Po9dg+ts2Qm4c=;
+        b=XPtEFpH/nv+GlvJcer59kF8bdIPmi99yL0TZ2Z+Oudx2MJb00DChvNM2QnJLS0qODnJNoy
+        OYM8ZBmf3zq9VJ4q6CZCvep++wzNIavK28q73/kFizil86WyztVPjmxNT769CAdDwCucLz
+        jfDH5HrK7DLOZjCijG30rMNadjsqWso=
+From:   David Heidelberg <david@ixit.cz>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Caleb Connolly <caleb@connolly.tech>,
+        David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: update qcom,domain property
+Date:   Tue, 14 Dec 2021 11:24:50 +0100
+Message-Id: <20211214102451.29084-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20211213135127.1656258-1-bryan.odonoghue@linaro.org> <20211213135127.1656258-2-bryan.odonoghue@linaro.org>
-In-Reply-To: <20211213135127.1656258-2-bryan.odonoghue@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 14 Dec 2021 11:24:11 +0100
-Message-ID: <CAMZdPi9=JTsfUAGTZiHVmwv+x-F-diYFZq0swew8Cj3pRN1n8g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] wcn36xx: Fix beacon filter structure definitions
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
-        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        benl@squareup.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Dec 2021 at 14:49, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> The beacon filter structures need to be packed. Right now its fine because
-> we don't yet use these structures so just pack them without marking it for
-> backporting.
->
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Since 'qcom,apr-domain' is deprecated in favor of 'qcom,domain',
+update accordingly.
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi  | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 91bc974aeb0a..01643a1f574d 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3054,7 +3054,7 @@ apr {
+ 					power-domains = <&gcc HLOS1_VOTE_LPASS_ADSP_GDSC>;
+ 					compatible = "qcom,apr-v2";
+ 					qcom,smd-channels = "apr_audio_svc";
+-					qcom,apr-domain = <APR_DOMAIN_ADSP>;
++					qcom,domain = <APR_DOMAIN_ADSP>;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 9217c3a51f79..240293592ef9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -2160,7 +2160,7 @@ glink-edge {
+ 				apr {
+ 					compatible = "qcom,apr-v2";
+ 					qcom,glink-channels = "apr_audio_svc";
+-					qcom,apr-domain = <APR_DOMAIN_ADSP>;
++					qcom,domain = <APR_DOMAIN_ADSP>;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 1bb4d98db96f..5d1d38eb1dfb 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -787,7 +787,7 @@ glink-edge {
+ 			apr {
+ 				compatible = "qcom,apr-v2";
+ 				qcom,glink-channels = "apr_audio_svc";
+-				qcom,apr-domain = <APR_DOMAIN_ADSP>;
++				qcom,domain = <APR_DOMAIN_ADSP>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 				qcom,intents = <512 20>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 5617a46e5ccd..2272efd1506b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -4320,7 +4320,7 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
+ 				apr {
+ 					compatible = "qcom,apr-v2";
+ 					qcom,glink-channels = "apr_audio_svc";
+-					qcom,apr-domain = <APR_DOMAIN_ADSP>;
++					qcom,domain = <APR_DOMAIN_ADSP>;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+-- 
+2.33.0
+
