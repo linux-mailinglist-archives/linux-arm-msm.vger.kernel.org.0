@@ -2,286 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26C034738CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 00:47:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CACFC473950
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 01:07:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241932AbhLMXrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Dec 2021 18:47:20 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:51069 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237090AbhLMXrT (ORCPT
+        id S240277AbhLNAHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Dec 2021 19:07:37 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:51260 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238683AbhLNAHh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Dec 2021 18:47:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639439239; x=1670975239;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=rmBJdIt+22OgdmMPr0fKt9wVJI9DZNdhVS8jNDmgRuM=;
-  b=JEwdatrMQJGlBWJGyfMr6//wdOH8LaY0Mahu8SPYq2mxtzLlExDczAYa
-   p1vB2YSlkBIRXBFmsSJ+p0umSgxiYGeUISy26NcjZ9l7ZfqfUjF4snakF
-   MiNw/7h9OCRivKjx0D1pkiOk02FONO50aCM9DTU7uT4zeraYvMqGR7Vlm
-   g=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Dec 2021 15:47:18 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2021 15:47:16 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 13 Dec 2021 15:47:16 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 13 Dec 2021 15:47:15 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_khsieh@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kishon@ti.com>, <p.zabel@pengutronix.de>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Subject: [PATCH v8] phy: qcom-qmp: add display port v4 voltage and pre-emphasis swing tables
-Date:   Mon, 13 Dec 2021 15:47:08 -0800
-Message-ID: <1639439228-11430-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 13 Dec 2021 19:07:37 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1639440457; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=HrkidRgCOdsW30/DkJv35RJ0R+GZ61VAFBn0ww2cif0=; b=xWyVsfy5w/U5yQTd5Sf3M4Q+qP17fLsj0/RN6doi4jKWdSMwLod+deihvmn68xD8wk54N0/d
+ gyoLlGqMxQCTyUyRXNPzPy1JI4EW/YHxWgHSYav/Rj1n8n6AxKS43AlGIQioKvrU7biycLQN
+ paTAyRQAwo/mJZeY/RiIJPtsMos=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 61b7e0481ff187c99994806b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Dec 2021 00:07:36
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C6968C43616; Tue, 14 Dec 2021 00:07:35 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-7.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.114.105] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B793CC4338F;
+        Tue, 14 Dec 2021 00:07:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B793CC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [RFC] bus: mhi: core: Load firmware asynchronous
+To:     =?UTF-8?Q?Thomas_Wei=c3=9fschuh?= <linux@weissschuh.net>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org,
+        Mario Limonciello <Mario.Limonciello@amd.com>,
+        Richard Hughes <hughsient@gmail.com>
+References: <20211210161645.10925-1-linux@weissschuh.net>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
+Date:   Mon, 13 Dec 2021 16:07:29 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+In-Reply-To: <20211210161645.10925-1-linux@weissschuh.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Kuogee Hsieh <khsieh@codeaurora.org>
 
-The previous patch from Fixes 'aff188feb5e1 ("phy: qcom-qmp: add support
-for sm8250-usb3-dp phy")' added functions to support V4 of the PHY, But
-it did not update voltage and pre-emphasis tables accordingly.
-This patch add v4 voltage and pre-emphasis swing tables to complete v4
-phy implementation. Both voltage and pre-emphasis swing level are set
-during link training negotiation between host and sink. There are totally
-four tables added.  A voltage swing table for both hbr and hbr1, a voltage
-table for both hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1
-and a pre-emphasis table for both hbr2 and hbr3. In addition, write 0x0a
-to TX_TX_POL_INV is added to complete the sequence of configure dp phy
-base on the hardware documentation.
+On 12/10/2021 8:16 AM, Thomas Weißschuh wrote:
+> This gives userspace the possibility to provide the firehose bootloader
+> via the sysfs-firmware-API instead of having to modify the global
+> firmware loadpath.
+> 
+> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+> 
+> ---
+> 
+> Please note that this is not tested yet, as I don't have access to a matching
+> firmware file.
+> This submission is to gather general feedback from the maintainers and then
+> Richard will do the actual testing, while I'll do the development.
+> 
+> This patch is should not have any impact beyond moving from request_firmware()
+> to request_firmware_nowait() and the involved code reshuffle.
+what are we achieving by moving to async ver of the firmware load ? MHI 
+boot flow can not do anything until BHI load is over. Is the intention 
+eventually to enable firmware fallback mechanism  and manually load the 
+firmware ?
 
-Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 112 +++++++++++++++++++++++++-----------
- 1 file changed, 77 insertions(+), 35 deletions(-)
+[..]
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 456a59d..d41e30c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -4255,40 +4255,50 @@ static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy)
- 	       qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
- }
- 
--static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
-+#define MAX_SWING_LEVEL 4
-+#define MAX_VOLTAGE_LEVEL 4
-+#define MAX_EMPHASIS_LEVEL 4
-+
-+static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
- 	{ 0x00, 0x0c, 0x15, 0x1a },
- 	{ 0x02, 0x0e, 0x16, 0xff },
- 	{ 0x02, 0x11, 0xff, 0xff },
- 	{ 0x04, 0xff, 0xff, 0xff }
- };
- 
--static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
-+static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
- 	{ 0x02, 0x12, 0x16, 0x1a },
- 	{ 0x09, 0x19, 0x1f, 0xff },
- 	{ 0x10, 0x1f, 0xff, 0xff },
- 	{ 0x1f, 0xff, 0xff, 0xff }
- };
- 
--static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
-+static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
- 	{ 0x00, 0x0c, 0x14, 0x19 },
- 	{ 0x00, 0x0b, 0x12, 0xff },
- 	{ 0x00, 0x0b, 0xff, 0xff },
- 	{ 0x04, 0xff, 0xff, 0xff }
- };
- 
--static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
-+static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
- 	{ 0x08, 0x0f, 0x16, 0x1f },
- 	{ 0x11, 0x1e, 0x1f, 0xff },
- 	{ 0x19, 0x1f, 0xff, 0xff },
- 	{ 0x1f, 0xff, 0xff, 0xff }
- };
- 
--static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
--		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
-+static int __qcom_qmp_phy_configure_dp_swing
-+			(struct qmp_phy *qphy,
-+			unsigned int drv_lvl_reg,
-+			unsigned int emp_post_reg,
-+			const u8 voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
-+			const u8 pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL],
-+			const u8 voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
-+			const u8 pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL])
- {
- 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
- 	unsigned int v_level = 0, p_level = 0;
--	u8 voltage_swing_cfg, pre_emphasis_cfg;
-+	u8 voltage, emphasis;
- 	int i;
- 
- 	for (i = 0; i < dp_opts->lanes; i++) {
-@@ -4297,26 +4307,25 @@ static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
- 	}
- 
- 	if (dp_opts->link_rate <= 2700) {
--		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
--		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
-+		voltage = voltage_swing_hbr_rbr[v_level][p_level];
-+		emphasis = pre_emphasis_hbr_rbr[v_level][p_level];
- 	} else {
--		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
--		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
-+		voltage = voltage_swing_hbr3_hbr2[v_level][p_level];
-+		emphasis = pre_emphasis_hbr3_hbr2[v_level][p_level];
- 	}
- 
- 	/* TODO: Move check to config check */
--	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
-+	if (voltage == 0xFF && emphasis == 0xFF)
- 		return -EINVAL;
- 
- 	/* Enable MUX to use Cursor values from these registers */
--	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
--	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
--
--	writel(voltage_swing_cfg, qphy->tx + drv_lvl_reg);
--	writel(pre_emphasis_cfg, qphy->tx + emp_post_reg);
--	writel(voltage_swing_cfg, qphy->tx2 + drv_lvl_reg);
--	writel(pre_emphasis_cfg, qphy->tx2 + emp_post_reg);
-+	voltage |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
-+	emphasis |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
- 
-+	writel(voltage, qphy->tx + drv_lvl_reg);
-+	writel(emphasis, qphy->tx + emp_post_reg);
-+	writel(voltage, qphy->tx2 + drv_lvl_reg);
-+	writel(emphasis, qphy->tx2 + emp_post_reg);
- 	return 0;
- }
- 
-@@ -4325,9 +4334,14 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
- 	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
- 	u32 bias_en, drvr_en;
- 
--	if (qcom_qmp_phy_configure_dp_swing(qphy,
--				QSERDES_V3_TX_TX_DRV_LVL,
--				QSERDES_V3_TX_TX_EMP_POST1_LVL) < 0)
-+	if (__qcom_qmp_phy_configure_dp_swing
-+			(qphy,
-+			QSERDES_V3_TX_TX_DRV_LVL,
-+			QSERDES_V3_TX_TX_EMP_POST1_LVL,
-+			qmp_dp_v3_voltage_swing_hbr_rbr,
-+			qmp_dp_v3_pre_emphasis_hbr_rbr,
-+			qmp_dp_v3_voltage_swing_hbr3_hbr2,
-+			qmp_dp_v3_pre_emphasis_hbr3_hbr2) < 0)
- 		return;
- 
- 	if (dp_opts->lanes == 1) {
-@@ -4465,6 +4479,35 @@ static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy)
- 	return 0;
- }
- 
-+/* The values in these tables are given without MUX_EN (0x20) bit set */
-+static const u8 qmp_dp_v4_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
-+	{ 0x00, 0x0c, 0x15, 0x1b },
-+	{ 0x02, 0x0e, 0x16, 0xff },
-+	{ 0x02, 0x11, 0xff, 0xff },
-+	{ 0x04, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
-+	{ 0x02, 0x12, 0x16, 0x1a },
-+	{ 0x09, 0x19, 0x1f, 0xff },
-+	{ 0x10, 0x1f, 0xff, 0xff },
-+	{ 0x1f, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
-+	{ 0x00, 0x0e, 0x15, 0x1b },
-+	{ 0x00, 0x0e, 0x15, 0xff },
-+	{ 0x00, 0x0e, 0xff, 0xff },
-+	{ 0x04, 0xff, 0xff, 0xff }
-+};
-+
-+static const u8 qmp_dp_v4_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
-+	{ 0x08, 0x0f, 0x16, 0x1f },
-+	{ 0x11, 0x1e, 0x1f, 0xff },
-+	{ 0x16, 0x1f, 0xff, 0xff },
-+	{ 0x1f, 0xff, 0xff, 0xff }
-+};
-+
- static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
- {
- 	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_PSR_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-@@ -4494,16 +4537,14 @@ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
- 
- static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy)
- {
--	/* Program default values before writing proper values */
--	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
--	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
--
--	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
--	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
--
--	qcom_qmp_phy_configure_dp_swing(qphy,
-+	__qcom_qmp_phy_configure_dp_swing
-+			(qphy,
- 			QSERDES_V4_TX_TX_DRV_LVL,
--			QSERDES_V4_TX_TX_EMP_POST1_LVL);
-+			QSERDES_V4_TX_TX_EMP_POST1_LVL,
-+			qmp_dp_v4_voltage_swing_hbr_rbr,
-+			qmp_dp_v4_pre_emphasis_hbr_rbr,
-+			qmp_dp_v4_voltage_swing_hbr3_hbr2,
-+			qmp_dp_v4_pre_emphasis_hbr3_hbr2);
- }
- 
- static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
-@@ -4622,6 +4663,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
- 	writel(drvr1_en, qphy->tx2 + QSERDES_V4_TX_HIGHZ_DRVR_EN);
- 	writel(bias1_en, qphy->tx2 + QSERDES_V4_TX_TRANSCEIVER_BIAS_EN);
- 
-+	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
-+	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
-+
- 	writel(0x18, qphy->pcs + QSERDES_DP_PHY_CFG);
- 	udelay(2000);
- 	writel(0x19, qphy->pcs + QSERDES_DP_PHY_CFG);
-@@ -4633,11 +4677,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
- 			10000))
- 		return -ETIMEDOUT;
- 
--	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
--	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
- 
--	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
--	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
-+	writel(0x22, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
-+	writel(0x22, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
- 
- 	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
- 	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
