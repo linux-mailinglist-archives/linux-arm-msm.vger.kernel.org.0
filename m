@@ -2,85 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1840B4743D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:47:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B22C4743E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:52:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234552AbhLNNr3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 08:47:29 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:53050 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234548AbhLNNr3 (ORCPT
+        id S232356AbhLNNwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 08:52:32 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:12848 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231995AbhLNNwc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 08:47:29 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 03418B819A1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 13:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9BEC34601;
-        Tue, 14 Dec 2021 13:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639489646;
-        bh=JwhJuFAM42vOdloILusvkHUTcWrMLKPvkc4iARM3qMM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=apP8Sai+uw6orF0J8Pdag1y0oCVskMkaL82ePR5nwcTtpFgTSnat28j7m9XPP6Dl5
-         BAAs1W8v3gC+5rF0JYAm+G0D83jysqezGg1Zhf6PjGYSvbFOgjacmFR2z2pS04isTd
-         duMRkBNiiS5KBAfQCwKasbWyX/zXaCUD9jyFrjKsumPPVqAJ7uqhU/PwGv16NRl0st
-         yWymDcubn4TM3nojw1l/+RlacNQA9fXBMtXPwueUhtZCAndW9gPnp7LajG+DgygF1a
-         eZ0qT5yMltwpPARDaCHPWdfLqV+eTF8W7bdS9CnT0QKIfOgt5JwAuN6dkXwrjnAno5
-         uu/K+FyqlPmzQ==
-Date:   Tue, 14 Dec 2021 13:47:20 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
-        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org
-Subject: Re: [v3] SoC: qcom: Distinguish headset codec by codec_dai->name
-Message-ID: <YbigaFWiLzi/4Ljv@sirena.org.uk>
-References: <20211214022509.1288245-1-judyhsiao@chromium.org>
+        Tue, 14 Dec 2021 08:52:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1639489947;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=pYibwlUUBQifFciJnYB0q0+Tq2C0+Rty8Kco70yJ1mY=;
+    b=IOwAtOfgJmGcA+jfZ7syljSSjwLKOLyQbti2fw7bl95hygiwGQvXCvMMqzhW/xWoes
+    BqQ21LeIh2yh1WzsYduhK7GgsQskAnqrW/JmLomNzajtiKhqIKSJV/9nBRfFjUOCkTuL
+    97lBmTGo9FlmsvHHpos2kamvi3c2ouVrBfYlPFG8mjJ70ddHUyD4q/KJL1GishTuYtog
+    J90dk4sS7F8qZJOMe4Fq5rsM356weR1fH6naPeffaXFv33+8c2C2klVbUC+tfa7EaP5W
+    bIxEdMOHhWc/tC72Q22LO5xaU3sPc1xrVgCUvxMT+J7507Ay4ol0Ox5y9HbIwwHOkLkp
+    Y8YA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL1O/hR"
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.35.3 AUTH)
+    with ESMTPSA id x08baexBEDqR8bA
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 14 Dec 2021 14:52:27 +0100 (CET)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: apq8016-sbc: Fix dtbs_check warnings for &sound
+Date:   Tue, 14 Dec 2021 14:51:24 +0100
+Message-Id: <20211214135124.2380-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PMc1jF/EEbgjBUTX"
-Content-Disposition: inline
-In-Reply-To: <20211214022509.1288245-1-judyhsiao@chromium.org>
-X-Cookie: No solicitors.
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+qcom,apq8016-sbc-sndcard is now covered by the qcom,sm8250.yaml schema
+which has slightly different recommendations for the naming of
+properties and nodes. The old naming is still functional but
+deprecated. Update the &sound node in apq8016-sbc to fix the following
+dtbs_check warnings:
 
---PMc1jF/EEbgjBUTX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  apq8016-sbc.dt.yaml: sound@7702000: 'model' is a required property
+    From schema: sound/qcom,sm8250.yaml
+  apq8016-sbc.dt.yaml: sound@7702000: 'external-dai-link@0', ...
+    do not match any of the regexes: '.*-dai-link$', ...
+    From schema: sound/qcom,sm8250.yaml
 
-On Tue, Dec 14, 2021 at 10:25:09AM +0800, Judy Hsiao wrote:
-> Distinguish which headset codec is on the board by codec_dai->name
-> instead of card->name.
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-There's no need to resubmit to fix this alone.
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+index a5320d6d30e7..0c566876333a 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
+@@ -351,12 +351,12 @@ &sound {
+ 	pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
+ 	pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
+ 	pinctrl-names = "default", "sleep";
+-	qcom,model = "DB410c";
+-	qcom,audio-routing =
++	model = "DB410c";
++	audio-routing =
+ 		"AMIC2", "MIC BIAS Internal2",
+ 		"AMIC3", "MIC BIAS External1";
+ 
+-	external-dai-link@0 {
++	quaternary-dai-link {
+ 		link-name = "ADV7533";
+ 		cpu {
+ 			sound-dai = <&lpass MI2S_QUATERNARY>;
+@@ -366,7 +366,7 @@ codec {
+ 		};
+ 	};
+ 
+-	internal-codec-playback-dai-link@0 {
++	primary-dai-link {
+ 		link-name = "WCD";
+ 		cpu {
+ 			sound-dai = <&lpass MI2S_PRIMARY>;
+@@ -376,7 +376,7 @@ codec {
+ 		};
+ 	};
+ 
+-	internal-codec-capture-dai-link@0 {
++	tertiary-dai-link {
+ 		link-name = "WCD-Capture";
+ 		cpu {
+ 			sound-dai = <&lpass MI2S_TERTIARY>;
+-- 
+2.34.1
 
---PMc1jF/EEbgjBUTX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmG4oGgACgkQJNaLcl1U
-h9AkBAf/dut9BUz9jbak9a35YO2OSGoVSscO2+hGoFIOS6RNh6DYvQbq7ldY/A8+
-OBkfvWnBkatZzkcf4yeKwUmCWD/JAMzqiq7JYRF+B+ziNyqCmv28d727fR5uvhAY
-tW+TmcaZnIHZ58vTa5UdrKctv6cbwuZOoT/oFEcFnq2aJ+kKlrJ87cm2QWE4i22V
-yZggCd67+9zFGErXbL1y/9q5Ca3zboCPQhySFUL0QxSWV2tKesT7H+PagX96m33k
-mjN50juAOlpQ990xRNBmUrhahEkJ3sbHauTHUISq7eQhRRF5zszyjdMPB/v+kfWz
-zOc+UmOjPyYI+URxH/5wZZM5IVrVNg==
-=DvSY
------END PGP SIGNATURE-----
-
---PMc1jF/EEbgjBUTX--
