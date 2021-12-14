@@ -2,45 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B22C4743E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:52:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A724744B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 15:22:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbhLNNwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 08:52:32 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.219]:12848 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231995AbhLNNwc (ORCPT
+        id S230268AbhLNOWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 09:22:49 -0500
+Received: from mo4-p02-ob.smtp.rzone.de ([81.169.146.169]:30473 "EHLO
+        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232470AbhLNOWr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 08:52:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1639489947;
+        Tue, 14 Dec 2021 09:22:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1639491754;
     s=strato-dkim-0002; d=gerhold.net;
     h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=pYibwlUUBQifFciJnYB0q0+Tq2C0+Rty8Kco70yJ1mY=;
-    b=IOwAtOfgJmGcA+jfZ7syljSSjwLKOLyQbti2fw7bl95hygiwGQvXCvMMqzhW/xWoes
-    BqQ21LeIh2yh1WzsYduhK7GgsQskAnqrW/JmLomNzajtiKhqIKSJV/9nBRfFjUOCkTuL
-    97lBmTGo9FlmsvHHpos2kamvi3c2ouVrBfYlPFG8mjJ70ddHUyD4q/KJL1GishTuYtog
-    J90dk4sS7F8qZJOMe4Fq5rsM356weR1fH6naPeffaXFv33+8c2C2klVbUC+tfa7EaP5W
-    bIxEdMOHhWc/tC72Q22LO5xaU3sPc1xrVgCUvxMT+J7507Ay4ol0Ox5y9HbIwwHOkLkp
-    Y8YA==
+    bh=av2Qq+J6PbfFPBH/diii4rDrGbpUSmagYYOyWFKE/74=;
+    b=YhzjZZ+gWbTGnypGjUd6vNQku9LSEHDjS5PPDI8T9/md/Z+xKOSdwiO3meQXQkNOsb
+    bgHJaHdM5MsJBdU9eNbV53m6bIlGfgsmCHi3gV9qX03sd8GzR43tXNS8qtdNl6Jy81ib
+    k9btp3sZ4CkPnh0fV2sTD4VCjjkxsWWyxrn31OgQd3j6/iqWsL6yf04Zc6p8Rfadvvgv
+    nxeEUsd/+lufYpbv55aLAR1V2hJa1hfEImoHZoQmoi+0/nvamY1KxBW3LuSFKCSzlStq
+    a1tofc/PJdZRrpxFvxv3/q31GuJyCjpWK16rQjtwei4sRMg1iIm96msuCfucx3UfRTke
+    IjYw==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fiL1O/hR"
 X-RZG-CLASS-ID: mo00
 Received: from droid..
     by smtp.strato.de (RZmta 47.35.3 AUTH)
-    with ESMTPSA id x08baexBEDqR8bA
+    with ESMTPSA id x08baexBEEMX8rV
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 14 Dec 2021 14:52:27 +0100 (CET)
+    Tue, 14 Dec 2021 15:22:33 +0100 (CET)
 From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: apq8016-sbc: Fix dtbs_check warnings for &sound
-Date:   Tue, 14 Dec 2021 14:51:24 +0100
-Message-Id: <20211214135124.2380-1-stephan@gerhold.net>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Paul Cercueil <paul@crapouillou.net>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/4] ASoC: qcom: Parse "pin-switches" and "widgets" from DT
+Date:   Tue, 14 Dec 2021 15:20:45 +0100
+Message-Id: <20211214142049.20422-1-stephan@gerhold.net>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -48,62 +57,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qcom,apq8016-sbc-sndcard is now covered by the qcom,sm8250.yaml schema
-which has slightly different recommendations for the naming of
-properties and nodes. The old naming is still functional but
-deprecated. Update the &sound node in apq8016-sbc to fix the following
-dtbs_check warnings:
+Some sound card setups might require extra pin switches to allow 
+turning off certain audio components. simple-card supports this
+already using the "pin-switches" and "widgets" device tree property. 
+This series makes it possible to use the same properties for the Qcom 
+sound cards.
 
-  apq8016-sbc.dt.yaml: sound@7702000: 'model' is a required property
-    From schema: sound/qcom,sm8250.yaml
-  apq8016-sbc.dt.yaml: sound@7702000: 'external-dai-link@0', ...
-    do not match any of the regexes: '.*-dai-link$', ...
-    From schema: sound/qcom,sm8250.yaml
+To implement that, the function that parses the "pin-switches" property 
+in simple-card-utils.c is first moved into the ASoC core. Then two 
+simple function calls are added to the common Qcom sound card DT parser.
+Finally there is a small patch for the msm8916-wcd-analog codec to make
+it possible to model sound card setups used in some MSM8916 smartphones.
+(See PATCH 2/4 for an explanation of some real example use cases.)
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Using pin switches rather than patching codec drivers with switches was
+originally suggested by Mark Brown on a patch for the tfa989x codec:
+https://lore.kernel.org/alsa-devel/YXaMVHo9drCIuD3u@sirena.org.uk/
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index a5320d6d30e7..0c566876333a 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -351,12 +351,12 @@ &sound {
- 	pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
- 	pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
- 	pinctrl-names = "default", "sleep";
--	qcom,model = "DB410c";
--	qcom,audio-routing =
-+	model = "DB410c";
-+	audio-routing =
- 		"AMIC2", "MIC BIAS Internal2",
- 		"AMIC3", "MIC BIAS External1";
- 
--	external-dai-link@0 {
-+	quaternary-dai-link {
- 		link-name = "ADV7533";
- 		cpu {
- 			sound-dai = <&lpass MI2S_QUATERNARY>;
-@@ -366,7 +366,7 @@ codec {
- 		};
- 	};
- 
--	internal-codec-playback-dai-link@0 {
-+	primary-dai-link {
- 		link-name = "WCD";
- 		cpu {
- 			sound-dai = <&lpass MI2S_PRIMARY>;
-@@ -376,7 +376,7 @@ codec {
- 		};
- 	};
- 
--	internal-codec-capture-dai-link@0 {
-+	tertiary-dai-link {
- 		link-name = "WCD-Capture";
- 		cpu {
- 			sound-dai = <&lpass MI2S_TERTIARY>;
+Stephan Gerhold (4):
+  ASoC: core: Add snd_soc_of_parse_pin_switches() from simple-card-utils
+  ASoC: dt-bindings: qcom: sm8250: Document "pin-switches" and "widgets"
+  ASoC: qcom: common: Parse "pin-switches" and "widgets" from DT
+  ASoC: msm8916-wcd-analog: Use separate outputs for HPH_L/HPH_R
+
+ .../bindings/sound/qcom,sm8250.yaml           | 16 ++++++
+ include/sound/soc.h                           |  1 +
+ sound/soc/codecs/msm8916-wcd-analog.c         |  7 +--
+ sound/soc/generic/simple-card-utils.c         | 45 +----------------
+ sound/soc/qcom/common.c                       | 10 ++++
+ sound/soc/soc-core.c                          | 50 +++++++++++++++++++
+ 6 files changed, 82 insertions(+), 47 deletions(-)
+
 -- 
 2.34.1
 
