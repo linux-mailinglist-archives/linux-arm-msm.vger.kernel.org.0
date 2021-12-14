@@ -2,85 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3220247403E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:18:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2891147402A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 11:12:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232921AbhLNKSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 05:18:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
+        id S232885AbhLNKMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 05:12:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbhLNKSO (ORCPT
+        with ESMTP id S232865AbhLNKMh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 05:18:14 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8B9C061574;
-        Tue, 14 Dec 2021 02:18:13 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id k4so13211124plx.8;
-        Tue, 14 Dec 2021 02:18:13 -0800 (PST)
+        Tue, 14 Dec 2021 05:12:37 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B61C06173F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:12:37 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id k64so17415982pfd.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 02:12:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=92yYEvFNeXQBGVvIoSkyIjgYw0Oqz3137D6F4hZH+Rg=;
-        b=D29J+HOYYRy51FfZDXuW6Pn/xW/GbTqEvAw3l9zPSLAi6xQuUoZ/Toleel3QrmskY9
-         arTkNYFWXgaSqFWqOKy31wjsttH81Ase+jxl27crlnZ/4UQmHfJ9LVkC82FzFSAdBTD7
-         4DJJnQ6/GkEuxzbNyL4mMxdgkyPTp1CA+DmG3GNit88exYDGM5zQ78pslBzxhI5PXX73
-         aPUZ5qE9MXweg7YpEkmj13cDR3DrRRMMX594aolSZH+JbJfPvVUKIzv2CDrFnDU392+4
-         FyD+bkK0FDr30TTej9hjYK8wwY4JH5rNAJWbmoYIy0AxS0q5wkJ7EdjMyP1/xTp2geRc
-         BCcA==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yJQrGlgOA8dqtlV7JMau63SOZ8ZTw0fQmfKynxB6xQ8=;
+        b=GYnIW2upq5GacPk614tRuRLtAlKe1wvWjWW7FrGyv/z6NW5OXHKQNlpDXQe6iA0O41
+         o0uPSrMOfWXXpc9ToCfk+qiLpDWC7CiZgKhmJVmE1cdDLzg3NcnhUfma23DndRlF1mdC
+         2U+lyn/h7QRMiQ8NERxETJX7S7sJcqLQxdi4F7GSwbiF6guj+srlbkBrL4Uq7krkoWqo
+         5lDXBcfRihR71cwvghWZBriJirZxRayNcYIWpI19MfO7KeP5ZcueOzPmNrrj6kOXpNDA
+         Zb1YgdKi5tg+cneHoVc5GqL+t09NfyflZ8wiVIlRPJZNRRXnRzDXAPnNsB53maa7reLK
+         Wqdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=92yYEvFNeXQBGVvIoSkyIjgYw0Oqz3137D6F4hZH+Rg=;
-        b=qrPD0il2g3/YxGJVKcKi2rxvlKdGmCXnczmsUhgJ2QSct9is1pVlzTstsvUHYmQuTd
-         sRoJpDgscYtJxu/YtBfjmWfuNHin3xtLSlygQ9jnquhTUPpw8sUPyGL/YcRuv0k36PzX
-         j4cbcRS3MLBJhKJvPRSx8cmUR+tRa144uw9OBnt3SNP/TjuDQDHOx1zhrEA20PsnHRor
-         U4a4tP9Byn2SUI9GD9SJaQ9Wohx4/uzkDXS9QwC8w/GwIBY7tzMzg6mGbbxLO8lB1Dgl
-         B+7Yx9Uywh9rQac1VM5nqpy46h9lfAjjNRbVLgjJzfrgmbcpNaXDX4qquWQ9kI1dIzgL
-         d+lw==
-X-Gm-Message-State: AOAM531w9pmJH52ndTXcm7BMmPXyzeDXDqtonZMNYW0ZV5I1na+J6kqx
-        HKgTOixzzJunq5NTJFP7OLo=
-X-Google-Smtp-Source: ABdhPJy7Vj4Ab7OH+HG5s6Zw+akLI3sfqQUGYrwu/CBSTg5X7kdBg/K54B6pE1gANgdI8CDJ9FhHbA==
-X-Received: by 2002:a17:902:c94a:b0:141:fdaa:59ac with SMTP id i10-20020a170902c94a00b00141fdaa59acmr4753664pla.37.1639477093554;
-        Tue, 14 Dec 2021 02:18:13 -0800 (PST)
-Received: from postoffice.intern (192.243.120.180.16clouds.com. [192.243.120.180])
-        by smtp.gmail.com with ESMTPSA id mg12sm2016244pjb.10.2021.12.14.02.18.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Dec 2021 02:18:13 -0800 (PST)
-Date:   Tue, 14 Dec 2021 18:17:56 +0800
-From:   David Yang <davidcomponentone@gmail.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, kishon@ti.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Yang Guang <yang.guang5@zte.com.cn>,
-        Zeal Robot <zealci@zte.com.cn>
-Subject: Re: [PATCH] pyh: qcom: fix the application of sizeof to pointer
-Message-ID: <YbhvVFTz+KwNtgo7@postoffice.intern>
-References: <8d75af8e322a7e5839d2dd4320b696ee09ec0843.1639100549.git.yang.guang5@zte.com.cn>
- <YbhjS2Nb8yrT9Nzq@matsya>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yJQrGlgOA8dqtlV7JMau63SOZ8ZTw0fQmfKynxB6xQ8=;
+        b=fMu8Qp1Eb87fCxOpb6ENpTYrtxVYa8C669rFo9XuVzYIW7LYecEPrJkz9luhX6rihH
+         JJUM26I9uCdp4GbJLD02Q8QVW92A/VTDxg+XmJjFBZ4MmyvEjhhyJEOo5FI4HeYK5H+c
+         sjfMz5BNX9Zro/FLoER1ScigQTn7ABUmEGQB2zbsC6Frw0+49XLA85KDjjjDSjACSDm3
+         XxAzEq3at7hY7zuq+N+b3zKFeEhr/Nq9ZqYBiDkXaBaT9xeVy5wjP/gE8MM+1bCKADbB
+         q01gMSboAqgkOR2Dp4ugbiHiBstYps8B6ZnUZKqj5tKU/7Lp+N/wmsWQ/6GFxvXrIFjm
+         SFYQ==
+X-Gm-Message-State: AOAM531KrDLXHkgBdEJ9ii6Dd1eoTSElc3sTOqEXHwjTYf/xEHBj9Lgk
+        Uj24utjqyD2UtNkPPOZVtx4jVuchykEuQAtKNeV8ew==
+X-Google-Smtp-Source: ABdhPJxsyxh37uq/D/8gqSDSjQwyE6u6hAEvFfFQkuxG2F+KH9I6cd3fGgHSs3M5xMjVzHrgQQVnZxJ41G0xwUXVEWA=
+X-Received: by 2002:aa7:8b07:0:b0:4a4:d003:92a9 with SMTP id
+ f7-20020aa78b07000000b004a4d00392a9mr3271031pfd.61.1639476756794; Tue, 14 Dec
+ 2021 02:12:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YbhjS2Nb8yrT9Nzq@matsya>
+References: <20211213135127.1656258-1-bryan.odonoghue@linaro.org> <20211213135127.1656258-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20211213135127.1656258-2-bryan.odonoghue@linaro.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Tue, 14 Dec 2021 11:24:11 +0100
+Message-ID: <CAMZdPi9=JTsfUAGTZiHVmwv+x-F-diYFZq0swew8Cj3pRN1n8g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] wcn36xx: Fix beacon filter structure definitions
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        benl@squareup.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry about that. Thank you for your advice.
+On Mon, 13 Dec 2021 at 14:49, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> The beacon filter structures need to be packed. Right now its fine because
+> we don't yet use these structures so just pack them without marking it for
+> backporting.
+>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-On Tue, Dec 14, 2021 at 02:56:35PM +0530, Vinod Koul wrote:
-> On 10-12-21, 14:21, davidcomponentone@gmail.com wrote:
-> > From: Yang Guang <yang.guang5@zte.com.cn>
-> > 
-> > The coccinelle check report:
-> > ./drivers/phy/qualcomm/phy-qcom-edp.c:574:31-37:
-> > ERROR: application of sizeof to pointer
-> 
-> - this should be tagged v2
-> - You should always note the changes done in v2 (after the --- line)
-> - subsystem name is 'phy' and not pyh
-> - I have already applied fix e87f13c33e126ab2c72f9acb5ae98fbb93ddfd32
-> 
-> -- 
-> ~Vinod
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
