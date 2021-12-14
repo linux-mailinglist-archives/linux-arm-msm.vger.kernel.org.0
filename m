@@ -2,144 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C04B474E8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 00:28:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D882474EB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 00:46:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234287AbhLNX2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 18:28:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231684AbhLNX2R (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 18:28:17 -0500
-Received: from todd.t-8ch.de (todd.t-8ch.de [IPv6:2a01:4f8:c010:41de::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02FC2C061574;
-        Tue, 14 Dec 2021 15:28:16 -0800 (PST)
-Date:   Wed, 15 Dec 2021 00:28:12 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=weissschuh.net;
-        s=mail; t=1639524493;
-        bh=px2nFIrkc6EXmcu4jcTAUXb6pMFO2r05xDq53egOoME=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EAU4pwjLaQmMoR5/v19+wcHmzW5KAqg+VzG1JV6RhGhb/EdwkqG9RxJ9cYhnakaPU
-         D2r0VayD3Vbkmif7SYS2UZOXOQ3DgGQyVn6dJj++QnGo1QnLnOyJWP644ug67CPu1s
-         Kxsq8wQ9+CtibJ6iwR3FUNh29X0l54fpD/rY4uYY=
-From:   Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
-To:     Hemant Kumar <hemantk@codeaurora.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Mario Limonciello <Mario.Limonciello@amd.com>,
-        Richard Hughes <hughsient@gmail.com>,
-        Ivan Mikhanchuk <ivan.mikhanchuk@quectel.com>,
-        Aleksander Morgado <aleksander@aleksander.es>
-Subject: Re: [RFC] bus: mhi: core: Load firmware asynchronous
-Message-ID: <ee87c8a5-e95b-4a32-ac9d-c68b64348f6e@t-8ch.de>
-References: <20211210161645.10925-1-linux@weissschuh.net>
- <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
- <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
- <6c805ecd-4542-5533-7852-ecd9cea27955@codeaurora.org>
+        id S234396AbhLNXqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 18:46:53 -0500
+Received: from ixit.cz ([94.230.151.217]:55366 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231447AbhLNXqx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 18:46:53 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id D0A952243C;
+        Wed, 15 Dec 2021 00:46:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1639525610;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=oHBpVI1zX0MdWA918+G1nEObZsRGP/0tTmp80DjrlbI=;
+        b=STWLsICsbmo6ZaAsoQCv9VQspc8ZlVlJPlkyADg3Ym0IKu4RM4mJ048ipk/kEI+2xS9thS
+        igrK6iFEHcUdYI3F+RSD8kPDUN9sarK9gaTY+CcSKGQgPNJxDLrUPrZS+e25IOLOE+S5K+
+        zlxKT9T+zPS04hAI4GJNHONHRSJr7FM=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Caleb Connolly <caleb@connolly.tech>,
+        David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: sdm845: rename memory@ nodes to more descriptive names
+Date:   Wed, 15 Dec 2021 00:46:47 +0100
+Message-Id: <20211214234648.23369-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6c805ecd-4542-5533-7852-ecd9cea27955@codeaurora.org>
-Jabber-ID: thomas@t-8ch.de
-X-Accept: text/plain, text/html;q=0.2, text/*;q=0.1
-X-Accept-Language: en-us, en;q=0.8, de-de;q=0.7, de;q=0.6
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-12-14 14:55-0800, Hemant Kumar wrote:
-> On 12/13/2021 10:32 PM, Thomas Weißschuh wrote:
-> > On 2021-12-13 16:07-0800, Hemant Kumar wrote:
-> > > On 12/10/2021 8:16 AM, Thomas Weißschuh wrote:
-> > > > This gives userspace the possibility to provide the firehose bootloader
-> > > > via the sysfs-firmware-API instead of having to modify the global
-> > > > firmware loadpath.
-> > > > 
-> > > > Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-> > > > 
-> > > > ---
-> > > > 
-> > > > Please note that this is not tested yet, as I don't have access to a matching
-> > > > firmware file.
-> > > > This submission is to gather general feedback from the maintainers and then
-> > > > Richard will do the actual testing, while I'll do the development.
-> > > > 
-> > > > This patch is should not have any impact beyond moving from request_firmware()
-> > > > to request_firmware_nowait() and the involved code reshuffle.
-> > > what are we achieving by moving to async ver of the firmware load ? MHI boot
-> > > flow can not do anything until BHI load is over. Is the intention eventually
-> > > to enable firmware fallback mechanism  and manually load the firmware ?
-> > 
-> > The goal is to provide the firehose bootloader (qcom/prog_firehose_sdx24.mbn)
-> > via the firmware fallback mechanism when upgrading the firmware on the device
-> > via the firehose protocol.
-> > 
-> > This bootloader firmware is not part of linux-firmware but provided as part of
-> > each firmware update package, so it is not installed statically on the system.
-> > 
-> > I will extend the commit message with this information.
-> 
-> For my understanding i have follow up question. As per the kernel doc
-> https://www.kernel.org/doc/html/latest/driver-api/firmware/fallback-mechanisms.html
+Pure effort to avoid `make dtbs_check` warnings about memory@ nodes, which
+should have property device_type set to memory.
 
-I'll try to answer, but please be aware that I have no previous experience with
-the firmware fallback mechanism and can not test this patch.
+Fixes warnings as:
+arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: memory@f5b00000: 'device_type' is a required property
+        From schema: dtschema/schemas/memory.yaml
 
-At this point in time I'm also hoping more for a general confirmation about
-using *some* fallback mechanism for MHI, so Richard and Ivan can test the patch
-(before it is committed) and then we can figure out exactly which of the
-fallback mechanisms fits best with feedback from them.
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  8 ++--
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 38 +++++++++----------
+ 2 files changed, 23 insertions(+), 23 deletions(-)
 
-> If CONFIG_FW_LOADER_USER_HELPER enabled but
-> CONFIG_FW_LOADER_USER_HELPER_FALLBACK is disabled, only the custom fallback
-> mechanism is available and for the request_firmware_nowait() call.
-> 
-> Custom fall back mechanism says
-> Users of the request_firmware_nowait() call have yet another option
-> available at their disposal: rely on the sysfs fallback mechanism but
-> request that no kobject uevents be issued to userspace. Original logic
-> behind this was that utilities other than udev might be required to lookup
-> firmware in non-traditional paths
-> 
-> Your patch is passing uevent flag as true which means you are relying on
-> uevent to be issued to userspace. How do you plan to update the firmware
-> path ? Alternatively firmware class provides a module param to specify the
-> firmware path /sys/module/firmware_class/parameters/path.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 7f42e5315ecb..511ca72f465e 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -54,7 +54,7 @@ reserved-memory {
+ 		 * it is otherwise possible for an allocation adjacent to the
+ 		 * rmtfs_mem region to trigger an XPU violation, causing a crash.
+ 		 */
+-		rmtfs_lower_guard: memory@f5b00000 {
++		rmtfs_lower_guard: rmtfs-lower-guard@f5b00000 {
+ 			no-map;
+ 			reg = <0 0xf5b00000 0 0x1000>;
+ 		};
+@@ -63,7 +63,7 @@ rmtfs_lower_guard: memory@f5b00000 {
+ 		 * but given the same address every time. Hard code it as this address is
+ 		 * where the modem firmware expects it to be.
+ 		 */
+-		rmtfs_mem: memory@f5b01000 {
++		rmtfs_mem: rmtfs-mem@f5b01000 {
+ 			compatible = "qcom,rmtfs-mem";
+ 			reg = <0 0xf5b01000 0 0x200000>;
+ 			no-map;
+@@ -71,7 +71,7 @@ rmtfs_mem: memory@f5b01000 {
+ 			qcom,client-id = <1>;
+ 			qcom,vmid = <15>;
+ 		};
+-		rmtfs_upper_guard: memory@f5d01000 {
++		rmtfs_upper_guard: rmtfs-upper-guard@f5d01000 {
+ 			no-map;
+ 			reg = <0 0xf5d01000 0 0x1000>;
+ 		};
+@@ -80,7 +80,7 @@ rmtfs_upper_guard: memory@f5d01000 {
+ 		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
+ 		 * random crashes which are most likely modem related, more testing needed.
+ 		 */
+-		removed_region: memory@88f00000 {
++		removed_region: removed-region@88f00000 {
+ 			no-map;
+ 			reg = <0 0x88f00000 0 0x1c00000>;
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 5fac82f026fd..28f7dc5c886a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -79,22 +79,22 @@ reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
+-		hyp_mem: memory@85700000 {
++		hyp_mem: hyp-mem@85700000 {
+ 			reg = <0 0x85700000 0 0x600000>;
+ 			no-map;
+ 		};
+ 
+-		xbl_mem: memory@85e00000 {
++		xbl_mem: xbl-mem@85e00000 {
+ 			reg = <0 0x85e00000 0 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		aop_mem: memory@85fc0000 {
++		aop_mem: aop-mem@85fc0000 {
+ 			reg = <0 0x85fc0000 0 0x20000>;
+ 			no-map;
+ 		};
+ 
+-		aop_cmd_db_mem: memory@85fe0000 {
++		aop_cmd_db_mem: aop-cmd-db-mem@85fe0000 {
+ 			compatible = "qcom,cmd-db";
+ 			reg = <0x0 0x85fe0000 0 0x20000>;
+ 			no-map;
+@@ -107,12 +107,12 @@ smem@86000000 {
+ 			hwlocks = <&tcsr_mutex 3>;
+ 		};
+ 
+-		tz_mem: memory@86200000 {
++		tz_mem: tz@86200000 {
+ 			reg = <0 0x86200000 0 0x2d00000>;
+ 			no-map;
+ 		};
+ 
+-		rmtfs_mem: memory@88f00000 {
++		rmtfs_mem: rmtfs@88f00000 {
+ 			compatible = "qcom,rmtfs-mem";
+ 			reg = <0 0x88f00000 0 0x200000>;
+ 			no-map;
+@@ -121,67 +121,67 @@ rmtfs_mem: memory@88f00000 {
+ 			qcom,vmid = <15>;
+ 		};
+ 
+-		qseecom_mem: memory@8ab00000 {
++		qseecom_mem: qseecom@8ab00000 {
+ 			reg = <0 0x8ab00000 0 0x1400000>;
+ 			no-map;
+ 		};
+ 
+-		camera_mem: memory@8bf00000 {
++		camera_mem: camera-mem@8bf00000 {
+ 			reg = <0 0x8bf00000 0 0x500000>;
+ 			no-map;
+ 		};
+ 
+-		ipa_fw_mem: memory@8c400000 {
++		ipa_fw_mem: ipa-fw@8c400000 {
+ 			reg = <0 0x8c400000 0 0x10000>;
+ 			no-map;
+ 		};
+ 
+-		ipa_gsi_mem: memory@8c410000 {
++		ipa_gsi_mem: ipa-gsi@8c410000 {
+ 			reg = <0 0x8c410000 0 0x5000>;
+ 			no-map;
+ 		};
+ 
+-		gpu_mem: memory@8c415000 {
++		gpu_mem: gpu@8c415000 {
+ 			reg = <0 0x8c415000 0 0x2000>;
+ 			no-map;
+ 		};
+ 
+-		adsp_mem: memory@8c500000 {
++		adsp_mem: adsp@8c500000 {
+ 			reg = <0 0x8c500000 0 0x1a00000>;
+ 			no-map;
+ 		};
+ 
+-		wlan_msa_mem: memory@8df00000 {
++		wlan_msa_mem: wlan-msa@8df00000 {
+ 			reg = <0 0x8df00000 0 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		mpss_region: memory@8e000000 {
++		mpss_region: mpss@8e000000 {
+ 			reg = <0 0x8e000000 0 0x7800000>;
+ 			no-map;
+ 		};
+ 
+-		venus_mem: memory@95800000 {
++		venus_mem: venus@95800000 {
+ 			reg = <0 0x95800000 0 0x500000>;
+ 			no-map;
+ 		};
+ 
+-		cdsp_mem: memory@95d00000 {
++		cdsp_mem: cdsp@95d00000 {
+ 			reg = <0 0x95d00000 0 0x800000>;
+ 			no-map;
+ 		};
+ 
+-		mba_region: memory@96500000 {
++		mba_region: mba@96500000 {
+ 			reg = <0 0x96500000 0 0x200000>;
+ 			no-map;
+ 		};
+ 
+-		slpi_mem: memory@96700000 {
++		slpi_mem: slpi@96700000 {
+ 			reg = <0 0x96700000 0 0x1400000>;
+ 			no-map;
+ 		};
+ 
+-		spss_mem: memory@97b00000 {
++		spss_mem: spss@97b00000 {
+ 			reg = <0 0x97b00000 0 0x100000>;
+ 			no-map;
+ 		};
+-- 
+2.33.0
 
-Emitting the uevent would allow the firmware update tool
-(fwupd, https://github.com/fwupd/fwupd) to monitor uevents and recognize when
-the device is ready to receive the firmware and then trigger the upload.
-If I see it correctly uevent=0 and uevent=1 do the same things except uevent=1
-also publishes the uevent.
-
-Modifying /sys/module/firmware_class/parameters/path is what currently is being
-done.
-But modifying the global firmware load path has the potential for the following
-issues:
-
-* While the global firmware load path is modified to a custom location any
-  load_firmware() call from other devices will fail because the new path does
-  not have the normal linux-firmware.
-* If the tool modifying crashes while before restoring the original load path
-  all further load_firmware()-calls will also fail.
-
-> > 
-> > PS: The current patch is missing 'return' after calls to
-> > 'mhi_fw_load_finish()', this will be corrected in v2.
-
-Another point:
-
-For sdx55 and sdx65 there is not only an edl firmware specified but also a
-firmware for normal operation.
-This firmware is not part of linux-firmware.
-Currently the firmware load would fail and put the modem into an error
-condition (I think?).
-With this patch there would be a timeout before that error state is reached.
-
-I know that some people have the SDX55 running with Linux but I'm now wondering
-where they are getting the firmware "qcom/sdx55m/sbl1.mbn" from.
-
-Thomas
