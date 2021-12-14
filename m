@@ -2,128 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35C0C474E3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 23:55:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72541474E41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 23:58:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234973AbhLNWzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 17:55:42 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:31155 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234991AbhLNWzl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 17:55:41 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1639522541; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=j5mv+bwGF9Jb+6wwuoo79SpCjZvRHCfajqRMmmEmvBk=; b=NEw4wv/ZEdyW7X43XhGE9zR82jD+EXgSL6U1bltzwuDDthaYd/k7+x7Wbt7aDpaZgUGlwRbr
- tASWjR+VuV8pI/C5qKRohUxOP3bNhLU1o0ND5dQcaGJCOgbBW9TKOUAekdiYyJh5JlhZbPlV
- QU5W+NhPlzf56x1MMkjSPHixgkY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n10.prod.us-east-1.postgun.com with SMTP id
- 61b920d886d0e4d888a7a017 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Dec 2021 22:55:20
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 202E5C4360C; Tue, 14 Dec 2021 22:55:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.110.114.105] (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BF48C4338F;
-        Tue, 14 Dec 2021 22:55:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1BF48C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [RFC] bus: mhi: core: Load firmware asynchronous
-To:     =?UTF-8?Q?Thomas_Wei=c3=9fschuh?= <linux@weissschuh.net>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org,
-        Mario Limonciello <Mario.Limonciello@amd.com>,
-        Richard Hughes <hughsient@gmail.com>
-References: <20211210161645.10925-1-linux@weissschuh.net>
- <403e93df-5b3c-acb3-2b65-df9a7834a9c5@codeaurora.org>
- <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <6c805ecd-4542-5533-7852-ecd9cea27955@codeaurora.org>
-Date:   Tue, 14 Dec 2021 14:55:16 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S233933AbhLNW6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 17:58:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37762 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233727AbhLNW6z (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 17:58:55 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EEDDC06173F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 14:58:54 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id u3so39723535lfl.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 14:58:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/ElhjSQRkBAVirJx6rQQ9wOPmR/xdLQ5Y4DtXvBrY/A=;
+        b=IP/SqCET/cIDz5W/tkTOoRj//JrcmN0RGsWN5l+Ru0RjNNGNm6ClYB9vI2+EGEZHzo
+         Yld3FVUuv6trAPU46mrts0q3WibtZansba+FfL44V2ESZjScqHEFz7M8rQN2txxULIOc
+         9u6JUrF6UZt7vrrJXn9Ndrfw4IY2PtfXwMyBQnivXoAN7/I5YjV8a4mZIaWXkEPCllrb
+         EquvQ/ZhfcBIdAdKjJ5BeYcwVoY+9CBxcjwMD5wGP4E5gdQ8PQYXDAX7tDi38kEX9xGs
+         nfRwb9N7gZcz0x785KK9DYFOPc+XEGfAtttIccE6n7IL/m0CUg91CtQPucJuvzonhkL+
+         +7Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/ElhjSQRkBAVirJx6rQQ9wOPmR/xdLQ5Y4DtXvBrY/A=;
+        b=7b4z15efJDTFXcRWbVBThEGt7VBNo1dGgs9mJUbfgyna7ZOqWmsqFNLXE+7TXNkDxE
+         lfeZURA1tAe76kkVFHyovmYyezZzFBF+NdC0/rBSkD84jN3OKIWHK5rG8D0GvUDNFi4P
+         l2h99uNDtHZalb/PDAd2gAvYF0dT+nrMtCYdOZ7FuhE1u4zNIY6mqO0NzLa3ItIyEDKw
+         jt7zg+5xmvrtXFKglnRvJgLf+OD5H0Xa4DI16K9ILs354IDvCeuVpk/tWHsN/yVeSswP
+         rdGENXyxMRf0Q4XHa0OwZ00WKi/PxOSTH2mt7mAws7MzoaXNzoyqEMOPTnIUmvqXiQPF
+         zGrg==
+X-Gm-Message-State: AOAM531WVO3ai//zj/nPcp5qTSuZhVxNGIOSHF1d8UBsdddBGRU2q3qj
+        hoXTiS0GNWr2lLI6bYCHTKjfZA==
+X-Google-Smtp-Source: ABdhPJx0SgvSJtbcVOQeXt6YA544j26Avfy58G+7BFNLy9a2hL9JByO623Fq0Qfn+4yZMNVbtkM17Q==
+X-Received: by 2002:a05:6512:11e5:: with SMTP id p5mr7001672lfs.537.1639522732735;
+        Tue, 14 Dec 2021 14:58:52 -0800 (PST)
+Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id t10sm45115lja.105.2021.12.14.14.58.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 14:58:52 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v4 00/10] qcom: add support for PCIe0 on SM8450 platform
+Date:   Wed, 15 Dec 2021 01:58:36 +0300
+Message-Id: <20211214225846.2043361-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <02e32c9d-79d2-4237-bb6b-8bd27029e7a9@t-8ch.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There are two different PCIe controllers and PHYs on SM8450, one having
+one lane and another with two lanes. This set of patches adds support
+for the first PCIe phy and controller only, support for the second PCIe
+part will come later.
+
+Changes since v3:
+ - Fix pcie gpios to follow defined schema as noted by Rob
+ - Fix commit message according to Bjorn's suggestions
+
+Changes since v2:
+ - Remove unnecessary comment in struct qcom_pcie_cfg
+
+Changes since v1:
+ - Fix capitalization/wording of PCI patch subjects
+ - Add missing gen3x1 specification to PHY table names
+
+----------------------------------------------------------------
+Dmitry Baryshkov (10):
+      dt-bindings: pci: qcom: Document PCIe bindings for SM8450
+      dt-bindings: phy: qcom,qmp: Add SM8450 PCIe PHY bindings
+      phy: qcom-qmp: Add SM8450 PCIe0 PHY support
+      PCI: qcom: Remove redundancy between qcom_pcie and qcom_pcie_cfg
+      PCI: qcom: Add ddrss_sf_tbu flag
+      PCI: qcom: Add SM8450 PCIe support
+      arm64: dts: qcom: sm8450: add PCIe0 PHY node
+      arm64: dts: qcom: sm8450: add PCIe0 RC device
+      arm64: dts: qcom: sm8450-qrd: enable PCIe0 PHY device
+      arm64: dts: qcom: sm8450-qrd: enable PCIe0 host
+
+ .../devicetree/bindings/pci/qcom,pcie.txt          |  21 ++-
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml      |   2 +
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts            |  14 ++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 143 ++++++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c             |  88 ++++++++-----
+ drivers/phy/qualcomm/phy-qcom-qmp.c                | 125 ++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h                |  33 +++++
+ 7 files changed, 388 insertions(+), 38 deletions(-)
 
 
-On 12/13/2021 10:32 PM, Thomas Weißschuh wrote:
-> On 2021-12-13 16:07-0800, Hemant Kumar wrote:
->> On 12/10/2021 8:16 AM, Thomas Weißschuh wrote:
->>> This gives userspace the possibility to provide the firehose bootloader
->>> via the sysfs-firmware-API instead of having to modify the global
->>> firmware loadpath.
->>>
->>> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
->>>
->>> ---
->>>
->>> Please note that this is not tested yet, as I don't have access to a matching
->>> firmware file.
->>> This submission is to gather general feedback from the maintainers and then
->>> Richard will do the actual testing, while I'll do the development.
->>>
->>> This patch is should not have any impact beyond moving from request_firmware()
->>> to request_firmware_nowait() and the involved code reshuffle.
->> what are we achieving by moving to async ver of the firmware load ? MHI boot
->> flow can not do anything until BHI load is over. Is the intention eventually
->> to enable firmware fallback mechanism  and manually load the firmware ?
-> 
-> The goal is to provide the firehose bootloader (qcom/prog_firehose_sdx24.mbn)
-> via the firmware fallback mechanism when upgrading the firmware on the device
-> via the firehose protocol.
-> 
-> This bootloader firmware is not part of linux-firmware but provided as part of
-> each firmware update package, so it is not installed statically on the system.
-> 
-> I will extend the commit message with this information.
-
-For my understanding i have follow up question. As per the kernel doc
-https://www.kernel.org/doc/html/latest/driver-api/firmware/fallback-mechanisms.html
-
-If CONFIG_FW_LOADER_USER_HELPER enabled but 
-CONFIG_FW_LOADER_USER_HELPER_FALLBACK is disabled, only the custom 
-fallback mechanism is available and for the request_firmware_nowait() call.
-
-Custom fall back mechanism says
-Users of the request_firmware_nowait() call have yet another option 
-available at their disposal: rely on the sysfs fallback mechanism but 
-request that no kobject uevents be issued to userspace. Original logic 
-behind this was that utilities other than udev might be required to 
-lookup firmware in non-traditional paths
-
-Your patch is passing uevent flag as true which means you are relying on 
-uevent to be issued to userspace. How do you plan to update the firmware 
-path ? Alternatively firmware class provides a module param to specify 
-the firmware path /sys/module/firmware_class/parameters/path.
-> 
-> PS: The current patch is missing 'return' after calls to
-> 'mhi_fw_load_finish()', this will be corrected in v2.
-> 
-
-Thanks,
-Hemant
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
