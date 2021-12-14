@@ -2,298 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81D2B47430C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 13:59:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07E2B474367
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 14:26:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234206AbhLNM7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 07:59:03 -0500
-Received: from mga02.intel.com ([134.134.136.20]:6072 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234195AbhLNM7C (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 07:59:02 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10197"; a="226249572"
-X-IronPort-AV: E=Sophos;i="5.88,205,1635231600"; 
-   d="scan'208";a="226249572"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2021 04:59:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,205,1635231600"; 
-   d="scan'208";a="463785891"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by orsmga003.jf.intel.com with ESMTP; 14 Dec 2021 04:58:49 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-        id DD49981; Tue, 14 Dec 2021 14:58:56 +0200 (EET)
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Sam Shih <sam.shih@mediatek.com>,
-        Zhiyong Tao <zhiyong.tao@mediatek.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Radim Pavlik <radim.pavlik@tbs-biometrics.com>,
-        Kavyasree Kotagiri <kavyasree.kotagiri@microchip.com>,
-        Colin Foster <colin.foster@in-advantage.com>,
-        Douglas Anderson <dianders@chromium.org>,
+        id S234384AbhLNNZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 08:25:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45728 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234388AbhLNNZf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 08:25:35 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A1F1C061748;
+        Tue, 14 Dec 2021 05:25:34 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 54B08B819AC;
+        Tue, 14 Dec 2021 13:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CA2C34605;
+        Tue, 14 Dec 2021 13:25:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639488332;
+        bh=+FyMOj1y47J0jKkiU7/fNkq+8RT+GijdYH8HXwKy9UM=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=K3hKjq/Upt25FBJ1BBPN71lKZHUzxMW0Bev6LE+t+EG5KTwVqghwvEGBNBAkFF6fu
+         aCMPYWhrpje5mTlIkIAmzVIrF9sf9it3U93yklsiUiPjY0bp4NWTcruukG1QluXtk5
+         oE4wJcA5wvcxnKADPHis9WBgJH9B8+tT0e2NqiR0H+o9ycsXDiEsRmfemwtKog49uZ
+         u/KQTIhumt8czyKtdsKzBKr/VFXXsS40vepyYSC6CffeziPmW628Sh6BWd5Q26OgYG
+         ETeqJATzGFnBJMlV+E2UvFWVEUKCVoQPmTVDMUbEKz/qfTfYK9JLRDX463/DUSVSrF
+         r1pAREIfnrQ8w==
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Herve Codina <herve.codina@bootlin.com>,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org,
-        bcm-kernel-feedback-list@broadcom.com,
-        linux-rpi-kernel@lists.infradead.org, alsa-devel@alsa-project.org,
-        patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-        linux-oxnas@groups.io, linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
-Cc:     =?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Sean Wang <sean.wang@kernel.org>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Support Opensource <support.opensource@diasemi.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andy Gross <agross@kernel.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org
-Subject: [PATCH v2 2/2] pinctrl: Propagate firmware node from a parent device
-Date:   Tue, 14 Dec 2021 14:58:55 +0200
-Message-Id: <20211214125855.33207-2-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211214125855.33207-1-andriy.shevchenko@linux.intel.com>
-References: <20211214125855.33207-1-andriy.shevchenko@linux.intel.com>
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        alsa-devel@alsa-project.org
+In-Reply-To: <20211202145505.58852-1-stephan@gerhold.net>
+References: <20211202145505.58852-1-stephan@gerhold.net>
+Subject: Re: [PATCH 0/5] ASoC: qcom: apq8016_sbc: Allow routing audio through QDSP6
+Message-Id: <163948832993.2865729.5795229789612585528.b4-ty@kernel.org>
+Date:   Tue, 14 Dec 2021 13:25:29 +0000
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When creating MFD platform devices the firmware node is left unset.
-This, in particular, prevents GPIO library to use it for different
-purposes. Propagate firmware node from the parent device and let
-GPIO library do the right thing.
+On Thu, 2 Dec 2021 15:55:00 +0100, Stephan Gerhold wrote:
+> This series makes it possible to route audio through the combined
+> audio/modem DSP on MSM8916/APQ8016 devices instead of bypassing it using
+> the LPASS drivers. This is necessary to support certain functionality such
+> as voice call audio. See PATCH 4/5 for details.
+> 
+> Also, qcom,apq8016-sbc.txt is converted to DT schema by adding it to the
+> existing qcom,sm8250.yaml. The bindings are similar enough that it is easier
+> to share a single schema instead of duplicating everything into multiple ones.
+> 
+> [...]
 
-While at it, slightly modify the headers to reflect the usage of APIs.
+Applied to
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
-v2: fixed compilation bug (LKP), due to above reshuffle headers in the rest
- drivers/pinctrl/cirrus/pinctrl-madera-core.c |  5 ++++-
- drivers/pinctrl/pinctrl-as3722.c             | 13 +++++++------
- drivers/pinctrl/pinctrl-da9062.c             |  6 +++---
- drivers/pinctrl/pinctrl-max77620.c           | 10 ++++++----
- drivers/pinctrl/pinctrl-rk805.c              | 12 ++++++------
- 5 files changed, 26 insertions(+), 20 deletions(-)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-diff --git a/drivers/pinctrl/cirrus/pinctrl-madera-core.c b/drivers/pinctrl/cirrus/pinctrl-madera-core.c
-index dce2626384a9..e1cfbee3643a 100644
---- a/drivers/pinctrl/cirrus/pinctrl-madera-core.c
-+++ b/drivers/pinctrl/cirrus/pinctrl-madera-core.c
-@@ -8,8 +8,10 @@
- #include <linux/err.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
-+
- #include <linux/pinctrl/machine.h>
- #include <linux/pinctrl/pinctrl.h>
- #include <linux/pinctrl/pinmux.h>
-@@ -1004,13 +1006,14 @@ static int madera_pin_probe(struct platform_device *pdev)
- 
- 	dev_dbg(&pdev->dev, "%s\n", __func__);
- 
-+	device_set_node(&pdev->dev, dev_fwnode(pdev->dev.parent));
-+
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
- 
- 	priv->dev = &pdev->dev;
- 	priv->madera = madera;
--	pdev->dev.of_node = madera->dev->of_node;
- 
- 	switch (madera->type) {
- 	case CS47L15:
-diff --git a/drivers/pinctrl/pinctrl-as3722.c b/drivers/pinctrl/pinctrl-as3722.c
-index 13c193156363..5a175e3d7439 100644
---- a/drivers/pinctrl/pinctrl-as3722.c
-+++ b/drivers/pinctrl/pinctrl-as3722.c
-@@ -23,19 +23,20 @@
- #include <linux/delay.h>
- #include <linux/gpio/driver.h>
- #include <linux/kernel.h>
-+#include <linux/mod_device_table.h>
- #include <linux/module.h>
- #include <linux/mfd/as3722.h>
--#include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/property.h>
-+#include <linux/slab.h>
-+
- #include <linux/pinctrl/consumer.h>
- #include <linux/pinctrl/machine.h>
- #include <linux/pinctrl/pinctrl.h>
- #include <linux/pinctrl/pinconf-generic.h>
- #include <linux/pinctrl/pinconf.h>
- #include <linux/pinctrl/pinmux.h>
--#include <linux/pm.h>
--#include <linux/slab.h>
- 
- #include "core.h"
- #include "pinconf.h"
-@@ -551,12 +552,13 @@ static int as3722_pinctrl_probe(struct platform_device *pdev)
- 	struct as3722_pctrl_info *as_pci;
- 	int ret;
- 
-+	device_set_node(&pdev->dev, dev_fwnode(pdev->dev.parent));
-+
- 	as_pci = devm_kzalloc(&pdev->dev, sizeof(*as_pci), GFP_KERNEL);
- 	if (!as_pci)
- 		return -ENOMEM;
- 
- 	as_pci->dev = &pdev->dev;
--	as_pci->dev->of_node = pdev->dev.parent->of_node;
- 	as_pci->as3722 = dev_get_drvdata(pdev->dev.parent);
- 	platform_set_drvdata(pdev, as_pci);
- 
-@@ -578,7 +580,6 @@ static int as3722_pinctrl_probe(struct platform_device *pdev)
- 
- 	as_pci->gpio_chip = as3722_gpio_chip;
- 	as_pci->gpio_chip.parent = &pdev->dev;
--	as_pci->gpio_chip.of_node = pdev->dev.parent->of_node;
- 	ret = gpiochip_add_data(&as_pci->gpio_chip, as_pci);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Couldn't register gpiochip, %d\n", ret);
-diff --git a/drivers/pinctrl/pinctrl-da9062.c b/drivers/pinctrl/pinctrl-da9062.c
-index 1c08579f0198..0e0ac3f3ffef 100644
---- a/drivers/pinctrl/pinctrl-da9062.c
-+++ b/drivers/pinctrl/pinctrl-da9062.c
-@@ -14,6 +14,7 @@
- #include <linux/bits.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- 
- #include <linux/gpio/driver.h>
-@@ -256,6 +257,8 @@ static int da9062_pctl_probe(struct platform_device *pdev)
- 	struct da9062_pctl *pctl;
- 	int i;
- 
-+	device_set_node(&pdev->dev, dev_fwnode(pdev->dev.parent));
-+
- 	pctl = devm_kzalloc(&pdev->dev, sizeof(*pctl), GFP_KERNEL);
- 	if (!pctl)
- 		return -ENOMEM;
-@@ -277,9 +280,6 @@ static int da9062_pctl_probe(struct platform_device *pdev)
- 	pctl->gc = reference_gc;
- 	pctl->gc.label = dev_name(&pdev->dev);
- 	pctl->gc.parent = &pdev->dev;
--#ifdef CONFIG_OF_GPIO
--	pctl->gc.of_node = parent->of_node;
--#endif
- 
- 	platform_set_drvdata(pdev, pctl);
- 
-diff --git a/drivers/pinctrl/pinctrl-max77620.c b/drivers/pinctrl/pinctrl-max77620.c
-index c643ed43ebbf..132987340637 100644
---- a/drivers/pinctrl/pinctrl-max77620.c
-+++ b/drivers/pinctrl/pinctrl-max77620.c
-@@ -11,13 +11,14 @@
- 
- #include <linux/mfd/max77620.h>
- #include <linux/module.h>
--#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/property.h>
-+#include <linux/regmap.h>
-+
- #include <linux/pinctrl/pinctrl.h>
- #include <linux/pinctrl/pinconf-generic.h>
- #include <linux/pinctrl/pinconf.h>
- #include <linux/pinctrl/pinmux.h>
--#include <linux/platform_device.h>
--#include <linux/regmap.h>
- 
- #include "core.h"
- #include "pinconf.h"
-@@ -551,12 +552,13 @@ static int max77620_pinctrl_probe(struct platform_device *pdev)
- 	struct max77620_pctrl_info *mpci;
- 	int i;
- 
-+	device_set_node(&pdev->dev, dev_fwnode(pdev->dev.parent));
-+
- 	mpci = devm_kzalloc(&pdev->dev, sizeof(*mpci), GFP_KERNEL);
- 	if (!mpci)
- 		return -ENOMEM;
- 
- 	mpci->dev = &pdev->dev;
--	mpci->dev->of_node = pdev->dev.parent->of_node;
- 	mpci->rmap = max77620->rmap;
- 
- 	mpci->pins = max77620_pins_desc;
-diff --git a/drivers/pinctrl/pinctrl-rk805.c b/drivers/pinctrl/pinctrl-rk805.c
-index c6f4229eb106..7c1f7408fb9a 100644
---- a/drivers/pinctrl/pinctrl-rk805.c
-+++ b/drivers/pinctrl/pinctrl-rk805.c
-@@ -13,17 +13,17 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/mfd/rk808.h>
--#include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/property.h>
-+#include <linux/slab.h>
-+
- #include <linux/pinctrl/consumer.h>
- #include <linux/pinctrl/machine.h>
- #include <linux/pinctrl/pinctrl.h>
- #include <linux/pinctrl/pinconf-generic.h>
- #include <linux/pinctrl/pinconf.h>
- #include <linux/pinctrl/pinmux.h>
--#include <linux/pm.h>
--#include <linux/slab.h>
- 
- #include "core.h"
- #include "pinconf.h"
-@@ -420,18 +420,18 @@ static int rk805_pinctrl_probe(struct platform_device *pdev)
- 	struct rk805_pctrl_info *pci;
- 	int ret;
- 
-+	device_set_node(&pdev->dev, dev_fwnode(pdev->dev.parent));
-+
- 	pci = devm_kzalloc(&pdev->dev, sizeof(*pci), GFP_KERNEL);
- 	if (!pci)
- 		return -ENOMEM;
- 
- 	pci->dev = &pdev->dev;
--	pci->dev->of_node = pdev->dev.parent->of_node;
- 	pci->rk808 = dev_get_drvdata(pdev->dev.parent);
- 
- 	pci->pinctrl_desc = rk805_pinctrl_desc;
- 	pci->gpio_chip = rk805_gpio_chip;
- 	pci->gpio_chip.parent = &pdev->dev;
--	pci->gpio_chip.of_node = pdev->dev.parent->of_node;
- 
- 	platform_set_drvdata(pdev, pci);
- 
--- 
-2.33.0
+Thanks!
 
+[1/5] ASoC: dt-bindings: qcom: sm8250: Drop redundant MultiMedia routes
+      commit: c55676ec292e0ff83261eb61efaf99a91079a3b8
+[2/5] ASoC: dt-bindings: qcom: sm8250: Document "aux-devs"
+      commit: 1875ae76f82c5c9acd7b7f44bd9226fbcbe858b7
+[3/5] ASoC: dt-bindings: qcom: apq8016-sbc: Move to qcom,sm8250 DT schema
+      commit: b7875d88bf70100d2fe0dc08072018f994ccd6c4
+[4/5] ASoC: dt-bindings: qcom: Document qcom,msm8916-qdsp6-sndcard compatible
+      commit: 38192dc36f1fe1615b7a12cc78b9354d6b4ba8b7
+[5/5] ASoC: qcom: apq8016_sbc: Allow routing audio through QDSP6
+      commit: 190357e1e09f271566e91fcd108c161f7e25a253
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
