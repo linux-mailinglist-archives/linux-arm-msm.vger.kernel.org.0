@@ -2,113 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EB93474C3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 20:47:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 65163474C6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Dec 2021 21:04:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237533AbhLNTrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 14:47:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51198 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237526AbhLNTrA (ORCPT
+        id S237567AbhLNUEw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 15:04:52 -0500
+Received: from mail-oi1-f181.google.com ([209.85.167.181]:34727 "EHLO
+        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230188AbhLNUEw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 14:47:00 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5608BC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 11:47:00 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CD3993F3BC;
-        Tue, 14 Dec 2021 20:46:57 +0100 (CET)
-Date:   Tue, 14 Dec 2021 20:46:56 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 0/2] Use "ref" clocks from firmware for DSI PLL VCO
- parent
-Message-ID: <20211214194656.mayiy4xhcshjluwf@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20210911131922.387964-1-marijn.suijten@somainline.org>
- <163165584152.763609.4056232270079096475@swboyd.mtv.corp.google.com>
- <20210918144038.6q352hzqopx7vvdu@SoMainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210918144038.6q352hzqopx7vvdu@SoMainline.org>
+        Tue, 14 Dec 2021 15:04:52 -0500
+Received: by mail-oi1-f181.google.com with SMTP id t19so28720262oij.1;
+        Tue, 14 Dec 2021 12:04:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=RJqjtodrdvg+GjFlTR3WmiDMbCMbLHzHFKDDXT45/9Q=;
+        b=k+3fC2Ntwd3C0FvFBVgzKsyLANZeLh5chw1XUFCk4atO2wnl64KlbYh79kUANZ7BQ/
+         L0REUVqYwiLgxY+LMtULc+x8iTP2CzHWdhzY/z1YqxnZE2stvM5Pk5ca86wzD5ObmOA2
+         IcurzyEFMxj9uSazgS+AhZmpJZRmHfhohlFHEp2tPRIuBoCqa7I3ytb/htnMi8y/0FzY
+         zdqX0Vyd5JcRbvAQiRydpJFSXLASfdjoHmnNBTpUPV1HcjglpwMZha5Hy9wqwbUN3FkQ
+         aY5xrtNt50vV/PYWHLPrQON1HDdPkZTV1bOXEEId/6oo8MD5nSJ3LiIlmuKT1Xyi0Qab
+         /OdA==
+X-Gm-Message-State: AOAM532Fd1fzkDk3hj2WuunQyb+OZNJt6Vnrsy8NSCisNcTeyFC1f2tV
+        UGmZybSpx5QAyD9fVXmUyg==
+X-Google-Smtp-Source: ABdhPJxyuWusHlo7VZe3TYTWV8m+4S+pvP/3wRQxB6XqQu8wB10s/8LoKvS0LuyEz0e6B3WOTMaVxg==
+X-Received: by 2002:a05:6808:158d:: with SMTP id t13mr6133558oiw.31.1639512291886;
+        Tue, 14 Dec 2021 12:04:51 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id s1sm158309ooo.11.2021.12.14.12.04.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Dec 2021 12:04:51 -0800 (PST)
+Received: (nullmailer pid 3819894 invoked by uid 1000);
+        Tue, 14 Dec 2021 20:04:50 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Baruch Siach <baruch.siach@siklu.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-arm-kernel@lists.infradead.org
+In-Reply-To: <b5053b42f73e574f48cf860a8e225d6b1939d216.1639499239.git.baruch@tkos.co.il>
+References: <ab2a4c345844f66aa22a847e522b2f4ee0786d8b.1639499239.git.baruch@tkos.co.il> <b5053b42f73e574f48cf860a8e225d6b1939d216.1639499239.git.baruch@tkos.co.il>
+Subject: Re: [PATCH v10 2/3] dt-bindings: pwm: add IPQ6018 binding
+Date:   Tue, 14 Dec 2021 14:04:50 -0600
+Message-Id: <1639512290.319512.3819893.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi all,
-
-On 2021-09-18 16:40:38, Marijn Suijten wrote:
-> On 2021-09-14 14:44:01, Stephen Boyd wrote:
-> > Quoting Marijn Suijten (2021-09-11 06:19:19)
-> > > All DSI PHY/PLL drivers were referencing their VCO parent clock by a
-> > > global name, most of which don't exist or have been renamed.  These
-> > > clock drivers seem to function fine without that except the 14nm driver
-> > > for sdm6xx [1].
-> > > 
-> > > At the same time all DTs provide a "ref" clock as per the requirements
-> > > of dsi-phy-common.yaml, but the clock is never used.  This patchset puts
-> > > that clock to use without relying on a global clock name, so that all
-> > > dependencies are explicitly defined in DT (the firmware) in the end.
-> > 
-> > I can take this through clk tree if it helps avoid conflicts. There are
-> > some other patches to sdm660.c in the clk tree already.
+On Tue, 14 Dec 2021 18:27:18 +0200, Baruch Siach wrote:
+> From: Baruch Siach <baruch.siach@siklu.com>
 > 
-> Might be useful to maintain proper ordering of these dependent patches
-> but it's up to Dmitry and Rob to decide, whom I'm sending this mail
-> directly to so that they can chime in.
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+> 
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> ---
+> This series does not convert the TCSR binding documentation to YAML. As
+> a result, this commit adds new a dt_binding_check warning:
+> 
+> /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq 6018', 'syscon', 'simple-mfd']
+> 
+> If that is a blocker to IPQ6018 PWM support, so be it. Patches will wait
+> for someone else to push them further.
+> 
+> v10:
+> 
+>   No change
+> 
+> v9:
+> 
+>   Add 'ranges' property to example (Rob)
+> 
+>   Drop label in example (Rob)
+> 
+> v8:
+> 
+>   Add size cell to 'reg' (Rob)
+> 
+> v7:
+> 
+>   Use 'reg' instead of 'offset' (Rob)
+> 
+>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+> 
+>   Use single cell address/size in example node (Bjorn)
+> 
+>   Move '#pwm-cells' lower in example node (Bjorn)
+> 
+>   List 'reg' as required
+> 
+> v6:
+> 
+>   Device node is child of TCSR; remove phandle (Rob Herring)
+> 
+>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+> 
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
+> 
+> v4: Update the binding example node as well (Rob Herring's bot)
+> 
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+> 
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> 
 
-Dependent patch [3] landed in 5.15 and [2] made it into 5.16 rc's - is
-it time to pick this series up and if so through what tree?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Repeating the links from patch 1/2:
-[2]: https://lore.kernel.org/linux-arm-msm/20210830175739.143401-1-marijn.suijten@somainline.org/
-[3]: https://lore.kernel.org/linux-arm-msm/20210829203027.276143-2-marijn.suijten@somainline.org/
+yamllint warnings/errors:
 
-Thanks!
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0: /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
 
-- marijn
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1567793
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
