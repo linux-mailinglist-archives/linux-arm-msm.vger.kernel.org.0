@@ -2,185 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A0A54756AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 11:43:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1638247574B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 12:04:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241739AbhLOKnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 05:43:25 -0500
-Received: from smtp-out2.suse.de ([195.135.220.29]:40640 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236702AbhLOKnY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 05:43:24 -0500
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id DF2CC1F3CA;
-        Wed, 15 Dec 2021 10:43:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1639565002; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=UHVQrF0DrvdbTi2ewbDCJH7wUtscgyPd+xqtty8zivk=;
-        b=dLSs5c5AKW+9jgb4G/5TZ112euYpcykDgKqxc5Yih6Z6iYCqcdflfw0AMWsYzjcXjH59cx
-        Co0beEqC6BZ5j0Tt1mrBxiIYxrbvsHnmTPpi77HpRQrk7ZZoLBx4NltyIsH65O1pDzHsxd
-        H1DI/yT7NX9Dpx6pY+cU2x1+w8LvTYY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1639565002;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=UHVQrF0DrvdbTi2ewbDCJH7wUtscgyPd+xqtty8zivk=;
-        b=jiz9RaYx8ziWvTfRPOb2vfyWR8BITnlobfx1MxAzU199xBoZom7IBZwFZ+6UDcpreIzwIZ
-        B04jo3lDveqp6ZCg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 9922513FC5;
-        Wed, 15 Dec 2021 10:43:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id cMWCJMrGuWH1eAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 15 Dec 2021 10:43:22 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     mripard@kernel.org, maarten.lankhorst@linux.intel.com,
-        airlied@linux.ie, daniel@ffwll.ch, jani.nikula@linux.intel.com
+        id S234111AbhLOLEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 06:04:12 -0500
+Received: from mga07.intel.com ([134.134.136.100]:54393 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234048AbhLOLEM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Dec 2021 06:04:12 -0500
+X-IronPort-AV: E=McAfee;i="6200,9189,10198"; a="302576978"
+X-IronPort-AV: E=Sophos;i="5.88,207,1635231600"; 
+   d="scan'208";a="302576978"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 03:04:11 -0800
+X-IronPort-AV: E=Sophos;i="5.88,207,1635231600"; 
+   d="scan'208";a="465553346"
+Received: from adalyx-mobl1.ger.corp.intel.com (HELO localhost) ([10.252.7.70])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 03:04:07 -0800
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, mripard@kernel.org,
+        maarten.lankhorst@linux.intel.com, airlied@linux.ie,
+        daniel@ffwll.ch
 Cc:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         nouveau@lists.freedesktop.org,
         linux-arm-kernel@lists.infradead.org,
         linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 5/5] drm/dp: Move DisplayPort AUX bus helpers into dp/
-Date:   Wed, 15 Dec 2021 11:43:17 +0100
-Message-Id: <20211215104318.18866-6-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20211215104318.18866-1-tzimmermann@suse.de>
+Subject: Re: [PATCH v2 3/5] drm/dp: Move DisplayPort helpers into separate
+ helper module
+In-Reply-To: <20211215104318.18866-4-tzimmermann@suse.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 References: <20211215104318.18866-1-tzimmermann@suse.de>
+ <20211215104318.18866-4-tzimmermann@suse.de>
+Date:   Wed, 15 Dec 2021 13:04:00 +0200
+Message-ID: <87pmpy3za7.fsf@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move drm_dp_aux_bus.c and its header file into the DP subdirectory
-and update all users. No functional changes.
+On Wed, 15 Dec 2021, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+> 	* move DP helper code into dp/ (Jani)
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/Makefile                         | 2 --
- drivers/gpu/drm/bridge/parade-ps8640.c           | 2 +-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c            | 2 +-
- drivers/gpu/drm/dp/Makefile                      | 2 ++
- drivers/gpu/drm/{ => dp}/drm_dp_aux_bus.c        | 2 +-
- drivers/gpu/drm/panel/panel-edp.c                | 2 +-
- drivers/gpu/drm/panel/panel-samsung-atna33xc20.c | 2 +-
- include/drm/{ => dp}/drm_dp_aux_bus.h            | 0
- 8 files changed, 7 insertions(+), 7 deletions(-)
- rename drivers/gpu/drm/{ => dp}/drm_dp_aux_bus.c (99%)
- rename include/drm/{ => dp}/drm_dp_aux_bus.h (100%)
+I suggested adding the subdirectory, but I'm going to bikeshed the name,
+which I didn't suggest.
 
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index 69be80ef1d31..700abeb4945e 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -31,8 +31,6 @@ drm-$(CONFIG_DEBUG_FS) += drm_debugfs.o drm_debugfs_crc.o
- drm-$(CONFIG_DRM_LOAD_EDID_FIRMWARE) += drm_edid_load.o
- drm-$(CONFIG_DRM_PRIVACY_SCREEN) += drm_privacy_screen.o drm_privacy_screen_x86.o
- 
--obj-$(CONFIG_DRM_DP_AUX_BUS) += drm_dp_aux_bus.o
--
- obj-$(CONFIG_DRM_NOMODESET) += drm_nomodeset.o
- 
- drm_cma_helper-y := drm_gem_cma_helper.o
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index d6a1adbe57d4..89ac4891459a 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -14,7 +14,7 @@
- #include <linux/regulator/consumer.h>
- 
- #include <drm/drm_bridge.h>
--#include <drm/drm_dp_aux_bus.h>
-+#include <drm/dp/drm_dp_aux_bus.h>
- #include <drm/dp/drm_dp_helper.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_of.h>
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 74fcaa0150fd..ceda36c69446 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -26,7 +26,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
--#include <drm/drm_dp_aux_bus.h>
-+#include <drm/dp/drm_dp_aux_bus.h>
- #include <drm/dp/drm_dp_helper.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_of.h>
-diff --git a/drivers/gpu/drm/dp/Makefile b/drivers/gpu/drm/dp/Makefile
-index 5b892aeff5ab..75faffc706b1 100644
---- a/drivers/gpu/drm/dp/Makefile
-+++ b/drivers/gpu/drm/dp/Makefile
-@@ -1,5 +1,7 @@
- # SPDX-License-Identifier: MIT
- 
-+obj-$(CONFIG_DRM_DP_AUX_BUS) += drm_dp_aux_bus.o
-+
- drm_dp_helper-y := drm_dp.o drm_dp_dual_mode_helper.o drm_dp_helper_mod.o drm_dp_mst_topology.o
- drm_dp_helper-$(CONFIG_DRM_DP_AUX_CHARDEV) += drm_dp_aux_dev.o
- drm_dp_helper-$(CONFIG_DRM_DP_CEC) += drm_dp_cec.o
-diff --git a/drivers/gpu/drm/drm_dp_aux_bus.c b/drivers/gpu/drm/dp/drm_dp_aux_bus.c
-similarity index 99%
-rename from drivers/gpu/drm/drm_dp_aux_bus.c
-rename to drivers/gpu/drm/dp/drm_dp_aux_bus.c
-index 565edf6b1732..415afce3cf96 100644
---- a/drivers/gpu/drm/drm_dp_aux_bus.c
-+++ b/drivers/gpu/drm/dp/drm_dp_aux_bus.c
-@@ -19,7 +19,7 @@
- #include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
- 
--#include <drm/drm_dp_aux_bus.h>
-+#include <drm/dp/drm_dp_aux_bus.h>
- #include <drm/dp/drm_dp_helper.h>
- 
- /**
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 6a6ca891ee2e..99ca1bd0091c 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -36,7 +36,7 @@
- 
- #include <drm/drm_crtc.h>
- #include <drm/drm_device.h>
--#include <drm/drm_dp_aux_bus.h>
-+#include <drm/dp/drm_dp_aux_bus.h>
- #include <drm/dp/drm_dp_helper.h>
- #include <drm/drm_panel.h>
- 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-index bffeadaaf9a2..20666b6217e7 100644
---- a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-@@ -14,7 +14,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
- 
--#include <drm/drm_dp_aux_bus.h>
-+#include <drm/dp/drm_dp_aux_bus.h>
- #include <drm/dp/drm_dp_helper.h>
- #include <drm/drm_edid.h>
- #include <drm/drm_panel.h>
-diff --git a/include/drm/drm_dp_aux_bus.h b/include/drm/dp/drm_dp_aux_bus.h
-similarity index 100%
-rename from include/drm/drm_dp_aux_bus.h
-rename to include/drm/dp/drm_dp_aux_bus.h
+$ find drivers/gpu/drm -mindepth 1 -maxdepth 1 -type d | wc -l
+68
+
+Assuming we move more of the drm modules to subdirectories, how are they
+going to stand out from drivers?
+
+I suggested drm_dp, which I understand results in tautology, but hey,
+all the filenames under drm/ also have drm_*.[ch]. And I find that very
+useful for git greps and other code archeology. With just the dp name,
+you'd have to know and list all the drm subdirectories when looking up
+stuff that's part of drm but not drivers.
+
+
+BR,
+Jani.
+
+
 -- 
-2.34.1
-
+Jani Nikula, Intel Open Source Graphics Center
