@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01A2A4751BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 05:35:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B38BC4751BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 05:35:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239751AbhLOEf1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 23:35:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56518 "EHLO
+        id S239754AbhLOEfb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 23:35:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239726AbhLOEfZ (ORCPT
+        with ESMTP id S239752AbhLOEfb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 23:35:25 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07ACC06173E;
-        Tue, 14 Dec 2021 20:35:24 -0800 (PST)
+        Tue, 14 Dec 2021 23:35:31 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C90C06173F;
+        Tue, 14 Dec 2021 20:35:30 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 82235617D2;
+        by sin.source.kernel.org (Postfix) with ESMTPS id ED944CE19FE;
+        Wed, 15 Dec 2021 04:35:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEEDC34604;
         Wed, 15 Dec 2021 04:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5570BC34608;
-        Wed, 15 Dec 2021 04:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639542923;
-        bh=Vd9kxCRzDbGb5FCo+00iF4zQOsjd4QYOTa28clj2axY=;
+        s=k20201202; t=1639542927;
+        bh=s9qdFU5s4Bc7u1OfBiWw3v8lMOxZJV5ftKA5FqmSElo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=s0J9kR+TDDl4WDjiTluGePS9httKRvEU8WUe4S8ivQtOMTenl7BvH4HnP6rWqZeNR
-         gk0j81yiXvkXvsiUOwqfZPjNcc0Qap6CS8mov5yi+HqYwpYRlFzGATPpze/YUOjJGR
-         8aYPUwpbFgXNff9IpQkhk7wy5IrEoEPlgFo8XJhyG6actcid2gzzSXzn4nD/GZOdfK
-         BBiBd6LQyU3idoMvJMzJ6UWJZCnguo0uDAZ8O4muOANbgdUpHayKYr+mNmPRPfKQHZ
-         bSsE60ReLxApoSAfXtg00YmTghq3HbNYS/is+QRrdwMlHVxHjC0DBn74+s3WbtSJih
-         CZPPnDOYBVNlg==
+        b=WIcYykmRBOl2SAo8NI9b3Ya9Pv9wQBQw2O/o5/DcCY2eRRVjmOjpPxkUjRwDLQFQe
+         Nudxhr/kcRbfwsEmhkQzsvH7i/ICyHMynL1oItXFXhxShj/v5J1pOMjvfyS8KqzEbe
+         +tKBy5KkZHaUtHjGPhwcOQItAE9YHXeAjHPawXLalvAWqvTyW0FK27mCUEAvi8yHtw
+         E/yX2f/tADaEER7EGuzxW2Z218GbZR+bghU/DTh+rQLQ24LMg3ywwwe5kY24Sx4nCp
+         xIByNWQ6wgugnkML8iFXGYwdDJFgvRhvnyzeCahaA7bWhtpQtOD+OlLvTffDnh0p0A
+         FFJ8f/177xKWg==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 10/11] arm64: dts: qcom: sm8450: add cpufreq support
-Date:   Wed, 15 Dec 2021 10:04:39 +0530
-Message-Id: <20211215043440.605624-11-vkoul@kernel.org>
+Subject: [PATCH v3 11/11] arm64: dts: qcom: sm8450: add i2c13 and i2c14 device nodes
+Date:   Wed, 15 Dec 2021 10:04:40 +0530
+Message-Id: <20211215043440.605624-12-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211215043440.605624-1-vkoul@kernel.org>
 References: <20211215043440.605624-1-vkoul@kernel.org>
@@ -52,107 +52,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The change adds a description of a SM8450 cpufreq-epss controller and
-references to it from CPU nodes.
+Add device tree nodes for two i2c blocks: i2c13 and i2c14.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 52 ++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 8fff4d54933f..56e3e8f771bd 100644
+index 56e3e8f771bd..62082ed5335d 100644
 --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -44,6 +44,7 @@ CPU0: cpu@0 {
- 			next-level-cache = <&L2_0>;
- 			power-domains = <&CPU_PD0>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			L2_0: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -61,6 +62,7 @@ CPU1: cpu@100 {
- 			next-level-cache = <&L2_100>;
- 			power-domains = <&CPU_PD1>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			L2_100: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -75,6 +77,7 @@ CPU2: cpu@200 {
- 			next-level-cache = <&L2_200>;
- 			power-domains = <&CPU_PD2>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			L2_200: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -89,6 +92,7 @@ CPU3: cpu@300 {
- 			next-level-cache = <&L2_300>;
- 			power-domains = <&CPU_PD3>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			L2_300: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -103,6 +107,7 @@ CPU4: cpu@400 {
- 			next-level-cache = <&L2_400>;
- 			power-domains = <&CPU_PD4>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 1>;
- 			L2_400: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -117,6 +122,7 @@ CPU5: cpu@500 {
- 			next-level-cache = <&L2_500>;
- 			power-domains = <&CPU_PD5>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 1>;
- 			L2_500: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -132,6 +138,7 @@ CPU6: cpu@600 {
- 			next-level-cache = <&L2_600>;
- 			power-domains = <&CPU_PD6>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 1>;
- 			L2_600: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -146,6 +153,7 @@ CPU7: cpu@700 {
- 			next-level-cache = <&L2_700>;
- 			power-domains = <&CPU_PD7>;
- 			power-domain-names = "psci";
-+			qcom,freq-domain = <&cpufreq_hw 2>;
- 			L2_700: l2-cache {
- 			      compatible = "cache";
- 			      next-level-cache = <&L3_0>;
-@@ -867,6 +875,21 @@ rpmhpd_opp_turbo_l1: opp10 {
+@@ -582,6 +582,44 @@ uart7: serial@99c000 {
  			};
  		};
  
-+		cpufreq_hw: cpufreq@17d91000 {
-+			compatible = "qcom,sm8450-cpufreq-epss", "qcom,cpufreq-epss";
-+			reg = <0 0x17d91000 0 0x1000>,
-+			      <0 0x17d92000 0 0x1000>,
-+			      <0 0x17d93000 0 0x1000>;
-+			reg-names = "freq-domain0", "freq-domain1", "freq-domain2";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
-+			clock-names = "xo", "alternate";
-+			interrupts = <GIC_SPI 30 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1", "dcvsh-irq-2";
-+			#freq-domain-cells = <1>;
++		qupv3_id_1: geniqup@ac0000 {
++			compatible = "qcom,geni-se-qup";
++			reg = <0x0 0x00ac0000 0x0 0x6000>;
++			clock-names = "m-ahb", "s-ahb";
++			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
++				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++			status = "disabled";
++
++			i2c13: i2c@a94000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x00a94000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_i2c13_data_clk>;
++				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
++
++			i2c14: i2c@a98000 {
++				compatible = "qcom,geni-i2c";
++				reg = <0 0x00a98000 0 0x4000>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S6_CLK>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&qup_i2c14_data_clk>;
++				interrupts = <GIC_SPI 363 IRQ_TYPE_LEVEL_HIGH>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++				status = "disabled";
++			};
 +		};
 +
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
- 				     "jedec,ufs-2.0";
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex";
+ 			reg = <0x0 0x01f40000 0x0 0x40000>;
+@@ -609,6 +647,20 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 211>;
+ 			wakeup-parent = <&pdc>;
+ 
++			qup_i2c13_data_clk: qup-i2c13-data-clk {
++				pins = "gpio48", "gpio49";
++				function = "qup13";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
++			qup_i2c14_data_clk: qup-i2c14-data-clk {
++				pins = "gpio52", "gpio53";
++				function = "qup14";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
++
+ 			qup_uart7_rx: qup-uart7-rx {
+ 				pins = "gpio26";
+ 				function = "qup7";
 -- 
 2.31.1
 
