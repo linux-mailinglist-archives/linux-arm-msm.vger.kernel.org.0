@@ -2,201 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B64AC475DF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 17:56:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B03A475DF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 17:56:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233753AbhLOQzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 11:55:44 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:13613 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232819AbhLOQzo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 11:55:44 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1639587344; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=sTdtQQP6OdTSK5qoXkTe64XNcig82CVmEynE7iICHV0=;
- b=xSmHBK+Hk/a3ZeS7c3TndZOshwv5PSgnJbGnl65ntXKAHgzqndK1IS9zz5RIWNV5BJCBjJ+V
- GbhP0oOAGRgA3Akn82LeQsU5GHrjmbo9cyKu5/vnDL+uAzkpKUbcIIcE6VCQk/fDKwLX6X1H
- GkK9TiPXS14HcOQmym2eNovE8UI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 61ba1e0f3553c354bed17cfb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Dec 2021 16:55:43
- GMT
-Sender: bgodavar=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B987EC4338F; Wed, 15 Dec 2021 16:55:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 33172C4360D;
-        Wed, 15 Dec 2021 16:55:41 +0000 (UTC)
+        id S245039AbhLOQ4S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 11:56:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245036AbhLOQ4R (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Dec 2021 11:56:17 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9362AC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 08:56:16 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id l7so34293544lja.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 08:56:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/mM+TtN7QigfV8F9BSaGaHszde8U6/Lni1GFCo1emVk=;
+        b=dF6HpHPFiz7ifldwyihr5zXt1+h5MHmIv9Cm6jHNIH41piiiJWR0Kcf9gKAOGyiBBq
+         vHACI8SjJCg/LcKAxtj5FkQXlgaz1BGK9X9usL/XZv0BH59KCm6bpWEHc+ZVlKWWAVri
+         ndSOhrvG5OXK+mfw0MAcUtufp7WlyGlgtZoPyEczgyPecrOYRFGN8YWykNVL6v3iqJ9S
+         WCFlq5rhTDbYjcYca4pCSiQXZ1LX7upCHqjflKi7nRxya4FTVT7wN3XxJ6UHgfN5THaZ
+         Tjx/A4LFyEYjnij+NpJnefMS0sKCqYWPvVjoI74jYl8rC9/q/LEPXc3ZHD7Tzr8vw9Vi
+         g+WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/mM+TtN7QigfV8F9BSaGaHszde8U6/Lni1GFCo1emVk=;
+        b=DQK5S0YRc1MdoTltRn7FDvPpi8qAqpCWn9WzwFGeXUqtapRjG1E5atXYJF+sATFbyc
+         Oul/9PDAGgc+7VKmvxCEfzSr9UFhWCw0VdUpCT2QuDShoxxxTt7MLMk+rZA17VpdNdzd
+         MyR5Ix7XRu1s6oXfc1JV7HcHjhjq2c/8s+DMocAJfNEh6G9h2uuYgyDe4Q2mu1iWMVPc
+         c2c2wV916fIzlxcrs4GRrYTB05QJqyO2QIkXZ0p8ml3ZvvZzmPqYp5CwOR99szSAMhG7
+         gn97EjGcfdyJkv3PIIWS/101XZ/K2ocJJdF9KvS51ePWJGZ6Qy/gsGPzIUxffBBlY/O0
+         /XvA==
+X-Gm-Message-State: AOAM5336Oz2mad0SpG5m4ad0+Vi17S+CeUm4trUeknvm3ygNC852IKtt
+        z3QLFzHSM+v6BpE+iFbaG/OjLQ==
+X-Google-Smtp-Source: ABdhPJxxxdf7tgICe77qXKsLRA6dZuxeJOxmfJaSbnj2PKfJJ2ko+kcJ9hGwJfYGy/h6bpf9qOqtjg==
+X-Received: by 2002:a2e:6e0d:: with SMTP id j13mr10688343ljc.124.1639587373419;
+        Wed, 15 Dec 2021 08:56:13 -0800 (PST)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id m14sm550392ljg.2.2021.12.15.08.56.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Dec 2021 08:56:12 -0800 (PST)
+Message-ID: <ec877733-7e1e-7ba8-0df9-8a7542dd0377@linaro.org>
+Date:   Wed, 15 Dec 2021 19:56:11 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] drm/msm/dp: Fix double free on error in
+ msm_dp_bridge_init()
+Content-Language: en-GB
+To:     Dan Carpenter <dan.carpenter@oracle.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+References: <20211215114900.GD14552@kili>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211215114900.GD14552@kili>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 15 Dec 2021 22:25:41 +0530
-From:   bgodavar@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org,
-        mcchou@chromium.org, saluvala@codeaurora.org,
-        Balakrishna Godavarthi <bgodavar@codeauroa.org>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280
-In-Reply-To: <Ya90KTLlwFlaIWRE@google.com>
-References: <1638857623-32379-1-git-send-email-bgodavar@codeaurora.org>
- <Ya90KTLlwFlaIWRE@google.com>
-Message-ID: <fa8d54f11be8f16d02f12dbc754d1da1@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Matthias,
+On 15/12/2021 14:49, Dan Carpenter wrote:
+> The "dp_bridge" pointer is allocated with devm_kzalloc() so it will be
+> freed automatically.  Kfreeing it here will only lead to a double free.
+> 
+> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-On 2021-12-07 20:18, Matthias Kaehlcke wrote:
-> On Tue, Dec 07, 2021 at 11:43:43AM +0530, Balakrishna Godavarthi wrote:
-> 
->> Subject: arm64: dts: qcom: sc7280: Add bluetooth node on SC7280
-> 
-> nit: the node is added to the IDP boards, not sc7280 in general
-> 
-[Bala]: will update it.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->> From: Balakrishna Godavarthi <bgodavar@codeauroa.org>
->> 
->> Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
->> 
->> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
->> ---
->> v3:
->>   * Addressed reviewers comments
+> ---
+>   drivers/gpu/drm/msm/dp/dp_drm.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> that's not overly useful, instead you should describe what changed
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 188e77c59885..d4d360d19eba 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -243,7 +243,6 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
+>   	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>   	if (rc) {
+>   		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
+> -		kfree(dp_bridge);
+>   		return ERR_PTR(rc);
+>   	}
+>   
 > 
->>   * Added pin config for sw_ctrl line.
->> v2:
->>   * merged two patches into one
->>   * Removed unused comments
->>   * Removed pinmux & pin conf.
->>   * Addressed reviewers comments
->> 
->> v1: initial patch
->> ---
->>  arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  4 ++++
->>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 37 
->> ++++++++++++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  4 ++++
->>  3 files changed, 45 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
->> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> index 9b991ba..19bd228 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> @@ -56,6 +56,10 @@
->>  	};
->>  };
->> 
->> +&bluetooth {
->> +	vddio-supply = <&vreg_l19b_1p8>;
->> +};
->> +
->>  &ipa {
->>  	status = "okay";
->>  	modem-init;
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index d623d71..b8b00dc 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -14,6 +14,11 @@
->>  #include "pmk8350.dtsi"
->> 
->>  / {
->> +	aliases {
->> +		bluetooth0 = &bluetooth;
->> +		serial1 = &uart7;
->> +	};
->> +
->>  	gpio-keys {
->>  		compatible = "gpio-keys";
->>  		label = "gpio-keys";
->> @@ -422,6 +427,23 @@
->>  				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
->>  	pinctrl-names = "default", "sleep";
->>  	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, 
->> <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
->> +
->> +	bluetooth: bluetooth {
->> +		compatible = "qcom,wcn6750-bt";
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&bt_en>, <&swctrl_gpio>;
->> +		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
->> +		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
->> +		vddaon-supply = <&vreg_s7b_0p9>;
->> +		vddbtcxmx-supply = <&vreg_s7b_0p9>;
->> +		vddrfacmn-supply = <&vreg_s7b_0p9>;
->> +		vddrfa0p8-supply = <&vreg_s7b_0p9>;
->> +		vddrfa1p7-supply = <&vreg_s1b_1p8>;
->> +		vddrfa1p2-supply = <&vreg_s8b_1p2>;
->> +		vddrfa2p2-supply = <&vreg_s1c_2p2>;
->> +		vddasd-supply = <&vreg_l11c_2p8>;
->> +		max-speed = <3200000>;
->> +	};
->>  };
->> 
->>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->> @@ -491,6 +513,14 @@
->>  };
->> 
->>  &tlmm {
->> +	bt_en: bt-en {
->> +		pins = "gpio85";
->> +		function = "gpio";
->> +		drive-strength = <2>;
-> 
-> is it really necessary to specify the drive strength?
-> 
-> Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml:
-> 
->   drive-strength:
->     enum: [2, 4, 6, 8, 10, 12, 14, 16]
->     default: 2
-> 
-> The default is 2, so it shouldn't be needed.
-> 
-[Bala]: will update it.
->> +		output-low;
->> +		bias-disable;
->> +	};
->> +
->>  	nvme_pwren: nvme-pwren {
->>  		function = "gpio";
->>  	};
->> @@ -554,6 +584,13 @@
->>  		 */
->>  		bias-pull-up;
->>  	};
->> +
->> +	swctrl_gpio: swctrl-gpio {
-> 
-> The 'gpio' suffix isn't really useful.
-> 
-> I suggest to use the signal name from the schematics "mos-sw-ctrl" or
-> call it "bt-sw-ctrl". If you use the schematic name then this should
-> be also done for the enable pin.
-[Bala]: will update it.
+
+
+-- 
+With best wishes
+Dmitry
