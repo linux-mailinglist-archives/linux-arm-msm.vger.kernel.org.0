@@ -2,82 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 703E04753CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 08:36:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 699E64754B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 09:56:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240622AbhLOHgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 02:36:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40402 "EHLO
+        id S235881AbhLOI4E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 03:56:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240639AbhLOHgl (ORCPT
+        with ESMTP id S235706AbhLOI4D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 02:36:41 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE381C061574;
-        Tue, 14 Dec 2021 23:36:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B133617DE;
-        Wed, 15 Dec 2021 07:36:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B015BC34605;
-        Wed, 15 Dec 2021 07:36:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639553800;
-        bh=2eI6exSN0FUaIEOk/+PWQb13t4mMcNpEbG4tBXpXW20=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=GJtAajHT++olYZTMCJyu0CSCpjQk5zQ6r+b6ZlJUYZzhoJmER5BgU9qx0Te16loCd
-         yBoJST5sR/FQiVmCv5vym8DKgallGkphuE4CUs+FlDG3kwNXyWok9fnI+xxUs5Egdd
-         DpyeFTBYXv2uuYipjOuhtwFoAVC14vJoUl1av7f73xXQTkGG2HwDB/W5eaWLyT544F
-         zi5awz4rDGvTVvQVja7kbMIcaFnkNtt9gGmFwo8uuJulw63bLTwr2Yac/KME64+gJN
-         DDFigMZAAcUKHkVbN2+u/KXvpdr+TzkPhr463srApXq+7GoHndTsnPYzh4/CJmnNc5
-         RJmn8VNc7ffYQ==
-Content-Type: text/plain; charset="utf-8"
+        Wed, 15 Dec 2021 03:56:03 -0500
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E19C061574;
+        Wed, 15 Dec 2021 00:56:03 -0800 (PST)
+Received: by mail-qt1-x82d.google.com with SMTP id j17so21117897qtx.2;
+        Wed, 15 Dec 2021 00:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dbfkGjADP1JP/ccn6Y79dw0BB+q77R8upChfhWhpbLY=;
+        b=QXkOpqLoRDDSGEf+AKDxWv1QFdCmuMqUjVA8i/659rKFxt5MDdmYGq1Va3+xt4xFWn
+         IbmRS6G79/ayBNeyvLsUXJa5B25V31ewyeG6mriDRl05OyLYuonJjzZkz5/gzgRBWwSY
+         FujwC5lJEo49cYy1CCLMPqhWg1fIqquQ7F1PsTfqC4edm3O6I6OqqjsYmkCkDIDcqBBv
+         3K+E9Jov4WP9Src1YIj53P5sSLYU2RgOjKiQd6tqUUrMgPwb85qooPV4q/htvnGcJiOz
+         04fzUV19TQL/zQhrxkcxDCBiCQrFo0YchSj5plkEyKKSN4KMhRsV/KI0kBjbP2e75lo7
+         ovsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dbfkGjADP1JP/ccn6Y79dw0BB+q77R8upChfhWhpbLY=;
+        b=Oj9mRjwX5b8V4VElGzpmfkEu/lLUlOxKF/XAq8fMmmJdjZxWKh+P55cHGrFrJJfOvR
+         uhGkJLTFme0Nv2ralsGGcy8fM8Su5LLvB3ea5S2ov98Mn+YalNqNiGU3FzU6LXkD4R1X
+         n83/buU8cv5QvIMsl94gF6ggHg2UuRGsBKdldQJCd1WN67G+HfGMTkTGoeNGsBoDc8Pf
+         XU9oh/K+fvKwUyL+kQq17t/P9od6YtLMMlKMR6qydOpDH6N89V/eChfpGCPCQZcR3I5s
+         omVVzzYFCpCBcl5J6krJarfc4FCAYd0yvgH7Lp9t3sUt928MxNopTuAO9ovSW0gqVaN+
+         IXQw==
+X-Gm-Message-State: AOAM531apPkUC3GszdwFhY0J016LIX7FaZn6GtMSmsKiPHwdoqSR0jAG
+        6qqpErN586Hm2JrCQF3GtcrN3ROwx9o=
+X-Google-Smtp-Source: ABdhPJzLfQfHP7IxlGx7vxk8z92ch8kS1M5ARNToa0yOaFgzRN1nbpR8d1Z4m+rwQRnrr/BsDfzCQw==
+X-Received: by 2002:ac8:5949:: with SMTP id 9mr10885179qtz.522.1639558562394;
+        Wed, 15 Dec 2021 00:56:02 -0800 (PST)
+Received: from localhost.localdomain ([193.203.214.57])
+        by smtp.gmail.com with ESMTPSA id q185sm696876qke.64.2021.12.15.00.55.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 00:56:01 -0800 (PST)
+From:   cgel.zte@gmail.com
+X-Google-Original-From: deng.changcheng@zte.com.cn
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
+        daniel@ffwll.ch, swboyd@chromium.org, quic_khsieh@quicinc.com,
+        dmitry.baryshkov@linaro.org, bjorn.andersson@linaro.org,
+        linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Changcheng Deng <deng.changcheng@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>
+Subject: [PATCH] drm/msm/dp: remove unneeded variable
+Date:   Wed, 15 Dec 2021 08:55:54 +0000
+Message-Id: <20211215085554.444351-1-deng.changcheng@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <Ybgs+zet4EVGMa2a@matsya>
-References: <20211207114003.100693-1-vkoul@kernel.org> <20211207114003.100693-3-vkoul@kernel.org> <20211209082607.06929C004DD@smtp.kernel.org> <Ybgs+zet4EVGMa2a@matsya>
-Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Vinod Koul <vkoul@kernel.org>
-Date:   Tue, 14 Dec 2021 23:36:39 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211215073640.B015BC34605@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Koul (2021-12-13 21:34:51)
-> On 09-12-21, 00:26, Stephen Boyd wrote:
-> > Quoting Vinod Koul (2021-12-07 03:40:03)
-> > > diff --git a/drivers/clk/qcom/gcc-sm8450.c b/drivers/clk/qcom/gcc-sm8=
-450.c
-> > > new file mode 100644
-> > > index 000000000000..82ac419718d7
-> > > --- /dev/null
-> > > +++ b/drivers/clk/qcom/gcc-sm8450.c
-> > > @@ -0,0 +1,3303 @@
-> > > +// SPDX-License-Identifier: GPL-2.0-only
-> > > +/*
-> > > + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserve=
-d.
-> > > + * Copyright (c) 2021, Linaro Limited
-> > > + */
-> > > +
-> > > +#include <linux/module.h>
-> > > +#include <linux/of_device.h>
-> > > +#include <linux/regmap.h>
-> >=20
-> > BTW, clk providers need to include clk-provider.h
->=20
-> It is included but indirectly thru clk-alpha-pll.h.. I think this should
-> be fine.
+From: Changcheng Deng <deng.changcheng@zte.com.cn>
 
-No
+Remove unneeded variable used to store return value.
+
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 8d9c19dbf33e..7cc4d21f2091 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -416,12 +416,11 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 
+ static int dp_display_usbpd_disconnect_cb(struct device *dev)
+ {
+-	int rc = 0;
+ 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+ 
+ 	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+ 
+-	return rc;
++	return 0;
+ }
+ 
+ static void dp_display_handle_video_request(struct dp_display_private *dp)
+-- 
+2.25.1
+
