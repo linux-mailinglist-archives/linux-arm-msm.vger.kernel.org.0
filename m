@@ -2,91 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C3AA476221
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C12A47622E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:51:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232964AbhLOTtc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 14:49:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41350 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231712AbhLOTtb (ORCPT
+        id S233413AbhLOTv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 14:51:27 -0500
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:44733 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233409AbhLOTv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 14:49:31 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC0E8C06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:49:30 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id 207so34931528ljf.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:49:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=2Jdbxx8yhXD15gHEUpM6lHyLqMwp2IChCOBO/z10+7k=;
-        b=Lww4o1mOGnsQcztPqGeqiJAHh8oityHaAea90qQKRPI8ultTJ7YAcj5V2zEfNqK4rG
-         iDmYqr9up1TXQWaxUd/jf2dxzmrgOMQNZb1gvjRWv4GP6M63ixqU08dqjmE52V/1m+2M
-         +EXWwJ02l+jhNVulEbDYpxUGrwH7fmtwkxU9espd27qqg10ZGPGzgY7QDGMnlmdwa8pz
-         WtQ9Hhr2bghLzlYu3SWvSvRWfCacpOlOv3dY4rpmqrygKJgLUuEe8JponEszaekTatT8
-         9gOVUtp6TexDQe0yT34c0TjfZNYUzPMjD0PaLMd3K4vy+A8HEQSoSteizObwLorh3/CT
-         OUFQ==
+        Wed, 15 Dec 2021 14:51:27 -0500
+Received: by mail-oi1-f170.google.com with SMTP id be32so33120336oib.11;
+        Wed, 15 Dec 2021 11:51:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2Jdbxx8yhXD15gHEUpM6lHyLqMwp2IChCOBO/z10+7k=;
-        b=oWzauXPSBGMLrPyJD2aIC4LmMqSNdiXwqxHaumIRiF0rH4Qdfb8iMMXVu2xQqq4kB+
-         QiNgi1FlPeEy+cRiatXNyloPegAwArztkYg9a/bMqefcbWD8VFwKVq0rQgBfKFdkbLa9
-         YWnnk5WOuV2BeoAr/Pm+DO0wEuZbSlad4NMPZpRUNvXCCZ7NrwJI593KKOq+OTPV38Hy
-         5DJAmDb5Gh8rvX4FictLCa7nW8JH1ZhsI1D3JS5ycy+cRft//hr30IHbYxThJWSSDHE8
-         l6bP5/nErJna05xISWPrC2PV05UlVGiBG4qv/9kBnaDOqAPoQgecM53aDAI4//lGdjAQ
-         zcCg==
-X-Gm-Message-State: AOAM531pZsLpEwm9Qe3E5ELr826ft9P4CfF5ZdsjySyvsEqyN31jfCFz
-        yieuMykSQFcfwf5yuQ7JHqOg2A==
-X-Google-Smtp-Source: ABdhPJzExouZ/WhriICLDITDfeC8Z9c4Cg/WczYq5K2alaBvVhuaktrZ/1hWVV+3tXuFko9PZQjrYQ==
-X-Received: by 2002:a2e:9e43:: with SMTP id g3mr11613559ljk.291.1639597769020;
-        Wed, 15 Dec 2021 11:49:29 -0800 (PST)
-Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id d10sm467446lfe.106.2021.12.15.11.48.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Dec 2021 11:49:00 -0800 (PST)
-Message-ID: <195d6835-c1ee-e818-3760-835a60b94402@linaro.org>
-Date:   Wed, 15 Dec 2021 22:48:34 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1p1PQrqDAJTBlAEU9eTaqXLhU+FeqafP7VNkw1V6x4M=;
+        b=IdDlIoNDd9y5sxkH89qTH2vxKqIUpoSeP8LG9hEkYHYr/KSxUY4D4c7FYN7vUR4I/j
+         87XrEoPbhQy4lCzqvVD/0HTEXLpnAgokhtEm+QWIMR3awzLjsWHIAGlg1s87ppTlt+X/
+         KPyJ9QsU7jHZEBE7D8bE79MisU+TxH5gyyFTKdCaf5Tvozl/uKk5Yy7wkJImcrmmMvN3
+         I4ePLLC2kBubPJ/Yl3dQRv9kIjeM0n3oeWTCzapFzsre1VAE31guk0o7/V8JGlsVMTvD
+         GOaAbXg4GKpOb0tW/SnjtJlTSODjDH0lcTru9abkaPd5y2wij0GDeHNRRM9fOlzOF1Zz
+         CrqQ==
+X-Gm-Message-State: AOAM533OpkE3b/KBeXkCRn0v4DiHLat5QptgosOyQMvTXG6sx3OpD90k
+        4xGPIYRiLofUtOdnLbOlEQ==
+X-Google-Smtp-Source: ABdhPJw6V5sSTfL+uRxvQ2C07gj9VqUiSInxCB3vdcAEt8qqdj6YEbamz7vxe0Y5oQERaTi6m1SK7A==
+X-Received: by 2002:a05:6808:b08:: with SMTP id s8mr1360010oij.126.1639597886569;
+        Wed, 15 Dec 2021 11:51:26 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id s17sm616782otp.20.2021.12.15.11.51.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 11:51:26 -0800 (PST)
+Received: (nullmailer pid 1725656 invoked by uid 1000);
+        Wed, 15 Dec 2021 19:51:25 -0000
+Date:   Wed, 15 Dec 2021 13:51:25 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     David Collins <quic_collinsd@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+Subject: Re: [PATCH 1/2] dt-bindings: firmware: arm,scmi: define support for
+ name based regulators
+Message-ID: <YbpHPU7PsGO2i+uw@robh.at.kernel.org>
+References: <cover.1639099631.git.quic_collinsd@quicinc.com>
+ <2d78b0f19991f8028d9be913be0a5aefd7d1ee17.1639099631.git.quic_collinsd@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v2 3/3] drm/msm/debugfs: Add display/kms state snapshot
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20211215174524.1742389-1-robdclark@gmail.com>
- <20211215174524.1742389-4-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211215174524.1742389-4-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2d78b0f19991f8028d9be913be0a5aefd7d1ee17.1639099631.git.quic_collinsd@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/12/2021 20:45, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Thu, 09 Dec 2021 17:54:41 -0800, David Collins wrote:
+> Allow SCMI regulator subnodes to be specified either by ID using
+> the "reg" property or by name using the "regulator-name" property.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Name based SCMI regulator specification helps ensure that an SCMI
+> agent doesn't need to be aware of the numbering scheme used for
+> Voltage Domains by the SCMI platform.  It also ensures that the
+> correct Voltage Domain is selected for a given physical regulator.
+> This cannot be guaranteed with numeric Voltage Domain IDs alone.
+> 
+> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
 > ---
-> v2: Drop unneeded msm_kms_show_priv [Dmitry B]
+>  .../devicetree/bindings/firmware/arm,scmi.yaml        | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
 > 
->   drivers/gpu/drm/msm/msm_debugfs.c | 75 +++++++++++++++++++++++++++++++
->   1 file changed, 75 insertions(+)-- 
-With best wishes
-Dmitry
+
+Reviewed-by: Rob Herring <robh@kernel.org>
