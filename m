@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C12A47622E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:51:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC927476254
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:57:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233413AbhLOTv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 14:51:27 -0500
-Received: from mail-oi1-f170.google.com ([209.85.167.170]:44733 "EHLO
-        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233409AbhLOTv1 (ORCPT
+        id S233901AbhLOT4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 14:56:39 -0500
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:39873 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229791AbhLOT4j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 14:51:27 -0500
-Received: by mail-oi1-f170.google.com with SMTP id be32so33120336oib.11;
-        Wed, 15 Dec 2021 11:51:27 -0800 (PST)
+        Wed, 15 Dec 2021 14:56:39 -0500
+Received: by mail-ot1-f49.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso26220695ots.6;
+        Wed, 15 Dec 2021 11:56:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1p1PQrqDAJTBlAEU9eTaqXLhU+FeqafP7VNkw1V6x4M=;
-        b=IdDlIoNDd9y5sxkH89qTH2vxKqIUpoSeP8LG9hEkYHYr/KSxUY4D4c7FYN7vUR4I/j
-         87XrEoPbhQy4lCzqvVD/0HTEXLpnAgokhtEm+QWIMR3awzLjsWHIAGlg1s87ppTlt+X/
-         KPyJ9QsU7jHZEBE7D8bE79MisU+TxH5gyyFTKdCaf5Tvozl/uKk5Yy7wkJImcrmmMvN3
-         I4ePLLC2kBubPJ/Yl3dQRv9kIjeM0n3oeWTCzapFzsre1VAE31guk0o7/V8JGlsVMTvD
-         GOaAbXg4GKpOb0tW/SnjtJlTSODjDH0lcTru9abkaPd5y2wij0GDeHNRRM9fOlzOF1Zz
-         CrqQ==
-X-Gm-Message-State: AOAM533OpkE3b/KBeXkCRn0v4DiHLat5QptgosOyQMvTXG6sx3OpD90k
-        4xGPIYRiLofUtOdnLbOlEQ==
-X-Google-Smtp-Source: ABdhPJw6V5sSTfL+uRxvQ2C07gj9VqUiSInxCB3vdcAEt8qqdj6YEbamz7vxe0Y5oQERaTi6m1SK7A==
-X-Received: by 2002:a05:6808:b08:: with SMTP id s8mr1360010oij.126.1639597886569;
-        Wed, 15 Dec 2021 11:51:26 -0800 (PST)
+        bh=rc75QnNGJmNS7Cbebb+pY8RDy1d28+BSSxCtW4SecuI=;
+        b=gEizBTR33a1S3bh2Zt7v2sHpuCPXzc86v5+CZm0YUxHqRyW8z5GPIbvHpz0Ki3zNXM
+         2Uw/3pTaM5+XccsawKq33kNfF4vZKI+gzDbwV9qOmPZKt89Hq6PwS8oq4k+6gzKsVhNP
+         sXMmTGAtw8/FLOBFHj104YxCTGVxbRqhH6AnBaOShjuJk6RESE9JCCMnat9uqKCiJENi
+         dNo/FuZrpF6TjWSxAYvBFbnhebdoeg6JnNQYft25K9T/u5+BmeszcF+KySZw5e3bbWuB
+         UziQJTu0iGpJmScRJ6vPWXiaYsFJWEh0jsCV9AUhhu4vBw4j7JMDEokbxcvjMrWlfUgi
+         iceQ==
+X-Gm-Message-State: AOAM530feeJ6KAuqy+H+XGb7FPsIzI+m3Gl2DR8IYpS4kUueQTbUU0cB
+        YNXmSmfsS2jCdWiKboexwrAq2jCcWA==
+X-Google-Smtp-Source: ABdhPJzrQNwX1PWtVKEQVvXrLOMZ8C9c+duQoIn7Gf9bM82Fcc1FZELEJd5svYbn2v5KVWFulAvMXQ==
+X-Received: by 2002:a05:6830:2431:: with SMTP id k17mr10212639ots.220.1639598198475;
+        Wed, 15 Dec 2021 11:56:38 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id s17sm616782otp.20.2021.12.15.11.51.25
+        by smtp.gmail.com with ESMTPSA id o2sm602213oik.11.2021.12.15.11.56.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 11:51:26 -0800 (PST)
-Received: (nullmailer pid 1725656 invoked by uid 1000);
-        Wed, 15 Dec 2021 19:51:25 -0000
-Date:   Wed, 15 Dec 2021 13:51:25 -0600
+        Wed, 15 Dec 2021 11:56:37 -0800 (PST)
+Received: (nullmailer pid 1733483 invoked by uid 1000);
+        Wed, 15 Dec 2021 19:56:36 -0000
+Date:   Wed, 15 Dec 2021 13:56:36 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     David Collins <quic_collinsd@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     linux-iio@vger.kernel.org, amit.pundir@linaro.org,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-Subject: Re: [PATCH 1/2] dt-bindings: firmware: arm,scmi: define support for
- name based regulators
-Message-ID: <YbpHPU7PsGO2i+uw@robh.at.kernel.org>
-References: <cover.1639099631.git.quic_collinsd@quicinc.com>
- <2d78b0f19991f8028d9be913be0a5aefd7d1ee17.1639099631.git.quic_collinsd@quicinc.com>
+        Rob Herring <robh+dt@kernel.org>, john.stultz@linaro.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>, sumit.semwal@linaro.org
+Subject: Re: [PATCH 2/7] dt-bindings: iio: adc: document qcom-spmi-rradc
+Message-ID: <YbpIdF/z3w6DAKH3@robh.at.kernel.org>
+References: <20211211022224.3488860-1-caleb@connolly.tech>
+ <20211211022224.3488860-3-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2d78b0f19991f8028d9be913be0a5aefd7d1ee17.1639099631.git.quic_collinsd@quicinc.com>
+In-Reply-To: <20211211022224.3488860-3-caleb@connolly.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 09 Dec 2021 17:54:41 -0800, David Collins wrote:
-> Allow SCMI regulator subnodes to be specified either by ID using
-> the "reg" property or by name using the "regulator-name" property.
+On Sat, 11 Dec 2021 02:22:19 +0000, Caleb Connolly wrote:
+> From: Caleb Connolly <caleb.connolly@linaro.org>
 > 
-> Name based SCMI regulator specification helps ensure that an SCMI
-> agent doesn't need to be aware of the numbering scheme used for
-> Voltage Domains by the SCMI platform.  It also ensures that the
-> correct Voltage Domain is selected for a given physical regulator.
-> This cannot be guaranteed with numeric Voltage Domain IDs alone.
+> Add dt-binding docs for the Qualcomm SPMI RRADC found in PMICs like
+> PMI8998 and PMI8994
 > 
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  .../devicetree/bindings/firmware/arm,scmi.yaml        | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+>  .../bindings/iio/adc/qcom,spmi-rradc.yaml     | 54 +++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
