@@ -2,244 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0D2D475BFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 16:41:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C970475C5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 16:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244031AbhLOPlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 10:41:23 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:63712 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244051AbhLOPlO (ORCPT
+        id S244227AbhLOPzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 10:55:21 -0500
+Received: from mail-ot1-f47.google.com ([209.85.210.47]:46851 "EHLO
+        mail-ot1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232935AbhLOPzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 10:41:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639582874; x=1671118874;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=EgLnYdnP6Z2nNaMt3/Wonw4+7AJUa3t7EsxvQX3swxY=;
-  b=zPrV+gCeG7zKbpzRvzssMgcP09h1Twg6x4IC049MV2pjkopxLLLzCI8b
-   fdK56bqvRHr91LZma1TWb5ce8I2amBCB8tXFLfv+rX4PBfCashtZGHo3X
-   CKf3p5MtFqSUC5+Ozv4VNWxQXqstWOLm0ex9KQ0ayb/3Iu5GzXgOAUBXa
-   U=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Dec 2021 07:41:13 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 07:41:03 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 15 Dec 2021 07:41:00 -0800
-Received: from [10.253.39.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 15 Dec
- 2021 07:40:57 -0800
-Message-ID: <764c4694-9793-3b18-5e22-14ad3bdb0a79@quicinc.com>
-Date:   Wed, 15 Dec 2021 23:40:54 +0800
+        Wed, 15 Dec 2021 10:55:20 -0500
+Received: by mail-ot1-f47.google.com with SMTP id x3-20020a05683000c300b0057a5318c517so25349191oto.13;
+        Wed, 15 Dec 2021 07:55:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1uN/AqHq/16fmWso+ckRBZMPm8uIk1S05gPTw3SpmPY=;
+        b=5wSByh36Ux6JGZav4koolC2t0qCKOK6ljaTp3ugb1FZ36dTXpykQLIh7zSlo3xDJM3
+         5seQCfFtOdOAFGUNYONb6MHWRvWbJNqhHnFkbCctt5dJNsmQdgfJKbuHkGpBQ64v+7ar
+         9axrimLhQ8X2d7BXOJfo2c+gu2dsmMMp4OgFEN4FF90b1GxecqBeOplB6Sk83DbMx2II
+         CA8lBFeG5tbf9WEDXRNLSezMq5VvJM4UlixnoBvjYYw+PauOLDS/RUQaqoDLNE7NWGCv
+         2+NbCDfOXfimLciifMQHVlcs+17GmSL+c3gn4k7rIuDGQNRy89DWoXm0gBw6QDkUrH4k
+         /xdQ==
+X-Gm-Message-State: AOAM530+FMxp5dm5iVy+h3sjBUkN2WtxntCVqpUCvQdEIel1WKu14Zsk
+        rpf6bVlBX1dWvxUe2lLmICEQJc/yAA==
+X-Google-Smtp-Source: ABdhPJz+BdqqYA7oiWw+kTcTRG+9z9GLCeD0Vi6YlvvtrKR1sMRLQfp3H7e/ZuYhjZ7GDhGlHaYmag==
+X-Received: by 2002:a05:6830:5a:: with SMTP id d26mr9044542otp.316.1639583720233;
+        Wed, 15 Dec 2021 07:55:20 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id 69sm496716otf.33.2021.12.15.07.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 07:55:19 -0800 (PST)
+Received: (nullmailer pid 1385017 invoked by uid 1000);
+        Wed, 15 Dec 2021 15:55:18 -0000
+Date:   Wed, 15 Dec 2021 09:55:18 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add SM8450 GCC clock bindings
+Message-ID: <YboP5r3BeImwIsQB@robh.at.kernel.org>
+References: <20211207114003.100693-1-vkoul@kernel.org>
+ <20211207114003.100693-2-vkoul@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v2 1/9] Use IDR to maintain all the enabled sources'
- paths.
-Content-Language: en-US
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
- <20211209141543.21314-2-quic_jinlmao@quicinc.com>
- <20211214183010.GA1549991@p14s>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20211214183010.GA1549991@p14s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211207114003.100693-2-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+On Tue, 07 Dec 2021 17:10:02 +0530, Vinod Koul wrote:
+> Add device tree bindings for global clock controller on SM8450 SoCs.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  .../bindings/clock/qcom,gcc-sm8450.yaml       |  85 ++++++
+>  include/dt-bindings/clock/qcom,gcc-sm8450.h   | 244 ++++++++++++++++++
+>  2 files changed, 329 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm8450.h
+> 
 
-Thanks for the review.
-
-On 12/15/2021 2:30 AM, Mathieu Poirier wrote:
-> Hi Mao,
->
-> On Thu, Dec 09, 2021 at 10:15:35PM +0800, Mao Jinlong wrote:
->> Use hash length of the source's device name to map to the pointer
->> of the enabled path. Using IDR will be more efficient than using
->> the list. And there could be other sources except STM and CPU etms
->> in the new HWs. It is better to maintain all the paths together.
->>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-core.c | 76 +++++++-------------
->>   1 file changed, 26 insertions(+), 50 deletions(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
->> index 8a18c71df37a..cc6b6cabf85f 100644
->> --- a/drivers/hwtracing/coresight/coresight-core.c
->> +++ b/drivers/hwtracing/coresight/coresight-core.c
->> @@ -7,6 +7,7 @@
->>   #include <linux/init.h>
->>   #include <linux/types.h>
->>   #include <linux/device.h>
->> +#include <linux/idr.h>
->>   #include <linux/io.h>
->>   #include <linux/err.h>
->>   #include <linux/export.h>
->> @@ -26,6 +27,12 @@
->>   static DEFINE_MUTEX(coresight_mutex);
->>   static DEFINE_PER_CPU(struct coresight_device *, csdev_sink);
->>   
->> +/*
->> + * Use IDR to map the hash length of the source's device name
->> + * to the pointer of path for the source
->> + */
->> +static DEFINE_IDR(path_idr);
->> +
->>   /**
->>    * struct coresight_node - elements of a path, from source to sink
->>    * @csdev:	Address of an element.
->> @@ -36,20 +43,6 @@ struct coresight_node {
->>   	struct list_head link;
->>   };
->>   
->> -/*
->> - * When operating Coresight drivers from the sysFS interface, only a single
->> - * path can exist from a tracer (associated to a CPU) to a sink.
->> - */
->> -static DEFINE_PER_CPU(struct list_head *, tracer_path);
->> -
->> -/*
->> - * As of this writing only a single STM can be found in CS topologies.  Since
->> - * there is no way to know if we'll ever see more and what kind of
->> - * configuration they will enact, for the time being only define a single path
->> - * for STM.
->> - */
->> -static struct list_head *stm_path;
->> -
->>   /*
->>    * When losing synchronisation a new barrier packet needs to be inserted at the
->>    * beginning of the data collected in a buffer.  That way the decoder knows that
->> @@ -1088,10 +1081,11 @@ static int coresight_validate_source(struct coresight_device *csdev,
->>   
->>   int coresight_enable(struct coresight_device *csdev)
->>   {
->> -	int cpu, ret = 0;
->> +	int ret = 0;
->>   	struct coresight_device *sink;
->>   	struct list_head *path;
->>   	enum coresight_dev_subtype_source subtype;
->> +	u32 hash;
->>   
->>   	subtype = csdev->subtype.source_subtype;
->>   
->> @@ -1133,26 +1127,14 @@ int coresight_enable(struct coresight_device *csdev)
->>   	if (ret)
->>   		goto err_source;
->>   
->> -	switch (subtype) {
->> -	case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
->> -		/*
->> -		 * When working from sysFS it is important to keep track
->> -		 * of the paths that were created so that they can be
->> -		 * undone in 'coresight_disable()'.  Since there can only
->> -		 * be a single session per tracer (when working from sysFS)
->> -		 * a per-cpu variable will do just fine.
->> -		 */
->> -		cpu = source_ops(csdev)->cpu_id(csdev);
->> -		per_cpu(tracer_path, cpu) = path;
->> -		break;
->> -	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
->> -		stm_path = path;
->> -		break;
->> -	default:
->> -		/* We can't be here */
->> -		break;
->> -	}
->> -
->> +	/*
->> +	 * Use the hash length of source's device name as ID
->> +	 * and map the ID to the pointer of the path.
->> +	 */
->> +	hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
->> +	ret = idr_alloc_u32(&path_idr, path, &hash, hash, GFP_KERNEL);
->> +	if (ret)
->> +		goto err_source;
->>   out:
->>   	mutex_unlock(&coresight_mutex);
->>   	return ret;
->> @@ -1168,8 +1150,9 @@ EXPORT_SYMBOL_GPL(coresight_enable);
->>   
->>   void coresight_disable(struct coresight_device *csdev)
->>   {
->> -	int cpu, ret;
->> +	int ret;
->>   	struct list_head *path = NULL;
->> +	u32 hash;
->>   
->>   	mutex_lock(&coresight_mutex);
->>   
->> @@ -1180,21 +1163,13 @@ void coresight_disable(struct coresight_device *csdev)
->>   	if (!csdev->enable || !coresight_disable_source(csdev))
->>   		goto out;
->>   
->> -	switch (csdev->subtype.source_subtype) {
->> -	case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
->> -		cpu = source_ops(csdev)->cpu_id(csdev);
->> -		path = per_cpu(tracer_path, cpu);
->> -		per_cpu(tracer_path, cpu) = NULL;
->> -		break;
->> -	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
->> -		path = stm_path;
->> -		stm_path = NULL;
->> -		break;
->> -	default:
->> -		/* We can't be here */
->> -		break;
->> -	}
->> +	hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
->> +	/* Find the path by the hash length. */
->> +	path = idr_find(&path_idr, hash);
->> +	if (path == NULL)
->> +		return;
-> Please add a dev_err() here as this should really not be happening.
-
-I will add the dev_err().
-
->
->>   
->> +	idr_remove(&path_idr, hash);
->>   	coresight_disable_path(path);
->>   	coresight_release_path(path);
->>   
->> @@ -1779,6 +1754,7 @@ static int __init coresight_init(void)
->>   
->>   static void __exit coresight_exit(void)
->>   {
->> +	idr_destroy(&path_idr);
-> As far as I can tell this isn't needed.
-
-I will remove this.
-
->
->>   	cscfg_exit();
->>   	etm_perf_exit();
->>   	bus_unregister(&coresight_bustype);
->> -- 
->> 2.17.1
->>
+Reviewed-by: Rob Herring <robh@kernel.org>
