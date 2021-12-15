@@ -2,64 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D34A47625D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:57:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43D5F47628F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 21:02:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233994AbhLOT55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 14:57:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43454 "EHLO
+        id S232555AbhLOUCt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 15:02:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbhLOT54 (ORCPT
+        with ESMTP id S230380AbhLOUCs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 14:57:56 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11406C06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:57:56 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id b19so33196002ljr.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:57:55 -0800 (PST)
+        Wed, 15 Dec 2021 15:02:48 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26C00C06173F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 12:02:48 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id c32so45355608lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 12:02:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=xzBRnW091E2hYttdO0EPFhJ6cH97SZxsTkE7s33U1XU=;
-        b=Q2astHq+BVkv2Vzv5F6Jicrgstv08rqCGISGYvZkbqqszqIAgWCfeFEkkxulWzaFEX
-         tGxPmgR9JbL9EuTp3fWKlyzHuy03tFWz6eSb7Gultp+R2w1dK4+TXJluBeQl8KWn67ax
-         Tvs6HtfUOt6CGBWcLYMj7d53/RjOfCGYAIwCwOGLfdorsOycBmxcjF9szZOrAzkoTujq
-         ZudgJ5hf44CqIaZQo23qs5tiHVXR6rYaj/sOm8aP8bxM93Pc3Mtqpu27WLL/zyme9uut
-         etZmFER6akRkdIZVw06QXlH6BxKk38L319qQ3INexdQB468zOwUAZ0rRiHqzONN941tD
-         5Jpg==
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=om/HCVC0CxSoU09KzvT/xb3Xt+kGoC0IjivC7aVdsOU=;
+        b=s8n8voY+G80iDGHzEN0iDm28Pjz+I27p2XDrzK3tqtodBaWLC4IKzkbZvcZIN4vqEK
+         79k6DEND/LHkoSxewVx1C9wBFz+NXUFG3zUg7gMa+WfNCmJ9OzoXXAArgjpU3k/QucfX
+         GCN2pifirNrUBtX1ncbrfFNnNPBk6l8ElsOOmmTEFZ9xvrVOJKTsMhtYO2wijsFmmzTe
+         VpRgoH8WTi8ThTPNu/u5GsH/vYPOw8aRh03f2AvrAhnHo8tlKHFkQlyOB8F20pcJhype
+         ozJ4WzWLNQFb9jNsnwU/A1PyAlhGnauorBFcJ1nFBQFyd5SQHpY7gYHVAUlGez5nRIwO
+         OY0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=xzBRnW091E2hYttdO0EPFhJ6cH97SZxsTkE7s33U1XU=;
-        b=yWRpDk+/Mn8dgwazTfXN7YwtmunnOrgPD/HgrRDUewniDiVLCV3jR9JrbOoMDkWKEK
-         Fo2m0S5hp3fDTSSEigQ0hldSk6IhnBWHzVMfefEqQkkkQgJO1sCVPmLkS9sgCP4Btcsd
-         N+KTH3ffeZ7IN8G75r8sC55vJPkjquhj9yZLT8zTME1YGRTgirOQYtw3vqsTOVswKEO8
-         0BXUMids2SBIufnbWOb5RGW6I9zmtSd6q07rSKHzWKcWX8vGyPh7soUWlCWCoEXrNmjd
-         K+Kj6heggsA/TpxG0G9sevwJEn7OGIk03zT8ZlyQOrg/1AR8MsA+R/8vO4BL6yQ/z8ih
-         xMAA==
-X-Gm-Message-State: AOAM532Sa/VjflL7lKDyUK1DbKonDn4clQrsLwYUIJsGWCvRzQEQHnkK
-        QNxEUOf5k3bKRJRsU2qcS3Po5Q==
-X-Google-Smtp-Source: ABdhPJxdumx8QChUC4wNlRA2hk//MDt1M3tNJWiARcl992IAZ/D8QucGCmYEjmGxyRU6uRxW6Fr3xA==
-X-Received: by 2002:a2e:b0ee:: with SMTP id h14mr11902221ljl.478.1639598274332;
-        Wed, 15 Dec 2021 11:57:54 -0800 (PST)
+        bh=om/HCVC0CxSoU09KzvT/xb3Xt+kGoC0IjivC7aVdsOU=;
+        b=BmD2k9hYpZk1U8pCAfaavUWsmNgVFEJ+2gzEjU6gr80SteUHNayIpRy99n8o1hFvc3
+         EA9azKMCEWICgr3nZDsKZ8/kr2w/mdb6wk/dAQVLi6zcOy75tsmNLQy3keUs5DCsX37+
+         Lize5Q8OZt1w/4jeQcZ+XP/kYWX90HMCVyQebMmIyEua8XhvdD60dD3U+WPCTe3S9zO/
+         TOihe2BYovFnMQcPPWJFQ/CVrZHYIXriB+83+jb1iYhyw4y3lYHMRrYWMKo23Rny1JnY
+         8xI5YSRHcMuXsfL4MwOw9TS5XB3/80OsVXLpbPjmEUuJ87RZbSECITsCP3TT2P/oB31p
+         bhew==
+X-Gm-Message-State: AOAM533Q3NGjtcqayuUfn+U2ewAaPybjzzRwR0sdeiwXoCnNqhlK8S+f
+        XZvLEZaCqENZAXFXE2yg6qU8eg==
+X-Google-Smtp-Source: ABdhPJxKvLhKMJ67E0hXe0d5fyzxvqCglgRRlF00/Qa9W98zBCmYEUfHy4a8/tNcYKNvPFcLR29PMw==
+X-Received: by 2002:ac2:5f0e:: with SMTP id 14mr11833186lfq.625.1639598566321;
+        Wed, 15 Dec 2021 12:02:46 -0800 (PST)
 Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id u17sm468737lfm.279.2021.12.15.11.57.49
+        by smtp.gmail.com with ESMTPSA id e10sm472204lfr.213.2021.12.15.12.02.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Dec 2021 11:57:53 -0800 (PST)
-Message-ID: <e1e7f91c-fcdb-7789-0094-80e2b5b09d4f@linaro.org>
-Date:   Wed, 15 Dec 2021 22:57:48 +0300
+        Wed, 15 Dec 2021 12:02:45 -0800 (PST)
+Message-ID: <69e44191-201f-8714-8a83-1a65a7026b54@linaro.org>
+Date:   Wed, 15 Dec 2021 23:02:37 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.2
-Subject: Re: [PATCH v3 1/2] drm/msm/dsi: Use "ref" fw clock instead of global
- name for VCO parent
+Subject: Re: [PATCH v3 0/2] Use "ref" clocks from firmware for DSI PLL VCO
+ parent
 Content-Language: en-GB
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -68,7 +69,6 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -78,145 +78,56 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+        freedreno@lists.freedesktop.org
 References: <20210911131922.387964-1-marijn.suijten@somainline.org>
- <20210911131922.387964-2-marijn.suijten@somainline.org>
+ <163165584152.763609.4056232270079096475@swboyd.mtv.corp.google.com>
+ <20210918144038.6q352hzqopx7vvdu@SoMainline.org>
+ <20211214194656.mayiy4xhcshjluwf@SoMainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210911131922.387964-2-marijn.suijten@somainline.org>
+In-Reply-To: <20211214194656.mayiy4xhcshjluwf@SoMainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2021 16:19, Marijn Suijten wrote:
-> All DSI PHY/PLL drivers were referencing their VCO parent clock by a
-> global name, most of which don't exist or have been renamed.  These
-> clock drivers seem to function fine without that except the 14nm driver
-> for sdm6xx [1].
+On 14/12/2021 22:46, Marijn Suijten wrote:
+> Hi all,
 > 
-> At the same time all DTs provide a "ref" clock as per the requirements
-> of dsi-phy-common.yaml, but the clock is never used.  This patchset puts
-> that clock to use without relying on a global clock name, so that all
-> dependencies are explicitly defined in DT (the firmware) in the end.
+> On 2021-09-18 16:40:38, Marijn Suijten wrote:
+>> On 2021-09-14 14:44:01, Stephen Boyd wrote:
+>>> Quoting Marijn Suijten (2021-09-11 06:19:19)
+>>>> All DSI PHY/PLL drivers were referencing their VCO parent clock by a
+>>>> global name, most of which don't exist or have been renamed.  These
+>>>> clock drivers seem to function fine without that except the 14nm driver
+>>>> for sdm6xx [1].
+>>>>
+>>>> At the same time all DTs provide a "ref" clock as per the requirements
+>>>> of dsi-phy-common.yaml, but the clock is never used.  This patchset puts
+>>>> that clock to use without relying on a global clock name, so that all
+>>>> dependencies are explicitly defined in DT (the firmware) in the end.
+>>>
+>>> I can take this through clk tree if it helps avoid conflicts. There are
+>>> some other patches to sdm660.c in the clk tree already.
+>>
+>> Might be useful to maintain proper ordering of these dependent patches
+>> but it's up to Dmitry and Rob to decide, whom I'm sending this mail
+>> directly to so that they can chime in.
 > 
-> Note that this patch intentionally breaks older firmware (DT) that
-> relies on the clock to be found globally instead.  The only affected
-> platform is msm8974 [2] for whose dsi_phy_28nm a .name="xo" fallback is
-> left in place to accommodate a more graceful transition period.  All
-> other platforms had the "ref" clock added to their phy node since its
-> inception, or in a followup patch some time after.  These patches
-> wrongly assumed that the "ref" clock was actively used and have hence
-> been listed as "Fixes:" below.
-> Furthermore apq8064 was providing the wrong 19.2MHz cxo instead of
-> 27MHz pxo clock, which has been addressed in [3].
+> Dependent patch [3] landed in 5.15 and [2] made it into 5.16 rc's - is
+> it time to pick this series up and if so through what tree?
+
+I'd also second the idea of merging these two patches into 5.17.
+Most probably it'd be easier to merge both of them through the clk tree. 
+Or we can take the first patch into drm-msm (but then we'd have a 
+dependency between msm-next and clk-qcom-next).
+
+Bjorn, Stephen?
+
 > 
-> It is expected that both [2] and [3] are applied to the tree well in
-> advance of this patch such that any actual breakage is extremely
-> unlikely, but might still occur if kernel upgrades are performed without
-> the DT to match.  After some time the fallback for msm8974 can be
-> removed again as well.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org/
+> Repeating the links from patch 1/2:
 > [2]: https://lore.kernel.org/linux-arm-msm/20210830175739.143401-1-marijn.suijten@somainline.org/
 > [3]: https://lore.kernel.org/linux-arm-msm/20210829203027.276143-2-marijn.suijten@somainline.org/
-> 
-> Fixes: 79e51645a1dd ("arm64: dts: qcom: msm8916: Set 'xo_board' as ref clock of the DSI PHY")
-> Fixes: 6969d1d9c615 ("ARM: dts: qcom-apq8064: Set 'cxo_board' as ref clock of the DSI PHY")
-> Fixes: 0c0e72705a33 ("arm64: dts: sdm845: Set 'bi_tcxo' as ref clock of the DSI PHYs")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 4 +++-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 4 +++-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 4 +++-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 4 +++-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 4 +++-
->   5 files changed, 15 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> index e46b10fc793a..3cbb1f1475e8 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-> @@ -562,7 +562,9 @@ static int pll_10nm_register(struct dsi_pll_10nm *pll_10nm, struct clk_hw **prov
->   	char clk_name[32], parent[32], vco_name[32];
->   	char parent2[32], parent3[32], parent4[32];
->   	struct clk_init_data vco_init = {
-> -		.parent_names = (const char *[]){ "xo" },
-> +		.parent_data = &(const struct clk_parent_data) {
-> +			.fw_name = "ref",
-> +		},
->   		.num_parents = 1,
->   		.name = vco_name,
->   		.flags = CLK_IGNORE_UNUSED,
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> index ebedbb6c8961..789b08c24d25 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> @@ -802,7 +802,9 @@ static int pll_14nm_register(struct dsi_pll_14nm *pll_14nm, struct clk_hw **prov
->   {
->   	char clk_name[32], parent[32], vco_name[32];
->   	struct clk_init_data vco_init = {
-> -		.parent_names = (const char *[]){ "xo" },
-> +		.parent_data = &(const struct clk_parent_data) {
-> +			.fw_name = "ref",
-> +		},
->   		.num_parents = 1,
->   		.name = vco_name,
->   		.flags = CLK_IGNORE_UNUSED,
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> index eb1b8ff61da1..531c4b65aede 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> @@ -521,7 +521,9 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
->   {
->   	char clk_name[32], parent1[32], parent2[32], vco_name[32];
->   	struct clk_init_data vco_init = {
-> -		.parent_names = (const char *[]){ "xo" },
-> +		.parent_data = &(const struct clk_parent_data) {
-> +			.fw_name = "ref", .name = "xo",
-> +		},
->   		.num_parents = 1,
->   		.name = vco_name,
->   		.flags = CLK_IGNORE_UNUSED,
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> index aaa37456f4ee..9662cb236468 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
-> @@ -385,7 +385,9 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
->   {
->   	char *clk_name, *parent_name, *vco_name;
->   	struct clk_init_data vco_init = {
-> -		.parent_names = (const char *[]){ "pxo" },
-> +		.parent_data = &(const struct clk_parent_data) {
-> +			.fw_name = "ref",
-> +		},
->   		.num_parents = 1,
->   		.flags = CLK_IGNORE_UNUSED,
->   		.ops = &clk_ops_dsi_pll_28nm_vco,
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 9eade6d81a54..1a5abbd9fb76 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -588,7 +588,9 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
->   	char clk_name[32], parent[32], vco_name[32];
->   	char parent2[32], parent3[32], parent4[32];
->   	struct clk_init_data vco_init = {
-> -		.parent_names = (const char *[]){ "bi_tcxo" },
-> +		.parent_data = &(const struct clk_parent_data) {
-> +			.fw_name = "ref",
-> +		},
->   		.num_parents = 1,
->   		.name = vco_name,
->   		.flags = CLK_IGNORE_UNUSED,
-> --
-> 2.33.0
-> 
-
-
 -- 
 With best wishes
 Dmitry
