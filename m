@@ -2,228 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D882474EB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 00:46:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CEFB474EED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 01:12:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234396AbhLNXqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 18:46:53 -0500
-Received: from ixit.cz ([94.230.151.217]:55366 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231447AbhLNXqx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 18:46:53 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id D0A952243C;
-        Wed, 15 Dec 2021 00:46:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1639525610;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=oHBpVI1zX0MdWA918+G1nEObZsRGP/0tTmp80DjrlbI=;
-        b=STWLsICsbmo6ZaAsoQCv9VQspc8ZlVlJPlkyADg3Ym0IKu4RM4mJ048ipk/kEI+2xS9thS
-        igrK6iFEHcUdYI3F+RSD8kPDUN9sarK9gaTY+CcSKGQgPNJxDLrUPrZS+e25IOLOE+S5K+
-        zlxKT9T+zPS04hAI4GJNHONHRSJr7FM=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Caleb Connolly <caleb@connolly.tech>,
-        David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: sdm845: rename memory@ nodes to more descriptive names
-Date:   Wed, 15 Dec 2021 00:46:47 +0100
-Message-Id: <20211214234648.23369-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S234660AbhLOAMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 19:12:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230230AbhLOAMi (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Dec 2021 19:12:38 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F55C06173E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 16:12:38 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id k23so30812708lje.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Dec 2021 16:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=zAjAMQVShjcCOaBYyRGNXKWRjBrsW1noh9beLLTMUjc=;
+        b=cAGK2Y7u94l/HgJW5AdpmzrUdVP1cp5+tjGnMGvpBNSMuA75MW5jJF53/tRbNip6UX
+         3Eymtg+5WcTuF6KBM05gm87AezSTEY9QNdjuRUEiXC/bxuirGKFNXvIp/aFfDoFbT8xR
+         vR85cNI//yCA1xHMxNYiP1TKxExx/AdsTORGv6ttnq2IRhj+YdcCDYwQCTCunJRS33fM
+         GJuFrjrktAGa2f4VOOMcI+jconsCcku1/6a4lUxXLjdr57x2hmX4w9PkPUqP32bGoQy8
+         blzgWazw+mYTRV101YvEc8Jc4pEVfYrglxt2f171d5ZT/ujGFNq3ZtiITkojt2zFtJV9
+         +TeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=zAjAMQVShjcCOaBYyRGNXKWRjBrsW1noh9beLLTMUjc=;
+        b=fuGjRVoKXQ7gyQ4Zpf7kTKDG0Gd/Q93h0Ft8HrAYPcFAMhD/lwkBbwzEhv7ZTAQ9IT
+         33u+tI5pOP/JD95G4crZOFmTA6lQ0BtEP1jYQTUoshAPVPzek+wpdTqL53JgFwinylcW
+         NEVuKBcAlZoxs5zehaEGUWx+xYdEBux28/XOZVdQY7MqpTJnCBcAOrl5plFEqlQUinLn
+         rn33fNryQFO4hj8h4S4C6t63ynK46n/5xBn/Whyk9E+EjKuuMRWyYHFElMRxIV5Yu6nj
+         624WVjbpfpja6OyKzOj1l8gU6AkCtmnvENsoQvHPePjLRMSJvE8fTnalWjC71UvKJYzH
+         lW+A==
+X-Gm-Message-State: AOAM532MRaGyik3XpXVaFKVo9Bh08KEqWAdm5KH7OOdqkJQpOJXaOvbJ
+        Mmmjw7UpZ0Unoyl+u8KiqlZdsg==
+X-Google-Smtp-Source: ABdhPJxGjxdHWEJWsOj5EGq6SS5HKquCVaUC/ZfjhceiK9vwnOdy7xxROfSJOSLOlCg8n7ZLwjLnvw==
+X-Received: by 2002:a2e:e1a:: with SMTP id 26mr7758125ljo.199.1639527156576;
+        Tue, 14 Dec 2021 16:12:36 -0800 (PST)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id x25sm40690lfe.69.2021.12.14.16.12.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Dec 2021 16:12:35 -0800 (PST)
+Message-ID: <0750dd24-1e84-6fb7-eb4e-9ab07d05ec62@linaro.org>
+Date:   Wed, 15 Dec 2021 03:12:34 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH 06/11] clk: qcom: camcc-sc7180: use parent_hws instead of
+ parent_data
+Content-Language: en-GB
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20211208175430.1333594-1-dmitry.baryshkov@linaro.org>
+ <20211208175430.1333594-7-dmitry.baryshkov@linaro.org>
+ <20211209081131.8D886C004DD@smtp.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211209081131.8D886C004DD@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pure effort to avoid `make dtbs_check` warnings about memory@ nodes, which
-should have property device_type set to memory.
+On 09/12/2021 11:11, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2021-12-08 09:54:25)
+>> If all parents are specified as clk_hw, we can use parent_hws instead of
+>> parent_data.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+> 
+> Is the code size smaller? Would be nice to add that detail.
 
-Fixes warnings as:
-arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: memory@f5b00000: 'device_type' is a required property
-        From schema: dtschema/schemas/memory.yaml
+The bloat-o-meter reports zero size difference.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  8 ++--
- arch/arm64/boot/dts/qcom/sdm845.dtsi          | 38 +++++++++----------
- 2 files changed, 23 insertions(+), 23 deletions(-)
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 7f42e5315ecb..511ca72f465e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -54,7 +54,7 @@ reserved-memory {
- 		 * it is otherwise possible for an allocation adjacent to the
- 		 * rmtfs_mem region to trigger an XPU violation, causing a crash.
- 		 */
--		rmtfs_lower_guard: memory@f5b00000 {
-+		rmtfs_lower_guard: rmtfs-lower-guard@f5b00000 {
- 			no-map;
- 			reg = <0 0xf5b00000 0 0x1000>;
- 		};
-@@ -63,7 +63,7 @@ rmtfs_lower_guard: memory@f5b00000 {
- 		 * but given the same address every time. Hard code it as this address is
- 		 * where the modem firmware expects it to be.
- 		 */
--		rmtfs_mem: memory@f5b01000 {
-+		rmtfs_mem: rmtfs-mem@f5b01000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0 0xf5b01000 0 0x200000>;
- 			no-map;
-@@ -71,7 +71,7 @@ rmtfs_mem: memory@f5b01000 {
- 			qcom,client-id = <1>;
- 			qcom,vmid = <15>;
- 		};
--		rmtfs_upper_guard: memory@f5d01000 {
-+		rmtfs_upper_guard: rmtfs-upper-guard@f5d01000 {
- 			no-map;
- 			reg = <0 0xf5d01000 0 0x1000>;
- 		};
-@@ -80,7 +80,7 @@ rmtfs_upper_guard: memory@f5d01000 {
- 		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
- 		 * random crashes which are most likely modem related, more testing needed.
- 		 */
--		removed_region: memory@88f00000 {
-+		removed_region: removed-region@88f00000 {
- 			no-map;
- 			reg = <0 0x88f00000 0 0x1c00000>;
- 		};
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 5fac82f026fd..28f7dc5c886a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -79,22 +79,22 @@ reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
- 
--		hyp_mem: memory@85700000 {
-+		hyp_mem: hyp-mem@85700000 {
- 			reg = <0 0x85700000 0 0x600000>;
- 			no-map;
- 		};
- 
--		xbl_mem: memory@85e00000 {
-+		xbl_mem: xbl-mem@85e00000 {
- 			reg = <0 0x85e00000 0 0x100000>;
- 			no-map;
- 		};
- 
--		aop_mem: memory@85fc0000 {
-+		aop_mem: aop-mem@85fc0000 {
- 			reg = <0 0x85fc0000 0 0x20000>;
- 			no-map;
- 		};
- 
--		aop_cmd_db_mem: memory@85fe0000 {
-+		aop_cmd_db_mem: aop-cmd-db-mem@85fe0000 {
- 			compatible = "qcom,cmd-db";
- 			reg = <0x0 0x85fe0000 0 0x20000>;
- 			no-map;
-@@ -107,12 +107,12 @@ smem@86000000 {
- 			hwlocks = <&tcsr_mutex 3>;
- 		};
- 
--		tz_mem: memory@86200000 {
-+		tz_mem: tz@86200000 {
- 			reg = <0 0x86200000 0 0x2d00000>;
- 			no-map;
- 		};
- 
--		rmtfs_mem: memory@88f00000 {
-+		rmtfs_mem: rmtfs@88f00000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0 0x88f00000 0 0x200000>;
- 			no-map;
-@@ -121,67 +121,67 @@ rmtfs_mem: memory@88f00000 {
- 			qcom,vmid = <15>;
- 		};
- 
--		qseecom_mem: memory@8ab00000 {
-+		qseecom_mem: qseecom@8ab00000 {
- 			reg = <0 0x8ab00000 0 0x1400000>;
- 			no-map;
- 		};
- 
--		camera_mem: memory@8bf00000 {
-+		camera_mem: camera-mem@8bf00000 {
- 			reg = <0 0x8bf00000 0 0x500000>;
- 			no-map;
- 		};
- 
--		ipa_fw_mem: memory@8c400000 {
-+		ipa_fw_mem: ipa-fw@8c400000 {
- 			reg = <0 0x8c400000 0 0x10000>;
- 			no-map;
- 		};
- 
--		ipa_gsi_mem: memory@8c410000 {
-+		ipa_gsi_mem: ipa-gsi@8c410000 {
- 			reg = <0 0x8c410000 0 0x5000>;
- 			no-map;
- 		};
- 
--		gpu_mem: memory@8c415000 {
-+		gpu_mem: gpu@8c415000 {
- 			reg = <0 0x8c415000 0 0x2000>;
- 			no-map;
- 		};
- 
--		adsp_mem: memory@8c500000 {
-+		adsp_mem: adsp@8c500000 {
- 			reg = <0 0x8c500000 0 0x1a00000>;
- 			no-map;
- 		};
- 
--		wlan_msa_mem: memory@8df00000 {
-+		wlan_msa_mem: wlan-msa@8df00000 {
- 			reg = <0 0x8df00000 0 0x100000>;
- 			no-map;
- 		};
- 
--		mpss_region: memory@8e000000 {
-+		mpss_region: mpss@8e000000 {
- 			reg = <0 0x8e000000 0 0x7800000>;
- 			no-map;
- 		};
- 
--		venus_mem: memory@95800000 {
-+		venus_mem: venus@95800000 {
- 			reg = <0 0x95800000 0 0x500000>;
- 			no-map;
- 		};
- 
--		cdsp_mem: memory@95d00000 {
-+		cdsp_mem: cdsp@95d00000 {
- 			reg = <0 0x95d00000 0 0x800000>;
- 			no-map;
- 		};
- 
--		mba_region: memory@96500000 {
-+		mba_region: mba@96500000 {
- 			reg = <0 0x96500000 0 0x200000>;
- 			no-map;
- 		};
- 
--		slpi_mem: memory@96700000 {
-+		slpi_mem: slpi@96700000 {
- 			reg = <0 0x96700000 0 0x1400000>;
- 			no-map;
- 		};
- 
--		spss_mem: memory@97b00000 {
-+		spss_mem: spss@97b00000 {
- 			reg = <0 0x97b00000 0 0x100000>;
- 			no-map;
- 		};
+
 -- 
-2.33.0
-
+With best wishes
+Dmitry
