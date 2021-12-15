@@ -2,133 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFC1047559B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 10:57:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 353974755A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 10:58:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241386AbhLOJ4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 04:56:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241365AbhLOJ4k (ORCPT
+        id S241395AbhLOJ6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 04:58:19 -0500
+Received: from mail-4317.proton.ch ([185.70.43.17]:54053 "EHLO
+        mail-4317.proton.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236424AbhLOJ6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 04:56:40 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B31C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 01:56:40 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id m12so32476259ljj.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 01:56:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=p/SKAYMrs/GzMLA7d2JR/TcXPA0mR6BvhD9+t/8AH8Q=;
-        b=itc9kjxlMhXQBPC8jrx+gv6j8zRYhwg2VuUiLV+Bh3vupyXh/O008OW493tQET3jDX
-         lj0kUSadknD5LkmknTU/rzElj13rvPstPnaOUK8U5FJdurdlyq4c32SxhxkuoxPANLhn
-         tzvU5Gqc06jrqOlltJSAjHToVRt0fB7iwVHgK0yaoUveO30kbcL/265rmut737K1h0v3
-         3Ljk9KPQhVOmTMafnSkuZ3LR/SQ6/DD2U/xC5xFYC2BuU7M476J3JrDMUnCy6PWkHXdd
-         5nqusR+mSaIGEyE+x+8r3y1ypsEpPyYei99WfRjiCdCHGRpLVMKg1vZ21vWpiS3iS+bu
-         sRDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=p/SKAYMrs/GzMLA7d2JR/TcXPA0mR6BvhD9+t/8AH8Q=;
-        b=tkBds+qHS+qJg1OQvK3BRabVXlzU3KyaHLVcHLQmsDiKeHIktGkCOCzMvVoi5zd5HH
-         Fs+LuDvvVV38dicJ0muVe8pxsroKDxFlDjXYwCUM56KN4QF1bGY3F4QFuzWT6Zxge2PF
-         /bIaU2hW5ZTwwygrrNi55s0Xnkie0dagT/FmDkaqBFZ985AmbOII1EOBiW9RnzKwfSzm
-         gJimBJYHXR5TAfc++B8d9us2XA8kuOi6zOjppW73ZVmDfrShnmgnV5TodntZpp/KD7QE
-         49DTxmhja1KejB5Qb/KdJTC++yKcpap4j52FrOMr3odoXFBjSoDAXjdWdphawsxy4Pdw
-         4SWw==
-X-Gm-Message-State: AOAM5308u2AsjjdLOj6qXKvSgFw8OlhvMwuKLQu5BFn/9rZ6df7UOI/r
-        TyFMlFu28xozuv2p+pmnqccNnQlvdTi/YOBW
-X-Google-Smtp-Source: ABdhPJzVOkMT9FzjByx/A3OwyLhbgyfAKWE2Jhkkebxkaa5n5h/HbOL+R3t7S+OrpxFG14Y2a6RRgg==
-X-Received: by 2002:a2e:9510:: with SMTP id f16mr9592237ljh.409.1639562198497;
-        Wed, 15 Dec 2021 01:56:38 -0800 (PST)
-Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id j20sm242085lfu.84.2021.12.15.01.56.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 01:56:38 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Wed, 15 Dec 2021 04:58:18 -0500
+Date:   Wed, 15 Dec 2021 09:58:16 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
+        s=protonmail; t=1639562296;
+        bh=y61HC4/CbZjjotOesALb2CPVggqpksT55ESKDuNtL9w=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc;
+        b=L2J2hPBpN7mSEZ7HQ1d5F6Jb61PWa6GyMdyvkWFgTkGu6uqFjZYDQFEeSv0Xtrxhc
+         IUbQ1sWRz+a6wOR3jD6J9hdX/7NfIMDXEgOfrrxNDix+/ryBsSPA0TtrJx3WPqH/yY
+         wnEEEWGyF6/JH23WuttQnjokKMcTegLbd/qj9ot1yk+cveGf372IADtq9xp1LFhkpE
+         QdZnOu7AqdEg+9LU6R4+twkH98KDilFQMLybBPbCu9Sw5f1MqWAPV6iXHulLOM9A6E
+         G7N+5DonAuPcJ58vmTZK9eLfvHr590Qk2QpcKTn3puVrsaYEp9yRE79/R9Z4W9kbVY
+         5ScX6wVA/+IRQ==
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From:   Simon Ser <contact@emersion.fr>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
         Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] drm/plane: add alpha and blend_mode to atomic_print_state
-Date:   Wed, 15 Dec 2021 12:56:36 +0300
-Message-Id: <20211215095636.2330563-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Reply-To: Simon Ser <contact@emersion.fr>
+Subject: Re: [PATCH] drm/plane: add alpha and blend_mode to atomic_print_state
+Message-ID: <NJH25z_TKgSybtTGJaa2Q4wbYBwO3q2l_MDS0YXy39faQ8F6PNg6NuEKqX2jlKiZhKkN76M_kc9UqQCQijtIeC_41J5I1nYVzmrT7m27KLs=@emersion.fr>
+In-Reply-To: <20211215095636.2330563-1-dmitry.baryshkov@linaro.org>
+References: <20211215095636.2330563-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When dumping plane state also output plane's alpha and blending mode
-values to ease debugging of complex composition cases.
+On Wednesday, December 15th, 2021 at 10:56, Dmitry Baryshkov <dmitry.barysh=
+kov@linaro.org> wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/drm_atomic.c        |  3 +++
- drivers/gpu/drm/drm_blend.c         | 21 +++++++++++++++++++++
- drivers/gpu/drm/drm_crtc_internal.h |  3 +++
- 3 files changed, 27 insertions(+)
+> +=09drm_printf(p, "\talpha=3D%x\n", state->alpha);
 
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index ff1416cd609a..e2e715b5aaa8 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -709,6 +709,9 @@ static void drm_atomic_plane_print_state(struct drm_printer *p,
- 		   drm_get_color_encoding_name(state->color_encoding));
- 	drm_printf(p, "\tcolor-range=%s\n",
- 		   drm_get_color_range_name(state->color_range));
-+	drm_printf(p, "\talpha=%x\n", state->alpha);
-+	drm_printf(p, "\tblend_mode=%s\n",
-+		   drm_get_pixel_blend_mode_name(state->pixel_blend_mode));
- 
- 	if (plane->funcs->atomic_print_state)
- 		plane->funcs->atomic_print_state(p, state);
-diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
-index ec37cbfabb50..e3971758ec53 100644
---- a/drivers/gpu/drm/drm_blend.c
-+++ b/drivers/gpu/drm/drm_blend.c
-@@ -616,3 +616,24 @@ int drm_plane_create_blend_mode_property(struct drm_plane *plane,
- 	return 0;
- }
- EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
-+
-+static const char * const pixel_blend_mode_name[] = {
-+	[DRM_MODE_BLEND_PIXEL_NONE] = "None",
-+	[DRM_MODE_BLEND_PREMULTI] = "Pre-multiplied",
-+	[DRM_MODE_BLEND_COVERAGE] = "Coverage",
-+};
-+
-+/**
-+ * drm_get_pixel_blend_mode_name - return a string for color encoding
-+ * @encoding: color encoding to compute name of
-+ *
-+ * In contrast to the other drm_get_*_name functions this one here returns a
-+ * const pointer and hence is threadsafe.
-+ */
-+const char *drm_get_pixel_blend_mode_name(uint16_t blend_mode)
-+{
-+	if (WARN_ON(blend_mode >= ARRAY_SIZE(pixel_blend_mode_name)))
-+		return "unknown";
-+
-+	return pixel_blend_mode_name[blend_mode];
-+}
-diff --git a/drivers/gpu/drm/drm_crtc_internal.h b/drivers/gpu/drm/drm_crtc_internal.h
-index 63279e984342..0794307191cf 100644
---- a/drivers/gpu/drm/drm_crtc_internal.h
-+++ b/drivers/gpu/drm/drm_crtc_internal.h
-@@ -289,3 +289,6 @@ void drm_mode_fixup_1366x768(struct drm_display_mode *mode);
- void drm_reset_display_info(struct drm_connector *connector);
- u32 drm_add_display_info(struct drm_connector *connector, const struct edid *edid);
- void drm_update_tile_info(struct drm_connector *connector, const struct edid *edid);
-+
-+/* drm_blend.c */
-+const char *drm_get_pixel_blend_mode_name(uint16_t blend_mode);
--- 
-2.33.0
-
+Maybe use %04X here to make it clearer that 0xFFFF is the max?
