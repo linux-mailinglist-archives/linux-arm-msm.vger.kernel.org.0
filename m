@@ -2,77 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66CAE475245
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 06:48:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49BA74753C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 08:36:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239912AbhLOFsc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 00:48:32 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:58795 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233488AbhLOFsb (ORCPT
+        id S240605AbhLOHg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 02:36:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40340 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232083AbhLOHg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 00:48:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639547312; x=1671083312;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=KDoIk0DbDB7uOCFnMskiFXS0WSSem0vlI14LSf5zEeo=;
-  b=O3OyrUzP3CjKxSJqPhZB1Qh4lnQIk9/jRNsaJU4LN5RJ5QhR2w2oxQTg
-   sYea92Fx0qhAkpdLhYgG0/nuYGGCvlDhgyyAO12gfwga8ufKvTeYqsqCD
-   KLjhk40eIZLrQ6faefBgMMNEE0GoJWfVlcl4c+QKv3ZpFstNk2T7ABnn7
-   I=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 14 Dec 2021 21:48:31 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2021 21:48:31 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 14 Dec 2021 21:48:30 -0800
-Received: from [10.216.21.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 14 Dec
- 2021 21:48:26 -0800
-Subject: Re: [PATCH v2] arm64: qcom: sc7280: Move USB2 controller nodes from
- common dtsi to SKU1
-To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>
-References: <1638422248-24221-1-git-send-email-quic_c_sanm@quicinc.com>
- <CAE-0n51S7gPnkgL40Lqj-8dgZ-jjfCmNGtnUDgqJ_Kw5dzc_sg@mail.gmail.com>
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Message-ID: <e605c057-a7a4-657a-06ee-f872e13e116e@quicinc.com>
-Date:   Wed, 15 Dec 2021 11:18:23 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Wed, 15 Dec 2021 02:36:28 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34A7C061574;
+        Tue, 14 Dec 2021 23:36:28 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 340F76182A;
+        Wed, 15 Dec 2021 07:36:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800E9C34600;
+        Wed, 15 Dec 2021 07:36:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639553787;
+        bh=DJ2GHnN3+A6IaBsHIRn0E837VrFieLJ7mGwRff2GO5U=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=K42zGEXQtbBUT2bBp6+lbHjYkNzFd6JkJbMuJ91E+Nz7cRsIzzkvNgi6kSRaeoVXA
+         kb6lglDpOdMVGikSLoyotjYyH3ieyB3VUCeABR/exa+uMUJ1+8q43SLUwrQkByNEab
+         +HJziIRWI19gF3NTBajou068WHrZujke73cH96PHZlyRksrZvXmC3gT4HCHNTenVFe
+         q68NCbL0sWxBa5+fxMnYVjam9VBfI8oRv+HA7k3vgpYsHilxdEL4breAyJIypCHtfJ
+         7ZNf1jeAKp84iCIAnCtHx/o9+L3E55fuQ77GWx1vVgeYaJJ2YJInBKfb+O3L6wSOtY
+         lFz9CBLy42htg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51S7gPnkgL40Lqj-8dgZ-jjfCmNGtnUDgqJ_Kw5dzc_sg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YbTqPfs7026l6LFE@builder.lan>
+References: <20211207114003.100693-1-vkoul@kernel.org> <20211207114003.100693-3-vkoul@kernel.org> <20211209082537.1AF6CC341C8@smtp.kernel.org> <YbTqPfs7026l6LFE@builder.lan>
+Subject: Re: [PATCH v2 2/2] clk: qcom: Add clock driver for SM8450
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Tue, 14 Dec 2021 23:36:26 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20211215073627.800E9C34600@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Quoting Bjorn Andersson (2021-12-11 10:13:17)
+> On Thu 09 Dec 02:25 CST 2021, Stephen Boyd wrote:
+>=20
+> > Maybe you want to drop these strings and use the dt index directly? That
+> > may actually be faster because we don't do as many string comparisons
+> > and the code may be smaller if we don't have to store bi_tcxo. I suppose
+> > to make it more readable we could have #defines for each DT index like
+> >=20
+> >  #define DT_BI_TCXO   0
+> >  #define DT_SLEEP_CLK 1
+> >=20
+> > Blaze a new trail!
+> >=20
+>=20
+> I like the idea, and iiuc it's just a matter of replacing .fw_name with
+> .index?
 
-On 12/3/2021 4:22 AM, Stephen Boyd wrote:
-> Quoting Sandeep Maheswaram (2021-12-01 21:17:28)
->> Move USB2 controller and phy nodes from common dtsi file as it is
->> required only for SKU1 board and change the mode to host mode as
->> it will be used in host mode for SKU1.
->>
->> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->> ---
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Can you merge this change in qcom tree?
+Yes.
+
+>=20
+> I am however worried that people will get the order wrong as they are
+> hacking on their dts/drivers, because (at least in my view) the order of
+> clocks & clock-names has been seen as "a dt binding requirement" up
+> until such change. But if we replace the names with indices such enum
+> would have to be kept in sync with the DT binding and there's no way to
+> validate it.
+
+That's lame, but I see your point. The order is definitely part of the
+binding but I'm not sure what we can do about folks deciding to reorder
+the clocks property. The checker has a blind spot here.
+
+>=20
+> If we do this we should force the driver and dts-writers to rely on the
+> binding document by omitting clock-names from the binding (and hence
+> dts). Otherwise people will (I will) assume that the clock-names are
+> still what matters...
+>=20
+
+I guess so. It still leaves everything exposed to the clocks property
+getting jumbled and then everything falling apart. Sigh.
+
+I'm not sure how much worse this is than today where the clock-names
+property could be wrong and doesn't match the order of the clocks
+property. We don't catch that either with the checker, so it's about the
+same risk from my perspective. Why not take the risk and save on image
+size?
