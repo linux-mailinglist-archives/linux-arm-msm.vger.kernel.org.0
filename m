@@ -2,84 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30F53476620
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 23:45:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B99E476672
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 00:24:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbhLOWpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 17:45:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54246 "EHLO
+        id S231951AbhLOXYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 18:24:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbhLOWo5 (ORCPT
+        with ESMTP id S231939AbhLOXYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 17:44:57 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC626C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:44:56 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id w15-20020a4a354f000000b002d85ef0533dso1689684oog.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:44:56 -0800 (PST)
+        Wed, 15 Dec 2021 18:24:49 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF18C06173F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 15:24:49 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id r5so21398227pgi.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 15:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=m7eXdYQSfHOMEV4rFRIDaD0pSvXJQjL3uNKMI5fpepU=;
-        b=KfMsZOgt7Y6Z3amFQl5cblfkWJ9BsLsgs6F59tO+WP9r1E/SX0knZhjqFEqY8rza2P
-         WYaqNWKLj61f+icTxKSItTfiEcGhGL4m+W2Yi09RtgSxrtNX7KtLu01F4z1IntRF7qsm
-         lQjR6AQYSMKlKJfiXDsJo6JrjaeVAd/hoG6tZlashgwMkqt40yKv5Sz9gD2CU0llzPp4
-         kA3QvEcn5npPgXOuYmee1ZppIpt19TtD1J+vMFHj0dy6V5cZgRyemvXSAhVlUD/RwHzi
-         tqKqk/a4FCRTDiGZ9WplIyq7PNEI2SU5ewboAybDUKqS2BZ5LSwA49Epo+zjkgNbOBrY
-         TE2A==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+wKtXeTQxQFOQCh8iyar/PDd0xAj+8Ua39SmoAmPwN0=;
+        b=e93vtoDwd7onN/Fo3H65oql7xosjLseC1YGapBrQmDK8jys1N9X2tePXxtX6QEq0nI
+         iDk6bk2DjcbExvPfmz/6+6BGWestI5jcC4InWhbLSXwwL53ZzItr2OyIyb7zESJ1u4Uq
+         Uria1ieOHKqTNLG4TJ8pf/MQSl/1RONlDvHVw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=m7eXdYQSfHOMEV4rFRIDaD0pSvXJQjL3uNKMI5fpepU=;
-        b=cpaGcLZ+rQ3FiLMDHx9TRpJfaNdTWRJqjP0vIHylZHSvOijy6mpa5XboDmsSbZRxAZ
-         nxvA3uDUhkq4ryEOfeevFWYOK49N4h9Rihq9M0tjkN9HikIG90sc4S9v8b3EsqEuNh1f
-         agsGsQKgarWy8dkYMn5TCV+a/0W/C7t9MGVYqODKGqrYRHwsp/nMSxrJ0gx/5GNTL9Xy
-         QRpe6vlk3wGRgJ2RMZGOroXTIrDR6lTegUZ/2o7CW7TM4f72zK/D1zuo6Gw4d5kQqEw2
-         kjHSwTEsic0/VPbv8ItpIm75MBUCtLQg8p6LKKQIMzRsHcdfrMeUnMookNJAmU+Aj0dU
-         je9g==
-X-Gm-Message-State: AOAM5338+KkrXBeG2ZUmJjCMqJqN/J4i4m4EhaWlGoWh0HsHqzu/vZA/
-        PHx0OlCKHdqRFpvopEQCM9mvgrQr4CvUCw==
-X-Google-Smtp-Source: ABdhPJwvuPMPfn2q5FP6SmmHtIMpypDWQyCMWMOoQqkrQwLhZNM4sZYqSqMw/ItoXQoAbeA14nUTcA==
-X-Received: by 2002:a4a:cf12:: with SMTP id l18mr9110518oos.25.1639608296178;
-        Wed, 15 Dec 2021 14:44:56 -0800 (PST)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bf17sm624189oib.27.2021.12.15.14.44.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+wKtXeTQxQFOQCh8iyar/PDd0xAj+8Ua39SmoAmPwN0=;
+        b=ggP41V6vPbM1gKlhelNzYzhZyg5qgU0U9uEmuABzVAGP5TrQcmMAGR+yoMvMWGnx5W
+         rjq1hnPE6ZxI083m9L8vlGvT/FRSGigzxqHss6H2NarLshvR/kluEIwzKtJ/LNPdeEgW
+         6iCRNqkoPNQoGyNpX8zqBdOxpcMK5oB5bNbuKbPhQFz+tI81Ae7rtPzLd9zyhu99ImXr
+         MBTn5asjxW0cTsmXVyOHBcwJhIg4Bi3STcslcqLl9jHESWlubdR9nov72EhJxrBiettB
+         TbxIGXxwic+q7gciPkR5BtO818KVQIC3oQ5ljLPCxatuVOPOvnMIrGiR2clbgIab7ueh
+         nLsQ==
+X-Gm-Message-State: AOAM530tH5O3sb6vIpUToFsx3Pcs+Ib1Uc4/NEkEIJ6PKNNczHR376Gc
+        euKARJG/5LPpBQfLGsO7Qaz08g==
+X-Google-Smtp-Source: ABdhPJzPaE3TIAcoa2YxlOC2PEjMxZUiaqVdjcPVu4fLhU5i65rsqtA1qnZU6a6ixNYs/HcqJpfTSw==
+X-Received: by 2002:aa7:9990:0:b0:4a1:57ff:3369 with SMTP id k16-20020aa79990000000b004a157ff3369mr11043448pfh.31.1639610688626;
+        Wed, 15 Dec 2021 15:24:48 -0800 (PST)
+Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
+        by smtp.gmail.com with ESMTPSA id c17sm3819536pfc.163.2021.12.15.15.24.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 14:44:55 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom: Don't memcpy_toio more than is provided
-Date:   Wed, 15 Dec 2021 16:44:49 -0600
-Message-Id: <163960827806.3071514.11059170619331104073.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211117065454.4142936-1-swboyd@chromium.org>
-References: <20211117065454.4142936-1-swboyd@chromium.org>
+        Wed, 15 Dec 2021 15:24:48 -0800 (PST)
+From:   Kees Cook <keescook@chromium.org>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <quic_bbhatt@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Yury Norov <yury.norov@gmail.com>,
+        Carl Huang <cjhuang@codeaurora.org>,
+        Carl Yin <carl.yin@quectel.com>, linux-kernel@vger.kernel.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-hardening@vger.kernel.org
+Subject: [PATCH] bus: mhi: core: Use correctly sized arguments for bit field
+Date:   Wed, 15 Dec 2021 15:24:46 -0800
+Message-Id: <20211215232446.2069794-1-keescook@chromium.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2373; h=from:subject; bh=5LBWuQcow5y4kUPEfLAt34GEYiaqhrm63wbxhk+W1ig=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhunk+I6cQX+iJm8LamClVJjxV5guF1cKeTHIPdL2O qM1yHtyJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYbp5PgAKCRCJcvTf3G3AJsjfD/ 9q5kWvVOIY0URvI4tj+mBje1t9tKvfuWMgGjtOXSEkCwt9eJuF6pjzV0I4cbdUmSgim7Nmqpyw8Pg0 2GqtVDK+rttKDmj3c7nA/bBDK89QLy2ddXtThguHJmEyyQyDBEtDXF921DwPMSO3WcIsfDdO3OhPIH Lu1Q6KPnBCnR4x7JE3/S26qSrLxFWuAt/rx2dGkNSF9TwCfeNB/sjxEJgA3cgdHrTtf/nna6jq1iDo r/DFhSPVhPJvVZF090UyNXl9D/cjecCHFnry7rfYNIh4J3jsiLwuEuyhp0vWvTE3BtVErokZyPuNpC 1mLoIfEmURAaIpIgixc+CBWHerMTijTuuC74n03XRWGFweixnFUXHD1Q6+CWubPkImDvRgfz29CwyR yBGzlF6HGzStLuGjoijkx8NBFB6TrRkwDFAWF5B0zw5qp3UrY+tSNO/YblwCNDvTq0462OfdG9cmVO pddc24rF+fnPL2/w9oTILc2Zri0z/gG5INmovaxelLQZXicWKq+xqPzW1tRtxhjEcIGaiLfRI0dZiO DK4/dMZ6bkYZ5RTeVJXNq0Gss3mT0AAXx14TKmm5JxoKuF4ZimvKbUTZ6n6ThtW6ak4tp4lC5EpzI6 FJrzw3xgxM7vAvncRiuDTMExcJ67HX5QgLfa35S+FkRjeRs5PI3Ev81oCCoA==
+X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 Nov 2021 22:54:54 -0800, Stephen Boyd wrote:
-> If the string passed into qcom_pil_info_store() isn't as long as
-> PIL_RELOC_NAME_LEN we'll try to copy the string assuming the length is
-> PIL_RELOC_NAME_LEN to the io space and go beyond the bounds of the
-> string. Let's only copy as many byes as the string is long, ignoring the
-> NUL terminator.
-> 
-> This fixes the following KASAN error:
-> 
-> [...]
+The find.h APIs are designed to be used only on unsigned long arguments.
+This can technically result in a over-read, but it is harmless in this
+case. Regardless, fix it to avoid the warning seen under -Warray-bounds,
+which we'd like to enable globally:
 
-Applied, thanks!
+In file included from ./include/linux/bitmap.h:9,
+                 from ./include/linux/cpumask.h:12,
+                 from ./arch/x86/include/asm/cpumask.h:5,
+                 from ./arch/x86/include/asm/msr.h:11,
+                 from ./arch/x86/include/asm/processor.h:22,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:60,
+                 from ./arch/x86/include/asm/preempt.h:7,
+                 from ./include/linux/preempt.h:78,
+                 from ./include/linux/spinlock.h:55,
+                 from ./include/linux/wait.h:9,
+                 from ./include/linux/wait_bit.h:8,
+                 from ./include/linux/fs.h:6,
+                 from ./include/linux/debugfs.h:15,
+                 from drivers/bus/mhi/core/init.c:7:
+drivers/bus/mhi/core/init.c: In function 'to_mhi_pm_state_str':
+./include/linux/find.h:187:37: warning: array subscript 'long unsigned int[0]' is partly outside array bounds of 'enum mhi_pm_state[1]' [-Warray-bounds]
+  187 |                 unsigned long val = *addr & GENMASK(size - 1, 0);
+      |                                     ^~~~~
+drivers/bus/mhi/core/init.c:80:51: note: while referencing 'state'
+   80 | const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+      |                                 ~~~~~~~~~~~~~~~~~~^~~~~
 
-[1/1] remoteproc: qcom: Don't memcpy_toio more than is provided
-      commit: fdc12231d885119cc2e2b4f3e0fbba3155f37a56
+Signed-off-by: Kees Cook <keescook@chromium.org>
+---
+ drivers/bus/mhi/core/init.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Best regards,
+diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+index f1ec34417592..b91f75fff962 100644
+--- a/drivers/bus/mhi/core/init.c
++++ b/drivers/bus/mhi/core/init.c
+@@ -79,7 +79,8 @@ static const char * const mhi_pm_state_str[] = {
+ 
+ const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+ {
+-	int index = find_last_bit((unsigned long *)&state, 32);
++	unsigned long bits = state;
++	int index = find_last_bit(&bits, 32);
+ 
+ 	if (index >= ARRAY_SIZE(mhi_pm_state_str))
+ 		return "Invalid State";
 -- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+2.30.2
+
