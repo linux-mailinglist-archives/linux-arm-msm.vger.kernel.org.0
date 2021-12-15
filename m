@@ -2,65 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F41CA475192
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 05:04:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 674F44751A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 05:34:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239691AbhLOEEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Dec 2021 23:04:51 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:52050 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235674AbhLOEEu (ORCPT
+        id S236539AbhLOEez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Dec 2021 23:34:55 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:51400 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236512AbhLOEez (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Dec 2021 23:04:50 -0500
+        Tue, 14 Dec 2021 23:34:55 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 65F63B81D4C;
-        Wed, 15 Dec 2021 04:04:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E8AC34603;
-        Wed, 15 Dec 2021 04:04:46 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C2B7617D6;
+        Wed, 15 Dec 2021 04:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32055C34600;
+        Wed, 15 Dec 2021 04:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639541088;
-        bh=OFQiIOJbDDB0jieVQbMNdFCClUHvhKr3mYLSoThmrow=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kIT9p5f4zAijGCEl4xxozDdr36MCMdYx1k0D/h+BY9NZt2BEcNdqGOVpAolFbjdHI
-         +xoFWVoUN+6fi3gvy+vThBoHDMM00JNZjHqwQrjKq0bP9FHCRsxIER80WCXNYMhGSt
-         MjqICTCMLXyZjuWPyVlGHKYQiwIrizs250N9BUAdyg9yPHV29CoG/rCqiC4b9La1iA
-         oa8uJhcNnYmcbUBBBNq4aksmCRakqrdbwZa6foT6b5rlMZbQtrDCce4WtNE9LLxdkM
-         wgfKtUl+RJ6Z3oF+RCaLk4E3xOpZdIn+BtoWepLUeFYiDRpg1FMrx3IW5yjQZD8sce
-         nL5L3bDu9ZuOw==
-Date:   Wed, 15 Dec 2021 09:34:44 +0530
+        s=k20201202; t=1639542893;
+        bh=undEf/ZeWMt+6rCXPdfTccv22XIYHhICTWGax4E81Gg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=iPbk7iLwqmxBAIn+/mAdDuaa1s9N813ZnSre/3zDmw4YR+PSyBIuWFybAKb11xlVF
+         UJg/EfKk6c8+IRTu3aZmxMbxMfsK66cfP/gwGPHE7SssCzlQbdbGKcjQr9nG/oCveQ
+         baQSAE5P3KVYlI8rqVfv7NwroFOmiR5jzJvsxAut6xRNqf2zky36Es8CbqQeVEeSYC
+         neIQPAnk8ofIWiGFfsGO87wP7vk2eoytB49Zz/hjrWYW7ZFMSYma9lsSVBfz4tLz8/
+         PF4tAG89nNFrjHWTh8aqiAbxHAo1ZFvjcocBhKVs43AvIWgXBAVzY3JMaPYCfIRgiV
+         ODPpeBmGQjkEg==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sdm845: mtp: Add vadc channels
- and thermal zones
-Message-ID: <YblpXLf1nFnDoAhT@matsya>
-References: <20211005032531.2251928-1-bjorn.andersson@linaro.org>
- <20211005032531.2251928-5-bjorn.andersson@linaro.org>
+Subject: [PATCH v3 00/11] arm64: dts: qcom: Add support for SM8450 SoC and
+Date:   Wed, 15 Dec 2021 10:04:29 +0530
+Message-Id: <20211215043440.605624-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211005032531.2251928-5-bjorn.andersson@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04-10-21, 20:25, Bjorn Andersson wrote:
-> Downstream defines four ADC channels related to thermal sensors external
-> to the PM8998 and two channels for internal voltage measurements.
-> 
-> Add these to the upstream SDM845 MTP, describe the thermal monitor
-> channels and add thermal_zones for these.
+Snapdragon 8 Gen 1 Mobile Platform [1] (SM8450) is the latest Qualcomm SoC
+announced today.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+This series adds the DTS support including clocks, tlmm, smmu, regulators,
+ufs, interconnects, pmics and cpufreq found in the SM8450 QRD board.
+
+[1]: https://www.qualcomm.com/products/snapdragon-8-gen-1-mobile-platform
+
+Changes in v3:
+ - drop spmi and icc patches
+ - add the tags recieved
+
+Changes in v2:
+ - add the acks recieved
+ - move gpio header include to soc dts
+ - fix the uart node name
+ - rework pinctrol nodes
+ - drop cpu clusters
+ - fix consistency in nodes for reserved mem and icc
+ - Squash some patches into qrd dts patches
+
+Dmitry Baryshkov (2):
+  arm64: dts: qcom: sm8450: Add rpmhpd node
+  arm64: dts: qcom: sm8450: add i2c13 and i2c14 device nodes
+
+Vinod Koul (8):
+  arm64: dts: qcom: Add base SM8450 DTSI
+  arm64: dts: qcom: sm8450: Add tlmm nodes
+  arm64: dts: qcom: sm8450: Add reserved memory nodes
+  arm64: dts: qcom: sm8450: add smmu nodes
+  arm64: dts: qcom: Add base SM8450 QRD DTS
+  arm64: dts: qcom: sm8450-qrd: Add rpmh regulator nodes
+  arm64: dts: qcom: sm8450: add ufs nodes
+  arm64: dts: qcom: sm8450-qrd: enable ufs nodes
+
+Vladimir Zapolskiy (1):
+  arm64: dts: qcom: sm8450: add cpufreq support
+
+ arch/arm64/boot/dts/qcom/Makefile       |    1 +
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts |  375 +++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 1026 +++++++++++++++++++++++
+ 3 files changed, 1402 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450-qrd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8450.dtsi
 
 -- 
-~Vinod
+2.31.1
+
