@@ -2,185 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E97C475FCD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 18:49:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 46005476001
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 18:57:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238264AbhLORtg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 12:49:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41834 "EHLO
+        id S245275AbhLOR5a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 12:57:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238305AbhLORtf (ORCPT
+        with ESMTP id S239020AbhLOR53 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 12:49:35 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46070C061401;
-        Wed, 15 Dec 2021 09:49:35 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id co15so1617800pjb.2;
-        Wed, 15 Dec 2021 09:49:35 -0800 (PST)
+        Wed, 15 Dec 2021 12:57:29 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D35CC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 09:57:29 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id z8so34506052ljz.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 09:57:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EcfVA2uBNe/X9h6wuhZ5EuU1xWQlNWZCg+pNTH+2meY=;
-        b=kIp4kYBkdDDru9e4HJrZZx1Mqq/lPJBOIQxaWAsqiDdm5RVCVoj8s/WNVOAt2apkEx
-         ehoLvfo0+fBHvEsFhC0tCoKyHUtmWXT/Ecsn1nSwftN1qUFJmUuEAQZ1jKtM3Xd3WTwa
-         cnM8BMDTbbYcRQt61uaFQrp/TA68fpZv5INyMdhWf5322Jf/2TfxfXaTvCdmk4gU0Jpv
-         ljXrNLt8ooqMdRZS95G+BM7KKfsmaGofA29Yl+FKKidVMQNBD7a7NtwUD1ePxcgFqOm2
-         0EHLFM7xvi/1la+RR5HsxUEyIY+XvK32s/BtNI7ijOH5ufs2fpUvG8OntcmSw9UURLuy
-         V9iQ==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xqTgrfsM1Vl0EOy6LcbfVMGCUhLcoIpzVU6zweaZnhw=;
+        b=QU3FCUjTver8CpcxKcyd8sacnworCFUizlIDrr1u0CyCKO6Ikf/qlTt/kCpXx8dLq9
+         ocqpWQBVQQG5ZT2wTkrj+bdpeEARv13nNWGg35tCmZz548xUbqP1dekQizZ+benudmHy
+         mmQ7vrmNo7qLGqEJlqUldXNA4+Ru1V+sP87zvv5h7pQxiKLKz+nZRqwlP/XkqFWIgOPi
+         dHV6bQnVJFlGiTgsOhB5KGgOEdAUvTFnV2HoJzE6xVnPzDtTcepyKkKiWhlawEpuqy0I
+         IPYQfLgb1hu8ZtcO20Tnvw8hDCpvriUwEh0K75WPkbSAhTb5cTsbwHmZuE908de3YLc8
+         hMMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EcfVA2uBNe/X9h6wuhZ5EuU1xWQlNWZCg+pNTH+2meY=;
-        b=61sE/vDM7tLLIN7OgCdzin72QdH6NR+gcQSy3T9pXUF5Ka8A1lBWAYhXBeAUbse5R6
-         wHo/UO9v0az2Ni3NY+Zn+o3YIzyYdE5iE4vtQPbug+xXOCKsgOIVq7JUCAiZ/TtW0iA5
-         gJyXyJvx2TX76JEHgRqIPEiJm2b6c+ssRCMo4DvPYB+voKnf4JLkc0gdJaIVOuRnUF/N
-         BNXN+KpfDtMO62EnI2JNarYHPYJnW7gemKpx9UMummiRpGFaq6LLmeOPC27gp/tkbC9S
-         xgvPwzc76JKpo28s/GrzuzKZ63SuzK758cgoDbytoB/h4JKu9pN64u14kegwpGWWxZtI
-         W8dg==
-X-Gm-Message-State: AOAM530izj2Xng7VgGa3a5OASxBGPgi8YjIiY8l26iiwNM2hgPM47Ovd
-        EkxlSDSMB1PAfL4SjzNlU5E=
-X-Google-Smtp-Source: ABdhPJx1Bx8yaUPuKlzM1Tz2ZDpWlyHvRiqC3BiqYmeoSCToMSDaurYg6b8JjJUEdJA2daCWrJD6wQ==
-X-Received: by 2002:a17:902:e54d:b0:148:a2e8:278a with SMTP id n13-20020a170902e54d00b00148a2e8278amr5386218plf.145.1639590574740;
-        Wed, 15 Dec 2021 09:49:34 -0800 (PST)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id n3sm2976279pgc.76.2021.12.15.09.49.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 09:49:33 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/3] drm/msm/debugfs: Add display/kms state snapshot
-Date:   Wed, 15 Dec 2021 09:45:08 -0800
-Message-Id: <20211215174524.1742389-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211215174524.1742389-1-robdclark@gmail.com>
-References: <20211215174524.1742389-1-robdclark@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xqTgrfsM1Vl0EOy6LcbfVMGCUhLcoIpzVU6zweaZnhw=;
+        b=Dmm+Ma/Cd3tmlTED45IOSOyntHJkkBlWD88ascVUSIkrj+fIamSNy0WD5zWYxrh1Xk
+         dib5Hr8OIo8PsYYkXCk6afmOgtXZLu3FL1/X6fFMxBRmhCOyqt15hEqnKPS5PcOaPIA+
+         GohVez9smqW4eH1XvvFNJjtbzqn8pJLC0MhWDDp97E61wzcDNIsRUKI65Y0W2BCfsA1D
+         Mii3h1uUXTTh1Zgxz4przmh14pCFc3UYBLX+Mt/739oODyrl7y0O60NXhQ0brbL7DCjj
+         /sN586Rf0SkiHLlZVyPq8p736BseoaAOpM7tOweNXwCxrGubuoDrVdPWv4PPjVR3zT8S
+         ikDg==
+X-Gm-Message-State: AOAM533UDi4j3VcO6OuHWTPcGWl47wCGgfwWpX99dpeMTP5tp+XCyomq
+        xL7xoy6Nd1IzC8lqsRgLFIG//KqAhfgkgPrS
+X-Google-Smtp-Source: ABdhPJxJ9W8SuT5c9X1oQeZdRpslbhWzloJcUYAo6odwzLJKoWAbzBrYWKGdYEogfEDxDKKzGtu7lA==
+X-Received: by 2002:a2e:3912:: with SMTP id g18mr11292596lja.96.1639591047539;
+        Wed, 15 Dec 2021 09:57:27 -0800 (PST)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id o10sm572000ljp.49.2021.12.15.09.57.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Dec 2021 09:57:27 -0800 (PST)
+Message-ID: <44171455-3aa3-cbda-0f0e-0038b95bb240@linaro.org>
+Date:   Wed, 15 Dec 2021 20:57:25 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 07/15] clk: qcom: camcc-sdm845: get rid of the test
+ clock
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>
+References: <20211215005423.2114261-1-dmitry.baryshkov@linaro.org>
+ <20211215005423.2114261-8-dmitry.baryshkov@linaro.org>
+ <20211215092350.hripuu2ud6fs5hhl@SoMainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211215092350.hripuu2ud6fs5hhl@SoMainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 15/12/2021 12:23, Marijn Suijten wrote:
+> On 2021-12-15 03:54:15, Dmitry Baryshkov wrote:
+>> The test clock isn't in the bindings and apparently it's not used by
+>> anyone upstream.  Remove it.
+>>
+>> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+> 
+> As with the other SoC patches in this series, you should move:
+> 
+>      [PATCH v2 09/15] clk: qcom: camcc-sdm845: use ARRAY_SIZE instead of specifying num_parents
+> 
+> Before this patch (07/15).  Otherwise num_parents for all the clocks
+> using parent_map/names_0 will have to temporarily be changed from 6 down
+> to 5 to make this bisectable.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
-v2: Drop unneeded msm_kms_show_priv [Dmitry B]
+Oops, missed this.
 
- drivers/gpu/drm/msm/msm_debugfs.c | 75 +++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+> 
+> - Marijn
+> 
+>> ---
+>>   drivers/clk/qcom/camcc-sdm845.c | 3 ---
+>>   1 file changed, 3 deletions(-)
+>>
+>> diff --git a/drivers/clk/qcom/camcc-sdm845.c b/drivers/clk/qcom/camcc-sdm845.c
+>> index 1b2cefef7431..545c288a7f98 100644
+>> --- a/drivers/clk/qcom/camcc-sdm845.c
+>> +++ b/drivers/clk/qcom/camcc-sdm845.c
+>> @@ -23,7 +23,6 @@ enum {
+>>   	P_CAM_CC_PLL1_OUT_EVEN,
+>>   	P_CAM_CC_PLL2_OUT_EVEN,
+>>   	P_CAM_CC_PLL3_OUT_EVEN,
+>> -	P_CORE_BI_PLL_TEST_SE,
+>>   };
+>>   
+>>   static const struct parent_map cam_cc_parent_map_0[] = {
+>> @@ -32,7 +31,6 @@ static const struct parent_map cam_cc_parent_map_0[] = {
+>>   	{ P_CAM_CC_PLL1_OUT_EVEN, 2 },
+>>   	{ P_CAM_CC_PLL3_OUT_EVEN, 5 },
+>>   	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+>> -	{ P_CORE_BI_PLL_TEST_SE, 7 },
+>>   };
+>>   
+>>   static const char * const cam_cc_parent_names_0[] = {
+>> @@ -41,7 +39,6 @@ static const char * const cam_cc_parent_names_0[] = {
+>>   	"cam_cc_pll1_out_even",
+>>   	"cam_cc_pll3_out_even",
+>>   	"cam_cc_pll0_out_even",
+>> -	"core_bi_pll_test_se",
+>>   };
+>>   
+>>   static struct clk_alpha_pll cam_cc_pll0 = {
+>> -- 
+>> 2.33.0
+>>
 
-diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-index 956b1efc3721..0804c31e8962 100644
---- a/drivers/gpu/drm/msm/msm_debugfs.c
-+++ b/drivers/gpu/drm/msm/msm_debugfs.c
-@@ -15,6 +15,11 @@
- #include "msm_gpu.h"
- #include "msm_kms.h"
- #include "msm_debugfs.h"
-+#include "disp/msm_disp_snapshot.h"
-+
-+/*
-+ * GPU Snapshot:
-+ */
- 
- struct msm_gpu_show_priv {
- 	struct msm_gpu_state *state;
-@@ -109,6 +114,73 @@ static const struct file_operations msm_gpu_fops = {
- 	.release = msm_gpu_release,
- };
- 
-+/*
-+ * Display Snapshot:
-+ */
-+
-+static int msm_kms_show(struct seq_file *m, void *arg)
-+{
-+	struct drm_printer p = drm_seq_file_printer(m);
-+	struct msm_disp_state *state = m->private;
-+
-+	msm_disp_state_print(state, &p);
-+
-+	return 0;
-+}
-+
-+static int msm_kms_release(struct inode *inode, struct file *file)
-+{
-+	struct seq_file *m = file->private_data;
-+	struct msm_disp_state *state = m->private;
-+
-+	msm_disp_state_free(state);
-+
-+	return single_release(inode, file);
-+}
-+
-+static int msm_kms_open(struct inode *inode, struct file *file)
-+{
-+	struct drm_device *dev = inode->i_private;
-+	struct msm_drm_private *priv = dev->dev_private;
-+	struct msm_disp_state *state;
-+	int ret;
-+
-+	if (!priv->kms)
-+		return -ENODEV;
-+
-+	ret = mutex_lock_interruptible(&priv->kms->dump_mutex);
-+	if (ret)
-+		return ret;
-+
-+	state = msm_disp_snapshot_state_sync(priv->kms);
-+
-+	mutex_unlock(&priv->kms->dump_mutex);
-+
-+	if (IS_ERR(state)) {
-+		return PTR_ERR(state);
-+	}
-+
-+	ret = single_open(file, msm_kms_show, state);
-+	if (ret) {
-+		msm_disp_state_free(state);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct file_operations msm_kms_fops = {
-+	.owner = THIS_MODULE,
-+	.open = msm_kms_open,
-+	.read = seq_read,
-+	.llseek = seq_lseek,
-+	.release = msm_kms_release,
-+};
-+
-+/*
-+ * Other debugfs:
-+ */
-+
- static unsigned long last_shrink_freed;
- 
- static int
-@@ -239,6 +311,9 @@ void msm_debugfs_init(struct drm_minor *minor)
- 	debugfs_create_file("gpu", S_IRUSR, minor->debugfs_root,
- 		dev, &msm_gpu_fops);
- 
-+	debugfs_create_file("kms", S_IRUSR, minor->debugfs_root,
-+		dev, &msm_kms_fops);
-+
- 	debugfs_create_u32("hangcheck_period_ms", 0600, minor->debugfs_root,
- 		&priv->hangcheck_period);
- 
+
 -- 
-2.33.1
-
+With best wishes
+Dmitry
