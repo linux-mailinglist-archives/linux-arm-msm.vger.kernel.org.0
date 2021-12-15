@@ -2,110 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1780475595
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 10:56:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFC1047559B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 10:57:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241378AbhLOJz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 04:55:59 -0500
-Received: from mga12.intel.com ([192.55.52.136]:44332 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241373AbhLOJz6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 04:55:58 -0500
-X-IronPort-AV: E=McAfee;i="6200,9189,10198"; a="219207381"
-X-IronPort-AV: E=Sophos;i="5.88,207,1635231600"; 
-   d="scan'208";a="219207381"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 01:55:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,207,1635231600"; 
-   d="scan'208";a="567876247"
-Received: from lkp-server02.sh.intel.com (HELO 9f38c0981d9f) ([10.239.97.151])
-  by fmsmga008.fm.intel.com with ESMTP; 15 Dec 2021 01:55:56 -0800
-Received: from kbuild by 9f38c0981d9f with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1mxR0t-0001a9-B5; Wed, 15 Dec 2021 09:55:55 +0000
-Date:   Wed, 15 Dec 2021 17:55:23 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 01/15] clk: qcom: gpucc-sdm660: fix two clocks with
- parent_names
-Message-ID: <202112151703.HPWFiC3t-lkp@intel.com>
-References: <20211215005423.2114261-2-dmitry.baryshkov@linaro.org>
+        id S241386AbhLOJ4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 04:56:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241365AbhLOJ4k (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Dec 2021 04:56:40 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B31C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 01:56:40 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id m12so32476259ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 01:56:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=p/SKAYMrs/GzMLA7d2JR/TcXPA0mR6BvhD9+t/8AH8Q=;
+        b=itc9kjxlMhXQBPC8jrx+gv6j8zRYhwg2VuUiLV+Bh3vupyXh/O008OW493tQET3jDX
+         lj0kUSadknD5LkmknTU/rzElj13rvPstPnaOUK8U5FJdurdlyq4c32SxhxkuoxPANLhn
+         tzvU5Gqc06jrqOlltJSAjHToVRt0fB7iwVHgK0yaoUveO30kbcL/265rmut737K1h0v3
+         3Ljk9KPQhVOmTMafnSkuZ3LR/SQ6/DD2U/xC5xFYC2BuU7M476J3JrDMUnCy6PWkHXdd
+         5nqusR+mSaIGEyE+x+8r3y1ypsEpPyYei99WfRjiCdCHGRpLVMKg1vZ21vWpiS3iS+bu
+         sRDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=p/SKAYMrs/GzMLA7d2JR/TcXPA0mR6BvhD9+t/8AH8Q=;
+        b=tkBds+qHS+qJg1OQvK3BRabVXlzU3KyaHLVcHLQmsDiKeHIktGkCOCzMvVoi5zd5HH
+         Fs+LuDvvVV38dicJ0muVe8pxsroKDxFlDjXYwCUM56KN4QF1bGY3F4QFuzWT6Zxge2PF
+         /bIaU2hW5ZTwwygrrNi55s0Xnkie0dagT/FmDkaqBFZ985AmbOII1EOBiW9RnzKwfSzm
+         gJimBJYHXR5TAfc++B8d9us2XA8kuOi6zOjppW73ZVmDfrShnmgnV5TodntZpp/KD7QE
+         49DTxmhja1KejB5Qb/KdJTC++yKcpap4j52FrOMr3odoXFBjSoDAXjdWdphawsxy4Pdw
+         4SWw==
+X-Gm-Message-State: AOAM5308u2AsjjdLOj6qXKvSgFw8OlhvMwuKLQu5BFn/9rZ6df7UOI/r
+        TyFMlFu28xozuv2p+pmnqccNnQlvdTi/YOBW
+X-Google-Smtp-Source: ABdhPJzVOkMT9FzjByx/A3OwyLhbgyfAKWE2Jhkkebxkaa5n5h/HbOL+R3t7S+OrpxFG14Y2a6RRgg==
+X-Received: by 2002:a2e:9510:: with SMTP id f16mr9592237ljh.409.1639562198497;
+        Wed, 15 Dec 2021 01:56:38 -0800 (PST)
+Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id j20sm242085lfu.84.2021.12.15.01.56.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 01:56:38 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] drm/plane: add alpha and blend_mode to atomic_print_state
+Date:   Wed, 15 Dec 2021 12:56:36 +0300
+Message-Id: <20211215095636.2330563-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211215005423.2114261-2-dmitry.baryshkov@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+When dumping plane state also output plane's alpha and blending mode
+values to ease debugging of complex composition cases.
 
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on v5.16-rc5 next-20211214]
-[cannot apply to agross-msm/qcom/for-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/0day-ci/linux/commits/Dmitry-Baryshkov/clk-qcom-another-round-of-clock-drivers-cleanup/20211215-085637
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: nios2-buildonly-randconfig-r005-20211214 (https://download.01.org/0day-ci/archive/20211215/202112151703.HPWFiC3t-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/a93be2f54e6825699913bbe0aab77dd7e4837fde
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/clk-qcom-another-round-of-clock-drivers-cleanup/20211215-085637
-        git checkout a93be2f54e6825699913bbe0aab77dd7e4837fde
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/clk/qcom/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> drivers/clk/qcom/gpucc-sdm660.c:208:52: error: 'struct clk_rcg2' has no member named 'clr'; did you mean 'clkr'?
-     208 |                                 &rbbmtimer_clk_src.clr.hw,
-         |                                                    ^~~
-         |                                                    clkr
-
-
-vim +208 drivers/clk/qcom/gpucc-sdm660.c
-
-   198	
-   199	static struct clk_branch gpucc_rbbmtimer_clk = {
-   200		.halt_reg = 0x10d0,
-   201		.halt_check = BRANCH_HALT,
-   202		.clkr = {
-   203			.enable_reg = 0x10d0,
-   204			.enable_mask = BIT(0),
-   205			.hw.init = &(struct clk_init_data){
-   206				.name = "gpucc_rbbmtimer_clk",
-   207				.parent_hws = (const struct clk_hw*[]){
- > 208					&rbbmtimer_clk_src.clr.hw,
-   209				},
-   210				.num_parents = 1,
-   211				.flags = CLK_SET_RATE_PARENT,
-   212				.ops = &clk_branch2_ops,
-   213			},
-   214		},
-   215	};
-   216	
-
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ drivers/gpu/drm/drm_atomic.c        |  3 +++
+ drivers/gpu/drm/drm_blend.c         | 21 +++++++++++++++++++++
+ drivers/gpu/drm/drm_crtc_internal.h |  3 +++
+ 3 files changed, 27 insertions(+)
+
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index ff1416cd609a..e2e715b5aaa8 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -709,6 +709,9 @@ static void drm_atomic_plane_print_state(struct drm_printer *p,
+ 		   drm_get_color_encoding_name(state->color_encoding));
+ 	drm_printf(p, "\tcolor-range=%s\n",
+ 		   drm_get_color_range_name(state->color_range));
++	drm_printf(p, "\talpha=%x\n", state->alpha);
++	drm_printf(p, "\tblend_mode=%s\n",
++		   drm_get_pixel_blend_mode_name(state->pixel_blend_mode));
+ 
+ 	if (plane->funcs->atomic_print_state)
+ 		plane->funcs->atomic_print_state(p, state);
+diff --git a/drivers/gpu/drm/drm_blend.c b/drivers/gpu/drm/drm_blend.c
+index ec37cbfabb50..e3971758ec53 100644
+--- a/drivers/gpu/drm/drm_blend.c
++++ b/drivers/gpu/drm/drm_blend.c
+@@ -616,3 +616,24 @@ int drm_plane_create_blend_mode_property(struct drm_plane *plane,
+ 	return 0;
+ }
+ EXPORT_SYMBOL(drm_plane_create_blend_mode_property);
++
++static const char * const pixel_blend_mode_name[] = {
++	[DRM_MODE_BLEND_PIXEL_NONE] = "None",
++	[DRM_MODE_BLEND_PREMULTI] = "Pre-multiplied",
++	[DRM_MODE_BLEND_COVERAGE] = "Coverage",
++};
++
++/**
++ * drm_get_pixel_blend_mode_name - return a string for color encoding
++ * @encoding: color encoding to compute name of
++ *
++ * In contrast to the other drm_get_*_name functions this one here returns a
++ * const pointer and hence is threadsafe.
++ */
++const char *drm_get_pixel_blend_mode_name(uint16_t blend_mode)
++{
++	if (WARN_ON(blend_mode >= ARRAY_SIZE(pixel_blend_mode_name)))
++		return "unknown";
++
++	return pixel_blend_mode_name[blend_mode];
++}
+diff --git a/drivers/gpu/drm/drm_crtc_internal.h b/drivers/gpu/drm/drm_crtc_internal.h
+index 63279e984342..0794307191cf 100644
+--- a/drivers/gpu/drm/drm_crtc_internal.h
++++ b/drivers/gpu/drm/drm_crtc_internal.h
+@@ -289,3 +289,6 @@ void drm_mode_fixup_1366x768(struct drm_display_mode *mode);
+ void drm_reset_display_info(struct drm_connector *connector);
+ u32 drm_add_display_info(struct drm_connector *connector, const struct edid *edid);
+ void drm_update_tile_info(struct drm_connector *connector, const struct edid *edid);
++
++/* drm_blend.c */
++const char *drm_get_pixel_blend_mode_name(uint16_t blend_mode);
+-- 
+2.33.0
+
