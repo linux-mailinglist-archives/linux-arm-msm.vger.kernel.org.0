@@ -2,80 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E12184765D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 23:28:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C259B476600
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 23:35:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231651AbhLOW2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 17:28:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50234 "EHLO
+        id S231376AbhLOWfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 17:35:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231625AbhLOW2L (ORCPT
+        with ESMTP id S231370AbhLOWfL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 17:28:11 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E07C06118F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:28:08 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id u18-20020a9d7212000000b00560cb1dc10bso26661478otj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:28:08 -0800 (PST)
+        Wed, 15 Dec 2021 17:35:11 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1050DC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:35:11 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso26691037ots.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 14:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jT4a+xEhIK+SVAkBmdeCICawKg4FNoRvYcNXbWrlWNc=;
-        b=Hc5/fDs4WRE4QmhZqB4/bFEqCnNTQkbEj2u9x4T6p2xlyWopfm8NqP8EsHEYuNF+JV
-         LUD4HQMVRL3Oi95SdU0xn1sfxzzEPEdAkXlcU3gek/wUkaO46Wicdsk0l8iaebwda0UL
-         h/UTw+jDFkc7wWsigbTqoAEow1qx8KBmmJ9L6Aobo2AiW2UV1bSHvylAE6becG/JwO9C
-         M5n6kccexw0Z+33zxZV3B3KD81Bq1w1RlEi0V7BYtFDM8e5skJWbrtT31WVKYUGKi3Q8
-         2ySLmTvQ3AnprjhfpHEryTf78giV6tySR06FDgAvNtGreNnhxnbY3KfbXrz5AvTcISuU
-         MztA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=DrRoCw7l3D7/9CGJqJ4R7z395m+W9pLZaas2T1HokPE=;
+        b=NnwvJspKiha/Rl8EShdutwtVGV78a5SwE6iiRfdpg6nh16rmzSM5gJ+/nO6Tec754s
+         Y+gJoXY+nfVXfAz/3jSJcy8Unl6Rw8RQz5Jdy9d8MJWogcfu6HTC6e7jn2GMnFzaytvS
+         ANdWDvAcvCzezpQfZyjstxUGM2sGNaOM2c/GCjxckEGdPtyFhQ14LNcivyUglq/kiTqH
+         dtEiNExkfzOR76VSEaKA6UjRyYsri8luOQqP/x+goQEfQaXyzSS63Oq83YDS99/u6hSA
+         XlPXEZOCDQl+aRKFln1e7XIGHlp+7GMjaIcUDysbTURnRzbzsvr/BioiCpCQjUrU+7yI
+         H+GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jT4a+xEhIK+SVAkBmdeCICawKg4FNoRvYcNXbWrlWNc=;
-        b=bgzHRqxiEI/26BBJiCqwB+c8ItCyFT+1IV6jrCYyyFj9WSsNGS3oOuaaO6xkppFfY4
-         OvAAT8fSUhNm8V2QH5X0ZZ/eH/afMGa4tsiQeVdwsM9X8HORVCFBy8hcEf3Xy4pul1fK
-         d8uzFyHNkBC9Ak7yNh08ql71IxbUePDLALvKsESp0ChqyXCAI1OSC3Bh4lBxLmYM3upa
-         tGzWf1zWXP9t+/TGekOofjgJ2wYRFYhCZtUSzcZ3AhTAu6wifMZ7oJkrNs4FWC9Tn2tY
-         hrzf+ZnqN6DmVI318KVnkd8faWz5bDN32ZdD6NjWffMmtn8JB1Xrjcc2iYZKvQ7loEvq
-         kWWw==
-X-Gm-Message-State: AOAM531AWXvfdSV5wORGrfD6atVwikHS+DTS2Na0pIYp/Nxd0ZLuCO3e
-        C4lOHrqgxgPLY1gj6l/k09ggRatNC0O7cQ==
-X-Google-Smtp-Source: ABdhPJyj7hr2nIOKDGVEPflX6oa9DhTDQBWoBdlSnXRKjmat/ygobjRbdzcjKqxvDI9f19+p2efppw==
-X-Received: by 2002:a05:6830:1358:: with SMTP id r24mr10762267otq.8.1639607288210;
-        Wed, 15 Dec 2021 14:28:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=DrRoCw7l3D7/9CGJqJ4R7z395m+W9pLZaas2T1HokPE=;
+        b=JNRP5mROkEH6jdoFZWVpHA2Rhz8WQ03UypwMOIDtB3oCh9pT33MkMR+8VInfzmRpHM
+         vH/KSaB0jem4UQNJEp0mXwn0VREiDw/Be4RVlEs4KJjkKwgLdYHYA641qrB1mYqX4XzB
+         NVbOs0oGHA/XACq5v8AD2Fe5kCzWwZTx4b5bqWNmqCHviN20xbiyACtPBgxJ+26+XE50
+         SBkwr5Mc6cH7IlZrGy1tPOZeSao1Muj/9WzH3qUCSFiuHV756X1ZisgeVUr0KKF7s8xy
+         z+zHBXCVRhEfpgiRgo0BbZTGqNWEQKYM4U/j3kZEu8ZAvpYTUuG1bwzgyWoXMM4cL27V
+         30KA==
+X-Gm-Message-State: AOAM5334FgCLaDeOU5ILk1Qrx2m8J8XKPLX6CTtM+/gA2V5u3R08/1WH
+        Q+HdWL3f4oEv7wuc/dDyefpChg==
+X-Google-Smtp-Source: ABdhPJwOQVNpU4KGRwikBNvh7yK6qAC+L8kEQepBFOThQIcssf+d3eBXVXm/ezaqNUWvTeLv3TFMFQ==
+X-Received: by 2002:a9d:6653:: with SMTP id q19mr10861621otm.116.1639607710366;
+        Wed, 15 Dec 2021 14:35:10 -0800 (PST)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t14sm700500oth.81.2021.12.15.14.28.07
+        by smtp.gmail.com with ESMTPSA id p23sm696362otf.37.2021.12.15.14.35.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 14:28:07 -0800 (PST)
+        Wed, 15 Dec 2021 14:35:09 -0800 (PST)
+Date:   Wed, 15 Dec 2021 16:35:05 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Jason Wang <wangborong@cdjrlc.com>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH] soc: qcom: rpmh-rsc: Fix typo in a comment
-Date:   Wed, 15 Dec 2021 16:27:41 -0600
-Message-Id: <163960723734.3062250.6877130242356070905.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211211090626.248801-1-wangborong@cdjrlc.com>
-References: <20211211090626.248801-1-wangborong@cdjrlc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v3 08/10] arm64: dts: qcom: sm8450: add PCIe0 RC device
+Message-ID: <YbptmeteGVt75NuO@builder.lan>
+References: <20211211021758.1712299-1-dmitry.baryshkov@linaro.org>
+ <20211211021758.1712299-9-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211211021758.1712299-9-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Dec 2021 17:06:26 +0800, Jason Wang wrote:
-> The double `for' in the comment in line 694 is repeated. Remove one
-> of them from the comment.
+On Fri 10 Dec 20:17 CST 2021, Dmitry Baryshkov wrote:
+
+> Add device tree node for the first PCIe host found on the Qualcomm
+> SM8450 platform.
 > 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 101 +++++++++++++++++++++++++++
+>  1 file changed, 101 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index a047d8a22897..09087a34a007 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -627,6 +627,84 @@ i2c14: i2c@a98000 {
+>  				#size-cells = <0>;
+>  				status = "disabled";
+>  			};
+> +		];
+> +
+> +		pcie0: pci@1c00000 {
+> +			compatible = "qcom,pcie-sm8450";
+> +			reg = <0 0x01c00000 0 0x3000>,
+> +			      <0 0x60000000 0 0xf1d>,
+> +			      <0 0x60000f20 0 0xa8>,
+> +			      <0 0x60001000 0 0x1000>,
+> +			      <0 0x60100000 0 0x100000>;
+> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
+> +			device_type = "pci";
+> +			linux,pci-domain = <0>;
+> +			bus-range = <0x00 0xff>;
+> +			num-lanes = <1>;
+> +
+> +			#address-cells = <3>;
+> +			#size-cells = <2>;
+> +
+> +			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+> +				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
+> +
+> +			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "msi";
+> +			#interrupt-cells = <1>;
+> +			interrupt-map-mask = <0 0 0 0x7>;
+> +			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> +					<0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> +					<0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> +					<0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
 
-Applied, thanks!
+You need to pad these with a couple more zeros, see 0ac10b291bee
+("arm64: dts: qcom: Fix 'interrupt-map' parent address cells")
 
-[1/1] soc: qcom: rpmh-rsc: Fix typo in a comment
-      commit: 73efacc6bd1d58e9b318f4861072501d97ebf7c4
+> +
+> +			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+> +				 <&gcc GCC_PCIE_0_PIPE_CLK_SRC>,
+> +				 <&pcie0_lane>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_PCIE_0_AUX_CLK>,
+> +				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> +				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>,
+> +				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>;
+> +			clock-names = "pipe",
+> +				      "pipe_mux",
+> +				      "phy_pipe",
+> +				      "ref",
+> +				      "aux",
+> +				      "cfg",
+> +				      "bus_master",
+> +				      "bus_slave",
+> +				      "slave_q2a",
+> +				      "ddrss_sf_tbu",
+> +				      "aggre0",
+> +				      "aggre1";
+> +
+> +			iommus = <&apps_smmu 0x1c00 0x7f>;
+> +			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+> +				    <0x100 &apps_smmu 0x1c01 0x1>;
+> +
+> +			resets = <&gcc GCC_PCIE_0_BCR>;
+> +			reset-names = "pci";
+> +
+> +			power-domains = <&gcc PCIE_0_GDSC>;
+> +			power-domain-names = "gdsc";
+> +
+> +			phys = <&pcie0_lane>;
+> +			phy-names = "pciephy";
+> +
+> +			perst-gpio = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +			enable-gpio = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+> +
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&pcie0_default_state>;
+> +
+> +			interconnects = <&pcie_noc MASTER_PCIE_0 &mc_virt SLAVE_EBI1>;
+> +			interconnect-names = "pci";
+> +
+> +			status = "disabled";
+>  		};
+>  
+>  		pcie0_phy: phy@1c06000 {
+> @@ -763,6 +841,29 @@ tlmm: pinctrl@f100000 {
+>  			gpio-ranges = <&tlmm 0 0 211>;
+>  			wakeup-parent = <&pdc>;
+>  
+> +			pcie0_default_state: pcie0-default {
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+Binding states that the node name needs to have the suffix "-state".
+
+Regards,
+Bjorn
+
+> +				perst {
+> +					pins = "gpio94";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-pull-down;
+> +				};
+> +
+> +				clkreq {
+> +					pins = "gpio95";
+> +					function = "pcie0_clkreqn";
+> +					drive-strength = <2>;
+> +					bias-pull-up;
+> +				};
+> +
+> +				wake {
+> +					pins = "gpio96";
+> +					function = "gpio";
+> +					drive-strength = <2>;
+> +					bias-pull-up;
+> +				};
+> +			};
+> +
+>  			qup_i2c13_default_state: qup-i2c13-default-state {
+>  				mux {
+>  					pins = "gpio48", "gpio49";
+> -- 
+> 2.33.0
+> 
