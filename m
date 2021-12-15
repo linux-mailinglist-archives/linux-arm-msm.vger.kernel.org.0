@@ -2,160 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 697D54758C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 13:22:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EF44758EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 13:36:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234411AbhLOMWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 07:22:37 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60866 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234236AbhLOMWg (ORCPT
+        id S242545AbhLOMg2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 07:36:28 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:39932 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242501AbhLOMg0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 07:22:36 -0500
+        Wed, 15 Dec 2021 07:36:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639570956; x=1671106956;
-  h=from:to:cc:subject:date:message-id;
-  bh=WSYjARf9I615x4tAMcmvpMwyOLr6e+mLTd1pXbcRWH4=;
-  b=jwRSDNXeCW7Q/zEzOY+TSo8Kh3vj1EFYJ01PbHLscfaVRu46OjR9lvtb
-   g2Ifq9h1vNUWGzCpBm8sAJXe19Iic7WtNtoseo08Trtq1XOntDlVixwb6
-   0WoJcNHI8z/706YM94gU4L6wA4HBUjOx7nC+MSk9AOjzsqiBkuYHoChX+
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 15 Dec 2021 04:22:36 -0800
+  t=1639571786; x=1671107786;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=9sxC78XQygJZeeTD71208lt2TeMRHyLi6SvJ7Zq/WFw=;
+  b=ON1S5jMx2f/vFcntmwR/wUmx7NzV3yYtA44TYWiikp+MfqoGZPQ2dP+1
+   3OUiiGqa0yWad6vVbjovPe0tf2G512647Y8JwLeI8GSuq3Ovo3DVHSFGJ
+   1GxL9+zgdjV+v1dsNCsSUVRBCxm1zLFvA/ojsIDyCYGOiJdeM5z+plfn4
+   I=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Dec 2021 04:36:26 -0800
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Dec 2021 04:22:33 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 15 Dec 2021 17:52:15 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id 89850213E6; Wed, 15 Dec 2021 17:52:14 +0530 (IST)
-From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        quic_pharish@quicinc.com,
-        Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Subject: [PATCH v3] Bluetooth: btqca: sequential validation
-Date:   Wed, 15 Dec 2021 17:51:40 +0530
-Message-Id: <1639570900-24509-1-git-send-email-quic_saluvala@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 04:36:25 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 15 Dec 2021 04:36:25 -0800
+Received: from [10.50.9.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 15 Dec
+ 2021 04:36:19 -0800
+Message-ID: <0e8322f2-0a6b-5b9f-09b1-b1e870cd6dd8@quicinc.com>
+Date:   Wed, 15 Dec 2021 18:06:16 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH V2 6/8] arm64: dts: qcom: sc7280: Add EUD dt node and dwc3
+ connector
+Content-Language: en-CA
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <bjorn.andersson@linaro.org>, <greg@kroah.com>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_satyap@quicinc.com>,
+        <quic_pheragu@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <quic_saipraka@quicinc.com>
+References: <cover.1638430506.git.quic_schowdhu@quicinc.com>
+ <d035e37829c6f9ec8f01d1137020af635e34966f.1638430506.git.quic_schowdhu@quicinc.com>
+ <YbemBSexMQRCVGYl@robh.at.kernel.org>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <YbemBSexMQRCVGYl@robh.at.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Added Sequential validation support
-& patch command config
 
-Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+On 12/14/2021 1:29 AM, Rob Herring wrote:
+> On Thu, Dec 02, 2021 at 03:21:25PM +0530, Souradeep Chowdhury wrote:
+>> Add the Embedded USB Debugger(EUD) device tree node. The
+>> node contains EUD base register region and EUD mode
+>> manager register regions along with the interrupt entry.
+>> Also add the connector to EUD which is mapped as the child
+>> of dwc3. The connector is attached to EUD via port. Also add
+>> the role-switch property to dwc3 node.
+>>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 25 +++++++++++++++++++++++++
+>>   1 file changed, 25 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 53a21d0..2d14e5c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -1315,6 +1315,18 @@
+>>   				phys = <&usb_2_hsphy>;
+>>   				phy-names = "usb2-phy";
+>>   				maximum-speed = "high-speed";
+>> +				usb-role-switch;
+>> +				usb_con: eud_usb_connector {
+>> +					compatible = "qcom,usb-connector-eud",
+>> +						     "usb-c-connector";
+>> +					ports {
+>> +						port@0 {
+> It is already defined that port@0 of the connector is USB HS data. Is
+> that the case here? What about the SS lines?
 
-v3:
-* removed rlen,rtype
-* Replaced kfree with kfree_skb
+As per the yaml documentation this is to be used for USB HS lines but in 
+this case I am using the port to get the connector fwnode from the eud 
+driver and then perform the role switch from the connector parent which 
+is the dwc3 controller.  Should I update the yaml file to include this 
+description?
 
-v2:
-* Added static declaration
-* Addressed wrong indentation
-* Removed EDL_PATCH_CONFIG_CMD_LEN
-*
+>  From the description, it sounds like the data path is DWC3 -> EUD ->
+> connector. The DT structure doesn't match that.
 
-v1:
-*Initial patch
----
- drivers/bluetooth/btqca.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h |  2 ++
- 2 files changed, 50 insertions(+)
+EUD is an independent QCOM IP , it is a mini usb hub which can only 
+function in device mode. That's why it has been mapped as a separate 
+device tree node connected to the type c connector via port endpoint to 
+perform a role switch when necessary. I have kept EUD and connector at 
+the same level as there is no direct data path from EUD to the connector 
+and both are at a level below the controller.
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index be04d74..21830c6 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -141,6 +141,51 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
- 	return err;
- }
- 
-+static int qca_send_patch_config_cmd(struct hci_dev *hdev)
-+{
-+	struct sk_buff *skb;
-+	int err = 0;
-+	u8 cmd[] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
-+	struct edl_event_hdr *edl;
-+
-+	bt_dev_dbg(hdev, "QCA Patch config");
-+
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
-+				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-+		return err;
-+	}
-+
-+	if (skb->len != 2) {
-+		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	edl = (struct edl_event_hdr *)(skb->data);
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA Patch config with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != EDL_PATCH_CONFIG_CMD) {
-+		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-+			   edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+
-+out:
-+	kfree_skb(skb);
-+	if (err)
-+		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
-+
-+	return err;
-+}
-+
- static int qca_send_reset(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -551,6 +596,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 */
- 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
- 
-+	if (soc_type == QCA_WCN6750)
-+		qca_send_patch_config_cmd(hdev);
-+
- 	/* Download rampatch file */
- 	config.type = TLV_TYPE_PATCH;
- 	if (qca_is_wcn399x(soc_type)) {
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 30afa77..61e9a50 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -13,6 +13,7 @@
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
- #define EDL_GET_BUILD_INFO_CMD		(0x20)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-+#define EDL_PATCH_CONFIG_CMD		(0x28)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
- #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
- #define QCA_DISABLE_LOGGING		(0xFC17)
-@@ -24,6 +25,7 @@
- #define EDL_CMD_EXE_STATUS_EVT		(0x00)
- #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
- #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
-+#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
- #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
- 
- #define EDL_TAG_ID_HCI			(17)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
-
+>
+>> +							usb2_role_switch: endpoint {
+>> +								remote-endpoint = <&eud_ep>;
+>> +							};
+>> +						};
+>> +					};
+>> +				};
+>>   			};
+>>   		};
+>>   
+>> @@ -1339,6 +1351,19 @@
+>>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>>   		};
+>>   
+>> +		eud:  eud@88e0000 {
+>> +			compatible = "qcom,sc7280-eud","qcom,eud";
+>> +			reg = <0 0x88e0000 0 0x2000>,
+>> +			      <0 0x88e2000 0 0x1000>;
+>> +			interrupt-parent = <&pdc>;
+>> +			interrupts = <11 IRQ_TYPE_LEVEL_HIGH>;
+>> +			port {
+>> +				eud_ep: endpoint {
+>> +					remote-endpoint = <&usb2_role_switch>;
+>> +				};
+>> +			};
+>> +		};
+>> +
+>>   		nsp_noc: interconnect@a0c0000 {
+>>   			reg = <0 0x0a0c0000 0 0x10000>;
+>>   			compatible = "qcom,sc7280-nsp-noc";
+>> -- 
+>> 2.7.4
+>>
+>>
