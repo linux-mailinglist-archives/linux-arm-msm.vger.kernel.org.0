@@ -2,74 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC927476254
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:57:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D34A47625D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 20:57:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233901AbhLOT4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 14:56:39 -0500
-Received: from mail-ot1-f49.google.com ([209.85.210.49]:39873 "EHLO
-        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhLOT4j (ORCPT
+        id S233994AbhLOT55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 14:57:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43454 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229517AbhLOT54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 14:56:39 -0500
-Received: by mail-ot1-f49.google.com with SMTP id r10-20020a056830080a00b0055c8fd2cebdso26220695ots.6;
-        Wed, 15 Dec 2021 11:56:38 -0800 (PST)
+        Wed, 15 Dec 2021 14:57:56 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11406C06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:57:56 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id b19so33196002ljr.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 11:57:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xzBRnW091E2hYttdO0EPFhJ6cH97SZxsTkE7s33U1XU=;
+        b=Q2astHq+BVkv2Vzv5F6Jicrgstv08rqCGISGYvZkbqqszqIAgWCfeFEkkxulWzaFEX
+         tGxPmgR9JbL9EuTp3fWKlyzHuy03tFWz6eSb7Gultp+R2w1dK4+TXJluBeQl8KWn67ax
+         Tvs6HtfUOt6CGBWcLYMj7d53/RjOfCGYAIwCwOGLfdorsOycBmxcjF9szZOrAzkoTujq
+         ZudgJ5hf44CqIaZQo23qs5tiHVXR6rYaj/sOm8aP8bxM93Pc3Mtqpu27WLL/zyme9uut
+         etZmFER6akRkdIZVw06QXlH6BxKk38L319qQ3INexdQB468zOwUAZ0rRiHqzONN941tD
+         5Jpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rc75QnNGJmNS7Cbebb+pY8RDy1d28+BSSxCtW4SecuI=;
-        b=gEizBTR33a1S3bh2Zt7v2sHpuCPXzc86v5+CZm0YUxHqRyW8z5GPIbvHpz0Ki3zNXM
-         2Uw/3pTaM5+XccsawKq33kNfF4vZKI+gzDbwV9qOmPZKt89Hq6PwS8oq4k+6gzKsVhNP
-         sXMmTGAtw8/FLOBFHj104YxCTGVxbRqhH6AnBaOShjuJk6RESE9JCCMnat9uqKCiJENi
-         dNo/FuZrpF6TjWSxAYvBFbnhebdoeg6JnNQYft25K9T/u5+BmeszcF+KySZw5e3bbWuB
-         UziQJTu0iGpJmScRJ6vPWXiaYsFJWEh0jsCV9AUhhu4vBw4j7JMDEokbxcvjMrWlfUgi
-         iceQ==
-X-Gm-Message-State: AOAM530feeJ6KAuqy+H+XGb7FPsIzI+m3Gl2DR8IYpS4kUueQTbUU0cB
-        YNXmSmfsS2jCdWiKboexwrAq2jCcWA==
-X-Google-Smtp-Source: ABdhPJzrQNwX1PWtVKEQVvXrLOMZ8C9c+duQoIn7Gf9bM82Fcc1FZELEJd5svYbn2v5KVWFulAvMXQ==
-X-Received: by 2002:a05:6830:2431:: with SMTP id k17mr10212639ots.220.1639598198475;
-        Wed, 15 Dec 2021 11:56:38 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id o2sm602213oik.11.2021.12.15.11.56.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 11:56:37 -0800 (PST)
-Received: (nullmailer pid 1733483 invoked by uid 1000);
-        Wed, 15 Dec 2021 19:56:36 -0000
-Date:   Wed, 15 Dec 2021 13:56:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     linux-iio@vger.kernel.org, amit.pundir@linaro.org,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, john.stultz@linaro.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>, sumit.semwal@linaro.org
-Subject: Re: [PATCH 2/7] dt-bindings: iio: adc: document qcom-spmi-rradc
-Message-ID: <YbpIdF/z3w6DAKH3@robh.at.kernel.org>
-References: <20211211022224.3488860-1-caleb@connolly.tech>
- <20211211022224.3488860-3-caleb@connolly.tech>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xzBRnW091E2hYttdO0EPFhJ6cH97SZxsTkE7s33U1XU=;
+        b=yWRpDk+/Mn8dgwazTfXN7YwtmunnOrgPD/HgrRDUewniDiVLCV3jR9JrbOoMDkWKEK
+         Fo2m0S5hp3fDTSSEigQ0hldSk6IhnBWHzVMfefEqQkkkQgJO1sCVPmLkS9sgCP4Btcsd
+         N+KTH3ffeZ7IN8G75r8sC55vJPkjquhj9yZLT8zTME1YGRTgirOQYtw3vqsTOVswKEO8
+         0BXUMids2SBIufnbWOb5RGW6I9zmtSd6q07rSKHzWKcWX8vGyPh7soUWlCWCoEXrNmjd
+         K+Kj6heggsA/TpxG0G9sevwJEn7OGIk03zT8ZlyQOrg/1AR8MsA+R/8vO4BL6yQ/z8ih
+         xMAA==
+X-Gm-Message-State: AOAM532Sa/VjflL7lKDyUK1DbKonDn4clQrsLwYUIJsGWCvRzQEQHnkK
+        QNxEUOf5k3bKRJRsU2qcS3Po5Q==
+X-Google-Smtp-Source: ABdhPJxdumx8QChUC4wNlRA2hk//MDt1M3tNJWiARcl992IAZ/D8QucGCmYEjmGxyRU6uRxW6Fr3xA==
+X-Received: by 2002:a2e:b0ee:: with SMTP id h14mr11902221ljl.478.1639598274332;
+        Wed, 15 Dec 2021 11:57:54 -0800 (PST)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id u17sm468737lfm.279.2021.12.15.11.57.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Dec 2021 11:57:53 -0800 (PST)
+Message-ID: <e1e7f91c-fcdb-7789-0094-80e2b5b09d4f@linaro.org>
+Date:   Wed, 15 Dec 2021 22:57:48 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211211022224.3488860-3-caleb@connolly.tech>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v3 1/2] drm/msm/dsi: Use "ref" fw clock instead of global
+ name for VCO parent
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+References: <20210911131922.387964-1-marijn.suijten@somainline.org>
+ <20210911131922.387964-2-marijn.suijten@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210911131922.387964-2-marijn.suijten@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 11 Dec 2021 02:22:19 +0000, Caleb Connolly wrote:
-> From: Caleb Connolly <caleb.connolly@linaro.org>
+On 11/09/2021 16:19, Marijn Suijten wrote:
+> All DSI PHY/PLL drivers were referencing their VCO parent clock by a
+> global name, most of which don't exist or have been renamed.  These
+> clock drivers seem to function fine without that except the 14nm driver
+> for sdm6xx [1].
 > 
-> Add dt-binding docs for the Qualcomm SPMI RRADC found in PMICs like
-> PMI8998 and PMI8994
+> At the same time all DTs provide a "ref" clock as per the requirements
+> of dsi-phy-common.yaml, but the clock is never used.  This patchset puts
+> that clock to use without relying on a global clock name, so that all
+> dependencies are explicitly defined in DT (the firmware) in the end.
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Note that this patch intentionally breaks older firmware (DT) that
+> relies on the clock to be found globally instead.  The only affected
+> platform is msm8974 [2] for whose dsi_phy_28nm a .name="xo" fallback is
+> left in place to accommodate a more graceful transition period.  All
+> other platforms had the "ref" clock added to their phy node since its
+> inception, or in a followup patch some time after.  These patches
+> wrongly assumed that the "ref" clock was actively used and have hence
+> been listed as "Fixes:" below.
+> Furthermore apq8064 was providing the wrong 19.2MHz cxo instead of
+> 27MHz pxo clock, which has been addressed in [3].
+> 
+> It is expected that both [2] and [3] are applied to the tree well in
+> advance of this patch such that any actual breakage is extremely
+> unlikely, but might still occur if kernel upgrades are performed without
+> the DT to match.  After some time the fallback for msm8974 can be
+> removed again as well.
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org/
+> [2]: https://lore.kernel.org/linux-arm-msm/20210830175739.143401-1-marijn.suijten@somainline.org/
+> [3]: https://lore.kernel.org/linux-arm-msm/20210829203027.276143-2-marijn.suijten@somainline.org/
+> 
+> Fixes: 79e51645a1dd ("arm64: dts: qcom: msm8916: Set 'xo_board' as ref clock of the DSI PHY")
+> Fixes: 6969d1d9c615 ("ARM: dts: qcom-apq8064: Set 'cxo_board' as ref clock of the DSI PHY")
+> Fixes: 0c0e72705a33 ("arm64: dts: sdm845: Set 'bi_tcxo' as ref clock of the DSI PHYs")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
->  .../bindings/iio/adc/qcom,spmi-rradc.yaml     | 54 +++++++++++++++++++
->  1 file changed, 54 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 4 +++-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 4 +++-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 4 +++-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 4 +++-
+>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 4 +++-
+>   5 files changed, 15 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> index e46b10fc793a..3cbb1f1475e8 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> @@ -562,7 +562,9 @@ static int pll_10nm_register(struct dsi_pll_10nm *pll_10nm, struct clk_hw **prov
+>   	char clk_name[32], parent[32], vco_name[32];
+>   	char parent2[32], parent3[32], parent4[32];
+>   	struct clk_init_data vco_init = {
+> -		.parent_names = (const char *[]){ "xo" },
+> +		.parent_data = &(const struct clk_parent_data) {
+> +			.fw_name = "ref",
+> +		},
+>   		.num_parents = 1,
+>   		.name = vco_name,
+>   		.flags = CLK_IGNORE_UNUSED,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> index ebedbb6c8961..789b08c24d25 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> @@ -802,7 +802,9 @@ static int pll_14nm_register(struct dsi_pll_14nm *pll_14nm, struct clk_hw **prov
+>   {
+>   	char clk_name[32], parent[32], vco_name[32];
+>   	struct clk_init_data vco_init = {
+> -		.parent_names = (const char *[]){ "xo" },
+> +		.parent_data = &(const struct clk_parent_data) {
+> +			.fw_name = "ref",
+> +		},
+>   		.num_parents = 1,
+>   		.name = vco_name,
+>   		.flags = CLK_IGNORE_UNUSED,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> index eb1b8ff61da1..531c4b65aede 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+> @@ -521,7 +521,9 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
+>   {
+>   	char clk_name[32], parent1[32], parent2[32], vco_name[32];
+>   	struct clk_init_data vco_init = {
+> -		.parent_names = (const char *[]){ "xo" },
+> +		.parent_data = &(const struct clk_parent_data) {
+> +			.fw_name = "ref", .name = "xo",
+> +		},
+>   		.num_parents = 1,
+>   		.name = vco_name,
+>   		.flags = CLK_IGNORE_UNUSED,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> index aaa37456f4ee..9662cb236468 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c
+> @@ -385,7 +385,9 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
+>   {
+>   	char *clk_name, *parent_name, *vco_name;
+>   	struct clk_init_data vco_init = {
+> -		.parent_names = (const char *[]){ "pxo" },
+> +		.parent_data = &(const struct clk_parent_data) {
+> +			.fw_name = "ref",
+> +		},
+>   		.num_parents = 1,
+>   		.flags = CLK_IGNORE_UNUSED,
+>   		.ops = &clk_ops_dsi_pll_28nm_vco,
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index 9eade6d81a54..1a5abbd9fb76 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -588,7 +588,9 @@ static int pll_7nm_register(struct dsi_pll_7nm *pll_7nm, struct clk_hw **provide
+>   	char clk_name[32], parent[32], vco_name[32];
+>   	char parent2[32], parent3[32], parent4[32];
+>   	struct clk_init_data vco_init = {
+> -		.parent_names = (const char *[]){ "bi_tcxo" },
+> +		.parent_data = &(const struct clk_parent_data) {
+> +			.fw_name = "ref",
+> +		},
+>   		.num_parents = 1,
+>   		.name = vco_name,
+>   		.flags = CLK_IGNORE_UNUSED,
+> --
+> 2.33.0
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+
+-- 
+With best wishes
+Dmitry
