@@ -2,77 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DD74476327
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 21:24:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF7C347632A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 21:24:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235754AbhLOUYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 15:24:10 -0500
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:43867 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235748AbhLOUYJ (ORCPT
+        id S235782AbhLOUYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 15:24:36 -0500
+Received: from relay03.th.seeweb.it ([5.144.164.164]:33209 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235779AbhLOUYg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 15:24:09 -0500
-Received: by mail-ot1-f51.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so26326414otu.10;
-        Wed, 15 Dec 2021 12:24:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=cHfNSs54Slrx4wtANzUpexy4Yem5PpNyZASXoL+St08=;
-        b=dSvjpJOVsaCnxxzF2adnGPwhib318grV0S53VCRdy/qSF9R/s4zpkwbO+4OxMQ2lFb
-         nLU1eJrMlaO2s20D7ztNRlGT+G1M7uNeoER70rR/Cat5pmbQmESKDmubvPysXyjaPIYA
-         2qBCK2NVrSprtqkz53RPnRHn8cHWz4VDcScUt6Nla724HWQFKOVWnSEuevdQBn/ocM/h
-         wrrQfuwHbCXnEZLKyechFJ3QWC4GfUOnlqAIEssXS7KfGyv+fOwZ+GYll00B/8tIXdSh
-         sWo2T2lOXN11cwdEAIyyZWszjW3Cb44/ndnXSk/iCkT/0PF2Ad2OxxJOxjkQ3sAIP3jg
-         GoKA==
-X-Gm-Message-State: AOAM530er+FRNmcMTt8t0s72VfVhVddtEz4z4yixyPuwingkeyvCol1x
-        n9WS6yCoFNwc0O/t7TGKhw==
-X-Google-Smtp-Source: ABdhPJzR65AsskXOxu12cvr8FeJjC048WZ1Ev6UZcGjufrn57yxDWUHLYrTWxWd3GOD7x5OcOdfq3w==
-X-Received: by 2002:a9d:61d4:: with SMTP id h20mr10154106otk.202.1639599848971;
-        Wed, 15 Dec 2021 12:24:08 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id e16sm645882ook.38.2021.12.15.12.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 12:24:08 -0800 (PST)
-Received: (nullmailer pid 1776423 invoked by uid 1000);
-        Wed, 15 Dec 2021 20:24:07 -0000
-Date:   Wed, 15 Dec 2021 14:24:07 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-rtc@vger.kernel.org, Alessandro Zummo <a.zummo@towertech.it>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <skakit@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: rtc: qcom-pm8xxx-rtc: update register
- numbers
-Message-ID: <YbpO53ySu7yr01NR@robh.at.kernel.org>
-References: <20211213192946.111320-1-david@ixit.cz>
+        Wed, 15 Dec 2021 15:24:36 -0500
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1695A20473;
+        Wed, 15 Dec 2021 21:24:34 +0100 (CET)
+Date:   Wed, 15 Dec 2021 21:24:32 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 09/16] clk: qcom: camcc-sdm845: move clock parent
+ tables down
+Message-ID: <20211215202432.hdjntlglgolld6nw@SoMainline.org>
+References: <20211215193704.2821775-1-dmitry.baryshkov@linaro.org>
+ <20211215193704.2821775-10-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211213192946.111320-1-david@ixit.cz>
+In-Reply-To: <20211215193704.2821775-10-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 13 Dec 2021 20:29:45 +0100, David Heidelberg wrote:
-> Extend registers up to 2, also document their names.
+On 2021-12-15 22:36:57, Dmitry Baryshkov wrote:
+> Move clock parent tables down, after the PLL declrataions, so that we
+> can use pll hw clock fields in the next commit.
 > 
-> Also fixes warnings generated by `make qcom/sdm845-oneplus-fajita.dtb`:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: reg: [[24576], [24832]] is too long
->         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: rtc@6000: 'reg-names' does not match any of the regexes: 'pinctrl-[0-9]+'
->         From schema: Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml         | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  drivers/clk/qcom/camcc-sdm845.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/camcc-sdm845.c b/drivers/clk/qcom/camcc-sdm845.c
+> index 6210b0fb7eac..fd01ea53a07f 100644
+> --- a/drivers/clk/qcom/camcc-sdm845.c
+> +++ b/drivers/clk/qcom/camcc-sdm845.c
+> @@ -25,22 +25,6 @@ enum {
+>  	P_CAM_CC_PLL3_OUT_EVEN,
+>  };
+>  
+> -static const struct parent_map cam_cc_parent_map_0[] = {
+> -	{ P_BI_TCXO, 0 },
+> -	{ P_CAM_CC_PLL2_OUT_EVEN, 1 },
+> -	{ P_CAM_CC_PLL1_OUT_EVEN, 2 },
+> -	{ P_CAM_CC_PLL3_OUT_EVEN, 5 },
+> -	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+> -};
+> -
+> -static const char * const cam_cc_parent_names_0[] = {
+> -	"bi_tcxo",
+> -	"cam_cc_pll2_out_even",
+> -	"cam_cc_pll1_out_even",
+> -	"cam_cc_pll3_out_even",
+> -	"cam_cc_pll0_out_even",
+> -};
+> -
+>  static struct clk_alpha_pll cam_cc_pll0 = {
+>  	.offset = 0x0,
+>  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_FABIA],
+> @@ -159,6 +143,22 @@ static struct clk_alpha_pll_postdiv cam_cc_pll3_out_even = {
+>  	},
+>  };
+>  
+> +static const struct parent_map cam_cc_parent_map_0[] = {
+> +	{ P_BI_TCXO, 0 },
+> +	{ P_CAM_CC_PLL2_OUT_EVEN, 1 },
+> +	{ P_CAM_CC_PLL1_OUT_EVEN, 2 },
+> +	{ P_CAM_CC_PLL3_OUT_EVEN, 5 },
+> +	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+> +};
+> +
+> +static const char * const cam_cc_parent_names_0[] = {
+> +	"bi_tcxo",
+> +	"cam_cc_pll2_out_even",
+> +	"cam_cc_pll1_out_even",
+> +	"cam_cc_pll3_out_even",
+> +	"cam_cc_pll0_out_even",
+> +};
+> +
+>  static const struct freq_tbl ftbl_cam_cc_bps_clk_src[] = {
+>  	F(19200000, P_BI_TCXO, 1, 0, 0),
+>  	F(100000000, P_CAM_CC_PLL0_OUT_EVEN, 6, 0, 0),
+> -- 
+> 2.33.0
+> 
