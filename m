@@ -2,156 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D17D4762D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 21:12:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE3B4762DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Dec 2021 21:13:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234932AbhLOUMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 15:12:07 -0500
-Received: from relay02.th.seeweb.it ([5.144.164.163]:35637 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234961AbhLOUMA (ORCPT
+        id S235000AbhLOUNm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 15:13:42 -0500
+Received: from mail-ot1-f51.google.com ([209.85.210.51]:41846 "EHLO
+        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231579AbhLOUNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 15:12:00 -0500
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 531932020E;
-        Wed, 15 Dec 2021 21:11:55 +0100 (CET)
-Date:   Wed, 15 Dec 2021 21:11:53 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 16/16] clk: qcom: gcc-msm8996: start getting rid of xo
- clk
-Message-ID: <20211215201153.orgyt6mlmxryrdpn@SoMainline.org>
-References: <20211215193704.2821775-1-dmitry.baryshkov@linaro.org>
- <20211215193704.2821775-17-dmitry.baryshkov@linaro.org>
+        Wed, 15 Dec 2021 15:13:42 -0500
+Received: by mail-ot1-f51.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so26300944otl.8;
+        Wed, 15 Dec 2021 12:13:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BPQ87d8QvmM6qxdlruPSM0k5IOysfGIQENHR+EofinE=;
+        b=lqOzMI7XKSeuiuwNv+qmIGNQ2w8a8aaGEVCvaLYH61NSicviZHtsgmytL4ZFxcznKK
+         sl2WyrNvz7z29oK6K7W9XNUUVZQqMkzrMWUcIkeLMZPqMfOfy57whzkTP2IXxbLpGHDF
+         gO/XYbUvAEBp3WYYK4xG/ihoRpRUowzkaweOS4Mz644G5fQCWXd+NYUIteZSXeH9c7sl
+         0HYd9cRG5aeK7D698H4D1dq8KZggTWQdlqCYfGLzYLCBmZyC7rVNvc4IKOD/J/wydXsR
+         1bBkMgk6zbi0+9CHuchEQLfw8oZRpD6YT5yv0jDbDYRO45RC3RnsgrzWKgXy738TNO4W
+         nmTA==
+X-Gm-Message-State: AOAM531NwpitQFz1CG97fkBSVR5mFzqYi4smJVprK5u+UkYU7zmT+4ah
+        oenw/4kFZW7EY09AWQOeHg==
+X-Google-Smtp-Source: ABdhPJwC1tIXdQafpPW2w+DI5hIKTJcUxGWJ0nBo+2J2/MJcrTpbq1kQ5CzII3k4Decz26ON0nmmdA==
+X-Received: by 2002:a05:6830:3110:: with SMTP id b16mr10290669ots.212.1639599221490;
+        Wed, 15 Dec 2021 12:13:41 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id i16sm526349oig.15.2021.12.15.12.13.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 12:13:40 -0800 (PST)
+Received: (nullmailer pid 1759973 invoked by uid 1000);
+        Wed, 15 Dec 2021 20:13:39 -0000
+Date:   Wed, 15 Dec 2021 14:13:39 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add
+ bindings for SM8450
+Message-ID: <YbpMc095FkeEAO9T@robh.at.kernel.org>
+References: <20211213131450.535775-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211215193704.2821775-17-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211213131450.535775-1-vkoul@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-12-15 22:37:04, Dmitry Baryshkov wrote:
-> The "xo" fixed_factor clock is a leftover/hack from a time when we
-> couldn't make rpmhcc the root of all clocks. It is going to be removed
-> once all users of this clock are converted to use clocks specified
-> through the DTS. Replace internal usage of the xo clock with the cxo
-> (RPM_SMD_BB_CLK1) parent, specifying xo_board as a fallback.
-
-Nit: as mentioned in another reply I don't think rpmhcc is the sole
-problem why "xo" exists (xo_board exists to subustitute it for now).
-Rather, "xo" seems to be a remnant from an era where clock dependencies
-were not (fully) specified in DT but instead relied on fixed, well known
-global names for these inter-driver (inter-clock) dependencies.  Maybe
-this alias was needed to streamline the use of xo_board until rpmcc
-could be used though?
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
+On Mon, 13 Dec 2021 18:44:48 +0530, Vinod Koul wrote:
+> Document the compatible string for USB phy found in Qualcomm SM8450 SoC
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  drivers/clk/qcom/gcc-msm8996.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>  .../devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml          | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
-> index 204c1f4c68c4..8da5ad2ad563 100644
-> --- a/drivers/clk/qcom/gcc-msm8996.c
-> +++ b/drivers/clk/qcom/gcc-msm8996.c
-> @@ -54,8 +54,8 @@ static struct clk_alpha_pll gpll0_early = {
->  		.enable_mask = BIT(0),
->  		.hw.init = &(struct clk_init_data){
->  			.name = "gpll0_early",
-> -			.parent_hws = (const struct clk_hw*[]){
-> -				&xo.hw,
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.fw_name = "cxo", .name = "xo_board",
->  			},
->  			.num_parents = 1,
->  			.ops = &clk_alpha_pll_ops,
-> @@ -131,8 +131,8 @@ static struct clk_alpha_pll gpll4_early = {
->  		.enable_mask = BIT(4),
->  		.hw.init = &(struct clk_init_data){
->  			.name = "gpll4_early",
-> -			.parent_hws = (const struct clk_hw*[]){
-> -				&xo.hw,
-> +			.parent_data = &(const struct clk_parent_data){
-> +				.fw_name = "cxo", .name = "xo_board",
->  			},
->  			.num_parents = 1,
->  			.ops = &clk_alpha_pll_ops,
-> @@ -167,7 +167,7 @@ static const struct parent_map gcc_xo_gpll0_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw }
->  };
->  
-> @@ -177,7 +177,7 @@ static const struct parent_map gcc_xo_sleep_clk_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_sleep_clk[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .fw_name = "sleep_clk", .name = "sleep_clk" }
->  };
->  
-> @@ -188,7 +188,7 @@ static const struct parent_map gcc_xo_gpll0_gpll0_early_div_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0_gpll0_early_div[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll0_early_div.hw }
->  };
-> @@ -200,7 +200,7 @@ static const struct parent_map gcc_xo_gpll0_gpll4_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0_gpll4[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll4.clkr.hw }
->  };
-> @@ -212,7 +212,7 @@ static const struct parent_map gcc_xo_gpll0_aud_ref_clk_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0_aud_ref_clk[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .fw_name = "aud_ref_clk", .name = "aud_ref_clk" }
->  };
-> @@ -225,7 +225,7 @@ static const struct parent_map gcc_xo_gpll0_sleep_clk_gpll0_early_div_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0_sleep_clk_gpll0_early_div[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .fw_name = "sleep_clk", .name = "sleep_clk" },
->  	{ .hw = &gpll0_early_div.hw }
-> @@ -239,7 +239,7 @@ static const struct parent_map gcc_xo_gpll0_gpll4_gpll0_early_div_map[] = {
->  };
->  
->  static const struct clk_parent_data gcc_xo_gpll0_gpll4_gpll0_early_div[] = {
-> -	{ .hw = &xo.hw },
-> +	{ .fw_name = "cxo", .name = "xo_board" },
->  	{ .hw = &gpll0.clkr.hw },
->  	{ .hw = &gpll4.clkr.hw },
->  	{ .hw = &gpll0_early_div.hw }
-> -- 
-> 2.33.0
-> 
+
+Acked-by: Rob Herring <robh@kernel.org>
