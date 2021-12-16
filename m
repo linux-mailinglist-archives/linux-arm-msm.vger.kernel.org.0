@@ -2,256 +2,464 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21C96477656
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 16:48:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E82E1477AD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 18:45:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238701AbhLPPsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 10:48:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34074 "EHLO
+        id S240297AbhLPRpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 12:45:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238714AbhLPPsT (ORCPT
+        with ESMTP id S240046AbhLPRpn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 10:48:19 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C148AC061747
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 07:48:18 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id 193so23621371qkh.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 07:48:18 -0800 (PST)
+        Thu, 16 Dec 2021 12:45:43 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07CCC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 09:45:42 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id s1so11461571wrg.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 09:45:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wfctcVVlvOvt9f1b90AP0qfvEFDdPLvVlI6Ah6jwx70=;
-        b=nz+YfyYL/oKEUv6MGMhq48iP1tS+LAiivJDAKUSh6DCSztPVdwtakPs+dk6kI8kwXi
-         umC+nf/N8aa02kZDvJM2cc7kryknVQiS0wR9S9W4auSsoZut5oz7iEQ0BMIsjcTYUJ3s
-         /fKRpDet8gk+2Rzy6S7Sv6/FneaoSZ5K+vM28zcEix+RK6fLTsVCqJbZMcTFP1tFvjic
-         U6Bb+X8r/vPD0udjssleEx66rz+vpzrYkZu1y9Zx7EfprcR/7mrUnor+HTmd7/QMdzoy
-         9gPFOo/Dc11iyDI2WOMKK0mgPFllwkoy6FhEwhPfx3zLjtPdQSe1Si9pzl+XTYCUPbc6
-         YmeA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zyjODw1XcGang83kHndNuo36+ufdYDr+XpHyTcLmKSQ=;
+        b=RfKAGou5li349Mhk16loLX5v4a3TELD3xaXJfIooKF2gdthjz6e2CmcZbc8vBkYkJx
+         vGSmMiWJ6fP+B7AG2Ehw/QN2dIAznutr1vr7a/L39uBVAK/iDSe+WMfqO08YDtG8IBUx
+         8qisE5YmjXHd78YUQnMtXNF2/Wm+CqWjZVqRc4h65P0RAm5a+JvU46xYjpjjLjKom4Tf
+         ZMU9GwUkMSD7cOZeYz3oHCx6HZ7S5swS9EcTgrspoua0c6wN7yEUY0ebgWzahu9Sf/l6
+         oLVvuuLbKjrj50rWe2Ob6b4XT/MvVjKz+RZXmXIQxlT0hZ6cysPgj3iUpXbCHR6LoX7U
+         mHkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wfctcVVlvOvt9f1b90AP0qfvEFDdPLvVlI6Ah6jwx70=;
-        b=uxMK67zk7LbXplisFezFDwhcIEwzHJsfwvnms0D/dzbJ1iQocUeTegeVfRB2OvxlIg
-         eQzdCVM54+7BhXzBUmtRJVeb2F9l0XVpGvM+TUb4QLwGBw/iXrLYg0Sk7zPFSToh+co5
-         QopqBvzDihXDZkaeaGOcQBeoqM/yrc9m3/8zDmdd77jIfJyHmZX1SlLLo5M8piJf6fHq
-         KRPyE9gb5Y7prYqJSxlPW2simYrQcGpv8N/ns+567oh/guTjnAgKNDThbqXhub4Ui0c+
-         1fXkMfs1Tus5v5m5QNy4EU1bQZgYh4IqXt6vMo63U/w7xlozYFTPHxflfqhPRwENpVb6
-         SRVA==
-X-Gm-Message-State: AOAM533Hmaw14RfSPUbyVdRYaFcB53WH7jFsb57KHRicBhl7gFwj08Lx
-        lO6j11Uew/mkFWKdzZ7xQf4dhg==
-X-Google-Smtp-Source: ABdhPJxTINUKnk11z7iqvevHHCAiRCPQVxS5oCLArk9MrxP7ubV5CKOXP13GS/LifdMmEdi71/jH/w==
-X-Received: by 2002:a37:410:: with SMTP id 16mr12574934qke.672.1639669697790;
-        Thu, 16 Dec 2021 07:48:17 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id bj32sm2958975qkb.75.2021.12.16.07.48.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Dec 2021 07:48:17 -0800 (PST)
-Subject: Re: [PATCH V6 0/7] Add driver support for Data Capture and Compare
- Engine(DCC) for SM8150,SC7280,SC7180,SDM845
-To:     Souradeep Chowdhury <schowdhu@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
-References: <cover.1628617260.git.schowdhu@codeaurora.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <396edd95-4f38-6830-99da-11e73d62a0cf@linaro.org>
-Date:   Thu, 16 Dec 2021 10:48:16 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zyjODw1XcGang83kHndNuo36+ufdYDr+XpHyTcLmKSQ=;
+        b=vqQz+7vLTeAb6LD8Kbxm8Y5EwXhC2t7/nMBi54iHm06wHecKHnrI1CBsCL7BS1WVtr
+         ++yviiY6AMXEKtBvZ2xDiJhYWNevthPs8CT5u58Dt59OAFHKQ56D7IzJ9okmEIYIr+mc
+         mpYfgcLLCnHcvs4OwLmuJ8ZXYBBvgrdt/eg3HQgDJhmg9ifQMUIDGqB2CmW87Su/YTCV
+         50aR1kmDD4Un09nUrutyr2wEtBDQfIBdHFGuoSZUr5ZHcxKnSRP/afkBFMJtXR2c9oDr
+         Go5IX4u8h9cz/bknX7fI8/svJsloNn0P9q1vx8GB8mDVnlnzA+edbHCdH6EVKQ3NyF7N
+         DuFQ==
+X-Gm-Message-State: AOAM530ArLU+kjevE9ijxiie5EKlRnhtImAoik2iVqD4Lq5a+YKyKfSG
+        HFrtSn2GArPdzTDGsI1jtUPp0g0Ew+DrCEMNtBX93w==
+X-Google-Smtp-Source: ABdhPJzujBFj3+o5UL9POJwUWK8U6hM4DaD5UB816N/+MfkeRsLsjXC8plKWGWoh5tkSXM/HT/PiKioC2tiZh5EXj9E=
+X-Received: by 2002:adf:8282:: with SMTP id 2mr9908867wrc.519.1639676741320;
+ Thu, 16 Dec 2021 09:45:41 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <cover.1628617260.git.schowdhu@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
+ <20211209141543.21314-3-quic_jinlmao@quicinc.com> <20211214185714.GB1549991@p14s>
+ <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
+In-Reply-To: <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Thu, 16 Dec 2021 17:45:30 +0000
+Message-ID: <CAJ9a7Vh2d79Ro72ZDsbQSVS8VrH3c+X+xo8849yGS4Z73+yq_w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/9] Coresight: Add coresight TPDM source driver
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+I have a couple of comments relating to Coresight trace IDs
+
+On Wed, 15 Dec 2021 at 16:10, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
+>
+> Hi Mathieu,
+>
+> On 12/15/2021 2:57 AM, Mathieu Poirier wrote:
+> > On Thu, Dec 09, 2021 at 10:15:36PM +0800, Mao Jinlong wrote:
+> >> Add driver to support Coresight device TPDM (Trace, Profiling and
+> >> Diagnostics Monitor). TPDM is a monitor to collect data from
+> >> different datasets. This change is to add probe/enable/disable
+> >> functions for tpdm source.
+> >>
+> >> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> >> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> >> ---
+> >>   MAINTAINERS                                  |   8 +
+> >>   drivers/hwtracing/coresight/Kconfig          |  13 ++
+> >>   drivers/hwtracing/coresight/Makefile         |   1 +
+> >>   drivers/hwtracing/coresight/coresight-core.c |   3 +-
+> >>   drivers/hwtracing/coresight/coresight-tpdm.c | 152 +++++++++++++++++++
+> >>   drivers/hwtracing/coresight/coresight-tpdm.h |  31 ++++
+> >>   include/linux/coresight.h                    |   1 +
+> >>   7 files changed, 208 insertions(+), 1 deletion(-)
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+> >>
+> >> diff --git a/MAINTAINERS b/MAINTAINERS
+> >> index 7a2345ce8521..59f39b3194f6 100644
+> >> --- a/MAINTAINERS
+> >> +++ b/MAINTAINERS
+> >> @@ -15560,6 +15560,14 @@ L:  netdev@vger.kernel.org
+> >>   S: Supported
+> >>   F: drivers/net/ipa/
+> >>
+> >> +QCOM CORESIGHT COMPONENTS DRIVER
+> >> +M:  Tao Zhang <quic_taozha@quicinc.com>
+> >> +M:  Jinlong Mao <quic_jinlmao@quicinc.com>
+> >> +M:  Mathieu Poirier <mathieu.poirier@linaro.org>
+> >> +M:  Suzuki K Poulose <suzuki.poulose@arm.com>
+> >> +S:  Maintained
+> >> +F:  drivers/hwtracing/coresight/coresight-tpdm.c
+> >> +
+> > There is no need for an extra entry in the MAINTAINERS file.  The checkpatch.pl
+> > script is smart enough to know when to CC you and Tao every time the TPDM/TPDA
+> > drivers are modified.  Suzuki and I will simply wait for you guys to add your RB
+> > tags before reviewing the patches.  I have explained this in the previous revision.
+>
+> Hi Mathieu,
+>
+> I will remove this  entry.
+>
+> >>   QEMU MACHINE EMULATOR AND VIRTUALIZER SUPPORT
+> >>   M: Gabriel Somlo <somlo@cmu.edu>
+> >>   M: "Michael S. Tsirkin" <mst@redhat.com>
+> >> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> >> index 514a9b8086e3..5c506a1cd08f 100644
+> >> --- a/drivers/hwtracing/coresight/Kconfig
+> >> +++ b/drivers/hwtracing/coresight/Kconfig
+> >> @@ -201,4 +201,17 @@ config CORESIGHT_TRBE
+> >>
+> >>        To compile this driver as a module, choose M here: the module will be
+> >>        called coresight-trbe.
+> >> +
+> >> +config CORESIGHT_TPDM
+> >> +    tristate "CoreSight Trace, Profiling & Diagnostics Monitor driver"
+> >> +    select CORESIGHT_LINKS_AND_SINKS
+> > Is this available on 32bit HW as well?  If not please make it dependent on ARM64
+> > as it for ETMv4x devices.
+> This is available on 32bit HW as well.
+> >> +    help
+> >> +      This driver provides support for configuring monitor. Monitors are
+> >> +      primarily responsible for data set collection and support the
+> >> +      ability to collect any permutation of data set types. Monitors are
+> >> +      also responsible for interaction with system cross triggering.
+> >> +
+> >> +      To compile this driver as a module, choose M here: the module will be
+> >> +      called coresight-tpdm.
+> >> +
+> >>   endif
+> >> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> >> index b6c4a48140ec..e7392a0dddeb 100644
+> >> --- a/drivers/hwtracing/coresight/Makefile
+> >> +++ b/drivers/hwtracing/coresight/Makefile
+> >> @@ -25,5 +25,6 @@ obj-$(CONFIG_CORESIGHT_CPU_DEBUG) += coresight-cpu-debug.o
+> >>   obj-$(CONFIG_CORESIGHT_CATU) += coresight-catu.o
+> >>   obj-$(CONFIG_CORESIGHT_CTI) += coresight-cti.o
+> >>   obj-$(CONFIG_CORESIGHT_TRBE) += coresight-trbe.o
+> >> +obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
+> >>   coresight-cti-y := coresight-cti-core.o    coresight-cti-platform.o \
+> >>                 coresight-cti-sysfs.o
+> >> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> >> index cc6b6cabf85f..a7f1a6f09cfb 100644
+> >> --- a/drivers/hwtracing/coresight/coresight-core.c
+> >> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> >> @@ -1071,7 +1071,8 @@ static int coresight_validate_source(struct coresight_device *csdev,
+> >>      }
+> >>
+> >>      if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
+> >> -        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE) {
+> >> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
+> >> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SYS) {
+> >>              dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
+> >>              return -EINVAL;
+> >>      }
+> >> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> >> new file mode 100644
+> >> index 000000000000..f494cef4fb24
+> >> --- /dev/null
+> >> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> >> @@ -0,0 +1,152 @@
+> >> +// SPDX-License-Identifier: GPL-2.0
+> >> +/*
+> >> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + */
+> >> +
+> >> +#include <linux/amba/bus.h>
+> >> +#include <linux/bitmap.h>
+> >> +#include <linux/coresight.h>
+> >> +#include <linux/device.h>
+> >> +#include <linux/err.h>
+> >> +#include <linux/fs.h>
+> >> +#include <linux/io.h>
+> >> +#include <linux/kernel.h>
+> >> +#include <linux/module.h>
+> >> +#include <linux/of.h>
+> >> +#include <linux/regulator/consumer.h>
+> >> +
+> >> +#include "coresight-priv.h"
+> >> +#include "coresight-tpdm.h"
+> >> +
+> >> +DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+> >> +
+> >> +static int tpdm_enable(struct coresight_device *csdev,
+> >> +                   struct perf_event *event, u32 mode)
+> >> +{
+> >> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> >> +
+> >> +    mutex_lock(&drvdata->lock);
+> >> +    if (drvdata->enable) {
+> >> +            mutex_unlock(&drvdata->lock);
+> >> +            return -EBUSY;
+> >> +    }
+> >> +
+> >> +    drvdata->enable = true;
+> >> +    mutex_unlock(&drvdata->lock);
+> >> +
+> >> +    dev_info(drvdata->dev, "TPDM tracing enabled\n");
+> >> +    return 0;
+> >> +}
+> >> +
+> >> +static void tpdm_disable(struct coresight_device *csdev,
+> >> +                     struct perf_event *event)
+> >> +{
+> >> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> >> +
+> >> +    mutex_lock(&drvdata->lock);
+> >> +    if (!drvdata->enable) {
+> >> +            mutex_unlock(&drvdata->lock);
+> >> +            return;
+> >> +    }
+> >> +
+> >> +    drvdata->enable = false;
+> >> +    mutex_unlock(&drvdata->lock);
+> >> +
+> >> +    dev_info(drvdata->dev, "TPDM tracing disabled\n");
+> >> +}
+> >> +
+> >> +static int tpdm_trace_id(struct coresight_device *csdev)
+> >> +{
+> >> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> >> +
+> >> +    return drvdata->traceid;
+> >> +}
+> >> +
+> >> +static const struct coresight_ops_source tpdm_source_ops = {
+> >> +    .trace_id       = tpdm_trace_id,
+> >> +    .enable         = tpdm_enable,
+> >> +    .disable        = tpdm_disable,
+> >> +};
+> >> +
+> >> +static const struct coresight_ops tpdm_cs_ops = {
+> >> +    .source_ops     = &tpdm_source_ops,
+> >> +};
+> >> +
+> >> +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
+> >> +{
+> >> +    static int traceid = TPDM_TRACE_ID_START;
+> >> +
+> >> +    drvdata->traceid = traceid++;
+> >> +}
+> > I have been specific on how to properly do this in the last revision.  Given the
+> > above about the MAINTAINERS file, I am not sure that I will continue reviewing this set.
+> >
+> > There is also no need to rush another revision as I won't have the bandwidth to
+> > process it before the holidays.
+> >
+> > Thanks,
+> > Mathieu
+>
+> Hi Mathieu,
+>
+> Sorry, not addressed your previous comments here.
+>
+> For the trace id, each coresight component has 7 bits to store the trace
+> id. So the trace id should be from 1 to 127 as 0 is invalid.
+
+IDs 0x70 - 0x7F (`112 - 127 ) are reserved - see the ARM Coresight
+Architecture specification v3.0
+
+>
+> Apart from TPDMs/STM/ETMs, we also have other coresight components in
+> our internal device. About 80 ids are already used.
+>
+> Some components have fixed trace id in HW. If we use functions below to
+> count the trace id, there will be conflict to other components.
+>
+> Can we use 1-15 for etm trace ids  and 16 - 127 for other coresight
+> components ? And handle trace ids in its' own driver ?
+>
+
+This will limit systems to 15 cores - some have more!
 
 
-On 8/10/21 1:54 PM, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.In case of a system
-> crash or manual software triggers by the user the DCC hardware stores the value at the register
-> addresses which can be used for debugging purposes.The DCC driver provides the user with sysfs
-> interface to configure the register addresses.The options that the DCC hardware provides include
-> reading from registers,writing to registers,first reading and then writing to registers and looping
-> through the values of the same register.
-> 
-> In certain cases a register write needs to be executed for accessing the rest of the registers,
-> also the user might want to record the changing values of a register with time for which he has the
-> option to use the loop feature.
+>
+> static inline int coresight_get_system_trace_id(int id)
+> {
+>          /* Start system IDs above the highest per CPU trace ID. */
+>          return coresigth_get_trace_id(cpumask_last(cpu_possible_mask) + 1);
+> }
+>
+> static inline int coresight_get_trace_id(int cpu)
+> {
+>      /*
+>       * A trace ID of value 0 is invalid, so let's start at some
+>       * random value that fits in 7 bits and go from there.  Since
+>       * the common convention is to have data trace IDs be I(N) + 1,
+>       * set instruction trace IDs as a function of the CPU number.
+>       */
+>      return (CORESIGHT_ETM_PMU_SEED + (cpu * 2));
+> }
+>
 
-Hello Souradeep,
+This fixed relationship between cpu and trace ID is used in the perf
+tooling to populate the elements in the perf.data file to correctly
+allow association between CPU and trace data, and thus allow correct
+trace decode.
 
-First of all, I think this is very a useful feature to have. I have some 
-generic design related queries/comments on driver and the interface 
-exposed to the user space. Also, I do not understand the h/w well here, 
-so feel free to correct me if I am wrong.
+It should be possible to create another more dynamic mapping scheme -
+but this must include a way to support the perf requirements too.
 
-1. Linked list looks like a very internal feature to the h/w. It really 
-is not an info that user should be aware of. I tried reading the code a 
-bit. IUC, every time a s/w trigger is issued the configs in all the 
-enabled linked lists are executed. The final ram dump that you get from 
-/dev/dcc_sram is a dump of contents from all the enabled list? Is this 
-understanding correct ? And we are talking of at-most 4 linked list?
-If yes, I think it might be better to have a folder per linked list with 
-config, config_write etc. Also if possible it will be better to dump the 
-results to a file in the specific folder instead of reading from 
-/dev/dcc_sram.
-If no, there is no real need for user to know the linked list, right? 
-Choosing of linked list can be done by kernel driver in this case with 
-no input needed from user.
+Regards
 
-2. Now to the sysfs interface itself, I know lot of thought has gone 
-into sysfs vs debugfs considerations. But, have you considered using 
-netlink interface instead of sysfs. Netlink interface is used for 
-asynchronous communication between kernel and user space. In case of 
-DCC, the communication appears to be asynchronous, where in user asks 
-the kernel to capture some info and kernel can indicate back to user 
-when the info is captured. Also the entire mess surrounding echoing addr 
-/ value / offset repeatedly into a sysfs entry can be avoided using 
-netlink interface.
+Mike
+
+> Thanks
+>
+> Jinlong Mao
+>
+> >> +
+> >> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+> >> +{
+> >> +    struct device *dev = &adev->dev;
+> >> +    struct coresight_platform_data *pdata;
+> >> +    struct tpdm_drvdata *drvdata;
+> >> +    struct coresight_desc desc = { 0 };
+> >> +
+> >> +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+> >> +    if (!desc.name)
+> >> +            return -ENOMEM;
+> >> +    pdata = coresight_get_platform_data(dev);
+> >> +    if (IS_ERR(pdata))
+> >> +            return PTR_ERR(pdata);
+> >> +    adev->dev.platform_data = pdata;
+> >> +
+> >> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> >> +    if (!drvdata)
+> >> +            return -ENOMEM;
+> >> +    drvdata->dev = &adev->dev;
+> >> +    dev_set_drvdata(dev, drvdata);
+> >> +
+> >> +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
+> >> +    if (!drvdata->base)
+> >> +            return -ENOMEM;
+> >> +
+> >> +    mutex_init(&drvdata->lock);
+> >> +
+> >> +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+> >> +    desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_SYS;
+> >> +    desc.ops = &tpdm_cs_ops;
+> >> +    desc.pdata = adev->dev.platform_data;
+> >> +    desc.dev = &adev->dev;
+> >> +    drvdata->csdev = coresight_register(&desc);
+> >> +    if (IS_ERR(drvdata->csdev))
+> >> +            return PTR_ERR(drvdata->csdev);
+> >> +
+> >> +    tpdm_init_default_data(drvdata);
+> >> +    pm_runtime_put(&adev->dev);
+> >> +
+> >> +    return 0;
+> >> +}
+> >> +
+> >> +static void __exit tpdm_remove(struct amba_device *adev)
+> >> +{
+> >> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+> >> +
+> >> +    coresight_unregister(drvdata->csdev);
+> >> +}
+> >> +
+> >> +static struct amba_id tpdm_ids[] = {
+> >> +    {
+> >> +            .id = 0x000f0e00,
+> >> +            .mask = 0x000fff00,
+> >> +    },
+> >> +    { 0, 0},
+> >> +};
+> >> +
+> >> +static struct amba_driver tpdm_driver = {
+> >> +    .drv = {
+> >> +            .name   = "coresight-tpdm",
+> >> +            .owner  = THIS_MODULE,
+> >> +            .suppress_bind_attrs = true,
+> >> +    },
+> >> +    .probe          = tpdm_probe,
+> >> +    .id_table       = tpdm_ids,
+> >> +};
+> >> +
+> >> +module_amba_driver(tpdm_driver);
+> >> +
+> >> +MODULE_LICENSE("GPL v2");
+> >> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
+> >> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+> >> new file mode 100644
+> >> index 000000000000..980ae90ff1c8
+> >> --- /dev/null
+> >> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+> >> @@ -0,0 +1,31 @@
+> >> +/* SPDX-License-Identifier: GPL-2.0 */
+> >> +/*
+> >> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + */
+> >> +
+> >> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
+> >> +#define _CORESIGHT_CORESIGHT_TPDM_H
+> >> +
+> >> +/* Default value of the traceid */
+> >> +#define TPDM_TRACE_ID_START 128
+> >> +
+> >> +/**
+> >> + * struct tpdm_drvdata - specifics associated to an TPDM component
+> >> + * @base:       memory mapped base address for this component.
+> >> + * @dev:        The device entity associated to this component.
+> >> + * @csdev:      component vitals needed by the framework.
+> >> + * @lock:       lock for the enable value.
+> >> + * @enable:     enable status of the component.
+> >> + * @traceid:    value of the current ID for this component.
+> >> + */
+> >> +
+> >> +struct tpdm_drvdata {
+> >> +    void __iomem            *base;
+> >> +    struct device           *dev;
+> >> +    struct coresight_device *csdev;
+> >> +    struct mutex            lock;
+> >> +    bool                    enable;
+> >> +    int                     traceid;
+> >> +};
+> >> +
+> >> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+> >> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> >> index 93a2922b7653..e48d463be63b 100644
+> >> --- a/include/linux/coresight.h
+> >> +++ b/include/linux/coresight.h
+> >> @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
+> >>      CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
+> >>      CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+> >>      CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+> >> +    CORESIGHT_DEV_SUBTYPE_SOURCE_SYS,
+> >>   };
+> >>
+> >>   enum coresight_dev_subtype_helper {
+> >> --
+> >> 2.17.1
+> >>
+
+
 
 -- 
-Warm Regards
-Thara (She/Her/Hers)
-> 
-> The options mentioned above are exposed to the user by sysfs files once the driver is probed.The
-> details and usage of this sysfs files are documented in Documentation/ABI/testing/sysfs-driver-dcc.
-> 
-> As an example let us consider a couple of debug scenarios where DCC has been proved to be effective
-> for debugging purposes:-
-> 
-> i)TimeStamp Related Issue
-> 
-> On SC7180, there was a coresight timestamp issue where it would occasionally be all 0 instead of proper
-> timestamp values.
-> 
-> Proper timestamp:
-> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
-> 
-> Zero timestamp:
-> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
-> 
-> Now this is a non-fatal issue and doesn't need a system reset, but still needs
-> to be rootcaused and fixed for those who do care about coresight etm traces.
-> Since this is a timestamp issue, we would be looking for any timestamp related
-> clocks and such.
-> 
-> o we get all the clk register details from IP documentation and configure it
-> via DCC config syfs node. Before that we set the current linked list.
-> 
-> /* Set the current linked list */
-> echo 3 > /sys/bus/platform/devices/10a2000.dcc/	
-> 
-> /* Program the linked list with the addresses */
-> echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
-> ..... and so on for other timestamp related clk registers
-> 
-> /* Other way of specifying is in "addr len" pair, in below case it
-> specifies to capture 4 words starting 0x10C004 */
-> 
-> echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
-> 
-> /* Enable DCC */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
-> 
-> /* Run the timestamp test for working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram1.bin
-> 
-> /* Run the timestamp test for non-working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram2.bin
-> 
-> Get the parser from [1] and checkout the latest branch.
-> 
-> /* Parse the SRAM bin */
-> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
-> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
-> 
-> Sample parsed output of dcc_sram1.bin:
-> 
-> <hwioDump version="1">
->          <timestamp>03/14/21</timestamp>
->              <generator>Linux DCC Parser</generator>
->                  <chip name="None" version="None">
->                  <register address="0x0010c004" value="0x80000000" />
->                  <register address="0x0010c008" value="0x00000008" />
->                  <register address="0x0010c00c" value="0x80004220" />
->                  <register address="0x0010c010" value="0x80000000" />
->              </chip>
->      <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
-> </hwioDump>
-> 
-> ii)NOC register errors
-> 
-> A particular class of registers called NOC which are functional registers was reporting
-> errors while logging the values.To trace these errors the DCC has been used effectively.
-> The steps followed were similar to the ones mentioned above.
-> In addition to NOC registers a few other dependent registers were configured in DCC to
-> monitor it's values during a crash. A look at the dependent register values revealed that
-> the crash was happening due to a secured access to one of these dependent registers.
-> All these debugging activity and finding the root cause was achieved using DCC.
-> 
-> DCC parser is available at the following open source location
-> 
-> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
-> 
-> Changes in v6:
-> 
-> *Added support in the dcc driver to handle multiple Qualcomm SoCs including SC7180,SC7280,SDM845
->   along with existing SM8150.
->   
-> *Added the support node in the respective device tree files for SC7180,SC7280,SDM845.
-> 
-> Souradeep Chowdhury (7):
->    dt-bindings: Added the yaml bindings for DCC
->    soc: qcom: dcc:Add driver support for Data Capture and Compare
->      unit(DCC)
->    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->      support
->    arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
->      node
->    arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
->      node
-> 
->   Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
->   .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   43 +
->   MAINTAINERS                                        |    8 +
->   arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
->   arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
->   drivers/soc/qcom/Kconfig                           |    8 +
->   drivers/soc/qcom/Makefile                          |    1 +
->   drivers/soc/qcom/dcc.c                             | 1549 ++++++++++++++++++++
->   10 files changed, 1747 insertions(+)
->   create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
->   create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
->   create mode 100644 drivers/soc/qcom/dcc.c
-> 
-
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
