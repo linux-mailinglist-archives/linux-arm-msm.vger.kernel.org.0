@@ -2,222 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 89527478087
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 00:31:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 764E64780B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 00:34:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237210AbhLPXbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 18:31:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
+        id S229595AbhLPXeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 18:34:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237106AbhLPXbU (ORCPT
+        with ESMTP id S229719AbhLPXeJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 18:31:20 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09710C06173F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 15:31:19 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id x43-20020a056830246b00b00570d09d34ebso808538otr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 15:31:19 -0800 (PST)
+        Thu, 16 Dec 2021 18:34:09 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA13FC06173F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 15:34:08 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id u74so1132448oie.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 15:34:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=NXP5aZIeipXTUi98du3BOF/PkToplyAfCgzX8CANNdQ=;
-        b=zFKdJmuecI72DotbzBckf7qeXzkcTKD+nGjYIEKibmNcyUgZxg+6KuEFFZcd+do1MC
-         44PNU6KqyaSlhEL7ew/u3e91AJFyCaBBnZeToKl4PrD0reR/1dCnRpTDQlAoRdpfN1Z+
-         LiSXhmO24W1NyyNSHQWI8lU5LnhkEqTaVI1woRGfzG6OOV9rKc+cwGR7EF8Z0wBf3Lc/
-         hFOgtUxWcfJnuY1kM/vbo+/yx1V7ikqFdQ1YPhUrHluDgJ9S2eIffby7X0Wc5v/dgvfX
-         BjTrWikZ59iRC8yX2nJ+LYR4WvJg76RE0qLI4u82mKoF8kRkysN5HhPnnW5Akn79gFLI
-         evug==
+        bh=wVN9Cdst75YteBeeIFGNl0na8PJu1PxWjHvdKRsuLNo=;
+        b=HjENK0B9HW76vw8xIIFcJA0IC3D9n2s3W+qR5y0bHYRZNJwAQgqyMg67KQ5oX7Cjpk
+         1tBi7NGzC/4YJI3ThIywLGGClCUcnzfkZSq+I0Rs9bz5/xCcm6jl5jr2lPIgSCLbaH2u
+         vEl+/iaypGo/qxv816XdLF0aZrgkDlf1X/ADKXOTzwPBCF3n81iMJk0ICHzh1CHFIFir
+         W34nfJiJYW+G2E8AA3TI7ZIJNttLnhX7gI2xABw9PaJbkjv/GkYmXEVE77DyRlnyw6dA
+         iY2iwcSoDGPe6FyQBPMym3RozkZZbmucrUF21orOEGPqNfx1EdygBBdHg0iFDR+y+yvY
+         VAYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=NXP5aZIeipXTUi98du3BOF/PkToplyAfCgzX8CANNdQ=;
-        b=A6Fv7DmMDuhKqxqFLyk5/QjgM16BFlP15dCV2H7gt+xfy8aKiHrTt9KNhAw/iJ9CEs
-         yiTJ0SXmldzgCnorH79qv0qjJ+Jdodi01ic9bje/tbHLY0sX72Cwdu80E5Hp5HjBAyd0
-         lepynS7V9KKOx8ZcDZgk+S4tOcUEGJz0WTNPPCoOxS0W0JX/KxLhJ8Yhjoqnx8Bwt+jk
-         xp6n3FhJBF+zxlzDsttCMB59fJCXQJdHJMgC7c9xEhjQV2vQQJNVOuu+L5fecjE27qfX
-         eZmQ4N3iZg7I0vPHrZN6pWY3rfJB9hN7esoKPIymj9ePx0qb/gxlRNrDEab5Kt1QPsLf
-         hZPw==
-X-Gm-Message-State: AOAM531LV9J3GDzaf3nswU8HCu0XhuUXffFk+yHNhWoo6b6MGM9TsNmO
-        LCiE1fPm2sJAt2dzmWa6yjlfZw==
-X-Google-Smtp-Source: ABdhPJx/NpkKAmabEITTnvIJ5WsOnzArrDjDEsBnlWblCgVJ+Hxk8mVhpGbmPRyJrNWtK6Oodd0Xrg==
-X-Received: by 2002:a9d:7548:: with SMTP id b8mr338973otl.92.1639697479143;
-        Thu, 16 Dec 2021 15:31:19 -0800 (PST)
+        bh=wVN9Cdst75YteBeeIFGNl0na8PJu1PxWjHvdKRsuLNo=;
+        b=1N5GDWXvAKDn1B2OhcMxGZzdaa63nBGGBE0amdA64vSFG2O9Nlwvj5yZUDeiUc47vF
+         tyHu8DnUMOt+d8JEHvv/bHqE/IPTWv+BPTBbK6j9771Ak4QbfP/pw2fU1xVKTzU/lUYb
+         jKEhBu4Ssn3CxT65+wugG6PLIRUCMLqmg6bBJ97g0dXoLKEEXahrx7GeaDlyf8lqcCJR
+         48Zv/SfjKsVXW+iNAld/FbU3+erF7o/0uTPTjgU5YKnQS8IIfSNGUaNL9QWh+d+7xg+p
+         xMaKQW6qM2oP7k1ywEPbA1I1zlHv+7FXvcWa89yHIupokYmTwlhcZVMX2yYKU/kvdEBO
+         RI0A==
+X-Gm-Message-State: AOAM5307V6QGoizzY1TLZ2G54rQQqunYypURblqN58xQbLc0/nibzSOU
+        Zp4RKdUhDx/b0CAhba95KxK4FA==
+X-Google-Smtp-Source: ABdhPJzVmPPYwv1YIcyUN6xIib5xQXy6q7OQQrigQ9KAdWSJxAYxjsL16fUSS1c0ugQMQ/lxpItSOQ==
+X-Received: by 2002:a05:6808:1597:: with SMTP id t23mr173283oiw.24.1639697648165;
+        Thu, 16 Dec 2021 15:34:08 -0800 (PST)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id g17sm1266613oiy.14.2021.12.16.15.31.18
+        by smtp.gmail.com with ESMTPSA id bi20sm1431910oib.29.2021.12.16.15.34.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 15:31:18 -0800 (PST)
-Date:   Thu, 16 Dec 2021 15:32:32 -0800
+        Thu, 16 Dec 2021 15:34:07 -0800 (PST)
+Date:   Thu, 16 Dec 2021 15:35:23 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Amit Nischal <anischal@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, dmitry.baryshkov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
-Message-ID: <YbvMkIhdsGdCfvFV@ripper>
-References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
- <20211216015136.96AD3C36AE1@smtp.kernel.org>
- <Ybqo+wUv6lNT75tJ@ripper>
- <20211216185856.27406C36AE2@smtp.kernel.org>
+To:     quic_vamslank@quicinc.com
+Cc:     agross@kernel.org, linus.walleij@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH v6 1/2] dt-bindings: pinctrl: qcom: Add SDX65 pinctrl
+ bindings
+Message-ID: <YbvNO8uS/x5qFqx8@ripper>
+References: <cover.1639696427.git.quic_vamslank@quicinc.com>
+ <ff9abf953c274a1e34f59114642f67ecf02acb6f.1639696427.git.quic_vamslank@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211216185856.27406C36AE2@smtp.kernel.org>
+In-Reply-To: <ff9abf953c274a1e34f59114642f67ecf02acb6f.1639696427.git.quic_vamslank@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 16 Dec 10:58 PST 2021, Stephen Boyd wrote:
+On Thu 16 Dec 15:18 PST 2021, quic_vamslank@quicinc.com wrote:
 
-> Quoting Bjorn Andersson (2021-12-15 18:48:27)
-> > On Wed 15 Dec 17:51 PST 2021, Stephen Boyd wrote:
-> > 
-> > > Quoting Bjorn Andersson (2021-12-02 19:56:01)
-> > > > As GDSCs are turned on and off some associated clocks are momentarily
-> > > > enabled for house keeping purposes. Failure to enable these clocks seems
-> > > > to have been silently ignored in the past, but starting in SM8350 this
-> > > > failure will prevent the GDSC to turn on.
-> > > > 
-> > > > At least on SM8350 this operation will enable the RCG per the
-> > > > configuration in CFG_REG. This means that the current model where the
-> > > > current configuration is written back to CF_REG immediately after
-> > > > parking the RCG doesn't work.
-> > > 
-> > > Just to clarify, is the RCG off and "parked" at XO with the config
-> > > register dirty and set to the desired frequency and then the RCG is
-> > > turned on by the GDSC?
-> > > 
-> > 
-> > Correct, that's exactly what I'm observing.
+> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 > 
-> Cool can you add that detail to the commit message?
+> Add device tree binding Documentation details for Qualcomm SDX65
+> pinctrl driver.
 > 
+> Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/pinctrl/qcom,sdx65-pinctrl.yaml  | 191 ++++++++++++++++++
+>  1 file changed, 191 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..cdfcf29dffee
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> @@ -0,0 +1,191 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdx65-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SDX65 TLMM block
+> +
+> +maintainers:
+> +  - Vamsi krishna Lanka <quic_vamslank@quicinc.com>
+> +
+> +description:
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  SDX65 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdx65-tlmm
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description: Specifies the PIN numbers and Flags, as defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +  gpio-reserved-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sdx65-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
+> +            $ref: "#/$defs/qcom-sdx65-tlmm-state"
+> +'$defs':
+> +  qcom-sdx65-tlmm-state:
 
-Sure.
+Thanks.
 
-> > 
-> > > > 
-> > > > Instead, keep track of the currently requested rate of the clock and
-> > > > upon enabling the clock reapply the configuration per the saved rate.
-> > > 
-> > > We already keep track of the requested rate and reapply it on enable,
-> > > just we're lazy and stash that information in the hardware and not the
-> > > software. I didn't think the gdsc would be turned on and ruin that all,
-> > > but it's fair.
-> > > 
-> > 
-> > Up until SM8350 I see no evidence that this has been a problem, but now
-> > it is. So there's likely some changes in the hardware there...
-> > 
-> > > > 
-> > > > Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
-> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > ---
-> > > >  drivers/clk/qcom/clk-rcg.h  |  2 ++
-> > > >  drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
-> > > >  2 files changed, 19 insertions(+), 15 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> > > > index 99efcc7f8d88..6939f4e62768 100644
-> > > > --- a/drivers/clk/qcom/clk-rcg.h
-> > > > +++ b/drivers/clk/qcom/clk-rcg.h
-> > > > @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
-> > > >   * @freq_tbl: frequency table
-> > > >   * @clkr: regmap clock handle
-> > > >   * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
-> > > > + * @current_rate: cached rate for parked RCGs
-> > > >   */
-> > > >  struct clk_rcg2 {
-> > > >         u32                     cmd_rcgr;
-> > > > @@ -149,6 +150,7 @@ struct clk_rcg2 {
-> > > >         const struct freq_tbl   *freq_tbl;
-> > > >         struct clk_regmap       clkr;
-> > > >         u8                      cfg_off;
-> > > > +       unsigned long           current_rate;
-> > > >  };
-> > > >  
-> > > >  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
-> > > > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> > > > index e1b1b426fae4..b574b38dcbd5 100644
-> > > > --- a/drivers/clk/qcom/clk-rcg2.c
-> > > > +++ b/drivers/clk/qcom/clk-rcg2.c
-> > > > @@ -167,6 +167,7 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> > > >  {
-> > > >         struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> > > >         u32 cfg, hid_div, m = 0, n = 0, mode = 0, mask;
-> > > > +       unsigned long rate;
-> > > >  
-> > > >         regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
-> > > >  
-> > > > @@ -186,7 +187,11 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> > > >         hid_div = cfg >> CFG_SRC_DIV_SHIFT;
-> > > >         hid_div &= mask;
-> > > >  
-> > > > -       return calc_rate(parent_rate, m, n, mode, hid_div);
-> > > > +       rate = calc_rate(parent_rate, m, n, mode, hid_div);
-> > > > +       if (!rcg->current_rate)
-> > > > +               rcg->current_rate = rate;
-> > > 
-> > > Instead of doing this in recalc_rate, all the time, why not make an init
-> > > clk op that does it once during registration? The other problem I see is
-> > > that the rate we calculate may be wrong if the parent is registered
-> > > after this clk. I think this came up originally when the patch this is
-> > > fixing was discussed.
-> > > 
-> > 
-> > I would need to go back and reproduce the issue I saw, but I had to add
-> > this because I ended up in clk_rcg2_shared_enable() with current_rate =
-> > 0, which I think would be equally bad to just committing the dirty
-> > configuration.
-> 
-> Alright.
-> 
-> > 
-> > > So instead of saving the current_rate can we save the cfg register value
-> > > (or however many registers we need) to put back the frequency of the clk
-> > > to what we want on enable? The other thing is that we made recalc_rate()
-> > > work "seamlessly" here by stashing the frequency into the register but
-> > > leaving it uncommitted until enable. We may need to now look at the
-> > > software copy of the registers in the shared rcg recalc rate operation
-> > > to figure out what the frequency is.
-> > > 
-> > 
-> > I made an attempt at this, the problem I had was to come up within
-> > something sane for how to deal with set_rate on parked clocks; because
-> > we need to re-generate the register contents, without writing out the
-> > value - and that got messy.
-> 
-> Looking back on the introduction of this code[1] I see that it's not
-> about the rate but more about the parent. i.e. we park the clk on the XO
-> parent but don't care about the m/n values or pre divider because it
-> doesn't really matter if the clk is running slowly. So nothing needs to
-> be saved except for the cfg register, and we can do that in software
-> with a single u32 instead of using a rate and looking it up and then
-> reprogramming the other values. We should be able to cache the register
-> content with an init clk_op.
-> 
-
-So you're suggesting that, in clk_rcg2_shared_set_rate(), when the RCG
-is found to be disabled, I should write out M, N, D and calculate a new
-cfg value which I stash until the next enable?
-
-Looks a little bit messy, but I will give it a try.
-
-> > 
-> > So stashing the frequency turned out to be much cleaner. I believe that
-> > this is also what they do downstream...
-> > 
-> 
-> Downstream doing something isn't a great reason.
-> 
-
-:)
-
-> [1] https://lore.kernel.org/r/07dbf890975c1178bc4cc2360c25526a@codeaurora.org
+This looks good now.
 
 Regards,
 Bjorn
+
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|10[0-7])$"
+> +            - enum: [ ufs_reset, sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data, sdc1_rclk ]
+> +        minItems: 1
+> +        maxItems: 150
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins. Functions are only valid for gpio pins.
+> +        enum: [ blsp_uart1, blsp_spi1, blsp_i2c1, blsp_uim1, atest_tsens,
+> +                bimc_dte1, dac_calib0, blsp_spi8, blsp_uart8, blsp_uim8,
+> +                qdss_cti_trig_out_b, bimc_dte0, dac_calib1, qdss_cti_trig_in_b,
+> +                dac_calib2, atest_tsens2, atest_usb1, blsp_spi10, blsp_uart10,
+> +                blsp_uim10, atest_bbrx1, atest_usb13, atest_bbrx0, atest_usb12,
+> +                mdp_vsync, edp_lcd, blsp_i2c10, atest_gpsadc1, atest_usb11,
+> +                atest_gpsadc0, edp_hot, atest_usb10, m_voc, dac_gpio, atest_char,
+> +                cam_mclk, pll_bypassnl, qdss_stm7, blsp_i2c8, qdss_tracedata_b,
+> +                pll_reset, qdss_stm6, qdss_stm5, qdss_stm4, atest_usb2, cci_i2c,
+> +                qdss_stm3, dac_calib3, atest_usb23, atest_char3, dac_calib4,
+> +                qdss_stm2, atest_usb22, atest_char2, qdss_stm1, dac_calib5,
+> +                atest_usb21, atest_char1, dbg_out, qdss_stm0, dac_calib6,
+> +                atest_usb20, atest_char0, dac_calib10, qdss_stm10,
+> +                qdss_cti_trig_in_a, cci_timer4, blsp_spi6, blsp_uart6, blsp_uim6,
+> +                blsp2_spi, qdss_stm9, qdss_cti_trig_out_a, dac_calib11,
+> +                qdss_stm8, cci_timer0, qdss_stm13, dac_calib7, cci_timer1,
+> +                qdss_stm12, dac_calib8, cci_timer2, blsp1_spi, qdss_stm11,
+> +                dac_calib9, cci_timer3, cci_async, dac_calib12, blsp_i2c6,
+> +                qdss_tracectl_a, dac_calib13, qdss_traceclk_a, dac_calib14,
+> +                dac_calib15, hdmi_rcv, dac_calib16, hdmi_cec, pwr_modem,
+> +                dac_calib17, hdmi_ddc, pwr_nav, dac_calib18, pwr_crypto,
+> +                dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,
+> +                dac_calib22, dac_calib23, dac_calib24, tsif1_sync, dac_calib25,
+> +                sd_write, tsif1_error, blsp_spi2, blsp_uart2, blsp_uim2,
+> +                qdss_cti, blsp_i2c2, blsp_spi3, blsp_uart3, blsp_uim3, blsp_i2c3,
+> +                uim3, blsp_spi9, blsp_uart9, blsp_uim9, blsp10_spi, blsp_i2c9,
+> +                blsp_spi7, blsp_uart7, blsp_uim7, qdss_tracedata_a, blsp_i2c7,
+> +                qua_mi2s, gcc_gp1_clk_a, ssc_irq, uim4, blsp_spi11, blsp_uart11,
+> +                blsp_uim11, gcc_gp2_clk_a, gcc_gp3_clk_a, blsp_i2c11, cri_trng0,
+> +                cri_trng1, cri_trng, qdss_stm18, pri_mi2s, qdss_stm17, blsp_spi4,
+> +                blsp_uart4, blsp_uim4, qdss_stm16, qdss_stm15, blsp_i2c4,
+> +                qdss_stm14, dac_calib26, spkr_i2s, audio_ref, lpass_slimbus,
+> +                isense_dbg, tsense_pwm1, tsense_pwm2, btfm_slimbus, ter_mi2s,
+> +                qdss_stm22, qdss_stm21, qdss_stm20, qdss_stm19, gcc_gp1_clk_b,
+> +                sec_mi2s, blsp_spi5, blsp_uart5, blsp_uim5, gcc_gp2_clk_b,
+> +                gcc_gp3_clk_b, blsp_i2c5, blsp_spi12, blsp_uart12, blsp_uim12,
+> +                qdss_stm25, qdss_stm31, blsp_i2c12, qdss_stm30, qdss_stm29,
+> +                tsif1_clk, qdss_stm28, tsif1_en, tsif1_data, sdc4_cmd, qdss_stm27,
+> +                qdss_traceclk_b, tsif2_error, sdc43, vfr_1, qdss_stm26, tsif2_clk,
+> +                sdc4_clk, qdss_stm24, tsif2_en, sdc42, qdss_stm23, qdss_tracectl_b,
+> +                sd_card, tsif2_data, sdc41, tsif2_sync, sdc40, mdp_vsync_p_b,
+> +                ldo_en, mdp_vsync_s_b, ldo_update, blsp11_uart_tx_b, blsp11_uart_rx_b,
+> +                blsp11_i2c_sda_b, prng_rosc, blsp11_i2c_scl_b, uim2, uim1, uim_batt,
+> +                pci_e2, pa_indicator, adsp_ext, ddr_bist, qdss_tracedata_11,
+> +                qdss_tracedata_12, modem_tsync, nav_dr, nav_pps, pci_e1, gsm_tx,
+> +                qspi_cs, ssbi2, ssbi1, mss_lte, qspi_clk, qspi0, qspi1, qspi2, qspi3,
+> +                gpio ]
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    tlmm: pinctrl@f100000 {
+> +        compatible = "qcom,sdx65-tlmm";
+> +        reg = <0x03000000 0xdc2000>;
+> +        gpio-controller;
+> +        #gpio-cells = <2>;
+> +        gpio-ranges = <&tlmm 0 0 109>;
+> +        interrupt-controller;
+> +        #interrupt-cells = <2>;
+> +        interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +        gpio-wo-subnode-state {
+> +            pins = "gpio1";
+> +            function = "gpio";
+> +        };
+> +
+> +        uart-w-subnodes-state {
+> +            rx {
+> +                pins = "gpio4";
+> +                function = "blsp_uart1";
+> +                bias-pull-up;
+> +            };
+> +
+> +            tx {
+> +                pins = "gpio5";
+> +                function = "blsp_uart1";
+> +                bias-disable;
+> +            };
+> +        };
+> +    };
+> +...
+> -- 
+> 2.33.1
+> 
