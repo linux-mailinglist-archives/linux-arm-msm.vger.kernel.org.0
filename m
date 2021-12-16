@@ -2,218 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 673674768F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 05:10:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13537476908
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 05:23:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbhLPEKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 23:10:17 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:49940 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbhLPEKR (ORCPT
+        id S231278AbhLPEXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 23:23:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229956AbhLPEXA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 23:10:17 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E5CE161BDF;
-        Thu, 16 Dec 2021 04:10:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8A7C36AE3;
-        Thu, 16 Dec 2021 04:10:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639627816;
-        bh=lZOnr8QqXUrRg94PL03YOTAhERYuduDNpbInbvwbG2A=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=o+X4w16Ykjuv82Ozy2++hhTexNDNFz8GV7HiPC4tAvSJevJPCUfRGj8m9K3jGzsDc
-         a0W02PMf1AOne57a1wO+s4bBcoLjbnlN5D6sD+Tchkoh6GwqwhiPIBhXtqqcj6ken5
-         FHF5Dl2wHUNF3qwgUJmsRQ7Cw+ziYbBJkkVyWNuBjdN6p1lENswEIu03QhpHz5pMG1
-         LBUxcdskFjocJdw7M2+n94EomT05dOC9oSSsDRtY0CMyW/nRBUt3Jd1LLDwMiORtsI
-         7m273zGIj116vvPF7E1XaOPTbq1I60AHvy8unyPriO1+irV61/c/XiYJ6W9PF5VA2G
-         fz2EpbrBanDfg==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAA8EJpokxg6Urjfm6J0xvbGOCRK2goX94=+awZ8OEW4fv-EoWQ@mail.gmail.com>
-References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org> <20211208022210.1300773-3-dmitry.baryshkov@linaro.org> <YbJNp+tnD6kEQAzt@ripper> <a4f7d300-90c2-7dda-5cda-5e2763a94912@linaro.org> <20211216013849.69747C36AE1@smtp.kernel.org> <CAA8EJpokxg6Urjfm6J0xvbGOCRK2goX94=+awZ8OEW4fv-EoWQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sdm845: park disp_cc_mdss_mdp_clk_src
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 15 Dec 2021 23:23:00 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8317BC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:23:00 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id 47-20020a9d0332000000b005798ac20d72so27477957otv.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:23:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GDdv/EeBUFLk3bv9K+cRCt6BYkbbDx2RqVmNewbZxFw=;
+        b=Ieq4eq6kQDwb37q6f2KGArlHmOblH6W/9exjQQ8JlVElP5O8MfHHM8kNcrk+MJT7El
+         JSVHUV/Y9VNwNGou7UidGHL4sYBz3+rdrQFbuFqmSTSbhTaVVj1hYfKHrzVOdO3KyG25
+         pY3wWDGkY2Ty7YTo+VmkXoSUa92YxGDTYdfsRsn9LyuuT+tH2d9G5SWHd78nGwF5xmYI
+         s7acF/FpGYeS6pAnaxIqrkB8beG4BRcjEWKWOrx3rwkwMhxof6TnRfp/uzvbSLMmTZOK
+         hK/fvgRGaZ/ceKyIrmtOZVwNWV6+b1nEY6hGcRQ+QUYN9Q4cT33m+zVDBgyFfsD6y36X
+         c2yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GDdv/EeBUFLk3bv9K+cRCt6BYkbbDx2RqVmNewbZxFw=;
+        b=Y/WwLeoseYRsfofYdWIVdkUbMSlwL1KViF9meXeUB6iMXWfhLDZB8SDRgKbCyvpYIv
+         BzL4GqlupfpXxTed9s9y3kiOPd9+mYgrvBnzd9M46+rfZ+DfvNfU8NDzD/V9tRfwxIXk
+         3C7abSRpQkszDOwG0BwTezlHe1E7YVmiq2E9+0IIlgNGO/zBz14WMW1SIPRcvIcRLb6D
+         Rlm6T+hepkK5niAVEbtCj6Zf6JnEo27ZlOXWi2l2xoECioqzDJZQq0NdnJ8hzVCcrUv8
+         LUh3Mt3qmC+ke2kk7N/gdd9yVMOCKzoxFj2LC70kpSs2C7qN7qXRNdg//QIsaI3mB5WB
+         rP7Q==
+X-Gm-Message-State: AOAM533GSWv7acBcOhsXJ97aSp81m7CiLeXHSy6b10oatGd91cBOuunZ
+        LJIaqNBYwNWnJUXK8jRjr/hVmQ==
+X-Google-Smtp-Source: ABdhPJyXSvtJiilAgiFt5npZLoQVuJqbM9RSKg7ZvlUVhEiW49q8q7GVeSTsr2LFhhzV5WXWaeNchA==
+X-Received: by 2002:a9d:578a:: with SMTP id q10mr11102993oth.149.1639628579733;
+        Wed, 15 Dec 2021 20:22:59 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 69sm839183otf.33.2021.12.15.20.22.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 20:22:59 -0800 (PST)
+Date:   Wed, 15 Dec 2021 20:24:14 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 15 Dec 2021 20:10:14 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211216041016.3E8A7C36AE3@smtp.kernel.org>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH 1/2] clk: qcom: add API to safely park RCG2 sources
+Message-ID: <Ybq/brI4mMHv3/kn@ripper>
+References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org>
+ <20211208022210.1300773-2-dmitry.baryshkov@linaro.org>
+ <20211209083727.30DD2C004DD@smtp.kernel.org>
+ <YbJMnvg/IDwHNeWS@ripper>
+ <995c66b7-ef69-56a4-93cc-59be52977972@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <995c66b7-ef69-56a4-93cc-59be52977972@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-12-15 19:34:11)
-> On Thu, 16 Dec 2021 at 04:38, Stephen Boyd <sboyd@kernel.org> wrote:
-> >
-> > Quoting Dmitry Baryshkov (2021-12-15 14:17:40)
-> > > On 09/12/2021 21:40, Bjorn Andersson wrote:
-> > > > On Tue 07 Dec 18:22 PST 2021, Dmitry Baryshkov wrote:
-> > > >
-> > > >> To stop disp_cc_mdss_mdp_clk_src from getting stuck during boot if=
- it
-> > > >> was enabled by the bootloader, part it to the TCXO clock source.
-> > > >>
-> > > >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > >> ---
-> > > >>   drivers/clk/qcom/dispcc-sdm845.c | 3 +++
-> > > >>   1 file changed, 3 insertions(+)
-> > > >>
-> > > >> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/d=
-ispcc-sdm845.c
-> > > >> index 735adfefc379..f2afbba7bc72 100644
-> > > >> --- a/drivers/clk/qcom/dispcc-sdm845.c
-> > > >> +++ b/drivers/clk/qcom/dispcc-sdm845.c
-> > > >> @@ -858,6 +858,9 @@ static int disp_cc_sdm845_probe(struct platfor=
-m_device *pdev)
-> > > >>
-> > > >>      clk_fabia_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_=
-config);
-> > > >>
-> > > >> +    /* Park disp_cc_mdss_mdp_clk_src */
-> > > >> +    clk_rcg2_park_safely(regmap, 0x2088, 0);
-> > > >
-> > > > Today booting the system with "clk_ignore_unused" will give you a
-> > > > working efifb up until the point where the display driver kicks in =
-and
-> > > > reinitializes the hardware state - which during development might be
-> > > > indefinite.
-> > >
-> > > During development one can introduce a dispcc parameter. Maybe we sho=
-uld
-> > > add qcom-common parameter telling dispcc drivers to skip parking these
-> > > clocks.
-> > >
-> > > >
-> > > > If we blindly cut the mdp_clk_src here that will no longer be possi=
-ble.
-> > >
-> > > I think we have several separate tasks here:
-> > >
-> > > 1) Support developing code. This is what you have in mind with EFIFB +
-> > > clk_ignore_unused.
-> > >
-> > > 2) Get display to work stable and rock solid. This can include
-> > > completely tearing down the display pipeline for the sake of getting
-> > > MDP/MDSS/DSI to work with as few hacks as possible.
-> > >
-> > > 3) Gracious handover of display/framebuffer from bootloader to the Li=
-nux
-> > > kernel.
-> > >
-> > > For the task #1, you can hack the dispcc as you wish or set any
-> > > additional parameters, as you are already passing clk_ignore_unused.
-> > > This will all end up as #1 transitions to #2.
-> > >
-> > > I was targetting task#2. Disable everything to let dpu/dsi/dp start f=
-rom
-> > > the scratch. If I understand correctly, this approach would also help
-> > > you with your boot-clock-too-high-for-the-minimum-opp issue. Is my
-> > > assumption correct?
-> > >
-> > > For the task #3 we need collaboration between dispcc, clock core and
-> > > dpu/dsi drivers. Just marking the clocks for the clk_disable_unused()=
- is
-> > > the least of the problems that we have here. I think [1] is a bit clo=
-ser
-> > > to what I'd expect.
-> > >
-> > > I have a similar but slightly different idea of how this can be made =
-to
-> > > work. I'd do the following (excuse me for the hand waving, no code at=
- hand):
-> > >
-> > > - Add clk_ops->inherit_state callback, which can check if the clock is
-> > > enabled already or not. If it is, set the enable_count to 1, set spec=
-ial
-> > > CLOCK_INHERITED flag, read back the state, etc.
-> > >
-> > > - Make of_clk_set_defaults() ignore clocks with CLOCK_INHERITED flag.
-> > > Maybe it should return special status telling that some of the clocks
-> > > were not updated.
-> >
-> > This sounds an awful lot like the CLK_HANDOFF flag that never
-> > materialized. We know we have a problem where the enable state of a clk
-> > isn't understood at registration time (although we do know the frequency
-> > of the clk). So far it's been put largely on clk providers to figure out
-> > that their clk is enabled and avoid doing something if it is. But that's
-> > run into problems where clk flags that want us to not do something if
-> > the clk is enabled fail to detect this, see CLK_SET_RATE_GATE for
-> > example. This should be fixed; patches welcome.
-> >
-> > Within the clk framework we don't really want to care about a clk alrea=
-dy
-> > being enabled and keeping track of that via the enable_count. Trying to
-> > figure out when to "hand that off" is complex, and what exactly is the
-> > point to it? Drivers still need to call clk_enable to enable the clk, so
-> > all that really matters is that we know the clk is on at boot and to
-> > respect the clk flags.
->=20
-> It's a pity. Tracking the pre-enabled clocks status would keep the
-> clock running till the driver is actually able to pick it up.
+On Wed 15 Dec 13:14 PST 2021, Dmitry Baryshkov wrote:
 
-I have no problem determining the prepare/enable state at clk
-registration time and then using that to make the clk flags work
-properly and to skip calling down into the prepare and enable clk_ops.
-It needs to be disjoint from the counts though so that the possibility
-of handing off the count is removed.
+> On 09/12/2021 21:36, Bjorn Andersson wrote:
+> > On Thu 09 Dec 00:37 PST 2021, Stephen Boyd wrote:
+> > 
+> > > Quoting Dmitry Baryshkov (2021-12-07 18:22:09)
+> > > > Some of RCG2 clocks can become stuck during the boot process, when
+> > > > device drivers are enabling and disabling the RCG2's parent clocks.
+> > > > To prevernt such outcome of driver probe sequences, add API to park
+> > > 
+> > > s/prevernt/prevent/
+> > > 
+> > > > clocks to the safe clock source (typically TCXO).
+> > > > 
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > 
+> > > I'd prefer this approach vs. adding a new clk flag. The clk framework
+> > > doesn't handle handoff properly today so we shouldn't try to bandage
+> > > that in the core.
+> > > 
+> > 
+> > I'm not against putting this responsibility in the drivers, but I don't
+> > think we can blindly park all the RCGs that may or may not be used.
+> > 
+> > Note that we should do this for all RCGs that downstream are marked as
+> > enable_safe_config (upstream should be using clk_rcg2_shared_ops)
+> > and disabling some of those probe time won't be appreciated by the
+> > hardware.
+> 
+> Only for the hardware as crazy, as displays. And maybe gmu_clk_src. I don't
+> think we expect venus or camcc to be really clocking when kernel boots.
+> 
 
->=20
-> > > - Add clk_get_inherit() call, which would drop the CLOCK_INHERITED fl=
-ag
-> > > and return previous flag state to calling driver. The driver now assu=
-mes
-> > > ownership of this clock with the enable_count of 1. This way the driv=
-er
-> > > can adjust itself to the current clock state (e.g. drop the frequency,
-> > > disable the clock and then call of_clk_set_defaults() again to
-> > > reparent/reclock clocks as necessary, etc). If the parent chain is not
-> > > fully available, clk_get_inherit must return an error for INHERITED
-> > > clocks, so that the driver will not cause reparenting of the orphaned
-> > > clocks.
-> >
-> > Please god no more clk_get() APIs! The driver shouldn't care that the
-> > clk is already enabled when clk_get() returns. The driver must call
-> > clk_enable() if it wants the clk to be enabled.
->=20
-> What about clk_get returning the clock and clk_enable transferring the
-> ownership?
+SM8350 GCC has 44 clocks marked as such downstream.
 
-No? Why can't the caller of clk_get() call clk_enable()?
+> > 
+> > 
+> > If you don't like the flag passed to clk_disable_unused (which is like a
+> > very reasonable objection to have), we need to make progress towards a
+> > proper solution that replaces clk_disable_unused().
+> 
+> The issue is that at the time of clk_disable_unused() it can be too late,
+> for example because msm being built-in into the kernel has already tried to
+> play with PLLs/GDSCs and thus made RCG stuck.
 
-> I see that Michael Turquette had more or less the same ideas in 2015-2016.
+Makes sense, so this logic will have to consider both the hardware state
+(or make assumptions thereof) and the clock votes in the kernel.
 
-Yes
+> This is what I was observing
+> on RB3 if the msm driver is built in and the splash screen is enabled.
+> 
 
->=20
-> It would ensure that the clock chain stays on till msm takes over the
-> efifb/splash/etc.
+Which clock was this?
 
-Who is turning off the clk? Some driver or the disable unused code?
+We should be able to assume that the bootloader will hand us a clock
+tree that's functionally configured, so reparenting etc of the RCGs
+should not cause issues because the old parent will be ticking and we
+will explicitly start the new parent.
 
->=20
-> >
-> > Buried in here is the question of if we should allow clk_get() to
-> > succeed if the clk is an orphan. I recall that rockchip had some problem
-> > if we didn't allow orphans to be handed out but it's been years and I've
-> > forgotten the details. But from a purely high-level we should definitel=
-y not
-> > hand out orphan clks via clk_get() because the clk isn't operable
-> > outside of clk_set_rate() or clk_set_parent().
-> >
-> > And there's more work to do here first by getting rid of the .get_parent
-> > clk_op and having it return a clk_hw pointer (see my two or three year
-> > old clk_get_hw series).
->=20
-> Could you please point me to it?
+One case that might not be handled though is the externally sourced
+clocks, where if you reconfigure the DSI phy without first parking the
+RCG you might lock up the RCG. So I think that whenever we mess with
+those clocks we need to make sure that the downstream RCGs are not
+ticking off them.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/log/?h=3Dclk-=
-parent-rewrite
+> > 
+> > > > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> > > > index e1b1b426fae4..230b04a7427c 100644
+> > > > --- a/drivers/clk/qcom/clk-rcg2.c
+> > > > +++ b/drivers/clk/qcom/clk-rcg2.c
+> > > > @@ -1036,6 +1036,40 @@ static void clk_rcg2_shared_disable(struct clk_hw *hw)
+> > > >          regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
+> > > >   }
+> > > > +int clk_rcg2_park_safely(struct regmap *regmap, u32 offset, unsigned int safe_src)
+> > 
+> > This seems to just duplicate clk_rcg2_shared_disable()?
+> 
+> A light version of it. It does not do force_on/_off. And also it can not
+> rely on clkr->regmap or clock name being set. Initially I used
+> clk_rcg2_shared_disable + several patches to stop it from crashing if it is
+> used on the non-registered clock. Then I just decided to write special
+> helper.
+> 
 
-My god it's been three years.
+Okay, makes sense then. But I don't think we want to shoot down clocks
+at clock probe time.
+
+Regards,
+Bjorn
+
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > 
+> > > Please add kernel doc as it's an exported symbol.
+> 
+> Ack
+> 
+> > > 
+> > > > +{
+> > > > +       unsigned int val, ret, count;
+> > > > +
+> > > > +       ret = regmap_read(regmap, offset + CFG_REG, &val);
+> > > > +       if (ret)
+> > > > +               return ret;
+> > > > +
+> > > > +       /* assume safe source is 0 */
+> > > 
+> > > Are we assuming safe source is 0 here? It looks like we pass it in now?
+> 
+> Leftover, will remove if/when posting v2.
+> 
+> > > 
+> > > > +       if ((val & CFG_SRC_SEL_MASK) == (safe_src << CFG_SRC_SEL_SHIFT))
+> > > > +               return 0;
+> > > > +
+> > > > +       regmap_write(regmap, offset + CFG_REG, safe_src << CFG_SRC_SEL_SHIFT);
+> > > > +
+> > > > +       ret = regmap_update_bits(regmap, offset + CMD_REG,
+> > > > +                                CMD_UPDATE, CMD_UPDATE);
+> > > > +       if (ret)
+> > > > +               return ret;
+> > > > +
+> > > > +       /* Wait for update to take effect */
+> > > > +       for (count = 500; count > 0; count--) {
+> > > > +               ret = regmap_read(regmap, offset + CMD_REG, &val);
+> > > > +               if (ret)
+> > > > +                       return ret;
+> > > > +               if (!(val & CMD_UPDATE))
+> > > > +                       return 0;
+> > > > +               udelay(1);
+> > > > +       }
+> > > > +
+> > > > +       WARN(1, "the rcg didn't update its configuration.");
+> > > 
+> > > Add a newline?
+> 
+> Ack.
+> 
+> > > 
+> > > > +       return -EBUSY;
+> > > > +}
+> > > > +EXPORT_SYMBOL_GPL(clk_rcg2_park_safely);
+> > > > +
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
