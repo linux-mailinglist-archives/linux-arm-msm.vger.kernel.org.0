@@ -2,121 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B99E476672
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 00:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E63514766F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 01:43:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231951AbhLOXYt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 18:24:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35000 "EHLO
+        id S232395AbhLPAns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 19:43:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231939AbhLOXYt (ORCPT
+        with ESMTP id S231771AbhLPAns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 18:24:49 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF18C06173F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 15:24:49 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id r5so21398227pgi.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 15:24:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+wKtXeTQxQFOQCh8iyar/PDd0xAj+8Ua39SmoAmPwN0=;
-        b=e93vtoDwd7onN/Fo3H65oql7xosjLseC1YGapBrQmDK8jys1N9X2tePXxtX6QEq0nI
-         iDk6bk2DjcbExvPfmz/6+6BGWestI5jcC4InWhbLSXwwL53ZzItr2OyIyb7zESJ1u4Uq
-         Uria1ieOHKqTNLG4TJ8pf/MQSl/1RONlDvHVw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+wKtXeTQxQFOQCh8iyar/PDd0xAj+8Ua39SmoAmPwN0=;
-        b=ggP41V6vPbM1gKlhelNzYzhZyg5qgU0U9uEmuABzVAGP5TrQcmMAGR+yoMvMWGnx5W
-         rjq1hnPE6ZxI083m9L8vlGvT/FRSGigzxqHss6H2NarLshvR/kluEIwzKtJ/LNPdeEgW
-         6iCRNqkoPNQoGyNpX8zqBdOxpcMK5oB5bNbuKbPhQFz+tI81Ae7rtPzLd9zyhu99ImXr
-         MBTn5asjxW0cTsmXVyOHBcwJhIg4Bi3STcslcqLl9jHESWlubdR9nov72EhJxrBiettB
-         TbxIGXxwic+q7gciPkR5BtO818KVQIC3oQ5ljLPCxatuVOPOvnMIrGiR2clbgIab7ueh
-         nLsQ==
-X-Gm-Message-State: AOAM530tH5O3sb6vIpUToFsx3Pcs+Ib1Uc4/NEkEIJ6PKNNczHR376Gc
-        euKARJG/5LPpBQfLGsO7Qaz08g==
-X-Google-Smtp-Source: ABdhPJzPaE3TIAcoa2YxlOC2PEjMxZUiaqVdjcPVu4fLhU5i65rsqtA1qnZU6a6ixNYs/HcqJpfTSw==
-X-Received: by 2002:aa7:9990:0:b0:4a1:57ff:3369 with SMTP id k16-20020aa79990000000b004a157ff3369mr11043448pfh.31.1639610688626;
-        Wed, 15 Dec 2021 15:24:48 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id c17sm3819536pfc.163.2021.12.15.15.24.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 15:24:48 -0800 (PST)
-From:   Kees Cook <keescook@chromium.org>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Kees Cook <keescook@chromium.org>,
-        Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <quic_bbhatt@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Yury Norov <yury.norov@gmail.com>,
-        Carl Huang <cjhuang@codeaurora.org>,
-        Carl Yin <carl.yin@quectel.com>, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-hardening@vger.kernel.org
-Subject: [PATCH] bus: mhi: core: Use correctly sized arguments for bit field
-Date:   Wed, 15 Dec 2021 15:24:46 -0800
-Message-Id: <20211215232446.2069794-1-keescook@chromium.org>
-X-Mailer: git-send-email 2.30.2
+        Wed, 15 Dec 2021 19:43:48 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08105C061574;
+        Wed, 15 Dec 2021 16:43:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 391DC61BA2;
+        Thu, 16 Dec 2021 00:43:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77383C36AE1;
+        Thu, 16 Dec 2021 00:43:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639615426;
+        bh=0a0+jjKb223PJQa3TiWBP7QgKr5ZKDUK1W5ZPLWni6Q=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=Rapx9OBhWmNGrOE6j9ZULoqvZo1LX2XmHvIcYR9DUGdb8iP7pxyPZTXZu7XvwRJjm
+         gmyRgheUUr8YCeUyhrOphJfp4xlfjED3phY/27+yNsptx45EMnQbdF7A+CftEiW1QK
+         QRTlGGU70Cuu59De/0AoZEjvNCQXD1AdbaN42roDp/J9SHNIoKygReTZp7c3ThnLH5
+         uBBOmTpQxzbXecoCegGbwHoVxD/+2o3JUKrzmorVUXRAxxTNynqmEX9uOyVy/ShTjt
+         uv1oTa1oAavVJ3INQaZsueIfWNT7ZQPTTMF9dMivWByM4E3kNZ3gM4bZoFLWFm6BU9
+         sWuVKBeI+M26g==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2373; h=from:subject; bh=5LBWuQcow5y4kUPEfLAt34GEYiaqhrm63wbxhk+W1ig=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhunk+I6cQX+iJm8LamClVJjxV5guF1cKeTHIPdL2O qM1yHtyJAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYbp5PgAKCRCJcvTf3G3AJsjfD/ 9q5kWvVOIY0URvI4tj+mBje1t9tKvfuWMgGjtOXSEkCwt9eJuF6pjzV0I4cbdUmSgim7Nmqpyw8Pg0 2GqtVDK+rttKDmj3c7nA/bBDK89QLy2ddXtThguHJmEyyQyDBEtDXF921DwPMSO3WcIsfDdO3OhPIH Lu1Q6KPnBCnR4x7JE3/S26qSrLxFWuAt/rx2dGkNSF9TwCfeNB/sjxEJgA3cgdHrTtf/nna6jq1iDo r/DFhSPVhPJvVZF090UyNXl9D/cjecCHFnry7rfYNIh4J3jsiLwuEuyhp0vWvTE3BtVErokZyPuNpC 1mLoIfEmURAaIpIgixc+CBWHerMTijTuuC74n03XRWGFweixnFUXHD1Q6+CWubPkImDvRgfz29CwyR yBGzlF6HGzStLuGjoijkx8NBFB6TrRkwDFAWF5B0zw5qp3UrY+tSNO/YblwCNDvTq0462OfdG9cmVO pddc24rF+fnPL2/w9oTILc2Zri0z/gG5INmovaxelLQZXicWKq+xqPzW1tRtxhjEcIGaiLfRI0dZiO DK4/dMZ6bkYZ5RTeVJXNq0Gss3mT0AAXx14TKmm5JxoKuF4ZimvKbUTZ6n6ThtW6ak4tp4lC5EpzI6 FJrzw3xgxM7vAvncRiuDTMExcJ67HX5QgLfa35S+FkRjeRs5PI3Ev81oCCoA==
-X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <69e44191-201f-8714-8a83-1a65a7026b54@linaro.org>
+References: <20210911131922.387964-1-marijn.suijten@somainline.org> <163165584152.763609.4056232270079096475@swboyd.mtv.corp.google.com> <20210918144038.6q352hzqopx7vvdu@SoMainline.org> <20211214194656.mayiy4xhcshjluwf@SoMainline.org> <69e44191-201f-8714-8a83-1a65a7026b54@linaro.org>
+Subject: Re: [PATCH v3 0/2] Use "ref" clocks from firmware for DSI PLL VCO parent
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Date:   Wed, 15 Dec 2021 16:43:45 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20211216004346.77383C36AE1@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The find.h APIs are designed to be used only on unsigned long arguments.
-This can technically result in a over-read, but it is harmless in this
-case. Regardless, fix it to avoid the warning seen under -Warray-bounds,
-which we'd like to enable globally:
+Quoting Dmitry Baryshkov (2021-12-15 12:02:37)
+> On 14/12/2021 22:46, Marijn Suijten wrote:
+> > Hi all,
+> >=20
+> > On 2021-09-18 16:40:38, Marijn Suijten wrote:
+> >> On 2021-09-14 14:44:01, Stephen Boyd wrote:
+> >>> Quoting Marijn Suijten (2021-09-11 06:19:19)
+> >>>> All DSI PHY/PLL drivers were referencing their VCO parent clock by a
+> >>>> global name, most of which don't exist or have been renamed.  These
+> >>>> clock drivers seem to function fine without that except the 14nm dri=
+ver
+> >>>> for sdm6xx [1].
+> >>>>
+> >>>> At the same time all DTs provide a "ref" clock as per the requiremen=
+ts
+> >>>> of dsi-phy-common.yaml, but the clock is never used.  This patchset =
+puts
+> >>>> that clock to use without relying on a global clock name, so that all
+> >>>> dependencies are explicitly defined in DT (the firmware) in the end.
+> >>>
+> >>> I can take this through clk tree if it helps avoid conflicts. There a=
+re
+> >>> some other patches to sdm660.c in the clk tree already.
+> >>
+> >> Might be useful to maintain proper ordering of these dependent patches
+> >> but it's up to Dmitry and Rob to decide, whom I'm sending this mail
+> >> directly to so that they can chime in.
+> >=20
+> > Dependent patch [3] landed in 5.15 and [2] made it into 5.16 rc's - is
+> > it time to pick this series up and if so through what tree?
+>=20
+> I'd also second the idea of merging these two patches into 5.17.
+> Most probably it'd be easier to merge both of them through the clk tree. =
 
-In file included from ./include/linux/bitmap.h:9,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/cpumask.h:5,
-                 from ./arch/x86/include/asm/msr.h:11,
-                 from ./arch/x86/include/asm/processor.h:22,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:7,
-                 from ./include/linux/preempt.h:78,
-                 from ./include/linux/spinlock.h:55,
-                 from ./include/linux/wait.h:9,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from ./include/linux/debugfs.h:15,
-                 from drivers/bus/mhi/core/init.c:7:
-drivers/bus/mhi/core/init.c: In function 'to_mhi_pm_state_str':
-./include/linux/find.h:187:37: warning: array subscript 'long unsigned int[0]' is partly outside array bounds of 'enum mhi_pm_state[1]' [-Warray-bounds]
-  187 |                 unsigned long val = *addr & GENMASK(size - 1, 0);
-      |                                     ^~~~~
-drivers/bus/mhi/core/init.c:80:51: note: while referencing 'state'
-   80 | const char *to_mhi_pm_state_str(enum mhi_pm_state state)
-      |                                 ~~~~~~~~~~~~~~~~~~^~~~~
+> Or we can take the first patch into drm-msm (but then we'd have a=20
+> dependency between msm-next and clk-qcom-next).
+>=20
+> Bjorn, Stephen?
+>=20
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/bus/mhi/core/init.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index f1ec34417592..b91f75fff962 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -79,7 +79,8 @@ static const char * const mhi_pm_state_str[] = {
- 
- const char *to_mhi_pm_state_str(enum mhi_pm_state state)
- {
--	int index = find_last_bit((unsigned long *)&state, 32);
-+	unsigned long bits = state;
-+	int index = find_last_bit(&bits, 32);
- 
- 	if (index >= ARRAY_SIZE(mhi_pm_state_str))
- 		return "Invalid State";
--- 
-2.30.2
-
+Sounds fine to take through clk tree.
