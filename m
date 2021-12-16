@@ -2,222 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13537476908
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 05:23:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BCBC476934
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 05:43:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231278AbhLPEXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 23:23:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
+        id S233608AbhLPEnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 23:43:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229956AbhLPEXA (ORCPT
+        with ESMTP id S233525AbhLPEnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 23:23:00 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8317BC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:23:00 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id 47-20020a9d0332000000b005798ac20d72so27477957otv.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:23:00 -0800 (PST)
+        Wed, 15 Dec 2021 23:43:22 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 514DFC06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:43:22 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id n104-20020a9d2071000000b005799790cf0bso27593113ota.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:43:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GDdv/EeBUFLk3bv9K+cRCt6BYkbbDx2RqVmNewbZxFw=;
-        b=Ieq4eq6kQDwb37q6f2KGArlHmOblH6W/9exjQQ8JlVElP5O8MfHHM8kNcrk+MJT7El
-         JSVHUV/Y9VNwNGou7UidGHL4sYBz3+rdrQFbuFqmSTSbhTaVVj1hYfKHrzVOdO3KyG25
-         pY3wWDGkY2Ty7YTo+VmkXoSUa92YxGDTYdfsRsn9LyuuT+tH2d9G5SWHd78nGwF5xmYI
-         s7acF/FpGYeS6pAnaxIqrkB8beG4BRcjEWKWOrx3rwkwMhxof6TnRfp/uzvbSLMmTZOK
-         hK/fvgRGaZ/ceKyIrmtOZVwNWV6+b1nEY6hGcRQ+QUYN9Q4cT33m+zVDBgyFfsD6y36X
-         c2yw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=3RzaaearIYbFOPasrtZL1Qn4CGShYarsAAtoS7FS/Og=;
+        b=Q7z6pT0v4hCeNK/JGdecfC+0v3mIIP71W56G1Cmgtw13ONjyj5+7R9dleoPXl+kO6h
+         1ZCyiZOsr2W3+Jh6O2Xn4LFVmwEn3rIZS/FW5/A6AhhCoxmS9iX6kLKr1vvmHhTkfN5/
+         jpMg1ISamVNsoqnLytvY9mb9PUrVUJVExTbmQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GDdv/EeBUFLk3bv9K+cRCt6BYkbbDx2RqVmNewbZxFw=;
-        b=Y/WwLeoseYRsfofYdWIVdkUbMSlwL1KViF9meXeUB6iMXWfhLDZB8SDRgKbCyvpYIv
-         BzL4GqlupfpXxTed9s9y3kiOPd9+mYgrvBnzd9M46+rfZ+DfvNfU8NDzD/V9tRfwxIXk
-         3C7abSRpQkszDOwG0BwTezlHe1E7YVmiq2E9+0IIlgNGO/zBz14WMW1SIPRcvIcRLb6D
-         Rlm6T+hepkK5niAVEbtCj6Zf6JnEo27ZlOXWi2l2xoECioqzDJZQq0NdnJ8hzVCcrUv8
-         LUh3Mt3qmC+ke2kk7N/gdd9yVMOCKzoxFj2LC70kpSs2C7qN7qXRNdg//QIsaI3mB5WB
-         rP7Q==
-X-Gm-Message-State: AOAM533GSWv7acBcOhsXJ97aSp81m7CiLeXHSy6b10oatGd91cBOuunZ
-        LJIaqNBYwNWnJUXK8jRjr/hVmQ==
-X-Google-Smtp-Source: ABdhPJyXSvtJiilAgiFt5npZLoQVuJqbM9RSKg7ZvlUVhEiW49q8q7GVeSTsr2LFhhzV5WXWaeNchA==
-X-Received: by 2002:a9d:578a:: with SMTP id q10mr11102993oth.149.1639628579733;
-        Wed, 15 Dec 2021 20:22:59 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 69sm839183otf.33.2021.12.15.20.22.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 20:22:59 -0800 (PST)
-Date:   Wed, 15 Dec 2021 20:24:14 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: Re: [PATCH 1/2] clk: qcom: add API to safely park RCG2 sources
-Message-ID: <Ybq/brI4mMHv3/kn@ripper>
-References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org>
- <20211208022210.1300773-2-dmitry.baryshkov@linaro.org>
- <20211209083727.30DD2C004DD@smtp.kernel.org>
- <YbJMnvg/IDwHNeWS@ripper>
- <995c66b7-ef69-56a4-93cc-59be52977972@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=3RzaaearIYbFOPasrtZL1Qn4CGShYarsAAtoS7FS/Og=;
+        b=qXKL5JO8uEjAgrF+HAFcmkMjtT4T7FHnuikuFFWSvhntR+vGQch+IGme9YgAWPNxNU
+         8LDeWiGTqPC19LLN0KTnDADi3bc1Q7HjTcLWlAsBEsnI2RLl4UkTvF9JRu+XQPljYbTd
+         Ixfk4hyK+nJ/kR+IcWbjzhrQNhZ802rVzSBxJ7Bw7pUcd7sB1WQY8blcUiTLyh2knKFf
+         7HNg1pnNXyCR2KnUv8RerZ8mLrS5ML/QbIG29DO6W6fVRyg9R0wmkf4SgaB/Qdxl68oj
+         ApbGaiwO7XPZacGYnvb8bRteIjIImu0emTG9XvSN8K5glefyhOgQhNfj8++qkZh/FbEe
+         KrFg==
+X-Gm-Message-State: AOAM531WK0fgxcOsFdM0tAjTSHVPxK6Zc6s54+RvXMrYg6JmObuQm0QL
+        baOQRd+vfxx32ARyS+y93M2iycI9xsjtR/7EshqEpw==
+X-Google-Smtp-Source: ABdhPJw7dtlv5FG/2hQWJ7GKk0B3PVmNniDqy4RqxdhspboPfH7npUG2cFrqS7aBKnFZFSKqIA/OGtC13xtvHmaNuGs=
+X-Received: by 2002:a9d:2243:: with SMTP id o61mr11377458ota.126.1639629801696;
+ Wed, 15 Dec 2021 20:43:21 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 15 Dec 2021 20:43:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <995c66b7-ef69-56a4-93cc-59be52977972@linaro.org>
+In-Reply-To: <YbqlDQogwdi52FpK@google.com>
+References: <20211215003639.386460-1-swboyd@chromium.org> <YbqlDQogwdi52FpK@google.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 15 Dec 2021 20:43:21 -0800
+Message-ID: <CAE-0n53z=CVMx=zmh6Up57E-yVG7iU3oMiM7cLPfsQwriM=+=w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: sc7180: Add board regulators for MIPI camera
+ trogdor boards
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 15 Dec 13:14 PST 2021, Dmitry Baryshkov wrote:
+Quoting Matthias Kaehlcke (2021-12-15 18:31:41)
+> On Tue, Dec 14, 2021 at 04:36:38PM -0800, Stephen Boyd wrote:
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > index d4f4441179fc..1dd8e35093a8 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> > @@ -113,6 +113,40 @@ src_vph_pwr: src-vph-pwr-regulator {
+> >               vin-supply = <&ppvar_sys>;
+> >       };
+> >
+> > +     pp1800_uf_cam: pp1800-uf-cam-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "pp1800_uf_cam";
+> > +             status = "disabled";
+> > +
+> > +             regulator-min-microvolt = <1800000>;
+> > +             regulator-max-microvolt = <1800000>;
+> > +
+> > +             gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> > +             enable-active-high;
+> > +             pinctrl-names = "default";
+> > +             pinctrl-0 = <&uf_cam_en>;
+> > +
+> > +             vin-supply = <&pp1800_ldo>;
+> > +             regulator-enable-ramp-delay = <1000>;
+> > +     };
+> > +
+> > +     pp1800_wf_cam: pp1800-wf-cam-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "pp1800_wf_cam";
+> > +             status = "disabled";
+> > +
+> > +             regulator-min-microvolt = <1800000>;
+> > +             regulator-max-microvolt = <1800000>;
+> > +
+> > +             gpio = <&tlmm 7 GPIO_ACTIVE_HIGH>;
+> > +             enable-active-high;
+> > +             pinctrl-names = "default";
+> > +             pinctrl-0 = <&wf_cam_en>;
+> > +
+> > +             vin-supply = <&pp1800_ldo>;
+> > +             regulator-enable-ramp-delay = <1000>;
+> > +     };
+> > +
+>
+> Shouldn't 'pp1800_ldo' be defined before these ("FIXED REGULATORS
+> - parents above children")?
 
-> On 09/12/2021 21:36, Bjorn Andersson wrote:
-> > On Thu 09 Dec 00:37 PST 2021, Stephen Boyd wrote:
-> > 
-> > > Quoting Dmitry Baryshkov (2021-12-07 18:22:09)
-> > > > Some of RCG2 clocks can become stuck during the boot process, when
-> > > > device drivers are enabling and disabling the RCG2's parent clocks.
-> > > > To prevernt such outcome of driver probe sequences, add API to park
-> > > 
-> > > s/prevernt/prevent/
-> > > 
-> > > > clocks to the safe clock source (typically TCXO).
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > 
-> > > I'd prefer this approach vs. adding a new clk flag. The clk framework
-> > > doesn't handle handoff properly today so we shouldn't try to bandage
-> > > that in the core.
-> > > 
-> > 
-> > I'm not against putting this responsibility in the drivers, but I don't
-> > think we can blindly park all the RCGs that may or may not be used.
-> > 
-> > Note that we should do this for all RCGs that downstream are marked as
-> > enable_safe_config (upstream should be using clk_rcg2_shared_ops)
-> > and disabling some of those probe time won't be appreciated by the
-> > hardware.
-> 
-> Only for the hardware as crazy, as displays. And maybe gmu_clk_src. I don't
-> think we expect venus or camcc to be really clocking when kernel boots.
-> 
+Good catch! Fixed it.
 
-SM8350 GCC has 44 clocks marked as such downstream.
+>
+> I suggest to move these two below the top level regulators, i.e.
+> somwhere after pp3300_a (probably pp3300_a and pp5000_a should be
+> swapped, but that's beyond the scope of this patch).
+>
+> >       pp5000_a: pp5000-a-regulator {
+> >               compatible = "regulator-fixed";
+> >               regulator-name = "pp5000_a";
+> > @@ -1517,4 +1611,32 @@ pinconf-sd-cd {
+> >                       drive-strength = <2>;
+> >               };
+> >       };
+> > +
+> > +     uf_cam_en: uf-cam-en {
+> > +             pinmux {
+> > +                     pins = "gpio6";
+> > +                     function = "gpio";
+> > +             };
+> > +
+> > +             pinconf {
+> > +                     pins = "gpio6";
+> > +                     drive-strength = <2>;
+> > +                     /* External pull down */
+>
+> Is there actually an external pull down?
 
-> > 
-> > 
-> > If you don't like the flag passed to clk_disable_unused (which is like a
-> > very reasonable objection to have), we need to make progress towards a
-> > proper solution that replaces clk_disable_unused().
-> 
-> The issue is that at the time of clk_disable_unused() it can be too late,
-> for example because msm being built-in into the kernel has already tried to
-> play with PLLs/GDSCs and thus made RCG stuck.
-
-Makes sense, so this logic will have to consider both the hardware state
-(or make assumptions thereof) and the clock votes in the kernel.
-
-> This is what I was observing
-> on RB3 if the msm driver is built in and the splash screen is enabled.
-> 
-
-Which clock was this?
-
-We should be able to assume that the bootloader will hand us a clock
-tree that's functionally configured, so reparenting etc of the RCGs
-should not cause issues because the old parent will be ticking and we
-will explicitly start the new parent.
-
-One case that might not be handled though is the externally sourced
-clocks, where if you reconfigure the DSI phy without first parking the
-RCG you might lock up the RCG. So I think that whenever we mess with
-those clocks we need to make sure that the downstream RCGs are not
-ticking off them.
-
-> > 
-> > > > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> > > > index e1b1b426fae4..230b04a7427c 100644
-> > > > --- a/drivers/clk/qcom/clk-rcg2.c
-> > > > +++ b/drivers/clk/qcom/clk-rcg2.c
-> > > > @@ -1036,6 +1036,40 @@ static void clk_rcg2_shared_disable(struct clk_hw *hw)
-> > > >          regmap_write(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, cfg);
-> > > >   }
-> > > > +int clk_rcg2_park_safely(struct regmap *regmap, u32 offset, unsigned int safe_src)
-> > 
-> > This seems to just duplicate clk_rcg2_shared_disable()?
-> 
-> A light version of it. It does not do force_on/_off. And also it can not
-> rely on clkr->regmap or clock name being set. Initially I used
-> clk_rcg2_shared_disable + several patches to stop it from crashing if it is
-> used on the non-registered clock. Then I just decided to write special
-> helper.
-> 
-
-Okay, makes sense then. But I don't think we want to shoot down clocks
-at clock probe time.
-
-Regards,
-Bjorn
-
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > 
-> > > Please add kernel doc as it's an exported symbol.
-> 
-> Ack
-> 
-> > > 
-> > > > +{
-> > > > +       unsigned int val, ret, count;
-> > > > +
-> > > > +       ret = regmap_read(regmap, offset + CFG_REG, &val);
-> > > > +       if (ret)
-> > > > +               return ret;
-> > > > +
-> > > > +       /* assume safe source is 0 */
-> > > 
-> > > Are we assuming safe source is 0 here? It looks like we pass it in now?
-> 
-> Leftover, will remove if/when posting v2.
-> 
-> > > 
-> > > > +       if ((val & CFG_SRC_SEL_MASK) == (safe_src << CFG_SRC_SEL_SHIFT))
-> > > > +               return 0;
-> > > > +
-> > > > +       regmap_write(regmap, offset + CFG_REG, safe_src << CFG_SRC_SEL_SHIFT);
-> > > > +
-> > > > +       ret = regmap_update_bits(regmap, offset + CMD_REG,
-> > > > +                                CMD_UPDATE, CMD_UPDATE);
-> > > > +       if (ret)
-> > > > +               return ret;
-> > > > +
-> > > > +       /* Wait for update to take effect */
-> > > > +       for (count = 500; count > 0; count--) {
-> > > > +               ret = regmap_read(regmap, offset + CMD_REG, &val);
-> > > > +               if (ret)
-> > > > +                       return ret;
-> > > > +               if (!(val & CMD_UPDATE))
-> > > > +                       return 0;
-> > > > +               udelay(1);
-> > > > +       }
-> > > > +
-> > > > +       WARN(1, "the rcg didn't update its configuration.");
-> > > 
-> > > Add a newline?
-> 
-> Ack.
-> 
-> > > 
-> > > > +       return -EBUSY;
-> > > > +}
-> > > > +EXPORT_SYMBOL_GPL(clk_rcg2_park_safely);
-> > > > +
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+My understanding is that there's an internal pull down in the LDO so
+while it isn't exactly "external" in the sense there's a pull down on
+the net via a resistor, there's still a pull down that you can't see in
+the schematic in the IC.
