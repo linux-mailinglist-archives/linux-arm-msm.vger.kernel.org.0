@@ -2,120 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED44947699D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 06:27:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B584769A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 06:34:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233695AbhLPFZ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 00:25:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58398 "EHLO
+        id S233717AbhLPFei (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 00:34:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231415AbhLPFZ4 (ORCPT
+        with ESMTP id S231372AbhLPFeh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 00:25:56 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184FBC061574;
-        Wed, 15 Dec 2021 21:25:56 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D283FB82232;
-        Thu, 16 Dec 2021 05:25:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D90C36AE2;
-        Thu, 16 Dec 2021 05:25:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639632353;
-        bh=+eJtz//5cGB7b9ENlk4d9Q+wDotc77DfxSWMK6U3Dwk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qfj9zuny/Ijd19+ICpHntStcMtSC1zYpyPwnNCUjXs9/rNvV90gurIYOItvqYiaCr
-         mCQO9rrijE9HGEmDdnBfcApYhR9CnryQL12Ml8jPY4Oi9OecwDN+mRl9iD6U+NcvkO
-         4HODK/ElklFB2tgVGmQECPbNkDtx8bLZR3brfzcUNqmHe7J5aN0Y3KdGLGB+Tj9NDl
-         XTFwpzx12t3eAjqBvCewf4lqa7qLFLCHWy4iqNlrre8fgx1yR2obB6y5R0VBljsWjJ
-         V2pvp1YGo4akwGVM1/N4vHyvp7NmGNMoG3BGcDXH0ycq8IV6zwzs/DCTBcbTP2idbX
-         cQXo+8YxTsZkQ==
-Date:   Thu, 16 Dec 2021 10:55:45 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <quic_bbhatt@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Yury Norov <yury.norov@gmail.com>,
-        Carl Huang <cjhuang@codeaurora.org>,
-        Carl Yin <carl.yin@quectel.com>, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-hardening@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: core: Use correctly sized arguments for bit
- field
-Message-ID: <20211216052545.GA42608@thinkpad>
-References: <20211215232446.2069794-1-keescook@chromium.org>
+        Thu, 16 Dec 2021 00:34:37 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0FE0C06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 21:34:37 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id fv9-20020a17090b0e8900b001a6a5ab1392so21548784pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 21:34:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VqjuAZq4oYCDMdr1hBIQdlpGSzDoDJuodoNVlHQ7Q0s=;
+        b=xls5EM4qKFWwvtdK4cimzOnYs74i3CN7oPdWI7GGC8tVpFeIZjeSBeZzxnRlWmOQc5
+         JFkje+nsfQg/DN+8v9LjaeUwgNUub7A4l1tC+5FxS/1RSHoA+pXH/5VbueCMm5WLAv45
+         aFZVk1zxrkGXpRlDMOnmWsIs+GcW0pYVZcwSxFGfP/Y2cIbjEaLbTysVL1ePuxgcm8bX
+         G5OkPJvcSImkxx42eJ1ZXYwclBP/E9/w0HdLc8HxOe1/aw+n9V5eTs82YlovTl4/D67T
+         IgF2TOQY7i7hIlc2sBG5hR6vRRjBf4AsD+UJwd0JQH8OTujuEjQ9siJk5NlwB/qZsqqY
+         i+Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VqjuAZq4oYCDMdr1hBIQdlpGSzDoDJuodoNVlHQ7Q0s=;
+        b=tvpzyyVBUhQAKFJPH9rY5vjLhC6wtl7bcaV0q0RuL5oq98LNyJ8ufAgfLVvKyXy9B5
+         E6gI1ereJG+UfeSk+zVQAjQ59vNMts1YTvVGBtvf9/KSudEeqqB/b/u7iGKdtoClwDu+
+         osz6HeMnCBQYq9AEQDwbuIl/GiuYbOc65vsEPYQJAMyfrCtll3/ok9jdr1N88wy14Kkv
+         HejvVZSnxHeS72RBydQ3tIqOgNdjK25IEwTf2M6YH9R8f+KYMq1cucikyE+R6E2kob/k
+         e75DXczi79cZ407LGcfnCupwiqBa+B3VnQOY80EyeTcucI9FwfhpgBoaca0BTjnGUxVd
+         knQw==
+X-Gm-Message-State: AOAM533AcrRIVf3ylq1ER9DDINzGgoUA2fqtKP5Dl6Lx8u13AzRFCEJB
+        7Im0CMisLhlhI4iR4eMAKr4Y
+X-Google-Smtp-Source: ABdhPJxC1DCgra3M7loMbJwumYjV0t3Kms8EW6VqH88yxs0m4oX009/rQ2R5hxrkywNW6U3GpWfiJQ==
+X-Received: by 2002:a17:902:d4ce:b0:148:a2f7:9d52 with SMTP id o14-20020a170902d4ce00b00148a2f79d52mr8023101plg.113.1639632876922;
+        Wed, 15 Dec 2021 21:34:36 -0800 (PST)
+Received: from thinkpad ([117.193.209.65])
+        by smtp.gmail.com with ESMTPSA id mv22sm3880583pjb.36.2021.12.15.21.34.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 21:34:36 -0800 (PST)
+Date:   Thu, 16 Dec 2021 11:04:31 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev
+Cc:     aleksander@aleksander.es, loic.poulain@linaro.org,
+        thomas.perrot@bootlin.com, hemantk@codeaurora.org,
+        bbhatt@codeaurora.org, quic_jhugo@quicinc.com,
+        linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v5] bus: mhi: Fix race while handling SYS_ERR at power up
+Message-ID: <20211216053431.GB42608@thinkpad>
+References: <20211207070018.115219-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211215232446.2069794-1-keescook@chromium.org>
+In-Reply-To: <20211207070018.115219-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 15, 2021 at 03:24:46PM -0800, Kees Cook wrote:
-> The find.h APIs are designed to be used only on unsigned long arguments.
-> This can technically result in a over-read, but it is harmless in this
-> case. Regardless, fix it to avoid the warning seen under -Warray-bounds,
-> which we'd like to enable globally:
+On Tue, Dec 07, 2021 at 12:30:18PM +0530, Manivannan Sadhasivam wrote:
+> During SYS_ERR condition, as a response to the MHI_RESET from host, some
+> devices tend to issue BHI interrupt without clearing the SYS_ERR state in
+> the device. This creates a race condition and causes a failure in booting
+> up the device.
 > 
-> In file included from ./include/linux/bitmap.h:9,
->                  from ./include/linux/cpumask.h:12,
->                  from ./arch/x86/include/asm/cpumask.h:5,
->                  from ./arch/x86/include/asm/msr.h:11,
->                  from ./arch/x86/include/asm/processor.h:22,
->                  from ./arch/x86/include/asm/cpufeature.h:5,
->                  from ./arch/x86/include/asm/thread_info.h:53,
->                  from ./include/linux/thread_info.h:60,
->                  from ./arch/x86/include/asm/preempt.h:7,
->                  from ./include/linux/preempt.h:78,
->                  from ./include/linux/spinlock.h:55,
->                  from ./include/linux/wait.h:9,
->                  from ./include/linux/wait_bit.h:8,
->                  from ./include/linux/fs.h:6,
->                  from ./include/linux/debugfs.h:15,
->                  from drivers/bus/mhi/core/init.c:7:
-> drivers/bus/mhi/core/init.c: In function 'to_mhi_pm_state_str':
-> ./include/linux/find.h:187:37: warning: array subscript 'long unsigned int[0]' is partly outside array bounds of 'enum mhi_pm_state[1]' [-Warray-bounds]
->   187 |                 unsigned long val = *addr & GENMASK(size - 1, 0);
->       |                                     ^~~~~
-> drivers/bus/mhi/core/init.c:80:51: note: while referencing 'state'
->    80 | const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->       |                                 ~~~~~~~~~~~~~~~~~~^~~~~
+> The issue is seen on the Sierra Wireless EM9191 modem during SYS_ERR
+> handling in mhi_async_power_up(). Once the host detects that the device
+> is in SYS_ERR state, it issues MHI_RESET and waits for the device to
+> process the reset request. During this time, the device triggers the BHI
+> interrupt to the host without clearing SYS_ERR condition. So the host
+> starts handling the SYS_ERR condition again.
 > 
-> Signed-off-by: Kees Cook <keescook@chromium.org>
+> To fix this issue, let's register the IRQ handler only after handling the
+> SYS_ERR check to avoid getting spurious IRQs from the device.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: e18d4e9fa79b ("bus: mhi: core: Handle syserr during power_up")
+> Reported-by: Aleksander Morgado <aleksander@aleksander.es>
+> Tested-by: Aleksander Morgado <aleksander@aleksander.es>
+> Tested-by: Thomas Perrot <thomas.perrot@bootlin.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-A small nit pick below but I'll fix it up while applying.
+Applied to mhi-next!
 
 Thanks,
 Mani
 
 > ---
->  drivers/bus/mhi/core/init.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index f1ec34417592..b91f75fff962 100644
-> --- a/drivers/bus/mhi/core/init.c
-> +++ b/drivers/bus/mhi/core/init.c
-> @@ -79,7 +79,8 @@ static const char * const mhi_pm_state_str[] = {
+> Changes in v5:
+> 
+> * Rewored the commit message and used "error_exit" goto label for error
+>   path
+> 
+> Changes in v4:
+> 
+> * Reverted the change that moved BHI_INTVEC as that was causing issue as
+>   reported by Aleksander.
+> 
+> Changes in v3:
+> 
+> * Moved BHI_INTVEC setup after irq setup
+> * Used interval_us as the delay for the polling API
+> 
+> Changes in v2:
+> 
+> * Switched to "mhi_poll_reg_field" for detecting MHI reset in device.
+> 
+>  drivers/bus/mhi/core/pm.c | 35 ++++++++++++-----------------------
+>  1 file changed, 12 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> index 7464f5d09973..9ae8532df5a3 100644
+> --- a/drivers/bus/mhi/core/pm.c
+> +++ b/drivers/bus/mhi/core/pm.c
+> @@ -1038,7 +1038,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  	enum mhi_ee_type current_ee;
+>  	enum dev_st_transition next_state;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	u32 val;
+> +	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
+>  	int ret;
 >  
->  const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->  {
-> -	int index = find_last_bit((unsigned long *)&state, 32);
-> +	unsigned long bits = state;
-
-Variable "bits" could be changed to "pm_state".
-
-> +	int index = find_last_bit(&bits, 32);
+>  	dev_info(dev, "Requested to power ON\n");
+> @@ -1055,10 +1055,6 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  	mutex_lock(&mhi_cntrl->pm_mutex);
+>  	mhi_cntrl->pm_state = MHI_PM_DISABLE;
 >  
->  	if (index >= ARRAY_SIZE(mhi_pm_state_str))
->  		return "Invalid State";
+> -	ret = mhi_init_irq_setup(mhi_cntrl);
+> -	if (ret)
+> -		goto error_setup_irq;
+> -
+>  	/* Setup BHI INTVEC */
+>  	write_lock_irq(&mhi_cntrl->pm_lock);
+>  	mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
+> @@ -1072,7 +1068,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  		dev_err(dev, "%s is not a valid EE for power on\n",
+>  			TO_MHI_EXEC_STR(current_ee));
+>  		ret = -EIO;
+> -		goto error_async_power_up;
+> +		goto error_exit;
+>  	}
+>  
+>  	state = mhi_get_mhi_state(mhi_cntrl);
+> @@ -1081,20 +1077,12 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  
+>  	if (state == MHI_STATE_SYS_ERR) {
+>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+> -		ret = wait_event_timeout(mhi_cntrl->state_event,
+> -				MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state) ||
+> -					mhi_read_reg_field(mhi_cntrl,
+> -							   mhi_cntrl->regs,
+> -							   MHICTRL,
+> -							   MHICTRL_RESET_MASK,
+> -							   MHICTRL_RESET_SHIFT,
+> -							   &val) ||
+> -					!val,
+> -				msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> -		if (!ret) {
+> -			ret = -EIO;
+> +		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> +				 MHICTRL_RESET_MASK, MHICTRL_RESET_SHIFT, 0,
+> +				 interval_us);
+> +		if (ret) {
+>  			dev_info(dev, "Failed to reset MHI due to syserr state\n");
+> -			goto error_async_power_up;
+> +			goto error_exit;
+>  		}
+>  
+>  		/*
+> @@ -1104,6 +1092,10 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  		mhi_write_reg(mhi_cntrl, mhi_cntrl->bhi, BHI_INTVEC, 0);
+>  	}
+>  
+> +	ret = mhi_init_irq_setup(mhi_cntrl);
+> +	if (ret)
+> +		goto error_exit;
+> +
+>  	/* Transition to next state */
+>  	next_state = MHI_IN_PBL(current_ee) ?
+>  		DEV_ST_TRANSITION_PBL : DEV_ST_TRANSITION_READY;
+> @@ -1116,10 +1108,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  
+>  	return 0;
+>  
+> -error_async_power_up:
+> -	mhi_deinit_free_irq(mhi_cntrl);
+> -
+> -error_setup_irq:
+> +error_exit:
+>  	mhi_cntrl->pm_state = MHI_PM_DISABLE;
+>  	mutex_unlock(&mhi_cntrl->pm_mutex);
+>  
 > -- 
-> 2.30.2
+> 2.25.1
 > 
