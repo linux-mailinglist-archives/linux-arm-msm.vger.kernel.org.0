@@ -2,330 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D59C47676E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:28:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B12547677A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:38:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232611AbhLPB2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 20:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232608AbhLPB2w (ORCPT
+        id S232605AbhLPBiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 20:38:50 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:58372 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232576AbhLPBiu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 20:28:52 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7FEC06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 17:28:52 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id k37so46609753lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 17:28:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UlrS5zFZyVHdYpzgyW8iT06BJPhA6vt2JDCBzzIikOM=;
-        b=rYGn/JjVv1JYKGBRRlsCAmx4jl7d0xgMlmBd2UBDlyRNkQTCeinptwxJAfvj8CLImK
-         RPgC68lNQmL/wp2wlthfpjvL96n2DohBpBEYZUq66VCm3m0ODkbTGIYcsi+TaP7HlI6Y
-         Xfx2uBzvVxjWMOLy4dDfmCmwLVIvJww8xkoIpUC2rJIdm9DS169+eYoHtjuy3ImiRneH
-         SYAvVZwylg7Ov4XRl8SqzO7wrmmd8tQs4Z0lSnPp4+yxHI57a44kaWxdRNccLj/yTQVv
-         b5gz8WJm0iGYdV2u7SqsKqnM4h95sHLOWVxUKL7riYZsYcy6JX5yJIhejL/HKeAg7a2v
-         E3MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UlrS5zFZyVHdYpzgyW8iT06BJPhA6vt2JDCBzzIikOM=;
-        b=6iojahDw9hHCVHbTfYiO+rC3nt+wGM0FuHKah48XvFkJuxQtEIehBDk/joD3pO9/9F
-         K6jz7u8LpECdQuJHmLqYKPGvykwJiE603gwCNS5sWGE8mKPFpI28k255/qcSUqlhhVxT
-         LlI2Jkr5GFML4v3E62tDRwtFoEiG2t/xVHv5vMg6hHRRAcj8cSzgVDHrr4K/refHUDB9
-         KPc+sK4e9pSsTEBGwxfVRORt0u5w+wGX4/8v8TxloU2S+us/LqnYosja/28LakXSlDV/
-         Nn7kZYgBjQo63t1h3rHLGBG5pyYh1cvbYD91COsGQfLi1HZBMeifBkuYoxYjcVExC8Fw
-         kQEQ==
-X-Gm-Message-State: AOAM5324rLfW8s630LG4CvxWRcijm5uHqvVFEAQSV+z+sjuwktIvnXdt
-        xavP/T9hFp+yku50kxjFz11Q5wJ2wOoDqtMLvI7gbQ==
-X-Google-Smtp-Source: ABdhPJyh3Iw4723/46nsuXnrbnrvsXRWMqvSUoqgbqtqdsU8ngYy/mqAO55xEC1qWNFgiVztN/kFKphRSKjSeiNHJmU=
-X-Received: by 2002:a05:6512:ac5:: with SMTP id n5mr12335152lfu.246.1639618130292;
- Wed, 15 Dec 2021 17:28:50 -0800 (PST)
+        Wed, 15 Dec 2021 20:38:50 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1DFC061B8E;
+        Thu, 16 Dec 2021 01:38:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69747C36AE1;
+        Thu, 16 Dec 2021 01:38:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639618729;
+        bh=W8uzl9WQID9wn9qU/d5EE2OS7Nsn5jFytQWpTJE3ifw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=ZW03Yc3qKNi/JeNs8MTBb46Jl8EmihD7tqeyCUsl2F58OANvYBRtmtLmwdSCiCkC3
+         gr2BveZb02MJ+wPytJggOeq/EZgWo2F/y7RjNQxZ9Nja0kGeITPJnEeHzopyccbNbk
+         MquInPH2KgMygwq7ShIUsy6DPPNamU2321Jm1nCkgURXKxhOBhKvIF1WpPDLAcvygU
+         prCvwecXX8FiIWTHB/hUhb9KHIJ92mWn0wQS0GQgMAZNh/q3ve6OuFryj0eQ9+O53A
+         YrhBZkIWVtHhWXdVyBeqAXquFKZ4B1hyl2tDgaleqxmogKcbqNCb0oolUkFJ154RT0
+         bKuLOxLSZPudQ==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20211211021758.1712299-1-dmitry.baryshkov@linaro.org>
- <20211211021758.1712299-4-dmitry.baryshkov@linaro.org> <YbpuCRqCmMmiC6EM@builder.lan>
-In-Reply-To: <YbpuCRqCmMmiC6EM@builder.lan>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 16 Dec 2021 04:28:39 +0300
-Message-ID: <CAA8EJpqqO46ni74ihQV15jvDqgMB3pJJg9kz80-meLC01idqnw@mail.gmail.com>
-Subject: Re: [PATCH v3 03/10] phy: qcom-qmp: Add SM8450 PCIe0 PHY support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Krzysztof Wilczy??ski" <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a4f7d300-90c2-7dda-5cda-5e2763a94912@linaro.org>
+References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org> <20211208022210.1300773-3-dmitry.baryshkov@linaro.org> <YbJNp+tnD6kEQAzt@ripper> <a4f7d300-90c2-7dda-5cda-5e2763a94912@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sdm845: park disp_cc_mdss_mdp_clk_src
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 15 Dec 2021 17:38:48 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20211216013849.69747C36AE1@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Dec 2021 at 01:37, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 10 Dec 20:17 CST 2021, Dmitry Baryshkov wrote:
->
-> > There are two different PCIe PHYs on SM8450, one having one lane (v5)
-> > and another with two lanes (v5.20). This commit adds support for the
-> > first PCIe phy only, support for the second PCIe PHY is coming in next
-> > commits.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Note that this is going to be merged separately from the PCIe controller
-> patches, sending them in separate series would make that clearer to the
-> maintainers.
+Quoting Dmitry Baryshkov (2021-12-15 14:17:40)
+> On 09/12/2021 21:40, Bjorn Andersson wrote:
+> > On Tue 07 Dec 18:22 PST 2021, Dmitry Baryshkov wrote:
+> >=20
+> >> To stop disp_cc_mdss_mdp_clk_src from getting stuck during boot if it
+> >> was enabled by the bootloader, part it to the TCXO clock source.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >>   drivers/clk/qcom/dispcc-sdm845.c | 3 +++
+> >>   1 file changed, 3 insertions(+)
+> >>
+> >> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispc=
+c-sdm845.c
+> >> index 735adfefc379..f2afbba7bc72 100644
+> >> --- a/drivers/clk/qcom/dispcc-sdm845.c
+> >> +++ b/drivers/clk/qcom/dispcc-sdm845.c
+> >> @@ -858,6 +858,9 @@ static int disp_cc_sdm845_probe(struct platform_de=
+vice *pdev)
+> >>  =20
+> >>      clk_fabia_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_conf=
+ig);
+> >>  =20
+> >> +    /* Park disp_cc_mdss_mdp_clk_src */
+> >> +    clk_rcg2_park_safely(regmap, 0x2088, 0);
+> >=20
+> > Today booting the system with "clk_ignore_unused" will give you a
+> > working efifb up until the point where the display driver kicks in and
+> > reinitializes the hardware state - which during development might be
+> > indefinite.
+>=20
+> During development one can introduce a dispcc parameter. Maybe we should =
 
-Hmm. If you think it would be better, I can split it into 3 series:
-- PCIe RC
-- PCIe PHY
-- dts changes
+> add qcom-common parameter telling dispcc drivers to skip parking these=20
+> clocks.
+>=20
+> >=20
+> > If we blindly cut the mdp_clk_src here that will no longer be possible.
+>=20
+> I think we have several separate tasks here:
+>=20
+> 1) Support developing code. This is what you have in mind with EFIFB +=20
+> clk_ignore_unused.
+>=20
+> 2) Get display to work stable and rock solid. This can include=20
+> completely tearing down the display pipeline for the sake of getting=20
+> MDP/MDSS/DSI to work with as few hacks as possible.
+>=20
+> 3) Gracious handover of display/framebuffer from bootloader to the Linux =
 
-Does that make sense?
+> kernel.
+>=20
+> For the task #1, you can hack the dispcc as you wish or set any=20
+> additional parameters, as you are already passing clk_ignore_unused.=20
+> This will all end up as #1 transitions to #2.
+>=20
+> I was targetting task#2. Disable everything to let dpu/dsi/dp start from =
 
->
-> Regards,
-> Bjorn
->
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 125 ++++++++++++++++++++++++++++
-> >  drivers/phy/qualcomm/phy-qcom-qmp.h |  33 ++++++++
-> >  2 files changed, 158 insertions(+)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index a959c97a699f..19c17678b999 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -2866,6 +2866,97 @@ static const struct qmp_phy_init_tbl qcm2290_usb3_pcs_tbl[] = {
-> >       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
-> >  };
-> >
-> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_serdes_tbl[] = {
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x08),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CORECLK_DIV_MODE1, 0x08),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_IVCO, 0x0f),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP_EN, 0x42),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE1_MODE0, 0x24),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE2_MODE1, 0x03),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE1_MODE1, 0xb4),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE_MAP, 0x02),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_HSCLK_SEL, 0x11),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x82),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START3_MODE0, 0x03),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START2_MODE0, 0x55),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START1_MODE0, 0x55),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x1a),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0x0a),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x68),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START3_MODE1, 0x02),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START2_MODE1, 0xaa),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START1_MODE1, 0xab),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x34),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0x14),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_SEL, 0x01),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x06),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x16),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x36),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x06),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x16),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x36),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0, 0x1e),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0, 0xca),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x18),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xa2),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_BUF_ENABLE, 0x07),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_EN_CENTER, 0x01),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_PER1, 0x31),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_PER2, 0x01),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE0, 0xde),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0, 0x07),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1, 0x4c),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1, 0x06),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
-> > +};
-> > +
-> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_tx_tbl[] = {
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x16),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x04),
-> > +};
-> > +
-> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_rx_tbl[] = {
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_LOW, 0x7f),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH, 0xff),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0xbf),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x3f),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH4, 0xd8),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_LOW, 0xdc),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH, 0xdc),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH2, 0x5c),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH3, 0x34),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH4, 0xa6),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_10_HIGH3, 0x34),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_10_HIGH4, 0x38),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x07),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_GM_CAL, 0x00),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH1, 0x08),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH2, 0x08),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0xf0),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_TX_ADAPT_POST_THRESH, 0xf0),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL4, 0x07),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FO_GAIN, 0x09),
-> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SO_GAIN, 0x05),
-> > +};
-> > +
-> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_tbl[] = {
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x77),
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_RATE_SLEW_CNTRL1, 0x0b),
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x05),
-> > +};
-> > +
-> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_misc_tbl[] = {
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_INT_AUX_CLK_CONFIG1, 0x00),
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_EQ_CONFIG2, 0x0f),
-> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
-> > +};
-> > +
-> >  struct qmp_phy;
-> >
-> >  /* struct qmp_phy_cfg - per-PHY initialization config */
-> > @@ -4116,6 +4207,37 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
-> >       .is_dual_lane_phy       = true,
-> >  };
-> >
-> > +static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
-> > +     .type = PHY_TYPE_PCIE,
-> > +     .nlanes = 1,
-> > +
-> > +     .serdes_tbl             = sm8450_qmp_gen3x1_pcie_serdes_tbl,
-> > +     .serdes_tbl_num         = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_serdes_tbl),
-> > +     .tx_tbl                 = sm8450_qmp_gen3x1_pcie_tx_tbl,
-> > +     .tx_tbl_num             = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_tx_tbl),
-> > +     .rx_tbl                 = sm8450_qmp_gen3x1_pcie_rx_tbl,
-> > +     .rx_tbl_num             = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_rx_tbl),
-> > +     .pcs_tbl                = sm8450_qmp_gen3x1_pcie_pcs_tbl,
-> > +     .pcs_tbl_num            = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_tbl),
-> > +     .pcs_misc_tbl           = sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
-> > +     .pcs_misc_tbl_num       = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
-> > +     .clk_list               = sdm845_pciephy_clk_l,
-> > +     .num_clks               = ARRAY_SIZE(sdm845_pciephy_clk_l),
-> > +     .reset_list             = sdm845_pciephy_reset_l,
-> > +     .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
-> > +     .vreg_list              = qmp_phy_vreg_l,
-> > +     .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
-> > +     .regs                   = sm8250_pcie_regs_layout,
-> > +
-> > +     .start_ctrl             = SERDES_START | PCS_START,
-> > +     .pwrdn_ctrl             = SW_PWRDN | REFCLK_DRV_DSBL,
-> > +     .phy_status             = PHYSTATUS,
-> > +
-> > +     .has_pwrdn_delay        = true,
-> > +     .pwrdn_delay_min        = 995,          /* us */
-> > +     .pwrdn_delay_max        = 1005,         /* us */
-> > +};
-> > +
-> >  static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
-> >       .type                   = PHY_TYPE_USB3,
-> >       .nlanes                 = 1,
-> > @@ -5774,6 +5896,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
-> >       }, {
-> >               .compatible = "qcom,sm8350-qmp-usb3-uni-phy",
-> >               .data = &sm8350_usb3_uniphy_cfg,
-> > +     }, {
-> > +             .compatible = "qcom,sm8450-qmp-gen3x1-pcie-phy",
-> > +             .data = &sm8450_qmp_gen3x1_pciephy_cfg,
-> >       }, {
-> >               .compatible = "qcom,sm8450-qmp-ufs-phy",
-> >               .data = &sm8450_ufsphy_cfg,
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> > index e15f461065bb..08422037f81b 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> > @@ -1069,6 +1069,15 @@
-> >  #define QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2          0x828
-> >
-> >  /* Only for QMP V5 PHY - QSERDES COM registers */
-> > +#define QSERDES_V5_COM_SSC_EN_CENTER                 0x010
-> > +#define QSERDES_V5_COM_SSC_PER1                              0x01c
-> > +#define QSERDES_V5_COM_SSC_PER2                              0x020
-> > +#define QSERDES_V5_COM_SSC_STEP_SIZE1_MODE0          0x024
-> > +#define QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0          0x028
-> > +#define QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1          0x030
-> > +#define QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1          0x034
-> > +#define QSERDES_V5_COM_CLK_ENABLE1                   0x048
-> > +#define QSERDES_V5_COM_SYSCLK_BUF_ENABLE             0x050
-> >  #define QSERDES_V5_COM_PLL_IVCO                              0x058
-> >  #define QSERDES_V5_COM_CP_CTRL_MODE0                 0x074
-> >  #define QSERDES_V5_COM_CP_CTRL_MODE1                 0x078
-> > @@ -1084,10 +1093,22 @@
-> >  #define QSERDES_V5_COM_DEC_START_MODE0                       0x0bc
-> >  #define QSERDES_V5_COM_LOCK_CMP2_MODE1                       0x0b8
-> >  #define QSERDES_V5_COM_DEC_START_MODE1                       0x0c4
-> > +#define QSERDES_V5_COM_DIV_FRAC_START1_MODE0         0x0cc
-> > +#define QSERDES_V5_COM_DIV_FRAC_START2_MODE0         0x0d0
-> > +#define QSERDES_V5_COM_DIV_FRAC_START3_MODE0         0x0d4
-> > +#define QSERDES_V5_COM_DIV_FRAC_START1_MODE1         0x0d8
-> > +#define QSERDES_V5_COM_DIV_FRAC_START2_MODE1         0x0dc
-> > +#define QSERDES_V5_COM_DIV_FRAC_START3_MODE1         0x0e0
-> >  #define QSERDES_V5_COM_VCO_TUNE_MAP                  0x10c
-> > +#define QSERDES_V5_COM_VCO_TUNE1_MODE0                       0x110
-> > +#define QSERDES_V5_COM_VCO_TUNE2_MODE0                       0x114
-> > +#define QSERDES_V5_COM_VCO_TUNE1_MODE1                       0x118
-> > +#define QSERDES_V5_COM_VCO_TUNE2_MODE1                       0x11c
-> >  #define QSERDES_V5_COM_VCO_TUNE_INITVAL2             0x124
-> > +#define QSERDES_V5_COM_CLK_SELECT                    0x154
-> >  #define QSERDES_V5_COM_HSCLK_SEL                     0x158
-> >  #define QSERDES_V5_COM_HSCLK_HS_SWITCH_SEL           0x15c
-> > +#define QSERDES_V5_COM_CORECLK_DIV_MODE1             0x16c
-> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0    0x1ac
-> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0    0x1b0
-> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1    0x1b4
-> > @@ -1130,6 +1151,7 @@
-> >  #define QSERDES_V5_RX_AC_JTAG_ENABLE                 0x068
-> >  #define QSERDES_V5_RX_AC_JTAG_MODE                   0x078
-> >  #define QSERDES_V5_RX_RX_TERM_BW                     0x080
-> > +#define QSERDES_V5_RX_TX_ADAPT_POST_THRESH           0x0cc
-> >  #define QSERDES_V5_RX_VGA_CAL_CNTRL1                 0x0d4
-> >  #define QSERDES_V5_RX_VGA_CAL_CNTRL2                 0x0d8
-> >  #define QSERDES_V5_RX_GM_CAL                         0x0dc
-> > @@ -1167,6 +1189,17 @@
-> >  #define QSERDES_V5_RX_DCC_CTRL1                              0x1a8
-> >  #define QSERDES_V5_RX_VTH_CODE                               0x1b0
-> >
-> > +/* Only for QMP V5 PHY - USB/PCIe PCS registers */
-> > +#define QPHY_V5_PCS_REFGEN_REQ_CONFIG1                       0x0dc
-> > +#define QPHY_V5_PCS_RX_SIGDET_LVL                    0x188
-> > +#define QPHY_V5_PCS_RATE_SLEW_CNTRL1                 0x198
-> > +
-> > +/* Only for QMP V5 PHY - PCS_PCIE registers */
-> > +#define QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE               0x20
-> > +#define QPHY_V5_PCS_PCIE_INT_AUX_CLK_CONFIG1         0x54
-> > +#define QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS            0x94
-> > +#define QPHY_V5_PCS_PCIE_EQ_CONFIG2                  0xa8
-> > +
-> >  /* Only for QMP V5 PHY - UFS PCS registers */
-> >  #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB 0x00c
-> >  #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB 0x010
-> > --
-> > 2.33.0
-> >
+> the scratch. If I understand correctly, this approach would also help=20
+> you with your boot-clock-too-high-for-the-minimum-opp issue. Is my=20
+> assumption correct?
+>=20
+> For the task #3 we need collaboration between dispcc, clock core and=20
+> dpu/dsi drivers. Just marking the clocks for the clk_disable_unused() is =
 
+> the least of the problems that we have here. I think [1] is a bit closer =
 
+> to what I'd expect.
+>=20
+> I have a similar but slightly different idea of how this can be made to=20
+> work. I'd do the following (excuse me for the hand waving, no code at han=
+d):
+>=20
+> - Add clk_ops->inherit_state callback, which can check if the clock is=20
+> enabled already or not. If it is, set the enable_count to 1, set special =
 
--- 
-With best wishes
-Dmitry
+> CLOCK_INHERITED flag, read back the state, etc.
+>=20
+> - Make of_clk_set_defaults() ignore clocks with CLOCK_INHERITED flag.=20
+> Maybe it should return special status telling that some of the clocks=20
+> were not updated.
+
+This sounds an awful lot like the CLK_HANDOFF flag that never
+materialized. We know we have a problem where the enable state of a clk
+isn't understood at registration time (although we do know the frequency
+of the clk). So far it's been put largely on clk providers to figure out
+that their clk is enabled and avoid doing something if it is. But that's
+run into problems where clk flags that want us to not do something if
+the clk is enabled fail to detect this, see CLK_SET_RATE_GATE for
+example. This should be fixed; patches welcome.
+
+Within the clk framework we don't really want to care about a clk already
+being enabled and keeping track of that via the enable_count. Trying to
+figure out when to "hand that off" is complex, and what exactly is the
+point to it? Drivers still need to call clk_enable to enable the clk, so
+all that really matters is that we know the clk is on at boot and to
+respect the clk flags.
+
+>=20
+> - Add clk_get_inherit() call, which would drop the CLOCK_INHERITED flag=20
+> and return previous flag state to calling driver. The driver now assumes =
+
+> ownership of this clock with the enable_count of 1. This way the driver=20
+> can adjust itself to the current clock state (e.g. drop the frequency,=20
+> disable the clock and then call of_clk_set_defaults() again to=20
+> reparent/reclock clocks as necessary, etc). If the parent chain is not=20
+> fully available, clk_get_inherit must return an error for INHERITED=20
+> clocks, so that the driver will not cause reparenting of the orphaned=20
+> clocks.
+
+Please god no more clk_get() APIs! The driver shouldn't care that the
+clk is already enabled when clk_get() returns. The driver must call
+clk_enable() if it wants the clk to be enabled.
+
+Buried in here is the question of if we should allow clk_get() to
+succeed if the clk is an orphan. I recall that rockchip had some problem
+if we didn't allow orphans to be handed out but it's been years and I've
+forgotten the details. But from a purely high-level we should definitely not
+hand out orphan clks via clk_get() because the clk isn't operable
+outside of clk_set_rate() or clk_set_parent().
+
+And there's more work to do here first by getting rid of the .get_parent
+clk_op and having it return a clk_hw pointer (see my two or three year
+old clk_get_hw series). Once we do that we'll know if we can hand out an
+orphan clk because it may one day be reparented via clk_set_parent() or
+clk_set_rate() vs. the case where we shouldn't hand it out via clk_get()
+because we'll never be able to parent it because the parent(s) doesn't
+exist.
