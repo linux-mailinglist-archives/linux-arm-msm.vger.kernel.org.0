@@ -2,68 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6F64477E74
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 22:09:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26183478069
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 00:19:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234430AbhLPVJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 16:09:41 -0500
-Received: from mail-oi1-f170.google.com ([209.85.167.170]:33732 "EHLO
-        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229738AbhLPVJT (ORCPT
+        id S237141AbhLPXTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 18:19:06 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:48561 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234193AbhLPXTF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 16:09:19 -0500
-Received: by mail-oi1-f170.google.com with SMTP id q25so801610oiw.0;
-        Thu, 16 Dec 2021 13:09:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OS/sucy8NbtpflVnkHVNg7NehaU6O8L89FOZlphTY1s=;
-        b=d0VkMCQe6STR4tr7BwB5usnt0kcvH91PbR2r765TaHejP55D0rx0jVC2KektJafwC9
-         84dABBpHJVWYeoYMTxDGoGSqG7FSiZVrfivAaLIF2Zs8bJmfWmpUlSZUp5WdPnQtRjxw
-         MHU4avwzqcZP+F2QLLDrp9OcsMqrIK5DDlpvd0npWhCLZvHjVxDVChj5RZoM7M/EL5iC
-         39EpAVHgpJJ7ZDzFImzU+q10NHVjH2DQNambnmlnX480WbAgyTiZdQePEkXsFisDgpjU
-         mxlNgbm6DBeTQT+PmB24PybZ5a+T9u/thfPre0hkMMtfmMkZQwDsltJ8KlDGvm4LmVMR
-         psZg==
-X-Gm-Message-State: AOAM532T3rYamtdhRHf9ZnYbMczNH4cH0bCqmqOY75UIuJkzf9sC4fdL
-        ghddhU+EkT1vI9WapPw+B3qnzAeCTw==
-X-Google-Smtp-Source: ABdhPJyyMGhiLWXkVVOwkZcyEhZGW4Fe/iwsRS5HdesRaYQ+6daPAj0X1Xw3SrpCTlL4beb0xpR1zg==
-X-Received: by 2002:aca:100f:: with SMTP id 15mr5675384oiq.82.1639688959036;
-        Thu, 16 Dec 2021 13:09:19 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id p10sm1219585otp.53.2021.12.16.13.09.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Dec 2021 13:09:18 -0800 (PST)
-Received: (nullmailer pid 766740 invoked by uid 1000);
-        Thu, 16 Dec 2021 21:09:18 -0000
-Date:   Thu, 16 Dec 2021 15:09:18 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: add binding for SM8450
-Message-ID: <Ybuq/lWQOAfMbXAD@robh.at.kernel.org>
-References: <20211216113849.659856-1-vkoul@kernel.org>
+        Thu, 16 Dec 2021 18:19:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1639696745; x=1671232745;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=r5gDvMoc92iDL10QJcM/tNCFOMSxMcUv+DruqpznXEQ=;
+  b=a8YI4Jru9DJ4ePaj/UU6k9Q3R0INP3HQ+II3ALqliqCqA6q/rkQ9rRoj
+   Gx54L+cp1aQtGKt5Xfy5KtEm4o3NiILhiLwAAfQqJ6FZd5cHearTyvL7H
+   rpIJGDw2Nv2INufiSHq9LajLIJcb10VuozkZGTC9r68wSSv3PizeW67Eg
+   4=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Dec 2021 15:19:05 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Dec 2021 15:19:04 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 16 Dec 2021 15:19:03 -0800
+Received: from hu-vamslank-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 16 Dec 2021 15:19:03 -0800
+From:   <quic_vamslank@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <linus.walleij@linaro.org>, <robh+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <manivannan.sadhasivam@linaro.org>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+Subject: [PATCH v6 0/2] Add pinctrl support for SDX65 
+Date:   Thu, 16 Dec 2021 15:18:44 -0800
+Message-ID: <cover.1639696427.git.quic_vamslank@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211216113849.659856-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Dec 2021 17:08:49 +0530, Vinod Koul wrote:
-> Add the compatible string for USB controller for Qualcomm SM8450 SoC.
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 
-Acked-by: Rob Herring <robh@kernel.org>
+Hello,
+
+Changes from v5:
+ - Fixed pinctrl dt_binding comments from Bjorn and Rob 
+
+Changes from v4:
+ - Fixed dt_binding check errors
+
+Changes from v3:
+ - Addressed comments, fixed dt_binding check errors and collected reviewed
+   by from Bjorn
+ - Rebased on top of v5.16-rc1
+
+Changes from v2:
+ - Addressed comments from Bjorn
+ - Collected Reviewed-by for the patches
+
+Changes from v1:
+ - Addressed all Bjorn's comments
+
+This patch series adds pinctrl bindings and tlmm support for SDX65.
+
+Thanks,
+Vamsi
+
+Vamsi Krishna Lanka (2):
+  dt-bindings: pinctrl: qcom: Add SDX65 pinctrl bindings
+  pinctrl: qcom: Add SDX65 pincontrol driver
+
+ .../bindings/pinctrl/qcom,sdx65-pinctrl.yaml  | 191 ++++
+ drivers/pinctrl/qcom/Kconfig                  |   9 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-sdx65.c          | 967 ++++++++++++++++++
+ 4 files changed, 1168 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdx65.c
+
+
+base-commit: 58e1100fdc5990b0cc0d4beaf2562a92e621ac7d
+prerequisite-patch-id: 93a6639086d56aaaf0c5d0e108a7a7690d39967f
+prerequisite-patch-id: 889196dd8ff26aaa113c94ac27b67f708301cd22
+prerequisite-patch-id: bca9c19611da01ed598f8645e6be49f8def4d683
+prerequisite-patch-id: ba1594c6d524ae889dd4325d0912848f5542633b
+prerequisite-patch-id: 6efd062dc77400d108f3f4a0c66010c69759d64a
+prerequisite-patch-id: fb27c240bc512176c822e6f1c7cb5b8d65633c56
+prerequisite-patch-id: 8125f49031bb5d9ebca1ca3e622080d6d3683bfb
+prerequisite-patch-id: e6ecff6bfb4016b9118b2b25f4077355a1448220
+prerequisite-patch-id: ba2f7d61be224484482d4910116ea69f1f5200ea
+-- 
+2.33.1
+
