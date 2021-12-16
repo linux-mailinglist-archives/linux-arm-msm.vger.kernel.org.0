@@ -2,352 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 100DA476759
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:15:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D59C47676E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:28:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbhLPBPl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 20:15:41 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:7890 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229548AbhLPBPk (ORCPT
+        id S232611AbhLPB2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 20:28:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232608AbhLPB2w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 20:15:40 -0500
+        Wed, 15 Dec 2021 20:28:52 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7FEC06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 17:28:52 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id k37so46609753lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 17:28:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639617340; x=1671153340;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=btxXdGUjAG0BBRt+C9w6d4jsurru/3AgZ36BbXsf768=;
-  b=y8thrL+RvWqeasrwp69AJ1+NyDqOkMh1qVd3//Cl4An4wS7nCMsrVbXp
-   HMA4ShDR+JKFrg7kl8UbB7ue+iVh6g06dTPDEZMILONMtoopoUK+EZ9M2
-   zw+2GLknYgSTX4s0Rmdsj5Tg+c9pXuV1JQG9z46DR/P5y3YTdAjIxi3Ee
-   k=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Dec 2021 17:15:40 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2021 17:15:39 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 15 Dec 2021 17:15:39 -0800
-Received: from [10.111.165.31] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 15 Dec
- 2021 17:15:36 -0800
-Message-ID: <ce4caf46-9433-3387-d50d-837c279d4827@quicinc.com>
-Date:   Wed, 15 Dec 2021 17:15:34 -0800
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UlrS5zFZyVHdYpzgyW8iT06BJPhA6vt2JDCBzzIikOM=;
+        b=rYGn/JjVv1JYKGBRRlsCAmx4jl7d0xgMlmBd2UBDlyRNkQTCeinptwxJAfvj8CLImK
+         RPgC68lNQmL/wp2wlthfpjvL96n2DohBpBEYZUq66VCm3m0ODkbTGIYcsi+TaP7HlI6Y
+         Xfx2uBzvVxjWMOLy4dDfmCmwLVIvJww8xkoIpUC2rJIdm9DS169+eYoHtjuy3ImiRneH
+         SYAvVZwylg7Ov4XRl8SqzO7wrmmd8tQs4Z0lSnPp4+yxHI57a44kaWxdRNccLj/yTQVv
+         b5gz8WJm0iGYdV2u7SqsKqnM4h95sHLOWVxUKL7riYZsYcy6JX5yJIhejL/HKeAg7a2v
+         E3MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UlrS5zFZyVHdYpzgyW8iT06BJPhA6vt2JDCBzzIikOM=;
+        b=6iojahDw9hHCVHbTfYiO+rC3nt+wGM0FuHKah48XvFkJuxQtEIehBDk/joD3pO9/9F
+         K6jz7u8LpECdQuJHmLqYKPGvykwJiE603gwCNS5sWGE8mKPFpI28k255/qcSUqlhhVxT
+         LlI2Jkr5GFML4v3E62tDRwtFoEiG2t/xVHv5vMg6hHRRAcj8cSzgVDHrr4K/refHUDB9
+         KPc+sK4e9pSsTEBGwxfVRORt0u5w+wGX4/8v8TxloU2S+us/LqnYosja/28LakXSlDV/
+         Nn7kZYgBjQo63t1h3rHLGBG5pyYh1cvbYD91COsGQfLi1HZBMeifBkuYoxYjcVExC8Fw
+         kQEQ==
+X-Gm-Message-State: AOAM5324rLfW8s630LG4CvxWRcijm5uHqvVFEAQSV+z+sjuwktIvnXdt
+        xavP/T9hFp+yku50kxjFz11Q5wJ2wOoDqtMLvI7gbQ==
+X-Google-Smtp-Source: ABdhPJyh3Iw4723/46nsuXnrbnrvsXRWMqvSUoqgbqtqdsU8ngYy/mqAO55xEC1qWNFgiVztN/kFKphRSKjSeiNHJmU=
+X-Received: by 2002:a05:6512:ac5:: with SMTP id n5mr12335152lfu.246.1639618130292;
+ Wed, 15 Dec 2021 17:28:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [Freedreno] [PATCH v1 8/8] drm/msm/dpu: move SSPP debugfs support
- from plane to SSPP code
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "David Airlie" <airlied@linux.ie>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>
-References: <20211201222633.2476780-1-dmitry.baryshkov@linaro.org>
- <20211201222633.2476780-9-dmitry.baryshkov@linaro.org>
- <fcebac6e-05ea-73ad-f592-fc1721d4ecfb@quicinc.com>
- <df5a6583-8c94-e43a-e62d-d2be3918cbea@quicinc.com>
- <0d6574c2-c811-22c6-39d3-379ac93afe0d@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <0d6574c2-c811-22c6-39d3-379ac93afe0d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20211211021758.1712299-1-dmitry.baryshkov@linaro.org>
+ <20211211021758.1712299-4-dmitry.baryshkov@linaro.org> <YbpuCRqCmMmiC6EM@builder.lan>
+In-Reply-To: <YbpuCRqCmMmiC6EM@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 16 Dec 2021 04:28:39 +0300
+Message-ID: <CAA8EJpqqO46ni74ihQV15jvDqgMB3pJJg9kz80-meLC01idqnw@mail.gmail.com>
+Subject: Re: [PATCH v3 03/10] phy: qcom-qmp: Add SM8450 PCIe0 PHY support
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "Krzysztof Wilczy??ski" <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 16 Dec 2021 at 01:37, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Fri 10 Dec 20:17 CST 2021, Dmitry Baryshkov wrote:
+>
+> > There are two different PCIe PHYs on SM8450, one having one lane (v5)
+> > and another with two lanes (v5.20). This commit adds support for the
+> > first PCIe phy only, support for the second PCIe PHY is coming in next
+> > commits.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>
+> Note that this is going to be merged separately from the PCIe controller
+> patches, sending them in separate series would make that clearer to the
+> maintainers.
+
+Hmm. If you think it would be better, I can split it into 3 series:
+- PCIe RC
+- PCIe PHY
+- dts changes
+
+Does that make sense?
+
+>
+> Regards,
+> Bjorn
+>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 125 ++++++++++++++++++++++++++++
+> >  drivers/phy/qualcomm/phy-qcom-qmp.h |  33 ++++++++
+> >  2 files changed, 158 insertions(+)
+> >
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > index a959c97a699f..19c17678b999 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > @@ -2866,6 +2866,97 @@ static const struct qmp_phy_init_tbl qcm2290_usb3_pcs_tbl[] = {
+> >       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
+> >  };
+> >
+> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_serdes_tbl[] = {
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_EN_SEL, 0x08),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_SELECT, 0x34),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CORECLK_DIV_MODE1, 0x08),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_IVCO, 0x0f),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP_EN, 0x42),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE1_MODE0, 0x24),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE2_MODE1, 0x03),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE1_MODE1, 0xb4),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_VCO_TUNE_MAP, 0x02),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_HSCLK_SEL, 0x11),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE0, 0x82),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START3_MODE0, 0x03),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START2_MODE0, 0x55),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START1_MODE0, 0x55),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE0, 0x1a),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE0, 0x0a),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DEC_START_MODE1, 0x68),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START3_MODE1, 0x02),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START2_MODE1, 0xaa),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_DIV_FRAC_START1_MODE1, 0xab),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP2_MODE1, 0x34),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_LOCK_CMP1_MODE1, 0x14),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_HSCLK_SEL, 0x01),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x06),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE0, 0x16),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x36),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x06),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_RCTRL_MODE1, 0x16),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x36),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0, 0x1e),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0, 0xca),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE1, 0x18),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1, 0xa2),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_BUF_ENABLE, 0x07),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_EN_CENTER, 0x01),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_PER1, 0x31),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_PER2, 0x01),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE0, 0xde),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0, 0x07),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1, 0x4c),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1, 0x06),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_tx_tbl[] = {
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x16),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x04),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_rx_tbl[] = {
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_LOW, 0x7f),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH, 0xff),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH2, 0xbf),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x3f),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH4, 0xd8),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_LOW, 0xdc),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH, 0xdc),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH2, 0x5c),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH3, 0x34),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_01_HIGH4, 0xa6),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_10_HIGH3, 0x34),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_10_HIGH4, 0x38),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x07),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_GM_CAL, 0x00),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH1, 0x08),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SB2_THRESH2, 0x08),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0xf0),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_TX_ADAPT_POST_THRESH, 0xf0),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL4, 0x07),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FO_GAIN, 0x09),
+> > +     QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SO_GAIN, 0x05),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_tbl[] = {
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0x77),
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_RATE_SLEW_CNTRL1, 0x0b),
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x05),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_misc_tbl[] = {
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_INT_AUX_CLK_CONFIG1, 0x00),
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_EQ_CONFIG2, 0x0f),
+> > +     QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
+> > +};
+> > +
+> >  struct qmp_phy;
+> >
+> >  /* struct qmp_phy_cfg - per-PHY initialization config */
+> > @@ -4116,6 +4207,37 @@ static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
+> >       .is_dual_lane_phy       = true,
+> >  };
+> >
+> > +static const struct qmp_phy_cfg sm8450_qmp_gen3x1_pciephy_cfg = {
+> > +     .type = PHY_TYPE_PCIE,
+> > +     .nlanes = 1,
+> > +
+> > +     .serdes_tbl             = sm8450_qmp_gen3x1_pcie_serdes_tbl,
+> > +     .serdes_tbl_num         = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_serdes_tbl),
+> > +     .tx_tbl                 = sm8450_qmp_gen3x1_pcie_tx_tbl,
+> > +     .tx_tbl_num             = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_tx_tbl),
+> > +     .rx_tbl                 = sm8450_qmp_gen3x1_pcie_rx_tbl,
+> > +     .rx_tbl_num             = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_rx_tbl),
+> > +     .pcs_tbl                = sm8450_qmp_gen3x1_pcie_pcs_tbl,
+> > +     .pcs_tbl_num            = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_tbl),
+> > +     .pcs_misc_tbl           = sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
+> > +     .pcs_misc_tbl_num       = ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
+> > +     .clk_list               = sdm845_pciephy_clk_l,
+> > +     .num_clks               = ARRAY_SIZE(sdm845_pciephy_clk_l),
+> > +     .reset_list             = sdm845_pciephy_reset_l,
+> > +     .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
+> > +     .vreg_list              = qmp_phy_vreg_l,
+> > +     .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> > +     .regs                   = sm8250_pcie_regs_layout,
+> > +
+> > +     .start_ctrl             = SERDES_START | PCS_START,
+> > +     .pwrdn_ctrl             = SW_PWRDN | REFCLK_DRV_DSBL,
+> > +     .phy_status             = PHYSTATUS,
+> > +
+> > +     .has_pwrdn_delay        = true,
+> > +     .pwrdn_delay_min        = 995,          /* us */
+> > +     .pwrdn_delay_max        = 1005,         /* us */
+> > +};
+> > +
+> >  static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+> >       .type                   = PHY_TYPE_USB3,
+> >       .nlanes                 = 1,
+> > @@ -5774,6 +5896,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
+> >       }, {
+> >               .compatible = "qcom,sm8350-qmp-usb3-uni-phy",
+> >               .data = &sm8350_usb3_uniphy_cfg,
+> > +     }, {
+> > +             .compatible = "qcom,sm8450-qmp-gen3x1-pcie-phy",
+> > +             .data = &sm8450_qmp_gen3x1_pciephy_cfg,
+> >       }, {
+> >               .compatible = "qcom,sm8450-qmp-ufs-phy",
+> >               .data = &sm8450_ufsphy_cfg,
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> > index e15f461065bb..08422037f81b 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> > @@ -1069,6 +1069,15 @@
+> >  #define QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2          0x828
+> >
+> >  /* Only for QMP V5 PHY - QSERDES COM registers */
+> > +#define QSERDES_V5_COM_SSC_EN_CENTER                 0x010
+> > +#define QSERDES_V5_COM_SSC_PER1                              0x01c
+> > +#define QSERDES_V5_COM_SSC_PER2                              0x020
+> > +#define QSERDES_V5_COM_SSC_STEP_SIZE1_MODE0          0x024
+> > +#define QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0          0x028
+> > +#define QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1          0x030
+> > +#define QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1          0x034
+> > +#define QSERDES_V5_COM_CLK_ENABLE1                   0x048
+> > +#define QSERDES_V5_COM_SYSCLK_BUF_ENABLE             0x050
+> >  #define QSERDES_V5_COM_PLL_IVCO                              0x058
+> >  #define QSERDES_V5_COM_CP_CTRL_MODE0                 0x074
+> >  #define QSERDES_V5_COM_CP_CTRL_MODE1                 0x078
+> > @@ -1084,10 +1093,22 @@
+> >  #define QSERDES_V5_COM_DEC_START_MODE0                       0x0bc
+> >  #define QSERDES_V5_COM_LOCK_CMP2_MODE1                       0x0b8
+> >  #define QSERDES_V5_COM_DEC_START_MODE1                       0x0c4
+> > +#define QSERDES_V5_COM_DIV_FRAC_START1_MODE0         0x0cc
+> > +#define QSERDES_V5_COM_DIV_FRAC_START2_MODE0         0x0d0
+> > +#define QSERDES_V5_COM_DIV_FRAC_START3_MODE0         0x0d4
+> > +#define QSERDES_V5_COM_DIV_FRAC_START1_MODE1         0x0d8
+> > +#define QSERDES_V5_COM_DIV_FRAC_START2_MODE1         0x0dc
+> > +#define QSERDES_V5_COM_DIV_FRAC_START3_MODE1         0x0e0
+> >  #define QSERDES_V5_COM_VCO_TUNE_MAP                  0x10c
+> > +#define QSERDES_V5_COM_VCO_TUNE1_MODE0                       0x110
+> > +#define QSERDES_V5_COM_VCO_TUNE2_MODE0                       0x114
+> > +#define QSERDES_V5_COM_VCO_TUNE1_MODE1                       0x118
+> > +#define QSERDES_V5_COM_VCO_TUNE2_MODE1                       0x11c
+> >  #define QSERDES_V5_COM_VCO_TUNE_INITVAL2             0x124
+> > +#define QSERDES_V5_COM_CLK_SELECT                    0x154
+> >  #define QSERDES_V5_COM_HSCLK_SEL                     0x158
+> >  #define QSERDES_V5_COM_HSCLK_HS_SWITCH_SEL           0x15c
+> > +#define QSERDES_V5_COM_CORECLK_DIV_MODE1             0x16c
+> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE0    0x1ac
+> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE2_MODE0    0x1b0
+> >  #define QSERDES_V5_COM_BIN_VCOCAL_CMP_CODE1_MODE1    0x1b4
+> > @@ -1130,6 +1151,7 @@
+> >  #define QSERDES_V5_RX_AC_JTAG_ENABLE                 0x068
+> >  #define QSERDES_V5_RX_AC_JTAG_MODE                   0x078
+> >  #define QSERDES_V5_RX_RX_TERM_BW                     0x080
+> > +#define QSERDES_V5_RX_TX_ADAPT_POST_THRESH           0x0cc
+> >  #define QSERDES_V5_RX_VGA_CAL_CNTRL1                 0x0d4
+> >  #define QSERDES_V5_RX_VGA_CAL_CNTRL2                 0x0d8
+> >  #define QSERDES_V5_RX_GM_CAL                         0x0dc
+> > @@ -1167,6 +1189,17 @@
+> >  #define QSERDES_V5_RX_DCC_CTRL1                              0x1a8
+> >  #define QSERDES_V5_RX_VTH_CODE                               0x1b0
+> >
+> > +/* Only for QMP V5 PHY - USB/PCIe PCS registers */
+> > +#define QPHY_V5_PCS_REFGEN_REQ_CONFIG1                       0x0dc
+> > +#define QPHY_V5_PCS_RX_SIGDET_LVL                    0x188
+> > +#define QPHY_V5_PCS_RATE_SLEW_CNTRL1                 0x198
+> > +
+> > +/* Only for QMP V5 PHY - PCS_PCIE registers */
+> > +#define QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE               0x20
+> > +#define QPHY_V5_PCS_PCIE_INT_AUX_CLK_CONFIG1         0x54
+> > +#define QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS            0x94
+> > +#define QPHY_V5_PCS_PCIE_EQ_CONFIG2                  0xa8
+> > +
+> >  /* Only for QMP V5 PHY - UFS PCS registers */
+> >  #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_MSB 0x00c
+> >  #define QPHY_V5_PCS_UFS_TIMER_20US_CORECLK_STEPS_LSB 0x010
+> > --
+> > 2.33.0
+> >
 
 
-On 12/9/2021 4:19 PM, Dmitry Baryshkov wrote:
-> On 10/12/2021 01:27, Abhinav Kumar wrote:
->>
->>
->> On 12/9/2021 2:18 PM, Abhinav Kumar wrote:
->>>
->>>
->>> On 12/1/2021 2:26 PM, Dmitry Baryshkov wrote:
->>>> We are preparing to change DPU plane implementation. Move SSPP debugfs
->>>> code from dpu_plane.c to dpu_hw_sspp.c, where it belongs.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 67 +++++++++++++++++
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  4 +
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  1 +
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 82 
->>>> +++------------------
->>>>   4 files changed, 84 insertions(+), 70 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> index d77eb7da5daf..ae3cf2e4d7d9 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
->>>> @@ -8,6 +8,8 @@
->>>>   #include "dpu_hw_sspp.h"
->>>>   #include "dpu_kms.h"
->>>> +#include <drm/drm_file.h>
->>>> +
->>>>   #define DPU_FETCH_CONFIG_RESET_VALUE   0x00000087
->>>>   /* DPU_SSPP_SRC */
->>>> @@ -686,6 +688,71 @@ static void _setup_layer_ops(struct dpu_hw_pipe 
->>>> *c,
->>>>           c->ops.setup_cdp = dpu_hw_sspp_setup_cdp;
->>>>   }
->>>> +#ifdef CONFIG_DEBUG_FS
->>>> +int _dpu_hw_sspp_init_debugfs(struct dpu_hw_pipe *hw_pipe, struct 
->>>> dpu_kms *kms, struct dentry *entry)
->>>> +{
->>>> +    const struct dpu_sspp_cfg *cfg = hw_pipe->cap;
->>>> +    const struct dpu_sspp_sub_blks *sblk = cfg->sblk;
->>>> +    struct dentry *debugfs_root;
->>>> +    char sspp_name[32];
->>>> +
->>>> +    snprintf(sspp_name, sizeof(sspp_name), "%d", hw_pipe->idx);
->>>> +
->>>> +    /* create overall sub-directory for the pipe */
->>>> +    debugfs_root =
->>>> +        debugfs_create_dir(sspp_name, entry);
->>>
->>>
->>> I would like to take a different approach to this. Let me know what 
->>> you think.
->>>
->>> Let the directory names still be the drm plane names as someone who 
->>> would first get the DRM state and then try to lookup the register 
->>> values of that plane would not know where to look now.
->>>
->>> Inside the /sys/kernel/debug/***/plane-X/ directory you can expose an 
->>> extra entry which tells the sspp_index.
->>>
->>> This will also establish the plane to SSPP mapping.
->>>
->>> Now when planes go virtual in the future, this will be helpful even more
->>> so that we can know the plane to SSPP mapping.
->>
->> OR i like rob's suggestion of implementing the atomic_print_state 
->> callback which will printout the drm plane to SSPP mapping along with 
->> this change so that when we look at DRM state, we also know the plane
->> to SSPP mapping and look in the right SSPP's dir.
-> 
-> I'd add atomic_print_state(), it seems simpler (and more future-proof).
-Now, that https://patchwork.freedesktop.org/patch/467031/ has been pushed,
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
->>>
->>>
->>>> +
->>>> +    /* don't error check these */
->>>> +    debugfs_create_xul("features", 0600,
->>>> +            debugfs_root, (unsigned long *)&hw_pipe->cap->features);
->>>> +
->>>> +    /* add register dump support */
->>>> +    dpu_debugfs_create_regset32("src_blk", 0400,
->>>> +            debugfs_root,
->>>> +            sblk->src_blk.base + cfg->base,
->>>> +            sblk->src_blk.len,
->>>> +            kms);
->>>> +
->>>> +    if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
->>>> +            cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
->>>> +            cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
->>>> +            cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
->>>> +        dpu_debugfs_create_regset32("scaler_blk", 0400,
->>>> +                debugfs_root,
->>>> +                sblk->scaler_blk.base + cfg->base,
->>>> +                sblk->scaler_blk.len,
->>>> +                kms);
->>>> +
->>>> +    if (cfg->features & BIT(DPU_SSPP_CSC) ||
->>>> +            cfg->features & BIT(DPU_SSPP_CSC_10BIT))
->>>> +        dpu_debugfs_create_regset32("csc_blk", 0400,
->>>> +                debugfs_root,
->>>> +                sblk->csc_blk.base + cfg->base,
->>>> +                sblk->csc_blk.len,
->>>> +                kms);
->>>> +
->>>> +    debugfs_create_u32("xin_id",
->>>> +            0400,
->>>> +            debugfs_root,
->>>> +            (u32 *) &cfg->xin_id);
->>>> +    debugfs_create_u32("clk_ctrl",
->>>> +            0400,
->>>> +            debugfs_root,
->>>> +            (u32 *) &cfg->clk_ctrl);
->>>> +    debugfs_create_x32("creq_vblank",
->>>> +            0600,
->>>> +            debugfs_root,
->>>> +            (u32 *) &sblk->creq_vblank);
->>>> +    debugfs_create_x32("danger_vblank",
->>>> +            0600,
->>>> +            debugfs_root,
->>>> +            (u32 *) &sblk->danger_vblank);
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +#endif
->>>> +
->>>> +
->>>>   static const struct dpu_sspp_cfg *_sspp_offset(enum dpu_sspp sspp,
->>>>           void __iomem *addr,
->>>>           struct dpu_mdss_cfg *catalog,
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>>> index e8939d7387cb..cef281687bab 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
->>>> @@ -381,6 +381,7 @@ struct dpu_hw_pipe {
->>>>       struct dpu_hw_sspp_ops ops;
->>>>   };
->>>> +struct dpu_kms;
->>>>   /**
->>>>    * dpu_hw_sspp_init - initializes the sspp hw driver object.
->>>>    * Should be called once before accessing every pipe.
->>>> @@ -400,5 +401,8 @@ struct dpu_hw_pipe *dpu_hw_sspp_init(enum 
->>>> dpu_sspp idx,
->>>>    */
->>>>   void dpu_hw_sspp_destroy(struct dpu_hw_pipe *ctx);
->>>> +void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry 
->>>> *debugfs_root);
->>>> +int _dpu_hw_sspp_init_debugfs(struct dpu_hw_pipe *hw_pipe, struct 
->>>> dpu_kms *kms, struct dentry *entry);
->>>> +
->>>>   #endif /*_DPU_HW_SSPP_H */
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> index 7e7a619769a8..de9efe6dcf7c 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>>> @@ -281,6 +281,7 @@ static int dpu_kms_debugfs_init(struct msm_kms 
->>>> *kms, struct drm_minor *minor)
->>>>       dpu_debugfs_danger_init(dpu_kms, entry);
->>>>       dpu_debugfs_vbif_init(dpu_kms, entry);
->>>>       dpu_debugfs_core_irq_init(dpu_kms, entry);
->>>> +    dpu_debugfs_sspp_init(dpu_kms, entry);
->>>>       for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
->>>>           if (priv->dp[i])
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> index ef66af696a40..cc7a7eb84fdd 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>>> @@ -13,7 +13,6 @@
->>>>   #include <drm/drm_atomic.h>
->>>>   #include <drm/drm_atomic_uapi.h>
->>>>   #include <drm/drm_damage_helper.h>
->>>> -#include <drm/drm_file.h>
->>>>   #include <drm/drm_gem_atomic_helper.h>
->>>>   #include "msm_drv.h"
->>>> @@ -1356,78 +1355,22 @@ void dpu_plane_danger_signal_ctrl(struct 
->>>> drm_plane *plane, bool enable)
->>>>       pm_runtime_put_sync(&dpu_kms->pdev->dev);
->>>>   }
->>>> -static int _dpu_plane_init_debugfs(struct drm_plane *plane)
->>>> +/* SSPP live inside dpu_plane private data only. Enumerate them 
->>>> here. */
->>>> +void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry 
->>>> *debugfs_root)
->>>>   {
->>>> -    struct dpu_plane *pdpu = to_dpu_plane(plane);
->>>> -    struct dpu_kms *kms = _dpu_plane_get_kms(plane);
->>>> -    const struct dpu_sspp_cfg *cfg = pdpu->pipe_hw->cap;
->>>> -    const struct dpu_sspp_sub_blks *sblk = cfg->sblk;
->>>> -    struct dentry *debugfs_root;
->>>> -
->>>> -    /* create overall sub-directory for the pipe */
->>>> -    debugfs_root =
->>>> -        debugfs_create_dir(plane->name,
->>>> -                plane->dev->primary->debugfs_root);
->>>> -
->>>> -    /* don't error check these */
->>>> -    debugfs_create_xul("features", 0600,
->>>> -            debugfs_root, (unsigned long 
->>>> *)&pdpu->pipe_hw->cap->features);
->>>> -
->>>> -    /* add register dump support */
->>>> -    dpu_debugfs_create_regset32("src_blk", 0400,
->>>> -            debugfs_root,
->>>> -            sblk->src_blk.base + cfg->base,
->>>> -            sblk->src_blk.len,
->>>> -            kms);
->>>> -
->>>> -    if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
->>>> -            cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
->>>> -            cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
->>>> -            cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
->>>> -        dpu_debugfs_create_regset32("scaler_blk", 0400,
->>>> -                debugfs_root,
->>>> -                sblk->scaler_blk.base + cfg->base,
->>>> -                sblk->scaler_blk.len,
->>>> -                kms);
->>>> -
->>>> -    if (cfg->features & BIT(DPU_SSPP_CSC) ||
->>>> -            cfg->features & BIT(DPU_SSPP_CSC_10BIT))
->>>> -        dpu_debugfs_create_regset32("csc_blk", 0400,
->>>> -                debugfs_root,
->>>> -                sblk->csc_blk.base + cfg->base,
->>>> -                sblk->csc_blk.len,
->>>> -                kms);
->>>> -
->>>> -    debugfs_create_u32("xin_id",
->>>> -            0400,
->>>> -            debugfs_root,
->>>> -            (u32 *) &cfg->xin_id);
->>>> -    debugfs_create_u32("clk_ctrl",
->>>> -            0400,
->>>> -            debugfs_root,
->>>> -            (u32 *) &cfg->clk_ctrl);
->>>> -    debugfs_create_x32("creq_vblank",
->>>> -            0600,
->>>> -            debugfs_root,
->>>> -            (u32 *) &sblk->creq_vblank);
->>>> -    debugfs_create_x32("danger_vblank",
->>>> -            0600,
->>>> -            debugfs_root,
->>>> -            (u32 *) &sblk->danger_vblank);
->>>> +    struct drm_plane *plane;
->>>> +    struct dentry *entry = debugfs_create_dir("sspp", debugfs_root);
->>>> -    return 0;
->>>> -}
->>>> -#else
->>>> -static int _dpu_plane_init_debugfs(struct drm_plane *plane)
->>>> -{
->>>> -    return 0;
->>>> -}
->>>> -#endif
->>>> +    if (IS_ERR(entry))
->>>> +        return;
->>>> -static int dpu_plane_late_register(struct drm_plane *plane)
->>>> -{
->>>> -    return _dpu_plane_init_debugfs(plane);
->>>> +    drm_for_each_plane(plane, dpu_kms->dev) {
->>>> +        struct dpu_plane *pdpu = to_dpu_plane(plane);
->>>> +
->>>> +        _dpu_hw_sspp_init_debugfs(pdpu->pipe_hw, dpu_kms, entry);
->>>> +    }
->>>>   }
->>>> +#endif
->>>>   static bool dpu_plane_format_mod_supported(struct drm_plane *plane,
->>>>           uint32_t format, uint64_t modifier)
->>>> @@ -1453,7 +1396,6 @@ static const struct drm_plane_funcs 
->>>> dpu_plane_funcs = {
->>>>           .reset = dpu_plane_reset,
->>>>           .atomic_duplicate_state = dpu_plane_duplicate_state,
->>>>           .atomic_destroy_state = dpu_plane_destroy_state,
->>>> -        .late_register = dpu_plane_late_register,
->>>>           .format_mod_supported = dpu_plane_format_mod_supported,
->>>>   };
->>>>
-> 
-> 
+
+-- 
+With best wishes
+Dmitry
