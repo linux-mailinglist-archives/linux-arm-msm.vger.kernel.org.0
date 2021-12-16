@@ -2,764 +2,263 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB675476FBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 12:15:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7697247702B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 12:27:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236723AbhLPLOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 06:14:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53150 "EHLO
+        id S236690AbhLPL1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 06:27:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236677AbhLPLNu (ORCPT
+        with ESMTP id S236388AbhLPL1U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 06:13:50 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2EFCC061763;
-        Thu, 16 Dec 2021 03:13:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 33D5861D56;
-        Thu, 16 Dec 2021 11:13:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D5C36AE4;
-        Thu, 16 Dec 2021 11:13:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639653227;
-        bh=gMXmFhtLeMbk5UzSPS/4Gdgc3GP5hLxghjc/b2jNE9s=;
-        h=From:To:Cc:Subject:Date:From;
-        b=K+QjIugxSdwiZATq3e89aDOhzWpGezmWEn8qA2haQR1IMBHZyG/pUVZwzUF6+vtYI
-         VpSP6k8JftD/8jl++rl+hz6wQmCMm0OZbHXMXBhC7j7NckDPzfCYLg5Sju9cuIRtGD
-         E/lIVEyUnl7SZFSBWrMpZkM1YaNxPvVM+ERksoCLQovjOdkPQY5XvLfUSu641Y2iWL
-         SOPQUq+KPp7E/yRWuWY821alxTINjohn+OWB+GABGpNJDRbjQhFmV3sPY5bqo2gsqA
-         9udeDixOFo8n6whUiUD5iyOdJSXLXM4ovzRhmcSQdbGgVvUMedYaoX/D0/kjnbxBVK
-         qYd4pvIZFrnDw==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Felipe Balbi <felipe.balbi@microsoft.com>
-Subject: [PATCH] arm64: boot: dts: qcom: sm8150: add SPI nodes
-Date:   Thu, 16 Dec 2021 13:13:41 +0200
-Message-Id: <20211216111341.304151-1-balbi@kernel.org>
-X-Mailer: git-send-email 2.34.1
+        Thu, 16 Dec 2021 06:27:20 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3288C06173F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 03:27:19 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id q16so2779513wrg.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 03:27:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rDIUjDX6gtKBD1gdD+dKFebSAfDuwKtdCmSczzKHMfM=;
+        b=OxjXJbs+eNQX+QZ1ssddZShI26uB80pfSYXBakdblRWXkkNNohv7NZkdRBiykPT5u9
+         UbvMZXUPYlHlSULAPAhIyaYxx4tU7+vqPGnNK1cpEzEfIf0RGy9M0IbE2uCwfvNIAJEs
+         0xtw7V6C152Ox3/VkzSh3yDSwBBfejuEJAyHJc+HjaSYRzZ7YFy9H1iV3E2RDxAhZ/lj
+         dPsfXvrs7AEqO4tU9OLiUMc9sDTXWImf+Q7ILydb+AR8/jLcX2q31XEaIbkd7CBc5b7L
+         nXCODJ1/0julC+GBvvDd3RPZkn6JUHR65b4A701d35tDBiwoJD8m5uAnhH2JlRHlkTWs
+         HmNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rDIUjDX6gtKBD1gdD+dKFebSAfDuwKtdCmSczzKHMfM=;
+        b=ExxeaAI7DkdCCG5hcwp7KSxkhtfjzaCpiI/8Cr0rxy1/kPjzzVj+6d3ufPjKwoO3xh
+         rNxKFbnQLsGk5UF//CAhpifTuJM0OBy3F538mU60NrnLYjsnBHLqeg19CN/ZLk2t9i+z
+         N0OZrX6dFfPyxYKftVjzn51C9BxLDMw00sKfX+6pJc49KNVDpti/Vk0+7UPP022xV9MX
+         sRYQkc6Uqc+sUBPdOHX3kpAKLwS+mCMb14cRoPjkeutmkK7eLoNk+wGiUGRC7vB7njZt
+         LO8AdeM4mv1yIOjkJFORgnpr55O5J96e7yzbn/CPsCPeKl4QLMzoTBu7nJO1tJAz7kU4
+         KEUQ==
+X-Gm-Message-State: AOAM5302RkSCbS9O77bVFBqCeigeYZSNJV1QsU0dR/k4N9LOOFDy6hvy
+        BO5/yjOu6YxOJ6kFbyyVe0HsqjwZy+lUcw==
+X-Google-Smtp-Source: ABdhPJzWbiQpdgtEXiHNVshhItAmT/S/onaU4BHbBgkoqs/MLGcT6pCGlZLZhDUYnoLDdKU+66zKxg==
+X-Received: by 2002:adf:dc0a:: with SMTP id t10mr8793166wri.8.1639654038270;
+        Thu, 16 Dec 2021 03:27:18 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id g13sm6026242wrd.57.2021.12.16.03.27.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Dec 2021 03:27:17 -0800 (PST)
+Subject: Re: [PATCH v2 6/8] misc: fastrpc: add secure domain support
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     robh+dt@kernel.org, gregkh@linuxfoundation.org,
+        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
+        jeyr@codeaurora.org, bkumar@qti.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20211209120626.26373-1-srinivas.kandagatla@linaro.org>
+ <20211209120626.26373-7-srinivas.kandagatla@linaro.org>
+ <YbeS7KXj1slU2qgf@ripper>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <0bdc9250-670d-453a-4474-d240da3894f2@linaro.org>
+Date:   Thu, 16 Dec 2021 11:27:16 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YbeS7KXj1slU2qgf@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Felipe Balbi <felipe.balbi@microsoft.com>
 
-Add missing SPI nodes for SM8150.
 
-Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
----
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 419 +++++++++++++++++++++++++++
- 1 file changed, 419 insertions(+)
+On 13/12/2021 18:37, Bjorn Andersson wrote:
+> On Thu 09 Dec 04:06 PST 2021, Srinivas Kandagatla wrote:
+> 
+>> ADSP/MDSP/SDSP are by default secured, which means it can only be loaded
+>> with a Signed process.
+>> Where as CDSP can be either be secured/unsecured. non-secured Compute DSP
+>> would allow users to load unsigned process and run hexagon instructions,
+>> but blocking access to secured hardware within the DSP. Where as signed
+>> process with secure CDSP would be allowed to access all the dsp resources.
+>>
+>> This patch adds basic code to create device nodes as per device tree property.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   drivers/misc/fastrpc.c | 61 +++++++++++++++++++++++++++++++++++-------
+>>   1 file changed, 51 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 79fc59caacef..50f8e23b6b04 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -240,12 +240,15 @@ struct fastrpc_channel_ctx {
+>>   	/* Flag if dsp attributes are cached */
+>>   	bool valid_attributes;
+>>   	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
+>> +	struct fastrpc_device *secure_fdevice;
+>>   	struct fastrpc_device *fdevice;
+>> +	bool secure;
+>>   };
+>>   
+>>   struct fastrpc_device {
+>>   	struct fastrpc_channel_ctx *cctx;
+>>   	struct miscdevice miscdev;
+>> +	bool secure;
+>>   };
+>>   
+>>   struct fastrpc_user {
+>> @@ -1876,7 +1879,7 @@ static struct platform_driver fastrpc_cb_driver = {
+>>   };
+>>   
+>>   static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ctx *cctx,
+>> -				   const char *domain)
+>> +				   bool is_secured, const char *domain)
+>>   {
+>>   	struct fastrpc_device *fdev;
+>>   	int err;
+>> @@ -1885,15 +1888,21 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
+>>   	if (!fdev)
+>>   		return -ENOMEM;
+>>   
+>> +	fdev->secure = is_secured;
+>>   	fdev->cctx = cctx;
+>>   	fdev->miscdev.minor = MISC_DYNAMIC_MINOR;
+>>   	fdev->miscdev.fops = &fastrpc_fops;
+>> -	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s", domain);
+>> +	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s%s",
+>> +					    domain, is_secured ? "-secure" : "");
+> 
+> Will this not result in existing userspace using the wrong misc device?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index eef9d79157e9..71b286c2a38b 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -626,6 +626,20 @@ i2c0: i2c@880000 {
- 				status = "disabled";
- 			};
- 
-+			spi0: spi@880000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x880000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi0_default>;
-+				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c1: i2c@884000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00884000 0 0x4000>;
-@@ -639,6 +653,20 @@ i2c1: i2c@884000 {
- 				status = "disabled";
- 			};
- 
-+			spi1: spi@884000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x884000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi1_default>;
-+				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c2: i2c@888000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00888000 0 0x4000>;
-@@ -652,6 +680,20 @@ i2c2: i2c@888000 {
- 				status = "disabled";
- 			};
- 
-+			spi2: spi@888000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x888000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi2_default>;
-+				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c3: i2c@88c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x0088c000 0 0x4000>;
-@@ -665,6 +707,20 @@ i2c3: i2c@88c000 {
- 				status = "disabled";
- 			};
- 
-+			spi3: spi@88c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x88c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi3_default>;
-+				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c4: i2c@890000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00890000 0 0x4000>;
-@@ -678,6 +734,20 @@ i2c4: i2c@890000 {
- 				status = "disabled";
- 			};
- 
-+			spi4: spi@890000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x890000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi4_default>;
-+				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c5: i2c@894000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00894000 0 0x4000>;
-@@ -691,6 +761,20 @@ i2c5: i2c@894000 {
- 				status = "disabled";
- 			};
- 
-+			spi5: spi@894000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x894000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi5_default>;
-+				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c6: i2c@898000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00898000 0 0x4000>;
-@@ -704,6 +788,20 @@ i2c6: i2c@898000 {
- 				status = "disabled";
- 			};
- 
-+			spi6: spi@898000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x898000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi6_default>;
-+				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c7: i2c@89c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x0089c000 0 0x4000>;
-@@ -717,6 +815,19 @@ i2c7: i2c@89c000 {
- 				status = "disabled";
- 			};
- 
-+			spi7: spi@89c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0x89c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi7_default>;
-+				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
-@@ -767,6 +878,20 @@ i2c8: i2c@a80000 {
- 				status = "disabled";
- 			};
- 
-+			spi8: spi@a80000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa80000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi8_default>;
-+				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c9: i2c@a84000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00a84000 0 0x4000>;
-@@ -780,6 +905,20 @@ i2c9: i2c@a84000 {
- 				status = "disabled";
- 			};
- 
-+			spi9: spi@a84000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa84000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi9_default>;
-+				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c10: i2c@a88000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00a88000 0 0x4000>;
-@@ -793,6 +932,20 @@ i2c10: i2c@a88000 {
- 				status = "disabled";
- 			};
- 
-+			spi10: spi@a88000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa88000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi10_default>;
-+				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c11: i2c@a8c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00a8c000 0 0x4000>;
-@@ -806,6 +959,20 @@ i2c11: i2c@a8c000 {
- 				status = "disabled";
- 			};
- 
-+			spi11: spi@a8c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa8c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi11_default>;
-+				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			uart2: serial@a90000 {
- 				compatible = "qcom,geni-debug-uart";
- 				reg = <0x0 0x00a90000 0x0 0x4000>;
-@@ -828,6 +995,20 @@ i2c12: i2c@a90000 {
- 				status = "disabled";
- 			};
- 
-+			spi12: spi@a90000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa90000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi12_default>;
-+				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c16: i2c@94000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x0094000 0 0x4000>;
-@@ -840,6 +1021,20 @@ i2c16: i2c@94000 {
- 				#size-cells = <0>;
- 				status = "disabled";
- 			};
-+
-+			spi16: spi@a94000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xa94000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi16_default>;
-+				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		gpi_dma2: dma-controller@c00000 {
-@@ -891,6 +1086,20 @@ i2c17: i2c@c80000 {
- 				status = "disabled";
- 			};
- 
-+			spi17: spi@c80000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc80000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi17_default>;
-+				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c18: i2c@c84000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00c84000 0 0x4000>;
-@@ -904,6 +1113,20 @@ i2c18: i2c@c84000 {
- 				status = "disabled";
- 			};
- 
-+			spi18: spi@c84000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc84000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi18_default>;
-+				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c19: i2c@c88000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00c88000 0 0x4000>;
-@@ -917,6 +1140,20 @@ i2c19: i2c@c88000 {
- 				status = "disabled";
- 			};
- 
-+			spi19: spi@c88000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc88000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S2_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi19_default>;
-+				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c13: i2c@c8c000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00c8c000 0 0x4000>;
-@@ -930,6 +1167,20 @@ i2c13: i2c@c8c000 {
- 				status = "disabled";
- 			};
- 
-+			spi13: spi@c8c000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc8c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi13_default>;
-+				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c14: i2c@c90000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00c90000 0 0x4000>;
-@@ -943,6 +1194,20 @@ i2c14: i2c@c90000 {
- 				status = "disabled";
- 			};
- 
-+			spi14: spi@c90000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc90000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi14_default>;
-+				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
-+
- 			i2c15: i2c@c94000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00c94000 0 0x4000>;
-@@ -955,6 +1220,20 @@ i2c15: i2c@c94000 {
- 				#size-cells = <0>;
- 				status = "disabled";
- 			};
-+
-+			spi15: spi@c94000 {
-+				compatible = "qcom,geni-spi";
-+				reg = <0 0xc94000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_spi15_default>;
-+				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
-+				spi-max-frequency = <50000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		config_noc: interconnect@1500000 {
-@@ -1296,6 +1575,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi0_default: qup-spi0-default {
-+				pins = "gpio0", "gpio1", "gpio2", "gpio3";
-+				function = "qup0";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c1_default: qup-i2c1-default {
- 				mux {
- 					pins = "gpio114", "gpio115";
-@@ -1309,6 +1595,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi1_default: qup-spi1-default {
-+				pins = "gpio114", "gpio115", "gpio116", "gpio117";
-+				function = "qup1";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c2_default: qup-i2c2-default {
- 				mux {
- 					pins = "gpio126", "gpio127";
-@@ -1322,6 +1615,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi2_default: qup-spi2-default {
-+				pins = "gpio126", "gpio127", "gpio128", "gpio129";
-+				function = "qup2";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c3_default: qup-i2c3-default {
- 				mux {
- 					pins = "gpio144", "gpio145";
-@@ -1335,6 +1635,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi3_default: qup-spi3-default {
-+				pins = "gpio144", "gpio145", "gpio146", "gpio147";
-+				function = "qup3";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c4_default: qup-i2c4-default {
- 				mux {
- 					pins = "gpio51", "gpio52";
-@@ -1348,6 +1655,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi4_default: qup-spi4-default {
-+				pins = "gpio51", "gpio52", "gpio53", "gpio54";
-+				function = "qup4";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c5_default: qup-i2c5-default {
- 				mux {
- 					pins = "gpio121", "gpio122";
-@@ -1361,6 +1675,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi5_default: qup-spi5-default {
-+				pins = "gpio119", "gpio120", "gpio121", "gpio122";
-+				function = "qup5";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c6_default: qup-i2c6-default {
- 				mux {
- 					pins = "gpio6", "gpio7";
-@@ -1374,6 +1695,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi6_default: qup-spi6_default {
-+				pins = "gpio4", "gpio5", "gpio6", "gpio7";
-+				function = "qup6";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c7_default: qup-i2c7-default {
- 				mux {
- 					pins = "gpio98", "gpio99";
-@@ -1387,6 +1715,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi7_default: qup-spi7_default {
-+				pins = "gpio98", "gpio99", "gpio100", "gpio101";
-+				function = "qup7";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c8_default: qup-i2c8-default {
- 				mux {
- 					pins = "gpio88", "gpio89";
-@@ -1400,6 +1735,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi8_default: qup-spi8-default {
-+				pins = "gpio88", "gpio89", "gpio90", "gpio91";
-+				function = "qup8";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c9_default: qup-i2c9-default {
- 				mux {
- 					pins = "gpio39", "gpio40";
-@@ -1413,6 +1755,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi9_default: qup-spi9-default {
-+				pins = "gpio39", "gpio40", "gpio41", "gpio42";
-+				function = "qup9";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c10_default: qup-i2c10-default {
- 				mux {
- 					pins = "gpio9", "gpio10";
-@@ -1426,6 +1775,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi10_default: qup-spi10-default {
-+				pins = "gpio9", "gpio10", "gpio11", "gpio12";
-+				function = "qup10";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c11_default: qup-i2c11-default {
- 				mux {
- 					pins = "gpio94", "gpio95";
-@@ -1439,6 +1795,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi11_default: qup-spi11-default {
-+				pins = "gpio92", "gpio93", "gpio94", "gpio95";
-+				function = "qup11";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c12_default: qup-i2c12-default {
- 				mux {
- 					pins = "gpio83", "gpio84";
-@@ -1452,6 +1815,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi12_default: qup-spi12-default {
-+				pins = "gpio83", "gpio84", "gpio85", "gpio86";
-+				function = "qup12";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c13_default: qup-i2c13-default {
- 				mux {
- 					pins = "gpio43", "gpio44";
-@@ -1465,6 +1835,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi13_default: qup-spi13-default {
-+				pins = "gpio43", "gpio44", "gpio45", "gpio46";
-+				function = "qup13";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c14_default: qup-i2c14-default {
- 				mux {
- 					pins = "gpio47", "gpio48";
-@@ -1478,6 +1855,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi14_default: qup-spi14-default {
-+				pins = "gpio47", "gpio48", "gpio49", "gpio50";
-+				function = "qup14";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c15_default: qup-i2c15-default {
- 				mux {
- 					pins = "gpio27", "gpio28";
-@@ -1491,6 +1875,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi15_default: qup-spi15-default {
-+				pins = "gpio27", "gpio28", "gpio29", "gpio30";
-+				function = "qup15";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c16_default: qup-i2c16-default {
- 				mux {
- 					pins = "gpio86", "gpio85";
-@@ -1504,6 +1895,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi16_default: qup-spi16-default {
-+				pins = "gpio83", "gpio84", "gpio85", "gpio86";
-+				function = "qup16";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c17_default: qup-i2c17-default {
- 				mux {
- 					pins = "gpio55", "gpio56";
-@@ -1517,6 +1915,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi17_default: qup-spi17-default {
-+				pins = "gpio55", "gpio56", "gpio57", "gpio58";
-+				function = "qup17";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c18_default: qup-i2c18-default {
- 				mux {
- 					pins = "gpio23", "gpio24";
-@@ -1530,6 +1935,13 @@ config {
- 				};
- 			};
- 
-+			qup_spi18_default: qup-spi18-default {
-+				pins = "gpio23", "gpio24", "gpio25", "gpio26";
-+				function = "qup18";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c19_default: qup-i2c19-default {
- 				mux {
- 					pins = "gpio57", "gpio58";
-@@ -1542,6 +1954,13 @@ config {
- 					bias-disable;
- 				};
- 			};
-+
-+			qup_spi19_default: qup-spi19-default {
-+				pins = "gpio55", "gpio56", "gpio57", "gpio58";
-+				function = "qup19";
-+				drive-strength = <6>;
-+				bias-disable;
-+			};
- 		};
- 
- 		remoteproc_mpss: remoteproc@4080000 {
--- 
-2.34.1
+No, we will end up with
 
+fastrpc-cdsp
+fastrpc-cdsp-secure
+
+based on the qcom,non-secure-domain DT property
+
+so we still have the same old name, as long as the dt-property is 
+correctly set.
+
+> 
+>>   	err = misc_register(&fdev->miscdev);
+>> -	if (err)
+>> +	if (err) {
+>>   		kfree(fdev);
+>> -	else
+>> -		cctx->fdevice = fdev;
+>> +	} else {
+>> +		if (is_secured)
+>> +			cctx->secure_fdevice = fdev;
+>> +		else
+>> +			cctx->fdevice = fdev;
+>> +	}
+>>   
+>>   	return err;
+>>   }
+>> @@ -1904,6 +1913,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>   	struct fastrpc_channel_ctx *data;
+>>   	int i, err, domain_id = -1;
+>>   	const char *domain;
+>> +	bool secure_dsp = false;
+> 
+
+> Afaict this is only every accessed after first being written. So no need
+> to initialize it.
+
+that's true, I can remove this in next spin.
+
+> 
+>>   
+>>   	err = of_property_read_string(rdev->of_node, "label", &domain);
+>>   	if (err) {
+>> @@ -1927,10 +1937,31 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>   	if (!data)
+>>   		return -ENOMEM;
+>>   
+>> -	err = fastrpc_device_register(rdev, data, domains[domain_id]);
+>> -	if (err) {
+>> -		kfree(data);
+>> -		return err;
+>> +
+>> +	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+>> +	data->secure = secure_dsp;
+>> +
+>> +	switch (domain_id) {
+>> +	case ADSP_DOMAIN_ID:
+>> +	case MDSP_DOMAIN_ID:
+>> +	case SDSP_DOMAIN_ID:
+>> +		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+>> +		if (err)
+>> +			goto fdev_error;
+>> +		break;
+>> +	case CDSP_DOMAIN_ID:
+>> +		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
+>> +		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
+>> +		if (err)
+>> +			goto fdev_error;
+>> +
+>> +		err = fastrpc_device_register(rdev, data, false, domains[domain_id]);
+>> +		if (err)
+>> +			goto fdev_error;
+>> +		break;
+>> +	default:
+>> +		err = -EINVAL;
+>> +		goto fdev_error;
+>>   	}
+>>   
+>>   	kref_init(&data->refcount);
+>> @@ -1943,7 +1974,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>   	data->domain_id = domain_id;
+>>   	data->rpdev = rpdev;
+>>   
+>> -	return of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+>> +	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+>> +	dev_info(rdev, "%s complete for %s with secure flag(%d) return: %d\n",
+>> +			__func__, domains[domain_id], secure_dsp, err);
+> 
+> I would prefer that we don't spam the kernel log with such useful
+> information, in particular since it will happen every time we start or
+> restart a remoteproc with fastrpc. So dev_dbg perhaps?
+
+agree, will change.
+> 
+>> +	return err;
+> 
+> I think that in the event that of_platform_populate() actually failed,
+> you will return an error here, fastrpc_rpmsg_remove() won't be called,
+> so you won't release the misc device or release &data->refcount. This
+> issue exists in the code today though...
+
+Thanks, that is a good point I will see if I can fix that in next spin.
+
+--srini
+
+> 
+> Regards,
+> Bjorn
+> 
+>> +
+>> +fdev_error:
+>> +	kfree(data);
+>> +	return err;
+>>   }
+>>   
+>>   static void fastrpc_notify_users(struct fastrpc_user *user)
+>> @@ -1970,6 +2008,9 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+>>   	if (cctx->fdevice)
+>>   		misc_deregister(&cctx->fdevice->miscdev);
+>>   
+>> +	if (cctx->secure_fdevice)
+>> +		misc_deregister(&cctx->secure_fdevice->miscdev);
+>> +
+>>   	of_platform_depopulate(&rpdev->dev);
+>>   
+>>   	cctx->rpdev = NULL;
+>> -- 
+>> 2.21.0
+>>
