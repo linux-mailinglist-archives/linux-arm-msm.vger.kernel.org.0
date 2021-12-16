@@ -2,276 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC77B476939
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 05:45:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED44947699D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 06:27:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233628AbhLPEpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 23:45:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
+        id S233695AbhLPFZ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 00:25:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231891AbhLPEpc (ORCPT
+        with ESMTP id S231415AbhLPFZ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 23:45:32 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6DAC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:45:31 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id l18so17254287pgj.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 20:45:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LVKfSXvPtNRhzT9A26cLOBfb/g0z4KWXTgdrUcPD/9s=;
-        b=XthdiZ60GyuaG/zkmkCjse0tAWN5fiEApAnABL6cV7N+H7mhWXUOEGXWM0Y9LGGms5
-         xsYQshkYoZ0zm+PqAad558SiTpfU+7JS2feO0u/cX9Qk23Tin740HEzU2z/j62Ow1QiC
-         hkMGfXKqjNovCtPfSgNgP+Mc4tuvLueISvj5I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=LVKfSXvPtNRhzT9A26cLOBfb/g0z4KWXTgdrUcPD/9s=;
-        b=mCIhq18Whn5RDmrvgBteeN4lEvW8fJFRbMce+9n7loY3yBiuSTA6VrwAXue5lJjYDs
-         p+1vt0jMTjKy1nZjDikNRUls4+4ZNGyMsmqctcMz+lewryxh3uWgEmboTv6cIaCaa/cU
-         8zox1tkeq5GxDc/gYptXWA3CwWfL0x9VM4NEZoR6Yj3KX5pBYmEqcqOMvsmdrhHkWg+B
-         PIPPZkPF3HJA75W5Hfk5dDX2bZsJq5alRj0MeuxOXo635UP1t8DLY4oEP5bBQGWSXELo
-         6R/yHekHCAxPjNXvlQyKk6b/V1qUMrdJL11iKR06SMBR0Wt0zqH2sE627tAN3EJLRzO3
-         ZCKQ==
-X-Gm-Message-State: AOAM533DfgKMvQjK5dybyZC9ztA7PnnFnbqwPU60MIttVQbsnb1VYnF1
-        d1o0d+n436w6vVwJhycRfEmC/g==
-X-Google-Smtp-Source: ABdhPJw1RTTEubweIfnVdMk11v7BeieG9shZJ3SUcPcflRiH39Tu2KaA8KvZqAQFZWcCotV0CXAdWg==
-X-Received: by 2002:a63:88c8:: with SMTP id l191mr511784pgd.522.1639629931082;
-        Wed, 15 Dec 2021 20:45:31 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:6c0f:9060:1bc2:315])
-        by smtp.gmail.com with ESMTPSA id mv22sm3727720pjb.36.2021.12.15.20.45.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 20:45:30 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v2] arm64: dts: sc7180: Add board regulators for MIPI camera trogdor boards
-Date:   Wed, 15 Dec 2021 20:45:29 -0800
-Message-Id: <20211216044529.733652-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+        Thu, 16 Dec 2021 00:25:56 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184FBC061574;
+        Wed, 15 Dec 2021 21:25:56 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D283FB82232;
+        Thu, 16 Dec 2021 05:25:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D90C36AE2;
+        Thu, 16 Dec 2021 05:25:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639632353;
+        bh=+eJtz//5cGB7b9ENlk4d9Q+wDotc77DfxSWMK6U3Dwk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=qfj9zuny/Ijd19+ICpHntStcMtSC1zYpyPwnNCUjXs9/rNvV90gurIYOItvqYiaCr
+         mCQO9rrijE9HGEmDdnBfcApYhR9CnryQL12Ml8jPY4Oi9OecwDN+mRl9iD6U+NcvkO
+         4HODK/ElklFB2tgVGmQECPbNkDtx8bLZR3brfzcUNqmHe7J5aN0Y3KdGLGB+Tj9NDl
+         XTFwpzx12t3eAjqBvCewf4lqa7qLFLCHWy4iqNlrre8fgx1yR2obB6y5R0VBljsWjJ
+         V2pvp1YGo4akwGVM1/N4vHyvp7NmGNMoG3BGcDXH0ycq8IV6zwzs/DCTBcbTP2idbX
+         cQXo+8YxTsZkQ==
+Date:   Thu, 16 Dec 2021 10:55:45 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Kees Cook <keescook@chromium.org>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <quic_bbhatt@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Yury Norov <yury.norov@gmail.com>,
+        Carl Huang <cjhuang@codeaurora.org>,
+        Carl Yin <carl.yin@quectel.com>, linux-kernel@vger.kernel.org,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: core: Use correctly sized arguments for bit
+ field
+Message-ID: <20211216052545.GA42608@thinkpad>
+References: <20211215232446.2069794-1-keescook@chromium.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211215232446.2069794-1-keescook@chromium.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some trogdor boards have on-board regulators for the MIPI camera
-components. Add nodes describing these regulators so boards with these
-supplies can consume them.
+On Wed, Dec 15, 2021 at 03:24:46PM -0800, Kees Cook wrote:
+> The find.h APIs are designed to be used only on unsigned long arguments.
+> This can technically result in a over-read, but it is harmless in this
+> case. Regardless, fix it to avoid the warning seen under -Warray-bounds,
+> which we'd like to enable globally:
+> 
+> In file included from ./include/linux/bitmap.h:9,
+>                  from ./include/linux/cpumask.h:12,
+>                  from ./arch/x86/include/asm/cpumask.h:5,
+>                  from ./arch/x86/include/asm/msr.h:11,
+>                  from ./arch/x86/include/asm/processor.h:22,
+>                  from ./arch/x86/include/asm/cpufeature.h:5,
+>                  from ./arch/x86/include/asm/thread_info.h:53,
+>                  from ./include/linux/thread_info.h:60,
+>                  from ./arch/x86/include/asm/preempt.h:7,
+>                  from ./include/linux/preempt.h:78,
+>                  from ./include/linux/spinlock.h:55,
+>                  from ./include/linux/wait.h:9,
+>                  from ./include/linux/wait_bit.h:8,
+>                  from ./include/linux/fs.h:6,
+>                  from ./include/linux/debugfs.h:15,
+>                  from drivers/bus/mhi/core/init.c:7:
+> drivers/bus/mhi/core/init.c: In function 'to_mhi_pm_state_str':
+> ./include/linux/find.h:187:37: warning: array subscript 'long unsigned int[0]' is partly outside array bounds of 'enum mhi_pm_state[1]' [-Warray-bounds]
+>   187 |                 unsigned long val = *addr & GENMASK(size - 1, 0);
+>       |                                     ^~~~~
+> drivers/bus/mhi/core/init.c:80:51: note: while referencing 'state'
+>    80 | const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+>       |                                 ~~~~~~~~~~~~~~~~~~^~~~~
+> 
+> Signed-off-by: Kees Cook <keescook@chromium.org>
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-Changes from v1 (https://lore.kernel.org/r/20211215003639.386460-1-swboyd@chromium.org):
- * Swapped order of regulators
+A small nit pick below but I'll fix it up while applying.
 
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  16 +++
- .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  16 +++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 122 ++++++++++++++++++
- 3 files changed, 154 insertions(+)
+Thanks,
+Mani
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 14ed09f30a73..c81805ef2250 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -142,6 +142,22 @@ skin-temp-thermistor@1 {
- 	};
- };
- 
-+&pp1800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp1800_wf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_wf_cam {
-+	status = "okay";
-+};
-+
- &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 4ab890b2a1d4..9110fed291c4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -149,6 +149,22 @@ skin-temp-thermistor@1 {
- 	};
- };
- 
-+&pp1800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp1800_wf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_uf_cam {
-+	status = "okay";
-+};
-+
-+&pp2800_wf_cam {
-+	status = "okay";
-+};
-+
- &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index d4f4441179fc..261339094b3c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -144,6 +144,100 @@ pp3300_a: pp3300-a-regulator {
- 		vin-supply = <&ppvar_sys>;
- 	};
- 
-+	pp1800_ec:
-+	pp1800_sensors:
-+	pp1800_ldo: pp1800-ldo-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp1800_ldo";
-+
-+		/* EC turns on with hibernate_l; always on for AP */
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		/*
-+		 * Actually should be pp1800_h1 but we don't have any need to
-+		 * model that so we use the parent of pp1800_h1.
-+		 */
-+		vin-supply = <&pp3300_a>;
-+	};
-+
-+	pp1800_uf_cam: pp1800-uf-cam-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp1800_uf_cam";
-+		status = "disabled";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&uf_cam_en>;
-+
-+		vin-supply = <&pp1800_ldo>;
-+		regulator-enable-ramp-delay = <1000>;
-+	};
-+
-+	pp1800_wf_cam: pp1800-wf-cam-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp1800_wf_cam";
-+		status = "disabled";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		gpio = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wf_cam_en>;
-+
-+		vin-supply = <&pp1800_ldo>;
-+		regulator-enable-ramp-delay = <1000>;
-+	};
-+
-+	pp2800_uf_cam: pp2800-uf-cam-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp2800_uf_cam";
-+		status = "disabled";
-+
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+
-+		gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		/*
-+		 * The pinconf can only be referenced once so we put it on the
-+		 * first regulator and comment it out here.
-+		 * pinctrl-names = "default";
-+		 * pinctrl-0 = <&uf_cam_en>;
-+		 */
-+
-+		vin-supply = <&pp3300_a>;
-+	};
-+
-+	pp2800_vcm_wf_cam:
-+	pp2800_wf_cam: pp2800-wf-cam-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "pp2800_wf_cam";
-+		status = "disabled";
-+
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+
-+		gpio = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		/*
-+		 * The pinconf can only be referenced once so we put it on the
-+		 * first regulator and comment it out here.
-+		 * pinctrl-names = "default";
-+		 * pinctrl-0 = <&wf_cam_en>;
-+		 */
-+
-+		vin-supply = <&pp3300_a>;
-+	};
-+
- 	pp3300_audio:
- 	pp3300_codec: pp3300-codec-regulator {
- 		compatible = "regulator-fixed";
-@@ -1517,4 +1611,32 @@ pinconf-sd-cd {
- 			drive-strength = <2>;
- 		};
- 	};
-+
-+	uf_cam_en: uf-cam-en {
-+		pinmux {
-+			pins = "gpio6";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio6";
-+			drive-strength = <2>;
-+			/* External pull down */
-+			bias-disable;
-+		};
-+	};
-+
-+	wf_cam_en: wf-cam-en {
-+		pinmux {
-+			pins = "gpio7";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio7";
-+			drive-strength = <2>;
-+			/* External pull down */
-+			bias-disable;
-+		};
-+	};
- };
+> ---
+>  drivers/bus/mhi/core/init.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index f1ec34417592..b91f75fff962 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -79,7 +79,8 @@ static const char * const mhi_pm_state_str[] = {
+>  
+>  const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+>  {
+> -	int index = find_last_bit((unsigned long *)&state, 32);
+> +	unsigned long bits = state;
 
-base-commit: 136057256686de39cc3a07c2e39ef6bc43003ff6
--- 
-https://chromeos.dev
+Variable "bits" could be changed to "pm_state".
 
+> +	int index = find_last_bit(&bits, 32);
+>  
+>  	if (index >= ARRAY_SIZE(mhi_pm_state_str))
+>  		return "Invalid State";
+> -- 
+> 2.30.2
+> 
