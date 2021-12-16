@@ -2,286 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB59D4767F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 03:32:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2F4047684C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 03:47:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232968AbhLPCbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 21:31:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48292 "EHLO
+        id S233069AbhLPCrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 21:47:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232955AbhLPCbn (ORCPT
+        with ESMTP id S233068AbhLPCrN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 21:31:43 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998B3C06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:31:43 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id k4so21697006pgb.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:31:43 -0800 (PST)
+        Wed, 15 Dec 2021 21:47:13 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4824BC06173F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:47:13 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso27251491otf.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=1Nyh8aXfrN+Sw6eETfR1mpYuyvth7ZZ3e8OJtXN61ek=;
-        b=bQHrsiCw6P1DNZBHIo0t82szC/ZHwJTqh8M7Kk41K1+zPhcYNFrFwtrpwXohdeyQ/5
-         Dj+coBZ82DEXBXw1oXCUBwlse01DnFEpA0hdaPq+ACBXeKshd5707qnDSetQPGdqB4i9
-         qrO/9UhKPzdXPjJhGLipPGiPM9vnHwr7UB0P8=
+        bh=TRWP49lUW96ocvMhTXoGModsLPQrvGdeEfB58QJjSHw=;
+        b=EayF8bdaNsHlRtAHP7evxUR+y9IPOGVKOafnT4sH/QpQRP1Mya47p8avlra3MTxt4l
+         FeOfd2YEYTdiGvzXAewm0uFdyydLLdI7f8zWOLnS8L47167FuBLW7a/1kLwNIj0/XcgA
+         3/YkxhrPh3XPAK03IGLCqA4GiJq0CjYuUUpE71H6xyLikyUDZctu6OjkVHe63XGje6nK
+         YGwz4qum+4oCUqeMUvaxIUeQzuT/DnknbMeDv5Gw9QQJ9NkUxZLgnZAJWOZSNg1vL0Wq
+         QgAtw+H0aaD8hYleYdwQ4Xehwo7G1QYFuXQdg8m+Tx4e05qCcRtaBt5oMkFd8yLUmeBL
+         1twg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=1Nyh8aXfrN+Sw6eETfR1mpYuyvth7ZZ3e8OJtXN61ek=;
-        b=1ywdjWFeplDet0swANTGNAfiBv0QqRMVILRhN5WaG1ZR5FtOYxnkLk6hu7JEtYQ44s
-         0Hs/T9HE5wITAWEHH+nw9c1uLK8EVD92UkXc/Bcg7Cp3JqOmjoUCsVYoFCjx87AwiKFp
-         1/x/vt2ae0Dfz2Opruq3jCnWP8ici8tCKLtP81ebTZsKo+S0AJ0ijA5aeXQP1xM4rs7Z
-         fMlRVZTcXpOBSpZf8DsJPF8cuw3fb3CGlay7zL8J0lpLbFfyahIm9A7VqIq6ev+atu+I
-         CU4KDW52zR9tN8sgmwY9hj1a6hrQdoWe5EjRwWC7fYrEAsUsOygqvb0oz1EmYPUrj7Vu
-         Cneg==
-X-Gm-Message-State: AOAM530lwt6NFnnbJ5DT6oP72l+t1rn61LX3dAz6IxNfQ9gWp92tOfum
-        KsZe0Q1Wd3nTJ6XmCui+GsRLEAC7W5T+hQ==
-X-Google-Smtp-Source: ABdhPJw6E8xTYPu3TCRU6+Nz/TGik/XX1DJ1dwuUmbh2KIXb77S3wAYPQrNSyD+sNzL95PUbgIuw2Q==
-X-Received: by 2002:a63:fc5c:: with SMTP id r28mr10158824pgk.476.1639621903041;
-        Wed, 15 Dec 2021 18:31:43 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:4570:3a38:a59b:d420])
-        by smtp.gmail.com with UTF8SMTPSA id h13sm3768534pfv.37.2021.12.15.18.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Dec 2021 18:31:42 -0800 (PST)
-Date:   Wed, 15 Dec 2021 18:31:41 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] arm64: dts: sc7180: Add board regulators for MIPI camera
- trogdor boards
-Message-ID: <YbqlDQogwdi52FpK@google.com>
-References: <20211215003639.386460-1-swboyd@chromium.org>
+        bh=TRWP49lUW96ocvMhTXoGModsLPQrvGdeEfB58QJjSHw=;
+        b=rnUPsgUXmJdc3LUri3xY/uHk2HAwFjhzJzDIa6a6Utcw7C56Hl9zAQiP+HeKyLytG6
+         i03qhUZWZ8aOzJ9/Bv8meMLubYci13BpSmrKhD9WIE7wtlsUmXHceSwx1IRhnpWknUu5
+         pGQ5JiNDg/xTWvV10t/hoR7FWs/1iJUAddYXz7FKWIqv0x71PMS+vqmPhLDYRGRp8DPi
+         nIhf87GPjFN44NpuDUo2IEQmrAyq9+PDd8tQl78BNwxck7/EgcSEbfAbWcpxSMj1gpSv
+         3SrD1nv129l/JQYNQwGDo3daBwdCs2EqCp+Q7aA22JPdeQhLe1ioRCGyR/wCLyMoO6Wy
+         OpBA==
+X-Gm-Message-State: AOAM533/Kbcztir5ICLMDNVGsMkB6C3LseFGgDMOGyYePnA52WsRLAR9
+        73WlOb+ZkXHpyB/EpG8THoqrrQ==
+X-Google-Smtp-Source: ABdhPJy3XoI/plV53gwj7OghHZJWYSUUb46rj5f3xLUMg2Pw8HEzn6oc35QxQoFn5evD49S2pqX9Dg==
+X-Received: by 2002:a05:6830:1e77:: with SMTP id m23mr11126632otr.370.1639622832549;
+        Wed, 15 Dec 2021 18:47:12 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r10sm894063ool.1.2021.12.15.18.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Dec 2021 18:47:12 -0800 (PST)
+Date:   Wed, 15 Dec 2021 18:48:27 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Amit Nischal <anischal@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>, dmitry.baryshkov@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
+Message-ID: <Ybqo+wUv6lNT75tJ@ripper>
+References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
+ <20211216015136.96AD3C36AE1@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211215003639.386460-1-swboyd@chromium.org>
+In-Reply-To: <20211216015136.96AD3C36AE1@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 14, 2021 at 04:36:38PM -0800, Stephen Boyd wrote:
-> Some trogdor boards have on-board regulators for the MIPI camera
-> components. Add nodes describing these regulators so boards with these
-> supplies can consume them.
+On Wed 15 Dec 17:51 PST 2021, Stephen Boyd wrote:
+
+> Quoting Bjorn Andersson (2021-12-02 19:56:01)
+> > As GDSCs are turned on and off some associated clocks are momentarily
+> > enabled for house keeping purposes. Failure to enable these clocks seems
+> > to have been silently ignored in the past, but starting in SM8350 this
+> > failure will prevent the GDSC to turn on.
+> > 
+> > At least on SM8350 this operation will enable the RCG per the
+> > configuration in CFG_REG. This means that the current model where the
+> > current configuration is written back to CF_REG immediately after
+> > parking the RCG doesn't work.
 > 
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  16 +++
->  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  16 +++
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 122 ++++++++++++++++++
->  3 files changed, 154 insertions(+)
+> Just to clarify, is the RCG off and "parked" at XO with the config
+> register dirty and set to the desired frequency and then the RCG is
+> turned on by the GDSC?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> index 14ed09f30a73..c81805ef2250 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> @@ -142,6 +142,22 @@ skin-temp-thermistor@1 {
->  	};
->  };
->  
-> +&pp1800_uf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp1800_wf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp2800_uf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp2800_wf_cam {
-> +	status = "okay";
-> +};
-> +
->  &pp3300_dx_edp {
->  	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> index 4ab890b2a1d4..9110fed291c4 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-> @@ -149,6 +149,22 @@ skin-temp-thermistor@1 {
->  	};
->  };
->  
-> +&pp1800_uf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp1800_wf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp2800_uf_cam {
-> +	status = "okay";
-> +};
-> +
-> +&pp2800_wf_cam {
-> +	status = "okay";
-> +};
-> +
->  &pp3300_dx_edp {
->  	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> index d4f4441179fc..1dd8e35093a8 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -113,6 +113,40 @@ src_vph_pwr: src-vph-pwr-regulator {
->  		vin-supply = <&ppvar_sys>;
->  	};
->  
-> +	pp1800_uf_cam: pp1800-uf-cam-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pp1800_uf_cam";
-> +		status = "disabled";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&uf_cam_en>;
-> +
-> +		vin-supply = <&pp1800_ldo>;
-> +		regulator-enable-ramp-delay = <1000>;
-> +	};
-> +
-> +	pp1800_wf_cam: pp1800-wf-cam-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pp1800_wf_cam";
-> +		status = "disabled";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		gpio = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wf_cam_en>;
-> +
-> +		vin-supply = <&pp1800_ldo>;
-> +		regulator-enable-ramp-delay = <1000>;
-> +	};
-> +
 
-Shouldn't 'pp1800_ldo' be defined before these ("FIXED REGULATORS
-- parents above children")?
+Correct, that's exactly what I'm observing.
 
-I suggest to move these two below the top level regulators, i.e.
-somwhere after pp3300_a (probably pp3300_a and pp5000_a should be
-swapped, but that's beyond the scope of this patch).
+> > 
+> > Instead, keep track of the currently requested rate of the clock and
+> > upon enabling the clock reapply the configuration per the saved rate.
+> 
+> We already keep track of the requested rate and reapply it on enable,
+> just we're lazy and stash that information in the hardware and not the
+> software. I didn't think the gdsc would be turned on and ruin that all,
+> but it's fair.
+> 
 
->  	pp5000_a: pp5000-a-regulator {
->  		compatible = "regulator-fixed";
->  		regulator-name = "pp5000_a";
-> @@ -144,6 +178,66 @@ pp3300_a: pp3300-a-regulator {
->  		vin-supply = <&ppvar_sys>;
->  	};
->  
-> +	pp1800_ec:
-> +	pp1800_sensors:
-> +	pp1800_ldo: pp1800-ldo-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pp1800_ldo";
-> +
-> +		/* EC turns on with hibernate_l; always on for AP */
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		/*
-> +		 * Actually should be pp1800_h1 but we don't have any need to
-> +		 * model that so we use the parent of pp1800_h1.
-> +		 */
-> +		vin-supply = <&pp3300_a>;
-> +	};
-> +
-> +	pp2800_uf_cam: pp2800-uf-cam-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pp2800_uf_cam";
-> +		status = "disabled";
-> +
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +
-> +		gpio = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		/*
-> +		 * The pinconf can only be referenced once so we put it on the
-> +		 * first regulator and comment it out here.
-> +		 * pinctrl-names = "default";
-> +		 * pinctrl-0 = <&uf_cam_en>;
-> +		 */
-> +
-> +		vin-supply = <&pp3300_a>;
-> +	};
-> +
-> +	pp2800_vcm_wf_cam:
-> +	pp2800_wf_cam: pp2800-wf-cam-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "pp2800_wf_cam";
-> +		status = "disabled";
-> +
-> +		regulator-min-microvolt = <2850000>;
-> +		regulator-max-microvolt = <2850000>;
-> +
-> +		gpio = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		/*
-> +		 * The pinconf can only be referenced once so we put it on the
-> +		 * first regulator and comment it out here.
-> +		 * pinctrl-names = "default";
-> +		 * pinctrl-0 = <&wf_cam_en>;
-> +		 */
-> +
-> +		vin-supply = <&pp3300_a>;
-> +	};
-> +
->  	pp3300_audio:
->  	pp3300_codec: pp3300-codec-regulator {
->  		compatible = "regulator-fixed";
-> @@ -1517,4 +1611,32 @@ pinconf-sd-cd {
->  			drive-strength = <2>;
->  		};
->  	};
-> +
-> +	uf_cam_en: uf-cam-en {
-> +		pinmux {
-> +			pins = "gpio6";
-> +			function = "gpio";
-> +		};
-> +
-> +		pinconf {
-> +			pins = "gpio6";
-> +			drive-strength = <2>;
-> +			/* External pull down */
+Up until SM8350 I see no evidence that this has been a problem, but now
+it is. So there's likely some changes in the hardware there...
 
-Is there actually an external pull down?
+> > 
+> > Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  drivers/clk/qcom/clk-rcg.h  |  2 ++
+> >  drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
+> >  2 files changed, 19 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> > index 99efcc7f8d88..6939f4e62768 100644
+> > --- a/drivers/clk/qcom/clk-rcg.h
+> > +++ b/drivers/clk/qcom/clk-rcg.h
+> > @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
+> >   * @freq_tbl: frequency table
+> >   * @clkr: regmap clock handle
+> >   * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
+> > + * @current_rate: cached rate for parked RCGs
+> >   */
+> >  struct clk_rcg2 {
+> >         u32                     cmd_rcgr;
+> > @@ -149,6 +150,7 @@ struct clk_rcg2 {
+> >         const struct freq_tbl   *freq_tbl;
+> >         struct clk_regmap       clkr;
+> >         u8                      cfg_off;
+> > +       unsigned long           current_rate;
+> >  };
+> >  
+> >  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
+> > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> > index e1b1b426fae4..b574b38dcbd5 100644
+> > --- a/drivers/clk/qcom/clk-rcg2.c
+> > +++ b/drivers/clk/qcom/clk-rcg2.c
+> > @@ -167,6 +167,7 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+> >  {
+> >         struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+> >         u32 cfg, hid_div, m = 0, n = 0, mode = 0, mask;
+> > +       unsigned long rate;
+> >  
+> >         regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
+> >  
+> > @@ -186,7 +187,11 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+> >         hid_div = cfg >> CFG_SRC_DIV_SHIFT;
+> >         hid_div &= mask;
+> >  
+> > -       return calc_rate(parent_rate, m, n, mode, hid_div);
+> > +       rate = calc_rate(parent_rate, m, n, mode, hid_div);
+> > +       if (!rcg->current_rate)
+> > +               rcg->current_rate = rate;
+> 
+> Instead of doing this in recalc_rate, all the time, why not make an init
+> clk op that does it once during registration? The other problem I see is
+> that the rate we calculate may be wrong if the parent is registered
+> after this clk. I think this came up originally when the patch this is
+> fixing was discussed.
+> 
 
-> +			bias-disable;
-> +		};
-> +	};
-> +
-> +	wf_cam_en: wf-cam-en {
-> +		pinmux {
-> +			pins = "gpio7";
-> +			function = "gpio";
-> +		};
-> +
-> +		pinconf {
-> +			pins = "gpio7";
-> +			drive-strength = <2>;
-> +			/* External pull down */
+I would need to go back and reproduce the issue I saw, but I had to add
+this because I ended up in clk_rcg2_shared_enable() with current_rate =
+0, which I think would be equally bad to just committing the dirty
+configuration.
 
-ditto
+> So instead of saving the current_rate can we save the cfg register value
+> (or however many registers we need) to put back the frequency of the clk
+> to what we want on enable? The other thing is that we made recalc_rate()
+> work "seamlessly" here by stashing the frequency into the register but
+> leaving it uncommitted until enable. We may need to now look at the
+> software copy of the registers in the shared rcg recalc rate operation
+> to figure out what the frequency is.
+> 
+
+I made an attempt at this, the problem I had was to come up within
+something sane for how to deal with set_rate on parked clocks; because
+we need to re-generate the register contents, without writing out the
+value - and that got messy.
+
+So stashing the frequency turned out to be much cleaner. I believe that
+this is also what they do downstream...
+
+Regards,
+Bjorn
