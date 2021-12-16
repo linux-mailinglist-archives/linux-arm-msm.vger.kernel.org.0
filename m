@@ -2,238 +2,306 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AA084769A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 06:35:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9E9E476A65
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 07:34:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233718AbhLPFfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 00:35:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231372AbhLPFfT (ORCPT
+        id S229834AbhLPGe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 01:34:29 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:33550 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229738AbhLPGe2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 00:35:19 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E64EC06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 21:35:19 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id m15so22029000pgu.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 21:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xAUPKtHZ/cqip3q5aKQfZCHMrNxXrdQ/AfUvWj8BXC0=;
-        b=wHwXQzzywBprb31FoxwkrxpnFsD39NHv77EUAfDiIV60T5VCq4gdjm9nr7ux3gM66T
-         CC5QgxYPgbNaQV7JbJX5V1L105hE4Qqm5XFqT9R8y7sLxIpcxscRkZv02CBVFfEjplcM
-         AirvFnTDiTy/fmHej5+AZ0PCE7Pu3a7aH0vsQVL12GgfTy38zWOEqVPZNaD9pIBOoRF8
-         bDCaK9LUDVHpg5TUy8qj9CkiMO5AByL61fo9ljgdQpa6fSAL9zXhax94jyKN2M8ROLnt
-         nY5BFpRNBsx11pG1pr2Hh1mTaMyXfn5+JNQSdgO9yN/ohEAzZIs3VZmq4I3mopIBldcK
-         iKWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xAUPKtHZ/cqip3q5aKQfZCHMrNxXrdQ/AfUvWj8BXC0=;
-        b=EdHR98I8tWCmsgbBINz8cok1BrvAjHMijDb3rKC3MxuAmeGLtSYuFNd8R9Iw8y6HN4
-         utE5JlG+FamQxJtt7mBGhUrIYFosf4SMQD/ZgbhlF2C0Mximc3NVpv43GLNSukUZuir8
-         Xf2Fvb67SMudUJDqPh2ZZo9Hce76Q2LgTcowMmLIMyHCqLymZfT0CG9Lipu0LXT37qu4
-         cNkY7Ln5xw423KpFu//WNZ7ouTxBcuso1/QGsaV9pXI9299Jskacqcygq+IXbRBedQyY
-         YIBvM+vIzt1EqMu0FU2yyBrF8j5KILTY7NSG+KKrLiKO7RFNsRhjzpYM6jH4lv6Y94gZ
-         5GAw==
-X-Gm-Message-State: AOAM531Od7e5YQuEmrnY5z4vyfsn6118QDJi1TrySMmQ7jeIKaKX7S+c
-        hfIqaP8uQOQninZg+R3H4RvU
-X-Google-Smtp-Source: ABdhPJwWgwWqnJqfrk7zPIVSoeCZxW3qcEmBoSg8LL687Mj2sffFemKpbMHq7tQO0c4v26/A/eIjwA==
-X-Received: by 2002:a05:6a00:1903:b0:47c:34c1:c6b6 with SMTP id y3-20020a056a00190300b0047c34c1c6b6mr12422821pfi.17.1639632918869;
-        Wed, 15 Dec 2021 21:35:18 -0800 (PST)
-Received: from thinkpad ([117.193.209.65])
-        by smtp.gmail.com with ESMTPSA id me7sm8589866pjb.9.2021.12.15.21.35.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Dec 2021 21:35:18 -0800 (PST)
-Date:   Thu, 16 Dec 2021 11:05:13 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     loic.poulain@linaro.org, hemantk@codeaurora.org,
-        bbhatt@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH v2] bus: mhi: core: Add an API for auto queueing buffers
- for DL channel
-Message-ID: <20211216053513.GC42608@thinkpad>
-References: <20211207071339.123794-1-manivannan.sadhasivam@linaro.org>
+        Thu, 16 Dec 2021 01:34:28 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5650CB8229B;
+        Thu, 16 Dec 2021 06:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6313C36AE2;
+        Thu, 16 Dec 2021 06:34:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639636466;
+        bh=Gt+BZtczzJb/Dny3RcnKDn17J9ysbZaBLlG0bXroAfE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=vM6Nd/tOhVZKcPnSqFEgSG0ahjioaW0+Zili52Tw4oDE/SS9MZFgBBIMWABR92w2Y
+         JK+FfRX2jPcc9l46ArdVp+/dlwZhwwE9Av1cio8z8Lsvn0mvkUkw9f3Ha0kJyjI6xE
+         THJ/JatMTPLILGVvgg2Zz/4hVHxIUkh8uXMA9sZtYKnye/ZAh1q6QtMx002+WRgfrJ
+         5JT6D1X+R+Uyz8Gr2AS46D6o+ZyobAIgSeAJDoEpGyW+SYhga/ykU5UUnhjr18Wo+y
+         zYtemdIXd8fepgkxlwx94LizH8sLMczUY9eaIz7G4sb0/YlPbtJJv4nCz671LcTtFJ
+         bxCrMAExqH9vQ==
+Date:   Thu, 16 Dec 2021 12:04:21 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, quic_abhinavk@quicinc.com,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kishon@ti.com, p.zabel@pengutronix.de,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: Re: [PATCH v8] phy: qcom-qmp: add display port v4 voltage and
+ pre-emphasis swing tables
+Message-ID: <Ybrd7WJpnmd6Wxle@matsya>
+References: <1639439228-11430-1-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211207071339.123794-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <1639439228-11430-1-git-send-email-quic_khsieh@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 07, 2021 at 12:43:39PM +0530, Manivannan Sadhasivam wrote:
-> Add a new API "mhi_prepare_for_transfer_autoqueue" for using with client
-> drivers like QRTR to request MHI core to autoqueue buffers for the DL
-> channel along with starting both UL and DL channels.
+Hi Kuogee,
+
+On 13-12-21, 15:47, Kuogee Hsieh wrote:
+> From: Kuogee Hsieh <khsieh@codeaurora.org>
+
+The patch is sent by Kuogee Hsieh <quic_khsieh@quicinc.com>, the patch
+author is Kuogee Hsieh <khsieh@codeaurora.org> and s-o-b Kuogee Hsieh
+<quic_khsieh@quicinc.com>.
+
+Sorry but they need to match before I can pick this.
+(Hint: git commit --amend --reset-author would do so provided gitconfig
+has your correct email)
+
+> The previous patch from Fixes 'aff188feb5e1 ("phy: qcom-qmp: add support
+> for sm8250-usb3-dp phy")' added functions to support V4 of the PHY, But
+
+Pls rephrase to:
+Commit aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp
+phy")' added functions to support V4 of the PHY, but it did not update
+voltage and pre-emphasis tables accordingly.
+
+> it did not update voltage and pre-emphasis tables accordingly.
+
+Empty line here
+
+> This patch add v4 voltage and pre-emphasis swing tables to complete v4
+> phy implementation. Both voltage and pre-emphasis swing level are set
+> during link training negotiation between host and sink. There are totally
+> four tables added.  A voltage swing table for both hbr and hbr1, a voltage
+> table for both hbr2 and hbr3, a pre-emphasis table for both hbr and hbr1
+> and a pre-emphasis table for both hbr2 and hbr3.
+
+Add one more empty line here
+
+> In addition, write 0x0a
+> to TX_TX_POL_INV is added to complete the sequence of configure dp phy
+> base on the hardware documentation.
 > 
-> So far, the "auto_queue" flag specified by the controller drivers in
-> channel definition served this purpose but this will be removed at some
-> point in future.
-> 
-> Cc: netdev@vger.kernel.org
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: David S. Miller <davem@davemloft.net>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Co-developed-by: Loic Poulain <loic.poulain@linaro.org>
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Applied to mhi-next with Ack from Jakub!
-
-Thanks,
-Mani
-
+> Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
+>  drivers/phy/qualcomm/phy-qcom-qmp.c | 112 +++++++++++++++++++++++++-----------
+>  1 file changed, 77 insertions(+), 35 deletions(-)
 > 
-> Changes in v2:
-> 
-> * Rebased on top of 5.16-rc1
-> * Fixed an issue reported by kernel test bot
-> * CCed netdev folks and Greg
-> * Slight change to the commit subject for reflecting "core" sub-directory
-> 
->  drivers/bus/mhi/core/internal.h |  6 +++++-
->  drivers/bus/mhi/core/main.c     | 21 +++++++++++++++++----
->  include/linux/mhi.h             | 21 ++++++++++++++++-----
->  net/qrtr/mhi.c                  |  2 +-
->  4 files changed, 39 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 9d72b1d1e986..e2e10474a9d9 100644
-> --- a/drivers/bus/mhi/core/internal.h
-> +++ b/drivers/bus/mhi/core/internal.h
-> @@ -682,8 +682,12 @@ void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl);
->  void mhi_rddm_prepare(struct mhi_controller *mhi_cntrl,
->  		      struct image_info *img_info);
->  void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl);
-> +
-> +/* Automatically allocate and queue inbound buffers */
-> +#define MHI_CH_INBOUND_ALLOC_BUFS BIT(0)
->  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> -			struct mhi_chan *mhi_chan);
-> +			struct mhi_chan *mhi_chan, unsigned int flags);
-> +
->  int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
->  		       struct mhi_chan *mhi_chan);
->  void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
-> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 930aba666b67..ffde617f93a3 100644
-> --- a/drivers/bus/mhi/core/main.c
-> +++ b/drivers/bus/mhi/core/main.c
-> @@ -1430,7 +1430,7 @@ static void mhi_unprepare_channel(struct mhi_controller *mhi_cntrl,
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> index 456a59d..d41e30c 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> @@ -4255,40 +4255,50 @@ static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy)
+>  	       qphy->pcs + QSERDES_V3_DP_PHY_AUX_INTERRUPT_MASK);
 >  }
 >  
->  int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
-> -			struct mhi_chan *mhi_chan)
-> +			struct mhi_chan *mhi_chan, unsigned int flags)
->  {
->  	int ret = 0;
->  	struct device *dev = &mhi_chan->mhi_dev->dev;
-> @@ -1455,6 +1455,9 @@ int mhi_prepare_channel(struct mhi_controller *mhi_cntrl,
->  	if (ret)
->  		goto error_pm_state;
->  
-> +	if (mhi_chan->dir == DMA_FROM_DEVICE)
-> +		mhi_chan->pre_alloc = !!(flags & MHI_CH_INBOUND_ALLOC_BUFS);
+> -static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[4][4] = {
+> +#define MAX_SWING_LEVEL 4
+> +#define MAX_VOLTAGE_LEVEL 4
+> +#define MAX_EMPHASIS_LEVEL 4
 > +
->  	/* Pre-allocate buffer for xfer ring */
->  	if (mhi_chan->pre_alloc) {
->  		int nr_el = get_nr_avail_ring_elements(mhi_cntrl,
-> @@ -1610,8 +1613,7 @@ void mhi_reset_chan(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan)
->  	read_unlock_bh(&mhi_cntrl->pm_lock);
->  }
+> +static const u8 qmp_dp_v3_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+>  	{ 0x00, 0x0c, 0x15, 0x1a },
+>  	{ 0x02, 0x0e, 0x16, 0xff },
+>  	{ 0x02, 0x11, 0xff, 0xff },
+>  	{ 0x04, 0xff, 0xff, 0xff }
+>  };
 >  
-> -/* Move channel to start state */
-> -int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-> +static int __mhi_prepare_for_transfer(struct mhi_device *mhi_dev, unsigned int flags)
+> -static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[4][4] = {
+> +static const u8 qmp_dp_v3_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+>  	{ 0x02, 0x12, 0x16, 0x1a },
+>  	{ 0x09, 0x19, 0x1f, 0xff },
+>  	{ 0x10, 0x1f, 0xff, 0xff },
+>  	{ 0x1f, 0xff, 0xff, 0xff }
+>  };
+>  
+> -static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[4][4] = {
+> +static const u8 qmp_dp_v3_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+>  	{ 0x00, 0x0c, 0x14, 0x19 },
+>  	{ 0x00, 0x0b, 0x12, 0xff },
+>  	{ 0x00, 0x0b, 0xff, 0xff },
+>  	{ 0x04, 0xff, 0xff, 0xff }
+>  };
+>  
+> -static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[4][4] = {
+> +static const u8 qmp_dp_v3_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+>  	{ 0x08, 0x0f, 0x16, 0x1f },
+>  	{ 0x11, 0x1e, 0x1f, 0xff },
+>  	{ 0x19, 0x1f, 0xff, 0xff },
+>  	{ 0x1f, 0xff, 0xff, 0xff }
+>  };
+>  
+> -static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
+> -		unsigned int drv_lvl_reg, unsigned int emp_post_reg)
+> +static int __qcom_qmp_phy_configure_dp_swing
+> +			(struct qmp_phy *qphy,
+> +			unsigned int drv_lvl_reg,
+> +			unsigned int emp_post_reg,
+> +			const u8 voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
+> +			const u8 pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL],
+> +			const u8 voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL],
+> +			const u8 pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL])
 >  {
->  	int ret, dir;
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> @@ -1622,7 +1624,7 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
->  		if (!mhi_chan)
->  			continue;
+>  	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+>  	unsigned int v_level = 0, p_level = 0;
+> -	u8 voltage_swing_cfg, pre_emphasis_cfg;
+> +	u8 voltage, emphasis;
+>  	int i;
 >  
-> -		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan);
-> +		ret = mhi_prepare_channel(mhi_cntrl, mhi_chan, flags);
->  		if (ret)
->  			goto error_open_chan;
+>  	for (i = 0; i < dp_opts->lanes; i++) {
+> @@ -4297,26 +4307,25 @@ static int qcom_qmp_phy_configure_dp_swing(struct qmp_phy *qphy,
 >  	}
-> @@ -1640,8 +1642,19 @@ int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
 >  
->  	return ret;
+>  	if (dp_opts->link_rate <= 2700) {
+> -		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr_rbr[v_level][p_level];
+> -		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr_rbr[v_level][p_level];
+> +		voltage = voltage_swing_hbr_rbr[v_level][p_level];
+> +		emphasis = pre_emphasis_hbr_rbr[v_level][p_level];
+>  	} else {
+> -		voltage_swing_cfg = qmp_dp_v3_voltage_swing_hbr3_hbr2[v_level][p_level];
+> -		pre_emphasis_cfg = qmp_dp_v3_pre_emphasis_hbr3_hbr2[v_level][p_level];
+> +		voltage = voltage_swing_hbr3_hbr2[v_level][p_level];
+> +		emphasis = pre_emphasis_hbr3_hbr2[v_level][p_level];
+>  	}
+>  
+>  	/* TODO: Move check to config check */
+> -	if (voltage_swing_cfg == 0xFF && pre_emphasis_cfg == 0xFF)
+> +	if (voltage == 0xFF && emphasis == 0xFF)
+>  		return -EINVAL;
+>  
+>  	/* Enable MUX to use Cursor values from these registers */
+> -	voltage_swing_cfg |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
+> -	pre_emphasis_cfg |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
+> -
+> -	writel(voltage_swing_cfg, qphy->tx + drv_lvl_reg);
+> -	writel(pre_emphasis_cfg, qphy->tx + emp_post_reg);
+> -	writel(voltage_swing_cfg, qphy->tx2 + drv_lvl_reg);
+> -	writel(pre_emphasis_cfg, qphy->tx2 + emp_post_reg);
+> +	voltage |= DP_PHY_TXn_TX_DRV_LVL_MUX_EN;
+> +	emphasis |= DP_PHY_TXn_TX_EMP_POST1_LVL_MUX_EN;
+>  
+> +	writel(voltage, qphy->tx + drv_lvl_reg);
+> +	writel(emphasis, qphy->tx + emp_post_reg);
+> +	writel(voltage, qphy->tx2 + drv_lvl_reg);
+> +	writel(emphasis, qphy->tx2 + emp_post_reg);
+>  	return 0;
 >  }
-> +
-> +int mhi_prepare_for_transfer(struct mhi_device *mhi_dev)
-> +{
-> +	return __mhi_prepare_for_transfer(mhi_dev, 0);
-> +}
->  EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer);
 >  
-> +int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev)
-> +{
-> +	return __mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_prepare_for_transfer_autoqueue);
+> @@ -4325,9 +4334,14 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
+>  	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
+>  	u32 bias_en, drvr_en;
+>  
+> -	if (qcom_qmp_phy_configure_dp_swing(qphy,
+> -				QSERDES_V3_TX_TX_DRV_LVL,
+> -				QSERDES_V3_TX_TX_EMP_POST1_LVL) < 0)
+> +	if (__qcom_qmp_phy_configure_dp_swing
+> +			(qphy,
+> +			QSERDES_V3_TX_TX_DRV_LVL,
+> +			QSERDES_V3_TX_TX_EMP_POST1_LVL,
+> +			qmp_dp_v3_voltage_swing_hbr_rbr,
+> +			qmp_dp_v3_pre_emphasis_hbr_rbr,
+> +			qmp_dp_v3_voltage_swing_hbr3_hbr2,
+> +			qmp_dp_v3_pre_emphasis_hbr3_hbr2) < 0)
+>  		return;
+>  
+>  	if (dp_opts->lanes == 1) {
+> @@ -4465,6 +4479,35 @@ static int qcom_qmp_v3_dp_phy_calibrate(struct qmp_phy *qphy)
+>  	return 0;
+>  }
+>  
+> +/* The values in these tables are given without MUX_EN (0x20) bit set */
+> +static const u8 qmp_dp_v4_pre_emphasis_hbr3_hbr2[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+> +	{ 0x00, 0x0c, 0x15, 0x1b },
+> +	{ 0x02, 0x0e, 0x16, 0xff },
+> +	{ 0x02, 0x11, 0xff, 0xff },
+> +	{ 0x04, 0xff, 0xff, 0xff }
+> +};
 > +
->  void mhi_unprepare_from_transfer(struct mhi_device *mhi_dev)
+> +static const u8 qmp_dp_v4_voltage_swing_hbr3_hbr2[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+> +	{ 0x02, 0x12, 0x16, 0x1a },
+> +	{ 0x09, 0x19, 0x1f, 0xff },
+> +	{ 0x10, 0x1f, 0xff, 0xff },
+> +	{ 0x1f, 0xff, 0xff, 0xff }
+> +};
+> +
+> +static const u8 qmp_dp_v4_pre_emphasis_hbr_rbr[MAX_SWING_LEVEL][MAX_EMPHASIS_LEVEL] = {
+> +	{ 0x00, 0x0e, 0x15, 0x1b },
+> +	{ 0x00, 0x0e, 0x15, 0xff },
+> +	{ 0x00, 0x0e, 0xff, 0xff },
+> +	{ 0x04, 0xff, 0xff, 0xff }
+> +};
+> +
+> +static const u8 qmp_dp_v4_voltage_swing_hbr_rbr[MAX_SWING_LEVEL][MAX_VOLTAGE_LEVEL] = {
+> +	{ 0x08, 0x0f, 0x16, 0x1f },
+> +	{ 0x11, 0x1e, 0x1f, 0xff },
+> +	{ 0x16, 0x1f, 0xff, 0xff },
+> +	{ 0x1f, 0xff, 0xff, 0xff }
+> +};
+> +
+>  static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
 >  {
->  	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 723985879035..271db1d6da85 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -717,15 +717,26 @@ void mhi_device_put(struct mhi_device *mhi_dev);
+>  	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_PSR_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+> @@ -4494,16 +4537,14 @@ static void qcom_qmp_v4_phy_dp_aux_init(struct qmp_phy *qphy)
 >  
->  /**
->   * mhi_prepare_for_transfer - Setup UL and DL channels for data transfer.
-> - *                            Allocate and initialize the channel context and
-> - *                            also issue the START channel command to both
-> - *                            channels. Channels can be started only if both
-> - *                            host and device execution environments match and
-> - *                            channels are in a DISABLED state.
->   * @mhi_dev: Device associated with the channels
-> + *
-> + * Allocate and initialize the channel context and also issue the START channel
-> + * command to both channels. Channels can be started only if both host and
-> + * device execution environments match and channels are in a DISABLED state.
->   */
->  int mhi_prepare_for_transfer(struct mhi_device *mhi_dev);
+>  static void qcom_qmp_v4_phy_configure_dp_tx(struct qmp_phy *qphy)
+>  {
+> -	/* Program default values before writing proper values */
+> -	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+> -	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+> -
+> -	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+> -	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+> -
+> -	qcom_qmp_phy_configure_dp_swing(qphy,
+> +	__qcom_qmp_phy_configure_dp_swing
+> +			(qphy,
+>  			QSERDES_V4_TX_TX_DRV_LVL,
+> -			QSERDES_V4_TX_TX_EMP_POST1_LVL);
+> +			QSERDES_V4_TX_TX_EMP_POST1_LVL,
+> +			qmp_dp_v4_voltage_swing_hbr_rbr,
+> +			qmp_dp_v4_pre_emphasis_hbr_rbr,
+> +			qmp_dp_v4_voltage_swing_hbr3_hbr2,
+> +			qmp_dp_v4_pre_emphasis_hbr3_hbr2);
+>  }
 >  
-> +/**
-> + * mhi_prepare_for_transfer_autoqueue - Setup UL and DL channels with auto queue
-> + *                                      buffers for DL traffic
-> + * @mhi_dev: Device associated with the channels
-> + *
-> + * Allocate and initialize the channel context and also issue the START channel
-> + * command to both channels. Channels can be started only if both host and
-> + * device execution environments match and channels are in a DISABLED state.
-> + * The MHI core will automatically allocate and queue buffers for the DL traffic.
-> + */
-> +int mhi_prepare_for_transfer_autoqueue(struct mhi_device *mhi_dev);
+>  static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+> @@ -4622,6 +4663,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+>  	writel(drvr1_en, qphy->tx2 + QSERDES_V4_TX_HIGHZ_DRVR_EN);
+>  	writel(bias1_en, qphy->tx2 + QSERDES_V4_TX_TRANSCEIVER_BIAS_EN);
+>  
+> +	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
+> +	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
 > +
->  /**
->   * mhi_unprepare_from_transfer - Reset UL and DL channels for data transfer.
->   *                               Issue the RESET channel command and let the
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index fa611678af05..18196e1c8c2f 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -79,7 +79,7 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->  	int rc;
+>  	writel(0x18, qphy->pcs + QSERDES_DP_PHY_CFG);
+>  	udelay(2000);
+>  	writel(0x19, qphy->pcs + QSERDES_DP_PHY_CFG);
+> @@ -4633,11 +4677,9 @@ static int qcom_qmp_v4_phy_configure_dp_phy(struct qmp_phy *qphy)
+>  			10000))
+>  		return -ETIMEDOUT;
 >  
->  	/* start channels */
-> -	rc = mhi_prepare_for_transfer(mhi_dev);
-> +	rc = mhi_prepare_for_transfer_autoqueue(mhi_dev);
->  	if (rc)
->  		return rc;
+> -	writel(0x0a, qphy->tx + QSERDES_V4_TX_TX_POL_INV);
+> -	writel(0x0a, qphy->tx2 + QSERDES_V4_TX_TX_POL_INV);
 >  
+> -	writel(0x27, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+> -	writel(0x27, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+> +	writel(0x22, qphy->tx + QSERDES_V4_TX_TX_DRV_LVL);
+> +	writel(0x22, qphy->tx2 + QSERDES_V4_TX_TX_DRV_LVL);
+>  
+>  	writel(0x20, qphy->tx + QSERDES_V4_TX_TX_EMP_POST1_LVL);
+>  	writel(0x20, qphy->tx2 + QSERDES_V4_TX_TX_EMP_POST1_LVL);
 > -- 
-> 2.25.1
-> 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+
+-- 
+~Vinod
