@@ -2,61 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0094747679F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:58:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D0D54767C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 03:12:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232727AbhLPB62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 20:58:28 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:33610 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbhLPB62 (ORCPT
+        id S229959AbhLPCMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 21:12:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229863AbhLPCMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 20:58:28 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3BD0CB8226F;
-        Thu, 16 Dec 2021 01:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8662C36AE0;
-        Thu, 16 Dec 2021 01:58:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639619906;
-        bh=lMPrp7luTDh7Q2f13X6B4VyWxo8Cwn3X9X/oPuxUdlg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=kFv7d25BF0TsrWzBYvojpTi7CmLTDfouRd+kFqDxVKXSuetpNeGwOBSRO/RO3NPY/
-         IU8YeuUFJzDCxnzAp1kSnqufEuxmthhNDLQjBi/oIn3BDOXrOndTormvuMc4MqfMhi
-         RBkj3ZK2pqYHYhsilQjLLMDaCUjQRjVkoInZ4nZ4qKC1iWf1IsdCAuNKF2fsvqcmQb
-         SFZAMmYQMyOv2cpxZ+dIZ13G0SXmL7+Mcwe9ampGWnvnKpecEmZfd/r3pjJAYbT77e
-         oABFqdZdrKHdDpxqk+AxUqNJtHZUCNCA+YqrbyEGCP+0ISon+3Cu/6WF7KfRYgyw0U
-         3CiAl7r5WReaw==
-Content-Type: text/plain; charset="utf-8"
+        Wed, 15 Dec 2021 21:12:42 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01FACC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:12:41 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id p8so36162626ljo.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Dec 2021 18:12:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oN/BkkxAzh0TiMVlSBz5FLbx67Y+EoaSkeGmdT8a2+8=;
+        b=hqMjUvbseGgiGYDl5Qbaq4vQtnZIGaJQXqPHIq4tnU6P7v+h++jnmsE4PxuiA+AH8N
+         /VM9sAODroW2HZ09MIr5DM4idU9+EI/mt6VAl7mSUjvsoVI229LH2eqNkLZjCthCYotX
+         PXLS4Vro8Kmeox/ihgl55IUOWY6C263GJ0xqxHrp/5liDKyPqD5TI5AZmpxN0n4MBnJ8
+         75ioiYeFBomV0uBquc5/Y0QjNaBfNvzxDVt28p31WJNdlueFp739E2MpwaEs09V1Vi1f
+         3h9JzIHtOX48MibsEofJIAqAECm+1R6XVSGZZz0+O+ibY7pR5kwPrkM5Og3Ax+otckMJ
+         9c0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oN/BkkxAzh0TiMVlSBz5FLbx67Y+EoaSkeGmdT8a2+8=;
+        b=e35Bqx0lqNJCXLL+Dt+Pp0gL8+aIAZr/lwY9iDpjeY2s+54f1JLwIUkYkn5C/ffc7o
+         /o4Mg1pxwD0K3fndoTPZH7aDnr5m9rJAJoblxj2axNZMWEnbqIK/YfuxpDM/8kP9B6Kp
+         OetghbHiqLsbOFuSXVvbbtUqzYkMO6yNQM7zJIAlekoZO5uGFzygPQ5AKrMExdBKXwOO
+         mOnOATz1Pue0kPcAiVA3dQj/Y+Ykf0u62vacG5Kjmct4cugZUKR/VoKlGGLCq9iJwyuH
+         5kcgkq/WeHE/oODagQebBFkynALpqMpCeP2lGpFnhqxrvipundfbzfOmkR4+/b5+rhlj
+         4cpA==
+X-Gm-Message-State: AOAM533N7d60zdWQvBMWHiQRY+hy4u13KaGxN79d7hdollTrSoCDUGX4
+        ObYiYKd0YxxSa6qWftmdxb2rAA==
+X-Google-Smtp-Source: ABdhPJwFkqpGRH3//LQhIXXRkFcjQiigOlWwY/xfN/YQ/h/cjLG5rE/ffQ/Bqh+WemHQh9E+4OLXCw==
+X-Received: by 2002:a2e:b163:: with SMTP id a3mr13430601ljm.264.1639620760128;
+        Wed, 15 Dec 2021 18:12:40 -0800 (PST)
+Received: from ?IPV6:2001:470:dd84:abc0::8a5? ([2001:470:dd84:abc0::8a5])
+        by smtp.gmail.com with ESMTPSA id m3sm798052lji.112.2021.12.15.18.12.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Dec 2021 18:12:39 -0800 (PST)
+Message-ID: <ccd98cd9-f8c1-d4df-3849-3844e8b82e89@linaro.org>
+Date:   Thu, 16 Dec 2021 05:12:37 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211215193704.2821775-11-dmitry.baryshkov@linaro.org>
-References: <20211215193704.2821775-1-dmitry.baryshkov@linaro.org> <20211215193704.2821775-11-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 10/16] clk: qcom: camcc-sdm845: convert to parent_hws/_data
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 15 Dec 2021 17:58:24 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211216015825.E8662C36AE0@smtp.kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v2 2/3] drm/msm/disp: Export helper for capturing snapshot
+Content-Language: en-GB
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Alexey Dobriyan <adobriyan@gmail.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20211215174524.1742389-1-robdclark@gmail.com>
+ <20211215174524.1742389-3-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211215174524.1742389-3-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-12-15 11:36:58)
-> Convert the clock driver to specify parent hws/data rather than parent
-> names, to actually bind using 'clock-names' specified in the DTS rather
-> than global clock names.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+On 15/12/2021 20:45, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> We'll re-use this for debugfs.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot.c | 28 +++++++++++++++-----
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot.h | 10 +++++++
+>   2 files changed, 31 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> index a4a7cb06bc87..580ea01b13ab 100644
+> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
+> @@ -28,29 +28,43 @@ static ssize_t __maybe_unused disp_devcoredump_read(char *buffer, loff_t offset,
+>   	return count - iter.remain;
+>   }
+>   
+> -static void _msm_disp_snapshot_work(struct kthread_work *work)
+> +struct msm_disp_state *
+> +msm_disp_snapshot_state_sync(struct msm_kms *kms)
+>   {
+> -	struct msm_kms *kms = container_of(work, struct msm_kms, dump_work);
+>   	struct drm_device *drm_dev = kms->dev;
+>   	struct msm_disp_state *disp_state;
+> -	struct drm_printer p;
+> +
+> +	WARN_ON(!mutex_is_locked(&kms->dump_mutex));
+>   
+>   	disp_state = kzalloc(sizeof(struct msm_disp_state), GFP_KERNEL);
+>   	if (!disp_state)
+> -		return;
+> +		return ERR_PTR(-ENOMEM);
+>   
+>   	disp_state->dev = drm_dev->dev;
+>   	disp_state->drm_dev = drm_dev;
+>   
+>   	INIT_LIST_HEAD(&disp_state->blocks);
+>   
+> -	/* Serialize dumping here */
+> -	mutex_lock(&kms->dump_mutex);
+> -
+>   	msm_disp_snapshot_capture_state(disp_state);
+>   
+> +	return disp_state;
+> +}
+> +
+> +static void _msm_disp_snapshot_work(struct kthread_work *work)
+> +{
+> +	struct msm_kms *kms = container_of(work, struct msm_kms, dump_work);
+> +	struct drm_device *drm_dev = kms->dev;
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+drivers/gpu/drm/msm/disp/msm_disp_snapshot.c:56:28: warning: unused 
+variable ‘drm_dev’ [-Wunused-variable]
+    56 |         struct drm_device *drm_dev = kms->dev;
+
+I will apply the fixup locally.
+
+> +	struct msm_disp_state *disp_state;
+> +	struct drm_printer p;
+> +
+> +	/* Serialize dumping here */
+> +	mutex_lock(&kms->dump_mutex);
+> +	disp_state = msm_disp_snapshot_state_sync(kms);
+>   	mutex_unlock(&kms->dump_mutex);
+>   
+> +	if (IS_ERR(disp_state))
+> +		return;
+> +
+>   	if (MSM_DISP_SNAPSHOT_DUMP_IN_CONSOLE) {
+>   		p = drm_info_printer(disp_state->drm_dev->dev);
+>   		msm_disp_state_print(disp_state, &p);
+> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> index 31ad68be3391..b5f452bd7ada 100644
+> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.h
+> @@ -84,6 +84,16 @@ int msm_disp_snapshot_init(struct drm_device *drm_dev);
+>    */
+>   void msm_disp_snapshot_destroy(struct drm_device *drm_dev);
+>   
+> +/**
+> + * msm_disp_snapshot_state_sync - synchronously snapshot display state
+> + * @kms:  the kms object
+> + *
+> + * Returns state or error
+> + *
+> + * Must be called with &kms->dump_mutex held
+> + */
+> +struct msm_disp_state *msm_disp_snapshot_state_sync(struct msm_kms *kms);
+> +
+>   /**
+>    * msm_disp_snapshot_state - trigger to dump the display snapshot
+>    * @drm_dev:	handle to drm device
+> 
+
+
+-- 
+With best wishes
+Dmitry
