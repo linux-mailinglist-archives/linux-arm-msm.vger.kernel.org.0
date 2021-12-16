@@ -2,178 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B12547677A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:38:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E89A047678E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 02:51:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbhLPBiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Dec 2021 20:38:50 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:58372 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232576AbhLPBiu (ORCPT
+        id S232663AbhLPBvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Dec 2021 20:51:39 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:59630 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229555AbhLPBvj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Dec 2021 20:38:50 -0500
+        Wed, 15 Dec 2021 20:51:39 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1DFC061B8E;
-        Thu, 16 Dec 2021 01:38:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69747C36AE1;
-        Thu, 16 Dec 2021 01:38:49 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id EBCE4B8226F;
+        Thu, 16 Dec 2021 01:51:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AD3C36AE1;
+        Thu, 16 Dec 2021 01:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639618729;
-        bh=W8uzl9WQID9wn9qU/d5EE2OS7Nsn5jFytQWpTJE3ifw=;
+        s=k20201202; t=1639619496;
+        bh=KK2PCJcQ7/7Byemi7xyIPz+xoe33j+VFfkbiyGQPARM=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=ZW03Yc3qKNi/JeNs8MTBb46Jl8EmihD7tqeyCUsl2F58OANvYBRtmtLmwdSCiCkC3
-         gr2BveZb02MJ+wPytJggOeq/EZgWo2F/y7RjNQxZ9Nja0kGeITPJnEeHzopyccbNbk
-         MquInPH2KgMygwq7ShIUsy6DPPNamU2321Jm1nCkgURXKxhOBhKvIF1WpPDLAcvygU
-         prCvwecXX8FiIWTHB/hUhb9KHIJ92mWn0wQS0GQgMAZNh/q3ve6OuFryj0eQ9+O53A
-         YrhBZkIWVtHhWXdVyBeqAXquFKZ4B1hyl2tDgaleqxmogKcbqNCb0oolUkFJ154RT0
-         bKuLOxLSZPudQ==
+        b=f3defKgWisUy4hgonbQccfiHiru2wDolSQZ2lMO8IcXbwKS0CzlFONzt1DKwkTkOe
+         sAzE/ZUhiOKvVGpR/T0TS6TAyrXIfIlAss5DjPcgWRsNxqM2AifybPhY2rFWpuq7r4
+         GcMpj50E/eqc47U5+AltRcSpdxtKQXMEsnwoZ9ppabM/LMHoI+efFG2N8huqB5HIug
+         9e+GBheH/SmbuMesh8dBVaQekajmGqSC473a1yfeVljWZtQCBbsW9CN5lxxr7FLVZa
+         sLT5KfNY2X376yjhQbAg3ZOqKoMYkC3F1NBB8vRanWcFK/cigst/XT+qweb6MZzSPF
+         8d9cP3mlkupqw==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <a4f7d300-90c2-7dda-5cda-5e2763a94912@linaro.org>
-References: <20211208022210.1300773-1-dmitry.baryshkov@linaro.org> <20211208022210.1300773-3-dmitry.baryshkov@linaro.org> <YbJNp+tnD6kEQAzt@ripper> <a4f7d300-90c2-7dda-5cda-5e2763a94912@linaro.org>
-Subject: Re: [PATCH 2/2] clk: qcom: dispcc-sdm845: park disp_cc_mdss_mdp_clk_src
+In-Reply-To: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
+References: <20211203035601.3505780-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH] clk: qcom: rcg2: Cache rate changes for parked RCGs
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Amit Nischal <anischal@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 15 Dec 2021 17:38:48 -0800
+        Taniya Das <tdas@codeaurora.org>
+Date:   Wed, 15 Dec 2021 17:51:35 -0800
 User-Agent: alot/0.9.1
-Message-Id: <20211216013849.69747C36AE1@smtp.kernel.org>
+Message-Id: <20211216015136.96AD3C36AE1@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2021-12-15 14:17:40)
-> On 09/12/2021 21:40, Bjorn Andersson wrote:
-> > On Tue 07 Dec 18:22 PST 2021, Dmitry Baryshkov wrote:
-> >=20
-> >> To stop disp_cc_mdss_mdp_clk_src from getting stuck during boot if it
-> >> was enabled by the bootloader, part it to the TCXO clock source.
-> >>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >>   drivers/clk/qcom/dispcc-sdm845.c | 3 +++
-> >>   1 file changed, 3 insertions(+)
-> >>
-> >> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispc=
-c-sdm845.c
-> >> index 735adfefc379..f2afbba7bc72 100644
-> >> --- a/drivers/clk/qcom/dispcc-sdm845.c
-> >> +++ b/drivers/clk/qcom/dispcc-sdm845.c
-> >> @@ -858,6 +858,9 @@ static int disp_cc_sdm845_probe(struct platform_de=
-vice *pdev)
-> >>  =20
-> >>      clk_fabia_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_conf=
-ig);
-> >>  =20
-> >> +    /* Park disp_cc_mdss_mdp_clk_src */
-> >> +    clk_rcg2_park_safely(regmap, 0x2088, 0);
-> >=20
-> > Today booting the system with "clk_ignore_unused" will give you a
-> > working efifb up until the point where the display driver kicks in and
-> > reinitializes the hardware state - which during development might be
-> > indefinite.
+Quoting Bjorn Andersson (2021-12-02 19:56:01)
+> As GDSCs are turned on and off some associated clocks are momentarily
+> enabled for house keeping purposes. Failure to enable these clocks seems
+> to have been silently ignored in the past, but starting in SM8350 this
+> failure will prevent the GDSC to turn on.
 >=20
-> During development one can introduce a dispcc parameter. Maybe we should =
+> At least on SM8350 this operation will enable the RCG per the
+> configuration in CFG_REG. This means that the current model where the
+> current configuration is written back to CF_REG immediately after
+> parking the RCG doesn't work.
 
-> add qcom-common parameter telling dispcc drivers to skip parking these=20
-> clocks.
->=20
-> >=20
-> > If we blindly cut the mdp_clk_src here that will no longer be possible.
->=20
-> I think we have several separate tasks here:
->=20
-> 1) Support developing code. This is what you have in mind with EFIFB +=20
-> clk_ignore_unused.
->=20
-> 2) Get display to work stable and rock solid. This can include=20
-> completely tearing down the display pipeline for the sake of getting=20
-> MDP/MDSS/DSI to work with as few hacks as possible.
->=20
-> 3) Gracious handover of display/framebuffer from bootloader to the Linux =
-
-> kernel.
->=20
-> For the task #1, you can hack the dispcc as you wish or set any=20
-> additional parameters, as you are already passing clk_ignore_unused.=20
-> This will all end up as #1 transitions to #2.
->=20
-> I was targetting task#2. Disable everything to let dpu/dsi/dp start from =
-
-> the scratch. If I understand correctly, this approach would also help=20
-> you with your boot-clock-too-high-for-the-minimum-opp issue. Is my=20
-> assumption correct?
->=20
-> For the task #3 we need collaboration between dispcc, clock core and=20
-> dpu/dsi drivers. Just marking the clocks for the clk_disable_unused() is =
-
-> the least of the problems that we have here. I think [1] is a bit closer =
-
-> to what I'd expect.
->=20
-> I have a similar but slightly different idea of how this can be made to=20
-> work. I'd do the following (excuse me for the hand waving, no code at han=
-d):
->=20
-> - Add clk_ops->inherit_state callback, which can check if the clock is=20
-> enabled already or not. If it is, set the enable_count to 1, set special =
-
-> CLOCK_INHERITED flag, read back the state, etc.
->=20
-> - Make of_clk_set_defaults() ignore clocks with CLOCK_INHERITED flag.=20
-> Maybe it should return special status telling that some of the clocks=20
-> were not updated.
-
-This sounds an awful lot like the CLK_HANDOFF flag that never
-materialized. We know we have a problem where the enable state of a clk
-isn't understood at registration time (although we do know the frequency
-of the clk). So far it's been put largely on clk providers to figure out
-that their clk is enabled and avoid doing something if it is. But that's
-run into problems where clk flags that want us to not do something if
-the clk is enabled fail to detect this, see CLK_SET_RATE_GATE for
-example. This should be fixed; patches welcome.
-
-Within the clk framework we don't really want to care about a clk already
-being enabled and keeping track of that via the enable_count. Trying to
-figure out when to "hand that off" is complex, and what exactly is the
-point to it? Drivers still need to call clk_enable to enable the clk, so
-all that really matters is that we know the clk is on at boot and to
-respect the clk flags.
+Just to clarify, is the RCG off and "parked" at XO with the config
+register dirty and set to the desired frequency and then the RCG is
+turned on by the GDSC?
 
 >=20
-> - Add clk_get_inherit() call, which would drop the CLOCK_INHERITED flag=20
-> and return previous flag state to calling driver. The driver now assumes =
+> Instead, keep track of the currently requested rate of the clock and
+> upon enabling the clock reapply the configuration per the saved rate.
 
-> ownership of this clock with the enable_count of 1. This way the driver=20
-> can adjust itself to the current clock state (e.g. drop the frequency,=20
-> disable the clock and then call of_clk_set_defaults() again to=20
-> reparent/reclock clocks as necessary, etc). If the parent chain is not=20
-> fully available, clk_get_inherit must return an error for INHERITED=20
-> clocks, so that the driver will not cause reparenting of the orphaned=20
-> clocks.
+We already keep track of the requested rate and reapply it on enable,
+just we're lazy and stash that information in the hardware and not the
+software. I didn't think the gdsc would be turned on and ruin that all,
+but it's fair.
 
-Please god no more clk_get() APIs! The driver shouldn't care that the
-clk is already enabled when clk_get() returns. The driver must call
-clk_enable() if it wants the clk to be enabled.
+>=20
+> Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as n=
+eeded")
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-rcg.h  |  2 ++
+>  drivers/clk/qcom/clk-rcg2.c | 32 +++++++++++++++++---------------
+>  2 files changed, 19 insertions(+), 15 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+> index 99efcc7f8d88..6939f4e62768 100644
+> --- a/drivers/clk/qcom/clk-rcg.h
+> +++ b/drivers/clk/qcom/clk-rcg.h
+> @@ -139,6 +139,7 @@ extern const struct clk_ops clk_dyn_rcg_ops;
+>   * @freq_tbl: frequency table
+>   * @clkr: regmap clock handle
+>   * @cfg_off: defines the cfg register offset from the CMD_RCGR + CFG_REG
+> + * @current_rate: cached rate for parked RCGs
+>   */
+>  struct clk_rcg2 {
+>         u32                     cmd_rcgr;
+> @@ -149,6 +150,7 @@ struct clk_rcg2 {
+>         const struct freq_tbl   *freq_tbl;
+>         struct clk_regmap       clkr;
+>         u8                      cfg_off;
+> +       unsigned long           current_rate;
+>  };
+> =20
+>  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg=
+2, clkr)
+> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+> index e1b1b426fae4..b574b38dcbd5 100644
+> --- a/drivers/clk/qcom/clk-rcg2.c
+> +++ b/drivers/clk/qcom/clk-rcg2.c
+> @@ -167,6 +167,7 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned long=
+ parent_rate)
+>  {
+>         struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+>         u32 cfg, hid_div, m =3D 0, n =3D 0, mode =3D 0, mask;
+> +       unsigned long rate;
+> =20
+>         regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
+> =20
+> @@ -186,7 +187,11 @@ clk_rcg2_recalc_rate(struct clk_hw *hw, unsigned lon=
+g parent_rate)
+>         hid_div =3D cfg >> CFG_SRC_DIV_SHIFT;
+>         hid_div &=3D mask;
+> =20
+> -       return calc_rate(parent_rate, m, n, mode, hid_div);
+> +       rate =3D calc_rate(parent_rate, m, n, mode, hid_div);
+> +       if (!rcg->current_rate)
+> +               rcg->current_rate =3D rate;
 
-Buried in here is the question of if we should allow clk_get() to
-succeed if the clk is an orphan. I recall that rockchip had some problem
-if we didn't allow orphans to be handed out but it's been years and I've
-forgotten the details. But from a purely high-level we should definitely not
-hand out orphan clks via clk_get() because the clk isn't operable
-outside of clk_set_rate() or clk_set_parent().
+Instead of doing this in recalc_rate, all the time, why not make an init
+clk op that does it once during registration? The other problem I see is
+that the rate we calculate may be wrong if the parent is registered
+after this clk. I think this came up originally when the patch this is
+fixing was discussed.
 
-And there's more work to do here first by getting rid of the .get_parent
-clk_op and having it return a clk_hw pointer (see my two or three year
-old clk_get_hw series). Once we do that we'll know if we can hand out an
-orphan clk because it may one day be reparented via clk_set_parent() or
-clk_set_rate() vs. the case where we shouldn't hand it out via clk_get()
-because we'll never be able to parent it because the parent(s) doesn't
-exist.
+So instead of saving the current_rate can we save the cfg register value
+(or however many registers we need) to put back the frequency of the clk
+to what we want on enable? The other thing is that we made recalc_rate()
+work "seamlessly" here by stashing the frequency into the register but
+leaving it uncommitted until enable. We may need to now look at the
+software copy of the registers in the shared rcg recalc rate operation
+to figure out what the frequency is.
+
+> +
+> +       return rate;
+>  }
+> =20
+>  static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq=
+_tbl *f,
+> @@ -968,12 +973,14 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *=
+hw, unsigned long rate,
+>         if (!f)
+>                 return -EINVAL;
+> =20
+> +       rcg->current_rate =3D rate;
+> +
+>         /*
+> -        * In case clock is disabled, update the CFG, M, N and D registers
+> -        * and don't hit the update bit of CMD register.
+> +        * In the case that the shared RCG is parked, current_rate will be
+> +        * applied as the clock is unparked again, so just return here.
+>          */
+>         if (!__clk_is_enabled(hw->clk))
+> -               return __clk_rcg2_configure(rcg, f);
+> +               return 0;
+> =20
+>         return clk_rcg2_shared_force_enable_clear(hw, f);
+>  }
+> @@ -987,8 +994,13 @@ static int clk_rcg2_shared_set_rate_and_parent(struc=
+t clk_hw *hw,
+>  static int clk_rcg2_shared_enable(struct clk_hw *hw)
+>  {
+>         struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+> +       const struct freq_tbl *f =3D NULL;
+
+Do not assign a value to a variable
+
+>         int ret;
+> =20
+> +       f =3D qcom_find_freq(rcg->freq_tbl, rcg->current_rate);
+
+and then assign it again without testing it before.
+
+> +       if (!f)
+> +               return -EINVAL;
+> +
+>         /*
+>          * Set the update bit because required configuration has already
