@@ -2,61 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8ED33476A73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 07:36:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2328476AA5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 07:54:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231656AbhLPGgT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 01:36:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbhLPGgS (ORCPT
+        id S234224AbhLPGy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 01:54:57 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:37728 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229459AbhLPGy5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 01:36:18 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C318C061574;
-        Wed, 15 Dec 2021 22:36:18 -0800 (PST)
+        Thu, 16 Dec 2021 01:54:57 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3909A61C11;
-        Thu, 16 Dec 2021 06:36:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DEDC36AE2;
-        Thu, 16 Dec 2021 06:36:16 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B72361C63;
+        Thu, 16 Dec 2021 06:54:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36F6C36AE5;
+        Thu, 16 Dec 2021 06:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639636577;
-        bh=neU9K+dVdRN9HYvVjoIapl4HfMVGMGGHHK9OM8vGk9w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vFcnYOgRfdBfISm46BAT8cSFrqfRG1QkFwb1Gx2T5yoaanL83Tdi0won7+pwl9NBW
-         Ew6Z5aOHaClbdfACdrx3CBtdU1sDlN4jG53sNC3TKXkl1duV6a0921hCjoZojXx3GE
-         EYADMd3o0SN9It835KWhYxQ0A+QD2eTqijNOqE0TKKWiWP2MZFQAiP5jxnMUVJB0F6
-         44GXU63DUbKbtIdBXfuUIC0Z3lYY/LuZWJ3qYDkRzok9PkKzcQmFhVMW7vGD2nQBbA
-         qXIPT5D+SDtgWQb5I9VV1LFFPeLRLEt9jGZ+YNyhE8cXlIvgI3S6WDMLtALID2b4Yd
-         onD7YnQHVt7VQ==
-Date:   Thu, 16 Dec 2021 12:06:13 +0530
+        s=k20201202; t=1639637695;
+        bh=Wj/t9web4ey2NI4eh1KobmSBrCKnyYqU9UKDsRQ/5OE=;
+        h=From:To:Cc:Subject:Date:From;
+        b=KjdL8eTKChshORjRmSUhbwh+Goi3enSnVS7D1K32jtbrCHKyEgzujaIxfPwWMHhtL
+         pNhC0LYrLM5U+d27eIY9zkLoX1hS0AOKM6BzuARVCY/vnbW4f6ohMs9tGYALhNT7/o
+         wBo2htBv5uBEL6mMrkmUea104Cot5uEG3/zllAoWdU3QXdZzcK9qcPRPWa7GU40Wrc
+         hw7T8Tl07KiPfUkyL9Z7VcmSk5kj5CJO153/TnrZjv62ggp1GhtNttxbCjBRNwvi1r
+         CBU9NfdEK3mBNbaXz/gC97Xwz278SP6RnTXZeA2dNE6c21zfOGhjFn8dnrA+xGbtS0
+         TwmLQJ9P9QuqQ==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add
- bindings for SM8450
-Message-ID: <YbreXVkMoOcoeHAA@matsya>
-References: <20211213131450.535775-1-vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 0/3] arm64: defconfig: Add SM8450 drivers
+Date:   Thu, 16 Dec 2021 12:24:41 +0530
+Message-Id: <20211216065444.650357-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211213131450.535775-1-vkoul@kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13-12-21, 18:44, Vinod Koul wrote:
-> Document the compatible string for USB phy found in Qualcomm SM8450 SoC
+We recently added support for Qualcomm SM8450. Enable the clock, pincontrol
+and interconnect drivers in the defconfig. All these driver are already
+picked up by respective maintainers
 
-Applied all, thanks
+Vinod Koul (3):
+  arm64: defconfig: Add SM8450 GCC config
+  arm64: defconfig: Add SM8450 pinctrl config
+  arm64: defconfig: Add SM8450 icc configs
+
+ arch/arm64/configs/defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
 -- 
-~Vinod
+2.31.1
+
