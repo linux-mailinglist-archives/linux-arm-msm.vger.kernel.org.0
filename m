@@ -2,138 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DB79476ADF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 08:14:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBA2B476B17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Dec 2021 08:36:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbhLPHOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Dec 2021 02:14:05 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:47158 "EHLO
+        id S232207AbhLPHgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Dec 2021 02:36:40 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:57486 "EHLO
         dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232014AbhLPHOE (ORCPT
+        with ESMTP id S229664AbhLPHgk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Dec 2021 02:14:04 -0500
+        Thu, 16 Dec 2021 02:36:40 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 76C1161C44;
-        Thu, 16 Dec 2021 07:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE178C36AE2;
-        Thu, 16 Dec 2021 07:14:03 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F231661BF7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Dec 2021 07:36:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58398C36AE4;
+        Thu, 16 Dec 2021 07:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639638843;
-        bh=xPCUzOj4GieQMOuilzV8vhjp46fj1EKmw4B3F1ga7AM=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=rQogwJyUY2Ccf5eLPliNU6Y8NbFy7TdJ+kSKc4Y7Wv4FX7dSWClDkFii8scmJZOyb
-         4mG3qIjujwAsZrkyI0rYCtMQwySsmieU1j3ZKK+NXQbIFy3vSM0yVEUdtrTZvVr0yz
-         TBdjcOG2O2JDyez61PspaJivdUXh0qNWZ0x0TX0cHeMdKA0F2xXhVK/wpPCB4NEZ+h
-         U9hJAgjPdaBG2gqcEaMDK1i92AkX6ngHar3U1Q+jpWczxi5yrgncguefrbQ/aUAXAc
-         MVLk0uJO4YkdmJI1keDZTm6lfzM131jnyQgUD9S5BoVMaFpdPan7lpwQGHLNVa7Ypj
-         2QIj/wNn0aKkA==
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1639640199;
+        bh=UePRP73Jx2HKB43iw9v8RZ6aV48R0z5Nc8P0e74+tAk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nqNOG9bXC1xKrH7kBq8D42evmf04eSII2Om+347SUxVL7VsLg3uYzth3xKcNWLKVb
+         Xene87jdXRHRJWiNZw/IwCDdTNzyODyjP79TANdthAwh5MLhwSjrUBsei2I1LZl9CA
+         lUa8DMYZdWvMt5Q+4RK5dI06NcPejEtoP9Kni62sDVLwSeZ2i98RZL54lhx68S+woV
+         RsCYzK9yzoXi8Ha7rEr1UkxdfRVmj/2XQJKRDh+HOp2poq4lAsxUZcABlfWZSJHOdT
+         vAXkhEMQoQH0K21ztuJ0UW9jgSknw3nCqZCBrM6EsPvvfi4M8BW+UFfCnmdyFHSbND
+         QP4xdTxTMjcXQ==
+Date:   Thu, 16 Dec 2021 13:06:28 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Thomas Perrot <thomas.perrot@bootlin.com>
+Cc:     linux-arm-msm@vger.kernel.org, mani@kernel.org,
+        hemantk@codeaurora.org, aleksander@aleksander.es
+Subject: Re: [PATCH v2] bus: mhi: pci_generic: Introduce Sierra EM919X support
+Message-ID: <20211216073628.GD42608@thinkpad>
+References: <20211123081541.648426-1-thomas.perrot@bootlin.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20211118034719.28971-1-quic_collinsd@quicinc.com>
-References: <20211118034719.28971-1-quic_collinsd@quicinc.com>
-Subject: Re: [PATCH v2] spmi: spmi-pmic-arb: fix irq_set_type race condition
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     David Collins <quic_collinsd@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Kiran Gunda <quic_kgunda@quicinc.com>,
-        Anirudh Ghayal <quic_aghayal@quicinc.com>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-To:     David Collins <quic_collinsd@quicinc.com>,
-        linux-kernel@vger.kernel.org
-Date:   Wed, 15 Dec 2021 23:14:01 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20211216071403.BE178C36AE2@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211123081541.648426-1-thomas.perrot@bootlin.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting David Collins (2021-11-17 19:47:19)
-> The qpnpint_irq_set_type() callback function configures the type
-> (edge vs level) and polarity (high, low, or both) of a particular
-> PMIC interrupt within a given peripheral.  To do this, it reads
-> the three consecutive IRQ configuration registers, modifies the
-> specified IRQ bit within the register values, and finally writes
-> the three modified register values back to the PMIC.  While a
-> spinlock is used to provide mutual exclusion on the SPMI bus
-> during the register read and write calls, there is no locking
-> around the overall read, modify, write sequence.  This opens up
-> the possibility of a race condition if two tasks set the type of
-> a PMIC IRQ within the same peripheral simultaneously.
->=20
-> When the race condition is encountered, both tasks will read the
-> old value of the registers and IRQ bits set by one of the tasks
-> will be dropped upon the register write of the other task.  This
-> then leads to PMIC IRQs being enabled with an incorrect type and
-> polarity configured.  Such misconfiguration can lead to an IRQ
-> storm that overwhelms the system and causes it to crash.
->=20
-> This race condition and IRQ storm have been observed when using
-> a pair of pm8941-pwrkey devices to handle PMK8350 pwrkey and
-> resin interrupts.  The independent devices probe asynchronously
-> in parallel and can simultaneously request and configure PMIC
-> IRQs in the same PMIC peripheral.
->=20
-> For a good case, the IRQ configuration calls end up serialized
-> due to timing deltas and the register read/write sequence looks
-> like this:
->=20
-> 1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
-> 2. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
-> 3. resin probe:  SPMI  read(0x1311): 0x80, 0x80, 0x80
-> 4. resin probe:  SPMI write(0x1311): 0xC0, 0xC0, 0xC0
->=20
-> The final register states after both devices have requested and
-> enabled their respective IRQs is thus:
->=20
-> 0x1311: 0xC0
-> 0x1312: 0xC0
-> 0x1313: 0xC0
-> 0x1314: 0x00
-> 0x1315: 0xC0
->=20
-> For a bad case, the IRQ configuration calls end up occurring
-> simultaneously and the race condition is encountered.  The
-> register read/write sequence then looks like this:
->=20
-> 1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
-> 2. resin probe:  SPMI  read(0x1311): 0x00, 0x00, 0x00
-> 3. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
-> 4. resin probe:  SPMI write(0x1311): 0x40, 0x40, 0x40
->=20
-> In this case, the final register states after both devices have
-> requested and enabled their respective IRQs is thus:
->=20
-> 0x1311: 0x40
-> 0x1312: 0x40
-> 0x1313: 0x40
-> 0x1314: 0x00
-> 0x1315: 0xC0
->=20
-> This corresponds to the resin IRQ being configured for both
-> rising and falling edges, as expected.  However, the pwrkey IRQ
-> is misconfigured as level type with both polarity high and low
-> set to disabled.  The PMIC IRQ triggering hardware treats this
-> particular register configuration as if level low triggering is
-> enabled.
->=20
-> The raw pwrkey IRQ signal is low when the power key is not being
-> pressed.  Thus, the pwrkey IRQ begins firing continuously in an
-> IRQ storm.
->=20
-> Fix the race condition by holding the spmi-pmic-arb spinlock for
-> the duration of the read, modify, write sequence performed in the
-> qpnpint_irq_set_type() function.  Split the pmic_arb_read_cmd()
-> and pmic_arb_write_cmd() functions each into three parts so that
-> hardware register IO is decoupled from spinlock locking.  This
-> allows a new function pmic_arb_masked_write() to be added which
-> locks the spinlock and then calls register IO functions to
-> perform SPMI read and write commands in a single atomic
-> operation.
->=20
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> ---
+On Tue, Nov 23, 2021 at 09:15:41AM +0100, Thomas Perrot wrote:
+> Add support for EM919X modems, this modem series is based on SDX55
+> qcom chip.
+> 
+> It is mandatory to use the same ring for control+data and diag events.
+> 
+> Tested-by: Aleksander Morgado <aleksander@aleksander.es>
+> Signed-off-by: Thomas Perrot <thomas.perrot@bootlin.com>
 
-Applied to spmi-next
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+Thanks,
+Mani
+
+> ---
+>  drivers/bus/mhi/pci_generic.c | 43 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 59a4896a8030..076a951fd587 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -403,7 +403,50 @@ static const struct mhi_pci_dev_info mhi_mv31_info = {
+>  	.dma_data_width = 32,
+>  };
+>  
+> +static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 256, 0),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 128, 0),
+> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 128, 0),
+> +	MHI_CHANNEL_CONFIG_UL(14, "QMI", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(15, "QMI", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 512, 1),
+> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 512, 2),
+> +};
+> +
+> +static struct mhi_event_config modem_sierra_em919x_mhi_events[] = {
+> +	/* first ring is control+data and DIAG ring */
+> +	MHI_EVENT_CONFIG_CTRL(0, 2048),
+> +	/* Hardware channels request dedicated hardware event rings */
+> +	MHI_EVENT_CONFIG_HW_DATA(1, 2048, 100),
+> +	MHI_EVENT_CONFIG_HW_DATA(2, 2048, 101)
+> +};
+> +
+> +static const struct mhi_controller_config modem_sierra_em919x_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 24000,
+> +	.num_channels = ARRAY_SIZE(mhi_sierra_em919x_channels),
+> +	.ch_cfg = mhi_sierra_em919x_channels,
+> +	.num_events = ARRAY_SIZE(modem_sierra_em919x_mhi_events),
+> +	.event_cfg = modem_sierra_em919x_mhi_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_sierra_em919x_info = {
+> +	.name = "sierra-em919x",
+> +	.config = &modem_sierra_em919x_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.sideband_wake = false,
+> +};
+> +
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+> +	/* EM919x (sdx55), use the same vid:pid as qcom-sdx55m */
+> +	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, 0x18d7, 0x0200),
+> +		.driver_data = (kernel_ulong_t) &mhi_sierra_em919x_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0306),
+>  		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx55_info },
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> -- 
+> 2.31.1
+> 
