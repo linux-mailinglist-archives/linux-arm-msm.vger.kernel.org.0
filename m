@@ -2,42 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92F03478BA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 13:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF342478BDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 13:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236324AbhLQMpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Dec 2021 07:45:53 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:44766 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhLQMpx (ORCPT
+        id S230432AbhLQM6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Dec 2021 07:58:05 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:51194 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231835AbhLQM6E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Dec 2021 07:45:53 -0500
+        Fri, 17 Dec 2021 07:58:04 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B91E762160;
-        Fri, 17 Dec 2021 12:45:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F23DC36AE1;
-        Fri, 17 Dec 2021 12:45:50 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 51547B827E8;
+        Fri, 17 Dec 2021 12:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDC4C36AE2;
+        Fri, 17 Dec 2021 12:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639745152;
-        bh=l+SCwxc+wY2dm/Ieek4EKeWRjkBv6W7lUhT0BytkOFY=;
+        s=k20201202; t=1639745882;
+        bh=Nl95m/EeW5ofxMEobM/4Y8KhAbs4dXGHygHTzo3tlH8=;
         h=From:To:Cc:Subject:Date:From;
-        b=IZclTaJhFvX6WWdIGYNjuhJK/EFDAYpToJk0lEYEVtbzL2EP3vJ5brG7BnM4dFdUG
-         t4o99TmUzZiGw0RZ9kWD2a8IBcWyAdXdw1K9I7ZjD8gs/cAqsBgCKTuJphFrj2575g
-         MDpVsT0TR2WTpODVxh+RpWiWjBXfgAcSB/7S++6Oou6fLYTZmprGWFYrnq3D2hq9fP
-         293/BdCkH4LS9PMIlpBbQH02p65fOtcC4JLjhX4imQZdqwAN6Cf05j++SfUWPjdEBw
-         hyFFbtuQnMTfPDmUko2BF7UmcbO2i6puJ4qQgXqfx0LN2oTpuHsU1q0Z/ekPOMBqHz
-         LBWL83wI1U+fg==
+        b=Hkf99pin5NXyGXe5j4BuO4gnmHi4A5l3Gm/wLjKeGw8IgxNj4lNQH9VqbXtWlIyq8
+         Dzl7Q9uiW1cj23JZUC08R0sOPAgVIngrGdMLka2H38c19tYWD23NJu4UrEpWfHdhbq
+         dAyzfyMSc1sfUCGALYrVRdRvUXLI8t6M3Ce1vGNLbm9ijvXHBMMYJCyKCMZx2kmUJa
+         IYF7Ixv8GehV8ElPuzB4nWm505d5j4/hHGXSDxDsco1on1WmgyOkzmVrnCRUok2W1H
+         6vNvve1kTRiB6h0Qsr3d9KBsudUTF1YI6zN5Q8gcZX6/BJE5ymOkpQNHUgsBLhnexc
+         Itf2wwRMj8INA==
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Felipe Balbi <felipe.balbi@microsoft.com>
-Subject: [PATCH] arm64: boot: dts: sm8150: simplify references to pwrkey and resin
-Date:   Fri, 17 Dec 2021 14:45:46 +0200
-Message-Id: <20211217124546.1192281-1-balbi@kernel.org>
+Subject: [RFC/patch 0/2] arm64: boot: dts: qcom: sm8150: enable framebuffer for Surface Duo
+Date:   Fri, 17 Dec 2021 14:57:55 +0200
+Message-Id: <20211217125757.1193256-1-balbi@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -47,55 +48,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Felipe Balbi <felipe.balbi@microsoft.com>
 
-Since commit d0a6ce59ea4e ("arm64: dts: qcom: sm8150: Add support for
-SONY Xperia 1 / 5 (Kumano platform)"), we can directly refer to pwrkey
-and resin by their new labels, respectively pon_pwrkey and pon_resin.
+Hi folks,
 
-Simplify microsof surface duo DTS by utilizing the new labels.
+I'm trying to enable the framebuffer on Microsoft Surface Duo. Looking
+through some internal docs, it came to my attention that the bootloader
+will fill up the framebuffer address and size to a memory node names
+splash_region. Adding the node, I can see the address of the
+framebuffer. Creating the relevant framebuffer device using
+simple-framebuffer, I can't see it working. Tried dd if=/dev/urandom
+of=/dev/fb0 and fb-test. None of which manage to get rid of what's
+already on the screen, put there by the bootloader (platform Logo).
 
-Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
----
- .../dts/qcom/sm8150-microsoft-surface-duo.dts | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+Wondering if any of you have seen a behavior such as this and how did
+you manage to get framebuffer working on SM8150 (I see at least Sony
+Xperia has the node).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index 5901c28e6696..a73317e1a824 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -430,18 +430,8 @@ &i2c19 {
- 	/* MAX34417 @ 0x1e */
- };
- 
--&pon {
--	pwrkey {
--		status = "okay";
--	};
--
--	resin {
--		compatible = "qcom,pm8941-resin";
--		interrupts = <0x0 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
--		debounce = <15625>;
--		bias-pull-up;
--		linux,code = <KEY_VOLUMEDOWN>;
--	};
-+&pon_pwrkey {
-+	status = "okay";
- };
- 
- &qupv3_id_0 {
-@@ -476,6 +466,12 @@ &remoteproc_slpi {
- 	firmware-name = "qcom/sm8150/microsoft/slpi.mdt";
- };
- 
-+&pon_resin {
-+	status = "okay";
-+
-+	linux,code = <KEY_VOLUMEDOWN>;
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <126 4>;
- 
+Felipe Balbi (2):
+  arm64: boot: dts: qcom: sm8150: add a label for reserved-memory
+  arm64: boot: dts: qcom: surface duo: add minimal framebuffer
+
+ .../dts/qcom/sm8150-microsoft-surface-duo.dts | 19 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  2 +-
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+
 -- 
 2.34.1
-
