@@ -2,93 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2491C47894C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 11:57:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92F03478BA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Dec 2021 13:45:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235134AbhLQK5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Dec 2021 05:57:47 -0500
-Received: from guitar.tcltek.co.il ([84.110.109.230]:42678 "EHLO mx.tkos.co.il"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S235032AbhLQK5r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Dec 2021 05:57:47 -0500
-Received: from tarshish (unknown [10.0.8.2])
+        id S236324AbhLQMpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Dec 2021 07:45:53 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:44766 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229502AbhLQMpx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Dec 2021 07:45:53 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 21523440636;
-        Fri, 17 Dec 2021 12:57:42 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1639738662;
-        bh=nXrybOou6I+bLCeC59H2ijJczueTEn33xckeQ5jyN8g=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=b9O/Dzz2ED2+nsOztjgbYw5H4tiGJSaorV1Sgux7ppPJ4+4XYA+PI+Fbn3kjOjgsE
-         Vpbs9ZaTzNUPtArPSfzmXL0jzMeq5gvs4N3tP16D6A9Lq6lxeJDZqC96w0Lw9NfdxG
-         MSMAMhhy6rgC1/EozbWrHICIKhEzSNbqlll4nkZ4DSXRTlw8ZDOiRZho+2l3DmqVOu
-         iNvbipFgJPJ84b0y2EpG3Wvxa2gW3dj6Tkqjv+zfPq6L6FRu3d5YEYS48lXsENFfhU
-         AzB7OSz8aHW7Czxo3eKQGczVztw4wUJNB5a3zx89XDyD2bZuecVXQXzLDafjJ2unAm
-         EkIlQeNBsJJfQ==
-References: <e7ee9012055a4ba9afcb1ffbbeda25f113f171b6.1638701145.git.baruch@tkos.co.il>
- <YbxfO8MQtWrONKvh@kroah.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Wesley Cheng <wcheng@codeaurora.org>
-Subject: Re: [PATCH] usb: dwc3: dwc3-qcom: Fix registration when
- tx-fifo-resize exists
-Date:   Fri, 17 Dec 2021 12:55:38 +0200
-In-reply-to: <YbxfO8MQtWrONKvh@kroah.com>
-Message-ID: <87zgozlcrb.fsf@tarshish>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B91E762160;
+        Fri, 17 Dec 2021 12:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F23DC36AE1;
+        Fri, 17 Dec 2021 12:45:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1639745152;
+        bh=l+SCwxc+wY2dm/Ieek4EKeWRjkBv6W7lUhT0BytkOFY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IZclTaJhFvX6WWdIGYNjuhJK/EFDAYpToJk0lEYEVtbzL2EP3vJ5brG7BnM4dFdUG
+         t4o99TmUzZiGw0RZ9kWD2a8IBcWyAdXdw1K9I7ZjD8gs/cAqsBgCKTuJphFrj2575g
+         MDpVsT0TR2WTpODVxh+RpWiWjBXfgAcSB/7S++6Oou6fLYTZmprGWFYrnq3D2hq9fP
+         293/BdCkH4LS9PMIlpBbQH02p65fOtcC4JLjhX4imQZdqwAN6Cf05j++SfUWPjdEBw
+         hyFFbtuQnMTfPDmUko2BF7UmcbO2i6puJ4qQgXqfx0LN2oTpuHsU1q0Z/ekPOMBqHz
+         LBWL83wI1U+fg==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Felipe Balbi <felipe.balbi@microsoft.com>
+Subject: [PATCH] arm64: boot: dts: sm8150: simplify references to pwrkey and resin
+Date:   Fri, 17 Dec 2021 14:45:46 +0200
+Message-Id: <20211217124546.1192281-1-balbi@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
+From: Felipe Balbi <felipe.balbi@microsoft.com>
 
-On Fri, Dec 17 2021, Greg Kroah-Hartman wrote:
-> On Sun, Dec 05, 2021 at 12:45:45PM +0200, Baruch Siach wrote:
->> Commit cefdd52fa04 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize
->> property by default") added the tx-fifo-resize property. But when this
->> property exists already, of_add_property() fails with -EEXIST, thus
->> breaking core registration. This regresses the IPQ6018 platform that has
->> tx-fifo-resize in its device-tree.
->> 
->> Don't fail when tx-fifo-resize exists.
->> 
->> Fixes: cefdd52fa045 ("usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default")
->> Cc: Wesley Cheng <wcheng@codeaurora.org>
->> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
->> ---
->>  drivers/usb/dwc3/dwc3-qcom.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index 9abbd01028c5..bbd8e401a82c 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -667,7 +667,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
->>  
->>  	prop->name = "tx-fifo-resize";
->>  	ret = of_add_property(dwc3_np, prop);
->> -	if (ret) {
->> +	if (ret && ret != -EEXIST) {
->>  		dev_err(dev, "unable to add property\n");
->>  		goto node_put;
->>  	}
->
-> This commit does not apply to my tree at all.  What tree/branch did you
-> make it against?
+Since commit d0a6ce59ea4e ("arm64: dts: qcom: sm8150: Add support for
+SONY Xperia 1 / 5 (Kumano platform)"), we can directly refer to pwrkey
+and resin by their new labels, respectively pon_pwrkey and pon_resin.
 
-This is against v5.16-rc3. As of -rc5 commit 6a97cee39d reverted the
-offending commit. So all is good now.
+Simplify microsof surface duo DTS by utilizing the new labels.
 
-Thanks,
-baruch
+Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
+---
+ .../dts/qcom/sm8150-microsoft-surface-duo.dts | 20 ++++++++-----------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
+index 5901c28e6696..a73317e1a824 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
+@@ -430,18 +430,8 @@ &i2c19 {
+ 	/* MAX34417 @ 0x1e */
+ };
+ 
+-&pon {
+-	pwrkey {
+-		status = "okay";
+-	};
+-
+-	resin {
+-		compatible = "qcom,pm8941-resin";
+-		interrupts = <0x0 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
+-		debounce = <15625>;
+-		bias-pull-up;
+-		linux,code = <KEY_VOLUMEDOWN>;
+-	};
++&pon_pwrkey {
++	status = "okay";
+ };
+ 
+ &qupv3_id_0 {
+@@ -476,6 +466,12 @@ &remoteproc_slpi {
+ 	firmware-name = "qcom/sm8150/microsoft/slpi.mdt";
+ };
+ 
++&pon_resin {
++	status = "okay";
++
++	linux,code = <KEY_VOLUMEDOWN>;
++};
++
+ &tlmm {
+ 	gpio-reserved-ranges = <126 4>;
+ 
 -- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+2.34.1
+
