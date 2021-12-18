@@ -2,30 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D07B2479C05
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 19:27:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 415EC479C09
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 19:28:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232114AbhLRS13 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Dec 2021 13:27:29 -0500
-Received: from ixit.cz ([94.230.151.217]:41988 "EHLO ixit.cz"
+        id S233730AbhLRS2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Dec 2021 13:28:21 -0500
+Received: from ixit.cz ([94.230.151.217]:42002 "EHLO ixit.cz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232110AbhLRS12 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Dec 2021 13:27:28 -0500
+        id S232110AbhLRS2V (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 18 Dec 2021 13:28:21 -0500
 Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id AFB602243C;
-        Sat, 18 Dec 2021 19:27:23 +0100 (CET)
+        by ixit.cz (Postfix) with ESMTPSA id AD8F32243C;
+        Sat, 18 Dec 2021 19:28:19 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1639852044;
+        t=1639852099;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding;
-        bh=c6BTVEMFSRiexd1tcA2S/X57hpqnpmSt7hRLfzTx7VQ=;
-        b=u7PWyZ2ilVYbQQQAiquojc6yCb1Ay84zm4+bHvsuxRzw6F/kXUPvIyGYG+ZqE00DNxihAP
-        0B333UmDEfx6HmngIv2gE49T8dHS2XzVvVnSAsjPxZTdAX9vyojU+R00uIXjtcEMuvmWUF
-        ZdLdDpEYO2FFbPZvbK2lIjcL/8lfMOs=
+        bh=ZUgYlveHu1wptl4mcHz9Z2Py2LFB1xJOtEmdujskRTQ=;
+        b=2VpmnA+vyPZ6aMDMxQEF9KcgrBJX998gk/MHHpSTIBwwwVkCY2wDGV/53Pe01q40PVxn50
+        6hcgOpDaWwKPq2UleMzWmFepXAJ2kMQdViUZuuLCM672qV1F+VJwKC9kJg+Dn9DG/AkrXq
+        ef9d6vCYuVpi+aayCyAesAWqFAP6sgg=
 From:   David Heidelberg <david@ixit.cz>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -34,12 +34,13 @@ Cc:     Caleb Connolly <caleb@connolly.tech>,
         David Heidelberg <david@ixit.cz>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-binding: soc: qcom: convert rmtfs documentation to yaml
-Date:   Sat, 18 Dec 2021 19:27:17 +0100
-Message-Id: <20211218182717.16928-1-david@ixit.cz>
+Subject: [PATCH v2] dt-binding: soc: qcom: convert rmtfs documentation to yaml
+Date:   Sat, 18 Dec 2021 19:28:16 +0100
+Message-Id: <20211218182816.17151-1-david@ixit.cz>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -48,10 +49,70 @@ Convert Qualcomm Remote File System Memory binding to the yaml format.
 
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
+v2: also removed old txt binding file
+ .../reserved-memory/qcom,rmtfs-mem.txt        | 51 ------------------
  .../reserved-memory/qcom,rmtfs-mem.yaml       | 53 +++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ 2 files changed, 53 insertions(+), 51 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.txt
  create mode 100644 Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
 
+diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.txt b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.txt
+deleted file mode 100644
+index 8562ba1dce69..000000000000
+--- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.txt
++++ /dev/null
+@@ -1,51 +0,0 @@
+-Qualcomm Remote File System Memory binding
+-
+-This binding describes the Qualcomm remote filesystem memory, which serves the
+-purpose of describing the shared memory region used for remote processors to
+-access block device data using the Remote Filesystem protocol.
+-
+-- compatible:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be:
+-		    "qcom,rmtfs-mem"
+-
+-- reg:
+-	Usage: required for static allocation
+-	Value type: <prop-encoded-array>
+-	Definition: must specify base address and size of the memory region,
+-		    as described in reserved-memory.txt
+-
+-- size:
+-	Usage: required for dynamic allocation
+-	Value type: <prop-encoded-array>
+-	Definition: must specify a size of the memory region, as described in
+-		    reserved-memory.txt
+-
+-- qcom,client-id:
+-	Usage: required
+-	Value type: <u32>
+-	Definition: identifier of the client to use this region for buffers.
+-
+-- qcom,vmid:
+-	Usage: optional
+-	Value type: <u32>
+-	Definition: vmid of the remote processor, to set up memory protection.
+-
+-= EXAMPLE
+-The following example shows the remote filesystem memory setup for APQ8016,
+-with the rmtfs region for the Hexagon DSP (id #1) located at 0x86700000.
+-
+-	reserved-memory {
+-		#address-cells = <2>;
+-		#size-cells = <2>;
+-		ranges;
+-
+-		rmtfs@86700000 {
+-			compatible = "qcom,rmtfs-mem";
+-			reg = <0x0 0x86700000 0x0 0xe0000>;
+-			no-map;
+-
+-			qcom,client-id = <1>;
+-		};
+-	};
 diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
 new file mode 100644
 index 000000000000..2998f1c8f0db
