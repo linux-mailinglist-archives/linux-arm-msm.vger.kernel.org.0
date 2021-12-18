@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20AA447990C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 06:56:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3574747994A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 08:17:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbhLRF4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Dec 2021 00:56:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54154 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232131AbhLRF4U (ORCPT
+        id S232226AbhLRHQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Dec 2021 02:16:57 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:41008 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232199AbhLRHQ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Dec 2021 00:56:20 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C6BC061574;
-        Fri, 17 Dec 2021 21:56:20 -0800 (PST)
+        Sat, 18 Dec 2021 02:16:57 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 83D64B81211;
-        Sat, 18 Dec 2021 05:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB67C36AE1;
-        Sat, 18 Dec 2021 05:56:16 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 24719B80123;
+        Sat, 18 Dec 2021 07:16:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85883C36AE1;
+        Sat, 18 Dec 2021 07:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639806977;
-        bh=40BD0rEeUxsyZeXLtNYWQWdpEdH5tJKZ6kJAeyeq0fk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DpNBgpsHsn3npz9NyHeNUrO90r/hXNp86DEDH6o5VhcquHXwQ4ucf63+L9fNswtCC
-         57CNtEhrRkJNE3Vzcb14O9HL7znZqTQQONewTIao0f1KBomDU3PWJpwigFRP0Zoa4e
-         ILAKadMdf0yw2frm8HGs7mN1HgexU7d04d0WznPrDiIaNbFldd/nymER9wiyrLCQFr
-         rGf7qQbiG4YLtYPVesp6qpb5SONEPc8bUNsrRnnik+eJhny5M7Lmr/cGwdfm6JqjCd
-         fXTP43JMNql2sRpzMZn8blmr4VYc9JdAiNrG2RSTxRyIQ677Sr2M/fAtixSvk9S0Jl
-         +TqBcFgAjL3iA==
-Date:   Sat, 18 Dec 2021 11:26:13 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v4 03/10] phy: qcom-qmp: Add SM8450 PCIe0 PHY support
-Message-ID: <Yb13/fIR1vaaWIZB@matsya>
-References: <20211214225846.2043361-1-dmitry.baryshkov@linaro.org>
- <20211214225846.2043361-4-dmitry.baryshkov@linaro.org>
+        s=k20201202; t=1639811814;
+        bh=RSpFIWd9FTkwqBB/oPQAKZKNaOc+nNVCAJLZA7EDQJc=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=e9mU++Jv8oHvqoa45fXOiYk8kRu2q5qVPCE4/iTyknAvGMnBzmpWuMCTG8DEp10nU
+         C9KK8BD+MUHhE/L1Hx9NtJMMl0dEtHS6coDI6KHNl6ADJGjT7JbDzk7ufhd/UsXK9Z
+         W1AB1wOXiNi/MvujsKf0i2/dQMRzAKzrGbOfY2+r+2QIHH0rbFGLXql6M8bZUqtxpm
+         9eY+Rz3YkbFS3yCxLX2tQhdMBdoRZqtOevAnj7eFwMkhPzPENy6gDuMDeZIXVEGWOh
+         S40/kFsmgZKcLAxQl0m3GXRuXXjAUnJ2CgpoqsTa+17Fsj1dYZgl50otFj3f/ht9jS
+         1GvwhhByLiJMA==
+References: <20211217125757.1193256-1-balbi@kernel.org>
+ <20211217125757.1193256-3-balbi@kernel.org>
+ <92001103-6b29-7ad9-eea3-34fd30c5f767@postmarketos.org>
+User-agent: mu4e 1.6.10; emacs 28.0.90
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC/patch 2/2] arm64: boot: dts: qcom: surface duo: add
+ minimal framebuffer
+Date:   Sat, 18 Dec 2021 09:15:30 +0200
+In-reply-to: <92001103-6b29-7ad9-eea3-34fd30c5f767@postmarketos.org>
+Message-ID: <87lf0i4c2l.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211214225846.2043361-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15-12-21, 01:58, Dmitry Baryshkov wrote:
-> There are two different PCIe PHYs on SM8450, one having one lane (v5)
-> and another with two lanes (v5.20). This commit adds support for the
-> first PCIe phy only, support for the second PCIe PHY is coming in next
-> commits.
 
-Applied to phy-next, thanks
+Hi,
+
+Alexey Minnekhanov <alexeymin@postmarketos.org> writes:
+> @@ -472,6 +483,14 @@ &pon_resin {
+>  	linux,code = <KEY_VOLUMEDOWN>;
+>  };
+>  
+> +&reserved_memory {
+> +	splash_region: splash_region@9c000000 {
+> +		/* We expect the bootloader to fill in the size */
+> +		reg = <0x0 0x9c000000 0x0 0x0>;
+>
+> 0x2400000 should be here as size, maybe?
+
+bootloader is filling that up, but sure I only used this to get the size
+and base address from bootloader. I could just hardcode the values now
+that I know them :-)
+
+>
+> 	 cont_splash_mem: memory@9c000000 {
+> 		reg = <0x0 0x9c000000 0x0 0x2400000>;
+> 		no-map;
+> 	};
+>
+> FWIW, example above (with similar simple-framebuffer
+> node) worked fine for my sm8150 based device.
+
+Oh okay. So it's likely to be something specific to our bootloader.
 
 -- 
-~Vinod
+balbi
