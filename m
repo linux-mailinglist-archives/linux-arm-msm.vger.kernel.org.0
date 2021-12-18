@@ -2,106 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A2F1479957
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 08:20:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E65494799E9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 10:14:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232256AbhLRHUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Dec 2021 02:20:23 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:57508 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbhLRHUW (ORCPT
+        id S232456AbhLRJOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Dec 2021 04:14:03 -0500
+Received: from relay02.th.seeweb.it ([5.144.164.163]:48723 "EHLO
+        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230286AbhLRJOC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Dec 2021 02:20:22 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Sat, 18 Dec 2021 04:14:02 -0500
+Received: from [192.168.1.101] (83.6.165.42.neoplus.adsl.tpnet.pl [83.6.165.42])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4EBB260AF7;
-        Sat, 18 Dec 2021 07:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0B6C36AE0;
-        Sat, 18 Dec 2021 07:20:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639812021;
-        bh=9i1TUA+CDSWdDEUdjwQ9lj0DV16oXIazcbfoNTlRc4w=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=QS4UBPx9DDuwV+dyeqw0LHv0rrsHiiLwKQDqWeBVbVw254Nw95lmtCh31fuz4ChR/
-         5QLMExa7WXf1jKb5VVL5Gk75Q65uyovkQiGj8MKcjB/11EzTrn9PMBJzeDdptQJHSJ
-         dyqyD2FBIQrYVs05YiSPmiXz/Ti60XOwPdj3pO2vGMrPoBo3axny5BLPRApGxzGMGH
-         Q/ORuAfHAhcp+AHC9LNvhOAVe091fBYTJQxmjhi17Cq+9/kic3mMS8K7DN8O4lH2BC
-         ZIZitjBzJqNTQI+MLqPQGD31qNqMq2gar8f+jhN6ULTqNMsjG2zhblakpkal+AJV4F
-         S0xiUDsyaRhSQ==
-References: <20211217125757.1193256-1-balbi@kernel.org>
- <20211217125757.1193256-3-balbi@kernel.org>
- <e2ed8317-a656-f6ac-9fc5-810588f33105@somainline.org>
-User-agent: mu4e 1.6.10; emacs 28.0.90
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C67B71F8F4;
+        Sat, 18 Dec 2021 10:13:59 +0100 (CET)
+Message-ID: <57058c58-03d8-4b9a-7416-c32b61c423cc@somainline.org>
+Date:   Sat, 18 Dec 2021 10:13:59 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [RFC/patch 0/2] arm64: boot: dts: qcom: sm8150: enable
+ framebuffer for Surface Duo
+Content-Language: en-US
+To:     Felipe Balbi <balbi@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC/patch 2/2] arm64: boot: dts: qcom: surface duo: add
- minimal framebuffer
-Date:   Sat, 18 Dec 2021 09:19:07 +0200
-In-reply-to: <e2ed8317-a656-f6ac-9fc5-810588f33105@somainline.org>
-Message-ID: <878rwi4bwt.fsf@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+        linux-kernel@vger.kernel.org,
+        Gustave Monce <gustave.monce@outlook.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20211217125757.1193256-1-balbi@kernel.org>
+ <da9a88a5-46bf-3eab-7318-6db4dfeef994@somainline.org>
+ <87czlu4bz7.fsf@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <87czlu4bz7.fsf@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-Hi,
-
-Konrad Dybcio <konrad.dybcio@somainline.org> writes:
-
-> On 17.12.2021 13:57, Felipe Balbi wrote:
->> From: Felipe Balbi <felipe.balbi@microsoft.com>
->>
->> Add a minimal framebuffer device so we can use the display on the
->> Surface Duo device.
->>
->> Signed-off-by: Felipe Balbi <felipe.balbi@microsoft.com>
->> ---
->>  .../dts/qcom/sm8150-microsoft-surface-duo.dts | 19 +++++++++++++++++++
->>  1 file changed, 19 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
->> index a73317e1a824..c629ec115fec 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
->> @@ -25,6 +25,17 @@ chosen {
->>  		stdout-path = "serial0:115200n8";
->>  	};
->>  
->> +	framebuffer0: framebuffer@9c000000 {
->> +		compatible = "simple-framebuffer";
->> +		reg = <0 0x9c000000 0 0x02400000>;
+On 18.12.2021 08:17, Felipe Balbi wrote:
+> Hi Konrad,
 >
-> You can remove the leading 0 in the size cell.
-
-okay
-
->> +		status = "okay";
+> Konrad Dybcio <konrad.dybcio@somainline.org> writes:
 >
-> This line is unnecessary, as it's enabled by default
-
-understood
-
->> @@ -472,6 +483,14 @@ &pon_resin {
->>  	linux,code = <KEY_VOLUMEDOWN>;
->>  };
->>  
->> +&reserved_memory {
->> +	splash_region: splash_region@9c000000 {
->> +		/* We expect the bootloader to fill in the size */
+>> On 17.12.2021 13:57, Felipe Balbi wrote:
+>>> From: Felipe Balbi <felipe.balbi@microsoft.com>
+>>>
+>>> Hi folks,
+>>>
+>>> I'm trying to enable the framebuffer on Microsoft Surface Duo. Looking
+>>> through some internal docs, it came to my attention that the bootloader
+>>> will fill up the framebuffer address and size to a memory node names
+>>> splash_region. Adding the node, I can see the address of the
+>>> framebuffer. Creating the relevant framebuffer device using
+>>> simple-framebuffer, I can't see it working. Tried dd if=/dev/urandom
+>>> of=/dev/fb0 and fb-test. None of which manage to get rid of what's
+>>> already on the screen, put there by the bootloader (platform Logo).
+>>>
+>>> Wondering if any of you have seen a behavior such as this and how did
+>>> you manage to get framebuffer working on SM8150 (I see at least Sony
+>>> Xperia has the node).
+>>>
+>>> Felipe Balbi (2):
+>>>   arm64: boot: dts: qcom: sm8150: add a label for reserved-memory
+>>>   arm64: boot: dts: qcom: surface duo: add minimal framebuffer
+>>>
+>>>  .../dts/qcom/sm8150-microsoft-surface-duo.dts | 19 +++++++++++++++++++
+>>>  arch/arm64/boot/dts/qcom/sm8150.dtsi          |  2 +-
+>>>  2 files changed, 20 insertions(+), 1 deletion(-)
+>> Hi,
+>>
+>>
+>> this issue is totally unique to the Duo and your bootloader configuration.
+>>
+>>
+>> Gus (CCd, co-author of Lumia 950/XL patches) and I were dissecting
+>> this precise issue (albeit for a different usecase) and in our testing
+>> it turned out that XBL likely kills the display stack upon exiting
+>> Boot Services and jumping to LinuxLoader. This may be a bug that comes
+>> from the legacy of this device, as exiting Boot Services would be
+>> rather undesirable in that scenario..
+> This is very nice background information which I didn't have. Thanks :-)
 >
-> Would it be different than the framebuffer size?
+>> One fix would be to ask the bootloader team to look into it and fix it
+>> from there, otherwise you'd have to bring up the display using the
+>> DPU1 driver, or perhaps in a third-stage-bootloader (pls don't do it
+> I'll give DPU1 a shot, thanks for the pointer
 
-honestly, I used this mainly to get the correct base address and size. I
-had 0 everywhere and bootloader filled the entire thing for me. I can
-just hardcode with the expected values anyway.
+Won't work yet. Your display (well, displays.. hehe) are CMD mode and
 
--- 
-balbi
+have DSC. Both of which are unsupported on SM8150. DSC patches by Vinod
+
+seem to only work on 845 (or at least don't work on 8250 for me) and Marijn
+
+from SoMainline (added to CC) is working on cleaning up CMD mode
+
+support, as Qualcomm moved the pingpong functionality (basically
+
+the way of SoC telling the panel HEY IT'S TIME TO DRAW A FRAME)
+
+to a different hardware block and that needs some care in code).
+
+
+>> for the sanity of us all :D)
+> no 3rd stages :-)
+>
+Good :P
+
+
+Konrad
+
