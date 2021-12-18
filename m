@@ -2,199 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC756479C7F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 21:11:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D28B5479CA3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 21:50:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234099AbhLRULc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Dec 2021 15:11:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41318 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234094AbhLRULb (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Dec 2021 15:11:31 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8183FC061574
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Dec 2021 12:11:31 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id t26so11042313wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Dec 2021 12:11:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jQn3VgompRNFuhU8fi2ilFWaC4sX+wD/C0nf/KumjpE=;
-        b=rNwrU1KH7raJ5cCl1qwuTI2tpZFxDHGH++NGtC8bzib+endShYZi5vcJgC6GA1BMG4
-         3QAISj4KGdx5arBXCwO5tnWc6Zl+YMeQoftTRQytorlnQEEH9xvX/Fm0V9mB0nZJ4iSV
-         tqSE6+rKLQdc3k/HofB4fLWY3W6/tDYPUrSnLaKUO6y3i1xY1Qp6ZQk2cZ1J2WXOUL12
-         hFLg29mQwYSl7akMjk+yBlxScag0Ph1VcAVLV24/gLBSlG/Xy1+QiuS5Q1K3z+NTBbTU
-         g1Z9kkOtw0FIEXwfKJ9jtY05nC7Ndxp3IPVaYBsNYQDB5gMktlisiUE19S433huR48ZX
-         cPlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jQn3VgompRNFuhU8fi2ilFWaC4sX+wD/C0nf/KumjpE=;
-        b=RekyN4fYKNQkItaec2GuWa8XFYgE7n6zMugQWHdDZJ39GopOLbNXVXiezsBsB6UY6q
-         A4MEscfBv0mIOvq2CUG/r6U2Kqv5VOmnW73d2aA+tRnw0Xd6LNKWJA2RNwzl32YeYBmz
-         Y1Wg+J2ZlvXfzGpxIIXoE6UDc3ZxAvpyN35pFzJnnVlhCAK+d84zysRUGdOpOH+RY9mp
-         YOc78n8vGlWTFowWDLNDqAMnWElN1i+U9ji8i/U5pZ/EJMVTnTaT3/mHycJt/wmN/7Hu
-         oagUWNGRggv4AnZFtxTmXRRVei+IRdls/wNDk5u2Tzay7Z6iNTmKaOUgET7W3Ma3NarW
-         lMBA==
-X-Gm-Message-State: AOAM532qgI/GkBfZbqfDrm47REjevdac6sKrp4vRzYAjrFIA2J7qUpf4
-        nwG0LWpIL4M4MmYwRqhIEjMCi6ipWGvXsg==
-X-Google-Smtp-Source: ABdhPJz6vq/ECTtvOXI5NaaUEKKDNvDUaiWY9zhEwWpo6zAOBVKweTRepL02Fay18G/Q/yXGwRchiQ==
-X-Received: by 2002:a05:6000:38b:: with SMTP id u11mr2058170wrf.408.1639858289499;
-        Sat, 18 Dec 2021 12:11:29 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:1f0f:c9b8:ee5c:5c2f? ([2a01:e34:ed2f:f020:1f0f:c9b8:ee5c:5c2f])
-        by smtp.googlemail.com with ESMTPSA id m20sm15248046wmq.11.2021.12.18.12.11.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Dec 2021 12:11:29 -0800 (PST)
-Subject: Re: [PATCH v5 6/6] qcom/soc/drivers: Add DTPM description for sdm845
-To:     Steev Klimaszewski <steev@kali.org>, rjw@rjwysocki.net
-Cc:     lukasz.luba@arm.com, robh@kernel.org, heiko@sntech.de,
-        arnd@linaro.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, ulf.hansson@linaro.org,
-        Andy Gross <agross@kernel.org>,
+        id S234186AbhLRUuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Dec 2021 15:50:46 -0500
+Received: from ixit.cz ([94.230.151.217]:42114 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234175AbhLRUuq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 18 Dec 2021 15:50:46 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 96BBB2243C;
+        Sat, 18 Dec 2021 21:50:43 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1639860643;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=SPbbkeP1sGPm5LCVGx2XF3KQc2r04SYqHiM88lPcVw4=;
+        b=UsY6mKorbpx7guY13PFJR3DbCGngPBh+OHdYrho/roLBO6xn1POvWdcyQUTbBkAQEzyA9I
+        uxv7b4UNZSe2w+re1aCe0MbcMD6j2p2kKA+T8nRIzE8bPE392x7EYFrtjcVzEPuzSmfVL9
+        CwyAOexAuJfwHb5lHYmF6m3xvUo+hnY=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-References: <20211218130014.4037640-1-daniel.lezcano@linaro.org>
- <20211218130014.4037640-7-daniel.lezcano@linaro.org>
- <aae49bcb-078f-f414-aede-0906c44c030b@kali.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <79f91bbd-aa65-16d9-0fde-1f04c0690477@linaro.org>
-Date:   Sat, 18 Dec 2021 21:11:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Rob Herring <robh+dt@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, Alex Elder <elder@linaro.org>,
+        David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-binding: soc: qcom: convert QCOM SMP2P binding to yaml
+Date:   Sat, 18 Dec 2021 21:50:39 +0100
+Message-Id: <20211218205039.35994-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-In-Reply-To: <aae49bcb-078f-f414-aede-0906c44c030b@kali.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Convert Qualcomm SoC SMP2P binding to the yaml format.
 
-Hi Steev,
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ .../bindings/soc/qcom/qcom,smp2p.txt          | 110 --------------
+ .../bindings/soc/qcom/qcom,smp2p.yaml         | 139 ++++++++++++++++++
+ 2 files changed, 139 insertions(+), 110 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
 
-thanks for taking the time to test the series.
-
-On 18/12/2021 20:47, Steev Klimaszewski wrote:
-> Hi Daniel,
-> 
-> On 12/18/21 7:00 AM, Daniel Lezcano wrote:
->> The DTPM framework does support now the hierarchy description.
->>
->> The platform specific code can call the hierarchy creation function
->> with an array of struct dtpm_node pointing to their parents.
->>
->> This patch provides a description of the big and Little CPUs and the
->> GPU and tie them together under a virtual package name. Only sdm845 is
->> described.
->>
->> The description could be extended in the future with the memory
->> controller with devfreq if it has the energy information.
->>
->> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
->> ---
->>   drivers/soc/qcom/Kconfig  |  9 ++++++
->>   drivers/soc/qcom/Makefile |  1 +
->>   drivers/soc/qcom/dtpm.c   | 65 +++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 75 insertions(+)
->>   create mode 100644 drivers/soc/qcom/dtpm.c
->>
->> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->> index e718b8735444..f21c1df2f2f9 100644
->> --- a/drivers/soc/qcom/Kconfig
->> +++ b/drivers/soc/qcom/Kconfig
->> @@ -228,4 +228,13 @@ config QCOM_APR
->>         application processor and QDSP6. APR is
->>         used by audio driver to configure QDSP6
->>         ASM, ADM and AFE modules.
->> +
->> +config QCOM_DTPM
->> +    tristate "Qualcomm DTPM hierarchy"
-> 
-> Testing this on a Lenovo Yoga C630 here and...
-> 
-> 
-> Should this be tristate?  Is it actually possible to unload the module
-> once it's loaded?
-> 
-> Here I have DTPM=y, DTPM_CPU=y, DTPM_DEVFREQ=y, QCOM_DTPM=m
-> 
-> But if I attempt to modprobe -r dtpm,
-> 
-> modprobe: ERROR: ../libkmod/libkmod-module.c:799
-> kmod_module_remove_module() could not remove 'dtpm': Device or resource
-> busy
-
-Yes, the module is designed to be loaded only. I did not wanted to add
-more complexity in the driver as unloading it is not the priority ATM.
-We need this to be a module in order to load it after the other devices.
-
->> +    depends on DTPM
->> +    help
->> +     Describe the hierarchy for the Dynamic Thermal Power
->> +     Management tree on this platform. That will create all the
->> +     power capping capable devices.
->> +
->>   endmenu
->> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->> index 70d5de69fd7b..cf38496c3f61 100644
->> --- a/drivers/soc/qcom/Makefile
->> +++ b/drivers/soc/qcom/Makefile
->> @@ -28,3 +28,4 @@ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->>   obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
->>   obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
->>   obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=    kryo-l2-accessors.o
->> +obj-$(CONFIG_QCOM_DTPM) += dtpm.o
-
-[ ... ]
-
->> +static struct of_device_id __initdata sdm845_dtpm_match_table[] = {
->> +        { .compatible = "qcom,sdm845", .data = sdm845_hierarchy },
->> +        {},
->> +};
->> +
->> +static int __init sdm845_dtpm_init(void)
->> +{
->> +    return dtpm_create_hierarchy(sdm845_dtpm_match_table);
->> +}
->> +late_initcall(sdm845_dtpm_init);
->> +
->> +MODULE_DESCRIPTION("Qualcomm DTPM driver");
->> +MODULE_LICENSE("GPL");
->> +MODULE_ALIAS("platform:dtpm");
->> +MODULE_AUTHOR("Daniel Lezcano <daniel.lezcano@kernel.org");
->> +
-> 
-> It does seem to work aside from not being able to modprobe -r the
-> module. Although I do see
-> 
-> [   35.849622] dtpm: Registered dtpm node 'sdm845' / 0-0 uW,
-> [   35.849652] dtpm: Registered dtpm node 'package' / 0-0 uW,
-> [   35.849676] dtpm: Registered dtpm node 'cpu0-cpufreq' / 40000-436000 uW,
-> [   35.849702] dtpm: Registered dtpm node 'cpu4-cpufreq' /
-> 520000-5828000 uW,
-> [   35.849734] dtpm_devfreq: No energy model available for '5000000.gpu'
-> [   35.849738] dtpm: Failed to setup '/soc@0/gpu@5000000': -22
-> 
-> If the devfreq issue with the gpu isn't expected, are we missing
-> something for the c630?
-
-Yes, the energy model is missing for the GPU, very likely the
-'dynamic-power-coefficient' property is missing in the gpu section.
-
-A quick test could be to add a value like 800. The resulting power
-numbers will be wrong but it should be possible to act on the
-performance by using these wrong power numbers.
-
-  -- Daniel
-
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
+deleted file mode 100644
+index 49e1d72d3648..000000000000
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
++++ /dev/null
+@@ -1,110 +0,0 @@
+-Qualcomm Shared Memory Point 2 Point binding
+-
+-The Shared Memory Point to Point (SMP2P) protocol facilitates communication of
+-a single 32-bit value between two processors.  Each value has a single writer
+-(the local side) and a single reader (the remote side).  Values are uniquely
+-identified in the system by the directed edge (local processor ID to remote
+-processor ID) and a string identifier.
+-
+-- compatible:
+-	Usage: required
+-	Value type: <string>
+-	Definition: must be one of:
+-		    "qcom,smp2p"
+-
+-- interrupts:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: one entry specifying the smp2p notification interrupt
+-
+-- mboxes:
+-	Usage: required
+-	Value type: <prop-encoded-array>
+-	Definition: reference to the associated doorbell in APCS, as described
+-		    in mailbox/mailbox.txt
+-
+-- qcom,ipc:
+-	Usage: required, unless mboxes is specified
+-	Value type: <prop-encoded-array>
+-	Definition: three entries specifying the outgoing ipc bit used for
+-		    signaling the remote end of the smp2p edge:
+-		    - phandle to a syscon node representing the apcs registers
+-		    - u32 representing offset to the register within the syscon
+-		    - u32 representing the ipc bit within the register
+-
+-- qcom,smem:
+-	Usage: required
+-	Value type: <u32 array>
+-	Definition: two identifiers of the inbound and outbound smem items used
+-		    for this edge
+-
+-- qcom,local-pid:
+-	Usage: required
+-	Value type: <u32>
+-	Definition: specifies the identifier of the local endpoint of this edge
+-
+-- qcom,remote-pid:
+-	Usage: required
+-	Value type: <u32>
+-	Definition: specifies the identifier of the remote endpoint of this edge
+-
+-= SUBNODES
+-Each SMP2P pair contain a set of inbound and outbound entries, these are
+-described in subnodes of the smp2p device node. The node names are not
+-important.
+-
+-- qcom,entry-name:
+-	Usage: required
+-	Value type: <string>
+-	Definition: specifies the name of this entry, for inbound entries this
+-		    will be used to match against the remotely allocated entry
+-		    and for outbound entries this name is used for allocating
+-		    entries
+-
+-- interrupt-controller:
+-	Usage: required for incoming entries
+-	Value type: <empty>
+-	Definition: marks the entry as inbound; the node should be specified
+-		    as a two cell interrupt-controller as defined in
+-		    "../interrupt-controller/interrupts.txt"
+-		    If not specified this node will denote the outgoing entry
+-
+-- #interrupt-cells:
+-	Usage: required for incoming entries
+-	Value type: <u32>
+-	Definition: must be 2 - denoting the bit in the entry and IRQ flags
+-
+-- #qcom,smem-state-cells:
+-	Usage: required for outgoing entries
+-	Value type: <u32>
+-	Definition: must be 1 - denoting the bit in the entry
+-
+-= EXAMPLE
+-The following example shows the SMP2P setup with the wireless processor,
+-defined from the 8974 apps processor's point-of-view. It encompasses one
+-inbound and one outbound entry:
+-
+-wcnss-smp2p {
+-	compatible = "qcom,smp2p";
+-	qcom,smem = <431>, <451>;
+-
+-	interrupts = <0 143 1>;
+-
+-	qcom,ipc = <&apcs 8 18>;
+-
+-	qcom,local-pid = <0>;
+-	qcom,remote-pid = <4>;
+-
+-	wcnss_smp2p_out: master-kernel {
+-		qcom,entry-name = "master-kernel";
+-
+-		#qcom,smem-state-cells = <1>;
+-	};
+-
+-	wcnss_smp2p_in: slave-kernel {
+-		qcom,entry-name = "slave-kernel";
+-
+-		interrupt-controller;
+-		#interrupt-cells = <2>;
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+new file mode 100644
+index 000000000000..40d1c42e917b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+@@ -0,0 +1,139 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Shared Memory Point 2 Point
++
++description: |
++  The Shared Memory Point to Point (SMP2P) protocol facilitates communication of
++  a single 32-bit value between two processors.  Each value has a single writer
++  (the local side) and a single reader (the remote side).  Values are uniquely
++  identified in the system by the directed edge (local processor ID to remote
++  processor ID) and a string identifier.
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++properties:
++  compatible:
++    const: qcom,smp2p
++
++  interrupts:
++    maxItems: 1
++
++  mboxes:
++    description: >
++      reference to the associated doorbell in APCS, as described
++      in mailbox/mailbox.txt
++
++  qcom,ipc:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    description: >
++      three entries specifying the outgoing ipc bit used for
++      signaling the remote end of the smp2p edge
++    minItems: 1
++    maxItems: 32 # no hard limit
++    items:
++      items:
++        - description: phandle to a syscon node representing the apcs registers
++        - description: offset to the register within the syscon
++        - description: the IPC bit within the register
++
++  qcom,smem:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    description: indentifiers of the smem items used for this edge
++    items:
++      - items:
++          - description: identifier of inbound smem items
++      - items:
++          - description: identifier of outbound smem items
++
++  qcom,local-pid:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: specifies the identifier of the local endpoint of this edge
++
++  qcom,remote-pid:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: specifies the identifier of the remote endpoint of this edge
++
++patternProperties:
++  "^((master|slave)-kernel|ipa-ap-to-modem|ipa-modem-to-ap|)$":
++    type: object
++    properties:
++      interrupt-controller:
++        description: >
++          marks the entry as inbound, if not specified
++          this node will denote the outgoing entry
++
++      '#interrupt-cells':
++        const: 2
++
++      qcom,entry-name:
++        $ref: /schemas/types.yaml#/definitions/string
++        description: >
++          specifies the name of this entry, for inbound entries this will be
++          used to match against the remotely allocated entry and for outbound
++          entries this name is used for allocating entries
++
++      '#qcom,smem-state-cells':
++        $ref: /schemas/types.yaml#/definitions/uint32
++        description: required for outgoing entries
++        const: 1
++
++    required:
++      - qcom,entry-name
++
++    oneOf:
++      - required:
++          - interrupt-controller
++          - '#interrupt-cells'
++      - required:
++          - '#qcom,smem-state-cells'
++
++    additionalProperties: false
++
++required:
++  - compatible
++  - qcom,smem
++  - qcom,local-pid
++  - qcom,remote-pid
++
++anyOf:
++  - required:
++      - mboxes
++  - required:
++      - qcom,ipc
++
++additionalProperties: false
++
++examples:
++  # The following example shows the SMP2P setup with the wireless processor,
++  # defined from the 8974 apps processor's point-of-view. It encompasses one
++  # inbound and one outbound entry:
++  - |
++    wcnss-smp2p {
++        compatible = "qcom,smp2p";
++        qcom,smem = <431>, <451>;
++
++        interrupts = <0 143 1>;
++
++        qcom,ipc = <&apcs 8 18>;
++
++        qcom,local-pid = <0>;
++        qcom,remote-pid = <4>;
++
++        wcnss_smp2p_out: master-kernel {
++            qcom,entry-name = "master-kernel";
++
++            #qcom,smem-state-cells = <1>;
++        };
++
++        wcnss_smp2p_in: slave-kernel {
++            qcom,entry-name = "slave-kernel";
++
++            interrupt-controller;
++            #interrupt-cells = <2>;
++        };
++    };
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+2.34.1
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
