@@ -2,180 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ECCE47A20B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Dec 2021 21:27:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87B4347A27D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Dec 2021 22:57:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236520AbhLSU1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Dec 2021 15:27:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236491AbhLSU1g (ORCPT
+        id S236718AbhLSV5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Dec 2021 16:57:25 -0500
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:45882 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233652AbhLSV5Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Dec 2021 15:27:36 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAAB3C06173E
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Dec 2021 12:27:35 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id j9so16060886wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Dec 2021 12:27:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ImKwKAtJTa2JOr2xuzluWDkdVVqyTel0wJZ07wbIYbA=;
-        b=HpVK6ENa73MHlEhJDRYLhTQmKwqnG3mgMc8ghhRxMDUn4dCNuEGcuJFcsHQOdU0xX/
-         ke8z3qwKaMWAw84z0iXUJOS/mrhRGdU1X/WfHQ0kFg+l4E4JyqjN0BIDrC5XoFXiyJG4
-         k5+BLwh3qxJuHlzw2lQwUPxcVWi9pO/8pQ4QZTM035VyrsN1G3L81KnTMo9DASs0/GFw
-         zgpOyNU5KvUSJEwpXBNiUKnFBaYzD1kTRtKdi19oMU7YIb+JGZ3hj7C8mBLYMLyZpRQ6
-         8jbXi4SDNZV51z9YBeZD4xbbMXikk7dwl7agRRDqa+bpTjybXjwkIkv6/jwoOZ4z96vz
-         0BQA==
+        Sun, 19 Dec 2021 16:57:24 -0500
+Received: by mail-oi1-f177.google.com with SMTP id 7so12984252oip.12;
+        Sun, 19 Dec 2021 13:57:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ImKwKAtJTa2JOr2xuzluWDkdVVqyTel0wJZ07wbIYbA=;
-        b=H+uME/RZ9Fwx6ZF0KdHNex+/o6iSstLJYZEZ12D8kzydtD4gvRDEKpXtw5rH+vVqE7
-         fcfj4uFPEaa7gbVH38ViYG3FwYsUUVvfyqren2OXjO+KZMAjtVXE9GT7o82ata+bXN5o
-         tc7bbiDhIusO7rVYmzrVqOQWBLZjHcRl+SY72WvcNAwe7RQ6Cbk2KMwTvxlxrv6pKbez
-         HIANrSjtw6RI2thDJXzuwTAgD3RV7ZyoQMxHl5EWx9JOuIlAK6yTgB20A+RKVTmRwbNA
-         RACFpKRNSH/x2hBAO0fD/o42xjHX1D9Bb8O1++IkzxJ38VlHVdlLGtYBZhS01tuBO9eh
-         y6EQ==
-X-Gm-Message-State: AOAM530SvuQwd3rHUcuhwA7epGGr7OKezlD9vyY8GJgTkq4fB/NKrMJN
-        RJ8tZ0ni2nN+ExxDLgV/q9yiasXAmYeuIQ==
-X-Google-Smtp-Source: ABdhPJwxpVXU+Y/j2S++Pov+VyZ1FliIpqI9/hEEJ8es8f76ghu33oeN9seadNCO8EYWJLopEEq2MQ==
-X-Received: by 2002:a5d:5303:: with SMTP id e3mr10467273wrv.73.1639945653692;
-        Sun, 19 Dec 2021 12:27:33 -0800 (PST)
-Received: from ?IPv6:2a01:e34:ed2f:f020:fa36:a1cd:f64:7a6? ([2a01:e34:ed2f:f020:fa36:a1cd:f64:7a6])
-        by smtp.googlemail.com with ESMTPSA id g11sm8662064wri.73.2021.12.19.12.27.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Dec 2021 12:27:33 -0800 (PST)
-Subject: Re: [PATCH v5 6/6] qcom/soc/drivers: Add DTPM description for sdm845
-To:     Steev Klimaszewski <steev@kali.org>, rjw@rjwysocki.net
-Cc:     lukasz.luba@arm.com, robh@kernel.org, heiko@sntech.de,
-        arnd@linaro.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, ulf.hansson@linaro.org,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=e2wJOEkGqL57M+FK41D9nVh8+UoyDiWRtyVQE+OdR54=;
+        b=5FI+7VjfNqI1EeTSpEMecrPqP+i6gSRAMnwn4e1HvfIp78iVL0Ja5w+0eUckGolad0
+         bh7qahi3wiGURpV8XEuJymwWRo/x2XxK0Py1JaDfMVcc/sZuHeEUQYBCL/opK0lfC0qc
+         0vu/jGpfkutGMmrpcGtkAMRFJOmKWLaxSZxD04cynk1OLB1cOZxM0rB2IiH1Fem1JAtQ
+         2YIJtHyf+Hcg0AKS13hEIOBpR1ig/2wsnEHmWX1pAIyTDWNWIpiN4QRFRuzJ4rz1nuVS
+         h36WQto1hqu24SbSZy9PSmjYGOo3eRZrKhisBYZYdz9gMZ/hObd/KpI4dHs9eMCJFcfe
+         Uflw==
+X-Gm-Message-State: AOAM532Y+DvwZX87iXTzY8dvnM/I+fIhk+skPnw5M92z/ySlNdMDa4Z4
+        hxktZ/ejNW7P+8XFjfjVbQ==
+X-Google-Smtp-Source: ABdhPJyLFh4Ey3YDVQxhAqEMt2z6iRmUSSYZHC/ZNmCMR8rrXILPUijWix/WR7nK+i/SPZMwKks/1Q==
+X-Received: by 2002:aca:1115:: with SMTP id 21mr15504945oir.137.1639951043901;
+        Sun, 19 Dec 2021 13:57:23 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id j5sm2900172ots.68.2021.12.19.13.57.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Dec 2021 13:57:23 -0800 (PST)
+Received: (nullmailer pid 2758867 invoked by uid 1000);
+        Sun, 19 Dec 2021 21:57:22 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <andy.gross@linaro.org>, devicetree@vger.kernel.org,
+        ~okias/devicetree@lists.sr.ht, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-References: <20211218130014.4037640-1-daniel.lezcano@linaro.org>
- <20211218130014.4037640-7-daniel.lezcano@linaro.org>
- <aae49bcb-078f-f414-aede-0906c44c030b@kali.org>
- <79f91bbd-aa65-16d9-0fde-1f04c0690477@linaro.org>
- <818ed2a3-47d4-46d6-4bd3-ff2c7ff0192c@kali.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <56905f98-d8a1-0631-8f1e-ccd403c6add2@linaro.org>
-Date:   Sun, 19 Dec 2021 21:27:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <818ed2a3-47d4-46d6-4bd3-ff2c7ff0192c@kali.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        linux-kernel@vger.kernel.org
+In-Reply-To: <20211218194038.26913-1-david@ixit.cz>
+References: <20211218194038.26913-1-david@ixit.cz>
+Subject: Re: [PATCH] dt-bindings: firmware: convert Qualcomm SCM binding to the yaml
+Date:   Sun, 19 Dec 2021 15:57:22 -0600
+Message-Id: <1639951042.365082.2758866.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/12/2021 19:44, Steev Klimaszewski wrote:
-> Hi Daniel,
+On Sat, 18 Dec 2021 20:40:37 +0100, David Heidelberg wrote:
+> Convert Qualcomm SCM firmware binding to the yaml format.
 > 
-> On 12/18/21 2:11 PM, Daniel Lezcano wrote:
->> Hi Steev,
->>
->> thanks for taking the time to test the series.
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> This patch comes with followup question -> since not all definitions
+> follow `"qcom,scm-*chipset*", "qcom,scm"`, should I change them or adjust this
+> binding to cover all cases?
 > 
-> My C630 is my daily driver and main computer, so I don't mind testing
-> things to improve its usage at all.
+>  .../devicetree/bindings/firmware/qcom,scm.txt |  54 ---------
+>  .../bindings/firmware/qcom,scm.yaml           | 112 ++++++++++++++++++
+>  2 files changed, 112 insertions(+), 54 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
+>  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
 > 
-> 
->> <snip>
->> Yes, the module is designed to be loaded only. I did not wanted to add
->> more complexity in the driver as unloading it is not the priority ATM.
->> We need this to be a module in order to load it after the other devices.
-> Makes sense, I just wasn't entirely sure if it was on purpose or not.
->>>> +    depends on DTPM
->>>> +    help
->>>> +     Describe the hierarchy for the Dynamic Thermal Power
->>>> +     Management tree on this platform. That will create all the
->>>> +     power capping capable devices.
->>>> +
->>>>    endmenu
->>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->>>> index 70d5de69fd7b..cf38496c3f61 100644
->>>> --- a/drivers/soc/qcom/Makefile
->>>> +++ b/drivers/soc/qcom/Makefile
->>>> @@ -28,3 +28,4 @@ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->>>>    obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
->>>>    obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
->>>>    obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=    kryo-l2-accessors.o
->>>> +obj-$(CONFIG_QCOM_DTPM) += dtpm.o
->> [ ... ]
-> I noticed this as well, and was going to ask if it shouldn't be named
-> qcom_dtpm, but I don't think it matters since it would be in
-> /lib/modules/$kver/kernel/drivers/soc/qcom ?
 
-Right
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
->>>> +static struct of_device_id __initdata sdm845_dtpm_match_table[] = {
->>>> +        { .compatible = "qcom,sdm845", .data = sdm845_hierarchy },
->>>> +        {},
->>>> +};
->>>> +
->>>> +static int __init sdm845_dtpm_init(void)
->>>> +{
->>>> +    return dtpm_create_hierarchy(sdm845_dtpm_match_table);
->>>> +}
->>>> +late_initcall(sdm845_dtpm_init);
->>>> +
->>>> +MODULE_DESCRIPTION("Qualcomm DTPM driver");
->>>> +MODULE_LICENSE("GPL");
->>>> +MODULE_ALIAS("platform:dtpm");
->>>> +MODULE_AUTHOR("Daniel Lezcano <daniel.lezcano@kernel.org");
->>>> +
->>> It does seem to work aside from not being able to modprobe -r the
->>> module. Although I do see
->>>
->>> [   35.849622] dtpm: Registered dtpm node 'sdm845' / 0-0 uW,
->>> [   35.849652] dtpm: Registered dtpm node 'package' / 0-0 uW,
->>> [   35.849676] dtpm: Registered dtpm node 'cpu0-cpufreq' /
->>> 40000-436000 uW,
->>> [   35.849702] dtpm: Registered dtpm node 'cpu4-cpufreq' /
->>> 520000-5828000 uW,
->>> [   35.849734] dtpm_devfreq: No energy model available for '5000000.gpu'
->>> [   35.849738] dtpm: Failed to setup '/soc@0/gpu@5000000': -22
->>>
->>> If the devfreq issue with the gpu isn't expected, are we missing
->>> something for the c630?
->> Yes, the energy model is missing for the GPU, very likely the
->> 'dynamic-power-coefficient' property is missing in the gpu section.
->>
->> A quick test could be to add a value like 800. The resulting power
->> numbers will be wrong but it should be possible to act on the
->> performance by using these wrong power numbers.
->>
->>    -- Daniel
->>
-> So, I'm definitely not the greatest of kernel hackers, just enough
-> knowledge to be dangerous and I know how to apply patches properly....
-> I'm not able to actually get this working.  I've tried adding it with a
-> few different numbers, and any time i try to add the d-p-c, I get
-> 
-> Dec 18 15:00:49 limitless kernel: [   57.394503] adreno 5000000.gpu: EM:
-> invalid perf. state: -22
-> Dec 18 15:00:49 limitless kernel: [   57.394515] dtpm_devfreq: No energy
-> model available for '5000000.gpu'
-> Dec 18 15:00:49 limitless kernel: [   57.394519] dtpm: Failed to setup
-> '/soc@0/gpu@5000000': -22
+yamllint warnings/errors:
 
-I've been through the code and I suspect something is missing in the
-mainline kernel for devfreq vs energy model. Not related to DTPM actually.
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/firmware/qcom,scm.example.dt.yaml: scm: compatible:0: 'qcom,msm8916' is not one of ['qcom,scm-apq8064', 'qcom,scm-apq8084', 'qcom,scm-ipq4019', 'qcom,scm-ipq806x', 'qcom,scm-ipq8074', 'qcom,scm-mdm9607', 'qcom,scm-msm8226', 'qcom,scm-msm8660', 'qcom,scm-msm8916', 'qcom,scm-msm8953', 'qcom,scm-msm8960', 'qcom,scm-msm8974', 'qcom,scm-msm8994', 'qcom,scm-msm8996', 'qcom,scm-msm8998', 'qcom,scm-sc7180', 'qcom,scm-sc7280', 'qcom,scm-sdm845', 'qcom,scm-sdx55', 'qcom,scm-sm8150', 'qcom,scm-sm8250', 'qcom,scm-sm8350']
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/firmware/qcom,scm.example.dt.yaml: scm: $nodename:0: '/' was expected
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/firmware/qcom,scm.example.dt.yaml: scm: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,msm8916', 'qcom,scm'] is too short
+	['qcom,msm8916', 'qcom,scm'] is too long
+	Additional items are not allowed ('qcom,scm' was unexpected)
+	'qcom,msm8916' is not one of ['qcom,apq8016-sbc']
+	'qcom,msm8916' is not one of ['lg,lenok']
+	'qcom,msm8916' is not one of ['asus,nexus7-flo', 'lg,nexus4-mako', 'sony,xperia-yuga', 'qcom,apq8064-cm-qs600', 'qcom,apq8064-ifc6410']
+	'qcom,msm8916' is not one of ['qcom,apq8074-dragonboard']
+	'qcom,msm8916' is not one of ['qcom,apq8060-dragonboard', 'qcom,msm8660-surf']
+	'qcom,msm8916' is not one of ['qcom,apq8084-mtp', 'qcom,apq8084-sbc']
+	'qcom,msm8916' is not one of ['samsung,s3ve3g']
+	'qcom,msm8916' is not one of ['qcom,msm8960-cdp']
+	'qcom,msm8916' is not one of ['fairphone,fp2', 'lge,hammerhead', 'samsung,klte', 'sony,xperia-amami', 'sony,xperia-castor', 'sony,xperia-honami']
+	'qcom,msm8916' is not one of ['alcatel,idol347']
+	'qcom,msm8916' is not one of ['longcheer,l8150', 'samsung,a3u-eur', 'samsung,a5u-eur']
+	'qcom,msm8916' is not one of ['sony,karin_windy', 'sony,karin-row', 'sony,satsuki-row', 'sony,sumire-row', 'sony,suzuran-row', 'qcom,msm8994']
+	'qcom,msm8996-mtp' was expected
+	'qcom,msm8916' is not one of ['qcom,ipq4019-ap-dk01.1-c1', 'qcom,ipq4019-ap-dk04.1-c3', 'qcom,ipq4019-ap-dk07.1-c1', 'qcom,ipq4019-ap-dk07.1-c2', 'qcom,ipq4019-dk04.1-c1']
+	'qcom,msm8916' is not one of ['qcom,ipq8064-ap148']
+	'qcom,msm8916' is not one of ['qcom,ipq8074-hk01', 'qcom,ipq8074-hk10-c1', 'qcom,ipq8074-hk10-c2']
+	'qcom,msm8916' is not one of ['qcom,sc7180-idp']
+	'qcom,msm8916' is not one of ['qcom,sc7280-idp', 'qcom,sc7280-idp2', 'google,piglin', 'google,senor']
+	'qcom,msm8916' is not one of ['xiaomi,lavender']
+	'qcom,msm8916' is not one of ['qcom,sdx55-mtp', 'qcom,sdx55-telit-fn980-tlb', 'qcom,sdx55-t55']
+	'qcom,msm8916' is not one of ['qcom,sdx65-mtp']
+	'qcom,msm8916' is not one of ['qcom,ipq6018-cp01', 'qcom,ipq6018-cp01-c1']
+	'qcom,msm8916' is not one of ['qcom,sa8155p-adp']
+	'qcom,msm8916' is not one of ['fairphone,fp4']
+	'qcom,msm8916' is not one of ['qcom,sm8150-mtp']
+	'qcom,msm8916' is not one of ['qcom,qrb5165-rb5', 'qcom,sm8250-mtp']
+	'qcom,msm8916' is not one of ['qcom,sm8350-hdk', 'qcom,sm8350-mtp']
+	'qcom,apq8016' was expected
+	'qcom,apq8026' was expected
+	'qcom,apq8064' was expected
+	'qcom,apq8074' was expected
+	'qcom,msm8660' was expected
+	'qcom,apq8084' was expected
+	'qcom,msm8226' was expected
+	'qcom,msm8960' was expected
+	'qcom,msm8974' was expected
+	'qcom,msm8916-mtp/1' was expected
+	'qcom,msm8916' was expected
+	'qcom,apq8094' was expected
+	'qcom,ipq4019' was expected
+	'qcom,ipq8064' was expected
+	'qcom,ipq8074' was expected
+	'qcom,sc7180' was expected
+	'qcom,sc7280' was expected
+	'qcom,sdm660' was expected
+	'qcom,sdx55' was expected
+	'qcom,sdx65' was expected
+	'qcom,ipq6018' was expected
+	'qcom,sa8155p' was expected
+	'qcom,sm7225' was expected
+	'qcom,sm8150' was expected
+	'qcom,sm8250' was expected
+	'qcom,sm8350' was expected
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/arm/qcom.yaml
 
-I'll double check if that could be added beside this series
+doc reference errors (make refcheckdocs):
 
+See https://patchwork.ozlabs.org/patch/1570591
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
