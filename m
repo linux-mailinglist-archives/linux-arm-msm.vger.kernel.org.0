@@ -2,270 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B767479D6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Dec 2021 22:36:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7046E479EF6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Dec 2021 04:14:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbhLRVgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Dec 2021 16:36:03 -0500
-Received: from ixit.cz ([94.230.151.217]:42164 "EHLO ixit.cz"
+        id S230159AbhLSDOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 18 Dec 2021 22:14:06 -0500
+Received: from plust-web.net ([153.122.13.140]:44170 "EHLO sv03.plust-web.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229480AbhLRVgC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Dec 2021 16:36:02 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 309AE2243C;
-        Sat, 18 Dec 2021 22:36:00 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1639863360;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=YHRge3bUDoDMh2nznf7wZYZYCRWtrOGMZUeO3tamWnc=;
-        b=OkzNcL46UQYp/TqxiQbBlwxTX9ni9NsM9/KAUM+3AVGBppuF9pkJ3fxg8ydHlKb7xVhv3h
-        E91weWNFUnnDBLDACsm22wpAJgAmYMHnUju1x+Q2PRfBdhK3BIeTjhp80HYa2fOmbF5Znw
-        sjLQ/f+t2irCs5/zvTl+eCwoJijRutg=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] RFC: dt-bindings: soc: qcom: convert GLINK binding to yaml
-Date:   Sat, 18 Dec 2021 22:35:56 +0100
-Message-Id: <20211218213556.42061-1-david@ixit.cz>
-X-Mailer: git-send-email 2.34.1
+        id S229710AbhLSDOG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 18 Dec 2021 22:14:06 -0500
+X-Greylist: delayed 537 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Dec 2021 22:14:05 EST
+Received: by sv03.plust-web.net (Postfix, from userid 10098)
+        id F13141A54293; Sun, 19 Dec 2021 12:05:06 +0900 (JST)
+To:     linux-arm-msm@vger.kernel.org
+Subject: =?UTF-8?B?44GK5ZWP44GE5ZCI44KP44Gb44GC44KK44GM44Go44GG44GU44GW44GE44G+?=  =?UTF-8?B?44GX44Gf?=
+X-PHP-Originating-Script: 10098:class-phpmailer.php
+Date:   Sun, 19 Dec 2021 03:05:06 +0000
+From:   =?UTF-8?B?5qCq5byP5Lya56S+44GV44GP44KJ4pSCTUFTQeW3peaIvw==?= 
+        <info@sakura-masakobo.jp>
+Message-ID: <1ddcc553f3a732d2bcfc11ac72052749@sakura-masakobo.jp>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm GLINK binding to the yaml syntax.
+この度は、株式会社さくら・MASA工房のホームページよりお問い合わせ頂き、ありがとうございました。
+以下の内容で、お問い合わせを受付けました。
+ご返答については、確認次第折り返しご連絡させて頂きますが、
+数日経っても弊社より返答が見られない場合は、
+メールアドレスの入力間違い等の恐れがございますので、
+直接お電話にてお問い合わせ下さい。
+---------------------------------------------------------------
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../bindings/soc/qcom/qcom,glink.txt          |  94 ----------------
- .../bindings/soc/qcom/qcom,glink.yaml         | 106 ++++++++++++++++++
- 2 files changed, 106 insertions(+), 94 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
+お問い合わせのご用件：
+その他
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
-deleted file mode 100644
-index 1214192847ac..000000000000
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.txt
-+++ /dev/null
-@@ -1,94 +0,0 @@
--Qualcomm GLINK edge binding
--
--This binding describes a Qualcomm GLINK edge, a fifo based mechanism for
--communication between subsystem-pairs on various Qualcomm platforms. Two types
--of edges can be described by the binding; the GLINK RPM edge and a SMEM based
--edge.
--
--- compatible:
--	Usage: required for glink-rpm
--	Value type: <stringlist>
--	Definition: must be "qcom,glink-rpm"
--
--- label:
--	Usage: optional
--	Value type: <string>
--	Definition: should specify the subsystem name this edge corresponds to.
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the IRQ used by the remote processor to
--		    signal this processor about communication related events
--
--- qcom,remote-pid:
--	Usage: required for glink-smem
--	Value type: <u32>
--	Definition: specifies the identifier of the remote endpoint of this edge
--
--- qcom,rpm-msg-ram:
--	Usage: required for glink-rpm
--	Value type: <prop-encoded-array>
--	Definition: handle to RPM message memory resource
--
--- mboxes:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: reference to the "rpm_hlos" mailbox in APCS, as described
--		    in mailbox/mailbox.txt
--
--= GLINK DEVICES
--Each subnode of the GLINK node represent function tied to a virtual
--communication channel. The name of the nodes are not important. The properties
--of these nodes are defined by the individual bindings for the specific function
--- but must contain the following property:
--
--- qcom,glink-channels:
--	Usage: required
--	Value type: <stringlist>
--	Definition: a list of channels tied to this function, used for matching
--		    the function to a set of virtual channels
--
--- qcom,intents:
--	Usage: optional
--	Value type: <prop-encoded-array>
--	Definition: a list of size,amount pairs describing what intents should
--		    be preallocated for this virtual channel. This can be used
--		    to tweak the default intents available for the channel to
--		    meet expectations of the remote.
--
--= EXAMPLE
--The following example represents the GLINK RPM node on a MSM8996 device, with
--the function for the "rpm_request" channel defined, which is used for
--regulators and root clocks.
--
--	apcs_glb: mailbox@9820000 {
--		compatible = "qcom,msm8996-apcs-hmss-global";
--		reg = <0x9820000 0x1000>;
--
--		#mbox-cells = <1>;
--	};
--
--	rpm_msg_ram: memory@68000 {
--		compatible = "qcom,rpm-msg-ram";
--		reg = <0x68000 0x6000>;
--	};
--
--	rpm-glink {
--		compatible = "qcom,glink-rpm";
--
--		interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
--
--		qcom,rpm-msg-ram = <&rpm_msg_ram>;
--
--		mboxes = <&apcs_glb 0>;
--
--		rpm-requests {
--			compatible = "qcom,rpm-msm8996";
--			qcom,glink-channels = "rpm_requests";
--
--			qcom,intents = <0x400 5
--					0x800 1>;
--			...
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
-new file mode 100644
-index 000000000000..11a7c845ea0a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,glink.yaml
-@@ -0,0 +1,106 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/soc/qcom/qcom,glink.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm GLINK edge
-+
-+description: |
-+  Qualcomm GLINK edge, a fifo based mechanism for communication between
-+  subsystem-pairs on various Qualcomm platforms. Two types of edges can be
-+  described by the binding; the GLINK RPM edge and a SMEM based.
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+properties:
-+  $nodename:
-+    pattern: "^(rpm-)?glink(-edge)?$"
-+
-+  compatible:
-+    const: qcom,glink-rpm
-+
-+  label:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: should specify the subsystem name this edge corresponds to
-+
-+  interrupts:
-+    description: >
-+      should specify the IRQ used by the remote processor to
-+      signal this processor about communication related events
-+    maxItems: 1
-+
-+  mboxes:
-+    description: >
-+      reference to the "rpm_hlos" mailbox in APCS, as described
-+      in mailbox/mailbox.txt
-+
-+  qcom,remote-pid:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: specifies the identifier of the remote endpoint of this edge
-+
-+  qcom,rpm-msg-ram:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: RPM message memory resource
-+
-+patternProperties:
-+  ".*":
-+    type: object
-+    properties:
-+      qcom,glink-channels:
-+        $ref: /schemas/types.yaml#/definitions/string
-+        description: >
-+          a list of channels tied to this function, used for matching
-+          the function to a set of virtual channels
-+
-+      'qcom,intents':
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        description: >
-+          a list of size, amount pairs describing what intents should
-+          be preallocated for this virtual channel. This can be used
-+          to tweak the default intents available for the channel to
-+          meet expectations of the remote
-+
-+    required:
-+      - qcom,glink-channels
-+
-+    additionalProperties: true
-+
-+required:
-+  - interrupts
-+  - mboxes
-+  - qcom,smem
-+  - qcom,local-pid
-+  - qcom,remote-pid
-+
-+anyOf:
-+  - required:
-+      - qcom,remote-pid
-+  - required:
-+      - qcom,rpm-msg-ram
-+
-+additionalProperties: false
-+
-+examples:
-+  # The following example represents the GLINK RPM node on a MSM8996 device,
-+  # with the function for the "rpm_request" channel defined, which
-+  # is used for regulators and root clocks.
-+  - |
-+    rpm-glink {
-+        compatible = "qcom,glink-rpm";
-+
-+        interrupts = <0 168 1>;
-+
-+        qcom,rpm-msg-ram = <&rpm_msg_ram>;
-+
-+        mboxes = <&apcs_glb 0>;
-+
-+        rpm-requests {
-+            compatible = "qcom,rpm-msm8996";
-+            qcom,glink-channels = "rpm_requests";
-+
-+            qcom,intents = <0x400 5
-+                            0x800 1>;
-+        };
-+    };
--- 
-2.34.1
+企業・団体・事業所名：
+❤️ Emily is interested in your profile! Click Here: https://bit.ly/3qa5oCK?ivmo9 ❤️
+
+お名前・ご担当者名：
+mjg7tuq
+
+メールアドレス：
+linux-arm-msm@vger.kernel.org
+
+電話番号：
+355683577508
+
+お問い合わせ内容：
+pfzklm8
+
+プライバシーポリシーへの同意：
+プライバシーポリシーに同意する
+
+---------------------------------------------------------------
+このメールは 株式会社さくら│MASA工房 ウェブサイト (https://sakura-masakobo.jp) のお問い合わせフォームから送信されました
+
+
+株式会社さくら　MASA工房
+〒341-0043　埼玉県三郷市栄1-8-9
+（固定電話）048-948-6173
+（携帯電話）090-7222-5732
 
