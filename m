@@ -2,71 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73ADF47A96D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 13:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B595047A97B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 13:24:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232489AbhLTMW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 07:22:57 -0500
-Received: from mxout03.lancloud.ru ([45.84.86.113]:55142 "EHLO
-        mxout03.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232484AbhLTMW4 (ORCPT
+        id S231745AbhLTMYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 07:24:55 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5339 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230218AbhLTMYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 07:22:56 -0500
-Received: from LanCloud
-DKIM-Filter: OpenDKIM Filter v2.11.0 mxout03.lancloud.ru 21B8120F2E48
-Received: from LanCloud
-Received: from LanCloud
-Received: from LanCloud
-Message-ID: <3da4130b-4412-6ae7-11ee-00245a02286a@omp.ru>
-Date:   Mon, 20 Dec 2021 15:22:47 +0300
+        Mon, 20 Dec 2021 07:24:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640003095; x=1671539095;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=7sbN8IGbQB2gnzro+dgzGKfUcYLtao5VZ814EIMlDic=;
+  b=r060cWcepUupLTecM5mlLcPX5Dore5M9ZcZjqRf2/+Qwm6RtthtxaR6W
+   6acYlnReyxXjhFc+xaW/OyUYVY2/NqT4BSUWcpSWbXVrLWY8LSXzqI++g
+   SH4BhWAYBW+zC0ra5ik6FW9uQji/VNU1IAhLYWziUKPPpa5zXhCFK7vyi
+   U=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 20 Dec 2021 04:24:54 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2021 04:24:53 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 20 Dec 2021 04:24:53 -0800
+Received: from [10.216.5.83] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 20 Dec
+ 2021 04:24:48 -0800
+Message-ID: <39d259cf-5663-5073-f16b-71a21f0e62e3@quicinc.com>
+Date:   Mon, 20 Dec 2021 17:54:42 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.0
-Subject: Re: [PATCH] usb: dwc3: qcom: Check for null irq pointer
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-CC:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <balbi@kernel.org>,
-        <p.zabel@pengutronix.de>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
- <d7974f16-74b1-4d8a-2c28-8acb710d6310@omp.ru>
- <4dcc204a-ba68-ebb8-021d-fd4b54be2729@omp.ru> <YcBzrN2Y7++Iephs@kroah.com>
-From:   Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-In-Reply-To: <YcBzrN2Y7++Iephs@kroah.com>
+Subject: Re: [PATCH] dt-bindings: qcom,pdc: convert to YAML
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20211213152208.290923-1-luca.weiss@fairphone.com>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <20211213152208.290923-1-luca.weiss@fairphone.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [192.168.11.198]
-X-ClientProxiedBy: LFEXT02.lancloud.ru (fd00:f066::142) To
- LFEX1907.lancloud.ru (fd00:f066::207)
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20.12.2021 15:14, Greg KH wrote:
+Hi Luca,
 
-[...]
->>>> The return value of platform_get_irq() needs to be checked.
->>>> To avoid use of null pointer
->>>
->>>     What null pointer, could you please clarify?
->>>
->>>> in case that there is no irq.
->>>>
->>>> Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
->>>> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
->>
->>     This has already been addressed by this (yet unmerged) patch:
->>
->> https://marc.info/?l=linux-usb&m=162854066430255
+On 12/13/2021 8:52 PM, Luca Weiss wrote:
+> Convert the PDC interrupt controller bindings to YAML.
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> This patch depends on the following patch, which fixed sm8250 & sm8350
+> compatibles and adds sm6350.
+> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
+>
+> Also, if somebody has a better suggestion for the register names,
+> the second one is pulled from downstream commit message which calls it
+> both "SPI config registers" and "interface registers":
+> https://source.codeaurora.org/quic/la/kernel/msm-4.19/commit/?id=cdefb63745e051a5bcf69663ac9d084d7da1eeec
 
-> Why not wait until that patch is actually merged?  Otherwise all of this
-> work is moot.
+Thanks for the patch. Please use "apss-shared-spi-cfg" name for the 
+second reg.
 
-    Wait, it has been merged back in August. Then this patch is just 
-outdated... :-)
+It was intended in [1] to remove it since there are no user in upstream 
+for second reg. but it should be fine to convert existing to yaml first 
+and then look to fix that.
 
-> greg k-h
+[1] 
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=449725&state=%2A&archive=both
 
-MBR, Sergey
+[2] 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1616409015-27682-1-git-send-email-mkshah@codeaurora.org/
+
+Thanks,
+Maulik
+>
+>   .../interrupt-controller/qcom,pdc.txt         | 77 -----------------
+>   .../interrupt-controller/qcom,pdc.yaml        | 86 +++++++++++++++++++
+>   2 files changed, 86 insertions(+), 77 deletions(-)
+>   delete mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.txt
+>   create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>
