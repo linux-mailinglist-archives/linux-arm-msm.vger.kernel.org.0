@@ -2,99 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E42E47B63A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 00:42:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DCE4C47B64A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 00:53:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233092AbhLTXmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 18:42:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
+        id S231441AbhLTXxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 18:53:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229690AbhLTXmX (ORCPT
+        with ESMTP id S230010AbhLTXxR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 18:42:23 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9838BC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:42:23 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id w5-20020a4a2745000000b002c2649b8d5fso3530320oow.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:42:23 -0800 (PST)
+        Mon, 20 Dec 2021 18:53:17 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AF7C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:53:17 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id l25so10982662qkl.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:53:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fXyd48HL5YcTwRMzoww9SwKMCubtA4ei6Uf/z8oQfp4=;
-        b=iRt1HjN1A1nyl7nMT+kA2MTBeejr1ApoIV9IiI1uWesGK2AwYegyzKXvni9c1zB765
-         nUiP77H4xmD0le8Lw2pufiiRtDMKbkAYJK6Tz20GxiDs0+8vg3zno+3TGGaLYrUS5Xpq
-         CD2eu0a9FRhLF5VB6cDDttJAZMsBvIIR8A0TmmqwkaRxE+IdzYcdVI7Nbl1xvNivTIa1
-         0lxlgxjIsAomn08fto5yhgQtmkRKIFuxKzD6ZcgULARZdqgVMuDMXv5e88AAgnVZ6+ik
-         8VidKPbaeuidmipgousjH3UL1Y/Ts0Z4OEh3ktJUCM6YxC4EYyoUwIZOaEjaJNN8ys9r
-         ydPA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NcXgqI6cxpe0e91iQv5hDRD0JOXrVC93a0bIwF8hPSM=;
+        b=Ws1YkYkUr9UQiyjkjzcDfhUOL2xPU099pRZc/DVWPUqgSkTISCxkmbTnZUDKAzLfWA
+         rXurwah7hW92RHgf4AfGporMV6jEGkWvykl1RhJbiY6Z31s88Vn+zEc35OMnbIZYeSP4
+         CepC8EGG3Wii+57keP6eq1lsupwPUR+cgohunTTfdwPD7cZEJd2p0zmSqtyvcRd+Rpae
+         +WIcvTi7P1Ey8W9eCBHQCRtVsuIwp70EIDu8b0sTFvy1ELF5TKrMhG3WZSojc0zMFxzX
+         x54Z6g9bakthG8guJwl5gMXlk17VPKWIXt+cBnzITS6vFSkkMqmhoLdoJ5CfEU0dYCJS
+         xChw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fXyd48HL5YcTwRMzoww9SwKMCubtA4ei6Uf/z8oQfp4=;
-        b=Bl3KZ5EbbYeEwI8ZmGK7ImzL5Cp8408pz12faDSMvtuqs66y3tjyNxs3vuvYWmkBl1
-         x99Eln9wN4lTqh4TpzBlEn3aiAflOnNFimp5tOtB4MavxRnpupwRnN5soS+JAJyrgvYC
-         xHYVL12YablWOLIwEyRDLBflQ+d89IDNGBfy7Wc1lroJdjwn+D3ewneTO+B4JWNsyTRE
-         KhT6JhdeTawCb9+uwW+zp7ewsKDM7PZbiRYQCJHjo9sI/n/Ez4QPsEkv8cZG5ukzo8c5
-         XGCGwCVOcgLAe4FpXq/rqX8BF8QXfuJ5+3wq1Rfb8aYIfK9Vp60tQF7IVjveO8ZtX4Zj
-         WWFQ==
-X-Gm-Message-State: AOAM532l+6N5WfGBCdE00Cdb12FDl2jJr+vQjFrrweT8SfMmlfxxCqxk
-        UsPBOIJr8JrU5YAgzTxuHA4THHXiM+pTgg==
-X-Google-Smtp-Source: ABdhPJwRDVXCRDJMAtfGL+pL+4iUwEl3wgGD7/CYswUfCpak+pmJgKFfARFDxMz1HxTkzfZwsAFaqw==
-X-Received: by 2002:a05:6820:1609:: with SMTP id bb9mr307552oob.37.1640043742930;
-        Mon, 20 Dec 2021 15:42:22 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n23sm3668243oig.4.2021.12.20.15.42.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 15:42:22 -0800 (PST)
-Date:   Mon, 20 Dec 2021 15:43:31 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: Avoid stack buffer for IRQ name
-Message-ID: <YcEVIyZu/nfLSyfl@ripper>
-References: <20210901084732.943248-1-ardb@kernel.org>
- <5bdf0bb1-150b-6b60-6f9d-86542b4d7695@linaro.org>
- <CAMZdPi9m_JJogxwT7k_0bzC9+gPxq9NHkuDF3T0HEj8EU-vd7w@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NcXgqI6cxpe0e91iQv5hDRD0JOXrVC93a0bIwF8hPSM=;
+        b=cNw8g7THuUa0d8eNyEvW5HS4k/GgxvnQAmd+R8i+EdnhviyqnsM1y/CmWa75D0nvXL
+         quEnUjmDbj8q+69s/G+MR4d/06tEQXBOL4Kze0NLZiiFdnSBOHBekhOv6kZ27kfZymF6
+         NTmWO2tSjlfRucDBuS6pEmUMzNz7zSn21RltWXQxMMbUpOYMO83Kby0aeRkO5QDhRUBq
+         wlS7eU3WBJwAP4gAzbyMjtwhf3CUSoKQ0TU2iJ1JZoqcSTc/0N6fysQnlU6Qg8Ko/Rqs
+         sBnhcuSh6wgRKbELciasBlO41YtH8mCFRG1olPH4KjrvIkbjMeM79V/GVfWO24JYo3Pw
+         NTEQ==
+X-Gm-Message-State: AOAM531CCOvbkRYqESh7Nd6RCbhFg29nGr0J9HDYQMKZcdnwURhGoxtk
+        IPjPVlZ5sZH9HzD0KpjZCT2hrGVKcYFsHE0kHjrFSg==
+X-Google-Smtp-Source: ABdhPJzFnDz2W0GHUrVIingh+4j+ON9BLU7ywtLTtBYgCoWWu0JGYwbykopD9mXXSuORzJrQ8/OZ1svpmcADUPTh3JU=
+X-Received: by 2002:a05:620a:13ea:: with SMTP id h10mr476112qkl.30.1640044396450;
+ Mon, 20 Dec 2021 15:53:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMZdPi9m_JJogxwT7k_0bzC9+gPxq9NHkuDF3T0HEj8EU-vd7w@mail.gmail.com>
+References: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 21 Dec 2021 02:53:05 +0300
+Message-ID: <CAA8EJpoYJFfB5qfFMoc3-QsmYZzO16C28MOrPyokANQyPBhdyg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: Only create debugfs for PRIMARY minor
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 20 Dec 02:12 PST 2021, Loic Poulain wrote:
+On Fri, 17 Dec 2021 at 03:19, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> dpu_kms_debugfs_init() is invoked for each minor being registered. Most
+> of the files created are unrelated to the minor, so there's no reason to
+> present them per minor.
+> The exception to this is the DisplayPort code, which ends up invoking
+> dp_debug_get() for each minor, each time associate the allocated object
+> with dp->debug.
+>
+> As such dp_debug will create debugfs files in both the PRIMARY and the
+> RENDER minor's debugfs directory, but only the last reference will be
+> remembered.
+>
+> The only use of this reference today is in the cleanup path in
+> dp_display_deinit_sub_modules() and the dp_debug_private object does
+> outlive the debugfs entries in either case, so there doesn't seem to be
+> any adverse effects of this, but per the code the current behavior is
+> unexpected, so change it to only create debugfs files for the PRIMARY
+> minor.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>
+> Changes since v1:
+> - Moved the check up from msm_dp_debugfs_init() to dpu_kms_debugfs_init()
+>
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 2ee70072a1b4..a54f7d373f14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -193,6 +193,10 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>         if (!p)
+>                 return -EINVAL;
+>
+> +       /* Only create one set of debugfs per DP instance */
 
-> > On 9/1/21 4:47 AM, Ard Biesheuvel wrote:
-> > > Registering an IRQ requires the string buffer containing the name to
-> > > remain allocated, as the name is not copied into another buffer.
-> > >
-> > > So let's add a irq_name field to the data struct instead, which is
-> > > guaranteed to have the appropriate lifetime.
-> > >
-> > > Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > Cc: Andy Gross <agross@kernel.org>
-> > > Cc: linux-arm-msm@vger.kernel.org
-> > > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> >
-> > Thanks for the fix.
-> >
-> > Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
-> 
-> Seems this patch has been overlooked. Would it be possible to resubmit
-> it with a 'Fixes' tag?
-> 
+The comment is misleading. Could you please fix it?
 
-This was resubmitted by Vladimir and Viresh replied that it's applied,
-see:
+> +       if (minor->type != DRM_MINOR_PRIMARY)
+> +               return 0;
+> +
+>         dev = dpu_kms->dev;
+>         priv = dev->dev_private;
+>
+> --
+> 2.33.1
+>
 
-https://lore.kernel.org/all/20211125065014.phkfugo2wptosrgv@vireshk-i7/
 
-Regards,
-Bjorn
+-- 
+With best wishes
+Dmitry
