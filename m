@@ -2,87 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CB5D47A7D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 11:44:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82D4B47A892
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 12:25:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbhLTKoj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 05:44:39 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:55553 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229612AbhLTKoj (ORCPT
+        id S231750AbhLTLZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 06:25:51 -0500
+Received: from mxout02.lancloud.ru ([45.84.86.82]:37216 "EHLO
+        mxout02.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230469AbhLTLZv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 05:44:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1639997079; x=1671533079;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=suS+USQJ2UKVv+N/mQuXbtw7rGVSpAvqHTYphU4MZbc=;
-  b=RKDc3H33WKcYouWpDTyUraXTrJtvygVZ4zXa+TEZXODsU3VSCeyB/AbM
-   8cFcPnKs+PttJdv3hG+PWR/qOwma5Lb94ZrrfD+Km36rvtVsVshOMGK6t
-   +i5oXRXM4qTBxbOFvDq4QBYaiAtUUDfAlv9kXXBPjHoQCCgavGFhTK/Wx
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Dec 2021 02:44:38 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2021 02:44:38 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 20 Dec 2021 02:44:37 -0800
-Received: from [10.216.48.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 20 Dec
- 2021 02:44:33 -0800
-Subject: Re: [PATCH V4 4/6] regulator: Add a regulator driver for the PM8008
- PMIC
-To:     Mark Brown <broonie@kernel.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, <swboyd@chromium.org>,
-        <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Lee Jones" <lee.jones@linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-5-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+vnV12gDCtia5S@sirena.org.uk>
- <d86e1a33-e7cf-58f7-d75b-23a0313ebde5@quicinc.com>
- <Ya4nn0/qp5El8P0L@sirena.org.uk>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <ec9eddf5-aba2-d63b-0e39-1a3d5bda3ce9@quicinc.com>
-Date:   Mon, 20 Dec 2021 16:14:29 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 20 Dec 2021 06:25:51 -0500
+Received: from LanCloud
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout02.lancloud.ru D4AA2232DC0A
+Received: from LanCloud
+Received: from LanCloud
+Received: from LanCloud
+Message-ID: <d7974f16-74b1-4d8a-2c28-8acb710d6310@omp.ru>
+Date:   Mon, 20 Dec 2021 14:25:42 +0300
 MIME-Version: 1.0
-In-Reply-To: <Ya4nn0/qp5El8P0L@sirena.org.uk>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH] usb: dwc3: qcom: Check for null irq pointer
 Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <balbi@kernel.org>,
+        <gregkh@linuxfoundation.org>, <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
+From:   Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+In-Reply-To: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [192.168.11.198]
+X-ClientProxiedBy: LFEXT02.lancloud.ru (fd00:f066::142) To
+ LFEX1907.lancloud.ru (fd00:f066::207)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20.12.2021 13:15, Jiasheng Jiang wrote:
 
-On 12/6/2021 8:39 PM, Mark Brown wrote:
-> On Mon, Dec 06, 2021 at 08:13:57PM +0530, Satya Priya Kakitapalli (Temp) wrote:
->> On 11/25/2021 9:15 PM, Mark Brown wrote:
->>> On Fri, Nov 19, 2021 at 03:12:31PM +0530, Satya Priya wrote:
->>>> +		child_node = of_get_child_by_name(parent_node, reg->name);
->>>> +		if (!child_node) {
->>>> +			dev_err(dev, "child node %s not found\n", reg->name);
->>>> +			return -ENODEV;
->>>> +		}
->>> This could be pulled out of the array.
->> Not sure what you meant here. could you elaborate a bit?
-> Why is this in every iteration of the loop?
+> The return value of platform_get_irq() needs to be checked.
+> To avoid use of null pointer
 
+   What null pointer, could you please clarify?
 
-Getting the child node here is not required anymore. This got carried 
-from previous versions, I'll remove this.
+in case that there is no irq.
+> 
+> Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> ---
+>   drivers/usb/dwc3/dwc3-qcom.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 49e6ca94486d..f04fb3f2fb85 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -614,6 +614,11 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+>   		qcom->acpi_pdata->dwc3_core_base_size;
+>   
+>   	irq = platform_get_irq(pdev_irq, 0);
+> +	if (!irq) {
 
+    This is totally wrong! That function returns negative error codes in case 
+of failure.
+
+> +		ret = -EINVAL;
+> +		goto out;
+> +	}
+> +
+>   	child_res[1].flags = IORESOURCE_IRQ;
+>   	child_res[1].start = child_res[1].end = irq;
+
+MBR, Sergey
