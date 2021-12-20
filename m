@@ -2,70 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C590E47AE0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 15:59:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1404047AF91
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 16:15:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237149AbhLTO5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 09:57:37 -0500
-Received: from ixit.cz ([94.230.151.217]:43666 "EHLO ixit.cz"
+        id S237657AbhLTPPI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 10:15:08 -0500
+Received: from ixit.cz ([94.230.151.217]:43688 "EHLO ixit.cz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239466AbhLTOzg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 09:55:36 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        id S239703AbhLTPNX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Dec 2021 10:13:23 -0500
+Received: from [192.168.1.138] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 9705D2243C;
-        Mon, 20 Dec 2021 15:55:33 +0100 (CET)
+        by ixit.cz (Postfix) with ESMTPSA id 509762243C;
+        Mon, 20 Dec 2021 16:13:20 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1640012133;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=ixSxI9pWx1iftFiZPbKJ4dYsU9D8Bg10R9uW7sAAzrA=;
-        b=NGZYH1IPDz/lhmlFcUcvRXkVF2mXoqc63TRPWluowRU1gR8avONCwEE+8+kzNyOkDquCAM
-        t0esMpQUIlvFkR+Bk5LBdzAnrF+Fk4gpGUq/HqLLEqVEWjd7eYWZSe2k0CtiYLhmtKsW0d
-        mflwt3TLVZLcRbRYaNJtZQZUG5o4qjE=
+        t=1640013201; h=from:from:reply-to:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+         content-type:content-type; bh=KrX7y60poYGBCDm0ycPvzme2bfekqQewMZgSm+ZbFeU=;
+        b=EgzYxS5aV8QckJ0t+JLOTVIuzL3NBmmHoDKTt75i+STRXVbKXdyCvGhI+fpKgT/PK5KH24
+        54HmSsHkbeojqoAmhKtBIjx5UY0BIrhwRprXNGltyr/NV/s1RKB/xGGrEHiA8yGVnebgcI
+        +OaPam8/3g/JiKGnkZgaaYu/eD/+pq0=
+Date:   Mon, 20 Dec 2021 16:13:14 +0100
 From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8996: qcom,controlled-remotely is boolean
-Date:   Mon, 20 Dec 2021 15:55:26 +0100
-Message-Id: <20211220145526.49102-1-david@ixit.cz>
-X-Mailer: git-send-email 2.34.1
+Reply-To: 20211110105922.217895-4-bhupesh.sharma@linaro.org
+Subject: Re: [PATCH v5 03/22] dt-bindings: qcom-bam: Convert binding to YAML
+To:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org, herbert@gondor.apana.org.au,
+        davem@davemloft.net, stephan@gerhold.net,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Message-Id: <2A6F4R.O6RS9WA32JJ91@ixit.cz>
+X-Mailer: geary/40.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCOM BAM parses property `qcom,controlled-remotely` as a boolean,
-adjust dts to reflect that.
+Some nitpicks:
+- `description:` -> `description: >`
+- you dropped part of example, wouldn't be better to keep it there?
+- remove `binding` from the title
 
-Discovered while converting text documentation into yaml format.
+Feel free to put:
+Reviewed-by: David Heidelberg <david@ixit.cz>
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thank you
+David Heidelberg
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 7eff331572f2..722fdda54a54 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -713,7 +713,7 @@ cryptobam: dma@644000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
--			qcom,controlled-remotely = <1>;
-+			qcom,controlled-remotely;
- 		};
- 
- 		crypto: crypto@67a000 {
--- 
-2.34.1
 
