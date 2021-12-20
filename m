@@ -2,76 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF1D47A79C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 11:15:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DEEB47A7D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 11:44:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230459AbhLTKPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 05:15:54 -0500
-Received: from smtp21.cstnet.cn ([159.226.251.21]:35364 "EHLO cstnet.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230475AbhLTKPy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 05:15:54 -0500
-Received: from localhost.localdomain (unknown [124.16.138.126])
-        by APP-01 (Coremail) with SMTP id qwCowAC3v5+5V8BhwcdlBA--.42591S2;
-        Mon, 20 Dec 2021 18:15:21 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
-        gregkh@linuxfoundation.org, p.zabel@pengutronix.de
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] usb: dwc3: qcom: Check for null irq pointer
-Date:   Mon, 20 Dec 2021 18:15:20 +0800
-Message-Id: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+        id S231331AbhLTKoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 05:44:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229612AbhLTKoZ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Dec 2021 05:44:25 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EB5DC061574;
+        Mon, 20 Dec 2021 02:44:25 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9BEF060F77;
+        Mon, 20 Dec 2021 10:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834D4C36AE8;
+        Mon, 20 Dec 2021 10:44:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1639997064;
+        bh=ePsHNzZhYnoHHXDL+Vx0SzMe2c+G0azjlX3WbXHW30E=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tqolC68YM3LwXeC/L4SU+II41TPz63VgDAoGtEeGJMrnNIhI3cjRtRaRpZISs7vQQ
+         YMzcwwvAlwDm3hgsJtme69fi3bavQs0My+glEAb86At6RZf0iKkvgg8bqcs7QE353b
+         wYz0QDWAH0Zcqe50nA/9so6yxRU2kDmHq0K+tNtY=
+Date:   Mon, 20 Dec 2021 11:44:21 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] usb: dwc3: qcom: Check for null irq pointer
+Message-ID: <YcBehfPqhHpd/FSK@kroah.com>
+References: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAC3v5+5V8BhwcdlBA--.42591S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrZry7XFyUuFyUZryxWr1DGFg_yoWfGFX_K3
-        s5Wr4xKrWDKF4fKryDAw13ZryIvr98XFn3WFs093Wa93WDWFykXryIvrZ8GryUZF4DWr9r
-        X398C3yY9Fy7AjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUbckFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
-        Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-        jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8twCF
-        04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
-        18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vI
-        r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
-        1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAI
-        cVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUqeHgUUUUU=
-X-Originating-IP: [124.16.138.126]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The return value of platform_get_irq() needs to be checked.
-To avoid use of null pointer in case that there is no irq.
+On Mon, Dec 20, 2021 at 06:15:20PM +0800, Jiasheng Jiang wrote:
+> The return value of platform_get_irq() needs to be checked.
+> To avoid use of null pointer in case that there is no irq.
+> 
+> Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 49e6ca94486d..f04fb3f2fb85 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -614,6 +614,11 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+>  		qcom->acpi_pdata->dwc3_core_base_size;
+>  
+>  	irq = platform_get_irq(pdev_irq, 0);
+> +	if (!irq) {
+> +		ret = -EINVAL;
 
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
- drivers/usb/dwc3/dwc3-qcom.c | 5 +++++
- 1 file changed, 5 insertions(+)
+That is NOT the proper way to check the return value of this function
+call.
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 49e6ca94486d..f04fb3f2fb85 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -614,6 +614,11 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
- 		qcom->acpi_pdata->dwc3_core_base_size;
- 
- 	irq = platform_get_irq(pdev_irq, 0);
-+	if (!irq) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
- 	child_res[1].flags = IORESOURCE_IRQ;
- 	child_res[1].start = child_res[1].end = irq;
- 
--- 
-2.25.1
 
