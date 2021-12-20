@@ -2,67 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 423B647B3A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 20:23:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9311A47B3F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 20:51:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240768AbhLTTXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 14:23:15 -0500
-Received: from mslow1.mail.gandi.net ([217.70.178.240]:56745 "EHLO
-        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233001AbhLTTXO (ORCPT
+        id S232775AbhLTTvk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 14:51:40 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:10056 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231869AbhLTTvk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 14:23:14 -0500
-Received: from relay6-d.mail.gandi.net (unknown [217.70.183.198])
-        by mslow1.mail.gandi.net (Postfix) with ESMTP id EBCB9D147F;
-        Mon, 20 Dec 2021 19:23:12 +0000 (UTC)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 7CA50C0007;
-        Mon, 20 Dec 2021 19:22:49 +0000 (UTC)
-Date:   Mon, 20 Dec 2021 20:22:49 +0100
-From:   Alexandre Belloni <alexandre.belloni@bootlin.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>, soc@kernel.org,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        =?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: Remove "spidev" nodes
-Message-ID: <YcDYCSamA31QLHtm@piout.net>
-References: <20211217221232.3664417-1-robh@kernel.org>
- <YcB3ZhbCZGmPNk5s@sirena.org.uk>
+        Mon, 20 Dec 2021 14:51:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640029900; x=1671565900;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=SWkrRsfh5wkH/U4hnyc7GU2xLX7B1JNAMj60e3Mc2UA=;
+  b=ZEc+aK0tAh/uSmowd9kDCXtmMn/YVX0u33QWU3MDlGrDSFyxGP7HJTv8
+   rs8uuFCHB+EYIYDk9JR2H4kQW5kM+7Ivc6ZkBhB+cVPBLatje/3bxs7gS
+   mMkMSdokIsQxbDRCT+MltWhSKhu3go8Qn8MuLrElFMyApwPNjghw09ezu
+   4=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Dec 2021 11:51:39 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2021 11:51:38 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 20 Dec 2021 11:51:38 -0800
+Received: from [10.111.163.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 20 Dec
+ 2021 11:51:36 -0800
+Message-ID: <f9521a5f-13cd-a379-3502-5590fd9c331c@quicinc.com>
+Date:   Mon, 20 Dec 2021 11:51:34 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YcB3ZhbCZGmPNk5s@sirena.org.uk>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH v2] drm/msm/dp: Only create debugfs for PRIMARY minor
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Mark,
 
-On 20/12/2021 12:30:30+0000, Mark Brown wrote:
-> On Fri, Dec 17, 2021 at 04:12:32PM -0600, Rob Herring wrote:
-> > "spidev" is not a real device, but a Linux implementation detail. It has
-> > never been documented either. The kernel has WARNed on the use of it for
-> > over 6 years. Time to remove its usage from the tree.
+
+On 12/16/2021 4:20 PM, Bjorn Andersson wrote:
+> dpu_kms_debugfs_init() is invoked for each minor being registered. Most
+> of the files created are unrelated to the minor, so there's no reason to
+> present them per minor.
+> The exception to this is the DisplayPort code, which ends up invoking
+> dp_debug_get() for each minor, each time associate the allocated object
+> with dp->debug.
 > 
-> Reviwed-by: Mark Brown <broonie@kernel.org>
+> As such dp_debug will create debugfs files in both the PRIMARY and the
+> RENDER minor's debugfs directory, but only the last reference will be
+> remembered.
+> 
+> The only use of this reference today is in the cleanup path in
+> dp_display_deinit_sub_modules() and the dp_debug_private object does
+> outlive the debugfs entries in either case, so there doesn't seem to be
+> any adverse effects of this, but per the code the current behavior is
+> unexpected, so change it to only create debugfs files for the PRIMARY
+> minor.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - Moved the check up from msm_dp_debugfs_init() to dpu_kms_debugfs_init()
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 2ee70072a1b4..a54f7d373f14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -193,6 +193,10 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   	if (!p)
+>   		return -EINVAL;
+>   
+> +	/* Only create one set of debugfs per DP instance */
+I would change this to DPU now instead of DP, but apart from that,
 
-You have a typo there so I'm not sure b4 will be able to pick that up
-
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> +	if (minor->type != DRM_MINOR_PRIMARY)
+> +		return 0;
+> +
+>   	dev = dpu_kms->dev;
+>   	priv = dev->dev_private;
+>   
