@@ -2,104 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F97A47A280
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Dec 2021 22:57:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DA76347A412
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 05:20:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236741AbhLSV51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Dec 2021 16:57:27 -0500
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:47071 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233652AbhLSV50 (ORCPT
+        id S237405AbhLTEUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Dec 2021 23:20:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33242 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237398AbhLTEUU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Dec 2021 16:57:26 -0500
-Received: by mail-oi1-f172.google.com with SMTP id s139so12971369oie.13;
-        Sun, 19 Dec 2021 13:57:25 -0800 (PST)
+        Sun, 19 Dec 2021 23:20:20 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07F1CC06173F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Dec 2021 20:20:20 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id w24so7045155ply.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Dec 2021 20:20:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=idRrPNY8lT9qvJ1RX4lP6sDX0kRhviqifoOXKRGv1rY=;
+        b=HI/6YkCt3ky43jRDNEN2lf6M22JE6+kU4T+uMtFrbfWX8vNs6ZusoVEID1nBzvAShn
+         S5ZTX7Ta1P9uRa9kd/zrtJZhAtjeuHfoK85oJ1GeE2Dmh+H8ThxhaXpqrOXewiNLqOSQ
+         o5L6XC7ifvxgGIy6Rq0q29P9z//gZq4zSt2X6nIn1ewKEtKWFLpzMiRl3XaW+2KCsW1H
+         pPvGUDfqd1gxPY4X2f+ExStB3eDWtWpgRF3Gwdq/IRh/vjDpkLIdJ3PHlddVT2e1m4bx
+         FfoHQpIUHyIZn/2ipJ3kPNh1POZNSW/ZlOciYn3QWbrNNhMav5W8xhcr1PHVOQgsXOqL
+         pRsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=3AjklewXqdG1lkYWZ+uYneVSQQ4mjuR7rV0/WxbDbIc=;
-        b=kGhlYRdt3ZxSTA9ExD7Ee/aKZE/9nmk8tRHFRJHPZjJWwlR0xodcUHBURKkQlx5h7K
-         j/ZF3lbsAp4IvP7r7yy+V3fuLasGOTUf6pOx1le2c9AfgZN3eUKieD72zkbBCNlSxDha
-         1F0YtwUUxMnMM42gp2Z2Fz3/Q3q7fNf+Q51gG9tPbz9mI4RKiqU1Dx9oGPM9YQREBvp4
-         WfQE7vLu/5EPNI0iaGKSid3ozl4xwz0ZNckBrrm7dshOZu7O18FnY21ib6CRLSh0FEiC
-         CyWgGBoJKNQV3SjxMITjkEUyikd1PCtNMRgo04pIN5Nqx8eM9/ubK9EjJZitullACRUG
-         J8zw==
-X-Gm-Message-State: AOAM532zchiwGLQSsrZH4uSv8+3cOmwaZIWnnvbQint94/6Ynlr8L5nd
-        MJ+y6gskBejePnE6WCBQ+Q==
-X-Google-Smtp-Source: ABdhPJw+WVWyfOwd110EyY0TN6edT8Ajj5a+WA4SmxByJWkQKr2y1y4aL/QJbbrjvZ0mKLkgv0L7Og==
-X-Received: by 2002:a05:6808:699:: with SMTP id k25mr9880760oig.135.1639951045370;
-        Sun, 19 Dec 2021 13:57:25 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id t11sm2899395otj.24.2021.12.19.13.57.24
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=idRrPNY8lT9qvJ1RX4lP6sDX0kRhviqifoOXKRGv1rY=;
+        b=6QYYhlHSb0QAGNB0u6wozi79ZRv1jjTYVLJzl2Ma28Isp0S+M925qkyFFqQN5f0IgE
+         3DxDEfrhUfpCs9BdYuQCb+QNlqv4+Ttck7ZE6J0cfM/G57Fdos67/VsfVC8Rdz9rFfww
+         irSevxjuHqh1hj6OmLyN7d59hojw9DJA7YcAo6aLDbVTp7r9+KSXURepX3RA7uhnH7Am
+         TncMx6MknjpGsusQB/4c/pVJG8b8vqCx5a2jxdnRKNy3yzWUFOLsHtrkPRRnGoI0liGW
+         8bEORKGLOg14Ttk7MythXRTLEK48aB3Ug3QNtDd5KEmDCjoVbjgyQcT7X7OzURQiY/Qr
+         6ZkQ==
+X-Gm-Message-State: AOAM533ceZeQLHA/zVGtyePwaXIkG/xdGKgfC57Nz5SpaISE7RKQAQWf
+        xVk29Go//NHTsELWQPfI5/tlwg==
+X-Google-Smtp-Source: ABdhPJzGZHTTmdWj0H2HUPNmPUFshIz7BAck3SWavB9iLe038KjqDHtpEYTn5mz3kFKV/RLuZgwPPw==
+X-Received: by 2002:a17:90b:164c:: with SMTP id il12mr17891712pjb.241.1639974019397;
+        Sun, 19 Dec 2021 20:20:19 -0800 (PST)
+Received: from localhost ([106.201.42.111])
+        by smtp.gmail.com with ESMTPSA id n14sm6000281pgd.80.2021.12.19.20.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Dec 2021 13:57:24 -0800 (PST)
-Received: (nullmailer pid 2758870 invoked by uid 1000);
-        Sun, 19 Dec 2021 21:57:22 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alex Elder <elder@linaro.org>, ~okias/devicetree@lists.sr.ht,
+        Sun, 19 Dec 2021 20:20:18 -0800 (PST)
+Date:   Mon, 20 Dec 2021 09:50:16 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     soc@kernel.org, Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        =?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
+        Tony Lindgren <tony@atomide.com>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20211218205039.35994-1-david@ixit.cz>
-References: <20211218205039.35994-1-david@ixit.cz>
-Subject: Re: [PATCH] dt-binding: soc: qcom: convert QCOM SMP2P binding to yaml
-Date:   Sun, 19 Dec 2021 15:57:22 -0600
-Message-Id: <1639951042.384579.2758869.nullmailer@robh.at.kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>,
+        Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: Remove "spidev" nodes
+Message-ID: <20211220042016.cnk332uthdxziv5a@vireshk-i7>
+References: <20211217221232.3664417-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211217221232.3664417-1-robh@kernel.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 18 Dec 2021 21:50:39 +0100, David Heidelberg wrote:
-> Convert Qualcomm SoC SMP2P binding to the yaml format.
+On 17-12-21, 16:12, Rob Herring wrote:
+> "spidev" is not a real device, but a Linux implementation detail. It has
+> never been documented either. The kernel has WARNed on the use of it for
+> over 6 years. Time to remove its usage from the tree.
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+> Cc: Mark Brown <broonie@kernel.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  .../bindings/soc/qcom/qcom,smp2p.txt          | 110 --------------
->  .../bindings/soc/qcom/qcom,smp2p.yaml         | 139 ++++++++++++++++++
->  2 files changed, 139 insertions(+), 110 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+> Arnd, Olof, Can you please apply this directly.
 > 
+>  arch/arm/boot/dts/spear1310-evb.dts           | 16 ---------
+>  arch/arm/boot/dts/spear1340-evb.dts           | 16 ---------
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,smem' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,local-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,remote-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'anyOf' conditional failed, one must be fixed:
-	'mboxes' is a required property
-	'qcom,ipc' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,smem' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,local-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,remote-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1570617
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+viresh
