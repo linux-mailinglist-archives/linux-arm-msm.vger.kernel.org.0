@@ -2,117 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DCE4C47B64A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 00:53:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 635A447B651
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 00:54:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbhLTXxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 18:53:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45520 "EHLO
+        id S233201AbhLTXyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 18:54:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230010AbhLTXxR (ORCPT
+        with ESMTP id S232161AbhLTXyI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 18:53:17 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AF7C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:53:17 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id l25so10982662qkl.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:53:17 -0800 (PST)
+        Mon, 20 Dec 2021 18:54:08 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7229BC06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:54:08 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id 132so10965148qkj.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:54:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NcXgqI6cxpe0e91iQv5hDRD0JOXrVC93a0bIwF8hPSM=;
-        b=Ws1YkYkUr9UQiyjkjzcDfhUOL2xPU099pRZc/DVWPUqgSkTISCxkmbTnZUDKAzLfWA
-         rXurwah7hW92RHgf4AfGporMV6jEGkWvykl1RhJbiY6Z31s88Vn+zEc35OMnbIZYeSP4
-         CepC8EGG3Wii+57keP6eq1lsupwPUR+cgohunTTfdwPD7cZEJd2p0zmSqtyvcRd+Rpae
-         +WIcvTi7P1Ey8W9eCBHQCRtVsuIwp70EIDu8b0sTFvy1ELF5TKrMhG3WZSojc0zMFxzX
-         x54Z6g9bakthG8guJwl5gMXlk17VPKWIXt+cBnzITS6vFSkkMqmhoLdoJ5CfEU0dYCJS
-         xChw==
+        bh=ICTB8V4n+9cmca6+x37Ql0fa5KJvA8Kd4xGMSs77tp4=;
+        b=GOa3Py2rvoHFE1zmqG4g4VsKavd6FCbMcxB66Q0UHthvWMGSZ4qkosE2WTkfXY5jLj
+         GJEsJls1Q8hoJJe0Hz8joPOiyGiwn/He61O6Dpe3Y2sQ6iVAEfduAgGVtDQ3aKJHE+Cf
+         CNf42oqdHuyZxsnhBOfuuJuEy0uOszNUBOUyIrrH612CftS0o0hXP8a1a35t3HoCwHAK
+         55EDgjLU7QWhMfPUQ3lxpDHgZqZIXdT/wc+PVWVZOt2vshCjWC9xUCTJ6B7WFwZ0dwS9
+         TlLRGrJ22LePnO+EgLB9+yPEVV/ZwtWz52I92Hh881azKDNEYhSvkBO35edcz4Ii6Hvs
+         dOdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NcXgqI6cxpe0e91iQv5hDRD0JOXrVC93a0bIwF8hPSM=;
-        b=cNw8g7THuUa0d8eNyEvW5HS4k/GgxvnQAmd+R8i+EdnhviyqnsM1y/CmWa75D0nvXL
-         quEnUjmDbj8q+69s/G+MR4d/06tEQXBOL4Kze0NLZiiFdnSBOHBekhOv6kZ27kfZymF6
-         NTmWO2tSjlfRucDBuS6pEmUMzNz7zSn21RltWXQxMMbUpOYMO83Kby0aeRkO5QDhRUBq
-         wlS7eU3WBJwAP4gAzbyMjtwhf3CUSoKQ0TU2iJ1JZoqcSTc/0N6fysQnlU6Qg8Ko/Rqs
-         sBnhcuSh6wgRKbELciasBlO41YtH8mCFRG1olPH4KjrvIkbjMeM79V/GVfWO24JYo3Pw
-         NTEQ==
-X-Gm-Message-State: AOAM531CCOvbkRYqESh7Nd6RCbhFg29nGr0J9HDYQMKZcdnwURhGoxtk
-        IPjPVlZ5sZH9HzD0KpjZCT2hrGVKcYFsHE0kHjrFSg==
-X-Google-Smtp-Source: ABdhPJzFnDz2W0GHUrVIingh+4j+ON9BLU7ywtLTtBYgCoWWu0JGYwbykopD9mXXSuORzJrQ8/OZ1svpmcADUPTh3JU=
-X-Received: by 2002:a05:620a:13ea:: with SMTP id h10mr476112qkl.30.1640044396450;
- Mon, 20 Dec 2021 15:53:16 -0800 (PST)
+        bh=ICTB8V4n+9cmca6+x37Ql0fa5KJvA8Kd4xGMSs77tp4=;
+        b=eNIUlL3yLA2djop1bd3FRiCtX27enQhNwTsF+VRbNW58Yt6PYuxqUin+3BgYowqpXl
+         vkGSgDcF19KeGRMKIQdKCdcx4FPg4P7e+wV1GUmnVh9gdz3wpB8oN0nm0njl44UdxTvP
+         2JTzI9buN/68DqLewv8hAc0FpS13JWU8t7HD+c2zbc7yRbPQYRN/paaMbaq1PTHGD2ck
+         9WaturS5nedatR5YSYdGXbnbYExrtbqzjH1xWaSoILrxBXZ8Shy8thpA2qHCTyA0ZPZo
+         ss2kWcmAfxHfNSaJUEcxeA+q1wEa+xZTmvivmMM+xE5x4pQscSi92I4afSOS6sa/LwSg
+         21Sw==
+X-Gm-Message-State: AOAM533QRXQMF0PSF4WJ8qOl48lBnLRfk4mbKcExxh+6xW+sQ9Rl4OI7
+        rCO2GutirRQm1Qw5R7EMjttTzcpk59JXbEiNmHz4zQ==
+X-Google-Smtp-Source: ABdhPJzCxuuI7T69jGLo8Z9p5gSwkmCeAciC0CgBmGa3lxd+isswddNujRi13+rwrqy40MTb27glmY8K2mKYuRI17Ng=
+X-Received: by 2002:ae9:e641:: with SMTP id x1mr432352qkl.59.1640044447562;
+ Mon, 20 Dec 2021 15:54:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+References: <20211220184220.86328-1-david@ixit.cz>
+In-Reply-To: <20211220184220.86328-1-david@ixit.cz>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 21 Dec 2021 02:53:05 +0300
-Message-ID: <CAA8EJpoYJFfB5qfFMoc3-QsmYZzO16C28MOrPyokANQyPBhdyg@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dp: Only create debugfs for PRIMARY minor
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
+Date:   Tue, 21 Dec 2021 02:53:56 +0300
+Message-ID: <CAA8EJprqBELsZUCVqppAsNVBzsW3FxQbUCQ=zy_tAVY0SeTPwQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: msm: disp: remove bus from dpu bindings
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Dec 2021 at 03:19, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Mon, 20 Dec 2021 at 21:42, David Heidelberg <david@ixit.cz> wrote:
 >
-> dpu_kms_debugfs_init() is invoked for each minor being registered. Most
-> of the files created are unrelated to the minor, so there's no reason to
-> present them per minor.
-> The exception to this is the DisplayPort code, which ends up invoking
-> dp_debug_get() for each minor, each time associate the allocated object
-> with dp->debug.
+> Driver and dts has been already adjusted and bus moved out of dpu, let's
+> update also dt-bindings.
 >
-> As such dp_debug will create debugfs files in both the PRIMARY and the
-> RENDER minor's debugfs directory, but only the last reference will be
-> remembered.
+> Fixes warnings as:
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: mdss
+> @ae00000: clock-names: ['iface', 'core'] is too short
+>         From schema: Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
 >
-> The only use of this reference today is in the cleanup path in
-> dp_display_deinit_sub_modules() and the dp_debug_private object does
-> outlive the debugfs entries in either case, so there doesn't seem to be
-> any adverse effects of this, but per the code the current behavior is
-> unexpected, so change it to only create debugfs files for the PRIMARY
-> minor.
+> Ref: https://lore.kernel.org/all/20210803101657.1072358-1-dmitry.baryshkov@linaro.org/
 >
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
+>  .../devicetree/bindings/display/msm/dpu-sdm845.yaml          | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
 >
-> Changes since v1:
-> - Moved the check up from msm_dp_debugfs_init() to dpu_kms_debugfs_init()
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+> index b4ea7c92fb3d..0dca4b3d66e4 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
+> @@ -31,13 +31,11 @@ properties:
+>    clocks:
+>      items:
+>        - description: Display AHB clock from gcc
+> -      - description: Display AXI clock
+>        - description: Display core clock
 >
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>    clock-names:
+>      items:
+>        - const: iface
+> -      - const: bus
+>        - const: core
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 2ee70072a1b4..a54f7d373f14 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -193,6 +193,10 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
->         if (!p)
->                 return -EINVAL;
+>    interrupts:
+> @@ -160,9 +158,8 @@ examples:
+>            power-domains = <&dispcc MDSS_GDSC>;
 >
-> +       /* Only create one set of debugfs per DP instance */
-
-The comment is misleading. Could you please fix it?
-
-> +       if (minor->type != DRM_MINOR_PRIMARY)
-> +               return 0;
-> +
->         dev = dpu_kms->dev;
->         priv = dev->dev_private;
+>            clocks = <&gcc GCC_DISP_AHB_CLK>,
+> -                   <&gcc GCC_DISP_AXI_CLK>,
+>                     <&dispcc DISP_CC_MDSS_MDP_CLK>;
+> -          clock-names = "iface", "bus", "core";
+> +          clock-names = "iface", "core";
 >
+>            interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+>            interrupt-controller;
 > --
-> 2.33.1
+> 2.34.1
 >
 
 
