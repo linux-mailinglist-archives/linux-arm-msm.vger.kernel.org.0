@@ -2,86 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BF1247A78A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 11:01:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF1D47A79C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Dec 2021 11:15:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230331AbhLTKBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 05:01:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230251AbhLTKBE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 05:01:04 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 306DDC061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 02:01:04 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id iy13so3394410pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 02:01:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=glxIKfznhcNipnrkJByGI9s+AUxnZnIKmybM9HizRSA=;
-        b=ZpDSg3GGMyKyLyKij38c9MVzCBq1litNCaAtMAZGrCtCncGp9k9Hndc8mept5FMffg
-         erWQMOMVd6mw7WmyDMRK6T6pUWxfRjXBLyNjuCpCwItEwvI2yFCPOVAPLJbZ/MrCoysU
-         5RBJImkszLmpykN5ayQT1eX1V2mdAIfq9eMy8KsxEkXtG+mkf+Jmpmkr7Y1BAC9gSudM
-         Iptl+nm/wkfbWAi0oJL29SkgpY+Hn5LEdS0t/LTXhzUzEDmV2sZaZXf3VTUp/Q/MIuBh
-         HhN5baKfZK199yw1GSt0wbCC/BMfZbxvTKQnWogtlRDNoWVhVBYL5NX13G2yXMq5AdNY
-         fuyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=glxIKfznhcNipnrkJByGI9s+AUxnZnIKmybM9HizRSA=;
-        b=fwEfe+bWbKnW/s8wIuM1k+h/EnLPEkhymEy2gmEwTOKX0J+Su837NmoM0kh/4VXg+8
-         i/ZklE0TIU7k6NPX9KxLb20hfDxMkBy8rNI6N6tsBUQ5XbVuWbMJOgJDTaIZ0kbY5fyN
-         fP3h6a2Tsa04kxahV+ATzoN6PeCpoZkTQiqDVUR7lY184iQ3bUqAsCh70hzdE4yf7NLo
-         X+bz7tFbcxTYa3HfjkuNY0z5gvDFgbITi9q1ZI3A/C7ka+rhjfUC8oEanfEb1VK3NkVE
-         lATnEV4MzjJ70wQviSOTXyy1lQ3+4YruZKebl44MJ5d8S/BqfJ2QOqp/I6c9X0NJG8uw
-         S5xg==
-X-Gm-Message-State: AOAM531FJwz4/CEj4+k06nM5AvAeSEP9NwNt1EZkRsljFj1Vh4DmcB2l
-        wpMe63Q6pntHw1Pu/Gy3002ebwgs1Z6VWQsQfDl1vA==
-X-Google-Smtp-Source: ABdhPJzT9dyHPL0f54cBqBFCr6WK2GpNgLSPMaBRAJ5GmbHyUhVZsqzeC+78Izoq8hsEYBMZvxe/ishN3wqS0tBbh7c=
-X-Received: by 2002:a17:902:760e:b0:148:f6af:f2c8 with SMTP id
- k14-20020a170902760e00b00148f6aff2c8mr9280960pll.95.1639994463118; Mon, 20
- Dec 2021 02:01:03 -0800 (PST)
+        id S230459AbhLTKPy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 05:15:54 -0500
+Received: from smtp21.cstnet.cn ([159.226.251.21]:35364 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230475AbhLTKPy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Dec 2021 05:15:54 -0500
+Received: from localhost.localdomain (unknown [124.16.138.126])
+        by APP-01 (Coremail) with SMTP id qwCowAC3v5+5V8BhwcdlBA--.42591S2;
+        Mon, 20 Dec 2021 18:15:21 +0800 (CST)
+From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, balbi@kernel.org,
+        gregkh@linuxfoundation.org, p.zabel@pengutronix.de
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: [PATCH] usb: dwc3: qcom: Check for null irq pointer
+Date:   Mon, 20 Dec 2021 18:15:20 +0800
+Message-Id: <20211220101520.930658-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210901084732.943248-1-ardb@kernel.org> <5bdf0bb1-150b-6b60-6f9d-86542b4d7695@linaro.org>
-In-Reply-To: <5bdf0bb1-150b-6b60-6f9d-86542b4d7695@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 20 Dec 2021 11:12:32 +0100
-Message-ID: <CAMZdPi9m_JJogxwT7k_0bzC9+gPxq9NHkuDF3T0HEj8EU-vd7w@mail.gmail.com>
-Subject: Re: [PATCH] cpufreq: qcom-cpufreq-hw: Avoid stack buffer for IRQ name
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowAC3v5+5V8BhwcdlBA--.42591S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZry7XFyUuFyUZryxWr1DGFg_yoWfGFX_K3
+        s5Wr4xKrWDKF4fKryDAw13ZryIvr98XFn3WFs093Wa93WDWFykXryIvrZ8GryUZF4DWr9r
+        X398C3yY9Fy7AjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUbckFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
+        Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+        jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
+        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8twCF
+        04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
+        18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vI
+        r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
+        1lIxAIcVCF04k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAI
+        cVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUqeHgUUUUU=
+X-Originating-IP: [124.16.138.126]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On 9/1/21 4:47 AM, Ard Biesheuvel wrote:
-> > Registering an IRQ requires the string buffer containing the name to
-> > remain allocated, as the name is not copied into another buffer.
-> >
-> > So let's add a irq_name field to the data struct instead, which is
-> > guaranteed to have the appropriate lifetime.
-> >
-> > Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
->
-> Thanks for the fix.
->
-> Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
+The return value of platform_get_irq() needs to be checked.
+To avoid use of null pointer in case that there is no irq.
 
-Seems this patch has been overlooked. Would it be possible to resubmit
-it with a 'Fixes' tag?
+Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Regards,
-Loic
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 49e6ca94486d..f04fb3f2fb85 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -614,6 +614,11 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+ 		qcom->acpi_pdata->dwc3_core_base_size;
+ 
+ 	irq = platform_get_irq(pdev_irq, 0);
++	if (!irq) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	child_res[1].flags = IORESOURCE_IRQ;
+ 	child_res[1].start = child_res[1].end = irq;
+ 
+-- 
+2.25.1
+
