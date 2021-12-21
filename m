@@ -2,299 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 24AAD47BAB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 08:21:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E89147BBE1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 09:31:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235026AbhLUHVi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 02:21:38 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:17256 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232272AbhLUHVh (ORCPT
+        id S232589AbhLUIbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 03:31:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47728 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232572AbhLUIbt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 02:21:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1640071297; x=1671607297;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=BXUd5mLERRNpJA7Tv/2hWsmJChcJtiZEKnhjjQqT8yM=;
-  b=jlPQHx+MVwfQ8hYDZZqeegcw5G/Zzbk9+MbJQRfX/c6imv32L2ImVR3k
-   wzN2wh4S1jZ7wBPGRS369mR6gTW4Mas3yBtgrGoMlLqXPpTPiJkY5ppvA
-   z4ATySzD371p3A61RXHZlnd4eY3eAFw+7Pk3XrVmv+V75xIZAkktLT+9H
-   M=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 20 Dec 2021 23:21:37 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2021 23:21:36 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 20 Dec 2021 23:21:36 -0800
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 20 Dec 2021 23:21:32 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        <devicetree@vger.kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <tglx@linutronix.de>, <maz@kernel.org>
-Subject: [PATCH v4 11/11] dt-bindings: convert qcom,spmi-pmic-arb binding to YAML format
-Date:   Tue, 21 Dec 2021 15:20:09 +0800
-Message-ID: <1640071211-31462-12-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
+        Tue, 21 Dec 2021 03:31:49 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C1DC061574;
+        Tue, 21 Dec 2021 00:31:48 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 70816B80E07;
+        Tue, 21 Dec 2021 08:31:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD66C36AE2;
+        Tue, 21 Dec 2021 08:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1640075506;
+        bh=60FSywWzdYsHJHMdx2FttrIaMi3V98PGqVc2kPOJQA4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=R48sImFtLDh4jETSb+Wnb9zOI8Ujh24+g2cMtqjfAPolHCvkYl0amyx95HZ2UPPUA
+         mFMH8fyiKR5sj9MbmUO67WQgisy20cme3S9+XAK4Jz+c/yYnTLrzCJyT3uK5KpIN/H
+         ns/WQmeG+Ei/X0HnioACBJDuDjouB3zc1Xyaa5R0=
+Date:   Tue, 21 Dec 2021 09:31:43 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Jiri Slaby <jirislaby@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_eberman@quicinc.com,
+        quic_tsoni@quicinc.com,
+        Shanker Donthineni <shankerd@codeaurora.org>,
+        Adam Wallis <awallis@codeaurora.org>,
+        Timur Tabi <timur@codeaurora.org>,
+        Elliot Berman <eberman@codeaurora.org>
+Subject: Re: [PATCHv3] tty: hvc: dcc: Bind driver to core0 for reads and
+ writes
+Message-ID: <YcGQ72wQB1CLkvur@kroah.com>
+References: <20211213141013.21464-1-quic_saipraka@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211213141013.21464-1-quic_saipraka@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the SPMI PMIC arbiter documentation to JSON/yaml.
+On Mon, Dec 13, 2021 at 07:40:13PM +0530, Sai Prakash Ranjan wrote:
+> From: Shanker Donthineni <shankerd@codeaurora.org>
+> 
+> Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
+> reads/writes from/to DCC on secondary cores. Each core has its
+> own DCC device registers, so when a core reads or writes from/to DCC,
+> it only accesses its own DCC device. Since kernel code can run on
+> any core, every time the kernel wants to write to the console, it
+> might write to a different DCC.
+> 
+> In SMP mode, Trace32 creates multiple windows, and each window shows
+> the DCC output only from that core's DCC. The result is that console
+> output is either lost or scattered across windows.
+> 
+> Selecting this option will enable code that serializes all console
+> input and output to core 0. The DCC driver will create input and
+> output FIFOs that all cores will use. Reads and writes from/to DCC
+> are handled by a workqueue that runs only core 0.
+> 
+> Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
+> Acked-by: Adam Wallis <awallis@codeaurora.org>
+> Signed-off-by: Timur Tabi <timur@codeaurora.org>
+> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> ---
+> 
+> Changes in v3:
+>  * Handle case where core0 is not online.
+> 
+> Changes in v2:
+>  * Checkpatch warning fixes.
+>  * Use of IS_ENABLED macros instead of ifdefs.
+> 
+> ---
+>  drivers/tty/hvc/Kconfig   |  20 +++++
+>  drivers/tty/hvc/hvc_dcc.c | 161 +++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 180 insertions(+), 1 deletion(-)
 
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 ----------
- .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 146 +++++++++++++++++++++
- 2 files changed, 146 insertions(+), 67 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+What has changed in the kernel in the past decade that this is suddenly
+an issue?  Why can't userspace debuggers handle this today, merging all
+of the data from different cores together?
 
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-deleted file mode 100644
-index 6332507..0000000
---- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+++ /dev/null
-@@ -1,67 +0,0 @@
--Qualcomm SPMI Controller (PMIC Arbiter)
--
--The SPMI PMIC Arbiter is found on Snapdragon chipsets.  It is an SPMI
--controller with wrapping arbitration logic to allow for multiple on-chip
--devices to control a single SPMI master.
--
--The PMIC Arbiter can also act as an interrupt controller, providing interrupts
--to slave devices.
--
--See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
--controller binding requirements for child nodes.
--
--See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
--generic interrupt controller binding documentation.
--
--Required properties:
--- compatible : should be "qcom,spmi-pmic-arb".
--- reg-names  : must contain:
--     "core" - core registers
--     "intr" - interrupt controller registers
--     "cnfg" - configuration registers
--   Registers used only for V2 PMIC Arbiter:
--     "chnls"  - tx-channel per virtual slave registers.
--     "obsrvr" - rx-channel (called observer) per virtual slave registers.
--
--- reg : address + size pairs describing the PMIC arb register sets; order must
--        correspond with the order of entries in reg-names
--- #address-cells : must be set to 2
--- #size-cells : must be set to 0
--- qcom,ee : indicates the active Execution Environment identifier (0-5)
--- qcom,channel : which of the PMIC Arb provided channels to use for accesses (0-5)
--
--Optional properties:
--- interrupts : interrupt list for the PMIC Arb controller, must contain a
--               single interrupt entry for the peripheral interrupt
--- interrupt-names : corresponding interrupt names for the interrupts
--                    listed in the 'interrupts' property, must contain:
--     "periph_irq" - summary interrupt for PMIC peripherals
--- interrupt-controller : boolean indicator that the PMIC arbiter is an interrupt controller
--- #interrupt-cells :  must be set to 4. Interrupts are specified as a 4-tuple:
--    cell 1: slave ID for the requested interrupt (0-15)
--    cell 2: peripheral ID for requested interrupt (0-255)
--    cell 3: the requested peripheral interrupt (0-7)
--    cell 4: interrupt flags indicating level-sense information, as defined in
--            dt-bindings/interrupt-controller/irq.h
--
--Example:
--
--	spmi {
--		compatible = "qcom,spmi-pmic-arb";
--		reg-names = "core", "intr", "cnfg";
--		reg = <0xfc4cf000 0x1000>,
--		      <0xfc4cb000 0x1000>,
--		      <0xfc4ca000 0x1000>;
--
--		interrupt-names = "periph_irq";
--		interrupts = <0 190 0>;
--
--		qcom,ee = <0>;
--		qcom,channel = <0>;
--
--		#address-cells = <2>;
--		#size-cells = <0>;
--
--		interrupt-controller;
--		#interrupt-cells = <4>;
--	};
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-new file mode 100644
-index 0000000..df8cfb7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-@@ -0,0 +1,146 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SPMI PMIC Arbiter
-+
-+maintainers:
-+  - Fenglin Wu <quic_fenglinw@quicinc.com>
-+  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-+
-+description: |
-+  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
-+  controller with wrapping arbitration logic to allow for multiple
-+  on-chip devices to control a single SPMI master.
-+
-+  The PMIC Arbiter can also act as an interrupt controller, providing
-+  interrupts to slave devices.
-+
-+  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
-+  SPMI controller binding requirements for child nodes.
-+
-+allOf:
-+  - $ref: spmi.yaml#
-+
-+properties:
-+  $nodename:
-+    pattern: "^spmi@.*"
-+
-+  compatible:
-+    const: qcom,spmi-pmic-arb
-+
-+  reg-names:
-+    $ref: /schemas/types.yaml#/definitions/string-array
-+    anyOf:
-+      - minItems: 3
-+      - maxItems: 3
-+      - enum: ["core", "intr", "cnfg"]
-+
-+      - minItems: 5
-+      - maxItems: 5
-+      - enum: ["core", "intr", "cnfg", "chnls", "obsrvr"]
-+
-+  reg:
-+    minItems: 3
-+    maxItems: 5
-+    description: |
-+      Specifies base physical address and size of the registers in SPMI PMIC
-+      Arbiter HW module, with the following order.
-+        - SPMI PMIC arbiter core registers (core)
-+        - SPMI PMIC arbiter interrupt controller registers (intr)
-+        - SPMI PMIC arbiter configuration registers (cnfg)
-+        - SPMI PMIC arbiter tx-channel per virtual slave registers (chnls)
-+        - SPMI PMIC arbiter rx-channel per virtual slave registers (obsrvr).
-+      Register for "chnls" and "obsrvr" are only applicable for PMIC arbiter
-+      with HW version greater than V2.
-+
-+  "#address-cells":
-+    const: 2
-+
-+  "#size-cells":
-+    const: 0
-+
-+  interrupts:
-+    description: The summary interrupt for the PMIC Arb controller.
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: periph_irq
-+
-+  interrupt-controller: true
-+
-+  "#interrupt-cells":
-+    const: 4
-+    description: |
-+      Specifies the number of cells needed to encode any interrupt source.
-+      The 1st cell is the slave ID for the requested interrupt, its valid
-+      range is [0-15].
-+      The 2nd cell is the  peripheral ID for requested interrupt, its valid
-+      range is [0-255].
-+      The 3rd cell is the requested peripheral interrupt, its valid range
-+      is [0-7].
-+      The 4th cell is interrupt flags indicating level-sense information,
-+      as defined in dt-bindings/interrupt-controller/irq.h
-+
-+  qcom,ee:
-+    description: the active Execution Environment identifier
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+  qcom,channel:
-+    description: which of the PMIC Arbiter provided channels to use for accesses
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2, 3, 4, 5]
-+
-+patternProperties:
-+  "@[0-9a-f]$":
-+    description: up to 16 child PMIC nodes
-+    type: object
-+
-+    properties:
-+      reg:
-+        items:
-+          - minItems: 1
-+            items:
-+              - minimum: 0
-+                maximum: 0xf
-+              - enum: [ 0 ]
-+                description:
-+                  0 means user ID address. 1 is reserved for group ID
-+                  address.
-+
-+    required:
-+      - reg
-+
-+required:
-+  - compatible
-+  - reg-names
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - qcom,ee
-+  - qcom,channel
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    spmi@fc4cf000 {
-+          compatible = "qcom,spmi-pmic-arb";
-+          reg-names = "core", "intr", "cnfg";
-+          reg = <0xfc4cf000 0x1000>,
-+                <0xfc4cb000 0x1000>,
-+                <0xfc4ca000 0x1000>;
-+          interrupt-names = "periph_irq";
-+          interrupts = <0 190 0>;
-+          interrupt-controller;
-+          #interrupt-cells = <4>;
-+
-+          qcom,ee = <0>;
-+          qcom,channel = <0>;
-+
-+          #address-cells = <2>;
-+          #size-cells = <0>;
-+    };
--- 
-2.7.4
+And why does this have to be a build-time option and not a runtime
+choice?  How are you going to build a universal kernel that works for
+both types of systems?
 
+> 
+> diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
+> index 8d60e0ff67b4..c0754a2e3fe4 100644
+> --- a/drivers/tty/hvc/Kconfig
+> +++ b/drivers/tty/hvc/Kconfig
+> @@ -87,6 +87,26 @@ config HVC_DCC
+>  	  driver. This console is used through a JTAG only on ARM. If you don't have
+>  	  a JTAG then you probably don't want this option.
+>  
+> +config HVC_DCC_SERIALIZE_SMP
+> +	bool "Use DCC only on core 0"
+> +	depends on SMP && HVC_DCC
+> +	help
+> +	  Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
+> +	  reads/writes from/to DCC on more than one core. Each core has its
+> +	  own DCC device registers, so when a core reads or writes from/to DCC,
+> +	  it only accesses its own DCC device. Since kernel code can run on
+> +	  any core, every time the kernel wants to write to the console, it
+> +	  might write to a different DCC.
+> +
+> +	  In SMP mode, Trace32 creates multiple windows, and each window shows
+> +	  the DCC output only from that core's DCC. The result is that console
+> +	  output is either lost or scattered across windows.
+> +
+> +	  Selecting this option will enable code that serializes all console
+> +	  input and output to core 0. The DCC driver will create input and
+> +	  output FIFOs that all cores will use. Reads and writes from/to DCC
+> +	  are handled by a workqueue that runs only core 0.
+
+So this drops down to only one device, not multiple ones?  Or is it the
+other way around?
+
+> +
+>  config HVC_RISCV_SBI
+>  	bool "RISC-V SBI console support"
+>  	depends on RISCV_SBI_V01
+> diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
+> index 8e0edb7d93fd..24e3770219bc 100644
+> --- a/drivers/tty/hvc/hvc_dcc.c
+> +++ b/drivers/tty/hvc/hvc_dcc.c
+> @@ -2,9 +2,12 @@
+>  /* Copyright (c) 2010, 2014 The Linux Foundation. All rights reserved.  */
+>  
+>  #include <linux/console.h>
+> +#include <linux/cpumask.h>
+>  #include <linux/init.h>
+> +#include <linux/kfifo.h>
+>  #include <linux/serial.h>
+>  #include <linux/serial_core.h>
+> +#include <linux/spinlock.h>
+>  
+>  #include <asm/dcc.h>
+>  #include <asm/processor.h>
+> @@ -67,26 +70,182 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
+>  	return i;
+>  }
+>  
+> +/*
+> + * Check if the DCC is enabled.  If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
+> + * then we assume then this function will be called first on core 0.  That
+> + * way, dcc_core0_available will be true only if it's available on core 0.
+> + */
+>  static bool hvc_dcc_check(void)
+>  {
+>  	unsigned long time = jiffies + (HZ / 10);
+> +	static bool dcc_core0_available;
+> +
+> +	/*
+> +	 * If we're not on core 0, but we previously confirmed that DCC is
+> +	 * active, then just return true.
+
+Why?  Don't you want to see if DCC works on the other cores?
+
+What if core 0 is never enabled?
+
+> +	 */
+> +	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && smp_processor_id() &&
+> +	    dcc_core0_available)
+> +		return true;
+>  
+>  	/* Write a test character to check if it is handled */
+>  	__dcc_putchar('\n');
+>  
+>  	while (time_is_after_jiffies(time)) {
+> -		if (!(__dcc_getstatus() & DCC_STATUS_TX))
+> +		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
+> +			if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
+
+Why this check again?
+
+> +				dcc_core0_available = true;
+>  			return true;
+> +		}
+>  	}
+
+
+
+>  
+>  	return false;
+>  }
+>  
+> +#if defined(CONFIG_HVC_DCC_SERIALIZE_SMP)
+
+No ifdefs in .c files please.  Make this a separate .c file entirely if
+this really is needed.
+
+> +
+> +static void dcc_put_work_fn(struct work_struct *work);
+> +static void dcc_get_work_fn(struct work_struct *work);
+> +static DECLARE_WORK(dcc_pwork, dcc_put_work_fn);
+> +static DECLARE_WORK(dcc_gwork, dcc_get_work_fn);
+
+No need to put "fn" at the end of your function name, we know it's a
+function :)
+
+> +static DEFINE_SPINLOCK(dcc_lock);
+> +static DEFINE_KFIFO(inbuf, unsigned char, 128);
+> +static DEFINE_KFIFO(outbuf, unsigned char, 1024);
+
+Where did these size values come from?
+
+> +
+> +/*
+> + * Workqueue function that writes the output FIFO to the DCC on core 0.
+> + */
+> +static void dcc_put_work_fn(struct work_struct *work)
+> +{
+> +	unsigned char ch;
+> +	unsigned long irqflags;
+> +
+> +	spin_lock_irqsave(&dcc_lock, irqflags);
+> +
+> +	/* While there's data in the output FIFO, write it to the DCC */
+> +	while (kfifo_get(&outbuf, &ch))
+> +		hvc_dcc_put_chars(0, &ch, 1);
+> +
+> +	/* While we're at it, check for any input characters */
+> +	while (!kfifo_is_full(&inbuf)) {
+> +		if (!hvc_dcc_get_chars(0, &ch, 1))
+> +			break;
+> +		kfifo_put(&inbuf, ch);
+
+Why is this needed?  Will not the normal input handling deal with this?
+
+> +	}
+> +
+> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
+> +}
+> +
+> +/*
+> + * Workqueue function that reads characters from DCC and puts them into the
+> + * input FIFO.
+> + */
+> +static void dcc_get_work_fn(struct work_struct *work)
+> +{
+> +	unsigned char ch;
+> +	unsigned long irqflags;
+> +
+> +	/*
+> +	 * Read characters from DCC and put them into the input FIFO, as
+> +	 * long as there is room and we have characters to read.
+> +	 */
+> +	spin_lock_irqsave(&dcc_lock, irqflags);
+> +
+> +	while (!kfifo_is_full(&inbuf)) {
+> +		if (!hvc_dcc_get_chars(0, &ch, 1))
+> +			break;
+> +		kfifo_put(&inbuf, ch);
+> +	}
+> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
+> +}
+> +
+> +/*
+> + * Write characters directly to the DCC if we're on core 0 and the FIFO
+> + * is empty, or write them to the FIFO if we're not.
+> + */
+> +static int hvc_dcc0_put_chars(u32 vt, const char *buf, int count)
+> +{
+> +	int len;
+> +	unsigned long irqflags;
+> +
+> +	spin_lock_irqsave(&dcc_lock, irqflags);
+> +	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
+> +		len = kfifo_in(&outbuf, buf, count);
+> +		spin_unlock_irqrestore(&dcc_lock, irqflags);
+> +
+> +		if (!cpu_online(0))
+> +			return 0;
+> +		/*
+> +		 * We just push data to the output FIFO, so schedule the
+> +		 * workqueue that will actually write that data to DCC.
+> +		 */
+> +		schedule_work_on(0, &dcc_pwork);
+> +		return len;
+> +	}
+> +
+> +	/*
+> +	 * If we're already on core 0, and the FIFO is empty, then just
+> +	 * write the data to DCC.
+> +	 */
+> +	len = hvc_dcc_put_chars(vt, buf, count);
+> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
+> +
+> +	return len;
+> +}
+> +
+> +/*
+> + * Read characters directly from the DCC if we're on core 0 and the FIFO
+> + * is empty, or read them from the FIFO if we're not.
+> + */
+> +static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
+> +{
+> +	int len;
+> +	unsigned long irqflags;
+> +
+> +	spin_lock_irqsave(&dcc_lock, irqflags);
+> +
+> +	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
+> +		len = kfifo_out(&inbuf, buf, count);
+> +		spin_unlock_irqrestore(&dcc_lock, irqflags);
+> +
+> +		if (!cpu_online(0))
+> +			return 0;
+
+Why check this here?
+
+> +		/*
+> +		 * If the FIFO was empty, there may be characters in the DCC
+> +		 * that we haven't read yet.  Schedule a workqueue to fill
+> +		 * the input FIFO, so that the next time this function is
+> +		 * called, we'll have data.
+> +		 */
+> +		if (!len)
+> +			schedule_work_on(0, &dcc_gwork);
+
+What happened if the cpu went offline between checking and doing this
+call?
+
+thanks,
+
+greg k-h
