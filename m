@@ -2,106 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FEB147BA58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 07:58:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BC2B47BA80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 08:12:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233606AbhLUG6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 01:58:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54976 "EHLO
+        id S234747AbhLUHM0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 02:12:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233439AbhLUG6x (ORCPT
+        with ESMTP id S234622AbhLUHMZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 01:58:53 -0500
+        Tue, 21 Dec 2021 02:12:25 -0500
 Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDE82C06173F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 22:58:53 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id mj19so11639137pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 22:58:53 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9638EC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 23:12:25 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id o63-20020a17090a0a4500b001b1c2db8145so1645511pjo.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 23:12:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Bfdq92o7810i6rJp9/BW3OyetwWdf/1GNppZ2JN9OJk=;
-        b=CeGvoycc2Gl6K76WdEbf+k5/nTMd19fWb21A6Xwiyn6l5U82KTjVDpCgmfzwxTAnCe
-         VNwmXZ2Wc78gQyFSxxVbv33ApfCh5jrVyaGOOAgBCZYmqk5e9PxFf/6tGSum9PBGesqv
-         wn5Jvt7ElLn6JOY4PoZiNLmNjSf/iZNRs38v/T8+/3tYZZecOxxAKbG+JOy9dWp6TgfH
-         wHXX/W9ysSnmhTHKq90voFPmtNIkvCIyOxDGQnsL/rfFT4mn1AOYJUkPOYT0c3K0J+M2
-         CfGP7KIIy5M00ZArYqzq3HQGJLRKdoYWkaMCUdn9r1bn5oKDRVeevJQ9U8qjbFavoa3E
-         Je4g==
+        bh=Pd57JPrq9wLZuPMxLEz3oLDEgN+l/LTIJFa/r5cmmFU=;
+        b=cAsgRiosMdXwEBHecB9MTUOyJ7JlmAzz4yCKMtYZw0aSo0OvF42q12VSuYiGkvc5xz
+         erIQviIa5baFD9QVUATp9X7E3FHM1MZAFDhkZ/BYcpDewq48MJXFYfe3x1grgPIwy5GR
+         cK+h5Far/XTLBoNKbGUUbsd0CvXhxB+et1q5eXqMSfvzLrOgfChgqFZmYpATDZjD/T2e
+         +HJdixKurMFUuU3NpDo6wvU6jmklZL0wqMjCfB2sJfe43CFeW9P+qKjtr/o4xAdv+ULW
+         jQL/zY3WAU6bYWYbEMGcFdXgtGSqB7kYWs2tifJhP+ExS8h3TuTqk4zhZiReMU4PQn2+
+         m4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Bfdq92o7810i6rJp9/BW3OyetwWdf/1GNppZ2JN9OJk=;
-        b=8DrH8To0rH3VgF4yQEYSegVc4lx+8wBXGqiuBRAlglLXu6MPlmrJ3SlM6ndcAXY7Xq
-         T6RXdkYo5TGavgfdOxAAts/rTJgMWD4O51N0db7js2ERrgwchQ8xyjfPfleCSorM2MmK
-         jn1MXgbtouTHzsaEl5TAOSzgmw1jWaLyrDhEvIPl+OBr4ltgU+l1BHK080TKX82uWZKm
-         gR2mzPOtSu7hCSGPUv0KV387Te/AWAoH5Uwufe6tsfo++uHUw8gYbQTMLa8eDgLwzn4u
-         ZOfE2Z8uhODV83rAzaQyrieuOaIbiY2BKEJP8wTOeULKTTEqnrDAvYcD7SofngoLJ59r
-         40qQ==
-X-Gm-Message-State: AOAM531OiVdYhalFpSahCWgDM7hjwtoxLVoEcT9vS/bLqwycTafIT3nF
-        uxOEUxZ5ORkNyg9G1nZtD2di
-X-Google-Smtp-Source: ABdhPJyosroBDKTLC8AhjYjToKLzIvkOBbyYz/3ygLbTchaVzURgogP17coYgfRhs5dw3LlpbnHrPQ==
-X-Received: by 2002:a17:90a:5285:: with SMTP id w5mr2518033pjh.1.1640069933188;
-        Mon, 20 Dec 2021 22:58:53 -0800 (PST)
+        bh=Pd57JPrq9wLZuPMxLEz3oLDEgN+l/LTIJFa/r5cmmFU=;
+        b=jokzSuDYu1ujoWQBKn6T38EWgPX+brc+bMBRbmEn3QDmaW8kYWRHuVjMKbZeTF1cl2
+         hlEXiu+PvswqN4ZdtmItx4NBFsQoJetTK7XRL9U+TKnlsWlmQeW3C6ygvVHu76Lgz4f5
+         /KCmJWHK35T27XjgSJ1usq7eN82Hs8/p9rDimYlhKvGU37t7QmhtI+ZSKyX3rcLzip6V
+         g+uHaHy3vUC3GyC4zE6S0akMoaE070h9QJ/FEwZNP4ZTCWphAuoUqNI5RkEzpMBbgtR1
+         IBFA3E86c1wmK6JI+dUIJEI89GORZZmgVr8iUBUw8DcKfNkf9R1+5R+gpT+lZWnxYsGC
+         JKtw==
+X-Gm-Message-State: AOAM532dkn9JLm5s1AW5rX3e8NgxufOqK0BDHfTj51ryS27yNyf1jjMG
+        C8XFt1NdJsc3cYt8sVGEtUYr
+X-Google-Smtp-Source: ABdhPJybKrTGTOw0sgXIk5MIpSXv/WBkmVaI8tHNqNxfUyfz+MejcF4YzSJI7jlVYqN8df1pRwCz6w==
+X-Received: by 2002:a17:902:8693:b0:148:a2e7:fb5a with SMTP id g19-20020a170902869300b00148a2e7fb5amr2038733plo.155.1640070745085;
+        Mon, 20 Dec 2021 23:12:25 -0800 (PST)
 Received: from thinkpad ([117.193.215.70])
-        by smtp.gmail.com with ESMTPSA id w7sm10141086pfw.133.2021.12.20.22.58.47
+        by smtp.gmail.com with ESMTPSA id ls7sm1568772pjb.11.2021.12.20.23.12.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Dec 2021 22:58:52 -0800 (PST)
-Date:   Tue, 21 Dec 2021 12:28:45 +0530
+        Mon, 20 Dec 2021 23:12:24 -0800 (PST)
+Date:   Tue, 21 Dec 2021 12:42:19 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845: add missing power-controller
- compatible
-Message-ID: <20211221065845.GC26872@thinkpad>
-References: <20211220211443.106754-1-david@ixit.cz>
+To:     20210106125322.61840-14-manivannan.sadhasivam@linaro.org
+Cc:     Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org
+Subject: Re: Question about node naming in [PATCH v3 13/18] ARM: dts: qcom:
+ sdx55: Add spmi node
+Message-ID: <20211221071219.GD26872@thinkpad>
+References: <HTKF4R.5S1PY4MCM4QS@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211220211443.106754-1-david@ixit.cz>
+In-Reply-To: <HTKF4R.5S1PY4MCM4QS@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 20, 2021 at 10:14:43PM +0100, David Heidelberg wrote:
-> dt-schema expect to have fallback compatible, which is now in-place.
+On Mon, Dec 20, 2021 at 09:27:17PM +0100, David Heidelberg wrote:
+> Hello Manivannan,
 > 
-> Fixes warning generated by `make qcom/sdm845-oneplus-fajita.dtb`:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: power-controller@c300000: compatible: ['qcom,sdm845-aoss-qmp'] is too short
->         From schema: Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
+> I'd like to ask, if you had any particular reason to name node `qcom,spmi@`
+> instead of basic `spmi@`.
 > 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 92ab4513a08b..dbdb4243499c 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -4619,7 +4619,7 @@ aoss_reset: reset-controller@c2a0000 {
->  		};
->  
->  		aoss_qmp: power-controller@c300000 {
-> -			compatible = "qcom,sdm845-aoss-qmp";
-> +			compatible = "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
 
-"qcom,sdm845-aoss-qmp" compatible is supported by the driver. So ideally we
-don't need a fallback here.
+"spmi" node label was not documented by devicetree spec at that time. So I was
+using "qcom,spmi" but it was not correct either.
 
-Is this something for DT backwards compatibility?
+I've submitted a PR now to devicetree-spec repo [1] for listing it as the
+generic node name. So once it got accepted, we can use "spmi@" for the node
+name.
 
 Thanks,
 Mani
 
->  			reg = <0 0x0c300000 0 0x100000>;
->  			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
->  			mboxes = <&apss_shared 0>;
-> -- 
-> 2.34.1
+[1] https://github.com/devicetree-org/devicetree-specification/pull/50
+
+> I'm currently converting binding for
+> Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb and I'm
+> considering adding qcom,spmi into qcom,spmi-pmic-arb or just rename this and
+> arch/arm64/boot/dts/qcom/msm8996.dtsi `qcom,spmi@` occurences to `spmi@`.
+> 
+> Ideas, inputs?
+> 
+> Thank you
+> David
+> 
 > 
