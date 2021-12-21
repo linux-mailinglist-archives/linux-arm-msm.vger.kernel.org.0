@@ -2,81 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C54EC47C278
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 16:13:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF27B47C340
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 16:43:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239149AbhLUPN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 10:13:29 -0500
-Received: from mail-qv1-f52.google.com ([209.85.219.52]:36846 "EHLO
-        mail-qv1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239154AbhLUPN2 (ORCPT
+        id S236437AbhLUPno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 10:43:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35634 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236408AbhLUPno (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 10:13:28 -0500
-Received: by mail-qv1-f52.google.com with SMTP id kc16so12700984qvb.3;
-        Tue, 21 Dec 2021 07:13:27 -0800 (PST)
+        Tue, 21 Dec 2021 10:43:44 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACE6EC061401
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 07:43:43 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id t6so12931582qkg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 07:43:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TM/EYNiDRj3pjelGxdOL0frKQz44QCfMf7gv+XrXNos=;
+        b=F1zsFtSE/NrsuidTSveNM0gDl67h08lj4dDeshbc+YE7OSUlu8s+0Y5iQn23G3bhNF
+         L7/wa0r6XY1bE9rXMFZfTu+Fly1u4zwbeabaGym5nNemI2EFNhoiXlaiBafNGzJ1pQTP
+         2NOR8VcChlrzxpu+4bESwQClbVMPNNWZEmiSRYvtoPxULTf3nt37FlKW9Q6pfO9iYgbF
+         RF4ZUgWzsXH2D1zT2fqvqSyfy+nAKOb2IS+rLrdYuLLa6toakJZdsUj51MwzHzPBkLlL
+         HjQtQKKZ5i8anDKE5BUSwmBMZOsyOFDsDI7yRi2g62QjU2REivitJy90PH6tgx9HdEAF
+         0qog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4fKX6RjQUhNvXa9JrLg/s9KHiNm86tGB9N0wiK9CEnU=;
-        b=Gz24N086qy/QbzSpalwOTOlBuzJckjqZvnNGbI5sTCeTtSV0Ivf/kXV9B1saufdBfs
-         UKIAgUnWzKjAkL2aHLccoBZdDq2qOBlPYfAYsVpIJw6l9wU390lOJ19wtTwK7nHv2lQq
-         SEZGcYfgVNoKejFbqpSmt9WZHJ13QSIkZRziewx3RmQIdZr/hCG7Mg1oRTzjrkKW+a+z
-         mQb78SELGkD3O3ZZtnmxCf0mVgUL1GVc7AYRNlMJXn4B/R0GfV2e2ZLCep/3IZv8CHfZ
-         WncN1njNC1Mcmf9vwGHjxmMOpMdKwmAEbx2o86u/e9DPjzGEQAMESRcpKZ1i4UK/djgN
-         Y1EQ==
-X-Gm-Message-State: AOAM5309QQ/tQLW9c+sE7++kEtHdOtUg0HSyMKvJ7or8B+deYWv3sHM5
-        tqNhcBJoxypd/VVby1dUpg==
-X-Google-Smtp-Source: ABdhPJx0O7vvxkTI9F1oGzIZmh7+nM/VkVa/kX86WP5ulF3qemPI+8XqcTEsOn7fE6VA95rN13Xybw==
-X-Received: by 2002:a05:6214:21ae:: with SMTP id t14mr2702941qvc.36.1640099607261;
-        Tue, 21 Dec 2021 07:13:27 -0800 (PST)
-Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id bm25sm14352057qkb.4.2021.12.21.07.13.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 07:13:26 -0800 (PST)
-Received: (nullmailer pid 1427701 invoked by uid 1000);
-        Tue, 21 Dec 2021 15:13:24 -0000
-Date:   Tue, 21 Dec 2021 11:13:24 -0400
-From:   Rob Herring <robh@kernel.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc:     tglx@linutronix.de, Rob Herring <robh+dt@kernel.org>,
-        sboyd@kernel.org, collinsd@codeaurora.org, subbaram@codeaurora.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        maz@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 08/11] bindings: spmi: spmi-pmic-arb: mark interrupt
- properties as optional
-Message-ID: <YcHvFKG8NaXzKpgA@robh.at.kernel.org>
-References: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
- <1640071211-31462-9-git-send-email-quic_fenglinw@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TM/EYNiDRj3pjelGxdOL0frKQz44QCfMf7gv+XrXNos=;
+        b=0HPziGrAByDJ4VQxZrHiRxW9sk7CJ/dXAgMiQPsznWczE9WPmEunHVzHaiKhA8ABWa
+         OY9YzCvC/sC5xvzOQ5TNWg2BOnMXmp5U0FN1IaMXBEjqp+XJvg5Plr7PF0GTC/zEgMN6
+         nnUP4cvHOjSQa6zp3UT38X46pvJa7siMsCm/X/jzry7q4KXr5wMmWQkTQMjrHU4EKQYS
+         32CT5zaz2qJwBrXrf+s8pV/u1IYGap9pXeLh2KVpsOxYzPFqj1JJXy/64uFI/b2ggxf7
+         erwK6B1Bpe8H+E5ouyekLlbLhQEr6MyyQeAj6AU83j+110LS1S67eRIsS1YQgxvol2ui
+         hXQQ==
+X-Gm-Message-State: AOAM530tBslt2pycJdMx9ax7JrQqPwsXPy6+/X/9TjQQhaXExbXdVZYp
+        ufaiUoGp8rrS2aJJkz9+GZeNSKJQpis2x6jsaDBLQQ==
+X-Google-Smtp-Source: ABdhPJwWSdSLT82NkDeKpmGZRZMmiKAk2WV6/DtmpRrClrcP7y9OglFbZ/77UwSWGk2t4gOg0h3W0exFjn2hG+lTn5U=
+X-Received: by 2002:a05:620a:4101:: with SMTP id j1mr2357042qko.593.1640101422825;
+ Tue, 21 Dec 2021 07:43:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1640071211-31462-9-git-send-email-quic_fenglinw@quicinc.com>
+References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
+ <20211218141024.500952-2-dmitry.baryshkov@linaro.org> <YcHr0/W0QqRlj1Ji@robh.at.kernel.org>
+In-Reply-To: <YcHr0/W0QqRlj1Ji@robh.at.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 21 Dec 2021 18:43:31 +0300
+Message-ID: <CAA8EJpr1wfW2CLSjBjJdMhhgBmcnMRkx=x5SAC_4LDQCHw1_qA@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings for SM8450
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Dec 2021 15:20:06 +0800, Fenglin Wu wrote:
-> From: David Collins <collinsd@codeaurora.org>
-> 
-> Mark all interrupt related properties as optional instead of
-> required.  Some boards do not required PMIC IRQ support and it
-> isn't needed to handle SPMI bus transactions, so specify it as
-> optional.
-> 
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+On Tue, 21 Dec 2021 at 17:59, Rob Herring <robh@kernel.org> wrote:
+>
+> On Sat, Dec 18, 2021 at 05:10:20PM +0300, Dmitry Baryshkov wrote:
+> > Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
+> > to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
+> > different set of clocks, so two compatible entries are required.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
+> >  1 file changed, 21 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > index a0ae024c2d0c..0adb56d5645e 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > @@ -15,6 +15,8 @@
+> >                       - "qcom,pcie-sc8180x" for sc8180x
+> >                       - "qcom,pcie-sdm845" for sdm845
+> >                       - "qcom,pcie-sm8250" for sm8250
+> > +                     - "qcom,pcie-sm8450-pcie0" for PCIe0 on sm8450
+> > +                     - "qcom,pcie-sm8450-pcie1" for PCIe1 on sm8450
+>
+> What's the difference between the two?
+
+Clocks used by these hosts. Quoting the definition:
+
++                     - "aggre0"      Aggre NoC PCIe0 AXI clock, only
+for sm8450-pcie0
++                     - "aggre1"      Aggre NoC PCIe1 AXI clock
+
+aggre1 is used by both pcie0 and pcie1, while aggre0 is used only by pcie0.
+
+>
+> >                       - "qcom,pcie-ipq6018" for ipq6018
+> >
+> >  - reg:
+> > @@ -169,6 +171,24 @@
+> >                       - "ddrss_sf_tbu" PCIe SF TBU clock
+> >                       - "pipe"        PIPE clock
+> >
+> > +- clock-names:
+> > +     Usage: required for sm8450-pcie0 and sm8450-pcie1
+> > +     Value type: <stringlist>
+> > +     Definition: Should contain the following entries
+> > +                     - "aux"         Auxiliary clock
+> > +                     - "cfg"         Configuration clock
+> > +                     - "bus_master"  Master AXI clock
+> > +                     - "bus_slave"   Slave AXI clock
+> > +                     - "slave_q2a"   Slave Q2A clock
+> > +                     - "tbu"         PCIe TBU clock
+> > +                     - "ddrss_sf_tbu" PCIe SF TBU clock
+> > +                     - "pipe"        PIPE clock
+> > +                     - "pipe_mux"    PIPE MUX
+> > +                     - "phy_pipe"    PIPE output clock
+> > +                     - "ref"         REFERENCE clock
+> > +                     - "aggre0"      Aggre NoC PCIe0 AXI clock, only for sm8450-pcie0
+> > +                     - "aggre1"      Aggre NoC PCIe1 AXI clock
+> > +
+> >  - resets:
+> >       Usage: required
+> >       Value type: <prop-encoded-array>
+> > @@ -246,7 +266,7 @@
+> >                       - "ahb"                 AHB reset
+> >
+> >  - reset-names:
+> > -     Usage: required for sc8180x, sdm845 and sm8250
+> > +     Usage: required for sc8180x, sdm845, sm8250 and sm8450
+> >       Value type: <stringlist>
+> >       Definition: Should contain the following entries
+> >                       - "pci"                 PCIe core reset
+> > --
+> > 2.34.1
+> >
+> >
 
 
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
 
-If a tag was not added on purpose, please state why and what changed.
-
+-- 
+With best wishes
+Dmitry
