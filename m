@@ -2,103 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04F2747C1B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 15:42:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EE1647C213
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 15:59:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238564AbhLUOmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 09:42:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48734 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234158AbhLUOmm (ORCPT
+        id S235721AbhLUO7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 09:59:36 -0500
+Received: from mail-qt1-f169.google.com ([209.85.160.169]:44883 "EHLO
+        mail-qt1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238768AbhLUO7f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 09:42:42 -0500
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE09C061574;
-        Tue, 21 Dec 2021 06:42:41 -0800 (PST)
-Received: by mail-qt1-x836.google.com with SMTP id n15so13097836qta.0;
-        Tue, 21 Dec 2021 06:42:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=D31zelEVktxk1zVBP/e569ZOieN3IU0DvIddUF6p1ZM=;
-        b=eiwe50TFlZDlaDlCkbz6L0i7iHgSm249T64gND2w03zqTyS2mJCA70hsfEf/pH+W0u
-         OD9kBLd1flhOakQJrfkZHHhVur8gnqkAPZGL/CKfLQFi6proAqbGYcaRp37eb4s0K+Qg
-         qW8ALuwdGcJ5fdocA9zAJG65LBi5mlEYo9AFgwyDxsciX78ksoV0C2dg1gdjJ7uEUpoY
-         fBGew3DkTgoaMcBQzfKFKlSZ9uLESHVKbmR2rsQ1PgYu/GGuKCUutYo3/f3PUPYLh1ud
-         plaOJ4TuyEOx3FvxzD96C3388WT+yT3EW2fh+O4eqmCmlIwqGXvGCnShOSmWHPY7AdZS
-         TS1g==
+        Tue, 21 Dec 2021 09:59:35 -0500
+Received: by mail-qt1-f169.google.com with SMTP id a1so13018085qtx.11;
+        Tue, 21 Dec 2021 06:59:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=D31zelEVktxk1zVBP/e569ZOieN3IU0DvIddUF6p1ZM=;
-        b=Nw/yDkgaWfOpMbhORGzRZEVzgxKydkuyhZYnF660yzTNEhbtbqxKXtXJbWozlW2ZTW
-         i72liCKyfBkgCgATHmS5496vMNUIXx5kCemlCbrVDmS+hNsfNq5HR9nSZ7vAl6vgYDZ3
-         NCcNRKTmp7sPU+f1PqJ9L34uH6n9Ey/fz5pdGeuQtMQdkJM0VY/HbFmdfAGR8ugYaSkT
-         BVazXvKDBTQq4+/484x8l+b6pJjdna8SAjAYAi0/FBLJ72ZpZXLzXtEA8uGgYnjQeGbm
-         m1u5PJrplQd67rQKcY7pjh4C0Xlke2vrxDx3/IN9vQzhsbBC1OVtzi5/8f6h/Fj2hb60
-         DXwA==
-X-Gm-Message-State: AOAM530awfyo+iv28Hk8ByQ3JjNhkRbjvLp6prOOH0do5ATTtID9SERs
-        Q1JNTa6tK9E4Di4A1fIhE5c=
-X-Google-Smtp-Source: ABdhPJyAwIC+hNgSxPfn11Ky2iXQXAmqJxFVzzNjAb5C2gvg6ijvzxuCuNZ8rvQFcyt6gcSDkXyfSA==
-X-Received: by 2002:a05:622a:28b:: with SMTP id z11mr2443070qtw.242.1640097761140;
-        Tue, 21 Dec 2021 06:42:41 -0800 (PST)
-Received: from localhost.localdomain ([193.203.214.57])
-        by smtp.gmail.com with ESMTPSA id v4sm14130108qkp.118.2021.12.21.06.42.37
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KdY8eJ3b8gIHmOjY8jOpNQudFdqG5PeN9eLzoM3qKnw=;
+        b=Ka4G39Yt6Dtn8rdp/9o4zCt6qlVpvjWtA3kZba9NKcAWVB9v2WwEyxOucQNmD2B7hB
+         oJglnGreoxtYS0Njyl56jSxXB04UwZpa3Jmkb0BxQnKg3PMyNsGqvapzgFOo4oViTJHP
+         1mi4rCToho4XsdqqNpBP485QewQIKFUsn/3zdx1bOZKxlwQc+jK0ny6h3QhYvDet7t/Y
+         OYo1ksEmsbVyxj+ryVHC5Y/Yd77sVthpwvaG2mGJxlKdLZS/vJWbFV1QbuD16E+EZkRA
+         qmO853ChLNjljvK+nZIMSgL3dmNYX5T0ckBYcWF4bcWZ4Y2pg4d1xhhdnQRTQ/Iygj06
+         qIWQ==
+X-Gm-Message-State: AOAM533xTmz2VnpY7z9+r/blkz3xabYJaIC8A+GsNePl2jPOJrCL9glG
+        qZLrh4XqchCh+MXEzh9ixqbP2AWjhNMP
+X-Google-Smtp-Source: ABdhPJwz8IpgYskPYVVDXd8Hm6lcmXvWy1o3h4wh8B+dYaiYsY9n+91H5bL0oPXDn0Bz3Q9J61mRvQ==
+X-Received: by 2002:ac8:5881:: with SMTP id t1mr2510729qta.414.1640098774575;
+        Tue, 21 Dec 2021 06:59:34 -0800 (PST)
+Received: from robh.at.kernel.org ([24.55.105.145])
+        by smtp.gmail.com with ESMTPSA id e14sm532762qts.15.2021.12.21.06.59.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 06:42:40 -0800 (PST)
-From:   cgel.zte@gmail.com
-X-Google-Original-From: deng.changcheng@zte.com.cn
-To:     robdclark@gmail.com
-Cc:     sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Changcheng Deng <deng.changcheng@zte.com.cn>,
-        Zeal Robot <zealci@zte.com.cn>
-Subject: [PATCH] drm/msm: replace DEFINE_SIMPLE_ATTRIBUTE with DEFINE_DEBUGFS_ATTRIBUTE
-Date:   Tue, 21 Dec 2021 14:42:34 +0000
-Message-Id: <20211221144234.480618-1-deng.changcheng@zte.com.cn>
-X-Mailer: git-send-email 2.25.1
+        Tue, 21 Dec 2021 06:59:33 -0800 (PST)
+Received: (nullmailer pid 1408248 invoked by uid 1000);
+        Tue, 21 Dec 2021 14:59:31 -0000
+Date:   Tue, 21 Dec 2021 10:59:31 -0400
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings
+ for SM8450
+Message-ID: <YcHr0/W0QqRlj1Ji@robh.at.kernel.org>
+References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
+ <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Changcheng Deng <deng.changcheng@zte.com.cn>
+On Sat, Dec 18, 2021 at 05:10:20PM +0300, Dmitry Baryshkov wrote:
+> Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
+> to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
+> different set of clocks, so two compatible entries are required.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> index a0ae024c2d0c..0adb56d5645e 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> @@ -15,6 +15,8 @@
+>  			- "qcom,pcie-sc8180x" for sc8180x
+>  			- "qcom,pcie-sdm845" for sdm845
+>  			- "qcom,pcie-sm8250" for sm8250
+> +			- "qcom,pcie-sm8450-pcie0" for PCIe0 on sm8450
+> +			- "qcom,pcie-sm8450-pcie1" for PCIe1 on sm8450
 
-Fix the following coccicheck warning:
-./drivers/gpu/drm/msm/msm_debugfs.c: 132: 0-23: WARNING: shrink_fops
-should be defined with DEFINE_DEBUGFS_ATTRIBUTE
+What's the difference between the two?
 
-Use DEFINE_DEBUGFS_ATTRIBUTE rather than DEFINE_SIMPLE_ATTRIBUTE for
-debugfs files.
-
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
----
- drivers/gpu/drm/msm/msm_debugfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-index 956b1efc3721..91fb0c83b600 100644
---- a/drivers/gpu/drm/msm/msm_debugfs.c
-+++ b/drivers/gpu/drm/msm/msm_debugfs.c
-@@ -129,9 +129,9 @@ shrink_set(void *data, u64 val)
- 	return 0;
- }
- 
--DEFINE_SIMPLE_ATTRIBUTE(shrink_fops,
--			shrink_get, shrink_set,
--			"0x%08llx\n");
-+DEFINE_DEBUGFS_ATTRIBUTE(shrink_fops,
-+			 shrink_get, shrink_set,
-+			 "0x%08llx\n");
- 
- 
- static int msm_gem_show(struct seq_file *m, void *arg)
--- 
-2.25.1
-
+>  			- "qcom,pcie-ipq6018" for ipq6018
+>  
+>  - reg:
+> @@ -169,6 +171,24 @@
+>  			- "ddrss_sf_tbu" PCIe SF TBU clock
+>  			- "pipe"	PIPE clock
+>  
+> +- clock-names:
+> +	Usage: required for sm8450-pcie0 and sm8450-pcie1
+> +	Value type: <stringlist>
+> +	Definition: Should contain the following entries
+> +			- "aux"         Auxiliary clock
+> +			- "cfg"         Configuration clock
+> +			- "bus_master"  Master AXI clock
+> +			- "bus_slave"   Slave AXI clock
+> +			- "slave_q2a"   Slave Q2A clock
+> +			- "tbu"         PCIe TBU clock
+> +			- "ddrss_sf_tbu" PCIe SF TBU clock
+> +			- "pipe"        PIPE clock
+> +			- "pipe_mux"    PIPE MUX
+> +			- "phy_pipe"    PIPE output clock
+> +			- "ref"         REFERENCE clock
+> +			- "aggre0"	Aggre NoC PCIe0 AXI clock, only for sm8450-pcie0
+> +			- "aggre1"	Aggre NoC PCIe1 AXI clock
+> +
+>  - resets:
+>  	Usage: required
+>  	Value type: <prop-encoded-array>
+> @@ -246,7 +266,7 @@
+>  			- "ahb"			AHB reset
+>  
+>  - reset-names:
+> -	Usage: required for sc8180x, sdm845 and sm8250
+> +	Usage: required for sc8180x, sdm845, sm8250 and sm8450
+>  	Value type: <stringlist>
+>  	Definition: Should contain the following entries
+>  			- "pci"			PCIe core reset
+> -- 
+> 2.34.1
+> 
+> 
