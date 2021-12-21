@@ -2,124 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 635A447B651
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 00:54:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2024147B65E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 01:01:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233201AbhLTXyJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Dec 2021 18:54:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
+        id S233217AbhLUABX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Dec 2021 19:01:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232161AbhLTXyI (ORCPT
+        with ESMTP id S230434AbhLUABX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Dec 2021 18:54:08 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7229BC06173F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:54:08 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id 132so10965148qkj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 15:54:08 -0800 (PST)
+        Mon, 20 Dec 2021 19:01:23 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64131C061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 16:01:23 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id w6-20020a9d77c6000000b0055e804fa524so14589630otl.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Dec 2021 16:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ICTB8V4n+9cmca6+x37Ql0fa5KJvA8Kd4xGMSs77tp4=;
-        b=GOa3Py2rvoHFE1zmqG4g4VsKavd6FCbMcxB66Q0UHthvWMGSZ4qkosE2WTkfXY5jLj
-         GJEsJls1Q8hoJJe0Hz8joPOiyGiwn/He61O6Dpe3Y2sQ6iVAEfduAgGVtDQ3aKJHE+Cf
-         CNf42oqdHuyZxsnhBOfuuJuEy0uOszNUBOUyIrrH612CftS0o0hXP8a1a35t3HoCwHAK
-         55EDgjLU7QWhMfPUQ3lxpDHgZqZIXdT/wc+PVWVZOt2vshCjWC9xUCTJ6B7WFwZ0dwS9
-         TlLRGrJ22LePnO+EgLB9+yPEVV/ZwtWz52I92Hh881azKDNEYhSvkBO35edcz4Ii6Hvs
-         dOdA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PRRlE08tRQGUC/ML6AzImHY04yPHs+qeigbIK6/ghCA=;
+        b=WTin9bf+zQCthKwRftbe7mXH1Hwkj0/++A2ImlNyEdbKrQyYcw7vxaOSmoo3yhQTYB
+         8xus/V01oDtDh/8outB78i7WyWUyy2yHdZAahe1edvGG7m/Pm69awBYMJboaizx89H3H
+         TySg4EtqKrNEYuEE4Q4R0OqqygxISuJbOAKbu80bTIDm7yKlpB/HMYXa1z94jjfhHSk7
+         DfdTZ/CV+1TIYTyrPNVOAAGiqu207MBdjUqyhP3wWXVU8NaOfYZFdsI77fTCVihYsS9b
+         ZslrJ3NsLR1SnC6wfdADYXanvW/E7ZUcqEbmT9QSZ8HX9kWfqZYoAtFQuRmEA5A11uId
+         gdyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ICTB8V4n+9cmca6+x37Ql0fa5KJvA8Kd4xGMSs77tp4=;
-        b=eNIUlL3yLA2djop1bd3FRiCtX27enQhNwTsF+VRbNW58Yt6PYuxqUin+3BgYowqpXl
-         vkGSgDcF19KeGRMKIQdKCdcx4FPg4P7e+wV1GUmnVh9gdz3wpB8oN0nm0njl44UdxTvP
-         2JTzI9buN/68DqLewv8hAc0FpS13JWU8t7HD+c2zbc7yRbPQYRN/paaMbaq1PTHGD2ck
-         9WaturS5nedatR5YSYdGXbnbYExrtbqzjH1xWaSoILrxBXZ8Shy8thpA2qHCTyA0ZPZo
-         ss2kWcmAfxHfNSaJUEcxeA+q1wEa+xZTmvivmMM+xE5x4pQscSi92I4afSOS6sa/LwSg
-         21Sw==
-X-Gm-Message-State: AOAM533QRXQMF0PSF4WJ8qOl48lBnLRfk4mbKcExxh+6xW+sQ9Rl4OI7
-        rCO2GutirRQm1Qw5R7EMjttTzcpk59JXbEiNmHz4zQ==
-X-Google-Smtp-Source: ABdhPJzCxuuI7T69jGLo8Z9p5gSwkmCeAciC0CgBmGa3lxd+isswddNujRi13+rwrqy40MTb27glmY8K2mKYuRI17Ng=
-X-Received: by 2002:ae9:e641:: with SMTP id x1mr432352qkl.59.1640044447562;
- Mon, 20 Dec 2021 15:54:07 -0800 (PST)
-MIME-Version: 1.0
-References: <20211220184220.86328-1-david@ixit.cz>
-In-Reply-To: <20211220184220.86328-1-david@ixit.cz>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 21 Dec 2021 02:53:56 +0300
-Message-ID: <CAA8EJprqBELsZUCVqppAsNVBzsW3FxQbUCQ=zy_tAVY0SeTPwQ@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: msm: disp: remove bus from dpu bindings
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PRRlE08tRQGUC/ML6AzImHY04yPHs+qeigbIK6/ghCA=;
+        b=pjtaBKXTSEpt68faaGtvntbUR9SsPvGGLMh7DIojAiD8GdRjtM0SZwvfOwyk6g92po
+         18Df7LM8Jjc3OBAGZvnH7dVClVRrgDUpy0gMzYPqbG6K+rAe9+KwsVH2OtWo3ZXZ3WFw
+         CIg1QSgO3MX2ba9J6/OvU2fOeKCh//vLIGVt9llxsp4dn/vDtXgoNT9RpauV2kHoDJfM
+         T1zsJMtfUzEPyV9Mh0MHJpkYwUq+A/+infup8+5F4TYUiuNUWDKNpUn2xpq+d/1qFS+G
+         cDPP91H7WWCZqzszBzQnf+IJTbOG5zcEpaJj+p967HoJKmpLhQ/Y00zKtWX7SJgi+H9G
+         jErA==
+X-Gm-Message-State: AOAM53323F/ZEoW9pxLxspTT5u2J/zhvP2RljBxI5Nm5uf16sFlZaeWl
+        4AcYZVz3wolF0ZrVyvMFSaOxG11Xa78ybQ==
+X-Google-Smtp-Source: ABdhPJxLH6ATKCV5pwDXNkHsZfhkl8m3cSUMOoFFfS0pKDKjPYh+aUzBCxMsy2pZgtNiipr6geA0jQ==
+X-Received: by 2002:a05:6830:8:: with SMTP id c8mr407528otp.115.1640044881961;
+        Mon, 20 Dec 2021 16:01:21 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x16sm2181504otq.47.2021.12.20.16.01.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Dec 2021 16:01:21 -0800 (PST)
+Date:   Mon, 20 Dec 2021 16:02:30 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dp: Only create debugfs for PRIMARY minor
+Message-ID: <YcEZljENYJQAk9We@ripper>
+References: <20211217002026.2304973-1-bjorn.andersson@linaro.org>
+ <CAA8EJpoYJFfB5qfFMoc3-QsmYZzO16C28MOrPyokANQyPBhdyg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoYJFfB5qfFMoc3-QsmYZzO16C28MOrPyokANQyPBhdyg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Dec 2021 at 21:42, David Heidelberg <david@ixit.cz> wrote:
->
-> Driver and dts has been already adjusted and bus moved out of dpu, let's
-> update also dt-bindings.
->
-> Fixes warnings as:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: mdss
-> @ae00000: clock-names: ['iface', 'core'] is too short
->         From schema: Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
->
-> Ref: https://lore.kernel.org/all/20210803101657.1072358-1-dmitry.baryshkov@linaro.org/
->
-> Signed-off-by: David Heidelberg <david@ixit.cz>
+On Mon 20 Dec 15:53 PST 2021, Dmitry Baryshkov wrote:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> On Fri, 17 Dec 2021 at 03:19, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > dpu_kms_debugfs_init() is invoked for each minor being registered. Most
+> > of the files created are unrelated to the minor, so there's no reason to
+> > present them per minor.
+> > The exception to this is the DisplayPort code, which ends up invoking
+> > dp_debug_get() for each minor, each time associate the allocated object
+> > with dp->debug.
+> >
+> > As such dp_debug will create debugfs files in both the PRIMARY and the
+> > RENDER minor's debugfs directory, but only the last reference will be
+> > remembered.
+> >
+> > The only use of this reference today is in the cleanup path in
+> > dp_display_deinit_sub_modules() and the dp_debug_private object does
+> > outlive the debugfs entries in either case, so there doesn't seem to be
+> > any adverse effects of this, but per the code the current behavior is
+> > unexpected, so change it to only create debugfs files for the PRIMARY
+> > minor.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >
+> > Changes since v1:
+> > - Moved the check up from msm_dp_debugfs_init() to dpu_kms_debugfs_init()
+> >
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index 2ee70072a1b4..a54f7d373f14 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -193,6 +193,10 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+> >         if (!p)
+> >                 return -EINVAL;
+> >
+> > +       /* Only create one set of debugfs per DP instance */
+> 
+> The comment is misleading. Could you please fix it?
+> 
 
-> ---
->  .../devicetree/bindings/display/msm/dpu-sdm845.yaml          | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> index b4ea7c92fb3d..0dca4b3d66e4 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> @@ -31,13 +31,11 @@ properties:
->    clocks:
->      items:
->        - description: Display AHB clock from gcc
-> -      - description: Display AXI clock
->        - description: Display core clock
->
->    clock-names:
->      items:
->        - const: iface
-> -      - const: bus
->        - const: core
->
->    interrupts:
-> @@ -160,9 +158,8 @@ examples:
->            power-domains = <&dispcc MDSS_GDSC>;
->
->            clocks = <&gcc GCC_DISP_AHB_CLK>,
-> -                   <&gcc GCC_DISP_AXI_CLK>,
->                     <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> -          clock-names = "iface", "bus", "core";
-> +          clock-names = "iface", "core";
->
->            interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
->            interrupt-controller;
-> --
-> 2.34.1
->
+I agree, and as Abhinav pointed out I didn't update $subject fully
+either.
 
+Will resubmit.
 
--- 
-With best wishes
-Dmitry
+Regards,
+Bjorn
+
+> > +       if (minor->type != DRM_MINOR_PRIMARY)
+> > +               return 0;
+> > +
+> >         dev = dpu_kms->dev;
+> >         priv = dev->dev_private;
+> >
+> > --
+> > 2.33.1
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
