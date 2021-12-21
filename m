@@ -2,119 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4360047C690
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 19:28:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD41B47C6A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 19:32:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241349AbhLUS2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 13:28:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241311AbhLUS2h (ORCPT
+        id S237237AbhLUSc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 13:32:59 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:34008 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233866AbhLUSc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 13:28:37 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09211C061574;
-        Tue, 21 Dec 2021 10:28:37 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id v13so60536pfi.3;
-        Tue, 21 Dec 2021 10:28:37 -0800 (PST)
+        Tue, 21 Dec 2021 13:32:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AtngP8d0g0fi2Zi2weqgSY60agKP0OsKMyjizujaa74=;
-        b=Q3r4GoA8o/zYVcwujoPbTOpghL3YfVRSaA/MrB3KGhWFEfWhne3McSgxheE8s+9WaU
-         V4odamfn+MNJnQEeVYfp71N396wLLT6MwbIQM3RYHFs5S8TJfGmYRv77AOpd6DXcEtM6
-         RUdnQDdkWpua9keDDXaXNMdcQxHBXeauZY46sgdjH5+pKKJZ3D+pN+jzkSthkQKsakhc
-         b8fERRuktBX4hW4X0CMsuXAEvwZOEY+ErzdE+rCpSgI8H9DCwQp0UYNhNrPIyzZ1cm8j
-         f6Ar3itIz9w9LghDA7QXEMwbx2VdX2HqRHiAmdLPV2RwyWrP/tw6kBS484W69BHXtWfl
-         ooHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AtngP8d0g0fi2Zi2weqgSY60agKP0OsKMyjizujaa74=;
-        b=NeRPhxjF+ClPfKYGsSHMcz7hl6oy5xes6SDPf1wBIco2KfEP6eQj6RxMk8w4wb3kDx
-         gLYIKmuvd6grokYON3wtoIPcvev9nkUZ28LHUZqCnZijSoKWps8zTzVSb5adDiJGF/b2
-         SwhxMbA2f97VKG4B6DG2ih90ZWQtDfw06JWOSRfS+/OASrYQSPRpPAxeEu1+gVE09lm0
-         LW/5njufK/8i1m5JSZM9uwLqm636MHB18tUo1vYzcv6Uzf008v+fPjy7S2bY0ZHaOX9j
-         XKDluGpkfPkNFexSFSdaEyZXNZ+6ovBzBwfh5fmEopw/ZXqFevWSYKKHxeRTQYf+wVvL
-         PT6Q==
-X-Gm-Message-State: AOAM532h41akmEs0mgq1n2dOW0gAIhr3asvzCSgaXh/3V4MzXkfkOyDN
-        kZ0iitDXcjqT1fd+pfQRcr4=
-X-Google-Smtp-Source: ABdhPJwxhTCNg3D2B6n/fOoZWVyeb1dwKHhW1JJA4lk5TEYiBhog0aJCNVOscXnjhKP2x3CnGjhysA==
-X-Received: by 2002:a63:9143:: with SMTP id l64mr1793570pge.495.1640111316637;
-        Tue, 21 Dec 2021 10:28:36 -0800 (PST)
-Received: from jaschultz-Thelio-Major.corp.microsoft.com ([2001:4898:80e8:36:b871:81c1:f2ef:8174])
-        by smtp.gmail.com with ESMTPSA id s19sm23436133pfu.137.2021.12.21.10.28.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 10:28:36 -0800 (PST)
-From:   Jarrett Schultz <jaschultzms@gmail.com>
-X-Google-Original-From: Jarrett Schultz <jaschultzMS@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        bjorn.andersson@linaro.org, Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <markgross@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Felipe Balbi <balbi@kernel.org>, linux-arm-msm@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: [PATCH RESEND v4 4/4] arm64: dts: qcom: surface-duo: Add surface xbl
-Date:   Tue, 21 Dec 2021 10:28:26 -0800
-Message-Id: <20211221182826.2141789-5-jaschultzMS@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211221182826.2141789-1-jaschultzMS@gmail.com>
-References: <20211221182826.2141789-1-jaschultzMS@gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640111578; x=1671647578;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=ZsgLJndpLvwXmWTrpAtIHRV7ZxELnn8+rKqh9Mjotck=;
+  b=tjIjwY112esO45WbSS9eYHwxlzhuiJipzNTTzAqt7bLWVWCB7ZfHqQiO
+   2GTL0uXc7iGgCRzgkJmuUyolMpdXlvAlsUNpwgvjKCcDEhRUHRJr240+q
+   AwuzCLdbRuTxhG62IKVquBCf7ZeRg8gQ9hhWPdQxiDucG3wyH4hvwbwBx
+   s=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 21 Dec 2021 10:32:58 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Dec 2021 10:32:56 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 21 Dec 2021 10:32:55 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 21 Dec 2021 10:32:54 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v8 1/2] drm/msm/dp: dp_link_parse_sink_count() return immediately if aux read failed
+Date:   Tue, 21 Dec 2021 10:32:47 -0800
+Message-ID: <1640111567-30157-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jarrett Schultz <jaschultz@microsoft.com>
+Add checking aux read/write status at both dp_link_parse_sink_count()
+and dp_link_parse_sink_status_filed() to avoid long timeout delay if
+dp aux read/write failed at timeout due to cable unplugged. Also make
+sure dp controller had been initialized before start dpcd read and write.
 
-Introduce device tree source for the surface xbl driver.
+Changes in V4:
+-- split this patch as stand alone patch
 
-Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+Changes in v5:
+-- rebase on msm-next branch
 
+Changes in v6:
+-- add more details commit text
+
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
 ---
+ drivers/gpu/drm/msm/dp/dp_display.c | 12 +++++++++---
+ drivers/gpu/drm/msm/dp/dp_link.c    | 19 ++++++++++++++-----
+ 2 files changed, 23 insertions(+), 8 deletions(-)
 
-Changes in v4:
- - N/A
-
----
-
-Changes in v3:
- - N/A
-
----
-
-Changes in v2:
- - Updated to reference an offset inside of imem
----
- .../boot/dts/qcom/sm8150-microsoft-surface-duo.dts     | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index 5901c28e6696..abb7964daac4 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -430,6 +430,16 @@ &i2c19 {
- 	/* MAX34417 @ 0x1e */
- };
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 3d61459..0766752 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -692,9 +692,15 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
+ 		return 0;
+ 	}
  
-+&imem {
-+	status = "okay";
+-	ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
+-	if (ret == -ECONNRESET) { /* cable unplugged */
+-		dp->core_initialized = false;
++	/*
++	 * dp core (ahb/aux clks) must be initialized before
++	 * irq_hpd be handled
++	 */
++	if (dp->core_initialized) {
++		ret = dp_display_usbpd_attention_cb(&dp->pdev->dev);
++		if (ret == -ECONNRESET) { /* cable unplugged */
++			dp->core_initialized = false;
++		}
+ 	}
+ 	DRM_DEBUG_DP("hpd_state=%d\n", state);
+ 
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index a5bdfc5..d4d31e5 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -737,18 +737,25 @@ static int dp_link_parse_sink_count(struct dp_link *dp_link)
+ 	return 0;
+ }
+ 
+-static void dp_link_parse_sink_status_field(struct dp_link_private *link)
++static int dp_link_parse_sink_status_field(struct dp_link_private *link)
+ {
+ 	int len = 0;
+ 
+ 	link->prev_sink_count = link->dp_link.sink_count;
+-	dp_link_parse_sink_count(&link->dp_link);
++	len = dp_link_parse_sink_count(&link->dp_link);
++	if (len < 0) {
++		DRM_ERROR("DP parse sink count failed\n");
++		return len;
++	}
+ 
+ 	len = drm_dp_dpcd_read_link_status(link->aux,
+ 		link->link_status);
+-	if (len < DP_LINK_STATUS_SIZE)
++	if (len < DP_LINK_STATUS_SIZE) {
+ 		DRM_ERROR("DP link status read failed\n");
+-	dp_link_parse_request(link);
++		return len;
++	}
 +
-+	xbl@a94 {
-+		compatible = "microsoft,sm8150-surface-duo-xbl";
-+		reg = <0xa94 0x100>;
-+		status = "okay";
-+	};
-+};
-+
- &pon {
- 	pwrkey {
- 		status = "okay";
++	return dp_link_parse_request(link);
+ }
+ 
+ /**
+@@ -1023,7 +1030,9 @@ int dp_link_process_request(struct dp_link *dp_link)
+ 
+ 	dp_link_reset_data(link);
+ 
+-	dp_link_parse_sink_status_field(link);
++	ret = dp_link_parse_sink_status_field(link);
++	if (ret)
++		return ret;
+ 
+ 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
+ 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
 -- 
-2.25.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
