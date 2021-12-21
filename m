@@ -2,148 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 562A447BCDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 10:30:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2913B47BDF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 11:13:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236063AbhLUJaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 04:30:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33200 "EHLO
+        id S232043AbhLUKN3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 05:13:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234398AbhLUJaC (ORCPT
+        with ESMTP id S232012AbhLUKN3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 04:30:02 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86FAC061574;
-        Tue, 21 Dec 2021 01:30:02 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4741061335;
-        Tue, 21 Dec 2021 09:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FBBC36AE2;
-        Tue, 21 Dec 2021 09:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1640079001;
-        bh=t9uG/PUzJfJCt5vq7qOvzQiuQHsRYBb+5hBgWJjQF8c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MMrMbGrsqXDDJawxnYTgl5OlqV29ks8dDbYtGt+9DN7vpqfD5awhcaVrfIphjkLhR
-         eCRBU9SysvivSe0EOauQNT2dECjbHZrp5OFoLLZrHfj5oxihlfsbp1jTAEj+M4zMa2
-         qN4tkQlXtDx9JJihAZOgHkEn4Qjac7ihVzHqkY94=
-Date:   Tue, 21 Dec 2021 10:29:59 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tue, 21 Dec 2021 05:13:29 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0712C061574;
+        Tue, 21 Dec 2021 02:13:28 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id j140-20020a1c2392000000b003399ae48f58so1277764wmj.5;
+        Tue, 21 Dec 2021 02:13:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LiEdSYmJyAKWAqc7ui3XIZTznDZvFBWaDk4WF2mm3yA=;
+        b=pBXL5mIQQqrE1sWVIayqcv1+QL5wyX/RH88FEO/rknbs31q5lPo7Gc1vsNLcyk0aeN
+         GuQyqQB6ckAM/UMXeqF1shw9N22mmOkGalFRHuT+sytdWtPUY6l7oo5EMLPSC9rjEBV9
+         21LHQ2WLsLqRROwJubFBoMUkkb+f2Mpgjv1O/Ong1dxmOUlcsz23vfcjqJD2j++ltWGb
+         peffVNVGts7WXOfgJi/2dptWzKdsMGvyg+itPpnhRpO0/hj/T1dXFnSDVMWoyycHht3+
+         GFC1s6NEkiwfR0QXZ9Es+IKcEhWteFlyreBY4mGdFzuw81AT1JVQ9BVWyEvFcTHkgWVa
+         kz1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LiEdSYmJyAKWAqc7ui3XIZTznDZvFBWaDk4WF2mm3yA=;
+        b=tEL8wZVJr9aDccRdYZScwm76wL5dUyI2XItj3oMlKKhBGCYSUgzOIIcuNeczoTDyzI
+         hNEA8p8MZ2tA6xbDE/9HiUDAgNNZmrjn3Gmd3Febz/isqIuZ+tFk87QHxe+rOdrtVwR1
+         1llGWL+jsAXOtLv9z8eLSgTTbZU07rR1KKTYrH96eYkF9YEIJ6WcleEw58+Vz7pxsqSa
+         0nEuND5uhNM1HG+ioA0Fi5MLxtPaV0uZvIu4h3ThRhj5WX9RPNXQkLziJuak7uzPIA7J
+         0M/QJpdJM6qiBEwOQA5W6B4sOH4Q1V5MJW5vZryAnz+cw6UFPSJKY0UQN+4jKsiqbeC7
+         0rqw==
+X-Gm-Message-State: AOAM531mSD+QYjBY+qrkvLbgMDwzQ33sa9dRfJ5JE1Y54ey3bg9S61fI
+        7YaBkAzcQ8ZbLAG5JKURozI=
+X-Google-Smtp-Source: ABdhPJxsRp72r/sEXZushQwODicy6txDdNbXADlfasQ0YwZfEqd1nrA21efVDrckpVqgvVS1sVerog==
+X-Received: by 2002:a1c:7e41:: with SMTP id z62mr2105184wmc.62.1640081607375;
+        Tue, 21 Dec 2021 02:13:27 -0800 (PST)
+Received: from localhost.localdomain ([217.113.240.86])
+        by smtp.gmail.com with ESMTPSA id m21sm18012267wrb.2.2021.12.21.02.13.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Dec 2021 02:13:26 -0800 (PST)
+From:   =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+To:     robdclark@gmail.com
+Cc:     maarten.lankhorst@linux.intel.com, sean@poorly.run,
+        airlied@linux.ie, daniel@ffwll.ch, tzimmermann@suse.de,
+        maxime@cerno.tech, mripard@kernel.org, wens@csie.org,
+        jernej.skrabec@gmail.com, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v4 01/34] component: Introduce struct aggregate_device
-Message-ID: <YcGel9PtOgqWH6l3@kroah.com>
-References: <20211202222732.2453851-1-swboyd@chromium.org>
- <20211202222732.2453851-2-swboyd@chromium.org>
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+Subject: [PATCH 0/3] Add missing format_mod_supported functions
+Date:   Tue, 21 Dec 2021 11:13:16 +0100
+Message-Id: <20211221101319.7980-1-jose.exposito89@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211202222732.2453851-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Dec 02, 2021 at 02:26:59PM -0800, Stephen Boyd wrote:
-> Replace 'struct master' with 'struct aggregate_device' and then rename
-> 'master' to 'adev' everywhere in the code. While we're here, put a
-> struct device inside the aggregate device so that we can register it
-> with a bus_type in the next patch.
-> 
-> The diff is large but that's because this is mostly a rename, where
-> sometimes 'master' is replaced with 'adev' and other times it is
-> replaced with 'parent' to indicate that the struct device that was being
-> used is actually the parent of the aggregate device and driver.
-> 
-> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/base/component.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/base/component.c b/drivers/base/component.c
-> index 2d25a6416587..d25048d04b70 100644
-> --- a/drivers/base/component.c
-> +++ b/drivers/base/component.c
-> @@ -9,6 +9,7 @@
->   */
->  #include <linux/component.h>
->  #include <linux/device.h>
-> +#include <linux/idr.h>
->  #include <linux/list.h>
->  #include <linux/mutex.h>
->  #include <linux/slab.h>
-> @@ -63,7 +64,10 @@ struct master {
->  
->  	const struct component_master_ops *ops;
->  	struct device *parent;
-> +	struct device dev;
+Hi all,
 
-Who initializes this new structure?
+When setting IN_FORMATS, implementing the
+"drm_plane_funcs.format_mod_supported" function is mandatory to avoid
+exposing a bogus blob.
 
->  	struct component_match *match;
-> +
-> +	int id;
->  };
->  
->  struct component {
-> @@ -79,6 +83,7 @@ struct component {
->  static DEFINE_MUTEX(component_mutex);
->  static LIST_HEAD(component_list);
->  static LIST_HEAD(masters);
-> +static DEFINE_IDA(aggregate_ida);
->  
->  #ifdef CONFIG_DEBUG_FS
->  
-> @@ -440,6 +445,7 @@ static void free_master(struct master *master)
->  		}
->  	}
->  
-> +	ida_free(&aggregate_ida, master->id);
->  	kfree(master);
->  }
->  
-> @@ -460,7 +466,7 @@ int component_master_add_with_match(struct device *parent,
->  	struct component_match *match)
->  {
->  	struct master *master;
-> -	int ret;
-> +	int ret, id;
->  
->  	/* Reallocate the match array for its true size */
->  	ret = component_match_realloc(match, match->num);
-> @@ -471,9 +477,17 @@ int component_master_add_with_match(struct device *parent,
->  	if (!master)
->  		return -ENOMEM;
->  
-> +	id = ida_alloc(&aggregate_ida, GFP_KERNEL);
-> +	if (id < 0) {
-> +		kfree(master);
-> +		return id;
-> +	}
-> +
-> +	master->id = id;
->  	master->parent = parent;
->  	master->ops = ops;
->  	master->match = match;
-> +	dev_set_name(&master->dev, "aggregate%d", id);
+This patchset adds a bit of documentation and fixes the issue in a
+couple of drivers affected by the bug.
 
-You set the name yet the device is not "real"?
+I reviewed all the other drivers and I didn't find more instances of
+the issue.
 
-I don't understand this patch at all, sorry.
+Jose
 
-greg k-h
+José Expósito (3):
+  drm/plane: Mention format_mod_supported in IN_FORMATS docs
+  drm/msm/mdp4: Add format_mod_supported function
+  drm/sun4i: Add format_mod_supported function
+
+ drivers/gpu/drm/drm_plane.c                | 7 +++++--
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c | 8 ++++++++
+ drivers/gpu/drm/sun4i/sun8i_ui_layer.c     | 7 +++++++
+ drivers/gpu/drm/sun4i/sun8i_vi_layer.c     | 7 +++++++
+ 4 files changed, 27 insertions(+), 2 deletions(-)
+
+-- 
+2.25.1
+
