@@ -2,108 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E81DA47C9BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 00:31:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16E8947C9C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 00:35:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237354AbhLUXbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 18:31:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236245AbhLUXbh (ORCPT
+        id S238019AbhLUXfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 18:35:16 -0500
+Received: from mail-qk1-f170.google.com ([209.85.222.170]:34530 "EHLO
+        mail-qk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238006AbhLUXfP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 18:31:37 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D505EC06173F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 15:31:36 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 646FD3F64B;
-        Wed, 22 Dec 2021 00:31:32 +0100 (CET)
-Date:   Wed, 22 Dec 2021 00:31:31 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Lee Jones <lee.jones@linaro.org>
-Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Tue, 21 Dec 2021 18:35:15 -0500
+Received: by mail-qk1-f170.google.com with SMTP id b85so671943qkc.1;
+        Tue, 21 Dec 2021 15:35:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qyanZg8s5W+8gtKaR/fQ6jVlMg3RFbNcdfj1FBUpzJQ=;
+        b=DPVHK3eKQrymXoErnB8m5AhrpH7IRASf1UGpCud5hyfJO06v3CaKIuaT3tNHykBHzR
+         MkQe54TvD5lnwm0PD5h+hINVjA08hqWNd7IGxAnjf7SE095JKJaaX26VL9Eu25uSFtA8
+         lS1fgHmvVWCLcojeMa+ZJbaNPHsqs1u06a1iD5rripWwe2eL0xyyQDC4HZ70poqm7ofT
+         tXRWmoXvaiZt7SoM+9FUIHLWg2RcTyNLYEskbrG9AwnJpERyNmfAL15+FsemD1U283NF
+         KFryL/8crGcivMGkmzdCq59Yb5vwATspy/87z4A0aC85iFabSea8RfYv1s8iGaXMbbLy
+         FTvw==
+X-Gm-Message-State: AOAM530hN7CVXYvXKZhrm1pfVP8Kk8AQGbM87KfU+EUgsJvNNptOK6up
+        SfxBP6Na75JINXhTTFGWuw==
+X-Google-Smtp-Source: ABdhPJyTptN0ibMFOYgCQ8c+Nvty9jYcqWQQe8SaV4rLqX5MHk6Wc/d9/bxsLWY/7Ky6+nkDa/9Yqw==
+X-Received: by 2002:a37:34c:: with SMTP id 73mr507439qkd.726.1640129714870;
+        Tue, 21 Dec 2021 15:35:14 -0800 (PST)
+Received: from robh.at.kernel.org ([24.55.105.145])
+        by smtp.gmail.com with ESMTPSA id c22sm312771qtd.76.2021.12.21.15.35.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Dec 2021 15:35:14 -0800 (PST)
+Received: (nullmailer pid 1725609 invoked by uid 1000);
+        Tue, 21 Dec 2021 23:35:12 -0000
+Date:   Tue, 21 Dec 2021 19:35:12 -0400
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        linux-phy@lists.infradead.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
-Subject: Re: [PATCH v3 0/9] backlight: qcom-wled: fix and solidify handling
- of enabled-strings
-Message-ID: <20211221233131.rwjjojuawgffr2gf@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kiran Gunda <kgunda@codeaurora.org>, Bryan Wu <cooloney@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-fbdev@vger.kernel.org
-References: <20211115203459.1634079-1-marijn.suijten@somainline.org>
- <20211116120213.n7qxqfi62lrxhyl7@maple.lan>
- <YZPRV2jD1EBYGdHL@google.com>
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Andy Gross <agross@kernel.org>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings
+ for SM8450
+Message-ID: <YcJksCyV11ssaRIF@robh.at.kernel.org>
+References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
+ <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YZPRV2jD1EBYGdHL@google.com>
+In-Reply-To: <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-11-16 15:42:15, Lee Jones wrote:
-> On Tue, 16 Nov 2021, Daniel Thompson wrote:
+On Sat, 18 Dec 2021 17:10:20 +0300, Dmitry Baryshkov wrote:
+> Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
+> to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
+> different set of clocks, so two compatible entries are required.
 > 
-> > Hi Lee
-> > 
-> > On Mon, Nov 15, 2021 at 09:34:50PM +0100, Marijn Suijten wrote:
-> > > This patchset fixes WLED's handling of enabled-strings: besides some
-> > > cleanup it is now actually possible to specify a non-contiguous array of
-> > > enabled strings (not necessarily starting at zero) and the values from
-> > > DT are now validated to prevent possible unexpected out-of-bounds
-> > > register and array element accesses.
-> > > Off-by-one mistakes in the maximum number of strings, also causing
-> > > out-of-bounds access, have been addressed as well.
-> > 
-> > They have arrived piecemeal (during v1, v2 and v3) but all patches on
-> > the set should now have my R-b: attached to them.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
 > 
-> I can see that.  Nothing for you to worry about.
-> 
-> I'll apply these when I conduct my next sweep, thanks.
 
-Thanks for that Lee!  Has the next sweep already passed by?  Seems
-everyone is preparing for the 5.17 merge window but these patches
-haven't yet landed on the backlight tree [1].  I'd appreciate it if we
-can make them appear in the 5.17 window :)
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/lee/backlight.git/
-
-Thanks!
-- Marijn
-
-> -- 
-> Lee Jones [李琼斯]
-> Senior Technical Lead - Developer Services
-> Linaro.org │ Open source software for Arm SoCs
-> Follow Linaro: Facebook | Twitter | Blog
+Reviewed-by: Rob Herring <robh@kernel.org>
