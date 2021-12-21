@@ -2,340 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E89147BBE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 09:31:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D80247BC0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 09:46:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbhLUIbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 03:31:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232572AbhLUIbt (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 03:31:49 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C1DC061574;
-        Tue, 21 Dec 2021 00:31:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S235775AbhLUIqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 03:46:33 -0500
+Received: from ixit.cz ([94.230.151.217]:44690 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235774AbhLUIqb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Dec 2021 03:46:31 -0500
+Received: from [127.0.0.1] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 70816B80E07;
-        Tue, 21 Dec 2021 08:31:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD66C36AE2;
-        Tue, 21 Dec 2021 08:31:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1640075506;
-        bh=60FSywWzdYsHJHMdx2FttrIaMi3V98PGqVc2kPOJQA4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=R48sImFtLDh4jETSb+Wnb9zOI8Ujh24+g2cMtqjfAPolHCvkYl0amyx95HZ2UPPUA
-         mFMH8fyiKR5sj9MbmUO67WQgisy20cme3S9+XAK4Jz+c/yYnTLrzCJyT3uK5KpIN/H
-         ns/WQmeG+Ei/X0HnioACBJDuDjouB3zc1Xyaa5R0=
-Date:   Tue, 21 Dec 2021 09:31:43 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Jiri Slaby <jirislaby@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_eberman@quicinc.com,
-        quic_tsoni@quicinc.com,
-        Shanker Donthineni <shankerd@codeaurora.org>,
-        Adam Wallis <awallis@codeaurora.org>,
-        Timur Tabi <timur@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>
-Subject: Re: [PATCHv3] tty: hvc: dcc: Bind driver to core0 for reads and
- writes
-Message-ID: <YcGQ72wQB1CLkvur@kroah.com>
-References: <20211213141013.21464-1-quic_saipraka@quicinc.com>
+        by ixit.cz (Postfix) with ESMTPSA id 5B2CC2243C;
+        Tue, 21 Dec 2021 09:46:29 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1640076389;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=eMCrwVedhww3XT7Zrx0zd1r8/n0TrPVz0TPWo4hKClc=;
+        b=EGeTGUsWAfnDLrFg1vnKYXCznCvum1KyPCYXUSpJkGqZM6Ye8Go1wDi2h2pfCYFIHNASH0
+        8cGzd87mo0xlrHzC+zQzUpm543rbpNVfyGogZi7xEFu+YjZ+beihpfKM2txAVIMFQU/zSg
+        m9Kogmx1mpSwIvzWHKJZ9xYja2q/7X8=
+Date:   Tue, 21 Dec 2021 08:46:28 +0000
+From:   David Heidelberg <david@ixit.cz>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_arm64=3A_dts=3A_qcom=3A_sdm845=3A_?= =?US-ASCII?Q?add_missing_power-controller_compatible?=
+In-Reply-To: <20211221065845.GC26872@thinkpad>
+References: <20211220211443.106754-1-david@ixit.cz> <20211221065845.GC26872@thinkpad>
+Message-ID: <231125F6-0A22-4042-969E-45347CBE8CB7@ixit.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211213141013.21464-1-quic_saipraka@quicinc.com>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 13, 2021 at 07:40:13PM +0530, Sai Prakash Ranjan wrote:
-> From: Shanker Donthineni <shankerd@codeaurora.org>
-> 
-> Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-> reads/writes from/to DCC on secondary cores. Each core has its
-> own DCC device registers, so when a core reads or writes from/to DCC,
-> it only accesses its own DCC device. Since kernel code can run on
-> any core, every time the kernel wants to write to the console, it
-> might write to a different DCC.
-> 
-> In SMP mode, Trace32 creates multiple windows, and each window shows
-> the DCC output only from that core's DCC. The result is that console
-> output is either lost or scattered across windows.
-> 
-> Selecting this option will enable code that serializes all console
-> input and output to core 0. The DCC driver will create input and
-> output FIFOs that all cores will use. Reads and writes from/to DCC
-> are handled by a workqueue that runs only core 0.
-> 
-> Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
-> Acked-by: Adam Wallis <awallis@codeaurora.org>
-> Signed-off-by: Timur Tabi <timur@codeaurora.org>
-> Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+It's more about how documentation is written=2E Documentation expect "speci=
+fic compatible", "generic compatible" in that order=2E Of course it can be =
+changed to allow also  only specific compatible=2E
+
+Also this syntax ensure that older kernel (without implemented device comp=
+atible/support) will try to work when new dts is used=2E Kernel can fallbac=
+k to generic one compatible and code and device will still work, if the dri=
+ver is generic enough to provide at least some basic support without knowin=
+g which exact device is handled=2E
+
+If I missed some reason to use it, I guess Rob will correct me :)
+
+David
+
+
+-------- P=C5=AFvodn=C3=AD zpr=C3=A1va --------
+Odes=C3=ADlatel: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eo=
+rg>
+Odesl=C3=A1no: 21=2E prosince 2021 6:58:45 UTC
+Komu: David Heidelberg <david@ixit=2Ecz>
+Kopie: Andy Gross <agross@kernel=2Eorg>, Bjorn Andersson <bjorn=2Eandersso=
+n@linaro=2Eorg>, Rob Herring <robh+dt@kernel=2Eorg>, ~okias/devicetree@list=
+s=2Esr=2Eht, linux-arm-msm@vger=2Ekernel=2Eorg, devicetree@vger=2Ekernel=2E=
+org, linux-kernel@vger=2Ekernel=2Eorg
+P=C5=99edm=C4=9Bt: Re: [PATCH] arm64: dts: qcom: sdm845: add missing power=
+-controller compatible
+
+On Mon, Dec 20, 2021 at 10:14:43PM +0100, David Heidelberg wrote:
+> dt-schema expect to have fallback compatible, which is now in-place=2E
+>=20
+> Fixes warning generated by `make qcom/sdm845-oneplus-fajita=2Edtb`:
+> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita=2Edt=2Eyaml: power-contro=
+ller@c300000: compatible: ['qcom,sdm845-aoss-qmp'] is too short
+>         From schema: Documentation/devicetree/bindings/soc/qcom/qcom,aos=
+s-qmp=2Eyaml
+>=20
+> Signed-off-by: David Heidelberg <david@ixit=2Ecz>
 > ---
-> 
-> Changes in v3:
->  * Handle case where core0 is not online.
-> 
-> Changes in v2:
->  * Checkpatch warning fixes.
->  * Use of IS_ENABLED macros instead of ifdefs.
-> 
-> ---
->  drivers/tty/hvc/Kconfig   |  20 +++++
->  drivers/tty/hvc/hvc_dcc.c | 161 +++++++++++++++++++++++++++++++++++++-
->  2 files changed, 180 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sdm845=2Edtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845=2Edtsi b/arch/arm64/boot/dt=
+s/qcom/sdm845=2Edtsi
+> index 92ab4513a08b=2E=2Edbdb4243499c 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845=2Edtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845=2Edtsi
+> @@ -4619,7 +4619,7 @@ aoss_reset: reset-controller@c2a0000 {
+>  		};
+> =20
+>  		aoss_qmp: power-controller@c300000 {
+> -			compatible =3D "qcom,sdm845-aoss-qmp";
+> +			compatible =3D "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
 
-What has changed in the kernel in the past decade that this is suddenly
-an issue?  Why can't userspace debuggers handle this today, merging all
-of the data from different cores together?
+"qcom,sdm845-aoss-qmp" compatible is supported by the driver=2E So ideally=
+ we
+don't need a fallback here=2E
 
-And why does this have to be a build-time option and not a runtime
-choice?  How are you going to build a universal kernel that works for
-both types of systems?
+Is this something for DT backwards compatibility?
 
-> 
-> diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
-> index 8d60e0ff67b4..c0754a2e3fe4 100644
-> --- a/drivers/tty/hvc/Kconfig
-> +++ b/drivers/tty/hvc/Kconfig
-> @@ -87,6 +87,26 @@ config HVC_DCC
->  	  driver. This console is used through a JTAG only on ARM. If you don't have
->  	  a JTAG then you probably don't want this option.
->  
-> +config HVC_DCC_SERIALIZE_SMP
-> +	bool "Use DCC only on core 0"
-> +	depends on SMP && HVC_DCC
-> +	help
-> +	  Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-> +	  reads/writes from/to DCC on more than one core. Each core has its
-> +	  own DCC device registers, so when a core reads or writes from/to DCC,
-> +	  it only accesses its own DCC device. Since kernel code can run on
-> +	  any core, every time the kernel wants to write to the console, it
-> +	  might write to a different DCC.
-> +
-> +	  In SMP mode, Trace32 creates multiple windows, and each window shows
-> +	  the DCC output only from that core's DCC. The result is that console
-> +	  output is either lost or scattered across windows.
-> +
-> +	  Selecting this option will enable code that serializes all console
-> +	  input and output to core 0. The DCC driver will create input and
-> +	  output FIFOs that all cores will use. Reads and writes from/to DCC
-> +	  are handled by a workqueue that runs only core 0.
+Thanks,
+Mani
 
-So this drops down to only one device, not multiple ones?  Or is it the
-other way around?
-
-> +
->  config HVC_RISCV_SBI
->  	bool "RISC-V SBI console support"
->  	depends on RISCV_SBI_V01
-> diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
-> index 8e0edb7d93fd..24e3770219bc 100644
-> --- a/drivers/tty/hvc/hvc_dcc.c
-> +++ b/drivers/tty/hvc/hvc_dcc.c
-> @@ -2,9 +2,12 @@
->  /* Copyright (c) 2010, 2014 The Linux Foundation. All rights reserved.  */
->  
->  #include <linux/console.h>
-> +#include <linux/cpumask.h>
->  #include <linux/init.h>
-> +#include <linux/kfifo.h>
->  #include <linux/serial.h>
->  #include <linux/serial_core.h>
-> +#include <linux/spinlock.h>
->  
->  #include <asm/dcc.h>
->  #include <asm/processor.h>
-> @@ -67,26 +70,182 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
->  	return i;
->  }
->  
-> +/*
-> + * Check if the DCC is enabled.  If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
-> + * then we assume then this function will be called first on core 0.  That
-> + * way, dcc_core0_available will be true only if it's available on core 0.
-> + */
->  static bool hvc_dcc_check(void)
->  {
->  	unsigned long time = jiffies + (HZ / 10);
-> +	static bool dcc_core0_available;
-> +
-> +	/*
-> +	 * If we're not on core 0, but we previously confirmed that DCC is
-> +	 * active, then just return true.
-
-Why?  Don't you want to see if DCC works on the other cores?
-
-What if core 0 is never enabled?
-
-> +	 */
-> +	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && smp_processor_id() &&
-> +	    dcc_core0_available)
-> +		return true;
->  
->  	/* Write a test character to check if it is handled */
->  	__dcc_putchar('\n');
->  
->  	while (time_is_after_jiffies(time)) {
-> -		if (!(__dcc_getstatus() & DCC_STATUS_TX))
-> +		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
-> +			if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-
-Why this check again?
-
-> +				dcc_core0_available = true;
->  			return true;
-> +		}
->  	}
-
-
-
->  
->  	return false;
->  }
->  
-> +#if defined(CONFIG_HVC_DCC_SERIALIZE_SMP)
-
-No ifdefs in .c files please.  Make this a separate .c file entirely if
-this really is needed.
-
-> +
-> +static void dcc_put_work_fn(struct work_struct *work);
-> +static void dcc_get_work_fn(struct work_struct *work);
-> +static DECLARE_WORK(dcc_pwork, dcc_put_work_fn);
-> +static DECLARE_WORK(dcc_gwork, dcc_get_work_fn);
-
-No need to put "fn" at the end of your function name, we know it's a
-function :)
-
-> +static DEFINE_SPINLOCK(dcc_lock);
-> +static DEFINE_KFIFO(inbuf, unsigned char, 128);
-> +static DEFINE_KFIFO(outbuf, unsigned char, 1024);
-
-Where did these size values come from?
-
-> +
-> +/*
-> + * Workqueue function that writes the output FIFO to the DCC on core 0.
-> + */
-> +static void dcc_put_work_fn(struct work_struct *work)
-> +{
-> +	unsigned char ch;
-> +	unsigned long irqflags;
-> +
-> +	spin_lock_irqsave(&dcc_lock, irqflags);
-> +
-> +	/* While there's data in the output FIFO, write it to the DCC */
-> +	while (kfifo_get(&outbuf, &ch))
-> +		hvc_dcc_put_chars(0, &ch, 1);
-> +
-> +	/* While we're at it, check for any input characters */
-> +	while (!kfifo_is_full(&inbuf)) {
-> +		if (!hvc_dcc_get_chars(0, &ch, 1))
-> +			break;
-> +		kfifo_put(&inbuf, ch);
-
-Why is this needed?  Will not the normal input handling deal with this?
-
-> +	}
-> +
-> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
-> +}
-> +
-> +/*
-> + * Workqueue function that reads characters from DCC and puts them into the
-> + * input FIFO.
-> + */
-> +static void dcc_get_work_fn(struct work_struct *work)
-> +{
-> +	unsigned char ch;
-> +	unsigned long irqflags;
-> +
-> +	/*
-> +	 * Read characters from DCC and put them into the input FIFO, as
-> +	 * long as there is room and we have characters to read.
-> +	 */
-> +	spin_lock_irqsave(&dcc_lock, irqflags);
-> +
-> +	while (!kfifo_is_full(&inbuf)) {
-> +		if (!hvc_dcc_get_chars(0, &ch, 1))
-> +			break;
-> +		kfifo_put(&inbuf, ch);
-> +	}
-> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
-> +}
-> +
-> +/*
-> + * Write characters directly to the DCC if we're on core 0 and the FIFO
-> + * is empty, or write them to the FIFO if we're not.
-> + */
-> +static int hvc_dcc0_put_chars(u32 vt, const char *buf, int count)
-> +{
-> +	int len;
-> +	unsigned long irqflags;
-> +
-> +	spin_lock_irqsave(&dcc_lock, irqflags);
-> +	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
-> +		len = kfifo_in(&outbuf, buf, count);
-> +		spin_unlock_irqrestore(&dcc_lock, irqflags);
-> +
-> +		if (!cpu_online(0))
-> +			return 0;
-> +		/*
-> +		 * We just push data to the output FIFO, so schedule the
-> +		 * workqueue that will actually write that data to DCC.
-> +		 */
-> +		schedule_work_on(0, &dcc_pwork);
-> +		return len;
-> +	}
-> +
-> +	/*
-> +	 * If we're already on core 0, and the FIFO is empty, then just
-> +	 * write the data to DCC.
-> +	 */
-> +	len = hvc_dcc_put_chars(vt, buf, count);
-> +	spin_unlock_irqrestore(&dcc_lock, irqflags);
-> +
-> +	return len;
-> +}
-> +
-> +/*
-> + * Read characters directly from the DCC if we're on core 0 and the FIFO
-> + * is empty, or read them from the FIFO if we're not.
-> + */
-> +static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
-> +{
-> +	int len;
-> +	unsigned long irqflags;
-> +
-> +	spin_lock_irqsave(&dcc_lock, irqflags);
-> +
-> +	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
-> +		len = kfifo_out(&inbuf, buf, count);
-> +		spin_unlock_irqrestore(&dcc_lock, irqflags);
-> +
-> +		if (!cpu_online(0))
-> +			return 0;
-
-Why check this here?
-
-> +		/*
-> +		 * If the FIFO was empty, there may be characters in the DCC
-> +		 * that we haven't read yet.  Schedule a workqueue to fill
-> +		 * the input FIFO, so that the next time this function is
-> +		 * called, we'll have data.
-> +		 */
-> +		if (!len)
-> +			schedule_work_on(0, &dcc_gwork);
-
-What happened if the cpu went offline between checking and doing this
-call?
-
-thanks,
-
-greg k-h
+>  			reg =3D <0 0x0c300000 0 0x100000>;
+>  			interrupts =3D <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
+>  			mboxes =3D <&apss_shared 0>;
+> --=20
+> 2=2E34=2E1
+>=20
