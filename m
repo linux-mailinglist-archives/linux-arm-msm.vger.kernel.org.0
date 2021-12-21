@@ -2,116 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D80247BC0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 09:46:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 609F047BCD6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 10:28:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235775AbhLUIqd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 03:46:33 -0500
-Received: from ixit.cz ([94.230.151.217]:44690 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235774AbhLUIqb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 03:46:31 -0500
-Received: from [127.0.0.1] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S231194AbhLUJ2O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 04:28:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32780 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230125AbhLUJ2N (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Dec 2021 04:28:13 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C47A6C061574;
+        Tue, 21 Dec 2021 01:28:13 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 5B2CC2243C;
-        Tue, 21 Dec 2021 09:46:29 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1640076389;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=eMCrwVedhww3XT7Zrx0zd1r8/n0TrPVz0TPWo4hKClc=;
-        b=EGeTGUsWAfnDLrFg1vnKYXCznCvum1KyPCYXUSpJkGqZM6Ye8Go1wDi2h2pfCYFIHNASH0
-        8cGzd87mo0xlrHzC+zQzUpm543rbpNVfyGogZi7xEFu+YjZ+beihpfKM2txAVIMFQU/zSg
-        m9Kogmx1mpSwIvzWHKJZ9xYja2q/7X8=
-Date:   Tue, 21 Dec 2021 08:46:28 +0000
-From:   David Heidelberg <david@ixit.cz>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_arm64=3A_dts=3A_qcom=3A_sdm845=3A_?= =?US-ASCII?Q?add_missing_power-controller_compatible?=
-In-Reply-To: <20211221065845.GC26872@thinkpad>
-References: <20211220211443.106754-1-david@ixit.cz> <20211221065845.GC26872@thinkpad>
-Message-ID: <231125F6-0A22-4042-969E-45347CBE8CB7@ixit.cz>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 54BB56149F;
+        Tue, 21 Dec 2021 09:28:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379BDC36AE2;
+        Tue, 21 Dec 2021 09:28:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1640078892;
+        bh=RZo6lge6X6obq2oOehXsW2SVPZlbm6/HXQ0bWrHOATs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=y7eaQL/+s66cWXwvBPdxqQZO1SayEAHzCJAg5oo0c4fkrE1LQpIN6MOlNbeREp/hb
+         a1qEEPazkXVmaMrn705X0V+/+01SmwN0Neidr1OtuqGMdlTM8GpvKNfvPyFB++tuLC
+         SzS9yHDaBPe3Go8IrzPzbCf9RJ9fQ9ZCvtAKUmwI=
+Date:   Tue, 21 Dec 2021 10:28:10 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+Subject: Re: [PATCH v4 01/34] component: Introduce struct aggregate_device
+Message-ID: <YcGeKpy/oecKlKZg@kroah.com>
+References: <20211202222732.2453851-1-swboyd@chromium.org>
+ <20211202222732.2453851-2-swboyd@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211202222732.2453851-2-swboyd@chromium.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's more about how documentation is written=2E Documentation expect "speci=
-fic compatible", "generic compatible" in that order=2E Of course it can be =
-changed to allow also  only specific compatible=2E
+On Thu, Dec 02, 2021 at 02:26:59PM -0800, Stephen Boyd wrote:
+> Replace 'struct master' with 'struct aggregate_device' and then rename
+> 'master' to 'adev' everywhere in the code. While we're here, put a
+> struct device inside the aggregate device so that we can register it
+> with a bus_type in the next patch.
 
-Also this syntax ensure that older kernel (without implemented device comp=
-atible/support) will try to work when new dts is used=2E Kernel can fallbac=
-k to generic one compatible and code and device will still work, if the dri=
-ver is generic enough to provide at least some basic support without knowin=
-g which exact device is handled=2E
+Do not do a "while we are here" type change please.  Do the
+rename/replace first, and then make the other change.
 
-If I missed some reason to use it, I guess Rob will correct me :)
+> The diff is large but that's because this is mostly a rename, where
+> sometimes 'master' is replaced with 'adev' and other times it is
+> replaced with 'parent' to indicate that the struct device that was being
+> used is actually the parent of the aggregate device and driver.
 
-David
+The diff is 15 lines, how is that "large"?
 
+thanks,
 
--------- P=C5=AFvodn=C3=AD zpr=C3=A1va --------
-Odes=C3=ADlatel: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eo=
-rg>
-Odesl=C3=A1no: 21=2E prosince 2021 6:58:45 UTC
-Komu: David Heidelberg <david@ixit=2Ecz>
-Kopie: Andy Gross <agross@kernel=2Eorg>, Bjorn Andersson <bjorn=2Eandersso=
-n@linaro=2Eorg>, Rob Herring <robh+dt@kernel=2Eorg>, ~okias/devicetree@list=
-s=2Esr=2Eht, linux-arm-msm@vger=2Ekernel=2Eorg, devicetree@vger=2Ekernel=2E=
-org, linux-kernel@vger=2Ekernel=2Eorg
-P=C5=99edm=C4=9Bt: Re: [PATCH] arm64: dts: qcom: sdm845: add missing power=
--controller compatible
-
-On Mon, Dec 20, 2021 at 10:14:43PM +0100, David Heidelberg wrote:
-> dt-schema expect to have fallback compatible, which is now in-place=2E
->=20
-> Fixes warning generated by `make qcom/sdm845-oneplus-fajita=2Edtb`:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita=2Edt=2Eyaml: power-contro=
-ller@c300000: compatible: ['qcom,sdm845-aoss-qmp'] is too short
->         From schema: Documentation/devicetree/bindings/soc/qcom/qcom,aos=
-s-qmp=2Eyaml
->=20
-> Signed-off-by: David Heidelberg <david@ixit=2Ecz>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845=2Edtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845=2Edtsi b/arch/arm64/boot/dt=
-s/qcom/sdm845=2Edtsi
-> index 92ab4513a08b=2E=2Edbdb4243499c 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845=2Edtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845=2Edtsi
-> @@ -4619,7 +4619,7 @@ aoss_reset: reset-controller@c2a0000 {
->  		};
-> =20
->  		aoss_qmp: power-controller@c300000 {
-> -			compatible =3D "qcom,sdm845-aoss-qmp";
-> +			compatible =3D "qcom,sdm845-aoss-qmp", "qcom,aoss-qmp";
-
-"qcom,sdm845-aoss-qmp" compatible is supported by the driver=2E So ideally=
- we
-don't need a fallback here=2E
-
-Is this something for DT backwards compatibility?
-
-Thanks,
-Mani
-
->  			reg =3D <0 0x0c300000 0 0x100000>;
->  			interrupts =3D <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
->  			mboxes =3D <&apss_shared 0>;
-> --=20
-> 2=2E34=2E1
->=20
+greg k-h
