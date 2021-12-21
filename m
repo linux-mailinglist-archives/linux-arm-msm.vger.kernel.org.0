@@ -2,92 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF15B47C954
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 23:45:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FBFD47C94F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 23:45:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233208AbhLUWpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 17:45:39 -0500
-Received: from mail-qt1-f177.google.com ([209.85.160.177]:43543 "EHLO
-        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233146AbhLUWph (ORCPT
+        id S232380AbhLUWpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 17:45:35 -0500
+Received: from mail-qv1-f46.google.com ([209.85.219.46]:34333 "EHLO
+        mail-qv1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232664AbhLUWpf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 17:45:37 -0500
-Received: by mail-qt1-f177.google.com with SMTP id q14so275237qtx.10;
-        Tue, 21 Dec 2021 14:45:37 -0800 (PST)
+        Tue, 21 Dec 2021 17:45:35 -0500
+Received: by mail-qv1-f46.google.com with SMTP id ke6so674260qvb.1;
+        Tue, 21 Dec 2021 14:45:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=+8wGUqAhe1nVbE36vIQoglJAafwXDPNIila4d3ObDt0=;
-        b=7Gk6TS+FOu/+TzUb6+EHrzbtvoBi9ZY0Q7sD49Ce8SArEz3mlH593iENjWP7it/rgs
-         5Jo3gnECg2W4at4oNX14IB4iFyZ3NYhzcAqYDCoY5aITeKnoBHmuiUMq6nLTNNGkPF4N
-         y66VXr/tRzUklBBIXinIuN8yeWlX5WEEUvvA4QTYLX7Yq/8gpv3NX2bhXw0CDRtjpb8h
-         IUvVjQ77eUCCx3AhiBAl736ncrN2FjdT2qLlfPUxOrPFGZpHDCJL52LsSm0VFPCjqJej
-         GFVCaopsOBPfDsr7rUHw4AEA8ntlXco+VfP1q2AOV9BuMgz89J4EK07QjkaXnQ4+/0T/
-         K6vQ==
-X-Gm-Message-State: AOAM530XKhrlApmBHGPNBX8Lk8kWwGD+me9WfspsL1HYXPovqsPGFPgJ
-        OB9Y1mJr4aDQlbK0yzmRdw==
-X-Google-Smtp-Source: ABdhPJx7XnHqD02k7pcnlKqo319KL/urrR33NOLRHEfJUbq0Q6OHKDLMbUngPtjWYfaKQrz6w9oy3Q==
-X-Received: by 2002:ac8:5f13:: with SMTP id x19mr295848qta.475.1640126736776;
-        Tue, 21 Dec 2021 14:45:36 -0800 (PST)
+        bh=+SlxlPFUAIksbSGbfJhkBNtunIqmSVgKHxJRcHXcQ94=;
+        b=AJuXwtOvnE2z2Z2uE1xR5PAV1qYm1FPVqBeZBStfqNw+k1NoxZpQFh74cl5fVjqMTL
+         yd47S3qp8F/W2eOECTiH5gSmx7Rr6sQB/jyqhQdkV2/5Nv0cvs0CBpusWuuYEwB6yncc
+         mmj9olN2eFdbgCx/nrM8zDA50jLhgA+fLKcXK6KaYdnDhkX8TpNpJNdeTgMTTaHM1nST
+         Uzz0zRXPfMCJanaaxYizVn0kU2cGxZgReGpPVPq1QE7064u2FpRunrXkgeSAMlHqXIoe
+         iccl/ikakYV5ctT9u85b8sa0QgnxSla+rC9VbBURC3wahWMC/WSYoP1YAeq5B35/uqwK
+         uuGw==
+X-Gm-Message-State: AOAM530IDGRr9e9rneeYF8Emoixx/Kxn5FB+7M+MkxcvCftT65tC5B0r
+        pWYJ/U6yaiav3BVIkeEezqb17gAhtupm
+X-Google-Smtp-Source: ABdhPJwICeOv3LZbjDh2U2Dcn/0vXEzNImCZcYu9rQjErZcZ4o6ZGrQ9T/ozNaawRpsqDXgRdrWE2A==
+X-Received: by 2002:a05:6214:4008:: with SMTP id kd8mr390066qvb.127.1640126734116;
+        Tue, 21 Dec 2021 14:45:34 -0800 (PST)
 Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id q30sm268645qkj.3.2021.12.21.14.45.34
+        by smtp.gmail.com with ESMTPSA id w10sm255592qtj.37.2021.12.21.14.45.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 14:45:35 -0800 (PST)
-Received: (nullmailer pid 1654440 invoked by uid 1000);
+        Tue, 21 Dec 2021 14:45:33 -0800 (PST)
+Received: (nullmailer pid 1654435 invoked by uid 1000);
         Tue, 21 Dec 2021 22:45:31 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Jarrett Schultz <jaschultzms@gmail.com>
-Cc:     linux-kernel@vger.kernel.org,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Jarrett Schultz <jaschultz@microsoft.com>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        platform-driver-x86@vger.kernel.org,
-        Felipe Balbi <balbi@kernel.org>, bjorn.andersson@linaro.org,
-        Mark Gross <markgross@kernel.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>
-In-Reply-To: <20211221182826.2141789-2-jaschultzMS@gmail.com>
-References: <20211221182826.2141789-1-jaschultzMS@gmail.com> <20211221182826.2141789-2-jaschultzMS@gmail.com>
-Subject: Re: [PATCH RESEND v4 1/4] dt-bindings: platform: microsoft: Document surface xbl
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Niklas Cassel <nks@flawful.org>, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20211221133937.173618-1-y.oudjana@protonmail.com>
+References: <20211221133937.173618-1-y.oudjana@protonmail.com>
+Subject: Re: [PATCH] dt-bindings: power: avs: qcom,cpr: Convert to DT schema
 Date:   Tue, 21 Dec 2021 18:45:31 -0400
-Message-Id: <1640126731.378625.1654439.nullmailer@robh.at.kernel.org>
+Message-Id: <1640126731.354790.1654434.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Dec 2021 10:28:23 -0800, Jarrett Schultz wrote:
-> From: Jarrett Schultz <jaschultz@microsoft.com>
+On Tue, 21 Dec 2021 13:40:05 +0000, Yassine Oudjana wrote:
+> Convert qcom,cpr.txt to DT schema format.
 > 
-> Introduce yaml for surface xbl driver.
-> 
-> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
-> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 > ---
-> 
-> Changes in v4:
->  - Addressed small formatting changes
->  - Removed unnecessary lines
-> 
-> ---
-> 
-> Changes in v3:
->  - Updated description to only pertain to the hardware
->  - Updated the required field to properly reflect the binding
->  - Removed the first example
->  - Fixed the size of the reg field in the second example
-> 
-> ---
-> 
-> Changes in v2:
->  - Removed json-schema dependence
->  - Elaborated on description of driver
->  - Updated example
-> ---
->  .../platform/microsoft/surface-xbl.yaml       | 64 +++++++++++++++++++
->  MAINTAINERS                                   |  7 ++
->  2 files changed, 71 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+>  .../bindings/power/avs/qcom,cpr.txt           | 130 --------------
+>  .../bindings/power/avs/qcom,cpr.yaml          | 161 ++++++++++++++++++
+>  MAINTAINERS                                   |   2 +-
+>  3 files changed, 162 insertions(+), 131 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+>  create mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -96,11 +70,11 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/platform/microsoft/surface-xbl.example.dt.yaml:0:0: /imem@146bf000/xbl@a94: failed to match any schema with compatible: ['microsoft,sm8150-surface-duo-xbl']
+Documentation/devicetree/bindings/power/avs/qcom,cpr.example.dt.yaml:0:0: /example-0/cpr-opp-table: failed to match any schema with compatible: ['operating-points-v2-qcom-level']
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1571914
+See https://patchwork.ozlabs.org/patch/1571666
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
