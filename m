@@ -2,160 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC6247C61E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 19:16:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D95A47C682
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 19:28:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241090AbhLUSQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 13:16:14 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:2669 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236770AbhLUSQO (ORCPT
+        id S241314AbhLUS2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 13:28:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46390 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237034AbhLUS2d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 13:16:14 -0500
+        Tue, 21 Dec 2021 13:28:33 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C2C5C061574;
+        Tue, 21 Dec 2021 10:28:33 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id u20so23179pfi.12;
+        Tue, 21 Dec 2021 10:28:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1640110574; x=1671646574;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=87wmM1aAjQ9JXZUAKdF+CTr0EM6APa+CfM0DbP+Bdgc=;
-  b=CYH2mkoIOlm+iMOgetSkJmhC23se6+ESgjwuTgVgxNscX/ZHxoN9Hy8H
-   wOmIDD6iDDZN4zyMO03flS5g2vzm1vXDK7npUdpMSep9iLn6OvJWVvCGU
-   45CzcCWyaxCgpE+gfDTKQWNItcQMNEx8lyN8acaOi7jKtceN2NVwYeJJx
-   k=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 21 Dec 2021 10:16:14 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Dec 2021 10:16:13 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 21 Dec 2021 10:16:12 -0800
-Received: from [10.110.121.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 21 Dec
- 2021 10:16:11 -0800
-Message-ID: <cb935a39-3b15-19fe-983c-dce326b2bf06@quicinc.com>
-Date:   Tue, 21 Dec 2021 10:16:09 -0800
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hm9wxEeaDEyWpSuzCto+olZxKZ0nKIQxXR9pF5LHrQU=;
+        b=d0UwYVXOLQkZ6PInaya1W+N+UGBMBKrHdSzoDTZ+eW7Oglrn22iPQlLUJvkwDacHqQ
+         fgi67bEi8xRmu+cp2Rd4Qv8o+ouQBhuwQsdibkn8QwYIUcnQFpuY8AaY/CyD1g0rozxH
+         1CXK/iDYwCwSBRDQIHOI3FqHabsF62o4iY9kvxfte8aKoAGMXgXg/I/OW3xMw39/HqMS
+         ahRskCo13Kvth/ytQuMJpG8YZKIZ6paXoO7l37eVVQNAnIjVSdHT0MkDLNK17NHrheJP
+         8jOOJnR8k+NAgD0CyB5q3qgf8PXHrCV/l9NdCojjXFDl6p2jJqcgnzYxpQxmu3b/+MSp
+         uJMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Hm9wxEeaDEyWpSuzCto+olZxKZ0nKIQxXR9pF5LHrQU=;
+        b=VE/7uiXyRJCOW+IBu31rkTodk+xzov4mstZGEOshSRoyhy9PM1ihjfmXvO0un6Nwsb
+         W6wj2gJYrEUA84RXro32Um0z3sqVreblbZAuupGkatyp3gFBobWQ7G1/ziatj1dU/QJE
+         wxf8fb0ZtD5O8wbaXrU/QcgcwubfFsJUfYT5YrrjVqxImUyWOPNSrXfN3SfRIZ1L3HcP
+         GEBz+BaCMhf7zUGo7IwyzTXf9FcQmHYOp/5MYo6TG89dFNsXe4Au2GdukO9S7Hn4bwfs
+         Mqirn13aUyJtUUoBp4ai78/pKH88G1lA+8rxJnHLLWJ/1GiHmElVVY8IhUw7kJp4oV1n
+         Mymg==
+X-Gm-Message-State: AOAM533eERidnKtGocTMuwE1jK7CI7Q9EL6aGkig6G00v+fxqGd13QYE
+        6axGZUk7V6aTW8Fg55ERKfo=
+X-Google-Smtp-Source: ABdhPJyO4P1OJY0lyc6KMrylx/Mv0PwcAGcPgUBbYYK5GYbBB2VrXBY0AHC+Yhwy6c8HIiT5rCS+/w==
+X-Received: by 2002:aa7:9298:0:b0:4ba:7d3a:1742 with SMTP id j24-20020aa79298000000b004ba7d3a1742mr4519732pfa.62.1640111313077;
+        Tue, 21 Dec 2021 10:28:33 -0800 (PST)
+Received: from jaschultz-Thelio-Major.corp.microsoft.com ([2001:4898:80e8:36:b871:81c1:f2ef:8174])
+        by smtp.gmail.com with ESMTPSA id s19sm23436133pfu.137.2021.12.21.10.28.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Dec 2021 10:28:32 -0800 (PST)
+From:   Jarrett Schultz <jaschultzms@gmail.com>
+X-Google-Original-From: Jarrett Schultz <jaschultzMS@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        bjorn.andersson@linaro.org, Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     Felipe Balbi <balbi@kernel.org>, linux-arm-msm@vger.kernel.org,
+        platform-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Jarrett Schultz <jaschultz@microsoft.com>
+Subject: [PATCH RESEND v4 0/4] platform: surface: Introduce Surface XBL Driver
+Date:   Tue, 21 Dec 2021 10:28:22 -0800
+Message-Id: <20211221182826.2141789-1-jaschultzMS@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v7 2/2] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1639085707-27845-1-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n51pbf3GqwA-wtTe5+rRvA_KMmb8kd6fqqDtZRX+X_3qiA@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n51pbf3GqwA-wtTe5+rRvA_KMmb8kd6fqqDtZRX+X_3qiA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Jarrett Schultz <jaschultz@microsoft.com>
 
-On 12/14/2021 5:50 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-12-09 13:35:07)
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 0766752..cfbc5e4 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -83,6 +83,7 @@ struct dp_display_private {
->>
->>          /* state variables */
->>          bool core_initialized;
->> +       bool phy_initialized;
->>          bool hpd_irq_on;
->>          bool audio_supported;
->>
->> @@ -371,21 +372,46 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->>          return rc;
->>   }
->>
->> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
->> +static void dp_display_host_phy_init(struct dp_display_private *dp)
->>   {
->> -       bool flip = false;
->> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
->> +                       dp->core_initialized, dp->phy_initialized);
->>
->> +       if (!dp->phy_initialized) {
-> Is this check only here because we don't know when this function is
-> getting called? I see in the DP case we get here from
-> dp_display_usbpd_configure_cb() but in the eDP case we get here from
-> dp_display_host_init() and presumably again from
-> dp_display_usbpd_configure_cb() called by dp_hpd_plug_handle().
->
-> If at all possible, I'd prefer to not have another tracking variable and
-> call dp_display_host_phy_init() from the same place regardless of DP or
-> eDP. Doing that would make it symmetric, per the commit text.
+Introduce the Surface Extensible Boot Loader driver for the Surface Duo.
+Exposes information about the driver to user space via sysfs for
+consumption in manufacturing mode.
 
-Agree, but  dp->phy_initialized variable used to track some other 
-conditions.
+Resend due to not showing in mailing list.
 
-For example, phy required to be re inited if dpcd read failed due to 
-cable unplugged.
+Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
 
-other dpcd read failed will not required to re inited.
+---
 
-Therefore I think dp->phy_initialized variable is still required.
+Changes in v4:
 
->> +               dp_ctrl_phy_init(dp->ctrl);
->> +               dp->phy_initialized = true;
->> +       }
->> +}
->> +
->> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
->> +{
->> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
->> +                       dp->core_initialized, dp->phy_initialized);
->> +
->> +       if (dp->phy_initialized) {
->> +               dp_ctrl_phy_exit(dp->ctrl);
->> +               dp->phy_initialized = false;
->> +       }
->> +}
->> +
->> +static void dp_display_host_init(struct dp_display_private *dp)
->> +{
->>          DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
->>          if (dp->core_initialized) {
->>                  DRM_DEBUG_DP("DP core already initialized\n");
->>                  return;
->>          }
->>
->> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
->> -               flip = true;
->> +       dp_power_init(dp->power, false);
->> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->> +
->> +       /*
->> +        * eDP is the embedded primary display and has its own phy
->> +        * initialize phy immediately
-> Can we get some more details here? Why is it better to initialize the
-> phy here vs. when HPD goes high on the panel? The comment says what the
-> code is doing but it isn't telling us why that's OK.
+ - Small binding definition changes
+ - Removed ACPI propagation from patch series since it has been
+   cherry-picked
+ - Fixed the Signed-off-by: and From: mismatch
 
-Will do.
+---
 
->
->> +        */
->> +       if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
->> +               dp_display_host_phy_init(dp);
->>
->> -       dp_power_init(dp->power, flip);
->> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
->>          dp_aux_init(dp->aux);
->>          dp->core_initialized = true;
->>   }
+Changes in v3:
+ - For the yaml documentation:
+    * Updated description
+    * Fixed examples
+    * Updated 'required' field
+ - Further propogated ACPI dependency in Kconfigs
+ - Updated sysfs several binding descriptions
+ - Renamed files to conform to naming conventions
+
+---
+
+Changes in v2:
+ - Per Maximilian, added patch 2: propagated ACPI dependency from the
+   directory as a whole to each individual driver
+ - For the yaml documentation:
+    * Removed json-schema dependence
+    * Elaborated on description of driver
+    * Updated example
+ - Changed target KernelVersion in sysfs documentation
+ - Updated MAINTAINER changes to be properly applied across patches
+ - For the driver itself,
+    * Added types.h inclusion and removed unused inclusions
+    * Minor updates to code and acronym style
+    * Remove __packed attribute on driver struct
+    * Use .dev_groups for sysfs
+ - Added more in-depth description of driver in Kconfig
+ - Modified dts to reference a newly added section in sm8150.dtsi
+
+---
+
+Jarrett Schultz (4):
+  dt-bindings: platform: microsoft: Document surface xbl
+  platform: surface: Add surface xbl
+  arm64: dts: qcom: sm8150: Add imem section
+  arm64: dts: qcom: surface-duo: Add surface xbl
+
+ .../ABI/testing/sysfs-platform-surface-xbl    |  79 ++++++++
+ .../platform/microsoft/surface-xbl.yaml       |  64 ++++++
+ MAINTAINERS                                   |   9 +
+ .../dts/qcom/sm8150-microsoft-surface-duo.dts |  10 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   8 +
+ drivers/platform/surface/Kconfig              |  12 ++
+ drivers/platform/surface/Makefile             |   1 +
+ drivers/platform/surface/surface_xbl.c        | 186 ++++++++++++++++++
+ 8 files changed, 369 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-surface-xbl
+ create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+ create mode 100644 drivers/platform/surface/surface_xbl.c
+
+-- 
+2.25.1
+
