@@ -2,381 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91C3547C0E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 14:40:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D75B747C1B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 15:42:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234702AbhLUNk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 08:40:26 -0500
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:44640 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235302AbhLUNk0 (ORCPT
+        id S238555AbhLUOm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 09:42:28 -0500
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:46812 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234158AbhLUOm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 08:40:26 -0500
-Date:   Tue, 21 Dec 2021 13:40:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail2; t=1640094022;
-        bh=rYqfDiHlulYQXemXIb0YDv6taNEoMdef/ERSb8A+0vQ=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
-        b=EBKc0r5ECanLCUWiSVOZAzzKguV4OfG3YjImTJAtAIKtXi0UbSArF8q6ih1tqkRLY
-         EYXFOfLXTnZw04MANyXvw8A6YJXrdF+jsnaDd9iTpiFgrOLu4GrvKhBBRUAR+uK3ga
-         vAfBrJKZFOoMnSoZdDoUJhRYi24SB/RjOCvIlO2DtK/EtQHu/TdFL6XQfABXbhEEu6
-         qzKK/W1+mKVo1i9imTFKMmSrtCx1v516gH0bqpAjb3nc5LBZ3BvcfJpCcbKh8bAsOn
-         RkcUsbteUw5iAPpeFLZ2US7KsaAcCQTMaC440JVBclmfyqtH6zswwDdpseI69mEEqQ
-         EevO165NlpO7g==
-To:     Rob Herring <robh+dt@kernel.org>, Niklas Cassel <nks@flawful.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH] dt-bindings: power: avs: qcom,cpr: Convert to DT schema
-Message-ID: <20211221133937.173618-1-y.oudjana@protonmail.com>
+        Tue, 21 Dec 2021 09:42:27 -0500
+Received: by mail-qk1-f176.google.com with SMTP id a11so12661825qkh.13;
+        Tue, 21 Dec 2021 06:42:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7hiTEgNKENcz/Y9G25D8gy7mCFSJcD5x99oF0W47Myw=;
+        b=Naa0Cv8oYi/Lzwfi38Pr4UWmAgesfzENdSfnMUusTLzOu/fGmYwKO2gGv5242Xb9HA
+         ksS95YcWxYWI1kPWMT3RITKzysxcYKOaqVYfAVDkLReCwsBOZ9IDG2sGZ0+ES7WZcASX
+         ACmBSeoXq98GkuGdi/5VADq3JfSic/DNd604DYHSzA6c0AYNpS28TXbOQugVI8oXh5WE
+         LWC+8ye4XtX3WMoRYfUR1XM6Gh2W6dM0KtK0l3aXADHmYBTE4odOCVWCCqbpbN4XauqL
+         biaMtMKaLRBF5VZa647WPB0AUtn2XhlTWGP3DHYmvzjgReeh8zJuLYUHe76H3SkWyX0l
+         RPMQ==
+X-Gm-Message-State: AOAM531N/0OyFBf53ySmtwnKYFwHuErrhEAJp6baEcKBYXkdj9kKcRlP
+        lFgGF+7VOfTf0ErUOQvahtOTGPfR1obl
+X-Google-Smtp-Source: ABdhPJwefwise4M4dQhfkhkAbPvDIFfh6hQWFr1NCJJ+Qx/b4zISrml4k1oH97Xkq+loYAG110ZWEA==
+X-Received: by 2002:a05:620a:2901:: with SMTP id m1mr2181584qkp.644.1640097746889;
+        Tue, 21 Dec 2021 06:42:26 -0800 (PST)
+Received: from robh.at.kernel.org ([24.55.105.145])
+        by smtp.gmail.com with ESMTPSA id bi6sm14226390qkb.29.2021.12.21.06.42.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Dec 2021 06:42:26 -0800 (PST)
+Received: (nullmailer pid 1376629 invoked by uid 1000);
+        Tue, 21 Dec 2021 14:42:24 -0000
+Date:   Tue, 21 Dec 2021 10:42:24 -0400
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sboyd@kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        devicetree@vger.kernel.org, collinsd@codeaurora.org,
+        subbaram@codeaurora.org, tglx@linutronix.de, maz@kernel.org
+Subject: Re: [PATCH v4 11/11] dt-bindings: convert qcom,spmi-pmic-arb binding
+ to YAML format
+Message-ID: <YcHn0MLuqvMHbmuO@robh.at.kernel.org>
+References: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1640071211-31462-12-git-send-email-quic_fenglinw@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1640071211-31462-12-git-send-email-quic_fenglinw@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert qcom,cpr.txt to DT schema format.
+On Tue, Dec 21, 2021 at 03:20:09PM +0800, Fenglin Wu wrote:
+> Convert the SPMI PMIC arbiter documentation to JSON/yaml.
+> 
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 ----------
+>  .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 146 +++++++++++++++++++++
+>  2 files changed, 146 insertions(+), 67 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> 
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- .../bindings/power/avs/qcom,cpr.txt           | 130 --------------
- .../bindings/power/avs/qcom,cpr.yaml          | 161 ++++++++++++++++++
- MAINTAINERS                                   |   2 +-
- 3 files changed, 162 insertions(+), 131 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.tx=
-t
- create mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.ya=
-ml
+> diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> new file mode 100644
+> index 0000000..df8cfb7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> @@ -0,0 +1,146 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SPMI PMIC Arbiter
+> +
+> +maintainers:
+> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
+> +  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+> +
+> +description: |
+> +  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
+> +  controller with wrapping arbitration logic to allow for multiple
+> +  on-chip devices to control a single SPMI master.
+> +
+> +  The PMIC Arbiter can also act as an interrupt controller, providing
+> +  interrupts to slave devices.
+> +
+> +  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
+> +  SPMI controller binding requirements for child nodes.
+> +
+> +allOf:
+> +  - $ref: spmi.yaml#
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^spmi@.*"
+> +
+> +  compatible:
+> +    const: qcom,spmi-pmic-arb
+> +
+> +  reg-names:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
 
-diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt b/Doc=
-umentation/devicetree/bindings/power/avs/qcom,cpr.txt
-deleted file mode 100644
-index ab0d5ebbad4e..000000000000
---- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
-+++ /dev/null
-@@ -1,130 +0,0 @@
--QCOM CPR (Core Power Reduction)
--
--CPR (Core Power Reduction) is a technology to reduce core power on a CPU
--or other device. Each OPP of a device corresponds to a "corner" that has
--a range of valid voltages for a particular frequency. While the device is
--running at a particular frequency, CPR monitors dynamic factors such as
--temperature, etc. and suggests adjustments to the voltage to save power
--and meet silicon characteristic requirements.
--
--- compatible:
--=09Usage: required
--=09Value type: <string>
--=09Definition: should be "qcom,qcs404-cpr", "qcom,cpr" for qcs404
--
--- reg:
--=09Usage: required
--=09Value type: <prop-encoded-array>
--=09Definition: base address and size of the rbcpr register region
--
--- interrupts:
--=09Usage: required
--=09Value type: <prop-encoded-array>
--=09Definition: should specify the CPR interrupt
--
--- clocks:
--=09Usage: required
--=09Value type: <prop-encoded-array>
--=09Definition: phandle to the reference clock
--
--- clock-names:
--=09Usage: required
--=09Value type: <stringlist>
--=09Definition: must be "ref"
--
--- vdd-apc-supply:
--=09Usage: required
--=09Value type: <phandle>
--=09Definition: phandle to the vdd-apc-supply regulator
--
--- #power-domain-cells:
--=09Usage: required
--=09Value type: <u32>
--=09Definition: should be 0
--
--- operating-points-v2:
--=09Usage: required
--=09Value type: <phandle>
--=09Definition: A phandle to the OPP table containing the
--=09=09    performance states supported by the CPR
--=09=09    power domain
--
--- acc-syscon:
--=09Usage: optional
--=09Value type: <phandle>
--=09Definition: phandle to syscon for writing ACC settings
--
--- nvmem-cells:
--=09Usage: required
--=09Value type: <phandle>
--=09Definition: phandle to nvmem cells containing the data
--=09=09    that makes up a fuse corner, for each fuse corner.
--=09=09    As well as the CPR fuse revision.
--
--- nvmem-cell-names:
--=09Usage: required
--=09Value type: <stringlist>
--=09Definition: should be "cpr_quotient_offset1", "cpr_quotient_offset2",
--=09=09    "cpr_quotient_offset3", "cpr_init_voltage1",
--=09=09    "cpr_init_voltage2", "cpr_init_voltage3", "cpr_quotient1",
--=09=09    "cpr_quotient2", "cpr_quotient3", "cpr_ring_osc1",
--=09=09    "cpr_ring_osc2", "cpr_ring_osc3", "cpr_fuse_revision"
--=09=09    for qcs404.
--
--Example:
--
--=09cpr_opp_table: cpr-opp-table {
--=09=09compatible =3D "operating-points-v2-qcom-level";
--
--=09=09cpr_opp1: opp1 {
--=09=09=09opp-level =3D <1>;
--=09=09=09qcom,opp-fuse-level =3D <1>;
--=09=09};
--=09=09cpr_opp2: opp2 {
--=09=09=09opp-level =3D <2>;
--=09=09=09qcom,opp-fuse-level =3D <2>;
--=09=09};
--=09=09cpr_opp3: opp3 {
--=09=09=09opp-level =3D <3>;
--=09=09=09qcom,opp-fuse-level =3D <3>;
--=09=09};
--=09};
--
--=09power-controller@b018000 {
--=09=09compatible =3D "qcom,qcs404-cpr", "qcom,cpr";
--=09=09reg =3D <0x0b018000 0x1000>;
--=09=09interrupts =3D <0 15 IRQ_TYPE_EDGE_RISING>;
--=09=09clocks =3D <&xo_board>;
--=09=09clock-names =3D "ref";
--=09=09vdd-apc-supply =3D <&pms405_s3>;
--=09=09#power-domain-cells =3D <0>;
--=09=09operating-points-v2 =3D <&cpr_opp_table>;
--=09=09acc-syscon =3D <&tcsr>;
--
--=09=09nvmem-cells =3D <&cpr_efuse_quot_offset1>,
--=09=09=09<&cpr_efuse_quot_offset2>,
--=09=09=09<&cpr_efuse_quot_offset3>,
--=09=09=09<&cpr_efuse_init_voltage1>,
--=09=09=09<&cpr_efuse_init_voltage2>,
--=09=09=09<&cpr_efuse_init_voltage3>,
--=09=09=09<&cpr_efuse_quot1>,
--=09=09=09<&cpr_efuse_quot2>,
--=09=09=09<&cpr_efuse_quot3>,
--=09=09=09<&cpr_efuse_ring1>,
--=09=09=09<&cpr_efuse_ring2>,
--=09=09=09<&cpr_efuse_ring3>,
--=09=09=09<&cpr_efuse_revision>;
--=09=09nvmem-cell-names =3D "cpr_quotient_offset1",
--=09=09=09"cpr_quotient_offset2",
--=09=09=09"cpr_quotient_offset3",
--=09=09=09"cpr_init_voltage1",
--=09=09=09"cpr_init_voltage2",
--=09=09=09"cpr_init_voltage3",
--=09=09=09"cpr_quotient1",
--=09=09=09"cpr_quotient2",
--=09=09=09"cpr_quotient3",
--=09=09=09"cpr_ring_osc1",
--=09=09=09"cpr_ring_osc2",
--=09=09=09"cpr_ring_osc3",
--=09=09=09"cpr_fuse_revision";
--=09};
-diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml b/Do=
-cumentation/devicetree/bindings/power/avs/qcom,cpr.yaml
-new file mode 100644
-index 000000000000..852eb36eea93
---- /dev/null
-+++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
-@@ -0,0 +1,161 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/power/avs/qcom,cpr.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Core Power Reduction (CPR) bindings
-+
-+maintainers:
-+  - Niklas Cassel <nks@flawful.org>
-+
-+description: |
-+  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
-+  or other device. Each OPP of a device corresponds to a "corner" that has
-+  a range of valid voltages for a particular frequency. While the device i=
-s
-+  running at a particular frequency, CPR monitors dynamic factors such as
-+  temperature, etc. and suggests adjustments to the voltage to save power
-+  and meet silicon characteristic requirements.
-+
-+properties:
-+  compatible:
-+    allOf:
-+      - items:
-+          - enum:
-+              - qcom,qcs404-cpr
-+          - const: qcom,cpr
-+
-+  reg:
-+    description: Base address and size of the RBCPR register region.
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: Reference clock.
-+
-+  clock-names:
-+    items:
-+      - const: ref
-+
-+  vdd-apc-supply:
-+    description: APC regulator supply.
-+
-+  '#power-domain-cells':
-+    const: 0
-+
-+  operating-points-v2:
-+    description: |
-+      A phandle to the OPP table containing the performance states
-+      supported by the CPR power domain.
-+
-+  acc-syscon:
-+    description: A phandle to the syscon used for writing ACC settings.
-+
-+  nvmem-cells:
-+    items:
-+      - description: Corner 1 quotient offset
-+      - description: Corner 2 quotient offset
-+      - description: Corner 3 quotient offset
-+      - description: Corner 1 initial voltage
-+      - description: Corner 2 initial voltage
-+      - description: Corner 3 initial voltage
-+      - description: Corner 1 quotient
-+      - description: Corner 2 quotient
-+      - description: Corner 3 quotient
-+      - description: Corner 1 ring oscillator
-+      - description: Corner 2 ring oscillator
-+      - description: Corner 3 ring oscillator
-+      - description: Fuse revision
-+
-+  nvmem-cell-names:
-+    items:
-+      - const: cpr_quotient_offset1
-+      - const: cpr_quotient_offset2
-+      - const: cpr_quotient_offset3
-+      - const: cpr_init_voltage1
-+      - const: cpr_init_voltage2
-+      - const: cpr_init_voltage3
-+      - const: cpr_quotient1
-+      - const: cpr_quotient2
-+      - const: cpr_quotient3
-+      - const: cpr_ring_osc1
-+      - const: cpr_ring_osc2
-+      - const: cpr_ring_osc3
-+      - const: cpr_fuse_revision
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+  - vdd-apc-supply
-+  - '#power-domain-cells'
-+  - operating-points-v2
-+  - nvmem-cells
-+  - nvmem-cell-names
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    cpr_opp_table: cpr-opp-table {
-+        compatible =3D "operating-points-v2-qcom-level";
-+
-+        cpr_opp1: opp1 {
-+            opp-level =3D <1>;
-+            qcom,opp-fuse-level =3D <1>;
-+        };
-+        cpr_opp2: opp2 {
-+            opp-level =3D <2>;
-+            qcom,opp-fuse-level =3D <2>;
-+        };
-+        cpr_opp3: opp3 {
-+            opp-level =3D <3>;
-+            qcom,opp-fuse-level =3D <3>;
-+        };
-+    };
-+
-+    power-controller@b018000 {
-+        compatible =3D "qcom,qcs404-cpr", "qcom,cpr";
-+        reg =3D <0x0b018000 0x1000>;
-+        interrupts =3D <0 15 IRQ_TYPE_EDGE_RISING>;
-+        clocks =3D <&xo_board>;
-+        clock-names =3D "ref";
-+        vdd-apc-supply =3D <&pms405_s3>;
-+        #power-domain-cells =3D <0>;
-+        operating-points-v2 =3D <&cpr_opp_table>;
-+        acc-syscon =3D <&tcsr>;
-+
-+        nvmem-cells =3D <&cpr_efuse_quot_offset1>,
-+            <&cpr_efuse_quot_offset2>,
-+            <&cpr_efuse_quot_offset3>,
-+            <&cpr_efuse_init_voltage1>,
-+            <&cpr_efuse_init_voltage2>,
-+            <&cpr_efuse_init_voltage3>,
-+            <&cpr_efuse_quot1>,
-+            <&cpr_efuse_quot2>,
-+            <&cpr_efuse_quot3>,
-+            <&cpr_efuse_ring1>,
-+            <&cpr_efuse_ring2>,
-+            <&cpr_efuse_ring3>,
-+            <&cpr_efuse_revision>;
-+        nvmem-cell-names =3D "cpr_quotient_offset1",
-+            "cpr_quotient_offset2",
-+            "cpr_quotient_offset3",
-+            "cpr_init_voltage1",
-+            "cpr_init_voltage2",
-+            "cpr_init_voltage3",
-+            "cpr_quotient1",
-+            "cpr_quotient2",
-+            "cpr_quotient3",
-+            "cpr_ring_osc1",
-+            "cpr_ring_osc2",
-+            "cpr_ring_osc3",
-+            "cpr_fuse_revision";
-+    };
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a7d86182fa6b..9ebbccb0494e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -15746,7 +15746,7 @@ M:=09Niklas Cassel <nks@flawful.org>
- L:=09linux-pm@vger.kernel.org
- L:=09linux-arm-msm@vger.kernel.org
- S:=09Maintained
--F:=09Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
-+F:=09Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
- F:=09drivers/soc/qcom/cpr.c
-=20
- QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
---=20
-2.34.1
+reg-names already has a type defined.
+
+> +    anyOf:
+> +      - minItems: 3
+> +      - maxItems: 3
+> +      - enum: ["core", "intr", "cnfg"]
+> +
+> +      - minItems: 5
+> +      - maxItems: 5
+> +      - enum: ["core", "intr", "cnfg", "chnls", "obsrvr"]
+
+I think you want something like this:
+
+minItems: 3
+items:
+  - const: core
+  - const: intr
+  - const: cnfg
+  - const: chnls
+  - const: obsrvr
 
 
+> +
+> +  reg:
+> +    minItems: 3
+> +    maxItems: 5
+> +    description: |
+> +      Specifies base physical address and size of the registers in SPMI PMIC
+> +      Arbiter HW module, with the following order.
+> +        - SPMI PMIC arbiter core registers (core)
+> +        - SPMI PMIC arbiter interrupt controller registers (intr)
+> +        - SPMI PMIC arbiter configuration registers (cnfg)
+> +        - SPMI PMIC arbiter tx-channel per virtual slave registers (chnls)
+> +        - SPMI PMIC arbiter rx-channel per virtual slave registers (obsrvr).
+> +      Register for "chnls" and "obsrvr" are only applicable for PMIC arbiter
+> +      with HW version greater than V2.
+> +
+> +  "#address-cells":
+> +    const: 2
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  interrupts:
+> +    description: The summary interrupt for the PMIC Arb controller.
+> +    maxItems: 1
+> +
+> +  interrupt-names:
+> +    const: periph_irq
+> +
+> +  interrupt-controller: true
+> +
+> +  "#interrupt-cells":
+> +    const: 4
+> +    description: |
+> +      Specifies the number of cells needed to encode any interrupt source.
+> +      The 1st cell is the slave ID for the requested interrupt, its valid
+> +      range is [0-15].
+> +      The 2nd cell is the  peripheral ID for requested interrupt, its valid
+> +      range is [0-255].
+> +      The 3rd cell is the requested peripheral interrupt, its valid range
+> +      is [0-7].
+> +      The 4th cell is interrupt flags indicating level-sense information,
+> +      as defined in dt-bindings/interrupt-controller/irq.h
+> +
+> +  qcom,ee:
+> +    description: the active Execution Environment identifier
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [0, 1, 2, 3, 4, 5]
+> +
+> +  qcom,channel:
+> +    description: which of the PMIC Arbiter provided channels to use for accesses
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [0, 1, 2, 3, 4, 5]
+> +
+
+> +patternProperties:
+> +  "@[0-9a-f]$":
+> +    description: up to 16 child PMIC nodes
+> +    type: object
+> +
+> +    properties:
+> +      reg:
+> +        items:
+> +          - minItems: 1
+> +            items:
+> +              - minimum: 0
+> +                maximum: 0xf
+> +              - enum: [ 0 ]
+> +                description:
+> +                  0 means user ID address. 1 is reserved for group ID
+> +                  address.
+> +
+> +    required:
+> +      - reg
+
+All this should be covered by spmi.yaml
+
+> +
+> +required:
+> +  - compatible
+> +  - reg-names
+> +  - reg
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +  - qcom,ee
+> +  - qcom,channel
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    spmi@fc4cf000 {
+> +          compatible = "qcom,spmi-pmic-arb";
+> +          reg-names = "core", "intr", "cnfg";
+> +          reg = <0xfc4cf000 0x1000>,
+> +                <0xfc4cb000 0x1000>,
+> +                <0xfc4ca000 0x1000>;
+> +          interrupt-names = "periph_irq";
+> +          interrupts = <0 190 0>;
+> +          interrupt-controller;
+> +          #interrupt-cells = <4>;
+> +
+> +          qcom,ee = <0>;
+> +          qcom,channel = <0>;
+> +
+> +          #address-cells = <2>;
+> +          #size-cells = <0>;
+> +    };
+> -- 
+> 2.7.4
+> 
+> 
