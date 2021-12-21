@@ -2,43 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD81B47C7C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 20:52:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E17B347C8A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Dec 2021 22:09:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241909AbhLUTwV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 14:52:21 -0500
-Received: from mail-qk1-f176.google.com ([209.85.222.176]:42911 "EHLO
-        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbhLUTwV (ORCPT
+        id S235610AbhLUVJj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 16:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230326AbhLUVJj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 14:52:21 -0500
-Received: by mail-qk1-f176.google.com with SMTP id g28so113346qkk.9;
-        Tue, 21 Dec 2021 11:52:21 -0800 (PST)
+        Tue, 21 Dec 2021 16:09:39 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38108C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 13:09:39 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id fo11so461308qvb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 13:09:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5b8n9orjAEw20yJsUAGO8xOhgi3RcUL34raFmKfwMXw=;
+        b=yts9ohbmCCUWr3HVviMlhLdcGCGcYytNi3Xxr0i8vdU5sxgJU9tbhkWxfue0cntgSu
+         LsFNtcZO5eVezqWQosNtyUOZBYj3uJjiYoeMBUbbD4B1WdllWuiAVAB5rRdof4246HuC
+         3/IropbvZ+DfegxN5sguXRI5xVJxq9k2pXQZDh3QgUMe45/kW7r9rx6JUjFHoUg1F5CD
+         KN6n3Gwn9s3Wf0LKPVtNAMwJobIQGqIimtGIQPXoOecIsajN0bfNTtcnIy9o5C3oF20C
+         IdcSR62YI92QCrGdl08wtQ8dNfsC2qE9qVywEBN0t948uemB9KXWogaJtUYARsonSdZ2
+         /Jzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6KTbJr72rRr9PgymTip4M6pAs/zMxShgqIUpXjW532I=;
-        b=YJvbynnGw+WcziAymS+HeHh4FN45U8uAkxdaI6inqFfariffat5ac9XRZ6msuBEvJV
-         02R9SVoOgTwWVFCCBDQKFJkJiszghCfkHl0Iii2DLtv9r2ivaplxg0uHrxWQKi3UfZ0Z
-         VaPefxKkz74mQIYw7fBEbGRP0rHgLPYRbgLwHajrAHBusAdpx6U1exhi+ERqlIz94JRE
-         D8LrqImwN6EYuhZJyl462gKvuYCuec/xghVYvb/f+/p9CudWhmpSexqYxzm2O86tnnvR
-         1Mjhbn6eZmUVgvk1tytf0Q7QwFof1NJvC5AXtFiT9YJVG2dq0fq0SFkAuSHIKXjXnIb/
-         Nwtw==
-X-Gm-Message-State: AOAM53089g9SPk2DLaDKaSIqhJa6RS4+WJSr6A8D5ZgsLJoAQTr6mDFp
-        S94uLkIfhDWsLUB0tOBtWA==
-X-Google-Smtp-Source: ABdhPJx3zZgrKOC/ikoGYyvjxr1YgqwCwXRo6Ficx2kO1hnoC7oIyz8VeuqxfzQ5mhKv/fqOVX9jkQ==
-X-Received: by 2002:a05:620a:b47:: with SMTP id x7mr2289893qkg.174.1640116340667;
-        Tue, 21 Dec 2021 11:52:20 -0800 (PST)
-Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id 8sm18888546qtz.28.2021.12.21.11.52.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 11:52:19 -0800 (PST)
-Received: (nullmailer pid 1640609 invoked by uid 1000);
-        Tue, 21 Dec 2021 19:52:17 -0000
-Date:   Tue, 21 Dec 2021 15:52:17 -0400
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5b8n9orjAEw20yJsUAGO8xOhgi3RcUL34raFmKfwMXw=;
+        b=Hg33jOfaDelk0Rc8p/3+upikMZJfZlJDEYO/PptwTaf8QUs6q1+5MQjBQG4dM+sA0A
+         ObPMxqp/zhPda7uliBmfjtilq4qENsPbOHWQr+LT78d7DNxXV6HX6VZy0sbnUvFK7L6a
+         9KPGsXtZqHfSlol/uyclomo5pKadAszged5vbZlTRInH7fALcCCKjWBmIDU5gmAO05eZ
+         ewK2kKw2K5xmxzdwLyki7LULmgqt3mUMoiVFtF8Bd16Qv3kkWk80A3f2svJ/tpL6cxN2
+         6O+q+FvctI3QfJ5mWosgqCyyU2DBOXed+gPN56wPAuSlMFEccgeEt24ARFEpFTGQWGmx
+         wI+w==
+X-Gm-Message-State: AOAM530VCOrRbjQDQJ5NFAIHfYChM5dIWtJrBpob2gSpckQTH77rRY9b
+        xJFgb9aHx0QGusX0D5sqguK5bpmdQddB54Ob+dX/SQ==
+X-Google-Smtp-Source: ABdhPJzO5NpLO0SWdQTQPLQ3pS5T+LQSeDWkBslctelVx9sng0G6KIRVPPF5PRkzhgH/O69heeBVsDLZKSB8oL6gvHE=
+X-Received: by 2002:a05:6214:248a:: with SMTP id gi10mr108271qvb.115.1640120978287;
+ Tue, 21 Dec 2021 13:09:38 -0800 (PST)
+MIME-Version: 1.0
+References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
+ <20211218141024.500952-2-dmitry.baryshkov@linaro.org> <YcHr0/W0QqRlj1Ji@robh.at.kernel.org>
+ <CAA8EJpr1wfW2CLSjBjJdMhhgBmcnMRkx=x5SAC_4LDQCHw1_qA@mail.gmail.com> <YcIwcUzYCq1v4Kfs@robh.at.kernel.org>
+In-Reply-To: <YcIwcUzYCq1v4Kfs@robh.at.kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 22 Dec 2021 00:09:27 +0300
+Message-ID: <CAA8EJpr7c-x3WJJQCXy3Wo0o82vODw4svwdZHrJ6ht5=WLNJ3A@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings for SM8450
+To:     Rob Herring <robh@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
@@ -46,60 +61,57 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stanimir Varbanov <svarbanov@mm-sol.com>,
         Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings
- for SM8450
-Message-ID: <YcIwcUzYCq1v4Kfs@robh.at.kernel.org>
-References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
- <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
- <YcHr0/W0QqRlj1Ji@robh.at.kernel.org>
- <CAA8EJpr1wfW2CLSjBjJdMhhgBmcnMRkx=x5SAC_4LDQCHw1_qA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpr1wfW2CLSjBjJdMhhgBmcnMRkx=x5SAC_4LDQCHw1_qA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Dec 21, 2021 at 06:43:31PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 21 Dec 2021 at 17:59, Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Sat, Dec 18, 2021 at 05:10:20PM +0300, Dmitry Baryshkov wrote:
-> > > Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
-> > > to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
-> > > different set of clocks, so two compatible entries are required.
+On Tue, 21 Dec 2021 at 22:52, Rob Herring <robh@kernel.org> wrote:
+>
+> On Tue, Dec 21, 2021 at 06:43:31PM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 21 Dec 2021 at 17:59, Rob Herring <robh@kernel.org> wrote:
 > > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
-> > >  1 file changed, 21 insertions(+), 1 deletion(-)
+> > > On Sat, Dec 18, 2021 at 05:10:20PM +0300, Dmitry Baryshkov wrote:
+> > > > Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
+> > > > to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
+> > > > different set of clocks, so two compatible entries are required.
+> > > >
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
+> > > >  1 file changed, 21 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > > > index a0ae024c2d0c..0adb56d5645e 100644
+> > > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> > > > @@ -15,6 +15,8 @@
+> > > >                       - "qcom,pcie-sc8180x" for sc8180x
+> > > >                       - "qcom,pcie-sdm845" for sdm845
+> > > >                       - "qcom,pcie-sm8250" for sm8250
+> > > > +                     - "qcom,pcie-sm8450-pcie0" for PCIe0 on sm8450
+> > > > +                     - "qcom,pcie-sm8450-pcie1" for PCIe1 on sm8450
 > > >
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > index a0ae024c2d0c..0adb56d5645e 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> > > @@ -15,6 +15,8 @@
-> > >                       - "qcom,pcie-sc8180x" for sc8180x
-> > >                       - "qcom,pcie-sdm845" for sdm845
-> > >                       - "qcom,pcie-sm8250" for sm8250
-> > > +                     - "qcom,pcie-sm8450-pcie0" for PCIe0 on sm8450
-> > > +                     - "qcom,pcie-sm8450-pcie1" for PCIe1 on sm8450
+> > > What's the difference between the two?
 > >
-> > What's the difference between the two?
-> 
-> Clocks used by these hosts. Quoting the definition:
-> 
-> +                     - "aggre0"      Aggre NoC PCIe0 AXI clock, only
-> for sm8450-pcie0
-> +                     - "aggre1"      Aggre NoC PCIe1 AXI clock
-> 
-> aggre1 is used by both pcie0 and pcie1, while aggre0 is used only by pcie0.
+> > Clocks used by these hosts. Quoting the definition:
+> >
+> > +                     - "aggre0"      Aggre NoC PCIe0 AXI clock, only
+> > for sm8450-pcie0
+> > +                     - "aggre1"      Aggre NoC PCIe1 AXI clock
+> >
+> > aggre1 is used by both pcie0 and pcie1, while aggre0 is used only by pcie0.
+>
+> That doesn't really seem like you need a different compatible for that.
+> Do you need to handle them differently? It seems like abuse of clocks
+> putting bus/interconnect clocks here, but sadly that's all too common.
 
-That doesn't really seem like you need a different compatible for that. 
-Do you need to handle them differently? It seems like abuse of clocks 
-putting bus/interconnect clocks here, but sadly that's all too common.
+Unfortunately, yes, it looks like we need to handle them differently.
+The clocks are not handled by the interconnect on their own.
 
-Rob
+-- 
+With best wishes
+Dmitry
