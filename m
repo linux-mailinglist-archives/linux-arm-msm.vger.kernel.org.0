@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9616B47CDB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 08:55:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0330847CE54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 09:33:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243097AbhLVHy7 convert rfc822-to-8bit (ORCPT
+        id S239488AbhLVIdV convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 02:54:59 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:41931 "EHLO
+        Wed, 22 Dec 2021 03:33:21 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:36813 "EHLO
         mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231422AbhLVHy6 (ORCPT
+        with ESMTP id S229558AbhLVIdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 02:54:58 -0500
+        Wed, 22 Dec 2021 03:33:21 -0500
 Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 26DC1CED08;
-        Wed, 22 Dec 2021 08:54:57 +0100 (CET)
+        by mail.holtmann.org (Postfix) with ESMTPSA id 14FA5CED09;
+        Wed, 22 Dec 2021 09:33:20 +0100 (CET)
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280
- IDP boards
+Subject: Re: [PATCH v4] Bluetooth: hci_qca: Stop IBS timer during BT OFF
 From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
-Date:   Wed, 22 Dec 2021 08:54:56 +0100
+In-Reply-To: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
+Date:   Wed, 22 Dec 2021 09:33:19 +0100
 Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Matthias Kaehlcke <mka@chromium.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        quic_hemantg@quicinc.com, MSM <linux-arm-msm@vger.kernel.org>,
+        quic_bgodavar@quicinc.com, Rocky Liao <rjliao@codeaurora.org>,
+        hbandi@codeaurora.org,
         Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        mcchou@chromium.org, saluvala@codeaurora.org
+        Miao-chen Chou <mcchou@chromium.org>, quic_saluvala@quicinc.com
 Content-Transfer-Encoding: 8BIT
-Message-Id: <580E8974-EB7F-4493-BECC-4B09765A954D@holtmann.org>
-References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
+Message-Id: <0B5EAE00-967E-4D53-AC3E-B0182BFB8F80@holtmann.org>
+References: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
+To:     Panicker Harish <quic_pharish@quicinc.com>
 X-Mailer: Apple Mail (2.3693.40.0.1.81)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Balakrishna,
+Hi Panicker,
 
-> Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
+> The IBS timers are not stopped properly once BT OFF is triggered.
+> we could see IBS commands being sent along with version command,
+> so stopped IBS timers while Bluetooth is off.
 > 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> ---
+> Fixes: 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support during hci down for wcn3990")
+> 
+> Signed-off-by: Panicker Harish <quic_pharish@quicinc.com>
+> ----
 > v4:
->  * updated commit subject
->  * Removed drive strength for bt_en
->  * updated swctrl_gpio name to sw_ctrl
+>  * Used del_timer_sync() instead of mod_timer() to stop the timer and
+>    to make sure the handler has finished executing on other CPUs.
 > 
 > v3:
->  * Addressed reviewers comments
->  * Added pin config for sw_ctrl line.
+>  *Addressed reviewers comments
+>  *updated commit message
+> 
 > v2:
->  * merged two patches into one
->  * Removed unused comments
->  * Removed pinmux & pin conf.
->  * Addressed reviewers comments
+>  * Addressed the username
+>  * The full implementation of IBS is based on timers
+>    to that reason we have used timers.
 > 
 > v1: initial patch
 > ---
-> arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  4 ++++
-> arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 36 ++++++++++++++++++++++++++++++++
-> arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  4 ++++
-> 3 files changed, 44 insertions(+)
+> drivers/bluetooth/hci_qca.c | 3 +++
+> 1 file changed, 3 insertions(+)
 
 patch has been applied to bluetooth-next tree.
 
