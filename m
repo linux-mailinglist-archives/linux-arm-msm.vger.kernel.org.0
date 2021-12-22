@@ -2,141 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 47F4B47CA3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 01:25:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4598147CA47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 01:35:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239439AbhLVAZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 19:25:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42078 "EHLO
+        id S229674AbhLVAfr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 19:35:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhLVAZg (ORCPT
+        with ESMTP id S239485AbhLVAfr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 19:25:36 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41149C061401
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:25:36 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id 45-20020a9d0a30000000b0058f1a6df088so627036otg.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:25:36 -0800 (PST)
+        Tue, 21 Dec 2021 19:35:47 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4F27C06173F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:35:46 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id n14so1071695wra.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:35:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GlatAavy7Fomh56/ZYdtVg3JLbpH742/1IfeF1igMjE=;
-        b=oYA99ve50DOz/uXnvujpBooTpUsPQakmp5rPxdw6ZC/osg4KyMsxdywztJFqb1RnGf
-         T5Lt2jpEcD9HKmiISCn0tGRI+nx1fw7h+i+OG+Zl8E3Qx7mmWmRELRjpQ2xXJ7YXZp3L
-         bmHuyn5a7rP/EErf6fIuoAadJRqb8BP13Whf653hHeiwbxVbgK9N7/KIypT/hBWKVJjj
-         K7mRY+7PEXChx5AcuYqS2Qypa+MBgMyhGPuRy4ESXu99ZwL+BsLQQMFb00rney2W9MeC
-         k4oegx7BfOZglF7wOuBGxfUYtRbR9pX+j7NsyiRkbrCQSysAi4drDtdovPfJzfU+jMQ3
-         YBog==
+        bh=h0Zf2gzsRp6VToYpioLi3lBcajNOnixbJvqv5xa970A=;
+        b=E2xnd5V1gcfsBxcT854U585uRoyaHgypaSGkMNpTTMaoxUiFeCU0CEaDEUc9b9dFHD
+         N1lEDo+n71vV54Yw1phLnCiACCELfpCW/OCd60yw2NMdgcFEx8aQBU8u+u7VZ7sd6a/C
+         m+1cy/dfI0hnywI9Z4dkdR2ErF4pv3zJDGiQFzVfQjbse7QU9PpWsKBTV4ocSfTQecaV
+         t+YTn9GGmLMWFjTop0jwIAKjgFxhYNJC6GLQpPredldsHiIs3zPKzg1XAM73IE7ABaaL
+         s4o1lXBoDILC65p9celfJpTsyLLlg4ALeK9aqtUtJxIUdg0fcgBPGqljeYDueFnuuTy6
+         1Jww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=GlatAavy7Fomh56/ZYdtVg3JLbpH742/1IfeF1igMjE=;
-        b=iLiajSw09d5d3faTZC4jmyjP7lSTMB29rbkFGrLQ2T8kqE1OyjK5lzrpsJtyoH7vNe
-         dXy3wuOmeVbIZd+a95NWNw+c0awCCHxcrRSUd+OfBWZGS58meugeUjEe6hh7RU+4tEpg
-         fI+TinG3IRRO/yhEMREopQlL+NDdPlD1OleBoBSCp/8mzlF+vgr7+fAZeToYFS+icoFU
-         EzkukCPIdUsG5E6uEpn4Zb+B2KnXkXMo1hlx+VvkOMCr+h+LP4NR/590nsDWHagnSUCO
-         7tIYbOieQyLAGWFCMrEXfYFluo6nEcRdvKo/jOhT6DNazASV4PyI5Gj/vFEKhcUhUF6q
-         G0zw==
-X-Gm-Message-State: AOAM533Qqm1ufqqK/K6syUcwSWF/Cpi6+7BCvTicp4kHnqgHokWwX19V
-        +ne61tfrE7wutkbsvODQrb+fow==
-X-Google-Smtp-Source: ABdhPJyM+6fi4zx1ka4RK/IUEJiQdwsWJkQb6v4yBj0cz4YQNrb0EevT/CzP60g5aj83xPDo+44vXg==
-X-Received: by 2002:a05:6830:183:: with SMTP id q3mr505352ota.285.1640132735532;
-        Tue, 21 Dec 2021 16:25:35 -0800 (PST)
-Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q2sm83086otg.64.2021.12.21.16.25.34
+        bh=h0Zf2gzsRp6VToYpioLi3lBcajNOnixbJvqv5xa970A=;
+        b=51muG9Bx8jUPgPvMPvMgnz+qQH75wJD03ip5UWz+GHJqUFlHRAInFa/P/rGRWdr5Di
+         8jBOATuS8uq7eZAUS7TD2itudoezcHzjXQrDFtjLyKHbvNUEalIPqpfL+ZWZZm13zgZF
+         5tJMBzZRg0Pu0iVokf8hbeOhYJ7Uuay2Orf5J0IVfQ062n1wFMqP2rOw8Gnp4gTYL8x0
+         czB8lHj8LsSO2QdThl8COKwfG1ymXNY/3DJcCQ30R7xSIdZxNYv/zbWdOhigckfXNvB2
+         RBhPvC3Ge55i0/1JslYdYfl+tPeZ9e+g68E112chCGGMehGgKhaApBMqzCdDDTZNudBz
+         YTCw==
+X-Gm-Message-State: AOAM532iSfB5brRPkO0QfAWg/CMVSYb38lAlgHAKVpRbNBy5oeVIVt6j
+        zK7hmBJMrC9QvfPvtoojl6+B5HwqK2gWEA==
+X-Google-Smtp-Source: ABdhPJzI5drqgK1FK9bE4CvuPsB4Q6LQrcv2bork+oSgmf7BpuuIDu/wHHTpzdyVWPeXDboYyBRq0A==
+X-Received: by 2002:adf:d1ef:: with SMTP id g15mr416871wrd.198.1640133345151;
+        Tue, 21 Dec 2021 16:35:45 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id n7sm282825wms.45.2021.12.21.16.35.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 16:25:35 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8350: Correct UFS symbol clocks
-Date:   Tue, 21 Dec 2021 16:26:44 -0800
-Message-Id: <20211222002644.3396011-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.33.1
+        Tue, 21 Dec 2021 16:35:44 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
+Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
+        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
+        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v3 00/19] CAMSS: Add SM8250 support 
+Date:   Wed, 22 Dec 2021 00:37:32 +0000
+Message-Id: <20211222003751.2461466-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The introduction of '9a61f813fcc8 ("clk: qcom: regmap-mux: fix parent
-clock lookup")' broke UFS support on SM8350.
+V3:
+Publishing this V3 to make it a bit easier to merge
 
-The cause for this is that the symbol clocks have a specified rate in
-the "freq-table-hz" table in the UFS node, which causes the UFS code to
-request a rate change, for which the "bi_tcxo" happens to provide the
-closest rate.  Prior to the change in regmap-mux it was determined
-(incorrectly) that no change was needed and everything worked. Instead
-mimic the configuration found in other platforms, by omitting the rate
-for the symbol clocks as well to avoid the rate change.
+- Adds Rob Herring's RB for the first DTS change
+- Adds Robert Foss' RB for the final three patches
+- Validated on latest 5.16-rc6 on rb3 and rb5
+- No functional changes to v2
 
-While at it also fill in the dummy symbol clocks that was dropped from
-the GCC driver as it was upstreamed.
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc6-sm8250-camss-imx577-only-v3
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc3-sm8250-camss-imx577-only-v2
 
-Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+RESEND V2:
++ Cc: devicetree@vger.kernel.org on first patch
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index bc176c252bca..ceb064a83038 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -38,6 +38,24 @@ sleep_clk: sleep-clk {
- 			clock-frequency = <32000>;
- 			#clock-cells = <0>;
- 		};
-+
-+		ufs_phy_rx_symbol_0_clk: ufs-phy-rx-symbol-0 {
-+			compatible = "fixed-clock";
-+			clock-frequency = <1000>;
-+			#clock-cells = <0>;
-+		};
-+
-+		ufs_phy_rx_symbol_1_clk: ufs-phy-rx-symbol-1 {
-+			compatible = "fixed-clock";
-+			clock-frequency = <1000>;
-+			#clock-cells = <0>;
-+		};
-+
-+		ufs_phy_tx_symbol_0_clk: ufs-phy-tx-symbol-0 {
-+			compatible = "fixed-clock";
-+			clock-frequency = <1000>;
-+			#clock-cells = <0>;
-+		};
- 	};
- 
- 	cpus {
-@@ -606,9 +624,9 @@ gcc: clock-controller@100000 {
- 				 <0>,
- 				 <0>,
- 				 <0>,
--				 <0>,
--				 <0>,
--				 <0>,
-+				 <&ufs_phy_rx_symbol_0_clk>,
-+				 <&ufs_phy_rx_symbol_1_clk>,
-+				 <&ufs_phy_tx_symbol_0_clk>,
- 				 <0>,
- 				 <0>;
- 		};
-@@ -2079,8 +2097,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 				<75000000 300000000>,
- 				<0 0>,
- 				<0 0>,
--				<75000000 300000000>,
--				<75000000 300000000>;
-+				<0 0>,
-+				<0 0>;
- 			status = "disabled";
- 		};
- 
+V2:
+- Adds Tested-by Julian Grahsl as indicated.
+- Fixes low-level noise checkpatch --strict
+  I ended up having to push defines into static inlines for this.
+- Adds Reviewed-by Robert Foss.
+- Adds VFE/CSID fix for sdm845 as explicit additional sdm845 specific
+  patch per Robert's suggestion.
+
+I took the time then to test out on sdm845 to ensure the new patch breaks
+nothing "./cam -c 1 --capture=1 --file=capture.raw" continues to produce
+expected data.
+
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc1-sm8250-camss-imx577-only
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc3-sm8250-camss-imx577-only-v2
+
+git diff v5.16-rc1-sm8250-camss-imx577-only..v5.16-rc3-sm8250-camss-imx577-only-v2 -- drivers/media/platform/qcom/camss
+
+V1/RESEND:
+RESEND: git send-email --to=inux-arm-msm@vger.kernel.org -> --to=linux-arm-msm@vger.kernel.org
+
+This series is imported from excellent enabling work contributed by
+Jonathan Marek which we have picked up in Linaro for the RB5 project.
+
+Link: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210511180728.23781-2-jonathan@marek.ca/
+Link: https://www.qualcomm.com/products/robotics-rb5-platform
+Link: https://www.96boards.org/product/qualcomm-robotics-rb5
+Link: https://www.thundercomm.com/app_en/product/1590131656070623?index=1&categoryId=category0&tabIndex=1
+
+The RB5 has a slightly different sku I think to Jonathan's platform -
+QRB5165 in our case with a different version of LK the relevant bootloader
+for the board.
+
+As a result we needed to make some additional updates to the provided
+patcheset, included here.
+
+The most notable changes are:
+
+- Addition of clocks.
+- Addition of bandwidth settings.
+- Representing the dependency on a VFE for a given CSID so that V4L
+  subdevs will come out of reset right when poked.
+
+A full tree which is bootable and capable of producing pixel data from the
+imx577 main sensor is available here, with this series being a sub-set of
+the necessary patches on the SoC side only.
+
+Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=v5.16-rc1-sm8250-camss-imx577-only
+
+media-ctl --reset
+media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+
+yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+
+Bryan O'Donoghue (3):
+  media: camss: Add SM8250 bandwdith configuration support
+  media: camss: Do vfe_get/vfe_put for csid on sm8250
+  media: camss: Apply vfe_get/vfe_put fix to SDM845
+
+Jonathan Marek (16):
+  media: dt-bindings: media: camss: Add qcom,sm8250-camss binding
+  media: camss: csiphy-3ph: don't print HW version as an error
+  media: camss: csiphy-3ph: disable interrupts
+  media: camss: csiphy-3ph: add support for SM8250 CSI DPHY
+  media: camss: csid-170: fix non-10bit formats
+  media: camss: csid-170: don't enable unused irqs
+  media: camss: csid-170: remove stray comment
+  media: camss: csid-170: support more than one lite vfe
+  media: camss: csid-170: set the right HALT_CMD when disabled
+  media: camss: csid: allow csid to work without a regulator
+  media: camss: remove vdda-csiN from sdm845 resources
+  media: camss: fix VFE irq name
+  media: camss: vfe-170: fix "VFE halt timeout" error
+  media: camss: Add initial support for VFE hardware version Titan 480
+  media: camss: add support for V4L2_PIX_FMT_GREY for sdm845 HW
+  media: camss: add support for SM8250 camss
+
+ .../bindings/media/qcom,sm8250-camss.yaml     | 450 ++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   3 +-
+ .../{camss-csid-170.c => camss-csid-gen2.c}   |  32 +-
+ .../media/platform/qcom/camss/camss-csid.c    |  56 +-
+ .../media/platform/qcom/camss/camss-csid.h    |   2 +-
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 184 ++++--
+ .../media/platform/qcom/camss/camss-csiphy.c  |   9 +-
+ .../media/platform/qcom/camss/camss-vfe-170.c |  12 +-
+ .../media/platform/qcom/camss/camss-vfe-480.c | 564 ++++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.c |  17 +-
+ drivers/media/platform/qcom/camss/camss-vfe.h |   4 +
+ .../media/platform/qcom/camss/camss-video.c   |   5 +-
+ drivers/media/platform/qcom/camss/camss.c     | 306 +++++++++-
+ drivers/media/platform/qcom/camss/camss.h     |  18 +
+ 14 files changed, 1558 insertions(+), 104 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
+ rename drivers/media/platform/qcom/camss/{camss-csid-170.c => camss-csid-gen2.c} (95%)
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-480.c
+
 -- 
-2.33.1
+2.33.0
 
