@@ -2,71 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2A047D646
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 19:10:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52C4747D7CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 20:33:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234673AbhLVSKA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 13:10:00 -0500
-Received: from mail-qk1-f171.google.com ([209.85.222.171]:39751 "EHLO
-        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234629AbhLVSKA (ORCPT
+        id S1345250AbhLVTdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 14:33:54 -0500
+Received: from smtp09.smtpout.orange.fr ([80.12.242.131]:64741 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345252AbhLVTdy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 13:10:00 -0500
-Received: by mail-qk1-f171.google.com with SMTP id 69so3112269qkd.6;
-        Wed, 22 Dec 2021 10:09:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KTIqQpQ7RCF278GdqSbhmvSoIu5FXpBD2evLi7Gwsvo=;
-        b=Ph16s+vi7pXX9RIlyejHAQR0O+GBULuJ/DONxPOjMDlVRuA6EISl2ZEmrnSSCa2Cr2
-         jmWDo3ZdiWrIfHxRnPKTRQ6dwdOyyT/8q8tRA1aFsNzYBdjqaIBiQRENdvFhUOtnNcv1
-         ozugIiMxuLUe+s/wUoQmMoNN81301h9thukxXapTGPC1BXwZmFfSWe8CFWicCYlityyR
-         kTsDiT+2usxZGtt7K40snMi9FtTz1nnTHwvb4Zi0kfaCBd+Ux/H4o61r3Iw62JUJSVjG
-         DKlM4Oy7P0tNwcGsVacaVq0795baU176IXEJ+TPOR0mXlGbjx2+OjTGE+vrLpbzymVjk
-         yBGQ==
-X-Gm-Message-State: AOAM533QP5u/396zDj8qUzqYo2xwOiifTo+Til9qkshifX24ZmSolqah
-        EqxeaqdCNHlIyJ2a6I/50A==
-X-Google-Smtp-Source: ABdhPJwgtaYFVUDdyame6/XYYKkRbGq5W7j9AjqEkQUD/2pDfkzBHsdHwIMdSEfPe52Am76ViUavpw==
-X-Received: by 2002:a05:620a:1792:: with SMTP id ay18mr2926162qkb.5.1640196599172;
-        Wed, 22 Dec 2021 10:09:59 -0800 (PST)
-Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id q12sm2229494qtx.16.2021.12.22.10.09.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 10:09:58 -0800 (PST)
-Received: (nullmailer pid 2433267 invoked by uid 1000);
-        Wed, 22 Dec 2021 18:09:56 -0000
-Date:   Wed, 22 Dec 2021 14:09:56 -0400
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        ~okias/devicetree@lists.sr.ht, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, linux-crypto@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH] dt-bindings: crypto: convert Qualcomm PRNG to yaml
-Message-ID: <YcNp9KRLgkiI65p2@robh.at.kernel.org>
-References: <20211220184355.86582-1-david@ixit.cz>
+        Wed, 22 Dec 2021 14:33:54 -0500
+Received: from pop-os.home ([86.243.171.122])
+        by smtp.orange.fr with ESMTPA
+        id 07MznESxgf6fn07MznJHFa; Wed, 22 Dec 2021 20:33:51 +0100
+X-ME-Helo: pop-os.home
+X-ME-Auth: YWZlNiIxYWMyZDliZWIzOTcwYTEyYzlhMmU3ZiQ1M2U2MzfzZDfyZTMxZTBkMTYyNDBjNDJlZmQ3ZQ==
+X-ME-Date: Wed, 22 Dec 2021 20:33:51 +0100
+X-ME-IP: 86.243.171.122
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch, swboyd@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] drm/msm/dp: Simplify dp_debug_init() and dp_debug_get()
+Date:   Wed, 22 Dec 2021 20:33:47 +0100
+Message-Id: <dc2d6f535379dd38a5e3f9ba502f1f2b3d1f56b7.1640201523.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211220184355.86582-1-david@ixit.cz>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Dec 2021 19:43:55 +0100, David Heidelberg wrote:
-> Convert Qualcomm PRNG documentation to yaml format.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../devicetree/bindings/crypto/qcom,prng.txt  | 19 --------
->  .../devicetree/bindings/crypto/qcom,prng.yaml | 43 +++++++++++++++++++
->  2 files changed, 43 insertions(+), 19 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.txt
->  create mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> 
+dp_debug_init() always returns 0. So, make it a void function and simplify
+the only caller accordingly.
 
-Applied, thanks!
+While at it remove a useless 'rc' initialization in dp_debug_get()
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/gpu/drm/msm/dp/dp_debug.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+index da4323556ef3..338f1f9c4d14 100644
+--- a/drivers/gpu/drm/msm/dp/dp_debug.c
++++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+@@ -207,9 +207,8 @@ static const struct file_operations test_active_fops = {
+ 	.write = dp_test_active_write
+ };
+ 
+-static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
++static void dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ {
+-	int rc = 0;
+ 	struct dp_debug_private *debug = container_of(dp_debug,
+ 			struct dp_debug_private, dp_debug);
+ 
+@@ -229,17 +228,15 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ 			debug, &dp_test_type_fops);
+ 
+ 	debug->root = minor->debugfs_root;
+-
+-	return rc;
+ }
+ 
+ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+ 		struct dp_usbpd *usbpd, struct dp_link *link,
+ 		struct drm_connector *connector, struct drm_minor *minor)
+ {
+-	int rc = 0;
+ 	struct dp_debug_private *debug;
+ 	struct dp_debug *dp_debug;
++	int rc;
+ 
+ 	if (!dev || !panel || !usbpd || !link) {
+ 		DRM_ERROR("invalid input\n");
+@@ -266,11 +263,7 @@ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+ 	dp_debug->hdisplay = 0;
+ 	dp_debug->vrefresh = 0;
+ 
+-	rc = dp_debug_init(dp_debug, minor);
+-	if (rc) {
+-		devm_kfree(dev, debug);
+-		goto error;
+-	}
++	dp_debug_init(dp_debug, minor);
+ 
+ 	return dp_debug;
+  error:
+-- 
+2.32.0
+
