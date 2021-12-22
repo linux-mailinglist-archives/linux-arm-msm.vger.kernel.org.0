@@ -2,107 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F71847D4E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 17:13:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A0BB47D4EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 17:14:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237401AbhLVQNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 11:13:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57698 "EHLO
+        id S238023AbhLVQOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 11:14:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237358AbhLVQNx (ORCPT
+        with ESMTP id S237569AbhLVQOF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 11:13:53 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC7EC06173F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 08:13:53 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id l10-20020a17090a384a00b001b22190e075so1080275pjf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 08:13:53 -0800 (PST)
+        Wed, 22 Dec 2021 11:14:05 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A71BC06173F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 08:14:05 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id bk14so4644039oib.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 08:14:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BFGk+wXY2WG7afvEROgA8Vzr9P5EaP9/8caVFzhLkSA=;
-        b=KPIAxvXG/nK7mtoxHKJtmhxYY1JxI8FZfbXBE5JDarjZjntn99MFPIUMIePJ5fM9l4
-         BIvHhJc+zR1Gmecdm/xoWo2Cj3K5rtCy53e3LQwCw9OGrjfhem3rW0ulCgdb2lPXIk4m
-         57l2A92N59ge18B950cG7ZpU7IGcQZvBoVlQU=
+        bh=R1KJE3FXvrSj8HB5KXe1+gFkdNmQmE8s+9hukGzG70I=;
+        b=jCgDbDMamLnBshk8hspx+invcjhIWvKnQG1sRQG+oNpxI6JglacyO9XUYAdGKmsHLJ
+         AI2+2CYg6s5guB+9cAi+tvvdLaDjqFst1SG0zjSmqVoDABOxoyMHZ68thvsS2w0uSB68
+         WcKNd9SCBcAMr6UNOa5ussgbCmM/xNnJHehHSOG07aeQmFZmT2eNSvogUyQO+cCTmXkB
+         XoW2z8AYQNn92pCI876qM1cCsXiX8PEjXgqT1jfX3qYDrPHR04CHIYoHyU+dbj2OW9IJ
+         d0VCoiDrKTRDr0Z2GO+dPnd1ke/NvunOkMSpFAVgVae3N1wiJ5M+Tykm5ywsTBPnXAZu
+         Gwhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BFGk+wXY2WG7afvEROgA8Vzr9P5EaP9/8caVFzhLkSA=;
-        b=ubeWiH9iJJsID7yWn/pXEc5RO8pcI2BlOsqxikLrYTbMQLO5NAZXY7eBEmRzFsYy+r
-         4n9TFwca/QlWICMR+8cVXw1YUUQJzHOrncGLqgWcV/qvTyCuU6CA7CX6kYmm3Qvay3Yy
-         Jrw+xovTU+qGvLotJz3gN+rPbBCU0zWishSYp+J2i/sIBqO9krm010AG3ffx18B76Y1K
-         rZsGnLhusz58WL/DLct6S8c2SkQ4jXQwDXehtGT8Z/HkB0PJWASTDJCLqZv5W7WNVpux
-         EogtUonFrRqRMHkjm3Ky7fTzEBM/Wh7VJMIsFJ5HCqPZ8lYDq+U8fNf9fVg+JE4v+8OF
-         Gkeg==
-X-Gm-Message-State: AOAM530JTuTJEKiKBk0Or1ofjHXmYZZ+98KvaYgNHhAblezoKNveJ3cB
-        1+i+2Q7d3R9yQeDVacau87zMCVquvsNa+w==
-X-Google-Smtp-Source: ABdhPJzJthtDcM8o6fnNwW70a8dUfaT9zNNY93DBwhkMDoA9DeR6kxYIymeQ/Nwv6x/WCNqCtRB2CQ==
-X-Received: by 2002:a17:902:aa8a:b0:148:a2e7:fb62 with SMTP id d10-20020a170902aa8a00b00148a2e7fb62mr3371252plr.163.1640189633147;
-        Wed, 22 Dec 2021 08:13:53 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:474e:891f:9d18:9114])
-        by smtp.gmail.com with UTF8SMTPSA id f124sm2529843pgc.32.2021.12.22.08.13.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Dec 2021 08:13:52 -0800 (PST)
-Date:   Wed, 22 Dec 2021 08:13:50 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Marcel Holtmann <marcel@holtmann.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        Hemantg <hemantg@codeaurora.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        mcchou@chromium.org, saluvala@codeaurora.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on
- SC7280 IDP boards
-Message-ID: <YcNOvlVQaT80qPsx@google.com>
-References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
- <580E8974-EB7F-4493-BECC-4B09765A954D@holtmann.org>
+        bh=R1KJE3FXvrSj8HB5KXe1+gFkdNmQmE8s+9hukGzG70I=;
+        b=x7ObXICbSK/6bmeOwrH2rDmwHdFE7MhNvl9b8GW8vnE1Yp7z7OmRrCXlb45zsPHIeM
+         2som9wJ5fYJoTZYOvHaJwfVWndhMhxBeRHrLiwX/u6AR8fW+5N0vcHrXW+RQFRycLCjn
+         xE2osezH0UevRGr3x2XRHF5/Yq7/OKvTagvshoExjw0x6Jqtome4ig3jgayGsytXGHYf
+         EUdTYb9jxZvOBKWQh55tNgUOy8JtWlwpr0k8JCsJmkuShH5rFM56o2jcicLDQpY8RlAV
+         fX7tRXp0k/v7xMBD/CVMtbR0c5b+MxaetB/iIu5SQ/S4r8AhrvvVp2QGMDWdVjtGEFGE
+         b2EA==
+X-Gm-Message-State: AOAM530jc2dQtPZogWucqAiM7QZ0D3zow6ZewKu1rejlb2FTGyxTBZSK
+        +uWiosZdTZ3oPqCf+YYZ739TAw==
+X-Google-Smtp-Source: ABdhPJwDbWYvUezPD/oxsmC/A3QZpxF9vYOgE9VM4BASq3J47B5Xup16MkyZUxtnmIxkmG2D8OwqEg==
+X-Received: by 2002:a54:470f:: with SMTP id k15mr555640oik.92.1640189644359;
+        Wed, 22 Dec 2021 08:14:04 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id t14sm418978otr.23.2021.12.22.08.14.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Dec 2021 08:14:03 -0800 (PST)
+Date:   Wed, 22 Dec 2021 08:15:10 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8350: Correct UFS symbol clocks
+Message-ID: <YcNPDiyx/biMZMQE@ripper>
+References: <20211222002644.3396011-1-bjorn.andersson@linaro.org>
+ <YcL/0PUeAI6SJ86s@matsya>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <580E8974-EB7F-4493-BECC-4B09765A954D@holtmann.org>
+In-Reply-To: <YcL/0PUeAI6SJ86s@matsya>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 22, 2021 at 08:54:56AM +0100, Marcel Holtmann wrote:
-> Hi Balakrishna,
-> 
-> > Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
-> > 
-> > Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> > ---
-> > v4:
-> >  * updated commit subject
-> >  * Removed drive strength for bt_en
-> >  * updated swctrl_gpio name to sw_ctrl
-> > 
-> > v3:
-> >  * Addressed reviewers comments
-> >  * Added pin config for sw_ctrl line.
-> > v2:
-> >  * merged two patches into one
-> >  * Removed unused comments
-> >  * Removed pinmux & pin conf.
-> >  * Addressed reviewers comments
-> > 
-> > v1: initial patch
-> > ---
-> > arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  4 ++++
-> > arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 36 ++++++++++++++++++++++++++++++++
-> > arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  4 ++++
-> > 3 files changed, 44 insertions(+)
-> 
-> patch has been applied to bluetooth-next tree.
+On Wed 22 Dec 02:37 PST 2021, Vinod Koul wrote:
 
-Thanks!
+> On 21-12-21, 16:26, Bjorn Andersson wrote:
+> > The introduction of '9a61f813fcc8 ("clk: qcom: regmap-mux: fix parent
+> > clock lookup")' broke UFS support on SM8350.
+> > 
+> > The cause for this is that the symbol clocks have a specified rate in
+> > the "freq-table-hz" table in the UFS node, which causes the UFS code to
+> > request a rate change, for which the "bi_tcxo" happens to provide the
+> > closest rate.  Prior to the change in regmap-mux it was determined
+> > (incorrectly) that no change was needed and everything worked. Instead
+> > mimic the configuration found in other platforms, by omitting the rate
+> > for the symbol clocks as well to avoid the rate change.
+> > 
+> > While at it also fill in the dummy symbol clocks that was dropped from
+> > the GCC driver as it was upstreamed.
+> > 
+> > Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 +++++++++++++++++++++++-----
+> >  1 file changed, 23 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > index bc176c252bca..ceb064a83038 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+> > @@ -38,6 +38,24 @@ sleep_clk: sleep-clk {
+> >  			clock-frequency = <32000>;
+> >  			#clock-cells = <0>;
+> >  		};
+> > +
+> > +		ufs_phy_rx_symbol_0_clk: ufs-phy-rx-symbol-0 {
+> > +			compatible = "fixed-clock";
+> > +			clock-frequency = <1000>;
+> > +			#clock-cells = <0>;
+> > +		};
+> > +
+> > +		ufs_phy_rx_symbol_1_clk: ufs-phy-rx-symbol-1 {
+> > +			compatible = "fixed-clock";
+> > +			clock-frequency = <1000>;
+> > +			#clock-cells = <0>;
+> > +		};
+> > +
+> > +		ufs_phy_tx_symbol_0_clk: ufs-phy-tx-symbol-0 {
+> > +			compatible = "fixed-clock";
+> > +			clock-frequency = <1000>;
+> > +			#clock-cells = <0>;
+> > +		};
+> >  	};
+> >  
+> >  	cpus {
+> > @@ -606,9 +624,9 @@ gcc: clock-controller@100000 {
+> >  				 <0>,
+> >  				 <0>,
+> >  				 <0>,
+> > -				 <0>,
+> > -				 <0>,
+> > -				 <0>,
+> > +				 <&ufs_phy_rx_symbol_0_clk>,
+> > +				 <&ufs_phy_rx_symbol_1_clk>,
+> > +				 <&ufs_phy_tx_symbol_0_clk>,
+> >  				 <0>,
+> >  				 <0>;
+> >  		};
+> > @@ -2079,8 +2097,8 @@ ufs_mem_hc: ufshc@1d84000 {
+> >  				<75000000 300000000>,
+> >  				<0 0>,
+> >  				<0 0>,
+> > -				<75000000 300000000>,
+> > -				<75000000 300000000>;
+> > +				<0 0>,
+> > +				<0 0>;
+> 
+> should the rate be zero here?
+> 
 
-I would have expected though that a device tree change goes through
-the qcom tree. Maybe Bjorn should pick it too to avoid possible
-conflicts?
+It seems that the numbers (75 and 300MHz) are the correct rates for the
+symbol clocks.
+It's however not clear to me where they are coming from and hence how we
+would represent the change of rate in &ufs_phy_?x_symbol_?_clk. Let's
+make sure to document this in the commit message...
+
+Thanks,
+Bjorn
+
