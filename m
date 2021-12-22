@@ -2,72 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFFE147D5C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 18:23:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0AF47D5CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 18:26:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233619AbhLVRXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 12:23:50 -0500
-Received: from mail-qt1-f173.google.com ([209.85.160.173]:45836 "EHLO
+        id S1344320AbhLVR0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 12:26:47 -0500
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:40920 "EHLO
         mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230222AbhLVRXu (ORCPT
+        with ESMTP id S230222AbhLVR0r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 12:23:50 -0500
-Received: by mail-qt1-f173.google.com with SMTP id p19so2529816qtw.12;
-        Wed, 22 Dec 2021 09:23:49 -0800 (PST)
+        Wed, 22 Dec 2021 12:26:47 -0500
+Received: by mail-qt1-f173.google.com with SMTP id l17so2552905qtk.7;
+        Wed, 22 Dec 2021 09:26:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=7TDsw9XQzQXdYUs39uUvUe3iQmmMQa6LCbc5rU4ePho=;
-        b=rCug8XGiUEShzDh10v+Ew+IHJgXH0x/URyhRafQPG58Qj5oqfkzcQomd6nW3wU3gAe
-         u1T8neLpq100/wHiLohVuy7fR1H/5g+oI1i8jSRIBhRSnWXy6kwUM2bV4EF6iaaCgEFI
-         KBokE5Bz89zFqY4hsL5oDe0ZqgWVP4M3Oz+aZ0VmWzUXOq38K/Z8I/osMivyRhYEoou+
-         81pXuQr+Q/I70S6PhkRUvRn2YLC7RTQqJu3k/EV6+nrEw+x6w/ekMQjacxx7lKdT5Ad9
-         b7+P4Pr8K63NSi100USNoSS8QgW4jVf/6/Jz72a2C7Kpyz0yAejjcldX9av/sIj2icUb
-         nPtA==
-X-Gm-Message-State: AOAM533vcnQA1GvNi9yNFRCPq5Dk4CS+D4z8WcqiJL1hIT/0Yke+cDhg
-        beU/NE04VSSbfn+i52FIpA==
-X-Google-Smtp-Source: ABdhPJzxmeJ4vj947LHRSfEAfmWwSWR/sKfp4pKsP2tkhnux61XO4ivFdW4ztkTaQ27FfcgzEGxuMQ==
-X-Received: by 2002:a05:622a:194:: with SMTP id s20mr2959669qtw.617.1640193829243;
-        Wed, 22 Dec 2021 09:23:49 -0800 (PST)
+        bh=7O2k2ThLqx+KpeKMT54zzcaZKyNhPXxf7BxowZGmDzY=;
+        b=dwOgzpTrjgxF6IXKh2JSdlMY5b/DncofR6PyGveE4UqgPxAnqeXAfOTmpDa/pEEIvk
+         Pt5b2miRG7pOHWXdM2gDPIta6QxlUjahGdTm5nty7QQugJkxMMX4nnuEQ2POdbDSMPOK
+         z589W+H18Lz38Sq2Tfpwo7TOjGqbm4UDD+4PNhl3w9YrsQhk2DGJ1d7c5CP/6n2SQ00O
+         uqzZjZhJAi/D0yIrGqtCfzRGeI3z1r8NY2n4dDlHDdvjfQc0xx/V80sI6nw1DjDnNTKm
+         m9oXahOhedSh8lbrHaiRjpikArp+78K64wh19Q93aOU9mK4GMF9wGrK6fcwMmr6LBlUF
+         6rcA==
+X-Gm-Message-State: AOAM530Oi+flp3xmbM3oofPSMkW68Lafwq7Kc+QE8umljobYtKsbhtKn
+        4IusPIp8u32e1jpwu3gvrQ==
+X-Google-Smtp-Source: ABdhPJyEwRWAdXu0mtApim4mISLV2vx5OQBpemTuKvlbTokcvtXqlcdCS32It7cDK5U8uxfj7fHP2A==
+X-Received: by 2002:a05:622a:242:: with SMTP id c2mr1135714qtx.559.1640194006586;
+        Wed, 22 Dec 2021 09:26:46 -0800 (PST)
 Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id y16sm2082704qki.41.2021.12.22.09.23.47
+        by smtp.gmail.com with ESMTPSA id v12sm2311394qkl.50.2021.12.22.09.26.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 09:23:48 -0800 (PST)
-Received: (nullmailer pid 2356999 invoked by uid 1000);
-        Wed, 22 Dec 2021 17:23:47 -0000
-Date:   Wed, 22 Dec 2021 13:23:47 -0400
+        Wed, 22 Dec 2021 09:26:45 -0800 (PST)
+Received: (nullmailer pid 2361638 invoked by uid 1000);
+        Wed, 22 Dec 2021 17:26:44 -0000
+Date:   Wed, 22 Dec 2021 13:26:44 -0400
 From:   Rob Herring <robh@kernel.org>
 To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Caleb Connolly <caleb@connolly.tech>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2] dt-binding: soc: qcom: convert rmtfs documentation to
- yaml
-Message-ID: <YcNfI3ex/XVKIyeN@robh.at.kernel.org>
-References: <20211218182816.17151-1-david@ixit.cz>
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-binding: soc: qcom: convert Qualcomm Command DB
+ documentation to yaml
+Message-ID: <YcNf1Iu1kMhCDElj@robh.at.kernel.org>
+References: <20211218184617.19923-1-david@ixit.cz>
+ <IXQB4R.TDKX07UI05SQ3@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211218182816.17151-1-david@ixit.cz>
+In-Reply-To: <IXQB4R.TDKX07UI05SQ3@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 18 Dec 2021 19:28:16 +0100, David Heidelberg wrote:
-> Convert Qualcomm Remote File System Memory binding to the yaml format.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> v2: also removed old txt binding file
->  .../reserved-memory/qcom,rmtfs-mem.txt        | 51 ------------------
->  .../reserved-memory/qcom,rmtfs-mem.yaml       | 53 +++++++++++++++++++
->  2 files changed, 53 insertions(+), 51 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.txt
->  create mode 100644 Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
-> 
+On Sat, Dec 18, 2021 at 07:48:54PM +0100, David Heidelberg wrote:
+> Since Mahesh Sivasubramanian <msivasub@codeaurora.org> email doesn't exist
+> anymore (returned with 550 User doesn't exist.), who should I assign as
+> maintainer for this document?
 
-Applied, thanks!
+I'll update it to Bjorn when applying.
+
+> Davi
+> 
+> On Sat, Dec 18 2021 at 19:46:16 +0100, David Heidelberg <david@ixit.cz>
+> wrote:
+> > Convert Qualcomm Command DB documentation into yaml format.
+> > 
+> > Signed-off-by: David Heidelberg <david@ixit.cz>
+> > ---
+> >  .../bindings/reserved-memory/qcom,cmd-db.txt  | 37 ---------------
+> >  .../bindings/reserved-memory/qcom,cmd-db.yaml | 46 +++++++++++++++++++
+> >  2 files changed, 46 insertions(+), 37 deletions(-)
+> >  delete mode 100644
+> > Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.txt
+> >  create mode 100644
+> > Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
+> > 
+> > diff --git
+> > a/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.txt
+> > b/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.txt
+> > deleted file mode 100644
+> > index 68395530c0a5..000000000000
+> > --- a/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.txt
+> > +++ /dev/null
+> > @@ -1,37 +0,0 @@
+> > -Command DB
+> > ----------
+> > -
+> > -Command DB is a database that provides a mapping between resource key
+> > and the
+> > -resource address for a system resource managed by a remote processor.
+> > The data
+> > -is stored in a shared memory region and is loaded by the remote
+> > processor.
+> > -
+> > -Some of the Qualcomm Technologies Inc SoC's have hardware accelerators
+> > for
+> > -controlling shared resources. Depending on the board configuration the
+> > shared
+> > -resource properties may change. These properties are dynamically probed
+> > by the
+> > -remote processor and made available in the shared memory.
+> > -
+> > -The bindings for Command DB is specified in the reserved-memory section
+> > in
+> > -devicetree. The devicetree representation of the command DB driver
+> > should be:
+> > -
+> > -Properties:
+> > -- compatible:
+> > -	Usage: required
+> > -	Value type: <string>
+> > -	Definition: Should be "qcom,cmd-db"
+> > -
+> > -- reg:
+> > -	Usage: required
+> > -	Value type: <prop encoded array>
+> > -	Definition: The register address that points to the actual location of
+> > -		    the Command DB in memory.
+> > -
+> > -Example:
+> > -
+> > -	reserved-memory {
+> > -		[...]
+> > -		reserved-memory@85fe0000 {
+> > -			reg = <0x0 0x85fe0000 0x0 0x20000>;
+> > -			compatible = "qcom,cmd-db";
+> > -			no-map;
+> > -		};
+> > -	};
+> > diff --git
+> > a/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
+> > b/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
+> > new file mode 100644
+> > index 000000000000..fa5cd6a77634
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,cmd-db.yaml
+> > @@ -0,0 +1,46 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: "http://devicetree.org/schemas/reserved-memory/qcom,cmd-db.yaml#"
+> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> > +
+> > +title: Qualcomm Command DB
+> > +
+> > +description: |
+> > +  Command DB is a database that provides a mapping between resource key
+> > and the
+> > +  resource address for a system resource managed by a remote processor.
+> > The data
+> > +  is stored in a shared memory region and is loaded by the remote
+> > processor.
+> > +
+> > +  Some of the Qualcomm Technologies Inc SoC's have hardware
+> > accelerators for
+> > +  controlling shared resources. Depending on the board configuration
+> > the shared
+> > +  resource properties may change. These properties are dynamically
+> > probed by the
+> > +  remote processor and made available in the shared memory.
+> > +
+> > +maintainers:
+> > +  - Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> > +
+> > +allOf:
+> > +  - $ref: "reserved-memory.yaml"
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,cmd-db
+> > +
+> > +required:
+> > +  - reg
+> > +
+> > +unevaluatedProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    reserved-memory {
+> > +        #address-cells = <1>;
+> > +        #size-cells = <1>;
+> > +        ranges;
+> > +
+> > +        reserved-memory@85fe0000 {
+> > +            reg = <0x85fe0000 0x20000>;
+> > +            compatible = "qcom,cmd-db";
+> > +            no-map;
+> > +        };
+> > +    };
+> > --
+> > 2.34.1
+> > 
+> 
+> 
+> 
