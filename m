@@ -2,123 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CBB847D01A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 11:37:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1C1A47D03B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 11:47:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244208AbhLVKhL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 05:37:11 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:41872 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244207AbhLVKhL (ORCPT
+        id S244259AbhLVKrK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 05:47:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39342 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240018AbhLVKrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 05:37:11 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E5592B81B75;
-        Wed, 22 Dec 2021 10:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE02DC36AE8;
-        Wed, 22 Dec 2021 10:37:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640169428;
-        bh=9Dx47wNPtTPgpUOjJ2e9sf0H/NhesZjsttM9oBKJaOo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=C8hIg5+qyretpcioj+KiYbCgMH7LIIvyxfC8H07JMqsyuaUejymy16iUWLX0zGFtl
-         toxFHKsVEiudsBwtSNZf9bBb8T0svcaDTLnCpSLVej8woAj01Mfq8thr5U6zViqMRR
-         WBv4mzEVvir1Y0qEKCslxvzO1jO4tTYLG3Mmlqpn3WO4tj/OK4cx2m2XkSma7uaHHn
-         3BYLAe1GSz/vzP5nrADZ+G1EgzW2loKHwGEhCwh1Dc70mElju2rO3AUvZEGfE/wKcw
-         GJaNATHFxD4CPLnbxrvNB6nhcgmnnQrFqTITgU0phA3UN0XZJRrQcXOMOUPAGdKTHn
-         tTHbXl7EA0DWQ==
-Date:   Wed, 22 Dec 2021 16:07:04 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Wed, 22 Dec 2021 05:47:10 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F97C061574;
+        Wed, 22 Dec 2021 02:47:09 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id g2so1767623pgo.9;
+        Wed, 22 Dec 2021 02:47:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2xrtYmdK6psZ2un6fT2FNi1Yoram+Ai7iGKYwtN1gQg=;
+        b=l4EBBJ2eeDjnV2ZrZ30lFX+MyetiRbFN1DZkq3f5M8NZiZ5uyA0gSTOU8/3qxqnWVa
+         SIXhVU9uQDsluB7hpribGBVUIZSnapqMH+KTEUxmpE58WnZKiSn0uY7H4q+JJUKvIwNy
+         NqDCKrH8QXrOHouZB34eRHB3+Emjmcxdm+6KPgkk13qJx465g4Fae0Rul0ODyJM4/5+b
+         8laWKaA7FNA5/4J0+ZTlS47pzZa1Xs2YdtnFkolPWrGMZ3p1VBe1a1W6nMLSLclFuzGl
+         dgOGi1uMwNTE/2wmEhlEP3DYgVVjlZ/10iqxzvebeW2d0/ph3ff38c9Y3ArGiY/lf4dY
+         MSGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2xrtYmdK6psZ2un6fT2FNi1Yoram+Ai7iGKYwtN1gQg=;
+        b=e3Toh/QsVZqMMkd5MdqVjTNjcl1AYou3ozjc0zhlW0iXSGgiR0Cf/7o5tJR+CNkjmG
+         neyV+3xs/ET3Bva9ICMLOfNMQeprwKU7oZ5QghdIVUI2CXWEeq9RXr8OZBel0tMihFvr
+         yRJYxDdAY3HhyTVmDLJpwscZwY917UWuK0XyRR0rc+r56GjGbU4lSXnmv7XJnt56vwdm
+         gENMUwm/suBrz9laOmKNHao+Ccd/G+8/Zb5WoxkMfAhC0CDuRzYa5Mdv88wh1uDNXnte
+         vuFsPhyvyxZyY0fMHBXeuUknR17ZmR+o4BjnJ5E9nBy2JTqtKBXh/K9nJ8zN+bqmc/q7
+         ul4Q==
+X-Gm-Message-State: AOAM533daUjEiuMvAFIoLjzeTsVKijEw1KZLi7fKxF435rGlibh9Btnn
+        inOUCDliDGCMtD1r+SWDmRQ=
+X-Google-Smtp-Source: ABdhPJyIXniOMacDP8bh10DoBgk9Lgk/oya66FSXeYFxxZMlcIgB0qbK5fdvJaPuNw8dLWfzp9qefw==
+X-Received: by 2002:a63:575c:: with SMTP id h28mr2237329pgm.171.1640170029448;
+        Wed, 22 Dec 2021 02:47:09 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id h22sm2545221pfv.25.2021.12.22.02.47.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Dec 2021 02:47:09 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+Cc:     linmq006@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: Correct UFS symbol clocks
-Message-ID: <YcL/0PUeAI6SJ86s@matsya>
-References: <20211222002644.3396011-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211222002644.3396011-1-bjorn.andersson@linaro.org>
+Subject: [PATCH v2] usb: dwc3: qcom: Fix NULL vs IS_ERR checking in dwc3_qcom_probe
+Date:   Wed, 22 Dec 2021 10:47:03 +0000
+Message-Id: <20211222104703.10241-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <YcLwh06Z/1hBG6IY@kroah.com>
+References: <YcLwh06Z/1hBG6IY@kroah.com>
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-12-21, 16:26, Bjorn Andersson wrote:
-> The introduction of '9a61f813fcc8 ("clk: qcom: regmap-mux: fix parent
-> clock lookup")' broke UFS support on SM8350.
-> 
-> The cause for this is that the symbol clocks have a specified rate in
-> the "freq-table-hz" table in the UFS node, which causes the UFS code to
-> request a rate change, for which the "bi_tcxo" happens to provide the
-> closest rate.  Prior to the change in regmap-mux it was determined
-> (incorrectly) that no change was needed and everything worked. Instead
-> mimic the configuration found in other platforms, by omitting the rate
-> for the symbol clocks as well to avoid the rate change.
-> 
-> While at it also fill in the dummy symbol clocks that was dropped from
-> the GCC driver as it was upstreamed.
-> 
-> Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 28 +++++++++++++++++++++++-----
->  1 file changed, 23 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index bc176c252bca..ceb064a83038 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -38,6 +38,24 @@ sleep_clk: sleep-clk {
->  			clock-frequency = <32000>;
->  			#clock-cells = <0>;
->  		};
-> +
-> +		ufs_phy_rx_symbol_0_clk: ufs-phy-rx-symbol-0 {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <1000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		ufs_phy_rx_symbol_1_clk: ufs-phy-rx-symbol-1 {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <1000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		ufs_phy_tx_symbol_0_clk: ufs-phy-tx-symbol-0 {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <1000>;
-> +			#clock-cells = <0>;
-> +		};
->  	};
->  
->  	cpus {
-> @@ -606,9 +624,9 @@ gcc: clock-controller@100000 {
->  				 <0>,
->  				 <0>,
->  				 <0>,
-> -				 <0>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&ufs_phy_rx_symbol_0_clk>,
-> +				 <&ufs_phy_rx_symbol_1_clk>,
-> +				 <&ufs_phy_tx_symbol_0_clk>,
->  				 <0>,
->  				 <0>;
->  		};
-> @@ -2079,8 +2097,8 @@ ufs_mem_hc: ufshc@1d84000 {
->  				<75000000 300000000>,
->  				<0 0>,
->  				<0 0>,
-> -				<75000000 300000000>,
-> -				<75000000 300000000>;
-> +				<0 0>,
-> +				<0 0>;
+Since the acpi_create_platform_device() function may return error
+pointers, dwc3_qcom_create_urs_usb_platdev() function may return error
+pointers too. Using IS_ERR_OR_NULL() to check the return value to fix this.
 
-should the rate be zero here?
+Fixes: c25c210f590e ("usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 3cb01cdd02c2..b81a9e1c1315 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -769,9 +769,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 		if (qcom->acpi_pdata->is_urs) {
+ 			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
+-			if (!qcom->urs_usb) {
++			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
+ 				dev_err(dev, "failed to create URS USB platdev\n");
+-				return -ENODEV;
++				if (!qcom->urs_usb)
++					return -ENODEV;
++				else
++					return PTR_ERR(qcom->urs_usb);
+ 			}
+ 		}
+ 	}
 -- 
-~Vinod
+2.17.1
+
