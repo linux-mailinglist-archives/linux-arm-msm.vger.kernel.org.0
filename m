@@ -2,149 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DAB6447CD00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 07:31:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9575247CD8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 08:29:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242760AbhLVGb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 01:31:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38112 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233175AbhLVGb0 (ORCPT
+        id S239336AbhLVH3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 02:29:47 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5768 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231422AbhLVH3r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 01:31:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6B1C061574;
-        Tue, 21 Dec 2021 22:31:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2D24E6189F;
-        Wed, 22 Dec 2021 06:31:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A8AC36AE8;
-        Wed, 22 Dec 2021 06:31:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640154685;
-        bh=7NmdHcwB+/nylAMW4yN/VuHS9DzrX/FmHd8am4UiMOk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YfTI1iL0xhlOZc43ftoVaYHxzagg0aC/+9ABfisPvSFbJQfiRjuzHjBjmLrpWWyh2
-         dp4NEr7mV86a1/NSFOzfMZ/zgWTKPZvgvDBNnjsy37THaxGD1VjmO4A95erKu9wGN0
-         uG8XSqNSyNHWz3zdPx+vU7S964D/thEisKaLo+1RXvnQyf5KTLL0eRoXv26h3og8cc
-         B7KtJJKWaOj7wa1RgNoClgpN2QyVDt2FuC52ZanUJ5rTrE7aH9GlSz8lX3aDKvi6Xn
-         VU5czq5lSTIHg0C17dyZUsAjy79J8RIYBYWvoIVj/pbnFpz39dXmK62pJ/jUMFaO6p
-         14QxKWboY+obw==
-Date:   Wed, 22 Dec 2021 12:01:21 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: crypto: convert Qualcomm PRNG to yaml
-Message-ID: <YcLGOWSnIDFpNcW6@matsya>
-References: <20211220184355.86582-1-david@ixit.cz>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211220184355.86582-1-david@ixit.cz>
+        Wed, 22 Dec 2021 02:29:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640158187; x=1671694187;
+  h=from:to:cc:subject:date:message-id;
+  bh=0ejRRfqIpyGBT+yHRzGWEvQYeapOKIN/RtCAbWM4Mb0=;
+  b=KItuY1bXLSXt/1Lj6auD+AFHqeHU5PK8xZzU9IsAyMbamQ/CxV8lMa1j
+   uPlkUQHDvumwUhkyKoBp8MJNABVW44e+LI1ea6ebo3Gy3S9LE1t7gYZk+
+   UNCJAg9g8w1UZin86kCcSPSD6OUCtPe347z6AuZ2IizaYEr5N7MNMIZ1r
+   U=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 21 Dec 2021 23:29:46 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Dec 2021 23:29:44 -0800
+X-QCInternal: smtphost
+Received: from hyd-lablnx229.qualcomm.com ([10.204.179.152])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 22 Dec 2021 12:59:27 +0530
+Received: by hyd-lablnx229.qualcomm.com (Postfix, from userid 2390365)
+        id 25F4C215DB; Wed, 22 Dec 2021 12:59:26 +0530 (IST)
+From:   Panicker Harish <quic_pharish@quicinc.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        quic_saluvala@quicinc.com,
+        Panicker Harish <quic_pharish@quicinc.com>
+Subject: [PATCH v4] Bluetooth: hci_qca: Stop IBS timer during BT OFF
+Date:   Wed, 22 Dec 2021 12:59:05 +0530
+Message-Id: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-12-21, 19:43, David Heidelberg wrote:
-> Convert Qualcomm PRNG documentation to yaml format.
+The IBS timers are not stopped properly once BT OFF is triggered.
+we could see IBS commands being sent along with version command,
+so stopped IBS timers while Bluetooth is off.
 
+Fixes: 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support during hci down for wcn3990")
 
-Acked-By: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Panicker Harish <quic_pharish@quicinc.com>
+----
+v4:
+  * Used del_timer_sync() instead of mod_timer() to stop the timer and
+    to make sure the handler has finished executing on other CPUs.
 
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../devicetree/bindings/crypto/qcom,prng.txt  | 19 --------
->  .../devicetree/bindings/crypto/qcom,prng.yaml | 43 +++++++++++++++++++
->  2 files changed, 43 insertions(+), 19 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.txt
->  create mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.txt b/Documentation/devicetree/bindings/crypto/qcom,prng.txt
-> deleted file mode 100644
-> index 7ee0e9eac973..000000000000
-> --- a/Documentation/devicetree/bindings/crypto/qcom,prng.txt
-> +++ /dev/null
-> @@ -1,19 +0,0 @@
-> -Qualcomm MSM pseudo random number generator.
-> -
-> -Required properties:
-> -
-> -- compatible  : should be "qcom,prng" for 8916 etc
-> -              : should be "qcom,prng-ee" for 8996 and later using EE
-> -		(Execution Environment) slice of prng
-> -- reg         : specifies base physical address and size of the registers map
-> -- clocks      : phandle to clock-controller plus clock-specifier pair
-> -- clock-names : "core" clocks all registers, FIFO and circuits in PRNG IP block
-> -
-> -Example:
-> -
-> -	rng@f9bff000 {
-> -		compatible = "qcom,prng";
-> -		reg = <0xf9bff000 0x200>;
-> -		clocks = <&clock GCC_PRNG_AHB_CLK>;
-> -		clock-names = "core";
-> -	};
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> new file mode 100644
-> index 000000000000..bb42f4588b40
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-> @@ -0,0 +1,43 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/crypto/qcom,prng.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Pseudo Random Number Generator
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,prng  # 8916 etc.
-> +      - qcom,prng-ee  # 8996 and later using EE
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    rng@f9bff000 {
-> +        compatible = "qcom,prng";
-> +        reg = <0xf9bff000 0x200>;
-> +        clocks = <&clk 125>;
-> +        clock-names = "core";
-> +    };
-> -- 
-> 2.34.1
+v3:
+  *Addressed reviewers comments
+  *updated commit message
 
+v2:
+  * Addressed the username
+  * The full implementation of IBS is based on timers
+    to that reason we have used timers.
+
+v1: initial patch
+---
+ drivers/bluetooth/hci_qca.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index dd768a8..9e99311 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1928,6 +1928,9 @@ static int qca_power_off(struct hci_dev *hdev)
+ 	hu->hdev->hw_error = NULL;
+ 	hu->hdev->cmd_timeout = NULL;
+ 
++	del_timer_sync(&qca->wake_retrans_timer);
++	del_timer_sync(&qca->tx_idle_timer);
++
+ 	/* Stop sending shutdown command if soc crashes. */
+ 	if (soc_type != QCA_ROME
+ 		&& qca->memdump_state == QCA_MEMDUMP_IDLE) {
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
+
