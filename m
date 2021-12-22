@@ -2,76 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0330847CE54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 09:33:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77B7C47CEED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 10:14:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239488AbhLVIdV convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 03:33:21 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:36813 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbhLVIdV (ORCPT
+        id S243799AbhLVJOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 04:14:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46844 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243798AbhLVJOv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 03:33:21 -0500
-Received: from smtpclient.apple (p5b3d2e91.dip0.t-ipconnect.de [91.61.46.145])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 14FA5CED09;
-        Wed, 22 Dec 2021 09:33:20 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH v4] Bluetooth: hci_qca: Stop IBS timer during BT OFF
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
-Date:   Wed, 22 Dec 2021 09:33:19 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        quic_hemantg@quicinc.com, MSM <linux-arm-msm@vger.kernel.org>,
-        quic_bgodavar@quicinc.com, Rocky Liao <rjliao@codeaurora.org>,
-        hbandi@codeaurora.org,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        Miao-chen Chou <mcchou@chromium.org>, quic_saluvala@quicinc.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <0B5EAE00-967E-4D53-AC3E-B0182BFB8F80@holtmann.org>
-References: <1640158145-24569-1-git-send-email-quic_pharish@quicinc.com>
-To:     Panicker Harish <quic_pharish@quicinc.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+        Wed, 22 Dec 2021 04:14:51 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D6FC061574;
+        Wed, 22 Dec 2021 01:14:50 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id o63-20020a17090a0a4500b001b1c2db8145so5198667pjo.5;
+        Wed, 22 Dec 2021 01:14:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=OSssIMDDFqUl1GaxKIZoLI2sUJGkDJOGUapWzIMb5/8=;
+        b=Cvr73gx342I4ibMWljPtMFTugqY8eShifSiun7fCw+d657o27NPMycuHCQDePGeYOA
+         jmbL/qL6VhH5kLzKvYZv9gQOHDp+n8b6uZLxwBZpB0uHgWRSnpYLSFnFbpq+01I5W5/K
+         GFmA6sYdHnh5FbiDPCFWlGsx41XepiqH8j8BF8xBTCPKY+e0e+InD3Me+s0qx24auBq+
+         mVsfkgaI56Ga6HU3c4fwPrNyr70UjNtKLqDn8Xy7md0oDLQKOBkbXuf6Wv5kSYyU3vZ7
+         ps1LNINxpSMnxxs3YL6JwnADc1dJ9pyWTnXMRu0zfcEIcMlrBuFNKc0B6Jm/Ut3tQ6rP
+         CVFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=OSssIMDDFqUl1GaxKIZoLI2sUJGkDJOGUapWzIMb5/8=;
+        b=d/TyWbv590Ivegv4qN2utaBjMS4Cr+H8xJgNvA4C+OqsB1NkVCJfjFN5wIj+tYZlVb
+         MdMCYb08zp+k/nOm1J8jT6BuOUYdz+UMgy0Hsh6vjxz/smSazmpJNhcmWslcYar1DE0e
+         HFDQ/3VYHslMBy4/sr10CtvBxcWgNpkLMgZ5nfwBWLoZ5R6XgDzhW2nvkdcEYyUrxWaf
+         +kFy2dcT6KhMKH9ZYrgU3D/gy8EF0tDIuFzpWgz2/z6QcbSo/h278v0l5MIxzOHRgDzW
+         nqGKJKwUzlRbBf3wcz0uxwyzKqP0e5L6u06Zq8GF4XdvgOF1I+tHgDFyh5d3bywNsVfo
+         geRw==
+X-Gm-Message-State: AOAM533il7q8o/0om1R7nA2LTz/Q6tNo7F6l/Zo+95ptcW1ZL27gl4Co
+        Hey1kTYX0BIGXu9JH8l+I/8=
+X-Google-Smtp-Source: ABdhPJy5hR3/+cKJ6KiI6xkkeErNtWGkKFQ3XJfZrhmJhXWZYQgVOcxzwixbuEfCULkgbhqPkEGweg==
+X-Received: by 2002:a17:902:e5c7:b0:148:dba0:2906 with SMTP id u7-20020a170902e5c700b00148dba02906mr1947995plf.33.1640164490052;
+        Wed, 22 Dec 2021 01:14:50 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id k6sm1918550pff.106.2021.12.22.01.14.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Dec 2021 01:14:49 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+Cc:     linmq006@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] usb: dwc3: qcom: Fix NULL vs IS_ERR checking in dwc3_qcom_probe
+Date:   Wed, 22 Dec 2021 09:14:44 +0000
+Message-Id: <20211222091444.5034-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Panicker,
+Since the acpi_create_platform_device() function may return error
+pointers, dwc3_qcom_create_urs_usb_platdev() function may return errors
+too. Using IS_ERR_OR_NULL() to check the return value to fix this.
 
-> The IBS timers are not stopped properly once BT OFF is triggered.
-> we could see IBS commands being sent along with version command,
-> so stopped IBS timers while Bluetooth is off.
-> 
-> Fixes: 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support during hci down for wcn3990")
-> 
-> Signed-off-by: Panicker Harish <quic_pharish@quicinc.com>
-> ----
-> v4:
->  * Used del_timer_sync() instead of mod_timer() to stop the timer and
->    to make sure the handler has finished executing on other CPUs.
-> 
-> v3:
->  *Addressed reviewers comments
->  *updated commit message
-> 
-> v2:
->  * Addressed the username
->  * The full implementation of IBS is based on timers
->    to that reason we have used timers.
-> 
-> v1: initial patch
-> ---
-> drivers/bluetooth/hci_qca.c | 3 +++
-> 1 file changed, 3 insertions(+)
+Fixes: c25c210f590e("usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-patch has been applied to bluetooth-next tree.
-
-Regards
-
-Marcel
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 3cb01cdd02c2..df27d903ba98 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -769,9 +769,9 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 		if (qcom->acpi_pdata->is_urs) {
+ 			qcom->urs_usb = dwc3_qcom_create_urs_usb_platdev(dev);
+-			if (!qcom->urs_usb) {
++			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
+ 				dev_err(dev, "failed to create URS USB platdev\n");
+-				return -ENODEV;
++				return qcom->urs_usb ? PTR_ERR(qcom->urs_usb) : -ENODEV;
+ 			}
+ 		}
+ 	}
+-- 
+2.17.1
 
