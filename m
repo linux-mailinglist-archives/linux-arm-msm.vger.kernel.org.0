@@ -2,79 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E851F47D63F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 19:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2A047D646
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 19:10:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344482AbhLVSHp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 13:07:45 -0500
-Received: from mail-qk1-f176.google.com ([209.85.222.176]:42705 "EHLO
-        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344477AbhLVSHo (ORCPT
+        id S234673AbhLVSKA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 13:10:00 -0500
+Received: from mail-qk1-f171.google.com ([209.85.222.171]:39751 "EHLO
+        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234629AbhLVSKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 13:07:44 -0500
-Received: by mail-qk1-f176.google.com with SMTP id r139so2224520qke.9;
-        Wed, 22 Dec 2021 10:07:44 -0800 (PST)
+        Wed, 22 Dec 2021 13:10:00 -0500
+Received: by mail-qk1-f171.google.com with SMTP id 69so3112269qkd.6;
+        Wed, 22 Dec 2021 10:09:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=PZT+442yryoIyAnTgfkKE3INejgOanJ0gZBKWAWh5S0=;
-        b=bgHaX3MUJWWeLEdhqA0Ts0sGzM6XI6TXfExugrW3VVvZ9sPXPA/c+EjvZH7iT1+Y7e
-         MVm9kJjl5Gp40sVpZ1KRUfwZtqdg4P80zUqJio8KD6uhhy52IdlNIBr78sAZi+Gg3vtX
-         AP2BvY4Aphuqs0mymYbNMi4uHGbv9Ob5uzWuZLva59muh1aVTRJ06Hc31x2OyOQZLpn4
-         vaBANwcc4kUJ0m1yYB/zpneQF2LsQWc4EEQ0TNywCJUGfFrz1LQkGWRPf44+sS6U8U3p
-         f5j4Ev5+5bAQ6/zZa9WMO9N53z8inXTCtB8fBn1kaORACRPUUvnq5gHgtqxrfu2dCJ9W
-         mOYw==
-X-Gm-Message-State: AOAM533s6+EPwdBV6327psECn1rMfBpW2KIFkRxkAoB3sOHfKuyn4290
-        afzx1bKbHmBndCkhirVURg==
-X-Google-Smtp-Source: ABdhPJyJC96os9VsgB6XT66xXHqKpdFgHISt8Maa/ibE4MzoOiNuO46peBDi0wJyk+XRb+grY1slKA==
-X-Received: by 2002:a05:620a:f0e:: with SMTP id v14mr2825574qkl.365.1640196464048;
-        Wed, 22 Dec 2021 10:07:44 -0800 (PST)
+        bh=KTIqQpQ7RCF278GdqSbhmvSoIu5FXpBD2evLi7Gwsvo=;
+        b=Ph16s+vi7pXX9RIlyejHAQR0O+GBULuJ/DONxPOjMDlVRuA6EISl2ZEmrnSSCa2Cr2
+         jmWDo3ZdiWrIfHxRnPKTRQ6dwdOyyT/8q8tRA1aFsNzYBdjqaIBiQRENdvFhUOtnNcv1
+         ozugIiMxuLUe+s/wUoQmMoNN81301h9thukxXapTGPC1BXwZmFfSWe8CFWicCYlityyR
+         kTsDiT+2usxZGtt7K40snMi9FtTz1nnTHwvb4Zi0kfaCBd+Ux/H4o61r3Iw62JUJSVjG
+         DKlM4Oy7P0tNwcGsVacaVq0795baU176IXEJ+TPOR0mXlGbjx2+OjTGE+vrLpbzymVjk
+         yBGQ==
+X-Gm-Message-State: AOAM533QP5u/396zDj8qUzqYo2xwOiifTo+Til9qkshifX24ZmSolqah
+        EqxeaqdCNHlIyJ2a6I/50A==
+X-Google-Smtp-Source: ABdhPJwgtaYFVUDdyame6/XYYKkRbGq5W7j9AjqEkQUD/2pDfkzBHsdHwIMdSEfPe52Am76ViUavpw==
+X-Received: by 2002:a05:620a:1792:: with SMTP id ay18mr2926162qkb.5.1640196599172;
+        Wed, 22 Dec 2021 10:09:59 -0800 (PST)
 Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id de13sm2455085qkb.81.2021.12.22.10.07.42
+        by smtp.gmail.com with ESMTPSA id q12sm2229494qtx.16.2021.12.22.10.09.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Dec 2021 10:07:43 -0800 (PST)
-Received: (nullmailer pid 2429602 invoked by uid 1000);
-        Wed, 22 Dec 2021 18:07:41 -0000
-Date:   Wed, 22 Dec 2021 14:07:41 -0400
+        Wed, 22 Dec 2021 10:09:58 -0800 (PST)
+Received: (nullmailer pid 2433267 invoked by uid 1000);
+        Wed, 22 Dec 2021 18:09:56 -0000
+Date:   Wed, 22 Dec 2021 14:09:56 -0400
 From:   Rob Herring <robh@kernel.org>
 To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-kernel@vger.kernel.org,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        dri-devel@lists.freedesktop.org, ~okias/devicetree@lists.sr.ht,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH] dt-bindings: msm: disp: remove bus from dpu bindings
-Message-ID: <YcNpbeN2Hjs+ipWv@robh.at.kernel.org>
-References: <20211220184220.86328-1-david@ixit.cz>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, linux-crypto@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH] dt-bindings: crypto: convert Qualcomm PRNG to yaml
+Message-ID: <YcNp9KRLgkiI65p2@robh.at.kernel.org>
+References: <20211220184355.86582-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211220184220.86328-1-david@ixit.cz>
+In-Reply-To: <20211220184355.86582-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Dec 2021 19:42:20 +0100, David Heidelberg wrote:
-> Driver and dts has been already adjusted and bus moved out of dpu, let's
-> update also dt-bindings.
-> 
-> Fixes warnings as:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: mdss
-> @ae00000: clock-names: ['iface', 'core'] is too short
->         From schema: Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml
-> 
-> Ref: https://lore.kernel.org/all/20210803101657.1072358-1-dmitry.baryshkov@linaro.org/
+On Mon, 20 Dec 2021 19:43:55 +0100, David Heidelberg wrote:
+> Convert Qualcomm PRNG documentation to yaml format.
 > 
 > Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
->  .../devicetree/bindings/display/msm/dpu-sdm845.yaml          | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  .../devicetree/bindings/crypto/qcom,prng.txt  | 19 --------
+>  .../devicetree/bindings/crypto/qcom,prng.yaml | 43 +++++++++++++++++++
+>  2 files changed, 43 insertions(+), 19 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.txt
+>  create mode 100644 Documentation/devicetree/bindings/crypto/qcom,prng.yaml
 > 
 
 Applied, thanks!
