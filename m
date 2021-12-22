@@ -2,110 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8041E47CA70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 01:36:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A38AC47CA82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 01:45:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240064AbhLVAgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Dec 2021 19:36:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240058AbhLVAgI (ORCPT
+        id S238066AbhLVApj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Dec 2021 19:45:39 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:2281 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230412AbhLVApi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Dec 2021 19:36:08 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA03C06173F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:36:08 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id t26so1341202wrb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Dec 2021 16:36:08 -0800 (PST)
+        Tue, 21 Dec 2021 19:45:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+vogyF2UScbBECoFaJzBFj/WlT8gMBbKDtNi13q1rsU=;
-        b=iGDar4Jp2+OVfw9Ek+kZLs81nxurgqwHoDpd5aVoZ1Mk6WbGF18xBcyLqOaF2BVTAC
-         oMMiHCTfkt2BcXKkl7kgeyfBySHMFJTM0eLj4SKlNJgYDCAI8WPcvx5JGIbO6qlLk7Yw
-         0DXXKLF77KmatZyAu/xWL8kmjGSXh87scBWacNpy1c2z08aqzOEGpCvgjdkyB+LaoFUs
-         GHpYeATnmVMmz+4W5wbm0mg2hRC//dkYA2T+2XGe+QheWlJgOsIRm0QWnG7OL6rjru6j
-         dwn/UQmcngoQ5KiScPE+X2yZpnYKzZ528ce/WkAq5wjXYIuL0FJWDfM95MR93NjOIudW
-         MUlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+vogyF2UScbBECoFaJzBFj/WlT8gMBbKDtNi13q1rsU=;
-        b=FA52YME2AgH1TkcIk80R/GEDUoGDcufgLHiilYFsYEGiC11foMnIVTX6iN9oT3dcqQ
-         /EQ0sGbjC4OjpiSrWVQaYmQRIGGTYWnsRqOHLD1SZzLpvCLpGIN8Rxx3B9CMnXoIyfZD
-         uNImGbrs0G4iCFb8dfbdC+Xgd0uJ6Yd7LBUvN4R0LgUI8j8C9pqFmo+KjVX17XdoBBwg
-         L7ejGLJwdsqEqRY6S01g8mj9CnIhBJdlgqY1a94SbDCQqlBuDQtUKNwLZBJuAnvw0HvI
-         R/yBqyXotStGnjhJv5V+wc5EnemaelMws9cNUlAA1vblcEC26yWeQKk0Q+LNgC2eu4Wn
-         JqkQ==
-X-Gm-Message-State: AOAM531zTt1qla1Qs4Z3fCj8XCP+z8D2LJb++BYCHLkeaxGNLlFdDroI
-        +NLohHXwdOs1soZGKEUxTnd5iJvP5XuvgA==
-X-Google-Smtp-Source: ABdhPJzROdEb/D+NIOiW0s/fmrJtw2dV1OQIcsSuEvwWh5axVoK3MbGEx2s0XsRtKhf/tmlQBwrDlQ==
-X-Received: by 2002:a05:6000:12d0:: with SMTP id l16mr385035wrx.466.1640133366920;
-        Tue, 21 Dec 2021 16:36:06 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id n7sm282825wms.45.2021.12.21.16.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Dec 2021 16:36:06 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
-Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v3 19/19] media: camss: Apply vfe_get/vfe_put fix to SDM845
-Date:   Wed, 22 Dec 2021 00:37:51 +0000
-Message-Id: <20211222003751.2461466-20-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211222003751.2461466-1-bryan.odonoghue@linaro.org>
-References: <20211222003751.2461466-1-bryan.odonoghue@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640133938; x=1671669938;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=GJaQ5FkdpJLd0SOS8siK4lgiyGjMx7yBQQ7gb5ulYLM=;
+  b=Pt34Yb7LS3TGtNtH5zJ6KF59L/eZxJJU6KfRgdvmd/mY/x5UHSEyKp0g
+   0+69rmPdQ0IX3TvalcfIyffBPACKNXQE+fYQfrhH4BxKBcOPm/d0EdP0I
+   R3amwX4P77w2BZHR2fUc+r4JpeB8OmeSw6S46Gc/eq9dw19B0/gTc2pvs
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 21 Dec 2021 16:45:38 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Dec 2021 16:45:37 -0800
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 21 Dec 2021 16:45:37 -0800
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 21 Dec
+ 2021 16:45:34 -0800
+Message-ID: <b35d0f12-1de2-9e15-2d87-5049614eeff1@quicinc.com>
+Date:   Wed, 22 Dec 2021 08:45:31 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH v4 11/11] dt-bindings: convert qcom,spmi-pmic-arb binding
+ to YAML format
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        <devicetree@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <subbaram@codeaurora.org>, <tglx@linutronix.de>, <maz@kernel.org>
+References: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1640071211-31462-12-git-send-email-quic_fenglinw@quicinc.com>
+ <YcHn0MLuqvMHbmuO@robh.at.kernel.org>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <YcHn0MLuqvMHbmuO@robh.at.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Similar to the SM8250 the CSID relies on the VFE to be clocked prior to
-taking the CSID out of reset.
+resend with plain text
 
-Apply the same fixup to SDM845 as SM8250.
 
-Suggested-by: Robert Foss <robert.foss@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-csid.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On 2021/12/21 22:42, Rob Herring wrote:
+> On Tue, Dec 21, 2021 at 03:20:09PM +0800, Fenglin Wu wrote:
+>> Convert the SPMI PMIC arbiter documentation to JSON/yaml.
+>>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> ---
+>>   .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 ----------
+>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 146 +++++++++++++++++++++
+>>   2 files changed, 146 insertions(+), 67 deletions(-)
+>>   delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>>   create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>>
+> 
+>> diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>> new file mode 100644
+>> index 0000000..df8cfb7
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>> @@ -0,0 +1,146 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SPMI PMIC Arbiter
+>> +
+>> +maintainers:
+>> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
+>> +  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+>> +
+>> +description: |
+>> +  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
+>> +  controller with wrapping arbitration logic to allow for multiple
+>> +  on-chip devices to control a single SPMI master.
+>> +
+>> +  The PMIC Arbiter can also act as an interrupt controller, providing
+>> +  interrupts to slave devices.
+>> +
+>> +  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
+>> +  SPMI controller binding requirements for child nodes.
+>> +
+>> +allOf:
+>> +  - $ref: spmi.yaml#
+>> +
+>> +properties:
+>> +  $nodename:
+>> +    pattern: "^spmi@.*"
+>> +
+>> +  compatible:
+>> +    const: qcom,spmi-pmic-arb
+>> +
+>> +  reg-names:
+>> +    $ref: /schemas/types.yaml#/definitions/string-array
+> 
+> reg-names already has a type defined.
+I understand there is a pattern property defined in dt-core.yaml and it 
+defines ".*-names" as a "non-unique-string-array" type. But here, the 
+strings in "reg-names" needs to be unique and it has to be ["core", 
+"intr", "cnfg"] or ["core", "intr", "cnfg", "chnls", "obsrvr"] , that's 
+why I redefined it as "string-array" type which requires each string to 
+be unique. Otherwise, if any dtsi nodes define the "reg-name" as 
+["core", "core", "core"] will not be caught as a fault.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index e6835b92695b6..32f82e471bae1 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -159,10 +159,11 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 	struct camss *camss = csid->camss;
- 	struct device *dev = camss->dev;
- 	struct vfe_device *vfe = &camss->vfe[csid->id];
-+	u32 version = camss->version;
- 	int ret;
- 
- 	if (on) {
--		if (camss->version == CAMSS_8250) {
-+		if (version == CAMSS_8250 || version == CAMSS_845) {
- 			ret = vfe_get(vfe);
- 			if (ret < 0)
- 				return ret;
-@@ -212,7 +213,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 		camss_disable_clocks(csid->nclocks, csid->clock);
- 		ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
- 		pm_runtime_put_sync(dev);
--		if (camss->version == CAMSS_8250)
-+		if (version == CAMSS_8250 || version == CAMSS_845)
- 			vfe_put(vfe);
- 	}
- 
--- 
-2.33.0
+> 
+>> +    anyOf:
+>> +      - minItems: 3
+>> +      - maxItems: 3
+>> +      - enum: ["core", "intr", "cnfg"]
+>> +
+>> +      - minItems: 5
+>> +      - maxItems: 5
+>> +      - enum: ["core", "intr", "cnfg", "chnls", "obsrvr"]
+> 
+> I think you want something like this:
+> 
+> minItems: 3
+> items:
+>    - const: core
+>    - const: intr
+>    - const: cnfg
+>    - const: chnls
+>    - const: obsrvr
+> 
+> 
+As I said, the content for "reg-names" here only has two options , 
+either ["core", "intr", "cnfg"] or ["core", "intr", "cnfg", "chnls", 
+"obsrvr"]. In patch V3, I defined it as below and "make dtbs_check" 
+threw out warnings because some of existing nodes defined "reg-names" 
+with these strings are not having the same order as I defined here (I 
+understood from the warnings that const items need to be followed 
+strictly even in order wise, is this correct?), and I guess the order of 
+the strings doesn't matter here and the schema here shouldn't have such 
+limitation, so I updated it as the "array-string" type and specified the 
+tuples can only be one of the strings defined in the enum. With this, 
+the previous warning regarding "reg-names" in "make dtbs_check" are all 
+fixed.
 
+   reg-names:
+     oneOf:
+       - items:
+           - const: core
+           - const: intr
+           - const: cnfg
+       - items:
+           - const: core
+           - const: intr
+           - const: cnfg
+           - const: chnls
+           - const: obsrvr
+
+
+>> +
+>> +  reg:
+>> +    minItems: 3
+>> +    maxItems: 5
+>> +    description: |
+>> +      Specifies base physical address and size of the registers in SPMI PMIC
+>> +      Arbiter HW module, with the following order.
+>> +        - SPMI PMIC arbiter core registers (core)
+>> +        - SPMI PMIC arbiter interrupt controller registers (intr)
+>> +        - SPMI PMIC arbiter configuration registers (cnfg)
+>> +        - SPMI PMIC arbiter tx-channel per virtual slave registers (chnls)
+>> +        - SPMI PMIC arbiter rx-channel per virtual slave registers (obsrvr).
+>> +      Register for "chnls" and "obsrvr" are only applicable for PMIC arbiter
+>> +      with HW version greater than V2.
+>> +
+>> +  "#address-cells":
+>> +    const: 2
+>> +
+>> +  "#size-cells":
+>> +    const: 0
+>> +
+>> +  interrupts:
+>> +    description: The summary interrupt for the PMIC Arb controller.
+>> +    maxItems: 1
+>> +
+>> +  interrupt-names:
+>> +    const: periph_irq
+>> +
+>> +  interrupt-controller: true
+>> +
+>> +  "#interrupt-cells":
+>> +    const: 4
+>> +    description: |
+>> +      Specifies the number of cells needed to encode any interrupt source.
+>> +      The 1st cell is the slave ID for the requested interrupt, its valid
+>> +      range is [0-15].
+>> +      The 2nd cell is the  peripheral ID for requested interrupt, its valid
+>> +      range is [0-255].
+>> +      The 3rd cell is the requested peripheral interrupt, its valid range
+>> +      is [0-7].
+>> +      The 4th cell is interrupt flags indicating level-sense information,
+>> +      as defined in dt-bindings/interrupt-controller/irq.h
+>> +
+>> +  qcom,ee:
+>> +    description: the active Execution Environment identifier
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    enum: [0, 1, 2, 3, 4, 5]
+>> +
+>> +  qcom,channel:
+>> +    description: which of the PMIC Arbiter provided channels to use for accesses
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    enum: [0, 1, 2, 3, 4, 5]
+>> +
+> 
+>> +patternProperties:
+>> +  "@[0-9a-f]$":
+>> +    description: up to 16 child PMIC nodes
+>> +    type: object
+>> +
+>> +    properties:
+>> +      reg:
+>> +        items:
+>> +          - minItems: 1
+>> +            items:
+>> +              - minimum: 0
+>> +                maximum: 0xf
+>> +              - enum: [ 0 ]
+>> +                description:
+>> +                  0 means user ID address. 1 is reserved for group ID
+>> +                  address.
+>> +
+>> +    required:
+>> +      - reg
+> 
+> All this should be covered by spmi.yaml
+> 
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg-names
+>> +  - reg
+>> +  - "#address-cells"
+>> +  - "#size-cells"
+>> +  - qcom,ee
+>> +  - qcom,channel
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    spmi@fc4cf000 {
+>> +          compatible = "qcom,spmi-pmic-arb";
+>> +          reg-names = "core", "intr", "cnfg";
+>> +          reg = <0xfc4cf000 0x1000>,
+>> +                <0xfc4cb000 0x1000>,
+>> +                <0xfc4ca000 0x1000>;
+>> +          interrupt-names = "periph_irq";
+>> +          interrupts = <0 190 0>;
+>> +          interrupt-controller;
+>> +          #interrupt-cells = <4>;
+>> +
+>> +          qcom,ee = <0>;
+>> +          qcom,channel = <0>;
+>> +
+>> +          #address-cells = <2>;
+>> +          #size-cells = <0>;
+>> +    };
+>> -- 
+>> 2.7.4
+>>
+>>
