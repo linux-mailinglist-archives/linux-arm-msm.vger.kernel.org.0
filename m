@@ -2,77 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B118047D198
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 13:23:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7567C47D36B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 15:13:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236062AbhLVMXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 07:23:38 -0500
-Received: from ixit.cz ([94.230.151.217]:46846 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229616AbhLVMXh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 07:23:37 -0500
-Received: from [127.0.0.1] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 75D632243C;
-        Wed, 22 Dec 2021 13:23:35 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1640175815;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=jKHE104nrU7+UPiwbD+7cG4P34KlnZN5bC/8w5bsAJs=;
-        b=fIWCddE52AW71C8340gbNr+P/QfYOFL3LxN6q1yv2pLq8PCyLFnk0Vt9W+CH0pKSXzMkga
-        O03BAaAJzSxFx3DISD0Ay2Gjlj+D6Iw1jOG7jnRqsGo+EDNRsdW2a7of37EITvhYVF06KV
-        73RvCI6p6OdA452CXD+QjVeJ8z3SgWM=
-Date:   Wed, 22 Dec 2021 12:23:34 +0000
-From:   David Heidelberg <david@ixit.cz>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     Rob Herring <robh@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Subject: =?US-ASCII?Q?Re=3A_Question_about_node_naming_in_=5BPATCH_v3?= =?US-ASCII?Q?_13/18=5D_ARM=3A_dts=3A_qcom=3A_sdx55=3A_Add_spmi_node?=
-In-Reply-To: <20211222091910.GA5159@thinkpad>
-References: <HTKF4R.5S1PY4MCM4QS@ixit.cz> <20211221071219.GD26872@thinkpad> <20211222091910.GA5159@thinkpad>
-Message-ID: <8AFA24D7-3378-42B6-87E2-0C4FB2ACDF95@ixit.cz>
+        id S245606AbhLVONO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 09:13:14 -0500
+Received: from ewsoutbound.kpnmail.nl ([195.121.94.170]:55401 "EHLO
+        ewsoutbound.kpnmail.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245599AbhLVONN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Dec 2021 09:13:13 -0500
+X-KPN-MessageId: 274244dc-6331-11ec-8a6e-005056ab378f
+Received: from smtp.kpnmail.nl (unknown [10.31.155.38])
+        by ewsoutbound.so.kpn.org (Halon) with ESMTPS
+        id 274244dc-6331-11ec-8a6e-005056ab378f;
+        Wed, 22 Dec 2021 15:12:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=xs4all.nl; s=xs4all01;
+        h=content-type:from:to:subject:mime-version:date:message-id;
+        bh=D7qUlmyWyRiBM87fcOPYLUo3TqeXcR8SLDEfqWVhTeE=;
+        b=tQQnRIjzHhP68s+68bMajYZC+ii1qI3/L3IXMw5kKGRQhGTvePFDJL5KOaiwJFupzjV6tU87E0sxw
+         inac2+cllLahPQMZVciYEYYUfCQ0BbOBoLQXtkMiC55lnGj0pyOBzcwE60TJ9m4bZ2vlY4GNXf6sLd
+         1bsAwShfFsqMMMEltfQsSmbXiuxctI1MLY8+Az6hwEZ+2tn8ZmfibNgtRdhg22CfpLOKiAbOUSGdQx
+         AFfBZHg13pBsKdZCnj+C+eKZ+/NDU2jeQPk57vVoBrd/2i5OGSwsUjjeqwMUjPwFfMgKD+DgFPcxPY
+         nS/l81eNrXE1uOUCfWDQ5WOMQ+EF1lg==
+X-KPN-VerifiedSender: Yes
+X-CMASSUN: 33|qg0CkmnxFkjnY6FZyiTdaeY6kx8pktK47rEV/taqXLOMDWKl4uNrWffXrYj8eka
+ wfPHVTauMYkr6gD6uVRS4Gg==
+X-Originating-IP: 80.101.105.217
+Received: from [192.168.1.10] (marune.xs4all.nl [80.101.105.217])
+        by smtp.xs4all.nl (Halon) with ESMTPSA
+        id 4bcaacaa-6331-11ec-94d2-005056abf0db;
+        Wed, 22 Dec 2021 15:13:12 +0100 (CET)
+Message-ID: <04e5c9b4-2a96-6b5f-7c26-89e1cbf8576f@xs4all.nl>
+Date:   Wed, 22 Dec 2021 15:13:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH v4 0/2] Remove clock-lanes DT property from CAMSS
+Content-Language: en-US
+To:     Robert Foss <robert.foss@linaro.org>, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, mchehab@kernel.org,
+        robh+dt@kernel.org, angelogioacchino.delregno@somainline.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+References: <20211206151811.39271-1-robert.foss@linaro.org>
+From:   Hans Verkuil <hverkuil@xs4all.nl>
+In-Reply-To: <20211206151811.39271-1-robert.foss@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thank you=2E
+Hi Robert,
 
-I'll rename the nodes to `spmi@` then and send binding conversion=2E
+I posted a PR for Bryan's 'CAMSS: Add SM8250 support' series, but your patch series
+clashes with his. Can you rebase this series on top of Bryan's work?
 
-David
+You can use this branch I made for the PR if you want:
 
+https://git.linuxtv.org/hverkuil/media_tree.git/log/?h=for-v5.17j
 
-PR is merged now=2E So you can proceed with using "spmi" node name in all =
-dts=2E
+Thanks!
 
-Thanks,
-Mani
+	Hans
 
-> Thanks,
-> Mani
->=20
-> [1] https://github=2Ecom/devicetree-org/devicetree-specification/pull/50
->=20
-> > I'm currently converting binding for
-> > Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb and I'm
-> > considering adding qcom,spmi into qcom,spmi-pmic-arb or just rename th=
-is and
-> > arch/arm64/boot/dts/qcom/msm8996=2Edtsi `qcom,spmi@` occurences to `sp=
-mi@`=2E
-> >=20
-> > Ideas, inputs?
-> >=20
-> > Thank you
-> > David
-> >=20
-> >=20
+On 06/12/2021 16:18, Robert Foss wrote:
+> Changes since v3:
+>  - Split patches heading for Media and ARM64 tress
+>    into two seperate series
+> 
+> Changes since v2:
+>  - Stephan: Rebased on v5.16-rc1
+>  - Stephan: Fixed 3/4 commit message title
+> 
+> Changes since v1:
+>  - Rob: Instead of documenting and fixing the use of the clock-lanes
+>    property, remove it, since it is is not programmable and
+>    therefore shouldn't be exposed in the DT.
+> 
+> Robert Foss (2):
+>   media: camss: csiphy: Move to hardcode CSI Clock Lane number
+>   media: dt-bindings: media: camss: Remove clock-lane property
+> 
+>  .../bindings/media/qcom,msm8916-camss.yaml    | 10 ---------
+>  .../bindings/media/qcom,msm8996-camss.yaml    | 20 ------------------
+>  .../bindings/media/qcom,sdm660-camss.yaml     | 20 ------------------
+>  .../bindings/media/qcom,sdm845-camss.yaml     | 17 ---------------
+>  .../qcom/camss/camss-csiphy-2ph-1-0.c         | 19 +++++++++++++++--
+>  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 17 ++++++++++++++-
+>  .../media/platform/qcom/camss/camss-csiphy.c  | 21 +------------------
+>  .../media/platform/qcom/camss/camss-csiphy.h  |  7 +++++++
+>  8 files changed, 41 insertions(+), 90 deletions(-)
+> 
+
