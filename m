@@ -2,126 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 522F547D057
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 11:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D1047D05F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Dec 2021 11:56:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244302AbhLVKzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Dec 2021 05:55:25 -0500
-Received: from relay02.th.seeweb.it ([5.144.164.163]:42237 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234994AbhLVKzZ (ORCPT
+        id S240127AbhLVK4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Dec 2021 05:56:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233647AbhLVK4t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Dec 2021 05:55:25 -0500
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B7BB520045;
-        Wed, 22 Dec 2021 11:55:21 +0100 (CET)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Wed, 22 Dec 2021 05:56:49 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7EDAC061401
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 02:56:47 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id t26so4067990wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Dec 2021 02:56:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=3Wks2OpuoB00uHRdh5JUOv2eXhyxD1JIeK8fHzyUvqM=;
+        b=P4Xys96R8sOLs5LvpYi8S+iGyJy/CyJ/hliNHjWaDR72pb5VG5lXrnhBXmj4y0RlHX
+         4v9sLZtMm8BVyxq+sRO25uelCX6izdp05ULp9hvwm/Mglo8UYDote5AH36detwLyX7Vm
+         mUvXr5jvb1YHSfeHVoPa0KzR46C3uFcGlEGAt7GFJWZdQ3iVBAgP83nrolccxZknIuWW
+         dCuuv1cj9ZlhKQ5xb/0JrTTtUe1cufNZnJX0cPDPa6p5zWK+99K/zeKfTycRnnXgyO5M
+         8dza5aq6D3S1rkIrUbC8l5cPMlq0UCY/lzfkJHQcOjH5CvLXP44Cglx13sliu0dbxC+d
+         a37Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=3Wks2OpuoB00uHRdh5JUOv2eXhyxD1JIeK8fHzyUvqM=;
+        b=ue7TXc44wVT4HOoth0uCXEvr2PsDqaGXobD4amf71jx+Vl6sHjDBkyDWDN5LCVP1VH
+         V07EyqEGD7nJsnTJSep7AU55XjJqB2kbgVcArXhmYYeNeP4/ELK3+Lk7MnMvkfTMFXuK
+         T7FK5GIy5SAgNipZAzg7Q1h3lsVv0sDEu7a2Z2d/HDxTse8JH7UxOUS21pg5emUD/Tx5
+         mH+xdqFMbaDuaszoXLq1+G3ZknE9HuDm0zUlcgrNsn7AnadvxfJ4hvwxySrkiFjdzqqA
+         im5T+g3I6HrYawdjVSTwgcdWoOnDi7DDBoTn64nGIMVn84JQz3iHbg5b6RjJ15TYkcS9
+         E4TA==
+X-Gm-Message-State: AOAM531Lm/16P4GvhT/17zb8Vy18T1S+7+igSjINJvRbIMLJOOZGdWGR
+        MWkFqzowA81a6f8I9InXMy40bw==
+X-Google-Smtp-Source: ABdhPJzPy9qHrxvmsh7Kw2oL3n3gfjoGIN/UMGaa134hOuMY2k9I3qz20YIwWw5VJKZnnyWplusSuQ==
+X-Received: by 2002:adf:bb4a:: with SMTP id x10mr1714179wrg.269.1640170606402;
+        Wed, 22 Dec 2021 02:56:46 -0800 (PST)
+Received: from google.com ([2.31.167.18])
+        by smtp.gmail.com with ESMTPSA id l19sm1507984wmq.22.2021.12.22.02.56.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Dec 2021 02:56:45 -0800 (PST)
+Date:   Wed, 22 Dec 2021 10:56:43 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        Bernard <bernard@vivo.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dpu: Bind pingpong block to intf on active ctls in cmd encoder
-Date:   Wed, 22 Dec 2021 11:55:12 +0100
-Message-Id: <20211222105513.44860-1-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.34.1
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org
+Subject: Re: [PATCH v3 0/9] backlight: qcom-wled: fix and solidify handling
+ of enabled-strings
+Message-ID: <YcMEa7aEXKrgjwuG@google.com>
+References: <20211115203459.1634079-1-marijn.suijten@somainline.org>
+ <20211116120213.n7qxqfi62lrxhyl7@maple.lan>
+ <YZPRV2jD1EBYGdHL@google.com>
+ <20211221233131.rwjjojuawgffr2gf@SoMainline.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211221233131.rwjjojuawgffr2gf@SoMainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per the specification of DPU_CTL_ACTIVE_CFG the configuration of
-active blocks should be proactively specified, and the pingpong block is
-no different.
+On Wed, 22 Dec 2021, Marijn Suijten wrote:
 
-The downstream display driver [1] confirms this by also calling
-bind_pingpong_blk on CTL_ACTIVE_CFG.  Note that this else-if is always
-entered, as setup_intf_cfg - unlike this mainline dpu driver that
-combines both behind the same function pointer - is left NULL in favour
-of using setup_intf_cfg_v1 when CTL_ACTIVE_CFG is set.
+> On 2021-11-16 15:42:15, Lee Jones wrote:
+> > On Tue, 16 Nov 2021, Daniel Thompson wrote:
+> > 
+> > > Hi Lee
+> > > 
+> > > On Mon, Nov 15, 2021 at 09:34:50PM +0100, Marijn Suijten wrote:
+> > > > This patchset fixes WLED's handling of enabled-strings: besides some
+> > > > cleanup it is now actually possible to specify a non-contiguous array of
+> > > > enabled strings (not necessarily starting at zero) and the values from
+> > > > DT are now validated to prevent possible unexpected out-of-bounds
+> > > > register and array element accesses.
+> > > > Off-by-one mistakes in the maximum number of strings, also causing
+> > > > out-of-bounds access, have been addressed as well.
+> > > 
+> > > They have arrived piecemeal (during v1, v2 and v3) but all patches on
+> > > the set should now have my R-b: attached to them.
+> > 
+> > I can see that.  Nothing for you to worry about.
+> > 
+> > I'll apply these when I conduct my next sweep, thanks.
+> 
+> Thanks for that Lee!  Has the next sweep already passed by?  Seems
+> everyone is preparing for the 5.17 merge window but these patches
+> haven't yet landed on the backlight tree [1].  I'd appreciate it if we
+> can make them appear in the 5.17 window :)
 
-This solves continuous timeouts on at least the Qualcomm sm6125 SoC:
+No need to panic.
 
-    [drm:dpu_encoder_frame_done_timeout:2091] [dpu error]enc31 frame done timeout
-    [drm:_dpu_encoder_phys_cmd_handle_ppdone_timeout.isra.0] *ERROR* id:31 pp:0 kickoff timeout 0 cnt 1 koff_cnt 1
-    [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] *ERROR* failed wait_for_idle: id:31 ret:-110 pp:0
+v5.17-rc1 isn't due to be cut for either 3.5 or 4.5 weeks.
 
-In the same way this pingpong block should also be unbound followed by
-an interface flush when the encoder is disabled, according to the
-downstream display driver [2].
-
-[1]: https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/sde/sde_encoder_phys_cmd.c?h=LA.UM.9.16.r1-08500-MANNAR.0#n167
-[2]: https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/sde/sde_encoder.c?h=LA.UM.9.16.r1-08500-MANNAR.0#n2986
-
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
----
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 8e433af7aea4..e0e08a874f07 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -71,6 +71,13 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
- 	intf_cfg.stream_sel = cmd_enc->stream_sel;
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
- 	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
-+
-+	/* setup which pp blk will connect to this intf */
-+	if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
-+		phys_enc->hw_intf->ops.bind_pingpong_blk(
-+				phys_enc->hw_intf,
-+				true,
-+				phys_enc->hw_pp->idx);
- }
- 
- static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-@@ -507,6 +514,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
- {
- 	struct dpu_encoder_phys_cmd *cmd_enc =
- 		to_dpu_encoder_phys_cmd(phys_enc);
-+	struct dpu_hw_ctl *ctl;
- 
- 	if (!phys_enc->hw_pp) {
- 		DPU_ERROR("invalid encoder\n");
-@@ -523,6 +531,19 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
- 
- 	if (phys_enc->hw_pp->ops.enable_tearcheck)
- 		phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, false);
-+
-+	if (dpu_encoder_phys_cmd_is_master(phys_enc)) {
-+		if (phys_enc->hw_intf->ops.bind_pingpong_blk) {
-+			phys_enc->hw_intf->ops.bind_pingpong_blk(
-+					phys_enc->hw_intf,
-+					false,
-+					phys_enc->hw_pp->idx);
-+
-+			ctl = phys_enc->hw_ctl;
-+			ctl->ops.update_pending_flush_intf(ctl, phys_enc->intf_idx);
-+		}
-+	}
-+
- 	phys_enc->enable_state = DPU_ENC_DISABLED;
- }
- 
 -- 
-2.34.1
-
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
