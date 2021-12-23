@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E76547E06D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 09:32:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B2F347E070
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 09:32:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347203AbhLWIcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Dec 2021 03:32:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51078 "EHLO
+        id S1347209AbhLWIcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Dec 2021 03:32:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229785AbhLWIcD (ORCPT
+        with ESMTP id S229785AbhLWIcE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Dec 2021 03:32:03 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE07C061401;
-        Thu, 23 Dec 2021 00:32:02 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id b186-20020a1c1bc3000000b00345734afe78so2855003wmb.0;
-        Thu, 23 Dec 2021 00:32:02 -0800 (PST)
+        Thu, 23 Dec 2021 03:32:04 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B34C061401;
+        Thu, 23 Dec 2021 00:32:03 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id bg2-20020a05600c3c8200b0034565c2be15so5248520wmb.0;
+        Thu, 23 Dec 2021 00:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cXyWAQ1VG/0jxLRICMV6KqxjV+m10/SVcbFw3Teq6as=;
-        b=E7QvrEOtpW8mYvxLPDzujVk8TxlOszCSlUnCUBvNk9kAC9UobxmFx7osQaGlpO4aPU
-         zMac+lzo6WloMN+nrB9Tjh92linpatSWlLqxxFC8ZyY+BPJOfAHxB0AH5Y+kdMj7MDv/
-         Rcv6eLB5Ygi7x1h3FPpyRTIJ7n/TY5u/BfisBYpYi56kCP+O1L7LV+/sQzCfDgXyeXZU
-         nLf9QHRBIU7caZUEZSpuhm20ZaTz91CHRwzkcgXyCc+ZhcztnTdhoXpOSE33JUvBSFyP
-         JOwbeHcGDKyTvGWpVU26msm4dLXX/CT3wBs7FjvacNbwRbxQnky6WMT5a9uM2OmHOnFc
-         imoQ==
+        bh=aCIN5UEkhZHfGa17tseQv9FnjRthtppZcJKFcClKQv8=;
+        b=lDlyK9/aN5B7LV/uo5bqDLESmVRwh4eJlHl34hVoTAns1peuvgodKp3s7yZIKw/wuf
+         QVMt/5NIMoqcJL/M8drPVYEv0aOnY3+d2EppmBk5v6e4sPlH7lUw/HqLkTkZ9TbcI7IB
+         MvgOlWPluR3MQNVsyTfbmFpk1e+umBxTDanEBBP0esxtKQy/erCMoAFDq2enhpIXuh8/
+         vXsVumldxNzYnwUfh21zQLIqnf4HN/RuEb4lKIx24BW3ysdZGZxHXKTTi6qTlmkTSxkf
+         Ff8T1ZxpKlwL6yXUhRCZzmWz4Fb6Tx8Iv+hasLIdE5+Zyt0aiH0jLUE+imKVtzcGhxum
+         CokQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cXyWAQ1VG/0jxLRICMV6KqxjV+m10/SVcbFw3Teq6as=;
-        b=eHnmUC7HApe4rDT2C41fWo8d7uua7LyI2jxpkjrc9OIzbJo7/w+63XpXEyBngCxp6Q
-         J6wxKYF8/H+sXFsXdOYLXY9C4CsafVOIvMspGNrrTJGKLZSjQVQGgQKWCyJGEwlT4uBQ
-         yhmOfztOAgzdjd7CKqjjhEzqKhMgZthubk40PkxF/MMbeetq4wnv6XLXwFn9uRKwLtFu
-         iIi21BMcHxLKO2bbr5YFPboxnu/WpZ4RyWihQplTGfvJoX0r1TbP6F9qlm+IZpyy7I2J
-         jkWwsXttJBIZWxBSZ2oAMnjrKeWgPnO4mnx/mDqLVNyJLIdC4coAgw2CNjhBT21TKo/y
-         lFJA==
-X-Gm-Message-State: AOAM5308Dp2YYStKAA+RyZadzCMFS+UAI0LjkuWgOS0UPH60yMy3fcOd
-        otBqJb/6dcptsleRukwHZ00flhZTs2pT+Q==
-X-Google-Smtp-Source: ABdhPJzQA9UhPfC45LdIuPUic6IhlAiJfyGtPvUExuZdy1zlD9jIKx/7SKjxB7X2fH6G04TkKHlEVA==
-X-Received: by 2002:a05:600c:4f94:: with SMTP id n20mr795792wmq.64.1640248321288;
-        Thu, 23 Dec 2021 00:32:01 -0800 (PST)
+        bh=aCIN5UEkhZHfGa17tseQv9FnjRthtppZcJKFcClKQv8=;
+        b=lhXZ1uD1PkUbfCDnozq5ORC8UsjIB4W0YUfTw5I0IvN8xgpl6RNex7GgovwXu+HXhi
+         CY4NARGdVkNAdFpGzSLQTx5nkNCliW4ZqSpMS0GMvSiVzUprK5+T5ZMYwdedtN3bfeHg
+         chb4PEsnmmQ0ALVZSB3LXylZ2zrHZBlm9ukJI91YoB8OyOFDj+Rt1IJ6RqEHeaHXp3JF
+         XuILUJsoWndId0873bwcGDgukfeyugWyxlw3CpH9N/UiHOLqYU3EYJ/sms5fdpPk5f4M
+         khbadk2XJRonySqoS0ok5zatLNZEbcspnYn/x2lst2z0LO0Y2D63Gz0TgH1BTQHk09RV
+         R4cg==
+X-Gm-Message-State: AOAM532/MMhJPyFLNzuzW8kQJcC0AoU99O49tfTw5wEGy0h1O4eKoDLt
+        Q0faj+gvev8JP6n2QrdH6PuZMhAaJTQUbg==
+X-Google-Smtp-Source: ABdhPJxE1BSyW50MmY1o26qz0DfvyUqNaXC6qBKQOhwW75vXiRYlN97LVqr8ILDPqN2prLe/dkeuNw==
+X-Received: by 2002:a1c:1906:: with SMTP id 6mr841291wmz.19.1640248322419;
+        Thu, 23 Dec 2021 00:32:02 -0800 (PST)
 Received: from dell5510.arch.suse.de (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id p21sm4038277wmq.20.2021.12.23.00.32.00
+        by smtp.gmail.com with ESMTPSA id p21sm4038277wmq.20.2021.12.23.00.32.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Dec 2021 00:32:00 -0800 (PST)
+        Thu, 23 Dec 2021 00:32:02 -0800 (PST)
 From:   Petr Vorel <petr.vorel@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Petr Vorel <petr.vorel@gmail.com>,
@@ -56,9 +56,9 @@ Cc:     Petr Vorel <petr.vorel@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: [PATCH 2/3] arm64: dts: qcom: msm8994: SoC specific compatible strings for qcom-sdhci
-Date:   Thu, 23 Dec 2021 09:31:52 +0100
-Message-Id: <20211223083153.22435-2-petr.vorel@gmail.com>
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8996: SoC specific compatible strings for qcom-sdhci
+Date:   Thu, 23 Dec 2021 09:31:53 +0100
+Message-Id: <20211223083153.22435-3-petr.vorel@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20211223083153.22435-1-petr.vorel@gmail.com>
 References: <20211223083153.22435-1-petr.vorel@gmail.com>
@@ -70,29 +70,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 5a9a5ed0565f..955bdb0639fe 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -444,7 +444,7 @@ usb@f9200000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 91bc974aeb0a..01d914221a95 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2693,7 +2693,7 @@ hsusb_phy2: phy@7412000 {
  		};
  
- 		sdhc1: sdhci@f9824900 {
+ 		sdhc1: sdhci@7464900 {
 -			compatible = "qcom,sdhci-msm-v4";
-+			compatible = "qcom,msm8994-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0xf9824900 0x1a0>, <0xf9824000 0x800>;
++			compatible = "qcom,msm8996-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x07464900 0x11c>, <0x07464000 0x800>;
  			reg-names = "hc_mem", "core_mem";
  
-@@ -467,7 +467,7 @@ sdhc1: sdhci@f9824900 {
+@@ -2716,7 +2716,7 @@ sdhc1: sdhci@7464900 {
  		};
  
- 		sdhc2: sdhci@f98a4900 {
+ 		sdhc2: sdhci@74a4900 {
 -			compatible = "qcom,sdhci-msm-v4";
-+			compatible = "qcom,msm8994-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0xf98a4900 0x11c>, <0xf98a4000 0x800>;
++			compatible = "qcom,msm8996-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x074a4900 0x314>, <0x074a4000 0x800>;
  			reg-names = "hc_mem", "core_mem";
  
 -- 
