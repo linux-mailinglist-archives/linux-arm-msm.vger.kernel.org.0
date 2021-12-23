@@ -2,225 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6067947E76A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 19:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AEDC47E807
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 20:09:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349567AbhLWSFf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Dec 2021 13:05:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38204 "EHLO
+        id S1349953AbhLWTJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Dec 2021 14:09:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244697AbhLWSFe (ORCPT
+        with ESMTP id S244775AbhLWTJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Dec 2021 13:05:34 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0227CC061401
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 10:05:34 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id j3-20020a056830014300b0058f4f1ef3c2so4017681otp.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 10:05:33 -0800 (PST)
+        Thu, 23 Dec 2021 14:09:16 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5F3C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 11:09:16 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id x1-20020a17090a2b0100b001b103e48cfaso6802452pjc.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 11:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1v9L4T41CwGiy712+i5FQLKiko4j+O1n9FYDtFOGNoU=;
-        b=HlaIv8e1qvy3wsrLeReJQH7FO3DX7fYc9QBZELRfuyUC3iXhmiKK4jQVo9DdDR2oJ4
-         GQNzKJCYCvExKUR3XcrkynxEszSZfANE3EBSZh/UjavaUaU923nbFDIkwYDPehTu9LRf
-         3H8DP5U69BGoqRdO+iC0KJdbYXvA1S+HsNM87VhuLf/uQ89QHTyNQZRa7j54lSVS/9Zr
-         wZc+YLl2Nm0bz5EE9p1mWVb5etdPQCopOCnwAc5Ry+U9jYjosyI4heA9loyfFZJLil/b
-         dh2m+PEZa3sLFbSjRXd9Oy1ekmpPiVV4Ke6MnmtaNH7zSkKeRj/VZezpe0edjLhRDWcd
-         Ty3w==
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=PA5Eb3SKatYFaqsO/40bx9AAytaL07oA6ydkj8EAbzQ=;
+        b=fHBIFXg93m0oA3JK2XLyJphjNUAxTWX7dNrB6QSfvF6iEj0pPiUsiw4FOXnEPehH8u
+         6sNJa6l5OXSSW+zrOe5Uw4U+IjFKhFPnyU00r1PpFDyIhIRw931AbyBBut2KCu7e2Gp7
+         XIv9fbhAUKoSq2jpE/+zbQJqXfUyhTGNeXKCDmV6anXs4NyB5v/fSP0EgYeNhAhA3OO6
+         iHC3ebKPUOqxedGI/AS7zWHTj0CJrGswIrD1Ir1ClX40vnqNym+oQx+21dtLmjrBiiqe
+         ayGH1adzw4vGZeR702AjZ03FqyF2MD6pwYYxJE1AsCEqxWWf/N6xwF9LB9mKcpy0Vzyo
+         T+GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1v9L4T41CwGiy712+i5FQLKiko4j+O1n9FYDtFOGNoU=;
-        b=BiBI0HpY9DHmFIbKhv91dCuYAXiwobyZ31a9KXjnwX9v+k5AwH9Vd8NcWYNB8bP+u6
-         6vR0cmtp0P24J1gafNXlwLWd+SmNmfRDEAFyFfXrCqimg2cqBxUWXIiKyA53zPJZ08p+
-         pmom9ujsFCy+8NQT24oVTe6GjX31cH3NB2KHMcXmHwbzAnL7tDdW7mfF2UTJQrrG/riF
-         PfVfp0iHmfB4tnMPw9GobRjV1w2R70ri3VGvxf22clSctlXAa1vsUNtU6L4jHtOuDPIT
-         u1kny06JImPJYMVaY4lSX6afHRqh427S+hGTfG+q17JXeIOrUq0D/Rj+C3kdR4PH8Lu9
-         Mjww==
-X-Gm-Message-State: AOAM532DsgpCrcePc2oBoiCx4cuU1YvFmBrO5NFV6yhOjEMwvKgfCl1j
-        ouHYwUEmTlE7amLELsMZqjjrqw==
-X-Google-Smtp-Source: ABdhPJwMf+E+xKIgFWu/fxvD3O6pjtvJtMAtY6YGFU6Mx+dbyzCPksk6IqLrnj00vlCR48AzuMzEHg==
-X-Received: by 2002:a05:6830:43aa:: with SMTP id s42mr2201594otv.118.1640282733237;
-        Thu, 23 Dec 2021 10:05:33 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id x4sm1168770oiv.35.2021.12.23.10.05.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Dec 2021 10:05:32 -0800 (PST)
-Date:   Thu, 23 Dec 2021 10:06:38 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc:     linux-media@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Prabhakar <prabhakar.csengg@gmail.com>,
-        linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 02/13] media: camss: Use platform_get_irq_byname() to get
- the interrupt
-Message-ID: <YcS6rl+dFqhH7giF@ripper>
-References: <20211223173015.22251-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20211223173015.22251-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=PA5Eb3SKatYFaqsO/40bx9AAytaL07oA6ydkj8EAbzQ=;
+        b=ZLTDIWO2+EsqmooS1Ob6LPxicz18GDyU08p1r2hljClzjeeZt4qaEC9Ysi36QUI2Au
+         QAaoU2N02/EED0h0HIrIJ70qpKbRW3DwWDRqdhl4PiFzucghXCWcOK1BUGYuVq4I/fqj
+         7DX+vSqZGRhO6q+HLQDD9U2VZXGbeX+1LTYvzMHbZOjsSPXZ6ipSoPCf4cUnjw1k99aZ
+         BfqwfxBkR/dE0IH3GY9HWiWeAXQQ6Cgb52bAv9QTlbZjQNs8SgQN3I6o2obvec/wb9Ak
+         yMJg47Ito0JDgd7dX2eQXyJzjai7DId6hkRfNJjp1UodxtTuaCIgDK9WDBK5hfOmA0E7
+         Ky0A==
+X-Gm-Message-State: AOAM530eKc3xD5q5IipN3osp7l6H/JFwiDZvx3bmmeYGLan1pZX3xqdA
+        Hq0E7K0JdvZKhxGY2S89UMPxgfG6ExBZdKbvUiA=
+X-Google-Smtp-Source: ABdhPJwctjRL4XsdCQ1wByYyUuPBgNQw6/HNCqSv2oUHeF1tRnMWYYhLG5iGVP8mLjHWk22vMkFZ9Ct8HIA0kLigy34=
+X-Received: by 2002:a17:902:6a82:b0:148:a2e7:fb5c with SMTP id
+ n2-20020a1709026a8200b00148a2e7fb5cmr3513772plk.157.1640286555435; Thu, 23
+ Dec 2021 11:09:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211223173015.22251-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+Received: by 2002:a05:6a20:789d:b0:68:7657:a7bf with HTTP; Thu, 23 Dec 2021
+ 11:09:14 -0800 (PST)
+Reply-To: revfrpaulwilliams2@gmail.com
+From:   "Rev. Fr. Paul Williams" <melindagatesfoundation53@gmail.com>
+Date:   Fri, 24 Dec 2021 00:39:14 +0530
+Message-ID: <CAMk=7STSakJZkbCFHpxqkiAMeHT0J+gLqbrWDhUJu7SUuk3R9Q@mail.gmail.com>
+Subject: Donation From Williams Foundation.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 23 Dec 09:30 PST 2021, Lad Prabhakar wrote:
-
-> platform_get_resource_byname(pdev, IORESOURCE_IRQ, ..) relies on static
-> allocation of IRQ resources in DT core code, this causes an issue
-> when using hierarchical interrupt domains using "interrupts" property
-> in the node as this bypasses the hierarchical setup and messes up the
-> irq chaining.
-> 
-> In preparation for removal of static setup of IRQ resource from DT core
-> code use platform_get_irq_byname().
-> 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> ---
->  drivers/media/platform/qcom/camss/camss-csid.c   | 12 ++++--------
->  drivers/media/platform/qcom/camss/camss-csiphy.c | 12 ++++--------
->  drivers/media/platform/qcom/camss/camss-ispif.c  | 12 ++++--------
->  drivers/media/platform/qcom/camss/camss-vfe.c    | 12 ++++--------
->  4 files changed, 16 insertions(+), 32 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index a1637b78568b..ac3504e98668 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -544,7 +544,6 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->  {
->  	struct device *dev = camss->dev;
->  	struct platform_device *pdev = to_platform_device(dev);
-> -	struct resource *r;
->  	int i, j;
->  	int ret;
->  
-> @@ -571,14 +570,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->  
->  	/* Interrupt */
->  
-> -	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ,
-> -					 res->interrupt[0]);
-> -	if (!r) {
-> -		dev_err(dev, "missing IRQ\n");
-> -		return -EINVAL;
-> -	}
-> +	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
-> +	if (ret < 0)
-> +		return ret;
->  
-> -	csid->irq = r->start;
-> +	csid->irq = ret;
->  	snprintf(csid->irq_name, sizeof(csid->irq_name), "%s_%s%d",
->  		 dev_name(dev), MSM_CSID_NAME, csid->id);
->  	ret = devm_request_irq(dev, csid->irq, csid->ops->isr,
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> index 24eec16197e7..6b225d06f35a 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-> @@ -568,7 +568,6 @@ int msm_csiphy_subdev_init(struct camss *camss,
->  {
->  	struct device *dev = camss->dev;
->  	struct platform_device *pdev = to_platform_device(dev);
-> -	struct resource *r;
->  	int i, j;
->  	int ret;
->  
-> @@ -611,14 +610,11 @@ int msm_csiphy_subdev_init(struct camss *camss,
->  
->  	/* Interrupt */
->  
-> -	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ,
-> -					 res->interrupt[0]);
-> -	if (!r) {
-> -		dev_err(dev, "missing IRQ\n");
-> -		return -EINVAL;
-> -	}
-> +	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
-> +	if (ret < 0)
-> +		return ret;
->  
-> -	csiphy->irq = r->start;
-> +	csiphy->irq = ret;
->  	snprintf(csiphy->irq_name, sizeof(csiphy->irq_name), "%s_%s%d",
->  		 dev_name(dev), MSM_CSIPHY_NAME, csiphy->id);
->  
-> diff --git a/drivers/media/platform/qcom/camss/camss-ispif.c b/drivers/media/platform/qcom/camss/camss-ispif.c
-> index ba5d65f6ef34..4ee11bb979cd 100644
-> --- a/drivers/media/platform/qcom/camss/camss-ispif.c
-> +++ b/drivers/media/platform/qcom/camss/camss-ispif.c
-> @@ -1100,7 +1100,6 @@ int msm_ispif_subdev_init(struct camss *camss,
->  	struct device *dev = camss->dev;
->  	struct ispif_device *ispif = camss->ispif;
->  	struct platform_device *pdev = to_platform_device(dev);
-> -	struct resource *r;
->  	int i;
->  	int ret;
->  
-> @@ -1153,14 +1152,11 @@ int msm_ispif_subdev_init(struct camss *camss,
->  
->  	/* Interrupt */
->  
-> -	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ, res->interrupt);
-> -
-> -	if (!r) {
-> -		dev_err(dev, "missing IRQ\n");
-> -		return -EINVAL;
-> -	}
-> +	ret = platform_get_irq_byname(pdev, res->interrupt);
-> +	if (ret < 0)
-> +		return ret;
->  
-> -	ispif->irq = r->start;
-> +	ispif->irq = ret;
->  	snprintf(ispif->irq_name, sizeof(ispif->irq_name), "%s_%s",
->  		 dev_name(dev), MSM_ISPIF_NAME);
->  	if (camss->version == CAMSS_8x16)
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index 71f78b40e7f5..7c2311d70546 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -1279,7 +1279,6 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
->  {
->  	struct device *dev = camss->dev;
->  	struct platform_device *pdev = to_platform_device(dev);
-> -	struct resource *r;
->  	int i, j;
->  	int ret;
->  
-> @@ -1312,14 +1311,11 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
->  
->  	/* Interrupt */
->  
-> -	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ,
-> -					 res->interrupt[0]);
-> -	if (!r) {
-> -		dev_err(dev, "missing IRQ\n");
-> -		return -EINVAL;
-> -	}
-> +	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
-> +	if (ret < 0)
-> +		return ret;
->  
-> -	vfe->irq = r->start;
-> +	vfe->irq = ret;
->  	snprintf(vfe->irq_name, sizeof(vfe->irq_name), "%s_%s%d",
->  		 dev_name(dev), MSM_VFE_NAME, vfe->id);
->  	ret = devm_request_irq(dev, vfe->irq, vfe->ops->isr,
-> -- 
-> 2.17.1
-> 
+Contact Rev. Fr. Paul Williams Immediately For A Charity Donation Of
+$6,200,000.00 United States Dollars At E-Mail:
+revfrpaulwilliams2@gmail.com
