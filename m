@@ -2,109 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20DB547E1C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 11:51:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E58AB47E1DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 11:59:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347801AbhLWKvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Dec 2021 05:51:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53590 "EHLO
+        id S1347810AbhLWK7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Dec 2021 05:59:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347797AbhLWKvn (ORCPT
+        with ESMTP id S239583AbhLWK7W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Dec 2021 05:51:43 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EF7C061401;
-        Thu, 23 Dec 2021 02:51:42 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id t18so10590746wrg.11;
-        Thu, 23 Dec 2021 02:51:42 -0800 (PST)
+        Thu, 23 Dec 2021 05:59:22 -0500
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0186AC061401
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 02:59:22 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id m12so8452431ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 02:59:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tfudTAdmdFICh0t1yWXo5ult410djfzaHfSac/cFTho=;
-        b=EtepVCtbNbfLKdFqxofhcNeMNA2fnGQ2Dq/BaoQyfo/VlMG7WjR7BXDwroranIbeOl
-         sOSZwC1j78o53SFa2Zdk+HW2q5K/VKYYcL3hh8i28qEHh+QiwsOhI896Uec9dwWUEscK
-         YS2ZRAHbbSxPE8AEAYAVTmBDhMF9HEOqyzSPylKDIZsU8qQxrTa8rBMee+tHdChDDEjr
-         Mr5nTSXndm9AoEP9r6ouebhd6lCYZGsZPaCCl3NMO8+hn0Hw7vIzY7e1BHhnzGzLLJ9d
-         knfhsPY2AFeS7V9tQ23bYoH2fPKq/LWqHcNlyHM5oYZpEqPkoDiyeZiJPu3gm3Iv2CdL
-         5BzQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=c4iGsoh91KxrBrGqNFTJPQDy9ooHu40v3iiRctF/iBc=;
+        b=EBJc5nrK6p9j6veHdYAAn3scocsoVPD7XdVbJoxP1ulH2p7QyiOSCXbT2xZe8LSVTV
+         eWmj+4Y/y60m/gKXpQNTf8bad6tstfny3dEgun071F8N0Mfmka+sJ+HaBCSOPeifbZak
+         CtWe93t0S4TzF9yByovOrLtGFV/ONI8vREtX1ENZv/tOKJ3BKIupOTolTB2Na37easpO
+         9ht+6aDNfbUGeA83KmfB1tXduOx0LfqzRSUb9Dg69a3RvbHOmeba9K2eVzcj2QpdakZM
+         LJeBgFb9zaX/zk6FA2Is4luDkTzddWQAMqcKJBAHcPv2oxt0oAD9tcCyW2M5Z8R6OeXz
+         pJUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=tfudTAdmdFICh0t1yWXo5ult410djfzaHfSac/cFTho=;
-        b=liMosDSSZ8SAXcRYX6Swobywl9RhffaWS7XYr8pqIfl+HPVO6QI6dzekDuIRJQ55hd
-         Z6GrAv6xGn16xQc+9oq1ywGAWiRB14mVtT5ORzfKRxGvJEHK4joccgkZwsZpX4Egxh3a
-         ff1Omh+D3mEZqon2YXEqOhkcVWz3yY8W73ovypypax/TQtlR2yPO60UpbZEvKzyms/Cc
-         7S1pMXwjvpUFz0z2xVdAjKZYAyDywcsp7v1fcynHkWpDa10Szpk0bSTGU4JwJgZxi35T
-         pX1+92M5UzWAntpPGhpiyky09DUsUXHqLvKOO3UXGHVEePNI9+b6jdyS4VJx033qwNwP
-         NOMA==
-X-Gm-Message-State: AOAM533AIyzhV5/LHbwu9L2A6m+MVHgre30uJBzhoIXIRc7KDwxTRU4u
-        +Clqd8i0DqjugniB+k07KmU=
-X-Google-Smtp-Source: ABdhPJx7SykAVW+xk4EnHCHEfh1R9jeM72DtNKdsBhroniwqEOuywn8lw1rZ71wtVjaCByRW1+IByA==
-X-Received: by 2002:a5d:4c44:: with SMTP id n4mr1315528wrt.4.1640256701357;
-        Thu, 23 Dec 2021 02:51:41 -0800 (PST)
-Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id y1sm4452464wrm.3.2021.12.23.02.51.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Dec 2021 02:51:40 -0800 (PST)
-Date:   Thu, 23 Dec 2021 11:51:37 +0100
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: Add compatible string
- for msm8994
-Message-ID: <YcRUufUB5xlVj/b8@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20211223083153.22435-1-petr.vorel@gmail.com>
- <CAPDyKFosa+V8E3pRBcwzOp48KfXZvLVmwCAro66gsWKZdAMmag@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=c4iGsoh91KxrBrGqNFTJPQDy9ooHu40v3iiRctF/iBc=;
+        b=phkNRqxHqBABV197OTUIZrSWj4Dnp6AOHmktA5qitZGDPPIBMwLsasnQ979jlZqeyX
+         3ztyRqQmlbuhgy69VdmODCL6wlbbOiPtJqAkodamS/xO/7cRi6OT7N3FlprztkigUtBr
+         AQKWc087E7GNtiDcLI/8C35mxhvr+EEXgi9gKN35x+rNaw/UFhtPQaB/7qgysIXPD8A2
+         imZ2/mUxqM5lE7pmUa7p61kMEzo1IkPvBzemqW2TUsrWcCkoWOeDeTgOWZsfFBfitxEm
+         J/RsUgKbAXV17AWGXB2gHntBdqKXh3e2KU0OFJZ2fEyhHFpTkcGOeokgY62tPxeYGto1
+         kXgA==
+X-Gm-Message-State: AOAM530joy4gzdyLw8soWZdkrb9YM+U1TVJKFDvxtx8rbcyvPlD6eSXz
+        nbAcwPDwysBnsvFjcafm7YzlIw==
+X-Google-Smtp-Source: ABdhPJzrM6Yg+3CEQag1QkRcx4LReAIp1OuWGROh3rLAvg9Pdp7MIzV4ecsfH5Te3AIhQWyFEDqZTg==
+X-Received: by 2002:a2e:9b88:: with SMTP id z8mr1325078lji.65.1640257160267;
+        Thu, 23 Dec 2021 02:59:20 -0800 (PST)
+Received: from [192.168.1.102] (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
+        by smtp.gmail.com with ESMTPSA id m21sm452454ljp.66.2021.12.23.02.59.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Dec 2021 02:59:20 -0800 (PST)
+Subject: Re: [PATCH v3 00/19] CAMSS: Add SM8250 support
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
+Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
+        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        jgrahsl@snap.com, hfink@snap.com, dmitry.baryshkov@linaro.org
+References: <20211222003751.2461466-1-bryan.odonoghue@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Message-ID: <2f3eb25d-3af9-4339-acb2-8d5b01e5881d@linaro.org>
+Date:   Thu, 23 Dec 2021 12:59:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFosa+V8E3pRBcwzOp48KfXZvLVmwCAro66gsWKZdAMmag@mail.gmail.com>
+In-Reply-To: <20211222003751.2461466-1-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> On Thu, 23 Dec 2021 at 09:32, Petr Vorel <petr.vorel@gmail.com> wrote:
+On 12/22/21 2:37 AM, Bryan O'Donoghue wrote:
+> V3:
+> Publishing this V3 to make it a bit easier to merge
+> 
+> - Adds Rob Herring's RB for the first DTS change
+> - Adds Robert Foss' RB for the final three patches
+> - Validated on latest 5.16-rc6 on rb3 and rb5
+> - No functional changes to v2
+> 
+> Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc6-sm8250-camss-imx577-only-v3
+> Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc3-sm8250-camss-imx577-only-v2
+> 
+> RESEND V2:
+> + Cc: devicetree@vger.kernel.org on first patch
+> 
+> V2:
+> - Adds Tested-by Julian Grahsl as indicated.
+> - Fixes low-level noise checkpatch --strict
+>    I ended up having to push defines into static inlines for this.
+> - Adds Reviewed-by Robert Foss.
+> - Adds VFE/CSID fix for sdm845 as explicit additional sdm845 specific
+>    patch per Robert's suggestion.
+> 
+> I took the time then to test out on sdm845 to ensure the new patch breaks
+> nothing "./cam -c 1 --capture=1 --file=capture.raw" continues to produce
+> expected data.
+> 
+> Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc1-sm8250-camss-imx577-only
+> Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=v5.16-rc3-sm8250-camss-imx577-only-v2
+> 
+> git diff v5.16-rc1-sm8250-camss-imx577-only..v5.16-rc3-sm8250-camss-imx577-only-v2 -- drivers/media/platform/qcom/camss
+> 
+> V1/RESEND:
+> RESEND: git send-email --to=inux-arm-msm@vger.kernel.org -> --to=linux-arm-msm@vger.kernel.org
+> 
+> This series is imported from excellent enabling work contributed by
+> Jonathan Marek which we have picked up in Linaro for the RB5 project.
+> 
+> Link: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210511180728.23781-2-jonathan@marek.ca/
+> Link: https://www.qualcomm.com/products/robotics-rb5-platform
+> Link: https://www.96boards.org/product/qualcomm-robotics-rb5
+> Link: https://www.thundercomm.com/app_en/product/1590131656070623?index=1&categoryId=category0&tabIndex=1
+> 
+> The RB5 has a slightly different sku I think to Jonathan's platform -
+> QRB5165 in our case with a different version of LK the relevant bootloader
+> for the board.
+> 
+> As a result we needed to make some additional updates to the provided
+> patcheset, included here.
+> 
+> The most notable changes are:
+> 
+> - Addition of clocks.
+> - Addition of bandwidth settings.
+> - Representing the dependency on a VFE for a given CSID so that V4L
+>    subdevs will come out of reset right when poked.
+> 
+> A full tree which is bootable and capable of producing pixel data from the
+> imx577 main sensor is available here, with this series being a sub-set of
+> the necessary patches on the SoC side only.
+> 
+> Link: https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=v5.16-rc1-sm8250-camss-imx577-only
+> 
+> media-ctl --reset
+> media-ctl -v -d /dev/media0 -V '"imx412 '20-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
+> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> 
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> 
 
-> > Add msm8994 SoC specific compatible strings for qcom-sdhci controller.
+Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-> > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+I've tested the series on top of v5.16-rc6 on RB5 board, image capturing
+from the imx577 sensor works fine, if I use the supplied rb5_defconfig.
+However I have to report that the camss driver is not probed successfully,
+if it is built-in, then there is an issue related to device link suppliers:
 
-> Hi Petr,
+	platform ac6a000.camss: error -EPROBE_DEFER: wait for supplier camera@1a
+	platform ac6a000.camss: Added to deferred list
 
-> Can you please re-submit this to linux-mmc too, so I can pick it from
-> the patchtracker.
-Sure, I'll try. I've acked 3 times to majordomo subscription to linux-mmc, but
-still no confirmation about it.
+This could be analyzed separately.
 
-Kind regards,
-Petr
-
-> Kind regards
-> Uffe
-
-> > ---
-> >  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
-> >  1 file changed, 1 insertion(+)
-
-> > diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> > index 50841e2843fc..6a8cc261bf61 100644
-> > --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> > +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> > @@ -17,6 +17,7 @@ Required properties:
-> >                 "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4"
-> >                 "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
-> >                 "qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
-> > +               "qcom,msm8994-sdhci", "qcom,sdhci-msm-v4"
-> >                 "qcom,msm8996-sdhci", "qcom,sdhci-msm-v4"
-> >                 "qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
-> >                 "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
-> > --
-> > 2.34.1
-
+--
+Best wishes,
+Vladimir
