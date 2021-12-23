@@ -2,105 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF31347E86B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 20:39:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8227447E998
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 23:57:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350022AbhLWTjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Dec 2021 14:39:37 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:34698 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244778AbhLWTje (ORCPT
+        id S240256AbhLWW5w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Dec 2021 17:57:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234511AbhLWW5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Dec 2021 14:39:34 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 9C77ECE2178;
-        Thu, 23 Dec 2021 19:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE51CC36AE9;
-        Thu, 23 Dec 2021 19:39:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1640288370;
-        bh=k9GLyyBuOQ9Sm/cdmFUcfY4OryXSOQK/ki79q1v2xQs=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=teCi81Fa9JLCqnabKNsg/PrAlHemns/yU09FMCuiPyVEoc4luFHDOqy6qbNfnGHKJ
-         ZoJr7MZzFZWiYLXcmmHGy/KRNQEXHPE/WMkuW0nld4DkxvbM3/qWP54lK5IfDlK/vL
-         ali+mRB4ark07IqM5aZvCSkqogySVXBe2AQC0WSqWgVZOiLqZTfn2TFPVZg6amuIeV
-         VVCikWprG9dLQluQVCfebfusXBJN4At8jeoCvdDrseJoeGgAedTXkJZLx+6Irxd129
-         TPJIfMdaZUIDz+QQuNXK1Rl3d7H8pQnjGHoy6a4cuQ0KhvYPODYq0g1TiD9oTgMlEG
-         LHKBL9FuYlndg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Thu, 23 Dec 2021 17:57:52 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19DC2C061401;
+        Thu, 23 Dec 2021 14:57:52 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id bm14so26739818edb.5;
+        Thu, 23 Dec 2021 14:57:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5G6N5MmO8P/7YzeJvaLeII1BWwEj3vKFRtBNPQAw/Sw=;
+        b=jO+k7tI2SYe4kM78XDof1xpdskkVd3Wq1uL6OFkWrT7fMJQczi6hMb2Vnvf0WTKSo2
+         rOhHh7ZgDiuhslZGvvbBxRNFzgio8fXbk/Ax7N7Yrfb6gooKUim5egVJlW/3e3zts59Z
+         w+zGErw8XiLawd2LzGoZ7ET9KLSNQi3WPANveJDKSmGeriCM1Ay8A5ygLqJyZF06MSOy
+         T/klowHG0xT6BoZPVaHPSn6gCWEz1c9EmduBg8i64uv5gaJjKmDJIkKeteURTK5C8iYg
+         MGmy7hPQ3dqbwZn9qCi+8vzxXtuaLglbmGr/AUVzRB0HGx9PVkGLbgmoBzMiNesb84St
+         G1jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=5G6N5MmO8P/7YzeJvaLeII1BWwEj3vKFRtBNPQAw/Sw=;
+        b=g5ffOtd3+kf/oLgt44pcl1zH0S7QiBaVxkVRWB29Zsgz08VvAcJj52dcXgw2D8/hYH
+         jE6qsXod2QWeYw8KMKUBu4h4XVEsLnMoRiM+V+Uwyl8mq/nA9Si1BtNtgrOQ7y54AMZU
+         SQ9DC62QxqZ2syH6RhImbsjpO/PyuiW39fjRP2AHhqa2Ey5BwsEBE/kC8uEuYq83uYnZ
+         zqmSLps9CTng6v0cUszWVWQOuDm3JAisJ9O3rduZdZ/Dv/nw8KDR4YtJeplonDYtAtxL
+         +3OA+jSsDhtP+wsD65S8rfBrdMlLEl2fNDq1tBc4PiJVBWL4A7/yOKx7H3X0rqv1HZ7y
+         IjoQ==
+X-Gm-Message-State: AOAM531+t3qaoaKIMgfULXymrPyQxJDHPO0irsAZtwwG1eKdd9S0dC9G
+        9B394my8Z/PsGI38MFBEwuQ=
+X-Google-Smtp-Source: ABdhPJwmwb7Ez7u+nU+Um2tqVoQ54ewknskyhGW6wJDxcFuRKp7l/iWHm8IwRNdX+X9Eg8I95I5vRA==
+X-Received: by 2002:a17:907:33c4:: with SMTP id zk4mr3494896ejb.569.1640300270598;
+        Thu, 23 Dec 2021 14:57:50 -0800 (PST)
+Received: from pevik (gw1.ms-free.net. [185.243.124.10])
+        by smtp.gmail.com with ESMTPSA id y5sm2101424ejk.203.2021.12.23.14.57.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Dec 2021 14:57:49 -0800 (PST)
+Date:   Thu, 23 Dec 2021 23:57:42 +0100
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konradybcio@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        phone-devel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Banajit Goswami <bgoswami@codeaurora.org>,
-        Paul Cercueil <paul@crapouillou.net>,
-        ~postmarketos/upstreaming@lists.sr.ht
-In-Reply-To: <20211214142049.20422-1-stephan@gerhold.net>
-References: <20211214142049.20422-1-stephan@gerhold.net>
-Subject: Re: [PATCH 0/4] ASoC: qcom: Parse "pin-switches" and "widgets" from DT
-Message-Id: <164028836762.13551.16534248024583184241.b4-ty@kernel.org>
-Date:   Thu, 23 Dec 2021 19:39:27 +0000
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: Add compatible string
+ for msm8994
+Message-ID: <YcT+5h15T0/gFCZO@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20211223083153.22435-1-petr.vorel@gmail.com>
+ <CAPDyKFosa+V8E3pRBcwzOp48KfXZvLVmwCAro66gsWKZdAMmag@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFosa+V8E3pRBcwzOp48KfXZvLVmwCAro66gsWKZdAMmag@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 14 Dec 2021 15:20:45 +0100, Stephan Gerhold wrote:
-> Some sound card setups might require extra pin switches to allow
-> turning off certain audio components. simple-card supports this
-> already using the "pin-switches" and "widgets" device tree property.
-> This series makes it possible to use the same properties for the Qcom
-> sound cards.
-> 
-> To implement that, the function that parses the "pin-switches" property
-> in simple-card-utils.c is first moved into the ASoC core. Then two
-> simple function calls are added to the common Qcom sound card DT parser.
-> Finally there is a small patch for the msm8916-wcd-analog codec to make
-> it possible to model sound card setups used in some MSM8916 smartphones.
-> (See PATCH 2/4 for an explanation of some real example use cases.)
-> 
-> [...]
+> On Thu, 23 Dec 2021 at 09:32, Petr Vorel <petr.vorel@gmail.com> wrote:
 
-Applied to
+> > Add msm8994 SoC specific compatible strings for qcom-sdhci controller.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 
-Thanks!
+> Hi Petr,
 
-[1/4] ASoC: core: Add snd_soc_of_parse_pin_switches() from simple-card-utils
-      commit: 3d4641a42ccf1593b3f3a474ee7541727acbb8e0
-[2/4] ASoC: dt-bindings: qcom: sm8250: Document "pin-switches" and "widgets"
-      commit: 37a49da9a7d5ac1f7128000de42ff222da46ba7a
-[3/4] ASoC: qcom: common: Parse "pin-switches" and "widgets" from DT
-      commit: 2623e66de125ba153e41be6a0b8af24cae8aa436
-[4/4] ASoC: msm8916-wcd-analog: Use separate outputs for HPH_L/HPH_R
-      commit: 319a05330f4ff3f951f9c42094958c6cdef393b3
+Hi Uffe,
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+> Can you please re-submit this to linux-mmc too, so I can pick it from
+> the patchtracker.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Done (I had to send it from my work mail, because majordomo haven't
+authenticated my private gmail address).
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Kind regards,
+Petr
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+> Kind regards
+> Uffe
 
-Thanks,
-Mark
+> > ---
+> >  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
+> >  1 file changed, 1 insertion(+)
+
+> > diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> > index 50841e2843fc..6a8cc261bf61 100644
+> > --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> > +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> > @@ -17,6 +17,7 @@ Required properties:
+> >                 "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4"
+> >                 "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
+> >                 "qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
+> > +               "qcom,msm8994-sdhci", "qcom,sdhci-msm-v4"
+> >                 "qcom,msm8996-sdhci", "qcom,sdhci-msm-v4"
+> >                 "qcom,qcs404-sdhci", "qcom,sdhci-msm-v5"
+> >                 "qcom,sc7180-sdhci", "qcom,sdhci-msm-v5";
+> > --
+> > 2.34.1
+
