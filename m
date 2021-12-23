@@ -2,224 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2448347E55B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 16:14:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFD0447E5DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Dec 2021 16:44:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244164AbhLWPOP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Dec 2021 10:14:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56214 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244159AbhLWPOO (ORCPT
+        id S232633AbhLWPoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Dec 2021 10:44:22 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:42231 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244231AbhLWPn2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Dec 2021 10:14:14 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25CB3C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 07:14:14 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id m25so5085075qtq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Dec 2021 07:14:14 -0800 (PST)
+        Thu, 23 Dec 2021 10:43:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=t/trXJx8RMPAN3LWudnaUQxfD3uy1w2bAsHfBMgTUD4=;
-        b=fRFCt19eMNuoU6PtktXS7n1jOThMCMfDUdupLVqGWLLRLo37s/AnQ6Fy5/pHuxQUd6
-         zgx1aHowl6rAzUxtffE+zbjOdfcezueIRzTm2vLPGFHg64asQp1rBfZmzfqdnlWiEaK/
-         5y/MsoJA7Bm/fL9BtN5O/6oeIAapMuMeEuuLTZQEm+hqPlCu80Td+bYNqjFMC+Dpg7rW
-         mZkmTMBMKpTsY61ma0kPQrkKHCrZCjgP9oXwO0yJjxgkriQioWZvyff6+eZw/+yPS8dS
-         m1vKZJAGjPm5JdGB88cFB28/Q304zxS5JbN+DFl8dIplqLvoxM9rqMgOddej7TGjdPPN
-         b83Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=t/trXJx8RMPAN3LWudnaUQxfD3uy1w2bAsHfBMgTUD4=;
-        b=OK3UjAhbhKzEyRx61MDlC5pkFa8QqJQ879mOWZkO+KIbXjJppFCRNZ4N7a191kjxA/
-         edW2wIhOaOxd/788tD4o/jOcWCdpcq3LH8H7MyyHF+k2ioRfHiZCWF5gXXFjol4kU+IK
-         I7wiadGpgrLOivb5MDsDKihhf9Cwg8okqkE0kHA4MKhZC8pj+XA0dITZjBX0LL0m4cM0
-         M2JoXBzkuyWvelPgKnhg5FP+T8j/wHB73SlMxi+7VQr+sB/aXfXzaG3pSBPJ7EmQzgM0
-         3gTxZ3wKjXsliUpntKwD1umrl7D48t1CezsyglAwu1240GYJizEE1zJ3HAMcl5GZZMEM
-         HS+w==
-X-Gm-Message-State: AOAM530seOKXyLIRklV5SmrgrZHtrhAppoSXxEgp5q1+E5/Ek/SVTBR2
-        dL1/aGflmJu990CXeTIKML4G6qKnW2kPkQ9kmTyNEw==
-X-Google-Smtp-Source: ABdhPJzo5jfo5EIyTNbDJSgwmDIgON2Qh/6AVrAP6YjCcBIc4AmF0ZPAPrBaCJHusO72lnkIuFbgN/2EcyzhZHf4g8k=
-X-Received: by 2002:ac8:47d3:: with SMTP id d19mr2039424qtr.72.1640272453114;
- Thu, 23 Dec 2021 07:14:13 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1640274208; x=1671810208;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=sQDSX24wJEDimyw1mkiYGrkhTO3eTMz3qcz+aDmYCPE=;
+  b=BpWkl8bEv3l0FpfU0ztjmlHWbmiHA+WR8CUSVqznzLZ9ysycsfQIV1yc
+   M0LIl2utEvxpVyIfSIoW97MiEmeYfNDehGakgA8NHvSkzkxwEn1ZCct1p
+   gWtqQyUCuv8su38UQCEHbmDD8hWEmab6uVqJqwrGnoAINZvZ63T0xFuod
+   Y=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 23 Dec 2021 07:43:28 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Dec 2021 07:43:27 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 23 Dec 2021 07:43:27 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 23 Dec 2021 07:43:23 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
+        <dianders@chromium.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH 0/3] Add lpass pin control support for audio on sc7280 based targets
+Date:   Thu, 23 Dec 2021 21:13:06 +0530
+Message-ID: <1640274189-14120-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <1640189262-9699-1-git-send-email-quic_c_pmaliset@quicinc.com>
-In-Reply-To: <1640189262-9699-1-git-send-email-quic_c_pmaliset@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 23 Dec 2021 18:14:02 +0300
-Message-ID: <CAA8EJpoq1xPj3nkZfjjviCQdLq-LcMVThTK6HzrW7AdmfebuhA@mail.gmail.com>
-Subject: Re: [PATCH v1] PCI: qcom: Add system PM support
-To:     Prasad Malisetty <quic_c_pmaliset@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 22 Dec 2021 at 19:08, Prasad Malisetty
-<quic_c_pmaliset@quicinc.com> wrote:
->
-> From: Prasad Malisetty <quic_pmaliset@quicinc.com>
->
-> Add suspend_noirq and resume_noirq callbacks to handle
-> System suspend and resume in dwc pcie controller driver.
->
-> When system suspends, send PME turnoff message to enter
-> link into L2 state. Along with powerdown the PHY, disable
-> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
-> supported and disable the pcie clocks, regulators.
+This patch set is to add lpass pin control support for Audio over I2S,
+wcd codec and digital mics.
 
-The GDSC stays on, if I'm not mistaken. Is this an expected behaviour
-for the suspend procedure?
+This patch set depends on:
+	-- https://patchwork.kernel.org/project/alsa-devel/patch/1638891339-21806-3-git-send-email-quic_srivasam@quicinc.com/
 
-Also as a side note, the qcom-pcie driver supports a variety of SoCs
-from different generations. Which platforms were really tested?
-Judging from your patch I suppose that you did not test this on any
-non-recent platform.
+Srinivasa Rao Mandadapu (3):
+  arm64: dts: qcom: sc7280: Add pinmux for I2S speaker and Headset
+  arm64: dts: qcom: sc7280: add lpass lpi pin controller node
+  arm64: dts: qcom: sc7280: Add wcd9380 pinmux
 
-> When system resumes, PCIe link will be re-established and
-> setup rc settings.
->
-> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 103 +++++++++++++++++++++++++++++++++
->  1 file changed, 103 insertions(+)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c19cd506..24dcf5a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -73,6 +73,8 @@
->
->  #define PCIE20_PARF_Q2A_FLUSH                  0x1AC
->
-> +#define PCIE20_PARF_PM_STTS                     0x24
-> +
->  #define PCIE20_MISC_CONTROL_1_REG              0x8BC
->  #define DBI_RO_WR_EN                           1
->
-> @@ -1616,6 +1618,107 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->         return ret;
->  }
->
-> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
-> +{
-> +       int ret = 0;
-> +       u32 val = 0, poll_val = 0;
-> +       uint64_t l23_rdy_poll_timeout = 100000;
-> +       struct dw_pcie *pci = pcie->pci;
-> +       struct device *dev = pci->dev;
-> +
-> +       val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +       val |= BIT(4);
-> +       writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +
-> +       ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
-> +                       (poll_val & BIT(5)), 10000, l23_rdy_poll_timeout);
-> +       if (!ret)
-> +               dev_dbg(dev, "PCIe: PM_Enter_L23 is received\n");
-> +       else
-> +               dev_err(dev, "PM_Enter_L23 is NOT received.PARF_PM_STTS 0x%x\n",
-> +                       readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
-> +
-> +       return ret;
-> +}
-> +
-> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
-> +{
-> +       struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +
-> +       /*Assert the reset of endpoint */
-> +       qcom_ep_reset_assert(pcie);
-> +
-> +       /* Put PHY into POWER DOWN state */
-> +       phy_power_off(pcie->phy);
-> +
-> +       writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> +
-> +       /* Disable pipe clock */
-> +       pcie->ops->post_deinit(pcie);
-> +
-> +       /* Change GCC_PCIE_1_PIPE_MUXR register to 0x2 for XO as parent */
-> +       if (pcie->pipe_clk_need_muxing)
-> +               clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
-> +
-> +       /* Disable PCIe clocks and regulators*/
-> +       pcie->ops->deinit(pcie);
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
-> +{
-> +       int ret = 0;
-> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +       struct dw_pcie *pci = pcie->pci;
-> +
-> +       if (!dw_pcie_link_up(pci)) {
-> +               dev_err(dev, "Power has been turned off already\n");
-> +               return ret;
-> +       }
-> +
-> +       /* Send PME turnoff msg */
-> +       ret = qcom_pcie_send_pme_turnoff_msg(pcie);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Power down the PHY, disable clock and regulators */
-> +       qcom_pcie_host_disable(pcie);
-> +
-> +       dev_info(dev, "PM: PCI is suspended\n");
-> +       return ret;
-> +}
-> +
-> +/* Resume the PCIe link */
-> +static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
-> +{
-> +       int ret = 0;
-> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +       struct dw_pcie *pci = pcie->pci;
-> +       struct pcie_port *pp = &pci->pp;
-> +
-> +       dev_info(dev, "PM: Resuming\n");
-> +
-> +       /* Initialize PCIe host */
-> +       ret = qcom_pcie_host_init(pp);
-> +       if (ret)
-> +               dev_err(dev, "cannot initialize host\n");
-> +
-> +       dw_pcie_iatu_detect(pci);
-> +       dw_pcie_setup_rc(pp);
-> +
-> +       /* Start the PCIe link */
-> +       qcom_pcie_start_link(pci);
-> +
-> +       ret = dw_pcie_wait_for_link(pci);
-> +       if (ret)
-> +               dev_err(dev, "Link never came up, Resume failed\n");
-> +
-> +       return ret;
-> +}
-> +
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +       SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
-> +};
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->         { .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->         { .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  38 ++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi     | 204 +++++++++++++++++++++++++++++++
+ 2 files changed, 242 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
