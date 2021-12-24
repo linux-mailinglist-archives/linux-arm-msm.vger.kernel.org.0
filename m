@@ -2,88 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35D0C47F005
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Dec 2021 17:13:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B24E47F00F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Dec 2021 17:17:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353170AbhLXQNp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Dec 2021 11:13:45 -0500
-Received: from relmlor2.renesas.com ([210.160.252.172]:61243 "EHLO
-        relmlie6.idc.renesas.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1353168AbhLXQNo (ORCPT
+        id S1353223AbhLXQRt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Dec 2021 11:17:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353244AbhLXQRr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Dec 2021 11:13:44 -0500
-X-IronPort-AV: E=Sophos;i="5.88,232,1635174000"; 
-   d="scan'208";a="105113748"
-Received: from unknown (HELO relmlir6.idc.renesas.com) ([10.200.68.152])
-  by relmlie6.idc.renesas.com with ESMTP; 25 Dec 2021 01:13:43 +0900
-Received: from localhost.localdomain (unknown [10.226.36.204])
-        by relmlir6.idc.renesas.com (Postfix) with ESMTP id 91FB64018934;
-        Sat, 25 Dec 2021 01:13:41 +0900 (JST)
-From:   Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-To:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Fri, 24 Dec 2021 11:17:47 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C83C06175C;
+        Fri, 24 Dec 2021 08:17:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C6ACDB82331;
+        Fri, 24 Dec 2021 16:17:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA71C36AE8;
+        Fri, 24 Dec 2021 16:17:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1640362664;
+        bh=IYe5mJ3hvrvjoRF3BknS8fKbhq3NF3XKuVnlR7l+1uw=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Jsb25bg4kpb1Llk8DRVYMlimGw5RRtIbvX/wb+bCE6Vy+4MAM9m2Abi1ZAwK9/Bz9
+         FKIHbNcAqzE3SHXEtw7zrwHjj1QbrE/yKt4Z40g+wEMWHGoTg9/3X5zd1m9CAcuuAi
+         Hloo8f1HrJzqJMi7Cf6fYj2JZpIrq2Tju/QS6rFSuHKAbM3A9I1PtamHZZLK1GnfC7
+         tAjmG3gQ2Ez+88KGoZu3FIpCVPvl9CbQ7qx3b9JjYi9ccHNi6puqFNMtHTGl0QMD2u
+         mf0xvnn9zol+tDFMplMBe1095vagfejbD3f3PmN2g+aks7x8+SynupYsI4JiEYg696
+         NgEdELiG+Qubw==
+From:   Mark Brown <broonie@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org
+Cc:     Pavel Dubrova <pashadubrova@gmail.com>,
+        linux-kernel@vger.kernel.org,
+        Martin Botka <martin.botka@somainline.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Prabhakar <prabhakar.csengg@gmail.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: [PATCH] slimbus: qcom-ngd-ctrl: Use platform_get_irq() to get the interrupt
-Date:   Fri, 24 Dec 2021 16:13:33 +0000
-Message-Id: <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211224161334.31123-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
-References: <20211224161334.31123-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20211224113450.107958-1-marijn.suijten@somainline.org>
+References: <20211224113450.107958-1-marijn.suijten@somainline.org>
+Subject: Re: [PATCH] regulator: qcom-labibb: OCP interrupts are not a failure while disabled
+Message-Id: <164036266175.3720266.13529108336109588098.b4-ty@kernel.org>
+Date:   Fri, 24 Dec 2021 16:17:41 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
-allocation of IRQ resources in DT core code, this causes an issue
-when using hierarchical interrupt domains using "interrupts" property
-in the node as this bypasses the hierarchical setup and messes up the
-irq chaining.
+On Fri, 24 Dec 2021 12:34:50 +0100, Marijn Suijten wrote:
+> Receiving the Over-Current Protection interrupt while the regulator is
+> disabled does not count as unhandled/failure (IRQ_NONE, or 0 as it were)
+> but a "fake event", usually due to inrush as the is regulator about to
+> be enabled.
+> 
+> 
 
-In preparation for removal of static setup of IRQ resource from DT core
-code use platform_get_irq().
+Applied to
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
----
-Hi,
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Dropping usage of platform_get_resource() was agreed based on
-the discussion [0].
+Thanks!
 
-[0] https://patchwork.kernel.org/project/linux-renesas-soc/
-patch/20211209001056.29774-1-prabhakar.mahadev-lad.rj@bp.renesas.com/
+[1/1] regulator: qcom-labibb: OCP interrupts are not a failure while disabled
+      commit: d27bb69dc83f00f86a830298c967052cded6e784
 
-Cheers,
-Prabhakar
----
- drivers/slimbus/qcom-ngd-ctrl.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 7040293c2ee8..0f29a08b4c09 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1526,13 +1526,11 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(ctrl->base))
- 		return PTR_ERR(ctrl->base);
- 
--	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
--	if (!res) {
--		dev_err(&pdev->dev, "no slimbus IRQ resource\n");
--		return -ENODEV;
--	}
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
-+		return ret;
- 
--	ret = devm_request_irq(dev, res->start, qcom_slim_ngd_interrupt,
-+	ret = devm_request_irq(dev, ret, qcom_slim_ngd_interrupt,
- 			       IRQF_TRIGGER_HIGH, "slim-ngd", ctrl);
- 	if (ret) {
- 		dev_err(&pdev->dev, "request IRQ failed\n");
--- 
-2.17.1
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
