@@ -2,128 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B909447F07F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Dec 2021 19:07:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44FFD47F083
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Dec 2021 19:10:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241828AbhLXSHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Dec 2021 13:07:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42468 "EHLO
+        id S1353406AbhLXSKi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Dec 2021 13:10:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239382AbhLXSHJ (ORCPT
+        with ESMTP id S1353403AbhLXSKi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Dec 2021 13:07:09 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2906CC061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Dec 2021 10:07:09 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id t19so14792895oij.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Dec 2021 10:07:09 -0800 (PST)
+        Fri, 24 Dec 2021 13:10:38 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D96C061759
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Dec 2021 10:10:37 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id w19-20020a056830061300b0058f1dd48932so11261654oti.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Dec 2021 10:10:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4WwkxD9pRsYNmxI5wJenMz61e+2fgc2AqpBuPszq2ec=;
-        b=RbXc0A07i189egi89NZXRTEqbxCb9KwdACbYmsqaXqiOGmfribp+2gFQgcsuJCGdBd
-         jawfI1a7zsBghKnXIlDW7YZvmodr3pPce2rdVwl5KID+z+nPRmX3U7UbIQje37R9olq+
-         fntQorCcgI8ik+8Y5dP5ZYA1jRKnK5+vS+bMtHT79uFh09hIck7bW0ZIARnzmNLIB5Kf
-         CeulPv8RenriKuwquuOYJ4OESwTeugUFdnu0Xx3afSs8nyaNj7bqY/Q7ak77+V4EZ5q7
-         XZKExRJv82hKWylcltqro9dO/ujOc6JinLOo/kOFuJAq6DMtCwh6DSMaWssM4hREhWbJ
-         Eb3g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fLFVp95LvwfjyR+KbQEFvb9sj3HyMK7EBdO7Z8mOWJ4=;
+        b=moFRveX0iHUjFFgrslSifCTpmVDUF7jars4wCTBHstuwpYkAr2DkS7C1UnNUb2z89V
+         Omd7PJg8D45AXjX7nfOFUAkoKBKrKbZfgb22EtEyRi4oN0KP3vwc27e78DXvIKBy+EqI
+         h3AVRZX/+HHL1H5nARZ037d4mDc7Dk9ZrBqIP95eAA5U4TeAy2HizIrNnEji3ozvQwLf
+         e36hUeQvS2rRwLqx/UF0OrgIj4hMpQXuJcMjjwTqfY6WCrprP1erJmzjCgvyUN47pIW/
+         MaQ+Dp7ElNJUAowXwDHTqEcnK7gRWzFAe5I3blrbNEuaJrX7+oeKZ8w/FiOQQGsi2JOR
+         70/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4WwkxD9pRsYNmxI5wJenMz61e+2fgc2AqpBuPszq2ec=;
-        b=vEyAfEQUxJ4Mdba1iGdzUGKM/Cfia584KP952v71BkVQST8J1C5VFSthmjBYdMzU4s
-         S2JGjde0ifdwkn6L4rYLWxv43j2Itic6qAXakZ+HgTrbcgS8O57I9BCr51BEByMAw4rZ
-         gj2Nk8weUBnyBO7Dyfkzu8nRSqVvVcbGQYQzatl+galqUYSmT9MMo5gcyjSifq/bQFLp
-         qfixmV4c6hkoC9J4O2b1ZPvnnuo3U/tW2eg9U5vGI98bxz1Goi7xSufa3NYri4V12GLB
-         XWPksVXZ1Bo2kZIKWnjH6cnKKSopIaLwk0NfB8x6De+TgeeO0oYnR73U+GvBECapmzYl
-         1aFQ==
-X-Gm-Message-State: AOAM532J45I1NR/Op2Lo1IxYofNBNcUBi+FcBLeeRHS6YK46SZYZ9Z7q
-        zlgHbt9Fbjd5HTnuaE8Yk61a3g==
-X-Google-Smtp-Source: ABdhPJzJoKsrdaRl4JDv5CJ93Xuh7aO3Rr8Y4L/8xojES8sfdfdDcC9F1afkDy+uY0g7UIxoouFa9Q==
-X-Received: by 2002:a05:6808:e87:: with SMTP id k7mr5929610oil.16.1640369228274;
-        Fri, 24 Dec 2021 10:07:08 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id bg38sm1801972oib.40.2021.12.24.10.07.07
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fLFVp95LvwfjyR+KbQEFvb9sj3HyMK7EBdO7Z8mOWJ4=;
+        b=PzgNAliCPoG3l27nDUkcIfwHSGkRD5r0nP5rH4NyXsgwqgbqm6nehEF9wBOagAzsTG
+         Or2kOhoPkDsULzY7mqaaHwsAojzfaTWEwv9HrJkHDFcxQi5VNwyhjjH3zCfMKZ9bi6ku
+         y9xrr7ixVv/HHELZkoSvpgO44bSFyNFutds2Uy3LepAC2GXda2vn+mHsXwkXhdUoZ3jx
+         Fi+pHs44/xz9j0/WpsOyo6fDZ8WZ4eQtA5N7c1UblZlqz5JsnRWDoqLRQmOoNK5hJ630
+         VKgeEnKtQQVoJRzL+SR1e6U9bu0iNkF5XCLtPoaJ9lZPIeKhMIx4HdzI31k1TXwO7Jdj
+         5JIg==
+X-Gm-Message-State: AOAM530rEuz/n546L5No/5madhQEQ/yyUH2KoGkIwg/6W4h1+JnGJX21
+        HmE8JSV8AHcgD12+idmtVeV12A==
+X-Google-Smtp-Source: ABdhPJwt8ZpC0gO3Hj/CsSjentOytlb/CCiNa8BQo4TVDmOwQ+Of3Ht85zvz/BJgtCE/KscYd3VVmw==
+X-Received: by 2002:a05:6830:314b:: with SMTP id c11mr5294889ots.178.1640369437101;
+        Fri, 24 Dec 2021 10:10:37 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id o19sm1785949oiw.22.2021.12.24.10.10.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Dec 2021 10:07:07 -0800 (PST)
-Date:   Fri, 24 Dec 2021 10:08:11 -0800
+        Fri, 24 Dec 2021 10:10:36 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Prabhakar <prabhakar.csengg@gmail.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH] slimbus: qcom-ngd-ctrl: Use platform_get_irq() to get
- the interrupt
-Message-ID: <YcYMi4QthNLF3j/f@ripper>
-References: <20211224161334.31123-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        johan.hedberg@gmail.com, marcel@holtmann.org
+Cc:     rjliao@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        abhishekpandit@chromium.org, saluvala@codeaurora.org,
+        linux-kernel@vger.kernel.org, hbandi@codeaurora.org,
+        linux-bluetooth@vger.kernel.org, mcchou@chromium.org,
+        hemantg@codeaurora.org, mka@chromium.org
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP boards
+Date:   Fri, 24 Dec 2021 12:10:31 -0600
+Message-Id: <164036941060.3935440.13095761506560620701.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
+References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 24 Dec 08:13 PST 2021, Lad Prabhakar wrote:
-
-> platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
-> allocation of IRQ resources in DT core code, this causes an issue
-> when using hierarchical interrupt domains using "interrupts" property
-> in the node as this bypasses the hierarchical setup and messes up the
-> irq chaining.
+On Wed, 15 Dec 2021 22:36:03 +0530, Balakrishna Godavarthi wrote:
+> Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
 > 
-> In preparation for removal of static setup of IRQ resource from DT core
-> code use platform_get_irq().
 > 
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Applied, thanks!
 
-Regards,
-Bjorn
+[1/1] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP boards
+      commit: 3a89ff3087c03c2295250c07234efa75873c7b51
 
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> ---
-> Hi,
-> 
-> Dropping usage of platform_get_resource() was agreed based on
-> the discussion [0].
-> 
-> [0] https://patchwork.kernel.org/project/linux-renesas-soc/
-> patch/20211209001056.29774-1-prabhakar.mahadev-lad.rj@bp.renesas.com/
-> 
-> Cheers,
-> Prabhakar
-> ---
->  drivers/slimbus/qcom-ngd-ctrl.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 7040293c2ee8..0f29a08b4c09 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -1526,13 +1526,11 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
->  	if (IS_ERR(ctrl->base))
->  		return PTR_ERR(ctrl->base);
->  
-> -	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
-> -	if (!res) {
-> -		dev_err(&pdev->dev, "no slimbus IRQ resource\n");
-> -		return -ENODEV;
-> -	}
-> +	ret = platform_get_irq(pdev, 0);
-> +	if (ret < 0)
-> +		return ret;
->  
-> -	ret = devm_request_irq(dev, res->start, qcom_slim_ngd_interrupt,
-> +	ret = devm_request_irq(dev, ret, qcom_slim_ngd_interrupt,
->  			       IRQF_TRIGGER_HIGH, "slim-ngd", ctrl);
->  	if (ret) {
->  		dev_err(&pdev->dev, "request IRQ failed\n");
-> -- 
-> 2.17.1
-> 
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
