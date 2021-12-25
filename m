@@ -2,101 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99C3B47F37C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 15:49:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EBEA47F393
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 15:58:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231987AbhLYOs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Dec 2021 09:48:58 -0500
-Received: from mail-qv1-f46.google.com ([209.85.219.46]:34744 "EHLO
-        mail-qv1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231958AbhLYOsw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Dec 2021 09:48:52 -0500
-Received: by mail-qv1-f46.google.com with SMTP id ke6so10029225qvb.1;
-        Sat, 25 Dec 2021 06:48:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=Qsnbtl5TIcmZmqxLDymCjbWs59/KyNv5D5IkyU1n0AU=;
-        b=vg5U+sz4rCD4/TlglSLBBXbZtUn37lQJ+R25HJwOlZq9JIJZ/7RAQgmfuSgX8/40ju
-         3d4SXLKUJsIhC/OCsyFJWiDQdQniItg9AbO9jpNzW6gayI+5qChsYYpCtmyZ8cDDxv09
-         aj3opHokBgM2w5xufqDBRurX1u+duKx66oaDrUy9OX1H+S5/bGmdokjSdcep4OutycOI
-         dWeRod/TYu1x3xMO+xK+C4LviqWxE9wZVAhUjqQCq/8HwGs5+IConnEqRqAsmDDCa1iq
-         Cy4bFP6hTevpxEfUOkaTOHOJzpMzrRz1ytNmkG81TBz+DtsDpHAdmjeTnTerURPH10VB
-         u1RQ==
-X-Gm-Message-State: AOAM5338AcwTePjFlZVUtKwvTb/I3DWxd8KGeQTIqSJhicQcew7U1gdz
-        OrXbwEhYIlMxlYhgI0Z8pg==
-X-Google-Smtp-Source: ABdhPJwJgoLi0RNO++5bjNzVyf1UGhEkAqQg5RIYL5IIYHFZV7ZTNMEU0IFW3Oh0cT2hJMlLWBJOYg==
-X-Received: by 2002:a05:6214:2aa1:: with SMTP id js1mr9229788qvb.27.1640443731505;
-        Sat, 25 Dec 2021 06:48:51 -0800 (PST)
-Received: from robh.at.kernel.org ([24.55.105.145])
-        by smtp.gmail.com with ESMTPSA id a38sm8788129qkp.80.2021.12.25.06.48.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Dec 2021 06:48:50 -0800 (PST)
-Received: (nullmailer pid 363341 invoked by uid 1000);
-        Sat, 25 Dec 2021 14:48:42 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        id S229953AbhLYO6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Dec 2021 09:58:06 -0500
+Received: from ixit.cz ([94.230.151.217]:55888 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229896AbhLYO6F (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 25 Dec 2021 09:58:05 -0500
+Received: from [192.168.1.138] (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id B4F292243C;
+        Sat, 25 Dec 2021 15:58:00 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1640444281; h=from:from:reply-to:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+         content-type:content-type; bh=/LnLMxqfZ7m239b7PJ+Ig6oQYO7elvpQqGQ3CYEemms=;
+        b=roVJfviBv3coP/BbjRNHUaOckQ7XDEQ1iZwLyLUi2Z9tV7Y83bPMYrzrY+tY93PfOkqIle
+        viKroG6j/lLLIKq7Q9hGDsjYoQaqeeW7H1VJg59wUO4g4z+gUBwCOH2+EjMhjSZ1dmy4ei
+        ltekRHlhWA4+NZm6KHMfR6scMaC2PHw=
+Date:   Sat, 25 Dec 2021 15:57:55 +0100
+From:   David Heidelberg <david@ixit.cz>
+Reply-To: 20200622075956.171058-5-bjorn.andersson@linaro.org
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm8250: Drop tcsr_mutex syscon
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~okias/devicetree@lists.sr.ht
-In-Reply-To: <20211224163344.54177-2-david@ixit.cz>
-References: <20211224163344.54177-1-david@ixit.cz> <20211224163344.54177-2-david@ixit.cz>
-Subject: Re: [PATCH 2/2] dt-bindings: spmi: convert QCOM PMIC SPMI bindings to yaml
-Date:   Sat, 25 Dec 2021 10:48:42 -0400
-Message-Id: <1640443722.898852.363340.nullmailer@robh.at.kernel.org>
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>
+Message-Id: <JWEO4R.7M77VCZXYS531@ixit.cz>
+X-Mailer: geary/40.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 24 Dec 2021 17:33:44 +0100, David Heidelberg wrote:
-> Convert Qualcomm PMIC SPMI binding to yaml format.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> 
-> ---
-> Patches for fixing dt-schema warnings for SDX55 and MSM8998 qcom,spmi
-> already sent to ML.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  65 ----------
->  .../bindings/spmi/qcom,spmi-pmic-arb.yaml     | 118 ++++++++++++++++++
->  2 files changed, 118 insertions(+), 65 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-> 
+Hello,
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+any particular reason, why you did applied this patch only to sm8250?
 
-yamllint warnings/errors:
+Is it safe to convert rest of tcsr-mutex nodes to new schema without 
+additional testing?
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.example.dts:20.14-38.11: Warning (unit_address_vs_reg): /example-0/spmi: node has a reg or ranges property, but no unit name
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.example.dt.yaml: spmi: $nodename:0: 'spmi' does not match '^spmi@.*'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.example.dt.yaml: spmi: Unevaluated properties are not allowed ('#address-cells', '#size-cells' were unexpected)
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+Thanks
+David
 
-doc reference errors (make refcheckdocs):
-Warning: Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt references a file that doesn't exist: Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt: Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-
-See https://patchwork.ozlabs.org/patch/1573075
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
 
