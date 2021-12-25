@@ -2,91 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0B0047F3D8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 17:37:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1CFC47F41E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 18:40:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232279AbhLYQhv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Dec 2021 11:37:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49604 "EHLO
+        id S232569AbhLYRkI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Dec 2021 12:40:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229987AbhLYQhu (ORCPT
+        with ESMTP id S230190AbhLYRkH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Dec 2021 11:37:50 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E1BC061401;
-        Sat, 25 Dec 2021 08:37:50 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id w16so44332815edc.11;
-        Sat, 25 Dec 2021 08:37:50 -0800 (PST)
+        Sat, 25 Dec 2021 12:40:07 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6A5C061757
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Dec 2021 09:40:07 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id r18-20020a4a7252000000b002c5f52d1834so3785142ooe.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Dec 2021 09:40:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tp14R7GSqiYR9/6km+gt56wkm7AN4wImp9Bt9uzwo8A=;
-        b=orr5VkWZ2RUz2gwv5ntyrfNI0H2QPgETyCgYMeL66rWrSs93CuRYKa39T3GzmGTAYm
-         Ex+Mq7yilvbI/tGjq+JmQG2LYqcKosCRTr3Fd4e+0Fk4FRVM/ACaLG/ktAL9hQmpcoOl
-         vYrG+CLyp1Vi6Nls4lm6wE1RdzhLel/9A72g9zdvfeo0dYeJhbLK7MCLRJ2rftALhfOT
-         h/KOJU1VbQcep/HAEoOG+ZchVUjPaoGhFi6JK0xuRqxed6yIhCDutv6PselSOCBpFDUp
-         UekBOsEe0PyUP3O66BI6JFHiF+UkHtz7ur9OawOXgKuNj7f3G4rrHH+DWTeJjLfas5bz
-         03TA==
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=WfzhWj1jtwCdxEak/D97aNhkHTpQCqGgLyMJk8IXEwI=;
+        b=eaAoE4ztF41KiZpnzSfaK9/FXh47Z15i/58PZS//afGbMpjYyS2woT9xWMHQvEJeZ4
+         bK8MppOg/i4qnbJie6j7sWtJ7DGauG30E0V7rDy8BmdJfBeXDMbumgI1fm5bCHxI5XYO
+         tfIwqEzLG9RVVBP1WWMq9TPuMm/Jt/K8xlFZWn+NsPSk1g/FSE1p1+6V1IqOEvPLuKOI
+         wA+qcKwIBZm3rCsf3L/ZPj7+DYd5gRbXWH5uWOaJxZjOipCEBBLqJZCfP7Q50xm9mBTN
+         2RAfJHyd4eH4p5j189+F/LnRv4qAFKuBdN/Wk9PN/nUF0W6qBU4wZW0u/m5Fy5qDyOX7
+         F5Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tp14R7GSqiYR9/6km+gt56wkm7AN4wImp9Bt9uzwo8A=;
-        b=fFTzaE+L5qeVlTD4pHV+2e/37Msr4vD1I5hDqdGvmRsQOYuqzP0Ldb/iOpDmYQZpOM
-         YmKIi2oL+DjXi79eT/68QkJh+Itbza5WfOMDKaLoXbJakxtXSzv+BSF3a4CN1R+cQyAh
-         E1T0TfgW0vom5yKM18U0As7Y9QiBayNtu9X3XJtDvcAELUce9Cbyviuxex4ZQff1P0PM
-         L8hPPDMSpZ5fsuq/wRQs/IbBDhWUrWBcZK+kjXlINKLmdLKkS19u90G6lqtQEWKvzdFV
-         zUCwp1NrklkWa28KLzph1LFYaumyegQoAUjSZRSRUu2zKY8N+dR+Mbyb9hMrf5kaeM59
-         5lJQ==
-X-Gm-Message-State: AOAM5339LzzwjtuFFnSy7f/JlpxQl4e9zIBR3aV6EBddZTinwr/duabr
-        G7anDTfIz4N62HkvjTkefbSXsJs3A8suGKWzbYx21C8lqLBsJw==
-X-Google-Smtp-Source: ABdhPJzLELowdgw2LAqP2+ZLzXCIwhbHFPm0W89lpc2u8NuEknXTdv50O0phcI6Q9cloPRJuZPYsHEgMlmbZwKiTbWo=
-X-Received: by 2002:a17:906:3ed0:: with SMTP id d16mr8369159ejj.636.1640450268909;
- Sat, 25 Dec 2021 08:37:48 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=WfzhWj1jtwCdxEak/D97aNhkHTpQCqGgLyMJk8IXEwI=;
+        b=MiaNIleDRnMMhd7vpbfGvH8M0c9a45Qwz8EZJHCMOYURV9//oD7lunWdwDo4TCtQz8
+         4nEYUwRYNsqxMqaQ7UZaTnOZgwe5wo4Sve2kTFsVvqgyrJ1oIEXXE4PKAOPTIHnfjvMK
+         sWfND6mVXj/0WHglnTkfGvn/x+/vR7YhOOzxemF5yLbl7BvsfOwJq88iX2/HRhnmLUn7
+         OdnThl63JnduLJjWN8NifKRt7Mv/PBIPTH/DCTlhuucswpCpvrsezmxaZr+5LgGB1bsr
+         s9rGMHYEIp55ckm4urNQwBe+h++4zc2/9FkkbXoCyKXzGx15mG8QlxFrvhbbWm0jJ2ex
+         EgYw==
+X-Gm-Message-State: AOAM531oiagaVsrh58F+NxkBRqWBPPn37WvzguehVnxKOnKsFoFz6nFk
+        UK6Rav6N3T5QGBR9k71jEUFBnQ==
+X-Google-Smtp-Source: ABdhPJwTd64h6NmnuJkKrnhyJ8AydZv/uOcsiocQB/wkmdKbXj9YXiW8i6BntXb/sn4Bbg1VBBPEpA==
+X-Received: by 2002:a4a:9612:: with SMTP id q18mr7025002ooi.36.1640454006594;
+        Sat, 25 Dec 2021 09:40:06 -0800 (PST)
+Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id v20sm2018193otj.27.2021.12.25.09.40.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Dec 2021 09:40:06 -0800 (PST)
+Message-ID: <85cc3f89-6e87-6fc7-311e-d410833d75da@kali.org>
+Date:   Sat, 25 Dec 2021 11:40:01 -0600
 MIME-Version: 1.0
-References: <20211117020346.4088302-1-swboyd@chromium.org> <20211203044718.b6nqn5rcbkrnpchp@vireshk-i7>
-In-Reply-To: <20211203044718.b6nqn5rcbkrnpchp@vireshk-i7>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Sat, 25 Dec 2021 18:37:12 +0200
-Message-ID: <CAHp75VdkxbJP7T-qaS=NKAUb7dXJdKeGRneQw+A1XN5AGtajeA@mail.gmail.com>
-Subject: Re: [PATCH] cpufreq: qcom-hw: Use optional irq API
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, Linux PM <linux-pm@vger.kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.1
+Subject: Re: [PATCH] slimbus: qcom-ngd-ctrl: Use platform_get_irq() to get the
+ interrupt
+Content-Language: en-US
+To:     Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Prabhakar <prabhakar.csengg@gmail.com>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+References: <20211224161334.31123-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Dec 6, 2021 at 5:26 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
+
+On 12/24/21 10:13 AM, Lad Prabhakar wrote:
+> platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
+> allocation of IRQ resources in DT core code, this causes an issue
+> when using hierarchical interrupt domains using "interrupts" property
+> in the node as this bypasses the hierarchical setup and messes up the
+> irq chaining.
 >
-> On 16-11-21, 18:03, Stephen Boyd wrote:
-> > Use platform_get_irq_optional() to avoid a noisy error message when the
-> > irq isn't specified. The irq is definitely optional given that we only
-> > care about errors that are -EPROBE_DEFER here.
+> In preparation for removal of static setup of IRQ resource from DT core
+> code use platform_get_irq().
+>
+> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> ---
+> Hi,
+>
+> Dropping usage of platform_get_resource() was agreed based on
+> the discussion [0].
+>
+> [0] https://patchwork.kernel.org/project/linux-renesas-soc/
+> patch/20211209001056.29774-1-prabhakar.mahadev-lad.rj@bp.renesas.com/
+>
+> Cheers,
+> Prabhakar
+> ---
+>   drivers/slimbus/qcom-ngd-ctrl.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+> index 7040293c2ee8..0f29a08b4c09 100644
+> --- a/drivers/slimbus/qcom-ngd-ctrl.c
+> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
+> @@ -1526,13 +1526,11 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+>   	if (IS_ERR(ctrl->base))
+>   		return PTR_ERR(ctrl->base);
+>   
+> -	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
+> -	if (!res) {
+> -		dev_err(&pdev->dev, "no slimbus IRQ resource\n");
+> -		return -ENODEV;
+> -	}
+> +	ret = platform_get_irq(pdev, 0);
+> +	if (ret < 0)
+> +		return ret;
+>   
+> -	ret = devm_request_irq(dev, res->start, qcom_slim_ngd_interrupt,
+> +	ret = devm_request_irq(dev, ret, qcom_slim_ngd_interrupt,
+>   			       IRQF_TRIGGER_HIGH, "slim-ngd", ctrl);
+>   	if (ret) {
+>   		dev_err(&pdev->dev, "request IRQ failed\n");
 
-> > +     data->throttle_irq = platform_get_irq_optional(pdev, index);
-> > +     if (data->throttle_irq == -ENXIO)
-> > +             return 0;
-> > +     if (data->throttle_irq < 0)
-> > +             return data->throttle_irq;
+Tested on Lenovo Yoga C630
 
-This adds more work for the future.
-The best approach is
+Tested-By: Steev Klimaszewski <steev@kali.org>
 
-ret = platform_get_irq_optional(...);
-if (ret < 0 && ret != -ENXIO)
-  return ret;
-if (ret > 0)
-  ...we got it...
-
-It will allow the future API fix of platform_get_irq_optional() to be
-really optional.
-
--- 
-With Best Regards,
-Andy Shevchenko
