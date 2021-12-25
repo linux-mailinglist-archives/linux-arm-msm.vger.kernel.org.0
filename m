@@ -2,60 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA8CD47F331
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 13:03:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 412D947F334
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Dec 2021 13:10:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbhLYMDL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Dec 2021 07:03:11 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.18.13]:40493 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229828AbhLYMDL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Dec 2021 07:03:11 -0500
-X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Dec 2021 07:03:10 EST
-Received: from [92.204.33.48] (helo=www.haertsfelder-imkerschule.com)
-        by smtprelay01.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <info@haertsfelder-imkerschule.com>)
-        id 1n15g1-0007Hk-45
-        for linux-arm-msm@vger.kernel.org; Sat, 25 Dec 2021 12:57:29 +0100
-Date:   Sat, 25 Dec 2021 11:57:11 +0000
-To:     linux-arm-msm@vger.kernel.org
-From:   =?UTF-8?Q?H=C3=A4rtsfelder_IMKERschule?= 
-        <info@haertsfelder-imkerschule.com>
-Reply-To: jakober@bairle.de
-Subject: =?UTF-8?Q?H=C3=A4rtsfelder_IMKERschule_=E2=80=9E=E2=9D=A4=EF=B8=8F_Jade_want_to_meet_you!_Click_Here:_https://bit.ly/32sW8BP=3F7ueb_=E2=9D=A4=EF=B8=8F=E2=80=9C?=
-Message-ID: <YiaQORTBJWoxmzsHu7gCCUjqdaHqne4TBSFSJJRJPE@www.haertsfelder-imkerschule.com>
-X-Mailer: WPMailSMTP/Mailer/smtp 3.1.0
+        id S231593AbhLYMKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Dec 2021 07:10:23 -0500
+Received: from ixit.cz ([94.230.151.217]:55704 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229828AbhLYMKX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 25 Dec 2021 07:10:23 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id AB0EB2243C;
+        Sat, 25 Dec 2021 13:10:20 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1640434220;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=gb1Cw8Ow3mPZGftKt6JWGoHjiKpCALnGpFaSaVSeix0=;
+        b=VfWDSEQpPI+jPCbQ9Xu6cAjBcq/fpv7HnjyMtCdUhQBhYKkh2tf4mosnsylryDeOsxiizq
+        afh9MK9k2VSFee+aGaIUzTNvWJgvK0FOZO4skQ8qY9G6EmfkxFx6ulIvOTeFxJlZtw+SG4
+        M/nrNuLUAzL7c7jrZO1PtndUFliHXIM=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: apq8064: fill missing power-domain-cells for clock controllers
+Date:   Sat, 25 Dec 2021 13:10:18 +0100
+Message-Id: <20211225121018.5569-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Df-Sender: bWFpbHNlcnZlckBoYWVydHNmZWxkZXItaW1rZXJzY2h1bGUuY29t
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vielen Dank
-Wir haben Ihren Aufnahmeantrag erhalten.
-Die Bearbeitung erfolgt in den nächsten Tagen.
+Add missing #power-domain-cells to the clock controllers.
 
-Mitgliedsanrtrag ❤️ Jade want to meet you! Click Here: https://bit.ly/32sW8BP?7ueb ❤️
-Vorname d7zb5e
-Nachnahme eoe35b
-Geburtsname jbmxo6
-Straße ag2otj4c
-Ort n37gap
-Telefon 389118447355
-Mobil 7b7o7b
-Email linux-arm-msm@vger.kernel.org
-Fax a6m3flk0
-Beruf g8uqe0
-Antrag nein
-Beitrittsdaum 2021-12-25
-Zustimmungen Ich habe die Datenschutzerklärung (unter Anmeldungen/Formulare) gelesen und stimme der Speicherung der Daten zu.
-IBAN d2zp2bjy
-BICjyqwzgg
-Bank 0qehlbd 
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Diese E-Mail wurde von einem Kontaktformular von Härtsfelder IMKERschule (https://www.haertsfelder-imkerschule.com) gesendet
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 562a292e75a3..5ae14c564c30 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -814,6 +814,7 @@ gcc: clock-controller@900000 {
+ 			nvmem-cells = <&tsens_calib>, <&tsens_backup>;
+ 			nvmem-cell-names = "calib", "calib_backup";
+ 			#clock-cells = <1>;
++			#power-domain-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#thermal-sensor-cells = <1>;
+ 		};
+@@ -829,6 +830,7 @@ mmcc: clock-controller@4000000 {
+ 			compatible = "qcom,mmcc-apq8064";
+ 			reg = <0x4000000 0x1000>;
+ 			#clock-cells = <1>;
++			#power-domain-cells = <1>;
+ 			#reset-cells = <1>;
+ 		};
+ 
+-- 
+2.34.1
 
