@@ -2,51 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A91147F61D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Dec 2021 10:41:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7526B47F760
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Dec 2021 16:14:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233146AbhLZJlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Dec 2021 04:41:39 -0500
-Received: from slot0.jllresort.com ([62.197.136.5]:53720 "EHLO
-        slot0.jllresort.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233143AbhLZJlj (ORCPT
+        id S232227AbhLZPON (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Dec 2021 10:14:13 -0500
+Received: from smtp01.smtpout.orange.fr ([80.12.242.123]:59710 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232046AbhLZPOM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Dec 2021 04:41:39 -0500
-X-Greylist: delayed 710 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Dec 2021 04:41:38 EST
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=jllresort.com;
- h=Reply-To:From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding; i=ele.mon@jllresort.com;
- bh=K36C4GyIGle+WajqMUnTtveZ5Cw=;
- b=GQ2aDfA/+euk5thtRkdCrV1fNMiCNkACAGx0rdl8hGKgAPVeRypEqTX5q1t+jp8I83sh+ASV7Aou
-   72XqpzHxi7FAZG3dj/EEbzT2Jh6/ho5ur2D6gEtFmM738ET1R3N1S8yBIDWkxbd/vCDv4fHTwtKi
-   zWrl8+PdIveSj8zLZrreJbeT3eajtgYlnFR3kOxBHvfo9ZQN5nDBjcKQUo7ZAN/es7DvJFIqP1pJ
-   zj8gnT9b7+HwDEckV+pdWbNiyQr5ApVboc26DqhpJkqNyzE4PCQwQRugecluvX5jCxt8Q84V/dda
-   hXLbcJf46zTOpsEYxNBu0fRP/6z6Fe1SSyxwbg==
-DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=jllresort.com;
- b=nLqd8Am+j8xStPKCfRXUh/UJVB3OIEdtJd6UHWn7xUFZyWIlAj7ytK3MdGJm55Wl8S0SmlCxPQcf
-   FET4GeLsttt/PxEWApCzGxPWjE4OM4ojetHgd+mHjmPUpWj9uBIR+yk9pFO5vVSwYkcZwVNUP7X7
-   zI1Gc/fhYpqKXv4QYUwZrKVJnKUBYcxtH1MB++22BEOO+27HOcWfkGHYjH7ZfhIrF04YgKflV2s/
-   tEiUxdrM8iyl/PAG8HtLKj71K3qWqvM8Arp3xsEWhY23oTPDVjqLmqgmEpil2Jev9uSGC1l1c2EQ
-   qTa92NMSJUUddWgceSCom+vSrROzAoeJvB0J/A==;
-Reply-To: mustafa.ayvaz@ayvazburosu.com
-From:   ele.mon@jllresort.com
-To:     linux-arm-msm@vger.kernel.org
-Subject: Happy Weekend:
-Date:   26 Dec 2021 10:29:26 +0100
-Message-ID: <20211226102855.8F84EB8C025D98C3@jllresort.com>
+        Sun, 26 Dec 2021 10:14:12 -0500
+Received: from pop-os.home ([86.243.171.122])
+        by smtp.orange.fr with ESMTPA
+        id 1VDpnig8t1UGB1VDqnOSgw; Sun, 26 Dec 2021 16:14:11 +0100
+X-ME-Helo: pop-os.home
+X-ME-Auth: YWZlNiIxYWMyZDliZWIzOTcwYTEyYzlhMmU3ZiQ1M2U2MzfzZDfyZTMxZTBkMTYyNDBjNDJlZmQ3ZQ==
+X-ME-Date: Sun, 26 Dec 2021 16:14:11 +0100
+X-ME-IP: 86.243.171.122
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com,
+        airlied@linux.ie, daniel@ffwll.ch, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, quic_khsieh@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] drm/msm/dp: Fix a potential double free in an error handling path
+Date:   Sun, 26 Dec 2021 16:14:05 +0100
+Message-Id: <6fd20c8779d6b03a5b54509af25b478049482087.1640531508.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Greetings to you linux-arm-msm,
+'dp_bridge' is devm_alloc'ed, so there is no need to free it explicitly or
+there will be a double free().
 
-I was wondering if you got my previous email? I have been trying=20
-to reach you by email linux-arm-msm@vger.kernel.org, kindly get=20
-back to me swiftly, it is very important and urgent.
+Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+ drivers/gpu/drm/msm/dp/dp_drm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks
-Mustafa Ayvaz
-Email: mustafa.ayvaz@ayvazburosu.com
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index 188e77c59885..d4d360d19eba 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -243,7 +243,6 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
+ 	rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+ 	if (rc) {
+ 		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
+-		kfree(dp_bridge);
+ 		return ERR_PTR(rc);
+ 	}
+ 
+-- 
+2.32.0
+
