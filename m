@@ -2,280 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7618480289
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Dec 2021 18:01:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1828E4804AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Dec 2021 21:53:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbhL0RBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Dec 2021 12:01:55 -0500
-Received: from ixit.cz ([94.230.151.217]:45110 "EHLO ixit.cz"
+        id S233108AbhL0Uxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Dec 2021 15:53:41 -0500
+Received: from mga02.intel.com ([134.134.136.20]:51654 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229563AbhL0RBz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Dec 2021 12:01:55 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 9DC9F2243C;
-        Mon, 27 Dec 2021 18:01:52 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1640624512;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=6r7SVTLbCnJKSsgZNC9WpCtKg1jN6VAd9dPfLCkLHbE=;
-        b=eEH2te2XJ1W9fdWxjvvrFRLp6JgH2GqYty7U+BU+V41tsFKGE5WjGWvIeacsJpfo/f18il
-        zLkNodNqHQ83g1E5120/E43ShZxk08Nl2a9l61ey3Vn7zYMCizThva4M2PqCNd5sBxLqXW
-        2vqCzmGuDL6/FhhVI7Z1TLZG3+Mk+DY=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        id S229579AbhL0Uxl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Dec 2021 15:53:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1640638421; x=1672174421;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=uMjxg5roKHjPfWYUpElwi13J+sMC3KKOIcQdkIvCfiU=;
+  b=RLYoS2xbqDZO2Fstwykv/h/nsBd9oriY7Zznz2c+p9yfNbLGHf4cZFyx
+   v4Nv141dBHV7Tfd4esigfKFymMkMbG8gdwY+R/A2lYOQ7vL8PMyYuEWX6
+   KsWUnjtOq1gjT5XL/KZrruHeH5nYzOQzxRRkLXo5XuKMsX3Q/YIVVPbYS
+   CLy9x8Mc0YHUW/vPglg6N6Ivili1k7x5qHRty3vjXSA+odnPSmtHau3qu
+   gf86WRvrybyxRvC7/xSLSwKvzp+IMH2PVn1/xiqVjpHS2CSGFAySe0/BS
+   fahMV2FCyJujm0b9yZ4GBqG0XDOR9603SEpDIQQKyPv/PGQ4UbQ96DRXQ
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10210"; a="228572565"
+X-IronPort-AV: E=Sophos;i="5.88,240,1635231600"; 
+   d="scan'208";a="228572565"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Dec 2021 12:53:40 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,240,1635231600"; 
+   d="scan'208";a="618556922"
+Received: from lkp-server01.sh.intel.com (HELO e357b3ef1427) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 27 Dec 2021 12:53:37 -0800
+Received: from kbuild by e357b3ef1427 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1n1wzw-0006qR-FJ; Mon, 27 Dec 2021 20:53:36 +0000
+Date:   Tue, 28 Dec 2021 04:52:40 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Prasad Malisetty <quic_c_pmaliset@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, lorenzo.pieralisi@arm.com,
+        robh@kernel.org, kw@linux.com, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3] dt-bindings: spmi: convert QCOM PMIC SPMI bindings to yaml
-Date:   Mon, 27 Dec 2021 18:01:50 +0100
-Message-Id: <20211227170151.73116-1-david@ixit.cz>
-X-Mailer: git-send-email 2.34.1
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v1] PCI: qcom: Add system PM support
+Message-ID: <202112280442.89f08VJU-lkp@intel.com>
+References: <1640189262-9699-1-git-send-email-quic_c_pmaliset@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1640189262-9699-1-git-send-email-quic_c_pmaliset@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert Qualcomm PMIC SPMI binding to yaml format.
+Hi Prasad,
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Thank you for the patch! Perhaps something to improve:
+
+[auto build test WARNING on helgaas-pci/next]
+[also build test WARNING on v5.16-rc7 next-20211224]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Prasad-Malisetty/PCI-qcom-Add-system-PM-support/20211223-001052
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/helgaas/pci.git next
+config: s390-randconfig-c005-20211227 (https://download.01.org/0day-ci/archive/20211228/202112280442.89f08VJU-lkp@intel.com/config)
+compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 511726c64d3b6cca66f7c54d457d586aa3129f67)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install s390 cross compiling tool for clang build
+        # apt-get install binutils-s390x-linux-gnu
+        # https://github.com/0day-ci/linux/commit/880ea4b05c26f859dd3f59f330d9aa08b7fc1d9f
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Prasad-Malisetty/PCI-qcom-Add-system-PM-support/20211223-001052
+        git checkout 880ea4b05c26f859dd3f59f330d9aa08b7fc1d9f
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=s390 SHELL=/bin/bash drivers/pci/controller/dwc/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/pci/controller/dwc/pcie-qcom.c:16:
+   In file included from include/linux/io.h:13:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:464:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:477:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:36:59: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) __swab16((__force __u16)(__le16)(x))
+                                                             ^
+   include/uapi/linux/swab.h:102:54: note: expanded from macro '__swab16'
+   #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
+                                                        ^
+   In file included from drivers/pci/controller/dwc/pcie-qcom.c:16:
+   In file included from include/linux/io.h:13:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:490:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:34:59: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
+                                                             ^
+   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
+   #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
+                                                        ^
+   In file included from drivers/pci/controller/dwc/pcie-qcom.c:16:
+   In file included from include/linux/io.h:13:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:501:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:511:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:521:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:609:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsb(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:617:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsw(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:625:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsl(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:634:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesb(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:643:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesw(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:652:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesl(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+>> drivers/pci/controller/dwc/pcie-qcom.c:1718:32: warning: unused variable 'qcom_pcie_pm_ops' [-Wunused-const-variable]
+   static const struct dev_pm_ops qcom_pcie_pm_ops = {
+                                  ^
+   13 warnings generated.
+
+
+vim +/qcom_pcie_pm_ops +1718 drivers/pci/controller/dwc/pcie-qcom.c
+
+  1717	
+> 1718	static const struct dev_pm_ops qcom_pcie_pm_ops = {
+  1719		SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
+  1720	};
+  1721	
 
 ---
-v2:
- - add #address and #size-cells
- - add reg and remove spmi include from example
-v3:
- - fix doc reference error (make refcheckdocs)
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../bindings/mfd/qcom,spmi-pmic.txt           |   2 +-
- .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  65 ----------
- .../bindings/spmi/qcom,spmi-pmic-arb.yaml     | 120 ++++++++++++++++++
- 3 files changed, 121 insertions(+), 66 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
- create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-index 7a27c500ff63..3810a80536f7 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-@@ -58,7 +58,7 @@ Required properties for peripheral child nodes:
- Optional properties for peripheral child nodes:
- - interrupts:      Interrupts are specified as a 4-tuple. For more information
-                    see:
--                   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+                   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
- - interrupt-names: Corresponding interrupt name to the interrupts property
- 
- Each child node of SPMI slave id represents a function of the PMIC. In the
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-deleted file mode 100644
-index ca645e21fe47..000000000000
---- a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
-+++ /dev/null
-@@ -1,65 +0,0 @@
--Qualcomm SPMI Controller (PMIC Arbiter)
--
--The SPMI PMIC Arbiter is found on Snapdragon chipsets.  It is an SPMI
--controller with wrapping arbitration logic to allow for multiple on-chip
--devices to control a single SPMI master.
--
--The PMIC Arbiter can also act as an interrupt controller, providing interrupts
--to slave devices.
--
--See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic SPMI
--controller binding requirements for child nodes.
--
--See Documentation/devicetree/bindings/interrupt-controller/interrupts.txt for
--generic interrupt controller binding documentation.
--
--Required properties:
--- compatible : should be "qcom,spmi-pmic-arb".
--- reg-names  : must contain:
--     "core" - core registers
--     "intr" - interrupt controller registers
--     "cnfg" - configuration registers
--   Registers used only for V2 PMIC Arbiter:
--     "chnls"  - tx-channel per virtual slave registers.
--     "obsrvr" - rx-channel (called observer) per virtual slave registers.
--
--- reg : address + size pairs describing the PMIC arb register sets; order must
--        correspond with the order of entries in reg-names
--- #address-cells : must be set to 2
--- #size-cells : must be set to 0
--- qcom,ee : indicates the active Execution Environment identifier (0-5)
--- qcom,channel : which of the PMIC Arb provided channels to use for accesses (0-5)
--- interrupts : interrupt list for the PMIC Arb controller, must contain a
--               single interrupt entry for the peripheral interrupt
--- interrupt-names : corresponding interrupt names for the interrupts
--                    listed in the 'interrupts' property, must contain:
--     "periph_irq" - summary interrupt for PMIC peripherals
--- interrupt-controller : boolean indicator that the PMIC arbiter is an interrupt controller
--- #interrupt-cells :  must be set to 4. Interrupts are specified as a 4-tuple:
--    cell 1: slave ID for the requested interrupt (0-15)
--    cell 2: peripheral ID for requested interrupt (0-255)
--    cell 3: the requested peripheral interrupt (0-7)
--    cell 4: interrupt flags indicating level-sense information, as defined in
--            dt-bindings/interrupt-controller/irq.h
--
--Example:
--
--	spmi {
--		compatible = "qcom,spmi-pmic-arb";
--		reg-names = "core", "intr", "cnfg";
--		reg = <0xfc4cf000 0x1000>,
--		      <0xfc4cb000 0x1000>,
--		      <0xfc4ca000 0x1000>;
--
--		interrupt-names = "periph_irq";
--		interrupts = <0 190 0>;
--
--		qcom,ee = <0>;
--		qcom,channel = <0>;
--
--		#address-cells = <2>;
--		#size-cells = <0>;
--
--		interrupt-controller;
--		#interrupt-cells = <4>;
--	};
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-new file mode 100644
-index 000000000000..55d379c85fd9
---- /dev/null
-+++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-@@ -0,0 +1,120 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SPMI Controller (PMIC Arbiter)
-+
-+maintainers:
-+  - Stephen Boyd <sboyd@kernel.org>
-+
-+description: |
-+  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
-+  controller with wrapping arbitration logic to allow for multiple on-chip
-+  devices to control a single SPMI master.
-+
-+  The PMIC Arbiter can also act as an interrupt controller, providing interrupts
-+  to slave devices.
-+
-+allOf:
-+  - $ref: spmi.yaml
-+
-+properties:
-+  compatible:
-+    const: qcom,spmi-pmic-arb
-+
-+  reg:
-+    oneOf:
-+      - items: # V1
-+          - description: core registers
-+          - description: interrupt controller registers
-+          - description: configuration registers
-+      - items: # V2
-+          - description: core registers
-+          - description: tx-channel per virtual slave regosters
-+          - description: rx-channel (called observer) per virtual slave registers
-+          - description: interrupt controller registers
-+          - description: configuration registers
-+
-+  reg-names:
-+    oneOf:
-+      - items:
-+          - const: core
-+          - const: intr
-+          - const: cnfg
-+      - items:
-+          - const: core
-+          - const: chnls
-+          - const: obsrvr
-+          - const: intr
-+          - const: cnfg
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: periph_irq
-+
-+  interrupt-controller: true
-+
-+  '#address-cells': true
-+
-+  '#interrupt-cells':
-+    const: 4
-+    description: |
-+      cell 1: slave ID for the requested interrupt (0-15)
-+      cell 2: peripheral ID for requested interrupt (0-255)
-+      cell 3: the requested peripheral interrupt (0-7)
-+      cell 4: interrupt flags indicating level-sense information,
-+              as defined in dt-bindings/interrupt-controller/irq.h
-+
-+  '#size-cells': true
-+
-+  qcom,ee:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 0
-+    maximum: 5
-+    description: >
-+      indicates the active Execution Environment identifier
-+
-+  qcom,channel:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    minimum: 0
-+    maximum: 5
-+    description: >
-+      which of the PMIC Arb provided channels to use for accesses
-+
-+required:
-+  - compatible
-+  - reg-names
-+  - interrupts
-+  - interrupt-names
-+  - '#interrupt-cells'
-+  - qcom,ee
-+  - qcom,channel
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    spmi@fc4cf000 {
-+        compatible = "qcom,spmi-pmic-arb";
-+        reg-names = "core", "intr", "cnfg";
-+        reg = <0xfc4cf000 0x1000>,
-+              <0xfc4cb000 0x1000>,
-+              <0xfc4ca000 0x1000>;
-+
-+        interrupt-names = "periph_irq";
-+        interrupts = <0 190 0>;
-+
-+        qcom,ee = <0>;
-+        qcom,channel = <0>;
-+
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+
-+        interrupt-controller;
-+        #interrupt-cells = <4>;
-+    };
-+
--- 
-2.34.1
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
