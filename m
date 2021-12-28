@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8567348063D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Dec 2021 06:20:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D12448063F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Dec 2021 06:20:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbhL1FUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Dec 2021 00:20:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
+        id S233015AbhL1FUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Dec 2021 00:20:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231245AbhL1FUR (ORCPT
+        with ESMTP id S231180AbhL1FUS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Dec 2021 00:20:17 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55E98C061757
+        Tue, 28 Dec 2021 00:20:18 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC344C06173E
         for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 21:20:17 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id x10so23498757oix.6
+Received: by mail-oi1-x22b.google.com with SMTP id s73so28406289oie.5
         for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 21:20:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t9/Q42cL9IQzn8S0oUqtJHRIk8EihJrAdm7N2Ps38H4=;
-        b=AgLNEqgK+8hwY6zV5kthAixDaxQj4eYqUwQrrSkVuXw8TExhoEo6j2FBT9fGKz4kf/
-         YcZVzElmrof21IeGPBnzlEb6Ju9RYaIDgVJMhmQCNRtz+pFWvniBQ3vlWc6M+gH4xCcf
-         tMuB2vKYz00kxgeN59yM5PK5XNKHi1+81VHVpLF1++FCO+X1cARMY/OxiAPYv3VMnMuc
-         6ghjoDOFLyyiMhlxMvZ0xhErBpes+FZsEsVx4w1l3q97Po1wpHxffS+g9JmAWOVdXr5j
-         2dSTFpurh/VPmvZlRDLAVR24CQIR2+Tch4UpZ4OrBYNeuCoHULZeISiytecCQcwm5MpX
-         lJcg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ByvL2Uf/cXpEPeJ2AJET+qvtgysLCEvhZPeq63DSw38=;
+        b=B4zhlUAr32kY5oZ8N53jC4N8hPIY76Y5v1jPJEOJ/8WQ/GGjZEEkjMyc62nzUR9fA+
+         iwn7SXOmsb3AMDCG7G2wARbdPuxKskTye7cWKkq7ezq1aFwZdRFDIvbp4aaDMdgev2mh
+         n7F1qLKmmQwyw5aKDR116G9iStrWa+eiY2wPMCHmXks6ElcXzV7rettiqdDEZ6+MqD6w
+         KQ75+fbrRwUTxPrV4tFrmnTSLRGx9+/YVu2ldIlYlJP93Pwva0AUASZGtPKEAvjFEI7U
+         0ljq2DhdsSpe3aUhVeYZoitZRvGXgDpIhWniyagk5LDACXH8GsQwmtBukZ0YqCumW61E
+         qzOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=t9/Q42cL9IQzn8S0oUqtJHRIk8EihJrAdm7N2Ps38H4=;
-        b=Q9QH2lt40hc5MKmdSIQ5z5PX9DbkycUPXdjMJEpO0G72y2CclDPwxgjNN3wGUPNieg
-         vgpq4xWAa8wpnXcmaAvju1q7Kncefy/9sCYCKFoKXdVqd4dXKqdr9GYRAHNVCxEYGdTl
-         YQlJgbSCzVGS65JOIiCiHSP4mq2ZFSkLt/nVinzWmLA/EsyZSZMVGdNEmMRecwVtmdBP
-         ZHsu+JWOshQd+ZwUuJKbD10ITcDOIKdk30SEtRXLZRsUi1iZsmyg4Ok4ItHNEv8cT57y
-         3AAN6qu0oCsuhtTFNbY2VHnDJfN5WNo2fAcZR5oWkRf+VFcNRnSoh/xthw6V4/VbBPXc
-         x4xQ==
-X-Gm-Message-State: AOAM531TxifH0NeijyJ2lotvmqvg3OKSKXnO8gWiTfzXU78QQFaSU3tm
-        F6ntUKyq0OA2gj3y9RNxHj6HpQ==
-X-Google-Smtp-Source: ABdhPJxc8vtB2u0AWKk85NxyiwmI3df7PshPc3CtR9aiP0B23rnjw6FNzRCYvNh1ARtl9vQea5v2ng==
-X-Received: by 2002:aca:907:: with SMTP id 7mr15253139oij.128.1640668816508;
-        Mon, 27 Dec 2021 21:20:16 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ByvL2Uf/cXpEPeJ2AJET+qvtgysLCEvhZPeq63DSw38=;
+        b=b0Ro7nhwHPcr92tU4FAGEVr0nh8EUSwOPWHqhWsgo2HNA0o4h4ou6Ob7vHrJi/Z5kJ
+         onJ0bv8h7zZVjiiBqjlBiLNSC049cCla8VmpfpEmt03Tmzlc9wE8QHb506HIMxEXC0xJ
+         NBIenRvfTlLmito5CRZmYh2OJIMcCSsrWU0pnbvsui42IrhUr68i50df1QZ8E9ProaVa
+         CVDzg0sVIjs62E1jkJ+AECrA3HkG2qWXd1rNjjV+/xS9hC3e8dBj9wartRMM3OdMJus9
+         huY4aRpQHg41598n8LvdlE0dQlkh0qL+DS+gGAnm81DDKKHq/VAcTxv9EsntfGyguOzo
+         DS/g==
+X-Gm-Message-State: AOAM5328ddF8e+yTFBolpAIkevaU6FBsMyg/sptuY9HNTQgPq82BoYjt
+        wGVDBiOlRRw7ExfCZYm4Bnqs9A==
+X-Google-Smtp-Source: ABdhPJxct+CkbSvI41JFvkdLrfCsI0wdjHkYbiI93M8uVvOhwpL8J0QsaQ7QXmKuxWERI3iK92ZM+w==
+X-Received: by 2002:a05:6808:1408:: with SMTP id w8mr15463765oiv.54.1640668817343;
+        Mon, 27 Dec 2021 21:20:17 -0800 (PST)
 Received: from ripper.. (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j5sm3002277oou.23.2021.12.27.21.20.15
+        by smtp.gmail.com with ESMTPSA id j5sm3002277oou.23.2021.12.27.21.20.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Dec 2021 21:20:16 -0800 (PST)
+        Mon, 27 Dec 2021 21:20:17 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>,
@@ -59,56 +59,53 @@ Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-usb@vger.kernel.org
-Subject: [PATCH 0/8] typec: mux: Introduce support for multiple TypeC muxes
-Date:   Mon, 27 Dec 2021 21:21:08 -0800
-Message-Id: <20211228052116.1748443-1-bjorn.andersson@linaro.org>
+Subject: [PATCH 1/8] dt-bindings: phy: qcom,qmp-usb3-dp: Add altmode/switch properties
+Date:   Mon, 27 Dec 2021 21:21:09 -0800
+Message-Id: <20211228052116.1748443-2-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211228052116.1748443-1-bjorn.andersson@linaro.org>
+References: <20211228052116.1748443-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series introduces a level of indirection between the controller's view of
-a typec_mux/switch and the implementation and then expands that to support
-multiple drivers.
+The QMP block deals with orientation switching and altmode switching
+between USB and DisplayPort. Add the necessary properties to the binding
+to allow it to be connected to a TypeC controller and trigger these
+operations.
 
-This is needed in order to support devices such as the Qualcomm Snapdragon 888
-HDK, which does muxing and orientation handling in the QMP (USB+DP) PHY and SBU
-muxing in the external FSA4480 chip.
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml         | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Additionally integration of typec mux and switch in the QMP PHY is included in
-the series, as is the new FSA4480 driver. This is done to deal with the
-renaming of the driver-side typec_mux -> typec_mux_dev.
-
-Bjorn Andersson (8):
-  dt-bindings: phy: qcom,qmp-usb3-dp: Add altmode/switch properties
-  phy: qcom-qmp: Register typec mux and orientation switch
-  device property: Helper to match multiple connections
-  device property: Use multi-connection matchers for single case
-  typec: mux: Introduce indirection
-  typec: mux: Allow multiple mux_devs per mux
-  dt-bindings: usb: Add binding for fcs,fsa4480
-  usb: typec: mux: Add On Semi fsa4480 driver
-
- .../bindings/phy/qcom,qmp-usb3-dp-phy.yaml    |  14 +
- .../devicetree/bindings/usb/fcs,fsa4480.yaml  |  72 +++++
- drivers/base/property.c                       |  83 ++++--
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 176 ++++++++++--
- drivers/usb/typec/bus.c                       |   2 +-
- drivers/usb/typec/mux.c                       | 257 +++++++++++++-----
- drivers/usb/typec/mux.h                       |  12 +-
- drivers/usb/typec/mux/Kconfig                 |   9 +
- drivers/usb/typec/mux/Makefile                |   1 +
- drivers/usb/typec/mux/fsa4480.c               | 220 +++++++++++++++
- drivers/usb/typec/mux/intel_pmc_mux.c         |   8 +-
- drivers/usb/typec/mux/pi3usb30532.c           |   8 +-
- include/linux/property.h                      |   5 +
- include/linux/usb/typec_mux.h                 |  22 +-
- 14 files changed, 762 insertions(+), 127 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/usb/fcs,fsa4480.yaml
- create mode 100644 drivers/usb/typec/mux/fsa4480.c
-
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+index 60dc27834e1d..f8a745ec479c 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-usb3-dp-phy.yaml
+@@ -77,6 +77,20 @@ properties:
+     description:
+       Phandle to a regulator supply to any specific refclk pll block.
+ 
++  port:
++    $ref: /schemas/graph.yaml#/properties/port
++    description:
++      A port node to link the QMP to a TypeC controller for the purpose of
++      handling altmode muxing and orientation switching.
++
++  mode-switch:
++    description: Flag the port as possible handle of altmode switching
++    type: boolean
++
++  orientation-switch:
++    description: Flag the port as possible handler of orientation switching
++    type: boolean
++
+ #Required nodes:
+ patternProperties:
+   "^usb3-phy@[0-9a-f]+$":
 -- 
 2.33.1
 
