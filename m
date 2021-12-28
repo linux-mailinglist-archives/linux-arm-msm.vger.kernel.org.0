@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9D5948060E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Dec 2021 05:54:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08081480612
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Dec 2021 05:54:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233651AbhL1EyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Dec 2021 23:54:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S234786AbhL1EyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Dec 2021 23:54:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234777AbhL1EyX (ORCPT
+        with ESMTP id S234781AbhL1EyY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Dec 2021 23:54:23 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36E4C06173E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:22 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id x4so11270895ljc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:22 -0800 (PST)
+        Mon, 27 Dec 2021 23:54:24 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9150EC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:23 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id p13so2644481lfh.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fzm+fAfZcksY7ALzmZSmOUT45EvDMYyF8rjxu1TJkXY=;
-        b=Aj6YAUv2DXSg+MQpk69d0dmtC/JhycHEbJgHsuXkbKslrvOlkqo5RcWxs6GQGHHwp6
-         PSQhJfP1PhVW9+Erf9Cs7urlAbxewdQseI/DYBbM7UeWTAraVGZn3eZmRqYXzHCQstDt
-         IKfqijxCd0l22sIwkBB28IvEsBSyzSYGOUq2dDjbPXia0P6cC/0zD8EGkWpGD84wRAVl
-         9K0WXWf9Ujc8tNG5vuAxvqeUJKjWFIvdK0SUBLQWg3pN4qxyo9am6Wv+g2W/b9I26I99
-         OgkBkUjVick+ZAMYQ9BQOffdnfpc2vv1gT+RQYBtbY551bYnyzkkPMOTQkHuDoo8lXP8
-         Ojag==
+        bh=e6insGDkGy9p02PkajZJi5ANDNTZOtawxzGoBxTWSe8=;
+        b=JkIGzh95BV9/PiDbqPW4WnuvSScZ993tfRn/xjE5A3+ACAJ8/N1EHOZLBCqCUmUorB
+         3T/hmF+ZlTsH749p0Bdnk4QBySwMx0AD8yQ5GP6hSQ8mN2XWBkDTIWLdI4m62Sh5vkGc
+         omD5htRLWyKF0unBSesFa71z3b9dnGrZ/iMOlayd3+MwPo4jg2OKskNLUPgREs6FlSd3
+         Tng/TCMZiBzv6nFU9I97Nd1DhVVBzx8dWukBEHZesDCHWcoWaatydm6eKNCHlJ5pc4Fn
+         YG+p5CXU5qbCfkJxTwUqbxPeXZStVzBsxA0GAX3msG02knbHjerazvjW9DXwaf6RHDZU
+         kTeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fzm+fAfZcksY7ALzmZSmOUT45EvDMYyF8rjxu1TJkXY=;
-        b=mSEZzJSUwSpPULLmQGK0braelBmZ29yNbDFTtnT9sF+gMdT1VNOaDru4G6GLN9VuAq
-         DRsMnA66T2BIfc4Hya+tYEMqXuwNP1pNGclNfWlcq9OT6phjZ4TyXtsT70RP07s9dfuI
-         33ZzZY3gL/NFioK4UCYPOXJEjJN3AfEXQ/kmyGtcDwIWsKiu4ZEz+p9sR4XRRCOF/dxr
-         QxrU0FBjeaC3zap1kt9DCcgr0k5Xjt/xUoYF8XGQQRIiVGqNOy3vnWZVHQDndd+u8z2i
-         ObuN4ETxYHM/4Tr7pOWP6zCPzF9hjjwNjq08j/8+dcEpYIKUGDL01tyok2LYKtCmfN+L
-         kgfw==
-X-Gm-Message-State: AOAM530vtODP53CxCkW9QGqaJVtUFQ0af1zMDB3K4CQBjg/K1/E1gBcF
-        aa2MquS3uPGiqxiVzvuhbQeLnw==
-X-Google-Smtp-Source: ABdhPJwAXeagQ6S5QFVozp1YLTXxv5eVxuCAS49GNrHxeD80bnQqHv+64XMpCnJSxpjTo0POe63hXw==
-X-Received: by 2002:a2e:7c0b:: with SMTP id x11mr11890399ljc.198.1640667261059;
+        bh=e6insGDkGy9p02PkajZJi5ANDNTZOtawxzGoBxTWSe8=;
+        b=s7la6UEzP3oKMvDEMAFjYXP0/ZFb+usyRZV5oPW09tJ4ek1jqnzOGoAtDovyb9YXI4
+         Bw0SejAaAzCxoOUMGlq4KKiIodhMvrbiQZqKw862yIY0m8XoKzVou0mrTxzdkBlLOFPO
+         RdZdsGHuGotgLC9UlUxSsMP5uxvkvhN0+3zlALwM812Jbt0JHUcVyIXLorbO3Qxerand
+         GHUaQntepd49wofisVKcNwRaURFvL+UTbwVsrdrX2RmhMzDJ3sOMeDnhfMDlXOZRznFS
+         R2AdV46rK1YksyOb18P6OEZQnSTE+q+AVjJCfh35K8wgh1JaaeSGhq/5HuXTBdj2Vblm
+         4lJA==
+X-Gm-Message-State: AOAM533pplgLUoax6S9e6t1ytzNF8FkhhuF538SRiXZI5hVIhZv+EEUX
+        OOE9tpYBccWWZ3FXM4mRBtSaNw==
+X-Google-Smtp-Source: ABdhPJzaD7Tvu0431Z4xaKkm/ZLR+H02sjOAANOx1UgKJaXkW/Hm8w/41VOuWcb355VyaelVB9zmQA==
+X-Received: by 2002:a05:6512:31cb:: with SMTP id j11mr15211152lfe.636.1640667261809;
         Mon, 27 Dec 2021 20:54:21 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id cf3sm1822685lfb.22.2021.12.27.20.54.20
+        by smtp.gmail.com with ESMTPSA id cf3sm1822685lfb.22.2021.12.27.20.54.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Dec 2021 20:54:20 -0800 (PST)
+        Mon, 27 Dec 2021 20:54:21 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Stephen Boyd <swboyd@chromium.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Subject: [PATCH v4 04/16] clk: qcom: camcc-sc7180: use ARRAY_SIZE instead of specifying num_parents
-Date:   Tue, 28 Dec 2021 07:54:03 +0300
-Message-Id: <20211228045415.20543-5-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v4 05/16] clk: qcom: camcc-sc7180: get rid of the test clock
+Date:   Tue, 28 Dec 2021 07:54:04 +0300
+Message-Id: <20211228045415.20543-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20211228045415.20543-1-dmitry.baryshkov@linaro.org>
 References: <20211228045415.20543-1-dmitry.baryshkov@linaro.org>
@@ -68,244 +67,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use ARRAY_SIZE() instead of manually specifying num_parents. This makes
-adding/removing entries to/from parent_data easy and errorproof.
+The test clock isn't in the bindings and apparently it's not used by
+anyone upstream.  Remove it.
 
+Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/clk/qcom/camcc-sc7180.c | 50 ++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ drivers/clk/qcom/camcc-sc7180.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
 diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-index ce73ee9037cb..f6e303976a0d 100644
+index f6e303976a0d..3c15e551419f 100644
 --- a/drivers/clk/qcom/camcc-sc7180.c
 +++ b/drivers/clk/qcom/camcc-sc7180.c
-@@ -303,7 +303,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_bps_clk_src",
- 		.parent_data = cam_cc_parent_data_2,
--		.num_parents = 5,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+@@ -29,7 +29,6 @@ enum {
+ 	P_CAM_CC_PLL2_OUT_AUX,
+ 	P_CAM_CC_PLL2_OUT_EARLY,
+ 	P_CAM_CC_PLL3_OUT_MAIN,
+-	P_CORE_BI_PLL_TEST_SE,
  };
-@@ -324,7 +324,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_cci_0_clk_src",
- 		.parent_data = cam_cc_parent_data_5,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_5),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct pll_vco agera_vco[] = {
+@@ -187,26 +186,22 @@ static const struct parent_map cam_cc_parent_map_0[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_CAM_CC_PLL1_OUT_EVEN, 2 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -338,7 +338,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_cci_1_clk_src",
- 		.parent_data = cam_cc_parent_data_5,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_5),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_0[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &cam_cc_pll1.clkr.hw },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -359,7 +359,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_cphy_rx_clk_src",
- 		.parent_data = cam_cc_parent_data_3,
--		.num_parents = 6,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_1[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_CAM_CC_PLL2_OUT_AUX, 1 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -378,7 +378,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_csi0phytimer_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_1[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &cam_cc_pll2_out_aux.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -392,7 +392,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_csi1phytimer_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_2[] = {
+@@ -214,7 +209,6 @@ static const struct parent_map cam_cc_parent_map_2[] = {
+ 	{ P_CAM_CC_PLL2_OUT_EARLY, 4 },
+ 	{ P_CAM_CC_PLL3_OUT_MAIN, 5 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -406,7 +406,7 @@ static struct clk_rcg2 cam_cc_csi2phytimer_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_csi2phytimer_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_2[] = {
+@@ -222,7 +216,6 @@ static const struct clk_parent_data cam_cc_parent_data_2[] = {
+ 	{ .hw = &cam_cc_pll2_out_early.hw },
+ 	{ .hw = &cam_cc_pll3.clkr.hw },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -420,7 +420,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_csi3phytimer_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_3[] = {
+@@ -231,7 +224,6 @@ static const struct parent_map cam_cc_parent_map_3[] = {
+ 	{ P_CAM_CC_PLL2_OUT_EARLY, 4 },
+ 	{ P_CAM_CC_PLL3_OUT_MAIN, 5 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -442,7 +442,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_fast_ahb_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_3[] = {
+@@ -240,33 +232,28 @@ static const struct clk_parent_data cam_cc_parent_data_3[] = {
+ 	{ .hw = &cam_cc_pll2_out_early.hw },
+ 	{ .hw = &cam_cc_pll3.clkr.hw },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -465,7 +465,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_icp_clk_src",
- 		.parent_data = cam_cc_parent_data_2,
--		.num_parents = 5,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_4[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_CAM_CC_PLL3_OUT_MAIN, 5 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -487,7 +487,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_0_clk_src",
- 		.parent_data = cam_cc_parent_data_4,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_4[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &cam_cc_pll3.clkr.hw },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -509,7 +509,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_0_csid_clk_src",
- 		.parent_data = cam_cc_parent_data_3,
--		.num_parents = 6,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_5[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -523,7 +523,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_1_clk_src",
- 		.parent_data = cam_cc_parent_data_4,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_5[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -537,7 +537,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_1_csid_clk_src",
- 		.parent_data = cam_cc_parent_data_3,
--		.num_parents = 6,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct parent_map cam_cc_parent_map_6[] = {
+@@ -274,7 +261,6 @@ static const struct parent_map cam_cc_parent_map_6[] = {
+ 	{ P_CAM_CC_PLL1_OUT_EVEN, 2 },
+ 	{ P_CAM_CC_PLL3_OUT_MAIN, 5 },
+ 	{ P_CAM_CC_PLL0_OUT_EVEN, 6 },
+-	{ P_CORE_BI_PLL_TEST_SE, 7 },
  };
-@@ -551,7 +551,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_lite_clk_src",
- 		.parent_data = cam_cc_parent_data_4,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
- 		.flags = CLK_SET_RATE_PARENT,
- 		.ops = &clk_rcg2_shared_ops,
- 	},
-@@ -566,7 +566,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ife_lite_csid_clk_src",
- 		.parent_data = cam_cc_parent_data_3,
--		.num_parents = 6,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct clk_parent_data cam_cc_parent_data_6[] = {
+@@ -282,7 +268,6 @@ static const struct clk_parent_data cam_cc_parent_data_6[] = {
+ 	{ .hw = &cam_cc_pll1.clkr.hw },
+ 	{ .hw = &cam_cc_pll3.clkr.hw },
+ 	{ .hw = &cam_cc_pll0.clkr.hw },
+-	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
  };
-@@ -589,7 +589,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_ipe_0_clk_src",
- 		.parent_data = cam_cc_parent_data_2,
--		.num_parents = 5,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -612,7 +612,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_jpeg_clk_src",
- 		.parent_data = cam_cc_parent_data_2,
--		.num_parents = 5,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_lrme_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_lrme_clk_src",
- 		.parent_data = cam_cc_parent_data_6,
--		.num_parents = 5,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_6),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -655,7 +655,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_mclk0_clk_src",
- 		.parent_data = cam_cc_parent_data_1,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -669,7 +669,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_mclk1_clk_src",
- 		.parent_data = cam_cc_parent_data_1,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -683,7 +683,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_mclk2_clk_src",
- 		.parent_data = cam_cc_parent_data_1,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -697,7 +697,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_mclk3_clk_src",
- 		.parent_data = cam_cc_parent_data_1,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -711,7 +711,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_mclk4_clk_src",
- 		.parent_data = cam_cc_parent_data_1,
--		.num_parents = 3,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
- 		.ops = &clk_rcg2_shared_ops,
- 	},
- };
-@@ -730,7 +730,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "cam_cc_slow_ahb_clk_src",
- 		.parent_data = cam_cc_parent_data_0,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_rcg2_shared_ops,
- 	},
+ 
+ static const struct freq_tbl ftbl_cam_cc_bps_clk_src[] = {
 -- 
 2.34.1
 
