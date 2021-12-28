@@ -2,327 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A9A15480501
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Dec 2021 22:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 45221480605
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Dec 2021 05:54:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233685AbhL0Vym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Dec 2021 16:54:42 -0500
-Received: from ixit.cz ([94.230.151.217]:48656 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231628AbhL0Vym (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Dec 2021 16:54:42 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 36CD12243C;
-        Mon, 27 Dec 2021 22:54:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1640642080;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=yw3V8KGmYspILWXnQWSBMCxq7vpVIhCkP8lWTZHJ1PA=;
-        b=bzbC0DnjTBYbFFsPfGLxrALpOPpwtA1hooSYC3v+jyrFwlNlXbeDe56Q5wiuGc0ggdIgRV
-        NnE7/zQYsykVosx/m91A1EiOMORVV7375fl0mpfgy2UpjGRIMDzo2ESYUx1gPwpet2YoKn
-        gYCDgP+aj0GnSU86svseBXKtACwwOi0=
-From:   David Heidelberg <david@ixit.cz>
+        id S230075AbhL1EyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Dec 2021 23:54:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229690AbhL1EyT (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Dec 2021 23:54:19 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6022AC06173E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:19 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id p7so28075643ljj.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Dec 2021 20:54:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bgZ26gLpYZWia5Mp27KMiIW9vPXm31xwsjzXxL0DvrY=;
+        b=ZsuYSlp4hhq7OKMsmg4c3chQLB5QMPCCGWZ8frDNwv5gAAKHpoxCqFDVdKuV1wMK+0
+         tRtOPSk+5zwliO7s/urc73AOKsGYqfNkaZoiYn1TwubRIJdsSpZoV35HmWptBFcOi85U
+         0QVrZ+ePdbTF9IFnyo2enjUevgnHPMf+1pPciVPleEcRWosIfyGXg2bSI55XPrqh3Hys
+         ZTZtmzO67hVK1+y2i/h4jt/78AKW0Vq3xzO4sZv6oSPXz8byv0Zuk/gbGzjOwmoEvZJA
+         FmHN106CXUA5YpUY5sSjfzxqhBdP0AaoBU20sdViS3NGHAmCIFDsSZ1ok96/3CFzwFdy
+         zIeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=bgZ26gLpYZWia5Mp27KMiIW9vPXm31xwsjzXxL0DvrY=;
+        b=im3WXui/WPBlxPKbgT/I/xmDYZCK0pnvGzz/E5t1b0dfkQvqxvp4WNUIf7aEo5IO+b
+         4yrdvKxsEIUDY4vCN0lPwZMCYiiIxlT8KD2S6u3AqS5+ubIyimyM/WtZO1Q/Tx1yZKTH
+         Cd5yrmgw+CYrHhAYEmmxieUSiy19HThz9AtXJKbx+S+1NSaVYXs7DM4Vo9yrBHdWtH+e
+         zaUWS7Yy1fT89/Xu4pIgf46yE34HyQKsJKPEtyKDTeWcMqI6hITQkR2Kt54zCFunhNEw
+         bqaARl2PruK8SZqMYCRB3pY90vSPpRyX5sxgMTMq+/EOdWBmmghKyctZBbRPpqNdFUS+
+         Vjag==
+X-Gm-Message-State: AOAM530lM2a9tsOuIp0l/QqRoh6pio6dl343D69hchtyk1/om5GKItvL
+        RlVEm0FyAB0DETfOU6KUKAY8Yg==
+X-Google-Smtp-Source: ABdhPJwOO//FUmIo1Z2x8QYcouiFzsNwH0Tgpq14aYNgNQEe3rjBK5RFopnB9qrvCKB8tkPu6VC85w==
+X-Received: by 2002:a05:651c:892:: with SMTP id d18mr16375646ljq.339.1640667257457;
+        Mon, 27 Dec 2021 20:54:17 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id cf3sm1822685lfb.22.2021.12.27.20.54.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Dec 2021 20:54:16 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: mfd: convert to yaml Qualcomm SPMI PMIC
-Date:   Mon, 27 Dec 2021 22:54:33 +0100
-Message-Id: <20211227215433.114426-1-david@ixit.cz>
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v4 00/16] clk: qcom: another round of clock drivers cleanup
+Date:   Tue, 28 Dec 2021 07:53:59 +0300
+Message-Id: <20211228045415.20543-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Caleb Connolly <caleb.connolly@linaro.org>
+Another bunch of updates for Qualcomm clock controller driver, removing
+unused enum values, test clock, using parent_data, parent_hws and
+ARRAY_SIZE.
 
-Convert Qualcomm SPMI PMIC binding to yaml format.
+Changes since v3:
+ - Converted clocks using periph_noc_clk_src as a parent to use
+   parent_hws
 
-Additional changes:
- - filled many missing compatibles
+Changes since v2:
+ - fix typo in first patch
+ - reorder and rework camcc-sdm845 patches, so that ARRAY_SIZE comes
+   first
+ - add patch converting gcc-msm8996 to use cxo/xo_board instead of still
+   depending on legacy xo clock
 
-Co-developed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
-depends on patch "arm64: dts: qcom: pms405: assign device specific compatible"
----
- .../bindings/mfd/qcom,spmi-pmic.txt           |  93 -----------
- .../bindings/mfd/qcom,spmi-pmic.yaml          | 152 ++++++++++++++++++
- 2 files changed, 152 insertions(+), 93 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
- create mode 100644 Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+Changes since v1:
+ - convert two parent_names in gpucc-sdm660
+ - split camcc-sc7180 patch into logical chunks
+ - split camcc-sdm845 patch into logical chinks
+ - reorder gcc-msm8996 patches to put ARRAY_SIZE in front of the rest of
+   patches
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-deleted file mode 100644
-index 3810a80536f7..000000000000
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt
-+++ /dev/null
-@@ -1,93 +0,0 @@
--          Qualcomm SPMI PMICs multi-function device bindings
--
--The Qualcomm SPMI series presently includes PM8941, PM8841 and PMA8084
--PMICs.  These PMICs use a QPNP scheme through SPMI interface.
--QPNP is effectively a partitioning scheme for dividing the SPMI extended
--register space up into logical pieces, and set of fixed register
--locations/definitions within these regions, with some of these regions
--specifically used for interrupt handling.
--
--The QPNP PMICs are used with the Qualcomm Snapdragon series SoCs, and are
--interfaced to the chip via the SPMI (System Power Management Interface) bus.
--Support for multiple independent functions are implemented by splitting the
--16-bit SPMI slave address space into 256 smaller fixed-size regions, 256 bytes
--each. A function can consume one or more of these fixed-size register regions.
--
--Required properties:
--- compatible:      Should contain one of:
--                   "qcom,pm660",
--                   "qcom,pm660l",
--                   "qcom,pm7325",
--                   "qcom,pm8004",
--                   "qcom,pm8005",
--                   "qcom,pm8019",
--                   "qcom,pm8028",
--                   "qcom,pm8110",
--                   "qcom,pm8150",
--                   "qcom,pm8150b",
--                   "qcom,pm8150c",
--                   "qcom,pm8150l",
--                   "qcom,pm8226",
--                   "qcom,pm8350c",
--                   "qcom,pm8841",
--                   "qcom,pm8901",
--                   "qcom,pm8909",
--                   "qcom,pm8916",
--                   "qcom,pm8941",
--                   "qcom,pm8950",
--                   "qcom,pm8994",
--                   "qcom,pm8998",
--                   "qcom,pma8084",
--                   "qcom,pmd9635",
--                   "qcom,pmi8950",
--                   "qcom,pmi8962",
--                   "qcom,pmi8994",
--                   "qcom,pmi8998",
--                   "qcom,pmk8002",
--                   "qcom,pmk8350",
--                   "qcom,pmr735a",
--                   "qcom,smb2351",
--                   or generalized "qcom,spmi-pmic".
--- reg:             Specifies the SPMI USID slave address for this device.
--                   For more information see:
--                   Documentation/devicetree/bindings/spmi/spmi.yaml
--
--Required properties for peripheral child nodes:
--- compatible:      Should contain "qcom,xxx", where "xxx" is a peripheral name.
--
--Optional properties for peripheral child nodes:
--- interrupts:      Interrupts are specified as a 4-tuple. For more information
--                   see:
--                   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
--- interrupt-names: Corresponding interrupt name to the interrupts property
--
--Each child node of SPMI slave id represents a function of the PMIC. In the
--example below the rtc device node represents a peripheral of pm8941
--SID = 0. The regulator device node represents a peripheral of pm8941 SID = 1.
--
--Example:
--
--	spmi {
--		compatible = "qcom,spmi-pmic-arb";
--
--		pm8941@0 {
--			compatible = "qcom,pm8941", "qcom,spmi-pmic";
--			reg = <0x0 SPMI_USID>;
--
--			rtc {
--				compatible = "qcom,rtc";
--				interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
--				interrupt-names = "alarm";
--			};
--		};
--
--		pm8941@1 {
--			compatible = "qcom,pm8941", "qcom,spmi-pmic";
--			reg = <0x1 SPMI_USID>;
--
--			regulator {
--				compatible = "qcom,regulator";
--				regulator-name = "8941_boost";
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-new file mode 100644
-index 000000000000..11aa2c61eded
---- /dev/null
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -0,0 +1,152 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SPMI PMICs multi-function device
-+
-+description: |
-+  Some Qualcomm PMICs used with the Snapdragon series SoCs are interfaced
-+  to the chip via the SPMI (System Power Management Interface) bus.
-+  Support for multiple independent functions are implemented by splitting the
-+  16-bit SPMI peripheral address space into 256 smaller fixed-size regions, 256 bytes
-+  each. A function can consume one or more of these fixed-size register regions.
-+
-+  The Qualcomm SPMI series includes the PM8941, PM8841, PMA8084, PM8998 and other
-+  PMICs.  These PMICs use a "QPNP" scheme through SPMI interface.
-+  QPNP is effectively a partitioning scheme for dividing the SPMI extended
-+  register space up into logical pieces, and set of fixed register
-+  locations/definitions within these regions, with some of these regions
-+  specifically used for interrupt handling.
-+
-+maintainers:
-+  - Stephen Boyd <sboyd@kernel.org>
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,pm660
-+          - qcom,pm660l
-+          - qcom,pm6150
-+          - qcom,pm6150l
-+          - qcom,pm6350
-+          - qcom,pm7325
-+          - qcom,pm8004
-+          - qcom,pm8005
-+          - qcom,pm8009
-+          - qcom,pm8019
-+          - qcom,pm8110
-+          - qcom,pm8150
-+          - qcom,pm8150b
-+          - qcom,pm8150l
-+          - qcom,pm8226
-+          - qcom,pm8350
-+          - qcom,pm8350b
-+          - qcom,pm8350c
-+          - qcom,pm8841
-+          - qcom,pm8909
-+          - qcom,pm8916
-+          - qcom,pm8941
-+          - qcom,pm8950
-+          - qcom,pm8994
-+          - qcom,pm8998
-+          - qcom,pma8084
-+          - qcom,pmd9635
-+          - qcom,pmi8950
-+          - qcom,pmi8962
-+          - qcom,pmi8994
-+          - qcom,pmi8998
-+          - qcom,pmk8350
-+          - qcom,pmm8155au
-+          - qcom,pmr735a
-+          - qcom,pmr735b
-+          - qcom,pms405
-+          - qcom,smb2351
-+      - const: qcom,spmi-pmic
-+
-+  reg: true
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+
-+patternProperties:
-+  $nodename:
-+    pattern: '^pmic@.*$'
-+
-+  '(labibb|([a-z][a-z0-9]+-)?regulators)':
-+    type: object
-+
-+    required:
-+      - compatible
-+
-+  '@[0-9a-f]+$':
-+    type: object
-+    description: >
-+      Each child node of the PMIC represents a function of it.
-+
-+    properties:
-+      interrupts:
-+        description: >
-+          Interrupts are specified as a 4-tuple. For more information see
-+          Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-+
-+      interrupt-names: true
-+
-+    required:
-+      - compatible
-+
-+    additionalProperties: true
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/spmi/spmi.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    spmi@c440000 {
-+        compatible = "qcom,spmi-pmic-arb";
-+        reg = <0x0c440000 0x1100>,
-+              <0x0c600000 0x2000000>,
-+              <0x0e600000 0x100000>,
-+              <0x0e700000 0xa0000>,
-+              <0x0c40a000 0x26000>;
-+        reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
-+        interrupt-names = "periph_irq";
-+        interrupts = <GIC_SPI 481 IRQ_TYPE_LEVEL_HIGH>;
-+        qcom,ee = <0>;
-+        qcom,channel = <0>;
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+        interrupt-controller;
-+        #interrupt-cells = <4>;
-+        cell-index = <0>;
-+
-+        pmi8998_lsid0: pmic@2 {
-+            compatible = "qcom,pmi8998", "qcom,spmi-pmic";
-+            reg = <0x2 SPMI_USID>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            pmi8998_gpio: gpios@c000 {
-+                compatible = "qcom,pmi8998-gpio", "qcom,spmi-gpio";
-+                reg = <0xc000>;
-+                gpio-controller;
-+                gpio-ranges = <&pmi8998_gpio 0 0 14>;
-+                #gpio-cells = <2>;
-+                interrupt-controller;
-+                #interrupt-cells = <2>;
-+            };
-+        };
-+    };
--- 
-2.34.1
+The following changes since commit fa55b7dcdc43c1aa1ba12bca9d2dd4318c2a0dbf:
+
+  Linux 5.16-rc1 (2021-11-14 13:56:52 -0800)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/dmitry.baryshkov/kernel.git msm-clocks-bulk-2
+
+for you to fetch changes up to eed05fb5fd9768229a70947a907b071c8dadc9ed:
+
+  clk: qcom: gcc-msm8996: start getting rid of xo clk (2021-12-28 07:51:15 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (16):
+      clk: qcom: gpucc-sdm660: fix two clocks with parent_names
+      clk: qcom: gpucc-sdm660: get rid of the test clock
+      clk: qcom: gpucc-sdm660: use parent_hws instead of parent_data
+      clk: qcom: camcc-sc7180: use ARRAY_SIZE instead of specifying num_parents
+      clk: qcom: camcc-sc7180: get rid of the test clock
+      clk: qcom: camcc-sc7180: use parent_hws instead of parent_data
+      clk: qcom: camcc-sdm845: use ARRAY_SIZE instead of specifying num_parents
+      clk: qcom: camcc-sdm845: get rid of the test clock
+      clk: qcom: camcc-sdm845: move clock parent tables down
+      clk: qcom: camcc-sdm845: convert to parent_hws/_data
+      clk: qcom: videocc-sc7180: use parent_hws instead of parent_data
+      clk: qcom: gcc-msm8996: use ARRAY_SIZE instead of specifying num_parents
+      clk: qcom: gcc-msm8996: drop unsupported clock sources
+      clk: qcom: gcc-msm8996: move clock parent tables down
+      clk: qcom: gcc-msm8996: use parent_hws/_data instead of parent_names
+      clk: qcom: gcc-msm8996: start getting rid of xo clk
+
+ drivers/clk/qcom/camcc-sc7180.c   | 221 ++++-----
+ drivers/clk/qcom/camcc-sdm845.c   | 323 +++++++------
+ drivers/clk/qcom/gcc-msm8996.c    | 971 +++++++++++++++++++++++---------------
+ drivers/clk/qcom/gpucc-sdm660.c   |  21 +-
+ drivers/clk/qcom/videocc-sc7180.c |   8 +-
+ 5 files changed, 874 insertions(+), 670 deletions(-)
 
