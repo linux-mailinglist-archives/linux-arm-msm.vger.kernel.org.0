@@ -2,295 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5F424811E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 12:12:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382A148147C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 16:33:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239867AbhL2LMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Dec 2021 06:12:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47350 "EHLO
+        id S240566AbhL2PdE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Dec 2021 10:33:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232566AbhL2LMt (ORCPT
+        with ESMTP id S233920AbhL2PdD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Dec 2021 06:12:49 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BE25C06173F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 03:12:49 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id kj16so18913575qvb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 03:12:49 -0800 (PST)
+        Wed, 29 Dec 2021 10:33:03 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A9DC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 07:33:03 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id a26-20020a9d6e9a000000b0058f37eeb861so26277639otr.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 07:33:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MK+wv3Q9ielT8iXy8qRJPd+VCDkiwmXUWkCOO3KJKF0=;
-        b=trfeqc9D6qWnrrEa9clqEmsiT9mj3yY5MpLpvwvGKYl0byXxi5fjbNQf77oUFPD4nX
-         37oHLE4uVDzPkg+QYTQBKtFkGObyFfSxN2vhDK/tl8LgZ5Qo8uXj7OjFQ9WHk8trIvTz
-         vAUZ/Qvb2Ri4cb43IzFnZr2oQHVDGZ66ElPJtAHF8kckpAgEn9lCYWAiym2Eff7Mx9ZT
-         xH20GaE11w2JFvJcF6VK3SJYEUEctUrf/MnypX2S55Iyiy3pyjmJSdK+3odtC1zb0I0a
-         njN9nj8cPcy6qdOUq/NSbL0GMTjkTTK0pATUfKCeDnTXI7FEmipw/08SRtgsWLts9VHn
-         TWXA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=bEVREXqmH89MbzmWrN4QA+dq6opc4nWIdeFIogoG25s=;
+        b=RTFfsdB2uHBYB6NExwweLLpzosyKhW44qS26y7DFowJZzwMDzXBlFLOYojA2LkuTIN
+         EceuNyl22Trg1sHmMGE3IHbMM6/MVvXgD3oVBSPCcN6nzf/uAg17aEOyGQTYCRALPt/u
+         aM0ClQSaFnUhFy8Dn/Tml4jDWiQnxOXACQxWt2JsjdfoPN96zGlG60/CPdWcLP2xLOz0
+         gQUDQd600NHbXxaihims1Dfmwec9qVhYCtq1SlkYoV1gGq7alR4H4BBMRhUlUVBOssML
+         x/3ZqEDPP/zCL8eL0/NKyOxLva4I1gWkrAO5flxh3zg1zQ0fCEzmu4Vc+E0XXhs24Saw
+         CzXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MK+wv3Q9ielT8iXy8qRJPd+VCDkiwmXUWkCOO3KJKF0=;
-        b=OA68uMBTITazIqLbJ+El3iDHxd0mK2D/L6YsRuP52azkWk3DBhPx+l6qgaaPyhZoF1
-         dMEDvWvXRlNUCiIcUZhFiSW2f3aUm0OShuNdw1NgQf4qhw8Hq867vg3Rd3dHSIPUNwu5
-         9XyLOmMeT+a26UaUaEALnDMYkY2xhOaupzoAQ+BuYjflTldoKYYWWxc31MfVIE1/MzfD
-         ekEJvN5OzN8TWl/64eoiSqWlHPuyIZPF+rIkgtYinXizGOYSg9fokLGFRu9qiXfwFuZi
-         qQQDr619O4EsIRvBhxpheDbUapRvYN1b3MGUOTMraDH/BHWX44nbRXotsusq8Avd2DP1
-         gcfQ==
-X-Gm-Message-State: AOAM533e9yUdqakSrV+v9//MzEII4uak1XYqVh535icuS5CySx5q9ZVk
-        Mv+TTm3POIZZzPBeqZdDaSEltnihIQPLLVrwKldOXQ==
-X-Google-Smtp-Source: ABdhPJx/ycB9hnFgWIFMr485YIetQ5jMQIZjyS0fs06KaM88EI1mr4pBAJAI0mNqkQn08i9geel87TfDRgxCxnTz+sE=
-X-Received: by 2002:a05:6214:226e:: with SMTP id gs14mr23861400qvb.119.1640776368524;
- Wed, 29 Dec 2021 03:12:48 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=bEVREXqmH89MbzmWrN4QA+dq6opc4nWIdeFIogoG25s=;
+        b=dc1z8iESTgcfMOsM6n3q++QJS/hqP2Ycp8xjfPodBF9Dhbigz6pO1ROyQuLFahXq9U
+         ED160O6JyS50DiYpByylSHaL/Bu7I1Gxf8p1fDzJJRFZb6sB+rAB8mZ+r3QWQ+oCWUCr
+         vRfu5+b+sXEudpg6r+czmvCHQP4rHA420MjbCnM8qbpLSMLVxJ4m3NuhAdrHy4Byu6Yr
+         1iFIq7cfeA8HB4f6wvql6okicAz7C8HG1gdl4CiQ0Uko0OurcYJdSWOoeVN0UH32F4Sz
+         CMWA3ByFrPFJMD4OPjt5FApctjfTWNQPJDdDJ9nAPIuuJchrqX9YXPppCcXMwh3FGaho
+         AikA==
+X-Gm-Message-State: AOAM531Zoq41QMO5C8fkYIl9XnyVmOwgnUx5WO8ePjUpPra7VTmS2y3n
+        +Q6TwC9usAWouq5FbCUzueLMgw==
+X-Google-Smtp-Source: ABdhPJz7bIQYwCUhTRuh/qTGG0rfJw4FKVSoZoVnl9SZrPB35j1RqA4/G6fChoJwqmI09cwCo+YPbg==
+X-Received: by 2002:a9d:6a56:: with SMTP id h22mr19063881otn.135.1640791982466;
+        Wed, 29 Dec 2021 07:33:02 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r5sm3408543ote.53.2021.12.29.07.33.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Dec 2021 07:33:02 -0800 (PST)
+Date:   Wed, 29 Dec 2021 07:34:02 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: phy: convert Qualcomm USB HS phy to yaml
+Message-ID: <Ycx/6gXhd6hnYJqP@ripper>
+References: <20211224170242.57816-1-david@ixit.cz>
 MIME-Version: 1.0
-References: <1640189262-9699-1-git-send-email-quic_c_pmaliset@quicinc.com>
- <CAA8EJpoq1xPj3nkZfjjviCQdLq-LcMVThTK6HzrW7AdmfebuhA@mail.gmail.com> <CO1PR02MB85374269B7CA824BA4AC27ACE9449@CO1PR02MB8537.namprd02.prod.outlook.com>
-In-Reply-To: <CO1PR02MB85374269B7CA824BA4AC27ACE9449@CO1PR02MB8537.namprd02.prod.outlook.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 29 Dec 2021 14:12:37 +0300
-Message-ID: <CAA8EJpqb_40+8OXuOUeG4iGDiK3-DSAPTjqrbVRecAQCdThKbQ@mail.gmail.com>
-Subject: Re: [PATCH v1] PCI: qcom: Add system PM support
-To:     "Prasad Malisetty (Temp)" <pmaliset@qti.qualcomm.com>
-Cc:     Prasad Malisetty <quic_c_pmaliset@quicinc.com>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "lorenzo.pieralisi@arm.com" <lorenzo.pieralisi@arm.com>,
-        "robh@kernel.org" <robh@kernel.org>, "kw@linux.com" <kw@linux.com>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        quic_vbadigan <quic_vbadigan@quicinc.com>,
-        "Rama Krishna (QUIC)" <quic_ramkri@quicinc.com>,
-        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        quic_pmaliset <quic_pmaliset@quicinc.com>,
-        quic_skananth <quic_skananth@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211224170242.57816-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Prasad,
+On Fri 24 Dec 09:02 PST 2021, David Heidelberg wrote:
 
-On Wed, 29 Dec 2021 at 13:59, Prasad Malisetty (Temp)
-<pmaliset@qti.qualcomm.com> wrote:
->
-> Hi Dmitry,
->
-> Thanks for the review and comments.
->
-> Please find the response inline.
+> Conversion of Qualcomm USB HS phy documentation to yaml.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-Could you please use proper quoting nesting, it's hard to read if your
-answers are marked as level 2 quote (>>).
+Very nice to see your efforts in this area David!
 
->
-> Thanks
-> -Prasad
->
-> -----Original Message-----
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Sent: Thursday, December 23, 2021 8:44 PM
-> To: Prasad Malisetty <quic_c_pmaliset@quicinc.com>
-> Cc: agross@kernel.org; bjorn.andersson@linaro.org; lorenzo.pieralisi@arm.=
-com; robh@kernel.org; kw@linux.com; bhelgaas@google.com; linux-pci@vger.ker=
-nel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org; quic_=
-vbadigan <quic_vbadigan@quicinc.com>; Rama Krishna (QUIC) <quic_ramkri@quic=
-inc.com>; manivannan.sadhasivam@linaro.org; swboyd@chromium.org; quic_pmali=
-set <quic_pmaliset@quicinc.com>
-> Subject: Re: [PATCH v1] PCI: qcom: Add system PM support
->
-> WARNING: This email originated from outside of Qualcomm. Please be wary o=
-f any links or attachments, and do not enable macros.
->
-> On Wed, 22 Dec 2021 at 19:08, Prasad Malisetty <quic_c_pmaliset@quicinc.c=
-om> wrote:
-> >
-> > From: Prasad Malisetty <quic_pmaliset@quicinc.com>
-> >
-> > Add suspend_noirq and resume_noirq callbacks to handle System suspend
-> > and resume in dwc pcie controller driver.
-> >
-> > When system suspends, send PME turnoff message to enter link into L2
-> > state. Along with powerdown the PHY, disable pipe clock, switch
-> > gcc_pcie_1_pipe_clk_src to XO if mux is supported and disable the pcie
-> > clocks, regulators.
->
-> The GDSC stays on, if I'm not mistaken. Is this an expected behaviour for=
- the suspend procedure?
->
-> >> No, GDSC will be disabled as part of system suspend. We are switching =
-gcc_pcie_1_clk_src to XO as GDSC should be enable in resume path.
+Just some minor nits below.
 
-I think you should call the pm_runtime_suspend() kind of function to
-let the Linux core power down the GDSC power domains.
+[..]
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+> new file mode 100644
+> index 000000000000..202c42754188
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+> @@ -0,0 +1,86 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,usb-hs-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm's USB HS PHY binding description
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,usb-hs-phy-apq8064
+> +          - qcom,usb-hs-phy-msm8916
+> +          - qcom,usb-hs-phy-msm8974
+> +      - const: qcom,usb-hs-phy
+> +
+> +  clocks: true
+> +
+> +  clock-names:
+> +    oneOf:
+> +      - items:
+> +          - const: ref
+> +          - const: sleep
+> +      - items:
+> +          - const: sleep
+> +          - const: ref
 
->
-> Also as a side note, the qcom-pcie driver supports a variety of SoCs from=
- different generations. Which platforms were really tested?
-> Judging from your patch I suppose that you did not test this on any non-r=
-ecent platform.
->
-> >> We have tested on SC7280 SoC which is recently added.
+Can't we just pick one of them?
 
-Please take care and check that your code doesn't break previous
-generations. You are using structures specific to 2.7.0 from the
-generic code path. This is not legit.
+> +
+> +  resets: true
+> +
+> +  reset-names:
+> +    oneOf:
+> +      - items:
+> +          - const: por
+> +      - items:
+> +          - const: phy
+> +          - const: por
 
->
-> > When system resumes, PCIe link will be re-established and setup rc
-> > settings.
-> >
-> > Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 103
-> > +++++++++++++++++++++++++++++++++
-> >  1 file changed, 103 insertions(+)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> > b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index c19cd506..24dcf5a 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -73,6 +73,8 @@
-> >
-> >  #define PCIE20_PARF_Q2A_FLUSH                  0x1AC
-> >
-> > +#define PCIE20_PARF_PM_STTS                     0x24
-> > +
-> >  #define PCIE20_MISC_CONTROL_1_REG              0x8BC
-> >  #define DBI_RO_WR_EN                           1
-> >
-> > @@ -1616,6 +1618,107 @@ static int qcom_pcie_probe(struct platform_devi=
-ce *pdev)
-> >         return ret;
-> >  }
-> >
-> > +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie) {
-> > +       int ret =3D 0;
-> > +       u32 val =3D 0, poll_val =3D 0;
-> > +       uint64_t l23_rdy_poll_timeout =3D 100000;
-> > +       struct dw_pcie *pci =3D pcie->pci;
-> > +       struct device *dev =3D pci->dev;
-> > +
-> > +       val =3D readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> > +       val |=3D BIT(4);
-> > +       writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> > +
-> > +       ret =3D readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), =
-poll_val,
-> > +                       (poll_val & BIT(5)), 10000, l23_rdy_poll_timeou=
-t);
-> > +       if (!ret)
-> > +               dev_dbg(dev, "PCIe: PM_Enter_L23 is received\n");
-> > +       else
-> > +               dev_err(dev, "PM_Enter_L23 is NOT received.PARF_PM_STTS=
- 0x%x\n",
-> > +                       readl_relaxed(pcie->parf +
-> > + PCIE20_PARF_PM_STTS));
-> > +
-> > +       return ret;
-> > +}
-> > +
-> > +static void qcom_pcie_host_disable(struct qcom_pcie *pcie) {
-> > +       struct qcom_pcie_resources_2_7_0 *res =3D &pcie->res.v2_7_0;
-> > +
-> > +       /*Assert the reset of endpoint */
-> > +       qcom_ep_reset_assert(pcie);
-> > +
-> > +       /* Put PHY into POWER DOWN state */
-> > +       phy_power_off(pcie->phy);
-> > +
-> > +       writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > +
-> > +       /* Disable pipe clock */
-> > +       pcie->ops->post_deinit(pcie);
-> > +
-> > +       /* Change GCC_PCIE_1_PIPE_MUXR register to 0x2 for XO as parent=
- */
-> > +       if (pcie->pipe_clk_need_muxing)
-> > +               clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
-> > +
-> > +       /* Disable PCIe clocks and regulators*/
-> > +       pcie->ops->deinit(pcie);
-> > +}
-> > +
-> > +static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device
-> > +*dev) {
-> > +       int ret =3D 0;
-> > +       struct qcom_pcie *pcie =3D dev_get_drvdata(dev);
-> > +       struct dw_pcie *pci =3D pcie->pci;
-> > +
-> > +       if (!dw_pcie_link_up(pci)) {
-> > +               dev_err(dev, "Power has been turned off already\n");
-> > +               return ret;
-> > +       }
-> > +
-> > +       /* Send PME turnoff msg */
-> > +       ret =3D qcom_pcie_send_pme_turnoff_msg(pcie);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       /* Power down the PHY, disable clock and regulators */
-> > +       qcom_pcie_host_disable(pcie);
-> > +
-> > +       dev_info(dev, "PM: PCI is suspended\n");
-> > +       return ret;
-> > +}
-> > +
-> > +/* Resume the PCIe link */
-> > +static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device
-> > +*dev) {
-> > +       int ret =3D 0;
-> > +       struct qcom_pcie *pcie =3D dev_get_drvdata(dev);
-> > +       struct dw_pcie *pci =3D pcie->pci;
-> > +       struct pcie_port *pp =3D &pci->pp;
-> > +
-> > +       dev_info(dev, "PM: Resuming\n");
-> > +
-> > +       /* Initialize PCIe host */
-> > +       ret =3D qcom_pcie_host_init(pp);
-> > +       if (ret)
-> > +               dev_err(dev, "cannot initialize host\n");
-> > +
-> > +       dw_pcie_iatu_detect(pci);
-> > +       dw_pcie_setup_rc(pp);
-> > +
-> > +       /* Start the PCIe link */
-> > +       qcom_pcie_start_link(pci);
-> > +
-> > +       ret =3D dw_pcie_wait_for_link(pci);
-> > +       if (ret)
-> > +               dev_err(dev, "Link never came up, Resume failed\n");
-> > +
-> > +       return ret;
-> > +}
-> > +
-> > +static const struct dev_pm_ops qcom_pcie_pm_ops =3D {
-> > +       SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq,
-> > +qcom_pcie_pm_resume_noirq) };
-> > +
-> >  static const struct of_device_id qcom_pcie_match[] =3D {
-> >         { .compatible =3D "qcom,pcie-apq8084", .data =3D &apq8084_cfg }=
-,
-> >         { .compatible =3D "qcom,pcie-ipq8064", .data =3D &ipq8064_cfg }=
-,
-> > --
-> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-> > member of Code Aurora Forum, hosted by The Linux Foundation
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+How about doing the:
 
+items:
+  - const: por
+  - const: phy
+minItems: 1
 
+> +
+> +  v1p8-supply: true
+> +
+> +  v3p3-supply: true
+> +
+> +  extcon: true
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  qcom,init-seq:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
 
---=20
-With best wishes
-Dmitry
+It's better to use the uint8-matrix, as that allows you to describe the
+value pairs as well. See e.g. st,adc-diff-channels in
+iio/adc/st,stm32-adc.yaml as an example.
+
+> +    description: |
+
+I think you can omit the '|'.
+
+Regards,
+Bjorn
+
+> +      Should contain a sequence of ULPI address and value pairs to
+> +      program into the ULPI_EXT_VENDOR_SPECIFIC area. This is related
+> +      to Device Mode Eye Diagram test. The addresses are offsets
+> +      from the ULPI_EXT_VENDOR_SPECIFIC address, for example,
+> +      <0x1 0x53> would mean "write the value 0x53 to address 0x81".
+> +
+> +required:
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - reset-names
+> +  - "#phy-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    otg: usb-controller {
+> +      ulpi {
+> +        phy {
+> +          compatible = "qcom,usb-hs-phy-msm8974", "qcom,usb-hs-phy";
+> +          #phy-cells = <0>;
+> +          clocks = <&clk 0>, <&clk 258>;
+> +          clock-names = "ref", "sleep";
+> +          resets = <&gcc 10>, <&otg 0>;
+> +          reset-names = "phy", "por";
+> +          v3p3-supply = <&pm8941_l24>;
+> +          v1p8-supply = <&pm8941_l6>;
+> +          extcon = <&smbb>;
+> +          qcom,init-seq = /bits/ 8 <0x1 0x63>;
+> +        };
+> +      };
+> +    };
+> -- 
+> 2.34.1
+> 
