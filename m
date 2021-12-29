@@ -2,564 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3ECE1480E3C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 01:29:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CB07480F7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 05:12:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229754AbhL2A3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Dec 2021 19:29:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48636 "EHLO
+        id S233830AbhL2EM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Dec 2021 23:12:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbhL2A3n (ORCPT
+        with ESMTP id S232404AbhL2EM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Dec 2021 19:29:43 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D2F2C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Dec 2021 16:29:42 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id j11so42744302lfg.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Dec 2021 16:29:42 -0800 (PST)
+        Tue, 28 Dec 2021 23:12:27 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E55CC061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Dec 2021 20:12:27 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so26803670otl.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Dec 2021 20:12:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=oibSG8+qBLBks3t9n9I4JkrULzaC1Ink3zPejbgFPPk=;
-        b=vtWo8iGRTmFNluIbCbzb/S3Pi9CNF5G5VORZUaQGpEJHiDGYXG9XpLqG3LdYdzg46v
-         HvhcSo3THYDRJLJCVCvi6himyh3aUMBRHondFKyBhxeXgrGWooUBttFKOQiykyyGHa4v
-         WElou1Ic3XR7SixXnYpCPkPGMwoDmhxisXXOOJWoiBFk+dCe8/eNeMa2zigbEZrGbui8
-         Y+eEyQ7OWs9tHA3dSRVcEIBPmpvJHEyogJBgvefFpFnKQ0llyydK8qD+ROnbQUbhc+ih
-         V27rUSMRLngn0BaePHbDRSIkyHYWSVcYSnQCoTdAoQ/xN+4Ev8EKvMi1V1BM+Kjty7of
-         dh8g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=v7CDjeE5jW+B6WRS62ZS6O0dpHSvARE91qFSq23R+iE=;
+        b=Pf25Toy3VhEVKDPSTCMJoIaMlmz3tplb+C/JM803ZEwbK0XSdyZVaI81VxbOu1oO5z
+         KdgIb3E+lKWTqZMq4QtkDgnhwuy+5NJsgL5aftD4+trvketP3SPzyU4vCZxqv2EccNt5
+         sApmDwXMjdzfvg4cZ0e7eIkYrLCaFQRTkbhQ4s70Rk3bBs6s50f8QARLaI6WHVKqtH+7
+         Ht4Hp0nx7+HXpDXvDf+AuIMxzcV1DUB+3fgXcCIn1s1KHSewi/JOqMQrk5cEq7cBEprs
+         l8O4dyhuZSPAS/8OHCpoaAH9HpECc/qBWKLpx7o4KKHKwqyBkyFz73WBzH3qBdbUX34a
+         jjcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=oibSG8+qBLBks3t9n9I4JkrULzaC1Ink3zPejbgFPPk=;
-        b=Auz7K58lTXKLf94jpVw24BVLnriurnO+n3HMdXKjR2n4k4U2UqVDeL682uir+RL3Xv
-         CmvFNgNqOimKruFfrSbrgEjx+tEyzhebLsIQaTsiCzOueJVFWLQIL5ry60QLOaCKXH1Y
-         pU1JVUWwAMJ8qRyJmeT1oXv7hNmCL0UAfzuCuQsC2Z8Otby1S7e3rLDc61gfnKb4Oawl
-         9rdYpWtqOuniTKCrOY7qa1HgyekoSgi055xXJyn0KGkkV8ohIZwAxhPKH5oNeKEuLsZz
-         X6KdBgtjjtl8Htyxbvq3GRSz6qK3zq2rDV/cFmFGktk3bgJUwcQP6tJxcnQcpQJ/NEyP
-         hrtQ==
-X-Gm-Message-State: AOAM5310YVz66nH15vrf370msP8+jb9QOjPCWog7C/6XsRRuvcwgJQ8h
-        370r0HR6NHY6+TyerKSJv66rbg==
-X-Google-Smtp-Source: ABdhPJzo3Sl5fUx8Qi/6EYnHGAxE+k1bLzfc5NncwRaZTmDLhqIzJdNQsVWHVqkZgW9+wr0z5z9Gsg==
-X-Received: by 2002:a05:6512:3182:: with SMTP id i2mr18660983lfe.673.1640737780312;
-        Tue, 28 Dec 2021 16:29:40 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 18sm2037364ljj.119.2021.12.28.16.29.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Dec 2021 16:29:39 -0800 (PST)
-Message-ID: <826279c5-697c-dca7-0b7c-33857bbba57a@linaro.org>
-Date:   Wed, 29 Dec 2021 03:29:38 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=v7CDjeE5jW+B6WRS62ZS6O0dpHSvARE91qFSq23R+iE=;
+        b=iVXwGuSftlNOjz4sJIOmkV6FUmq1s0EakgMh2acNDxv7wPZMaY2aGKiSmxL/qP4aEm
+         tllGBIc7QeOqaiNU8y0V/cxy6O8d3TWxUADT+pDl72coLlouu6CI/oLs1q5g2kIWrCn3
+         xMBZVlr/YhqvATUARlVN/MupMe8ceICjJmczsNhc/2zLgqE8Y7AbLSw7u+F3nMlPA+n4
+         ORfWoqkeB8vp7GYNDGgJN/sZDQL1o0plYMAXGtBZGVA1AScaB9hYRKp05AE9j+n7F9GI
+         68x5C70B34kPwiotjgwwG5FXLklOmKz4aZkZd+kXp0GWpNvHoqjIM7vMhtjWQrKWgCHT
+         jAQg==
+X-Gm-Message-State: AOAM531CilOwtrAwkU5jlgP4Rur4SnUFQCgN9yHe+B7N1NLE6YnMl9Vu
+        DN6nXEs7NqXro4Q6Nxs5jNJY5fySGo2OFw==
+X-Google-Smtp-Source: ABdhPJyv4OCTP83HxuEyvA+CllD1b+sDZ3yjheAk30RxpzMAoDVZphL4t6bE6SkxiM7ahXfkKv8jug==
+X-Received: by 2002:a05:6830:1285:: with SMTP id z5mr18176183otp.180.1640751146731;
+        Tue, 28 Dec 2021 20:12:26 -0800 (PST)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b24sm3754202oic.16.2021.12.28.20.12.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Dec 2021 20:12:26 -0800 (PST)
+Date:   Tue, 28 Dec 2021 22:12:21 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <khsieh@codeaurora.org>
 Subject: Re: [PATCH v2 2/2] drm/msm/dp: rewrite dss_module_power to use bulk
  clock functions
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Message-ID: <YcvgJcxWDfaSMVVg@builder.lan>
 References: <20211126023516.1108411-1-dmitry.baryshkov@linaro.org>
  <20211126023516.1108411-3-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20211126023516.1108411-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kuogee,
+On Thu 25 Nov 20:35 CST 2021, Dmitry Baryshkov wrote:
 
-Some time ago you volonteered to check these two patches on a DP hosts. 
-Any progress?
-
-On 26/11/2021 05:35, Dmitry Baryshkov wrote:
 > In order to simplify DP code, drop hand-coded loops over clock arrays,
 > replacing them with clk_bulk_* functions.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/Makefile         |   1 -
->   drivers/gpu/drm/msm/dp/dp_clk_util.c | 120 ---------------------------
->   drivers/gpu/drm/msm/dp/dp_clk_util.h |  38 ---------
->   drivers/gpu/drm/msm/dp/dp_ctrl.c     |  19 ++---
->   drivers/gpu/drm/msm/dp/dp_parser.c   |  21 ++++-
->   drivers/gpu/drm/msm/dp/dp_parser.h   |  17 +++-
->   drivers/gpu/drm/msm/dp/dp_power.c    |  81 +++++++++---------
->   7 files changed, 83 insertions(+), 214 deletions(-)
->   delete mode 100644 drivers/gpu/drm/msm/dp/dp_clk_util.c
->   delete mode 100644 drivers/gpu/drm/msm/dp/dp_clk_util.h
-> 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index b6637da219b0..ccacf604881a 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -104,7 +104,6 @@ msm-$(CONFIG_DRM_MSM_GPU_STATE)	+= adreno/a6xx_gpu_state.o
->   
->   msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
->   	dp/dp_catalog.o \
-> -	dp/dp_clk_util.o \
->   	dp/dp_ctrl.o \
->   	dp/dp_display.o \
->   	dp/dp_drm.o \
-> diff --git a/drivers/gpu/drm/msm/dp/dp_clk_util.c b/drivers/gpu/drm/msm/dp/dp_clk_util.c
-> deleted file mode 100644
-> index 44a4fc59ff31..000000000000
-> --- a/drivers/gpu/drm/msm/dp/dp_clk_util.c
-> +++ /dev/null
-> @@ -1,120 +0,0 @@
-> -// SPDX-License-Identifier: GPL-2.0-only
-> -/* Copyright (c) 2012-2015, 2017-2018, The Linux Foundation.
-> - * All rights reserved.
-> - */
-> -
-> -#include <linux/clk.h>
-> -#include <linux/clk/clk-conf.h>
-> -#include <linux/err.h>
-> -#include <linux/delay.h>
-> -#include <linux/of.h>
-> -
-> -#include <drm/drm_print.h>
-> -
-> -#include "dp_clk_util.h"
-> -
-> -void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk)
-> -{
-> -	int i;
-> -
-> -	for (i = num_clk - 1; i >= 0; i--) {
-> -		if (clk_arry[i].clk)
-> -			clk_put(clk_arry[i].clk);
-> -		clk_arry[i].clk = NULL;
-> -	}
-> -}
-> -
-> -int msm_dss_get_clk(struct device *dev, struct dss_clk *clk_arry, int num_clk)
-> -{
-> -	int i, rc = 0;
-> -
-> -	for (i = 0; i < num_clk; i++) {
-> -		clk_arry[i].clk = clk_get(dev, clk_arry[i].clk_name);
-> -		rc = PTR_ERR_OR_ZERO(clk_arry[i].clk);
-> -		if (rc) {
-> -			DEV_ERR("%pS->%s: '%s' get failed. rc=%d\n",
-> -				__builtin_return_address(0), __func__,
-> -				clk_arry[i].clk_name, rc);
-> -			goto error;
-> -		}
-> -	}
-> -
-> -	return rc;
-> -
-> -error:
-> -	for (i--; i >= 0; i--) {
-> -		if (clk_arry[i].clk)
-> -			clk_put(clk_arry[i].clk);
-> -		clk_arry[i].clk = NULL;
-> -	}
-> -
-> -	return rc;
-> -}
-> -
-> -int msm_dss_clk_set_rate(struct dss_clk *clk_arry, int num_clk)
-> -{
-> -	int i, rc = 0;
-> -
-> -	for (i = 0; i < num_clk; i++) {
-> -		if (clk_arry[i].clk) {
-> -			if (clk_arry[i].type != DSS_CLK_AHB) {
-> -				DEV_DBG("%pS->%s: '%s' rate %ld\n",
-> -					__builtin_return_address(0), __func__,
-> -					clk_arry[i].clk_name,
-> -					clk_arry[i].rate);
-> -				rc = clk_set_rate(clk_arry[i].clk,
-> -					clk_arry[i].rate);
-> -				if (rc) {
-> -					DEV_ERR("%pS->%s: %s failed. rc=%d\n",
-> -						__builtin_return_address(0),
-> -						__func__,
-> -						clk_arry[i].clk_name, rc);
-> -					break;
-> -				}
-> -			}
-> -		} else {
-> -			DEV_ERR("%pS->%s: '%s' is not available\n",
-> -				__builtin_return_address(0), __func__,
-> -				clk_arry[i].clk_name);
-> -			rc = -EPERM;
-> -			break;
-> -		}
-> -	}
-> -
-> -	return rc;
-> -}
-> -
-> -int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable)
-> -{
-> -	int i, rc = 0;
-> -
-> -	if (enable) {
-> -		for (i = 0; i < num_clk; i++) {
-> -			DEV_DBG("%pS->%s: enable '%s'\n",
-> -				__builtin_return_address(0), __func__,
-> -				clk_arry[i].clk_name);
-> -			rc = clk_prepare_enable(clk_arry[i].clk);
-> -			if (rc)
-> -				DEV_ERR("%pS->%s: %s en fail. rc=%d\n",
-> -					__builtin_return_address(0),
-> -					__func__,
-> -					clk_arry[i].clk_name, rc);
-> -
-> -			if (rc && i) {
-> -				msm_dss_enable_clk(&clk_arry[i - 1],
-> -					i - 1, false);
-> -				break;
-> -			}
-> -		}
-> -	} else {
-> -		for (i = num_clk - 1; i >= 0; i--) {
-> -			DEV_DBG("%pS->%s: disable '%s'\n",
-> -				__builtin_return_address(0), __func__,
-> -				clk_arry[i].clk_name);
-> -
-> -			clk_disable_unprepare(clk_arry[i].clk);
-> -		}
-> -	}
-> -
-> -	return rc;
-> -}
-> diff --git a/drivers/gpu/drm/msm/dp/dp_clk_util.h b/drivers/gpu/drm/msm/dp/dp_clk_util.h
-> deleted file mode 100644
-> index 6288a2833a58..000000000000
-> --- a/drivers/gpu/drm/msm/dp/dp_clk_util.h
-> +++ /dev/null
-> @@ -1,38 +0,0 @@
-> -/* SPDX-License-Identifier: GPL-2.0-only */
-> -/* Copyright (c) 2012, 2017-2018, The Linux Foundation. All rights reserved.
-> - */
-> -
-> -#ifndef __DPU_IO_UTIL_H__
-> -#define __DPU_IO_UTIL_H__
-> -
-> -#include <linux/platform_device.h>
-> -#include <linux/types.h>
-> -
-> -#define DEV_DBG(fmt, args...)   pr_debug(fmt, ##args)
-> -#define DEV_INFO(fmt, args...)  pr_info(fmt, ##args)
-> -#define DEV_WARN(fmt, args...)  pr_warn(fmt, ##args)
-> -#define DEV_ERR(fmt, args...)   pr_err(fmt, ##args)
-> -
-> -enum dss_clk_type {
-> -	DSS_CLK_AHB, /* no set rate. rate controlled through rpm */
-> -	DSS_CLK_PCLK,
-> -};
-> -
-> -struct dss_clk {
-> -	struct clk *clk; /* clk handle */
-> -	char clk_name[32];
-> -	enum dss_clk_type type;
-> -	unsigned long rate;
-> -	unsigned long max_rate;
-> -};
-> -
-> -struct dss_module_power {
-> -	unsigned int num_clk;
-> -	struct dss_clk *clk_config;
-> -};
-> -
-> -int msm_dss_get_clk(struct device *dev, struct dss_clk *clk_arry, int num_clk);
-> -void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk);
-> -int msm_dss_clk_set_rate(struct dss_clk *clk_arry, int num_clk);
-> -int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable);
-> -#endif /* __DPU_IO_UTIL_H__ */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 62e75dc8afc6..e9a4d6c32f57 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1289,20 +1289,19 @@ static int dp_ctrl_setup_main_link(struct dp_ctrl_private *ctrl,
->   static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
->   			enum dp_pm_type module, char *name, unsigned long rate)
->   {
-> +	u32 i;
->   	u32 num = ctrl->parser->mp[module].num_clk;
-> -	struct dss_clk *cfg = ctrl->parser->mp[module].clk_config;
-> -
-> -	while (num && strcmp(cfg->clk_name, name)) {
-> -		num--;
-> -		cfg++;
-> -	}
->   
->   	DRM_DEBUG_DP("setting rate=%lu on clk=%s\n", rate, name);
->   
-> -	if (num)
-> -		cfg->rate = rate;
-> -	else
-> -		DRM_ERROR("%s clock doesn't exit to set rate %lu\n",
-> +	for (i = 0; i < num; i++) {
-> +		if (!strcmp(ctrl->parser->mp[module].clocks[i].id, name)) {
-> +			ctrl->parser->mp[module].clk_config[i].rate = rate;
-> +			return;
-> +		}
-> +	}
-> +
-> +	DRM_ERROR("%s clock doesn't exit to set rate %lu\n",
->   				name, rate);
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index a7acc23f742b..0fe726913b4e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -162,6 +162,11 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
->   	}
->   
->   	core_power->num_clk = core_clk_count;
-> +	core_power->clocks = devm_kcalloc(dev,
-> +			core_power->num_clk, sizeof(struct clk_bulk_data),
-> +			GFP_KERNEL);
-> +	if (!core_power->clocks)
-> +		return -ENOMEM;
->   	core_power->clk_config = devm_kzalloc(dev,
->   			sizeof(struct dss_clk) * core_power->num_clk,
->   			GFP_KERNEL);
-> @@ -175,6 +180,11 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
->   	}
->   
->   	ctrl_power->num_clk = ctrl_clk_count;
-> +	ctrl_power->clocks = devm_kcalloc(dev,
-> +			ctrl_power->num_clk, sizeof(struct clk_bulk_data),
-> +			GFP_KERNEL);
-> +	if (!ctrl_power->clocks)
-> +		return -ENOMEM;
->   	ctrl_power->clk_config = devm_kzalloc(dev,
->   			sizeof(struct dss_clk) * ctrl_power->num_clk,
->   			GFP_KERNEL);
-> @@ -190,6 +200,11 @@ static int dp_parser_init_clk_data(struct dp_parser *parser)
->   	}
->   
->   	stream_power->num_clk = stream_clk_count;
-> +	stream_power->clocks = devm_kcalloc(dev,
-> +			stream_power->num_clk, sizeof(struct clk_bulk_data),
-> +			GFP_KERNEL);
-> +	if (!stream_power->clocks)
-> +		return -ENOMEM;
->   	stream_power->clk_config = devm_kzalloc(dev,
->   			sizeof(struct dss_clk) * stream_power->num_clk,
->   			GFP_KERNEL);
-> @@ -236,21 +251,21 @@ static int dp_parser_clock(struct dp_parser *parser)
->   				core_clk_index < core_clk_count) {
->   			struct dss_clk *clk =
->   				&core_power->clk_config[core_clk_index];
-> -			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
-> +			core_power->clocks[i].id = devm_kstrdup(dev, clk_name, GFP_KERNEL);
->   			clk->type = DSS_CLK_AHB;
->   			core_clk_index++;
->   		} else if (dp_parser_check_prefix("stream", clk_name) &&
->   				stream_clk_index < stream_clk_count) {
->   			struct dss_clk *clk =
->   				&stream_power->clk_config[stream_clk_index];
-> -			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
-> +			stream_power->clocks[i].id = devm_kstrdup(dev, clk_name, GFP_KERNEL);
->   			clk->type = DSS_CLK_PCLK;
->   			stream_clk_index++;
->   		} else if (dp_parser_check_prefix("ctrl", clk_name) &&
->   			   ctrl_clk_index < ctrl_clk_count) {
->   			struct dss_clk *clk =
->   				&ctrl_power->clk_config[ctrl_clk_index];
-> -			strlcpy(clk->clk_name, clk_name, sizeof(clk->clk_name));
-> +			ctrl_power->clocks[i].id = devm_kstrdup(dev, clk_name, GFP_KERNEL);
->   			ctrl_clk_index++;
->   			if (dp_parser_check_prefix("ctrl_link", clk_name) ||
->   			    dp_parser_check_prefix("stream_pixel", clk_name))
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 094b39bfed8c..f16072f33cdb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -10,7 +10,6 @@
->   #include <linux/phy/phy.h>
->   #include <linux/phy/phy-dp.h>
->   
-> -#include "dp_clk_util.h"
->   #include "msm_drv.h"
->   
->   #define DP_LABEL "MDSS DP DISPLAY"
-> @@ -106,6 +105,22 @@ struct dp_regulator_cfg {
->   	struct dp_reg_entry regs[DP_DEV_REGULATOR_MAX];
->   };
->   
-> +enum dss_clk_type {
-> +	DSS_CLK_AHB, /* no set rate. rate controlled through rpm */
-> +	DSS_CLK_PCLK,
-> +};
-> +
-> +struct dss_clk {
-> +	enum dss_clk_type type;
-> +	unsigned long rate;
-> +};
-> +
-> +struct dss_module_power {
-> +	unsigned int num_clk;
-> +	struct clk_bulk_data *clocks;
-> +	struct dss_clk *clk_config;
-> +};
-> +
->   /**
->    * struct dp_parser - DP parser's data exposed to clients
->    *
-> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-> index b48b45e92bfa..87683071868d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_power.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
-> @@ -105,72 +105,69 @@ static int dp_power_clk_init(struct dp_power_private *power)
->   	ctrl = &power->parser->mp[DP_CTRL_PM];
->   	stream = &power->parser->mp[DP_STREAM_PM];
->   
-> -	rc = msm_dss_get_clk(dev, core->clk_config, core->num_clk);
-> +	rc = devm_clk_bulk_get(dev, core->num_clk, core->clocks);
->   	if (rc) {
->   		DRM_ERROR("failed to get %s clk. err=%d\n",
->   			dp_parser_pm_name(DP_CORE_PM), rc);
->   		return rc;
->   	}
->   
-> -	rc = msm_dss_get_clk(dev, ctrl->clk_config, ctrl->num_clk);
-> +	rc = devm_clk_bulk_get(dev, ctrl->num_clk, ctrl->clocks);
->   	if (rc) {
->   		DRM_ERROR("failed to get %s clk. err=%d\n",
->   			dp_parser_pm_name(DP_CTRL_PM), rc);
-> -		msm_dss_put_clk(core->clk_config, core->num_clk);
->   		return -ENODEV;
->   	}
->   
-> -	rc = msm_dss_get_clk(dev, stream->clk_config, stream->num_clk);
-> +	rc = devm_clk_bulk_get(dev, stream->num_clk, stream->clocks);
->   	if (rc) {
->   		DRM_ERROR("failed to get %s clk. err=%d\n",
->   			dp_parser_pm_name(DP_CTRL_PM), rc);
-> -		msm_dss_put_clk(core->clk_config, core->num_clk);
->   		return -ENODEV;
->   	}
->   
->   	return 0;
->   }
->   
-> -static int dp_power_clk_deinit(struct dp_power_private *power)
-> +static int dp_power_clk_set_link_rate(struct dp_power_private *power,
-> +			struct dss_clk *clk_arry, int num_clk, int enable)
->   {
-> -	struct dss_module_power *core, *ctrl, *stream;
-> -
-> -	core = &power->parser->mp[DP_CORE_PM];
-> -	ctrl = &power->parser->mp[DP_CTRL_PM];
-> -	stream = &power->parser->mp[DP_STREAM_PM];
-> +	u32 rate;
-> +	int i, rc = 0;
->   
-> -	if (!core || !ctrl || !stream) {
-> -		DRM_ERROR("invalid power_data\n");
-> -		return -EINVAL;
-> +	for (i = 0; i < num_clk; i++) {
-> +		if (clk_arry[i].type == DSS_CLK_PCLK) {
-> +			if (enable)
-> +				rate = clk_arry[i].rate;
-> +			else
-> +				rate = 0;
-> +
-> +			rc = dev_pm_opp_set_rate(power->dev, rate);
-> +			if (rc)
-> +				break;
-> +		}
->   	}
-> -
-> -	msm_dss_put_clk(ctrl->clk_config, ctrl->num_clk);
-> -	msm_dss_put_clk(core->clk_config, core->num_clk);
-> -	msm_dss_put_clk(stream->clk_config, stream->num_clk);
-> -	return 0;
-> +	return rc;
->   }
->   
-> -static int dp_power_clk_set_link_rate(struct dp_power_private *power,
-> -			struct dss_clk *clk_arry, int num_clk, int enable)
-> +static int dp_clk_set_rate(struct dss_module_power *mp)
->   {
-> -	u32 rate;
->   	int i, rc = 0;
-> +	struct dss_clk *clk_arry = mp->clk_config;
->   
-> -	for (i = 0; i < num_clk; i++) {
-> -		if (clk_arry[i].clk) {
-> -			if (clk_arry[i].type == DSS_CLK_PCLK) {
-> -				if (enable)
-> -					rate = clk_arry[i].rate;
-> -				else
-> -					rate = 0;
-> -
-> -				rc = dev_pm_opp_set_rate(power->dev, rate);
-> -				if (rc)
-> -					break;
-> +	for (i = 0; i < mp->num_clk; i++) {
-> +		if (clk_arry[i].type != DSS_CLK_AHB) {
-> +			rc = clk_set_rate(mp->clocks[i].clk, mp->clk_config[i].rate);
-> +			if (rc) {
-> +				DRM_ERROR("%pS->%s: %s failed. rc=%d\n",
-> +						__builtin_return_address(0),
-> +						__func__,
-> +						mp->clocks[i].id, rc);
-> +				break;
->   			}
-> -
->   		}
->   	}
-> +
->   	return rc;
->   }
->   
-> @@ -189,7 +186,7 @@ static int dp_power_clk_set_rate(struct dp_power_private *power,
->   	} else {
->   
->   		if (enable) {
-> -			rc = msm_dss_clk_set_rate(mp->clk_config, mp->num_clk);
-> +			rc = dp_clk_set_rate(mp);
->   			if (rc) {
->   				DRM_ERROR("failed to set clks rate\n");
->   				return rc;
-> @@ -197,10 +194,14 @@ static int dp_power_clk_set_rate(struct dp_power_private *power,
->   		}
->   	}
->   
-> -	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, enable);
-> -	if (rc) {
-> -		DRM_ERROR("failed to %d clks, err: %d\n", enable, rc);
-> -		return rc;
-> +	if (enable) {
-> +		rc = clk_bulk_prepare_enable(mp->num_clk, mp->clocks);
-> +		if (rc) {
-> +			DRM_ERROR("failed to enable clks, err: %d\n", rc);
-> +			return rc;
-> +		}
-> +	} else {
-> +		clk_bulk_disable_unprepare(mp->num_clk, mp->clocks);
->   	}
->   
->   	return 0;
-> @@ -336,9 +337,7 @@ void dp_power_client_deinit(struct dp_power *dp_power)
->   
->   	power = container_of(dp_power, struct dp_power_private, dp_power);
->   
-> -	dp_power_clk_deinit(power);
->   	pm_runtime_disable(&power->pdev->dev);
-> -
->   }
->   
->   int dp_power_init(struct dp_power *dp_power, bool flip)
 
+I've yet to debug this, but applying the two patches and attaching an
+HDMI cable to my USB dongle results in the follwing splat on the 8350
+HDK.
 
--- 
-With best wishes
-Dmitry
+[   39.658840] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[   39.667883] Mem abort info:
+[   39.670774]   ESR = 0x96000006
+[   39.673940]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   39.679417]   SET = 0, FnV = 0
+[   39.682582]   EA = 0, S1PTW = 0
+[   39.685825]   FSC = 0x06: level 2 translation fault
+[   39.690851] Data abort info:
+[   39.693838]   ISV = 0, ISS = 0x00000006
+[   39.697797]   CM = 0, WnR = 0
+[   39.700864] user pgtable: 4k pages, 48-bit VAs, pgdp=000000010eb8d000
+[   39.707501] [0000000000000000] pgd=080000010f097003, p4d=080000010f097003, pud=080000010ba58003, pmd=0000000000000000
+[   39.718425] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+[   39.724169] Modules linked in: pmic_glink_altmode qcom_pmic_glink_power cfg80211 rfkill 8021q garp mrp stp llc microchip lan78xx snd_soc_hdmi_codec pmic_glink pdr_interface rpmsg_char qrtr_smd qrtr fsa4480 qcom_q6v5_pas qcom_pil_info i2c_qcom_geni qcom_q6v5 msm qcom_sysmon qcom_stats gpu_sched crct10dif_ce drm_kms_helper qcom_common qcom_glink_smem gpucc_sm8350 phy_qcom_qmp mdt_loader typec ufs_qcom qmi_helpers qcom_rng socinfo qnoc_sm8350 rmtfs_mem fuse drm ipv6
+[   39.766330] CPU: 0 PID: 85 Comm: kworker/0:3 Not tainted 5.16.0-rc5-next-20211215-00046-g2f90133452d9 #280
+[   39.776256] Hardware name: Qualcomm Technologies, Inc. SM8350 HDK (DT)
+[   39.782969] Workqueue: events pmic_glink_altmode_worker [pmic_glink_altmode]
+[   39.790235] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   39.797393] pc : __pi_strcmp+0x1c/0xf0
+[   39.801271] lr : dp_ctrl_set_clock_rate+0x8c/0xf0 [msm]
+[   39.806737] sp : ffff800008adbbc0
+[   39.810153] x29: ffff800008adbbc0 x28: 0000000000000000 x27: 0000000000000000
+[   39.817501] x26: ffffb60107f74270 x25: ffff297a49b33c80 x24: 00000000202fbf00
+[   39.824846] x23: 0000000000000001 x22: ffff297a4b400580 x21: 0000000000000020
+[   39.832188] x20: ffffb600e3d78068 x19: 0000000000000000 x18: ffffffffffffffff
+[   39.839541] x17: 6b6c63206e6f2030 x16: ffffb601063476c0 x15: 0720072007200720
+[   39.846893] x14: 0720072007200720 x13: ffffb60107c622c8 x12: 0000000000000765
+[   39.854229] x11: 0000000000000277 x10: 0101010101010101 x9 : ffffb60107c622c8
+[   39.861565] x8 : 00000000ffffefff x7 : 0000000000000000 x6 : ffffb60107cba2c8
+[   39.868902] x5 : 0000000000000000 x4 : ffff297cbe8619d8 x3 : 0000000000000000
+[   39.876240] x2 : 0000000000000000 x1 : ffffb600e3d78068 x0 : 0000000000000000
+[   39.883594] Call trace:
+[   39.886124]  __pi_strcmp+0x1c/0xf0
+[   39.889638]  dp_ctrl_enable_mainlink_clocks+0x98/0x110 [msm]
+[   39.895537]  dp_ctrl_on_link+0x98/0x3f0 [msm]
+[   39.900096]  dp_display_process_hpd_high+0xa8/0x100 [msm]
+[   39.905731]  dp_display_usbpd_attention_cb+0x164/0x1a4 [msm]
+[   39.911629]  dp_hpd_oob_event+0x74/0xa4 [msm]
+[   39.916195]  dp_display_oob_hotplug_event+0x1c/0x2c [msm]
+[   39.921831]  dp_oob_hotplug_event+0x18/0x24 [msm]
+[   39.926756]  drm_connector_oob_hotplug_event+0x40/0x60 [drm]
+[   39.932686]  pmic_glink_altmode_worker+0x7c/0x194 [pmic_glink_altmode]
+[   39.939398]  process_one_work+0x1d0/0x350
+[   39.943526]  worker_thread+0x13c/0x460
+[   39.947390]  kthread+0x17c/0x190
+[   39.950722]  ret_from_fork+0x10/0x20
+[   39.954416] Code: f24008ff 540003e1 f2400807 54000241 (f8408402)
+[   39.960684] ---[ end trace 0000000000000000 ]---
+
+Regards,
+Bjorn
