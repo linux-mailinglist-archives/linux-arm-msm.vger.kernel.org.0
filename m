@@ -2,90 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB600481486
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 16:41:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E4E648158F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Dec 2021 18:04:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240592AbhL2PlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Dec 2021 10:41:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50562 "EHLO
+        id S240940AbhL2REd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Dec 2021 12:04:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240589AbhL2PlW (ORCPT
+        with ESMTP id S237582AbhL2REc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Dec 2021 10:41:22 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B9A4C06173E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 07:41:22 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id t23so35493785oiw.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 07:41:22 -0800 (PST)
+        Wed, 29 Dec 2021 12:04:32 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C02DFC061748
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 09:04:31 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id j21so88452835edt.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 09:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=k8xcoM08aGsQ9cgOiWILeKp3rFeqCGSS3Z+ipGXVLHU=;
-        b=rwvDoEk/kN13V2PMeafxRzr64jH39i+khURkn4NYSnLlyLDE/zubrsMHorgomf5ZdW
-         ofdrt4LcayFTFAIXQ218p3IxCVFu/IKFBucpaYzXAsWKTEWAyzrI+OrMwYp9SR02kxXG
-         YBDmORwtu8QGG6Y5Cg2QDtFrQivrTANYT33g+6TKqV4zbbo/4P8QdULaRtc7cQdpax1Z
-         4NvEKbWPnXyVXrcyQ8e18xEppjuy694uWVwou/u/tJFYsiwVfPK/ZmOISZlJo/HjD0Mu
-         0hfN5DDDwSvPuHXaaNVQttJq7LNjVZ/QjvKY9Bqc72QaCwuu+ojUEm/uCESmSH8imDI8
-         5rJQ==
+        d=fairphone.com; s=fair;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2ieMbS+0D70pohooVgVjI3yQAHsrI5Yv9aY0un0BvWo=;
+        b=xhe6pIARJ6nLxgaxAop08bsGSZx7Kd1UHcvKv5ZPM0idYz9aF0B/bEfVlj/jBvPEtv
+         EL+qyUCy17ZT5uW1wjT7/JjXHAAC22rkvHyo8Q2cuyrY5hEzFKU2LMuuPt/bEIBXMBcZ
+         tsfJiiDsS97+WiMnMJrXiLSA/kDkYo4uhIiyzdEA4TAXXm+x7BPiFOBCbj5/VlAqsAvE
+         2Mltoe9ZvCTgvetpz3GsLVq+0zFxvjuXZA2zLJaeFXQ4D/LPhmRyDvt4ZbQ8WqyNT3Lo
+         IxkocrOxDq6U1n3AjNJu8e61H14NFTitTuJYG3isHVjxir78T+h2tld3qMIe4PnoIXv3
+         MtWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k8xcoM08aGsQ9cgOiWILeKp3rFeqCGSS3Z+ipGXVLHU=;
-        b=2bIIchG6F2nQjPLjGdl3pzIetEka2kEZ4ERTpPaVzoU7K9An0FpL0Ll6CSJrkIO+/9
-         lDC3pMl28YUo/xOVdAvsyFzRjR6I4PCJuEwiccyMTFbLbEXmp9r8P+aONy381EwWfrcI
-         dGrqv3HQhlb6DiwBCLxH15RSHHNOZJA0zTTk59l2cAo3a5UUtc/3/g9XLwwUHkjSvA8k
-         S5eEeij5C5l+edbBfxtabvtYDKDbkaVk+MLr2t567ldv6ElWBT6Iza8TukoUvfCbigqP
-         cIwOVuKicspA/2pk5/TInC0xTJhTtxBJ7Sn5/dbYJ6+PZXVU/T8mjJswSyZaLSBSPx6X
-         xEIg==
-X-Gm-Message-State: AOAM532PKVHXIRENyGgUCCmi8tmrUO6JMULJqmM4+zYee5FEWnmNZIFF
-        UFi21iRj/ggPjBybT5x+kSYQvg==
-X-Google-Smtp-Source: ABdhPJwJUr/fpObTJMHPrT/NkF6fQxl07QYgOqC8iAwJuKY/YU1wquZM9/dXbiKugVMhqjvafFZ8sA==
-X-Received: by 2002:a05:6808:1396:: with SMTP id c22mr21870052oiw.59.1640792481997;
-        Wed, 29 Dec 2021 07:41:21 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k101sm3988166otk.60.2021.12.29.07.41.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=2ieMbS+0D70pohooVgVjI3yQAHsrI5Yv9aY0un0BvWo=;
+        b=qZtXN7lti49ZCkb5MK2MgBQLGinUGOuU08K9f/QLL6x6VDnUp4WPDlA7uB6E3j7M3+
+         0caUbvn8LH8EASJIB0AxFaD8bq3o1NSnAjzfEfIEtbTS5XpDtulJaVLxC4QkGmqkUvYD
+         /zQH21WKW/mpq2L1r8bdb4Z/jmIwYmZZK2n7pH9vElXVNTtlz0sJaL1NSVOJkqubrYbA
+         QpDZn02MMUs1qf1bq2bIlMed3HjGQ1O27fkJZOyhQcbpJ0QbOy4V3Bqn0+SNJmt72qt9
+         XUXX9X0soJIPpz0+0BUA6Z12T/Mq7FS3lcPvhuo4xU3G+QWkZMCRBWlGCyZo1H9Y04of
+         8IQg==
+X-Gm-Message-State: AOAM531ofJSDF3t+Dwhk8C3LCUlYgHVqvJ9z9iDz/UkNrjylsUc/G5me
+        quG0E886zDqT0HW39UApG5ygWTXAXz0bwddN
+X-Google-Smtp-Source: ABdhPJxEun8C2Rz5QYSsXiRo78geOqzPnu/l72Y9HBWwUVyyAPVjgqYpYhJYTw9hG0hiFAmsYo+q8Q==
+X-Received: by 2002:aa7:c5ca:: with SMTP id h10mr25978582eds.401.1640797469905;
+        Wed, 29 Dec 2021 09:04:29 -0800 (PST)
+Received: from localhost.localdomain ([2a02:a210:20c5:8c80:7d0a:cd68:c339:f426])
+        by smtp.gmail.com with ESMTPSA id w11sm8546153edv.65.2021.12.29.09.04.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Dec 2021 07:41:21 -0800 (PST)
-Date:   Wed, 29 Dec 2021 07:42:19 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     20200622075956.171058-5-bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Baolin Wang <baolin.wang7@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm8250: Drop tcsr_mutex syscon
-Message-ID: <YcyB21OI0GVhNmQJ@ripper>
-References: <JWEO4R.7M77VCZXYS531@ixit.cz>
+        Wed, 29 Dec 2021 09:04:29 -0800 (PST)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        linux-fbdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-leds@vger.kernel.org
+Subject: [PATCH 0/4] Enable display backlight on Fairphone 4
+Date:   Wed, 29 Dec 2021 18:03:54 +0100
+Message-Id: <20211229170358.2457006-1-luca.weiss@fairphone.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <JWEO4R.7M77VCZXYS531@ixit.cz>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 25 Dec 06:57 PST 2021, David Heidelberg wrote:
+Add and enable PM6150L wled which is used for controlling the display
+backlight on Fairphone 4.
 
-> Hello,
-> 
-> any particular reason, why you did applied this patch only to sm8250?
-> 
+This series depends on the recent wled series by Marijn Suijten,
+currently applied in the for-backlight-next branch of
+kernel/git/lee/backlight.git (or linux-next).
 
-I was working on a 8250 board when this annoyed me, and I wanted to keep
-the "example" clean so I only did that platform and then forgot to go
-back and clean up the rest. (Same thing with the smem compatible moving
-to reserved-memory).
+Luca Weiss (4):
+  dt-bindings: backlight: qcom-wled: Add PM6150L compatible
+  backlight: qcom-wled: Add PM6150L compatible
+  arm64: dts: qcom: pm6150l: Add wled node
+  arm64: dts: qcom: sm7225-fairphone-fp4: Configure WLED
 
-> Is it safe to convert rest of tcsr-mutex nodes to new schema without
-> additional testing?
-> 
+ .../devicetree/bindings/leds/backlight/qcom-wled.yaml  |  1 +
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi                  | 10 ++++++++++
+ arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts      |  9 +++++++++
+ drivers/video/backlight/qcom-wled.c                    |  1 +
+ 4 files changed, 21 insertions(+)
 
-I can't think of any reason it wouldn't be safe, so please feel free to
-prepare a patch.
+-- 
+2.34.1
 
-Thanks,
-Bjorn
