@@ -2,102 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B57C481BC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 12:42:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E71D3481CB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 15:01:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235359AbhL3LmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Dec 2021 06:42:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58920 "EHLO
+        id S235821AbhL3OBD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Dec 2021 09:01:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235195AbhL3LmJ (ORCPT
+        with ESMTP id S234755AbhL3OBC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Dec 2021 06:42:09 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B328C061574;
-        Thu, 30 Dec 2021 03:42:09 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id u16so18064622plg.9;
-        Thu, 30 Dec 2021 03:42:09 -0800 (PST)
+        Thu, 30 Dec 2021 09:01:02 -0500
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14624C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 06:01:02 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id o10so22139455qvc.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 06:01:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id;
-        bh=/2GJveFYsVaUlKyHZdp6crFhqF80gEKGhbqZmnuCaPw=;
-        b=ejmeQXi5v7W71useZlfjfwzFxkxvM1kP7DwvtcTupW3abw6ntYvZSeCDvTvBfDr6rD
-         J7n569pNY4TVJauADBeMO0a58S/TwG1GBs3ffyk+e8m5ZgE5CixUEZpdIzqFlXPG+bAH
-         nk32QjcaPju2vdFe/OIih0/wNBavRPTrwWeFQljYboic3cktf0/Dtu0lrzIY2mvOobaa
-         I6hLRhU+bYCGPvtw1Q6uTKBwp1d4MgqfDj0c3Q58aoPE6aMq4zFx3EnVJAmSaKTSX7Q6
-         oHi+xCN/AsMQfPSADLHdrX6QRhAWTl5Vrm22Qr3ZwSUeafN/ENvg74hWt7qs/YjPUSwp
-         ZFYw==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DARIRUyKixjDrkgi6thwAX0I/tkeXzUp7pYBAMvHcik=;
+        b=o+4Ko9dlc80surFGX5vVwGzb5c0ETDQSkrNniT1RhUajJtbke5ejdnEQdrpYRC2aih
+         VWkRLiWRv9geVnd/zJTopRXySrnbVMRrlTYvdgaZH7t93PLF9Rbx8xtjaTfjXv594UbL
+         b7zNCmyRS0OzMiCVTL/0r03bd4toCRyvgXvdOerFJretUUJkg9UeZ7ET5Wn4xVrrtdOI
+         pLYqPJEgU8XsxsfOB+Mra2infcJhM/cQY8/pJKqp6FbSq7IMjsVA8SkY6/zkDzJATRKo
+         9OdzEvSbw9TO/yiYrJ9PI8ogruGMkPYuCnmejWNy299fPZQSylEnBcAg0jQWZo3jeI92
+         xIEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/2GJveFYsVaUlKyHZdp6crFhqF80gEKGhbqZmnuCaPw=;
-        b=nKz8xnhDF3VLuc3JF54ozUrT41sLORTHSh1mBRujIUihX4rUM32qI08IWxric7sAfS
-         Hub1uoCLwlshlrWa+p1v/tgHAR72QCKJosLHeQZMwsO0K801r7xYqgd6VssXxm55fSun
-         mdLhCQao+ST7LwcTbOiHYMDKcaqerp/wqCA5lI956u1n7c1jHv+6a26JwajfJn7ukpeK
-         8VSKRgt3qWP5sQTxq1Wmh8Q99bvHxeOcja+3W9Bh0VMczltrAdAidBPO+BpRsXwHVJ+W
-         Jsx+vYfBBGeBcUSZahZbf7BWGXQorDDUGs9NTNKu3EIbXniWXu1deJcth3eq86fEpdZX
-         tAZg==
-X-Gm-Message-State: AOAM531aNNy599FDtVZZ/caUXmMrFjeMoy9dlEvlHD8OdqtuE0P9fkdt
-        x/po9kk9VcAqSulSJC/JWB8Mxb2/AttiKmPXCtw=
-X-Google-Smtp-Source: ABdhPJz6MwEuYN2+6s3o7RaQLmfYGH7X11lcFjXo8ZW4cYY7etouGrgDssFxE12vtlb+FIrJSDflOg==
-X-Received: by 2002:a17:902:ea0f:b0:149:3fdd:1090 with SMTP id s15-20020a170902ea0f00b001493fdd1090mr30038430plg.43.1640864528698;
-        Thu, 30 Dec 2021 03:42:08 -0800 (PST)
-Received: from localhost.localdomain ([159.226.95.43])
-        by smtp.googlemail.com with ESMTPSA id c9sm22932631pfc.61.2021.12.30.03.42.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Dec 2021 03:42:08 -0800 (PST)
-From:   Miaoqian Lin <linmq006@gmail.com>
-Cc:     linmq006@gmail.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] cpuidle: qcom_spm: Fix missing put_device() call in spm_cpuidle_register
-Date:   Thu, 30 Dec 2021 11:42:03 +0000
-Message-Id: <20211230114203.13467-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.17.1
-To:     unlisted-recipients:; (no To-header on input)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DARIRUyKixjDrkgi6thwAX0I/tkeXzUp7pYBAMvHcik=;
+        b=zzhbY1akzrOeols67qdoOPS1wSSp8BpiLo3pzP1ntxc9nY86TjU+NLSL9xvps/ZfYe
+         ziMwpvUHoENaXeQ18qPfMacOgyzLOQGJUjIVb/xwGIIm77dLijWQEeDIMxWHjnSTinYR
+         s14P0ax3Kv8pzvOY2xBchHj+EaCr8gCc87+im5FswerHntdCG4DboNPdK7Lv63tkJLN4
+         RRkGpbDtP+4Kc/xxkZP2rF4nGHBErngzY9X8AQag49LhqPwyGJ9zX+xcXxMaGsOAfdLz
+         j+ZRhFUUMpNMWhMa21Sc66YZVLs4BSqjCWgDdob4d0HZuiXnvxYmEHi3GSxeMwTNR3AO
+         ff/Q==
+X-Gm-Message-State: AOAM533HWsjc3u/fUALPGLTNJ1gYEQ0/zCRcIsPZimtKlqV1PV8xpBg/
+        icrAdGY7R3h6D3DNq/nvcJVz8S9IYDFeBLinthmdBg==
+X-Google-Smtp-Source: ABdhPJzI5hJNYB9BiClkHNkpWJpsy0r+CCHtNuPM3lBUlcbQsrm/hksxpm6NB1KIf4ASty1FzjWa3Th+WWHhWw7Y8XA=
+X-Received: by 2002:a05:6214:260b:: with SMTP id gu11mr27691426qvb.55.1640872860787;
+ Thu, 30 Dec 2021 06:01:00 -0800 (PST)
+MIME-Version: 1.0
+References: <1640856276-14697-1-git-send-email-quic_rajeevny@quicinc.com> <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
+In-Reply-To: <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 30 Dec 2021 17:00:49 +0300
+Message-ID: <CAA8EJpptEvS6Y+MEX=VxmUSf1=GAp_oV5PWCCGUzMYP13_QsRg@mail.gmail.com>
+Subject: Re: [v1 1/2] dt-bindings: msm/dsi: Add 10nm dsi phy tuning properties
+To:     Rajeev Nandan <quic_rajeevny@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
+        robh+dt@kernel.org, robh@kernel.org, quic_abhinavk@quicinc.com,
+        quic_kalyant@quicinc.com, quic_mkrishn@quicinc.com,
+        jonathan@marek.ca, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The reference taken by 'of_find_device_by_node()' must be released when
-not needed anymore.
-Add the corresponding 'put_device()' in the error handling paths.
+On Thu, 30 Dec 2021 at 12:25, Rajeev Nandan <quic_rajeevny@quicinc.com> wrote:
+>
+> Add 10nm dsi phy tuning properties for phy drive strength and
+> phy drive level adjustemnt.
+>
+> Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
+> ---
+>  .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> index 4399715..9406982 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> @@ -35,6 +35,18 @@ properties:
+>        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+>        connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+>
+> +  phy-drive-strength-cfg:
+> +    type: array
+> +    description:
+> +      Register values of DSIPHY_RESCODE_OFFSET_TOP and DSIPHY_RESCODE_OFFSET_BOT
+> +      for all five lanes to adjust the phy drive strength.
+> +
+> +  phy-drive-level-cfg:
+> +    type: array
+> +    description:
+> +      Register values of DSIPHY_RESCODE_OFFSET_TOP for all five lanes to adjust
+> +      phy drive level/amplitude.
 
-Fixes: 60f3692 ("cpuidle: qcom_spm: Detach state machine from main SPM handling")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
- drivers/cpuidle/cpuidle-qcom-spm.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
-index 01e77913a414..6638c1de90c3 100644
---- a/drivers/cpuidle/cpuidle-qcom-spm.c
-+++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-@@ -107,12 +107,16 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
- 		return -ENODEV;
- 
- 	data = devm_kzalloc(cpuidle_dev, sizeof(*data), GFP_KERNEL);
--	if (!data)
-+	if (!data) {
-+		put_device(&pdev->dev);
- 		return -ENOMEM;
-+	}
- 
- 	data->spm = dev_get_drvdata(&pdev->dev);
--	if (!data->spm)
-+	if (!data->spm) {
-+		put_device(&pdev->dev);
- 		return -EINVAL;
-+	}
- 
- 	data->cpuidle_driver = qcom_spm_idle_driver;
- 	data->cpuidle_driver.cpumask = (struct cpumask *)cpumask_of(cpu);
+Description is incorrect, it's not the RESCODE_OFFSET_TOP register.
+
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -64,5 +76,12 @@ examples:
+>           clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>                    <&rpmhcc RPMH_CXO_CLK>;
+>           clock-names = "iface", "ref";
+> +
+> +         phy-drive-strength-cfg = [00 00
+> +                                   00 00
+> +                                   00 00
+> +                                   00 00
+> +                                   00 00];
+> +         phy-drive-level-cfg = [59 59 59 59 59];
+
+You are writing this value into the PHY_CMN_VREG_CTRL register. So
+specifying 5 values here does not make sense.
+
+>       };
+>  ...
+> --
+> 2.7.4
+>
+
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
