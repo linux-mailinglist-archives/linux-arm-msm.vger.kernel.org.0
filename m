@@ -2,119 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5582481CE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 15:14:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 55F1B481D00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 15:26:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239905AbhL3OOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Dec 2021 09:14:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36120 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239904AbhL3OOq (ORCPT
+        id S239972AbhL3O0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Dec 2021 09:26:53 -0500
+Received: from relay05.th.seeweb.it ([5.144.164.166]:50669 "EHLO
+        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239922AbhL3O0w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Dec 2021 09:14:46 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E7EC06173F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 06:14:45 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id e25so17028864qkl.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 06:14:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QIiHEJXmhVq0VBafG1mogzpPwrmMW4FruUD/NmecsX4=;
-        b=v2hIyW3mD6FmJ8nkeft+cv6KuVC1JDxtGiR2QFqmE90D7SaoYnF5CB/FKe3h9JwOyq
-         /I6mAjM/ssDxFxSSX7wxbUTseuVA4Zuj4iwEoAV7cdbqCjzZJfa+MvYLfMn2myxyq+cZ
-         Cp3qJdFlJth6krKQcCtQLgt17jme53BYOgvsoN5KAyfbvcafNi4bj5ejB3w2TFeyZPMH
-         Lgiw4wQZ7QipW3UrHtkF1Sq7x/beho5bu9SjSXqX+s1aAhPJ0ELi3+zd5n7TPHeVHe+N
-         4AE4Qlbew+zsjT60mRIGyW2N1jNoGoP8csJbdLLCzlfLR3tEC7SS3GVGbKNYHkZKHHMN
-         H03w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QIiHEJXmhVq0VBafG1mogzpPwrmMW4FruUD/NmecsX4=;
-        b=aO8TmboVdx0UVY2ytQYrZDk/ElUZMoEFyacRelMQuZlYMH9GKiegG4twaqrRneFT2F
-         pZQsIsw/W+836d4Lr4Sio7tAyXMaK5/Zhi58JyJFZyKh0id93btCwNuPjHXyYw+CcZRH
-         D4Q4MXLGxrX7CpeLmKDRHgepVlytsYz6j1Kq60p2Gr5DGA/otFUy3rFkpcfwvM8MGC17
-         M/OgW2wSzOX1ss+Hx7ATrvERJs9RAi3lc21gRGgA1saTDNplQPpNMl/VnqmzAyzd4gaI
-         6cnoJCyw/sFxmrwDXuHULrfSvh4S30BaboqmdHeazyR+k6b+xUUy7fCV1OHQgs0bGkOO
-         ML7Q==
-X-Gm-Message-State: AOAM533TEoiH6ky4o1/SFczzmlIieMf8z1eO5/71HHPSqY4WA7Ub3/XX
-        b0qkU+zHkpl/2GzL2VotOtBLK6E6DwpT0NTWvgEbgg==
-X-Google-Smtp-Source: ABdhPJwiPhF1WQpKvdE8hOeE3MBy5zy9jvFyDBDOF14ZRUSR7yDBFMcY79AZCN5Dj2E2nbfMQHBa9NJGEFhbiHTXthI=
-X-Received: by 2002:a37:b8b:: with SMTP id 133mr19734621qkl.59.1640873684877;
- Thu, 30 Dec 2021 06:14:44 -0800 (PST)
+        Thu, 30 Dec 2021 09:26:52 -0500
+Received: from [192.168.1.101] (83.6.168.106.neoplus.adsl.tpnet.pl [83.6.168.106])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C2D1B3F725;
+        Thu, 30 Dec 2021 15:26:49 +0100 (CET)
+Message-ID: <e6ac0b79-368b-41af-f20d-f58ddc02f05e@somainline.org>
+Date:   Thu, 30 Dec 2021 15:26:48 +0100
 MIME-Version: 1.0
-References: <1640856276-14697-1-git-send-email-quic_rajeevny@quicinc.com> <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
-In-Reply-To: <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 30 Dec 2021 17:14:34 +0300
-Message-ID: <CAA8EJppoe8ebU-yNKF6fbuDK4nf=09eNzVvaq_wQ+qKdjWEf4w@mail.gmail.com>
-Subject: Re: [v1 1/2] dt-bindings: msm/dsi: Add 10nm dsi phy tuning properties
-To:     Rajeev Nandan <quic_rajeevny@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
-        robh+dt@kernel.org, robh@kernel.org, quic_abhinavk@quicinc.com,
-        quic_kalyant@quicinc.com, quic_mkrishn@quicinc.com,
-        jonathan@marek.ca, airlied@linux.ie, daniel@ffwll.ch,
-        swboyd@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] clk: qcom: gcc-msm8994: Remove NoC clocks
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211230023101.1122588-1-konrad.dybcio@somainline.org>
+ <CAA8EJprR_eNiRTXOLnHzztbdH_RYj-+Po99b=7c2Asxvop+jtQ@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <CAA8EJprR_eNiRTXOLnHzztbdH_RYj-+Po99b=7c2Asxvop+jtQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Dec 2021 at 12:25, Rajeev Nandan <quic_rajeevny@quicinc.com> wrote:
->
-> Add 10nm dsi phy tuning properties for phy drive strength and
-> phy drive level adjustemnt.
->
-> Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
-> ---
->  .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> index 4399715..9406982 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-> @@ -35,6 +35,18 @@ properties:
->        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
->        connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
->
-> +  phy-drive-strength-cfg:
-> +    type: array
-> +    description:
-> +      Register values of DSIPHY_RESCODE_OFFSET_TOP and DSIPHY_RESCODE_OFFSET_BOT
-> +      for all five lanes to adjust the phy drive strength.
-> +
-> +  phy-drive-level-cfg:
-> +    type: array
-> +    description:
-> +      Register values of DSIPHY_RESCODE_OFFSET_TOP for all five lanes to adjust
-> +      phy drive level/amplitude.
-> +
->  required:
->    - compatible
->    - reg
-> @@ -64,5 +76,12 @@ examples:
->           clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
->                    <&rpmhcc RPMH_CXO_CLK>;
->           clock-names = "iface", "ref";
-> +
-> +         phy-drive-strength-cfg = [00 00
-> +                                   00 00
-> +                                   00 00
-> +                                   00 00
-> +                                   00 00];
-> +         phy-drive-level-cfg = [59 59 59 59 59];
 
-And second notice. This interface seems to be too register-centric.
-You provide register values without any actual way to interpret them.
-I'd prefer to have something closer to pinctrl. Specify strength and
-level in some logical way and then in the driver interpret that into
-register values.
+On 30.12.2021 15:06, Dmitry Baryshkov wrote:
+> On Thu, 30 Dec 2021 at 05:31, Konrad Dybcio
+> <konrad.dybcio@somainline.org> wrote:
+>> Just like in commit 05cf3ec00d460b50088d421fb878a0f83f57e262
+>> ("clk: qcom: gcc-msm8996: Drop (again) gcc_aggre1_pnoc_ahb_clk")
+>> adding NoC clocks turned out to be a huge mistake, as they cause a lot of
+>> issues at little benefit (basically only letting Linux know about their
+>> children's frequencies), especially when mishandled or misconfigured.
+> I'm not against this patch, but it manifests another question to me:
+> should the NoC driver set these frequencies (as demanded), or are they
+> set by the hardware/RPM/etc and so are read-only to us?
 
--- 
-With best wishes
-Dmitry
+The downstream driver [1] only seems to vote for 19.2 MHz on
+
+p(c)noc_keepalive_a_clk and 40MHz on mmssnoc_ahb_a_clk and
+
+not really care much about them otherwise in the (msm_)clk framework.
+
+
+Interestingly, the voting-at-probe also seems to be true for 8916 [2],
+
+and even more so for 8974 [3] which votes for CXO too, and I don't
+
+think we handle it upstream.. Is it unnecessary, or did things always
+
+work by miracle? Should we perhaps set it with assigned-clocks under
+
+rpmcc in DT?
+
+
+Otherwise, they seem to be handled by msm_bus's voter clocks, so in
+
+our case that'll be interconnect's job. I had an old WIP driver somewhere,
+
+but it had issues with some (well, many) paths.. I'll rebase it and try debugging
+
+that.
+
+
+Decoding ancient msm-3.10 code is not for the faint of heart, but I don't think
+
+8994 or 8974 (which are similar in many ways) ever got a newer kernel release..
+
+
+[..]
+
+
+Konrad
+
+
+[1] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/drivers/clk/qcom/clock-rpm-8994.c#L292
+
+
+[2] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/drivers/clk/qcom/clock-rpm-8916.c#L168
+
+
+[3] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/arch/arm/mach-msm/clock-rpm-8974.c
+
