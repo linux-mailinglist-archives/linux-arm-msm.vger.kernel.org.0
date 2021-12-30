@@ -2,199 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7F3C481894
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 03:34:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD388481A1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 08:09:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234871AbhL3Ce4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Dec 2021 21:34:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52062 "EHLO
+        id S236519AbhL3HJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Dec 2021 02:09:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234683AbhL3Cez (ORCPT
+        with ESMTP id S236041AbhL3HJv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Dec 2021 21:34:55 -0500
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE30C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Dec 2021 18:34:55 -0800 (PST)
-Received: from localhost.localdomain (83.6.168.106.neoplus.adsl.tpnet.pl [83.6.168.106])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id EA0C51F535;
-        Thu, 30 Dec 2021 03:34:52 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 30 Dec 2021 02:09:51 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124F3C061574;
+        Wed, 29 Dec 2021 23:09:51 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id l10-20020a17090a384a00b001b22190e075so21903152pjf.3;
+        Wed, 29 Dec 2021 23:09:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=ZDP2T3kEdA2Z/HSfJU3quwQVcpsj6OKL669wXFyJOLM=;
+        b=ewFBGrrBkM1b1Tm+9/Tfx0/jdnhhjHUmqN2gPCUfoaIQiudnZP/aHzudqr0wsCP8aQ
+         rormtM95j8BEp56u+2L+GF4D3FjPjcn1CSbQzU9UcbEXBZ/Po2MLBtH8STz9EiTk6vmn
+         ozXz9s1afuD1u/5C9jV+0eiG5+aqTim261vL0eh2HAdfDULaO5th6A6024sSxM6o97Aa
+         LJbiRLmRMETO6TQMR7imF/w7tgASINZQOXVtJ2VMQHjHafd+HpGPLT93RdWgc04k1udX
+         sL53h+kRamfZtJ9pSSKuzzzCa2P96TKD/393I4LXYaULqtE6RGMpE44hI8TGAmxNkuS+
+         Kh4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ZDP2T3kEdA2Z/HSfJU3quwQVcpsj6OKL669wXFyJOLM=;
+        b=h2fj3S9Ls9QhCMGDSHMMS70xiTsUtOYNgiPv3sVsVpbiXeOMoV5eJnUcJH2DxvCkuM
+         HjbdnZH4l+O1eWkzP+ve8xkFqXDDZQ+lSxwxXvkszWxai+/aUtOhDgeraAI8InUfJRda
+         Y0fkpuASADG8Y2tEN2PtyMwnJOiyKOkQWGEdAgNph8mgYhdZb95Zm/EVLrSC7hh/FhpB
+         hvrjmU/zqXoCr50kbt78VE3/MtnKh2S0F7W0JcORt5X5dibeI1FbV1vS8CzXe3UPCbbF
+         zrgM44hFQQxiJtTFkNUH0VcMzA3o0lOrnFmFaTZ97km1xhJlPi9bbxw5DbeNpuioRQZP
+         GrTg==
+X-Gm-Message-State: AOAM530ZVMQMIT7zn6BQeyPdpz09qUHASSe5hjgG1dgO9UtSZi4J3AYf
+        swGPW33O2pMu1pzJTCQ7Hnc=
+X-Google-Smtp-Source: ABdhPJx3W4rYV1Sq+P6R0r+0aSLlg1TI58NlfVsAeHyTkdba/dBdZqLjrK02fPkqUSdPeo9VzcuRNA==
+X-Received: by 2002:a17:902:c94f:b0:148:d23a:c88e with SMTP id i15-20020a170902c94f00b00148d23ac88emr31023765pla.26.1640848190523;
+        Wed, 29 Dec 2021 23:09:50 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id x2sm21640486pgo.2.2021.12.29.23.09.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Dec 2021 23:09:50 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+Cc:     linmq006@gmail.com, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Hai Li <hali@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-Subject: [RFC PATCH] regulator: qcom_smd: Align probe function with rpmh-regulator
-Date:   Thu, 30 Dec 2021 03:34:42 +0100
-Message-Id: <20211230023442.1123424-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH] drm/msm/dsi: Fix missing put_device() call in dsi_get_phy
+Date:   Thu, 30 Dec 2021 07:09:40 +0000
+Message-Id: <20211230070943.18116-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RPMh regulator driver is much newer and gets more attention, which in
-consequence makes it do a few things better. Update qcom_smd-regulator's
-probe function to mimic what rpmh-regulator does to address a couple of
-issues:
+If of_find_device_by_node() succeeds, dsi_get_phy() doesn't
+a corresponding put_device(). Thus add put_device() to fix the exception
+handling.
 
-- Probe defer now works correctly, before it used to, well,
-  kinda just die.. This fixes reliable probing on (at least) PM8994,
-  because Linux apparently cannot deal with supply map dependencies yet..
-
-- Regulator data is now matched more sanely: regulator data is matched
-  against each individual regulator node name and throwing an -EINVAL if
-  data is missing, instead of just assuming everything is fine and
-  iterating over all subsequent array members.
-
-- status = "disabled" will now work for disabling individual regulators in
-  DT. Previously it didn't seem to do much if anything at all.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Fixes: ec31abf ("drm/msm/dsi: Separate PHY to another platform device")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 ---
- drivers/regulator/qcom_smd-regulator.c | 100 +++++++++++++++++--------
- 1 file changed, 70 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 8bac024dde8b..9fc666107a06 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -9,6 +9,7 @@
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/regulator/driver.h>
-+#include <linux/regulator/of_regulator.h>
- #include <linux/soc/qcom/smd-rpm.h>
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+index 75ae3008b68f..35be526e907a 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.c
++++ b/drivers/gpu/drm/msm/dsi/dsi.c
+@@ -40,7 +40,12 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
  
- struct qcom_rpm_reg {
-@@ -1239,52 +1240,91 @@ static const struct of_device_id rpm_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, rpm_of_match);
+ 	of_node_put(phy_node);
  
--static int rpm_reg_probe(struct platform_device *pdev)
-+/**
-+ * rpm_regulator_init_vreg() - initialize all attributes of a qcom_smd-regulator
-+ * @vreg:		Pointer to the individual qcom_smd-regulator resource
-+ * @dev:		Pointer to the top level qcom_smd-regulator PMIC device
-+ * @node:		Pointer to the individual qcom_smd-regulator resource
-+ *			device node
-+ * @rpm:		Pointer to the rpm bus node
-+ * @pmic_rpm_data:	Pointer to a null-terminated array of qcom_smd-regulator
-+ *			resources defined for the top level PMIC device
-+ *
-+ * Return: 0 on success, errno on failure
-+ */
-+static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev,
-+				   struct device_node *node, struct qcom_smd_rpm *rpm,
-+				   const struct rpm_regulator_data *pmic_rpm_data)
- {
--	const struct rpm_regulator_data *reg;
--	const struct of_device_id *match;
--	struct regulator_config config = { };
-+	struct regulator_config config = {};
-+	const struct rpm_regulator_data *rpm_data;
- 	struct regulator_dev *rdev;
-+	int ret;
-+
-+	for (rpm_data = pmic_rpm_data; rpm_data->name; rpm_data++)
-+		if (of_node_name_eq(node, rpm_data->name))
-+			break;
-+
-+	if (!rpm_data->name) {
-+		dev_err(dev, "Unknown regulator %pOFn\n", node);
-+		return -EINVAL;
+-	if (!phy_pdev || !msm_dsi->phy) {
++	if (!phy_pdev) {
++		DRM_DEV_ERROR(&pdev->dev, "%s: phy driver is not ready\n", __func__);
++		return -EPROBE_DEFER;
 +	}
-+
-+	vreg->dev	= dev;
-+	vreg->rpm	= rpm;
-+	vreg->type	= rpm_data->type;
-+	vreg->id	= rpm_data->id;
-+
-+	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
-+	vreg->desc.name = rpm_data->name;
-+	vreg->desc.supply_name = rpm_data->supply;
-+	vreg->desc.owner = THIS_MODULE;
-+	vreg->desc.type = REGULATOR_VOLTAGE;
-+	vreg->desc.of_match = rpm_data->name;
-+
-+	config.dev		= dev;
-+	config.of_node		= node;
-+	config.driver_data	= vreg;
-+
-+	rdev = devm_regulator_register(dev, &vreg->desc, &config);
-+	if (IS_ERR(rdev)) {
-+		ret = PTR_ERR(rdev);
-+		dev_err(dev, "%pOFn: devm_regulator_register() failed, ret=%d\n", node, ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int rpm_reg_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	const struct rpm_regulator_data *vreg_data;
-+	struct device_node *node;
- 	struct qcom_rpm_reg *vreg;
- 	struct qcom_smd_rpm *rpm;
-+	int ret;
- 
- 	rpm = dev_get_drvdata(pdev->dev.parent);
- 	if (!rpm) {
--		dev_err(&pdev->dev, "unable to retrieve handle to rpm\n");
-+		dev_err(&pdev->dev, "Unable to retrieve handle to rpm\n");
- 		return -ENODEV;
++	if (!msm_dsi->phy) {
++		put_device(&phy_pdev->dev);
+ 		DRM_DEV_ERROR(&pdev->dev, "%s: phy driver is not ready\n", __func__);
+ 		return -EPROBE_DEFER;
  	}
- 
--	match = of_match_device(rpm_of_match, &pdev->dev);
--	if (!match) {
--		dev_err(&pdev->dev, "failed to match device\n");
-+	vreg_data = of_device_get_match_data(dev);
-+	if (!vreg_data)
- 		return -ENODEV;
--	}
- 
--	for (reg = match->data; reg->name; reg++) {
-+	for_each_available_child_of_node(dev->of_node, node) {
- 		vreg = devm_kzalloc(&pdev->dev, sizeof(*vreg), GFP_KERNEL);
- 		if (!vreg)
- 			return -ENOMEM;
- 
--		vreg->dev = &pdev->dev;
--		vreg->type = reg->type;
--		vreg->id = reg->id;
--		vreg->rpm = rpm;
--
--		memcpy(&vreg->desc, reg->desc, sizeof(vreg->desc));
--
--		vreg->desc.id = -1;
--		vreg->desc.owner = THIS_MODULE;
--		vreg->desc.type = REGULATOR_VOLTAGE;
--		vreg->desc.name = reg->name;
--		vreg->desc.supply_name = reg->supply;
--		vreg->desc.of_match = reg->name;
--
--		config.dev = &pdev->dev;
--		config.driver_data = vreg;
--		rdev = devm_regulator_register(&pdev->dev, &vreg->desc, &config);
--		if (IS_ERR(rdev)) {
--			dev_err(&pdev->dev, "failed to register %s\n", reg->name);
--			return PTR_ERR(rdev);
-+		ret = rpm_regulator_init_vreg(vreg, dev, node, rpm, vreg_data);
-+
-+		if (ret < 0) {
-+			of_node_put(node);
-+			return ret;
- 		}
- 	}
- 
 -- 
-2.34.1
+2.17.1
 
