@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55F1B481D00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 15:26:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECBFA481D0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Dec 2021 15:29:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239972AbhL3O0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Dec 2021 09:26:53 -0500
-Received: from relay05.th.seeweb.it ([5.144.164.166]:50669 "EHLO
-        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239922AbhL3O0w (ORCPT
+        id S239963AbhL3O35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Dec 2021 09:29:57 -0500
+Received: from m-r2.th.seeweb.it ([5.144.164.171]:32799 "EHLO
+        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240060AbhL3O35 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Dec 2021 09:26:52 -0500
+        Thu, 30 Dec 2021 09:29:57 -0500
 Received: from [192.168.1.101] (83.6.168.106.neoplus.adsl.tpnet.pl [83.6.168.106])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C2D1B3F725;
-        Thu, 30 Dec 2021 15:26:49 +0100 (CET)
-Message-ID: <e6ac0b79-368b-41af-f20d-f58ddc02f05e@somainline.org>
-Date:   Thu, 30 Dec 2021 15:26:48 +0100
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 638393F3F5;
+        Thu, 30 Dec 2021 15:29:55 +0100 (CET)
+Message-ID: <5543bdad-3518-fe20-d755-69ebac4ddd69@somainline.org>
+Date:   Thu, 30 Dec 2021 15:29:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.1
@@ -45,61 +45,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 30.12.2021 15:06, Dmitry Baryshkov wrote:
-> On Thu, 30 Dec 2021 at 05:31, Konrad Dybcio
-> <konrad.dybcio@somainline.org> wrote:
->> Just like in commit 05cf3ec00d460b50088d421fb878a0f83f57e262
->> ("clk: qcom: gcc-msm8996: Drop (again) gcc_aggre1_pnoc_ahb_clk")
->> adding NoC clocks turned out to be a huge mistake, as they cause a lot of
->> issues at little benefit (basically only letting Linux know about their
->> children's frequencies), especially when mishandled or misconfigured.
-> I'm not against this patch, but it manifests another question to me:
-> should the NoC driver set these frequencies (as demanded), or are they
-> set by the hardware/RPM/etc and so are read-only to us?
+> You don't have to init array entries with NULL values (if it's not for
+> the documentation purposes). Uninitialized entries will get NULL value
+> anyway.
+>
+Forgot to address this in my previous message, but I think it may be a
 
-The downstream driver [1] only seems to vote for 19.2 MHz on
+good indicator for the next person that decides this would be a good idea
 
-p(c)noc_keepalive_a_clk and 40MHz on mmssnoc_ahb_a_clk and
+that they should probably stay away from it.. If it's really bad, then sure, I
 
-not really care much about them otherwise in the (msm_)clk framework.
-
-
-Interestingly, the voting-at-probe also seems to be true for 8916 [2],
-
-and even more so for 8974 [3] which votes for CXO too, and I don't
-
-think we handle it upstream.. Is it unnecessary, or did things always
-
-work by miracle? Should we perhaps set it with assigned-clocks under
-
-rpmcc in DT?
-
-
-Otherwise, they seem to be handled by msm_bus's voter clocks, so in
-
-our case that'll be interconnect's job. I had an old WIP driver somewhere,
-
-but it had issues with some (well, many) paths.. I'll rebase it and try debugging
-
-that.
-
-
-Decoding ancient msm-3.10 code is not for the faint of heart, but I don't think
-
-8994 or 8974 (which are similar in many ways) ever got a newer kernel release..
-
-
-[..]
+can remove it..
 
 
 Konrad
-
-
-[1] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/drivers/clk/qcom/clock-rpm-8994.c#L292
-
-
-[2] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/drivers/clk/qcom/clock-rpm-8916.c#L168
-
-
-[3] https://github.com/sonyxperiadev/kernel/blob/aosp/LA.BR.1.3.3_rb2.14/arch/arm/mach-msm/clock-rpm-8974.c
 
