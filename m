@@ -2,78 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 151EE48230D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Dec 2021 10:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD89F4823C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Dec 2021 12:36:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbhLaJoy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Dec 2021 04:44:54 -0500
-Received: from smtp25.cstnet.cn ([159.226.251.25]:35978 "EHLO cstnet.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229498AbhLaJok (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Dec 2021 04:44:40 -0500
-Received: from localhost.localdomain (unknown [124.16.138.126])
-        by APP-05 (Coremail) with SMTP id zQCowAB3WBX00M5hJpBdBQ--.56555S2;
-        Fri, 31 Dec 2021 17:44:20 +0800 (CST)
-From:   Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To:     agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] soc: qcom: rpmpd: Check for null return of devm_kcalloc
-Date:   Fri, 31 Dec 2021 17:44:19 +0800
-Message-Id: <20211231094419.1941054-1-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAB3WBX00M5hJpBdBQ--.56555S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7JFW7GFyUZw1DAryxGw15urg_yoWDtFgEka
-        ykZrn7Gw4UGF1xCF1xtr13Zr9F9F4kWrn2qw4Sg3WfAr97JFs3GrWqqwsxCr1fWay3AFnr
-        JFyqvr93Aw12vjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUIcSsGvfJTRUUUbckFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-        6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-        A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-        Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-        0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-        jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-        1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW8uwCF
-        04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
-        18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vI
-        r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
-        1lIxAIcVCF04k26cxKx2IYs7xG6rWUJVWrZr1UMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF
-        0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU6rWrUUUUU=
-X-Originating-IP: [124.16.138.126]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+        id S229551AbhLaLgr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Dec 2021 06:36:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229489AbhLaLgr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 31 Dec 2021 06:36:47 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA48C061574;
+        Fri, 31 Dec 2021 03:36:47 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id t123so23382625pfc.13;
+        Fri, 31 Dec 2021 03:36:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=1/UF0ncJUYwiLLzKEraXnHU13+tz0U123c7WptP7z5Y=;
+        b=gp6BrgxTXFVQfR1+cp7I9Lsv8M8xOIo5oybzVN1oRSsD4aqOm/CJ4Sz4+q7vCXZ9cv
+         7CdFaPFp5TtRls69NQIYoavLlsBCI5ne1W+ueNyFkLilIIWmpYjucy5fM+9K9XoqaPeo
+         zXNgk+rfjdVG4vXeNDtZzH/LNX3F1N3H8i/19nitSOXtnR19odAFtiOJTppJ3pxpIOer
+         wlDVLP5HeEBXfsKFQwLJWmna8wpwP80mXAHz/6GWlxyhF1SCSW1sydeBCCekHfLgCuk1
+         EO5IzUXQLjGUiocHldAHc4jlz4YlBjIg9ANIIQDbrQUYryi9E4zjbjlO9PnaKyGHcDqc
+         +Jgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=1/UF0ncJUYwiLLzKEraXnHU13+tz0U123c7WptP7z5Y=;
+        b=qCmMa/G6Simgkd1YuJ+6OpuT5+dKyxFcJcd6QPMPEK1Sn1quReFKH4vdIP7F0nTl3J
+         snHD2f6KcrzHSr6tUpGJp8IKXEi64H3XxvShJGGkz/06wIgc9UKWh8G8EOC4deJ1mXQY
+         WVmavMMCFxGClLCmGK82bDFQkcHwXIHzMPwnSsy3ySi8LEBnUymOmGFw7DohWWmufN0U
+         lN6nz4zDFRK2w/O1BjmwsTvXNFfmr3MlMskSZDIKWcmhtZlhHrscs+QwxdJEGRT7nP5N
+         kxR3ZsSMo0LRAETsJSl6UJ0QV9ukwrTzkYKw8LOZcZ8Uh2JJ4m7cPbZrdmn3XAugiWc7
+         5JgQ==
+X-Gm-Message-State: AOAM530nwN6z0Kj9Rscz+1zNV5O6qcNiZr9yjNDCxscA5IppCCwaNCmm
+        zPC+Z9k/+KrjFD/V8TNAF94=
+X-Google-Smtp-Source: ABdhPJyE7afA0OSGQwdpsYil4DdPNVqeivpZA14LhZUH7yEiDZqcuyvGBsDVC3/qAGA5O62LnAK8LA==
+X-Received: by 2002:a63:3ece:: with SMTP id l197mr15213032pga.371.1640950606698;
+        Fri, 31 Dec 2021 03:36:46 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id e20sm8295460pfd.104.2021.12.31.03.36.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Dec 2021 03:36:46 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+Cc:     linmq006@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] usb: dwc3: dwc3-qcom: Add missing platform_device_put() in dwc3_qcom_acpi_register_core
+Date:   Fri, 31 Dec 2021 11:36:41 +0000
+Message-Id: <20211231113641.31474-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Because of the possible failure of the allocation, data->domains might
-be NULL pointer and will cause the dereference of the NULL pointer
-later.
-Therefore, it might be better to check it and directly return -ENOMEM
-without releasing data manually if fails, because the comment of the
-devm_kmalloc() says "Memory allocated with this function is
-automatically freed on driver detach.".
+Add the missing platform_device_put() before return from
+dwc3_qcom_acpi_register_core in the error handling case.
 
-Fixes: bbe3a66c3f5a ("soc: qcom: rpmpd: Add a Power domain driver to model corners")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 ---
- drivers/soc/qcom/rpmpd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmpd.c b/drivers/soc/qcom/rpmpd.c
-index 27733b0e7fca..f4ef8a100c99 100644
---- a/drivers/soc/qcom/rpmpd.c
-+++ b/drivers/soc/qcom/rpmpd.c
-@@ -496,6 +496,9 @@ static int rpmpd_probe(struct platform_device *pdev)
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 3cb01cdd02c2..5257783f17b0 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -598,8 +598,10 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+ 	qcom->dwc3->dev.coherent_dma_mask = dev->coherent_dma_mask;
  
- 	data->domains = devm_kcalloc(&pdev->dev, num, sizeof(*data->domains),
- 				     GFP_KERNEL);
-+	if (!data->domains)
-+		return -ENOMEM;
-+
- 	data->num_domains = num;
+ 	child_res = kcalloc(2, sizeof(*child_res), GFP_KERNEL);
+-	if (!child_res)
++	if (!child_res) {
++		platform_device_put(qcom->dwc3);
+ 		return -ENOMEM;
++	}
  
- 	for (i = 0; i < num; i++) {
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!res) {
+@@ -637,9 +639,13 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add device\n");
+ 		device_remove_software_node(&qcom->dwc3->dev);
++		goto out;
+ 	}
++	kfree(child_res);
++	return 0;
+ 
+ out:
++	platform_device_put(qcom->dwc3);
+ 	kfree(child_res);
+ 	return ret;
+ }
 -- 
-2.25.1
+2.17.1
 
