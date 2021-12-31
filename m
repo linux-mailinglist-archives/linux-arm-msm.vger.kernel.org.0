@@ -2,128 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90682482173
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Dec 2021 03:18:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CED5482203
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Dec 2021 05:48:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242056AbhLaCSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Dec 2021 21:18:45 -0500
-Received: from mga14.intel.com ([192.55.52.115]:41960 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230097AbhLaCSp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Dec 2021 21:18:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1640917125; x=1672453125;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wtEJ0zWFCIg9b5L8s1KYkJATOZKPuIOSMQp1wVJxQgk=;
-  b=BNXCkTO0ljN8zYQqphbPNng89CX+h6E1k9CgZEpZK+D4i6zlv3/dw+vW
-   GKe4/sIAEnp12FjsipfL8LGqnXQ5SmKi4BA7H/wXSJ+SAKu4YjIJgZp4m
-   uLV6EROgYM5Xv+i6gmFOH86XakS0ToVTi2RctGluuTdnLo88kyl9rqkMx
-   M4l6Tk64CM3+Fodk5pzNKwbBxDw1MiRHPfjr4QpYUjnwdECfXHxpL1Eqv
-   1BTtCuUNCOf+/xAcLtNjZJTwXTjNxwW3YDXrJfjiQNzu6wO1i58+xaORZ
-   r6jh6isow2Yhxj/6qcG90KuxaNsPBF6F/kDPlIfyztmfAbO6mGSx4cgD/
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10213"; a="241969845"
-X-IronPort-AV: E=Sophos;i="5.88,250,1635231600"; 
-   d="scan'208";a="241969845"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2021 18:18:44 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,250,1635231600"; 
-   d="scan'208";a="687376744"
-Received: from lkp-server01.sh.intel.com (HELO e357b3ef1427) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 30 Dec 2021 18:18:40 -0800
-Received: from kbuild by e357b3ef1427 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1n37V9-000ArO-75; Fri, 31 Dec 2021 02:18:39 +0000
-Date:   Fri, 31 Dec 2021 10:17:38 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Taniya Das <tdas@codeaurora.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette =?iso-8859-1?Q?=A0?= 
-        <mturquette@baylibre.com>
-Cc:     kbuild-all@lists.01.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org
-Subject: Re: [PATCH v2 5/5] clk: qcom: lpass: Add support for LPASS clock
- controller for SC7280
-Message-ID: <202112311037.baApS5Qa-lkp@intel.com>
-References: <1640018638-19436-6-git-send-email-tdas@codeaurora.org>
+        id S241043AbhLaEsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Dec 2021 23:48:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57930 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237595AbhLaEsX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Dec 2021 23:48:23 -0500
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AE3C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 20:48:23 -0800 (PST)
+Received: by mail-qv1-xf30.google.com with SMTP id q3so23893961qvc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Dec 2021 20:48:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=R53maEe/jvwfVpnz6cg55bUPaUGQxEAtSlPRSaJ2X7w=;
+        b=R1yOXnIb4oliBKplgIaPGCmFfYmxfboQaJjmuYQZFquNG/rHO7k31hJ6Q4zZwHz5Fu
+         LkUDe5vXTjp0eXRXRBE9A2MXZF1zCfKh74XyGGQedKrC5QQh/oMgbuldlrpKE412FfWL
+         fY0JSDFERCvca8fkM1f7C71Vij/5kN+09wAHfluuJzk3kJGO2LxX30T8Gq3J8nVFayx8
+         XGLrfBlWEoZUJKUDsbhx4RnSaW+Tl6u9KO0s2bRAWS8kzAZH7W4oGwNRWgYVY0PqdvH1
+         dpAyO3r8wkDFZ7EE9qv87n8TstRiHiixsgElt1SRsxVwK/LWdV8C9Uc6SIYe1z5D2s3F
+         rWYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=R53maEe/jvwfVpnz6cg55bUPaUGQxEAtSlPRSaJ2X7w=;
+        b=HV3ggTNjgUzEf7P+NxE+CNIbTFA6pP0Rc4EXUh+0M7osW9DKEZi41P5lAJLyfSUCXF
+         LaVRVd04Xp+y0TZiOFqW7uw0vn5+te8ku1yC+4DDubUSMyUNnthuloetua8NFOYbjO/k
+         a/2QFjhwHjAtZEUER3AGxYzspF1nh9SddwIYghiPZHWTVuQDyDgvlbzOp4d7gD52RMXD
+         p0Z0/tAtkxiv6LzEeWZ6BJhqUfxS422tD6gwxfcykG4iFYyJUSMzULY7xh3XPeX4V/P5
+         Hp1gNLbIsNwjyMwzEsX6xbwClXFZ0eNbvjDxR6aYyInuWRdLIBC0moc5wNWr4MLy3eAG
+         mrqA==
+X-Gm-Message-State: AOAM532CWqpAEB4ROy40yqTb94Iu9I3yJs0SinvNzmnsh8AdKZFpYgkJ
+        4hU9gub5PbY+ylLZpEca5KVWym2xbzH/+pWmvE4ADw==
+X-Google-Smtp-Source: ABdhPJw/EAiKiAXVcoRgkADJaLo/ew/8Ebw2meWTvaPQZnDXNRdQsY1jw9rc/OfqCuwE3dX/djM+8OgVD3yQJBPRAsM=
+X-Received: by 2002:a05:6214:27cc:: with SMTP id ge12mr30123774qvb.122.1640926102469;
+ Thu, 30 Dec 2021 20:48:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1640018638-19436-6-git-send-email-tdas@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20211126023516.1108411-1-dmitry.baryshkov@linaro.org>
+ <20211126023516.1108411-3-dmitry.baryshkov@linaro.org> <YcvgJcxWDfaSMVVg@builder.lan>
+In-Reply-To: <YcvgJcxWDfaSMVVg@builder.lan>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 31 Dec 2021 07:48:11 +0300
+Message-ID: <CAA8EJpqQrGFhD3+SCLZg5E2zzV_62v9=abcqK7LkOWDKYZo5Xg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] drm/msm/dp: rewrite dss_module_power to use bulk
+ clock functions
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Taniya,
+HI,
 
-Thank you for the patch! Yet something to improve:
+On Wed, 29 Dec 2021 at 07:12, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Thu 25 Nov 20:35 CST 2021, Dmitry Baryshkov wrote:
+>
+> > In order to simplify DP code, drop hand-coded loops over clock arrays,
+> > replacing them with clk_bulk_* functions.
+> >
+>
+> I've yet to debug this, but applying the two patches and attaching an
+> HDMI cable to my USB dongle results in the follwing splat on the 8350
+> HDK.
 
-[auto build test ERROR on clk/clk-next]
-[also build test ERROR on robh/for-next linus/master v5.16-rc7 next-20211224]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Intersesting. The only major difference between original code and the
+patches code in this function is the removal of `if (clk_arry[i].clk)`
+condition in that function. Could yyou please check whether clocks are
+properly parsed at the time you receive the hpd event?
 
-url:    https://github.com/0day-ci/linux/commits/Taniya-Das/Add-support-for-LPASS-Core-and-Audio-Clock-for-SC7280/20211221-004818
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
-config: alpha-allmodconfig (https://download.01.org/0day-ci/archive/20211231/202112311037.baApS5Qa-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/fec640fab5ec498e79475ecd4b15bc95035a76b1
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Taniya-Das/Add-support-for-LPASS-Core-and-Audio-Clock-for-SC7280/20211221-004818
-        git checkout fec640fab5ec498e79475ecd4b15bc95035a76b1
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=alpha SHELL=/bin/bash drivers/clk/qcom/
+If  we can not debug this issue,  I'd then propose to merge first
+patch and let somebody else rewrite dp_clk_util to use clk_bulk_data.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+>
+> [   39.658840] Unable to handle kernel NULL pointer dereference at virtua=
+l address 0000000000000000
+> [   39.667883] Mem abort info:
+> [   39.670774]   ESR =3D 0x96000006
+> [   39.673940]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+> [   39.679417]   SET =3D 0, FnV =3D 0
+> [   39.682582]   EA =3D 0, S1PTW =3D 0
+> [   39.685825]   FSC =3D 0x06: level 2 translation fault
+> [   39.690851] Data abort info:
+> [   39.693838]   ISV =3D 0, ISS =3D 0x00000006
+> [   39.697797]   CM =3D 0, WnR =3D 0
+> [   39.700864] user pgtable: 4k pages, 48-bit VAs, pgdp=3D000000010eb8d00=
+0
+> [   39.707501] [0000000000000000] pgd=3D080000010f097003, p4d=3D080000010=
+f097003, pud=3D080000010ba58003, pmd=3D0000000000000000
+> [   39.718425] Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> [   39.724169] Modules linked in: pmic_glink_altmode qcom_pmic_glink_powe=
+r cfg80211 rfkill 8021q garp mrp stp llc microchip lan78xx snd_soc_hdmi_cod=
+ec pmic_glink pdr_interface rpmsg_char qrtr_smd qrtr fsa4480 qcom_q6v5_pas =
+qcom_pil_info i2c_qcom_geni qcom_q6v5 msm qcom_sysmon qcom_stats gpu_sched =
+crct10dif_ce drm_kms_helper qcom_common qcom_glink_smem gpucc_sm8350 phy_qc=
+om_qmp mdt_loader typec ufs_qcom qmi_helpers qcom_rng socinfo qnoc_sm8350 r=
+mtfs_mem fuse drm ipv6
+> [   39.766330] CPU: 0 PID: 85 Comm: kworker/0:3 Not tainted 5.16.0-rc5-ne=
+xt-20211215-00046-g2f90133452d9 #280
+> [   39.776256] Hardware name: Qualcomm Technologies, Inc. SM8350 HDK (DT)
+> [   39.782969] Workqueue: events pmic_glink_altmode_worker [pmic_glink_al=
+tmode]
+> [   39.790235] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYP=
+E=3D--)
+> [   39.797393] pc : __pi_strcmp+0x1c/0xf0
+> [   39.801271] lr : dp_ctrl_set_clock_rate+0x8c/0xf0 [msm]
+> [   39.806737] sp : ffff800008adbbc0
+> [   39.810153] x29: ffff800008adbbc0 x28: 0000000000000000 x27: 000000000=
+0000000
+> [   39.817501] x26: ffffb60107f74270 x25: ffff297a49b33c80 x24: 000000002=
+02fbf00
+> [   39.824846] x23: 0000000000000001 x22: ffff297a4b400580 x21: 000000000=
+0000020
+> [   39.832188] x20: ffffb600e3d78068 x19: 0000000000000000 x18: fffffffff=
+fffffff
+> [   39.839541] x17: 6b6c63206e6f2030 x16: ffffb601063476c0 x15: 072007200=
+7200720
+> [   39.846893] x14: 0720072007200720 x13: ffffb60107c622c8 x12: 000000000=
+0000765
+> [   39.854229] x11: 0000000000000277 x10: 0101010101010101 x9 : ffffb6010=
+7c622c8
+> [   39.861565] x8 : 00000000ffffefff x7 : 0000000000000000 x6 : ffffb6010=
+7cba2c8
+> [   39.868902] x5 : 0000000000000000 x4 : ffff297cbe8619d8 x3 : 000000000=
+0000000
+> [   39.876240] x2 : 0000000000000000 x1 : ffffb600e3d78068 x0 : 000000000=
+0000000
+> [   39.883594] Call trace:
+> [   39.886124]  __pi_strcmp+0x1c/0xf0
+> [   39.889638]  dp_ctrl_enable_mainlink_clocks+0x98/0x110 [msm]
+> [   39.895537]  dp_ctrl_on_link+0x98/0x3f0 [msm]
+> [   39.900096]  dp_display_process_hpd_high+0xa8/0x100 [msm]
+> [   39.905731]  dp_display_usbpd_attention_cb+0x164/0x1a4 [msm]
+> [   39.911629]  dp_hpd_oob_event+0x74/0xa4 [msm]
+> [   39.916195]  dp_display_oob_hotplug_event+0x1c/0x2c [msm]
+> [   39.921831]  dp_oob_hotplug_event+0x18/0x24 [msm]
+> [   39.926756]  drm_connector_oob_hotplug_event+0x40/0x60 [drm]
+> [   39.932686]  pmic_glink_altmode_worker+0x7c/0x194 [pmic_glink_altmode]
+> [   39.939398]  process_one_work+0x1d0/0x350
+> [   39.943526]  worker_thread+0x13c/0x460
+> [   39.947390]  kthread+0x17c/0x190
+> [   39.950722]  ret_from_fork+0x10/0x20
+> [   39.954416] Code: f24008ff 540003e1 f2400807 54000241 (f8408402)
+> [   39.960684] ---[ end trace 0000000000000000 ]---
+>
+> Regards,
+> Bjorn
 
-All errors (new ones prefixed by >>):
-
-   In file included from include/uapi/linux/posix_types.h:5,
-                    from include/uapi/linux/types.h:14,
-                    from include/linux/types.h:6,
-                    from include/linux/of.h:14,
-                    from include/linux/clk-provider.h:9,
-                    from drivers/clk/qcom/lpassaudiocc-sc7280.c:6:
-   drivers/clk/qcom/lpassaudiocc-sc7280.c: In function 'lpass_audio_cc_sc7280_probe':
->> include/linux/stddef.h:8:14: error: called object is not a function or function pointer
-       8 | #define NULL ((void *)0)
-         |              ^
-   include/linux/pm_clock.h:82:25: note: in expansion of macro 'NULL'
-      82 | #define pm_clk_suspend  NULL
-         |                         ^~~~
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:740:9: note: in expansion of macro 'pm_clk_suspend'
-     740 |         pm_clk_suspend(&pdev->dev);
-         |         ^~~~~~~~~~~~~~
-   drivers/clk/qcom/lpassaudiocc-sc7280.c: In function 'lpass_aon_cc_sc7280_probe':
->> include/linux/stddef.h:8:14: error: called object is not a function or function pointer
-       8 | #define NULL ((void *)0)
-         |              ^
-   include/linux/pm_clock.h:82:25: note: in expansion of macro 'NULL'
-      82 | #define pm_clk_suspend  NULL
-         |                         ^~~~
-   drivers/clk/qcom/lpassaudiocc-sc7280.c:798:9: note: in expansion of macro 'pm_clk_suspend'
-     798 |         pm_clk_suspend(&pdev->dev);
-         |         ^~~~~~~~~~~~~~
 
 
-vim +8 include/linux/stddef.h
-
-^1da177e4c3f41 Linus Torvalds   2005-04-16  6  
-^1da177e4c3f41 Linus Torvalds   2005-04-16  7  #undef NULL
-^1da177e4c3f41 Linus Torvalds   2005-04-16 @8  #define NULL ((void *)0)
-6e218287432472 Richard Knutsson 2006-09-30  9  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+--=20
+With best wishes
+Dmitry
