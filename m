@@ -2,88 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39F014825E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Dec 2021 22:36:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEA24482701
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jan 2022 09:02:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231777AbhLaVgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Dec 2021 16:36:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49942 "EHLO
+        id S229505AbiAAIC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Jan 2022 03:02:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbhLaVgq (ORCPT
+        with ESMTP id S229446AbiAAIC3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Dec 2021 16:36:46 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA601C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Dec 2021 13:36:45 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id y22so112427391edq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Dec 2021 13:36:45 -0800 (PST)
+        Sat, 1 Jan 2022 03:02:29 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72609C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Jan 2022 00:02:28 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id i31so64050650lfv.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Jan 2022 00:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KwgQAOCKFfMztQ+QUTfNAIMHY08uMQrIfZD5um76SKg=;
-        b=FdIfx1M4lkR+5QwjsMildYxfc23oPJDFRH60X+AtmwJ7V7NhP9lLh+9OJiApdoXIhm
-         9FL45GJ28btOXMzIzETji1SZRkTaKJQd2GQHbJB+066j5+1xZnNGbEeWeYJbUMWjsg+b
-         TXcoI+RRgjafTCcSardobr0TgIf4Te8oEB8czQBef3RKvvkwQ4GUqG8+vCpU1u757YlE
-         56akFj0vEMgB6nk+q88ZQm1avpHtFGg6voW2suu/vskHOuhalCnVezR12Cv9lpWgqXtF
-         k2eyDQRSfoYwurYO81tum347FizITASmA+HkMKlQFyBI1zievdESZPRfTc7uO/UkisSv
-         sE8w==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=phiqoClr7WghpTYPY+gGvK9p/LG4f7wDsCyd/Os15F0=;
+        b=KsHgprH5EUX6LY7buF6yMvpQz9QsG34ilT5si4YBOdTmiKrLQLtlIhKmpb0AnShvlI
+         Hk8Wttps1QhJTHXiMwo4Cq5ocXltNDdNxeGUb81/GSLtNT3sMYaQCbZMT3V/fsZXv+zG
+         GS/naibpTACgt2pVln9BKHxYQo8P5/3p3wzU7+ESDqPLksaT4pXftJBLqLBf/jwFFRC+
+         S4KHxdr0cVeOYnpa37ciM+hicOlGx7T61ZqDkVY1WaKLFk/q9GSuqlCEa8KLbZlNn3Hu
+         IrYgbOkjZhGaBfN+zrEqd+GeyZlDxSLsKedEHpfPxBONh3cN9wujFgJ8O9KhRUjwYFFJ
+         WYEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=KwgQAOCKFfMztQ+QUTfNAIMHY08uMQrIfZD5um76SKg=;
-        b=Jmpli3DPtJoAJfFsBw5f/Qe2j4wsI7dvaegz8cKT9HRR857l0UVco8ASgU+5LeRyxk
-         oM2IFNzrnG9uMGlms+7JKKmPesEdXVxjsQWZHGJPKujXvUv+A5/rhdAwL1rlV031Hi7b
-         6diqa4i9eDtVDWXpg+clq8yqzdEtBvqjLPcDmp8+45R7d73V6VMY0uKEqMNBIzBjerZb
-         g1GkkG1OoWwmEWVkJk03vdp4a84N/cpdXJwrq2zw5q6xoZ7iq7oB2fFxaLUC+kAoFDej
-         JeUp7biG3VAwWai/P5UWnpv8DUbuxAyw3SgCZXKrYyCikd0AbCi4Mn1aIXtiuPGdKtym
-         arAA==
-X-Gm-Message-State: AOAM530uwdDslt0shU9eayhnd5UW8nygg2aEXHMAl9MYspeFFixLbV8Q
-        JAGuQ3fPxwzykgeDscEcMvPbupaQHWw=
-X-Google-Smtp-Source: ABdhPJy93KZHO77oufkVy/UWHzd5Hz8gdu5Ys6VpJG5S5XqcfsoyCQ6sVLSjjLCHIBh3m9h7NedsDA==
-X-Received: by 2002:aa7:d0c5:: with SMTP id u5mr35733431edo.202.1640986604271;
-        Fri, 31 Dec 2021 13:36:44 -0800 (PST)
-Received: from localhost.localdomain (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id b5sm10912286edz.14.2021.12.31.13.36.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Dec 2021 13:36:43 -0800 (PST)
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Petr Vorel <petr.vorel@gmail.com>,
-        Julian Ribbeck <julian.ribbeck@gmx.de>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH 1/1] arm64: dts: qcom: msm8916-j5: Fix typo
-Date:   Fri, 31 Dec 2021 22:36:35 +0100
-Message-Id: <20211231213635.116324-1-petr.vorel@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=phiqoClr7WghpTYPY+gGvK9p/LG4f7wDsCyd/Os15F0=;
+        b=JTLiknVO94D7xPnn7+/xONFYdNAIK6j/tTCvHuIwDhgsn3/vKfakB79kEOT7jWcHJ6
+         nRTkoKCH0jHh9nPBqEt2W59LZWki7HuXhZfHEk2XWIW8Y/blaTusSo+DLZpJ+/nzV9ts
+         rZ1+N+jDcnmehpJ0FIS7oCPVEqLon88+qPUVjvTz010CnqfifDuQnljZAG4ClrlVjVHw
+         QyY/N2ppvsou8ugizxONeYFTbt+PfZo3Q7rk6cKUzZuavCP26aQKi+Eeo/p2Lt5jZKwX
+         Wc6/4it6f5fTM2+XAzrEDt/FZ5fuPJH+7PZGS9gSwSXAmZXsBSlQ1+nVGq6K8UYfiq9y
+         +Y+w==
+X-Gm-Message-State: AOAM533W+m9SGLQRHeOLawlcxmmd+APaD4FvRyNfXww/r51AkVy+nWTO
+        v3Ig8vdv4AvE5L57pXl4M7YdgmRZqdM9Fyl1BRvTMQ==
+X-Google-Smtp-Source: ABdhPJz9VvixIekr6Rdug1RTopqQtzuGUt7hfa5y2gWCLkYPIzi4XBkoOCd7KJvQdQIxgEiS4vSb0QoXWBGeBe04GK4=
+X-Received: by 2002:a05:6512:750:: with SMTP id c16mr34857438lfs.622.1641024146404;
+ Sat, 01 Jan 2022 00:02:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cbe181af-402d-c8eb-3104-4ee48f8d525a@nexus-software.ie> <Yc9zt9vOWXTPZ8PH@ripper>
+In-Reply-To: <Yc9zt9vOWXTPZ8PH@ripper>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 1 Jan 2022 09:02:15 +0100
+Message-ID: <CACRpkdYLGeYPkNZ5O1jw0dhF2Uo5qKsToGkAQJixG1sPxkB42A@mail.gmail.com>
+Subject: Re: External data abort on ipq6018 gpio # 20 ~ offset 0x14000 any
+ ideas ?
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     "Bryan O'Donoghue" <pure.logic@nexus-software.ie>,
+        linux-arm-msm@vger.kernel.org, Baruch Siach <baruch@tkos.co.il>,
+        Sricharan R <sricharan@codeaurora.org>,
+        arajkuma@codeaurora.org, speriaka@codeaurora.org,
+        sivaprak@codeaurora.org, jason <jason@wallystech.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes: bd943653b10d ("arm64: dts: qcom: Add device tree for Samsung J5 2015 (samsung-j5)")
+On Fri, Dec 31, 2021 at 10:17 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+> On Fri 31 Dec 09:05 PST 2021, Bryan O'Donoghue wrote:
 
-Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
----
- arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> The reason for seeing this issue is typically that the pins are related
+> to some I2C bus that is used for some secure application, i.e. they are
+> reserved for TZ to use.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-index 687bea438a57..6c408d61de75 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5.dts
-@@ -41,7 +41,7 @@ volume-up {
- 		};
- 
- 		home-key {
--			lable = "Home Key";
-+			label = "Home Key";
- 			gpios = <&msmgpio 109 GPIO_ACTIVE_LOW>;
- 			linux,code = <KEY_HOMEPAGE>;
- 		};
--- 
-2.34.1
+In the best of all worlds TZ should be telling us what it is using
+for itself.
 
+> Unfortunately I don't know how to determine the list of protected GPIOs,
+> other than trial and error.
+>
+> But once you have the list, you can use "gpio-reserved-ranges" (a series
+> of offset, count pairs) in the TLMM DT node to mark off these gpios as
+> reserved.
+
+This is the right thing to do.
+
+If I'm not mistaken the TZ can modify the device tree during boot just
+as well as the boot loader can, or it can tell the boot loader to modify
+the device tree, and add reserved GPIOs to the
+gpio-reserved-ranges.
+
+I think the real problem is that some system manager didn't think
+about resource reservation even though we have mechanisms in
+place to do them.
+
+Yours,
+Linus Walleij
