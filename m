@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0973148289F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jan 2022 23:01:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C54AB482A44
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jan 2022 07:27:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232733AbiAAWBu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Jan 2022 17:01:50 -0500
-Received: from mail-ua1-f42.google.com ([209.85.222.42]:39904 "EHLO
-        mail-ua1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230239AbiAAWBu (ORCPT
+        id S232029AbiABG1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jan 2022 01:27:24 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:53069 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231982AbiABG1X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Jan 2022 17:01:50 -0500
-Received: by mail-ua1-f42.google.com with SMTP id j11so15019311uaq.6;
-        Sat, 01 Jan 2022 14:01:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=EIYlX0fg89iThHN0zMuGWjZdyWg72w1vf2v0+D7SNtI=;
-        b=hrOsgbOYGBqErc1KQWtNwwl5z4eJTcbsp4pzs/N9OrkJ3jHn5LHhj5l6bRjwhxlNBa
-         Kh1q8mRFsOuCoJpKKn14Av2Piju4og2yzR2qY+fLjo0BiGrMDc0EXWUfBmemy1rIn/LP
-         yI93Rj4cL3ySqjc/DK1rbTuvWqnVEfa19m0QNMjcV5tnftwL/yl3YC1rTrx25WaPsLtR
-         jvA6DLab610B5JMAuknBSoR1BoSyoBAHWKpqNL8hs3yIF2dvD1q/7vP1N4ky9kWzP27j
-         3QotvZk68eggtMfpA7kJ+b+FcbIkKG9gZgXfpiqksNO46F/oQBlm1DBBTo0gHQPHkHYj
-         03Pg==
-X-Gm-Message-State: AOAM53358rVQ0qWjkq8zzXEJU0cmzGdMW8TPiySLJ0zE2FjcLfyuouFC
-        okNPdH6ggXksOOwig234QEJsIKlxCwj1
-X-Google-Smtp-Source: ABdhPJz2XEbM/n1d4hzrwv5hiRpcGtsXAB6QuViudqMOLi02VAkPU3bX7OP/UX05O/2eLvlC42/doQ==
-X-Received: by 2002:ab0:6956:: with SMTP id c22mr5104855uas.51.1641074509649;
-        Sat, 01 Jan 2022 14:01:49 -0800 (PST)
-Received: from robh.at.kernel.org ([209.91.235.3])
-        by smtp.gmail.com with ESMTPSA id i62sm6165690vke.33.2022.01.01.14.01.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Jan 2022 14:01:48 -0800 (PST)
-Received: (nullmailer pid 839548 invoked by uid 1000);
-        Sat, 01 Jan 2022 22:01:44 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Rajeev Nandan <quic_rajeevny@quicinc.com>
-Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        quic_mkrishn@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_kalyant@quicinc.com, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, daniel@ffwll.ch, swboyd@chromium.org,
-        airlied@linux.ie, sean@poorly.run, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_abhinavk@quicinc.com,
-        dri-devel@lists.freedesktop.org, jonathan@marek.ca
-In-Reply-To: <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
-References: <1640856276-14697-1-git-send-email-quic_rajeevny@quicinc.com> <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
-Subject: Re: [v1 1/2] dt-bindings: msm/dsi: Add 10nm dsi phy tuning properties
-Date:   Sat, 01 Jan 2022 18:01:44 -0400
-Message-Id: <1641074504.063577.839547.nullmailer@robh.at.kernel.org>
+        Sun, 2 Jan 2022 01:27:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641104843; x=1672640843;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=KNjbPSw0dS/30AtlU76DflNFpjpfBnTRJdGVbLSGOkQ=;
+  b=Wott16rALNDzrLWNAh8zd1LrcYYnrR61/L9O2cR/rYZQyZDFZejsF4tb
+   e2Z5E8p5FqUxBHgEin8cTTwIVCThNlAQ7BrkGzIYsCWb83GhP+SvOCqt/
+   oBgHR73QH2fUiNZG3QeKB68twSwI/87N7k5OYK4L1XQ9xBdcikFo58azx
+   s=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jan 2022 22:27:23 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jan 2022 22:27:23 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sat, 1 Jan 2022 22:27:22 -0800
+Received: from [10.216.52.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sat, 1 Jan 2022
+ 22:27:18 -0800
+Message-ID: <3741398c-b3e2-4872-d08f-9de02fe3cab9@quicinc.com>
+Date:   Sun, 2 Jan 2022 11:57:12 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] dt-bindings: qcom,pdc: convert to YAML
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20211213152208.290923-1-luca.weiss@fairphone.com>
+ <39d259cf-5663-5073-f16b-71a21f0e62e3@quicinc.com>
+ <CGROQPIOKGRH.2UVREF2IWAOIC@otso>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <CGROQPIOKGRH.2UVREF2IWAOIC@otso>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Dec 2021 14:54:35 +0530, Rajeev Nandan wrote:
-> Add 10nm dsi phy tuning properties for phy drive strength and
-> phy drive level adjustemnt.
-> 
-> Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
-> ---
->  .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
+Hi Luca,
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+On 12/29/2021 3:11 PM, Luca Weiss wrote:
+> Hi Maulik,
+>
+> On Mon Dec 20, 2021 at 1:24 PM CET, Maulik Shah wrote:
+>> Hi Luca,
+>>
+>> On 12/13/2021 8:52 PM, Luca Weiss wrote:
+>>> Convert the PDC interrupt controller bindings to YAML.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>> This patch depends on the following patch, which fixed sm8250 & sm8350
+>>> compatibles and adds sm6350.
+>>> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
+>>>
+>>> Also, if somebody has a better suggestion for the register names,
+>>> the second one is pulled from downstream commit message which calls it
+>>> both "SPI config registers" and "interface registers":
+>>> https://source.codeaurora.org/quic/la/kernel/msm-4.19/commit/?id=cdefb63745e051a5bcf69663ac9d084d7da1eeec
+>> Thanks for the patch. Please use "apss-shared-spi-cfg" name for the
+>> second reg.
+>>
+>> It was intended in [1] to remove it since there are no user in upstream
+>> for second reg. but it should be fine to convert existing to yaml first
+>> and then look to fix that.
+>>
+> Do you have a full-text version of that? I'd use it instead of this in
+> the binding.
+>
+>    - description: PDC interface register region
+you can use below description,
 
-yamllint warnings/errors:
+description: Edge or Level config register for SPI interrupts
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml: properties:phy-drive-strength-cfg:type: 'array' is not one of ['boolean', 'object']
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml: properties:phy-drive-level-cfg:type: 'array' is not one of ['boolean', 'object']
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml: ignoring, error in schema: properties: phy-drive-strength-cfg: type
-Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.example.dt.yaml:0:0: /example-0/dsi-phy@ae94400: failed to match any schema with compatible: ['qcom,dsi-phy-10nm']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1574124
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Thanks,
+Maulik
