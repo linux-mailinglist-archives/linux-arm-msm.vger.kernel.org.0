@@ -2,103 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C54AB482A44
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jan 2022 07:27:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5048C482AC5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jan 2022 11:43:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232029AbiABG1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jan 2022 01:27:24 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:53069 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231982AbiABG1X (ORCPT
+        id S232192AbiABKnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jan 2022 05:43:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232177AbiABKnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jan 2022 01:27:23 -0500
+        Sun, 2 Jan 2022 05:43:09 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB493C061574
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jan 2022 02:43:08 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id s1so64430091wra.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jan 2022 02:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641104843; x=1672640843;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=KNjbPSw0dS/30AtlU76DflNFpjpfBnTRJdGVbLSGOkQ=;
-  b=Wott16rALNDzrLWNAh8zd1LrcYYnrR61/L9O2cR/rYZQyZDFZejsF4tb
-   e2Z5E8p5FqUxBHgEin8cTTwIVCThNlAQ7BrkGzIYsCWb83GhP+SvOCqt/
-   oBgHR73QH2fUiNZG3QeKB68twSwI/87N7k5OYK4L1XQ9xBdcikFo58azx
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Jan 2022 22:27:23 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jan 2022 22:27:23 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sat, 1 Jan 2022 22:27:22 -0800
-Received: from [10.216.52.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sat, 1 Jan 2022
- 22:27:18 -0800
-Message-ID: <3741398c-b3e2-4872-d08f-9de02fe3cab9@quicinc.com>
-Date:   Sun, 2 Jan 2022 11:57:12 +0530
+        d=gmail.com; s=20210112;
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=g8Z10qgIS0EarfPNyU/0T6kl3UEk/EndXdl7judHSI4=;
+        b=mjzYsM7Bfon4hWir7+HENqeqm4FX/bC0Z6wXmD2Cc5pmBNfhD3uVuoaMrW73kyHo5J
+         chcfMxSRaM5BUkI+ImFNJwtXBdG2z9r8oJZcfd/CtUaSepAj3KZ5l43yxpC211NcSjIf
+         2GagrO7ZSZ0v+LG4dPEKQzdjfQUygaCbHpgR3gfQEpAm6G6A6qvqkDzNHJgyz61tJn09
+         KxhrQ4Y4AStETtH5kWGJN7s/G5hagtW03R1hjByq4013guGgQKVkMK6p4Dsws+bL3yBt
+         oIL+Bx3Vh3mGKXGUQwkfDa9dVzdCyxyI1tD6sAMm4HTIZF3mtpPQI2IPa7LWW/IjYd/O
+         q1EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=g8Z10qgIS0EarfPNyU/0T6kl3UEk/EndXdl7judHSI4=;
+        b=DD1R2De45yfL//eFKbinG5LLsr5jLxGklEZu7iaEtWlpqUgwO9leLbuLGAoc7FVknH
+         vRyY217i/Dzw4xpi1TRRvia6ldd6DFycQO/Q/7RfuJoZdC17NTAa2ondWSx4EWJIdVxx
+         NpS9kUEq4GnTsiJGSwxy/ENahNzVHJQBffpL8KORkhBhGJThLw27Y2tFLJY+6gpSHOMJ
+         3FeswSHyZ/i5o3gnZCGgpyKKILdo21Chut7VitlSg/hegBdiJn9TVaGy9WzQZmFr1ac2
+         kx6MZnRlOljSq9kw7k2ftVPsWWAxUon+7D5oNWYfPvOkR2+hRQr50pSXdwkDX6AlbHwO
+         f3UQ==
+X-Gm-Message-State: AOAM531KFNKHVTHvw1C6sygucYu+ecDnzaFK+ZsBz5UCY8l0hiNXPKKb
+        x1iX8LKCY1aVMeUinpWPAVRXsGfter3TxA==
+X-Google-Smtp-Source: ABdhPJywtfsz2LYcQqg4ZgkptummJ/3NdhqNF+VK1zZIDwhDzalgHC1+6pyFFh5LgNbKDWM48GhPrw==
+X-Received: by 2002:a5d:448f:: with SMTP id j15mr36323472wrq.603.1641120187257;
+        Sun, 02 Jan 2022 02:43:07 -0800 (PST)
+Received: from [192.168.9.102] ([197.211.59.105])
+        by smtp.gmail.com with ESMTPSA id n41sm35585017wms.32.2022.01.02.02.43.03
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 02 Jan 2022 02:43:06 -0800 (PST)
+Message-ID: <61d181ba.1c69fb81.7eb5a.738a@mx.google.com>
+From:   Margaret Leung KO May-yee <abdulrahmantukurargungu@gmail.com>
+X-Google-Original-From: Margaret Leung KO May-yee
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH] dt-bindings: qcom,pdc: convert to YAML
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20211213152208.290923-1-luca.weiss@fairphone.com>
- <39d259cf-5663-5073-f16b-71a21f0e62e3@quicinc.com>
- <CGROQPIOKGRH.2UVREF2IWAOIC@otso>
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-In-Reply-To: <CGROQPIOKGRH.2UVREF2IWAOIC@otso>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: =?utf-8?q?Gesch=C3=A4ftsvorschlag?=
+To:     Recipients <Margaret@vger.kernel.org>
+Date:   Sun, 02 Jan 2022 11:42:59 +0100
+Reply-To: la67737777@gmail.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luca,
+Am Mrs. Margaret Leung I have a business proposal for you reach at: la67737=
+777@gmail.com
 
-On 12/29/2021 3:11 PM, Luca Weiss wrote:
-> Hi Maulik,
->
-> On Mon Dec 20, 2021 at 1:24 PM CET, Maulik Shah wrote:
->> Hi Luca,
->>
->> On 12/13/2021 8:52 PM, Luca Weiss wrote:
->>> Convert the PDC interrupt controller bindings to YAML.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>> This patch depends on the following patch, which fixed sm8250 & sm8350
->>> compatibles and adds sm6350.
->>> https://lore.kernel.org/linux-arm-msm/20211213082614.22651-4-luca.weiss@fairphone.com/
->>>
->>> Also, if somebody has a better suggestion for the register names,
->>> the second one is pulled from downstream commit message which calls it
->>> both "SPI config registers" and "interface registers":
->>> https://source.codeaurora.org/quic/la/kernel/msm-4.19/commit/?id=cdefb63745e051a5bcf69663ac9d084d7da1eeec
->> Thanks for the patch. Please use "apss-shared-spi-cfg" name for the
->> second reg.
->>
->> It was intended in [1] to remove it since there are no user in upstream
->> for second reg. but it should be fine to convert existing to yaml first
->> and then look to fix that.
->>
-> Do you have a full-text version of that? I'd use it instead of this in
-> the binding.
->
->    - description: PDC interface register region
-you can use below description,
-
-description: Edge or Level config register for SPI interrupts
-
-Thanks,
-Maulik
+Margaret Leung
+Managing Director of Chong Hing Bank
