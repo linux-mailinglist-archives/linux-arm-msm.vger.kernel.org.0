@@ -2,140 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 183FD482E50
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:52:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DCF6482E56
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:52:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiACFwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jan 2022 00:52:03 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:44166 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbiACFwD (ORCPT
+        id S229876AbiACFwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jan 2022 00:52:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38550 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229505AbiACFwz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jan 2022 00:52:03 -0500
+        Mon, 3 Jan 2022 00:52:55 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86E1C061761
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jan 2022 21:52:54 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 24951B80989
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jan 2022 05:52:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA07C36AEB;
-        Mon,  3 Jan 2022 05:51:57 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1A54A60FA9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jan 2022 05:52:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7799DC36AE9;
+        Mon,  3 Jan 2022 05:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641189120;
-        bh=Rvdd71uzdWwOSe7+yhScwEDQuAfW55HrUBLeHi9rhPs=;
+        s=k20201202; t=1641189173;
+        bh=efe9x2zqWKqz9Ww5zAplmpJMaFSnp8oSxrb1YNxiTqY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LgPw8OWSLgkN3lCpvTt0bPlghy/ha3PBlcersBkE6W5gJcH0sGdkfbrmvnGLNya4Z
-         51AKmPdvdoi/K26sqv61xKvvEUw4o4eeFot+19srcfFecq40QNrHInGG6xeglVaGFr
-         C37FY5H61YDbOEuYxcLytKNMWQ0sRbrR5FiezeV3riMxlyML+d9pcwR2UiJwmuOGF/
-         Rb2V7sbMLbRy8fRh4fIUFlOUR4Gs7vdanLA8RkUwdoVMtkpsy/HyXdhf2hOeqDtiAk
-         OOK6Hmjpw6/amQEYtdYIwMrM17q3tDXk5ABFq86tDopud6W1yNiL25pY7VdSjW4uvT
-         ds/KL7TMUKN9g==
-Date:   Mon, 3 Jan 2022 11:21:52 +0530
+        b=khztlvo/E2gmtUqHXV8XczAThHrFMvXXbEe/aZ3GqYmciX3cPJ8BVlCFSVcCYeWbn
+         fdtf39rppxXID6jaB03uVmxd9L8bRPzeuBq5InTVEwORQy7B55nE9T6ztOBIAnE4Kg
+         XXQp0UxUFAMOhBd3ry2oFPc0f3/TBM9p2b/HD/jqfUfJJya1f+YPmyMX3D3t5flolC
+         0idQL8/jPLezyUJLUyL62RTxilYDFDBxuwskNDyS/VYCLo4DCnijtElPiVinUoUI/l
+         A8Q4MlV9ibuuK//3EK8AWDeEV//RVzoW+WHncdpN/Kb2brdiYjw1MfhJvPqgA7KHDd
+         qjKat2dpWZ/3g==
+Date:   Mon, 3 Jan 2022 11:22:46 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
         miquel.raynal@bootlin.com, architt@codeaurora.org,
         bbrezillon@kernel.org, absahu@codeaurora.org, baruch@tkos.co.il
-Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix clock sequencing in
- qcom_nandc_probe()
-Message-ID: <20220103055152.GA3581@thinkpad>
+Subject: Re: [PATCH v2 2/2] mtd: parsers: qcom: Don't print error message on
+ -EPROBE_DEFER
+Message-ID: <20220103055246.GB3581@thinkpad>
 References: <20220103030316.58301-1-bryan.odonoghue@linaro.org>
- <20220103030316.58301-2-bryan.odonoghue@linaro.org>
+ <20220103030316.58301-3-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220103030316.58301-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220103030316.58301-3-bryan.odonoghue@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 03, 2022 at 03:03:15AM +0000, Bryan O'Donoghue wrote:
-> Interacting with a NAND chip on an IPQ6018 I found that the qcomsmem NAND
-> partition parser was returning -EPROBE_DEFER waiting for the main smem
-> driver to load.
+On Mon, Jan 03, 2022 at 03:03:16AM +0000, Bryan O'Donoghue wrote:
+> Its possible for the main smem driver to not be loaded by the time we come
+> along to parse the smem partition description but, this is a perfectly
+> normal thing.
 > 
-> This caused the board to reset. Playing about with the probe() function
-> shows that the problem lies in the core clock being switched off before the
-> nandc_unalloc() routine has completed.
+> No need to print out an error message in this case.
 > 
-> If we look at how qcom_nandc_remove() tears down allocated resources we see
-> the expected order is
-> 
-> qcom_nandc_unalloc(nandc);
-> 
-> clk_disable_unprepare(nandc->aon_clk);
-> clk_disable_unprepare(nandc->core_clk);
-> 
-> dma_unmap_resource(&pdev->dev, nandc->base_dma, resource_size(res),
-> 		   DMA_BIDIRECTIONAL, 0);
-> 
-> Tweaking probe() to both bring up and tear-down in that order removes the
-> reset if we end up deferring elsewhere.
-> 
-> Fixes: c76b78d8ec05 ("mtd: nand: Qualcomm NAND controller driver")
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-
-Can you please CC stable list for backporting?
 
 Thanks,
 Mani
 
 > ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
+>  drivers/mtd/parsers/qcomsmempart.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index 04e6f7b267064..0f41a9a421575 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -2,7 +2,6 @@
->  /*
->   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
->   */
-> -
->  #include <linux/clk.h>
->  #include <linux/slab.h>
->  #include <linux/bitops.h>
-> @@ -3063,10 +3062,6 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->  	if (dma_mapping_error(dev, nandc->base_dma))
->  		return -ENXIO;
->  
-> -	ret = qcom_nandc_alloc(nandc);
-> -	if (ret)
-> -		goto err_nandc_alloc;
-> -
->  	ret = clk_prepare_enable(nandc->core_clk);
->  	if (ret)
->  		goto err_core_clk;
-> @@ -3075,6 +3070,10 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->  	if (ret)
->  		goto err_aon_clk;
->  
-> +	ret = qcom_nandc_alloc(nandc);
-> +	if (ret)
-> +		goto err_nandc_alloc;
-> +
->  	ret = qcom_nandc_setup(nandc);
->  	if (ret)
->  		goto err_setup;
-> @@ -3086,15 +3085,14 @@ static int qcom_nandc_probe(struct platform_device *pdev)
->  	return 0;
->  
->  err_setup:
-> +	qcom_nandc_unalloc(nandc);
-> +err_nandc_alloc:
->  	clk_disable_unprepare(nandc->aon_clk);
->  err_aon_clk:
->  	clk_disable_unprepare(nandc->core_clk);
->  err_core_clk:
-> -	qcom_nandc_unalloc(nandc);
-> -err_nandc_alloc:
->  	dma_unmap_resource(dev, res->start, resource_size(res),
->  			   DMA_BIDIRECTIONAL, 0);
-> -
->  	return ret;
->  }
+> diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
+> index 06a818cd2433f..b2a57fe8479fa 100644
+> --- a/drivers/mtd/parsers/qcomsmempart.c
+> +++ b/drivers/mtd/parsers/qcomsmempart.c
+> @@ -75,7 +75,8 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+>  	pr_debug("Parsing partition table info from SMEM\n");
+>  	ptable = qcom_smem_get(SMEM_APPS, SMEM_AARM_PARTITION_TABLE, &len);
+>  	if (IS_ERR(ptable)) {
+> -		pr_err("Error reading partition table header\n");
+> +		if (PTR_ERR(ptable) != -EPROBE_DEFER)
+> +			pr_err("Error reading partition table header\n");
+>  		return PTR_ERR(ptable);
+>  	}
 >  
 > -- 
 > 2.33.0
