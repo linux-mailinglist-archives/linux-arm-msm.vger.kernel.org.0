@@ -2,110 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABAA5482E45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:47:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 183FD482E50
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:52:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbiACFrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jan 2022 00:47:32 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:30427 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231751AbiACFra (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jan 2022 00:47:30 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1641188848; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=cVC+oibIc8iPmXhnG1hrq/a9esqKZx7TVHYepgpH7ck=;
- b=EAu1o29iNLEFlViVz4/q5bjVfndUpoKJN60pXPiie841LLK3QDjvedniApkBvB0X+zwPSFxy
- 4xPB7jErfg6pR/N4ZDnS/mXoMSkVjbc+JuQoKEay8/DYE0eWHqJXd4af3/FOAFj5n2UW4DD9
- bi0hgL1DVdVAbXxOpSABLkBgE8s=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61d28df0bf630523994db265 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 Jan 2022 05:47:28
- GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E36C0C43616; Mon,  3 Jan 2022 05:47:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=ham autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S229883AbiACFwD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jan 2022 00:52:03 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:44166 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229876AbiACFwD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 Jan 2022 00:52:03 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99A62C4360C;
-        Mon,  3 Jan 2022 05:47:27 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 24951B80989
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jan 2022 05:52:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA07C36AEB;
+        Mon,  3 Jan 2022 05:51:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641189120;
+        bh=Rvdd71uzdWwOSe7+yhScwEDQuAfW55HrUBLeHi9rhPs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LgPw8OWSLgkN3lCpvTt0bPlghy/ha3PBlcersBkE6W5gJcH0sGdkfbrmvnGLNya4Z
+         51AKmPdvdoi/K26sqv61xKvvEUw4o4eeFot+19srcfFecq40QNrHInGG6xeglVaGFr
+         C37FY5H61YDbOEuYxcLytKNMWQ0sRbrR5FiezeV3riMxlyML+d9pcwR2UiJwmuOGF/
+         Rb2V7sbMLbRy8fRh4fIUFlOUR4Gs7vdanLA8RkUwdoVMtkpsy/HyXdhf2hOeqDtiAk
+         OOK6Hmjpw6/amQEYtdYIwMrM17q3tDXk5ABFq86tDopud6W1yNiL25pY7VdSjW4uvT
+         ds/KL7TMUKN9g==
+Date:   Mon, 3 Jan 2022 11:21:52 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        miquel.raynal@bootlin.com, architt@codeaurora.org,
+        bbrezillon@kernel.org, absahu@codeaurora.org, baruch@tkos.co.il
+Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix clock sequencing in
+ qcom_nandc_probe()
+Message-ID: <20220103055152.GA3581@thinkpad>
+References: <20220103030316.58301-1-bryan.odonoghue@linaro.org>
+ <20220103030316.58301-2-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 03 Jan 2022 11:17:27 +0530
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Baruch Siach <baruch@tkos.co.il>,
-        Sricharan R <sricharan@codeaurora.org>,
-        arajkuma@codeaurora.org, speriaka@codeaurora.org,
-        sivaprak@codeaurora.org, jason <jason@wallystech.com>,
-        linus.walleij@linaro.org
-Subject: Re: External data abort on ipq6018 gpio # 20 ~ offset 0x14000 any
- ideas ?
-In-Reply-To: <731e9571-5414-1c00-b6e4-a5316d287506@nexus-software.ie>
-References: <cbe181af-402d-c8eb-3104-4ee48f8d525a@nexus-software.ie>
- <Yc9zt9vOWXTPZ8PH@ripper>
- <731e9571-5414-1c00-b6e4-a5316d287506@nexus-software.ie>
-Message-ID: <2de144430c1acf7e0743adde7055926c@codeaurora.org>
-X-Sender: kathirav@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220103030316.58301-2-bryan.odonoghue@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-01-01 21:17, Bryan O'Donoghue wrote:
-> On 31/12/2021 21:18, Bjorn Andersson wrote:
->> Unfortunately I don't know how to determine the list of protected 
->> GPIOs,
->> other than trial and error.
->> 
->> But once you have the list, you can use "gpio-reserved-ranges" (a 
->> series
->> of offset, count pairs) in the TLMM DT node to mark off these gpios as
->> reserved.
+On Mon, Jan 03, 2022 at 03:03:15AM +0000, Bryan O'Donoghue wrote:
+> Interacting with a NAND chip on an IPQ6018 I found that the qcomsmem NAND
+> partition parser was returning -EPROBE_DEFER waiting for the main smem
+> driver to load.
 > 
-> Ah nice, worked first time.
+> This caused the board to reset. Playing about with the probe() function
+> shows that the problem lies in the core clock being switched off before the
+> nandc_unalloc() routine has completed.
 > 
-> gpio-reserved-ranges = <20 4>;
+> If we look at how qcom_nandc_remove() tears down allocated resources we see
+> the expected order is
+> 
+> qcom_nandc_unalloc(nandc);
+> 
+> clk_disable_unprepare(nandc->aon_clk);
+> clk_disable_unprepare(nandc->core_clk);
+> 
+> dma_unmap_resource(&pdev->dev, nandc->base_dma, resource_size(res),
+> 		   DMA_BIDIRECTIONAL, 0);
+> 
+> Tweaking probe() to both bring up and tear-down in that order removes the
+> reset if we end up deferring elsewhere.
+> 
+> Fixes: c76b78d8ec05 ("mtd: nand: Qualcomm NAND controller driver")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-You want to protect only one GPIO right? I understand that it should be 
-just <20 1>. Isn't the case?
+Can you please CC stable list for backporting?
 
-You are using a CP01-C4 variant(#define CPU_IPQ6005 453, machid 
-0x8030003). In this variant alone, GPIO20 is protected by TZ for some of 
-its operation since there is no PMIC. In other variants of IPQ6018, you 
-shouldn't be seeing this issue.
+Thanks,
+Mani
 
-> 
-> Well I guess its good to know there's no more esoteric explanation
-> than "trustzone made it explode" - it only seems to be the one GPIO
-> too, quite what use there is for TZ in this GPIO
-> 
-> PINGROUP(20, pwm20, atest_char2, _, _, _, _, _, _, _)
-> 
-> is anybody's guess.
-> 
-> Good enough for my purposes.
-> 
-> Thanks !
-> 
 > ---
-> bod
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
+>  drivers/mtd/nand/raw/qcom_nandc.c | 14 ++++++--------
+>  1 file changed, 6 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+> index 04e6f7b267064..0f41a9a421575 100644
+> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> @@ -2,7 +2,6 @@
+>  /*
+>   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+>   */
+> -
+>  #include <linux/clk.h>
+>  #include <linux/slab.h>
+>  #include <linux/bitops.h>
+> @@ -3063,10 +3062,6 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+>  	if (dma_mapping_error(dev, nandc->base_dma))
+>  		return -ENXIO;
+>  
+> -	ret = qcom_nandc_alloc(nandc);
+> -	if (ret)
+> -		goto err_nandc_alloc;
+> -
+>  	ret = clk_prepare_enable(nandc->core_clk);
+>  	if (ret)
+>  		goto err_core_clk;
+> @@ -3075,6 +3070,10 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_aon_clk;
+>  
+> +	ret = qcom_nandc_alloc(nandc);
+> +	if (ret)
+> +		goto err_nandc_alloc;
+> +
+>  	ret = qcom_nandc_setup(nandc);
+>  	if (ret)
+>  		goto err_setup;
+> @@ -3086,15 +3085,14 @@ static int qcom_nandc_probe(struct platform_device *pdev)
+>  	return 0;
+>  
+>  err_setup:
+> +	qcom_nandc_unalloc(nandc);
+> +err_nandc_alloc:
+>  	clk_disable_unprepare(nandc->aon_clk);
+>  err_aon_clk:
+>  	clk_disable_unprepare(nandc->core_clk);
+>  err_core_clk:
+> -	qcom_nandc_unalloc(nandc);
+> -err_nandc_alloc:
+>  	dma_unmap_resource(dev, res->start, resource_size(res),
+>  			   DMA_BIDIRECTIONAL, 0);
+> -
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.33.0
+> 
