@@ -2,218 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBF49482E36
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:41:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAA5482E45
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 06:47:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231637AbiACFlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jan 2022 00:41:12 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:62605 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229527AbiACFlL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jan 2022 00:41:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641188471; x=1672724471;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=ZUtxtdz4uH9rLeuOq9hfgHex7zCJpBmeeoNCCU1r+Yg=;
-  b=bGpA/ZjEr0fqXHlNf3iTnS3R5y1AF0JK1pAgJd+WoxQtu6URBeg5anGE
-   1jelyTSDk2+oxT41QPt7ing1ukKum1YuZpfqWsTpMKf2U3+bgj51FijkS
-   /3pVwi1EhPfK/y1AQ+AH2cGXjShBZ98B/7dV+ZHfUpBLvtTrMj5r7II5H
-   k=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Jan 2022 21:41:11 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jan 2022 21:41:11 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 2 Jan 2022 21:41:10 -0800
-Received: from [10.50.54.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 2 Jan 2022
- 21:41:06 -0800
-Message-ID: <4009226e-76bf-6e37-65be-8942ef7126df@quicinc.com>
-Date:   Mon, 3 Jan 2022 11:11:03 +0530
+        id S229527AbiACFrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jan 2022 00:47:32 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:30427 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231751AbiACFra (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 3 Jan 2022 00:47:30 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1641188848; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=cVC+oibIc8iPmXhnG1hrq/a9esqKZx7TVHYepgpH7ck=;
+ b=EAu1o29iNLEFlViVz4/q5bjVfndUpoKJN60pXPiie841LLK3QDjvedniApkBvB0X+zwPSFxy
+ 4xPB7jErfg6pR/N4ZDnS/mXoMSkVjbc+JuQoKEay8/DYE0eWHqJXd4af3/FOAFj5n2UW4DD9
+ bi0hgL1DVdVAbXxOpSABLkBgE8s=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61d28df0bf630523994db265 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 03 Jan 2022 05:47:28
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E36C0C43616; Mon,  3 Jan 2022 05:47:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=ham autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 99A62C4360C;
+        Mon,  3 Jan 2022 05:47:27 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv6 0/5] tracing/rwmmio/arm64: Add support to trace register
- reads/writes
-Content-Language: en-US
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Steven Rostedt <rostedt@goodmis.org>
-CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <cover.1638858746.git.quic_saipraka@quicinc.com>
- <93ef32a5-013a-fdcf-11bb-6f3c9bc34628@quicinc.com>
-In-Reply-To: <93ef32a5-013a-fdcf-11bb-6f3c9bc34628@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 03 Jan 2022 11:17:27 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Baruch Siach <baruch@tkos.co.il>,
+        Sricharan R <sricharan@codeaurora.org>,
+        arajkuma@codeaurora.org, speriaka@codeaurora.org,
+        sivaprak@codeaurora.org, jason <jason@wallystech.com>,
+        linus.walleij@linaro.org
+Subject: Re: External data abort on ipq6018 gpio # 20 ~ offset 0x14000 any
+ ideas ?
+In-Reply-To: <731e9571-5414-1c00-b6e4-a5316d287506@nexus-software.ie>
+References: <cbe181af-402d-c8eb-3104-4ee48f8d525a@nexus-software.ie>
+ <Yc9zt9vOWXTPZ8PH@ripper>
+ <731e9571-5414-1c00-b6e4-a5316d287506@nexus-software.ie>
+Message-ID: <2de144430c1acf7e0743adde7055926c@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/13/2021 8:58 AM, Sai Prakash Ranjan wrote:
-> Hi Arnd,
->
-> On 12/7/2021 12:24 PM, Sai Prakash Ranjan wrote:
->> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
->> are typically used to read/write from/to memory mapped registers
->> and can cause hangs or some undefined behaviour in following cases,
->>
->> * If the access to the register space is unclocked, for example: if
->>    there is an access to multimedia(MM) block registers without MM
->>    clocks.
->>
->> * If the register space is protected and not set to be accessible from
->>    non-secure world, for example: only EL3 (EL: Exception level) access
->>    is allowed and any EL2/EL1 access is forbidden.
->>
->> * If xPU(memory/register protection units) is controlling access to
->>    certain memory/register space for specific clients.
->>
->> and more...
->>
->> Such cases usually results in instant reboot/SErrors/NOC or interconnect
->> hangs and tracing these register accesses can be very helpful to debug
->> such issues during initial development stages and also in later stages.
->>
->> So use ftrace trace events to log such MMIO register accesses which
->> provides rich feature set such as early enablement of trace events,
->> filtering capability, dumping ftrace logs on console and many more.
->>
->> Sample output:
->>
->> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 
->> val=0xa0d5d addr=0xfffffbfffdbff700
->> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 
->> width=32 val=0xa0d5d addr=0xfffffbfffdbff700
->> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 
->> addr=0xfffffbfffdbff610
->> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 
->> val=0x0 addr=0xfffffbfffdbff610
->>
->> This series is a follow-up for the series [1] and a recent series [2] 
->> making use
->> of both.
->>
->> [1] 
->> https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
->> [2] 
->> https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
->>
->> Note in previous v4 version, Arnd suggested to benchmark and compare 
->> size with callback
->> based implementation, please see [3] for more details on that with 
->> brief comparison below.
->>
->>
->> **Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
->> $ size vmlinux
->>     text           data             bss     dec hex         filename
->>   23884219        14284468         532568 38701255 24e88c7        
->> vmlinux
->>
->> **Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
->> $ size vmlinux
->>      text          data             bss     dec hex        filename
->>   24108179        14279596         532568 38920343 251e097       vmlinux
->>
->> $ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
->> add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
->> Total: Before=25812612, After=26043292, chg +0.89%
->>
->> [3] 
->> https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
->>
->> Changes in v6:
->>   * Implemented suggestions by Arnd Bergmann:
->>     - Use arch independent IO barriers in arm64/asm
->>     - Add ARCH_HAVE_TRACE_MMIO_ACCESS
->>     - Add post read and post write logging support
->>     - Remove tracepoint_active check
->>   * Fix build error reported by kernel test robot.
->>
->> Changes in v5:
->>   * Move arm64 to use asm-generic provided high level MMIO accessors 
->> (Arnd).
->>   * Add inline logging for MMIO relaxed and non-relaxed accessors.
->>   * Move nVHE KVM comment to makefile (Marc).
->>   * Fix overflow warning due to switch to inline accessors instead of 
->> macro.
->>   * Modify trace event field to include caller and parent details for 
->> more detailed logs.
->>
->> Changes in v4:
->>   * Drop dynamic debug based filter support since that will be 
->> developed later with
->>     the help from Steven (Ftrace maintainer).
->>   * Drop value passed to writel as it is causing hangs when tracing 
->> is enabled.
->>   * Code cleanup for trace event as suggested by Steven for earlier 
->> version.
->>   * Fixed some build errors reported by 0-day bot.
->>
->> Changes in v3:
->>   * Create a generic mmio header for instrumented version (Earlier 
->> suggested in [1]
->>     by Will Deacon and recently [2] by Greg to have a generic version 
->> first).
->>   * Add dynamic debug support to filter out traces which can be very 
->> useful for targeted
->>     debugging specific to subsystems or drivers.
->>   * Few modifications to the rwmmio trace event fields to include the 
->> mmio width and print
->>     addresses in hex.
->>   * Rewrote commit msg to explain some more about usecases.
->>
->> Prasad Sodagudi (1):
->>    tracing: Add register read/write tracing support
->>
->> Sai Prakash Ranjan (4):
->>    arm64: io: Use asm-generic high level MMIO accessors
->>    irqchip/tegra: Fix overflow implicit truncation warnings
->>    drm/meson: Fix overflow implicit truncation warnings
->>    asm-generic/io: Add logging support for MMIO accessors
->>
->>   arch/Kconfig                      |   3 +
->>   arch/arm64/Kconfig                |   1 +
->>   arch/arm64/include/asm/io.h       |  41 +++--------
->>   arch/arm64/kvm/hyp/nvhe/Makefile  |   7 +-
->>   drivers/gpu/drm/meson/meson_viu.c |  22 +++---
->>   drivers/irqchip/irq-tegra.c       |  10 +--
->>   include/asm-generic/io.h          |  81 +++++++++++++++++++--
->>   include/trace/events/rwmmio.h     | 112 ++++++++++++++++++++++++++++++
->>   kernel/trace/Kconfig              |   7 ++
->>   kernel/trace/Makefile             |   1 +
->>   kernel/trace/trace_readwrite.c    |  47 +++++++++++++
->>   11 files changed, 278 insertions(+), 54 deletions(-)
->>   create mode 100644 include/trace/events/rwmmio.h
->>   create mode 100644 kernel/trace/trace_readwrite.c
->>
->
-> Does this version look good to you? From the other mail thread it 
-> seems Catalin
-> is ok with your suggested change. Kernel test robot hasn't come with 
-> any build error
-> reports so far, I have fixed the previous reported one in meson drm 
-> driver.
->
-> Thanks,
-> Sai
+On 2022-01-01 21:17, Bryan O'Donoghue wrote:
+> On 31/12/2021 21:18, Bjorn Andersson wrote:
+>> Unfortunately I don't know how to determine the list of protected 
+>> GPIOs,
+>> other than trial and error.
+>> 
+>> But once you have the list, you can use "gpio-reserved-ranges" (a 
+>> series
+>> of offset, count pairs) in the TLMM DT node to mark off these gpios as
+>> reserved.
+> 
+> Ah nice, worked first time.
+> 
+> gpio-reserved-ranges = <20 4>;
 
-Any more comments for this version?
 
-Thanks,
-Sai
+You want to protect only one GPIO right? I understand that it should be 
+just <20 1>. Isn't the case?
+
+You are using a CP01-C4 variant(#define CPU_IPQ6005 453, machid 
+0x8030003). In this variant alone, GPIO20 is protected by TZ for some of 
+its operation since there is no PMIC. In other variants of IPQ6018, you 
+shouldn't be seeing this issue.
+
+> 
+> Well I guess its good to know there's no more esoteric explanation
+> than "trustzone made it explode" - it only seems to be the one GPIO
+> too, quite what use there is for TZ in this GPIO
+> 
+> PINGROUP(20, pwm20, atest_char2, _, _, _, _, _, _, _)
+> 
+> is anybody's guess.
+> 
+> Good enough for my purposes.
+> 
+> Thanks !
+> 
+> ---
+> bod
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
