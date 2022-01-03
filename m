@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1AFB482C75
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jan 2022 18:50:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36E52482D99
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 04:01:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229693AbiABRuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Jan 2022 12:50:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53164 "EHLO
+        id S229457AbiACDBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Jan 2022 22:01:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiABRuE (ORCPT
+        with ESMTP id S229455AbiACDBK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Jan 2022 12:50:04 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5348C061761
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jan 2022 09:50:03 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id v7so65746547wrv.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jan 2022 09:50:03 -0800 (PST)
+        Sun, 2 Jan 2022 22:01:10 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5FDCC061761
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jan 2022 19:01:09 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id t26so67310671wrb.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jan 2022 19:01:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=f/23sp1iBvoUiVjjVi++1/pRdYTmKhtlANlkSerXd08=;
-        b=tYKARDaQ5u5adV9zC7q44A7IL73nAsobcLzJ8JMaKVcNyLtyjGibbCRSWpujUXqThw
-         +VcCvaMo0jZ/h5spYLzvrnhQO+UXFaPckLhBp0whjINWIaUOWLfHi+89jz73xg07UJxn
-         vPNryvEOAQCaJdkNNGe1RFLFLT0ReeDzhcDJ3tuSlG2eKYDeQUgukqhqa7gtMMuFZiwz
-         NV1IWdtiCdty6X3nUjThkzLK+Of2EGEnePa07rGol/l0Fr0/+TyqxxPC6jZfF1TJfZ4U
-         eJ1PlGctGSpSD3k8tsJyDxgg2WalOJ48ueqrTo7P5jQ3az+/jC1sCK6oyhIJtdbxeaxD
-         rH2g==
+        bh=ZPVYLHdEN2vTjfHQg99TQO0KsUtSn3N32X0J9UMa42w=;
+        b=H2Gj8QRAS7vbR7dVQuXfqWlVxR/q75a06Yf7SXfC8g7bo6wPNAGbKwvo9e1oDp0rSS
+         IqVi5jZ4zlKsJogJi16DJpAnfcM4y5FFmOjuLq1ELUTjNV7KQNVqA3ewSgeG4Y9u/hcN
+         7pRuR3J2OV9l2u+zJY+KggAf4kPCLt+XSf89ufkgsX63CHXS91d7tBVh097+h0XU4Lld
+         pIn494w+M027JxDJZnw9RmQwAd7JmfI3dVFqXpQIPXodoqTYKq2ZePtl93zKGlHgbpK1
+         cGxDMwdFS3f90hOgmhyeDguH5a66LS35QJwFducQygnYMZCLvqKiTzanRw7CPM58kHOA
+         rADw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=f/23sp1iBvoUiVjjVi++1/pRdYTmKhtlANlkSerXd08=;
-        b=x53/cE2y0lGbPMdh9FXDAHwu+czxwOBSGENCFONW7g7Su+JttkieydHGx5ysQqvo81
-         C7P7xg+fMru2iFlWm4K1Te1K2XLW5NqJ49WIxjT6dkxxSJtaorpVJk9SCl+yG4rV96rX
-         0M6WzozL3HdQeyJIaJ59Ze5sCCBGAe14pOKWCDDCvMU3T5EE/Am5jCpWsvZoHgoFrnT1
-         3tLihC2WfdCKmYOL+cFOgK/R+xLiKb9q58AqRkKRMe4PQQSIoNBjUTpZHFQT6Y1b0WDk
-         cHaHMwYA6xZ8+hF5CQEn36E87tah3RNtCZpYeQw8Tuh9uPSnOjoantea1RsEGtusk9Tp
-         XH4w==
-X-Gm-Message-State: AOAM531EYnfyZ8O4NY0aI+T2bnSgUgl2WBLwii+40TZonmIJWRbOtPY1
-        YvEjTrJz/vqoqzEIKxbnkwUCnBUi09C8cQ==
-X-Google-Smtp-Source: ABdhPJyDfDza2tpMfD0SPFAiUn84iJf8jMGv78xiZPbuRdqDLQnnBAgVWBkAQSuxqp5jIfrq77yFrg==
-X-Received: by 2002:a5d:5255:: with SMTP id k21mr37623129wrc.381.1641145802034;
-        Sun, 02 Jan 2022 09:50:02 -0800 (PST)
+        bh=ZPVYLHdEN2vTjfHQg99TQO0KsUtSn3N32X0J9UMa42w=;
+        b=euDxrwhzZHS3f+dPVsprSRuVwSnkYYokOVEa/zhDv94/NdGHtlAcRPH+rR0xXj6UUf
+         mfN+L6yyC77dZovZhCXHvDGkmSfNwr3idQ5Q+Ind6GmEI8I1WHqQklqastd1nOjT8f1k
+         USKu31Kw6J0fO0lmizYcaFT0NJtMqVK901cUYfiVwffoFYuSg54iHPRnD+gKRMP0mqgi
+         /P5UaLqRGj1uau3+zz3WXR1dSttHdJSUmprhbXjx1wsEdCy1OhV/RhJMm4jT+CubS8W5
+         3ZR/mprddB8RSq1qp35MecWwAHR9NNcEmkMcKy8U5Ndw/BN0M3fbUYZ0ldr5dj+Qkdq8
+         tWew==
+X-Gm-Message-State: AOAM530VwiKdkPUuhaUIYr85pG9d1Dqw1TB0vBKtxjr/xzKqtwkSg7SX
+        JGDmNz8eUtXUw5z3aHa8rUpUvxjaK+fqIw==
+X-Google-Smtp-Source: ABdhPJxcACWfxvCOxKTjwsBBcoTwoLDkHGPSqYp5nL4pj5yyJ6axB85Bz6ziXkkXIbIBhKNcXbiB3Q==
+X-Received: by 2002:adf:f245:: with SMTP id b5mr36603818wrp.506.1641178867961;
+        Sun, 02 Jan 2022 19:01:07 -0800 (PST)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o10sm23539488wmq.31.2022.01.02.09.50.01
+        by smtp.gmail.com with ESMTPSA id p11sm38095667wru.99.2022.01.02.19.01.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jan 2022 09:50:01 -0800 (PST)
+        Sun, 02 Jan 2022 19:01:07 -0800 (PST)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
         mani@kernel.org, miquel.raynal@bootlin.com, architt@codeaurora.org,
         bbrezillon@kernel.org, absahu@codeaurora.org
 Cc:     baruch@tkos.co.il, bryan.odonoghue@linaro.org
-Subject: [PATCH] mtd: rawnand: qcom: Fix clock sequencing in qcom_nandc_probe()
-Date:   Sun,  2 Jan 2022 17:52:06 +0000
-Message-Id: <20220102175206.3960-1-bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 0/2] Two Qcom NAND related fixes.
+Date:   Mon,  3 Jan 2022 03:03:14 +0000
+Message-Id: <20220103030316.58301-1-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -63,86 +63,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Interacting with a NAND chip on an IPQ6018 I found that the qcomsmem NAND
-partition parser was returning -EPROBE_DEFER waiting for the main smem
-driver to load.
+I've already sent the ordering fix for probe deferral in qcom_nandc_probe()
+but there's also an associated printout in the partition parser that
+shouldn't be there.
 
-This caused the board to reset. Playing about with the probe() function
-shows that the problem lies in the core clock being switched off before the
-nandc_unalloc() routine has completed.
+Add a patch to silence the spurious error message. 
 
-If we look at how qcom_nandc_remove() tears down allocated resources we see
-the expected order is
+Bryan O'Donoghue (2):
+  mtd: rawnand: qcom: Fix clock sequencing in qcom_nandc_probe()
+  mtd: parsers: qcom: Don't print error message on -EPROBE_DEFER
 
-qcom_nandc_unalloc(nandc);
+ drivers/mtd/nand/raw/qcom_nandc.c  | 14 ++++++--------
+ drivers/mtd/parsers/qcomsmempart.c |  3 ++-
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-clk_disable_unprepare(nandc->aon_clk);
-clk_disable_unprepare(nandc->core_clk);
-
-dma_unmap_resource(&pdev->dev, nandc->base_dma, resource_size(res),
-		   DMA_BIDIRECTIONAL, 0);
-
-Tweaking probe() to both bring up and tear-down in that order removes the
-reset if we end up deferring elsewhere.
-
-Fixes: c76b78d8ec05 ("mtd: nand: Qualcomm NAND controller driver")
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/mtd/nand/raw/qcom_nandc.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 04e6f7b267064..0f41a9a421575 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2,7 +2,6 @@
- /*
-  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-  */
--
- #include <linux/clk.h>
- #include <linux/slab.h>
- #include <linux/bitops.h>
-@@ -3063,10 +3062,6 @@ static int qcom_nandc_probe(struct platform_device *pdev)
- 	if (dma_mapping_error(dev, nandc->base_dma))
- 		return -ENXIO;
- 
--	ret = qcom_nandc_alloc(nandc);
--	if (ret)
--		goto err_nandc_alloc;
--
- 	ret = clk_prepare_enable(nandc->core_clk);
- 	if (ret)
- 		goto err_core_clk;
-@@ -3075,6 +3070,10 @@ static int qcom_nandc_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_aon_clk;
- 
-+	ret = qcom_nandc_alloc(nandc);
-+	if (ret)
-+		goto err_nandc_alloc;
-+
- 	ret = qcom_nandc_setup(nandc);
- 	if (ret)
- 		goto err_setup;
-@@ -3086,15 +3085,14 @@ static int qcom_nandc_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_setup:
-+	qcom_nandc_unalloc(nandc);
-+err_nandc_alloc:
- 	clk_disable_unprepare(nandc->aon_clk);
- err_aon_clk:
- 	clk_disable_unprepare(nandc->core_clk);
- err_core_clk:
--	qcom_nandc_unalloc(nandc);
--err_nandc_alloc:
- 	dma_unmap_resource(dev, res->start, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
--
- 	return ret;
- }
- 
 -- 
 2.33.0
 
