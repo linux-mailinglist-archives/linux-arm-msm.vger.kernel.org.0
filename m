@@ -2,94 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 13368484AA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 23:23:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C2B484AB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 23:26:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235400AbiADWXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 17:23:52 -0500
-Received: from ip-16.mailobj.net ([213.182.54.16]:44980 "EHLO msg-6.mailo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235396AbiADWXw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 17:23:52 -0500
-X-Greylist: delayed 1148 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jan 2022 17:23:51 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1641335021; bh=D9+yesqlorbnAPS/+e8RpkomkpiH25w35KF85YKftws=;
-        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-         References:Content-Type:MIME-Version:Content-Transfer-Encoding;
-        b=deEhpTXGDzfZDyLq+M2IB6Gg63C8ZizhFRc6EhvmgCPG9VvhPPjnIPXizUTePHn9N
-         /UmtQC9ZceL+5623ZBdJMtFs+02FfCqHfCtWqLSgJR8weg/GkhHemLtGrvKuiXp+yk
-         Xmdc2mWkM7qhLHK5i54uum43Hz+/znn6iqtDqRAI=
-Received: by b-6.in.mailobj.net [192.168.90.16] with ESMTP
-        via proxy.mailoo.org [213.182.55.207]
-        Tue,  4 Jan 2022 23:23:41 +0100 (CET)
-X-EA-Auth: dkBh22kJ20/hvolg0DJ9p+rXilUkNG/qYu7BqATLamBRCWe11wYuObjSvXCVh0j77U2DiA4iqmaYbpymvTVNxhbiOyBvrnJEg4zzQ4dIvQk=
-Message-ID: <f15a477aa01e2e972f54d1c36fa24df9cce48506.camel@mailoo.org>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sc7280: Add nodes for va tx
- and rx macros and external codecs
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Date:   Tue, 04 Jan 2022 23:23:40 +0100
-In-Reply-To: <1641208380-15510-2-git-send-email-quic_srivasam@quicinc.com>
-References: <1641208380-15510-1-git-send-email-quic_srivasam@quicinc.com>
-         <1641208380-15510-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.2 (3.42.2-1.fc35) 
+        id S235454AbiADW0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 17:26:07 -0500
+Received: from mail-oi1-f172.google.com ([209.85.167.172]:39592 "EHLO
+        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234768AbiADW0H (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jan 2022 17:26:07 -0500
+Received: by mail-oi1-f172.google.com with SMTP id x10so56652903oix.6;
+        Tue, 04 Jan 2022 14:26:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JnOadLKUCLxTeQKKTc3saQOhwTodIVbhHkqdpkUyL30=;
+        b=WFYzZklu7ExpTwNpAloUxXp5mKb1feZSZPj1q4u3uuJGeMK9gsGAnMt6ITs56VOUlW
+         saDzVyarRYzoO8PnQ//4fbdkJ3gEw2se3vDBTlg8yiGE4dd9lAVdaRuLdIrLh7hGHl+l
+         cd9h9eDQJ7P+lLIz3AFLy53HnEY8Mma2yE20MxfY7xm5Gu5Rz1xCBd23QofbBRipVL0j
+         h1nq8HHtFw57vLv9UwZYNmOZIzUDnLHTt5sunAmVaOZSQ8uNv80en5OGozxWrokrCYyZ
+         cOPt/2uY6NW2hFr4g71FQzZN4jsauSM1CX10Zu+z0F3RsvDqXcJAHRKikHPi4/u+1DGE
+         Bqsg==
+X-Gm-Message-State: AOAM530QuBof6LR5xclmSiuhFuuSODYCV9QMi54uu1X2n6pTu0shnD2p
+        IZbZ2fOhCdNxn4AI5w+AKA==
+X-Google-Smtp-Source: ABdhPJxfmZnICaR0AFOGdWsnbelA0aJZsRc1Kgnndk6DcVeWC0CYljTp86RqQf43B5yP69zwu5wQGg==
+X-Received: by 2002:a05:6808:10d1:: with SMTP id s17mr395747ois.26.1641335166437;
+        Tue, 04 Jan 2022 14:26:06 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id c139sm7472227oob.31.2022.01.04.14.26.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jan 2022 14:26:05 -0800 (PST)
+Received: (nullmailer pid 1557364 invoked by uid 1000);
+        Tue, 04 Jan 2022 22:26:04 -0000
+Date:   Tue, 4 Jan 2022 16:26:04 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     David Heidelberg <david@ixit.cz>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Discussion: dt-bindings: display: msm:
+ dsi-controller-main: fix the binding
+Message-ID: <YdTJfMXYXjavr8cZ@robh.at.kernel.org>
+References: <20211225205352.76827-1-david@ixit.cz>
+ <CAA8EJpoVuNDS2uD2g8W_40XVO2jS=6GtRQFxAnyPpd_QuHim8g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoVuNDS2uD2g8W_40XVO2jS=6GtRQFxAnyPpd_QuHim8g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-TGUgbHVuZGkgMDMgamFudmllciAyMDIyIMOgIDE2OjQyICswNTMwLCBTcmluaXZhc2EgUmFvIE1h
-bmRhZGFwdSBhIMOpY3JpdMKgOgo+IFNDNzI4MCBoYXMgVkEsIFRYIGFuZCBSWCBtYWNyb3Mgd2l0
-aCBTb3VuZFdpcmUgQ29udHJvbGxlcnMgdG8gYXR0YWNoIHdpdGgKPiBjb2RlY3MgbGlrZSBXQ0Q5
-Mzh4LCBtYXg5ODM2MGEgdXNpbmcgc291bmR3aXJlIG1hc3RlcnMgYW5kIGkycyBidXMuCj4gQWRk
-IHRoZXNlIG5vZGVzIGZvciBzYzcyODAgYmFzZWQgcGxhdGZvcm1zIGF1ZGlvIHVzZSBjYXNlLgo+
-IEFkZCB0bG1tIGdwaW8gcHJvcGVydHkgaW4gd2NkOTM4eCBub2RlIGZvciBzd2l0Y2hpbmcgQ1RJ
-QS9PTVRQIEhlYWRzZXQuCj4gCj4gU2lnbmVkLW9mZi1ieTogU3Jpbml2YXNhIFJhbyBNYW5kYWRh
-cHUgPHF1aWNfc3JpdmFzYW1AcXVpY2luYy5jb20+Cj4gQ28tZGV2ZWxvcGVkLWJ5OiBWZW5rYXRh
-IFByYXNhZCBQb3R0dXJ1IDxxdWljX3BvdHR1cnVAcXVpY2luYy5jb20+Cj4gU2lnbmVkLW9mZi1i
-eTogVmVua2F0YSBQcmFzYWQgUG90dHVydSA8cXVpY19wb3R0dXJ1QHF1aWNpbmMuY29tPgo+IC0t
-LQo+IMKgYXJjaC9hcm02NC9ib290L2R0cy9xY29tL3NjNzI4MC1jcmQuZHRzwqAgfMKgwqAgNCAr
-Kwo+IMKgYXJjaC9hcm02NC9ib290L2R0cy9xY29tL3NjNzI4MC1pZHAuZHRzaSB8wqAgNTIgKysr
-KysrKysrKysrKysKPiDCoGFyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zYzcyODAuZHRzacKgwqDC
-oMKgIHwgMTEzICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKPiDCoDMgZmlsZXMgY2hh
-bmdlZCwgMTY5IGluc2VydGlvbnMoKykKClsuLi5dCgoKPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02
-NC9ib290L2R0cy9xY29tL3NjNzI4MC1pZHAuZHRzaSBiL2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNv
-bS9zYzcyODAtaWRwLmR0c2kKPiBpbmRleCBkZGViNTA4Li45NDYxNGM5IDEwMDY0NAo+IC0tLSBh
-L2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zYzcyODAtaWRwLmR0c2kKPiArKysgYi9hcmNoL2Fy
-bTY0L2Jvb3QvZHRzL3Fjb20vc2M3MjgwLWlkcC5kdHNpCj4gQEAgLTYzNiwzICs2MzYsNTUgQEAK
-PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGJpYXMtcHVsbC11cDsKPiDCoMKgwqDC
-oMKgwqDCoMKgfTsKPiDCoH07Cj4gKwo+ICsmc3dyMCB7Cj4gK8KgwqDCoMKgwqDCoMKgd2NkX3J4
-OiB3Y2Q5Mzh4LXJ4ewoKU3BhY2UgYmVmb3JlIGJyYWNlLi4uCgo+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqBjb21wYXRpYmxlID0gInNkdzIwMjE3MDEwZDAwIjsKPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgcmVnID0gPDAgND47Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCNzb3VuZC1kYWktY2VsbHMgPSA8MT47Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoHFjb20scngtcG9ydC1tYXBwaW5nID0gPDEgMiAzIDQgNT47Cj4gK8KgwqDCoMKg
-wqDCoMKgfTsKPiArfTsKPiArCj4gKyZzd3IxIHsKPiArwqDCoMKgwqDCoMKgwqB3Y2RfdHg6IHdj
-ZDkzOHgtdHh7CgpEaXR0by4uLgoKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY29t
-cGF0aWJsZSA9ICJzZHcyMDIxNzAxMGQwMCI7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoHJlZyA9IDwwIDM+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAjc291bmQt
-ZGFpLWNlbGxzID0gPDE+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBxY29tLHR4
-LXBvcnQtbWFwcGluZyA9IDwxIDIgMyA0PjsKPiArwqDCoMKgwqDCoMKgwqB9Owo+ICt9Owo+ICsK
-PiArJnNvYyB7Cj4gK8KgwqDCoMKgwqDCoMKgbWF4OTgzNjBhOiBhdWRpby1jb2RlYy0wIHsKPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY29tcGF0aWJsZSA9ICJtYXhpbSxtYXg5ODM2
-MGEiOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBwaW5jdHJsLW5hbWVzID0gImRl
-ZmF1bHQiOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBwaW5jdHJsLTAgPSA8JmFt
-cF9lbj47Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHNkbW9kZS1ncGlvcyA9IDwm
-dGxtbSA2MyBHUElPX0FDVElWRV9ISUdIPjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgI3NvdW5kLWRhaS1jZWxscyA9IDwwPjsKPiArwqDCoMKgwqDCoMKgwqB9Owo+ICsKPiArwqDC
-oMKgwqDCoMKgwqB3Y2Q5Mzh4OiBjb2RlYyB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoGNvbXBhdGlibGUgPSAicWNvbSx3Y2Q5MzgwLWNvZGVjIjsKPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgI3NvdW5kLWRhaS1jZWxscyA9IDwxPjsKPiArCj4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoHJlc2V0LWdwaW9zID0gPCZ0bG1tIDgzIDA+OwoKR1BJT19BQ1RJ
-VkVfSElHSCA/Cgo=
+On Sun, Dec 26, 2021 at 02:34:08AM +0300, Dmitry Baryshkov wrote:
+> Hi,
+> 
+> On Sat, 25 Dec 2021 at 23:54, David Heidelberg <david@ixit.cz> wrote:
+> >
+> > This binding is not much validating the old DSI v2.
+> >
+> > Currently we don't differentiate old v2 from new versions,
+> > so we need to figure out how to validate them.
+> >
+> > I propose specific compatible depending on mdss version, but I would be
+> > glad, if someone with deeper knowledge proposed the names.
+> >
+> > I'm willing to implement it then and back from autodetection.
+> 
+> I'd suggest to use hardware-specific compatible for apq8064 (and maybe
+> other v2 hosts if somebody adds support). For example
+> "qcom,apq8064-dsi-ctrl" or "qcom,dsi-ctrl-apq8064" (no strong
+> preference here).
 
+The former.
 
+> For 6G hosts it will probably make sense to use IP versions instead
+> ("qcom-dsi-ctrl-6g-v2.4.1").
 
+Humm, we went down the path of version numbers for QCom blocks, but the 
+result was not much reuse of same version on more than 2-3 parts if 
+that. So stick with SoCs for naming unless there's a strong case that 
+version numbers to SoC parts is 1 to many.
+
+Rob
