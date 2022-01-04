@@ -2,83 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E025484AC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 23:32:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 269A6484A8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 23:16:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235571AbiADWco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 17:32:44 -0500
-Received: from ip-16.mailobj.net ([213.182.54.16]:45388 "EHLO msg-6.mailo.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235600AbiADWcn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 17:32:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
-        t=1641333864; bh=lHp0UvUah92KKPlvcUMbQFYVc6g3XCuqxRZn264QpCQ=;
-        h=X-EA-Auth:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-         References:Content-Type:MIME-Version:Content-Transfer-Encoding;
-        b=YfHu3Ib4CMPne8gVNPiPiQTXmUrIkJsbFR81gzI6KBYVxwS/AYsm8gmLsnCdxImEn
-         xWdlrQ5pk99RQ6dHA4AV4updH9D3trai3BsehQ7HRyHS5ZQUv5LmWJpkXA2fz2rLf3
-         mMd4ZylTryve+On95vjiOOd7II1rI5KqcpsrdYe0=
-Received: by b-1.in.mailobj.net [192.168.90.11] with ESMTP
-        via proxy.mailoo.org [213.182.55.207]
-        Tue,  4 Jan 2022 23:04:24 +0100 (CET)
-X-EA-Auth: oxHs20R9oJarhLAFe19phH5Y2A6Qj5HoKCXz1xSYEm9MYXCDPfcQDk36oOEfmjvlC29iFnXNW4jJQRAnmlnylrbQAQabHawFfNezHUH5Bqk=
-Message-ID: <fd7f6a115ece824c75f5b8fd02f1fc84cefca176.camel@mailoo.org>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sc7280: Add nodes for va tx
- and rx macros and external codecs
-From:   Vincent Knecht <vincent.knecht@mailoo.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, rohitkr@codeaurora.org,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Date:   Tue, 04 Jan 2022 23:04:23 +0100
-In-Reply-To: <1641208380-15510-2-git-send-email-quic_srivasam@quicinc.com>
-References: <1641208380-15510-1-git-send-email-quic_srivasam@quicinc.com>
-         <1641208380-15510-2-git-send-email-quic_srivasam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.2 (3.42.2-1.fc35) 
+        id S235344AbiADWQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 17:16:09 -0500
+Received: from mail-ot1-f51.google.com ([209.85.210.51]:37377 "EHLO
+        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233989AbiADWQI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 4 Jan 2022 17:16:08 -0500
+Received: by mail-ot1-f51.google.com with SMTP id 45-20020a9d0a30000000b0058f1a6df088so49012453otg.4;
+        Tue, 04 Jan 2022 14:16:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SuGukoNPooesabXeAdaxQqSV8RWg79OHbj9bSw0hpC0=;
+        b=kPtFWgAEC1SvnWk4mz+kk6TT42+mhR8xw7oYli4Hndooqqe45/jWeIJppwneYWMyQq
+         5HFrIvy/ykG6NWaToK7zIDHE6fiJ8l5jRbaIoKtQH46VVdhKB8+8lj8TAudI8u/obii3
+         3xImcy6nkPzD7z4i53IqLp2zV/Y58aFzPlRQ7s2Vp0BazztIjjKWzWkkJMCp5sGpHf2z
+         I4YLhYn+gAt0GtiiFItYpRSVO7uQ0Z9DNlUzXmsX5kLGwly2krtfrDEsSdZpNKq1BO/J
+         9VCNaW9YPUsKGJGmpI+cpxgXFungAdr/vTGn+nvjOEV0JJArmZwf97sGVUHG76rpM/gu
+         eHSw==
+X-Gm-Message-State: AOAM531B9sGIkSqbifLaof+VZ/JvBkkVx79SbhwFlDznAZAPv60uaXU4
+        RhbXD5NW4/388D7DTE5S+g==
+X-Google-Smtp-Source: ABdhPJyWWBdwDhHOY9YQSLSHOZtAKoY0iHLxicl58vShawhYSkoTxM6Cv6OfDigF8mP+BC5iYta/dA==
+X-Received: by 2002:a05:6830:4094:: with SMTP id x20mr37291654ott.53.1641334568149;
+        Tue, 04 Jan 2022 14:16:08 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id x4sm10126613oiv.35.2022.01.04.14.16.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jan 2022 14:16:07 -0800 (PST)
+Received: (nullmailer pid 1540165 invoked by uid 1000);
+        Tue, 04 Jan 2022 22:16:06 -0000
+Date:   Tue, 4 Jan 2022 16:16:06 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: mfd: syscon: Add Qualcomm TCSR registers
+Message-ID: <YdTHJrqjt5IPhoM2@robh.at.kernel.org>
+References: <20211225140708.22000-1-david@ixit.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211225140708.22000-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le lundi 03 janvier 2022 =C3=A0 16:42 +0530, Srinivasa Rao Mandadapu a =C3=
-=A9crit=C2=A0:
-> SC7280 has VA, TX and RX macros with SoundWire Controllers to attach with
-> codecs like WCD938x, max98360a using soundwire masters and i2s bus.
-> Add these nodes for sc7280 based platforms audio use case.
-> Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
->=20
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
-> =C2=A0arch/arm64/boot/dts/qcom/sc7280-crd.dts=C2=A0 |=C2=A0=C2=A0 4 ++
-> =C2=A0arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |=C2=A0 52 ++++++++++++++
-> =C2=A0arch/arm64/boot/dts/qcom/sc7280.dtsi=C2=A0=C2=A0=C2=A0=C2=A0 | 113 =
-+++++++++++++++++++++++++++++++
-> =C2=A03 files changed, 169 insertions(+)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dt=
-s/qcom/sc7280-crd.dts
-> index cd2755c..035cca9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> @@ -72,6 +72,10 @@ ap_ts_pen_1v8: &i2c13 {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0pins =3D "gpio51";
-> =C2=A0};
-> =C2=A0
-> +&wcd938x {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0qcom,us-euro-gpios =3D <&tlmm =
-81 0>;
-> +};
-> +
+On Sat, Dec 25, 2021 at 03:07:07PM +0100, David Heidelberg wrote:
+> Qualcomm devices have a set of registers that provide various control and status
+> functions for their peripherals.
+> 
+> Modification:
+>  - dropped "qcom,tcsr-ipq6018", "syscon", "simple-mfd", since it's not
+>    used anywhere.
 
-Maybe using a defined value is possible, rather than an obscure zero ?
-GPIO_ACTIVE_HIGH ?
-
-
-
+There is about to be. See: 
+https://lore.kernel.org/all/b5053b42f73e574f48cf860a8e225d6b1939d216.1639499239.git.baruch@tkos.co.il/
