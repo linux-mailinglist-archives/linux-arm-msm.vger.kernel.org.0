@@ -2,93 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78C2B484AB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 23:26:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4F86484B60
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jan 2022 00:53:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235454AbiADW0H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 17:26:07 -0500
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:39592 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234768AbiADW0H (ORCPT
+        id S235662AbiADXxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 18:53:06 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:18998 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235661AbiADXxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 17:26:07 -0500
-Received: by mail-oi1-f172.google.com with SMTP id x10so56652903oix.6;
-        Tue, 04 Jan 2022 14:26:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=JnOadLKUCLxTeQKKTc3saQOhwTodIVbhHkqdpkUyL30=;
-        b=WFYzZklu7ExpTwNpAloUxXp5mKb1feZSZPj1q4u3uuJGeMK9gsGAnMt6ITs56VOUlW
-         saDzVyarRYzoO8PnQ//4fbdkJ3gEw2se3vDBTlg8yiGE4dd9lAVdaRuLdIrLh7hGHl+l
-         cd9h9eDQJ7P+lLIz3AFLy53HnEY8Mma2yE20MxfY7xm5Gu5Rz1xCBd23QofbBRipVL0j
-         h1nq8HHtFw57vLv9UwZYNmOZIzUDnLHTt5sunAmVaOZSQ8uNv80en5OGozxWrokrCYyZ
-         cOPt/2uY6NW2hFr4g71FQzZN4jsauSM1CX10Zu+z0F3RsvDqXcJAHRKikHPi4/u+1DGE
-         Bqsg==
-X-Gm-Message-State: AOAM530QuBof6LR5xclmSiuhFuuSODYCV9QMi54uu1X2n6pTu0shnD2p
-        IZbZ2fOhCdNxn4AI5w+AKA==
-X-Google-Smtp-Source: ABdhPJxfmZnICaR0AFOGdWsnbelA0aJZsRc1Kgnndk6DcVeWC0CYljTp86RqQf43B5yP69zwu5wQGg==
-X-Received: by 2002:a05:6808:10d1:: with SMTP id s17mr395747ois.26.1641335166437;
-        Tue, 04 Jan 2022 14:26:06 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id c139sm7472227oob.31.2022.01.04.14.26.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 14:26:05 -0800 (PST)
-Received: (nullmailer pid 1557364 invoked by uid 1000);
-        Tue, 04 Jan 2022 22:26:04 -0000
-Date:   Tue, 4 Jan 2022 16:26:04 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     David Heidelberg <david@ixit.cz>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Discussion: dt-bindings: display: msm:
- dsi-controller-main: fix the binding
-Message-ID: <YdTJfMXYXjavr8cZ@robh.at.kernel.org>
-References: <20211225205352.76827-1-david@ixit.cz>
- <CAA8EJpoVuNDS2uD2g8W_40XVO2jS=6GtRQFxAnyPpd_QuHim8g@mail.gmail.com>
+        Tue, 4 Jan 2022 18:53:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641340386; x=1672876386;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=fLCcdxocKH85HQ3jCk4LCX/EcUSahJ0COmlko2j8PsA=;
+  b=xg7QKbHKRMU2MORlfYWN59MqT+IzZ/wufOWYgLrjVyYWinZ/LsbwMsZY
+   qtf4hzraLf36zxwW+Ls4BMp6kBzmtXHsUE73AxDxScQomtfndrpzwUvJI
+   nDTk6m31Am1t/01+S9CdYUxONmXQM1w6wux9cai78of67pWNQxEoJGTsa
+   0=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 04 Jan 2022 15:53:06 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2022 15:52:35 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 4 Jan 2022 15:52:15 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 4 Jan 2022 15:52:14 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: stop link training after link training 2 failed
+Date:   Tue, 4 Jan 2022 15:52:07 -0800
+Message-ID: <1641340327-2261-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoVuNDS2uD2g8W_40XVO2jS=6GtRQFxAnyPpd_QuHim8g@mail.gmail.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Dec 26, 2021 at 02:34:08AM +0300, Dmitry Baryshkov wrote:
-> Hi,
-> 
-> On Sat, 25 Dec 2021 at 23:54, David Heidelberg <david@ixit.cz> wrote:
-> >
-> > This binding is not much validating the old DSI v2.
-> >
-> > Currently we don't differentiate old v2 from new versions,
-> > so we need to figure out how to validate them.
-> >
-> > I propose specific compatible depending on mdss version, but I would be
-> > glad, if someone with deeper knowledge proposed the names.
-> >
-> > I'm willing to implement it then and back from autodetection.
-> 
-> I'd suggest to use hardware-specific compatible for apq8064 (and maybe
-> other v2 hosts if somebody adds support). For example
-> "qcom,apq8064-dsi-ctrl" or "qcom,dsi-ctrl-apq8064" (no strong
-> preference here).
+Each DP link training contains link training 1 followed by link
+training 2.  There is maximum of 5 retries of DP link training
+before declared link training failed. It is required to stop link
+training at end of link training 2 if it is failed so that next
+link training 1 can start freshly. This patch fixes link compliance
+test  case 4.3.1.13 (Source Device Link Training EQ Fallback Test).
 
-The former.
+Fixes: 2e0adc765d88 ("drm/msm/dp: do not end dp link training until video is ready")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> For 6G hosts it will probably make sense to use IP versions instead
-> ("qcom-dsi-ctrl-6g-v2.4.1").
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 39558a2..3e4b3d9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1745,6 +1745,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+ 				/* end with failure */
+ 				break; /* lane == 1 already */
+ 			}
++
++			/* stop link training before start re training  */
++			dp_ctrl_clear_training_pattern(ctrl);
+ 		}
+ 	}
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Humm, we went down the path of version numbers for QCom blocks, but the 
-result was not much reuse of same version on more than 2-3 parts if 
-that. So stick with SoCs for naming unless there's a strong case that 
-version numbers to SoC parts is 1 to many.
-
-Rob
