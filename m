@@ -2,82 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E33B484239
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 14:19:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF1C484261
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 14:27:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233382AbiADNTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 08:19:49 -0500
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:43580 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbiADNTt (ORCPT
+        id S233535AbiADN1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 08:27:47 -0500
+Received: from mail-4319.protonmail.ch ([185.70.43.19]:27109 "EHLO
+        mail-4319.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233452AbiADN1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 08:19:49 -0500
-Received: by mail-ot1-f44.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so47289657otu.10;
-        Tue, 04 Jan 2022 05:19:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vXJyG+aPQT4HJZIu9rC6Yx2sQSwHLG6CbDytEKM/K3U=;
-        b=OpssVjPPVNfEF6naElg34t384t5IcJEe8dtkVwWRwL8ysd2VuvgKZVtDqQaTZ65frS
-         R7MxByKwoFsnh3kAJ6xy/gUFRtw8jfUCZ/Uu6+m2HU15wQugnglzaR7sJCdGvPBsx4CI
-         PxzC7aG2EyalNJXBEHYWbmvbTzOK8G7V7G0YmzChDdVYP04TIwGoxF06+2HoKWes8xTZ
-         2SCPslRLx0fAFopIMKqaqeqQizHTKDK8s8d4SnCT9NfKILMHs58y7Pa8P2zPL4wRlTHG
-         HhEDMCy9/mzMVazI5nslicgfXiXl7KfCQksyVuTMkCu1k7cswYXmVMvbSKN9phyFE3Ez
-         CVQg==
-X-Gm-Message-State: AOAM531xllQ62wraBY9b66IAxInZ2/TaFwx1krAqLB37Gwthb5+aANtF
-        R7KEeoWhILDYsYPbgGzGYw==
-X-Google-Smtp-Source: ABdhPJyF7XLC4a3OI784NyDanuYxfo3XEVhHBTQqEEE2GI42KrC8UhKs7BNtbpJ+vumVDLD0mMpcww==
-X-Received: by 2002:a05:6830:40b0:: with SMTP id x48mr35045276ott.279.1641302388237;
-        Tue, 04 Jan 2022 05:19:48 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id e4sm9619556oiy.12.2022.01.04.05.19.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 05:19:47 -0800 (PST)
-Received: (nullmailer pid 656049 invoked by uid 1000);
-        Tue, 04 Jan 2022 13:19:46 -0000
-Date:   Tue, 4 Jan 2022 07:19:46 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
-        linux-kernel@vger.kernel.org, ~okias/devicetree@lists.sr.ht,
-        Stephen Boyd <sboyd@kernel.org>,
+        Tue, 4 Jan 2022 08:27:46 -0500
+Date:   Tue, 04 Jan 2022 13:27:36 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail2; t=1641302864;
+        bh=N7TpRcOftGUw1oifCpP7wjHuRkrHBIGaeiwn9kajWDE=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
+        b=IEMI4JihSWX9ee2Vw9tB89Q4ml+v1FxEi7fDsZXnsmu23gdA9N2b/Dz3muscm7U85
+         NW02cO4eqnLQe25jqTCd83fegrMNTPxbRpii6fZfqb7KX5FcmoHIXazWy5TG7ho+q+
+         HXSEOsJ17jHdmzjUzDq5eE6zsRnGT0sACL0TLrrCLB7sIi6O40EG7XKwL8EllSJFl0
+         ZfBPMCytskxwVXfs+xHIS8Qbcjc56JmFnNqHj8Qqt1v/OTWTJXzFdDJCzPvvyAcM7q
+         07vq06iLa19PRvXHj91pnMlQfrvMj4R5gI8OYpr25+gKpfdd+1ttO1ibFFIVxTxtTm
+         UnwOjr4cN9v5w==
+To:     Rob Herring <robh+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3] dt-bindings: spmi: convert QCOM PMIC SPMI bindings to
- yaml
-Message-ID: <YdRJcv2kpp1vgUTb@robh.at.kernel.org>
-References: <20211227170151.73116-1-david@ixit.cz>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-kernel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: [PATCH 0/7] dt-bindings: Convert multiple Qualcomm OPP and CPUFreq bindings to DT schema
+Message-ID: <20220104132618.391799-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211227170151.73116-1-david@ixit.cz>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Dec 2021 18:01:50 +0100, David Heidelberg wrote:
-> Convert Qualcomm PMIC SPMI binding to yaml format.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> 
-> ---
-> v2:
->  - add #address and #size-cells
->  - add reg and remove spmi include from example
-> v3:
->  - fix doc reference error (make refcheckdocs)
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  .../bindings/mfd/qcom,spmi-pmic.txt           |   2 +-
->  .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  65 ----------
->  .../bindings/spmi/qcom,spmi-pmic-arb.yaml     | 120 ++++++++++++++++++
->  3 files changed, 121 insertions(+), 66 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
->  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
-> 
+This series is a compilation of DT schema conversions of multiple Qualcomm
+OPP and CPUFreq bindings:
+- qcom-cpufreq-nvmem (operating-points-v2-kryo-cpu)
+- qcom-opp (operating-points-v2-qcom-level)
+- qcom,cpr
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Converting each one to DT schema introduces new dt_binding_check and
+dtbs_check errors to the others, so it was better to combine them into
+a series. Some errors were also caused by a couple of device trees having
+OPP tables with names that do not follow opp-v2-base, so these got fixed
+in this series as well. Finally, the lack of MSM8996 compatibles in
+arm/qcom.yaml caused an error in the opp-v2-kryo-cpu example, so they were
+added to the schema as well as to the msm8996-mtp device tree, which only
+had qcom,msm8996-mtp as its compatible.
+
+PATCH 4/7 is a new version of a patch[1] that was sent as part of
+a different series before, and PATCH 7/7 is a new version of a patch[2]
+that was first sent alone.
+
+Changes since v1 (PATCH v2 4/7):
+ - Split the schema into an OPP schema and a CPUFreq schema.=20
+
+Changes since v1 (PATCH v2 7/7):
+ - Remove allOf from compatible.
+
+Yassine Oudjana (7):
+  dt-bindings: arm: qcom: Add msm8996 and apq8096 compatibles
+  arm64: dts: qcom: msm8996-mtp: Add msm8996 compatible
+  dt-bindings: opp: qcom-opp: Convert to DT schema
+  dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema
+  arm64: dts: qcom: msm8996: Rename cluster OPP tables
+  arm64: dts: qcom: qcs404: Rename CPU and CPR OPP tables
+  dt-bindings: power: avs: qcom,cpr: Convert to DT schema
+
+ .../devicetree/bindings/arm/qcom.yaml         |  16 +-
+ .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 166 ++++
+ .../bindings/opp/opp-v2-kryo-cpu.yaml         | 257 ++++++
+ .../bindings/opp/opp-v2-qcom-level.yaml       |  60 ++
+ .../bindings/opp/qcom-nvmem-cpufreq.txt       | 796 ------------------
+ .../devicetree/bindings/opp/qcom-opp.txt      |  19 -
+ .../bindings/power/avs/qcom,cpr.txt           | 130 ---
+ .../bindings/power/avs/qcom,cpr.yaml          | 160 ++++
+ MAINTAINERS                                   |   5 +-
+ arch/arm64/boot/dts/qcom/msm8996-mtp.dts      |   2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   4 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |   4 +-
+ 12 files changed, 666 insertions(+), 953 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-=
+nvmem.yaml
+ create mode 100644 Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.y=
+aml
+ create mode 100644 Documentation/devicetree/bindings/opp/opp-v2-qcom-level=
+.yaml
+ delete mode 100644 Documentation/devicetree/bindings/opp/qcom-nvmem-cpufre=
+q.txt
+ delete mode 100644 Documentation/devicetree/bindings/opp/qcom-opp.txt
+ delete mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.tx=
+t
+ create mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.ya=
+ml
+
+[1] https://lore.kernel.org/linux-arm-msm/20211014083016.137441-6-y.oudjana=
+@protonmail.com/
+[2]=09https://lore.kernel.org/linux-arm-msm/20211221133937.173618-1-y.oudja=
+na@protonmail.com/
+--=20
+2.34.1
+
+
