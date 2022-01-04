@@ -2,81 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D1E6484338
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 15:20:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47D644843E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 15:55:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234096AbiADOUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 09:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbiADOUs (ORCPT
+        id S233431AbiADOzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 09:55:05 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:38248 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229504AbiADOzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 09:20:48 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DD64C061785
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jan 2022 06:20:48 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id k18so39781650wrg.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jan 2022 06:20:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=WeeQCilTFNE7Nh007wpxMFboWE5lVX/qeHUt4Da2x6c=;
-        b=KJiosB/89hqKX7GXGJC0SgqE7yLt3BnJ+gWDCoQ3Eh7n9pW11tyn5I2ygUov09Z4f+
-         HvyzWkpUTZk89/jv9FhjAUHp0240JCKYZFML/yqGzz6seu2ob65gpk4jgkpE58p3PZ0X
-         nU5NcJ7+8cBv9X94p+fp6GJcNwqzkuMbzi0l30NMfvWEIB3lRIImEP5SgZD9rSfBacbU
-         64+XimNRphqL/JQ20UagMgU+h5dzPH+Ci+EicYq942IgGs2nkxiqWhvfxX18q58SoUw1
-         lweURD7cElEXdJt+auTId7ok7ZlHT7jwiRNnrm08gJWgcsJsYDTjxUngOVm/ulV1KZIX
-         OWxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WeeQCilTFNE7Nh007wpxMFboWE5lVX/qeHUt4Da2x6c=;
-        b=iOQ3LAIj3v9Q4Ir1TSZk2q3UCb4gDxZOC6ttphrSdxnnPHMSUSEbd1mQzeivFFRBpr
-         hq8V0c1svVK2bgFgSImVmOjTN2zPgDT0czm2IJrzGrFvulf8eFiAtY/oaUa7wH9gDLrc
-         uvCLfQ7evCTjVpp966ffbhO2+2Nv25TP2sAGyqpgrvY6AhpTa+GtB+gcM6fcCWd8Jzb1
-         ye2qq+ljM9YigM5O2D+7N3kGzpVDbmJN/z0gQed6aUjhwQMWC0DQZOyQH7rNHNfBJwqV
-         enESKQ4tz9JL7PEyh5ifqq8cc3Xn/z0oz+IF+GqAVFF55IMjATzRqyMbdN6uOhOzFa/l
-         fG+g==
-X-Gm-Message-State: AOAM532SF3WaiYBFWXeYGJsnJ1kjA2m9o+OP3zZLjyoAx393H5Lg79DX
-        LdJC5HJ51zhqC7YJdtfHJvR2pg==
-X-Google-Smtp-Source: ABdhPJwMrTzASSAtuAeHD13Uah3zwGwzHwTERozrKIQfJGj44BxpQ00MYPr62K/vCy7LTPB3/EduVA==
-X-Received: by 2002:a5d:4c47:: with SMTP id n7mr42360529wrt.322.1641306046777;
-        Tue, 04 Jan 2022 06:20:46 -0800 (PST)
-Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id j39sm35717478wms.0.2022.01.04.06.20.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jan 2022 06:20:46 -0800 (PST)
-Date:   Tue, 4 Jan 2022 14:20:44 +0000
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Tue, 4 Jan 2022 09:55:04 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8F207B8163C;
+        Tue,  4 Jan 2022 14:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2375C36AE9;
+        Tue,  4 Jan 2022 14:54:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641308102;
+        bh=f3icQ/m7CajZ+VJvBYNNkvB5JOmyPouGV9LddxkO4UQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mgjFfOacSVcbUCgTqqwDxVkPATxlRDzMedwid53NvgthlGHoqpza1bq+kE3CFtGiv
+         oGVozRaF/w7Psdby7hRishvp8i8uVMOLfSaL0D9aZk64RGUgUhuz04+d98C/00erzF
+         GRlHz7cMGW3o2UgHaSQJpAh8ppClWSSva0GPUPTGQNPk4un6xp6KQViruy5HcNoZnJ
+         pWPh43v/RYS64Nth7z0dXeugiyeU8KJFZUwNONVHuQatzS0Q0v4QZGM5mc3MBpPejY
+         UjYF2TrBVxYWScn7yRaVknceWxRlqex4COFr+1OoZUbXW4RXXt4xY5fGt0YOvpQAQB
+         5KGC2G5rKEXMg==
+Date:   Tue, 4 Jan 2022 14:54:56 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Cc:     David Collins <quic_collinsd@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] backlight: qcom-wled: Add PM6150L compatible
-Message-ID: <20220104142044.iit5wnsrgzngu76w@maple.lan>
-References: <20211229170358.2457006-1-luca.weiss@fairphone.com>
- <20211229170358.2457006-3-luca.weiss@fairphone.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, swboyd@chromium.org,
+        subbaram@codeaurora.org, Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V4 1/6] dt-bindings: regulator: Add
+ "regulator-min-dropout-voltage-microvolt"
+Message-ID: <YdRfwL9uQQd/0etr@sirena.org.uk>
+References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1637314953-4215-2-git-send-email-quic_c_skakit@quicinc.com>
+ <YZ+o9sQpECZSrieN@sirena.org.uk>
+ <d828f2a1-03e8-d6ee-4ab7-39bf677093b7@quicinc.com>
+ <Ya5VhkggWdjYyTHL@sirena.org.uk>
+ <6a44cb99-6894-c9ce-4f1e-5dee0939598c@quicinc.com>
+ <Ya97cnuwM+MuNMg3@sirena.org.uk>
+ <23a47965-4ea9-5f6c-7e3c-27f5bd35f5b7@quicinc.com>
+ <YbPCjbnH6cXQqy6S@sirena.org.uk>
+ <012a0a96-ab0e-e844-12e1-f2272bf2506d@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="aPEEkehX3JTCtWCF"
 Content-Disposition: inline
-In-Reply-To: <20211229170358.2457006-3-luca.weiss@fairphone.com>
+In-Reply-To: <012a0a96-ab0e-e844-12e1-f2272bf2506d@quicinc.com>
+X-Cookie: The horror... the horror!
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 29, 2021 at 06:03:56PM +0100, Luca Weiss wrote:
-> PM6150L contains WLED of version 5. Add support ofr it to the driver.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+--aPEEkehX3JTCtWCF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Mon, Jan 03, 2022 at 08:05:40PM +0530, Satya Priya Kakitapalli (Temp) wrote:
+> On 12/11/2021 2:41 AM, Mark Brown wrote:
 
-Daniel.
+> > I'd think we should consider if it's better to support this
+> > dynamically at runtime based on load information and provide options for
+> > configuring the peak load information through DT instead for static
+> > configurations.  That would fit in with the stuff we have for managing
+> > modes on DCDCs (which isn't really deployed but is there) and the API we
+> > have for allowing client drivers to indicate their load requirements at
+> > runtime that fits in with that.  That'd allow us to only boost the
+> > headroom when it's really needed.
+
+> This means Dynamic headroom control feature needs to be implemented. I need
+> to explore more on this and gather info from team, Could we merge the
+> present driver with "static headroom" for now? I'll do a follow up series to
+> implement this feature.
+
+I'd be happy to merge something with the headroom configured statically
+in the driver like we do for other devices - I guess if you set the
+highest headroom that should cover it.
+
+--aPEEkehX3JTCtWCF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmHUX8AACgkQJNaLcl1U
+h9BhtQf+L2r2wDroNeXGylRY4U6hq0q4A+rug1b0Z/Qvervdg9gBOKGNRqXnTnRX
+nqzFmlgkbrxJj8c8l/awd4GSaKks6/isvYqyXVVz8jHTHAN8oQz0vfMJdfRZUCKN
+fLJLckc/HgwVgHTZU9fTT/Z5sef9yJ426HwueHyhwmZkrBuBGCQisB7gncH/5QRY
+Je3U4w6teDpA7tlWo7MRY+KUIwPbOAuTY0QzUbWJL3eR4T7Cw2hp8rU7HuawkpQp
+4gkf6lZoTSkLcUpp+WDg7zJw7eRXseveFTFg+1DRFRa3TpgX7bHEy4K6rZgRGbVC
+k6OcTDSmHWwuKQ2mPh/J5uWpKQOTSg==
+=z85G
+-----END PGP SIGNATURE-----
+
+--aPEEkehX3JTCtWCF--
