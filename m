@@ -2,90 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BABDD48415F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 13:00:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E33B484239
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 14:19:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232849AbiADMAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Jan 2022 07:00:12 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:3750 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232800AbiADMAL (ORCPT
+        id S233382AbiADNTt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Jan 2022 08:19:49 -0500
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:43580 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231189AbiADNTt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Jan 2022 07:00:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641297610; x=1672833610;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Z4lRkDztl8kkMzv5y4vn6o4suy5hREey12tivQS1lgQ=;
-  b=SU9KAVtdZdSQ7KKjehkNjExqe+beFzzvc+8t8Ffx4t33TsAPZzViv/3s
-   XbWMOpIRWGhzJWQy8nsKzt53E9Kct1TwTRRxhA3p/LMpGkpgqm0td2Jgv
-   jDmlfazOQnq30Dfi5ZcTj2eVbaVJS91rJmlphrQoq9u74oVJYgZiSMK3g
-   Q=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 04 Jan 2022 04:00:10 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2022 04:00:08 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 4 Jan 2022 04:00:08 -0800
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 4 Jan 2022 04:00:03 -0800
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
-        <bjorn.andersson@linaro.org>, <greg@kroah.com>
-CC:     <linux-kernel@vger.kernel.org>, <tsoni@codeaurora.org>,
-        <psodagud@codeaurora.org>, <satyap@codeaurora.org>,
-        <pheragu@codeaurora.org>, <rnayak@codeaurora.org>,
-        <sibis@codeaurora.org>, <saiprakash.ranjan@codeaurora.org>,
-        <quic_schowdhu@quicinc.com>
-Subject: [PATCH V3 7/7] MAINTAINERS: Add maintainer entry for EUD
-Date:   Tue, 4 Jan 2022 17:28:20 +0530
-Message-ID: <e0d3661ea69a5706ea0fec3b4a38c5cd43a2e790.1641288286.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1641288286.git.quic_schowdhu@quicinc.com>
-References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
+        Tue, 4 Jan 2022 08:19:49 -0500
+Received: by mail-ot1-f44.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so47289657otu.10;
+        Tue, 04 Jan 2022 05:19:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vXJyG+aPQT4HJZIu9rC6Yx2sQSwHLG6CbDytEKM/K3U=;
+        b=OpssVjPPVNfEF6naElg34t384t5IcJEe8dtkVwWRwL8ysd2VuvgKZVtDqQaTZ65frS
+         R7MxByKwoFsnh3kAJ6xy/gUFRtw8jfUCZ/Uu6+m2HU15wQugnglzaR7sJCdGvPBsx4CI
+         PxzC7aG2EyalNJXBEHYWbmvbTzOK8G7V7G0YmzChDdVYP04TIwGoxF06+2HoKWes8xTZ
+         2SCPslRLx0fAFopIMKqaqeqQizHTKDK8s8d4SnCT9NfKILMHs58y7Pa8P2zPL4wRlTHG
+         HhEDMCy9/mzMVazI5nslicgfXiXl7KfCQksyVuTMkCu1k7cswYXmVMvbSKN9phyFE3Ez
+         CVQg==
+X-Gm-Message-State: AOAM531xllQ62wraBY9b66IAxInZ2/TaFwx1krAqLB37Gwthb5+aANtF
+        R7KEeoWhILDYsYPbgGzGYw==
+X-Google-Smtp-Source: ABdhPJyF7XLC4a3OI784NyDanuYxfo3XEVhHBTQqEEE2GI42KrC8UhKs7BNtbpJ+vumVDLD0mMpcww==
+X-Received: by 2002:a05:6830:40b0:: with SMTP id x48mr35045276ott.279.1641302388237;
+        Tue, 04 Jan 2022 05:19:48 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id e4sm9619556oiy.12.2022.01.04.05.19.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jan 2022 05:19:47 -0800 (PST)
+Received: (nullmailer pid 656049 invoked by uid 1000);
+        Tue, 04 Jan 2022 13:19:46 -0000
+Date:   Tue, 4 Jan 2022 07:19:46 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     linux-arm-msm@vger.kernel.org, Lee Jones <lee.jones@linaro.org>,
+        linux-kernel@vger.kernel.org, ~okias/devicetree@lists.sr.ht,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: spmi: convert QCOM PMIC SPMI bindings to
+ yaml
+Message-ID: <YdRJcv2kpp1vgUTb@robh.at.kernel.org>
+References: <20211227170151.73116-1-david@ixit.cz>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211227170151.73116-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the entry for maintainer for EUD driver
-and other associated files.
+On Mon, 27 Dec 2021 18:01:50 +0100, David Heidelberg wrote:
+> Convert Qualcomm PMIC SPMI binding to yaml format.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> 
+> ---
+> v2:
+>  - add #address and #size-cells
+>  - add reg and remove spmi include from example
+> v3:
+>  - fix doc reference error (make refcheckdocs)
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../bindings/mfd/qcom,spmi-pmic.txt           |   2 +-
+>  .../bindings/spmi/qcom,spmi-pmic-arb.txt      |  65 ----------
+>  .../bindings/spmi/qcom,spmi-pmic-arb.yaml     | 120 ++++++++++++++++++
+>  3 files changed, 121 insertions(+), 66 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+> 
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0227e15..54f616a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7018,6 +7018,14 @@ F:	include/trace/events/mdio.h
- F:	include/uapi/linux/mdio.h
- F:	include/uapi/linux/mii.h
- 
-+EUD-QCOM
-+M:	Souradeep Chowdhury <schowdhu@codeaurora.org>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/ABI/testing/sysfs-driver-eud
-+F:	Documentation/devicetree/bindings/arm/msm/qcom,eud.yaml
-+F:	drivers/usb/common/qcom_eud.c
-+
- EXFAT FILE SYSTEM
- M:	Namjae Jeon <linkinjeon@kernel.org>
- M:	Sungjong Seo <sj1557.seo@samsung.com>
--- 
-2.7.4
-
+Reviewed-by: Rob Herring <robh@kernel.org>
