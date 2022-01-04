@@ -2,110 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 242E3483384
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jan 2022 15:38:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC095483B3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jan 2022 05:14:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235594AbiACOhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Jan 2022 09:37:54 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:51769 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235213AbiACOfy (ORCPT
+        id S232767AbiADEO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Jan 2022 23:14:27 -0500
+Received: from mail-4325.protonmail.ch ([185.70.43.25]:21423 "EHLO
+        mail-4325.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232764AbiADEO1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Jan 2022 09:35:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641220554; x=1672756554;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=Kkn0XEM2sZCVDqxZ85uch+XeIVY/Ku5AixlF8FXOOyo=;
-  b=Br/3wSIyEYJXGQ3sw0GBE57ghvq2wU/RPC4qifGOPSlnCkFoOi2Tqrk+
-   Y8GltsshTfPbmRRhN+2/QKtq1EQ3oN9APzNf6mORb6V8fVXe+lziz0wEu
-   2iuJk8qSXHDJG9DX3l9UHEMtPuBJVlnipor3q8P5BfDRwEzR2t01RlEu5
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Jan 2022 06:35:53 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jan 2022 06:35:51 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 3 Jan 2022 06:35:51 -0800
-Received: from [10.216.7.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 3 Jan 2022
- 06:35:45 -0800
-Subject: Re: [PATCH V4 1/6] dt-bindings: regulator: Add
- "regulator-min-dropout-voltage-microvolt"
-To:     Mark Brown <broonie@kernel.org>,
-        David Collins <quic_collinsd@quicinc.com>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, <swboyd@chromium.org>,
-        <subbaram@codeaurora.org>, Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, Lee Jones <lee.jones@linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-2-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+o9sQpECZSrieN@sirena.org.uk>
- <d828f2a1-03e8-d6ee-4ab7-39bf677093b7@quicinc.com>
- <Ya5VhkggWdjYyTHL@sirena.org.uk>
- <6a44cb99-6894-c9ce-4f1e-5dee0939598c@quicinc.com>
- <Ya97cnuwM+MuNMg3@sirena.org.uk>
- <23a47965-4ea9-5f6c-7e3c-27f5bd35f5b7@quicinc.com>
- <YbPCjbnH6cXQqy6S@sirena.org.uk>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <012a0a96-ab0e-e844-12e1-f2272bf2506d@quicinc.com>
-Date:   Mon, 3 Jan 2022 20:05:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 3 Jan 2022 23:14:27 -0500
+Date:   Tue, 04 Jan 2022 04:14:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail2; t=1641269664;
+        bh=IvTkpfbUiuCp5b5JT8RQ28eHfOSOWqPHcurO4pZoOwM=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc;
+        b=R37NhaWLqXh9AnVJC1AeqSNqLvKw0Zg0KN/2PbYCGzoF4aZf5NtVbKB66ElieSo9+
+         SLDs8LPtVCCVMdHryC0tAel14Q2kVNHi69flMT3IDROhOpxTEt4cDFV3jEf4114s6q
+         /ANd0Xgm8UQUCwMBt0E//mQrIEC+DZ1CLxh/A9iDJa/ugqHoSMVCpcg298xZfDIcLe
+         pHvv0jhXgVisPF0bcUDkLGKQxNVdOs5raXsk1NV91d/2KP2KT523TeNRm/qEq+/FyQ
+         Z/5/GPXw9UKlHp9NU0kVjbWdfKcMOOzC45Y3a0m+RgO98JRNuxPGm8xaoX46HlFxyh
+         SpdOTHQsl+zsg==
+To:     Rob Herring <robh@kernel.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Niklas Cassel <nks@flawful.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH] dt-bindings: power: avs: qcom,cpr: Convert to DT schema
+Message-ID: <20220104041303.349963-1-y.oudjana@protonmail.com>
+In-Reply-To: <YcJgDToAY/vXXekl@robh.at.kernel.org>
+References: <20211221133937.173618-1-y.oudjana@protonmail.com> <YcJgDToAY/vXXekl@robh.at.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <YbPCjbnH6cXQqy6S@sirena.org.uk>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 21 Dec 2021 19:15:25 -0400, Rob Herring <robh@kernel.org> wrote:
+> On Tue, Dec 21, 2021 at 01:40:05PM +0000, Yassine Oudjana wrote:
+> > Convert qcom,cpr.txt to DT schema format.
+> >=20
+> > Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> > ---
+> >  .../bindings/power/avs/qcom,cpr.txt           | 130 --------------
+> >  .../bindings/power/avs/qcom,cpr.yaml          | 161 ++++++++++++++++++
+> >  MAINTAINERS                                   |   2 +-
+> >  3 files changed, 162 insertions(+), 131 deletions(-)
+> >  delete mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cp=
+r.txt
+> >  create mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cp=
+r.yaml
+>=20
+>=20
+> > diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml =
+b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+> > new file mode 100644
+> > index 000000000000..852eb36eea93
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+> > @@ -0,0 +1,161 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/power/avs/qcom,cpr.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm Core Power Reduction (CPR) bindings
+> > +
+> > +maintainers:
+> > +  - Niklas Cassel <nks@flawful.org>
+> > +
+> > +description: |
+> > +  CPR (Core Power Reduction) is a technology to reduce core power on a=
+ CPU
+> > +  or other device. Each OPP of a device corresponds to a "corner" that=
+ has
+> > +  a range of valid voltages for a particular frequency. While the devi=
+ce is
+> > +  running at a particular frequency, CPR monitors dynamic factors such=
+ as
+> > +  temperature, etc. and suggests adjustments to the voltage to save po=
+wer
+> > +  and meet silicon characteristic requirements.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    allOf:
+>=20
+> Don't need allOf with only 1 entry.
 
-On 12/11/2021 2:41 AM, Mark Brown wrote:
-> On Wed, Dec 08, 2021 at 04:56:48PM -0800, David Collins wrote:
->> On 12/7/21 7:19 AM, Mark Brown wrote:
->>> On Tue, Dec 07, 2021 at 08:36:11PM +0530, Satya Priya Kakitapalli (Temp) wrote:
->>> that regulator.  We absolutely can and do expect this to be board
->>> independent, it's a function of the design of the regulator.  Sharing
->>> the input supply has no impact on this, the input voltage that the
->>> regulator needs just get fed into the requiremnts on the supply voltage.
->> The PM8008 LDOs are low noise LDOs intended to supply noise sensitive
->> camera sensor hardware.  They can maintain output regulation with a
->> fixed headroom voltage.  However, in order to guarantee high PSRR, the
->> headroom voltage must be scaled according to the peak load expected from
->> the each LDO on a given board.  Thus, we included support for a DT
->> property to specify the headroom per LDO to meet noise requirements
->> across boards.
-> Interesting...  how much extra headroom are we talking about here?  I'd
-> be unsurprised to see this usually just quoted as part of the standard
-> headroom requirement and this smells like the sort of thing that's going
-> to be frequently misused.  If the gains are something worth writing home
-> about
+I get this from dt_binding_check without it:
 
+Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml: properties:compa=
+tible: [{'items': [{'enum': ['qcom,qcs404-cpr']}, {'const': 'qcom,cpr'}]}] =
+is not of type 'object', 'boolean'
 
-> I'd think we should consider if it's better to support this
-> dynamically at runtime based on load information and provide options for
-> configuring the peak load information through DT instead for static
-> configurations.  That would fit in with the stuff we have for managing
-> modes on DCDCs (which isn't really deployed but is there) and the API we
-> have for allowing client drivers to indicate their load requirements at
-> runtime that fits in with that.  That'd allow us to only boost the
-> headroom when it's really needed.
-
-This means Dynamic headroom control feature needs to be implemented. I 
-need to explore more on this and gather info from team, Could we merge 
-the present driver with "static headroom" for now? I'll do a follow up 
-series to implement this feature.
-
+>=20
+> > +      - items:
+> > +          - enum:
+> > +              - qcom,qcs404-cpr
+> > +          - const: qcom,cpr
+> > +
+> > +  reg:
+> > +    description: Base address and size of the RBCPR register region.
+> > +    maxItems: 1
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: Reference clock.
+> > +
+> > +  clock-names:
+> > +    items:
+> > +      - const: ref
+> > +
+> > +  vdd-apc-supply:
+> > +    description: APC regulator supply.
+> > +
+> > +  '#power-domain-cells':
+> > +    const: 0
+> > +
+> > +  operating-points-v2:
+> > +    description: |
+> > +      A phandle to the OPP table containing the performance states
+> > +      supported by the CPR power domain.
+> > +
+> > +  acc-syscon:
+> > +    description: A phandle to the syscon used for writing ACC settings=
+.
+> > +
+> > +  nvmem-cells:
+> > +    items:
+> > +      - description: Corner 1 quotient offset
+> > +      - description: Corner 2 quotient offset
+> > +      - description: Corner 3 quotient offset
+> > +      - description: Corner 1 initial voltage
+> > +      - description: Corner 2 initial voltage
+> > +      - description: Corner 3 initial voltage
+> > +      - description: Corner 1 quotient
+> > +      - description: Corner 2 quotient
+> > +      - description: Corner 3 quotient
+> > +      - description: Corner 1 ring oscillator
+> > +      - description: Corner 2 ring oscillator
+> > +      - description: Corner 3 ring oscillator
+> > +      - description: Fuse revision
+> > +
+> > +  nvmem-cell-names:
+> > +    items:
+> > +      - const: cpr_quotient_offset1
+> > +      - const: cpr_quotient_offset2
+> > +      - const: cpr_quotient_offset3
+> > +      - const: cpr_init_voltage1
+> > +      - const: cpr_init_voltage2
+> > +      - const: cpr_init_voltage3
+> > +      - const: cpr_quotient1
+> > +      - const: cpr_quotient2
+> > +      - const: cpr_quotient3
+> > +      - const: cpr_ring_osc1
+> > +      - const: cpr_ring_osc2
+> > +      - const: cpr_ring_osc3
+> > +      - const: cpr_fuse_revision
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - interrupts
+> > +  - clocks
+> > +  - clock-names
+> > +  - vdd-apc-supply
+> > +  - '#power-domain-cells'
+> > +  - operating-points-v2
+> > +  - nvmem-cells
+> > +  - nvmem-cell-names
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +
+> > +    cpr_opp_table: cpr-opp-table {
+> > +        compatible =3D "operating-points-v2-qcom-level";
+> > +
+> > +        cpr_opp1: opp1 {
+> > +            opp-level =3D <1>;
+> > +            qcom,opp-fuse-level =3D <1>;
+> > +        };
+> > +        cpr_opp2: opp2 {
+> > +            opp-level =3D <2>;
+> > +            qcom,opp-fuse-level =3D <2>;
+> > +        };
+> > +        cpr_opp3: opp3 {
+> > +            opp-level =3D <3>;
+> > +            qcom,opp-fuse-level =3D <3>;
+> > +        };
+> > +    };
+> > +
+> > +    power-controller@b018000 {
+> > +        compatible =3D "qcom,qcs404-cpr", "qcom,cpr";
+> > +        reg =3D <0x0b018000 0x1000>;
+> > +        interrupts =3D <0 15 IRQ_TYPE_EDGE_RISING>;
+> > +        clocks =3D <&xo_board>;
+> > +        clock-names =3D "ref";
+> > +        vdd-apc-supply =3D <&pms405_s3>;
+> > +        #power-domain-cells =3D <0>;
+> > +        operating-points-v2 =3D <&cpr_opp_table>;
+> > +        acc-syscon =3D <&tcsr>;
+> > +
+> > +        nvmem-cells =3D <&cpr_efuse_quot_offset1>,
+> > +            <&cpr_efuse_quot_offset2>,
+> > +            <&cpr_efuse_quot_offset3>,
+> > +            <&cpr_efuse_init_voltage1>,
+> > +            <&cpr_efuse_init_voltage2>,
+> > +            <&cpr_efuse_init_voltage3>,
+> > +            <&cpr_efuse_quot1>,
+> > +            <&cpr_efuse_quot2>,
+> > +            <&cpr_efuse_quot3>,
+> > +            <&cpr_efuse_ring1>,
+> > +            <&cpr_efuse_ring2>,
+> > +            <&cpr_efuse_ring3>,
+> > +            <&cpr_efuse_revision>;
+> > +        nvmem-cell-names =3D "cpr_quotient_offset1",
+> > +            "cpr_quotient_offset2",
+> > +            "cpr_quotient_offset3",
+> > +            "cpr_init_voltage1",
+> > +            "cpr_init_voltage2",
+> > +            "cpr_init_voltage3",
+> > +            "cpr_quotient1",
+> > +            "cpr_quotient2",
+> > +            "cpr_quotient3",
+> > +            "cpr_ring_osc1",
+> > +            "cpr_ring_osc2",
+> > +            "cpr_ring_osc3",
+> > +            "cpr_fuse_revision";
+> > +    };
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index a7d86182fa6b..9ebbccb0494e 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -15746,7 +15746,7 @@ M:=09Niklas Cassel <nks@flawful.org>
+> >  L:=09linux-pm@vger.kernel.org
+> >  L:=09linux-arm-msm@vger.kernel.org
+> >  S:=09Maintained
+> > -F:=09Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+> > +F:=09Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+> >  F:=09drivers/soc/qcom/cpr.c
+> > =20
+> >  QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
+> > --=20
+> > 2.34.1
+> >=20
+> >=20
+> >=20
+>=20
 
