@@ -2,201 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64250485A70
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jan 2022 22:10:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 60AE5485A75
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jan 2022 22:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244351AbiAEVKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 16:10:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49310 "EHLO
+        id S244368AbiAEVN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 16:13:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244348AbiAEVKC (ORCPT
+        with ESMTP id S244358AbiAEVN4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 16:10:02 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FFB4C061212
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 13:10:01 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id 45-20020a9d0a30000000b0058f1a6df088so815642otg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 13:10:01 -0800 (PST)
+        Wed, 5 Jan 2022 16:13:56 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF65C061201
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 13:13:56 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id w19-20020a056830061300b0058f1dd48932so774259oti.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 13:13:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=GNdXeJAgUyRmDGiwYrY80oM6MegVT5rNLhczJIKJgLs=;
-        b=fphekuQIeDoMeRgFsdNPxKE88i9NZ70/onKEZ1FNwyHkn3eDW66TlLOY0zGHMZnMSK
-         0CfvPvWJrULbwegUqeK/HiQwEzNxlmLSN/4/8k4FseQLHxDVg/o5YJOjUdfTyCO1OEYP
-         kb7zWDhP0Gz2XpaHjVzhHFDNmK6Gp90oOghOA=
+        bh=ISVjPyfL3KOfV6g7C5TopV/TTWEXrKvfhAA2krbL5Mk=;
+        b=Krl/wS800jGJxl3ShvAzsrW/gK65FLU+CMy90b2OER0L8WoKbsRpJP6vI2qbkgFosn
+         dQl66gHaLEMnIEQW+NuyDFoVH4AtzqZqN7reCGno6+Sif8jmNhwr67a/Wzi2+XHIC+D7
+         5qqeLS2dTV2xCR4GCiX1bFcZHisF2A+FLFLKE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=GNdXeJAgUyRmDGiwYrY80oM6MegVT5rNLhczJIKJgLs=;
-        b=5GFOI89N0xRIl9QknRsbMxn2rxeOLMX/xdfYvkx6hsSWKOcb2T0nc2Fb+CoDYd2IMz
-         1e/HO2iNRhmxKnwd6J20VnEd4uVgARay8ugSMrbCsk+0tGNISf4Kr2p4QIKJand+K8t9
-         nLpwWWEVXbocWvMmEOTagPsq6ICATH21k/UtXYR99EDRaeBJr2TXTfrMmc9wTHw+3CpV
-         JKGMcokxe6Gibdc69HJkzFu0xm62IKc8vzM5f2U9Ulciz6eYp04Lowf9q1hbDYCxPI/M
-         PQ/+woeSJ3yqhTbjwxas36iUaIZC5SQBjc2J6NyNFhhbiRrtw0H15TiXevz4kDiyb5zy
-         oSZQ==
-X-Gm-Message-State: AOAM530zT6pn9foKqzUhykFDgrXG/LRegkfocCD1h7KKprZ4SPUxI7Of
-        Cb1QUcOclInonwm3oHTSOuAGOJiDd101a+xmW+qJHg==
-X-Google-Smtp-Source: ABdhPJy+Pnm2rxcxWxPMuwbgavxWUvf/qfRlFc0pILUt8sXiujUxMGq01EZplZFi70PuN14XUcluAz+pJnZrBAHarxY=
-X-Received: by 2002:a9d:2243:: with SMTP id o61mr39525756ota.126.1641417000709;
- Wed, 05 Jan 2022 13:10:00 -0800 (PST)
+        bh=ISVjPyfL3KOfV6g7C5TopV/TTWEXrKvfhAA2krbL5Mk=;
+        b=xrKLUPN5iok0VHyCKnvomtlzF7k/uclYxRFdV+jLK/I5HSWahHodxvQ0O3a1seCuMq
+         eiJXym75v+VHBkNsSw1XNhMu6gLNcJ5PRt8y516yoV7G2D2RasLiZKZ3FoTQSEuG+rBp
+         XbPqg8EiU/OaBSr8MoCKAghuvSvrsoXvZFZfLH0fBkKrLLvXfvqFPbKoJ03EbtGEUz6p
+         nWoj8FwSNXSPeQcqde1K8hoeLG9m3Oz+sjT68br3TwchIDQvi4XbBm9DfSl91LZ97fOO
+         w6a0jrJRP00AwKIaofS+CP1BzP7NGRnYTTJutDpfqMl3blLGKhiElS4WftqpzwFD6jmP
+         w/zg==
+X-Gm-Message-State: AOAM532WWoO9MUjW40ta8SyUQszdPmdeL1pQVWqCEnPnxkvZAOBHXlCp
+        IeqOkbJ00O2hksZ3i7mYuVZWCYWi8sgbfXhC1zVkvQ==
+X-Google-Smtp-Source: ABdhPJzywRaiCU9j7Sj91FTrYmwIL1FU1+bcav6gdU9MZyu0RoH9bIV2rYSu8RXKtSwekbAltC+3DvT9fL9uaPW4XT4=
+X-Received: by 2002:a9d:1a6:: with SMTP id e35mr164416ote.77.1641417235673;
+ Wed, 05 Jan 2022 13:13:55 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 5 Jan 2022 13:10:00 -0800
+ HTTPREST; Wed, 5 Jan 2022 13:13:55 -0800
 MIME-Version: 1.0
-In-Reply-To: <1641208380-15510-4-git-send-email-quic_srivasam@quicinc.com>
-References: <1641208380-15510-1-git-send-email-quic_srivasam@quicinc.com> <1641208380-15510-4-git-send-email-quic_srivasam@quicinc.com>
+In-Reply-To: <1640801745-16234-1-git-send-email-quic_khsieh@quicinc.com>
+References: <1640801745-16234-1-git-send-email-quic_khsieh@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Wed, 5 Jan 2022 13:10:00 -0800
-Message-ID: <CAE-0n5069ehb97ybJV7Z0FXnODvRBuy-w6r1KJSfZnHece7k1A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7280: add sound card support
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Date:   Wed, 5 Jan 2022 13:13:55 -0800
+Message-ID: <CAE-0n50QyX0YsvZbAfi_bL+4-jQrdB7FFUPL3pksLW_9Xzb9hg@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: add support of tps4 (training pattern 4)
+ for HBR3
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Kuogee Hsieh <khsieh@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-01-03 03:13:00)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 3449d56..63b1184 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -637,6 +637,99 @@
->         };
->  };
+Quoting Kuogee Hsieh (2021-12-29 10:15:45)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 6965afa..7dea101 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -94,7 +94,7 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog, bool enable);
+>  void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
+>  void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
+>                                 u32 stream_rate_khz, bool fixed_nvid);
+> -int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog, u32 pattern);
+> +int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog, u32 pattern);
+>  void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
+>  bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
+>  void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 39558a2..da6c083 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1078,12 +1078,13 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
+>         int tries, old_v_level, ret = 0;
+>         u8 link_status[DP_LINK_STATUS_SIZE];
+>         int const maximum_retries = 4;
+> +       char state_ctrl_bit = 1;
 >
-> +&sound {
-> +       compatible = "google,sc7280-herobrine";
-> +       model = "sc7280-wcd938x-max98360a-1mic";
-> +       status = "okay";
-> +       audio-routing =
-> +               "IN1_HPHL", "HPHL_OUT",
-> +               "IN2_HPHR", "HPHR_OUT",
-> +               "AMIC1", "MIC BIAS1",
-> +               "AMIC2", "MIC BIAS2",
-> +               "VA DMIC0", "MIC BIAS3",
-> +               "VA DMIC1", "MIC BIAS3",
-> +               "VA DMIC2", "MIC BIAS1",
-> +               "VA DMIC3", "MIC BIAS1",
-> +               "TX SWR_ADC0", "ADC1_OUTPUT",
-> +               "TX SWR_ADC1", "ADC2_OUTPUT",
-> +               "TX SWR_ADC2", "ADC3_OUTPUT",
-> +               "TX SWR_DMIC0", "DMIC1_OUTPUT",
-> +               "TX SWR_DMIC1", "DMIC2_OUTPUT",
-> +               "TX SWR_DMIC2", "DMIC3_OUTPUT",
-> +               "TX SWR_DMIC3", "DMIC4_OUTPUT",
-> +               "TX SWR_DMIC4", "DMIC5_OUTPUT",
-> +               "TX SWR_DMIC5", "DMIC6_OUTPUT",
-> +               "TX SWR_DMIC6", "DMIC7_OUTPUT",
-> +               "TX SWR_DMIC7", "DMIC8_OUTPUT";
-> +
-> +               qcom,msm-mbhc-hphl-swh = <1>;
-> +               qcom,msm-mbhc-gnd-swh = <1>;
-
-Why are these last extra tabbed?
-
-> +
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
-> +       #sound-dai-cells = <0>;
-> +
-> +       dai-link@6 {
-> +               link-name = "WCD Playback";
-> +               reg = <LPASS_CDC_DMA_RX0>;
-> +               cpu {
-> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai = <&wcd938x 0>, <&swr0 0>, <&rxmacro 0>;
-> +               };
-> +       };
-> +
-> +       dai-link@19 {
-> +               link-name = "WCD Capture";
-> +               reg = <LPASS_CDC_DMA_TX3>;
-> +               cpu {
-> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai = <&wcd938x 1>, <&swr1 0>, <&txmacro 0>;
-> +               };
-> +       };
-> +
-> +       dai-link@1 {
-> +               link-name = "Secondary MI2S Playback";
-> +               reg = <MI2S_SECONDARY>;
-> +               cpu {
-> +                       sound-dai = <&lpass_cpu MI2S_SECONDARY>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai = <&max98360a>;
-> +               };
-> +       };
-> +
-> +       dai-link@5 {
-> +               link-name = "DP Playback";
-> +               reg = <LPASS_DP_RX>;
-> +               cpu {
-> +                       sound-dai = <&lpass_cpu LPASS_DP_RX>;
-> +               };
-> +
-> +               codec {
-> +                               sound-dai = <&msm_dp>;
-
-Why double tabbed?
-
-> +               };
-> +       };
-> +
-> +       dai-link@25 {
-> +               link-name = "DMIC Capture";
-> +               reg = <LPASS_CDC_DMA_VA_TX0>;
-> +               cpu {
-> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
-> +               };
-> +
-> +               codec {
-> +                       sound-dai = <&vamacro 0>;
-> +               };
-> +       };
-
-The order of the nodes seems arbitrary. Is there any sort order that can
-be used to avoid conflicts in the future? Maybe the reg property because
-that's how we sort the SoC node.
-
-> +};
-> +
->  &swr0 {
->         wcd_rx: wcd938x-rx{
->                 compatible = "sdw20217010d00";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 68c7755..57bc5ef 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2786,6 +2786,9 @@
+>         dp_catalog_ctrl_state_ctrl(ctrl->catalog, 0);
 >
->                 };
+>         *training_step = DP_TRAINING_1;
 >
-> +               sound: sound {
+> -       ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, DP_TRAINING_PATTERN_1);
+> +       ret = dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, state_ctrl_bit);
 
-Is this really necessary? Certainly it shouldn't be in the SoC node as
-it doesn't have a reg property.
+Why not inline 'state_ctrl_bit' value of 1 here?
 
-> +               };
-> +
->                 usb_1_hsphy: phy@88e3000 {
->                         compatible = "qcom,sc7280-usb-hs-phy",
->                                      "qcom,usb-snps-hs-7nm-phy";
-> --
-> 2.7.4
+>         if (ret)
+>                 return ret;
+>         dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+> @@ -1181,7 +1182,7 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+>                         int *training_step)
+>  {
+>         int tries = 0, ret = 0;
+> -       char pattern;
+> +       char pattern, state_ctrl_bit;
+
+Why is 'state_ctrl_bit' a char when the function it's passed to takes a
+u32? Please be consistent with types. It would be good to make 'pattern'
+into a u8 as well instead of a char to be similarly consistent.
+
+>         int const maximum_retries = 5;
+>         u8 link_status[DP_LINK_STATUS_SIZE];
+>
+> @@ -1189,12 +1190,20 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+>
+>         *training_step = DP_TRAINING_2;
+>
+> -       if (drm_dp_tps3_supported(ctrl->panel->dpcd))
+> +       if (drm_dp_tps4_supported(ctrl->panel->dpcd)) {
+> +               pattern = DP_TRAINING_PATTERN_4;
+> +               state_ctrl_bit = 4;
+> +       }
+> +       else if (drm_dp_tps3_supported(ctrl->panel->dpcd)) {
+>                 pattern = DP_TRAINING_PATTERN_3;
+> -       else
+> +               state_ctrl_bit = 3;
+> +       }
+> +       else {
+>                 pattern = DP_TRAINING_PATTERN_2;
+> +               state_ctrl_bit = 2;
+> +       }
+>
+> -       ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, pattern);
+> +       ret = dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, state_ctrl_bit);
+>         if (ret)
+>                 return ret;
 >
