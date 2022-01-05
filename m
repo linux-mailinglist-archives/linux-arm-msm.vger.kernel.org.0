@@ -2,183 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 53D6F485AC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jan 2022 22:35:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6310B485B16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jan 2022 22:51:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244469AbiAEVfO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 16:35:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54802 "EHLO
+        id S235584AbiAEVvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 16:51:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244479AbiAEVet (ORCPT
+        with ESMTP id S244591AbiAEVve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 16:34:49 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D123AC034002
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 13:34:48 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id x10so911485oix.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 13:34:48 -0800 (PST)
+        Wed, 5 Jan 2022 16:51:34 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C55C061245
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 13:51:34 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id s21-20020a05683004d500b0058f585672efso930375otd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 13:51:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=aikMCKgudfdNFplAVHd5dZZXnejy0/EJjuSG/0Dh+Qk=;
-        b=nojXfc3QeDa4iaP71sncYrCB3wu7bLLyOe3E6RLAx+SoyIv3/xzrXSplCVbTaqycvs
-         jNlEcorkEg3VtM6xmPuL5OnmRIjchtMFOWw/kWuJQ3rJQGIkvo/eqxUo5B7jMsgSX/mw
-         xLLXbTEalgpY7wNm4bRtUSyYCxO6JUWHZyDZE=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2keR8hCMUDIY7bnNjmG+SAvoD6opBafNXfTHV+Fh0DA=;
+        b=PbgzYXDhpebbQ8HJD9s+CMOouBvRusJVw6TWznVldZPDR0uZ7XWAzbyOD2T2J0fp+F
+         Ydap/7y3W7BKC389hdxz963xdS2nTHKtAB9I+ZOhq5cbpBqA5KL/Kut7z3mYNHFovUUw
+         r+j7JNlTEtkP5hsyBatFonqkP5c87V6ZGoSax83yPAdueQT9UxQJ0unO3lRKGlMqybBm
+         VwxlQiEu/ueMijLaX562L8rJZeSeDUJJlueVeRJ18ZXmL/0nRiGwSr+ZbCewtq0ZkrE6
+         Kgt4YhmqgazwiwmR5UdP5VDWKaS4v/AxLiADbnHhX8BnWvsSF9cOErYUwQmOEwmrz0YS
+         fMHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=aikMCKgudfdNFplAVHd5dZZXnejy0/EJjuSG/0Dh+Qk=;
-        b=DT2Fx+0niMjhOXLgrJCLhW0lpUpLf/y1ZcENlQ+WLSYsteuMQ4kMj0+XnZCO0cUbNq
-         gB0Jc/WDkhBJMTHMfiVUBDntNu6OlMxfpN+u6eGmBEQqr+1HC7CbyfMuUJookvGVB8Ys
-         nWyhDH0zGuMYtpfx8+75NalZQ0B/BEjKMNaShLQDCv8GAsyOL2+NHnfC2PauJKuZqfEJ
-         O2XjP6wNC4VbN9qYnXpyYOIZ+vIweEajRSMFT6iQTQRuhtRDuUu/ErlXzk32sOMJoO+8
-         bmx04/cvkU/Oiljyrvmy/ISS5aqOaGgoDpO7cXL+TbvQNpVQawicN5haBwSJyS1/DBHB
-         JWXg==
-X-Gm-Message-State: AOAM533cT84gRLHLEAtq5KYxPJGSeMTaV31p17JuhWsm+dn3V3aQUwgC
-        RtfPqmgsiJ2AmO5JhgnuGPZLcwUf0NW3k70p58y/ew==
-X-Google-Smtp-Source: ABdhPJz8SSN2Fj+FwJmMI6TRwdHCqoAnptzNFxaptsVJlo0Hr4xuSL1iBnb3nFWwft46rigEC0UuSxDvQnlNciU7W5Q=
-X-Received: by 2002:a54:4710:: with SMTP id k16mr4028697oik.32.1641418488161;
- Wed, 05 Jan 2022 13:34:48 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 5 Jan 2022 13:34:47 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2keR8hCMUDIY7bnNjmG+SAvoD6opBafNXfTHV+Fh0DA=;
+        b=mWXQaDFJgc5hiAwnjIHbg1bfPXneymleZrOPqCzf/wzt5eLuVJ38UQyqEeX40AXFbG
+         ylYmVThDDsvfcEH9UMCePUau8GXRnCtVTTsVo8u5XmQfW6WIq9nP15IxkYWJ5OQUJX7Y
+         wVmLnT/KoVF1YxmcKDEnxxOvK6x6+FaYDhyMwCPlpD2NI/HOJhCzR4J9Aj5W3DGItnoX
+         9KrIh/sHlSmu9OYKEsbXxUWoe77+aVpNqInRGtQnCbzGWDjyYyU3U2LnKqVXWYuDyYP0
+         AW4LMdQGKTt+zQQo9+9zoL8oSoTdWdYT2mcqKatji3ZWoE02sovUGNI9W1tDK0KS57PI
+         ViFw==
+X-Gm-Message-State: AOAM5316PRqilcn6YAm92Ypah2nkz3pwTHJySGXW9iEvQmD8RlY4c8NW
+        OqB0ivBynS63MQ5XnnzC2BJm/w==
+X-Google-Smtp-Source: ABdhPJxzCvfc1uKh7RaRPbxKo+wYz4qfhrjAj2y8Fbw99Dl0hoag8VY3AOGBjREkCSDZqAefpeRdzw==
+X-Received: by 2002:a9d:74ca:: with SMTP id a10mr2521610otl.222.1641419493649;
+        Wed, 05 Jan 2022 13:51:33 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e20sm48385oiw.32.2022.01.05.13.51.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jan 2022 13:51:33 -0800 (PST)
+Date:   Wed, 5 Jan 2022 13:52:22 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org,
+        rui.zhang@intel.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [Patch v2 1/3] thermal: qcom: lmh: Add support for sm8150
+Message-ID: <YdYTFu/QTZ5DS95M@ripper>
+References: <20211215163400.33349-1-thara.gopinath@linaro.org>
+ <20211215163400.33349-2-thara.gopinath@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1640805422-21904-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1640805422-21904-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 5 Jan 2022 13:34:47 -0800
-Message-ID: <CAE-0n50Bi2v3D1B8Ee1ckdUWLhpyNrCEVqikbuS8wMfT0+2VnA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dp: populate connector of struct dp_panel
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211215163400.33349-2-thara.gopinath@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-12-29 11:17:02)
-> There is kernel crashed due to unable to handle kernel NULL
-> pointer dereference of dp_panel->connector while running DP link
-> layer compliance test case 4.2.2.6 (EDID Corruption Detection).
+On Wed 15 Dec 08:33 PST 2021, Thara Gopinath wrote:
 
-Can you explain how we get into that situation? Like
-
-"We never assign struct dp_panel::connector, instead the connector is
-stored in struct msm_dp::connector. When we run compliance testing test
-case 4.2.2.6 dp_panel_handle_sink_request() won't have a valid edid set
-in struct dp_panel::edid so we'll try to use the connectors
-real_edid_checksum and hit a NULL pointer deref error because the
-connector pointer is never assigned."
-
-> This patch fixes this problem by populating connector of dp_panel.
->
-> [drm:dp_panel_read_sink_caps] *ERROR* panel edid read failed
-> Unable to handle kernel NULL pointer dereference at virtual address 00000000000006e1
-> Mem abort info:
->   ESR = 0x96000006
->   EC = 0x25: DABT (current EL), IL = 32 bits
->   SET = 0, FnV = 0
->   EA = 0, S1PTW = 0
-> Data abort info:
->   ISV = 0, ISS = 0x00000006
->   CM = 0, WnR = 0
-> user pgtable: 4k pages, 39-bit VAs, pgdp=0000000115f25000
-> [00000000000006e1] pgd=00000001174fe003, p4d=00000001174fe003, pud=00000001174fe003, pmd=0000000000000000
-> Internal error: Oops: 96000006 [#1] PREEMPT SMP
-
-This sort of stuff isn't really useful because it takes quite a few
-lines to say "We hit a NULL pointer deref" which was already stated. I'd
-rather have a clear description of what goes wrong and how setting the
-pointer in msm_dp_modeset_init() fixes it.
-
-> {...]
->
-> Changes in V2:
-> -- populate panel connector at msm_dp_modeset_init() instead of at dp_panel_read_sink_caps()
->
-> Fixes: 7948fe12d47 ("drm/msm/dp: return correct edid checksum after corrupted edid checksum read")
-> Signee-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Add compatible to support LMh for sm8150 SoC.
+> sm8150 does not require explicit enabling for various LMh subsystems.
+> Add a variable indicating the same as match data which is set for sdm845.
+> Execute the piece of code enabling various LMh subsystems only if
+> enable algorithm match data is present.
+> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 3449d3f..c282bbf 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1495,36 +1495,41 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->         }
->  }
->
-> -int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
-> +int msm_dp_modeset_init(struct msm_dp *dp, struct drm_device *dev,
->                         struct drm_encoder *encoder)
+> 
+> v1->v2:
+> 	- Added LMH_ENABLE_ALGOS of_device_id match data to indicate
+> 	  whether LMh subsytems need explicit enabling or not.
+> 
+>  drivers/thermal/qcom/lmh.c | 62 +++++++++++++++++++++-----------------
+>  1 file changed, 35 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+> index eafa7526eb8b..80d26d043498 100644
+> --- a/drivers/thermal/qcom/lmh.c
+> +++ b/drivers/thermal/qcom/lmh.c
+> @@ -28,6 +28,8 @@
+>  
+>  #define LMH_REG_DCVS_INTR_CLR		0x8
+>  
+> +#define LMH_ENABLE_ALGOS		((void *)1)
+> +
+>  struct lmh_hw_data {
+>  	void __iomem *base;
+>  	struct irq_domain *domain;
+> @@ -87,6 +89,7 @@ static int lmh_probe(struct platform_device *pdev)
 >  {
->         struct msm_drm_private *priv;
-> +       struct dp_display_private *dp_display;
->         int ret;
->
-> -       if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
-> +       if (WARN_ON(!encoder) || WARN_ON(!dp) || WARN_ON(!dev))
->                 return -EINVAL;
->
->         priv = dev->dev_private;
-> -       dp_display->drm_dev = dev;
-> +       dp->drm_dev = dev;
-> +
-> +       dp_display = container_of(dp, struct dp_display_private, dp_display);
->
-> -       ret = dp_display_request_irq(dp_display);
-> +       ret = dp_display_request_irq(dp);
->         if (ret) {
->                 DRM_ERROR("request_irq failed, ret=%d\n", ret);
->                 return ret;
->         }
->
-> -       dp_display->encoder = encoder;
-> +       dp->encoder = encoder;
->
-> -       dp_display->connector = dp_drm_connector_init(dp_display);
-> -       if (IS_ERR(dp_display->connector)) {
-> -               ret = PTR_ERR(dp_display->connector);
-> +       dp->connector = dp_drm_connector_init(dp);
-> +       if (IS_ERR(dp->connector)) {
-> +               ret = PTR_ERR(dp->connector);
->                 DRM_DEV_ERROR(dev->dev,
->                         "failed to create dp connector: %d\n", ret);
-> -               dp_display->connector = NULL;
-> +               dp->connector = NULL;
->                 return ret;
->         }
->
-> -       priv->connectors[priv->num_connectors++] = dp_display->connector;
-> +       dp_display->panel->connector = dp->connector;
+>  	struct device *dev = &pdev->dev;
+>  	struct device_node *np = dev->of_node;
+> +	const struct of_device_id *of_id;
+>  	struct device_node *cpu_node;
+>  	struct lmh_hw_data *lmh_data;
+>  	int temp_low, temp_high, temp_arm, cpu_id, ret;
+> @@ -141,32 +144,36 @@ static int lmh_probe(struct platform_device *pdev)
+>  	if (!qcom_scm_lmh_dcvsh_available())
+>  		return -EINVAL;
+>  
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling current subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret) {
+> -		dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+> -		return ret;
+> -	}
+> -
+> -	ret = qcom_scm_lmh_profile_change(0x1);
+> -	if (ret) {
+> -		dev_err(dev, "Error %d changing profile\n", ret);
+> -		return ret;
+> +	of_id = of_match_device(dev->driver->of_match_table, dev);
 
-This is the one line that matters I think? Can we reach the connector
-for the dp device without going through the panel in
-dp_panel_handle_sink_request()? That would reduce the number of struct
-elements if possible.
+I think it would be preferable to use of_device_get_match_data() and
+assign this to an unsigned long.
 
 > +
-> +       priv->connectors[priv->num_connectors++] = dp->connector;
+> +	if (of_id && of_id->data == LMH_ENABLE_ALGOS) {
 
-Can we not rename all the local variables in this patch and do it later
-or never? Reading this patch takes a long time because we have to make
-sure nothing has actually changed with the rename of 'dp_display' to
-'dp'.
+Then you don't need to check of_id for NULL here and this would lend
+itself nicely to be a bitmask of enabled algorithms if some platform
+would need to enable a subset of these.
 
->         return 0;
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling current subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret) {
+> +			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+> +			return ret;
+> +		}
+> +
+> +		ret = qcom_scm_lmh_profile_change(0x1);
+> +		if (ret) {
+> +			dev_err(dev, "Error %d changing profile\n", ret);
+> +			return ret;
+> +		}
+>  	}
+>  
+>  	/* Set default thermal trips */
+> @@ -213,7 +220,8 @@ static int lmh_probe(struct platform_device *pdev)
 >  }
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+>  
+>  static const struct of_device_id lmh_table[] = {
+> -	{ .compatible = "qcom,sdm845-lmh", },
+> +	{ .compatible = "qcom,sdm845-lmh", .data = LMH_ENABLE_ALGOS},
+
+Make LMH_ENABLE_ALGOS just an integer define and add the explicit (void
+*) cast here.
+
+Regards,
+Bjorn
+
+> +	{ .compatible = "qcom,sm8150-lmh", },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, lmh_table);
+> -- 
+> 2.25.1
+> 
