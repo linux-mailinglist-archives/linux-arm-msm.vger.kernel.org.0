@@ -2,163 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EEF7485CC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:02:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 388E8485CC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:03:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245684AbiAFACn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 19:02:43 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:39740 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239653AbiAFACk (ORCPT
+        id S245715AbiAFADI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 19:03:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245713AbiAFADG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 19:02:40 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 68E46619AC;
-        Thu,  6 Jan 2022 00:02:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D33C36AEB;
-        Thu,  6 Jan 2022 00:02:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641427359;
-        bh=LgWpScTlaLqYHFK8lobVRo2ot5LNdzJ8EJo8mKwcmbw=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=Y8J2O8Zp8lwwSv9TL1P4m2ZUQL20fqJs5IlKmJ1Io7eLzeOFPEMO4XuEhNaXr0ZwI
-         U87Pcn9teJWabi9W/lmj/Ct5fUa6afHAeVc8uInJe5lHi1VP0/DAzo+FJgi/rxrHyk
-         K3yjvsXQPXnuziGln7CnYEUm+HuRiynUFR/OrdEKfPaA9L4PI27GrnP2F38wEl1Ere
-         O0xHGR9Lq9nl0bIh/VIwpz8nSqTXHFjwfRUXFR3JW9LpgPjJATSjeUWQ0WlJK3Ei7g
-         0lNVOeAPar90tYvnzsl2YSQnbcCjglY/4i1hpwre+69KrNJ3UHnBVsuYlDe3V2HLh9
-         eJEw14YLoCYYw==
-Content-Type: text/plain; charset="utf-8"
+        Wed, 5 Jan 2022 19:03:06 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501E7C061245
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 16:03:05 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id 69so1083108qkd.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 16:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ssONjB52T9db6+AwacpF9Z0HfuTWVxGvlKDXaL5sZD4=;
+        b=WZSBpVwh3QTZfHBZLV54czxSDHcNrFDD00XjYyiQ2Ka0nqTU3wAFileKOC0v2xWY3F
+         aYi4Ljg9ZJ5sZ0uCtB2FGIsbQ93KsMfvFApEF9mplhGmhQkMBEvI0OYcS4Lx1xCHCEJD
+         qMJKxW7PKiWXujlSeqZBy4CT6x5stkKE2gEwjEaPLyAuvS5myEtG6eGJccGTEanGwDCU
+         CF4FXMTGJutk/aEv8WS90+JA9xE2WhN7tZ0Mr7SjgK2zgj4Jgupn3jzjLHGcRgtFy6SK
+         0DQnyL5RWLYfDn+zf16qdI7qauoNx1hue19JXGopxYDaQorZ4awyZT4sfyll5CWgKZ+5
+         jXwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ssONjB52T9db6+AwacpF9Z0HfuTWVxGvlKDXaL5sZD4=;
+        b=5KyN7tyCBp9vqC2TiCGGp5EhMr51vGhJEJepXUlcegvr9BAO1IpXcrPrNeCs4P+UUC
+         SqyIOBdreuJvJUg31XliK1dPSuYb5rrN9Spij5xAILbHqa4wDvvLZGmeuiiBj9mnJVBr
+         pZR2q1RopJEqZdzMTN/pqEdaBfAQnNTNZTHWzApYkl+aEkv150YGJm9SCMUSKbbli59M
+         IxGNtHcLMrRmeY+mbkS8wt58FC0CEfkZMr5s43xKAdKBLYeIB/FAwtjlBGqaSj2YQEax
+         Nhgqn9aDALWGcxvBoOR6v1gr6E0fWAc71dC+TUewsLT98z6+m/wBd71mBZTGTyy6Dg1o
+         3flw==
+X-Gm-Message-State: AOAM532MCjUHvhMLcX3QqZrwB3Ga5vZKtdvuMZ5nBDe3EbjTOlbgUc6G
+        /g71Mys6G4AHtV4kSu/Ju+ae9RLC6nJonCsT0lXw1w==
+X-Google-Smtp-Source: ABdhPJy/OoApJncON5r6kNBonHzIlP9P6S23pAbv4nLVXCuC80zPXDfcJ33V7h0DY405MSua4DBRdlVX+QeRcw+KvA0=
+X-Received: by 2002:a37:b8b:: with SMTP id 133mr38079500qkl.59.1641427384486;
+ Wed, 05 Jan 2022 16:03:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1640018638-19436-6-git-send-email-tdas@codeaurora.org>
-References: <1640018638-19436-1-git-send-email-tdas@codeaurora.org> <1640018638-19436-6-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2 5/5] clk: qcom: lpass: Add support for LPASS clock controller for SC7280
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 05 Jan 2022 16:02:38 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20220106000239.B6D33C36AEB@smtp.kernel.org>
+References: <20220105232700.444170-1-dmitry.baryshkov@linaro.org>
+ <20220105232700.444170-3-dmitry.baryshkov@linaro.org> <CAE-0n52fsc9cFfUMOg8EufwwkjJp1sQDO07RVWBvK78+74ubLA@mail.gmail.com>
+In-Reply-To: <CAE-0n52fsc9cFfUMOg8EufwwkjJp1sQDO07RVWBvK78+74ubLA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 6 Jan 2022 03:02:53 +0300
+Message-ID: <CAA8EJppodnj9sW1oyXu8POd2Evkqz0vuNLmz5v8RYw+Ww-rpCA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] drm/msm: move msm_readl/_writel to msm_drv.h
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-12-20 08:43:58)
-> diff --git a/drivers/clk/qcom/lpasscorecc-sc7280.c b/drivers/clk/qcom/lpa=
-sscorecc-sc7280.c
-> new file mode 100644
-> index 0000000..dd79847
-> --- /dev/null
-> +++ b/drivers/clk/qcom/lpasscorecc-sc7280.c
-> @@ -0,0 +1,433 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-[...]
-> +       [LPASS_CORE_CC_EXT_IF0_CLK_SRC] =3D &lpass_core_cc_ext_if0_clk_sr=
-c.clkr,
-> +       [LPASS_CORE_CC_EXT_IF0_IBIT_CLK] =3D &lpass_core_cc_ext_if0_ibit_=
-clk.clkr,
-> +       [LPASS_CORE_CC_EXT_IF1_CLK_SRC] =3D &lpass_core_cc_ext_if1_clk_sr=
-c.clkr,
-> +       [LPASS_CORE_CC_EXT_IF1_IBIT_CLK] =3D &lpass_core_cc_ext_if1_ibit_=
-clk.clkr,
-> +       [LPASS_CORE_CC_LPM_CORE_CLK] =3D &lpass_core_cc_lpm_core_clk.clkr,
-> +       [LPASS_CORE_CC_LPM_MEM0_CORE_CLK] =3D &lpass_core_cc_lpm_mem0_cor=
-e_clk.clkr,
-> +       [LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK] =3D &lpass_core_cc_sysnoc_m=
-port_core_clk.clkr,
-> +};
-> +
-> +static struct regmap_config lpass_core_cc_sc7280_regmap_config =3D {
+On Thu, 6 Jan 2022 at 02:43, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2022-01-05 15:27:00)
+> > With the reglog removal, msm_readl/_writel became single line wrappers
+> > around readl/writel. Move those two wrappers and msm_rmw to msm_drv.h to
+> > remove need for extra function calls when doing register writes.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>
+> Any chance this can go further and replace msm_readl/msm_writel with
+> readl/writel directly?
 
-Can this be const?
+This can go on a step-by-step basis. But practically yes. With this
+change in place we should be able to drop most of the io wrappers.
 
-> +       .reg_bits =3D 32,
-> +       .reg_stride =3D 4,
-> +       .val_bits =3D 32,
-> +       .fast_io =3D true,
-
-Any .max_register?
-
-> +};
-> +
-> +static const struct qcom_cc_desc lpass_core_cc_sc7280_desc =3D {
-> +       .config =3D &lpass_core_cc_sc7280_regmap_config,
-> +       .clks =3D lpass_core_cc_sc7280_clocks,
-> +       .num_clks =3D ARRAY_SIZE(lpass_core_cc_sc7280_clocks),
-> +};
-> +
-> +static const struct of_device_id lpass_core_cc_sc7280_match_table[] =3D {
-> +       { .compatible =3D "qcom,sc7280-lpasscorecc" },
-> +       { }
-> +};
-> +MODULE_DEVICE_TABLE(of, lpass_core_cc_sc7280_match_table);
-> +
-> +static struct gdsc *lpass_core_hm_sc7280_gdscs[] =3D {
-> +       [LPASS_CORE_CC_LPASS_CORE_HM_GDSC] =3D &lpass_core_cc_lpass_core_=
-hm_gdsc,
-> +};
-> +
-> +static const struct qcom_cc_desc lpass_core_hm_sc7280_desc =3D {
-> +       .config =3D &lpass_core_cc_sc7280_regmap_config,
-> +       .gdscs =3D lpass_core_hm_sc7280_gdscs,
-> +       .num_gdscs =3D ARRAY_SIZE(lpass_core_hm_sc7280_gdscs),
-> +};
-> +
-> +static int lpass_core_cc_sc7280_probe(struct platform_device *pdev)
-> +{
-> +       struct regmap *regmap;
-> +
-> +       regmap =3D qcom_cc_map(pdev, &lpass_core_cc_sc7280_desc);
-> +       if (IS_ERR(regmap))
-> +               return PTR_ERR(regmap);
-> +
-> +       clk_lucid_pll_configure(&lpass_core_cc_dig_pll, regmap, &lpass_co=
-re_cc_dig_pll_config);
-> +
-> +       return qcom_cc_really_probe(pdev, &lpass_core_cc_sc7280_desc, reg=
-map);
-> +}
-> +
-> +static struct platform_driver lpass_core_cc_sc7280_driver =3D {
-> +       .probe =3D lpass_core_cc_sc7280_probe,
-> +       .driver =3D {
-> +               .name =3D "lpass_core_cc-sc7280",
-> +               .of_match_table =3D lpass_core_cc_sc7280_match_table,
-> +       },
-> +};
-> +
-> +static int lpass_hm_core_probe(struct platform_device *pdev)
-> +{
-> +       const struct qcom_cc_desc *desc;
-> +       int ret;
-> +
-> +       lpass_core_cc_sc7280_regmap_config.name =3D "lpass_hm_core";
-> +       desc =3D &lpass_core_hm_sc7280_desc;
-> +
-> +       ret =3D qcom_cc_probe_by_index(pdev, 0, desc);
-
-Why don't we use the desc directly here?
-
-> +       if (ret)
-> +               goto destroy_clk;
-> +
-> +       return 0;
-> +
-> +destroy_clk:
-> +       return ret;
-
-This can be simplified and the goto removed.
-
-> +}
-> +
+-- 
+With best wishes
+Dmitry
