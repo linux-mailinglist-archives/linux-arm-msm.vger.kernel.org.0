@@ -2,87 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE3BC486B21
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 21:28:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CECC486B60
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 21:46:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243827AbiAFU2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 15:28:43 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:50168 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243842AbiAFU2g (ORCPT
+        id S243929AbiAFUqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 15:46:47 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:47201 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S243919AbiAFUqr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 15:28:36 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 72CFEB823F5;
-        Thu,  6 Jan 2022 20:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC97C36AED;
-        Thu,  6 Jan 2022 20:28:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641500914;
-        bh=7JPgGGSC3mETrSZWLiqb/rm0G2DWTS3MmMRMZRaLWOg=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=ubJMff7c+5YhV+mTJNXBnSsbJFzpYbKCYljquIFZG/T53cKbM2Q1lveOlzb1n7Y5G
-         qzLBbRKaQ3gYjHt6daCVbwxcrvCUFBT4NrRaOQxJUSKgOV7ZZXjI2AayaYDnpLrx5U
-         vCTaVtWqVamhW4h0n592imXbzcmbJ5p3APvqxByN3owSZ9xHeTdGfTZnK//UN4cXA/
-         CGPi1dda8xpTU2jJlTc/UgCevVWsqZ12Uf7Vk2Q1neOW7r1A3P6eiHX/aqQ/v2QO42
-         BDnVYmI6HmqrhjUeL5eNosbsdjv9yT1fIadFLciFnmKBA58WPACaKwymjNsio0d0AC
-         g9aMLzwpX3LXA==
-From:   Mark Brown <broonie@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>
-In-Reply-To: <20220103071118.27220-1-vkoul@kernel.org>
-References: <20220103071118.27220-1-vkoul@kernel.org>
-Subject: Re: [PATCH v2 1/2] spi: qcom: geni: set the error code for gpi transfer
-Message-Id: <164150091257.2243644.8975625877918588032.b4-ty@kernel.org>
-Date:   Thu, 06 Jan 2022 20:28:32 +0000
+        Thu, 6 Jan 2022 15:46:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641502007; x=1673038007;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=OVjfgTPsU90JleNOuXTplCawmPMZLSFg76Is1FvE+d4=;
+  b=qwtKUPgDN3kxSH+KzlK6g0rPBHKOb7bVneEurqSV7FmE6yiBK6YuGbXt
+   UfMALIvhuQirkUBPt0MwRgeaQg9AFig7Ey15Mr/8Ziw6g2EHbnsV+Fbg8
+   YphCZTVW+FLOVg5LpzN3eQPotUssDXbC7no01nP6DssHnTwDbiKb8+eI5
+   s=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jan 2022 12:46:47 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 12:46:45 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 12:46:45 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 12:44:32 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v4] drm/msm/dp:  populate connector of struct  dp_panel
+Date:   Thu, 6 Jan 2022 12:44:22 -0800
+Message-ID: <1641501862-17499-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 3 Jan 2022 12:41:17 +0530, Vinod Koul wrote:
-> Before we invoke spi_finalize_current_transfer() in
-> spi_gsi_callback_result() we should set the spi->cur_msg->status as
-> appropriate (0 for success, error otherwise).
-> 
-> The helps to return error on transfer and not wait till it timesout on
-> error
-> 
-> [...]
+DP CTS test case 4.2.2.6 has valid edid with bad checksum on purpose
+and expect DP source return correct checksum. During drm edid read,
+correct edid checksum is calculated and stored at
+connector::real_edid_checksum.
 
-Applied to
+The problem is struct dp_panel::connector never be assigned, instead the
+connector is stored in struct msm_dp::connector. When we run compliance
+testing test case 4.2.2.6 dp_panel_handle_sink_request() won't have a valid
+edid set in struct dp_panel::edid so we'll try to use the connectors
+real_edid_checksum and hit a NULL pointer dereference error because the
+connector pointer is never assigned.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+Changes in V2:
+-- populate panel connector at msm_dp_modeset_init() instead of at dp_panel_read_sink_caps()
 
-Thanks!
+Changes in V3:
+-- remove unhelpful kernel crash trace commit text
+-- remove renaming dp_display parameter to dp
 
-[1/2] spi: qcom: geni: set the error code for gpi transfer
-      commit: 74b86d6af81be73bb74995ebeba74417e84b6b6f
-[2/2] spi: qcom: geni: handle timeout for gpi mode
-      commit: f8039ea55d4ccac2238a247a574f0acb3bc1dc4b
+Changes in V4:
+-- add more details to commit text
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Fixes: 7948fe12d47 ("drm/msm/dp: return correct edid checksum after corrupted edid checksum read")
+Signee-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 3449d3f..40a059d 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1499,6 +1499,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 			struct drm_encoder *encoder)
+ {
+ 	struct msm_drm_private *priv;
++	struct dp_display_private *dp_priv;
+ 	int ret;
+ 
+ 	if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
+@@ -1507,6 +1508,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 	priv = dev->dev_private;
+ 	dp_display->drm_dev = dev;
+ 
++	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
++
+ 	ret = dp_display_request_irq(dp_display);
+ 	if (ret) {
+ 		DRM_ERROR("request_irq failed, ret=%d\n", ret);
+@@ -1524,6 +1527,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 		return ret;
+ 	}
+ 
++	dp_priv->panel->connector = dp_display->connector;
++
+ 	priv->connectors[priv->num_connectors++] = dp_display->connector;
+ 	return 0;
+ }
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
