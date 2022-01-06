@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 331D6485D28
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:29:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02AE4485D2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:30:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343729AbiAFA3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 19:29:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38486 "EHLO
+        id S1343767AbiAFAac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 19:30:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343734AbiAFA3D (ORCPT
+        with ESMTP id S1343780AbiAFAaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 19:29:03 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DDB4C061201
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 16:29:03 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id p19so708530qtw.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 16:29:03 -0800 (PST)
+        Wed, 5 Jan 2022 19:30:20 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E6FC0611FF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 16:30:20 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id p19so710948qtw.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 16:30:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ieee.org; s=google;
         h=message-id:date:mime-version:user-agent:from:subject:to:cc
          :references:content-language:in-reply-to:content-transfer-encoding;
-        bh=x+c+nB71HU1/FSoixaZntFKj7lnNe4rQLk5DQjPdfdc=;
-        b=bKx8q7nraU8tjLQOt4lt7n7KAYu9GdnyIDHrrbCrUoy+MhW3lD0vpOe8swYrGjKRuZ
-         Wi71hOV2NTXBGBrDCt/vyODBYzOpnxvW1Zeb1CrzQJNgxDc/pQrL65vKT2j2w5Itoga1
-         bDwOMKQ8t7dSzaj6O7XeEa8JHusjeWz/bZA7A=
+        bh=XzlMRK1FhwMuePIvLEhvqHTLG+Z497r7/k29BszxCjs=;
+        b=U8WG9lf6XKQM/k9AFEZ4ZJDoyVZu0YdXE9uARoYTxNc3Ud9604S6eQrcmhAZgyHPsk
+         9evhwRrOmIBuixz8pMzb0zx6wFaIHjPS+hCy5bBqulK8xL6Vcxiyh0RKr7o49YVxmCsJ
+         aI+BIVji0ilfINWkPRqMW02Wq12sHVSxw8zVk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:from
          :subject:to:cc:references:content-language:in-reply-to
          :content-transfer-encoding;
-        bh=x+c+nB71HU1/FSoixaZntFKj7lnNe4rQLk5DQjPdfdc=;
-        b=hnimcD6+Goiq5D44Uj+KPpw2FBvNkZxxiwRkYXf4b6l3aaghVE2fbOvn+OiBowtiu4
-         XXsjH6lne3Yl7qKFpSfABHy1K+l9OEvSRuUuQlQlI+NiEEMYv5Pb0QHQajjq7RdUMW5o
-         dnF792lyW0bBU3oAmK3P068E36ubv40CyxTquegklTrYPF9K6/6+yFvckIcsGLeXpxPI
-         Kf1WznHlKVQakZuj5KEbDOSbAzfwu9GYY6U5Fm31XtYOkusH+kmx3kXWZxS2BU316AEA
-         OTUI8srIkqmK+777Si/TAA5OWGGpUp47Wca2AvZlOhdMt5REQkdP9uTOgX8IfFfiM8og
-         01eA==
-X-Gm-Message-State: AOAM5317IS2M0C98KhcWIGc1G/UZ7xTbYfRLR5udsdfaAnEFqrpg56/Z
-        ThV9Y7vox32+eWPQuzuSH8+4DA==
-X-Google-Smtp-Source: ABdhPJyoOcRjPUCIzBM4cSvnxW9XZTpRVoJXdVBSE/SxVFk39xVlGzhp29ooIAOvDsTOwEuWg/OkGA==
-X-Received: by 2002:a05:622a:144e:: with SMTP id v14mr988166qtx.319.1641428942541;
-        Wed, 05 Jan 2022 16:29:02 -0800 (PST)
+        bh=XzlMRK1FhwMuePIvLEhvqHTLG+Z497r7/k29BszxCjs=;
+        b=ENtq8E/ttIA/dpKai4qMs147AT2q3UHnw9xab+aWbWA2tatS8kECBFw+bPb16Wutum
+         YXT+1x/uPQqOpQUNfilFr5gLhFFPG9VTbuoqNcZwtHyi4ZXP5iL1V9kPCyWJDyYtPvCo
+         9bFrLl+QO7BJn7+5D1rdYYZuBCONXVVqKFULfY3Rz+GFxs+AGYrWoR3sY9FnlfWSHrtA
+         hWC4RGw7VGd3QNK5jgCkyPqCtIxBQ0BivhKN+FNdyvFw6gvoz4HEA0TldRPHy0cZJEVp
+         HVKdIl55afxfJOOxzkLdq/8aCVe1QejA51CPUlBMpszGeTB5plItzVac3x5jBcN9MKf1
+         WecQ==
+X-Gm-Message-State: AOAM533E45OQcJB8P9hewAwp0w5K6avZFK44o6eR3csEZ4zO8zC77h6z
+        BngJw3InPSNAd4sMnIOKqisoeA==
+X-Google-Smtp-Source: ABdhPJyxIca9AUkdt425rPWk77DPoVto6swQCVcx4vpspyIQuv3ojarkPC7soabj1xSmplMe/annhg==
+X-Received: by 2002:a05:622a:1716:: with SMTP id h22mr35401467qtk.322.1641429019104;
+        Wed, 05 Jan 2022 16:30:19 -0800 (PST)
 Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id q21sm319772qkl.52.2022.01.05.16.29.01
+        by smtp.googlemail.com with ESMTPSA id o5sm338225qkp.132.2022.01.05.16.30.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jan 2022 16:29:02 -0800 (PST)
-Message-ID: <e72c4ba7-39df-ef70-89f1-b8c066184273@ieee.org>
-Date:   Wed, 5 Jan 2022 18:29:00 -0600
+        Wed, 05 Jan 2022 16:30:18 -0800 (PST)
+Message-ID: <454a3828-aa1f-7160-9ff2-e4c5967490f4@ieee.org>
+Date:   Wed, 5 Jan 2022 18:30:17 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.3.1
 From:   Alex Elder <elder@ieee.org>
-Subject: Re: [PATCH 08/20] bus: mhi: ep: Add support for managing MMIO
- registers
+Subject: Re: [PATCH 09/20] bus: mhi: ep: Add support for ring management
 To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
         mhi@lists.linux.dev
 Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
@@ -63,9 +62,9 @@ Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
         vbadigan@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20211202113553.238011-1-manivannan.sadhasivam@linaro.org>
- <20211202113553.238011-9-manivannan.sadhasivam@linaro.org>
+ <20211202113553.238011-10-manivannan.sadhasivam@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20211202113553.238011-9-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20211202113553.238011-10-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -73,257 +72,468 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 12/2/21 5:35 AM, Manivannan Sadhasivam wrote:
-> Add support for managing the Memory Mapped Input Output (MMIO) registers
-> of the MHI bus. All MHI operations are carried out using the MMIO registers
-> by both host and the endpoint device.
+> Add support for managing the MHI ring. The MHI ring is a circular queue
+> of data structures used to pass the information between host and the
+> endpoint.
 > 
-> The MMIO registers reside inside the endpoint device memory (fixed
-> location based on the platform) and the address is passed by the MHI EP
-> controller driver during its registration.
+> MHI support 3 types of rings:
 > 
+> 1. Transfer ring
+> 2. Event ring
+> 3. Command ring
+> 
+> All rings reside inside the host memory and the MHI EP device maps it to
+> the device memory using blocks like PCIe iATU. The mapping is handled in
+> the MHI EP controller driver itself.
+
+A few more comments here.  And with that, I'm done for today.
+
+					-Alex
+
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
 >   drivers/bus/mhi/ep/Makefile   |   2 +-
->   drivers/bus/mhi/ep/internal.h |  36 ++++
->   drivers/bus/mhi/ep/main.c     |   6 +-
->   drivers/bus/mhi/ep/mmio.c     | 303 ++++++++++++++++++++++++++++++++++
->   include/linux/mhi_ep.h        |  18 ++
->   5 files changed, 363 insertions(+), 2 deletions(-)
->   create mode 100644 drivers/bus/mhi/ep/mmio.c
+>   drivers/bus/mhi/ep/internal.h |  23 +++
+>   drivers/bus/mhi/ep/main.c     |  53 +++++-
+>   drivers/bus/mhi/ep/ring.c     | 314 ++++++++++++++++++++++++++++++++++
+>   include/linux/mhi_ep.h        |  11 ++
+>   5 files changed, 401 insertions(+), 2 deletions(-)
+>   create mode 100644 drivers/bus/mhi/ep/ring.c
 > 
 > diff --git a/drivers/bus/mhi/ep/Makefile b/drivers/bus/mhi/ep/Makefile
-> index 64e29252b608..a1555ae287ad 100644
+> index a1555ae287ad..7ba0e04801eb 100644
 > --- a/drivers/bus/mhi/ep/Makefile
 > +++ b/drivers/bus/mhi/ep/Makefile
 > @@ -1,2 +1,2 @@
 >   obj-$(CONFIG_MHI_BUS_EP) += mhi_ep.o
-> -mhi_ep-y := main.o
-> +mhi_ep-y := main.o mmio.o
+> -mhi_ep-y := main.o mmio.o
+> +mhi_ep-y := main.o mmio.o ring.o
 > diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-> index 7b164daf4332..39eeb5f384e2 100644
+> index 39eeb5f384e2..a7a4e6934f7d 100644
 > --- a/drivers/bus/mhi/ep/internal.h
 > +++ b/drivers/bus/mhi/ep/internal.h
-> @@ -91,6 +91,12 @@ struct mhi_generic_ctx {
->   	__u64 wp __packed __aligned(4);
+> @@ -97,6 +97,18 @@ enum mhi_ep_execenv {
+>   	MHI_EP_UNRESERVED
 >   };
 >   
-
-Maybe add a comment defining SBL as "secondary boot loader" and AMSS
-as "advanced modem subsystem".
-
-> +enum mhi_ep_execenv {
-> +	MHI_EP_SBL_EE = 1,
-> +	MHI_EP_AMSS_EE = 2,
-> +	MHI_EP_UNRESERVED
-> +};
+> +/* Transfer Ring Element macros */
+> +#define MHI_EP_TRE_PTR(ptr) (ptr)
+> +#define MHI_EP_TRE_DWORD0(len) (len & MHI_MAX_MTU)
+> +#define MHI_EP_TRE_DWORD1(bei, ieot, ieob, chain) ((2 << 16) | (bei << 10) \
+> +	| (ieot << 9) | (ieob << 8) | chain)
+> +#define MHI_EP_TRE_GET_PTR(tre) ((tre)->ptr)
+> +#define MHI_EP_TRE_GET_LEN(tre) ((tre)->dword[0] & 0xffff)
+> +#define MHI_EP_TRE_GET_CHAIN(tre) FIELD_GET(BIT(0), (tre)->dword[1])
+> +#define MHI_EP_TRE_GET_IEOB(tre) FIELD_GET(BIT(8), (tre)->dword[1])
+> +#define MHI_EP_TRE_GET_IEOT(tre) FIELD_GET(BIT(9), (tre)->dword[1])
+> +#define MHI_EP_TRE_GET_BEI(tre) FIELD_GET(BIT(10), (tre)->dword[1])
 > +
 >   enum mhi_ep_ring_state {
 >   	RING_STATE_UINT = 0,
 >   	RING_STATE_IDLE,
-> @@ -155,4 +161,34 @@ struct mhi_ep_chan {
+> @@ -161,6 +173,17 @@ struct mhi_ep_chan {
 >   	bool skip_td;
 >   };
 >   
-> +/* MMIO related functions */
-
-I would *really* rather have the mmio_read functions *return* the read
-value, rather than having the address of the location to store it passed
-as argument.  Your MMIO calls never fail, so there's no need to return
-anything else.  Returning the value also makes it more obvious that the
-*result* is getting assigned (rather than sort of implying it by passing
-in the address of the result).  And there's no possibility of someone
-passing a bad pointer that way either.
-
-> +void mhi_ep_mmio_read(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 *regval);
-
-In other words:
-
-u32 mhi_ep_mmio_read(struct mhi_ep_ctrl *mhi_ctrl, u32 offset);
-
-> +void mhi_ep_mmio_write(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 val);
-> +void mhi_ep_mmio_masked_write(struct mhi_ep_cntrl *mhi_cntrl, u32 offset,
-> +			      u32 mask, u32 shift, u32 val);
-> +int mhi_ep_mmio_masked_read(struct mhi_ep_cntrl *dev, u32 offset,
-> +			    u32 mask, u32 shift, u32 *regval);
-> +void mhi_ep_mmio_enable_ctrl_interrupt(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_disable_ctrl_interrupt(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_enable_cmdb_interrupt(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_disable_cmdb_interrupt(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_enable_chdb_a7(struct mhi_ep_cntrl *mhi_cntrl, u32 chdb_id);
-> +void mhi_ep_mmio_disable_chdb_a7(struct mhi_ep_cntrl *mhi_cntrl, u32 chdb_id);
-> +void mhi_ep_mmio_enable_chdb_interrupts(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_read_chdb_status_interrupts(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_mask_interrupts(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_get_chc_base(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_get_erc_base(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_get_crc_base(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_get_ch_db(struct mhi_ep_ring *ring, u64 *wr_offset);
-> +void mhi_ep_mmio_get_er_db(struct mhi_ep_ring *ring, u64 *wr_offset);
-> +void mhi_ep_mmio_get_cmd_db(struct mhi_ep_ring *ring, u64 *wr_offset);
-> +void mhi_ep_mmio_set_env(struct mhi_ep_cntrl *mhi_cntrl, u32 value);
-> +void mhi_ep_mmio_clear_reset(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_reset(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_get_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state *state,
-> +			       bool *mhi_reset);
-> +void mhi_ep_mmio_init(struct mhi_ep_cntrl *mhi_cntrl);
-> +void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
+> +/* MHI Ring related functions */
+> +void mhi_ep_ring_init(struct mhi_ep_ring *ring, enum mhi_ep_ring_type type, u32 id);
+> +void mhi_ep_ring_stop(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring);
+> +size_t mhi_ep_ring_addr2offset(struct mhi_ep_ring *ring, u64 ptr);
+> +int mhi_ep_ring_start(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+> +		      union mhi_ep_ring_ctx *ctx);
+> +int mhi_ep_process_ring(struct mhi_ep_ring *ring);
+> +int mhi_ep_ring_add_element(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *element,
+> +			    int evt_offset);
+> +void mhi_ep_ring_inc_index(struct mhi_ep_ring *ring);
 > +
->   #endif
+>   /* MMIO related functions */
+>   void mhi_ep_mmio_read(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 *regval);
+>   void mhi_ep_mmio_write(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 val);
 > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index f0b5f49db95a..fddf75dfb9c7 100644
+> index fddf75dfb9c7..6d448d42f527 100644
 > --- a/drivers/bus/mhi/ep/main.c
 > +++ b/drivers/bus/mhi/ep/main.c
-> @@ -209,7 +209,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->   	struct mhi_ep_device *mhi_dev;
->   	int ret;
+> @@ -18,6 +18,42 @@
 >   
-> -	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev)
-> +	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio)
->   		return -EINVAL;
+>   static DEFINE_IDA(mhi_ep_cntrl_ida);
 >   
->   	ret = parse_ch_cfg(mhi_cntrl, config);
-> @@ -222,6 +222,10 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->   		goto err_free_ch;
->   	}
->   
-> +	/* Set MHI version and AMSS EE before enumeration */
-> +	mhi_ep_mmio_write(mhi_cntrl, MHIVER, config->mhi_version);
-> +	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EP_AMSS_EE);
-> +
->   	/* Set controller index */
->   	mhi_cntrl->index = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
->   	if (mhi_cntrl->index < 0) {
-> diff --git a/drivers/bus/mhi/ep/mmio.c b/drivers/bus/mhi/ep/mmio.c
-> new file mode 100644
-> index 000000000000..157ef1240f6f
-> --- /dev/null
-> +++ b/drivers/bus/mhi/ep/mmio.c
-> @@ -0,0 +1,303 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (C) 2021 Linaro Ltd.
-> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/io.h>
-> +#include <linux/mhi_ep.h>
-> +
-> +#include "internal.h"
-> +
-> +void mhi_ep_mmio_read(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 *regval)
+> +static void mhi_ep_ring_worker(struct work_struct *work)
 > +{
-> +	*regval = readl(mhi_cntrl->mmio + offset);
+> +	struct mhi_ep_cntrl *mhi_cntrl = container_of(work,
+> +				struct mhi_ep_cntrl, ring_work);
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	struct mhi_ep_ring *ring;
+> +	struct list_head *cp, *q;
+> +	unsigned long flags;
+> +	int ret = 0;
+> +
+> +	/* Process the command ring first */
+> +	ret = mhi_ep_process_ring(&mhi_cntrl->mhi_cmd->ring);
+> +	if (ret) {
+> +		dev_err(dev, "Error processing command ring\n");
+> +		goto err_unlock;
+> +	}
+> +
+> +	spin_lock_irqsave(&mhi_cntrl->list_lock, flags);
+> +	/* Process the channel rings now */
 
-	return readl(...);
+Use list_for_each_entry_safe() here.
 
+But actually, rather than doing this, you can do the
+trick of grabbing the whole list under lock, then
+handling processing the entries outside of it.  You'll
+have to judge whether that can be done, but basically:
+
+	struct mhi_ep_ring *ring, *tmp;
+	LIST_HEAD(list);
+
+	spin_lock_irqsave(&mhi_cntrl->list_lock, flags);
+
+	list_splice_init(&mhi_cntrl->ch_db_list, &list);
+
+	spin_unlock_irqrestore(&mhi_cntrl->list_lock, flags);
+
+	list_for_each_entry_safe(ring, tmp, &list, list) {
+		list_del(&ring->list);
+		ret = mhi_ep_process_ring(ring);
+		...
+	}
+
+> +	list_for_each_safe(cp, q, &mhi_cntrl->ch_db_list) {
+> +		ring = list_entry(cp, struct mhi_ep_ring, list);
+> +		list_del(cp);
+> +		ret = mhi_ep_process_ring(ring);
+> +		if (ret) {
+> +			dev_err(dev, "Error processing channel ring: %d\n", ring->ch_id);
+> +			goto err_unlock;
+> +		}
+> +
+> +		/* Re-enable channel interrupt */
+> +		mhi_ep_mmio_enable_chdb_a7(mhi_cntrl, ring->ch_id);
+> +	}
+> +
+> +err_unlock:
+> +	spin_unlock_irqrestore(&mhi_cntrl->list_lock, flags);
 > +}
 > +
-> +void mhi_ep_mmio_write(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 val)
+>   static void mhi_ep_release_device(struct device *dev)
+>   {
+>   	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
+
+. . .
+
+> +void mhi_ep_ring_inc_index(struct mhi_ep_ring *ring)
 > +{
-> +	writel(val, mhi_cntrl->mmio + offset);
+> +	ring->rd_offset++;
+> +	if (ring->rd_offset == ring->ring_size)
+> +		ring->rd_offset = 0;
 > +}
 > +
-> +void mhi_ep_mmio_masked_write(struct mhi_ep_cntrl *mhi_cntrl, u32 offset, u32 mask,
-> +			       u32 shift, u32 val)
-
-There is no need for a shift argument here.  I would like to say
-"use the bitfield functions" but at the moment they require the
-mask to be constant.  You could still do that, by having all
-these be defined as static inline functions in a header though.
-Maybe you can use FIELD_GET() though, I don't know.
-
-Anyway, try to get rid of these shifts; they shouldn't be
-necessary.
-
+> +static int __mhi_ep_cache_ring(struct mhi_ep_ring *ring, size_t end)
 > +{
-> +	u32 regval;
+> +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	size_t start, copy_size;
+> +	struct mhi_ep_ring_element *ring_shadow;
+> +	phys_addr_t ring_shadow_phys;
+> +	size_t size = ring->ring_size * sizeof(struct mhi_ep_ring_element);
+
+Do you cache the entire ring just in case you need to wrap
+around the end of it?
+
+> +	int ret;
 > +
-> +	mhi_ep_mmio_read(mhi_cntrl, offset, &regval);
-> +	regval &= ~mask;
-> +	regval |= ((val << shift) & mask);
-> +	mhi_ep_mmio_write(mhi_cntrl, offset, regval);
-> +}
+> +	/* No need to cache event rings */
+> +	if (ring->type == RING_TYPE_ER)
+> +		return 0;
 > +
-> +int mhi_ep_mmio_masked_read(struct mhi_ep_cntrl *dev, u32 offset,
-> +			     u32 mask, u32 shift, u32 *regval)
-> +{
-> +	mhi_ep_mmio_read(dev, offset, regval);
-> +	*regval &= mask;
-> +	*regval >>= shift;
+> +	/* No need to cache the ring if write pointer is unmodified */
+> +	if (ring->wr_offset == end)
+> +		return 0;
+> +
+> +	start = ring->wr_offset;
+> +
+> +	/* Allocate memory for host ring */
+> +	ring_shadow = mhi_cntrl->alloc_addr(mhi_cntrl, &ring_shadow_phys,
+> +					   size);
+> +	if (!ring_shadow) {
+> +		dev_err(dev, "Failed to allocate memory for ring_shadow\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	/* Map host ring */
+> +	ret = mhi_cntrl->map_addr(mhi_cntrl, ring_shadow_phys,
+> +				  ring->ring_ctx->generic.rbase, size);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to map ring_shadow\n\n");
+> +		goto err_ring_free;
+> +	}
+> +
+> +	dev_dbg(dev, "Caching ring: start %d end %d size %d", start, end, copy_size);
+> +
+> +	if (start < end) {
+> +		copy_size = (end - start) * sizeof(struct mhi_ep_ring_element);
+> +		memcpy_fromio(&ring->ring_cache[start], &ring_shadow[start], copy_size);
+> +	} else {
+> +		copy_size = (ring->ring_size - start) * sizeof(struct mhi_ep_ring_element);
+> +		memcpy_fromio(&ring->ring_cache[start], &ring_shadow[start], copy_size);
+> +		if (end)
+> +			memcpy_fromio(&ring->ring_cache[0], &ring_shadow[0],
+> +					end * sizeof(struct mhi_ep_ring_element));
+> +	}
+> +
+> +	/* Now unmap and free host ring */
+> +	mhi_cntrl->unmap_addr(mhi_cntrl, ring_shadow_phys);
+> +	mhi_cntrl->free_addr(mhi_cntrl, ring_shadow_phys, ring_shadow, size);
 > +
 > +	return 0;
-
-There is no point in returning 0 from this function.
-
-> +}
 > +
-> +void mhi_ep_mmio_get_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state *state,
-> +				bool *mhi_reset)
-> +{
-> +	u32 regval;
+> +err_ring_free:
+> +	mhi_cntrl->free_addr(mhi_cntrl, ring_shadow_phys, &ring_shadow, size);
 > +
-> +	mhi_ep_mmio_read(mhi_cntrl, MHICTRL, &regval);
-> +	*state = FIELD_GET(MHICTRL_MHISTATE_MASK, regval);
-> +	*mhi_reset = !!FIELD_GET(MHICTRL_RESET_MASK, regval);
-> +}
-> +
-> +static void mhi_ep_mmio_mask_set_chdb_int_a7(struct mhi_ep_cntrl *mhi_cntrl,
-> +						u32 chdb_id, bool enable)
-> +{
-> +	u32 chid_mask, chid_idx, chid_shft, val = 0;
-> +
-> +	chid_shft = chdb_id % 32;
-> +	chid_mask = BIT(chid_shft);
-> +	chid_idx = chdb_id / 32;
-> +
-> +	if (chid_idx >= MHI_MASK_ROWS_CH_EV_DB)
-> +		return;
-
-The above should maybe issue a warning?
-
-> +
-> +	if (enable)
-> +		val = 1;
-> +
-> +	mhi_ep_mmio_masked_write(mhi_cntrl, MHI_CHDB_INT_MASK_A7_n(chid_idx),
-> +				  chid_mask, chid_shft, val);
-> +	mhi_ep_mmio_read(mhi_cntrl, MHI_CHDB_INT_MASK_A7_n(chid_idx),
-> +			  &mhi_cntrl->chdb[chid_idx].mask);
-
-Why do you read after writing?  Is this to be sure the write completes
-over PCIe or something?  Even then I don't think that would be needed
-because the memory is on "this side" of PCIe (right?).
-
-> +}
-> +
-> +void mhi_ep_mmio_enable_chdb_a7(struct mhi_ep_cntrl *mhi_cntrl, u32 chdb_id)
-> +{
-> +	mhi_ep_mmio_mask_set_chdb_int_a7(mhi_cntrl, chdb_id, true);
-> +}
-> +
-> +void mhi_ep_mmio_disable_chdb_a7(struct mhi_ep_cntrl *mhi_cntrl, u32 chdb_id)
-> +{
-> +	mhi_ep_mmio_mask_set_chdb_int_a7(mhi_cntrl, chdb_id, false);
-> +}
-> +
-> +static void mhi_ep_mmio_set_chdb_interrupts(struct mhi_ep_cntrl *mhi_cntrl, bool enable)
-> +{
-> +	u32 val = 0, i = 0;
-
-No need for assigning 0 to i.
-
-					-Alex
-
-> +
-> +	if (enable)
-> +		val = MHI_CHDB_INT_MASK_A7_n_EN_ALL;
-> +
-> +	for (i = 0; i < MHI_MASK_ROWS_CH_EV_DB; i++) {
-> +		mhi_ep_mmio_write(mhi_cntrl, MHI_CHDB_INT_MASK_A7_n(i), val);
-> +		mhi_cntrl->chdb[i].mask = val;
-> +	}
+> +	return ret;
 > +}
 > +
 
 . . .
+
+> +static int mhi_ep_process_ring_element(struct mhi_ep_ring *ring, size_t offset)
+> +{
+> +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	struct mhi_ep_ring_element *el;
+> +	int ret = -ENODEV;
+> +
+> +	/* Get the element and invoke the respective callback */
+> +	el = &ring->ring_cache[offset];
+> +
+
+You already know that the ring_cb function pointer is non-null (you set
+it in mhi_ep_ring_init(), below).  At least you *should* be able to
+be sure of that...
+
+> +	if (ring->ring_cb)
+> +		ret = ring->ring_cb(ring, el);
+> +	else
+> +		dev_err(dev, "No callback registered for ring\n");
+> +
+> +	return ret;
+> +}
+> +
+> +int mhi_ep_process_ring(struct mhi_ep_ring *ring)
+> +{
+> +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	int ret = 0;
+> +
+> +	/* Event rings should not be processed */
+> +	if (ring->type == RING_TYPE_ER)
+> +		return -EINVAL;
+> +
+> +	dev_dbg(dev, "Processing ring of type: %d\n", ring->type);
+> +
+> +	/* Update the write offset for the ring */
+> +	ret = mhi_ep_update_wr_offset(ring);
+> +	if (ret) {
+> +		dev_err(dev, "Error updating write offset for ring\n");
+> +		return ret;
+> +	}
+> +
+> +	/* Sanity check to make sure there are elements in the ring */
+> +	if (ring->rd_offset == ring->wr_offset)
+> +		return 0;
+> +
+> +	/* Process channel ring first */
+> +	if (ring->type == RING_TYPE_CH) {
+> +		ret = mhi_ep_process_ring_element(ring, ring->rd_offset);
+> +		if (ret)
+> +			dev_err(dev, "Error processing ch ring element: %d\n", ring->rd_offset);
+> +
+> +		return ret;
+> +	}
+> +
+> +	/* Process command ring now */
+> +	while (ring->rd_offset != ring->wr_offset) {
+> +		ret = mhi_ep_process_ring_element(ring, ring->rd_offset);
+> +		if (ret) {
+> +			dev_err(dev, "Error processing cmd ring element: %d\n", ring->rd_offset);
+> +			return ret;
+> +		}
+> +
+> +		mhi_ep_ring_inc_index(ring);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +/* TODO: Support for adding multiple ring elements to the ring */
+> +int mhi_ep_ring_add_element(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el, int size)
+
+I'm pretty sure the size argument is unused, so should be eliminated.
+
+> +{
+> +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	struct mhi_ep_ring_element *ring_shadow;
+> +	size_t ring_size = ring->ring_size * sizeof(struct mhi_ep_ring_element);
+
+Use sizeof(*el) in the line above.
+
+> +	phys_addr_t ring_shadow_phys;
+> +	size_t old_offset = 0;
+> +	u32 num_free_elem;
+> +	int ret;
+> +
+> +	ret = mhi_ep_update_wr_offset(ring);
+> +	if (ret) {
+> +		dev_err(dev, "Error updating write pointer\n");
+> +		return ret;
+> +	}
+> +
+> +	if (ring->rd_offset < ring->wr_offset)
+> +		num_free_elem = (ring->wr_offset - ring->rd_offset) - 1;
+> +	else
+> +		num_free_elem = ((ring->ring_size - ring->rd_offset) + ring->wr_offset) - 1;
+> +
+> +	/* Check if there is space in ring for adding at least an element */
+> +	if (num_free_elem < 1) {
+
+	if (!num_free_elem) {
+
+> +		dev_err(dev, "No space left in the ring\n");
+> +		return -ENOSPC;
+> +	}
+> +
+> +	old_offset = ring->rd_offset;
+> +	mhi_ep_ring_inc_index(ring);
+> +
+> +	dev_dbg(dev, "Adding an element to ring at offset (%d)\n", ring->rd_offset);
+> +
+> +	/* Update rp in ring context */
+> +	ring->ring_ctx->generic.rp = (ring->rd_offset * sizeof(struct mhi_ep_ring_element)) +
+> +				      ring->ring_ctx->generic.rbase;
+> +
+> +	/* Allocate memory for host ring */
+> +	ring_shadow = mhi_cntrl->alloc_addr(mhi_cntrl, &ring_shadow_phys, ring_size);
+> +	if (!ring_shadow) {
+> +		dev_err(dev, "failed to allocate ring_shadow\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	/* Map host ring */
+> +	ret = mhi_cntrl->map_addr(mhi_cntrl, ring_shadow_phys,
+> +				  ring->ring_ctx->generic.rbase, ring_size);
+> +	if (ret) {
+> +		dev_err(dev, "failed to map ring_shadow\n\n");
+> +		goto err_ring_free;
+> +	}
+> +
+> +	/* Copy the element to ring */
+
+Use sizeof(*el) in the memcpy_toio() call.
+
+> +	memcpy_toio(&ring_shadow[old_offset], el, sizeof(struct mhi_ep_ring_element));
+> +
+> +	/* Now unmap and free host ring */
+> +	mhi_cntrl->unmap_addr(mhi_cntrl, ring_shadow_phys);
+> +	mhi_cntrl->free_addr(mhi_cntrl, ring_shadow_phys, ring_shadow, ring_size);
+> +
+> +	return 0;
+> +
+> +err_ring_free:
+> +	mhi_cntrl->free_addr(mhi_cntrl, ring_shadow_phys, ring_shadow, ring_size);
+> +
+> +	return ret;
+> +}
+> +
+> +void mhi_ep_ring_init(struct mhi_ep_ring *ring, enum mhi_ep_ring_type type, u32 id)
+> +{
+> +	ring->state = RING_STATE_UINT;
+> +	ring->type = type;
+> +	if (ring->type == RING_TYPE_CMD) {
+> +		ring->db_offset_h = CRDB_HIGHER;
+> +		ring->db_offset_l = CRDB_LOWER;
+> +	} else if (ring->type == RING_TYPE_CH) {
+> +		ring->db_offset_h = CHDB_HIGHER_n(id);
+> +		ring->db_offset_l = CHDB_LOWER_n(id);
+> +		ring->ch_id = id;
+> +	} else if (ring->type == RING_TYPE_ER) {
+> +		ring->db_offset_h = ERDB_HIGHER_n(id);
+> +		ring->db_offset_l = ERDB_LOWER_n(id);
+> +	}
+
+There is no other case, right?  If you hit it, you should report
+it.  Otherwise there's not really any need to check for ring->type
+RING_TYPE_ER...
+
+					-Alex
+
+> +}
+> +
+> +int mhi_ep_ring_start(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring,
+> +			union mhi_ep_ring_ctx *ctx)
+> +{
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	int ret;
+> +
+> +	ring->mhi_cntrl = mhi_cntrl;
+> +	ring->ring_ctx = ctx;
+> +	ring->ring_size = mhi_ep_ring_num_elems(ring);
+> +
+> +	/* During ring init, both rp and wp are equal */
+> +	ring->rd_offset = mhi_ep_ring_addr2offset(ring, ring->ring_ctx->generic.rp);
+> +	ring->wr_offset = mhi_ep_ring_addr2offset(ring, ring->ring_ctx->generic.rp);
+> +	ring->state = RING_STATE_IDLE;
+> +
+> +	/* Allocate ring cache memory for holding the copy of host ring */
+> +	ring->ring_cache = kcalloc(ring->ring_size, sizeof(struct mhi_ep_ring_element),
+> +				   GFP_KERNEL);
+> +	if (!ring->ring_cache)
+> +		return -ENOMEM;
+> +
+> +	ret = mhi_ep_cache_ring(ring, ring->ring_ctx->generic.wp);
+> +	if (ret) {
+> +		dev_err(dev, "Failed to cache ring\n");
+> +		kfree(ring->ring_cache);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +void mhi_ep_ring_stop(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_ring *ring)
+> +{
+> +	ring->state = RING_STATE_UINT;
+> +	kfree(ring->ring_cache);
+> +}
+> diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+> index 902c8febd856..729f4b802b74 100644
+> --- a/include/linux/mhi_ep.h
+> +++ b/include/linux/mhi_ep.h
+> @@ -62,6 +62,11 @@ struct mhi_ep_db_info {
+>    * @ch_ctx_host_pa: Physical address of host channel context data structure
+>    * @ev_ctx_host_pa: Physical address of host event context data structure
+>    * @cmd_ctx_host_pa: Physical address of host command context data structure
+> + * @ring_wq: Dedicated workqueue for processing MHI rings
+> + * @ring_work: Ring worker
+> + * @ch_db_list: List of queued channel doorbells
+> + * @st_transition_list: List of state transitions
+> + * @list_lock: Lock for protecting state transition and channel doorbell lists
+>    * @chdb: Array of channel doorbell interrupt info
+>    * @raise_irq: CB function for raising IRQ to the host
+>    * @alloc_addr: CB function for allocating memory in endpoint for storing host context
+> @@ -90,6 +95,12 @@ struct mhi_ep_cntrl {
+>   	u64 ev_ctx_host_pa;
+>   	u64 cmd_ctx_host_pa;
+>   
+> +	struct workqueue_struct	*ring_wq;
+> +	struct work_struct ring_work;
+> +
+> +	struct list_head ch_db_list;
+> +	struct list_head st_transition_list;
+> +	spinlock_t list_lock;
+>   	struct mhi_ep_db_info chdb[4];
+>   
+>   	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl);
+> 
+
