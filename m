@@ -2,210 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6565486AA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 20:48:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB919486B07
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 21:24:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243437AbiAFTsC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 14:48:02 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:34368 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243403AbiAFTsB (ORCPT
+        id S236332AbiAFUYH convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 6 Jan 2022 15:24:07 -0500
+Received: from coyote.holtmann.net ([212.227.132.17]:48250 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243662AbiAFUYH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 14:48:01 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1BCAEB82390;
-        Thu,  6 Jan 2022 19:48:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D1BC36AE3;
-        Thu,  6 Jan 2022 19:47:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641498478;
-        bh=qG4P24v3rmLtQVZ3+9ve8/eqf1rVrXsPHnG9nhgApC0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KrJ0kcx0NyoXAwr90aY0RBzRaQre/3bXHridHFAgDUq9ZXQt7ScnYGEouRVmTHaCS
-         chWRZ2HIE+AOIQO7mR71i2psYYeUUVms2cUZs2oJ1auYHkguHNanzBbARYsTUyhfta
-         qRRATijRtCLfxbK6gskf7D0HWlsfyYRc+5jcyFxX+DdRniNa/e8RhFroTngeOFt1yE
-         nwD1YIbg3DWXjc2+9wKbSmwQS2Q+a3HUqUjGf7qdMunErvKGTG0GBN3Qye2/yY5IKF
-         EPm4u7ZWGRbhuCEDngy3AOSrHenY7DbYOLUXOSjzSjBZJNSd+XQUNCEwmBTrfL7/46
-         fQQbrcBPdiiIw==
-Date:   Thu, 6 Jan 2022 11:47:57 -0800
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Cc:     linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
-        linux-fscrypt@vger.kernel.org, thara.gopinath@linaro.org,
-        quic_neersoni@quicinc.com, dineshg@quicinc.com
-Subject: Re: [PATCH 00/10] Add wrapped key support for Qualcomm ICE
-Message-ID: <YddHbRx2UGeAOhji@sol.localdomain>
-References: <20211206225725.77512-1-quic_gaurkash@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211206225725.77512-1-quic_gaurkash@quicinc.com>
+        Thu, 6 Jan 2022 15:24:07 -0500
+Received: from smtpclient.apple (p4fefca45.dip0.t-ipconnect.de [79.239.202.69])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 46150CECDC;
+        Thu,  6 Jan 2022 21:24:05 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
+Subject: Re: [PATCH v4] Bluetooth: btqca: sequential validation
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1640174444-28561-1-git-send-email-quic_saluvala@quicinc.com>
+Date:   Thu, 6 Jan 2022 21:24:04 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        quic_hemantg@quicinc.com, MSM <linux-arm-msm@vger.kernel.org>,
+        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
+        hbandi@codeaurora.org, abhishekpandit@chromium.org,
+        mcchou@chromium.org, quic_pharish@quicinc.com
+Content-Transfer-Encoding: 8BIT
+Message-Id: <3E84ACC3-BF17-4E7B-AA57-CDCA86549813@holtmann.org>
+References: <1640174444-28561-1-git-send-email-quic_saluvala@quicinc.com>
+To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>
+X-Mailer: Apple Mail (2.3693.40.0.1.81)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Gaurav,
+Hi Sai,
 
-On Mon, Dec 06, 2021 at 02:57:15PM -0800, Gaurav Kashyap wrote:
-> Testing:
-> Test platform: SM8350 HDK/MTP
-> Engineering trustzone image (based on sm8350) is required to test
-> this feature. This is because of version changes of HWKM.
-> HWKM version 2 and moving forward has a lot of restrictions on the
-> key management due to which the launched SM8350 solution (based on v1)
-> cannot be used and some modifications are required in trustzone.
+> This change will have sequential validation support
+> & patch config command is added
+> 
+> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+> 
+> v4:
+> * addressed the change from u8 cmd to const u8 cmd
+> 
+> v3:
+> * removed rlen,rtype
+> * Replaced kfree with kfree_skb
+> 
+> v2:
+> * Added static declaration
+> * Addressed wrong indentation
+> * Removed EDL_PATCH_CONFIG_CMD_LEN
+> 
+> v1:
+> *Initial patch
+> ---
+> drivers/bluetooth/btqca.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
+> drivers/bluetooth/btqca.h |  2 ++
+> 2 files changed, 50 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index be04d74..9091a88 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -141,6 +141,51 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
+> 	return err;
+> }
+> 
+> +static int qca_send_patch_config_cmd(struct hci_dev *hdev)
+> +{
+> +	struct sk_buff *skb;
+> +	int err = 0;
+> +	const u8 cmd[] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
+> +	struct edl_event_hdr *edl;
 
-I've been trying to test this patchset on a SM8350 HDK using the TrustZone image
-you provided, but it's not completely working yet.
+I said this many times before. = {[SPACE], a, b, c[SPACE]};
 
-This is the kernel branch I'm using:
-https://git.kernel.org/pub/scm/fs/fscrypt/fscrypt.git/log/?h=wip-wrapped-keys.
-It has my v4 patchset with your patchset rebased on top of it, some qcom_scm.c
-fixes I had to make (see below), and some extra logging messages.
+And I prefer the const pieces first, and int err last.
 
-This is how I'm building and booting a kernel on the board:
-https://github.com/ebiggers/fscryptctl/blob/wip-wrapped-keys/scripts/sm8350-buildkernel.sh
+> +
+> +	bt_dev_dbg(hdev, "QCA Patch config");
+> +
+> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
+> +				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
+> +	if (IS_ERR(skb)) {
+> +		err = PTR_ERR(skb);
+> +		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
+> +		return err;
+> +	}
+> +
+> +	if (skb->len != 2) {
+> +		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
+> +		err = -EILSEQ;
+> +		goto out;
+> +	}
+> +
+> +	edl = (struct edl_event_hdr *)(skb->data);
+> +	if (!edl) {
+> +		bt_dev_err(hdev, "QCA Patch config with no header");
+> +		err = -EILSEQ;
+> +		goto out;
+> +	}
+> +
+> +	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != EDL_PATCH_CONFIG_CMD) {
+> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
+> +			   edl->rtype);
+> +		err = -EIO;
+> +		goto out;
+> +	}
+> +
+> +out:
+> +	kfree_skb(skb);
+> +	if (err)
+> +		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
 
-And this is the test script I'm running:
-https://github.com/ebiggers/fscryptctl/blob/wip-wrapped-keys/scripts/wrappedkey-test.sh.
-It imports or generates a hardware-wrapped key, then tries to set up a directory
-on an ext4 filesystem that is encrypted with that key.   This uses new
-'fscryptctl' commands to access the new blk-crypto ioctls; the version of
-'fscryptctl' on the branch the scripts are on has all the needed changes.
+It is rather pointless to print two error. So just scrap this one.
 
-QCOM_SCM_ES_IMPORT_ICE_KEY, QCOM_SCM_ES_GENERATE_ICE_KEY,
-QCOM_SCM_ES_PREPARE_ICE_KEY, all seem to work.  However,
-QCOM_SCM_ES_DERIVE_SW_SECRET doesn't work; it always returns -EINVAL.
+> +
+> +	return err;
+> +}
+> +
+> static int qca_send_reset(struct hci_dev *hdev)
+> {
+> 	struct sk_buff *skb;
+> @@ -551,6 +596,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+> 	 */
+> 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> 
+> +	if (soc_type == QCA_WCN6750)
+> +		qca_send_patch_config_cmd(hdev);
+> +
+> 	/* Download rampatch file */
+> 	config.type = TLV_TYPE_PATCH;
+> 	if (qca_is_wcn399x(soc_type)) {
+> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+> index 30afa77..61e9a50 100644
+> --- a/drivers/bluetooth/btqca.h
+> +++ b/drivers/bluetooth/btqca.h
+> @@ -13,6 +13,7 @@
+> #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+> #define EDL_GET_BUILD_INFO_CMD		(0x20)
+> #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
+> +#define EDL_PATCH_CONFIG_CMD		(0x28)
+> #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+> #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+> #define QCA_DISABLE_LOGGING		(0xFC17)
+> @@ -24,6 +25,7 @@
+> #define EDL_CMD_EXE_STATUS_EVT		(0x00)
+> #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
+> #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
+> +#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
+> #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
+> 
+> #define EDL_TAG_ID_HCI			(17)
 
-For example:
+Regards
 
-Importing hardware-wrapped key
-[  187.606109] blk-crypto: entering BLKCRYPTOCREATEKEY
-[  187.611648] calling QCOM_SCM_ES_IMPORT_ICE_KEY; raw_key=5858585858585858585858585858585858585858585858585858585858585858
-[  187.628180] QCOM_SCM_ES_IMPORT_ICE_KEY succeeded; longterm_wrapped_key=fab51aa07fb6c2bf2fea60a8120e8d35a9e53865b594e0fb6279e7951a34864591f1c1c4e26f9421039377c1ac311ff9241a0152030000000000000000000000
-[  187.646433] blk-crypto: exiting BLKCRYPTOCREATEKEY; ret=0
-Preparing hardware-wrapped key
-[  187.653129] blk-crypto: entering BLKCRYPTOPREPAREKEY
-[  187.660356] calling QCOM_SCM_ES_PREPARE_ICE_KEY; longterm_wrapped_key=fab51aa07fb6c2bf2fea60a8120e8d35a9e53865b594e0fb6279e7951a34864591f1c1c4e26f9421039377c1ac311ff9241a0152030000000000000000000000
-[  187.680420] QCOM_SCM_ES_PREPARE_ICE_KEY succeeded; ephemeral_wrapped_key=1fbf5d501854858d6faaf52c9d22bebc576012e40485ba75e7d19e88f74b3400eb1a8836e28232939e990df6007659b1241a0152030000000000000000000000
-[  187.698791] blk-crypto: exiting BLKCRYPTOPREPAREKEY; ret=0
-Adding hardware-wrapped key
-[  187.705515] calling blk_crypto_derive_sw_secret(); wrapped_key_size=68
-[  187.714075] in qti_ice_derive_sw_secret()
-[  187.718212] calling qti_ice_hwkm_init()
-[  187.722157] calling qti_ice_hwkm_init_sequence(version=1)
-[  187.727715] setting standard mode
-[  187.731134] checking BIST status
-[  187.734464] configuring ICE registers
-[  187.738230] disabling CRC check
-[  187.741479] setting RSP_FIFO_FULL bit
-[  187.745247] calling qcom_scm_derive_sw_secret()
-[  187.749920] calling QCOM_SCM_ES_DERIVE_SW_SECRET; wrapped_key=1fbf5d501854858d6faaf52c9d22bebc576012e40485ba75e7d19e88f74b3400eb1a8836e28232939e990df6007659b1241a0152030000000000000000000000, secret_size=32
-[  187.768834] QCOM_SCM_ES_DERIVE_SW_SECRET failed with error -22
-[  187.774838] blk_crypto_derive_sw_secret() returned -22
-error: adding key to /mnt: Invalid argument
+Marcel
 
-
-You can see that the wrapped_key being passed to QCOM_SCM_ES_DERIVE_SW_SECRET
-matches the ephemeral_wrapped_key that was returned earlier by
-QCOM_SCM_ES_PREPARE_ICE_KEY, and that secret_size is 32.  So the arguments are
-as expected.  However, QCOM_SCM_ES_DERIVE_SW_SECRET still fails.
-
-This still occurs if QCOM_SCM_ES_GENERATE_ICE_KEY is used instead of
-QCOM_SCM_ES_IMPORT_ICE_KEY.
-
-Have you tested that QCOM_SCM_ES_DERIVE_SW_SECRET is working properly?
-
-For reference, these are the fixes I had to apply to qcom_scm.c to get things
-working until that point.  This included fixing the direction of the first
-arguments to the SCM calls, and fixing the return values.  Note, I also tested
-leaving QCOM_SCM_ES_DERIVE_SW_SECRET using QCOM_SCM_RO instead of QCOM_SCM_RW,
-but the result was still the same --- it still returned -EINVAL.
-
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index d57f52015640..002b57a1473d 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1087,7 +1087,7 @@ int qcom_scm_derive_sw_secret(const u8 *wrapped_key, u32 wrapped_key_size,
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_ES,
- 		.cmd =  QCOM_SCM_ES_DERIVE_SW_SECRET,
--		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
-+		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL),
- 		.args[1] = wrapped_key_size,
-@@ -1148,7 +1148,7 @@ EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
-  * This SCM calls adds support for the generate key IOCTL to interface
-  * with the secure environment to generate and return a wrapped key..
-  *
-- * Return: 0 on success; -errno on failure.
-+ * Return: size of the resulting key on success; -errno on failure.
-  */
- int qcom_scm_generate_ice_key(u8 *longterm_wrapped_key,
- 			    u32 longterm_wrapped_key_size)
-@@ -1188,7 +1188,7 @@ int qcom_scm_generate_ice_key(u8 *longterm_wrapped_key,
- 	dma_free_coherent(__scm->dev, longterm_wrapped_key_size,
- 			  longterm_wrapped_keybuf, longterm_wrapped_key_phys);
- 
--	return ret;
-+	return ret ?: longterm_wrapped_key_size;
- }
- EXPORT_SYMBOL(qcom_scm_generate_ice_key);
- 
-@@ -1209,7 +1209,7 @@ EXPORT_SYMBOL(qcom_scm_generate_ice_key);
-  * with the secure environment to rewrap the wrapped key with an
-  * ephemeral wrapping key.
-  *
-- * Return: 0 on success; -errno on failure.
-+ * Return: size of the resulting key on success; -errno on failure.
-  */
- int qcom_scm_prepare_ice_key(const u8 *longterm_wrapped_key,
- 			     u32 longterm_wrapped_key_size,
-@@ -1219,7 +1219,7 @@ int qcom_scm_prepare_ice_key(const u8 *longterm_wrapped_key,
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_ES,
- 		.cmd =  QCOM_SCM_ES_PREPARE_ICE_KEY,
--		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
-+		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL),
- 		.args[1] = longterm_wrapped_key_size,
-@@ -1270,7 +1270,7 @@ int qcom_scm_prepare_ice_key(const u8 *longterm_wrapped_key,
- 	dma_free_coherent(__scm->dev, longterm_wrapped_key_size,
- 			  longterm_wrapped_keybuf, longterm_wrapped_key_phys);
- 
--	return ret;
-+	return ret ?: ephemeral_wrapped_key_size;
- }
- EXPORT_SYMBOL(qcom_scm_prepare_ice_key);
- 
-@@ -1289,7 +1289,7 @@ EXPORT_SYMBOL(qcom_scm_prepare_ice_key);
-  * the secure environment to import a raw key and generate a longterm
-  * wrapped key.
-  *
-- * Return: 0 on success; -errno on failure.
-+ * Return: size of the resulting key on success; -errno on failure.
-  */
- int qcom_scm_import_ice_key(const u8 *imported_key, u32 imported_key_size,
- 			    u8 *longterm_wrapped_key,
-@@ -1298,7 +1298,7 @@ int qcom_scm_import_ice_key(const u8 *imported_key, u32 imported_key_size,
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_ES,
- 		.cmd =  QCOM_SCM_ES_IMPORT_ICE_KEY,
--		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RO,
-+		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL, QCOM_SCM_RW,
- 					 QCOM_SCM_VAL),
- 		.args[1] = imported_key_size,
-@@ -1344,7 +1344,7 @@ int qcom_scm_import_ice_key(const u8 *imported_key, u32 imported_key_size,
- 	dma_free_coherent(__scm->dev, imported_key_size, imported_keybuf,
- 			  imported_key_phys);
- 
--	return ret;
-+	return ret ?: longterm_wrapped_key_size;
- }
- EXPORT_SYMBOL(qcom_scm_import_ice_key);
