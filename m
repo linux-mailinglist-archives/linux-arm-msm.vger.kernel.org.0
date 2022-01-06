@@ -2,214 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C7621486717
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 16:52:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68175486776
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 17:13:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240707AbiAFPww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 10:52:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47468 "EHLO
+        id S241072AbiAFQNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 11:13:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240705AbiAFPww (ORCPT
+        with ESMTP id S240952AbiAFQNR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 10:52:52 -0500
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA7DC061201
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 07:52:51 -0800 (PST)
-Received: by mail-qt1-x829.google.com with SMTP id p19so2645956qtw.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 07:52:51 -0800 (PST)
+        Thu, 6 Jan 2022 11:13:17 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A8BC061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 08:13:16 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id o7so3656117ioo.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 08:13:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GhPv3TCVMNdzUlnrS7GkeARVb8jWq6T2I9klaQoUwbI=;
-        b=mHj9cU1mZ6+AB2dMfeWCnzQpmvDTSdjQ5h89UiEllr8fDgUmgLQN5aAd0vSd5pEJaA
-         mxouS/6Sbd2IF2gwVQR8Mc5mTxut8muKa8K5E8Zg0bKborLAHXPib8E3Mu75W8mVuEa1
-         CnnOkkjJTOs0lLWA8n90R8AdshgTb//mTalunZPjrNeERzpCjWv0ligUJaD53pPFYmve
-         /Sm4At6DaJZrbvx3TgAR9+qYvzjxCGlw2wPEJR6V1Lv02QAFKaqdAs4GSnfXS2DZi9w9
-         WbOsdM5KctOO5LQJiNZDxjiRwKhPhCFhP8ZqIlO+eamevz1IkEuszxQEIUAXKSxWteZi
-         GGmw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=X5QlOKATkg+9Prd2ezRheoLg8bFfRjYXz/Me8Di8F7c=;
+        b=k3wV17DuYBAKkilG5F4sMKLPdAc/udCpFB4Zg7vUaNdHN9hLlS8Y1+LLFS/kzWWNo7
+         duV9yRWDKNuuxZ1SkusEk0Bhv/5JHdNKZ3HxDCsIxAvd9u3pgSsGI/9gsKfK3GJP8Zt1
+         27kQpJbUxRuz+hcivXUoaFvU8CcUr15OTJpEY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GhPv3TCVMNdzUlnrS7GkeARVb8jWq6T2I9klaQoUwbI=;
-        b=L+vKNuvyzAZygee92d3iCug9qhmXy1PPOC5f7n72Nl1fueAQ/3ae0DI5G2pcd7gYPI
-         PmxEav5iEpuasA7TIq7doyEavQlymhLyFF+Efw+xwAN1gZ3MZixQDGtlNxTbWq9JrbCk
-         rt/4BoTgrAScygmcLZGhvFHhkxEHLDDnwbZWTtBacyS4Laa74RCmuSHbmHHxXTW2oHWY
-         XX0iP0B/6jeLXmVyNTnx0U6O3a0Zssct0RMqbS9QJbAGbi41SV4AJ1PBv8yW90h1mcwv
-         URCuk4t/Mo1sf154ztST3rNvLvmkxsA23ircs17CYbyN6pt1l7+QKC2JeYU3TNkIwGQ1
-         oE6w==
-X-Gm-Message-State: AOAM532fCSCVAaWZODDD5Nw9sM9kqiKb98C9yfh7foBLTjZtPQHwvG7Z
-        E1WsYogyLX0GpDhbrd8OtQ5bbA==
-X-Google-Smtp-Source: ABdhPJzsQPvOoewQNO3rShMtgLaJZlLZfDc1vqyDvuNjeB4XHvY9hmxC9cyUio4pPyQleEFz0K3wiA==
-X-Received: by 2002:ac8:5993:: with SMTP id e19mr51906451qte.568.1641484370843;
-        Thu, 06 Jan 2022 07:52:50 -0800 (PST)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id y6sm1696596qtn.23.2022.01.06.07.52.50
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X5QlOKATkg+9Prd2ezRheoLg8bFfRjYXz/Me8Di8F7c=;
+        b=nVt/9E2r6EQYxNgFw/EI2nZG/gqIgiqsQg0he+e3rBqRxDArCe3I1qFTBqYrOj4KY0
+         n/gzj1diff/tBDUvjqi01zdlOhtJXPpm8OJ4CWqOgln3I57X6tcWarencDkLEckB9mMn
+         0JC8+pWlBr4n2+/m1AwbEK7MGaM8OPi+HVni5XZEtk8/pWLN4lxZNtB4M5hLManyU0Bd
+         eQUgV6W3y0YkfBj63ZC0mAYPm2Z72Y9a/iCXmzHFGs7Ybdg9VjcgrBYySBewcEW70ylI
+         7w6FZsnjzbmLfKT39/YBIyDzS9RDRGytph1qm4WtdIqv36XgPtLEy1RQRGrIp2yoCbdU
+         1tww==
+X-Gm-Message-State: AOAM533IWJJSiwIpiL/15odE24up5QJYS4l6kcXo35dK4fr+aAzF93Nb
+        vNlFDhbctPV4UKNJNCsOI9AtS8PsqbMUKQ==
+X-Google-Smtp-Source: ABdhPJzk8trPc+6VB8NFnN9wWURvrUsAT3IHq09orErxK7uE1YYCmiCO83/uI4lp+SScFEXdG2iGvQ==
+X-Received: by 2002:a05:6602:2ac5:: with SMTP id m5mr27597789iov.156.1641485596112;
+        Thu, 06 Jan 2022 08:13:16 -0800 (PST)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id f12sm1312859ilu.39.2022.01.06.08.13.15
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jan 2022 07:52:50 -0800 (PST)
-Subject: Re: [Patch v2 1/3] thermal: qcom: lmh: Add support for sm8150
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org,
-        rui.zhang@intel.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20211215163400.33349-1-thara.gopinath@linaro.org>
- <20211215163400.33349-2-thara.gopinath@linaro.org> <YdYTFu/QTZ5DS95M@ripper>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <efe8205e-aaea-fda6-c556-f42bfd6ec82c@linaro.org>
-Date:   Thu, 6 Jan 2022 10:52:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Thu, 06 Jan 2022 08:13:15 -0800 (PST)
+Received: by mail-il1-f172.google.com with SMTP id o1so2292827ilo.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 08:13:15 -0800 (PST)
+X-Received: by 2002:a05:6e02:2187:: with SMTP id j7mr27894010ila.120.1641485595294;
+ Thu, 06 Jan 2022 08:13:15 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <YdYTFu/QTZ5DS95M@ripper>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20220103071118.27220-1-vkoul@kernel.org>
+In-Reply-To: <20220103071118.27220-1-vkoul@kernel.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 6 Jan 2022 08:13:03 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=Ue9Z+NmqviCXEN2pHxWZaAcTbFzzn=xxfg8d8QzPwp4A@mail.gmail.com>
+Message-ID: <CAD=FV=Ue9Z+NmqviCXEN2pHxWZaAcTbFzzn=xxfg8d8QzPwp4A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] spi: qcom: geni: set the error code for gpi transfer
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+On Sun, Jan 2, 2022 at 11:11 PM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Before we invoke spi_finalize_current_transfer() in
+> spi_gsi_callback_result() we should set the spi->cur_msg->status as
+> appropriate (0 for success, error otherwise).
+>
+> The helps to return error on transfer and not wait till it timesout on
+> error
+>
+> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>
+> Changes in v2:
+>  - add missing spi_finalize_current_transfer() for dma error case
+>
+>  drivers/spi/spi-geni-qcom.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 413fa1a7a936..b82f3ddff0f4 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -346,17 +346,21 @@ spi_gsi_callback_result(void *cb, const struct dmaengine_result *result)
+>  {
+>         struct spi_master *spi = cb;
+>
+> +       spi->cur_msg->status = -EIO;
+>         if (result->result != DMA_TRANS_NOERROR) {
+>                 dev_err(&spi->dev, "DMA txn failed: %d\n", result->result);
+> +               spi_finalize_current_transfer(spi);
+>                 return;
+>         }
+>
+>         if (!result->residue) {
+> +               spi->cur_msg->status = 0;
+>                 dev_dbg(&spi->dev, "DMA txn completed\n");
+> -               spi_finalize_current_transfer(spi);
+>         } else {
+>                 dev_err(&spi->dev, "DMA xfer has pending: %d\n", result->residue);
+>         }
+> +
+> +       spi_finalize_current_transfer(spi);
+>  }
 
-On 1/5/22 4:52 PM, Bjorn Andersson wrote:
-> On Wed 15 Dec 08:33 PST 2021, Thara Gopinath wrote:
-> 
->> Add compatible to support LMh for sm8150 SoC.
->> sm8150 does not require explicit enabling for various LMh subsystems.
->> Add a variable indicating the same as match data which is set for sdm845.
->> Execute the piece of code enabling various LMh subsystems only if
->> enable algorithm match data is present.
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v1->v2:
->> 	- Added LMH_ENABLE_ALGOS of_device_id match data to indicate
->> 	  whether LMh subsytems need explicit enabling or not.
->>
->>   drivers/thermal/qcom/lmh.c | 62 +++++++++++++++++++++-----------------
->>   1 file changed, 35 insertions(+), 27 deletions(-)
->>
->> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
->> index eafa7526eb8b..80d26d043498 100644
->> --- a/drivers/thermal/qcom/lmh.c
->> +++ b/drivers/thermal/qcom/lmh.c
->> @@ -28,6 +28,8 @@
->>   
->>   #define LMH_REG_DCVS_INTR_CLR		0x8
->>   
->> +#define LMH_ENABLE_ALGOS		((void *)1)
->> +
->>   struct lmh_hw_data {
->>   	void __iomem *base;
->>   	struct irq_domain *domain;
->> @@ -87,6 +89,7 @@ static int lmh_probe(struct platform_device *pdev)
->>   {
->>   	struct device *dev = &pdev->dev;
->>   	struct device_node *np = dev->of_node;
->> +	const struct of_device_id *of_id;
->>   	struct device_node *cpu_node;
->>   	struct lmh_hw_data *lmh_data;
->>   	int temp_low, temp_high, temp_arm, cpu_id, ret;
->> @@ -141,32 +144,36 @@ static int lmh_probe(struct platform_device *pdev)
->>   	if (!qcom_scm_lmh_dcvsh_available())
->>   		return -EINVAL;
->>   
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> -	if (ret)
->> -		dev_err(dev, "Error %d enabling current subfunction\n", ret);
->> -
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> -	if (ret)
->> -		dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
->> -
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> -	if (ret)
->> -		dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
->> -
->> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
->> -				 LMH_NODE_DCVS, node_id, 0);
->> -	if (ret) {
->> -		dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
->> -		return ret;
->> -	}
->> -
->> -	ret = qcom_scm_lmh_profile_change(0x1);
->> -	if (ret) {
->> -		dev_err(dev, "Error %d changing profile\n", ret);
->> -		return ret;
->> +	of_id = of_match_device(dev->driver->of_match_table, dev);
-> 
-> I think it would be preferable to use of_device_get_match_data() and
-> assign this to an unsigned long.
+What you have here should work and seems fine, though it's a bit
+awkward. Every exit path now calls spi_finalize_current_transfer().
+IMO this would be slightly cleaner like this (also moving the error
+cases to both be first)
 
-Sure.. I will fix this and the comment below and send out v3.
+if (result->result != DMA_TRANS_NOERROR) {
+  dev_err(...);
+} else if (result->residue)
+  dev_err(...);
+} else {
+  spi->cur_msg->status = 0;
+  dev_dbg(...);
+}
 
--- 
-Warm Regards
-Thara (She/Her/Hers)
-> 
->> +
->> +	if (of_id && of_id->data == LMH_ENABLE_ALGOS) {
-> 
-> Then you don't need to check of_id for NULL here and this would lend
-> itself nicely to be a bitmask of enabled algorithms if some platform
-> would need to enable a subset of these.
-> 
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
->> +					 LMH_NODE_DCVS, node_id, 0);
->> +		if (ret)
->> +			dev_err(dev, "Error %d enabling current subfunction\n", ret);
->> +
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
->> +					 LMH_NODE_DCVS, node_id, 0);
->> +		if (ret)
->> +			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
->> +
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
->> +					 LMH_NODE_DCVS, node_id, 0);
->> +		if (ret)
->> +			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
->> +
->> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
->> +					 LMH_NODE_DCVS, node_id, 0);
->> +		if (ret) {
->> +			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
->> +			return ret;
->> +		}
->> +
->> +		ret = qcom_scm_lmh_profile_change(0x1);
->> +		if (ret) {
->> +			dev_err(dev, "Error %d changing profile\n", ret);
->> +			return ret;
->> +		}
->>   	}
->>   
->>   	/* Set default thermal trips */
->> @@ -213,7 +220,8 @@ static int lmh_probe(struct platform_device *pdev)
->>   }
->>   
->>   static const struct of_device_id lmh_table[] = {
->> -	{ .compatible = "qcom,sdm845-lmh", },
->> +	{ .compatible = "qcom,sdm845-lmh", .data = LMH_ENABLE_ALGOS},
-> 
-> Make LMH_ENABLE_ALGOS just an integer define and add the explicit (void
-> *) cast here.
-> 
-> Regards,
-> Bjorn
-> 
->> +	{ .compatible = "qcom,sm8150-lmh", },
->>   	{}
->>   };
->>   MODULE_DEVICE_TABLE(of, lmh_table);
->> -- 
->> 2.25.1
->>
+spi_finalize_current_transfer(spi);
 
+I'll let Mark decide if he wants it to be respun with the above, wants
+a follow-on patch, or doesn't care either way. In any case:
 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
