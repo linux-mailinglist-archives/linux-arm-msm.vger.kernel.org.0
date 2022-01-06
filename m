@@ -2,138 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68175486776
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 17:13:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C6DFA48682F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 18:13:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241072AbiAFQNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 11:13:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52200 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240952AbiAFQNR (ORCPT
+        id S241582AbiAFRNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 12:13:49 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:54834 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241580AbiAFRNs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 11:13:17 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A8BC061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 08:13:16 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id o7so3656117ioo.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 08:13:16 -0800 (PST)
+        Thu, 6 Jan 2022 12:13:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X5QlOKATkg+9Prd2ezRheoLg8bFfRjYXz/Me8Di8F7c=;
-        b=k3wV17DuYBAKkilG5F4sMKLPdAc/udCpFB4Zg7vUaNdHN9hLlS8Y1+LLFS/kzWWNo7
-         duV9yRWDKNuuxZ1SkusEk0Bhv/5JHdNKZ3HxDCsIxAvd9u3pgSsGI/9gsKfK3GJP8Zt1
-         27kQpJbUxRuz+hcivXUoaFvU8CcUr15OTJpEY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X5QlOKATkg+9Prd2ezRheoLg8bFfRjYXz/Me8Di8F7c=;
-        b=nVt/9E2r6EQYxNgFw/EI2nZG/gqIgiqsQg0he+e3rBqRxDArCe3I1qFTBqYrOj4KY0
-         n/gzj1diff/tBDUvjqi01zdlOhtJXPpm8OJ4CWqOgln3I57X6tcWarencDkLEckB9mMn
-         0JC8+pWlBr4n2+/m1AwbEK7MGaM8OPi+HVni5XZEtk8/pWLN4lxZNtB4M5hLManyU0Bd
-         eQUgV6W3y0YkfBj63ZC0mAYPm2Z72Y9a/iCXmzHFGs7Ybdg9VjcgrBYySBewcEW70ylI
-         7w6FZsnjzbmLfKT39/YBIyDzS9RDRGytph1qm4WtdIqv36XgPtLEy1RQRGrIp2yoCbdU
-         1tww==
-X-Gm-Message-State: AOAM533IWJJSiwIpiL/15odE24up5QJYS4l6kcXo35dK4fr+aAzF93Nb
-        vNlFDhbctPV4UKNJNCsOI9AtS8PsqbMUKQ==
-X-Google-Smtp-Source: ABdhPJzk8trPc+6VB8NFnN9wWURvrUsAT3IHq09orErxK7uE1YYCmiCO83/uI4lp+SScFEXdG2iGvQ==
-X-Received: by 2002:a05:6602:2ac5:: with SMTP id m5mr27597789iov.156.1641485596112;
-        Thu, 06 Jan 2022 08:13:16 -0800 (PST)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id f12sm1312859ilu.39.2022.01.06.08.13.15
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jan 2022 08:13:15 -0800 (PST)
-Received: by mail-il1-f172.google.com with SMTP id o1so2292827ilo.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 08:13:15 -0800 (PST)
-X-Received: by 2002:a05:6e02:2187:: with SMTP id j7mr27894010ila.120.1641485595294;
- Thu, 06 Jan 2022 08:13:15 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641489228; x=1673025228;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=SWAmITqjsYu6xDYGpHA7fp1gPjfRndTao20EuIkpURA=;
+  b=a41vqbPcoZRU36YpyKgVSX/FemSw1/jjeSKBVo3PdMcd7FX6Rlsu3gtl
+   76tZqpgFfAazWmuUeMKdkg2t/rTTL3zPKRcmN3zIw+h2tVD0QxdwFQWZE
+   SrP6g1CT2nVbHo5KfU1ekgwGdIlSphcCVSua0OHW29Jq+8kIeBoZUaIoi
+   U=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 06 Jan 2022 09:13:48 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 09:13:48 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 09:13:47 -0800
+Received: from [10.110.24.66] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 6 Jan 2022
+ 09:13:46 -0800
+Message-ID: <63bae3ec-2bbf-f4f7-b54a-73a921f8f438@quicinc.com>
+Date:   Thu, 6 Jan 2022 09:13:45 -0800
 MIME-Version: 1.0
-References: <20220103071118.27220-1-vkoul@kernel.org>
-In-Reply-To: <20220103071118.27220-1-vkoul@kernel.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 6 Jan 2022 08:13:03 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Ue9Z+NmqviCXEN2pHxWZaAcTbFzzn=xxfg8d8QzPwp4A@mail.gmail.com>
-Message-ID: <CAD=FV=Ue9Z+NmqviCXEN2pHxWZaAcTbFzzn=xxfg8d8QzPwp4A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] spi: qcom: geni: set the error code for gpi transfer
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: [PATCH v2] drm/msm/dp: populate connector of struct dp_panel
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
+        <robdclark@gmail.com>, <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1640805422-21904-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n50Bi2v3D1B8Ee1ckdUWLhpyNrCEVqikbuS8wMfT0+2VnA@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n50Bi2v3D1B8Ee1ckdUWLhpyNrCEVqikbuS8wMfT0+2VnA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Sun, Jan 2, 2022 at 11:11 PM Vinod Koul <vkoul@kernel.org> wrote:
+On 1/5/2022 1:34 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2021-12-29 11:17:02)
+>> There is kernel crashed due to unable to handle kernel NULL
+>> pointer dereference of dp_panel->connector while running DP link
+>> layer compliance test case 4.2.2.6 (EDID Corruption Detection).
+> Can you explain how we get into that situation? Like
 >
-> Before we invoke spi_finalize_current_transfer() in
-> spi_gsi_callback_result() we should set the spi->cur_msg->status as
-> appropriate (0 for success, error otherwise).
+> "We never assign struct dp_panel::connector, instead the connector is
+> stored in struct msm_dp::connector. When we run compliance testing test
+> case 4.2.2.6 dp_panel_handle_sink_request() won't have a valid edid set
+> in struct dp_panel::edid so we'll try to use the connectors
+> real_edid_checksum and hit a NULL pointer deref error because the
+> connector pointer is never assigned."
 >
-> The helps to return error on transfer and not wait till it timesout on
-> error
+>> This patch fixes this problem by populating connector of dp_panel.
+>>
+>> [drm:dp_panel_read_sink_caps] *ERROR* panel edid read failed
+>> Unable to handle kernel NULL pointer dereference at virtual address 00000000000006e1
+>> Mem abort info:
+>>    ESR = 0x96000006
+>>    EC = 0x25: DABT (current EL), IL = 32 bits
+>>    SET = 0, FnV = 0
+>>    EA = 0, S1PTW = 0
+>> Data abort info:
+>>    ISV = 0, ISS = 0x00000006
+>>    CM = 0, WnR = 0
+>> user pgtable: 4k pages, 39-bit VAs, pgdp=0000000115f25000
+>> [00000000000006e1] pgd=00000001174fe003, p4d=00000001174fe003, pud=00000001174fe003, pmd=0000000000000000
+>> Internal error: Oops: 96000006 [#1] PREEMPT SMP
+> This sort of stuff isn't really useful because it takes quite a few
+> lines to say "We hit a NULL pointer deref" which was already stated. I'd
+> rather have a clear description of what goes wrong and how setting the
+> pointer in msm_dp_modeset_init() fixes it.
 >
-> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
+>> {...]
+>>
+>> Changes in V2:
+>> -- populate panel connector at msm_dp_modeset_init() instead of at dp_panel_read_sink_caps()
+>>
+>> Fixes: 7948fe12d47 ("drm/msm/dp: return correct edid checksum after corrupted edid checksum read")
+>> Signee-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 25 +++++++++++++++----------
+>>   1 file changed, 15 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 3449d3f..c282bbf 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1495,36 +1495,41 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+>>          }
+>>   }
+>>
+>> -int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>> +int msm_dp_modeset_init(struct msm_dp *dp, struct drm_device *dev,
+>>                          struct drm_encoder *encoder)
+>>   {
+>>          struct msm_drm_private *priv;
+>> +       struct dp_display_private *dp_display;
+>>          int ret;
+>>
+>> -       if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
+>> +       if (WARN_ON(!encoder) || WARN_ON(!dp) || WARN_ON(!dev))
+>>                  return -EINVAL;
+>>
+>>          priv = dev->dev_private;
+>> -       dp_display->drm_dev = dev;
+>> +       dp->drm_dev = dev;
+>> +
+>> +       dp_display = container_of(dp, struct dp_display_private, dp_display);
+>>
+>> -       ret = dp_display_request_irq(dp_display);
+>> +       ret = dp_display_request_irq(dp);
+>>          if (ret) {
+>>                  DRM_ERROR("request_irq failed, ret=%d\n", ret);
+>>                  return ret;
+>>          }
+>>
+>> -       dp_display->encoder = encoder;
+>> +       dp->encoder = encoder;
+>>
+>> -       dp_display->connector = dp_drm_connector_init(dp_display);
+>> -       if (IS_ERR(dp_display->connector)) {
+>> -               ret = PTR_ERR(dp_display->connector);
+>> +       dp->connector = dp_drm_connector_init(dp);
+>> +       if (IS_ERR(dp->connector)) {
+>> +               ret = PTR_ERR(dp->connector);
+>>                  DRM_DEV_ERROR(dev->dev,
+>>                          "failed to create dp connector: %d\n", ret);
+>> -               dp_display->connector = NULL;
+>> +               dp->connector = NULL;
+>>                  return ret;
+>>          }
+>>
+>> -       priv->connectors[priv->num_connectors++] = dp_display->connector;
+>> +       dp_display->panel->connector = dp->connector;
+> This is the one line that matters I think? Can we reach the connector
+> for the dp device without going through the panel in
+> dp_panel_handle_sink_request()? That would reduce the number of struct
+> elements if possible.
+I tried, but very difficulty. It will take more text section space.
 >
-> Changes in v2:
->  - add missing spi_finalize_current_transfer() for dma error case
+>> +
+>> +       priv->connectors[priv->num_connectors++] = dp->connector;
+> Can we not rename all the local variables in this patch and do it later
+> or never? Reading this patch takes a long time because we have to make
+> sure nothing has actually changed with the rename of 'dp_display' to
+> 'dp'.
 >
->  drivers/spi/spi-geni-qcom.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 413fa1a7a936..b82f3ddff0f4 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -346,17 +346,21 @@ spi_gsi_callback_result(void *cb, const struct dmaengine_result *result)
->  {
->         struct spi_master *spi = cb;
->
-> +       spi->cur_msg->status = -EIO;
->         if (result->result != DMA_TRANS_NOERROR) {
->                 dev_err(&spi->dev, "DMA txn failed: %d\n", result->result);
-> +               spi_finalize_current_transfer(spi);
->                 return;
->         }
->
->         if (!result->residue) {
-> +               spi->cur_msg->status = 0;
->                 dev_dbg(&spi->dev, "DMA txn completed\n");
-> -               spi_finalize_current_transfer(spi);
->         } else {
->                 dev_err(&spi->dev, "DMA xfer has pending: %d\n", result->residue);
->         }
-> +
-> +       spi_finalize_current_transfer(spi);
->  }
-
-What you have here should work and seems fine, though it's a bit
-awkward. Every exit path now calls spi_finalize_current_transfer().
-IMO this would be slightly cleaner like this (also moving the error
-cases to both be first)
-
-if (result->result != DMA_TRANS_NOERROR) {
-  dev_err(...);
-} else if (result->residue)
-  dev_err(...);
-} else {
-  spi->cur_msg->status = 0;
-  dev_dbg(...);
-}
-
-spi_finalize_current_transfer(spi);
-
-I'll let Mark decide if he wants it to be respun with the above, wants
-a follow-on patch, or doesn't care either way. In any case:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>>          return 0;
+>>   }
+>>
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
