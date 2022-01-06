@@ -2,164 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DEE14866A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 16:20:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C7621486717
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 16:52:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240413AbiAFPUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 10:20:11 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:63968 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S240393AbiAFPUK (ORCPT
+        id S240707AbiAFPww (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 10:52:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240705AbiAFPww (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 10:20:10 -0500
+        Thu, 6 Jan 2022 10:52:52 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFA7DC061201
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 07:52:51 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id p19so2645956qtw.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 07:52:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641482410; x=1673018410;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=VdhC7mh1p8Y8MIPqArIrmPlsIZq0Rjq9uAm2FjmLFsw=;
-  b=GXuVoPMnTTPrrvzgbxe8Z1Rgf7HgXuN9mqz9Nr4AE5dvG4CHf3c3fiC3
-   Lkmlljv6KcIJUFzOCTFAusgQn9uyEspluMzmXrMJNiOaY084lzJw/t4XJ
-   ReVcwvrnf94Ys7bG72203ykgBq2No/l2/KllOGs0zjjrr5a3olFRYVWam
-   w=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Jan 2022 07:20:10 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 07:20:10 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 6 Jan 2022 07:20:09 -0800
-Received: from [10.50.52.105] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 6 Jan 2022
- 07:20:04 -0800
-Message-ID: <705c280b-bced-476d-8e21-1a5afbf3d2f3@quicinc.com>
-Date:   Thu, 6 Jan 2022 20:50:00 +0530
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GhPv3TCVMNdzUlnrS7GkeARVb8jWq6T2I9klaQoUwbI=;
+        b=mHj9cU1mZ6+AB2dMfeWCnzQpmvDTSdjQ5h89UiEllr8fDgUmgLQN5aAd0vSd5pEJaA
+         mxouS/6Sbd2IF2gwVQR8Mc5mTxut8muKa8K5E8Zg0bKborLAHXPib8E3Mu75W8mVuEa1
+         CnnOkkjJTOs0lLWA8n90R8AdshgTb//mTalunZPjrNeERzpCjWv0ligUJaD53pPFYmve
+         /Sm4At6DaJZrbvx3TgAR9+qYvzjxCGlw2wPEJR6V1Lv02QAFKaqdAs4GSnfXS2DZi9w9
+         WbOsdM5KctOO5LQJiNZDxjiRwKhPhCFhP8ZqIlO+eamevz1IkEuszxQEIUAXKSxWteZi
+         GGmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GhPv3TCVMNdzUlnrS7GkeARVb8jWq6T2I9klaQoUwbI=;
+        b=L+vKNuvyzAZygee92d3iCug9qhmXy1PPOC5f7n72Nl1fueAQ/3ae0DI5G2pcd7gYPI
+         PmxEav5iEpuasA7TIq7doyEavQlymhLyFF+Efw+xwAN1gZ3MZixQDGtlNxTbWq9JrbCk
+         rt/4BoTgrAScygmcLZGhvFHhkxEHLDDnwbZWTtBacyS4Laa74RCmuSHbmHHxXTW2oHWY
+         XX0iP0B/6jeLXmVyNTnx0U6O3a0Zssct0RMqbS9QJbAGbi41SV4AJ1PBv8yW90h1mcwv
+         URCuk4t/Mo1sf154ztST3rNvLvmkxsA23ircs17CYbyN6pt1l7+QKC2JeYU3TNkIwGQ1
+         oE6w==
+X-Gm-Message-State: AOAM532fCSCVAaWZODDD5Nw9sM9kqiKb98C9yfh7foBLTjZtPQHwvG7Z
+        E1WsYogyLX0GpDhbrd8OtQ5bbA==
+X-Google-Smtp-Source: ABdhPJzsQPvOoewQNO3rShMtgLaJZlLZfDc1vqyDvuNjeB4XHvY9hmxC9cyUio4pPyQleEFz0K3wiA==
+X-Received: by 2002:ac8:5993:: with SMTP id e19mr51906451qte.568.1641484370843;
+        Thu, 06 Jan 2022 07:52:50 -0800 (PST)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id y6sm1696596qtn.23.2022.01.06.07.52.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jan 2022 07:52:50 -0800 (PST)
+Subject: Re: [Patch v2 1/3] thermal: qcom: lmh: Add support for sm8150
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org,
+        rui.zhang@intel.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211215163400.33349-1-thara.gopinath@linaro.org>
+ <20211215163400.33349-2-thara.gopinath@linaro.org> <YdYTFu/QTZ5DS95M@ripper>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <efe8205e-aaea-fda6-c556-f42bfd6ec82c@linaro.org>
+Date:   Thu, 6 Jan 2022 10:52:49 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH V6 0/7] Add driver support for Data Capture and Compare
- Engine(DCC) for SM8150,SC7280,SC7180,SDM845
-Content-Language: en-CA
-To:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, <vkoul@kernel.org>
-References: <cover.1628617260.git.schowdhu@codeaurora.org>
- <396edd95-4f38-6830-99da-11e73d62a0cf@linaro.org>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <396edd95-4f38-6830-99da-11e73d62a0cf@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+In-Reply-To: <YdYTFu/QTZ5DS95M@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 12/16/2021 9:18 PM, Thara Gopinath wrote:
->
->
-> On 8/10/21 1:54 PM, Souradeep Chowdhury wrote:
->> DCC(Data Capture and Compare) is a DMA engine designed for debugging 
->> purposes.In case of a system
->> crash or manual software triggers by the user the DCC hardware stores 
->> the value at the register
->> addresses which can be used for debugging purposes.The DCC driver 
->> provides the user with sysfs
->> interface to configure the register addresses.The options that the 
->> DCC hardware provides include
->> reading from registers,writing to registers,first reading and then 
->> writing to registers and looping
->> through the values of the same register.
+
+On 1/5/22 4:52 PM, Bjorn Andersson wrote:
+> On Wed 15 Dec 08:33 PST 2021, Thara Gopinath wrote:
+> 
+>> Add compatible to support LMh for sm8150 SoC.
+>> sm8150 does not require explicit enabling for various LMh subsystems.
+>> Add a variable indicating the same as match data which is set for sdm845.
+>> Execute the piece of code enabling various LMh subsystems only if
+>> enable algorithm match data is present.
 >>
->> In certain cases a register write needs to be executed for accessing 
->> the rest of the registers,
->> also the user might want to record the changing values of a register 
->> with time for which he has the
->> option to use the loop feature.
->
-> Hello Souradeep,
->
-> First of all, I think this is very a useful feature to have. I have 
-> some generic design related queries/comments on driver and the 
-> interface exposed to the user space. Also, I do not understand the h/w 
-> well here, so feel free to correct me if I am wrong.
->
-> 1. Linked list looks like a very internal feature to the h/w. It 
-> really is not an info that user should be aware of. I tried reading 
-> the code a bit. IUC, every time a s/w trigger is issued the configs in 
-> all the enabled linked lists are executed. The final ram dump that you 
-> get from /dev/dcc_sram is a dump of contents from all the enabled 
-> list? Is this understanding correct ? And we are talking of at-most 4 
-> linked list?
-> If yes, I think it might be better to have a folder per linked list 
-> with config, config_write etc. Also if possible it will be better to 
-> dump the results to a file in the specific folder instead of reading 
-> from /dev/dcc_sram.
-> If no, there is no real need for user to know the linked list, right? 
-> Choosing of linked list can be done by kernel driver in this case with 
-> no input needed from user.
->
-> 2. Now to the sysfs interface itself, I know lot of thought has gone 
-> into sysfs vs debugfs considerations. But, have you considered using 
-> netlink interface instead of sysfs. Netlink interface is used for 
-> asynchronous communication between kernel and user space. In case of 
-> DCC, the communication appears to be asynchronous, where in user asks 
-> the kernel to capture some info and kernel can indicate back to user 
-> when the info is captured. Also the entire mess surrounding echoing 
-> addr / value / offset repeatedly into a sysfs entry can be avoided 
-> using netlink interface.
->
-Hello Thara,
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>
+>> v1->v2:
+>> 	- Added LMH_ENABLE_ALGOS of_device_id match data to indicate
+>> 	  whether LMh subsytems need explicit enabling or not.
+>>
+>>   drivers/thermal/qcom/lmh.c | 62 +++++++++++++++++++++-----------------
+>>   1 file changed, 35 insertions(+), 27 deletions(-)
+>>
+>> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+>> index eafa7526eb8b..80d26d043498 100644
+>> --- a/drivers/thermal/qcom/lmh.c
+>> +++ b/drivers/thermal/qcom/lmh.c
+>> @@ -28,6 +28,8 @@
+>>   
+>>   #define LMH_REG_DCVS_INTR_CLR		0x8
+>>   
+>> +#define LMH_ENABLE_ALGOS		((void *)1)
+>> +
+>>   struct lmh_hw_data {
+>>   	void __iomem *base;
+>>   	struct irq_domain *domain;
+>> @@ -87,6 +89,7 @@ static int lmh_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device *dev = &pdev->dev;
+>>   	struct device_node *np = dev->of_node;
+>> +	const struct of_device_id *of_id;
+>>   	struct device_node *cpu_node;
+>>   	struct lmh_hw_data *lmh_data;
+>>   	int temp_low, temp_high, temp_arm, cpu_id, ret;
+>> @@ -141,32 +144,36 @@ static int lmh_probe(struct platform_device *pdev)
+>>   	if (!qcom_scm_lmh_dcvsh_available())
+>>   		return -EINVAL;
+>>   
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> -	if (ret)
+>> -		dev_err(dev, "Error %d enabling current subfunction\n", ret);
+>> -
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> -	if (ret)
+>> -		dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+>> -
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> -	if (ret)
+>> -		dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+>> -
+>> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+>> -				 LMH_NODE_DCVS, node_id, 0);
+>> -	if (ret) {
+>> -		dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+>> -		return ret;
+>> -	}
+>> -
+>> -	ret = qcom_scm_lmh_profile_change(0x1);
+>> -	if (ret) {
+>> -		dev_err(dev, "Error %d changing profile\n", ret);
+>> -		return ret;
+>> +	of_id = of_match_device(dev->driver->of_match_table, dev);
+> 
+> I think it would be preferable to use of_device_get_match_data() and
+> assign this to an unsigned long.
 
-Thanks for your review comments. Following are some points from my end
+Sure.. I will fix this and the comment below and send out v3.
 
-
-1) Each linked list represent a particular block of memory in DCC_SRAM 
-which is preserved for that particular list. That is why offset 
-calculation is done on the driver based on the linked list chosen by the 
-user.
-
-     This choice needs to be made by the user since the number for the 
-linked list chosen is specific to the registers used to debug a 
-particular component.  Also we are giving the user flexibility to 
-configure multiple
-
-     linked lists at one go so that even if we don't have a separate 
-folder for it , the dumps are collected as a separate list of registers. 
-Also there are certain curr_list values which may be supported by the dcc
-
-     hardware but may not be accessible to the user and so the choice 
-cannot be made arbitrarily from the driver.
-
-
-2) From opensource, I can see that Netlink has been used in most of the 
-cases where we need to notify stats to the user by taking the advantage 
-of asynchronous communication. In this case, that requirement is not
-
-     there since it is mostly one way communication from user to kernel. 
-Also since this is used for debugging purposes perhaps sysfs adds more 
-reliability than Netlink. In case of Netlink we have the additional
-
-      overhead of dealing with socket calls. Let me know otherwise.
-
-
-Thanks,
-
-Souradeep
-
-
-
+-- 
+Warm Regards
+Thara (She/Her/Hers)
+> 
+>> +
+>> +	if (of_id && of_id->data == LMH_ENABLE_ALGOS) {
+> 
+> Then you don't need to check of_id for NULL here and this would lend
+> itself nicely to be a bitmask of enabled algorithms if some platform
+> would need to enable a subset of these.
+> 
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+>> +					 LMH_NODE_DCVS, node_id, 0);
+>> +		if (ret)
+>> +			dev_err(dev, "Error %d enabling current subfunction\n", ret);
+>> +
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+>> +					 LMH_NODE_DCVS, node_id, 0);
+>> +		if (ret)
+>> +			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+>> +
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+>> +					 LMH_NODE_DCVS, node_id, 0);
+>> +		if (ret)
+>> +			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+>> +
+>> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+>> +					 LMH_NODE_DCVS, node_id, 0);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+>> +			return ret;
+>> +		}
+>> +
+>> +		ret = qcom_scm_lmh_profile_change(0x1);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error %d changing profile\n", ret);
+>> +			return ret;
+>> +		}
+>>   	}
+>>   
+>>   	/* Set default thermal trips */
+>> @@ -213,7 +220,8 @@ static int lmh_probe(struct platform_device *pdev)
+>>   }
+>>   
+>>   static const struct of_device_id lmh_table[] = {
+>> -	{ .compatible = "qcom,sdm845-lmh", },
+>> +	{ .compatible = "qcom,sdm845-lmh", .data = LMH_ENABLE_ALGOS},
+> 
+> Make LMH_ENABLE_ALGOS just an integer define and add the explicit (void
+> *) cast here.
+> 
+> Regards,
+> Bjorn
+> 
+>> +	{ .compatible = "qcom,sm8150-lmh", },
+>>   	{}
+>>   };
+>>   MODULE_DEVICE_TABLE(of, lmh_table);
+>> -- 
+>> 2.25.1
+>>
 
 
