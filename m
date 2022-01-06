@@ -2,97 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE5534868A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 18:32:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D366B48687D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 18:31:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241958AbiAFRcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 12:32:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41798 "EHLO
+        id S241837AbiAFRbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 12:31:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242022AbiAFRb7 (ORCPT
+        with ESMTP id S241828AbiAFRbk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 12:31:59 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74E7CC034004
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 09:31:58 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id k18so6171561wrg.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 09:31:58 -0800 (PST)
+        Thu, 6 Jan 2022 12:31:40 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC2C6C0611FF
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 09:31:40 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id q14so2957515qtx.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 09:31:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2VD8BhFQsi1gAqizHlVU3fMYSmPUmL03WAYruvW0snE=;
-        b=m0HegGbWAjKeIsRoARzohUa1OFMBWmXZPnpb5wapIM9mm6FBTq1HEOGWlGenaN3qdn
-         TvWeF9SIpEDEC5m9jk5Kp9vi1+dvoGcUPJgdxkFcFmhdle1fNu+aEc5p9h1nShqrcPr9
-         cuHbe9jDYKohD+V842KPRBr2Nb5OtDaemIUGCatFdFOslDRAjkL4HblA+hNxDcKNuAHO
-         LXfQ1zU2ZPkOf0SsV4iTWTKHlU+3kgzp5gxCXxiZcnAzaWwY1vdjk+tTYHN2MZ9tMz0b
-         O28XacDMJHSYjxjiu7EjHdJ6QMQTFZ93yg2mNQzGXvgLBqR1OwAWiBV8/Sf3GpKubiF8
-         /fXA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uSBn+Ips2mtFKmkest40VuG2t1Y4Y842E21N7HcVLJw=;
+        b=KRlCFD5KV+WoJ+jF34AGPj77mfOTitmcVtdNTWCJ0WyhMf7uB/TfCP6b+01TV1eF7G
+         Z9Rz1Tk2QJEAU4OGX7qnERqkDPihLIskT9gJrWpCajmgLeGm3ovHofUdfGGD/U57Bald
+         E8AqlWMbVzVYjsBqw8yR35fEk1hzUW+ZZ6JAKq6nE+FSVpMia+YMmp1yU2lWnbN6134g
+         N+dlVB0pOl81XfwbhH61YgaCuJRyYJvbhku03FdwbytcfF90/Mo96jIzw/3bFkbB3Krz
+         ucy1cOlyrZhSd/pJeDZUkEbOFqkkiFxSJHZpDOBU3ULTe6lXvRzh8QoMPWGVNPPL7hOI
+         CqAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2VD8BhFQsi1gAqizHlVU3fMYSmPUmL03WAYruvW0snE=;
-        b=l+zC5UywTwNRcVq00OifLggaBXQJmp9VaajyRd7j74jLyXi6B/ZOjASkPwo/mA4VQS
-         Q1OSwgbi5tsq6NCYBYSIJclUJuaEegWMSXypPZCP8hevAjtqb06FslTnULb5M1KrqGEr
-         pWs95SBOGM/AefizJIggHH82YOP6bFSbWyEHSaLVE5JwK09QLxGu6VRNgj8O83xLMsCV
-         tEHVhoUj/+EK/cTAedobUl5f7lAJqrrAwlNcx5/NIP5hqg8FGkLAMPxZkKR6lkkEdWhE
-         N9LSe+oPMOa453QOHWw+0U526P6V3fOdZ0MWx323DRorpap4yhUizEs5apPPmGGZrT25
-         0nsQ==
-X-Gm-Message-State: AOAM531hafcZT49xOhs+EqznESL+IQSaWEVY2ueGjBm1OoRriWWaB3QB
-        T6kJnCMkWeW9bbq+nyRmJa5iqWsV3tIqXQ==
-X-Google-Smtp-Source: ABdhPJy11EzN1DwExZ7UdzsyYAs7SBnwijjhuNVuuoC9cCSTKSH3NTcmkInYclaSjfV1HMK9sX5vSA==
-X-Received: by 2002:a5d:6f02:: with SMTP id ay2mr14004127wrb.269.1641490317063;
-        Thu, 06 Jan 2022 09:31:57 -0800 (PST)
-Received: from localhost.localdomain ([81.178.195.252])
-        by smtp.gmail.com with ESMTPSA id b16sm2575594wmq.41.2022.01.06.09.31.56
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uSBn+Ips2mtFKmkest40VuG2t1Y4Y842E21N7HcVLJw=;
+        b=Y9agnzoRuMq1V+czSmuh6KfBqNFMTruiXRA7jVr8eP0w4UEJ7Gq1ywciqWOcFfdgj5
+         AytmK/uqe5hi6Zb0C91K3lGba+uw9zqBcO71KR2PgeUEQOG+C5/LBblrQHogh7B6YMYm
+         ODkimiB+qDkf1IsFNKAApaCnyl0O9QhiHQtp5iBDkw5vNtRNnFQySPk+bqI7vN5vw+fd
+         UGtmDW7cIH+83wTJaQRUA1sue6HEyxzafo0Dm+CsMMAupNmlVICd6he/j1YpAx+B2STd
+         9H2zQUq4zJD9Ly306g/QupFvk/NhTW9JLzEVip2rAbYFfiUiuDqfuzf9UyGSJLgu/GrM
+         hKCw==
+X-Gm-Message-State: AOAM533UFBrCl+Jn+s5m/F7WoEAeSagy+da5rsQ9ksb2jMFzWLm9aBPk
+        h48cz2pbo4TNgAizo0Bl1E+05g==
+X-Google-Smtp-Source: ABdhPJxE5KkAAzma7mqLIUe2FZ4XWQGFK4NRb0bHNrVt5TNjZCSoBUnAU8GezkGBh69GcrQDQoAVgw==
+X-Received: by 2002:ac8:7d47:: with SMTP id h7mr53966124qtb.486.1641490299706;
+        Thu, 06 Jan 2022 09:31:39 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id i21sm2126536qti.31.2022.01.06.09.31.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 09:31:56 -0800 (PST)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org
-Subject: [PATCH v3 7/7] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable RRADC
-Date:   Thu,  6 Jan 2022 17:31:31 +0000
-Message-Id: <20220106173131.3279580-8-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220106173131.3279580-1-caleb.connolly@linaro.org>
-References: <20220106173131.3279580-1-caleb.connolly@linaro.org>
+        Thu, 06 Jan 2022 09:31:39 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        daniel.lezcano@linaro.org, rafael@kernel.org, rui.zhang@intel.com,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [Patch v3 0/3] Extend LMh driver to suppot Qualcomm sm8150 SoC.
+Date:   Thu,  6 Jan 2022 12:31:35 -0500
+Message-Id: <20220106173138.411097-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the PMI8998 RRADC.
+Add support for sm8150 in the Qualcomm Limits Management Hardware(LMh)
+driver. Also add required device tree entries and dt-binding.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+Thara Gopinath (3):
+  thermal: qcom: lmh: Add support for sm8150
+  arm64: dts: qcom: sm8150: Add support for LMh node
+  dt-bindings: thermal: Add sm8150 compatible string for LMh
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 580d4cc1296f..481132b0cee4 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -312,6 +312,10 @@ resin {
- 	};
- };
- 
-+&pmi8998_rradc {
-+	status = "okay";
-+};
-+
- /* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
- &q6afedai {
- 	qi2s@22 {
+ .../devicetree/bindings/thermal/qcom-lmh.yaml |  1 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 24 +++++++
+ drivers/thermal/qcom/lmh.c                    | 62 +++++++++++--------
+ 3 files changed, 60 insertions(+), 27 deletions(-)
+
 -- 
-2.34.1
+2.25.1
 
