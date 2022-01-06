@@ -2,112 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C81B48683B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 18:15:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 164E2486857
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 18:22:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241598AbiAFRPp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 12:15:45 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:55492 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241570AbiAFRPn (ORCPT
+        id S241666AbiAFRWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 12:22:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39464 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241650AbiAFRWT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 12:15:43 -0500
+        Thu, 6 Jan 2022 12:22:19 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF2FC061201
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 09:22:19 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id d187-20020a1c1dc4000000b003474b4b7ebcso900912wmd.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 09:22:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641489343; x=1673025343;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=cykvwp8vzwvD4aN72B0mMnrqtEJ+xaw+0nAWMKLhHEc=;
-  b=cy8jQU4cP+W/6vrBGG9gNdVOqQKwKNYw7ffBIxtRXNY6I40O3QEL4C5g
-   Q57jyi4i7CsEun3Myg8gXEJhk7ERoyHj2HgDGRM4/wUHw/VY3S8d4UC/6
-   4i6hPNgfxtUwaIN+66xN7XkvzN1KilBwTwJlZs2tW5ACKRpcNGagmBK2D
-   g=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 06 Jan 2022 09:15:43 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 09:15:43 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 6 Jan 2022 09:15:42 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 6 Jan 2022 09:15:41 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] drm/msm/dp:  populate connector of struct  dp_panel
-Date:   Thu, 6 Jan 2022 09:15:35 -0800
-Message-ID: <1641489335-20975-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=OESxuxOPQ9N0Y5m/wvnZiwker1H5kNKlxxV6vdBK7b8=;
+        b=EAjQaRanzOIH/yxM8yb5H8X1SX8vm+zuKMYxwwAgwZx1hyFk+3f0PWM7KvaaeW21AA
+         gYaYH2IXqh2BwtKSeVldKPY5EwA4Gjnk2zylL6hj0pwfpg1ajoFx3m4jiA9uvRldFbf6
+         avqK3xdqvJNxTyLnn0cIleSW82WNtYOHz0bI0tb1DH0UU+aswltDkw5vUvbVzpgZjnzI
+         TXVl/+iP19p4Wo+Nu9MaWxiYf81SUMtg/IMPTNRYQliTBUIiGVr9oVsk/eop0/BLjAb+
+         36zG+7Q14T83jh06R31C6CjTOb2h1CyNdu435q1YgkBKVICE1sBMOkk8G5Sbtl1C+pFW
+         66/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=OESxuxOPQ9N0Y5m/wvnZiwker1H5kNKlxxV6vdBK7b8=;
+        b=8HsDcQbXcytMJ/MoroGsC+5fmKX5o1LYZPEmpgMmgpvZ3J+eOrNYFSruKFP5w50NOG
+         X78tsiQT7PShzpy9e4hfvjk8J4AgEvSbyPf37CVYdQo9VKOBK1VXI7xqetDha8+e1e9z
+         MqbtIsUPWRSFVLHdAYBI28n2hkWGBVkNh/wJU8swdNgGRzYFScj0zfLZMKxnT7C6aewf
+         URKkdSVvGt8GrBVdiLyzoRPq+9coHKOrcniQvzhKMHtxbrVUKWRsSUeVRGRKO8u4Dlgx
+         LK7pGwn4v02BjXVcPrKSiZ/e7FCOT5FlSYjTABvJ6DOKozw5P6JIFEksYVu1fsRhGfbn
+         5dtw==
+X-Gm-Message-State: AOAM531GbFcxlwAdj9I4jqYvIWq2vrBEOnHp7f6vqGSJdnWdpf8irqkC
+        Q7uOGryTh9DGjOJ8l1YiNeB+2Q==
+X-Google-Smtp-Source: ABdhPJwgw6xq9LNRrVTKmxbfYVyJW7X5FNtSTuOXv28V60cAAk4ifsk4fqTC/QbiKG8pdvGNzTzUKw==
+X-Received: by 2002:a1c:f20e:: with SMTP id s14mr7693939wmc.186.1641489738072;
+        Thu, 06 Jan 2022 09:22:18 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id m10sm2261730wms.25.2022.01.06.09.22.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jan 2022 09:22:17 -0800 (PST)
+Message-ID: <edcd752d-37a5-2004-3508-01efcfa571ba@linaro.org>
+Date:   Thu, 6 Jan 2022 17:24:27 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH v2 1/2] mtd: rawnand: qcom: Fix clock sequencing in
+ qcom_nandc_probe()
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
+        miquel.raynal@bootlin.com, architt@codeaurora.org,
+        bbrezillon@kernel.org, absahu@codeaurora.org, baruch@tkos.co.il,
+        "stable@vger.kernel.org" <stable@vger.kernel.org>
+References: <20220103030316.58301-1-bryan.odonoghue@linaro.org>
+ <20220103030316.58301-2-bryan.odonoghue@linaro.org>
+ <20220103055152.GA3581@thinkpad>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20220103055152.GA3581@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We never assign struct dp_panel::connector, instead the connector is
-stored in struct msm_dp::connector. When we run compliance testing test
-case 4.2.2.6 dp_panel_handle_sink_request() won't have a valid edid set
-in struct dp_panel::edid so we'll try to use the connectors
-real_edid_checksum and hit a NULL pointer dereference error because the
-connector pointer is never assigned.
+On 03/01/2022 05:51, Manivannan Sadhasivam wrote:
+> On Mon, Jan 03, 2022 at 03:03:15AM +0000, Bryan O'Donoghue wrote:
+>> Interacting with a NAND chip on an IPQ6018 I found that the qcomsmem NAND
+>> partition parser was returning -EPROBE_DEFER waiting for the main smem
+>> driver to load.
+>>
+>> This caused the board to reset. Playing about with the probe() function
+>> shows that the problem lies in the core clock being switched off before the
+>> nandc_unalloc() routine has completed.
+>>
+>> If we look at how qcom_nandc_remove() tears down allocated resources we see
+>> the expected order is
+>>
+>> qcom_nandc_unalloc(nandc);
+>>
+>> clk_disable_unprepare(nandc->aon_clk);
+>> clk_disable_unprepare(nandc->core_clk);
+>>
+>> dma_unmap_resource(&pdev->dev, nandc->base_dma, resource_size(res),
+>> 		   DMA_BIDIRECTIONAL, 0);
+>>
+>> Tweaking probe() to both bring up and tear-down in that order removes the
+>> reset if we end up deferring elsewhere.
+>>
+>> Fixes: c76b78d8ec05 ("mtd: nand: Qualcomm NAND controller driver")
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> 
+> Can you please CC stable list for backporting?
+> 
+> Thanks,
+> Mani
+> 
 
-Changes in V2:
--- populate panel connector at msm_dp_modeset_init() instead of at dp_panel_read_sink_caps()
+NP.
 
-Changes in V3:
--- remove unhelpful kernel crash trace commit text
--- remove renaming dp_display parameter to dp
++ cc stable
 
-Fixes: 7948fe12d47 ("drm/msm/dp: return correct edid checksum after corrupted edid checksum read")
-Signee-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 3449d3f..40a059d 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1499,6 +1499,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
- 	struct msm_drm_private *priv;
-+	struct dp_display_private *dp_priv;
- 	int ret;
- 
- 	if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
-@@ -1507,6 +1508,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 	priv = dev->dev_private;
- 	dp_display->drm_dev = dev;
- 
-+	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
-+
- 	ret = dp_display_request_irq(dp_display);
- 	if (ret) {
- 		DRM_ERROR("request_irq failed, ret=%d\n", ret);
-@@ -1524,6 +1527,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 		return ret;
- 	}
- 
-+	dp_priv->panel->connector = dp_display->connector;
-+
- 	priv->connectors[priv->num_connectors++] = dp_display->connector;
- 	return 0;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+FWIW I believe Greg's scripts will pick up on Fixes: tags automatically
