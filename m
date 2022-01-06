@@ -2,86 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 388E8485CC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:03:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6386485CCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 01:03:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245715AbiAFADI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 19:03:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60716 "EHLO
+        id S245720AbiAFADk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 19:03:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245713AbiAFADG (ORCPT
+        with ESMTP id S245713AbiAFADh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 19:03:06 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501E7C061245
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 16:03:05 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id 69so1083108qkd.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 16:03:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ssONjB52T9db6+AwacpF9Z0HfuTWVxGvlKDXaL5sZD4=;
-        b=WZSBpVwh3QTZfHBZLV54czxSDHcNrFDD00XjYyiQ2Ka0nqTU3wAFileKOC0v2xWY3F
-         aYi4Ljg9ZJ5sZ0uCtB2FGIsbQ93KsMfvFApEF9mplhGmhQkMBEvI0OYcS4Lx1xCHCEJD
-         qMJKxW7PKiWXujlSeqZBy4CT6x5stkKE2gEwjEaPLyAuvS5myEtG6eGJccGTEanGwDCU
-         CF4FXMTGJutk/aEv8WS90+JA9xE2WhN7tZ0Mr7SjgK2zgj4Jgupn3jzjLHGcRgtFy6SK
-         0DQnyL5RWLYfDn+zf16qdI7qauoNx1hue19JXGopxYDaQorZ4awyZT4sfyll5CWgKZ+5
-         jXwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ssONjB52T9db6+AwacpF9Z0HfuTWVxGvlKDXaL5sZD4=;
-        b=5KyN7tyCBp9vqC2TiCGGp5EhMr51vGhJEJepXUlcegvr9BAO1IpXcrPrNeCs4P+UUC
-         SqyIOBdreuJvJUg31XliK1dPSuYb5rrN9Spij5xAILbHqa4wDvvLZGmeuiiBj9mnJVBr
-         pZR2q1RopJEqZdzMTN/pqEdaBfAQnNTNZTHWzApYkl+aEkv150YGJm9SCMUSKbbli59M
-         IxGNtHcLMrRmeY+mbkS8wt58FC0CEfkZMr5s43xKAdKBLYeIB/FAwtjlBGqaSj2YQEax
-         Nhgqn9aDALWGcxvBoOR6v1gr6E0fWAc71dC+TUewsLT98z6+m/wBd71mBZTGTyy6Dg1o
-         3flw==
-X-Gm-Message-State: AOAM532MCjUHvhMLcX3QqZrwB3Ga5vZKtdvuMZ5nBDe3EbjTOlbgUc6G
-        /g71Mys6G4AHtV4kSu/Ju+ae9RLC6nJonCsT0lXw1w==
-X-Google-Smtp-Source: ABdhPJy/OoApJncON5r6kNBonHzIlP9P6S23pAbv4nLVXCuC80zPXDfcJ33V7h0DY405MSua4DBRdlVX+QeRcw+KvA0=
-X-Received: by 2002:a37:b8b:: with SMTP id 133mr38079500qkl.59.1641427384486;
- Wed, 05 Jan 2022 16:03:04 -0800 (PST)
+        Wed, 5 Jan 2022 19:03:37 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E46C5C061245;
+        Wed,  5 Jan 2022 16:03:36 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 81EC2619B2;
+        Thu,  6 Jan 2022 00:03:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8364C36AEB;
+        Thu,  6 Jan 2022 00:03:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641427416;
+        bh=To/H3NokkHFtvWoYEsZUlwbam8b8aQ4ZguL5QsrFWD8=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Su/KlbJ7ag469KjwxTh0oFlyISEe6/xOxBYgXvM7pvwzXBGS8fLV2dZ8QXSOjxjoZ
+         AmgYbUKj4VtL0WQVv4mIW/i53B21G1R1oPwcbWMp4QeOfdgV9pqS5Tj0NvX5hV4mdw
+         BqQ9CpB57fT2/zDfcqVIRtqYdYUusc9moTqM7CturLpCs67D5a8zMzddor9v1qONtH
+         RdlMSNngV9Nu1h2PQDebZVOf93Y/Ptp+yd2yKTjOgxaO+rbTBhbXSyTX7Kz2ZHE9al
+         EbE6UYIen8sabd6r40k/BxnlxfWoVa6xHAyuDnhRN4iCkQHL9KxfiGYLdNA1Zgnijb
+         Wjhs3IZy9bA7A==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20220105232700.444170-1-dmitry.baryshkov@linaro.org>
- <20220105232700.444170-3-dmitry.baryshkov@linaro.org> <CAE-0n52fsc9cFfUMOg8EufwwkjJp1sQDO07RVWBvK78+74ubLA@mail.gmail.com>
-In-Reply-To: <CAE-0n52fsc9cFfUMOg8EufwwkjJp1sQDO07RVWBvK78+74ubLA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 6 Jan 2022 03:02:53 +0300
-Message-ID: <CAA8EJppodnj9sW1oyXu8POd2Evkqz0vuNLmz5v8RYw+Ww-rpCA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] drm/msm: move msm_readl/_writel to msm_drv.h
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <202112210805.wI87zJw0-lkp@intel.com>
+References: <1640018638-19436-6-git-send-email-tdas@codeaurora.org> <202112210805.wI87zJw0-lkp@intel.com>
+Subject: Re: [PATCH v2 5/5] clk: qcom: lpass: Add support for LPASS clock controller for SC7280
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     kbuild-all@lists.01.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org
+To:     Michael Turquette =?utf-8?q?=C2=A0?= <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        kernel test robot <lkp@intel.com>
+Date:   Wed, 05 Jan 2022 16:03:34 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20220106000335.D8364C36AEB@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 6 Jan 2022 at 02:43, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-01-05 15:27:00)
-> > With the reglog removal, msm_readl/_writel became single line wrappers
-> > around readl/writel. Move those two wrappers and msm_rmw to msm_drv.h to
-> > remove need for extra function calls when doing register writes.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
->
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->
-> Any chance this can go further and replace msm_readl/msm_writel with
-> readl/writel directly?
+Quoting kernel test robot (2021-12-20 17:02:06)
+> Hi Taniya,
+>=20
+> Thank you for the patch! Perhaps something to improve:
+>=20
+> [auto build test WARNING on clk/clk-next]
+> [also build test WARNING on robh/for-next linus/master v5.16-rc6 next-202=
+11220]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+>=20
+> url:    https://github.com/0day-ci/linux/commits/Taniya-Das/Add-support-f=
+or-LPASS-Core-and-Audio-Clock-for-SC7280/20211221-004818
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk=
+-next
+> config: parisc-allyesconfig (https://download.01.org/0day-ci/archive/2021=
+1221/202112210805.wI87zJw0-lkp@intel.com/config)
+> compiler: hppa-linux-gcc (GCC) 11.2.0
+> reproduce (this is a W=3D1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbi=
+n/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # https://github.com/0day-ci/linux/commit/fec640fab5ec498e79475ec=
+d4b15bc95035a76b1
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Taniya-Das/Add-support-for-LPASS=
+-Core-and-Audio-Clock-for-SC7280/20211221-004818
+>         git checkout fec640fab5ec498e79475ecd4b15bc95035a76b1
+>         # save the config file to linux build tree
+>         mkdir build_dir
+>         COMPILER_INSTALL_PATH=3D$HOME/0day COMPILER=3Dgcc-11.2.0 make.cro=
+ss O=3Dbuild_dir ARCH=3Dparisc SHELL=3D/bin/bash drivers/clk/qcom/
+>=20
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+>=20
+> All warnings (new ones prefixed by >>):
+>=20
+> >> drivers/clk/qcom/lpassaudiocc-sc7280.c:39:9: warning: this decimal con=
+stant is unsigned only in ISO C90
+>       39 |         { 595200000, 3600000000, 0 },
 
-This can go on a step-by-step basis. But practically yes. With this
-change in place we should be able to drop most of the io wrappers.
+This should be easy to fix.
 
--- 
-With best wishes
-Dmitry
+>          |         ^
+>    In file included from include/uapi/linux/posix_types.h:5,
+>                     from include/uapi/linux/types.h:14,
+>                     from include/linux/types.h:6,
+>                     from include/linux/of.h:14,
+>                     from include/linux/clk-provider.h:9,
+>                     from drivers/clk/qcom/lpassaudiocc-sc7280.c:6:
+>    drivers/clk/qcom/lpassaudiocc-sc7280.c: In function 'lpass_audio_cc_sc=
+7280_probe':
+>    include/linux/stddef.h:8:14: error: called object is not a function or=
+ function pointer
+>        8 | #define NULL ((void *)0)
+>          |              ^
+>    include/linux/pm_clock.h:82:25: note: in expansion of macro 'NULL'
+>       82 | #define pm_clk_suspend  NULL
+
+This one looks like the driver needs some #ifdef CONFIG_PM somewhere.
+
+>          |                         ^~~~
+>    drivers/clk/qcom/lpassaudiocc-sc7280.c:740:9: note: in expansion of ma=
+cro 'pm_clk_suspend'
+>      740 |         pm_clk_suspend(&pdev->dev);
+>          |         ^~~~~~~~~~~~~~
+>    drivers/clk/qcom/lpassaudiocc-sc7280.c: In function 'lpass_aon_cc_sc72=
+80_probe':
+>    include/linux/stddef.h:8:14: error: called object is not a function or=
+ function pointer
+>        8 | #define NULL ((void *)0)
+>          |              ^
+>    include/linux/pm_clock.h:82:25: note: in expansion of macro 'NULL'
+>       82 | #define pm_clk_suspend  NULL
+>          |                         ^~~~
+>    drivers/clk/qcom/lpassaudiocc-sc7280.c:798:9: note: in expansion of ma=
+cro 'pm_clk_suspend'
+>      798 |         pm_clk_suspend(&pdev->dev);
+>          |         ^~~~~~~~~~~~~~
+>=20
+>=20
+> vim +39 drivers/clk/qcom/lpassaudiocc-sc7280.c
+>=20
+>     37 =20
+>     38  static const struct pll_vco zonda_vco[] =3D {
+>   > 39          { 595200000, 3600000000, 0 },
+>     40  };
+>     41 =20
+>=20
+> ---
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
