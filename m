@@ -2,160 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 55E53486DB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 00:25:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF43E486DC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 00:31:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245478AbiAFXZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 18:25:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38468 "EHLO
+        id S245537AbiAFXbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 18:31:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245457AbiAFXZB (ORCPT
+        with ESMTP id S245491AbiAFXbm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 18:25:01 -0500
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E559C061201
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 15:25:01 -0800 (PST)
-Received: by mail-oo1-xc2d.google.com with SMTP id b1-20020a4a8101000000b002c659ab1342so1055046oog.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 15:25:01 -0800 (PST)
+        Thu, 6 Jan 2022 18:31:42 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B06DC061201
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 15:31:42 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id i5-20020a05683033e500b0057a369ac614so4793361otu.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 15:31:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YT91JSmjzJ2hfMRgmVGOHVorjfPKR1pnZsxBO5R/GuI=;
-        b=D/2AfUta7+flczHy8ibrXSRE5JZwr1mvaDAm0fn6GyepCsgG/s0a25xiiu8Bs1JPsW
-         EV4tRZIEE8yPe/4ReG4UssI53IzIFhO4hBIpP3vqlVkRFrGA1q9NMhl3GedN8/IdYJiH
-         O01JgwzEhicYXwzzPCsaY8WyvhE0Gta03dtVTlZpyoIe66Cwwbku0vvfxlf43li7OY4G
-         PRhovW1OJLNVoNy6ngs6xb5Yf6BjeeF2nYrbpbKW8OUsv0pjzqItxGItlHP1vj//7SLN
-         l4YtUMm4YTsggUax4nX8OZaWRA3zZN8HSEbQxfB7AmMAEde3HTegsxkdpCokgVtbX35L
-         OceQ==
+        bh=U/iQuGmfWVCkASUQJWaEZjxwQAvZNH3XGdLjyGaFqjM=;
+        b=QYekmvEyoXHRscB62NK9bJUtGw8ZD99/DIFRGyeHrPx3wzvFj/kwtu+NC4BYqZl8I/
+         8BgPS2GskUr/7xzGX//DJdT4KPVPHNdSr8VotN9gPvsqZgPV9AjoahEjTv60wfNrSL44
+         68XfzjkVYMo1XYk1fdTw/jHVwlPDt/RrYeQhw7uZ+xuP1ZR84chvBSzZ2kUeeXPGVlGI
+         fCdZcsaVHOSajq8XA3RX49EbeS7bHBJRXOLhtCPcKWnB9I8Ptzph1P0sAKhDVs7hFZoP
+         NTm0fwdXH+6ppEyfgZc6EaEZHPg/2WcGKiokFtDLBo+NgCQUDLLDBFabFTd+4L/0eYby
+         kIMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YT91JSmjzJ2hfMRgmVGOHVorjfPKR1pnZsxBO5R/GuI=;
-        b=kNZErI6XstvFbqcwCESVdaqD3PSVn6ug+CHVQFep/MKmAfP3V+We3GQqrUQOJseJU3
-         DG37Aha9uoyNynW0fMINLdcJlofbLAGd0Dqj0P+VH6uEmcMgJ6QeQeeIxC8sCYWLpDAJ
-         0ZcUSA12imVzgKKvI48cFN4du+NlLc3u67d11poz5fwNxQDIDw6yfO6VPaG4f6pJqZYy
-         Ag65xatJw0Qc4OJa4ja66OwV6LgNTxZVGKg4SNzSevgAMsRtJSvCkZiL1xLxaO2qKCUA
-         0+G7xkvw8kAy89n+/rSvBoetneNlhsjp0NSV2CZQgenycIPs21bDFhHFbv3FFJ9w4TvH
-         tvjQ==
-X-Gm-Message-State: AOAM532vgswmhhmDCDe63/w52NmnJAZNHatPFEvPhXs1++mE33FF+Iu9
-        egl3PRfpI8BK3gDAVH+z8K67Ng==
-X-Google-Smtp-Source: ABdhPJx4FLN2qFyGyHmApIrjJ+Hi7f0aIkSdtjulk3KuErND+7d/W8dEBalySybtcEntfx775c97rw==
-X-Received: by 2002:a4a:8746:: with SMTP id a6mr37663438ooi.93.1641511500390;
-        Thu, 06 Jan 2022 15:25:00 -0800 (PST)
+        bh=U/iQuGmfWVCkASUQJWaEZjxwQAvZNH3XGdLjyGaFqjM=;
+        b=k/HyK76nOKcbqF585XnrcK7T6KUTI0cmzYQDbPdXwgJqPB2uqQoaVim4brSNuCSvKS
+         TTKXS1q4+/QJjLhta71aA/xiadokhGpKNw6t7xSS2IEJRKSn8ECsIf0CUWDrFJOX+B2a
+         atgbJl8vTdMTRTzQ7JBKgL0pthchfsZxECIhOa8V//e+x1KtyxIR2VjVkNZfvfBvuVgG
+         17GCWypxUmqwsP7Ix3vtAjNHuiRd9nWWMrSrqF2o5pXCE2DhNGkQQ5upMvlzf5QHIQVi
+         odHW1ztV2SI8qRCz40j8f5iYSf03g6Nl3QxyM9WC5K8kzuiKfA3+6jKaAqVK5rDVQWhF
+         JOLw==
+X-Gm-Message-State: AOAM533wJdDeC8FeNJe0+RjFGgLg6emvT+eBh3juNY83+zkpv8j8ahcC
+        epBEapzEgIVM4K7izGqheRxIEQ==
+X-Google-Smtp-Source: ABdhPJwwvy1O+83ffycRY9f/jcSNfUXGTP0v3GbYn5nK1x1SBIZ23uQYgrNJb6+fJc8BSLGhw3LwBA==
+X-Received: by 2002:a9d:700b:: with SMTP id k11mr42420380otj.141.1641511901355;
+        Thu, 06 Jan 2022 15:31:41 -0800 (PST)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v5sm636158oic.11.2022.01.06.15.24.59
+        by smtp.gmail.com with ESMTPSA id 2sm613946otm.41.2022.01.06.15.31.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 15:25:00 -0800 (PST)
-Date:   Thu, 6 Jan 2022 15:25:49 -0800
+        Thu, 06 Jan 2022 15:31:41 -0800 (PST)
+Date:   Thu, 6 Jan 2022 15:32:28 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] drm/msm/gpu: Wait for idle before suspending
-Message-ID: <Ydd6fSI/fYDGveja@ripper>
-References: <20220106181449.696988-1-robdclark@gmail.com>
- <20220106181449.696988-2-robdclark@gmail.com>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, daniel.lezcano@linaro.org, rafael@kernel.org,
+        rui.zhang@intel.com, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [Patch v3 1/3] thermal: qcom: lmh: Add support for sm8150
+Message-ID: <Ydd8DAAEClRcklTy@ripper>
+References: <20220106173138.411097-1-thara.gopinath@linaro.org>
+ <20220106173138.411097-2-thara.gopinath@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220106181449.696988-2-robdclark@gmail.com>
+In-Reply-To: <20220106173138.411097-2-thara.gopinath@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 06 Jan 10:14 PST 2022, Rob Clark wrote:
+On Thu 06 Jan 09:31 PST 2022, Thara Gopinath wrote:
 
-> From: Rob Clark <robdclark@chromium.org>
+> Add compatible to support LMh for sm8150 SoC.
+> sm8150 does not require explicit enabling for various LMh subsystems.
+> Add a variable indicating the same as match data which is set for sdm845.
+> Execute the piece of code enabling various LMh subsystems only if
+> enable algorithm match data is present.
 > 
-> System suspend uses pm_runtime_force_suspend(), which cheekily bypasses
-> the runpm reference counts.  This doesn't actually work so well when the
-> GPU is active.  So add a reasonable delay waiting for the GPU to become
-> idle.
-> 
-> Alternatively we could just return -EBUSY in this case, but that has the
-> disadvantage of causing system suspend to fail.
-> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Regards,
+Thanks Thara,
 Bjorn
 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 9 +++++++++
->  drivers/gpu/drm/msm/msm_gpu.c              | 3 +++
->  drivers/gpu/drm/msm/msm_gpu.h              | 3 +++
->  3 files changed, 15 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 93005839b5da..b677ca3fd75e 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -611,6 +611,15 @@ static int adreno_resume(struct device *dev)
->  static int adreno_suspend(struct device *dev)
->  {
->  	struct msm_gpu *gpu = dev_to_gpu(dev);
-> +	int ret = 0;
-> +
-> +	ret = wait_event_timeout(gpu->retire_event,
-> +				 !msm_gpu_active(gpu),
-> +				 msecs_to_jiffies(1000));
-> +	if (ret == 0) {
-> +		dev_err(dev, "Timeout waiting for GPU to suspend\n");
-> +		return -EBUSY;
-> +	}
+> v2->v3:
+> 	- use of_device_get_match_data to get the data from match table
+> 	  rather than using of_match_device and subsequent ->data, as per
+> 	  Bjorn's review comments.
+> 	- Minor fixes as per Bjorn's review comments.
+> 
+> v1->v2:
+> 	- Added LMH_ENABLE_ALGOS of_device_id match data to indicate
+> 	  whether LMh subsytems need explicit enabling or not.
+>  drivers/thermal/qcom/lmh.c | 62 +++++++++++++++++++++-----------------
+>  1 file changed, 35 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+> index eafa7526eb8b..c7f91cbdccc7 100644
+> --- a/drivers/thermal/qcom/lmh.c
+> +++ b/drivers/thermal/qcom/lmh.c
+> @@ -28,6 +28,8 @@
 >  
->  	return gpu->funcs->pm_suspend(gpu);
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 0f78c2615272..2c1049c0ea14 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -703,6 +703,8 @@ static void retire_submits(struct msm_gpu *gpu)
->  			}
->  		}
+>  #define LMH_REG_DCVS_INTR_CLR		0x8
+>  
+> +#define LMH_ENABLE_ALGOS		1
+> +
+>  struct lmh_hw_data {
+>  	void __iomem *base;
+>  	struct irq_domain *domain;
+> @@ -90,6 +92,7 @@ static int lmh_probe(struct platform_device *pdev)
+>  	struct device_node *cpu_node;
+>  	struct lmh_hw_data *lmh_data;
+>  	int temp_low, temp_high, temp_arm, cpu_id, ret;
+> +	unsigned int enable_alg;
+>  	u32 node_id;
+>  
+>  	lmh_data = devm_kzalloc(dev, sizeof(*lmh_data), GFP_KERNEL);
+> @@ -141,32 +144,36 @@ static int lmh_probe(struct platform_device *pdev)
+>  	if (!qcom_scm_lmh_dcvsh_available())
+>  		return -EINVAL;
+>  
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling current subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret)
+> -		dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+> -
+> -	ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+> -				 LMH_NODE_DCVS, node_id, 0);
+> -	if (ret) {
+> -		dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+> -		return ret;
+> -	}
+> -
+> -	ret = qcom_scm_lmh_profile_change(0x1);
+> -	if (ret) {
+> -		dev_err(dev, "Error %d changing profile\n", ret);
+> -		return ret;
+> +	enable_alg = (uintptr_t)of_device_get_match_data(dev);
+> +
+> +	if (enable_alg) {
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_CRNT, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling current subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_REL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling reliability subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_BCL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret)
+> +			dev_err(dev, "Error %d enabling BCL subfunction\n", ret);
+> +
+> +		ret = qcom_scm_lmh_dcvsh(LMH_SUB_FN_THERMAL, LMH_ALGO_MODE_ENABLE, 1,
+> +					 LMH_NODE_DCVS, node_id, 0);
+> +		if (ret) {
+> +			dev_err(dev, "Error %d enabling thermal subfunction\n", ret);
+> +			return ret;
+> +		}
+> +
+> +		ret = qcom_scm_lmh_profile_change(0x1);
+> +		if (ret) {
+> +			dev_err(dev, "Error %d changing profile\n", ret);
+> +			return ret;
+> +		}
 >  	}
-> +
-> +	wake_up_all(&gpu->retire_event);
+>  
+>  	/* Set default thermal trips */
+> @@ -213,7 +220,8 @@ static int lmh_probe(struct platform_device *pdev)
 >  }
 >  
->  static void retire_worker(struct kthread_work *work)
-> @@ -848,6 +850,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  	INIT_LIST_HEAD(&gpu->active_list);
->  	mutex_init(&gpu->active_lock);
->  	mutex_init(&gpu->lock);
-> +	init_waitqueue_head(&gpu->retire_event);
->  	kthread_init_work(&gpu->retire_work, retire_worker);
->  	kthread_init_work(&gpu->recover_work, recover_worker);
->  	kthread_init_work(&gpu->fault_work, fault_worker);
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index 445c6bfd4b6b..92aa1e9196c6 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -230,6 +230,9 @@ struct msm_gpu {
->  	/* work for handling GPU recovery: */
->  	struct kthread_work recover_work;
->  
-> +	/** retire_event: notified when submits are retired: */
-> +	wait_queue_head_t retire_event;
-> +
->  	/* work for handling active-list retiring: */
->  	struct kthread_work retire_work;
->  
+>  static const struct of_device_id lmh_table[] = {
+> -	{ .compatible = "qcom,sdm845-lmh", },
+> +	{ .compatible = "qcom,sdm845-lmh", .data = (void *)LMH_ENABLE_ALGOS},
+> +	{ .compatible = "qcom,sm8150-lmh", },
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, lmh_table);
 > -- 
-> 2.33.1
+> 2.25.1
 > 
