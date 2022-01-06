@@ -2,399 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE6D5486E2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 00:54:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FE5A486E14
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 00:53:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343629AbiAFXys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 18:54:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45312 "EHLO
+        id S1343568AbiAFXxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 18:53:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343628AbiAFXys (ORCPT
+        with ESMTP id S1343556AbiAFXxd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 18:54:48 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B25C061212;
-        Thu,  6 Jan 2022 15:54:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4DEB7B82484;
-        Thu,  6 Jan 2022 23:54:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56F2C36AE0;
-        Thu,  6 Jan 2022 23:54:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641513285;
-        bh=CGFXGGU78BkK1+GVSl4VRzuVBELpwr9woJ2HhMC4+Fg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pfNit8pkr/Pskxna8//mCJCJ3FYKv6F+YqgQqiZ+UnOX35a4kRw6ODcLbVQwN3t8a
-         yXOrGPwMR5eUDyXA1qev6oNlRovaYNvQTkkG0+pN6Mbjki1Ky8Rnnet/wEzjZNtHcU
-         BJVFImbnG4M6+zgAg6T3II5c3igbX1zNvw85iOMIm45ag0BFah31ZTarmQI+sygv9S
-         MmDbZOjrosZMfpFvugRPQIVzdT8BDjRuAHgPZ8dBda7kKmgJBU7szNQJFT5V4HxkBk
-         QIYJAqyTsGfJjs3ZN1N9IIYbQ9ygpHkcHmZZfF+BC1nc48EpokfxJ7yD+zuNKvzAm8
-         lMu2UyM1/YhFg==
-Received: by pali.im (Postfix)
-        id C465DBFF; Fri,  7 Jan 2022 00:54:41 +0100 (CET)
-Date:   Fri, 7 Jan 2022 00:54:41 +0100
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Baruch Siach <baruch@tkos.co.il>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] PCI: qcom: add support for IPQ60xx PCIe controller
-Message-ID: <20220106235441.xb3y6hk4jjzmnbot@pali>
-References: <cover.1640587131.git.baruch@tkos.co.il>
- <a2406bf515124afad50ca3c947e2cd758c0896b1.1640587131.git.baruch@tkos.co.il>
- <20220106144518.GA15482@lpieralisi>
- <87k0fcenuw.fsf@tarshish>
- <Ydd5Wh0KeADBQ/h1@ripper>
+        Thu, 6 Jan 2022 18:53:33 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEA20C0611FD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 15:53:32 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id k18so7791827wrg.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 15:53:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MxTgX/T4Utod2KZDrFfy1v9Xj8U2o1FdEpdtHIXf/tc=;
+        b=VveWvexS79tlh3xTyCuziU0DJrT/8bd0ZDdVhhn5Vvd2c8pW7ZpF5+74My+aQ4C5bM
+         lTiHSrek91iiuEmpa78dS7ISiPN0YYdZlLn0DA2xLhW6kesLQ6ZmWfgdOrqJt7taYJod
+         zSW0QTkSNvKoiupXpTGgjp3UUf2094gvHPgqpMFERabyKuYW+Pyim/++hdQfGnsotedF
+         UN1VAmSQ3YmP2RqPhRs1f911NOr9eFeNjKGNI7TTVARdw7PVWWWnfEEsKOJN1C859DYy
+         OdlSBBScXqbHD1pKXbGJsZeEGHuLe2DrBD0P9ZM1du0EJfML7xvagPaYOk6hEJZKH+tN
+         lPAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MxTgX/T4Utod2KZDrFfy1v9Xj8U2o1FdEpdtHIXf/tc=;
+        b=G5P8QyDeJXG8hcrSCJTe1B2Sc7uyaT5FspqlPtWUgLNSVvBZ98LdX8b2P0FqDJhJVL
+         w+vLiujSGtHXInJ/r9rE44k1flptce6P1OrxiP+5tyVo7wSK854ePGyiu7lyK7vPmY7f
+         fh5UthB2YXzFqa+KOwwcz6C+jOJDmwT1KprRCX9bBEY9LV3+NHeDiFNMs4ghVTZZznxN
+         bfHEJWNp+eCqobbzyO9Q+C+JgSYM9X9dL5OIYRSsliADhFySRR+lKIrpmiUiche8L2Fw
+         R6jBmALmuDxQ3fM41SadD/kpIx4dXZa1mGe2VnRJ/D5a4+b0bBmD6TRjK8DRwa1kMge7
+         IlRQ==
+X-Gm-Message-State: AOAM533f8Azc/WyZna8CsQZlORaWFZUKt3Z45yiDCtRXLEiMGiYLNsSD
+        RHOt+noBpNnBDD8nUJrefzGcZhtj7O1rnw==
+X-Google-Smtp-Source: ABdhPJw3Dfccs1phmLL74BlOgzIIEhit9dxt/GP15nBfKiHac2L/oOJVj6t9G2WJ9A1ktG5c+VEY3w==
+X-Received: by 2002:a05:6000:1acb:: with SMTP id i11mr51015251wry.244.1641513211224;
+        Thu, 06 Jan 2022 15:53:31 -0800 (PST)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id a71sm335893wme.39.2022.01.06.15.53.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jan 2022 15:53:30 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
+Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
+        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
+        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
+        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
+Subject: [PATCH 0/7] camss: Fixup multiple VDDA regulator support
+Date:   Thu,  6 Jan 2022 23:55:33 +0000
+Message-Id: <20220106235540.1567839-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ydd5Wh0KeADBQ/h1@ripper>
-User-Agent: NeoMutt/20180716
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thursday 06 January 2022 15:20:58 Bjorn Andersson wrote:
-> On Thu 06 Jan 10:05 PST 2022, Baruch Siach wrote:
-> 
-> > Hi Lorenzo,
-> > 
-> > On Thu, Jan 06 2022, Lorenzo Pieralisi wrote:
-> > > [+Pali - query on reset delay]
-> > >
-> > > On Mon, Dec 27, 2021 at 08:46:05AM +0200, Baruch Siach wrote:
-> > >> From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> > >> 
-> > >> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
-> > >> platform.
-> > >> 
-> > >> The code is based on downstream[1] Codeaurora kernel v5.4 (branch
-> > >> win.linuxopenwrt.2.0).
-> > >> 
-> > >> Split out the DBI registers access part from .init into .post_init. DBI
-> > >> registers are only accessible after phy_power_on().
-> > >> 
-> > >> [1] https://source.codeaurora.org/quic/qsdk/oss/kernel/linux-ipq-5.4/
-> > >> 
-> > >> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-> > >> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> > >> ---
-> > >> v4:
-> > >> 
-> > >>   * Rebase on v5.16-rc1
-> > >> 
-> > >> v3:
-> > >>   * Drop speed setup; rely on generic code (Rob Herring)
-> > >> 
-> > >>   * Drop unused CLK_RATE macros (Bjorn Helgaas)
-> > >> 
-> > >>   * Minor formatting fixes (Bjorn Helgaas)
-> > >> 
-> > >>   * Add reference to downstream Codeaurora kernel tree (Bjorn Helgaas)
-> > >> 
-> > >> v2:
-> > >>   * Drop ATU configuration; rely on common code instead
-> > >> 
-> > >>   * Use more common register macros
-> > >> 
-> > >>   * Use bulk clk and reset APIs
-> > >> ---
-> > >>  drivers/pci/controller/dwc/pcie-designware.h |   1 +
-> > >>  drivers/pci/controller/dwc/pcie-qcom.c       | 145 +++++++++++++++++++
-> > >>  2 files changed, 146 insertions(+)
-> > >> 
-> > >> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> > >> index ea87809ee298..279c3778a13b 100644
-> > >> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> > >> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> > >> @@ -76,6 +76,7 @@
-> > >>  
-> > >>  #define GEN3_RELATED_OFF			0x890
-> > >>  #define GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL	BIT(0)
-> > >> +#define GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS	BIT(13)
-> > >>  #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
-> > >>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
-> > >>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
-> > >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > >> index 1c3d1116bb60..14f86c45a8d9 100644
-> > >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > >> @@ -52,6 +52,10 @@
-> > >>  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
-> > >>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
-> > >>  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL	0x174
-> > >> +#define AHB_CLK_EN				BIT(0)
-> > >> +#define MSTR_AXI_CLK_EN				BIT(1)
-> > >> +#define BYPASS					BIT(4)
-> > >> +
-> > >>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT	0x178
-> > >>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2	0x1A8
-> > >>  #define PCIE20_PARF_LTSSM			0x1B0
-> > >> @@ -171,6 +175,11 @@ struct qcom_pcie_resources_2_7_0 {
-> > >>  	struct clk *ref_clk_src;
-> > >>  };
-> > >>  
-> > >> +struct qcom_pcie_resources_2_9_0 {
-> > >> +	struct clk_bulk_data clks[5];
-> > >> +	struct reset_control *rst;
-> > >> +};
-> > >> +
-> > >>  union qcom_pcie_resources {
-> > >>  	struct qcom_pcie_resources_1_0_0 v1_0_0;
-> > >>  	struct qcom_pcie_resources_2_1_0 v2_1_0;
-> > >> @@ -178,6 +187,7 @@ union qcom_pcie_resources {
-> > >>  	struct qcom_pcie_resources_2_3_3 v2_3_3;
-> > >>  	struct qcom_pcie_resources_2_4_0 v2_4_0;
-> > >>  	struct qcom_pcie_resources_2_7_0 v2_7_0;
-> > >> +	struct qcom_pcie_resources_2_9_0 v2_9_0;
-> > >>  };
-> > >>  
-> > >>  struct qcom_pcie;
-> > >> @@ -1297,6 +1307,127 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
-> > >>  	clk_disable_unprepare(res->pipe_clk);
-> > >>  }
-> > >>  
-> > >> +static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
-> > >> +{
-> > >> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
-> > >> +	struct dw_pcie *pci = pcie->pci;
-> > >> +	struct device *dev = pci->dev;
-> > >> +	int ret;
-> > >> +
-> > >> +	res->clks[0].id = "iface";
-> > >> +	res->clks[1].id = "axi_m";
-> > >> +	res->clks[2].id = "axi_s";
-> > >> +	res->clks[3].id = "axi_bridge";
-> > >> +	res->clks[4].id = "rchng";
-> > >> +
-> > >> +	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
-> > >> +	if (ret < 0)
-> > >> +		return ret;
-> > >> +
-> > >> +	res->rst = devm_reset_control_array_get_exclusive(dev);
-> > >> +	if (IS_ERR(res->rst))
-> > >> +		return PTR_ERR(res->rst);
-> > >> +
-> > >> +	return 0;
-> > >> +}
-> > >> +
-> > >> +static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
-> > >> +{
-> > >> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
-> > >> +
-> > >> +	clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
-> > >> +}
-> > >> +
-> > >> +static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
-> > >> +{
-> > >> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
-> > >> +	struct device *dev = pcie->pci->dev;
-> > >> +	int ret;
-> > >> +
-> > >> +	ret = reset_control_assert(res->rst);
-> > >> +	if (ret) {
-> > >> +		dev_err(dev, "reset assert failed (%d)\n", ret);
-> > >> +		return ret;
-> > >> +	}
-> > >> +
-> > >> +	usleep_range(2000, 2500);
-> > >> +
-> > >> +	ret = reset_control_deassert(res->rst);
-> > >> +	if (ret) {
-> > >> +		dev_err(dev, "reset deassert failed (%d)\n", ret);
-> > >> +		return ret;
-> > >> +	}
-> > >> +
-> > >> +	/*
-> > >> +	 * Don't have a way to see if the reset has completed.
-> > >> +	 * Wait for some time.
-> > >
-> > > Is this arbitrary ? What does this reset represent ?
-> > 
-> > I have no idea. I'm just porting working downstream kernel code, and I
-> > have no access to hardware documentation.
-> > 
-> 
-> The reset here doesn't literally reset the device, it will assert (hold)
-> the reset line, then sleep 2ms, then deassert (release) it and the sleep
-> below will ensure that we don't enable the clocks etc until the hardware
-> has been given 2ms to "recover".
+Following on from comments from Vladimir on the sm8250 CAMSS patches I had
+a look through the RB3 and RB5 schematics.
 
-Hello! What kind of reset line it asserts? Some internal line to PCIe
-controller IP? Or external PCIe Reset line from PCIe controller? Or some
-other?
+Here we see the CSI PHY connects to the same VDDA power-rails as USB, PCIe,
+UFS and the DSI PHYs.
 
-> So it's not a matter of us waiting because we don't know how to check,
-> it's a matter of following the datasheet stating the minimum timing of
-> the operations to be performed to get the PCIe controller into a known
-> (clean) state..
+Right now CAMSS works on SDM845 and SM8250 because one of the USB, PCIe,
+or UFS has enabled the relevant VDDA supplies, prior to the CAMSS driver
+running.
 
-It would be really useful to put comment into code to which datasheet
-you are referring and also mention the information that this datasheet
-states that timeout of YXZ ms is required.
+The solution is to
+- Fix the describing YAML
+- Add in regulator_bulk_enable()/regulator_bulk_disable()
+- Update the DTS to point at the necessary regulators
 
-Lorenzo, added me into this discussion as we found out that lot of PCIe
-controller drivers are adding "random" delays into the "random" places
-and lot of them just implement required delays defined in PCIe specs.
-Something which is common for evert PCIe HW. This starting to be a big
-mess as every driver has to reinvent wheel and so all "sleeping code"
-should be properly documented. I have an idea of moving PCIe state
-machine delays from drivers to PCI core code, but such thing would
-require to correctly identify them. And probably there is no better way
-than putting comments, why delay is required and why it was chosen to
-specific value. If you want to contribute into this idea, look at email:
-https://lore.kernel.org/linux-pci/20211022183808.jdeo7vntnagqkg7g@pali/
+I have an SDM660 board on-order so when it arrives I can also look into the
+vdda_sec regulator if nobody else has.
 
-> 
-> I'm slightly puzzled to why this matters if the clocks are off, but if
-> you're porting downstream code, my suggestion is that you should just
-> omit the comment.
-> 
-> > Note that some other variants also add delays before or after reset
-> > deassert:
-> > 
-> >   qcom_pcie_init_2_4_0()
-> > 
-> >   qcom_pcie_init_2_3_3()
-> > 
-> >   qcom_pcie_init_2_7_0()
-> > 
-> > baruch
-> > 
-> > >> +	 */
-> > >> +	usleep_range(2000, 2500);
-> > >> +
-> > >> +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
-> > >> +	if (ret)
-> > >> +		goto err_reset;
-> > >> +
-> > >> +	return 0;
-> > >> +
-> > >> +	/*
-> > >> +	 * Not checking for failure, will anyway return
-> > >> +	 * the original failure in 'ret'.
-> > >> +	 */
-> 
-> I think you can omit this comment as well. You failed to enable the
-> clocks and you want to inform the caller about that error.
-> 
-> Also, you're asserting the reset line to put the hardware in reset
-> again, if that fails there's not much to do.
-> 
-> Regards,
-> Bjorn
-> 
-> > >> +err_reset:
-> > >> +	reset_control_assert(res->rst);
-> > >> +
-> > >> +	return ret;
-> > >> +}
-> > >> +
-> > >> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> > >> +{
-> > >> +	struct dw_pcie *pci = pcie->pci;
-> > >> +	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> > >> +	u32 val;
-> > >> +	int i;
-> > >> +
-> > >> +	writel(SLV_ADDR_SPACE_SZ,
-> > >> +		pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
-> > >> +
-> > >> +	val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > >> +	val &= ~BIT(0);
-> > >> +	writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> > >> +
-> > >> +	writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
-> > >> +
-> > >> +	writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
-> > >> +	writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
-> > >> +		pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
-> > >> +	writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS
-> > >> +		| GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
-> > >> +		pci->dbi_base + GEN3_RELATED_OFF);
-> > >> +
-> > >> +	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
-> > >> +		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
-> > >> +		AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
-> > >> +		pcie->parf + PCIE20_PARF_SYS_CTRL);
-> > >> +
-> > >> +	writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
-> > >> +
-> > >> +	dw_pcie_dbi_ro_wr_en(pci);
-> > >> +	writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
-> > >> +
-> > >> +	/* Configure PCIe link capabilities for ASPM */
-> > >> +	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> > >> +	val &= ~PCI_EXP_LNKCAP_ASPMS;
-> > >> +	writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> > >> +
-> > >> +	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
-> > >> +			PCI_EXP_DEVCTL2);
-> > >> +
-> > >> +	for (i = 0; i < 256; i++)
-> > >> +		writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N
-> > >> +				+ (4 * i));
-> > >> +
-> > >> +	return 0;
-> > >> +}
-> > >> +
-> > >>  static int qcom_pcie_link_up(struct dw_pcie *pci)
-> > >>  {
-> > >>  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> > >> @@ -1487,6 +1618,15 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
-> > >>  	.config_sid = qcom_pcie_config_sid_sm8250,
-> > >>  };
-> > >>  
-> > >> +/* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
-> > >> +static const struct qcom_pcie_ops ops_2_9_0 = {
-> > >> +	.get_resources = qcom_pcie_get_resources_2_9_0,
-> > >> +	.init = qcom_pcie_init_2_9_0,
-> > >> +	.post_init = qcom_pcie_post_init_2_9_0,
-> > >> +	.deinit = qcom_pcie_deinit_2_9_0,
-> > >> +	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> > >> +};
-> > >> +
-> > >>  static const struct qcom_pcie_cfg apq8084_cfg = {
-> > >>  	.ops = &ops_1_0_0,
-> > >>  };
-> > >> @@ -1520,6 +1660,10 @@ static const struct qcom_pcie_cfg sc7280_cfg = {
-> > >>  	.pipe_clk_need_muxing = true,
-> > >>  };
-> > >>  
-> > >> +static const struct qcom_pcie_cfg ipq6018_cfg = {
-> > >> +	.ops = &ops_2_9_0,
-> > >> +};
-> > >> +
-> > >>  static const struct dw_pcie_ops dw_pcie_ops = {
-> > >>  	.link_up = qcom_pcie_link_up,
-> > >>  	.start_link = qcom_pcie_start_link,
-> > >> @@ -1629,6 +1773,7 @@ static const struct of_device_id qcom_pcie_match[] = {
-> > >>  	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> > >>  	{ .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
-> > >>  	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
-> > >> +	{ .compatible = "qcom,pcie-ipq6018", .data = &ipq6018_cfg },
-> > >>  	{ }
-> > >>  };
-> > >>  
-> > >> -- 
-> > >> 2.34.1
-> > >> 
-> > 
-> > 
-> > -- 
-> >                                                      ~. .~   Tk Open Systems
-> > =}------------------------------------------------ooO--U--Ooo------------{=
-> >    - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+For now this series addresses the fundamental gap in the CSI PHY power
+rails and remediates the situation for the two boards I have schematics for
+and can test, RB3/SDM845 and RB5/SM8250.
+
+This patch applies on top of
+git.linuxtv.org/hverkuil/media_tree.git  / br-v5.17j
+
+Bootable and testable tree for both RB3 and RB5 here:
+git.linaro.org/people/bryan.odonoghue/kernel.git / br-v5.17j+camss-fixes
+
+Bryan O'Donoghue (7):
+  media: dt-bindings: media: camss: Fixup vdda regulator descriptions
+    sdm845
+  media: dt-bindings: media: camss: Add vdda supply declarations sm8250
+  arm64: dts: qcom: sdm845: Rename camss vdda-supply to vdda-phy-supply
+  arm64: dts: qcom: sdm845: Add camss vdda-pll-supply
+  media: camss: Add regulator_bulk support
+  media: camss: Point sdm845 at the correct vdda regulators
+  media: camss: Point sm8250 at the correct vdda regulators
+
+ .../bindings/media/qcom,sdm845-camss.yaml     | 14 ++-
+ .../bindings/media/qcom,sm8250-camss.yaml     | 13 +++
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |  3 +-
+ .../media/platform/qcom/camss/camss-csid.c    | 40 +++++---
+ .../media/platform/qcom/camss/camss-csid.h    |  3 +-
+ drivers/media/platform/qcom/camss/camss.c     | 94 +++++++++----------
+ drivers/media/platform/qcom/camss/camss.h     |  2 +-
+ 7 files changed, 100 insertions(+), 69 deletions(-)
+
+-- 
+2.33.0
+
