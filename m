@@ -2,165 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB919486B07
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 21:24:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 109AD486B1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 21:28:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236332AbiAFUYH convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 6 Jan 2022 15:24:07 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:48250 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243662AbiAFUYH (ORCPT
+        id S243779AbiAFU2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 15:28:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54508 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243805AbiAFU2a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 15:24:07 -0500
-Received: from smtpclient.apple (p4fefca45.dip0.t-ipconnect.de [79.239.202.69])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 46150CECDC;
-        Thu,  6 Jan 2022 21:24:05 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH v4] Bluetooth: btqca: sequential validation
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1640174444-28561-1-git-send-email-quic_saluvala@quicinc.com>
-Date:   Thu, 6 Jan 2022 21:24:04 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        quic_hemantg@quicinc.com, MSM <linux-arm-msm@vger.kernel.org>,
-        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org,
-        mcchou@chromium.org, quic_pharish@quicinc.com
-Content-Transfer-Encoding: 8BIT
-Message-Id: <3E84ACC3-BF17-4E7B-AA57-CDCA86549813@holtmann.org>
-References: <1640174444-28561-1-git-send-email-quic_saluvala@quicinc.com>
-To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+        Thu, 6 Jan 2022 15:28:30 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95552C061212;
+        Thu,  6 Jan 2022 12:28:30 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5C2F5B823F5;
+        Thu,  6 Jan 2022 20:28:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33F2C36AE3;
+        Thu,  6 Jan 2022 20:28:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641500908;
+        bh=4Tm8lIJbayYVxgJwvNC72NWqqUSjJNNTYUqBQif91Jk=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=uPjadOGMkQKU6rfYSjF1dH2cjguOooXzLJrvK7sc0x9/9zwRcJ53FL+C6li8vxs3d
+         gzZCjKgfhZG4h/YnwxBht2MlXYrIpAdNznxxPUMcYyEHPsIxo+kPpUEDS8Cdp6WEW0
+         91w/TSCViT/fgI0SdG/lniVKT5dKQ5TUw8NlIJpQqUYVzRtSyGGCzN9O8PZJWK7FwF
+         EGqs1+mn2soFfUhwNhsRBRugACCQ2Hs7IKGez/V1xAA6Yox1jwsPkRMxbni6dgxHqS
+         p/TkRKcfPHXbRbD5KvNu0IvQnjj+3aU27CIrOn7lTcOPNhnn3+2w/BgKpsHrceHGBc
+         k3+FhpwuJhSqg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     jamipkettunen@somainline.org, Liam Girdwood <lgirdwood@gmail.com>,
+        martin.botka@somainline.org, Andy Gross <agross@kernel.org>,
+        angelogioacchino.delregno@somainline.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20211230023442.1123424-1-konrad.dybcio@somainline.org>
+References: <20211230023442.1123424-1-konrad.dybcio@somainline.org>
+Subject: Re: [RFC PATCH] regulator: qcom_smd: Align probe function with rpmh-regulator
+Message-Id: <164150090571.2243609.1684347122306028222.b4-ty@kernel.org>
+Date:   Thu, 06 Jan 2022 20:28:25 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
-
-> This change will have sequential validation support
-> & patch config command is added
+On Thu, 30 Dec 2021 03:34:42 +0100, Konrad Dybcio wrote:
+> The RPMh regulator driver is much newer and gets more attention, which in
+> consequence makes it do a few things better. Update qcom_smd-regulator's
+> probe function to mimic what rpmh-regulator does to address a couple of
+> issues:
 > 
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+> - Probe defer now works correctly, before it used to, well,
+>   kinda just die.. This fixes reliable probing on (at least) PM8994,
+>   because Linux apparently cannot deal with supply map dependencies yet..
 > 
-> v4:
-> * addressed the change from u8 cmd to const u8 cmd
-> 
-> v3:
-> * removed rlen,rtype
-> * Replaced kfree with kfree_skb
-> 
-> v2:
-> * Added static declaration
-> * Addressed wrong indentation
-> * Removed EDL_PATCH_CONFIG_CMD_LEN
-> 
-> v1:
-> *Initial patch
-> ---
-> drivers/bluetooth/btqca.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
-> drivers/bluetooth/btqca.h |  2 ++
-> 2 files changed, 50 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index be04d74..9091a88 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -141,6 +141,51 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
-> 	return err;
-> }
-> 
-> +static int qca_send_patch_config_cmd(struct hci_dev *hdev)
-> +{
-> +	struct sk_buff *skb;
-> +	int err = 0;
-> +	const u8 cmd[] = {EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0};
-> +	struct edl_event_hdr *edl;
+> [...]
 
-I said this many times before. = {[SPACE], a, b, c[SPACE]};
+Applied to
 
-And I prefer the const pieces first, and int err last.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-> +
-> +	bt_dev_dbg(hdev, "QCA Patch config");
-> +
-> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
-> +				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-> +	if (IS_ERR(skb)) {
-> +		err = PTR_ERR(skb);
-> +		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-> +		return err;
-> +	}
-> +
-> +	if (skb->len != 2) {
-> +		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-> +		err = -EILSEQ;
-> +		goto out;
-> +	}
-> +
-> +	edl = (struct edl_event_hdr *)(skb->data);
-> +	if (!edl) {
-> +		bt_dev_err(hdev, "QCA Patch config with no header");
-> +		err = -EILSEQ;
-> +		goto out;
-> +	}
-> +
-> +	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != EDL_PATCH_CONFIG_CMD) {
-> +		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-> +			   edl->rtype);
-> +		err = -EIO;
-> +		goto out;
-> +	}
-> +
-> +out:
-> +	kfree_skb(skb);
-> +	if (err)
-> +		bt_dev_err(hdev, "QCA Patch config cmd failed (%d)", err);
+Thanks!
 
-It is rather pointless to print two error. So just scrap this one.
+[1/1] regulator: qcom_smd: Align probe function with rpmh-regulator
+      commit: 14e2976fbabdacb01335d7f91eeebbc89c67ddb1
 
-> +
-> +	return err;
-> +}
-> +
-> static int qca_send_reset(struct hci_dev *hdev)
-> {
-> 	struct sk_buff *skb;
-> @@ -551,6 +596,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
-> 	 */
-> 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
-> 
-> +	if (soc_type == QCA_WCN6750)
-> +		qca_send_patch_config_cmd(hdev);
-> +
-> 	/* Download rampatch file */
-> 	config.type = TLV_TYPE_PATCH;
-> 	if (qca_is_wcn399x(soc_type)) {
-> diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-> index 30afa77..61e9a50 100644
-> --- a/drivers/bluetooth/btqca.h
-> +++ b/drivers/bluetooth/btqca.h
-> @@ -13,6 +13,7 @@
-> #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
-> #define EDL_GET_BUILD_INFO_CMD		(0x20)
-> #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-> +#define EDL_PATCH_CONFIG_CMD		(0x28)
-> #define MAX_SIZE_PER_TLV_SEGMENT	(243)
-> #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
-> #define QCA_DISABLE_LOGGING		(0xFC17)
-> @@ -24,6 +25,7 @@
-> #define EDL_CMD_EXE_STATUS_EVT		(0x00)
-> #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
-> #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
-> +#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
-> #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
-> 
-> #define EDL_TAG_ID_HCI			(17)
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Regards
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Marcel
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
