@@ -2,64 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E83485E0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 02:21:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D935485E6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jan 2022 03:07:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344327AbiAFBVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Jan 2022 20:21:02 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:43506 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344334AbiAFBUk (ORCPT
+        id S1344594AbiAFCHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Jan 2022 21:07:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344589AbiAFCHM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Jan 2022 20:20:40 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5B67B619B9;
-        Thu,  6 Jan 2022 01:20:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC02C36AE3;
-        Thu,  6 Jan 2022 01:20:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641432038;
-        bh=LA3+mrFJJfQeXQpZkoy6bwopnm+qcX4aqg5IW7PfQ90=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=WwJRp+HxwH2HBhZH4WLpcDEM+PoAvVSnMv7XC/kuHhKUZwZmN1KmZTUv0TWASXYMq
-         do0tSRW+24XHO4Dj6p4HuCemcmqQXspfuzD6BNLMZEt5qaGwZ5JRqeHTgIS9U7Gw9x
-         olBbicBPyuZdvsMiMz6zErNVjaIoonjdX1FIp/7aVSCH8fcNJ5hNKIfdzQ0Z8Kug3h
-         xdNrVQ80FAd9KOR6+AVhBEWPCK4ai04RF6tTBUItcIOas0P1R7un5mrlfoNLqf/X2Y
-         fW+EczAVunpVvrOKEPJHb8pNC3QRsIzMeyvAXAbzGhBmL3mpI01k5aPBMT64MXhoy9
-         Vbv5A04BDuqYg==
-Content-Type: text/plain; charset="utf-8"
+        Wed, 5 Jan 2022 21:07:12 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D9BC061201
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jan 2022 18:07:12 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id t23so1730149oiw.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jan 2022 18:07:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=N8EyGGSmrvvI6zU1aQmKy8o54cZnNfEr69UiGzAV5Xg=;
+        b=NxFVhNfzmEq5RCDmuy44ry2eINp5RIBA/UI9lnUXVtNeRh1g4inZSBQgJsaOiHkpuZ
+         M8H0h59pBbxHadQ2QoWie5KzIFcXOp4pq8Fe+9w4RMK8jtEGvk+ZQ+f64XTDbv5wcr+Q
+         op3ubfY18FPsSkmWAWki/KrbF3BFhxuvFOAu0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=N8EyGGSmrvvI6zU1aQmKy8o54cZnNfEr69UiGzAV5Xg=;
+        b=FBmUpOLcXVMvEHuZdyLK/mt8jtw+CavvI4vV5xBMRirBRch80ms6aX1l1+iil7wqHb
+         4z8V+Cz8GRXuRDKAtImNLBqfIk4xte51ET4024HBF6jMpedI5ZxLk8qY0BQzvVXOghXF
+         +gzPJFIU84ZssWK6BinmoOMtm+vwXqZ+3dRl19N+tFhxqkfp1elkx5T8hSd6Chy5mDSK
+         pHjl1e4Q0v+NihRCY51W/9sF/EvOXfHt68BRXNna9s6nFfRdujNxPu8hBrkJnkg/MmJO
+         cmHYmWRuhBX1wKV+bG3kbOp2RqXqSWwp6Uwdh+WMDu57R/cyir0ph+sj5zlLR+qclqbi
+         MK/g==
+X-Gm-Message-State: AOAM5319Xz8KwwqUVcoga+AeAkXVquPejbE2dAaSLMMXWB9AV5f4570D
+        c4htuhZRs+7IAh+gmWewQs564DfK4H9gZ9+YFDZdkA==
+X-Google-Smtp-Source: ABdhPJwMibIsFOJg1O7S6ixK9lYcwLkrgBiGvGU8C/v/R7joI0S4Kl3kddaxfXVhULAlQHivvDuZi7OlcYqOesAmHjQ=
+X-Received: by 2002:aca:a953:: with SMTP id s80mr4711191oie.164.1641434831728;
+ Wed, 05 Jan 2022 18:07:11 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 5 Jan 2022 18:07:11 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1640018638-19436-3-git-send-email-tdas@codeaurora.org>
-References: <1640018638-19436-1-git-send-email-tdas@codeaurora.org> <1640018638-19436-3-git-send-email-tdas@codeaurora.org>
-Subject: Re: [PATCH v2 2/5] clk: Enable/Disable runtime PM for clk_summary
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 05 Jan 2022 17:20:37 -0800
+In-Reply-To: <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
+References: <1640856276-14697-1-git-send-email-quic_rajeevny@quicinc.com> <1640856276-14697-2-git-send-email-quic_rajeevny@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Message-Id: <20220106012038.AAC02C36AE3@smtp.kernel.org>
+Date:   Wed, 5 Jan 2022 18:07:11 -0800
+Message-ID: <CAE-0n52xCvmFe4O9LfoHe7zSaWGH2dF2GGhROr60tb-DV=V8Sg@mail.gmail.com>
+Subject: Re: [v1 1/2] dt-bindings: msm/dsi: Add 10nm dsi phy tuning properties
+To:     Rajeev Nandan <quic_rajeevny@quicinc.com>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
+        robh+dt@kernel.org, robh@kernel.org, quic_abhinavk@quicinc.com,
+        quic_kalyant@quicinc.com, quic_mkrishn@quicinc.com,
+        jonathan@marek.ca, dmitry.baryshkov@linaro.org, airlied@linux.ie,
+        daniel@ffwll.ch
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2021-12-20 08:43:55)
-> The registers for some clocks in the SOC area, which are under the power
-> domain are required to be enabled before accessing them. During the
-> clk_summary if the power-domains are not enabled they could result into
-> NoC errors.
->=20
-> Thus ensure the register access of the clock controller is done with
-> pm_untime_get/put functions.
->=20
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
+Quoting Rajeev Nandan (2021-12-30 01:24:35)
+> Add 10nm dsi phy tuning properties for phy drive strength and
+> phy drive level adjustemnt.
 
-Applied to clk-next
+s/adjustemnt/adjustment/
+
+Please add the details about parasitics and eye shape tuning to this
+commit text.
+
+>
+> Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
+> ---
+>  .../devicetree/bindings/display/msm/dsi-phy-10nm.yaml | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> index 4399715..9406982 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> @@ -35,6 +35,18 @@ properties:
+>        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+>        connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
+>
+> +  phy-drive-strength-cfg:
+> +    type: array
+> +    description:
+> +      Register values of DSIPHY_RESCODE_OFFSET_TOP and DSIPHY_RESCODE_OFFSET_BOT
+> +      for all five lanes to adjust the phy drive strength.
+> +
+> +  phy-drive-level-cfg:
+> +    type: array
+> +    description:
+> +      Register values of DSIPHY_RESCODE_OFFSET_TOP for all five lanes to adjust
+> +      phy drive level/amplitude.
+
+It would be better to put human understandable values into DT here. This
+looks like a black box to anyone outside of qcom, so they won't know how
+to tune or set these register values.
+
+At least for phy-drive-level-cfg it sounds like it could be some sort of
+property that is a u32 array of 5 elements for each lane indicating some
+sort of amplitude, i.e.
+
+	phy-max-amplitudes = <0 1 2 3 4>;
+	phy-min-amplitudes = <0 1 2 3 4>;
+
+where each index corresponds to a particular lane. Then the driver can
+parse the amplitude and convert it into some sort of register value.
