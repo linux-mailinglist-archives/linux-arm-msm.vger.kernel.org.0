@@ -2,101 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17898487444
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 09:50:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 56DE348746D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 10:05:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236356AbiAGIue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 03:50:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236255AbiAGIud (ORCPT
+        id S1346222AbiAGJFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 04:05:05 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:53500 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236717AbiAGJFF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 03:50:33 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8927DC061245;
-        Fri,  7 Jan 2022 00:50:33 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id v25so4938175pge.2;
-        Fri, 07 Jan 2022 00:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id;
-        bh=IQS4J/qtHwJGGOnAQs0o0rtK4NFNyvH92Ln82XpYq1E=;
-        b=BR9uftG+cCtV8P36GOU+YlObjfqGNjV8mIZYTwYw5+DCzL+BOwdPwVbM3W2Gruavzu
-         32qKXVL3Pm05dggOZeyGMYvmCVPqcnm644blBcdbV+bKenZmugHuv991x8t0KfqfwIQV
-         72D0fgW9hmUTsgWjbgKZS4YCyBQ6kgfjpKzcwJtq1bvHQx4X4zTIOnNbJAxtClRLGJZi
-         1zSj3Oy67PRKgvBwhkJl8UPb6juw9oepXa+8aF6xLEm5RXNB/y3goROq2NB66Nv9KWMr
-         AfoSW1ItYV32P/T0irVa6Bw4SK9lVifs8P2m69RBE0IXafbaxoNuzUp8px1kY9ZYE5wB
-         Mxhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=IQS4J/qtHwJGGOnAQs0o0rtK4NFNyvH92Ln82XpYq1E=;
-        b=VOvnUCf5X7LXaC7OJfaHyZA89O1UjxpEWNEfkrDrT4w9WngsF/5/pNBJ+8Sx4ELsyn
-         N5ckMDs6fpiKv1kfyjP2RoV5lPehgZ2aJjlS2ezwDBKxm4V5C8ePsbwJTgiVwb7Z6gHc
-         mzyJTRqTaXAeTX82mC0mSUbSQA/IYmmRpjmnobJ83sXhDuOoih8DGPzlAToCGCJk36nI
-         5ahxUgCHUJ3IJ2FkuXEWK50sxuo1luvVbTA/kAQfQPXFVHgEr47ICm1clVO2jPXw4x75
-         C9Q9FTdbWFAt8MFEWlrMkcCSkkYZENLBBXv2obz0TrjMeqFJyBKil7IcPBxBp+PPps4X
-         FkIg==
-X-Gm-Message-State: AOAM531vGqQlFcF2rJIr/I2mdfKSC1v6Vhbwzzwe7CskblqHVdgQrUjj
-        rntUSmEYfsz3v/gO4HF7Zw8=
-X-Google-Smtp-Source: ABdhPJzrezcJmoyT8I5bb9IzMr0GwT31Qhm2NI7Dx6C7H3w2cx5/PuMuN/+otYHv28cEYnq5kQUd5w==
-X-Received: by 2002:a63:8149:: with SMTP id t70mr55367147pgd.71.1641545433164;
-        Fri, 07 Jan 2022 00:50:33 -0800 (PST)
-Received: from localhost.localdomain ([159.226.95.43])
-        by smtp.googlemail.com with ESMTPSA id f20sm5167583pfe.166.2022.01.07.00.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 00:50:32 -0800 (PST)
-From:   Miaoqian Lin <linmq006@gmail.com>
-Cc:     linmq006@gmail.com, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Archit Taneja <architt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/hdmi: Fix missing put_device() call in msm_hdmi_get_phy
-Date:   Fri,  7 Jan 2022 08:50:22 +0000
-Message-Id: <20220107085026.23831-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.17.1
-To:     unlisted-recipients:; (no To-header on input)
+        Fri, 7 Jan 2022 04:05:05 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D1973B80B29;
+        Fri,  7 Jan 2022 09:05:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD694C36AE9;
+        Fri,  7 Jan 2022 09:05:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1641546302;
+        bh=xTq42ywxf/zC38gO2EAc6K6Hy163Ci7B/HsTe1JVSbQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PPmRtmZPWrVVfmNvmMeUDSxbr5n9h1iqdcDipYH8mJirrJj0xIet8IDE7YrG8qgey
+         6kVcsLI1gzqL4wm8iJK2wkCBKRyU3SSzcVBSlEes6fzsESHiRTsYFEvFrCjszaUv0T
+         qzSpqVWmegkC6eYFtWVmyd+zlRmbD3BTMa8X2foM=
+Date:   Fri, 7 Jan 2022 10:04:58 +0100
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Miaoqian Lin <linmq006@gmail.com>
+Cc:     vladimir.zapolskiy@linaro.org, agross@kernel.org, balbi@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2] usb: dwc3: dwc3-qcom: Add missing
+ platform_device_put() in dwc3_qcom_acpi_register_core
+Message-ID: <YdgCOpYZWEV2SA80@kroah.com>
+References: <83d55401-d8b3-f709-c77a-fa0e09fda27f@linaro.org>
+ <20220105065517.6967-1-linmq006@gmail.com>
+ <Ydb8LIgZ/xGZ/lYX@kroah.com>
+ <20220107030719.GA1972@VICKYMQLIN-NB1.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220107030719.GA1972@VICKYMQLIN-NB1.localdomain>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The reference taken by 'of_find_device_by_node()' must be released when
-not needed anymore.
-Add the corresponding 'put_device()' in the error handling path.
+On Fri, Jan 07, 2022 at 11:07:19AM +0800, Miaoqian Lin wrote:
+> Hi greg k-h:
+> > > Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+> > > Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+> > > ---
+> > > Changes in v2:
+> > > - add fixes tag.
+> > > - do error handling in a unified way.
+> > > - add necessary blank line.
+> > > ---
+> > >  drivers/usb/dwc3/dwc3-qcom.c | 11 +++++++++--
+> > >  1 file changed, 9 insertions(+), 2 deletions(-)
+> > 
+> > 
+> > Does not apply to my tree at all :(
+> > 
+> > Please rebase and resend.
+> 
+> I see the v1 of this patch has been applied to usb-next branch.
+> v2 has some format fixes. I am unsure should I rebase v2 on the top of usb-next?
+> I am afraid to introduce more inconvenience.
 
-Fixes: e00012b256d4 ("drm/msm/hdmi: Make HDMI core get its PHY")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
- drivers/gpu/drm/msm/hdmi/hdmi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+If v1 was incorrect, please submit a patch to either fix it, or revert
+it entirely.
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 75b64e6ae035..a439794a32e8 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -95,10 +95,15 @@ static int msm_hdmi_get_phy(struct hdmi *hdmi)
- 
- 	of_node_put(phy_node);
- 
--	if (!phy_pdev || !hdmi->phy) {
-+	if (!phy_pdev) {
- 		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
- 		return -EPROBE_DEFER;
- 	}
-+	if (!hdmi->phy) {
-+		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
-+		put_device(&phy_pdev->dev);
-+		return -EPROBE_DEFER;
-+	}
- 
- 	hdmi->phy_dev = get_device(&phy_pdev->dev);
- 
--- 
-2.17.1
+thanks,
 
+greg k-h
