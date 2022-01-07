@@ -2,74 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22A8A487473
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 10:05:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE3354877C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 13:51:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346288AbiAGJFT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 04:05:19 -0500
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:38484 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346247AbiAGJFT (ORCPT
+        id S1347345AbiAGMvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 07:51:37 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:40632 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1347443AbiAGMui (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 04:05:19 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: kholk11)
-        with ESMTPSA id BF4F91F45F92
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1641546317;
-        bh=rdXiAe9ghAS4SWFr5mc31jwEuvWu/wJvN9Ci8eVD2QU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Vacvfxe05tDpadRq7/p5lRr3rsC+hvEjbGBg8AdSRh6uJZFwUsCH7sQryL+tsxwwg
-         S19T8S4pXeHyGH1M+vbZ7AHQkdMAIatUbJ0KAkNRJu2c9ztBwaK783YAkL2wCwTsxa
-         8EC4XQ+9njrIyh9sv6vz9hPUo9sKGpBxHHD5kqaJpasjqz9jkozwpCiSXsUtZAD624
-         q+akR7tL2E0Nyu2ST7Wm9thG7vrDveDZWsQdbJfsRuXK22iqh2eBEzCR/idsk75SJG
-         bwRm8FTuBrfE0NMK9ObC1d1awxs64nSaZka7mtLYeCOxFuosJGmBKNXXGwQb0OixUd
-         BKbNGQ9kamE0w==
-Subject: Re: [PATCH 1/2] drm/msm/gpu: Wait for idle before suspending
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220106181449.696988-1-robdclark@gmail.com>
- <20220106181449.696988-2-robdclark@gmail.com>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Message-ID: <d67e7c42-769c-9e15-e69b-c560e3be402c@collabora.com>
-Date:   Fri, 7 Jan 2022 10:05:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Fri, 7 Jan 2022 07:50:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641559838; x=1673095838;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=Mdi0FfApzXXlanizF2QXF55IPByMuk3+tGAbBFptguA=;
+  b=aknlj4K7VEi9I8lZ0d1aaL9ZEaNDNR55uqZeQFwZNyd+AVW26okYr7Qc
+   hdbcw303LslwydbRUyllQGEG44YRxEL7wjTUarDL/a4s/8+hM/GWovZdl
+   X/1wb0tnIfCNpftrj3dPqL2I5Vvaa7Y4hColZDq/JOdQ5Pd7b2Omz5PDT
+   Y=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 07 Jan 2022 04:50:35 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 04:50:35 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 7 Jan 2022 04:50:34 -0800
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 7 Jan 2022 04:50:31 -0800
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH] arm64: dts: ipq8074: add the reserved-memory region
+Date:   Fri, 7 Jan 2022 18:20:22 +0530
+Message-ID: <1641559822-31825-1-git-send-email-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <20220106181449.696988-2-robdclark@gmail.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 06/01/22 19:14, Rob Clark ha scritto:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> System suspend uses pm_runtime_force_suspend(), which cheekily bypasses
-> the runpm reference counts.  This doesn't actually work so well when the
-> GPU is active.  So add a reasonable delay waiting for the GPU to become
-> idle.
-> 
-> Alternatively we could just return -EBUSY in this case, but that has the
-> disadvantage of causing system suspend to fail.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+On IPQ8074, 4MB of memory is needed for TZ. So mark that region
+as reserved.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 6c6a0f853669..b4d813c27230 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -82,6 +82,17 @@
+ 		};
+ 	};
+ 
++	reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		memory@4ac00000 {
++			no-map;
++			reg = <0x0 0x4ac00000 0x0 0x00400000>;
++		};
++	};
++
+ 	soc: soc {
+ 		#address-cells = <0x1>;
+ 		#size-cells = <0x1>;
+-- 
+2.7.4
 
