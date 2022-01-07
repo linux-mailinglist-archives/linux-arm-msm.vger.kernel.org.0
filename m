@@ -2,164 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D4A6487305
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 07:21:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC63148733F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 08:03:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbiAGGVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 01:21:22 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:28020 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiAGGVW (ORCPT
+        id S233516AbiAGHDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 02:03:41 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:5267 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229560AbiAGHDk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 01:21:22 -0500
+        Fri, 7 Jan 2022 02:03:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641536482; x=1673072482;
-  h=from:to:cc:subject:date:message-id;
-  bh=4rC1v7lQALkUSnRTkf3I8/5bz1TS65gHrh4ok0KusDE=;
-  b=TCXP7EeNnfh9ZNri1ihy24ql1dS6VHY2MRIy8YZTQYvHWRp0tZiEj9fw
-   kjmrx9lGdJo/5qV/wxQlYZhm1sJFlnjv7JXEbRQdhqCVcCfVcPIc6sm8H
-   mvs+VY5WO91yd9y1kigIPj2S1TmkBa43Bg3pUt8ZxcHZvgHJR+zjyZgYs
-   o=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 06 Jan 2022 22:21:22 -0800
+  t=1641539020; x=1673075020;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=jzLQhRXBbbds/xkaF7CP3l/Idp5WJKmhBZ3vmgviI2A=;
+  b=TJcizHSjEBCMuERAdCO/MhcBkwWgOOWiis1PMtCtL1q++C+LCbnm/V+d
+   atdAcYrYqVmtkARsCYMZcPv2SRlyU9/MIQLRr7r5gLIY+gWByg2tSoUn/
+   vtyB+lZYID7qCCGmvYRJnL6nlvKzDYCkoG8agCP38FDpIP8g983kdYL/i
+   U=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jan 2022 23:03:40 -0800
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Jan 2022 22:21:20 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Jan 2022 11:51:04 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id 88B37214B7; Fri,  7 Jan 2022 11:51:03 +0530 (IST)
-From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        rjliao@codeaurora.org, hbandi@codeaurora.org,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Subject: [PATCH v5] Bluetooth: btqca: sequential validation
-Date:   Fri,  7 Jan 2022 11:50:53 +0530
-Message-Id: <1641536453-7628-1-git-send-email-quic_saluvala@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 23:03:24 -0800
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 23:03:20 -0800
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 6 Jan 2022
+ 23:03:17 -0800
+Message-ID: <5ef25022-b53b-4002-7de8-e31bfb236009@quicinc.com>
+Date:   Fri, 7 Jan 2022 15:03:14 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v4 11/11] dt-bindings: convert qcom,spmi-pmic-arb binding
+ to YAML format
+Content-Language: en-US
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        <devicetree@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <subbaram@codeaurora.org>, <tglx@linutronix.de>, <maz@kernel.org>
+References: <1640071211-31462-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1640071211-31462-12-git-send-email-quic_fenglinw@quicinc.com>
+ <YcHn0MLuqvMHbmuO@robh.at.kernel.org>
+ <b35d0f12-1de2-9e15-2d87-5049614eeff1@quicinc.com>
+In-Reply-To: <b35d0f12-1de2-9e15-2d87-5049614eeff1@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Added Sequential validation support
-& patch command config
 
-Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
 
-v5:
-* Addressed spacing in cmd
-* Addressed position of int err declaration
-* Removed redundant debug message
+On 2021/12/22 8:45, Fenglin Wu wrote:
+> resend with plain text
+> 
+> 
+> On 2021/12/21 22:42, Rob Herring wrote:
+>> On Tue, Dec 21, 2021 at 03:20:09PM +0800, Fenglin Wu wrote:
+>>> Convert the SPMI PMIC arbiter documentation to JSON/yaml.
+>>>
+>>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>>> ---
+>>>   .../bindings/spmi/qcom,spmi-pmic-arb.txt           |  67 ----------
+>>>   .../bindings/spmi/qcom,spmi-pmic-arb.yaml          | 146 
+>>> +++++++++++++++++++++
+>>>   2 files changed, 146 insertions(+), 67 deletions(-)
+>>>   delete mode 100644 
+>>> Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt
+>>>   create mode 100644 
+>>> Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>>>
+>>
+>>> diff --git 
+>>> a/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml 
+>>> b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>>> new file mode 100644
+>>> index 0000000..df8cfb7
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml
+>>> @@ -0,0 +1,146 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/spmi/qcom,spmi-pmic-arb.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm SPMI PMIC Arbiter
+>>> +
+>>> +maintainers:
+>>> +  - Fenglin Wu <quic_fenglinw@quicinc.com>
+>>> +  - Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+>>> +
+>>> +description: |
+>>> +  The SPMI PMIC Arbiter is found on Snapdragon chipsets. It is an SPMI
+>>> +  controller with wrapping arbitration logic to allow for multiple
+>>> +  on-chip devices to control a single SPMI master.
+>>> +
+>>> +  The PMIC Arbiter can also act as an interrupt controller, providing
+>>> +  interrupts to slave devices.
+>>> +
+>>> +  See Documentation/devicetree/bindings/spmi/spmi.yaml for the generic
+>>> +  SPMI controller binding requirements for child nodes.
+>>> +
+>>> +allOf:
+>>> +  - $ref: spmi.yaml#
+>>> +
+>>> +properties:
+>>> +  $nodename:
+>>> +    pattern: "^spmi@.*"
+>>> +
+>>> +  compatible:
+>>> +    const: qcom,spmi-pmic-arb
+>>> +
+>>> +  reg-names:
+>>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>>
+>> reg-names already has a type defined.
+> I understand there is a pattern property defined in dt-core.yaml and it 
+> defines ".*-names" as a "non-unique-string-array" type. But here, the 
+> strings in "reg-names" needs to be unique and it has to be ["core", 
+> "intr", "cnfg"] or ["core", "intr", "cnfg", "chnls", "obsrvr"] , that's 
+> why I redefined it as "string-array" type which requires each string to 
+> be unique. Otherwise, if any dtsi nodes define the "reg-name" as 
+> ["core", "core", "core"] will not be caught as a fault.
+> 
+>>
+>>> +    anyOf:
+>>> +      - minItems: 3
+>>> +      - maxItems: 3
+>>> +      - enum: ["core", "intr", "cnfg"]
+>>> +
+>>> +      - minItems: 5
+>>> +      - maxItems: 5
+>>> +      - enum: ["core", "intr", "cnfg", "chnls", "obsrvr"]
+>>
+>> I think you want something like this:
+>>
+>> minItems: 3
+>> items:
+>>    - const: core
+>>    - const: intr
+>>    - const: cnfg
+>>    - const: chnls
+>>    - const: obsrvr
+>>
+>>
+> As I said, the content for "reg-names" here only has two options , 
+> either ["core", "intr", "cnfg"] or ["core", "intr", "cnfg", "chnls", 
+> "obsrvr"]. In patch V3, I defined it as below and "make dtbs_check" 
+> threw out warnings because some of existing nodes defined "reg-names" 
+> with these strings are not having the same order as I defined here (I 
+> understood from the warnings that const items need to be followed 
+> strictly even in order wise, is this correct?), and I guess the order of 
+> the strings doesn't matter here and the schema here shouldn't have such 
+> limitation, so I updated it as the "array-string" type and specified the 
+> tuples can only be one of the strings defined in the enum. With this, 
+> the previous warning regarding "reg-names" in "make dtbs_check" are all 
+> fixed.
+> 
+>    reg-names:
+>      oneOf:
+>        - items:
+>            - const: core
+>            - const: intr
+>            - const: cnfg
+>        - items:
+>            - const: core
+>            - const: intr
+>            - const: cnfg
+>            - const: chnls
+>            - const: obsrvr
+>
+Can you help to confirm if I need to change this back to what has been 
+defined in PATCH v3 but just ignore those "make dtbs_check" warnings?
+Thanks
 
-v4:
-* addressed the change from u8 cmd to const u8 cmd
-
-v3:
-* removed rlen,rtype
-* Replaced kfree with kfree_skb
-
-v2:
-* Added static declaration
-* Addressed wrong indentation
-* Removed EDL_PATCH_CONFIG_CMD_LEN
-
-v1:
-*Initial patch
----
- drivers/bluetooth/btqca.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btqca.h |  2 ++
- 2 files changed, 48 insertions(+)
-
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index f7bf311..313fce76 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -142,6 +142,49 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
- 	return err;
- }
- 
-+static int qca_send_patch_config_cmd(struct hci_dev *hdev)
-+{
-+	const u8 cmd[] = { EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0 };
-+	struct sk_buff *skb;
-+	struct edl_event_hdr *edl;
-+	int err = 0;
-+
-+	bt_dev_dbg(hdev, "QCA Patch config");
-+
-+	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
-+				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		err = PTR_ERR(skb);
-+		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
-+		return err;
-+	}
-+
-+	if (skb->len != 2) {
-+		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	edl = (struct edl_event_hdr *)(skb->data);
-+	if (!edl) {
-+		bt_dev_err(hdev, "QCA Patch config with no header");
-+		err = -EILSEQ;
-+		goto out;
-+	}
-+
-+	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != EDL_PATCH_CONFIG_CMD) {
-+		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
-+			   edl->rtype);
-+		err = -EIO;
-+		goto out;
-+	}
-+
-+out:
-+	kfree_skb(skb);
-+
-+	return err;
-+}
-+
- static int qca_send_reset(struct hci_dev *hdev)
- {
- 	struct sk_buff *skb;
-@@ -552,6 +595,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 */
- 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
- 
-+	if (soc_type == QCA_WCN6750)
-+		qca_send_patch_config_cmd(hdev);
-+
- 	/* Download rampatch file */
- 	config.type = TLV_TYPE_PATCH;
- 	if (qca_is_wcn399x(soc_type)) {
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 30afa77..61e9a50 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -13,6 +13,7 @@
- #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
- #define EDL_GET_BUILD_INFO_CMD		(0x20)
- #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
-+#define EDL_PATCH_CONFIG_CMD		(0x28)
- #define MAX_SIZE_PER_TLV_SEGMENT	(243)
- #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
- #define QCA_DISABLE_LOGGING		(0xFC17)
-@@ -24,6 +25,7 @@
- #define EDL_CMD_EXE_STATUS_EVT		(0x00)
- #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
- #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
-+#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
- #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
- 
- #define EDL_TAG_ID_HCI			(17)
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
-
+> 
+>>> +
+>>> +  reg:
+>>> +    minItems: 3
+>>> +    maxItems: 5
+>>> +    description: |
+>>> +      Specifies base physical address and size of the registers in 
+>>> SPMI PMIC
+>>> +      Arbiter HW module, with the following order.
+>>> +        - SPMI PMIC arbiter core registers (core)
+>>> +        - SPMI PMIC arbiter interrupt controller registers (intr)
+>>> +        - SPMI PMIC arbiter configuration registers (cnfg)
+>>> +        - SPMI PMIC arbiter tx-channel per virtual slave registers 
+>>> (chnls)
+>>> +        - SPMI PMIC arbiter rx-channel per virtual slave registers 
+>>> (obsrvr).
+>>> +      Register for "chnls" and "obsrvr" are only applicable for PMIC 
+>>> arbiter
+>>> +      with HW version greater than V2.
+>>> +
+>>> +  "#address-cells":
+>>> +    const: 2
+>>> +
+>>> +  "#size-cells":
+>>> +    const: 0
+>>> +
+>>> +  interrupts:
+>>> +    description: The summary interrupt for the PMIC Arb controller.
+>>> +    maxItems: 1
+>>> +
+>>> +  interrupt-names:
+>>> +    const: periph_irq
+>>> +
+>>> +  interrupt-controller: true
+>>> +
+>>> +  "#interrupt-cells":
+>>> +    const: 4
+>>> +    description: |
+>>> +      Specifies the number of cells needed to encode any interrupt 
+>>> source.
+>>> +      The 1st cell is the slave ID for the requested interrupt, its 
+>>> valid
+>>> +      range is [0-15].
+>>> +      The 2nd cell is the  peripheral ID for requested interrupt, 
+>>> its valid
+>>> +      range is [0-255].
+>>> +      The 3rd cell is the requested peripheral interrupt, its valid 
+>>> range
+>>> +      is [0-7].
+>>> +      The 4th cell is interrupt flags indicating level-sense 
+>>> information,
+>>> +      as defined in dt-bindings/interrupt-controller/irq.h
+>>> +
+>>> +  qcom,ee:
+>>> +    description: the active Execution Environment identifier
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    enum: [0, 1, 2, 3, 4, 5]
+>>> +
+>>> +  qcom,channel:
+>>> +    description: which of the PMIC Arbiter provided channels to use 
+>>> for accesses
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    enum: [0, 1, 2, 3, 4, 5]
+>>> +
+>>
+>>> +patternProperties:
+>>> +  "@[0-9a-f]$":
+>>> +    description: up to 16 child PMIC nodes
+>>> +    type: object
+>>> +
+>>> +    properties:
+>>> +      reg:
+>>> +        items:
+>>> +          - minItems: 1
+>>> +            items:
+>>> +              - minimum: 0
+>>> +                maximum: 0xf
+>>> +              - enum: [ 0 ]
+>>> +                description:
+>>> +                  0 means user ID address. 1 is reserved for group ID
+>>> +                  address.
+>>> +
+>>> +    required:
+>>> +      - reg
+>>
+>> All this should be covered by spmi.yaml
+>>
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg-names
+>>> +  - reg
+>>> +  - "#address-cells"
+>>> +  - "#size-cells"
+>>> +  - qcom,ee
+>>> +  - qcom,channel
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    spmi@fc4cf000 {
+>>> +          compatible = "qcom,spmi-pmic-arb";
+>>> +          reg-names = "core", "intr", "cnfg";
+>>> +          reg = <0xfc4cf000 0x1000>,
+>>> +                <0xfc4cb000 0x1000>,
+>>> +                <0xfc4ca000 0x1000>;
+>>> +          interrupt-names = "periph_irq";
+>>> +          interrupts = <0 190 0>;
+>>> +          interrupt-controller;
+>>> +          #interrupt-cells = <4>;
+>>> +
+>>> +          qcom,ee = <0>;
+>>> +          qcom,channel = <0>;
+>>> +
+>>> +          #address-cells = <2>;
+>>> +          #size-cells = <0>;
+>>> +    };
+>>> -- 
+>>> 2.7.4
+>>>
+>>>
