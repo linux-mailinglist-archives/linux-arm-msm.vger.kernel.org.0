@@ -2,212 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41F8E487CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 20:27:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 419BC487D02
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 20:29:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231994AbiAGT1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 14:27:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232106AbiAGT1I (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 14:27:08 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C8DC061401
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 11:27:07 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id o3-20020a9d4043000000b0058f31f4312fso7688008oti.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 11:27:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7NkUgJRGyv/mGOJjcDFlQgMnvKEd2905SAIiMK/+wtE=;
-        b=diH74T6M28+vlK6mRBohtBievIcLoYDNhMQVJQtqXb+BQhjwBBgE9hnxvnCqEe+mjX
-         /I+FLpA0O1vUce24LeiofkQWsLGWOE7ROTLL5BznzuyIqOMjBJoy98WIkTPWrdQmLORk
-         NyUa+oYBYwcr8qa6rjXNlyv3oytgrYJ2nQRZU5Ea6iuATUbNJ+EwEP3nsUG/QLDWyeTT
-         J/rSDvmtQ2TuOBt5ylcNqKi24SQiUxZ8/4Q57iFAvYzeKQ8o2/EZI0Z0IbuEl/KlGWmP
-         C/wVpqcEv74u4/20GTMZUSr4VOzA4mElSt4qA6VexPyNVk2iSPuEJAi6FudZaoN00sSO
-         LyZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7NkUgJRGyv/mGOJjcDFlQgMnvKEd2905SAIiMK/+wtE=;
-        b=M0aBdI/jlBQJ+Sxkrz4CnfU4HgKs7/FCzypGZ70REj7FcUuWwxoiKPh0mR3OpjGLaJ
-         zbLOBVKnHO3wKv559vkA4p1ox5HczWfD3OICiUhUyUm6L7hsJJnsaE4K5nQ7boPFtgP9
-         oEBZpuEiOuaCYVy3DS4H4k99aERKn+nurBF1A9AaX7n9raO0o0KOxFR8zLRogluPdRaO
-         rF0+Z57RWHyZcyjJDdqEn22SEE/4UZgyosG6kaIavmhTUvhxucacu7CRqFBcIysC9EKl
-         xEe5glo9MTqLQCNKlbhZncBLY+RnJzGmSGrOFTPOa0yrhmOzmpEqZE6SsYPuwLx/c+12
-         d0jQ==
-X-Gm-Message-State: AOAM531qRuLdDRzT+YSkIX+wa9BIcg3T2h1MMdWXh2KqseCJMZADF5uk
-        Q1fuVEqFkeEFRBJBLwKpemVdrg==
-X-Google-Smtp-Source: ABdhPJwzflM4/ZC276UeLQsqnYjgLT3b8PYW7TqWlC7GqsDuQtLFWDALbglEfGsUu1xN50Cdhej/Fw==
-X-Received: by 2002:a05:6830:1d5c:: with SMTP id p28mr49666970oth.10.1641583627216;
-        Fri, 07 Jan 2022 11:27:07 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l3sm1067724oic.37.2022.01.07.11.27.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 11:27:06 -0800 (PST)
-Date:   Fri, 7 Jan 2022 11:27:54 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     rjw@rjwysocki.net, lukasz.luba@arm.com, robh@kernel.org,
-        heiko@sntech.de, arnd@linaro.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, ulf.hansson@linaro.org,
-        Andy Gross <agross@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v5 6/6] qcom/soc/drivers: Add DTPM description for sdm845
-Message-ID: <YdiUOh8FtPRktlUM@ripper>
-References: <20211218130014.4037640-1-daniel.lezcano@linaro.org>
- <20211218130014.4037640-7-daniel.lezcano@linaro.org>
+        id S232057AbiAGT3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 14:29:12 -0500
+Received: from mga05.intel.com ([192.55.52.43]:29519 "EHLO mga05.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232106AbiAGT3M (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Jan 2022 14:29:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1641583752; x=1673119752;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=E2Si7o9RIAAEYdrCtYYfcYtGZ6HwKFG1nOR0mMvP4Ww=;
+  b=YKfhuR5S1I0NjtcuXU0HVRL9HVMM8gl2xgUMosIgT6oCxxeD58G+17dB
+   D6B6vRPaBh6jc1e8OzpyPZDWe/vBY1WgNq3GksAAIZq4eXIVO4Hb/4Qjn
+   pmO6Lk0Z7Cncy/Fl6FKWHR3IdjSChucbiyBi7h4KvoM2q6VIqvWTwHtv/
+   oRopTyvyLw2FwRt99yv6CZoN1X/xLYGtwW7HX6H4aZzBCBI4RMxcPQVWp
+   wcdzXE/bgW4O0LgOSrk3X+g2KTvP/Ge0ar3245k0yeBnVhloEPCxJXzuW
+   CR5uFiVzkHwgSHUuO2bb9VluKow9LrapCXp9J1twU0QxFkamgIQVVj+vB
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10219"; a="329270020"
+X-IronPort-AV: E=Sophos;i="5.88,270,1635231600"; 
+   d="scan'208";a="329270020"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 11:29:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,270,1635231600"; 
+   d="scan'208";a="689895410"
+Received: from lkp-server01.sh.intel.com (HELO e357b3ef1427) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 07 Jan 2022 11:29:09 -0800
+Received: from kbuild by e357b3ef1427 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1n5uvE-000IyK-E4; Fri, 07 Jan 2022 19:29:08 +0000
+Date:   Sat, 8 Jan 2022 03:28:06 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, loic.poulain@linaro.org,
+        benl@squareup.com, bryan.odonoghue@linaro.org
+Subject: Re: [PATCH 4/4] wcn36xx: Add SNR reporting via get_survey()
+Message-ID: <202201080336.Ut3ffMZu-lkp@intel.com>
+References: <20220107153323.1807905-5-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211218130014.4037640-7-daniel.lezcano@linaro.org>
+In-Reply-To: <20220107153323.1807905-5-bryan.odonoghue@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 18 Dec 05:00 PST 2021, Daniel Lezcano wrote:
+Hi Bryan,
 
-> The DTPM framework does support now the hierarchy description.
-> 
-> The platform specific code can call the hierarchy creation function
-> with an array of struct dtpm_node pointing to their parents.
-> 
-> This patch provides a description of the big and Little CPUs and the
-> GPU and tie them together under a virtual package name. Only sdm845 is
-> described.
-> 
-> The description could be extended in the future with the memory
-> controller with devfreq if it has the energy information.
-> 
-> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> ---
->  drivers/soc/qcom/Kconfig  |  9 ++++++
->  drivers/soc/qcom/Makefile |  1 +
->  drivers/soc/qcom/dtpm.c   | 65 +++++++++++++++++++++++++++++++++++++++
->  3 files changed, 75 insertions(+)
->  create mode 100644 drivers/soc/qcom/dtpm.c
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index e718b8735444..f21c1df2f2f9 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -228,4 +228,13 @@ config QCOM_APR
->  	  application processor and QDSP6. APR is
->  	  used by audio driver to configure QDSP6
->  	  ASM, ADM and AFE modules.
-> +
-> +config QCOM_DTPM
-> +	tristate "Qualcomm DTPM hierarchy"
-> +	depends on DTPM
-> +	help
-> +	 Describe the hierarchy for the Dynamic Thermal Power
-> +	 Management tree on this platform. That will create all the
-> +	 power capping capable devices.
-> +
->  endmenu
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 70d5de69fd7b..cf38496c3f61 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -28,3 +28,4 @@ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->  obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
->  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
->  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
-> +obj-$(CONFIG_QCOM_DTPM) += dtpm.o
-> diff --git a/drivers/soc/qcom/dtpm.c b/drivers/soc/qcom/dtpm.c
-> new file mode 100644
-> index 000000000000..c15283f59494
-> --- /dev/null
-> +++ b/drivers/soc/qcom/dtpm.c
-> @@ -0,0 +1,65 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright 2021 Linaro Limited
-> + *
-> + * Author: Daniel Lezcano <daniel.lezcano@linaro.org>
-> + *
-> + * DTPM hierarchy description
-> + */
-> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-> +
-> +#include <linux/dtpm.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +
-> +static struct dtpm_node __initdata sdm845_hierarchy[] = {
-> +	[0]{ .name = "sdm845" },
+I love your patch! Perhaps something to improve:
 
-Why is the index signifiant here?
-Doesn't this imply risk that we forget one element, which will be
-thereby implicitly be left initialized as {} and hence denote
-termination of the list?
+[auto build test WARNING on kvalo-wireless-drivers-next/master]
+[also build test WARNING on kvalo-ath/ath-next next-20220107]
+[cannot apply to kvalo-wireless-drivers/master v5.16-rc8]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-> +	[1]{ .name = "package",
-> +	     .parent = &sdm845_hierarchy[0] },
-> +	[2]{ .name = "/cpus/cpu@0",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[3]{ .name = "/cpus/cpu@100",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[4]{ .name = "/cpus/cpu@200",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[5]{ .name = "/cpus/cpu@300",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[6]{ .name = "/cpus/cpu@400",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[7]{ .name = "/cpus/cpu@500",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[8]{ .name = "/cpus/cpu@600",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[9]{ .name = "/cpus/cpu@700",
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[10]{ .name = "/soc@0/gpu@5000000",
+url:    https://github.com/0day-ci/linux/commits/Bryan-O-Donoghue/wcn36xx-Add-spectrum-survey-reporting/20220107-233226
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/wireless-drivers-next.git master
+config: powerpc-allyesconfig (https://download.01.org/0day-ci/archive/20220108/202201080336.Ut3ffMZu-lkp@intel.com/config)
+compiler: powerpc-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/81c9665c3b1b0b2167717fbd52c32b5ea0f215af
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Bryan-O-Donoghue/wcn36xx-Add-spectrum-survey-reporting/20220107-233226
+        git checkout 81c9665c3b1b0b2167717fbd52c32b5ea0f215af
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=powerpc SHELL=/bin/bash drivers/net/wireless/ath/wcn36xx/
 
-It worries me that we encode the textual structure of the dts in the
-kernel. E.g. for quite a while this was "/soc/gpu@5000000", so if this
-landed a year ago this driver would have prevented us from correcting
-the dts.
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-Another concern is that not all busses in the system are capable of
-36-bit wide addresses, so it's plausible that we might one day have to
-create a more accurate representation of the address space. Maybe not on
-SDM845, but this would force us to be inconsistent.
+All warnings (new ones prefixed by >>):
 
-Regards,
-Bjorn
+>> drivers/net/wireless/ath/wcn36xx/main.c:1360:5: warning: no previous prototype for 'wcn36xx_get_survey' [-Wmissing-prototypes]
+    1360 | int wcn36xx_get_survey(struct ieee80211_hw *hw, int idx,
+         |     ^~~~~~~~~~~~~~~~~~
 
-> +	     .type = DTPM_NODE_DT,
-> +	     .parent = &sdm845_hierarchy[1] },
-> +	[11]{ },
-> +};
-> +
-> +static struct of_device_id __initdata sdm845_dtpm_match_table[] = {
-> +        { .compatible = "qcom,sdm845", .data = sdm845_hierarchy },
-> +        {},
-> +};
-> +
-> +static int __init sdm845_dtpm_init(void)
-> +{
-> +	return dtpm_create_hierarchy(sdm845_dtpm_match_table);
-> +}
-> +late_initcall(sdm845_dtpm_init);
-> +
-> +MODULE_DESCRIPTION("Qualcomm DTPM driver");
-> +MODULE_LICENSE("GPL");
-> +MODULE_ALIAS("platform:dtpm");
-> +MODULE_AUTHOR("Daniel Lezcano <daniel.lezcano@kernel.org");
-> +
-> -- 
-> 2.25.1
-> 
+
+vim +/wcn36xx_get_survey +1360 drivers/net/wireless/ath/wcn36xx/main.c
+
+  1359	
+> 1360	int wcn36xx_get_survey(struct ieee80211_hw *hw, int idx,
+  1361			       struct survey_info *survey)
+  1362	{
+  1363		struct wcn36xx *wcn = hw->priv;
+  1364		struct ieee80211_supported_band *sband;
+  1365		struct wcn36xx_chan_survey *chan_survey;
+  1366		unsigned long flags;
+  1367	
+  1368		sband = wcn->hw->wiphy->bands[NL80211_BAND_2GHZ];
+  1369		if (idx >= sband->n_channels) {
+  1370			idx -= sband->n_channels;
+  1371			sband = wcn->hw->wiphy->bands[NL80211_BAND_5GHZ];
+  1372		}
+  1373	
+  1374		if (!sband || idx >= sband->n_channels)
+  1375			return -ENOENT;
+  1376	
+  1377		spin_lock_irqsave(&wcn->survey_lock, flags);
+  1378	
+  1379		chan_survey = &wcn->chan_survey[idx];
+  1380		survey->channel = &sband->channels[idx];
+  1381		survey->noise = chan_survey->rssi - chan_survey->snr;
+  1382		survey->filled = 0;
+  1383	
+  1384		if (chan_survey->rssi > -100 && chan_survey->rssi < 0)
+  1385			survey->filled |= SURVEY_INFO_NOISE_DBM;
+  1386	
+  1387		if (survey->channel == wcn->channel)
+  1388			survey->filled |= SURVEY_INFO_IN_USE;
+  1389	
+  1390		spin_unlock_irqrestore(&wcn->survey_lock, flags);
+  1391	
+  1392		 wcn36xx_dbg(WCN36XX_DBG_MAC,
+  1393			     "ch %d rssi %d snr %d noise %d filled %x freq %d\n",
+  1394			     HW_VALUE_CHANNEL(survey->channel->hw_value),
+  1395			     chan_survey->rssi, chan_survey->snr, survey->noise,
+  1396			     survey->filled, survey->channel->center_freq);
+  1397	
+  1398		return 0;
+  1399	}
+  1400	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
