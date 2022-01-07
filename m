@@ -2,158 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D4704872B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 06:33:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D4A6487305
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 07:21:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346278AbiAGFaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 00:30:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36124 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346227AbiAGFaO (ORCPT
+        id S229679AbiAGGVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 01:21:22 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:28020 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229658AbiAGGVW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 00:30:14 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B772DC061245;
-        Thu,  6 Jan 2022 21:30:13 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id q5so5820814ioj.7;
-        Thu, 06 Jan 2022 21:30:13 -0800 (PST)
+        Fri, 7 Jan 2022 01:21:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WQJWjrpvTcrk4L61/TAk/KIkMk45wkVxi65EcBB2wtY=;
-        b=d2IudHU+bG8/bgad7PeXNNcoFRsOkHVCShVHm/vs56LEwWSHNLuOiFpEy9DKP9l6Tr
-         NRBxvirumd6cXxSnkNLyfQ8A+72NlcNsvL7hvZj4qmTJqiiF7Csdbvt56vxPZKgm+KVa
-         LrSlrBhRhlCqqGdxdNHqwGpDCyTnA+YPYbfsQ7G96lw32cSPWQqyRz6ZiwfsJR6RI6by
-         O/u4dN98TOOAoUCbAY7mPaIye9Ia4ZItYtBJMihh1+Ydm/s5SHgsKj5zmzh/47Sa491b
-         AMMv+xW6DkrMNDF0c1KBxG7IMcy/cHwsIMDRlFUpK5z1bz9+nVuZCJuiiCAmG8ZEJ5nx
-         Qodg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WQJWjrpvTcrk4L61/TAk/KIkMk45wkVxi65EcBB2wtY=;
-        b=niy51DWjezcZgjqN9F3M+8tYIfD7rzSTrOLGEhmvJk2EtZ8RuLsMadJHrWAWmm4CDp
-         np1P3TcWizh+ewQctLpYBY+xeOnqDJDGsCv/T+xUBhYehuuhRhwLkej3cgK89ZXk+QmM
-         0cZyfeBGCB1Nv8rzs+wQZRM9zg7gDpRnvsHQtzeOBDrrh0f80ZvpRin4/s0Ua68ht8lr
-         9W902dI/MGm78YeGGyfW6U5B5EeCCAhS09oGWbJUUYweQdROZ7BodG8Hmo//0dgb1uwR
-         uehAuovumuXSzfeGL2j+TASPIT6cOo+O6AOnR47HA8hrtZ6pDBYhQCQwNZ+F7TvZeoxY
-         FuRA==
-X-Gm-Message-State: AOAM530M4kQZd/tqvx1ypzadrhOVuQFsGScCZkTSCLArNI2sRuNouGy2
-        5+zprnaD4rYnjRW5y0zXGDA=
-X-Google-Smtp-Source: ABdhPJyGlqD7G+Do4+iTOVF8S6gJU+ENiyjS7KIHnyFyCqamp+AFbBw5NgCHK7Jn+6e1D4PE8CKoHg==
-X-Received: by 2002:a05:6602:2218:: with SMTP id n24mr29175293ion.182.1641533413048;
-        Thu, 06 Jan 2022 21:30:13 -0800 (PST)
-Received: from frodo.. (c-24-9-77-57.hsd1.co.comcast.net. [24.9.77.57])
-        by smtp.googlemail.com with ESMTPSA id c18sm1843446iod.18.2022.01.06.21.30.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 21:30:12 -0800 (PST)
-From:   Jim Cromie <jim.cromie@gmail.com>
-To:     jbaron@akamai.com, gregkh@linuxfoundation.org,
-        linux@rasmusvillemoes.dk, rostedt@goodmis.org,
-        mathieu.desnoyers@efficios.com, daniel.vetter@ffwll.ch,
-        seanpaul@chromium.org, robdclark@gmail.com,
-        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        intel-gvt-dev@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Cc:     quic_saipraka@quicinc.com, will@kernel.org,
-        catalin.marinas@arm.com, quic_psodagud@quicinc.com, maz@kernel.org,
-        arnd@arndb.de, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, mingo@redhat.com,
-        jim.cromie@gmail.com
-Subject: [PATCH v11 19/19] drm_print: use DEFINE_DYNAMIC_DEBUG_CLASSBITS for drm.debug
-Date:   Thu,  6 Jan 2022 22:29:42 -0700
-Message-Id: <20220107052942.1349447-20-jim.cromie@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220107052942.1349447-1-jim.cromie@gmail.com>
-References: <20220107052942.1349447-1-jim.cromie@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641536482; x=1673072482;
+  h=from:to:cc:subject:date:message-id;
+  bh=4rC1v7lQALkUSnRTkf3I8/5bz1TS65gHrh4ok0KusDE=;
+  b=TCXP7EeNnfh9ZNri1ihy24ql1dS6VHY2MRIy8YZTQYvHWRp0tZiEj9fw
+   kjmrx9lGdJo/5qV/wxQlYZhm1sJFlnjv7JXEbRQdhqCVcCfVcPIc6sm8H
+   mvs+VY5WO91yd9y1kigIPj2S1TmkBa43Bg3pUt8ZxcHZvgHJR+zjyZgYs
+   o=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 06 Jan 2022 22:21:22 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Jan 2022 22:21:20 -0800
+X-QCInternal: smtphost
+Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Jan 2022 11:51:04 +0530
+Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
+        id 88B37214B7; Fri,  7 Jan 2022 11:51:03 +0530 (IST)
+From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        rjliao@codeaurora.org, hbandi@codeaurora.org,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        Sai Teja Aluvala <quic_saluvala@quicinc.com>
+Subject: [PATCH v5] Bluetooth: btqca: sequential validation
+Date:   Fri,  7 Jan 2022 11:50:53 +0530
+Message-Id: <1641536453-7628-1-git-send-email-quic_saluvala@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-if CONFIG_DRM_USE_DYNDBG=y, use new macro to create the sysfs bitmap
-to control drm.debug callsites.
+Added Sequential validation support
+& patch command config
 
-DEFINE_DYNAMIC_DEBUG_CLASSBITS( debug, __drm_debug,
-	"drm.debug - control summary",
-	/* inline vector of dyndbg.class_id (uint:4, 0 is reserved) */
-	DRM_UT_CORE,
-	DRM_UT_DRIVER,
-	DRM_UT_KMS,
-	DRM_UT_PRIME,
-	DRM_UT_ATOMIC,
-	DRM_UT_VBL,
-	DRM_UT_STATE,
-	DRM_UT_LEASE,
-	DRM_UT_DP,
-	DRM_UT_DRMRES );
+Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
 
-NOTES:
+v5:
+* Addressed spacing in cmd
+* Addressed position of int err declaration
+* Removed redundant debug message
 
-dyndbg.class_id is uint:4, values 1-15 are valid. 0 is reserved
-primarily for non-classified callsites (aka: prdbgs), and is thus
-available to mark the end of the vector (and is added by the macro).
+v4:
+* addressed the change from u8 cmd to const u8 cmd
 
-RFC: how to fold this in, with multiple macro expansion ?
-Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+v3:
+* removed rlen,rtype
+* Replaced kfree with kfree_skb
+
+v2:
+* Added static declaration
+* Addressed wrong indentation
+* Removed EDL_PATCH_CONFIG_CMD_LEN
+
+v1:
+*Initial patch
 ---
- drivers/gpu/drm/drm_print.c | 20 ++++++++++++++++++--
- include/drm/drm_print.h     |  2 +-
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btqca.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/bluetooth/btqca.h |  2 ++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-index 0a15a4ec5ead..0de562e5306a 100644
---- a/drivers/gpu/drm/drm_print.c
-+++ b/drivers/gpu/drm/drm_print.c
-@@ -41,7 +41,7 @@
-  * __drm_debug: Enable debug output.
-  * Bitmask of DRM_UT_x. See include/drm/drm_print.h for details.
-  */
--unsigned int __drm_debug;
-+unsigned long __drm_debug;
- EXPORT_SYMBOL(__drm_debug);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index f7bf311..313fce76 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -142,6 +142,49 @@ static int qca_read_fw_build_info(struct hci_dev *hdev)
+ 	return err;
+ }
  
- MODULE_PARM_DESC(debug, "Enable debug output, where each bit enables a debug category.\n"
-@@ -53,7 +53,23 @@ MODULE_PARM_DESC(debug, "Enable debug output, where each bit enables a debug cat
- "\t\tBit 5 (0x20)  will enable VBL messages (vblank code)\n"
- "\t\tBit 7 (0x80)  will enable LEASE messages (leasing code)\n"
- "\t\tBit 8 (0x100) will enable DP messages (displayport code)");
--module_param_named(debug, __drm_debug, int, 0600);
++static int qca_send_patch_config_cmd(struct hci_dev *hdev)
++{
++	const u8 cmd[] = { EDL_PATCH_CONFIG_CMD, 0x01, 0, 0, 0 };
++	struct sk_buff *skb;
++	struct edl_event_hdr *edl;
++	int err = 0;
 +
-+#if !defined(CONFIG_DRM_USE_DYNAMIC_DEBUG)
-+module_param_named(debug, __drm_debug, ulong, 0600);
-+#else
-+DEFINE_DYNAMIC_DEBUG_CLASSBITS(debug, __drm_debug,
-+	"enable drm.debug categories - 1 bit per category",
-+	DRM_UT_CORE,
-+	DRM_UT_DRIVER,
-+	DRM_UT_KMS,
-+	DRM_UT_PRIME,
-+	DRM_UT_ATOMIC,
-+	DRM_UT_VBL,
-+	DRM_UT_STATE,
-+	DRM_UT_LEASE,
-+	DRM_UT_DP,
-+	DRM_UT_DRMRES);
-+#endif
- 
- void __drm_puts_coredump(struct drm_printer *p, const char *str)
++	bt_dev_dbg(hdev, "QCA Patch config");
++
++	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, sizeof(cmd),
++				cmd, HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Sending QCA Patch config failed (%d)", err);
++		return err;
++	}
++
++	if (skb->len != 2) {
++		bt_dev_err(hdev, "QCA Patch config cmd size mismatch len %d", skb->len);
++		err = -EILSEQ;
++		goto out;
++	}
++
++	edl = (struct edl_event_hdr *)(skb->data);
++	if (!edl) {
++		bt_dev_err(hdev, "QCA Patch config with no header");
++		err = -EILSEQ;
++		goto out;
++	}
++
++	if (edl->cresp != EDL_PATCH_CONFIG_RES_EVT || edl->rtype != EDL_PATCH_CONFIG_CMD) {
++		bt_dev_err(hdev, "QCA Wrong packet received %d %d", edl->cresp,
++			   edl->rtype);
++		err = -EIO;
++		goto out;
++	}
++
++out:
++	kfree_skb(skb);
++
++	return err;
++}
++
+ static int qca_send_reset(struct hci_dev *hdev)
  {
-diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
-index 6d43b81a0ee4..ebed5ba2dc24 100644
---- a/include/drm/drm_print.h
-+++ b/include/drm/drm_print.h
-@@ -36,7 +36,7 @@
- #include <drm/drm.h>
+ 	struct sk_buff *skb;
+@@ -552,6 +595,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	 */
+ 	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
  
- /* Do *not* use outside of drm_print.[ch]! */
--extern unsigned int __drm_debug;
-+extern unsigned long __drm_debug;
++	if (soc_type == QCA_WCN6750)
++		qca_send_patch_config_cmd(hdev);
++
+ 	/* Download rampatch file */
+ 	config.type = TLV_TYPE_PATCH;
+ 	if (qca_is_wcn399x(soc_type)) {
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index 30afa77..61e9a50 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -13,6 +13,7 @@
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+ #define EDL_GET_BUILD_INFO_CMD		(0x20)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
++#define EDL_PATCH_CONFIG_CMD		(0x28)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+ #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+ #define QCA_DISABLE_LOGGING		(0xFC17)
+@@ -24,6 +25,7 @@
+ #define EDL_CMD_EXE_STATUS_EVT		(0x00)
+ #define EDL_SET_BAUDRATE_RSP_EVT	(0x92)
+ #define EDL_NVM_ACCESS_CODE_EVT		(0x0B)
++#define EDL_PATCH_CONFIG_RES_EVT	(0x00)
+ #define QCA_DISABLE_LOGGING_SUB_OP	(0x14)
  
- /**
-  * DOC: print
+ #define EDL_TAG_ID_HCI			(17)
 -- 
-2.33.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
 
