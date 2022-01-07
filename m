@@ -2,656 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 503EF4870D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 04:01:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13B89487100
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 04:06:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345555AbiAGDBN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 22:01:13 -0500
-Received: from vps5.brixit.nl ([192.81.221.234]:38744 "EHLO vps5.brixit.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1345500AbiAGDBN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 22:01:13 -0500
-Received: from lexxgentoo.local (unknown [77.239.252.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by vps5.brixit.nl (Postfix) with ESMTPSA id 10F3C61A22;
-        Fri,  7 Jan 2022 03:01:10 +0000 (UTC)
-From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: [PATCH] arm64: dts: qcom: Initial Xiaomi Mi 9 support (cepheus)
-Date:   Fri,  7 Jan 2022 05:59:10 +0300
-Message-Id: <20220107025910.112425-1-alexeymin@postmarketos.org>
-X-Mailer: git-send-email 2.32.0
+        id S1345456AbiAGDGR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 22:06:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60840 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231985AbiAGDGQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 6 Jan 2022 22:06:16 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 511FDC061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 19:06:16 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id u13so10591236lff.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 19:06:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Le5b+gfm8kEhoQGFgPM2eB+8FLoC7vz8a2SlJRnSDGQ=;
+        b=Zo5y9ZH8M2cqtZIKViHJ4SXxuJPxDlI+tHz1eH40NGNhxEvrKF6WfuwCYBX1/1kyv/
+         5rvBgW/eDCw99yCXUEGbMl/A4XRIdPmwEUlYSO6CR8XX4XOz20SkyYpdxdm0j08RcB9w
+         WrKL9T8vV7GqQBFcXHmo29oGlYmzXYDCdtcKYmG6ektDwfdEGXizKI4lddsS6Z/gQ2VX
+         v65AidI2OA2sBKAhKMQFnkxNFOGB2CAIfues3B+4ZkaMIZgLSMO+S4koUAEUHvEck6gs
+         QNAZxvvM+eeTQhLNo6oB+yLF212K27/+wIMWrY9eJpf+oVppOwloU3hTUDKrNWMkkE02
+         Egwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Le5b+gfm8kEhoQGFgPM2eB+8FLoC7vz8a2SlJRnSDGQ=;
+        b=vq+Ou4ieWFM1jB4t1S+CDmLXkV2/1PaEt9aH9OxOc9tThTu/kkULdu5tdofX3n6B4p
+         iOP7e1YeOBYx/nKgH8C84EOjyWEIlxEsRgrP+DWaAjOHbk6Z+Cs7bVMvh2TeaaH1uHcU
+         fEx+wSbuRivTK9EjloVhfCBoGjlxY/BzJMKtDxVhKAld3WMbJSihvrfyjI3ObX9hwgrE
+         AlbiSQnqC+PnNr4inDsww4pWZhFzpZTzADiGKJzeepcp4B+00AE2ncqy9uCcdAH6305I
+         mvyX82AocJJeo2k/iZN+wMmuSua2Mcn8uJOfj6CV9aialCigWuSaFVQ+lFLEOzZfaTKE
+         VTyA==
+X-Gm-Message-State: AOAM532IBGBrGSJDx3lM4NBFecKgSpq7sas+5NQ/iLaPt6Tow2BX7BDE
+        c16ikF96Pb9MSmWiPWlQFD5r9Q==
+X-Google-Smtp-Source: ABdhPJyuJrIFR231OR4pS4P0aMgoBzgDhxyRUxHpUfwtWAajfQcCZXRWZgHwytL4KPjF7en/yVrAxg==
+X-Received: by 2002:a05:6512:1155:: with SMTP id m21mr54717647lfg.188.1641524774613;
+        Thu, 06 Jan 2022 19:06:14 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id n10sm400669lfk.246.2022.01.06.19.06.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Jan 2022 19:06:14 -0800 (PST)
+Message-ID: <63e0e911-6a01-0853-47eb-0f4e9cfb261b@linaro.org>
+Date:   Fri, 7 Jan 2022 06:06:13 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [RFC PATCH 0/7] Simplify and correct msm/dp bridge implementation
+Content-Language: en-GB
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220107020132.587811-1-dmitry.baryshkov@linaro.org>
+ <CAE-0n52Si84XZxURUZ6ONKOCsyCDGF=AXHrStOoMPC67xRiVfQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAE-0n52Si84XZxURUZ6ONKOCsyCDGF=AXHrStOoMPC67xRiVfQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial support for Xiaomi Mi 9 smartphone, based on
-Qualcomm SM8150 (Snapdragon 855) chipset.
+On 07/01/2022 05:16, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-01-06 18:01:25)
+>> I noticed that commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
+>> enable and disable") conflicts with the panel-edp (panel bridge)
+>> support. Both bridges will try to attach directly to the drm encoder
+>> itself. I started writing lengthy letter describing what is broken and
+>> how it should be fixed. Then at some point I stopped and quickly coded
+>> this RFC (which is compile-tested only).
+>>
+>> Comments and tests (on both DP and eDP setups) are more than welcome.
+> 
+> There are some DP patches dribbling in every day or so and it's really
+> hard to follow along. I asked Kuogee to resend all outstanding patches
+> as a single series but that hasn't happened. I'm not super interested in
+> reviewing/testing out these patches until the outstanding patches for DP
+> on the list are reviewed and landed. Have you looked at those patches?
 
-Currently the following features are supported:
- * reserved-memory map
- * debug UART
- * display using simple-framebuffer
- * physical keys: power, volume up/down, AI key
- * reboot modes
- * regulator voltages
- * USB peripheral mode
+I haven't been following the DP patches. Well, in fact I was mostly 
+stopping myself from looking onto the DP driver and getting elbow deep 
+in it. Partially because some of the patches circulating on the list 
+were clear hacks (e.g. PHY timeouts). Some would be too complex to 
+review them without deep diving into DP. Most of my attention (and spare 
+time) goes to the DPU/DSI/MDP5 (and to lesser extent MDP4/HDMI) drives.
 
-Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm8150-xiaomi-cepheus.dts   | 575 ++++++++++++++++++
- 2 files changed, 576 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
+With regards to this patch series, the patch 1 is probably most 
+important (and might warrant sending it separately), as it should fix 
+eDP support for Bjorn.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6b816eb33309..078c0d13ae8e 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -101,6 +101,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-bahamut.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-griffin.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-xiaomi-cepheus.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
-new file mode 100644
-index 000000000000..2c768a6d51ca
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
-@@ -0,0 +1,575 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Alexey Minnekhanov <alexeymin@postmarketos.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm8150.dtsi"
-+#include "pm8150.dtsi"
-+#include "pm8150b.dtsi"
-+#include "pm8150l.dtsi"
-+
-+/*
-+ * Rewrite reserved memory maps inherited from sm8150.dtsi to match the ones
-+ * used on xiaomi-cepheus.
-+ * Note: this list is ordered by its memory address in sm8150.dtsi.
-+ */
-+/delete-node/ &tz_mem;      /* same address but larger, no place for rmtfs_mem! */
-+/delete-node/ &rmtfs_mem;   /* moved to completely different address */
-+/delete-node/ &adsp_mem;    /* same start address, but larger size */
-+/delete-node/ &mpss_mem;    /* same size, shifted higher, due to larger adsp_mem */
-+/delete-node/ &venus_mem;   /* same size, shifted higher */
-+/delete-node/ &slpi_mem;    /* same size, shifted higher */
-+/delete-node/ &ipa_fw_mem;  /* same size, shifted higher */
-+/delete-node/ &ipa_gsi_mem; /* same size, shifted higher */
-+/delete-node/ &gpu_mem;     /* same size, shifted higher */
-+/delete-node/ &spss_mem;    /* same size, shifted higher */
-+/delete-node/ &cdsp_mem;    /* same size, shifted higher */
-+
-+/ {
-+	model = "Xiaomi Mi 9";
-+	compatible = "xiaomi,cepheus", "qcom,sm8150";
-+
-+	aliases {
-+		serial0 = &uart2;
-+		display0 = &framebuffer;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "serial0:115200n8";
-+
-+		framebuffer: framebuffer@9c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0x9c000000 0 0x2300000>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			/*
-+			 * That's (going to be) a lot of clocks, but it's necessary due
-+			 * to unused clk cleanup & no panel driver yet (& no dispcc either)..
-+			 */
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&gcc GCC_DISP_SF_AXI_CLK>;
-+		};
-+	};
-+
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ai_key_pin_a &vol_up_pin_a>;
-+
-+		vol_up {
-+			label = "volume_up";
-+			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_KEY>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+
-+		ai_key {
-+			label = "ai_key";
-+			gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_KEY>;
-+			linux,code = <KEY_HOMEPAGE>; /* no AI key in Linux */
-+			wakeup-source;
-+			debounce-interval = <39>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		tz_mem: memory@86200000 {
-+			no-map;
-+			reg = <0x0 0x86200000 0x0 0x5500000>;
-+			phandle = <0x594>;
-+		};
-+
-+		adsp_mem: memory@8be00000 {
-+			no-map;
-+			reg = <0x0 0x8be00000 0x0 0x2200000>;
-+		};
-+
-+		mpss_mem: memory@8e000000 {
-+			no-map;
-+			reg = <0x0 0x8e000000 0x0 0x9600000>;
-+		};
-+
-+		venus_mem: memory@97600000 {
-+			no-map;
-+			reg = <0x0 0x97600000 0x0 0x500000>;
-+		};
-+
-+		slpi_mem: memory@97b00000 {
-+			no-map;
-+			reg = <0x0 0x97b00000 0x0 0x1400000>;
-+		};
-+
-+		ipa_fw_mem: memory@98f00000 {
-+			no-map;
-+			reg = <0x0 0x98f00000 0x0 0x10000>;
-+		};
-+
-+		ipa_gsi_mem: memory@98f10000 {
-+			no-map;
-+			reg = <0x0 0x98f10000 0x0 0x5000>;
-+		};
-+
-+		gpu_mem: memory@98f15000 {
-+			no-map;
-+			reg = <0x0 0x98f15000 0x0 0x2000>;
-+		};
-+
-+		spss_mem: memory@99000000 {
-+			no-map;
-+			reg = <0x0 0x99000000 0x0 0x100000>;
-+		};
-+
-+		cdsp_mem: memory@99100000 {
-+			no-map;
-+			reg = <0x0 0x99100000 0x0 0x1400000>;
-+		};
-+
-+		cont_splash_mem: memory@9c000000 {
-+			reg = <0x0 0x9c000000 0x0 0x2400000>;
-+			no-map;
-+		};
-+
-+		cdsp_sec_mem: memory@a4c00000 {
-+			reg = <0x0 0xa4c00000 0x0 0x3c00000>;
-+			no-map;
-+		};
-+
-+		ramoops@b0000000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xb0000000 0x0 0x400000>;
-+			console-size = <0x200000>;
-+			ecc-size = <0>;
-+			ftrace-size = <0>;
-+			pmsg-size = <0x200000>;
-+			record-size = <0>;
-+		};
-+
-+		/* Downstream dynamically allocates rmtfs_mem region using
-+		 * dma_alloc_coherent and adds 4k guard pages before and after
-+		 * it to workaround some "XPU limitation". */
-+		/* rmtfs_lower_guard */
-+		memory@f4100000 {
-+			no-map;
-+			reg = <0x0 0xf4100000 0x0 0x1000>;
-+		};
-+
-+		rmtfs_mem: memory@f4101000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0 0xf4101000 0x0 0x300000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <15>;
-+		};
-+
-+		/* rmtfs_upper_guard */
-+		memory@f4401000 {
-+			no-map;
-+			reg = <0x0 0xf4401000 0x0 0x1000>;
-+		};
-+	};
-+
-+	vdd_boost_vreg: vdd-boost-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vdd_boost_vreg";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		regulator-always-on;
-+		gpio = <&pm8150b_gpios 5 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vdd_boost_en_pin>;
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+	};
-+
-+	/* S4 is modeled as a fixed regulator in vendor sources */
-+	vreg_s4a_1p8: pm8150-s4-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_s4a_1p8";
-+
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&apps_rsc {
-+	pm8150-rpmh-regulators {
-+		compatible = "qcom,pm8150-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
-+		vdd-l2-l10-supply = <&vreg_bob>;
-+		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p9>;
-+		vdd-l6-l9-supply = <&vreg_s8c_1p3>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_1p9>;
-+		vdd-l13-l16-l17-supply = <&vreg_bob>;
-+
-+		vreg_s2a_0p6: smps2 {
-+			regulator-min-microvolt = <600000>;
-+			regulator-max-microvolt = <600000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_s2a_0p6";
-+		};
-+
-+		vreg_s5a_1p9: smps5 {
-+			regulator-min-microvolt = <1904000>;
-+			regulator-max-microvolt = <2040000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_s5a_0p6";
-+		};
-+
-+		vreg_s6a_0p9: smps6 {
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_s6a_0p9";
-+		};
-+
-+		vreg_l1a_0p75: ldo1 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l1a_0p75";
-+		};
-+
-+		vreg_l2a_3p1: ldo2 {
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l2a_3p1";
-+		};
-+
-+		vreg_l3a_0p8: ldo3 {
-+			regulator-min-microvolt = <480000>;
-+			regulator-max-microvolt = <932000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l3a_0p8";
-+		};
-+
-+		vreg_l5a_0p875: ldo5 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l5a_0p875";
-+		};
-+
-+		vreg_l6a_1p2: ldo6 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l6a_1p2";
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l7a_1p8";
-+		};
-+
-+		vreg_l9a_1p2: ldo9 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l9a_1p2";
-+		};
-+
-+		vreg_l10a_2p5: ldo10 {
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l10a_2p5";
-+		};
-+
-+		vreg_l11a_0p8: ldo11 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l11a_0p8";
-+		};
-+
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l12a_1p8";
-+		};
-+
-+		/* L13 is unused, but min/max are 3000000 for it. */
-+
-+		vreg_l14a_1p8: ldo14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l14a_1p8";
-+		};
-+
-+		vreg_l15a_1p7: ldo15 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1704000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l15a_1p7";
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l16a_2p7";
-+		};
-+
-+		vreg_l17a_3p0: ldo17 {
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l17a_3p0";
-+		};
-+
-+		vreg_l18a_0p8: ldo18 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150_l18a_0p8";
-+		};
-+	};
-+
-+	pm8150l-rpmh-regulators {
-+		compatible = "qcom,pm8150l-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+
-+		vdd-l1-l8-supply = <&vreg_s4a_1p8>;
-+		vdd-l2-l3-supply = <&vreg_s8c_1p3>;
-+		vdd-l4-l5-l6-supply = <&vreg_bob>;
-+		vdd-l7-l11-supply = <&vreg_bob>;
-+		vdd-l9-l10-supply = <&vreg_bob>;
-+
-+		vdd-bob-supply = <&vph_pwr>;
-+		vdd-flash-supply = <&vreg_bob>;
-+		vdd-rgb-supply = <&vreg_bob>;
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3350000>;
-+			regulator-max-microvolt = <4000000>;
-+			/* tavil-slim-pgd will request 3300000 */
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+			regulator-allow-bypass;
-+			regulator-name = "pm8150l_bob";
-+		};
-+
-+		vreg_s1c_1p1: smps1 {
-+			regulator-min-microvolt = <1128000>;
-+			regulator-max-microvolt = <1128000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_s1c_1p1";
-+		};
-+
-+		vreg_s8c_1p3: smps8 {
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_s8c_1p3";
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l1c_1p8";
-+		};
-+
-+		vreg_l2c_1p3: ldo2 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l2c_1p3";
-+		};
-+
-+		vreg_l3c_1p2: ldo3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l3c_1p2";
-+		};
-+
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l4c_1p8";
-+		};
-+
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <2928000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l5c_1p8";
-+		};
-+
-+		vreg_l6c_2p9: ldo6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-name = "pm8150l_l6c_2p9";
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l7c_3p0";
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l8c_1p8";
-+		};
-+
-+		vreg_l9c_2p9: ldo9 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-name = "pm8150l_l9c_2p9";
-+		};
-+
-+		vreg_l10c_3p3: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l10c_3p3";
-+		};
-+
-+		vreg_l11c_3p3: ldo11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-name = "pm8150l_l11c_3p3";
-+		};
-+	};
-+};
-+
-+&pm8150_gpios {
-+	vol_up_pin_a: vol-up-active {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+};
-+
-+&pm8150b_gpios {
-+	vdd_boost_en_pin: vdd-boost-en-pin {
-+		pins = "gpio12";
-+		function = "normal";
-+		output-low;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_HIGH>;
-+	};
-+};
-+
-+&pon {
-+	mode-recovery = <0x1>;
-+	mode-bootloader = <0x2>;
-+	mode-rtc = <0x3>;
-+	mode-normal = <0x20>;
-+	mode-panic = <0x21>;
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	/* gpios 0..3 are NFC spi, gpios 126..129 are FP spi */
-+	gpio-reserved-ranges = <0 4>, <126 4>;
-+
-+	ai_key_pin_a: ai-key-pin-active {
-+		pins = "gpio97";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	snps,has-lpm-erratum;
-+	snps,hird-threshold = /bits/ 8 <0x10>;
-+	maximum-speed = "high-speed";
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+	vdda-pll-supply = <&vreg_l5a_0p875>;
-+	vdda18-supply = <&vreg_l12a_1p8>;
-+	vdda33-supply = <&vreg_l2a_3p1>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+	vdda-phy-supply = <&vreg_l3c_1p2>;
-+	vdda-pll-supply = <&vreg_l5a_0p875>;
-+};
+So, initially I wrote just patch 1. And then the surrounding code 
+immediately prompted me to update the rest of the drm glue code. Elbow 
+deep, as I said. Patch 7 might be a bit advantageous (and maybe I should 
+remove it in future),
+
+> See [1] for an example.
+
+I think most of the patches circulating through the list are irrelevant 
+to this patch series, as they do not touch the drm glue code.
+
+>> The following changes since commit 6ed95285382d6f90a3c3a11d5806a5eb7db715c3:
+>>
+>>    drm/msm/a5xx: Fix missing CP_PROTECT for SMMU on A540 (2021-12-17 15:09:46 -0800)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://git.linaro.org/people/dmitry.baryshkov/kernel.git msm-dp-bridges
+>>
+>> for you to fetch changes up to 7eff304d50ba520e9193a293a8e42bbd9d7aa0e1:
+>>
+>>    drm/msm/dp: stop carying about the connector type (2022-01-07 04:56:06 +0300)
+>>
+>> ----------------------------------------------------------------
+>> Dmitry Baryshkov (7):
+>>        drm/msm/dp: fix panel bridge attachment
+>>        drm/msm/dp: support attaching bridges to the DP encoder
+>>        drm/msm/dp: replace dp_connector with drm_bridge_connector
+>>        drm/msm/dp: remove extra wrappers and public functions
+>>        drm/msm/dp: remove unused stubs
+>>        drm/msm/dp: remove dp_display_en/disable prototypes and data argument
+>>        drm/msm/dp: stop carying about the connector type
+>>
+>>   drivers/gpu/drm/msm/Makefile        |   1 -
+>>   drivers/gpu/drm/msm/dp/dp_display.c | 263 ++++++++++++++++++++++++++----------
+>>   drivers/gpu/drm/msm/dp/dp_display.h |   5 +-
+>>   drivers/gpu/drm/msm/dp/dp_drm.c     | 250 ----------------------------------
+>>   drivers/gpu/drm/msm/dp/dp_parser.c  |  28 ++--
+>>   drivers/gpu/drm/msm/dp/dp_parser.h  |   4 +-
+>>   drivers/gpu/drm/msm/msm_drv.h       |  32 +----
+>>   7 files changed, 203 insertions(+), 380 deletions(-)
+>>   delete mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
+>>
+> 
+> [1] https://lore.kernel.org/r/1640220845-25266-1-git-send-email-quic_khsieh@quicinc.com
+
+
 -- 
-2.32.0
-
+With best wishes
+Dmitry
