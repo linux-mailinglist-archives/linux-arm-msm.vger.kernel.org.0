@@ -2,81 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5732A4873E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 09:08:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17898487444
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 09:50:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235704AbiAGIIl convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Fri, 7 Jan 2022 03:08:41 -0500
-Received: from coyote.holtmann.net ([212.227.132.17]:52346 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235551AbiAGIIk (ORCPT
+        id S236356AbiAGIue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 03:50:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52084 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236255AbiAGIud (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 03:08:40 -0500
-Received: from smtpclient.apple (p4fefca45.dip0.t-ipconnect.de [79.239.202.69])
-        by mail.holtmann.org (Postfix) with ESMTPSA id DEC8ACECE8;
-        Fri,  7 Jan 2022 09:08:36 +0100 (CET)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH v5] Bluetooth: btqca: sequential validation
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1641536453-7628-1-git-send-email-quic_saluvala@quicinc.com>
-Date:   Fri, 7 Jan 2022 09:08:36 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        quic_hemantg@quicinc.com, linux-arm-msm@vger.kernel.org,
-        quic_bgodavar@quicinc.com, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, abhishekpandit@chromium.org,
-        mcchou@chromium.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <597B76E1-F88B-49C6-B849-5D9835AF3A06@holtmann.org>
-References: <1641536453-7628-1-git-send-email-quic_saluvala@quicinc.com>
-To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+        Fri, 7 Jan 2022 03:50:33 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8927DC061245;
+        Fri,  7 Jan 2022 00:50:33 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id v25so4938175pge.2;
+        Fri, 07 Jan 2022 00:50:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=IQS4J/qtHwJGGOnAQs0o0rtK4NFNyvH92Ln82XpYq1E=;
+        b=BR9uftG+cCtV8P36GOU+YlObjfqGNjV8mIZYTwYw5+DCzL+BOwdPwVbM3W2Gruavzu
+         32qKXVL3Pm05dggOZeyGMYvmCVPqcnm644blBcdbV+bKenZmugHuv991x8t0KfqfwIQV
+         72D0fgW9hmUTsgWjbgKZS4YCyBQ6kgfjpKzcwJtq1bvHQx4X4zTIOnNbJAxtClRLGJZi
+         1zSj3Oy67PRKgvBwhkJl8UPb6juw9oepXa+8aF6xLEm5RXNB/y3goROq2NB66Nv9KWMr
+         AfoSW1ItYV32P/T0irVa6Bw4SK9lVifs8P2m69RBE0IXafbaxoNuzUp8px1kY9ZYE5wB
+         Mxhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=IQS4J/qtHwJGGOnAQs0o0rtK4NFNyvH92Ln82XpYq1E=;
+        b=VOvnUCf5X7LXaC7OJfaHyZA89O1UjxpEWNEfkrDrT4w9WngsF/5/pNBJ+8Sx4ELsyn
+         N5ckMDs6fpiKv1kfyjP2RoV5lPehgZ2aJjlS2ezwDBKxm4V5C8ePsbwJTgiVwb7Z6gHc
+         mzyJTRqTaXAeTX82mC0mSUbSQA/IYmmRpjmnobJ83sXhDuOoih8DGPzlAToCGCJk36nI
+         5ahxUgCHUJ3IJ2FkuXEWK50sxuo1luvVbTA/kAQfQPXFVHgEr47ICm1clVO2jPXw4x75
+         C9Q9FTdbWFAt8MFEWlrMkcCSkkYZENLBBXv2obz0TrjMeqFJyBKil7IcPBxBp+PPps4X
+         FkIg==
+X-Gm-Message-State: AOAM531vGqQlFcF2rJIr/I2mdfKSC1v6Vhbwzzwe7CskblqHVdgQrUjj
+        rntUSmEYfsz3v/gO4HF7Zw8=
+X-Google-Smtp-Source: ABdhPJzrezcJmoyT8I5bb9IzMr0GwT31Qhm2NI7Dx6C7H3w2cx5/PuMuN/+otYHv28cEYnq5kQUd5w==
+X-Received: by 2002:a63:8149:: with SMTP id t70mr55367147pgd.71.1641545433164;
+        Fri, 07 Jan 2022 00:50:33 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id f20sm5167583pfe.166.2022.01.07.00.50.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jan 2022 00:50:32 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+Cc:     linmq006@gmail.com, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Archit Taneja <architt@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/hdmi: Fix missing put_device() call in msm_hdmi_get_phy
+Date:   Fri,  7 Jan 2022 08:50:22 +0000
+Message-Id: <20220107085026.23831-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sai,
+The reference taken by 'of_find_device_by_node()' must be released when
+not needed anymore.
+Add the corresponding 'put_device()' in the error handling path.
 
-> Added Sequential validation support
-> & patch command config
-> 
-> Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
-> 
-> v5:
-> * Addressed spacing in cmd
-> * Addressed position of int err declaration
-> * Removed redundant debug message
-> 
-> v4:
-> * addressed the change from u8 cmd to const u8 cmd
-> 
-> v3:
-> * removed rlen,rtype
-> * Replaced kfree with kfree_skb
-> 
-> v2:
-> * Added static declaration
-> * Addressed wrong indentation
-> * Removed EDL_PATCH_CONFIG_CMD_LEN
-> 
-> v1:
-> *Initial patch
-> ---
-> drivers/bluetooth/btqca.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
-> drivers/bluetooth/btqca.h |  2 ++
-> 2 files changed, 48 insertions(+)
+Fixes: e00012b256d4 ("drm/msm/hdmi: Make HDMI core get its PHY")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-so I applied this patch to bluetooth-next tree after fixing up the commit message.
-
-However, this is the last patch from anyone of your team that I am taking. The disrespect of the patch submission guidelines or even basic attempt to submit a patch in the correct form or with comments addressed is astonishing. Please read up on patch submission guidelines or watch Greg KH's multiple talks on the topic. You are wasting my time and there is no reason that simple patches like this take 7-10 attempts to get it right.
-
-If you want to know what you did wrong this time around, then maybe try to “git am” your email to a clean bluetooth-next and look on how it looks like with “git show” afterwards before sending it to anybody.
-
-Regards
-
-Marcel
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 75b64e6ae035..a439794a32e8 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -95,10 +95,15 @@ static int msm_hdmi_get_phy(struct hdmi *hdmi)
+ 
+ 	of_node_put(phy_node);
+ 
+-	if (!phy_pdev || !hdmi->phy) {
++	if (!phy_pdev) {
+ 		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
+ 		return -EPROBE_DEFER;
+ 	}
++	if (!hdmi->phy) {
++		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
++		put_device(&phy_pdev->dev);
++		return -EPROBE_DEFER;
++	}
+ 
+ 	hdmi->phy_dev = get_device(&phy_pdev->dev);
+ 
+-- 
+2.17.1
 
