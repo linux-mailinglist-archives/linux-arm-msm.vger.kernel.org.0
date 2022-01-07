@@ -2,93 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6C0E486F0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:49:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2219A486F16
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:52:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344469AbiAGAtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 19:49:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57960 "EHLO
+        id S1344534AbiAGAwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 19:52:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343865AbiAGAtq (ORCPT
+        with ESMTP id S1344063AbiAGAwb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 19:49:46 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D885C061201
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:49:46 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id r16so1712920ile.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:49:46 -0800 (PST)
+        Thu, 6 Jan 2022 19:52:31 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1B1C061201
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:52:31 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 35-20020a9d08a6000000b00579cd5e605eso5036163otf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:52:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rJcSInqpfPU6bE6yiy9usTY1S88S5qox1awnErqC6mA=;
-        b=J+sn/Rt5tV/i7W+5GNQyDfgnvURa3oaDBPDYDx6r16CTCV2ZnbDiyWKKFTVm8sM3uS
-         iILM1H1DJUvw9MuRVWtDnRthXmEyF505xWjHMjbHwcoek2o1YXmCA9mzF0Z+GXKSWOYL
-         t6rffkhd6DVbti1WN0s6crULf1f0kCww2JZDM=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=s3aPUnzYtbQdyger4FFqFgLjI63Heqt9JjnVsTDvx1g=;
+        b=YQRWy5nSJPHQ4hRAob2yOMp9D4kCgJVQ5yHcHhKjyTW/DJECb5qacmqSX79+xOSbs4
+         OcGPjU5cD2lngXPtzWSEHYB9nSmbZzIO+0jL4IFiZmMx/ZX68ZU7w7Za9vevCPEYUaXc
+         rRa0/MOnudrWVMZ+MCWKVmhwbWT5V/5zkB6EMpTxlPGIvSjNo0CWp09/MaSEAjjKXI4m
+         E5oxEz37pnP/Naar8HLJE9Kl4vWvyg1jo1IeZ70iX8TOXBbSVasphZ/HGduyZoaBJWwP
+         jvGRHaPE4XIZcQjcxF2OaNPEU+Cb/D2BAwKybhbLHlV67dlv4GRUHlCugGGw8IHpwN/y
+         9rcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rJcSInqpfPU6bE6yiy9usTY1S88S5qox1awnErqC6mA=;
-        b=cy1NErQGk3LVAMNb8H4iG9IztZz7pu4M6/xkCOi85lO3i/LFjHrW4etybfHC2IT2j4
-         zWzxElXMBuCWXYl0CNvuflFPsv/NbovTvhIQL6ce/aIJVViWYUmWtsiTdMonszT/Yl/G
-         TBHiO4koNf+8x/miqr/PmwY1OkNCoP57MeqdS8AweciJIFWp5GgSnhaG4iLhSOoV1glz
-         Zjg8w5QgAJZ6CNYMWRvuBJsi2r0IlSujhegKov2CCF9GXapFq4bc9OY8tDWGhguinBP6
-         FP/FF8DYrlSSb/uoov+70TpTISmoCPG93400gUYyKAcvwjxgyKIjeLaTk8btH6J3Lz0M
-         Md6w==
-X-Gm-Message-State: AOAM531FtzW30Vo1ag8ayWRFYsuRjMWsC5uCmShXT3LSYOTD3lbSuVcq
-        7WB0bKcCKfLrlYKP4vsiWR3c56EAJjPuIg==
-X-Google-Smtp-Source: ABdhPJyAqih3rsdAILXbrQxyYdyCqqF2kEFJSAFc2/GqfcQmVDw8LMBo9Buevuu4Fg71ym6sGxx+kQ==
-X-Received: by 2002:a92:db52:: with SMTP id w18mr30276175ilq.216.1641516585212;
-        Thu, 06 Jan 2022 16:49:45 -0800 (PST)
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com. [209.85.166.181])
-        by smtp.gmail.com with ESMTPSA id s20sm2040876iog.25.2022.01.06.16.49.44
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jan 2022 16:49:44 -0800 (PST)
-Received: by mail-il1-f181.google.com with SMTP id d14so3445782ila.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:49:44 -0800 (PST)
-X-Received: by 2002:a05:6e02:20e6:: with SMTP id q6mr29686099ilv.180.1641516584417;
- Thu, 06 Jan 2022 16:49:44 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=s3aPUnzYtbQdyger4FFqFgLjI63Heqt9JjnVsTDvx1g=;
+        b=JN2T/Zd31ezWlZojCRazQbr+D+4CVlHDWFlQsZivz5m9cGuJbs7rEbKP/ZXuFOhrQ1
+         OTrhOSp9Lmw/GtNvU5OgwI1ccf60X83iOOhocJHNqN9AdX67W6bFpvXiLPhyOmlKiw46
+         cyJFta/uJjyyREnEAr+7NHPGswzImnswjJ7PZLPmC8AHmK2OxUlnFaX8YPL7MpE2FQEp
+         c56mSsdEOEXgb9dghfgiKupz4sEjaApx0RnlraHHp/2Xamr/S6H9Hns6Sr8m8BF+t0qk
+         WVYLs4qNi2TqjTsWTfrRPKZ3k2UmEht1v9zU+QWToXD/kJJAifrKpe+bpe7BTgmjPxeM
+         68FQ==
+X-Gm-Message-State: AOAM533SIKGwhuwKAcEJkuMTCd4LXHJ1qfPrh448bcxOsiHDO+1meRCg
+        M0QfaSJAM5kE5N5oHKSvDciRIQ==
+X-Google-Smtp-Source: ABdhPJxaEwr/pVgQRGR6oItzZwZipY1ky/bn7O+vG2jFuV4Le4fXzFXjJf1hnC0sL5fZCeu+yYTOuw==
+X-Received: by 2002:a05:6830:10cc:: with SMTP id z12mr1216616oto.99.1641516750511;
+        Thu, 06 Jan 2022 16:52:30 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id bi20sm760074oib.29.2022.01.06.16.52.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jan 2022 16:52:30 -0800 (PST)
+Date:   Thu, 6 Jan 2022 16:53:17 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
+        greg@kroah.com, linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org, rnayak@codeaurora.org,
+        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org
+Subject: Re: [PATCH V3 5/7] arm64: dts: qcom: sc7280: Add EUD dt node and
+ dwc3 connector
+Message-ID: <YdeO/T0kQtNQfmx+@ripper>
+References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
+ <baf41480be71bd4472fe09c2993e43a780554d94.1641288286.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-References: <20211216044529.733652-1-swboyd@chromium.org>
-In-Reply-To: <20211216044529.733652-1-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 6 Jan 2022 16:49:32 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=X4a5oRQSpg2fp-++EEpK_d0UfybJTdEq9DbpeWkd+3zQ@mail.gmail.com>
-Message-ID: <CAD=FV=X4a5oRQSpg2fp-++EEpK_d0UfybJTdEq9DbpeWkd+3zQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: sc7180: Add board regulators for MIPI
- camera trogdor boards
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <baf41480be71bd4472fe09c2993e43a780554d94.1641288286.git.quic_schowdhu@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue 04 Jan 03:58 PST 2022, Souradeep Chowdhury wrote:
 
-On Wed, Dec 15, 2021 at 8:45 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Some trogdor boards have on-board regulators for the MIPI camera
-> components. Add nodes describing these regulators so boards with these
-> supplies can consume them.
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Add the Embedded USB Debugger(EUD) device tree node. The
+> node contains EUD base register region and EUD mode
+> manager register regions along with the interrupt entry.
+> Also add the connector to EUD which is mapped as the child
+> of dwc3. The connector is attached to EUD via port. Also add
+> the role-switch property to dwc3 node.
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 > ---
->
-> Changes from v1 (https://lore.kernel.org/r/20211215003639.386460-1-swboyd@chromium.org):
->  * Swapped order of regulators
->
->  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  16 +++
->  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  16 +++
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 122 ++++++++++++++++++
->  3 files changed, 154 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 53a21d0..2d14e5c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -1315,6 +1315,18 @@
+>  				phys = <&usb_2_hsphy>;
+>  				phy-names = "usb2-phy";
+>  				maximum-speed = "high-speed";
+> +				usb-role-switch;
+> +				usb_con: eud_usb_connector {
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+I think this is backwards.
+
+Iiuc you have dwc3 <-> EUD <-> connector, where the connector typically
+would be represented in relation to a Type-C controller.
+
+So I think this graph should be looking something like:
+
+
+dwc3 {
+    ports {
+        port {
+            dwc3_eud: endpoint {
+                remote-endpoint = <&eud_ep>;
+            };
+        };
+    };
+};
+
+eud {
+    ports {
+        port {
+            eud_dwc3: endpoint {
+                remote-endpoint = <&dwc3_eud>;
+            };
+        };
+
+        port {
+            eud_con: endpoint {
+                remote-endpoint = <&con_eud>;
+            };
+        };
+    };
+};
+
+connector {
+    compatible = "usb-c-connector";
+
+    ports {
+        port {
+            con_eud: endpoint {
+                remote-endpoint = <&eud_con>;
+            };
+        };
+    };
+};
+
+With EUD "forwarding" the role switching requests from the connector, or
+overriding them if the EUD is enabled.
+
+Alternatively the dwc3 would be in a graph with both the eud and the
+connector, but I don't know how to ensure that the EUD decision takes
+precedence over the type-c controllers role request...
+
+
+In the case of us having a type-c controller, such as the pmic_glink,
+the connector node would then be a child of the controller.
+
+Regards,
+Bjorn
+
+> +					compatible = "qcom,usb-connector-eud",
+> +						     "usb-c-connector";
+> +					ports {
+> +						port@0 {
+> +							usb2_role_switch: endpoint {
+> +								remote-endpoint = <&eud_ep>;
+> +							};
+> +						};
+> +					};
+> +				};
+>  			};
+>  		};
+>  
+> @@ -1339,6 +1351,19 @@
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		eud:  eud@88e0000 {
+> +			compatible = "qcom,sc7280-eud","qcom,eud";
+> +			reg = <0 0x88e0000 0 0x2000>,
+> +			      <0 0x88e2000 0 0x1000>;
+> +			interrupt-parent = <&pdc>;
+> +			interrupts = <11 IRQ_TYPE_LEVEL_HIGH>;
+> +			port {
+> +				eud_ep: endpoint {
+> +					remote-endpoint = <&usb2_role_switch>;
+> +				};
+> +			};
+> +		};
+> +
+>  		nsp_noc: interconnect@a0c0000 {
+>  			reg = <0 0x0a0c0000 0 0x10000>;
+>  			compatible = "qcom,sc7280-nsp-noc";
+> -- 
+> 2.7.4
+> 
