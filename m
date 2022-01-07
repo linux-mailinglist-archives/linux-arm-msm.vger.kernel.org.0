@@ -2,73 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8770A486F2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:55:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3D06486F31
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:55:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344021AbiAGAzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 19:55:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59186 "EHLO
+        id S236259AbiAGAzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 19:55:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343957AbiAGAzA (ORCPT
+        with ESMTP id S230226AbiAGAzX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 19:55:00 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B2FC061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:55:00 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id s127so6184946oig.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:55:00 -0800 (PST)
+        Thu, 6 Jan 2022 19:55:23 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24B4C061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:55:23 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id s73so6173538oie.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=0pYB0RbUQb+ZQoPYrHQZu7/mbDpmz+DgyrT9hvQMHLY=;
-        b=Eiq2sMVpWWW2opwh1s3oSD+oaO/zGcn7FnlC2rBpA08jcz+kUVeafqwvNnJuMyuUqe
-         9uGs/R9Fds44whRulyvtahDBqPz7smp88bIRpxpAz265T29JGxifo/nt/hHjFROtlIDX
-         DsN9DptDMweVHlZ/nJxP1DklA36xVnYoAXjMU=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PPHN7dIp4QC+dIELGI0e4PB8xgBekSRxt9hWBqYZaeQ=;
+        b=QAoJfOBrBgvrMUWejWpVu+DGP0fKi1jKKzzm0JxDDhqqdjpvInSeW2fQwwOZnN/44N
+         c9OjRqHLLopjfcrSBsptXfUcmjG2js+eW8+gv/n5Qa7hA8vDEYx6QpbShaiHjfrDYNAy
+         bKWR1MpZM0RvtS04wQaTyVhyhVd5BwrrhmwYUqwOxELjco1lKVtOYPKGQqR3CjOxDIUo
+         LsHxt5cLZW2PGLAbyqeOsD19xEXhTTgUtGaHNn/ySKyeBSb692CDquAmy3gx08FHyPvE
+         F/o2xfGaTrOwY46ssKOxkf0rIyWzi3qa/GnfGbIu+ksWxdFG3v264RLuRoK3pgkCRjhj
+         Awjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=0pYB0RbUQb+ZQoPYrHQZu7/mbDpmz+DgyrT9hvQMHLY=;
-        b=cJv1b3O1rHxmCR5wlUfEsynTnRjm0Jnfo5dedZ9P58JEEp8TBCv07dFPh1nCA7yiwM
-         2xGHvRqIZ6loCZTZttMp69ay7NI86xWtAa7UIO1++Y1PozfWzo9tHQGEPVthNso3vxer
-         zlTLfz3yeJFNRSglGcCeVnuLY+sXu2W3biljULRlUuTY2T2aMVePK3PjFWClYAqaNIZL
-         KlZ4Gv69ljKNabWW1HVWepCt0jpaogIcEvQMxV1W88BP5MOO1Q/wFAmDZr60aVyPCVBl
-         ABhBFiNSKSRXBlFNrL//zIAJNK1uDVZlbs1m9miFAJMIa2rikLl91jOFOTPPTuaniAu5
-         2MLA==
-X-Gm-Message-State: AOAM530+9SxVZtVcLzJIImFk2WUjtAyMnudef02D/W33x240iITUx1Ip
-        +aOxLLQzYgpwP13g2LIHwIe7Uay+yRpFZD+D1mTQ7Q==
-X-Google-Smtp-Source: ABdhPJzYKjK4yEo/vzFZbZ8eeAgkwCnr5IK1Nsn86Bcg+g6fm4a6GbPnGoQH9r+nY1PYdtmE7DycRXW6TwBE0GwCX40=
-X-Received: by 2002:a54:4710:: with SMTP id k16mr8059411oik.32.1641516900087;
- Thu, 06 Jan 2022 16:55:00 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Jan 2022 16:54:59 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PPHN7dIp4QC+dIELGI0e4PB8xgBekSRxt9hWBqYZaeQ=;
+        b=msplb3BzzQ0Sa40AaGiNL8xsNbhEBa1FUnGKsanWriGCP0V7PlqMdAejZ0IjKZ0QDC
+         O1TO27xgSosfKBnR1wU8HevixGh7SzyxFyXTbqv+YLmoMz3Ww+b35rm6o2SEc4Tg+luU
+         /3oTjbImyIHfrC8NVaIsToowa6zxyEsP2957F3U3gjDmYbnxL9ijsfmXe/EaGLIu1nEX
+         URR6S2r27YycHIkw3pKTu6EjruMVm+jEPg+IsXkikM8zBrsakphRFm0LJACykGutJanb
+         jMMCFA59/jVjbo6/7o+n/QC94BHyVIDPiLqQgbVpmVZN0IfMaTBMZWlYqtBViltV72C7
+         Ifvg==
+X-Gm-Message-State: AOAM530vTw2Tw1MCQ3UVsX7p5oxeMiCXu07HlxJ7IqhZ0Rm4I92FVoL6
+        6edQ1qmfJv2Ajd7LnZ+D7PtHkQ==
+X-Google-Smtp-Source: ABdhPJzreEyFRJ4mudEoHFIkqdyi66BzGsimcD1Jb7Q1Uwvgz9R2jmPCaxSvZBU0jpuX2qjcPAh0kQ==
+X-Received: by 2002:aca:1214:: with SMTP id 20mr6675134ois.126.1641516922985;
+        Thu, 06 Jan 2022 16:55:22 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w20sm5557otl.40.2022.01.06.16.55.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jan 2022 16:55:22 -0800 (PST)
+Date:   Thu, 6 Jan 2022 16:56:10 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
+        greg@kroah.com, linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org, rnayak@codeaurora.org,
+        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org
+Subject: Re: [PATCH V3 3/7] bindings: usb: dwc3: Update dwc3 properties for
+ EUD connector
+Message-ID: <YdePqpJjIiPAuHlJ@ripper>
+References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
+ <163f4d977fb6a0d80d8fd8d358991aeeb58d31a6.1641288286.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20220105231031.436020-3-dmitry.baryshkov@linaro.org>
-References: <20220105231031.436020-1-dmitry.baryshkov@linaro.org> <20220105231031.436020-3-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 6 Jan 2022 16:54:59 -0800
-Message-ID: <CAE-0n53OWdu7jdA-d_xr7LJunkZycjQE78Md+457_8=88uo2-Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] drm/msm/dpu: add DSPP blocks teardown
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <163f4d977fb6a0d80d8fd8d358991aeeb58d31a6.1641288286.git.quic_schowdhu@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-01-05 15:10:28)
-> Add missing calls to dpu_hw_dspp_destroy() to free resources allocated
-> for DSPP hardware blocks.
->
-> Fixes: e47616df008b ("drm/msm/dpu: add support for color processing blocks in dpu driver")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+On Tue 04 Jan 03:58 PST 2022, Souradeep Chowdhury wrote:
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Add the connector property for dwc3 node. This connector can
+> be used to role-switch the controller from device to host and
+> vice versa.
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> index 078fb78..9382168 100644
+> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+> @@ -318,6 +318,12 @@ properties:
+>      items:
+>        enum: [1, 4, 8, 16, 32, 64, 128, 256]
+>  
+> +  connector:
+
+The dwc3 isn't the connector, so I think you should put a ports {} in
+the dwc3 and link that to the connector that is described elsewhere.
+
+Regards,
+Bjorn
+
+> +    type: object
+> +    $ref: /connector/usb-connector.yaml#
+> +    description:
+> +      Connector for dual role switch, especially for "eud-usb-c-connector"
+> +
+>  unevaluatedProperties: false
+>  
+>  required:
+> -- 
+> 2.7.4
+> 
