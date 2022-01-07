@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D40B34871FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 06:10:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DF70487244
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 06:26:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230105AbiAGFKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 00:10:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60080 "EHLO
+        id S229953AbiAGF0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 00:26:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiAGFKz (ORCPT
+        with ESMTP id S229474AbiAGF0e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 00:10:55 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C7AC061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 21:10:54 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id p13so11451281lfh.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 21:10:54 -0800 (PST)
+        Fri, 7 Jan 2022 00:26:34 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26C1C061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 21:26:33 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id x7so11616538lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 21:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=0yKFhRVY+tmgEn1pnh2jXYO28tsu8Fn3zCjKHC19tG8=;
-        b=LM0sBgoiXVAKVgYQ7hvH4qn4ssRopfXMNhWLdwSG93358RsmXHTyImGboqD8IcX2yZ
-         XsuwL+phqMqClkbLW8JgbRRSAcvDGKX4LDZClZlqdJAJ7QCctHNWOwEyu0FTWWADbnVS
-         G9P2iuSHEuWX8dSL4vQSRNZySy6NMAWL+iqqMCzHCKGepTut/fVYAoUxwnpbJ7ZW2sCq
-         SiiZDOqZJBl20lZ8ai9g5+aCnmbrNWadJHgusUtHVOOy8LgihZNZeKXfgPJWBnxEk+ts
-         44Pwrfq40iKeadDW7xd1GolnM9r0onIm6TpRyvuyIpK0FS7KDVUMb/FaOhDRBbQe7Lbl
-         X2Gw==
+        bh=a74v7f2Hv+IdP7z/eazwaJeILmDVIwPUMnvFevEv50o=;
+        b=h/3VkUo9knDx+Rc/FxFMShrZTCS4vYa/9S1YN3FvnyogzeWCn9b/X4/RRr6UyHZ3LD
+         YB7yaCkQoFw+/zg0cTpEqRro8Yr9i+9CoZEAp9yyYuobFi5/gTJ/y84mJyJ2lDtp9xfS
+         y5FwyGMqQJkvrjCRqngOxvZr86JUgFVwHHcVbYNWoxZd+MUIUsF1AC1aXe/J0NW0OVpQ
+         8u/XncJbdsgaLZTCRwFCKjJ6KKAWx9WYZJmRJnJGv9vIpewSDojvcw9QYtlH7Zc6D+ZA
+         pgsusL51TOgIXaI7WVjYzD7kkPgLLrTitybrBffGfZke9rnwCpn7koF9GbL+AZezAT4U
+         s6rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=0yKFhRVY+tmgEn1pnh2jXYO28tsu8Fn3zCjKHC19tG8=;
-        b=a0vCWE4HA1nb4g37j+GqkxVE0VvF3OkQOOW8Er8kEWtj7r0N1fOlzo/DEOuBwvuEpx
-         JgeJcRoym4Z4bJeitWzn9J+4PJU8KcVCeidrvH2f+qLi9xmlTpi+kMN6UuFNrd+gKhYg
-         1HZn4LxVbZM0vO0Wv0aK6O9Pu88mDG2Yk2yCZloPnFf1+jTCC1a/HI731lrOVkcWZptO
-         FhDvuHF2FwX4FWFOe+8L7dj3zkjQUbFuOV1174aEPY5lPNCCfG8a4NqbasRCdNmTCkwf
-         Tqiz8Rwr7CUQZ3Iz2DaJWsHiM0df2kOT3fYUQWWrhkExK/+ISP3PG9NshE/erd7xgMiQ
-         tMUA==
-X-Gm-Message-State: AOAM533+Kcl41M+A5MPvyTY8eD6doe6R6JsPRwbtscm+0yPl88PBZmX6
-        WCzJS0JDc7SXt07SYm+zARAEmUiEjnfICA==
-X-Google-Smtp-Source: ABdhPJyDg1mIC7X2483Y3Ph4N0x5XTKoCpdyLSZUkspnNO0POxxLCuN5JpcD+sVxqaZCVr+5JN7Y0w==
-X-Received: by 2002:ac2:4f02:: with SMTP id k2mr54882293lfr.421.1641532252898;
-        Thu, 06 Jan 2022 21:10:52 -0800 (PST)
+        bh=a74v7f2Hv+IdP7z/eazwaJeILmDVIwPUMnvFevEv50o=;
+        b=aiFmFPMxMK9j0xQK9o/bYyhqH6VD1VEocsMnJ31TECqYVxApqRdBcXC0+jUqp4idJn
+         Yj00FdPmVHJtSOdDpZONFmalyiXZEq17MpJvIhsovqNJjA8sx25Lro/4dguTA6G9PmkD
+         2sYzfv6T8vmxY9X7rgfeKxtRfaE6kyjwEFEYDd/fUMvGxGwVhHSVLp13Bz/596CzvSft
+         OQLcrzGs+TvqzMUBXq6of1AqXHa6ehlTYa/DyYN5IF8mjDZIIg86jgOpF74nL25xJ4qP
+         N3UY+Aje7yb0UCPwGt2/LIrwHL39WjxjYylpx3Gajes2w3br16H4tWZlm+LA126Njlmz
+         RVaA==
+X-Gm-Message-State: AOAM531+4cg/JsOk9gITQnET5NUZolJbsKtDVS2zWvd+yXgeYba7OgvN
+        7CLErKMVUZTczPlOOR99GIoyYA==
+X-Google-Smtp-Source: ABdhPJzZ8pnVj1Q3UCYFQ8g4E+bQPTlPKB7qjdHEzzD5Cp6cloL6Q6CSqnGQB4vIirxvKUvj4pym7g==
+X-Received: by 2002:a05:6512:33ca:: with SMTP id d10mr53900180lfg.431.1641533191684;
+        Thu, 06 Jan 2022 21:26:31 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p20sm431865lfu.270.2022.01.06.21.10.52
+        by smtp.gmail.com with ESMTPSA id g5sm439133lfj.33.2022.01.06.21.26.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jan 2022 21:10:52 -0800 (PST)
-Message-ID: <0c63a37b-4db9-678b-38a5-c6470bbd0565@linaro.org>
-Date:   Fri, 7 Jan 2022 08:10:51 +0300
+        Thu, 06 Jan 2022 21:26:31 -0800 (PST)
+Message-ID: <a97cec56-5a8d-2b92-2850-af2a6d3fbf09@linaro.org>
+Date:   Fri, 7 Jan 2022 08:26:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.1
-Subject: Re: [RFC PATCH 1/7] drm/msm/dp: fix panel bridge attachment
+Subject: Re: [RFC PATCH 2/7] drm/msm/dp: support attaching bridges to the DP
+ encoder
 Content-Language: en-GB
 To:     Stephen Boyd <swboyd@chromium.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -65,34 +66,81 @@ Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20220107020132.587811-1-dmitry.baryshkov@linaro.org>
- <20220107020132.587811-2-dmitry.baryshkov@linaro.org>
- <CAE-0n52vvqW7ba5zw_jrqpW=ky_Pas=binMe-nYbr=8OQZs_jQ@mail.gmail.com>
+ <20220107020132.587811-3-dmitry.baryshkov@linaro.org>
+ <CAE-0n51XaV1+rh4CZKz7gMZBPkpq+wHcbNbgHFxoC1ikoDLkhQ@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n52vvqW7ba5zw_jrqpW=ky_Pas=binMe-nYbr=8OQZs_jQ@mail.gmail.com>
+In-Reply-To: <CAE-0n51XaV1+rh4CZKz7gMZBPkpq+wHcbNbgHFxoC1ikoDLkhQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/01/2022 06:37, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-01-06 18:01:26)
->> In commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
->> enable and disable") the DP driver received a drm_bridge instance, which
->> is always attached to the encoder as a root bridge. However it conflicts
->> with the panel_bridge support for eDP panels.
-> 
-> Can you elaborate here? How does it conflict? Could be as simple as "it
-> attaches before the panel bridge can attach to the root" or something
-> like that.
-
-Actually it would be the other way around: panel bridge attaching before 
-the "dp" one. But yes, you got the idea. I'll extend the patch's 
-description.
-
->> Change panel_bridge
->> attachment to come after dp_bridge attachment.
+On 07/01/2022 06:42, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-01-06 18:01:27)
+>> Currently DP driver will allocate panel bridge for eDP panels.
+>> Simplify this code to just check if there is any next bridge in the
+>> chain (be it a panel bridge or regular bridge). Rename panel_bridge
+>> field to next_bridge accordingly.
 >>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c |  2 +-
+>>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
+>>   drivers/gpu/drm/msm/dp/dp_drm.c     |  4 ++--
+>>   drivers/gpu/drm/msm/dp/dp_parser.c  | 26 ++++++++------------------
+>>   drivers/gpu/drm/msm/dp/dp_parser.h  |  2 +-
+>>   5 files changed, 13 insertions(+), 23 deletions(-)
+> 
+> I like this one, it certainly makes it easier to understand.
+> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+>> index a7acc23f742b..5de21f3d0812 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+>> @@ -307,11 +299,9 @@ static int dp_parser_parse(struct dp_parser *parser, int connector_type)
+>>          if (rc)
+>>                  return rc;
+>>
+>> -       if (connector_type == DRM_MODE_CONNECTOR_eDP) {
+> 
+> It feels like this is on purpose, but I don't see any comment so I have
+> no idea. I think qcom folks are concerned about changing how not eDP
+> works. I'll have to test it out locally.
+
+Ah, another thing that should go into the commit message.
+
+Current situation:
+- DP: no external bridges supported.
+- eDP: only a drm_panel wrapped into the panel bridge
+
+After this patch:
+- both DP and eDP support any chain of bridges attached.
+
+
+While the change means nothing for the DP (IIUC, it will not have any 
+bridges), it simplifies the code path, lowering the amount of checks.
+
+And for eDP this means that we can attach any eDP-to-something bridges 
+(e.g. NXP PTN3460).
+
+
+Well... After re-checking the source code for 
+devm_drm_of_get_bridge/drm_of_find_panel_or_bridge I should probably 
+revert removal of the check. The function will return -ENODEV if neither 
+bridge nor panel are specified.
+
+> 
+>> -               rc = dp_parser_find_panel(parser);
+>> -               if (rc)
+>> -                       return rc;
+>> -       }
+>> +       rc = dp_parser_find_next_bridge(parser);
+>> +       if (rc)
+>> +               return rc;
+>>
+>>          /* Map the corresponding regulator information according to
+>>           * version. Currently, since we only have one supported platform,
 
 
 -- 
