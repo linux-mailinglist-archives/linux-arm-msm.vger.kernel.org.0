@@ -2,151 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C005048700A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 03:01:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 261C4487038
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 03:16:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344448AbiAGCBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 21:01:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        id S1344612AbiAGCQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 21:16:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345294AbiAGCBn (ORCPT
+        with ESMTP id S1344454AbiAGCQW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 21:01:43 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A5DC061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 18:01:43 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id bp20so10263018lfb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 18:01:43 -0800 (PST)
+        Thu, 6 Jan 2022 21:16:22 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58407C061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 18:16:22 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id u21so6320945oie.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 18:16:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cavINj3cofdeKu4U7XMW4TvkQD30lvi7kbRjPCa2LIY=;
-        b=rqmMHxTRkxBezlU0DpApXj6CmPCvVe6iSMS3gnQffk6cfkuXdhKWWyryRJg2dfyX5r
-         L5qFK9EFsyUKEc4omyAf3RBXFQDmW9ZBRA2KDgVLkliganJiFDzqbBgM7V2s5FAhjvH8
-         82rZ5C+ZwWCS7+S3mXCsIXsmvjaFPZJnddI2ITMdIhpsI5zaBgNsY65gTd8DwBs4RjSz
-         21hQ3z4Ikd5kv/4QQVE/75cF+VjmHxyyh2QAQJYgJeaprpD9CFJqvgMQA/b8F76pZPTt
-         MP48hANI89zeJIu3u+77eWR/l+NDl0yQclhyZvbw4Uoo7LbHwWWOgntM5LrL52zVZFpD
-         Fl7A==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=kKwZjkLvH6ZAyxG0ybHLi0g/OyU34wARZkVSPe8lOGY=;
+        b=fjouixiydP9JfIEYO4dKSBB1qDJzNLODLO3f135n3yJtR03j2236LSj+1UPbe/Kb1q
+         LQRX4MrsVNp5T8wuwow6pj1u5cShr8gJF6PgM0j66XuE9fyBQPWBhCWkoS7SHjdiV+Vr
+         pcePNgHKNGX/5Y+o5qAiHk7TcmNiY+NaHuf+4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cavINj3cofdeKu4U7XMW4TvkQD30lvi7kbRjPCa2LIY=;
-        b=6gyMdZ1Y4+HiAeJ2lF7iZnquvFUIgHM2+EhFb2B5TCLubtZTH1uXsuAXVKLaKVwFkh
-         SsvmCTsV3mLPy6LuX6ohu8G28pPixt5VMbYz4+t0Ldi06/SXzW7QJxPGV3RAAt4t9/sH
-         TsXiP08O+BhmLvQIxCO9mSORpirIN79fEQ1/R8lvhVSQyL74n4fZpVBKP8lNSZ1nNjzd
-         ajlxfrsgWTQK8uHGtSA5TfbUZwdG6OXe5BtURuo4yrtuiKFaqRHsKywohd3uLoJrlETw
-         qoD4vt05MCJ7iuQPYx2Rx36nijkCwu6CigwslzwOr/ivhxjc7lb7YxLd1uP3D7HbKjhd
-         P8Bw==
-X-Gm-Message-State: AOAM532Kr5dAzM0zrkiAOiWrsrjTKcQMgBhJxMZWKiy0iLjGsQWalg06
-        A3yMyySzvuNqJ3PphOy4aJ/i5g==
-X-Google-Smtp-Source: ABdhPJzrdA/wggs3ngCjXFAtkKp0DyG0Sq0NZxWjQKwdK/7ikm1DhWRSKvTXFkqcoczymqKfvGE1DA==
-X-Received: by 2002:a05:6512:11c9:: with SMTP id h9mr39598037lfr.33.1641520901690;
-        Thu, 06 Jan 2022 18:01:41 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w12sm382837lfe.256.2022.01.06.18.01.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 18:01:40 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [RFC PATCH 7/7] drm/msm/dp: stop carying about the connector type
-Date:   Fri,  7 Jan 2022 05:01:32 +0300
-Message-Id: <20220107020132.587811-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=kKwZjkLvH6ZAyxG0ybHLi0g/OyU34wARZkVSPe8lOGY=;
+        b=RkS7yqqN8Ew6zCYnFkzDk0nB6+PuXPVr0NiadS1f6vjaYFwQMGb+fy1PONs388umHQ
+         fVli1+cEqxy9vIJMNJ5rUr/E+V1P8afsJNEUfR0E5w/lKIioZNVyNn6Aup0RGBwXNNTd
+         8b4WtUTE73cu+5A2tUAusNIsya4RMTrjHPxOk/6v6yqhU1bPSnwV1gAxCBqN+eIuSUmZ
+         X68h32HtCI4aYeaxKT7fn9xYi6SZ4skoqqzL9X9uWtTB91W5NcdoWbSABr+BasCpRA5X
+         xzGBLOIdNU9jkavcdzTm62x5HdtmL8htusQnuxWIBExeAa0j6wSnLKxPqwecPadd47mt
+         0NCQ==
+X-Gm-Message-State: AOAM531ZsteR//q6pL4jET5N/M6f4ZRxV1K78RkykbyjrYyKy4p2YWyH
+        Rkl7uXeLs0oOOpMXFXsylWP12cUG5SLddmVCsyp9ehD1uio=
+X-Google-Smtp-Source: ABdhPJw8A1/PY/9sW6U9NcUoroIzSiIr77qSNDetdvPRYOFPKJhRkXW9Sirs8QrjrRjfHfN7YWmkU3aTwiVMic/LFWU=
+X-Received: by 2002:a54:4710:: with SMTP id k16mr8244349oik.32.1641521781718;
+ Thu, 06 Jan 2022 18:16:21 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Jan 2022 18:16:21 -0800
+MIME-Version: 1.0
 In-Reply-To: <20220107020132.587811-1-dmitry.baryshkov@linaro.org>
 References: <20220107020132.587811-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 6 Jan 2022 18:16:21 -0800
+Message-ID: <CAE-0n52Si84XZxURUZ6ONKOCsyCDGF=AXHrStOoMPC67xRiVfQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/7] Simplify and correct msm/dp bridge implementation
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After changing dp_parser code to always check for the next bridge, it
-does not check connector type anymore. Remove connector type from the
-dp_paser_parse() arguments list and from the struct msm_dp_desc fields
-list.
+Quoting Dmitry Baryshkov (2022-01-06 18:01:25)
+> I noticed that commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
+> enable and disable") conflicts with the panel-edp (panel bridge)
+> support. Both bridges will try to attach directly to the drm encoder
+> itself. I started writing lengthy letter describing what is broken and
+> how it should be fixed. Then at some point I stopped and quickly coded
+> this RFC (which is compile-tested only).
+>
+> Comments and tests (on both DP and eDP setups) are more than welcome.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 9 ++++-----
- drivers/gpu/drm/msm/dp/dp_parser.c  | 2 +-
- drivers/gpu/drm/msm/dp/dp_parser.h  | 2 +-
- 3 files changed, 6 insertions(+), 7 deletions(-)
+There are some DP patches dribbling in every day or so and it's really
+hard to follow along. I asked Kuogee to resend all outstanding patches
+as a single series but that hasn't happened. I'm not super interested in
+reviewing/testing out these patches until the outstanding patches for DP
+on the list are reviewed and landed. Have you looked at those patches?
+See [1] for an example.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 720e80ea99cb..0a71a17975b0 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -129,7 +129,6 @@ struct dp_display_private {
- 
- struct msm_dp_desc {
- 	phys_addr_t io_start;
--	unsigned int connector_type;
- };
- 
- struct msm_dp_config {
-@@ -139,15 +138,15 @@ struct msm_dp_config {
- 
- static const struct msm_dp_config sc7180_dp_cfg = {
- 	.descs = (const struct msm_dp_desc[]) {
--		[MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-+		[MSM_DP_CONTROLLER_0] = { .io_start = 0x0ae90000 },
- 	},
- 	.num_descs = 1,
- };
- 
- static const struct msm_dp_config sc7280_dp_cfg = {
- 	.descs = (const struct msm_dp_desc[]) {
--		[MSM_DP_CONTROLLER_0] =	{ .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
--		[MSM_DP_CONTROLLER_1] =	{ .io_start = 0x0aea0000, .connector_type = DRM_MODE_CONNECTOR_eDP },
-+		[MSM_DP_CONTROLLER_0] =	{ .io_start = 0x0ae90000 },
-+		[MSM_DP_CONTROLLER_1] =	{ .io_start = 0x0aea0000 },
- 	},
- 	.num_descs = 2,
- };
-@@ -249,7 +248,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
- 	dp->dp_display.drm_dev = drm;
- 	priv->dp[dp->id] = &dp->dp_display;
- 
--	rc = dp->parser->parse(dp->parser, dp->dp_display.connector_type);
-+	rc = dp->parser->parse(dp->parser);
- 	if (rc) {
- 		DRM_ERROR("device tree parsing failed\n");
- 		goto end;
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-index 5de21f3d0812..044ab0b63b14 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.c
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-@@ -278,7 +278,7 @@ static int dp_parser_find_next_bridge(struct dp_parser *parser)
- 	return 0;
- }
- 
--static int dp_parser_parse(struct dp_parser *parser, int connector_type)
-+static int dp_parser_parse(struct dp_parser *parser)
- {
- 	int rc = 0;
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-index 4cec851e38d9..1f036dd3e224 100644
---- a/drivers/gpu/drm/msm/dp/dp_parser.h
-+++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-@@ -125,7 +125,7 @@ struct dp_parser {
- 	u32 max_dp_lanes;
- 	struct drm_bridge *next_bridge;
- 
--	int (*parse)(struct dp_parser *parser, int connector_type);
-+	int (*parse)(struct dp_parser *parser);
- };
- 
- /**
--- 
-2.34.1
+>
+> The following changes since commit 6ed95285382d6f90a3c3a11d5806a5eb7db715c3:
+>
+>   drm/msm/a5xx: Fix missing CP_PROTECT for SMMU on A540 (2021-12-17 15:09:46 -0800)
+>
+> are available in the Git repository at:
+>
+>   https://git.linaro.org/people/dmitry.baryshkov/kernel.git msm-dp-bridges
+>
+> for you to fetch changes up to 7eff304d50ba520e9193a293a8e42bbd9d7aa0e1:
+>
+>   drm/msm/dp: stop carying about the connector type (2022-01-07 04:56:06 +0300)
+>
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (7):
+>       drm/msm/dp: fix panel bridge attachment
+>       drm/msm/dp: support attaching bridges to the DP encoder
+>       drm/msm/dp: replace dp_connector with drm_bridge_connector
+>       drm/msm/dp: remove extra wrappers and public functions
+>       drm/msm/dp: remove unused stubs
+>       drm/msm/dp: remove dp_display_en/disable prototypes and data argument
+>       drm/msm/dp: stop carying about the connector type
+>
+>  drivers/gpu/drm/msm/Makefile        |   1 -
+>  drivers/gpu/drm/msm/dp/dp_display.c | 263 ++++++++++++++++++++++++++----------
+>  drivers/gpu/drm/msm/dp/dp_display.h |   5 +-
+>  drivers/gpu/drm/msm/dp/dp_drm.c     | 250 ----------------------------------
+>  drivers/gpu/drm/msm/dp/dp_parser.c  |  28 ++--
+>  drivers/gpu/drm/msm/dp/dp_parser.h  |   4 +-
+>  drivers/gpu/drm/msm/msm_drv.h       |  32 +----
+>  7 files changed, 203 insertions(+), 380 deletions(-)
+>  delete mode 100644 drivers/gpu/drm/msm/dp/dp_drm.c
+>
 
+[1] https://lore.kernel.org/r/1640220845-25266-1-git-send-email-quic_khsieh@quicinc.com
