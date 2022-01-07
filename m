@@ -2,384 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9D1A487CDC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 20:15:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41F8E487CFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 20:27:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbiAGTPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 14:15:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53208 "EHLO
+        id S231994AbiAGT1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 14:27:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230007AbiAGTPC (ORCPT
+        with ESMTP id S232106AbiAGT1I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 14:15:02 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21681C06173E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 11:15:02 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id w19-20020a056830061300b0058f1dd48932so7595616oti.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 11:15:02 -0800 (PST)
+        Fri, 7 Jan 2022 14:27:08 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C8DC061401
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 11:27:07 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id o3-20020a9d4043000000b0058f31f4312fso7688008oti.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 11:27:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WtHO/Q1bDJN+G650TFpgg/0NiPkrLAPHRgb8v223Lbo=;
-        b=qONpMQerFVvJzeuaO7HJZFklpD0RhtVscnKhouQotEj2yGV1inUiOVjoIrwSdcu3u5
-         pziPKDh5Uy7aBsppkzh1MRIAQnoQOo0+/Oan2f5Bj8tvGHYrreKOHECnFdMpf+pTDVTp
-         P6BK9/snST6swA4g+dDgOQLIU8d7pSDbV61aSvYUOrljBJJXiH0SdGOvcadatIgcLwwb
-         o2Dm/tjA4ew7sIDw0kzYcHUzJtXgLZke1SNSx1SqM2mbIZmTmLWLSXe3rzX9t1lMOLqP
-         /5hdc7f/ubXWLgLzD84Vgk0ltCExiIb7IxZ2x+0lwtIZI7R10QI/lxhIGdDsYzUvkLZ+
-         pxaQ==
+        bh=7NkUgJRGyv/mGOJjcDFlQgMnvKEd2905SAIiMK/+wtE=;
+        b=diH74T6M28+vlK6mRBohtBievIcLoYDNhMQVJQtqXb+BQhjwBBgE9hnxvnCqEe+mjX
+         /I+FLpA0O1vUce24LeiofkQWsLGWOE7ROTLL5BznzuyIqOMjBJoy98WIkTPWrdQmLORk
+         NyUa+oYBYwcr8qa6rjXNlyv3oytgrYJ2nQRZU5Ea6iuATUbNJ+EwEP3nsUG/QLDWyeTT
+         J/rSDvmtQ2TuOBt5ylcNqKi24SQiUxZ8/4Q57iFAvYzeKQ8o2/EZI0Z0IbuEl/KlGWmP
+         C/wVpqcEv74u4/20GTMZUSr4VOzA4mElSt4qA6VexPyNVk2iSPuEJAi6FudZaoN00sSO
+         LyZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WtHO/Q1bDJN+G650TFpgg/0NiPkrLAPHRgb8v223Lbo=;
-        b=PLvQcyjgT0Ptw6Bk19LTShEq0JkymsrqVnRhVjc7iPCQAa83GZHBVoOBfj49A+3lqe
-         V+6M7f77Che4RZf03xYt23VTmEBmjGkCc4WvgA+8r26tSR6YeoeS/Ae3gY5NjY9tCia/
-         w4QYD0bSwQ1fdb1CJeQqW9YYhKUmNLXY8hEaG2m3ZQxYksH7CC1cMgjqhnsd+9/Kl4Ts
-         CRjT6sWA0ptoQcYp2zyQAZ/XTHHgkz4wB6BVb2mVwBcai6N6A/SCcwR6/YVXwen7sVNx
-         +MPM7o2FBAFzzDLINULM3G4/UQRcyiu/NBz0dh6i7j6U+pYJvUYFhdyUKGrD8XCCXTZV
-         6CVA==
-X-Gm-Message-State: AOAM531xS1cTOmVEPR2mFnaeaqUAMg5dG8/2N+zPYBCkkV2cX4zfAtT6
-        yiuq78wN2X3M35evgNDL26NdCA==
-X-Google-Smtp-Source: ABdhPJyER9T3EOwYSOIowyTf9EWMcugUaNVPtcM6nDpPtMfbdbEXtdMfAc/EnCINbs1sZwTKzmfUgQ==
-X-Received: by 2002:a9d:84c:: with SMTP id 70mr47330471oty.185.1641582901293;
-        Fri, 07 Jan 2022 11:15:01 -0800 (PST)
+        bh=7NkUgJRGyv/mGOJjcDFlQgMnvKEd2905SAIiMK/+wtE=;
+        b=M0aBdI/jlBQJ+Sxkrz4CnfU4HgKs7/FCzypGZ70REj7FcUuWwxoiKPh0mR3OpjGLaJ
+         zbLOBVKnHO3wKv559vkA4p1ox5HczWfD3OICiUhUyUm6L7hsJJnsaE4K5nQ7boPFtgP9
+         oEBZpuEiOuaCYVy3DS4H4k99aERKn+nurBF1A9AaX7n9raO0o0KOxFR8zLRogluPdRaO
+         rF0+Z57RWHyZcyjJDdqEn22SEE/4UZgyosG6kaIavmhTUvhxucacu7CRqFBcIysC9EKl
+         xEe5glo9MTqLQCNKlbhZncBLY+RnJzGmSGrOFTPOa0yrhmOzmpEqZE6SsYPuwLx/c+12
+         d0jQ==
+X-Gm-Message-State: AOAM531qRuLdDRzT+YSkIX+wa9BIcg3T2h1MMdWXh2KqseCJMZADF5uk
+        Q1fuVEqFkeEFRBJBLwKpemVdrg==
+X-Google-Smtp-Source: ABdhPJwzflM4/ZC276UeLQsqnYjgLT3b8PYW7TqWlC7GqsDuQtLFWDALbglEfGsUu1xN50Cdhej/Fw==
+X-Received: by 2002:a05:6830:1d5c:: with SMTP id p28mr49666970oth.10.1641583627216;
+        Fri, 07 Jan 2022 11:27:07 -0800 (PST)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h1sm992357oog.26.2022.01.07.11.15.00
+        by smtp.gmail.com with ESMTPSA id l3sm1067724oic.37.2022.01.07.11.27.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 11:15:00 -0800 (PST)
-Date:   Fri, 7 Jan 2022 11:15:49 -0800
+        Fri, 07 Jan 2022 11:27:06 -0800 (PST)
+Date:   Fri, 7 Jan 2022 11:27:54 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH 2/8] phy: qcom-qmp: Register typec mux and orientation
- switch
-Message-ID: <YdiRZUV0oJfsdHZV@ripper>
-References: <20211228052116.1748443-1-bjorn.andersson@linaro.org>
- <20211228052116.1748443-3-bjorn.andersson@linaro.org>
- <Ycvx2qOlPsVIjkHq@matsya>
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     rjw@rjwysocki.net, lukasz.luba@arm.com, robh@kernel.org,
+        heiko@sntech.de, arnd@linaro.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, ulf.hansson@linaro.org,
+        Andy Gross <agross@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v5 6/6] qcom/soc/drivers: Add DTPM description for sdm845
+Message-ID: <YdiUOh8FtPRktlUM@ripper>
+References: <20211218130014.4037640-1-daniel.lezcano@linaro.org>
+ <20211218130014.4037640-7-daniel.lezcano@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Ycvx2qOlPsVIjkHq@matsya>
+In-Reply-To: <20211218130014.4037640-7-daniel.lezcano@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 28 Dec 21:27 PST 2021, Vinod Koul wrote:
+On Sat 18 Dec 05:00 PST 2021, Daniel Lezcano wrote:
 
-> On 27-12-21, 21:21, Bjorn Andersson wrote:
-> > The QMP PHY handles muxing of USB vs DisplayPort, as well as orientation
-> > switching of the SuperSpeed lanes. So register typec handlers for the
-> > two types.
-> > 
-> > The TypeC mux allows switching between four lanes of DisplayPort and a
-> > mixed USB+DP combination. This makes it possible to reach resolutions
-> > that requires 4 lanes.
-> > 
-> > The TypeC switch allows switching the SuperSpeed pins and have been
-> > tested with both 2 and 4 lane DisplayPort.
-> > 
-> > It's possible that in the USB mode the DP_MODE should be disabled, but
-> > this is left untouched.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > My suggestion is that if/once this patch is deemed acceptable the PHY
-> > maintainers could create a immutable branch/tag which can be merged into the
-> > PHY tree as well as the USB tree.
-> > 
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 176 +++++++++++++++++++++++++---
-> >  1 file changed, 158 insertions(+), 18 deletions(-)
-> > 
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > index 7bea6a60dc54..8d8139df9d8e 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-> > @@ -19,6 +19,8 @@
-> >  #include <linux/regulator/consumer.h>
-> >  #include <linux/reset.h>
-> >  #include <linux/slab.h>
-> > +#include <linux/usb/typec_dp.h>
-> > +#include <linux/usb/typec_mux.h>
-> >  
-> >  #include <dt-bindings/phy/phy.h>
-> >  
-> > @@ -3017,6 +3019,9 @@ struct qmp_phy_dp_clks {
-> >   * @phy_mutex: mutex lock for PHY common block initialization
-> >   * @init_count: phy common block initialization count
-> >   * @ufs_reset: optional UFS PHY reset handle
-> > + * @sw: typec switch for receiving orientation changes
-> > + * @mux: typec mux for DP muxing
-> > + * @orientation: carries current CC orientation
-> >   */
-> >  struct qcom_qmp {
-> >  	struct device *dev;
-> > @@ -3032,6 +3037,10 @@ struct qcom_qmp {
-> >  	int init_count;
-> >  
-> >  	struct reset_control *ufs_reset;
-> > +
-> > +	struct typec_switch *sw;
-> > +	struct typec_mux *mux;
-> > +	enum typec_orientation orientation;
-> >  };
-> >  
-> >  static void qcom_qmp_v3_phy_dp_aux_init(struct qmp_phy *qphy);
-> > @@ -4378,30 +4387,23 @@ static void qcom_qmp_v3_phy_configure_dp_tx(struct qmp_phy *qphy)
-> >  
-> >  static bool qcom_qmp_phy_configure_dp_mode(struct qmp_phy *qphy)
-> >  {
-> > +	const struct phy_configure_opts_dp *dp_opts = &qphy->dp_opts;
-> > +	bool reverse = qphy->qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-> >  	u32 val;
-> > -	bool reverse = false;
-> >  
-> >  	val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-> >  	      DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN;
-> >  
-> > -	/*
-> > -	 * TODO: Assume orientation is CC1 for now and two lanes, need to
-> > -	 * use type-c connector to understand orientation and lanes.
-> > -	 *
-> > -	 * Otherwise val changes to be like below if this code understood
-> > -	 * the orientation of the type-c cable.
-> > -	 *
-> > -	 * if (lane_cnt == 4 || orientation == ORIENTATION_CC2)
-> > -	 *	val |= DP_PHY_PD_CTL_LANE_0_1_PWRDN;
-> > -	 * if (lane_cnt == 4 || orientation == ORIENTATION_CC1)
-> > -	 *	val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-> > -	 * if (orientation == ORIENTATION_CC2)
-> > -	 *	writel(0x4c, qphy->pcs + QSERDES_V3_DP_PHY_MODE);
-> > -	 */
-> > -	val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-> > +	if (dp_opts->lanes == 4 || reverse)
-> > +		val |= DP_PHY_PD_CTL_LANE_0_1_PWRDN;
-> > +	if (dp_opts->lanes == 4 || !reverse)
-> > +		val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-> >  	writel(val, qphy->pcs + QSERDES_DP_PHY_PD_CTL);
-> >  
-> > -	writel(0x5c, qphy->pcs + QSERDES_DP_PHY_MODE);
-> > +	if (reverse)
-> > +		writel(0x4c, qphy->pcs + QSERDES_DP_PHY_MODE);
-> > +	else
-> > +		writel(0x5c, qphy->pcs + QSERDES_DP_PHY_MODE);
-> >  
-> >  	return reverse;
-> >  }
-> > @@ -5809,6 +5811,123 @@ static const struct dev_pm_ops qcom_qmp_phy_pm_ops = {
-> >  			   qcom_qmp_phy_runtime_resume, NULL)
-> >  };
-> >  
-> > +#if IS_ENABLED(CONFIG_TYPEC)
-> > +static int qcom_qmp_phy_typec_switch_set(struct typec_switch *sw,
-> > +		enum typec_orientation orientation)
+> The DTPM framework does support now the hierarchy description.
 > 
-> pls align to preceding open brace (here and other places)
+> The platform specific code can call the hierarchy creation function
+> with an array of struct dtpm_node pointing to their parents.
 > 
-
-Sure thing.
-
-> > +{
-> > +	struct qcom_qmp *qmp = typec_switch_get_drvdata(sw);
-> > +	void __iomem *dp_com = qmp->dp_com;
-> > +
-> > +	qmp->orientation = orientation;
-> > +
-> > +	if (orientation == TYPEC_ORIENTATION_REVERSE)
-> > +		qphy_setbits(dp_com, QPHY_V3_DP_COM_TYPEC_CTRL, 0x01);
-> > +	else
-> > +		qphy_clrbits(dp_com, QPHY_V3_DP_COM_TYPEC_CTRL, 0x01);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int qcom_qmp_phy_typec_mux_set(struct typec_mux *mux,
-> > +				      struct typec_mux_state *state)
-> > +{
-> > +	struct qcom_qmp *qmp = typec_mux_get_drvdata(mux);
-> > +	void __iomem *dp_com = qmp->dp_com;
-> > +	bool dp_mode;
-> > +	bool usb_mode;
-> > +
-> > +	switch (state->mode) {
-> > +	case TYPEC_STATE_SAFE:
-> > +	case TYPEC_STATE_USB:
-> > +		/*
-> > +		 * TODO: Figure out if we should clear DP_MODE when we enter a
-> > +		 * USB-only state.
-> > +		 */
-> > +		dp_mode = true;
+> This patch provides a description of the big and Little CPUs and the
+> GPU and tie them together under a virtual package name. Only sdm845 is
+> described.
 > 
-> should this be false for these states?
+> The description could be extended in the future with the memory
+> controller with devfreq if it has the energy information.
 > 
-
-I think it should, but figured that I better change the behavior in a
-separate follow-up commit. Might also be that SAFE should be
-false/false - or in some other way turning off the output.
-
-Hence the TODO.
-
-> > +		usb_mode = true;
-> > +		break;
-> > +	case TYPEC_DP_STATE_A:
-> > +	case TYPEC_DP_STATE_C:
-> > +	case TYPEC_DP_STATE_E:
-> > +		dp_mode = true;
-> > +		usb_mode = false;
-> > +		break;
-> > +	case TYPEC_DP_STATE_B:
-> > +	case TYPEC_DP_STATE_D:
-> > +	case TYPEC_DP_STATE_F:
-> > +		dp_mode = true;
-> > +		usb_mode = true;
-> > +		break;
-> > +	}
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> ---
+>  drivers/soc/qcom/Kconfig  |  9 ++++++
+>  drivers/soc/qcom/Makefile |  1 +
+>  drivers/soc/qcom/dtpm.c   | 65 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 75 insertions(+)
+>  create mode 100644 drivers/soc/qcom/dtpm.c
 > 
-> looks like dp_mode is true always. And only for DP state A C E, usb_mode
-> is false...
-> 
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index e718b8735444..f21c1df2f2f9 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -228,4 +228,13 @@ config QCOM_APR
+>  	  application processor and QDSP6. APR is
+>  	  used by audio driver to configure QDSP6
+>  	  ASM, ADM and AFE modules.
+> +
+> +config QCOM_DTPM
+> +	tristate "Qualcomm DTPM hierarchy"
+> +	depends on DTPM
+> +	help
+> +	 Describe the hierarchy for the Dynamic Thermal Power
+> +	 Management tree on this platform. That will create all the
+> +	 power capping capable devices.
+> +
+>  endmenu
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index 70d5de69fd7b..cf38496c3f61 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -28,3 +28,4 @@ obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
+>  obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+>  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+>  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+> +obj-$(CONFIG_QCOM_DTPM) += dtpm.o
+> diff --git a/drivers/soc/qcom/dtpm.c b/drivers/soc/qcom/dtpm.c
+> new file mode 100644
+> index 000000000000..c15283f59494
+> --- /dev/null
+> +++ b/drivers/soc/qcom/dtpm.c
+> @@ -0,0 +1,65 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright 2021 Linaro Limited
+> + *
+> + * Author: Daniel Lezcano <daniel.lezcano@linaro.org>
+> + *
+> + * DTPM hierarchy description
+> + */
+> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+> +
+> +#include <linux/dtpm.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +
+> +static struct dtpm_node __initdata sdm845_hierarchy[] = {
+> +	[0]{ .name = "sdm845" },
 
-A, C and E are 4-lanes DP, while B, D, F are 2-lane DP and 2-lane USB.
+Why is the index signifiant here?
+Doesn't this imply risk that we forget one element, which will be
+thereby implicitly be left initialized as {} and hence denote
+termination of the list?
 
-> > +
-> > +	qphy_setbits(dp_com, QPHY_V3_DP_COM_RESET_OVRD_CTRL,
-> > +		     SW_DPPHY_RESET_MUX | SW_USB3PHY_RESET_MUX);
-> > +	if (dp_mode)
-> > +		qphy_setbits(dp_com, QPHY_V3_DP_COM_PHY_MODE_CTRL, DP_MODE);
-> > +	else
-> > +		qphy_clrbits(dp_com, QPHY_V3_DP_COM_PHY_MODE_CTRL, DP_MODE);
-> > +
-> > +	if (usb_mode)
-> > +		qphy_setbits(dp_com, QPHY_V3_DP_COM_PHY_MODE_CTRL, USB3_MODE);
-> > +	else
-> > +		qphy_clrbits(dp_com, QPHY_V3_DP_COM_PHY_MODE_CTRL, USB3_MODE);
-> > +
-> > +	qphy_setbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
-> > +	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
-> > +	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int qcom_qmp_phy_typec_register(struct qcom_qmp *qmp,
-> > +				       const struct qmp_phy_cfg *cfg)
-> > +{
-> > +	struct typec_switch_desc sw_desc = {};
-> > +	struct typec_mux_desc mux_desc = {};
-> > +	struct device *dev = qmp->dev;
-> > +
-> > +	if (!cfg->has_phy_dp_com_ctrl)
-> > +		return 0;
-> > +
-> > +	sw_desc.drvdata = qmp;
-> > +	sw_desc.fwnode = dev->fwnode;
-> > +	sw_desc.set = qcom_qmp_phy_typec_switch_set;
-> > +	qmp->sw = typec_switch_register(dev, &sw_desc);
-> > +	if (IS_ERR(qmp->sw)) {
-> > +		dev_err(dev, "Error registering typec switch: %pe\n", qmp->sw);
-> > +		return PTR_ERR(qmp->sw);
-> > +	}
-> > +
-> > +	mux_desc.drvdata = qmp;
-> > +	mux_desc.fwnode = dev->fwnode;
-> > +	mux_desc.set = qcom_qmp_phy_typec_mux_set;
-> > +	qmp->mux = typec_mux_register(dev, &mux_desc);
-> > +	if (IS_ERR(qmp->mux)) {
-> > +		dev_err(dev, "Error registering typec mux: %pe\n", qmp->mux);
-> > +		typec_switch_unregister(qmp->sw);
-> > +		return PTR_ERR(qmp->mux);
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static void qcom_qmp_phy_typec_unregister(struct qcom_qmp *qmp)
-> > +{
-> > +	typec_mux_unregister(qmp->mux);
-> > +	typec_switch_unregister(qmp->sw);
-> > +}
-> > +#else
-> 
-> empty line here pls
-> 
+> +	[1]{ .name = "package",
+> +	     .parent = &sdm845_hierarchy[0] },
+> +	[2]{ .name = "/cpus/cpu@0",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[3]{ .name = "/cpus/cpu@100",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[4]{ .name = "/cpus/cpu@200",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[5]{ .name = "/cpus/cpu@300",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[6]{ .name = "/cpus/cpu@400",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[7]{ .name = "/cpus/cpu@500",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[8]{ .name = "/cpus/cpu@600",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[9]{ .name = "/cpus/cpu@700",
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[10]{ .name = "/soc@0/gpu@5000000",
 
-Okay.
+It worries me that we encode the textual structure of the dts in the
+kernel. E.g. for quite a while this was "/soc/gpu@5000000", so if this
+landed a year ago this driver would have prevented us from correcting
+the dts.
 
-Thanks,
+Another concern is that not all busses in the system are capable of
+36-bit wide addresses, so it's plausible that we might one day have to
+create a more accurate representation of the address space. Maybe not on
+SDM845, but this would force us to be inconsistent.
+
+Regards,
 Bjorn
 
-> > +static int qcom_qmp_phy_typec_register(struct qcom_qmp *qmp,
-> > +				       const struct qmp_phy_cfg *cfg)
-> > +{
-> > +	return 0;
-> > +}
-> > +
-> > +static void qcom_qmp_phy_typec_unregister(struct qcom_qmp *qmp)
-> > +{
-> > +}
-> > +#endif
-> > +
-> >  static int qcom_qmp_phy_probe(struct platform_device *pdev)
-> >  {
-> >  	struct qcom_qmp *qmp;
-> > @@ -5891,7 +6010,15 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
-> >  		return ret;
-> >  	}
-> >  
-> > -	num = of_get_available_child_count(dev->of_node);
-> > +	ret = qcom_qmp_phy_typec_register(qmp, cfg);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	num = 0;
-> > +	for_each_available_child_of_node(dev->of_node, child) {
-> > +		if (!of_node_name_eq(child, "port"))
-> > +			num++;
-> > +	}
-> >  	/* do we have a rogue child node ? */
-> >  	if (num > expected_phys)
-> >  		return -EINVAL;
-> > @@ -5918,6 +6045,9 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
-> >  			serdes = usb_serdes;
-> >  		}
-> >  
-> > +		if (of_node_name_eq(child, "port"))
-> > +			continue;
-> > +
-> >  		/* Create per-lane phy */
-> >  		ret = qcom_qmp_phy_create(dev, child, id, serdes, cfg);
-> >  		if (ret) {
-> > @@ -5962,8 +6092,18 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
-> >  	return ret;
-> >  }
-> >  
-> > +static int qcom_qmp_phy_remove(struct platform_device *pdev)
-> > +{
-> > +	struct qcom_qmp *qmp = platform_get_drvdata(pdev);
-> > +
-> > +	qcom_qmp_phy_typec_unregister(qmp);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  static struct platform_driver qcom_qmp_phy_driver = {
-> >  	.probe		= qcom_qmp_phy_probe,
-> > +	.remove		= qcom_qmp_phy_remove,
-> >  	.driver = {
-> >  		.name	= "qcom-qmp-phy",
-> >  		.pm	= &qcom_qmp_phy_pm_ops,
-> > -- 
-> > 2.33.1
-> 
+> +	     .type = DTPM_NODE_DT,
+> +	     .parent = &sdm845_hierarchy[1] },
+> +	[11]{ },
+> +};
+> +
+> +static struct of_device_id __initdata sdm845_dtpm_match_table[] = {
+> +        { .compatible = "qcom,sdm845", .data = sdm845_hierarchy },
+> +        {},
+> +};
+> +
+> +static int __init sdm845_dtpm_init(void)
+> +{
+> +	return dtpm_create_hierarchy(sdm845_dtpm_match_table);
+> +}
+> +late_initcall(sdm845_dtpm_init);
+> +
+> +MODULE_DESCRIPTION("Qualcomm DTPM driver");
+> +MODULE_LICENSE("GPL");
+> +MODULE_ALIAS("platform:dtpm");
+> +MODULE_AUTHOR("Daniel Lezcano <daniel.lezcano@kernel.org");
+> +
 > -- 
-> ~Vinod
+> 2.25.1
+> 
