@@ -2,93 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFD60487101
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 04:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 649A2487145
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 04:37:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbiAGDHZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 22:07:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32874 "EHLO
+        id S237188AbiAGDhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 22:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiAGDHZ (ORCPT
+        with ESMTP id S236277AbiAGDhC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 22:07:25 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54853C061245;
-        Thu,  6 Jan 2022 19:07:25 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id p14so3873613plf.3;
-        Thu, 06 Jan 2022 19:07:25 -0800 (PST)
+        Thu, 6 Jan 2022 22:37:02 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B2BC061245
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 19:37:01 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id n17-20020a9d64d1000000b00579cf677301so5283842otl.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 19:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gnH114STT8YnsWgJhc87udMHHLSSILWXx2aVT6ZKp78=;
-        b=IPtQgxNXXye3vrO61LkJ9uDE1W3w/2a5prtcwAumWGMDH716B3ATudCOceRiQIGvVu
-         ClTCAue88GqvjnTOTM/N3WbwI+exZvo3zdgowAkAsPL2PRctIqjiFE2MI2wxVdqXE/lu
-         jz+W6cpabAklUajeNsI2tBV1T9DdwN8MY5rEAACdCkgWlAUwJ06g20jKHfCbcpS31sMu
-         4xls6eLfYI9MF32eqGFhLxSPzKYIV4rTpe92Sy2gMvVxvgMHmAN3t+A9xbAGix973k7P
-         bqQwirW4Ec86gWbMPgV/ZEZRJFtJTV1G5h2NMNRvveodp6hGSGpHA7ohlhHMNgADWvYM
-         GF+A==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=V9mvsC6DGuIKmVWqSZ8Hh/LgnzR2ZGlGS22EsE3aa5c=;
+        b=gSpK8J4n7dxUsqwALzCNvN8wJ70GBoGsNjlrkbbYhD6WU2pNysbn/qal1NnPO+NrFM
+         dj8t9ARs4nKO0fUdROf18x6bcu2KIZdRw/sU8s2RfNKQ8xpYwtJtmpSEuRvmrD4yTf8x
+         O9P2bBGAeDrkzbCwSyidZj3iKWyTSeh2rjVcg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gnH114STT8YnsWgJhc87udMHHLSSILWXx2aVT6ZKp78=;
-        b=JaFCEtDMon1FtjNw54cKoNXIbdHp3uNb0BS0AXGrWUTWPCVcfWgU9TJJm6Gm5iihwt
-         Nvb45+KLZpDNd01DFZfVWAOQCYwnE8VuAR5W14uwY6gegrP/tupLTac/ECPtxm7pgbUm
-         hUI2pS5we9weifRnwgwCxLXaz1Q7rO6ahE838rMOujwo8+LHjCqrv4v92yN0awsPeFxo
-         GvEAp7JJxeWQeYa9tnaUU9GO2ZCtckyFeQlvlD1hstjFkd3nXyJ11Kesu8ILZRcsrpWF
-         cyVkqT3PxHDCdlX1L7SUoMa3q0zQMy2iG3ZvA4zPHuzGIhHdAw64A6yFvTSAQdGLSWze
-         hCYA==
-X-Gm-Message-State: AOAM531Zn0Rywm2bmpAvGCsK2LMRszYm6C+7t2iXQkjOXY1DKYmPDyZA
-        yu3td7HvCZc9oFbXLTIxW8rio2jehs/FH6B1TBo=
-X-Google-Smtp-Source: ABdhPJx/0/4bNwc0VXDEcBX+xyEgn9woQacd0N8S7Y3rirlAECRGPTJF6s8/62NjceRipUETMVA0gg==
-X-Received: by 2002:a17:90b:3a85:: with SMTP id om5mr13434408pjb.145.1641524844899;
-        Thu, 06 Jan 2022 19:07:24 -0800 (PST)
-Received: from VICKYMQLIN-NB1.localdomain ([103.172.116.195])
-        by smtp.gmail.com with ESMTPSA id nk13sm3568005pjb.36.2022.01.06.19.07.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Jan 2022 19:07:24 -0800 (PST)
-Date:   Fri, 7 Jan 2022 11:07:19 +0800
-From:   Miaoqian Lin <linmq006@gmail.com>
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     vladimir.zapolskiy@linaro.org, agross@kernel.org, balbi@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v2] usb: dwc3: dwc3-qcom: Add missing
- platform_device_put() in dwc3_qcom_acpi_register_core
-Message-ID: <20220107030719.GA1972@VICKYMQLIN-NB1.localdomain>
-References: <83d55401-d8b3-f709-c77a-fa0e09fda27f@linaro.org>
- <20220105065517.6967-1-linmq006@gmail.com>
- <Ydb8LIgZ/xGZ/lYX@kroah.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=V9mvsC6DGuIKmVWqSZ8Hh/LgnzR2ZGlGS22EsE3aa5c=;
+        b=L4gaaRFOVJooTiwKb1bO/LIU37R2WUiIWzUX0GAScAlXnNwjWa7KOkR7Zc4pURqpVf
+         OPR6hRzEN4+iOnhvw5lm92h4NiTxLvBcXRc1lRb2Xd+ElnD5l3QWF9jvzLpByb+08Xjp
+         dCr4F8fp9jJB7sXh/pj5jhL+NtAvLlJtOIJ2OPHaB1tB6SMEo1kF5Z2AOoP2y1VrkFFD
+         EQ2HXviPH2WiKU0htXv5wQkdCdwLgFiSRHyyWdkPPNqMKOpyXftMdp2as83u/kqZaJuQ
+         5hP+Snbzx2gSUaO7lYkV2rcZU6w+sAKKUSAmHsSoeIZ69PUP5IGZcpl7BXvBGY9e0gAq
+         RJ2Q==
+X-Gm-Message-State: AOAM532UmDojfgk8KhdQlI8zjFbzLs+T12kM4PMjNsnfP1Tok+/xSUUZ
+        DR/9xPw9YzfSrhwUMmou9c6Mr+O8+pmGv8vZAVPIqg==
+X-Google-Smtp-Source: ABdhPJyU0TGUnomL9oIu+YtgauKLIsxl0/No+gbVlEzQt9cSRx7b2g8hXaUYCjWvRTpSAEFsVO2YQWTDsqh0nBzcZyY=
+X-Received: by 2002:a9d:7451:: with SMTP id p17mr1037416otk.159.1641526621309;
+ Thu, 06 Jan 2022 19:37:01 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Jan 2022 19:37:00 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ydb8LIgZ/xGZ/lYX@kroah.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20220107020132.587811-2-dmitry.baryshkov@linaro.org>
+References: <20220107020132.587811-1-dmitry.baryshkov@linaro.org> <20220107020132.587811-2-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 6 Jan 2022 19:37:00 -0800
+Message-ID: <CAE-0n52vvqW7ba5zw_jrqpW=ky_Pas=binMe-nYbr=8OQZs_jQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/7] drm/msm/dp: fix panel bridge attachment
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi greg k-h:
-> > Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-> > Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-> > ---
-> > Changes in v2:
-> > - add fixes tag.
-> > - do error handling in a unified way.
-> > - add necessary blank line.
-> > ---
-> >  drivers/usb/dwc3/dwc3-qcom.c | 11 +++++++++--
-> >  1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> 
-> Does not apply to my tree at all :(
-> 
-> Please rebase and resend.
+Quoting Dmitry Baryshkov (2022-01-06 18:01:26)
+> In commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
+> enable and disable") the DP driver received a drm_bridge instance, which
+> is always attached to the encoder as a root bridge. However it conflicts
+> with the panel_bridge support for eDP panels.
 
-I see the v1 of this patch has been applied to usb-next branch.
-v2 has some format fixes. I am unsure should I rebase v2 on the top of usb-next?
-I am afraid to introduce more inconvenience.
+Can you elaborate here? How does it conflict? Could be as simple as "it
+attaches before the panel bridge can attach to the root" or something
+like that.
 
-Regards,
-Miaoqian.
+> Change panel_bridge
+> attachment to come after dp_bridge attachment.
+>
