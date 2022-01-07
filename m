@@ -2,96 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0F1748793F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 15:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F257B487959
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 15:56:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239397AbiAGOv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 09:51:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49586 "EHLO
+        id S239012AbiAGO4u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 09:56:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232065AbiAGOv4 (ORCPT
+        with ESMTP id S239425AbiAGO4m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 09:51:56 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0237BC06173E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 06:51:56 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id s19so5720536qtc.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 06:51:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8nl5vAeNGSOns35uL+fkC4uu+J6bk11HauJCQV7waYU=;
-        b=C/yvRfk+luoRHRR7kHkAThuRQYp4xm78a5kqIhQ8UpMeNBe0eGmcD1kQ7myXnJWzXD
-         Oc42tbOu6W//pMLS0RGc4l/yNqSmsIdk8WcpzutVWaYfhLGVSG/l5x5zu/t+SunX4i0r
-         ufP5oiYWU+ohl1aNtMR43P6ArASJUA+rBwf9NRMzzb8w/5h5qDGWEBke1mIjFSBViS9g
-         grsrZhMmuMCpotC6ymi092bmB9rl5cpdcymiOxkZyNmY0pPAnVp1GlYke9XK+NXR9xsW
-         AQBIkMDX+K5MhSQwkSS5u2nHOIXO6OAmqTKeS+wBLdUN5iEHzL1etCH04z38tIMIEaA2
-         xw5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8nl5vAeNGSOns35uL+fkC4uu+J6bk11HauJCQV7waYU=;
-        b=a27hfx+Hxsz6d6AtMySHVs3U2XbNOhTU5k697fBOa1RaWm3sZ3o9awA1n0hnEh4Ga+
-         bwdeofOxPCtxdm5aifN5bGa1DTtt60Zim3g7Z1vPIJE6WYzFYMrTD4LgD2yw02y+wrip
-         Cbb4ILLwJ5yMQLCzubUSpM8WDV25mYgFsiwy5+rV8KhrnqPT98a+XxchHjqxEDYfIGMO
-         V9i/T4hXzxpe+FG+rQTQdVm/ME0qwgiJU9VR7kEbKdJoJ9iacsYpgxIp2nPz6wPnMnhs
-         G+ZI8ePaNx+guVx1kRGVgFtwkk7XY53t7mx3IO/0UlB3SB7JaHbO7kmtp+ZdVLeQBC3O
-         T0IQ==
-X-Gm-Message-State: AOAM532srL5unPx+vTEmUSzVs++jsj6WyOhmlb+DjAEt0OzK3BK6sOrw
-        X32nZj/81MlKq4pzhWH/W4q2pJvCdbIH7Q==
-X-Google-Smtp-Source: ABdhPJw+X70xUw0SSMUFrYRmkB6I8xJ9Ys/8V5scbKprm7qM3U7XyJoaBel6NBHVbSQjcZTvZULcnA==
-X-Received: by 2002:a05:622a:1010:: with SMTP id d16mr8179622qte.81.1641567115127;
-        Fri, 07 Jan 2022 06:51:55 -0800 (PST)
-Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.googlemail.com with ESMTPSA id az16sm3776899qkb.124.2022.01.07.06.51.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 06:51:54 -0800 (PST)
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-To:     bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
-        rafael@kernel.org, herbert@gondor.apana.org.au
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: Update email address
-Date:   Fri,  7 Jan 2022 09:51:54 -0500
-Message-Id: <20220107145154.458779-1-thara.gopinath@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        Fri, 7 Jan 2022 09:56:42 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4023C061401;
+        Fri,  7 Jan 2022 06:56:41 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 829E561560;
+        Fri,  7 Jan 2022 14:56:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8184C36AEB;
+        Fri,  7 Jan 2022 14:56:39 +0000 (UTC)
+Date:   Fri, 7 Jan 2022 09:56:38 -0500
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Subject: Re: [PATCHv6 4/5] tracing: Add register read/write tracing support
+Message-ID: <20220107095638.7d81c1b9@gandalf.local.home>
+In-Reply-To: <df9b5a82-5f00-f3ec-14cf-0b212be2a7a7@quicinc.com>
+References: <cover.1638858746.git.quic_saipraka@quicinc.com>
+        <76983c26d889df7252a17017a48754163fb6b0d5.1638858747.git.quic_saipraka@quicinc.com>
+        <20220106131824.073fbe5c@gandalf.local.home>
+        <df9b5a82-5f00-f3ec-14cf-0b212be2a7a7@quicinc.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update my email address in the MAINTAINERS file as  the current
-one will stop functioning in a while.
+On Fri, 7 Jan 2022 10:40:05 +0530
+Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
 
-Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
----
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Hi Steve,
+> 
+> On 1/6/2022 11:48 PM, Steven Rostedt wrote:
+> > This should not be in the kernel/trace directory. It should be in the  
+> 
+> Hmm these are called from low level generic io header file 
+> (include/asm-generic/) where
+> we wouldn't have any Kconfig to control this feature flexibly and as we 
+> can have this as
+> a generic feature selectable by other architectures, wouldn't this be 
+> suited in kernel/trace?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fb18ce7168aa..afcdd7588822 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -15751,7 +15751,7 @@ F:	Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
- F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
- 
- QUALCOMM CRYPTO DRIVERS
--M:	Thara Gopinath <thara.gopinath@linaro.org>
-+M:	Thara Gopinath <thara.gopinath@gmail.com>
- L:	linux-crypto@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-@@ -15868,7 +15868,7 @@ F:	include/linux/if_rmnet.h
- 
- QUALCOMM TSENS THERMAL DRIVER
- M:	Amit Kucheria <amitk@kernel.org>
--M:	Thara Gopinath <thara.gopinath@linaro.org>
-+M:	Thara Gopinath <thara.gopinath@gmail.com>
- L:	linux-pm@vger.kernel.org
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
--- 
-2.25.1
+Isn't there a place for generic rwmmio code?
 
+> I thought you were ok with the folder structure in the initial versions 
+> of the series?
+
+Sorry, I missed the C file in kernel/trace. The files in kernel/trace tend
+to be specific for the internals of tracing. This C file is more to hold
+helper functions for mmio, which to me should be someplace for mmio code.
+Perhaps in mm/ ?
+
+-- Steve
