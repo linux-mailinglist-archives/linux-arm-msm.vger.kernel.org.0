@@ -2,655 +2,773 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5125487D54
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 20:51:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B56D487D89
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 21:12:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbiAGTv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 14:51:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33358 "EHLO
+        id S231223AbiAGUMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 15:12:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233580AbiAGTv4 (ORCPT
+        with ESMTP id S230022AbiAGUMv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 14:51:56 -0500
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8C1C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 11:51:55 -0800 (PST)
-Received: by mail-oo1-xc33.google.com with SMTP id y13-20020a4a624d000000b002daae38b0b5so1766845oog.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 11:51:55 -0800 (PST)
+        Fri, 7 Jan 2022 15:12:51 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F7DC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 12:12:51 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id g79-20020a9d12d5000000b0058f08f31338so7813425otg.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 12:12:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VvmNzmjc2WEotJx4JTnHryRS0wiwmcvORbMIh69FTm0=;
-        b=mHAD+sPLoXpkc9VpPoHX/GdzZGd56s9sTSdFb9t7oX8F/RO2TslxQoboNkosPsl/aG
-         q3trh94drZqprgQZKGiig0vWqcjqjKpEKJKCHEtliBXiQSE37v4AKjHihsSVCphd2Js/
-         lkyoE8ByeXCppoFP653HLXPp8XKLGZLXbylXLdEdcGfyGomlHSahm+a7ma8rTh2CVi5T
-         5AEMuwpQ0mTsgHlw67AyDSgwgKrq44rv2xlqQ9AXX2dglyg1EPIxEaX7JuaF28agU07N
-         rmm+uvhibsXvzQ/6Ag0n3RH19dPjdVjM18cpb9okrnMT/vqn0c6470C6itoTCOm2Xthn
-         4GWw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=qzxB3QmI0R1PQdjcWH6dhajVuNaMFY/w5f3MEMdABg0=;
+        b=Jv5ZVUAwsmOEykUWa1tM5qAcstG212PlitzA9gXEpZimi/ARDTNKWHQkGcfB8THm9y
+         9nS05fdjc9RrUXf2MZNjBxhoNsFhw3ZPnBB+fa1PdQBKEp0r+UapnueMtTJZX7NEQRw0
+         Fvy2x/y7RTf6oiHcaOwfBOdn1Twjt/cw60rv4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VvmNzmjc2WEotJx4JTnHryRS0wiwmcvORbMIh69FTm0=;
-        b=76Jr+ARFu6AoXpmP97LV2DTXiYz+TcZ+SiMNlFoJz66BHDvZivdIeHmK6rkCIslYRK
-         vshvkWVur9ipQXoh7g3THQnMiRpUb6hmuFf4S7UNvMs8+UdC2JrKtmvnlqr+4PCef5Hz
-         4I8xQhIxIP6ELZq7VMvT75Dr4MSOVxcpueYgwTRWpM06V2chW5ZTExHxn3aTehGNQqWg
-         Wz9vkRezc/T+PHsZ/Jv0Glny/JvAIasseNRLg1gLYz7klQGEbi+2RN3P8cgszrzIYD9z
-         5FkcOC4NEl2afUidTcXz9BlSYew+9QjPKtlUuuDxL4ZYyNCELgri/i58n2cmQx+VK7IS
-         yUBw==
-X-Gm-Message-State: AOAM530ZjkstGWGxNYrdektZ14UwvqD8rcS9aKXesL0jtTaLh5YpozcH
-        H2rbOVoAwBDlu2GETsQvBkfoeA==
-X-Google-Smtp-Source: ABdhPJwaUgAptayEIJY2k+FJLE1hIhKGUgNC2BS9eOAelcDNmnv6GkahYlUlK++07L1qyahdx+0iBg==
-X-Received: by 2002:a4a:cb95:: with SMTP id y21mr2161390ooq.54.1641585114839;
-        Fri, 07 Jan 2022 11:51:54 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e6sm1011213oot.6.2022.01.07.11.51.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 11:51:54 -0800 (PST)
-Date:   Fri, 7 Jan 2022 11:52:43 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org,
-        jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, jgrahsl@snap.com,
-        hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH 5/7] media: camss: Add regulator_bulk support
-Message-ID: <YdiaC9eS05qna0Hm@ripper>
-References: <20220106235540.1567839-1-bryan.odonoghue@linaro.org>
- <20220106235540.1567839-6-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=qzxB3QmI0R1PQdjcWH6dhajVuNaMFY/w5f3MEMdABg0=;
+        b=I0Fg+1Pr9SlTqr9DtHA/lj/KVtkLSWHRGLZ1K9lpvUPWnRhMqqnF133aiar0RAnEr/
+         00femUIFLWTZl06Dc35St7UCqiTFSbMNIrYtgNrlTsE8X0iHE3x3pTmZyfcRcjX58v7l
+         4+xMRrMjAJPNlaTpjt7sU5N1Vmy6olGB9qvLbTNobDTypN3e+kn4zEtotTq+hU5OD8Pn
+         gUytLOtDcXtzdM5WFTNu/wmqnTMEKBqLtR32v3rM73HJG9ZMJrox/2Wfx4UsiG/cbcho
+         XmXLG4Yd8Ma/UxECce6NiAfW9DEx4IGOqkBvFIYRQ/9VIS0E8IcEMuyK73nwfhnkJRcd
+         TdIA==
+X-Gm-Message-State: AOAM530vvOQkuUthFq8SWC2De58UdDe3O3OmWZwbQzKRjoAQIcGa8Mpq
+        42EhmnQ1pOfuZhMZlSpgDlqXkGzMsr3BZZ7lT2XPUg==
+X-Google-Smtp-Source: ABdhPJwifaKAQVUzFBHvz2RTjON2cRWf5r7+OYu6xAKRQi1eSG9iNVdvHYBYSlK4afPTxjVnhP2ZNqDPiNMeedmu448=
+X-Received: by 2002:a9d:7451:: with SMTP id p17mr3219475otk.159.1641586370389;
+ Fri, 07 Jan 2022 12:12:50 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 7 Jan 2022 12:12:49 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220106235540.1567839-6-bryan.odonoghue@linaro.org>
+In-Reply-To: <87pmp3lmmo.fsf@intel.com>
+References: <20220106214556.2461363-1-swboyd@chromium.org> <20220106214556.2461363-4-swboyd@chromium.org>
+ <87pmp3lmmo.fsf@intel.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 7 Jan 2022 12:12:49 -0800
+Message-ID: <CAE-0n53yT2D7q7gXCPq19EGUqN8NRLYq9WUd=wPPR8JY9SSqoQ@mail.gmail.com>
+Subject: Re: [PATCH v5 03/32] component: Move struct aggregate_device out to
+ header file
+To:     Douglas Anderson <dianders@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jani Nikula <jani.nikula@linux.intel.com>
+Cc:     Saravana Kannan <saravanak@google.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        freedreno@lists.freedesktop.org, Ingo Molnar <mingo@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 06 Jan 15:55 PST 2022, Bryan O'Donoghue wrote:
+Quoting Jani Nikula (2022-01-07 05:07:59)
+> On Thu, 06 Jan 2022, Stephen Boyd <swboyd@chromium.org> wrote:
+> > This allows aggregate driver writers to use the device passed to their
+> > probe/remove/shutdown functions properly instead of treating it as an
+> > opaque pointer.
+>
+> You say it like having opaque pointers with interfaces instead of
+> exposed data is a bad thing.
 
-> Add the ability to enable or disable multiple regulators in bulk with
-> camss. This is useful for sm8250, sdm845 and it looks like sdm660 where we
-> have more than one CSI regulator to do at once.
-> 
-> It should just work for standalone existing vdda regulators and parts which
-> don't have an explicitly defined CSI regulator.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  .../media/platform/qcom/camss/camss-csid.c    | 40 +++++---
->  .../media/platform/qcom/camss/camss-csid.h    |  3 +-
->  drivers/media/platform/qcom/camss/camss.c     | 94 +++++++++----------
->  drivers/media/platform/qcom/camss/camss.h     |  2 +-
->  4 files changed, 75 insertions(+), 64 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 32f82e471bae1..786a18bd9571c 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -173,7 +173,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  		if (ret < 0)
->  			return ret;
->  
-> -		ret = csid->vdda ? regulator_enable(csid->vdda) : 0;
-> +		ret = regulator_bulk_enable(csid->num_supplies,
-> +					    csid->supplies);
->  		if (ret < 0) {
->  			pm_runtime_put_sync(dev);
->  			return ret;
-> @@ -181,16 +182,16 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  
->  		ret = csid_set_clock_rates(csid);
->  		if (ret < 0) {
-> -			if (csid->vdda)
-> -				regulator_disable(csid->vdda);
-> +			regulator_bulk_disable(csid->num_supplies,
-> +					       csid->supplies);
->  			pm_runtime_put_sync(dev);
->  			return ret;
->  		}
->  
->  		ret = camss_enable_clocks(csid->nclocks, csid->clock, dev);
->  		if (ret < 0) {
-> -			if (csid->vdda)
-> -				regulator_disable(csid->vdda);
-> +			regulator_bulk_disable(csid->num_supplies,
-> +					       csid->supplies);
->  			pm_runtime_put_sync(dev);
->  			return ret;
->  		}
-> @@ -201,8 +202,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  		if (ret < 0) {
->  			disable_irq(csid->irq);
->  			camss_disable_clocks(csid->nclocks, csid->clock);
-> -			if (csid->vdda)
-> -				regulator_disable(csid->vdda);
-> +			regulator_bulk_disable(csid->num_supplies,
-> +					       csid->supplies);
->  			pm_runtime_put_sync(dev);
->  			return ret;
->  		}
-> @@ -211,7 +212,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->  	} else {
->  		disable_irq(csid->irq);
->  		camss_disable_clocks(csid->nclocks, csid->clock);
-> -		ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
-> +		regulator_bulk_disable(csid->num_supplies,
-> +				       csid->supplies);
->  		pm_runtime_put_sync(dev);
->  		if (version == CAMSS_8250 || version == CAMSS_845)
->  			vfe_put(vfe);
-> @@ -660,14 +662,22 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->  	}
->  
->  	/* Regulator */
-> -
-> -	csid->vdda = NULL;
-> -	if (res->regulator[0])
-> -		csid->vdda = devm_regulator_get(dev, res->regulator[0]);
-> -	if (IS_ERR(csid->vdda)) {
-> -		dev_err(dev, "could not get regulator\n");
-> -		return PTR_ERR(csid->vdda);
-> +	for (i = 0; i < ARRAY_SIZE(res->regulators); i++) {
-> +		if (res->regulators[i])
-> +			csid->num_supplies++;
->  	}
-> +	csid->supplies = devm_kmalloc_array(camss->dev, csid->num_supplies,
-> +					    sizeof(csid->supplies), GFP_KERNEL);
+I didn't intend to convey that message at all and in fact I didn't write
+that opaque pointers are a bad thing.
 
-When res->regulators is empty num_supplies will be 0 and you will get
-ZERO_SIZE_PTR back here, so this works just fine - but I had to read the
-code to learn what kzalloc(0) returns.
+>
+> Data is not an interface. IMO if you can get by with keeping the types
+> private, go for it. Unless I'm missing something, you only need the
+> parent dev pointer. Maybe add a helper function for it?
 
-Perhaps it would be nice to be explicit and make the allocation
-conditional on num_supplies? And leave csid->supplies NULL when this
-happens?
+Sure I'll add a function for that.
 
-> +	if (!csid->supplies)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < csid->num_supplies; i++)
-> +		csid->supplies[i].supply = res->regulators[i];
-> +
-> +	ret = devm_regulator_bulk_get(camss->dev, csid->num_supplies,
-> +				      csid->supplies);
-> +	if (ret)
-> +		return ret;
->  
->  	init_completion(&csid->reset_complete);
->  
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> index 17a50fa426be1..f06040e44c515 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> @@ -152,7 +152,8 @@ struct csid_device {
->  	char irq_name[30];
->  	struct camss_clock *clock;
->  	int nclocks;
-> -	struct regulator *vdda;
-> +	struct regulator_bulk_data *supplies;
-> +	int num_supplies;
->  	struct completion reset_complete;
->  	struct csid_testgen_config testgen;
->  	struct csid_phy_config phy;
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index d9905e737d88d..419c48c4f1d52 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -34,7 +34,7 @@
->  static const struct resources csiphy_res_8x16[] = {
->  	/* CSIPHY0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
+>
+> It's trivial to expose the guts like this, but it's usually a lot of
+> hard work to go the other way. Look at the dependencies of component.h
+> now. To keep it self-contained, i.e. buildable without implicit
+> dependencies, you'd need to add #include <device.h>, which goes on to
+> include the world. Then have a look at [1].
+>
+> Please at least let's not do this lightly.
+>
 
-To me this indicates that regulators is an array of 1 element and we set
-it to NULL, which based on how above is written must have been the case
-at some point.
+Got it. Thanks! How does this look?
 
-But I would have preferred this was written as:
+---8<---
+diff --git a/drivers/base/component.c b/drivers/base/component.c
+index cd50137753b4..e8f09945c261 100644
+--- a/drivers/base/component.c
++++ b/drivers/base/component.c
+@@ -56,6 +56,27 @@ struct component_match {
+ 	struct component_match_array *compare;
+ };
 
-		.regulators = {},
++struct aggregate_device {
++	const struct component_master_ops *ops;
++	struct device *parent;
++	struct device dev;
++	struct component_match *match;
++	struct aggregate_driver *adrv;
++
++	int id;
++};
++
++static inline struct aggregate_device *to_aggregate_device(struct device *d)
++{
++	return container_of(d, struct aggregate_device, dev);
++}
++
++struct device *aggregate_device_parent(struct aggregate_device *adev)
++{
++	return adev->parent;
++}
++EXPORT_SYMBOL_GPL(aggregate_device_parent);
++
+ struct component {
+ 	struct list_head node;
+ 	struct aggregate_device *adev;
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+index 0463386a6ed2..5fa868cf9825 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+@@ -27,7 +27,7 @@ struct komeda_dev *dev_to_mdev(struct device *dev)
 
-Perhaps the maintainer can chime in with a verdict if this would be okay
-to do as part of this change?
+ static void komeda_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
 
-Regards,
-Bjorn
+ 	if (!mdrv)
+@@ -48,7 +48,7 @@ static void komeda_unbind(struct aggregate_device *adev)
 
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
->  		.clock_rate = { { 0 },
->  				{ 0 },
-> @@ -46,7 +46,7 @@ static const struct resources csiphy_res_8x16[] = {
->  
->  	/* CSIPHY1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer" },
->  		.clock_rate = { { 0 },
->  				{ 0 },
-> @@ -60,7 +60,7 @@ static const struct resources csiphy_res_8x16[] = {
->  static const struct resources csid_res_8x16[] = {
->  	/* CSID0 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->  			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -77,7 +77,7 @@ static const struct resources csid_res_8x16[] = {
->  
->  	/* CSID1 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->  			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -107,7 +107,7 @@ static const struct resources_ispif ispif_res_8x16 = {
->  static const struct resources vfe_res_8x16[] = {
->  	/* VFE0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "vfe0", "csi_vfe0",
->  			   "vfe_ahb", "vfe_axi", "ahb" },
->  		.clock_rate = { { 0 },
-> @@ -129,7 +129,7 @@ static const struct resources vfe_res_8x16[] = {
->  static const struct resources csiphy_res_8x96[] = {
->  	/* CSIPHY0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
->  		.clock_rate = { { 0 },
->  				{ 0 },
-> @@ -141,7 +141,7 @@ static const struct resources csiphy_res_8x96[] = {
->  
->  	/* CSIPHY1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer" },
->  		.clock_rate = { { 0 },
->  				{ 0 },
-> @@ -153,7 +153,7 @@ static const struct resources csiphy_res_8x96[] = {
->  
->  	/* CSIPHY2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy2_timer" },
->  		.clock_rate = { { 0 },
->  				{ 0 },
-> @@ -167,7 +167,7 @@ static const struct resources csiphy_res_8x96[] = {
->  static const struct resources csid_res_8x96[] = {
->  	/* CSID0 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->  			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -184,7 +184,7 @@ static const struct resources csid_res_8x96[] = {
->  
->  	/* CSID1 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->  			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -201,7 +201,7 @@ static const struct resources csid_res_8x96[] = {
->  
->  	/* CSID2 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
->  			   "csi2", "csi2_phy", "csi2_pix", "csi2_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -218,7 +218,7 @@ static const struct resources csid_res_8x96[] = {
->  
->  	/* CSID3 */
->  	{
-> -		.regulator = { "vdda" },
-> +		.regulators = { "vdda" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi3_ahb", "ahb",
->  			   "csi3", "csi3_phy", "csi3_pix", "csi3_rdi" },
->  		.clock_rate = { { 0 },
-> @@ -249,7 +249,7 @@ static const struct resources_ispif ispif_res_8x96 = {
->  static const struct resources vfe_res_8x96[] = {
->  	/* VFE0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ahb", "vfe0", "csi_vfe0", "vfe_ahb",
->  			   "vfe0_ahb", "vfe_axi", "vfe0_stream"},
->  		.clock_rate = { { 0 },
-> @@ -267,7 +267,7 @@ static const struct resources vfe_res_8x96[] = {
->  
->  	/* VFE1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ahb", "vfe1", "csi_vfe1", "vfe_ahb",
->  			   "vfe1_ahb", "vfe_axi", "vfe1_stream"},
->  		.clock_rate = { { 0 },
-> @@ -287,7 +287,7 @@ static const struct resources vfe_res_8x96[] = {
->  static const struct resources csiphy_res_660[] = {
->  	/* CSIPHY0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer",
->  			   "csi0_phy", "csiphy_ahb2crif" },
->  		.clock_rate = { { 0 },
-> @@ -301,7 +301,7 @@ static const struct resources csiphy_res_660[] = {
->  
->  	/* CSIPHY1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer",
->  			   "csi1_phy", "csiphy_ahb2crif" },
->  		.clock_rate = { { 0 },
-> @@ -315,7 +315,7 @@ static const struct resources csiphy_res_660[] = {
->  
->  	/* CSIPHY2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy2_timer",
->  			   "csi2_phy", "csiphy_ahb2crif" },
->  		.clock_rate = { { 0 },
-> @@ -331,7 +331,7 @@ static const struct resources csiphy_res_660[] = {
->  static const struct resources csid_res_660[] = {
->  	/* CSID0 */
->  	{
-> -		.regulator = { "vdda", "vdd_sec" },
-> +		.regulators = { "vdda", "vdd_sec" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->  			   "csi0", "csi0_phy", "csi0_pix", "csi0_rdi",
->  			   "cphy_csid0" },
-> @@ -351,7 +351,7 @@ static const struct resources csid_res_660[] = {
->  
->  	/* CSID1 */
->  	{
-> -		.regulator = { "vdda", "vdd_sec" },
-> +		.regulators = { "vdda", "vdd_sec" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->  			   "csi1", "csi1_phy", "csi1_pix", "csi1_rdi",
->  			   "cphy_csid1" },
-> @@ -371,7 +371,7 @@ static const struct resources csid_res_660[] = {
->  
->  	/* CSID2 */
->  	{
-> -		.regulator = { "vdda", "vdd_sec" },
-> +		.regulators = { "vdda", "vdd_sec" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
->  			   "csi2", "csi2_phy", "csi2_pix", "csi2_rdi",
->  			   "cphy_csid2" },
-> @@ -391,7 +391,7 @@ static const struct resources csid_res_660[] = {
->  
->  	/* CSID3 */
->  	{
-> -		.regulator = { "vdda", "vdd_sec" },
-> +		.regulators = { "vdda", "vdd_sec" },
->  		.clock = { "top_ahb", "ispif_ahb", "csi3_ahb", "ahb",
->  			   "csi3", "csi3_phy", "csi3_pix", "csi3_rdi",
->  			   "cphy_csid3" },
-> @@ -425,7 +425,7 @@ static const struct resources_ispif ispif_res_660 = {
->  static const struct resources vfe_res_660[] = {
->  	/* VFE0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "throttle_axi", "top_ahb", "ahb", "vfe0",
->  			   "csi_vfe0", "vfe_ahb", "vfe0_ahb", "vfe_axi",
->  			   "vfe0_stream"},
-> @@ -446,7 +446,7 @@ static const struct resources vfe_res_660[] = {
->  
->  	/* VFE1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "throttle_axi", "top_ahb", "ahb", "vfe1",
->  			   "csi_vfe1", "vfe_ahb", "vfe1_ahb", "vfe_axi",
->  			   "vfe1_stream"},
-> @@ -469,7 +469,7 @@ static const struct resources vfe_res_660[] = {
->  static const struct resources csiphy_res_845[] = {
->  	/* CSIPHY0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
->  				"cpas_ahb", "cphy_rx_src", "csiphy0",
->  				"csiphy0_timer_src", "csiphy0_timer" },
-> @@ -487,7 +487,7 @@ static const struct resources csiphy_res_845[] = {
->  
->  	/* CSIPHY1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
->  				"cpas_ahb", "cphy_rx_src", "csiphy1",
->  				"csiphy1_timer_src", "csiphy1_timer" },
-> @@ -505,7 +505,7 @@ static const struct resources csiphy_res_845[] = {
->  
->  	/* CSIPHY2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
->  				"cpas_ahb", "cphy_rx_src", "csiphy2",
->  				"csiphy2_timer_src", "csiphy2_timer" },
-> @@ -523,7 +523,7 @@ static const struct resources csiphy_res_845[] = {
->  
->  	/* CSIPHY3 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
->  				"cpas_ahb", "cphy_rx_src", "csiphy3",
->  				"csiphy3_timer_src", "csiphy3_timer" },
-> @@ -543,7 +543,7 @@ static const struct resources csiphy_res_845[] = {
->  static const struct resources csid_res_845[] = {
->  	/* CSID0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->  				"soc_ahb", "vfe0", "vfe0_src",
->  				"vfe0_cphy_rx", "csi0",
-> @@ -563,7 +563,7 @@ static const struct resources csid_res_845[] = {
->  
->  	/* CSID1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->  				"soc_ahb", "vfe1", "vfe1_src",
->  				"vfe1_cphy_rx", "csi1",
-> @@ -583,7 +583,7 @@ static const struct resources csid_res_845[] = {
->  
->  	/* CSID2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->  				"soc_ahb", "vfe_lite", "vfe_lite_src",
->  				"vfe_lite_cphy_rx", "csi2",
-> @@ -605,7 +605,7 @@ static const struct resources csid_res_845[] = {
->  static const struct resources vfe_res_845[] = {
->  	/* VFE0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
->  				"soc_ahb", "vfe0", "vfe0_axi",
->  				"vfe0_src", "csi0",
-> @@ -625,7 +625,7 @@ static const struct resources vfe_res_845[] = {
->  
->  	/* VFE1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
->  				"soc_ahb", "vfe1", "vfe1_axi",
->  				"vfe1_src", "csi1",
-> @@ -645,7 +645,7 @@ static const struct resources vfe_res_845[] = {
->  
->  	/* VFE-lite */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
->  				"soc_ahb", "vfe_lite",
->  				"vfe_lite_src", "csi2",
-> @@ -666,7 +666,7 @@ static const struct resources vfe_res_845[] = {
->  static const struct resources csiphy_res_8250[] = {
->  	/* CSIPHY0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy0", "csiphy0_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -675,7 +675,7 @@ static const struct resources csiphy_res_8250[] = {
->  	},
->  	/* CSIPHY1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy1", "csiphy1_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -684,7 +684,7 @@ static const struct resources csiphy_res_8250[] = {
->  	},
->  	/* CSIPHY2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy2", "csiphy2_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -693,7 +693,7 @@ static const struct resources csiphy_res_8250[] = {
->  	},
->  	/* CSIPHY3 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy3", "csiphy3_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -702,7 +702,7 @@ static const struct resources csiphy_res_8250[] = {
->  	},
->  	/* CSIPHY4 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy4", "csiphy4_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -711,7 +711,7 @@ static const struct resources csiphy_res_8250[] = {
->  	},
->  	/* CSIPHY5 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "csiphy5", "csiphy5_timer" },
->  		.clock_rate = { { 400000000 },
->  				{ 300000000 } },
-> @@ -723,7 +723,7 @@ static const struct resources csiphy_res_8250[] = {
->  static const struct resources csid_res_8250[] = {
->  	/* CSID0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0", "vfe0_areg", "vfe0_ahb" },
->  		.clock_rate = { { 400000000 },
->  				{ 400000000 },
-> @@ -735,7 +735,7 @@ static const struct resources csid_res_8250[] = {
->  	},
->  	/* CSID1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1", "vfe1_areg", "vfe1_ahb" },
->  		.clock_rate = { { 400000000 },
->  				{ 400000000 },
-> @@ -747,7 +747,7 @@ static const struct resources csid_res_8250[] = {
->  	},
->  	/* CSID2 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
->  		.clock_rate = { { 400000000 },
->  				{ 400000000 },
-> @@ -758,7 +758,7 @@ static const struct resources csid_res_8250[] = {
->  	},
->  	/* CSID3 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
->  		.clock_rate = { { 400000000 },
->  				{ 400000000 },
-> @@ -772,7 +772,7 @@ static const struct resources csid_res_8250[] = {
->  static const struct resources vfe_res_8250[] = {
->  	/* VFE0 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
->  			   "camnoc_axi", "vfe0_ahb", "vfe0_areg", "vfe0",
->  			   "vfe0_axi", "cam_hf_axi" },
-> @@ -790,7 +790,7 @@ static const struct resources vfe_res_8250[] = {
->  	},
->  	/* VFE1 */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
->  			   "camnoc_axi", "vfe1_ahb", "vfe1_areg", "vfe1",
->  			   "vfe1_axi", "cam_hf_axi" },
-> @@ -808,7 +808,7 @@ static const struct resources vfe_res_8250[] = {
->  	},
->  	/* VFE2 (lite) */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
->  			   "camnoc_axi", "vfe_lite_ahb", "vfe_lite_axi",
->  			   "vfe_lite", "cam_hf_axi" },
-> @@ -825,7 +825,7 @@ static const struct resources vfe_res_8250[] = {
->  	},
->  	/* VFE3 (lite) */
->  	{
-> -		.regulator = { NULL },
-> +		.regulators = { NULL },
->  		.clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
->  			   "camnoc_axi", "vfe_lite_ahb", "vfe_lite_axi",
->  			   "vfe_lite", "cam_hf_axi" },
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 9c644e638a948..c9b3e0df5be8f 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -42,7 +42,7 @@
->  #define CAMSS_RES_MAX 17
->  
->  struct resources {
-> -	char *regulator[CAMSS_RES_MAX];
-> +	char *regulators[CAMSS_RES_MAX];
->  	char *clock[CAMSS_RES_MAX];
->  	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
->  	char *reg[CAMSS_RES_MAX];
-> -- 
-> 2.33.0
-> 
+ static int komeda_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct komeda_drv *mdrv;
+ 	int err;
+
+diff --git a/drivers/gpu/drm/arm/hdlcd_drv.c b/drivers/gpu/drm/arm/hdlcd_drv.c
+index 5c03eb98d814..e3ed925797d5 100644
+--- a/drivers/gpu/drm/arm/hdlcd_drv.c
++++ b/drivers/gpu/drm/arm/hdlcd_drv.c
+@@ -272,7 +272,7 @@ static const struct drm_driver hdlcd_driver = {
+
+ static int hdlcd_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm;
+ 	struct hdlcd_drm_private *hdlcd;
+ 	int ret;
+@@ -347,7 +347,7 @@ static int hdlcd_drm_bind(struct aggregate_device *adev)
+
+ static void hdlcd_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct hdlcd_drm_private *hdlcd = drm->dev_private;
+
+diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+index e6ee4d1e3bb8..7b946b962b22 100644
+--- a/drivers/gpu/drm/arm/malidp_drv.c
++++ b/drivers/gpu/drm/arm/malidp_drv.c
+@@ -704,7 +704,7 @@ static int malidp_runtime_pm_resume(struct device *dev)
+
+ static int malidp_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct resource *res;
+ 	struct drm_device *drm;
+ 	struct malidp_drm *malidp;
+@@ -897,7 +897,7 @@ static int malidp_bind(struct aggregate_device *adev)
+
+ static void malidp_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm->dev_private;
+ 	struct malidp_hw_device *hwdev = malidp->dev;
+diff --git a/drivers/gpu/drm/armada/armada_drv.c
+b/drivers/gpu/drm/armada/armada_drv.c
+index b3559363ea43..27739cbe2291 100644
+--- a/drivers/gpu/drm/armada/armada_drv.c
++++ b/drivers/gpu/drm/armada/armada_drv.c
+@@ -62,7 +62,7 @@ static const struct drm_mode_config_funcs
+armada_drm_mode_config_funcs = {
+
+ static int armada_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct armada_private *priv;
+ 	struct resource *mem = NULL;
+ 	int ret, n;
+@@ -162,7 +162,7 @@ static int armada_drm_bind(struct aggregate_device *adev)
+
+ static void armada_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct armada_private *priv = drm_to_armada_dev(drm);
+
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+index 95d1e518ff13..2ea655fd7a70 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+@@ -496,7 +496,7 @@ static const struct drm_driver etnaviv_drm_driver = {
+  */
+ static int etnaviv_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct etnaviv_drm_private *priv;
+ 	struct drm_device *drm;
+ 	int ret;
+@@ -555,7 +555,7 @@ static int etnaviv_bind(struct aggregate_device *adev)
+
+ static void etnaviv_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct etnaviv_drm_private *priv = drm->dev_private;
+
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c
+b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+index dcb52ec2bd35..f58c3069b591 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+@@ -255,7 +255,7 @@ static struct component_match
+*exynos_drm_match_add(struct device *dev)
+
+ static int exynos_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct exynos_drm_private *private;
+ 	struct drm_encoder *encoder;
+ 	struct drm_device *drm;
+@@ -333,7 +333,7 @@ static int exynos_drm_bind(struct aggregate_device *adev)
+
+ static void exynos_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm);
+diff --git a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+index 00d47c784cbb..338077908177 100644
+--- a/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
++++ b/drivers/gpu/drm/hisilicon/kirin/kirin_drm_drv.c
+@@ -219,7 +219,7 @@ static int kirin_drm_kms_cleanup(struct drm_device *dev)
+
+ static int kirin_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct kirin_drm_data *driver_data;
+ 	struct drm_device *drm_dev;
+ 	int ret;
+@@ -256,7 +256,7 @@ static int kirin_drm_bind(struct aggregate_device *adev)
+
+ static void kirin_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm_dev);
+diff --git a/drivers/gpu/drm/imx/imx-drm-core.c
+b/drivers/gpu/drm/imx/imx-drm-core.c
+index 9e28bb16364c..82645e42b7d3 100644
+--- a/drivers/gpu/drm/imx/imx-drm-core.c
++++ b/drivers/gpu/drm/imx/imx-drm-core.c
+@@ -198,7 +198,7 @@ static int compare_of(struct device *dev, void *data)
+
+ static int imx_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm;
+ 	int ret;
+
+@@ -267,7 +267,7 @@ static int imx_drm_bind(struct aggregate_device *adev)
+
+ static void imx_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm);
+diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+index d5330fb486e8..db61efc35b2d 100644
+--- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
++++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
+@@ -1152,7 +1152,7 @@ static int ingenic_drm_bind(struct device *dev,
+bool has_components)
+
+ static int ingenic_drm_bind_with_components(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+
+ 	return ingenic_drm_bind(dev, true);
+ }
+@@ -1178,7 +1178,7 @@ static void ingenic_drm_unbind(struct device *dev)
+
+ static void ingenic_aggregate_remove(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+
+ 	ingenic_drm_unbind(dev);
+ }
+diff --git a/drivers/gpu/drm/mcde/mcde_drv.c b/drivers/gpu/drm/mcde/mcde_drv.c
+index 1652f9e0601d..b8479355844e 100644
+--- a/drivers/gpu/drm/mcde/mcde_drv.c
++++ b/drivers/gpu/drm/mcde/mcde_drv.c
+@@ -217,7 +217,7 @@ static const struct drm_driver mcde_drm_driver = {
+
+ static int mcde_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	int ret;
+
+@@ -250,7 +250,7 @@ static int mcde_drm_bind(struct aggregate_device *adev)
+
+ static void mcde_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm);
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index a3f27b8c9769..af0dda5e45bf 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -350,7 +350,7 @@ static int compare_of(struct device *dev, void *data)
+
+ static int mtk_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mtk_drm_private *private = dev_get_drvdata(dev);
+ 	struct drm_device *drm;
+ 	int ret;
+@@ -383,7 +383,7 @@ static int mtk_drm_bind(struct aggregate_device *adev)
+
+ static void mtk_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mtk_drm_private *private = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(private->drm);
+diff --git a/drivers/gpu/drm/meson/meson_drv.c
+b/drivers/gpu/drm/meson/meson_drv.c
+index 3028f2a45f66..426caea3d570 100644
+--- a/drivers/gpu/drm/meson/meson_drv.c
++++ b/drivers/gpu/drm/meson/meson_drv.c
+@@ -358,14 +358,14 @@ static int meson_drv_bind_master(struct device
+*dev, bool has_components)
+
+ static int meson_drv_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+
+ 	return meson_drv_bind_master(dev, true);
+ }
+
+ static void meson_drv_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct meson_drm *priv = dev_get_drvdata(dev);
+ 	struct drm_device *drm = priv->drm;
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index f6e9b0d318f5..b2735355ea81 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1362,17 +1362,19 @@ static int add_gpu_components(struct device *dev,
+
+ static int msm_drm_bind(struct aggregate_device *adev)
+ {
+-	return msm_drm_init(adev->parent, &msm_driver);
++	return msm_drm_init(aggregate_device_parent(adev), &msm_driver);
+ }
+
+ static void msm_drm_unbind(struct aggregate_device *adev)
+ {
+-	msm_drm_uninit(adev->parent);
++	msm_drm_uninit(aggregate_device_parent(adev));
+ }
+
+ static void msm_drm_shutdown(struct aggregate_device *adev)
+ {
+-	struct drm_device *drm =
+platform_get_drvdata(to_platform_device(adev->parent));
++	const struct device *parent = aggregate_device_parent(adev);
++	const struct platform_device *pdev = to_platform_device(parent);
++	struct drm_device *drm = platform_get_drvdata(pdev);
+ 	struct msm_drm_private *priv = drm ? drm->dev_private : NULL;
+
+ 	if (!priv || !priv->kms)
+diff --git a/drivers/gpu/drm/omapdrm/dss/dss.c
+b/drivers/gpu/drm/omapdrm/dss/dss.c
+index 9328d97f19ab..6226ef389694 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dss.c
++++ b/drivers/gpu/drm/omapdrm/dss/dss.c
+@@ -1306,7 +1306,7 @@ static const struct soc_device_attribute
+dss_soc_devices[] = {
+
+ static int dss_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct dss_device *dss = dev_get_drvdata(dev);
+ 	struct platform_device *drm_pdev;
+ 	struct dss_pdata pdata;
+@@ -1333,7 +1333,7 @@ static int dss_bind(struct aggregate_device *adev)
+
+ static void dss_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct dss_device *dss = dev_get_drvdata(dev);
+
+ 	platform_device_unregister(dss->drm_pdev);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+index 6c755361d376..5179ca899dbb 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+@@ -111,7 +111,7 @@ static void rockchip_iommu_cleanup(struct
+drm_device *drm_dev)
+
+ static int rockchip_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm_dev;
+ 	struct rockchip_drm_private *private;
+ 	int ret;
+@@ -186,7 +186,7 @@ static int rockchip_drm_bind(struct aggregate_device *adev)
+
+ static void rockchip_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm_dev);
+diff --git a/drivers/gpu/drm/sti/sti_drv.c b/drivers/gpu/drm/sti/sti_drv.c
+index b277cc679154..958db315d547 100644
+--- a/drivers/gpu/drm/sti/sti_drv.c
++++ b/drivers/gpu/drm/sti/sti_drv.c
+@@ -184,7 +184,7 @@ static void sti_cleanup(struct drm_device *ddev)
+
+ static int sti_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *ddev;
+ 	int ret;
+
+@@ -219,7 +219,7 @@ static int sti_bind(struct aggregate_device *adev)
+
+ static void sti_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(ddev);
+diff --git a/drivers/gpu/drm/sun4i/sun4i_drv.c
+b/drivers/gpu/drm/sun4i/sun4i_drv.c
+index 700f5e32eaf7..35c5e575132f 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_drv.c
++++ b/drivers/gpu/drm/sun4i/sun4i_drv.c
+@@ -58,7 +58,7 @@ static const struct drm_driver sun4i_drv_driver = {
+
+ static int sun4i_drv_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm;
+ 	struct sun4i_drv *drv;
+ 	int ret;
+@@ -128,7 +128,7 @@ static int sun4i_drv_bind(struct aggregate_device *adev)
+
+ static void sun4i_drv_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm);
+diff --git a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+index 92ff516fb6de..c12c579ce66f 100644
+--- a/drivers/gpu/drm/tilcdc/tilcdc_drv.c
++++ b/drivers/gpu/drm/tilcdc/tilcdc_drv.c
+@@ -531,14 +531,14 @@ static const struct dev_pm_ops tilcdc_pm_ops = {
+  */
+ static int tilcdc_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+
+ 	return tilcdc_init(&tilcdc_driver, dev);
+ }
+
+ static void tilcdc_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+
+ 	/* Check if a subcomponent has already triggered the unloading. */
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index 82a44ebf9121..297ecddea5fb 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -214,7 +214,7 @@ static void vc4_match_add_drivers(struct device *dev,
+
+ static int vc4_drm_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct drm_device *drm;
+ 	struct vc4_dev *vc4;
+@@ -287,7 +287,7 @@ static int vc4_drm_bind(struct aggregate_device *adev)
+
+ static void vc4_drm_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+
+ 	drm_dev_unregister(drm);
+diff --git a/drivers/iommu/mtk_iommu.h b/drivers/iommu/mtk_iommu.h
+index 064fd4f4eade..125be5819c42 100644
+--- a/drivers/iommu/mtk_iommu.h
++++ b/drivers/iommu/mtk_iommu.h
+@@ -96,7 +96,7 @@ static inline void release_of(struct device *dev, void *data)
+
+ static inline int mtk_iommu_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mtk_iommu_data *data = dev_get_drvdata(dev);
+
+ 	return component_bind_all(dev, &data->larb_imu);
+@@ -104,7 +104,7 @@ static inline int mtk_iommu_bind(struct
+aggregate_device *adev)
+
+ static inline void mtk_iommu_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mtk_iommu_data *data = dev_get_drvdata(dev);
+
+ 	component_unbind_all(dev, &data->larb_imu);
+diff --git a/drivers/misc/mei/hdcp/mei_hdcp.c b/drivers/misc/mei/hdcp/mei_hdcp.c
+index ae903a09fb06..3c6e4e3bf212 100644
+--- a/drivers/misc/mei/hdcp/mei_hdcp.c
++++ b/drivers/misc/mei/hdcp/mei_hdcp.c
+@@ -734,7 +734,7 @@ static const struct i915_hdcp_component_ops mei_hdcp_ops = {
+
+ static int mei_hdcp_aggregate_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+ 	struct i915_hdcp_comp_master *comp_master =
+ 						mei_cldev_get_drvdata(cldev);
+@@ -752,7 +752,7 @@ static int mei_hdcp_aggregate_bind(struct
+aggregate_device *adev)
+
+ static void mei_hdcp_aggregate_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+ 	struct i915_hdcp_comp_master *comp_master =
+ 						mei_cldev_get_drvdata(cldev);
+diff --git a/drivers/misc/mei/pxp/mei_pxp.c b/drivers/misc/mei/pxp/mei_pxp.c
+index 7b7bd7c0e8b1..887e43e6ba5f 100644
+--- a/drivers/misc/mei/pxp/mei_pxp.c
++++ b/drivers/misc/mei/pxp/mei_pxp.c
+@@ -85,7 +85,7 @@ static const struct i915_pxp_component_ops mei_pxp_ops = {
+
+ static int mei_pxp_aggregate_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+ 	struct i915_pxp_component *comp_master = mei_cldev_get_drvdata(cldev);
+ 	int ret;
+@@ -101,7 +101,7 @@ static int mei_pxp_aggregate_bind(struct
+aggregate_device *adev)
+
+ static void mei_pxp_aggregate_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+ 	struct i915_pxp_component *comp_master = mei_cldev_get_drvdata(cldev);
+
+diff --git a/drivers/power/supply/ab8500_charger.c
+b/drivers/power/supply/ab8500_charger.c
+index 52d4105e28f2..e1e5c9387b57 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3314,7 +3314,7 @@ static const struct power_supply_desc
+ab8500_usb_chg_desc = {
+
+ static int ab8500_charger_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct ab8500_charger *di = dev_get_drvdata(dev);
+ 	int ch_stat;
+ 	int ret;
+@@ -3357,7 +3357,7 @@ static int ab8500_charger_bind(struct
+aggregate_device *adev)
+
+ static void ab8500_charger_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct ab8500_charger *di = dev_get_drvdata(dev);
+ 	int ret;
+
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dss.c
+b/drivers/video/fbdev/omap2/omapfb/dss/dss.c
+index f12663c39ceb..0bdb9f909992 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dss.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dss.c
+@@ -1069,7 +1069,7 @@ static int dss_video_pll_probe(struct
+platform_device *pdev)
+ /* DSS HW IP initialisation */
+ static int dss_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct resource *dss_mem;
+ 	u32 rev;
+@@ -1170,7 +1170,7 @@ static int dss_bind(struct aggregate_device *adev)
+
+ static void dss_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct platform_device *pdev = to_platform_device(dev);
+
+ 	dss_initialized = false;
+diff --git a/include/linux/component.h b/include/linux/component.h
+index 07fe481d4e3b..7c86f4cc718e 100644
+--- a/include/linux/component.h
++++ b/include/linux/component.h
+@@ -8,6 +8,8 @@
+ struct component_match;
+ struct aggregate_device;
+
++struct device *aggregate_device_parent(struct aggregate_device *adev);
++
+ /**
+  * struct component_ops - callbacks for component drivers
+  *
+@@ -63,20 +65,6 @@ void component_del(struct device *, const struct
+component_ops *);
+ int component_bind_all(struct device *master, void *master_data);
+ void component_unbind_all(struct device *master, void *master_data);
+
+-struct aggregate_device {
+-	struct device *parent;
+-	struct device dev;
+-	struct component_match *match;
+-	struct aggregate_driver *adrv;
+-
+-	int id;
+-};
+-
+-static inline struct aggregate_device *to_aggregate_device(struct device *d)
+-{
+-	return container_of(d, struct aggregate_device, dev);
+-}
+-
+ /**
+  * struct aggregate_driver - Aggregate driver (made up of other drivers)
+  * @driver: device driver
+diff --git a/sound/hda/hdac_component.c b/sound/hda/hdac_component.c
+index 9e4dab97f485..4ec5d9bf8533 100644
+--- a/sound/hda/hdac_component.c
++++ b/sound/hda/hdac_component.c
+@@ -183,7 +183,7 @@ EXPORT_SYMBOL_GPL(snd_hdac_acomp_get_eld);
+
+ static int hdac_component_master_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_audio_component *acomp = hdac_get_acomp(dev);
+ 	int ret;
+
+@@ -225,7 +225,7 @@ static int hdac_component_master_bind(struct
+aggregate_device *adev)
+
+ static void hdac_component_master_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct drm_audio_component *acomp = hdac_get_acomp(dev);
+
+ 	if (acomp->audio_ops && acomp->audio_ops->master_unbind)
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index f44f5d41bfdb..6edb040d0639 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -4318,7 +4318,7 @@ static struct snd_soc_dai_driver wcd938x_dais[] = {
+
+ static int wcd938x_bind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
+ 	int ret;
+
+@@ -4403,7 +4403,7 @@ static int wcd938x_bind(struct aggregate_device *adev)
+
+ static void wcd938x_unbind(struct aggregate_device *adev)
+ {
+-	struct device *dev = adev->parent;
++	struct device *dev = aggregate_device_parent(adev);
+ 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
+
+ 	device_link_remove(dev, wcd938x->txdev);
