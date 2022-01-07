@@ -2,259 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CC1A487911
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 15:34:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D0F1748793F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 15:52:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347896AbiAGOeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 09:34:24 -0500
-Received: from mga17.intel.com ([192.55.52.151]:59409 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1347864AbiAGOeP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 09:34:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1641566055; x=1673102055;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=DXgdDcZzD0elNYWBm1IixW+PtrsX2vdFCxvYPLrWCGc=;
-  b=gZ+SC1r6USJ4Wru4gsVPIHJy57OAf3p3sinWiJnzb1lPs5eDcK8j7oQZ
-   RxITv7x3Wnh4L8lEueAbnJKb4yPLQhsfJwtxix1NHLOmsZFfEz9R5hi36
-   HzHrfqyukXIQlsTag0jzpY6vNjsxzs02HdqER4lzRwBasdtV1b9uAqcdu
-   l1QIGq2xiUTPPID0U+SqOMlyK10tpIvjAorj3+Ca6dhYxnx6kqhsx3vkB
-   Kpvsv84YqdHo2XjjBh1E53AnERF/VTEj2tzk9g+hci55QBlirYMTFDTMw
-   J5sjCVLAFe3J5EahM9ocLIwQDktV0JkVTaEx2jhccUjbFjbj1ZJKVhjhp
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10219"; a="223571537"
-X-IronPort-AV: E=Sophos;i="5.88,270,1635231600"; 
-   d="scan'208";a="223571537"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 06:34:14 -0800
-X-IronPort-AV: E=Sophos;i="5.88,270,1635231600"; 
-   d="scan'208";a="668784047"
-Received: from paasikivi.fi.intel.com ([10.237.72.42])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 06:34:11 -0800
-Received: from paasikivi.fi.intel.com (localhost [127.0.0.1])
-        by paasikivi.fi.intel.com (Postfix) with ESMTP id 9160D202B9;
-        Fri,  7 Jan 2022 16:33:39 +0200 (EET)
-Date:   Fri, 7 Jan 2022 16:33:39 +0200
-From:   Sakari Ailus <sakari.ailus@linux.intel.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Daniel Scally <djrscally@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH 3/8] device property: Helper to match multiple connections
-Message-ID: <YdhPQ0Wuz63JBKaR@paasikivi.fi.intel.com>
-References: <20211228052116.1748443-1-bjorn.andersson@linaro.org>
- <20211228052116.1748443-4-bjorn.andersson@linaro.org>
- <Yc17Ssug3neFFXKN@kuha.fi.intel.com>
- <Yc7I3gZehc1lHn4Z@paasikivi.fi.intel.com>
- <YdYC8DeF1i9a3RnP@ripper>
+        id S239397AbiAGOv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 09:51:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232065AbiAGOv4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 7 Jan 2022 09:51:56 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0237BC06173E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 06:51:56 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id s19so5720536qtc.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 06:51:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8nl5vAeNGSOns35uL+fkC4uu+J6bk11HauJCQV7waYU=;
+        b=C/yvRfk+luoRHRR7kHkAThuRQYp4xm78a5kqIhQ8UpMeNBe0eGmcD1kQ7myXnJWzXD
+         Oc42tbOu6W//pMLS0RGc4l/yNqSmsIdk8WcpzutVWaYfhLGVSG/l5x5zu/t+SunX4i0r
+         ufP5oiYWU+ohl1aNtMR43P6ArASJUA+rBwf9NRMzzb8w/5h5qDGWEBke1mIjFSBViS9g
+         grsrZhMmuMCpotC6ymi092bmB9rl5cpdcymiOxkZyNmY0pPAnVp1GlYke9XK+NXR9xsW
+         AQBIkMDX+K5MhSQwkSS5u2nHOIXO6OAmqTKeS+wBLdUN5iEHzL1etCH04z38tIMIEaA2
+         xw5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8nl5vAeNGSOns35uL+fkC4uu+J6bk11HauJCQV7waYU=;
+        b=a27hfx+Hxsz6d6AtMySHVs3U2XbNOhTU5k697fBOa1RaWm3sZ3o9awA1n0hnEh4Ga+
+         bwdeofOxPCtxdm5aifN5bGa1DTtt60Zim3g7Z1vPIJE6WYzFYMrTD4LgD2yw02y+wrip
+         Cbb4ILLwJ5yMQLCzubUSpM8WDV25mYgFsiwy5+rV8KhrnqPT98a+XxchHjqxEDYfIGMO
+         V9i/T4hXzxpe+FG+rQTQdVm/ME0qwgiJU9VR7kEbKdJoJ9iacsYpgxIp2nPz6wPnMnhs
+         G+ZI8ePaNx+guVx1kRGVgFtwkk7XY53t7mx3IO/0UlB3SB7JaHbO7kmtp+ZdVLeQBC3O
+         T0IQ==
+X-Gm-Message-State: AOAM532srL5unPx+vTEmUSzVs++jsj6WyOhmlb+DjAEt0OzK3BK6sOrw
+        X32nZj/81MlKq4pzhWH/W4q2pJvCdbIH7Q==
+X-Google-Smtp-Source: ABdhPJw+X70xUw0SSMUFrYRmkB6I8xJ9Ys/8V5scbKprm7qM3U7XyJoaBel6NBHVbSQjcZTvZULcnA==
+X-Received: by 2002:a05:622a:1010:: with SMTP id d16mr8179622qte.81.1641567115127;
+        Fri, 07 Jan 2022 06:51:55 -0800 (PST)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id az16sm3776899qkb.124.2022.01.07.06.51.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jan 2022 06:51:54 -0800 (PST)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     bjorn.andersson@linaro.org, daniel.lezcano@linaro.org,
+        rafael@kernel.org, herbert@gondor.apana.org.au
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: Update email address
+Date:   Fri,  7 Jan 2022 09:51:54 -0500
+Message-Id: <20220107145154.458779-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YdYC8DeF1i9a3RnP@ripper>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 05, 2022 at 12:43:28PM -0800, Bjorn Andersson wrote:
-> On Fri 31 Dec 01:09 PST 2021, Sakari Ailus wrote:
-> 
-> > Hi Björn,
-> > 
-> > (And thanks to Heikki for cc'ing me!)
-> > 
-> > On Thu, Dec 30, 2021 at 11:26:34AM +0200, Heikki Krogerus wrote:
-> > > +Andy, Dan and Sakari
-> > > 
-> > > On Mon, Dec 27, 2021 at 09:21:11PM -0800, Bjorn Andersson wrote:
-> > > > In some cases multiple connections with the same connection id
-> > > > needs to be resolved from a fwnode graph.
-> > > > 
-> > > > One such example is when separate hardware is used for performing muxing and/or
-> > > > orientation switching of the SuperSpeed and SBU lines in a USB-C
-> > > > connector. In this case the connector needs to belong to a graph with
-> > > > multiple matching remote endpoints, and the TypeC controller needs to be
-> > > > able to resolve them both.
-> > > > 
-> > > > Add a new API that allows this kind of lookup.
-> > > > 
-> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > ---
-> > > >  drivers/base/property.c  | 94 ++++++++++++++++++++++++++++++++++++++++
-> > > >  include/linux/property.h |  5 +++
-> > > >  2 files changed, 99 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/base/property.c b/drivers/base/property.c
-> > > > index cbe4fa298413..0aa0296fd991 100644
-> > > > --- a/drivers/base/property.c
-> > > > +++ b/drivers/base/property.c
-> > > > @@ -1180,6 +1180,36 @@ fwnode_graph_devcon_match(struct fwnode_handle *fwnode, const char *con_id,
-> > > >  	return NULL;
-> > > >  }
-> > > >  
-> > > > +static unsigned int fwnode_graph_devcon_matches(struct fwnode_handle *fwnode,
-> > > > +						const char *con_id, void *data,
-> > > > +						devcon_match_fn_t match,
-> > > > +						void **matches,
-> > > > +						unsigned int matches_len)
-> > > > +{
-> > > > +	struct fwnode_handle *node;
-> > > > +	struct fwnode_handle *ep;
-> > > > +	unsigned int count = 0;
-> > > > +	void *ret;
-> > > > +
-> > > > +	fwnode_graph_for_each_endpoint(fwnode, ep) {
-> > > > +		if (count >= matches_len) {
-> > > > +			fwnode_handle_put(ep);
-> > > > +			return count;
-> > > > +		}
-> > > > +
-> > > > +		node = fwnode_graph_get_remote_port_parent(ep);
-> > > > +		if (!fwnode_device_is_available(node))
-> > 
-> > The reference to node needs to be put here.
-> > 
-> 
-> You're right, thanks!
-> 
-> > > > +			continue;
-> > > > +
-> > > > +		ret = match(node, con_id, data);
-> > > > +		fwnode_handle_put(node);
-> > > > +
-> > > > +		if (ret)
-> > > > +			matches[count++] = ret;
-> > > > +	}
-> > > > +	return count;
-> > > > +}
-> > > > +
-> > > >  static void *
-> > > >  fwnode_devcon_match(struct fwnode_handle *fwnode, const char *con_id,
-> > > >  		    void *data, devcon_match_fn_t match)
-> > > > @@ -1202,6 +1232,35 @@ fwnode_devcon_match(struct fwnode_handle *fwnode, const char *con_id,
-> > > >  	return NULL;
-> > > >  }
-> > > >  
-> > > > +static unsigned int fwnode_devcon_matches(struct fwnode_handle *fwnode,
-> > > > +					  const char *con_id, void *data,
-> > > > +					  devcon_match_fn_t match,
-> > > > +					  void **matches,
-> > > > +					  unsigned int matches_len)
-> > > > +{
-> > > > +	struct fwnode_handle *node;
-> > > > +	unsigned int count = 0;
-> > > > +	void *ret;
-> > > > +	int i;
-> > 
-> > unsigned int, please.
-> > 
-> 
-> Sounds good.
-> 
-> > > > +
-> > > > +	for (i = 0; ; i++) {
-> > > > +		if (count >= matches_len)
-> > > > +			return count;
-> > > > +
-> > > > +		node = fwnode_find_reference(fwnode, con_id, i);
-> > > > +		if (IS_ERR(node))
-> > > > +			break;
-> > > > +
-> > > > +		ret = match(node, NULL, data);
-> > > > +		fwnode_handle_put(node);
-> > > > +
-> > > > +		if (ret)
-> > > > +			matches[count++] = ret;
-> > > > +	}
-> > > > +
-> > > > +	return count;
-> > > > +}
-> > > > +
-> > > >  /**
-> > > >   * fwnode_connection_find_match - Find connection from a device node
-> > > >   * @fwnode: Device node with the connection
-> > > > @@ -1229,3 +1288,38 @@ void *fwnode_connection_find_match(struct fwnode_handle *fwnode,
-> > > >  	return fwnode_devcon_match(fwnode, con_id, data, match);
-> > > >  }
-> > > >  EXPORT_SYMBOL_GPL(fwnode_connection_find_match);
-> > > > +
-> > > > +/**
-> > > > + * fwnode_connection_find_matches - Find connections from a device node
-> > > > + * @fwnode: Device node with the connection
-> > > > + * @con_id: Identifier for the connection
-> > > > + * @data: Data for the match function
-> > > > + * @match: Function to check and convert the connection description
-> > > > + * @matches: Array of pointers to fill with matches
-> > > > + * @matches_len: Length of @matches
-> > > > + *
-> > > > + * Find up to @matches_len connections with unique identifier @con_id between
-> > > > + * @fwnode and other device nodes. @match will be used to convert the
-> > > > + * connection description to data the caller is expecting to be returned
-> > > > + * through the @matches array.
-> > 
-> > If the caller allocates the matches array, how does it know how large it
-> > should be? Is there a need to provide a way to count the matches before
-> > writing them to an array? Most similar functions do that by just setting the
-> > array (matches) to NULL.
-> > 
-> 
-> This is a very relevant comment and I did look for ways to handle this
-> as I came up with the patch.
-> 
-> I think the typical mechanism would be to allow @matches to be NULL, in
-> which case we iterate over objects and return the number of matches, so
-> that the caller can allocate an appropriately sized array and call the
-> API again.
-> 
-> But the "match" function simply returns a pointer to something and
-> looking at the example of the typec_{mux,switch} this pointer points to
-> a member of an object which has a struct device which is refcounted.
-> 
-> As such, we can't simply discard the returned object. We have to pass it
-> back to the caller, whom knows what "match" did and is able to reverse
-> that.
-> 
-> I looked at changing the callback and I looked at using krealloc() to
-> grow an array dynamically.
+Update my email address in the MAINTAINERS file as  the current
+one will stop functioning in a while.
 
-krealloc() may also fail...
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+---
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> 
-> 
-> But looking at the use case in mind; finding entities that might need to
-> react to a USB Type-C event I have a need for 2 matches, and 3 seems
-> plausible. Beyond that the largest of_graph I have ever dealt with has 6
-> endpoints.
-> 
-> While it isn't relevant to use this API for my 6-endpoint case, it would
-> result in @matches having to be 48 bytes of pointers. And once the call
-> returns, the actual number of pointers needed is known and the long-term
-> storage can be re-allocated as necessary based on the return value.
-> 
-> As such, I dropped the idea of making something fancier and more
-> dynamic, for the sake of simplicity. Perhaps I'm missing some cool use
-> case where this is infeasible?
-
-Another option would be to use a fixed-size array for the purpose. Assuming
-this will remain a small number, a single global macro could be used to set
-the maximum number that could be also easily increased if needed.
-
-On the other hand, if this number remains specific to the caller as it
-would seem, then I guess a caller-set value (as implemented now) remains a
-fine option, too.
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fb18ce7168aa..afcdd7588822 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -15751,7 +15751,7 @@ F:	Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
+ 
+ QUALCOMM CRYPTO DRIVERS
+-M:	Thara Gopinath <thara.gopinath@linaro.org>
++M:	Thara Gopinath <thara.gopinath@gmail.com>
+ L:	linux-crypto@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+@@ -15868,7 +15868,7 @@ F:	include/linux/if_rmnet.h
+ 
+ QUALCOMM TSENS THERMAL DRIVER
+ M:	Amit Kucheria <amitk@kernel.org>
+-M:	Thara Gopinath <thara.gopinath@linaro.org>
++M:	Thara Gopinath <thara.gopinath@gmail.com>
+ L:	linux-pm@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
 -- 
-Kind regards,
+2.25.1
 
-Sakari Ailus
