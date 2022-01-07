@@ -2,109 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3D06486F31
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:55:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAE3F486F3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:57:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236259AbiAGAzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 19:55:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230226AbiAGAzX (ORCPT
+        id S240032AbiAGA53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 19:57:29 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:26842 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230133AbiAGA53 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 19:55:23 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24B4C061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:55:23 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id s73so6173538oie.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:55:23 -0800 (PST)
+        Thu, 6 Jan 2022 19:57:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PPHN7dIp4QC+dIELGI0e4PB8xgBekSRxt9hWBqYZaeQ=;
-        b=QAoJfOBrBgvrMUWejWpVu+DGP0fKi1jKKzzm0JxDDhqqdjpvInSeW2fQwwOZnN/44N
-         c9OjRqHLLopjfcrSBsptXfUcmjG2js+eW8+gv/n5Qa7hA8vDEYx6QpbShaiHjfrDYNAy
-         bKWR1MpZM0RvtS04wQaTyVhyhVd5BwrrhmwYUqwOxELjco1lKVtOYPKGQqR3CjOxDIUo
-         LsHxt5cLZW2PGLAbyqeOsD19xEXhTTgUtGaHNn/ySKyeBSb692CDquAmy3gx08FHyPvE
-         F/o2xfGaTrOwY46ssKOxkf0rIyWzi3qa/GnfGbIu+ksWxdFG3v264RLuRoK3pgkCRjhj
-         Awjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PPHN7dIp4QC+dIELGI0e4PB8xgBekSRxt9hWBqYZaeQ=;
-        b=msplb3BzzQ0Sa40AaGiNL8xsNbhEBa1FUnGKsanWriGCP0V7PlqMdAejZ0IjKZ0QDC
-         O1TO27xgSosfKBnR1wU8HevixGh7SzyxFyXTbqv+YLmoMz3Ww+b35rm6o2SEc4Tg+luU
-         /3oTjbImyIHfrC8NVaIsToowa6zxyEsP2957F3U3gjDmYbnxL9ijsfmXe/EaGLIu1nEX
-         URR6S2r27YycHIkw3pKTu6EjruMVm+jEPg+IsXkikM8zBrsakphRFm0LJACykGutJanb
-         jMMCFA59/jVjbo6/7o+n/QC94BHyVIDPiLqQgbVpmVZN0IfMaTBMZWlYqtBViltV72C7
-         Ifvg==
-X-Gm-Message-State: AOAM530vTw2Tw1MCQ3UVsX7p5oxeMiCXu07HlxJ7IqhZ0Rm4I92FVoL6
-        6edQ1qmfJv2Ajd7LnZ+D7PtHkQ==
-X-Google-Smtp-Source: ABdhPJzreEyFRJ4mudEoHFIkqdyi66BzGsimcD1Jb7Q1Uwvgz9R2jmPCaxSvZBU0jpuX2qjcPAh0kQ==
-X-Received: by 2002:aca:1214:: with SMTP id 20mr6675134ois.126.1641516922985;
-        Thu, 06 Jan 2022 16:55:22 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w20sm5557otl.40.2022.01.06.16.55.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 16:55:22 -0800 (PST)
-Date:   Thu, 6 Jan 2022 16:56:10 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
-        greg@kroah.com, linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
-        psodagud@codeaurora.org, satyap@codeaurora.org,
-        pheragu@codeaurora.org, rnayak@codeaurora.org,
-        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org
-Subject: Re: [PATCH V3 3/7] bindings: usb: dwc3: Update dwc3 properties for
- EUD connector
-Message-ID: <YdePqpJjIiPAuHlJ@ripper>
-References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
- <163f4d977fb6a0d80d8fd8d358991aeeb58d31a6.1641288286.git.quic_schowdhu@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641517049; x=1673053049;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=+Z7xRVSlmNeiIFWUHvEdTDAW69uc9POi1AmSX78ne+Q=;
+  b=DW01MZc4I917lHP+xMYZwdIZng3V8NsZGq57y3s5NcYBCU4zhLLLdmiu
+   MEZhbEKUFodoIBBFyuimom8hleild7zsCVFwMYDUYKs/DiUoM5B0bBknR
+   knMaqnuyYI4bMxTmFhLNo9iMskOC0Wkwzml1NoVr94WQ6nMFMGxmz+0Tx
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Jan 2022 16:57:28 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2022 16:57:28 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 16:57:27 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 6 Jan 2022 16:57:25 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <bjorn.andersson@linaro.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Subject: [PATCH v4] drm/msm/dp: add support of tps4 (training pattern 4) for HBR3
+Date:   Thu, 6 Jan 2022 16:57:08 -0800
+Message-ID: <1641517028-27639-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <163f4d977fb6a0d80d8fd8d358991aeeb58d31a6.1641288286.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 04 Jan 03:58 PST 2022, Souradeep Chowdhury wrote:
+From: Kuogee Hsieh <khsieh@codeaurora.org>
 
-> Add the connector property for dwc3 node. This connector can
-> be used to role-switch the controller from device to host and
-> vice versa.
-> 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> index 078fb78..9382168 100644
-> --- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-> @@ -318,6 +318,12 @@ properties:
->      items:
->        enum: [1, 4, 8, 16, 32, 64, 128, 256]
->  
-> +  connector:
+Some DP sinkers prefer to use tps4 instead of tps3 during training #2.
+This patch will use tps4 to perform link training #2 if sinker's DPCD
+supports it.
 
-The dwc3 isn't the connector, so I think you should put a ports {} in
-the dwc3 and link that to the connector that is described elsewhere.
+Changes in V2:
+-- replace  dp_catalog_ctrl_set_pattern() with  dp_catalog_ctrl_set_pattern_state_bit()
 
-Regards,
-Bjorn
+Changes in V3:
+-- change state_ctrl_bits type to u32 and pattern type to u8
 
-> +    type: object
-> +    $ref: /connector/usb-connector.yaml#
-> +    description:
-> +      Connector for dual role switch, especially for "eud-usb-c-connector"
-> +
->  unevaluatedProperties: false
->  
->  required:
-> -- 
-> 2.7.4
-> 
+Changes in V4:
+-- align } else if { and } else {
+
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 12 ++++++------
+ drivers/gpu/drm/msm/dp/dp_catalog.h |  2 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 17 ++++++++++++-----
+ 3 files changed, 19 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index 6ae9b29..64f0b26 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -456,19 +456,19 @@ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog,
+ 	dp_write_p0(catalog, MMSS_DP_DSC_DTO, 0x0);
+ }
+ 
+-int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
+-					u32 pattern)
++int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog,
++					u32 state_bit)
+ {
+ 	int bit, ret;
+ 	u32 data;
+ 	struct dp_catalog_private *catalog = container_of(dp_catalog,
+ 				struct dp_catalog_private, dp_catalog);
+ 
+-	bit = BIT(pattern - 1);
+-	DRM_DEBUG_DP("hw: bit=%d train=%d\n", bit, pattern);
++	bit = BIT(state_bit - 1);
++	DRM_DEBUG_DP("hw: bit=%d train=%d\n", bit, state_bit);
+ 	dp_catalog_ctrl_state_ctrl(dp_catalog, bit);
+ 
+-	bit = BIT(pattern - 1) << DP_MAINLINK_READY_LINK_TRAINING_SHIFT;
++	bit = BIT(state_bit - 1) << DP_MAINLINK_READY_LINK_TRAINING_SHIFT;
+ 
+ 	/* Poll for mainlink ready status */
+ 	ret = readx_poll_timeout(readl, catalog->io->dp_controller.link.base +
+@@ -476,7 +476,7 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
+ 					data, data & bit,
+ 					POLLING_SLEEP_US, POLLING_TIMEOUT_US);
+ 	if (ret < 0) {
+-		DRM_ERROR("set pattern for link_train=%d failed\n", pattern);
++		DRM_ERROR("set state_bit for link_train=%d failed\n", state_bit);
+ 		return ret;
+ 	}
+ 	return 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+index 6965afa..7dea101 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.h
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+@@ -94,7 +94,7 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog, bool enable);
+ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
+ void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
+ 				u32 stream_rate_khz, bool fixed_nvid);
+-int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog, u32 pattern);
++int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog, u32 pattern);
+ void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
+ bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
+ void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index 39558a2..ad64ddd 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1083,7 +1083,7 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
+ 
+ 	*training_step = DP_TRAINING_1;
+ 
+-	ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, DP_TRAINING_PATTERN_1);
++	ret = dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, 1);
+ 	if (ret)
+ 		return ret;
+ 	dp_ctrl_train_pattern_set(ctrl, DP_TRAINING_PATTERN_1 |
+@@ -1181,7 +1181,8 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+ 			int *training_step)
+ {
+ 	int tries = 0, ret = 0;
+-	char pattern;
++	u8 pattern;
++	u32 state_ctrl_bit;
+ 	int const maximum_retries = 5;
+ 	u8 link_status[DP_LINK_STATUS_SIZE];
+ 
+@@ -1189,12 +1190,18 @@ static int dp_ctrl_link_train_2(struct dp_ctrl_private *ctrl,
+ 
+ 	*training_step = DP_TRAINING_2;
+ 
+-	if (drm_dp_tps3_supported(ctrl->panel->dpcd))
++	if (drm_dp_tps4_supported(ctrl->panel->dpcd)) {
++		pattern = DP_TRAINING_PATTERN_4;
++		state_ctrl_bit = 4;
++	} else if (drm_dp_tps3_supported(ctrl->panel->dpcd)) {
+ 		pattern = DP_TRAINING_PATTERN_3;
+-	else
++		state_ctrl_bit = 3;
++	} else {
+ 		pattern = DP_TRAINING_PATTERN_2;
++		state_ctrl_bit = 2;
++	}
+ 
+-	ret = dp_catalog_ctrl_set_pattern(ctrl->catalog, pattern);
++	ret = dp_catalog_ctrl_set_pattern_state_bit(ctrl->catalog, state_ctrl_bit);
+ 	if (ret)
+ 		return ret;
+ 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
