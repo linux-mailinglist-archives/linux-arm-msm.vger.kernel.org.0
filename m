@@ -2,140 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9018C4879BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 16:31:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90C354879D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 16:43:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348105AbiAGPbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Jan 2022 10:31:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348101AbiAGPbU (ORCPT
+        id S239627AbiAGPn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Jan 2022 10:43:26 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:39679 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230323AbiAGPn0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Jan 2022 10:31:20 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80CCDC06173F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jan 2022 07:31:19 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id l10so11724737wrh.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jan 2022 07:31:19 -0800 (PST)
+        Fri, 7 Jan 2022 10:43:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3caE7ZiFVRPsfUz1cJ9WrcYjXkULY6fiCjhjWppgLEs=;
-        b=osq/ESNMmBdyZ3Ij8ISDCG5B99rgcMHSPcv8FqvNjy0q9TjoXobh8cYbuaar2pjDti
-         IYpkJs8aCAaBGK42XIFDJB4O9JL6ocwSqH1Qpl+SFZnYsXmSJKj3lebODEGF0sdwN3g+
-         Bvu4JuSRPBSUHUIxCKn+aG04syONMaLJ9bnxPCUqGo3/vODwDQ4h8IFe90MpMG1oH2hw
-         kYKcpGzBZwtAbBcQJIWAmFBU9fJxMg9KxtR31uz3QUg93Bu03UWRVQoKy3VIfkq0/ttV
-         JTyRci8ignpmOT1b3qhjc52lBVn3MxYGk2LYGPfWVNU8fWMobL1R/eYzkqDsa7Em+YSe
-         9HuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3caE7ZiFVRPsfUz1cJ9WrcYjXkULY6fiCjhjWppgLEs=;
-        b=M0HZmM6a5H9sHd9vRkWBWyogNARVsq0G5dLiANnrY2IZurIUYk7h+nMDjRTusJXFYv
-         OSoCGYzFHezpEH7EysbsyDNJN6uhqN+gGdzifAqhYPd9tBn0CO650IO0t4hjgOM9pU0U
-         sV62BpKfZbhBhvWgQfUHspI5GmfMMdAdaNcy+3y5TgC5N4X3y2HHd5BQqHpGZoMNHlDE
-         WIwWauft2AbuKBDzvK9cUf9V3FHn1zpkhDfbfg3bzuF43Aed/Nm93aDpjVmxj7YOwg3t
-         Nj8Q50utKilmssWrEV9SNVapnIMVVY2KgYyABCHiJjE8JyatYg4m7FcRT74HYuVSIo4M
-         VAzQ==
-X-Gm-Message-State: AOAM530agA5x+8qGvwTcIP10Ojqcg2WqeRbuGVKiedPs+Hi95+5xyD2l
-        W3CAwoNYmpzuwhTmpjbUdZs1EcZrmkTmyg==
-X-Google-Smtp-Source: ABdhPJxP/LtECTOcLF1eTcgsMe+Mm9jzmNY1cAbNE7xAawb3DcVWlasFk4TfQ/ICCR24z/+0jjD+ww==
-X-Received: by 2002:a05:6000:1845:: with SMTP id c5mr54191134wri.499.1641569478109;
-        Fri, 07 Jan 2022 07:31:18 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m6sm997242wrx.36.2022.01.07.07.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 07:31:17 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
-        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Cc:     loic.poulain@linaro.org, benl@squareup.com,
-        bryan.odonoghue@linaro.org
-Subject: [PATCH 4/4] wcn36xx: Add SNR reporting via get_survey()
-Date:   Fri,  7 Jan 2022 15:33:23 +0000
-Message-Id: <20220107153323.1807905-5-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220107153323.1807905-1-bryan.odonoghue@linaro.org>
-References: <20220107153323.1807905-1-bryan.odonoghue@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641570206; x=1673106206;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=1bKTnpdPDCKCFfh2M//kBRLpjp/9Xjx7Og/VHfiyWnA=;
+  b=DJdz/Nox2/BXixf0fqh6z4Pi2nhdGUKo0t7iRbjtcV49hOt9Cdmx8cDw
+   HR27kO0Gzo69443vUfu+x7+qsHtwUY9N2+fRrbwoqmbSiy000cK99/RXO
+   lfoPwVrHl0oDClEyfRqbRn0YY4Fm0FLuK4g8mYl4zghSjiyRHoYB887wc
+   M=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Jan 2022 07:43:25 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 07:43:25 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 7 Jan 2022 07:43:24 -0800
+Received: from [10.50.27.236] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 7 Jan 2022
+ 07:43:19 -0800
+Message-ID: <84d36c7f-d75e-61f9-7670-c651cc50d083@quicinc.com>
+Date:   Fri, 7 Jan 2022 21:13:16 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH V6 0/7] Add driver support for Data Capture and Compare
+ Engine(DCC) for SM8150,SC7280,SC7180,SDM845
+Content-Language: en-CA
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        "Sai Prakash Ranjan" <saiprakash.ranjan@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>, <vkoul@kernel.org>
+References: <cover.1628617260.git.schowdhu@codeaurora.org>
+ <396edd95-4f38-6830-99da-11e73d62a0cf@linaro.org>
+ <705c280b-bced-476d-8e21-1a5afbf3d2f3@quicinc.com> <YdeDtlmPRQx3FU9i@ripper>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <YdeDtlmPRQx3FU9i@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for get_survey() reporting. Current channel and noise-floor are
-reported, other parameters such as scan, busy, TX and RX time are not
-immediately available.
 
-Noise is a useful metric to report, so bring it out now.
+On 1/7/2022 5:35 AM, Bjorn Andersson wrote:
+> On Thu 06 Jan 07:20 PST 2022, Souradeep Chowdhury wrote:
+>
+>> On 12/16/2021 9:18 PM, Thara Gopinath wrote:
+>>>
+>>> On 8/10/21 1:54 PM, Souradeep Chowdhury wrote:
+>>>> DCC(Data Capture and Compare) is a DMA engine designed for debugging
+>>>> purposes.In case of a system
+>>>> crash or manual software triggers by the user the DCC hardware
+>>>> stores the value at the register
+>>>> addresses which can be used for debugging purposes.The DCC driver
+>>>> provides the user with sysfs
+>>>> interface to configure the register addresses.The options that the
+>>>> DCC hardware provides include
+>>>> reading from registers,writing to registers,first reading and then
+>>>> writing to registers and looping
+>>>> through the values of the same register.
+>>>>
+>>>> In certain cases a register write needs to be executed for accessing
+>>>> the rest of the registers,
+>>>> also the user might want to record the changing values of a register
+>>>> with time for which he has the
+>>>> option to use the loop feature.
+>>> Hello Souradeep,
+>>>
+>>> First of all, I think this is very a useful feature to have. I have some
+>>> generic design related queries/comments on driver and the interface
+>>> exposed to the user space. Also, I do not understand the h/w well here,
+>>> so feel free to correct me if I am wrong.
+>>>
+>>> 1. Linked list looks like a very internal feature to the h/w. It really
+>>> is not an info that user should be aware of. I tried reading the code a
+>>> bit. IUC, every time a s/w trigger is issued the configs in all the
+>>> enabled linked lists are executed. The final ram dump that you get from
+>>> /dev/dcc_sram is a dump of contents from all the enabled list? Is this
+>>> understanding correct ? And we are talking of at-most 4 linked list?
+>>> If yes, I think it might be better to have a folder per linked list with
+>>> config, config_write etc. Also if possible it will be better to dump the
+>>> results to a file in the specific folder instead of reading from
+>>> /dev/dcc_sram.
+>>> If no, there is no real need for user to know the linked list, right?
+>>> Choosing of linked list can be done by kernel driver in this case with
+>>> no input needed from user.
+>>>
+>>> 2. Now to the sysfs interface itself, I know lot of thought has gone
+>>> into sysfs vs debugfs considerations. But, have you considered using
+>>> netlink interface instead of sysfs. Netlink interface is used for
+>>> asynchronous communication between kernel and user space. In case of
+>>> DCC, the communication appears to be asynchronous, where in user asks
+>>> the kernel to capture some info and kernel can indicate back to user
+>>> when the info is captured. Also the entire mess surrounding echoing addr
+>>> / value / offset repeatedly into a sysfs entry can be avoided using
+>>> netlink interface.
+>>>
+>> Hello Thara,
+>>
+>> Thanks for your review comments. Following are some points from my end
+>>
+>>
+>> 1) Each linked list represent a particular block of memory in DCC_SRAM which
+>> is preserved for that particular list. That is why offset calculation is
+>> done on the driver based on the linked list chosen by the user.
+>>
+>>      This choice needs to be made by the user since the number for the linked
+>> list chosen is specific to the registers used to debug a particular
+>> component.  Also we are giving the user flexibility to configure multiple
+>>
+>>      linked lists at one go so that even if we don't have a separate folder
+>> for it , the dumps are collected as a separate list of registers. Also there
+>> are certain curr_list values which may be supported by the dcc
+>>
+>>      hardware but may not be accessible to the user and so the choice cannot
+>> be made arbitrarily from the driver.
+>>
+> But in the end, as you write out the SRAM content, is there really any
+> linked lists? Afaict it's just a sequence of operations/commands. The
+> linked list part seems to be your data structure of choice to keep track
+> of these operations in the driver before flushing them out.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/net/wireless/ath/wcn36xx/main.c | 42 +++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+That is correct, the linked list defined in the driver is for storing 
+the addresses sequentially in DCC_SRAM and is just an internal
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
-index d130ebb965146..bcef590be60dc 100644
---- a/drivers/net/wireless/ath/wcn36xx/main.c
-+++ b/drivers/net/wireless/ath/wcn36xx/main.c
-@@ -1357,6 +1357,47 @@ static void wcn36xx_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	}
- }
- 
-+int wcn36xx_get_survey(struct ieee80211_hw *hw, int idx,
-+		       struct survey_info *survey)
-+{
-+	struct wcn36xx *wcn = hw->priv;
-+	struct ieee80211_supported_band *sband;
-+	struct wcn36xx_chan_survey *chan_survey;
-+	unsigned long flags;
-+
-+	sband = wcn->hw->wiphy->bands[NL80211_BAND_2GHZ];
-+	if (idx >= sband->n_channels) {
-+		idx -= sband->n_channels;
-+		sband = wcn->hw->wiphy->bands[NL80211_BAND_5GHZ];
-+	}
-+
-+	if (!sband || idx >= sband->n_channels)
-+		return -ENOENT;
-+
-+	spin_lock_irqsave(&wcn->survey_lock, flags);
-+
-+	chan_survey = &wcn->chan_survey[idx];
-+	survey->channel = &sband->channels[idx];
-+	survey->noise = chan_survey->rssi - chan_survey->snr;
-+	survey->filled = 0;
-+
-+	if (chan_survey->rssi > -100 && chan_survey->rssi < 0)
-+		survey->filled |= SURVEY_INFO_NOISE_DBM;
-+
-+	if (survey->channel == wcn->channel)
-+		survey->filled |= SURVEY_INFO_IN_USE;
-+
-+	spin_unlock_irqrestore(&wcn->survey_lock, flags);
-+
-+	 wcn36xx_dbg(WCN36XX_DBG_MAC,
-+		     "ch %d rssi %d snr %d noise %d filled %x freq %d\n",
-+		     HW_VALUE_CHANNEL(survey->channel->hw_value),
-+		     chan_survey->rssi, chan_survey->snr, survey->noise,
-+		     survey->filled, survey->channel->center_freq);
-+
-+	return 0;
-+}
-+
- static const struct ieee80211_ops wcn36xx_ops = {
- 	.start			= wcn36xx_start,
- 	.stop			= wcn36xx_stop,
-@@ -1385,6 +1426,7 @@ static const struct ieee80211_ops wcn36xx_ops = {
- 	.ipv6_addr_change	= wcn36xx_ipv6_addr_change,
- #endif
- 	.flush			= wcn36xx_flush,
-+	.get_survey		= wcn36xx_get_survey,
- 
- 	CFG80211_TESTMODE_CMD(wcn36xx_tm_cmd)
- };
--- 
-2.33.0
+data structure of the driver. However, there is also a "list" from DCC 
+hardware perspective. The following driver code shows how
 
+a list is initiated with the beginning and end sram offset so that DCC 
+hardware can treat it as a separate list of addresses and dump
+
+the values separately.
+
+               /* 1. Take ownership of the list */
+                 dcc_writel(drvdata, BIT(0), DCC_LL_LOCK(list));
+
+                 /* 2. Program linked-list in the SRAM */
+                 ram_cfg_base = drvdata->ram_cfg;
+                 ret = __dcc_ll_cfg(drvdata, list);
+                 if (ret) {
+                         dcc_writel(drvdata, 0, DCC_LL_LOCK(list));
+                         goto err;
+                 }
+
+                 /* 3. program DCC_RAM_CFG reg */
+                 dcc_writel(drvdata, ram_cfg_base +
+                         drvdata->ram_offset/4, DCC_LL_BASE(list));
+                 dcc_writel(drvdata, drvdata->ram_start +
+                         drvdata->ram_offset/4, DCC_FD_BASE(list));
+                 dcc_writel(drvdata, 0xFFF, DCC_LL_TIMEOUT(list));
+
+                 /* 4. Clears interrupt status register */
+                 dcc_writel(drvdata, 0, DCC_LL_INT_ENABLE(list));
+                 dcc_writel(drvdata, (BIT(0) | BIT(1) | BIT(2)),
+                                         DCC_LL_INT_STATUS(list));
+
+                 drvdata->enable[list] = true;
+
+So when user enters multiple lists, the DCC hardware will process it as 
+separate group of register values.
+
+>
+> Regards,
+> Bjorn
+>
+>> 2) From opensource, I can see that Netlink has been used in most of the
+>> cases where we need to notify stats to the user by taking the advantage of
+>> asynchronous communication. In this case, that requirement is not
+>>
+>>      there since it is mostly one way communication from user to kernel. Also
+>> since this is used for debugging purposes perhaps sysfs adds more
+>> reliability than Netlink. In case of Netlink we have the additional
+>>
+>>       overhead of dealing with socket calls. Let me know otherwise.
+>>
+>>
+>> Thanks,
+>>
+>> Souradeep
+>>
+>>
+>>
+>>
+>>
