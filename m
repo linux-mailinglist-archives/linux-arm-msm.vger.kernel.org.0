@@ -2,93 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED3D0486E88
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:16:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6536486E8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jan 2022 01:18:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343902AbiAGAQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Jan 2022 19:16:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50316 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343884AbiAGAQi (ORCPT
+        id S1343896AbiAGASL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Jan 2022 19:18:11 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:52092 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343745AbiAGASK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Jan 2022 19:16:38 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2389BC061245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jan 2022 16:16:38 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id t204so6042040oie.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jan 2022 16:16:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=AhAOsZ/7jHs5SUsagnpCXuv8mziNMy8lNAe5OxNHwRI=;
-        b=jtu0UCzsfvv7r/9Ui35y3wcCDJ3CTyXCC8ChvPsXCS9J3W37m6SMoBTQbsj+ErtfE9
-         pe0aHLL5ZWI9rFnxE5JXD20lz7HQ5hXDUeTh2khVn4BFwqA6b1gU7t/PkpRjvVqM6VpH
-         u3uv0WnE20bi241CKaAwLaQZj5rAyiY2wkRUw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=AhAOsZ/7jHs5SUsagnpCXuv8mziNMy8lNAe5OxNHwRI=;
-        b=Zp4mu4dP7xvXVPjQm2CE4GEWO0dGMywAWxuF3GtE/Xxvnuk4zMTqa7U7PdHkmO182J
-         iYS1TxECwLYEJ6SEY6LmptRT490WmnTvTSRa0g90pYp3cSpTS2nFvqSXIDkyQMQ2YMmy
-         bhyniUsrwxkA2QQtQoT5HprNg9ADvUTESVosPKajEcXMY/5z1gssQV9+3L6WpXpBzLIM
-         p6+eawlI6oaqlsxyQUXY1qaDRZ/LTlgrXSj7hFOqFZII49Cmt0jGjA/JVJdH18W7m8++
-         I3WsgguQFKBm8h6/KrfQFVHpS2ePOt/rtrlv+7YKQS0O6/srWIcWEu6nKJzoUA+smnk8
-         HXtQ==
-X-Gm-Message-State: AOAM530g/zTbTjnhG7gZLCRXssTlM+vbNLgkJq8BngiwPoWHPCeOeyQN
-        m+wY4KOU+hGoaCGKpuq0sW5m2vk9YzEXjtCPgrePgA==
-X-Google-Smtp-Source: ABdhPJzdnu0U3lCEWw7wwT5P+wBqtXsBtwXolcxsJQLEGILR/MbyPZuk7wEfhLzqqaqCXLmimPsFv6cKTyObVMLoGMs=
-X-Received: by 2002:a54:4710:: with SMTP id k16mr7970018oik.32.1641514597511;
- Thu, 06 Jan 2022 16:16:37 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Jan 2022 16:16:37 -0800
+        Thu, 6 Jan 2022 19:18:10 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CEA7761E80;
+        Fri,  7 Jan 2022 00:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309A9C36AE3;
+        Fri,  7 Jan 2022 00:18:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641514689;
+        bh=nCrqN1gixElapyW4wIoqI1rbQMvwPXyoXKP6XwJCgq0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=UHkO8udkc0cTHJsahiPvsYbo8dL9t6KBtN+bfRihrB8OfesxZifZcFekZzWhDE5df
+         G0hCsi1+IzzKhKvERTX4gXXhgwv7yJFJWWivdXcAcmBivPGxbhl2CJKEC1EfrWauuC
+         j9z4BFinPN2w5dOBdBfELK2z81ViauOZtiPJ65h1zNZGGChpsgWuHKd46Jy92F7vLd
+         g8oNQrsjwvexTywUOzluljTJAFss5ncaun856JKBnp+i1Q9eT9O3PW3z/rezPBcBT5
+         hJCq4az6KbN59VohhLes6GxVomEi656SgdyeLoTxJ+O+jAm7qm+nNrAq6VTvQhRy/u
+         DB8jNzlpE/6Kg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <1641501894-17563-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1641501894-17563-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v10 1/2] dt-bindings: leds: Add Qualcomm Light Pulse Generator binding
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>, Pavel Machek <pavel@ucw.cz>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?utf-8?q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Date:   Thu, 06 Jan 2022 16:18:07 -0800
 User-Agent: alot/0.9.1
-Date:   Thu, 6 Jan 2022 16:16:37 -0800
-Message-ID: <CAE-0n51WQMSeChCyMKCHOGSqhGKf4=TamDinndrF8iVFrmrZ7A@mail.gmail.com>
-Subject: Re: [PATCH v4] drm/msm/dp: populate connector of struct dp_panel
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <20220107001809.309A9C36AE3@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-01-06 12:44:54)
-> DP CTS test case 4.2.2.6 has valid edid with bad checksum on purpose
-> and expect DP source return correct checksum. During drm edid read,
-> correct edid checksum is calculated and stored at
-> connector::real_edid_checksum.
->
-> The problem is struct dp_panel::connector never be assigned, instead the
-> connector is stored in struct msm_dp::connector. When we run compliance
-> testing test case 4.2.2.6 dp_panel_handle_sink_request() won't have a valid
-> edid set in struct dp_panel::edid so we'll try to use the connectors
-> real_edid_checksum and hit a NULL pointer dereference error because the
-> connector pointer is never assigned.
->
-> Changes in V2:
-> -- populate panel connector at msm_dp_modeset_init() instead of at dp_panel_read_sink_caps()
->
-> Changes in V3:
-> -- remove unhelpful kernel crash trace commit text
-> -- remove renaming dp_display parameter to dp
->
-> Changes in V4:
-> -- add more details to commit text
->
-> Fixes: 7948fe12d47 ("drm/msm/dp: return correct edid checksum after corrupted edid checksum read")
-> Signee-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Quoting Bjorn Andersson (2021-10-09 21:39:11)
+> This adds the binding document describing the three hardware blocks
+> related to the Light Pulse Generator found in a wide range of Qualcomm
+> PMICs.
+>=20
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
