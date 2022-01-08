@@ -2,104 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D764881AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jan 2022 06:34:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15753488223
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jan 2022 08:25:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbiAHFeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Jan 2022 00:34:25 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:17913 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229708AbiAHFeY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Jan 2022 00:34:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641620064; x=1673156064;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=rur0/nZv+Mm/lbEL32xKYlmQrxtSdjeSo48l1xph7k8=;
-  b=jjkZLFZMHk8L/E7zv84O+8hjotCGU4HCcqqa2NGm6871gfL5ghjNaFWN
-   d+v3mnOD7yR9mVliP5pnau7JXFmBqWmc4pDAPB2+VcXeLuepkWM9yJpxA
-   Lq/6B5mm0sz41GZ24UFFYQc3QNMimtWnSGXgyeitROeaKQMCicWAhA+iS
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 07 Jan 2022 21:34:24 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jan 2022 21:34:24 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 7 Jan 2022 21:34:23 -0800
-Received: from [10.50.8.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 7 Jan 2022
- 21:34:19 -0800
-Message-ID: <b36d92de-ae0b-243d-f2de-e12fe730f6c4@quicinc.com>
-Date:   Sat, 8 Jan 2022 11:04:16 +0530
+        id S229991AbiAHHZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Jan 2022 02:25:26 -0500
+Received: from box.trvn.ru ([194.87.146.52]:56037 "EHLO box.trvn.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233484AbiAHHZZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 8 Jan 2022 02:25:25 -0500
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 513EC4038B;
+        Sat,  8 Jan 2022 12:25:19 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1641626721; bh=xSTjwXWm03zXFQo0llbV1rDWCB+tlvOs66q7D/jrNgg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=epAcW3haHkcxECO4fhpYKScBgMXqNlBNUG2+cW5jDomY+kcf0MDNq3gAPA6UuyXM+
+         yKTgRwUYchNnwuexw8rggh7wSOkYc3Y9+bpc88nQd0ApHcJGU83jR2Sr0VFOtBljH7
+         cX1o/eGahOki14stGjyeiRwDZNNms7owI7d4I/GVPv2IDaPLKRZp2sEeXv/HwQezBK
+         fBujLPdT6vZNaoTMQ53mVYlaK3tvHE1r3HWMvb3vl5NM+L+vPrDCAVHjY8JRTYavWw
+         hkSreKo+bgTthBvEbg+LMs6JYtRDbPAuECg5n1ZbNa0j1Cx0gf7Es7N4DRTiUUsPUe
+         65q5iO/G5lgWA==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv6 4/5] tracing: Add register read/write tracing support
-Content-Language: en-US
-To:     Steven Rostedt <rostedt@goodmis.org>
-CC:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-References: <cover.1638858746.git.quic_saipraka@quicinc.com>
- <76983c26d889df7252a17017a48754163fb6b0d5.1638858747.git.quic_saipraka@quicinc.com>
- <20220106131824.073fbe5c@gandalf.local.home>
- <df9b5a82-5f00-f3ec-14cf-0b212be2a7a7@quicinc.com>
- <20220107095638.7d81c1b9@gandalf.local.home>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <20220107095638.7d81c1b9@gandalf.local.home>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Date:   Sat, 08 Jan 2022 12:25:19 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     linus.walleij@linaro.org, mturquette@baylibre.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, tdas@codeaurora.org,
+        svarbanov@mm-sol.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/4] clk: qcom: clk-rcg2: Fail Duty-Cycle configuration if
+ MND divider is not enabled.
+In-Reply-To: <20220108005209.5140EC36AEB@smtp.kernel.org>
+References: <20211209163720.106185-1-nikita@trvn.ru>
+ <20211209163720.106185-2-nikita@trvn.ru>
+ <20220108005209.5140EC36AEB@smtp.kernel.org>
+Message-ID: <991533e0fddd6999c8a06a536ae57999@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On 1/7/2022 8:26 PM, Steven Rostedt wrote:
-> On Fri, 7 Jan 2022 10:40:05 +0530
-> Sai Prakash Ranjan <quic_saipraka@quicinc.com> wrote:
->
->> Hi Steve,
+Stephen Boyd писал(а) 08.01.2022 05:52:
+> Quoting Nikita Travkin (2021-12-09 08:37:17)
+>> In cases when MND is not enabled (e.g. when only Half Integer Divider is
+>> used), setting D registers makes no effect. Fail instead of making
+>> ineffective write.
 >>
->> On 1/6/2022 11:48 PM, Steven Rostedt wrote:
->>> This should not be in the kernel/trace directory. It should be in the
->> Hmm these are called from low level generic io header file
->> (include/asm-generic/) where
->> we wouldn't have any Kconfig to control this feature flexibly and as we
->> can have this as
->> a generic feature selectable by other architectures, wouldn't this be
->> suited in kernel/trace?
-> Isn't there a place for generic rwmmio code?
+>> Fixes: 7f891faf596e ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+>>  drivers/clk/qcom/clk-rcg2.c | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+>> index e1b1b426fae4..6964cf914b60 100644
+>> --- a/drivers/clk/qcom/clk-rcg2.c
+>> +++ b/drivers/clk/qcom/clk-rcg2.c
+>> @@ -396,7 +396,7 @@ static int clk_rcg2_get_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>  static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>  {
+>>         struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+>> -       u32 notn_m, n, m, d, not2d, mask, duty_per;
+>> +       u32 notn_m, n, m, d, not2d, mask, duty_per, cfg;
+>>         int ret;
+>>
+>>         /* Duty-cycle cannot be modified for non-MND RCGs */
+>> @@ -407,6 +407,11 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
+>>
+>>         regmap_read(rcg->clkr.regmap, RCG_N_OFFSET(rcg), &notn_m);
+>>         regmap_read(rcg->clkr.regmap, RCG_M_OFFSET(rcg), &m);
+>> +       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
+>> +
+>> +       /* Duty-cycle cannot be modified if MND divider is in bypass mode. */
+>> +       if (!(cfg & CFG_MODE_MASK))
+>> +               return -EINVAL;
+> 
+> Should we still allow 50% duty cycle to succeed?
 
-I am thinking of moving it to lib/ similar to an interface of 
-logic_iomem.c which
-Arnd had initially suggested to look at.
+*Technically* setting 50% duty cycle works since it's the default,
+but how I understand it, the main way to get there is to call
+clk_set_duty_cycle() which implies that it's caller intends
+to control duty cycle specifically but the call doesn't actually
+control anything as the hardware block is disabled.
 
->> I thought you were ok with the folder structure in the initial versions
->> of the series?
-> Sorry, I missed the C file in kernel/trace. The files in kernel/trace tend
-> to be specific for the internals of tracing. This C file is more to hold
-> helper functions for mmio, which to me should be someplace for mmio code.
-> Perhaps in mm/ ?
->
+I'm adding this error here primarily to bring attention of the
+user (e.g. developer enabling some peripheral that needs
+duty cycle control) who might have to change their clock tree
+to make this control effective. So, assuming that if someone
+sets the duty cycle to 50% then they might set it to some other
+value later, it makes sense to fail the first call anyway.
 
-Oh ok, mm would not be the right fit as it is memory management and this 
-is about
-memory mapped IO, let me try and move it to lib/ as done for logic_iomem.c
+If you think there are some other possibilities for this call
+to happen specifically with 50% duty cycle (e.g. some
+preparations or cleanups in the clk subsystem or some drivers
+that I'm not aware of) then I can make an exemption in the check
+for that.
 
 Thanks,
-Sai
+Nikita
