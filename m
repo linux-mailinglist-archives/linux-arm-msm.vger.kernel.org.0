@@ -2,107 +2,381 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3926488C05
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 20:24:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DF56488C2B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 21:03:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236726AbiAITYp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jan 2022 14:24:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236723AbiAITYo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jan 2022 14:24:44 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C955C061751;
-        Sun,  9 Jan 2022 11:24:43 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c66so7416328wma.5;
-        Sun, 09 Jan 2022 11:24:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/7KLjfPHsWfXinvdT9x6SwzVroZgq92QvU7YFU5ZeWM=;
-        b=eJ2muUDWeSDar4I1sLFaTGZhcHvqAdSpGMogP4fuj4m5J2xdYuZQPEszkuQHAbE08C
-         fy20TVvX4eSaHLy986Oe8RMqcP62rOxSFOpaAvq+SGNKos5U2QTn73e8xJXEUK5TugXp
-         BPztQRIxS3ET5kmCq2F8hSY/4zEwfidL2fwngro2M2GsXgGYLa8R10h4tC67IALi9dcJ
-         rmvEvIoTD879fADNyXMYKP7xX6rO92qnN5sCdzgfjWVswCg5pOHTbCeuufsZKAoTqrut
-         CSQp8CU2czG+ZiucpIEDGWIbeFiWI1xFyhUJvfD9ILlY+6e3Za2UTPxwutRpLTZFFw8y
-         ly3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/7KLjfPHsWfXinvdT9x6SwzVroZgq92QvU7YFU5ZeWM=;
-        b=Eebsqlv88jU2wGM6EAQBkvnUnmqAJDmmFKCmZTgaNsR0md5oI+bLELQyKJfpQFWLRk
-         gTLSmgh4eiyhI8aSnCXzfv45i+5HPAW163j2+Nshzc37tUp6MUazYNlb8y7DMzOBgInP
-         663lyFwCq+NywplEGQvHqPWP6bNltD5b5N807jWdhSSI+1Ex1o6ieNPVVkpHSoKwwDG9
-         Wd/f7M61aPNt2BKBKmuZo+ctMDdEd1kPkXPh8ZMGnwDlHmKvElc1/o+YnBYEeylQIzGt
-         CiG9cKR2LDW9tmPWWFtpSYMQVxYSPIR4lKauXn7h+BncIWlCMOfq2lXLi25VkraopBGB
-         bsSg==
-X-Gm-Message-State: AOAM532BSf7M33dZkw/e53MNw9EelcKeUOM40wC9kc6dRek70JrRiOwe
-        v5fLmW2mVW59kIToz4fcaJU=
-X-Google-Smtp-Source: ABdhPJxob2kx7PZCoFwkFA0s/AKSHeLZcHwTJ8YZObT7NHoX+c9068fofT99Quzq/1i0wvnVcFJNFQ==
-X-Received: by 2002:a7b:c0cf:: with SMTP id s15mr1712753wmh.95.1641756281658;
-        Sun, 09 Jan 2022 11:24:41 -0800 (PST)
-Received: from localhost.localdomain ([217.113.240.86])
-        by smtp.gmail.com with ESMTPSA id w17sm5403831wmc.14.2022.01.09.11.24.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jan 2022 11:24:41 -0800 (PST)
-From:   =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
-To:     kalyan_t@codeaurora.org
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
-        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
-Subject: [PATCH] drm/msm/dpu: invalid parameter check in dpu_setup_dspp_pcc
-Date:   Sun,  9 Jan 2022 20:24:31 +0100
-Message-Id: <20220109192431.135949-1-jose.exposito89@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        id S231658AbiAIUDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jan 2022 15:03:36 -0500
+Received: from ixit.cz ([94.230.151.217]:53120 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230395AbiAIUDg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 9 Jan 2022 15:03:36 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id C69432243C;
+        Sun,  9 Jan 2022 21:03:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1641758614;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=wFkft0CzkB4uaaTqJMU1+7/bcgLx79HrA1YTAV+YSWw=;
+        b=dHWkB+hFlaifxqkARmY1gZbghkvtP8IirCsBIMjzu/Wmts8xQO+GW+IJHe+P531de3CMfH
+        eqSRPjEjiVfQaeBXk642cxa9DBCDyuvsv8ufLlotMmB8lSzRJK9janKN3O0qRg6bAYcPrY
+        bs05e9iLaD9g3sSCRyd0eCT2wnurV+Q=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: msm8960: Sort out rpm node duplication
+Date:   Sun,  9 Jan 2022 21:03:31 +0100
+Message-Id: <20220109200332.41474-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function performs a check on the "ctx" input parameter, however, it
-is used before the check.
+On other platforms are usually regulators enumerated in platform and
+used in devices, follow the pattern on MSM8960 too.
 
-Initialize the "base" variable after the sanity check to avoid a
-possible NULL pointer dereference.
+No functional changes.
 
-Fixes: 4259ff7ae509e ("drm/msm/dpu: add support for pcc color block in dpu driver")
-Addresses-Coverity-ID: 1493866 ("Null pointer dereference")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Original author: Bjorn Andersson
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/qcom-msm8960-cdp.dts | 73 +++++++++++++-------------
+ arch/arm/boot/dts/qcom-msm8960.dtsi    | 43 +++++++++++++++
+ 2 files changed, 79 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-index a98e964c3b6f..355894a3b48c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
-@@ -26,9 +26,16 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
- 		struct dpu_hw_pcc_cfg *cfg)
- {
+diff --git a/arch/arm/boot/dts/qcom-msm8960-cdp.dts b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+index 830703759466..7c4c3cb79d05 100644
+--- a/arch/arm/boot/dts/qcom-msm8960-cdp.dts
++++ b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+@@ -49,7 +49,6 @@ sdcc3: mmc@12180000 {
  
--	u32 base = ctx->cap->sblk->pcc.base;
-+	u32 base;
+ 		rpm@108000 {
+ 			regulators {
+-				compatible = "qcom,rpm-pm8921-regulators";
+ 				vin_lvs1_3_6-supply = <&pm8921_s4>;
+ 				vin_lvs2-supply = <&pm8921_s4>;
+ 				vin_lvs4_5_7-supply = <&pm8921_s4>;
+@@ -62,7 +61,7 @@ regulators {
+ 				vdd_l28-supply = <&pm8921_s7>;
  
--	if (!ctx || !base) {
-+	if (!ctx) {
-+		DRM_ERROR("invalid ctx %pK\n", ctx);
-+		return;
-+	}
+ 				/* Buck SMPS */
+-				pm8921_s1: s1 {
++				s1 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1225000>;
+ 					regulator-max-microvolt = <1225000>;
+@@ -70,21 +69,21 @@ pm8921_s1: s1 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_s2: s2 {
++				s2 {
+ 					regulator-min-microvolt = <1300000>;
+ 					regulator-max-microvolt = <1300000>;
+ 					qcom,switch-mode-frequency = <1600000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_s3: s3 {
++				s3 {
+ 					regulator-min-microvolt = <500000>;
+ 					regulator-max-microvolt = <1150000>;
+ 					qcom,switch-mode-frequency = <4800000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_s4: s4 {
++				s4 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <1800000>;
+@@ -93,14 +92,14 @@ pm8921_s4: s4 {
+ 					qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
+ 				};
+ 
+-				pm8921_s7: s7 {
++				s7 {
+ 					regulator-min-microvolt = <1150000>;
+ 					regulator-max-microvolt = <1150000>;
+ 					qcom,switch-mode-frequency = <3200000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_s8: s8 {
++				s8 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <2050000>;
+ 					regulator-max-microvolt = <2050000>;
+@@ -109,137 +108,137 @@ pm8921_s8: s8 {
+ 				};
+ 
+ 				/* PMOS LDO */
+-				pm8921_l1: l1 {
++				l1 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1050000>;
+ 					regulator-max-microvolt = <1050000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l2: l2 {
++				l2 {
+ 					regulator-min-microvolt = <1200000>;
+ 					regulator-max-microvolt = <1200000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l3: l3 {
++				l3 {
+ 					regulator-min-microvolt = <3075000>;
+ 					regulator-max-microvolt = <3075000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l4: l4 {
++				l4 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <1800000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l5: l5 {
++				l5 {
+ 					regulator-min-microvolt = <2950000>;
+ 					regulator-max-microvolt = <2950000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l6: l6 {
++				l6 {
+ 					regulator-min-microvolt = <2950000>;
+ 					regulator-max-microvolt = <2950000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l7: l7 {
++				l7 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1850000>;
+ 					regulator-max-microvolt = <2950000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l8: l8 {
++				l8 {
+ 					regulator-min-microvolt = <2800000>;
+ 					regulator-max-microvolt = <3000000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l9: l9 {
++				l9 {
+ 					regulator-min-microvolt = <3000000>;
+ 					regulator-max-microvolt = <3000000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l10: l10 {
++				l10 {
+ 					regulator-min-microvolt = <3000000>;
+ 					regulator-max-microvolt = <3000000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l11: l11 {
++				l11 {
+ 					regulator-min-microvolt = <2850000>;
+ 					regulator-max-microvolt = <2850000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l12: l12 {
++				l12 {
+ 					regulator-min-microvolt = <1200000>;
+ 					regulator-max-microvolt = <1200000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l14: l14 {
++				l14 {
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <1800000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l15: l15 {
++				l15 {
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <2950000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l16: l16 {
++				l16 {
+ 					regulator-min-microvolt = <2800000>;
+ 					regulator-max-microvolt = <2800000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l17: l17 {
++				l17 {
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <2950000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l18: l18 {
++				l18 {
+ 					regulator-min-microvolt = <1300000>;
+ 					regulator-max-microvolt = <1300000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l21: l21 {
++				l21 {
+ 					regulator-min-microvolt = <1900000>;
+ 					regulator-max-microvolt = <1900000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l22: l22 {
++				l22 {
+ 					regulator-min-microvolt = <2750000>;
+ 					regulator-max-microvolt = <2750000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l23: l23 {
++				l23 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <1800000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l24: l24 {
++				l24 {
+ 					regulator-min-microvolt = <750000>;
+ 					regulator-max-microvolt = <1150000>;
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_l25: l25 {
++				l25 {
+ 					regulator-always-on;
+ 					regulator-min-microvolt = <1250000>;
+ 					regulator-max-microvolt = <1250000>;
+@@ -247,35 +246,35 @@ pm8921_l25: l25 {
+ 				};
+ 
+ 				/* Low Voltage Switch */
+-				pm8921_lvs1: lvs1 {
++				lvs1 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs2: lvs2 {
++				lvs2 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs3: lvs3 {
++				lvs3 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs4: lvs4 {
++				lvs4 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs5: lvs5 {
++				lvs5 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs6: lvs6 {
++				lvs6 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_lvs7: lvs7 {
++				lvs7 {
+ 					bias-pull-down;
+ 				};
+ 
+-				pm8921_ncp: ncp {
++				ncp {
+ 					regulator-min-microvolt = <1800000>;
+ 					regulator-max-microvolt = <1800000>;
+ 					qcom,switch-mode-frequency = <1600000>;
+diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+index d9033912c7f3..ffedc60f9ec1 100644
+--- a/arch/arm/boot/dts/qcom-msm8960.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+@@ -154,6 +154,49 @@ rpm@108000 {
+ 
+ 			regulators {
+ 				compatible = "qcom,rpm-pm8921-regulators";
 +
-+	base = ctx->cap->sblk->pcc.base;
++				/* Buck SMPS */
++				pm8921_s1: s1 {};
++				pm8921_s2: s2 {};
++				pm8921_s3: s3 {};
++				pm8921_s4: s4 {};
++				pm8921_s7: s7 {};
++				pm8921_s8: s8 {};
 +
-+	if (!base) {
- 		DRM_ERROR("invalid ctx %pK pcc base 0x%x\n", ctx, base);
- 		return;
- 	}
++				/* PMOS LDO */
++				pm8921_l1: l1 {};
++				pm8921_l2: l2 {};
++				pm8921_l3: l3 {};
++				pm8921_l4: l4 {};
++				pm8921_l5: l5 {};
++				pm8921_l6: l6 {};
++				pm8921_l7: l7 {};
++				pm8921_l8: l8 {};
++				pm8921_l9: l9 {};
++				pm8921_l10: l10 {};
++				pm8921_l11: l11 {};
++				pm8921_l12: l12 {};
++				pm8921_l14: l14 {};
++				pm8921_l15: l15 {};
++				pm8921_l16: l16 {};
++				pm8921_l17: l17 {};
++				pm8921_l18: l18 {};
++				pm8921_l21: l21 {};
++				pm8921_l22: l22 {};
++				pm8921_l23: l23 {};
++				pm8921_l24: l24 {};
++				pm8921_l25: l25 {};
++
++				/* Low Voltage Switch */
++				pm8921_lvs1: lvs1 {};
++				pm8921_lvs2: lvs2 {};
++				pm8921_lvs3: lvs3 {};
++				pm8921_lvs4: lvs4 {};
++				pm8921_lvs5: lvs5 {};
++				pm8921_lvs6: lvs6 {};
++				pm8921_lvs7: lvs7 {};
++
++				pm8921_ncp: ncp {};
+ 			};
+ 		};
+ 
 -- 
-2.25.1
+2.34.1
 
