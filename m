@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 723D6488A28
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 16:21:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 942CE488A3A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 16:33:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234112AbiAIPVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jan 2022 10:21:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34794 "EHLO
+        id S234469AbiAIPdM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jan 2022 10:33:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbiAIPVS (ORCPT
+        with ESMTP id S234160AbiAIPdL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jan 2022 10:21:18 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400C3C06173F;
-        Sun,  9 Jan 2022 07:21:18 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id p18so404833wmg.4;
-        Sun, 09 Jan 2022 07:21:18 -0800 (PST)
+        Sun, 9 Jan 2022 10:33:11 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F41C06173F;
+        Sun,  9 Jan 2022 07:33:11 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id c126-20020a1c9a84000000b00346f9ebee43so5779593wme.4;
+        Sun, 09 Jan 2022 07:33:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=r/pE1ECBkfSNzadNoNYykzwMon5LhyL0GG0vfMrJjtg=;
-        b=Wsb+nMKWd2enNkyyKrUbL4DfRLHth/3QbZpJ/KFqka0EygV7ypMOU5GocL6Ls/2ydq
-         Z7LT7ReqWrJlPfTRWr6ednzK5QVQX3hPhnNkodooWBpitZklel+ofKjg2AEBvWPMOuvE
-         7J3WsJiKCVq18mOVUqQFMFwBYVhFsmPox/OU+GE5fojZykWkpBkgmfleVPo/XGRXyhOz
-         gReNLxFY65+d1TplRqZBgaJYy03UNX5CozaRAlnaL9ffgFL12kzKgEBEt9pnQnt97ngW
-         pW/dPZjzqMDF2G7Z3hxB8CGVS+R6LFuGq/HQp6/6tO+YClFNlxKbrKmdv2IYvkrTh7nA
-         x3Og==
+        bh=iDd3o808yP7X72T6NzrCF0U4nmksu/IQWoASd3p64DE=;
+        b=Rwocg3ISJZmmd4OExeBAWyILA3YMSmy8ziMH8efgpxikhEt1Fi+yxjiJIMAlSSnJV5
+         QZyvXqXOp4taFUkQMppcVGH6aYy/NSlqBPpvwe7jdYrB55WnbSxdTjkeeRXVOo9xhX4K
+         WzLrNXfpTTOGiVtvRVm57FBpwJbANqX0/G8F/SSod+B8QFQVxWEyUi8iOUe+t0c7dTPi
+         SNIenYntpK850n25wzv16wwBOOctQuBNEpR9tQU1txBOWZKvHW6w9VKz7ISPj7fRPKIH
+         NB6HNe2q4zzW5DBL2WdHXgoOFd2zjkkSAyVssiozvXN4RtDWaNP2yKkyLkVRr/NFERvP
+         Ehfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
          :content-disposition;
-        bh=r/pE1ECBkfSNzadNoNYykzwMon5LhyL0GG0vfMrJjtg=;
-        b=kUI9iQdpgp68d4Mo2C2DLrXQxsk5fqisuIxyJXCGJ94LcHAqHVoozlOWHW8BqfUoNe
-         UP+d8kORxvxuEhOE9LJJ+sKJsA9rVgQ9kK92NfAC6ZlG8PzhOIW1kP1/CzVnlgqbImT6
-         iBb112eOUxTVNc5xD5QJzfPpuXYyWVgb9c2ErCC9ytc2OPearquyjdyiBOGMc3W9/aNz
-         IHZ0O6Kmrv3aNv1dU355wvmsB4fcFNElmf4qdJrGS30pBQkQC1CuBUNHl5cdEBWyvDnn
-         BtxVBHarfNRXNJrDRj8KXy5LI3yr0BI7ZmF9+1F9rBzlEBrKfNLFzVqDZY1/+iJKRLAv
-         Sayw==
-X-Gm-Message-State: AOAM53115Jk88uyinxD/RAOu52OKbDeLSUdXIBan9vJAX9x5l4ro8dcm
-        g+yVFJsSjRUoytNSEkOwH6bxJPf0Mek=
-X-Google-Smtp-Source: ABdhPJwdRSy4DpT/59DeBlaG0s/t9MI7vCHvyE7MRtojJWgI/BV2PgKNeofkpXxhMbNnktf6Rz7ffQ==
-X-Received: by 2002:a7b:c747:: with SMTP id w7mr1209955wmk.89.1641741676947;
-        Sun, 09 Jan 2022 07:21:16 -0800 (PST)
+        bh=iDd3o808yP7X72T6NzrCF0U4nmksu/IQWoASd3p64DE=;
+        b=plg8qN2mV5wzHz3JOyyhZrlVA9SDSquX4rf663d9TaCEHbT9REHmtTOOwCk+zxS5rV
+         alnWcdYaxbMTCUpEX+h/oJC4NnKeehcqPT9/mwk2kaawdLIdwaGZVY3rUmb2zUrtrRH0
+         cGBPPLV2dBKvYFR8UDkgXGCec/NHwKE0FQIoV5U2qop0S32bLgoNDJ7MhXF04xbyC0s6
+         FcJ0xgIq4llea9I44GUPG0B8PAdGxk1ZNE/F3N1oJn6sH1vQKChbCt0s+oioAS04w79k
+         Jf+xXSgHXwS9zLDIRnGUe7AUAhsvTneNyUgeRZKjg87WaBqPTWBXxfLX/SXr5VCbWZ5I
+         ZzQA==
+X-Gm-Message-State: AOAM530fRbDAK+tJqPnjK7N5QTm8mAXsrMyCjRuRR+SKnT3k8nGfmJPT
+        KBh9+3PQi5JNzxqRtn/VfVM=
+X-Google-Smtp-Source: ABdhPJx9cHQbVJeErPiVzJrAJ3ii+2lsZitJtx5VsqLgiHkKLMiSgxyynJB98c1XTm1heqpZURaNPA==
+X-Received: by 2002:a1c:f316:: with SMTP id q22mr18595850wmq.33.1641742389598;
+        Sun, 09 Jan 2022 07:33:09 -0800 (PST)
 Received: from standask-GA-A55M-S2HP ([188.123.115.255])
-        by smtp.gmail.com with ESMTPSA id g5sm4601786wrd.100.2022.01.09.07.21.16
+        by smtp.gmail.com with ESMTPSA id b5sm4437340wrr.19.2022.01.09.07.33.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jan 2022 07:21:16 -0800 (PST)
-Date:   Sun, 9 Jan 2022 16:21:15 +0100
+        Sun, 09 Jan 2022 07:33:09 -0800 (PST)
+Date:   Sun, 9 Jan 2022 16:33:07 +0100
 From:   Stanislav Jakubek <stano.jakubek@gmail.com>
 To:     Rob Herring <robh+dt@kernel.org>
 Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH] dt-bindings: vendor-prefixes: add F(x)tec
-Message-ID: <20220109152115.GA9102@standask-GA-A55M-S2HP>
+Subject: [PATCH] dt-bindings: vendor-prefixes: add Thundercomm
+Message-ID: <20220109153307.GA9842@standask-GA-A55M-S2HP>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -61,7 +61,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add vendor prefix for F(x)tec (https://www.fxtec.com/)
+Add vendor prefix for Thundercomm (https://www.thundercomm.com/)
 
 Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
 ---
@@ -69,18 +69,18 @@ Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index a13d6a19c2b4..0a6821f2d1e1 100644
+index a13d6a19c2b4..f79c30183e7e 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -441,6 +441,8 @@ patternProperties:
-     description: Freescale Semiconductor
-   "^fujitsu,.*":
-     description: Fujitsu Ltd.
-+  "^fxtec,.*":
-+    description: FX Technology Ltd.
-   "^gardena,.*":
-     description: GARDENA GmbH
-   "^gateworks,.*":
+@@ -1205,6 +1205,8 @@ patternProperties:
+     description: THine Electronics, Inc.
+   "^thingyjp,.*":
+     description: thingy.jp
++  "^thundercomm,.*":
++    description: Thundercomm Technology Co., Ltd.
+   "^ti,.*":
+     description: Texas Instruments
+   "^tianma,.*":
 -- 
 2.25.1
 
