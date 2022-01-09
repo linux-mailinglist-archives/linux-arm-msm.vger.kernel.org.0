@@ -2,311 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9A17488AE5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 18:18:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A42F488B02
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 18:25:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236141AbiAIRS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jan 2022 12:18:28 -0500
-Received: from ixit.cz ([94.230.151.217]:52900 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236128AbiAIRS1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jan 2022 12:18:27 -0500
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 8D7BB2243C;
-        Sun,  9 Jan 2022 18:18:21 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1641748701;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=1neQMH4UzNAqauJdDad8SbWmvmqaMSnRi7ODRmIgqZc=;
-        b=KAglRMact6mEBZWDewf3xQaQpwdkkMxOVw13HBLKw9vI6q/b4XFb5aUPMhcdMchTSvVwDz
-        P7fTe4IlW22Of8Eu5Waq3f7QPYlpPEFQI20EPOvwXkAY/t5IaAaJS8/3jxwiHETMzboNyV
-        eqsrh1RMGSLp1NWgf1wK8hYBBspHNsA=
-From:   David Heidelberg <david@ixit.cz>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: msm/mdp4: convert to yaml format
-Date:   Sun,  9 Jan 2022 18:18:13 +0100
-Message-Id: <20220109171814.16103-1-david@ixit.cz>
-X-Mailer: git-send-email 2.34.1
+        id S234244AbiAIRZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jan 2022 12:25:22 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:33326 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232409AbiAIRZW (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 9 Jan 2022 12:25:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1641749122; x=1673285122;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=pY/vgC3mibUTksylngWUfaDZ+uO3n7is8v7CToQVCw4=;
+  b=vk6mjJcCerO2hmAoyrNutr/Zo4vmVNEr7EXKXteKrVLxEPCNfqy9AbPy
+   MdKdugrvb0Y6IyXn8KTgxqVKvF2yZRUxh0UMCmIedvWN7bnfC91NHPbmf
+   IGggL2cSIBo/Z+Xac5zsCYppkolGk5wnpj8dKH1fOlyQ71EKOA4penyoK
+   w=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 09 Jan 2022 09:25:22 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jan 2022 09:25:21 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 9 Jan 2022 09:25:21 -0800
+Received: from mkshah-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 9 Jan 2022 09:25:17 -0800
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <ulf.hansson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <quic_lsrao@quicinc.com>,
+        <quic_rjendra@quicinc.com>, Maulik Shah <quic_mkshah@quicinc.com>
+Subject: [PATCH 00/10] Add APSS RSC to Cluster power domain
+Date:   Sun, 9 Jan 2022 22:54:57 +0530
+Message-ID: <1641749107-31979-1-git-send-email-quic_mkshah@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam: Yes
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert mdp4 binding into yaml format.
+This series patches 1 to 4 adds/corrects the cpuidle states/
+apps_rsc TCS configuration to make it same as downstream kernel.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../devicetree/bindings/display/msm/mdp4.txt  | 114 ----------------
- .../devicetree/bindings/display/msm/mdp4.yaml | 124 ++++++++++++++++++
- 2 files changed, 124 insertions(+), 114 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp4.txt
- create mode 100644 Documentation/devicetree/bindings/display/msm/mdp4.yaml
+The patches 5, 6 and 7 adds apps_rsc device to cluster power domain such
+that when cluster is going to power down the cluster pre off notification
+will program the 'sleep' and 'wake' votes in SLEEP TCS and WAKE TCSes.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/mdp4.txt b/Documentation/devicetree/bindings/display/msm/mdp4.txt
-deleted file mode 100644
-index b07eeb38f709..000000000000
---- a/Documentation/devicetree/bindings/display/msm/mdp4.txt
-+++ /dev/null
-@@ -1,114 +0,0 @@
--Qualcomm adreno/snapdragon MDP4 display controller
--
--Description:
--
--This is the bindings documentation for the MDP4 display controller found in
--SoCs like MSM8960, APQ8064 and MSM8660.
--
--Required properties:
--- compatible:
--  * "qcom,mdp4" - mdp4
--- reg: Physical base address and length of the controller's registers.
--- interrupts: The interrupt signal from the display controller.
--- clocks: device clocks
--  See ../clocks/clock-bindings.txt for details.
--- clock-names: the following clocks are required.
--  * "core_clk"
--  * "iface_clk"
--  * "bus_clk"
--  * "lut_clk"
--  * "hdmi_clk"
--  * "tv_clk"
--- ports: contains the list of output ports from MDP. These connect to interfaces
--  that are external to the MDP hardware, such as HDMI, DSI, EDP etc (LVDS is a
--  special case since it is a part of the MDP block itself).
--
--  Each output port contains an endpoint that describes how it is connected to an
--  external interface. These are described by the standard properties documented
--  here:
--	Documentation/devicetree/bindings/graph.txt
--	Documentation/devicetree/bindings/media/video-interfaces.txt
--
--  The output port mappings are:
--	Port 0 -> LCDC/LVDS
--	Port 1 -> DSI1 Cmd/Video
--	Port 2 -> DSI2 Cmd/Video
--	Port 3 -> DTV
--
--Optional properties:
--- clock-names: the following clocks are optional:
--  * "lut_clk"
--- qcom,lcdc-align-lsb: Boolean value indicating that LSB alignment should be
--  used for LCDC. This is only valid for 18bpp panels.
--
--Example:
--
--/ {
--	...
--
--	hdmi: hdmi@4a00000 {
--		...
--		ports {
--			...
--			port@0 {
--				reg = <0>;
--				hdmi_in: endpoint {
--					remote-endpoint = <&mdp_dtv_out>;
--				};
--			};
--			...
--		};
--		...
--	};
--
--	...
--
--	mdp: mdp@5100000 {
--		compatible = "qcom,mdp4";
--		reg = <0x05100000 0xf0000>;
--		interrupts = <GIC_SPI 75 0>;
--		clock-names =
--		    "core_clk",
--		    "iface_clk",
--		    "lut_clk",
--		    "hdmi_clk",
--		    "tv_clk";
--		clocks =
--		    <&mmcc MDP_CLK>,
--		    <&mmcc MDP_AHB_CLK>,
--		    <&mmcc MDP_AXI_CLK>,
--		    <&mmcc MDP_LUT_CLK>,
--		    <&mmcc HDMI_TV_CLK>,
--		    <&mmcc MDP_TV_CLK>;
--
--		ports {
--			#address-cells = <1>;
--			#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
--					mdp_lvds_out: endpoint {
--					};
--				};
--
--				port@1 {
--					reg = <1>;
--					mdp_dsi1_out: endpoint {
--					};
--				};
--
--				port@2 {
--					reg = <2>;
--					mdp_dsi2_out: endpoint {
--					};
--				};
--
--				port@3 {
--					reg = <3>;
--					mdp_dtv_out: endpoint {
--						remote-endpoint = <&hdmi_in>;
--					};
--				};
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/display/msm/mdp4.yaml b/Documentation/devicetree/bindings/display/msm/mdp4.yaml
-new file mode 100644
-index 000000000000..f63f60fea27c
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/mdp4.yaml
-@@ -0,0 +1,124 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/display/msm/mdp4.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Adreno/Snapdragon MDP4 display controller
-+
-+description: >
-+  MDP4 display controller found in SoCs like MSM8960, APQ8064 and MSM8660.
-+
-+maintainers:
-+  - Rob Clark <robdclark@gmail.com>
-+
-+properties:
-+  compatible:
-+    const: qcom,mdp4
-+
-+  clocks:
-+    minItems: 6
-+    maxItems: 6
-+
-+  clock-names:
-+    items:
-+      - const: core_clk
-+      - const: iface_clk
-+      - const: bus_clk
-+      - const: lut_clk
-+      - const: hdmi_clk
-+      - const: tv_clk
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  iommus:
-+    maxItems: 1
-+
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
-+    properties:
-+      port@0:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: LCDC/LVDS
-+
-+      port@1:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: DSI1 Cmd / Video
-+
-+      port@2:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: DSI2 Cmd / Video
-+
-+      port@3:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Digital TV
-+
-+  qcom,lcdc-align-lsb:
-+    type: boolean
-+    description: >
-+      Indication that LSB alignment should be used for LCDC.
-+      This is only valid for 18bpp panels.
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - ports
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    mdp: mdp@5100000 {
-+        compatible = "qcom,mdp4";
-+        reg = <0x05100000 0xf0000>;
-+        interrupts = <0 75 0>;
-+        clock-names =
-+            "core_clk",
-+            "iface_clk",
-+            "bus_clk",
-+            "lut_clk",
-+            "hdmi_clk",
-+            "tv_clk";
-+        clocks =
-+            <&mmcc 77>,
-+            <&mmcc 86>,
-+            <&mmcc 102>,
-+            <&mmcc 75>,
-+            <&mmcc 97>,
-+            <&mmcc 12>;
-+
-+        ports {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            port@0 {
-+                reg = <0>;
-+                mdp_lvds_out: endpoint {
-+                };
-+            };
-+
-+            port@1 {
-+                reg = <1>;
-+                mdp_dsi1_out: endpoint {
-+                };
-+            };
-+
-+            port@2 {
-+                reg = <2>;
-+                mdp_dsi2_out: endpoint {
-+                };
-+            };
-+
-+            port@3 {
-+                reg = <3>;
-+                mdp_dtv_out: endpoint {
-+                    remote-endpoint = <&hdmi_in>;
-+                };
-+            };
-+        };
-+    };
+The patches 8, 9 and 10 are to program the next wakeup in CONTROL_TCS.
+
+[1], [2] was older way of programming CONTROL_TCS (exporting an API and
+calling when last CPU was entering deeper low power mode). Now with patch
+number 5,6 and 7 the apps RSC is added to to cluster power domain and hence
+these patches are no longer needed with this series.
+
+The series is tested on SM8250 with latest linux-next tag next-20220107.
+
+[1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20190218140210.14631-3-rplsssn@codeaurora.org/
+[2] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=59613
+
+Lina Iyer (1):
+  soc: qcom: rpmh-rsc: Attach RSC to cluster PM domain
+
+Maulik Shah (9):
+  arm64: dts: qcom: sm8150: Correct TCS configuration for apps rsc
+  arm64: dts: qcom: sm8250: Add cpuidle states
+  arm64: dts: qcom: sm8350: Correct TCS configuration for apps rsc
+  arm64: dts: qcom: sm8450: Update cpuidle states parameters
+  dt-bindings: soc: qcom: Update devicetree binding document for
+    rpmh-rsc
+  arm64: dts: qcom: Add power-domains property for apps_rsc
+  PM: domains: Store the closest hrtimer event of the domain CPUs
+  soc: qcom: rpmh-rsc: Save base address of drv
+  soc: qcom: rpmh-rsc: Write CONTROL_TCS with next timer wakeup
+
+ .../devicetree/bindings/soc/qcom/rpmh-rsc.txt      |   6 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |   7 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 106 ++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |   3 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  29 ++---
+ drivers/base/power/domain_governor.c               |   1 +
+ drivers/soc/qcom/rpmh-internal.h                   |   9 +-
+ drivers/soc/qcom/rpmh-rsc.c                        | 138 +++++++++++++++++++--
+ drivers/soc/qcom/rpmh.c                            |   4 +-
+ include/linux/pm_domain.h                          |   1 +
+ 10 files changed, 271 insertions(+), 33 deletions(-)
+
 -- 
-2.34.1
+2.7.4
 
