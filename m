@@ -2,176 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 021204960B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 15:27:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9F89496379
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 17:58:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381051AbiAUO15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 09:27:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43986 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381038AbiAUO1z (ORCPT
+        id S1381414AbiAUQ6p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 11:58:45 -0500
+Received: from [36.155.112.122] ([36.155.112.122]:49544 "EHLO
+        ecs-42a4.novalocal" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1381169AbiAUQ5g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 09:27:55 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 291CAC06173B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 06:27:55 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id o12so34141550lfu.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 06:27:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=T5DdgzdEP/ycx7S7WAsdXGSwAN7y02UOf2kIHObUcYA=;
-        b=LPKgykbUdMmZqHV7RTgEm5kK2QzH3vl1DLmlkKDOJwrWWkAnO5+WQyxOeLlbfEwQ5/
-         DwKsIhLmPxZqM8ikqxKGMVm4YabKaFOB2p3n/XNVw2Lrr0TpvtloHzzEE5uou7uq9PoM
-         YUACtYIuc651Qy0xeO256dXFf8i+RM9XPDht19GtaDobIdjSwu+vlzK9NWjc95V7CB5b
-         N7N8DYi6/IS1takj9tcGGPO+0QVIAdx12gZ2Q7pYFbItodPujZDIZKuJyrexFFZuIVoM
-         tgh3/kwRS0LWGZ+HYLQmG3gCqYlB+Bo+AQVQoEz+hCFheA2hBoz2TNNFgzwujwsNFNVh
-         oAWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T5DdgzdEP/ycx7S7WAsdXGSwAN7y02UOf2kIHObUcYA=;
-        b=LIRZOUm9xi/GYCuqNtu5ajbgkeVaPBkNuJKrARtH6i1dpQhxdRuGCU7wVUo7gcRUL5
-         Zn3Sf4JRbTeHEEYCeO5pDFKkVx9ugMl3++w5L7pNan/B0PzXz8Um6ASo0r+sdM0Rx+Lw
-         A58BDLA8w4SErZtxFR1Uez/goR2qq0Mm/Sj/RBWT66TUO5nDGjxa5bZKn0O6uETLs58b
-         dskO2iW9S1yNLjDvt4rKpRjr7Mf3K1SPpr1i4uKD7Cpqw90PbzFZcXjvxsq0RsHPi06Y
-         xs0J6XJ8L4z4XxXksrE747/jtoUHcUj4ozahGd4R+tEaoODKR0nKrgB97Fw4wm3giQZO
-         bkgw==
-X-Gm-Message-State: AOAM533n5d7fsy/RJTvUHAnBpICqZpZRtA192GC7/LVXlEqxcUzU/B8Z
-        hPKUsIsVBGfQQ1ouDZp6WsZfKU2ztZBeJ2cAEWgcvQ==
-X-Google-Smtp-Source: ABdhPJxVEP+ieUR0BpVvq/WdgN9zf6SxNJrIPp+zWW83gdFVxbH/lah8cFzuxk01LCPckNDTgaE8/7iVNj31hvDnZyU=
-X-Received: by 2002:a19:f811:: with SMTP id a17mr3865291lff.18.1642775273407;
- Fri, 21 Jan 2022 06:27:53 -0800 (PST)
+        Fri, 21 Jan 2022 11:57:36 -0500
+Received: from User (localhost [127.0.0.1])
+        by ecs-42a4.novalocal (Postfix) with SMTP id F273C3045F2;
+        Sun,  9 Jan 2022 13:57:24 +0800 (CST)
+Reply-To: <andbaill228@mail2world.com>
+From:   "Vlieghe" <andbaill228@mail2world.com>
+Subject: Very Importante Notice
+Date:   Sun, 9 Jan 2022 07:55:54 +0200
 MIME-Version: 1.0
-References: <20220121050233.8708-1-quic_ctheegal@quicinc.com>
-In-Reply-To: <20220121050233.8708-1-quic_ctheegal@quicinc.com>
-From:   Vincent Guittot <vincent.guittot@linaro.org>
-Date:   Fri, 21 Jan 2022 15:27:42 +0100
-Message-ID: <CAKfTPtDTm5O_P504=_6Gjk2Uv0DiLS8Mu=c6km3uVO0h8BB1Lw@mail.gmail.com>
-Subject: Re: [PATCH v2] sched/fair: Prefer small idle cores for forkees
-To:     Chitti Babu Theegala <quic_ctheegal@quicinc.com>
-Cc:     mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
-        dietmar.eggemann@arm.com, rostedt@goodmis.org,
-        joel@joelfernandes.org, linux-arm-msm@vger.kernel.org,
-        quic_lingutla@quicinc.com, linux-kernel@vger.kernel.org,
-        quic_rjendra@quicinc.com, Vincent.Donnefort@arm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+Message-Id: <20220109055724.F273C3045F2@ecs-42a4.novalocal>
+To:     undisclosed-recipients:;
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Jan 2022 at 06:03, Chitti Babu Theegala
-<quic_ctheegal@quicinc.com> wrote:
->
-> Newly forked threads don't have any useful utilization data yet and
-> it's not possible to forecast their impact on energy consumption.
+Sir/Madam,
 
-It would be worth mentioning that you consider only EAS mode in the patch
+Good day to you.
 
-> These forkees (though very small, most times) end up waking big
+I am Dr.Gertjan Vlieghe personal Secretary to Andrew Bailey who double as the Governor, Bank of England (https://en.wikipedia.org/wiki/Andrew_Bailey_%28banker%29). We have an inheritance of a deceased client, who bear the same name  with your surname. kindly contact Andrew Bailey through his personal email ( andbaill228@mail2world.com ) with your details for more information.
 
-The assumption that " (though very small, most times)" is maybe true
-for the cases that you are interested in and you monitor, but it's not
-always true. It seems that Vincent D. raised some concerns about
-forkee which would not be small at the end.
+Thank you.
 
-> cores from deep sleep for that very small durations.
->
-> Bias all forkees to small cores to prevent waking big cores from deep
-
-you are testing idlest_sgs->idle_cpus so you don't bias to small cores
-but small & idle cores but if there is no small idle core then you
-will wake up a big core though the forkees are small most times
-
-> sleep to save power.
-
-Then why do you want to wake up a small core from deep state instead
-of packing in one of these already running cpus? If you care about
-power, selecting a small idle core may not always be the best choice.
-Would it be better to select a non idle cpu with largest spare
-capacity at the current opp ?
-
->
-> Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
-> ---
-> Changes in v2:
-> 1. Enclosed the EAS check for this small core preferring logic
-> ---
->  kernel/sched/fair.c | 18 +++++++++++++-----
->  1 file changed, 13 insertions(+), 5 deletions(-)
->
-> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index c6046446c50b3..72f9ea7c98c05 100644
-> --- a/kernel/sched/fair.c
-> +++ b/kernel/sched/fair.c
-> @@ -5872,7 +5872,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
->  }
->
->  static struct sched_group *
-> -find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu);
-> +find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag);
->
->  /*
->   * find_idlest_group_cpu - find the idlest CPU among the CPUs in the group.
-> @@ -5959,7 +5959,7 @@ static inline int find_idlest_cpu(struct sched_domain *sd, struct task_struct *p
->                         continue;
->                 }
->
-> -               group = find_idlest_group(sd, p, cpu);
-> +               group = find_idlest_group(sd, p, cpu, sd_flag);
->                 if (!group) {
->                         sd = sd->child;
->                         continue;
-> @@ -8885,7 +8885,8 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
->  static bool update_pick_idlest(struct sched_group *idlest,
->                                struct sg_lb_stats *idlest_sgs,
->                                struct sched_group *group,
-> -                              struct sg_lb_stats *sgs)
-> +                              struct sg_lb_stats *sgs,
-> +                              int sd_flag)
->  {
->         if (sgs->group_type < idlest_sgs->group_type)
->                 return true;
-> @@ -8922,6 +8923,13 @@ static bool update_pick_idlest(struct sched_group *idlest,
->                 if (idlest_sgs->idle_cpus > sgs->idle_cpus)
->                         return false;
->
-> +               if (sched_energy_enabled()) {
-
-This is not enough, the find_energy_efficient_cpu() returns early to
-fallback to the default performance mode when the system is
-overutilized
-
-
-> +                   /* Select smaller cpu group for newly woken up forkees */
-> +                   if ((sd_flag & SD_BALANCE_FORK) && (idlest_sgs->idle_cpus &&
-> +                       !capacity_greater(idlest->sgc->max_capacity, group->sgc->max_capacity)))
-> +                       return false;
-> +               }
-> +
->                 /* Select group with lowest group_util */
->                 if (idlest_sgs->idle_cpus == sgs->idle_cpus &&
->                         idlest_sgs->group_util <= sgs->group_util)
-> @@ -8940,7 +8948,7 @@ static bool update_pick_idlest(struct sched_group *idlest,
->   * Assumes p is allowed on at least one CPU in sd.
->   */
->  static struct sched_group *
-> -find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
-> +find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag)
->  {
->         struct sched_group *idlest = NULL, *local = NULL, *group = sd->groups;
->         struct sg_lb_stats local_sgs, tmp_sgs;
-> @@ -8978,7 +8986,7 @@ find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
->
->                 update_sg_wakeup_stats(sd, group, sgs, p);
->
-> -               if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs)) {
-> +               if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs, sd_flag)) {
->                         idlest = group;
->                         idlest_sgs = *sgs;
->                 }
-> --
-> 2.17.1
->
+Dr.Gertjan Vlieghe
