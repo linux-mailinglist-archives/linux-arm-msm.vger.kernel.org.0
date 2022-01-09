@@ -2,353 +2,311 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06154488AD4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 18:10:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9A17488AE5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jan 2022 18:18:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236119AbiAIRKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Jan 2022 12:10:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234264AbiAIRKA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Jan 2022 12:10:00 -0500
-X-Greylist: delayed 1091 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 09 Jan 2022 09:10:00 PST
-Received: from balrog.mythic-beasts.com (balrog.mythic-beasts.com [IPv6:2a00:1098:0:82:1000:0:2:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88474C06173F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Jan 2022 09:10:00 -0800 (PST)
-Received: from [81.101.6.87] (port=35378 helo=jic23-huawei)
-        by balrog.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <jic23@jic23.retrosnub.co.uk>)
-        id 1n6bQ7-00032G-BP; Sun, 09 Jan 2022 16:51:55 +0000
-Date:   Sun, 9 Jan 2022 16:57:43 +0000
-From:   Jonathan Cameron <jic23@jic23.retrosnub.co.uk>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sumit.semwal@linaro.org,
-        amit.pundir@linaro.org, john.stultz@linaro.org
-Subject: Re: [PATCH v3 1/7] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
-Message-ID: <20220109165743.7e01e226@jic23-huawei>
-In-Reply-To: <20220106173131.3279580-2-caleb.connolly@linaro.org>
-References: <20220106173131.3279580-1-caleb.connolly@linaro.org>
-        <20220106173131.3279580-2-caleb.connolly@linaro.org>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
+        id S236141AbiAIRS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Jan 2022 12:18:28 -0500
+Received: from ixit.cz ([94.230.151.217]:52900 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236128AbiAIRS1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 9 Jan 2022 12:18:27 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 8D7BB2243C;
+        Sun,  9 Jan 2022 18:18:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1641748701;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=1neQMH4UzNAqauJdDad8SbWmvmqaMSnRi7ODRmIgqZc=;
+        b=KAglRMact6mEBZWDewf3xQaQpwdkkMxOVw13HBLKw9vI6q/b4XFb5aUPMhcdMchTSvVwDz
+        P7fTe4IlW22Of8Eu5Waq3f7QPYlpPEFQI20EPOvwXkAY/t5IaAaJS8/3jxwiHETMzboNyV
+        eqsrh1RMGSLp1NWgf1wK8hYBBspHNsA=
+From:   David Heidelberg <david@ixit.cz>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: msm/mdp4: convert to yaml format
+Date:   Sun,  9 Jan 2022 18:18:13 +0100
+Message-Id: <20220109171814.16103-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-BlackCat-Spam-Score: 19
-X-Spam-Status: No, score=1.9
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu,  6 Jan 2022 17:31:25 +0000
-Caleb Connolly <caleb.connolly@linaro.org> wrote:
+Convert mdp4 binding into yaml format.
 
-> Some PMIC functions such as the RRADC need to be aware of the PMIC
-> chip revision information to implement errata or otherwise adjust
-> behaviour, export the PMIC information to enable this.
-> 
-> This is specifically required to enable the RRADC to adjust
-> coefficients based on which chip fab the PMIC was produced in,
-> this can vary per unique device and therefore has to be read at
-> runtime.
-> 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-Hi Caleb,
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ .../devicetree/bindings/display/msm/mdp4.txt  | 114 ----------------
+ .../devicetree/bindings/display/msm/mdp4.yaml | 124 ++++++++++++++++++
+ 2 files changed, 124 insertions(+), 114 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/display/msm/mdp4.txt
+ create mode 100644 Documentation/devicetree/bindings/display/msm/mdp4.yaml
 
-Some comments inline.
-
-Thanks,
-
-Jonathan
-
-> ---
->  drivers/mfd/qcom-spmi-pmic.c | 108 +++++++++++++++++------------------
->  include/soc/qcom/qcom-pmic.h |  63 ++++++++++++++++++++
->  2 files changed, 114 insertions(+), 57 deletions(-)
->  create mode 100644 include/soc/qcom/qcom-pmic.h
-> 
-> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-> index 1cacc00aa6c9..6b75c2f52b74 100644
-> --- a/drivers/mfd/qcom-spmi-pmic.c
-> +++ b/drivers/mfd/qcom-spmi-pmic.c
-> @@ -3,51 +3,24 @@
->   * Copyright (c) 2014, The Linux Foundation. All rights reserved.
->   */
->  
-> +#include <linux/device.h>
-> +#include <linux/gfp.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
-> +#include <linux/slab.h>
->  #include <linux/spmi.h>
->  #include <linux/regmap.h>
->  #include <linux/of_platform.h>
-> +#include <soc/qcom/qcom-pmic.h>
->  
->  #define PMIC_REV2		0x101
->  #define PMIC_REV3		0x102
->  #define PMIC_REV4		0x103
->  #define PMIC_TYPE		0x104
->  #define PMIC_SUBTYPE		0x105
-> -
-> +#define PMIC_FAB_ID		0x1f2
->  #define PMIC_TYPE_VALUE		0x51
->  
-> -#define COMMON_SUBTYPE		0x00
-> -#define PM8941_SUBTYPE		0x01
-> -#define PM8841_SUBTYPE		0x02
-> -#define PM8019_SUBTYPE		0x03
-> -#define PM8226_SUBTYPE		0x04
-> -#define PM8110_SUBTYPE		0x05
-> -#define PMA8084_SUBTYPE		0x06
-> -#define PMI8962_SUBTYPE		0x07
-> -#define PMD9635_SUBTYPE		0x08
-> -#define PM8994_SUBTYPE		0x09
-> -#define PMI8994_SUBTYPE		0x0a
-> -#define PM8916_SUBTYPE		0x0b
-> -#define PM8004_SUBTYPE		0x0c
-> -#define PM8909_SUBTYPE		0x0d
-> -#define PM8028_SUBTYPE		0x0e
-> -#define PM8901_SUBTYPE		0x0f
-> -#define PM8950_SUBTYPE		0x10
-> -#define PMI8950_SUBTYPE		0x11
-> -#define PM8998_SUBTYPE		0x14
-> -#define PMI8998_SUBTYPE		0x15
-> -#define PM8005_SUBTYPE		0x18
-> -#define PM660L_SUBTYPE		0x1A
-> -#define PM660_SUBTYPE		0x1B
-> -#define PM8150_SUBTYPE		0x1E
-> -#define PM8150L_SUBTYPE		0x1f
-> -#define PM8150B_SUBTYPE		0x20
-> -#define PMK8002_SUBTYPE		0x21
-> -#define PM8009_SUBTYPE		0x24
-> -#define PM8150C_SUBTYPE		0x26
-> -#define SMB2351_SUBTYPE		0x29
-> -
->  static const struct of_device_id pmic_spmi_id_table[] = {
->  	{ .compatible = "qcom,pm660",     .data = (void *)PM660_SUBTYPE },
->  	{ .compatible = "qcom,pm660l",    .data = (void *)PM660L_SUBTYPE },
-> @@ -81,42 +54,47 @@ static const struct of_device_id pmic_spmi_id_table[] = {
->  	{ }
->  };
->  
-> -static void pmic_spmi_show_revid(struct regmap *map, struct device *dev)
-> +static int pmic_spmi_load_revid(struct regmap *map, struct device *dev,
-> +				 struct qcom_spmi_pmic *pmic)
->  {
-> -	unsigned int rev2, minor, major, type, subtype;
-> -	const char *name = "unknown";
->  	int ret, i;
->  
-> -	ret = regmap_read(map, PMIC_TYPE, &type);
-> +	ret = regmap_read(map, PMIC_TYPE, &pmic->type);
->  	if (ret < 0)
-> -		return;
-> +		return ret;
->  
-> -	if (type != PMIC_TYPE_VALUE)
-> -		return;
-> +	if (pmic->type != PMIC_TYPE_VALUE)
-> +		return ret;
->  
-> -	ret = regmap_read(map, PMIC_SUBTYPE, &subtype);
-> +	ret = regmap_read(map, PMIC_SUBTYPE, &pmic->subtype);
->  	if (ret < 0)
-> -		return;
-> +		return ret;
->  
->  	for (i = 0; i < ARRAY_SIZE(pmic_spmi_id_table); i++) {
-> -		if (subtype == (unsigned long)pmic_spmi_id_table[i].data)
-> +		if (pmic->subtype == (unsigned long)pmic_spmi_id_table[i].data)
->  			break;
->  	}
->  
->  	if (i != ARRAY_SIZE(pmic_spmi_id_table))
-> -		name = pmic_spmi_id_table[i].compatible;
-> +		pmic->name = devm_kstrdup_const(dev, pmic_spmi_id_table[i].compatible, GFP_KERNEL);
-
-Managed allocation that you call kfree on in remove().
-
->  
-> -	ret = regmap_read(map, PMIC_REV2, &rev2);
-> +	ret = regmap_read(map, PMIC_REV2, &pmic->rev2);
->  	if (ret < 0)
-> -		return;
-> +		return ret;
->  
-> -	ret = regmap_read(map, PMIC_REV3, &minor);
-> +	ret = regmap_read(map, PMIC_REV3, &pmic->minor);
->  	if (ret < 0)
-> -		return;
-> +		return ret;
->  
-> -	ret = regmap_read(map, PMIC_REV4, &major);
-> +	ret = regmap_read(map, PMIC_REV4, &pmic->major);
->  	if (ret < 0)
-> -		return;
-> +		return ret;
-> +
-> +	if (pmic->subtype == PMI8998_SUBTYPE || pmic->subtype == PM660_SUBTYPE) {
-> +		ret = regmap_read(map, PMIC_FAB_ID, &pmic->fab_id);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
->  
->  	/*
->  	 * In early versions of PM8941 and PM8226, the major revision number
-> @@ -124,14 +102,14 @@ static void pmic_spmi_show_revid(struct regmap *map, struct device *dev)
->  	 * Increment the major revision number here if the chip is an early
->  	 * version of PM8941 or PM8226.
->  	 */
-> -	if ((subtype == PM8941_SUBTYPE || subtype == PM8226_SUBTYPE) &&
-> -	    major < 0x02)
-> -		major++;
-> +	if ((pmic->subtype == PM8941_SUBTYPE || pmic->subtype == PM8226_SUBTYPE) &&
-> +	    pmic->major < 0x02)
-> +		pmic->major++;
->  
-> -	if (subtype == PM8110_SUBTYPE)
-> -		minor = rev2;
-> +	if (pmic->subtype == PM8110_SUBTYPE)
-> +		pmic->minor = pmic->rev2;
->  
-> -	dev_dbg(dev, "%x: %s v%d.%d\n", subtype, name, major, minor);
-> +	return 0;
->  }
->  
->  static const struct regmap_config spmi_regmap_config = {
-> @@ -144,22 +122,38 @@ static const struct regmap_config spmi_regmap_config = {
->  static int pmic_spmi_probe(struct spmi_device *sdev)
->  {
->  	struct regmap *regmap;
-> +	struct qcom_spmi_pmic *pmic;
->  
->  	regmap = devm_regmap_init_spmi_ext(sdev, &spmi_regmap_config);
->  	if (IS_ERR(regmap))
->  		return PTR_ERR(regmap);
->  
-> +	pmic = devm_kzalloc(&sdev->dev, sizeof(*pmic), GFP_KERNEL);
-> +	if (!pmic)
-> +		return -ENOMEM;
-
-Within the code visible here, why can't this just be on the stack?
-
-> +
->  	/* Only the first slave id for a PMIC contains this information */
-> -	if (sdev->usid % 2 == 0)
-> -		pmic_spmi_show_revid(regmap, &sdev->dev);
-> +	if (sdev->usid % 2 == 0) {
-> +		pmic_spmi_load_revid(regmap, &sdev->dev, pmic);
-> +		spmi_device_set_drvdata(sdev, pmic);
-> +		qcom_pmic_print_info(&sdev->dev, pmic);
-> +	}
->  
->  	return devm_of_platform_populate(&sdev->dev);
->  }
->  
-> +static void pmic_spmi_remove(struct spmi_device *sdev)
-> +{
-> +	struct qcom_spmi_pmic *pmic = spmi_device_get_drvdata(sdev);
-> +
-> +	kfree(pmic->name);
-
-Looks like this is cleaning up a managed allocation unless I'm missing something
-which means you'll get a double free on remove.
-
-> +}
-> +
->  MODULE_DEVICE_TABLE(of, pmic_spmi_id_table);
->  
->  static struct spmi_driver pmic_spmi_driver = {
->  	.probe = pmic_spmi_probe,
-> +	.remove = pmic_spmi_remove,
->  	.driver = {
->  		.name = "pmic-spmi",
->  		.of_match_table = pmic_spmi_id_table,
-> diff --git a/include/soc/qcom/qcom-pmic.h b/include/soc/qcom/qcom-pmic.h
-> new file mode 100644
-> index 000000000000..59114988582d
-> --- /dev/null
-> +++ b/include/soc/qcom/qcom-pmic.h
-> @@ -0,0 +1,63 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/* Copyright (c) 2021 Linaro. All rights reserved.
-> + * Copyright (c) 2021 Caleb Connolly <caleb.connolly@linaro.org>
-> + */
-> +
-> +#ifndef __QCOM_PMIC_H__
-> +#define __QCOM_PMIC_H__
-> +
-> +#define COMMON_SUBTYPE		0x00
-> +#define PM8941_SUBTYPE		0x01
-> +#define PM8841_SUBTYPE		0x02
-> +#define PM8019_SUBTYPE		0x03
-> +#define PM8226_SUBTYPE		0x04
-> +#define PM8110_SUBTYPE		0x05
-> +#define PMA8084_SUBTYPE		0x06
-> +#define PMI8962_SUBTYPE		0x07
-> +#define PMD9635_SUBTYPE		0x08
-> +#define PM8994_SUBTYPE		0x09
-> +#define PMI8994_SUBTYPE		0x0a
-> +#define PM8916_SUBTYPE		0x0b
-> +#define PM8004_SUBTYPE		0x0c
-> +#define PM8909_SUBTYPE		0x0d
-> +#define PM8028_SUBTYPE		0x0e
-> +#define PM8901_SUBTYPE		0x0f
-> +#define PM8950_SUBTYPE		0x10
-> +#define PMI8950_SUBTYPE		0x11
-> +#define PM8998_SUBTYPE		0x14
-> +#define PMI8998_SUBTYPE		0x15
-> +#define PM8005_SUBTYPE		0x18
-> +#define PM660L_SUBTYPE		0x1A
-> +#define PM660_SUBTYPE		0x1B
-> +#define PM8150_SUBTYPE		0x1E
-> +#define PM8150L_SUBTYPE		0x1f
-> +#define PM8150B_SUBTYPE		0x20
-> +#define PMK8002_SUBTYPE		0x21
-> +#define PM8009_SUBTYPE		0x24
-> +#define PM8150C_SUBTYPE		0x26
-> +#define SMB2351_SUBTYPE		0x29
-> +
-> +#define PMI8998_FAB_ID_SMIC	0x11
-> +#define PMI8998_FAB_ID_GF	0x30
-> +
-> +#define PM660_FAB_ID_GF		0x0
-> +#define PM660_FAB_ID_TSMC	0x2
-> +#define PM660_FAB_ID_MX		0x3
-> +
-> +struct qcom_spmi_pmic {
-> +	unsigned int type;
-> +	unsigned int subtype;
-> +	unsigned int major;
-> +	unsigned int minor;
-> +	unsigned int rev2;
-> +	unsigned int fab_id;
-> +	const char *name;
-> +};
-> +
-struct device;
-
-> +static inline void qcom_pmic_print_info(struct device *dev, struct qcom_spmi_pmic *pmic)
-> +{
-
-Need an include to get you access to dev_info() and possibly so
-
-Headers should stand and build on their own including any inline functions they
-contain.
-
-
-> +	dev_info(dev, "%x: %s v%d.%d\n",
-> +		pmic->subtype, pmic->name, pmic->major, pmic->minor);
-> +}
-> +
-> +#endif /* __QCOM_PMIC_H__ */
+diff --git a/Documentation/devicetree/bindings/display/msm/mdp4.txt b/Documentation/devicetree/bindings/display/msm/mdp4.txt
+deleted file mode 100644
+index b07eeb38f709..000000000000
+--- a/Documentation/devicetree/bindings/display/msm/mdp4.txt
++++ /dev/null
+@@ -1,114 +0,0 @@
+-Qualcomm adreno/snapdragon MDP4 display controller
+-
+-Description:
+-
+-This is the bindings documentation for the MDP4 display controller found in
+-SoCs like MSM8960, APQ8064 and MSM8660.
+-
+-Required properties:
+-- compatible:
+-  * "qcom,mdp4" - mdp4
+-- reg: Physical base address and length of the controller's registers.
+-- interrupts: The interrupt signal from the display controller.
+-- clocks: device clocks
+-  See ../clocks/clock-bindings.txt for details.
+-- clock-names: the following clocks are required.
+-  * "core_clk"
+-  * "iface_clk"
+-  * "bus_clk"
+-  * "lut_clk"
+-  * "hdmi_clk"
+-  * "tv_clk"
+-- ports: contains the list of output ports from MDP. These connect to interfaces
+-  that are external to the MDP hardware, such as HDMI, DSI, EDP etc (LVDS is a
+-  special case since it is a part of the MDP block itself).
+-
+-  Each output port contains an endpoint that describes how it is connected to an
+-  external interface. These are described by the standard properties documented
+-  here:
+-	Documentation/devicetree/bindings/graph.txt
+-	Documentation/devicetree/bindings/media/video-interfaces.txt
+-
+-  The output port mappings are:
+-	Port 0 -> LCDC/LVDS
+-	Port 1 -> DSI1 Cmd/Video
+-	Port 2 -> DSI2 Cmd/Video
+-	Port 3 -> DTV
+-
+-Optional properties:
+-- clock-names: the following clocks are optional:
+-  * "lut_clk"
+-- qcom,lcdc-align-lsb: Boolean value indicating that LSB alignment should be
+-  used for LCDC. This is only valid for 18bpp panels.
+-
+-Example:
+-
+-/ {
+-	...
+-
+-	hdmi: hdmi@4a00000 {
+-		...
+-		ports {
+-			...
+-			port@0 {
+-				reg = <0>;
+-				hdmi_in: endpoint {
+-					remote-endpoint = <&mdp_dtv_out>;
+-				};
+-			};
+-			...
+-		};
+-		...
+-	};
+-
+-	...
+-
+-	mdp: mdp@5100000 {
+-		compatible = "qcom,mdp4";
+-		reg = <0x05100000 0xf0000>;
+-		interrupts = <GIC_SPI 75 0>;
+-		clock-names =
+-		    "core_clk",
+-		    "iface_clk",
+-		    "lut_clk",
+-		    "hdmi_clk",
+-		    "tv_clk";
+-		clocks =
+-		    <&mmcc MDP_CLK>,
+-		    <&mmcc MDP_AHB_CLK>,
+-		    <&mmcc MDP_AXI_CLK>,
+-		    <&mmcc MDP_LUT_CLK>,
+-		    <&mmcc HDMI_TV_CLK>,
+-		    <&mmcc MDP_TV_CLK>;
+-
+-		ports {
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
+-					mdp_lvds_out: endpoint {
+-					};
+-				};
+-
+-				port@1 {
+-					reg = <1>;
+-					mdp_dsi1_out: endpoint {
+-					};
+-				};
+-
+-				port@2 {
+-					reg = <2>;
+-					mdp_dsi2_out: endpoint {
+-					};
+-				};
+-
+-				port@3 {
+-					reg = <3>;
+-					mdp_dtv_out: endpoint {
+-						remote-endpoint = <&hdmi_in>;
+-					};
+-				};
+-		};
+-	};
+-};
+diff --git a/Documentation/devicetree/bindings/display/msm/mdp4.yaml b/Documentation/devicetree/bindings/display/msm/mdp4.yaml
+new file mode 100644
+index 000000000000..f63f60fea27c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/mdp4.yaml
+@@ -0,0 +1,124 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/display/msm/mdp4.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Adreno/Snapdragon MDP4 display controller
++
++description: >
++  MDP4 display controller found in SoCs like MSM8960, APQ8064 and MSM8660.
++
++maintainers:
++  - Rob Clark <robdclark@gmail.com>
++
++properties:
++  compatible:
++    const: qcom,mdp4
++
++  clocks:
++    minItems: 6
++    maxItems: 6
++
++  clock-names:
++    items:
++      - const: core_clk
++      - const: iface_clk
++      - const: bus_clk
++      - const: lut_clk
++      - const: hdmi_clk
++      - const: tv_clk
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  iommus:
++    maxItems: 1
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: LCDC/LVDS
++
++      port@1:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: DSI1 Cmd / Video
++
++      port@2:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: DSI2 Cmd / Video
++
++      port@3:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: Digital TV
++
++  qcom,lcdc-align-lsb:
++    type: boolean
++    description: >
++      Indication that LSB alignment should be used for LCDC.
++      This is only valid for 18bpp panels.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - ports
++
++additionalProperties: false
++
++examples:
++  - |
++    mdp: mdp@5100000 {
++        compatible = "qcom,mdp4";
++        reg = <0x05100000 0xf0000>;
++        interrupts = <0 75 0>;
++        clock-names =
++            "core_clk",
++            "iface_clk",
++            "bus_clk",
++            "lut_clk",
++            "hdmi_clk",
++            "tv_clk";
++        clocks =
++            <&mmcc 77>,
++            <&mmcc 86>,
++            <&mmcc 102>,
++            <&mmcc 75>,
++            <&mmcc 97>,
++            <&mmcc 12>;
++
++        ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++                reg = <0>;
++                mdp_lvds_out: endpoint {
++                };
++            };
++
++            port@1 {
++                reg = <1>;
++                mdp_dsi1_out: endpoint {
++                };
++            };
++
++            port@2 {
++                reg = <2>;
++                mdp_dsi2_out: endpoint {
++                };
++            };
++
++            port@3 {
++                reg = <3>;
++                mdp_dtv_out: endpoint {
++                    remote-endpoint = <&hdmi_in>;
++                };
++            };
++        };
++    };
+-- 
+2.34.1
 
