@@ -2,87 +2,419 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABE6D489F9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 19:51:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA4CA489FCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 20:03:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242014AbiAJSvo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 13:51:44 -0500
-Received: from mga04.intel.com ([192.55.52.120]:18507 "EHLO mga04.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241986AbiAJSvo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 13:51:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1641840704; x=1673376704;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fWcyZfu0zV/E0m/O9x2TQoChBExtoI+yu9H4BVJDPSs=;
-  b=N1AG7oW/fb1f6NZnvghhQDx0aGJw8Xc3nP7nyKsLMYywYrjQsk/zzFop
-   t7hkN1KvLgnfmeFmFKL+fBbe3Y/wIHDNG2ByZb2ZhH+ILgyjc6Cddy6mx
-   Br5ukJL5UUBw6tb+NiGE2wjn0VKxw5TbJcm6D2YUirRpOxXLn+bQ4rTjQ
-   rPNob3LAVlqLE4867mc/RsL1y3zhmIPYf+sX0xezg/c4HDt33qKZ96a5U
-   R0JpiTyq3NnWmR7Mhz+oPqTRHUzG+mOVVUKRVhrUkNsfOsGWWw+6JUZ2V
-   IP13MMHYCXMQCjwjmftEoe8FMyOvAnat3vLssLs8NQuhRqa+RP7mdYGgj
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10223"; a="242111264"
-X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
-   d="scan'208";a="242111264"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2022 10:51:44 -0800
-X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
-   d="scan'208";a="575917216"
-Received: from smile.fi.intel.com ([10.237.72.61])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2022 10:51:41 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1n6zkQ-008z5l-SX;
-        Mon, 10 Jan 2022 20:50:26 +0200
-Date:   Mon, 10 Jan 2022 20:50:26 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Rosin <peda@axentia.se>
-Subject: Re: [PATCH v1 4/5] iio: adc: qcom-vadc-common: Re-use generic struct
- u32_fract
-Message-ID: <Ydx/8vZj1jvkkkm0@smile.fi.intel.com>
-References: <20220110181711.65054-1-andriy.shevchenko@linux.intel.com>
- <20220110181711.65054-4-andriy.shevchenko@linux.intel.com>
+        id S243006AbiAJTDt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 14:03:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242995AbiAJTDs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jan 2022 14:03:48 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67749C061748
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 11:03:48 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id r131so19945791oig.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 11:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=y16qkHkmMgHKa/qlQyvw80tWKaz+7fnpKnVdmj4S/8c=;
+        b=X+GPSmQD3Zrq45sIoMCWgpLgJOjHekms6/ZMEeD6FskaA9IdsHzwI6xF5sMs/aELjR
+         7/Mj5BYK5iJauOy4OpTCjhaKlXrsKeYqNdWYoyppe5YKDPC3v1adKckjQ/G5CZdMKZSK
+         pqqvPrmuaWhBQDKyv5gfEF8Q7fkrR7rxk+Y7Ne7ZTIMkUFtpS16kkIe9T+W9/3viEHcY
+         vTAl73Y2S25o1fvxYW7/gAWAU2D+VtUzYDSMrYUPPn7vTgMeNRAYxQjKRah4YCatM7mB
+         baNOTr/1rEsTjrB7n1EoyBWBgEYCVzkUJA0f+7Z1ZwfuilNc9Send2Bs+5RCXjG0t14h
+         mdxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=y16qkHkmMgHKa/qlQyvw80tWKaz+7fnpKnVdmj4S/8c=;
+        b=EUqjDLYNYBxoyl6YeGFAOwOrHcz/EH0gP0tT3MC3Kys4LmOp4yGLWiPweilsyEwtml
+         TL2HchCbDa8eVH1j+TvElbMyOFpLp83oTC1LAeeLBx/1qrXAmP9J/O4EqvMWeA6Ip4ba
+         9sws5LX2R18a9JVscDT+Pf+lU6PEu62Is7m509KZ+1ikEpp9d4KR91p89CKf0xC4Ws9L
+         2cQNqUmSp/GW050m4lbiwsJ/FuhZZDQP+5HbQaZn6o0UTWI5ltGlGWulu8uztXMwCwiU
+         ynwqxclT8uHJ5CFZx144xK5dHTaCYJwpAQkgYF5m7QlYp9O8jCTOamcTNR9tHYkrO3vl
+         SaWQ==
+X-Gm-Message-State: AOAM530Kkdm5ASQx0CIv2voibAnDR+NYIdFnacdppBpOyyAP1JNi6Ybj
+        9sMdCYlIj8p7f3I62ALV8wT9Fg==
+X-Google-Smtp-Source: ABdhPJzU96q+WoahiaFezz1nwyszlSfmra0cuq4XBj9AHQdCk6lCFnoCGiKmZMe46+7TH+X0lg8T1g==
+X-Received: by 2002:a05:6808:15a5:: with SMTP id t37mr12164342oiw.124.1641841427684;
+        Mon, 10 Jan 2022 11:03:47 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k101sm1585041otk.60.2022.01.10.11.03.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jan 2022 11:03:47 -0800 (PST)
+Date:   Mon, 10 Jan 2022 11:04:31 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: msm8960: Sort out rpm node duplication
+Message-ID: <YdyDPwYh6xJbco2F@ripper>
+References: <20220109200332.41474-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220110181711.65054-4-andriy.shevchenko@linux.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20220109200332.41474-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 08:17:10PM +0200, Andy Shevchenko wrote:
-> Instead of custom data type re-use generic struct u32_fract.
-> No changes intended.
+On Sun 09 Jan 12:03 PST 2022, David Heidelberg wrote:
 
-...
+> On other platforms are usually regulators enumerated in platform and
+> used in devices, follow the pattern on MSM8960 too.
 
-> -/**
-> - * struct vadc_prescale_ratio - Represent scaling ratio for ADC input.
-> - * @num: the inverse numerator of the gain applied to the input channel.
-> - * @den: the inverse denominator of the gain applied to the input channel.
-> - */
-> -struct vadc_prescale_ratio {
-> -	u32 num;
-> -	u32 den;
-> -};
+I used to be a proponent of this, but as we grew the number of devices
+supported we noticed that not everyone uses the same set of PMICs.
+And then we have cases where non-Qualcomm people drew the schematics and
+picked different names for the regulator lines - which we want to be
+able to represent in the labels.
 
-Definitely forgot to compile this one.
+As such, I would prefer if we moved those other platforms towards
+specifying the regulators in the board dts instead of platform dtsi.
+Even though it does imply that there's some level of duplication.
 
--- 
-With Best Regards,
-Andy Shevchenko
+Regards,
+Bjorn
 
-
+> 
+> No functional changes.
+> 
+> Original author: Bjorn Andersson
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  arch/arm/boot/dts/qcom-msm8960-cdp.dts | 73 +++++++++++++-------------
+>  arch/arm/boot/dts/qcom-msm8960.dtsi    | 43 +++++++++++++++
+>  2 files changed, 79 insertions(+), 37 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-msm8960-cdp.dts b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+> index 830703759466..7c4c3cb79d05 100644
+> --- a/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+> +++ b/arch/arm/boot/dts/qcom-msm8960-cdp.dts
+> @@ -49,7 +49,6 @@ sdcc3: mmc@12180000 {
+>  
+>  		rpm@108000 {
+>  			regulators {
+> -				compatible = "qcom,rpm-pm8921-regulators";
+>  				vin_lvs1_3_6-supply = <&pm8921_s4>;
+>  				vin_lvs2-supply = <&pm8921_s4>;
+>  				vin_lvs4_5_7-supply = <&pm8921_s4>;
+> @@ -62,7 +61,7 @@ regulators {
+>  				vdd_l28-supply = <&pm8921_s7>;
+>  
+>  				/* Buck SMPS */
+> -				pm8921_s1: s1 {
+> +				s1 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1225000>;
+>  					regulator-max-microvolt = <1225000>;
+> @@ -70,21 +69,21 @@ pm8921_s1: s1 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_s2: s2 {
+> +				s2 {
+>  					regulator-min-microvolt = <1300000>;
+>  					regulator-max-microvolt = <1300000>;
+>  					qcom,switch-mode-frequency = <1600000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_s3: s3 {
+> +				s3 {
+>  					regulator-min-microvolt = <500000>;
+>  					regulator-max-microvolt = <1150000>;
+>  					qcom,switch-mode-frequency = <4800000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_s4: s4 {
+> +				s4 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <1800000>;
+> @@ -93,14 +92,14 @@ pm8921_s4: s4 {
+>  					qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
+>  				};
+>  
+> -				pm8921_s7: s7 {
+> +				s7 {
+>  					regulator-min-microvolt = <1150000>;
+>  					regulator-max-microvolt = <1150000>;
+>  					qcom,switch-mode-frequency = <3200000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_s8: s8 {
+> +				s8 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <2050000>;
+>  					regulator-max-microvolt = <2050000>;
+> @@ -109,137 +108,137 @@ pm8921_s8: s8 {
+>  				};
+>  
+>  				/* PMOS LDO */
+> -				pm8921_l1: l1 {
+> +				l1 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1050000>;
+>  					regulator-max-microvolt = <1050000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l2: l2 {
+> +				l2 {
+>  					regulator-min-microvolt = <1200000>;
+>  					regulator-max-microvolt = <1200000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l3: l3 {
+> +				l3 {
+>  					regulator-min-microvolt = <3075000>;
+>  					regulator-max-microvolt = <3075000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l4: l4 {
+> +				l4 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <1800000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l5: l5 {
+> +				l5 {
+>  					regulator-min-microvolt = <2950000>;
+>  					regulator-max-microvolt = <2950000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l6: l6 {
+> +				l6 {
+>  					regulator-min-microvolt = <2950000>;
+>  					regulator-max-microvolt = <2950000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l7: l7 {
+> +				l7 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1850000>;
+>  					regulator-max-microvolt = <2950000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l8: l8 {
+> +				l8 {
+>  					regulator-min-microvolt = <2800000>;
+>  					regulator-max-microvolt = <3000000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l9: l9 {
+> +				l9 {
+>  					regulator-min-microvolt = <3000000>;
+>  					regulator-max-microvolt = <3000000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l10: l10 {
+> +				l10 {
+>  					regulator-min-microvolt = <3000000>;
+>  					regulator-max-microvolt = <3000000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l11: l11 {
+> +				l11 {
+>  					regulator-min-microvolt = <2850000>;
+>  					regulator-max-microvolt = <2850000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l12: l12 {
+> +				l12 {
+>  					regulator-min-microvolt = <1200000>;
+>  					regulator-max-microvolt = <1200000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l14: l14 {
+> +				l14 {
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <1800000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l15: l15 {
+> +				l15 {
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <2950000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l16: l16 {
+> +				l16 {
+>  					regulator-min-microvolt = <2800000>;
+>  					regulator-max-microvolt = <2800000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l17: l17 {
+> +				l17 {
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <2950000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l18: l18 {
+> +				l18 {
+>  					regulator-min-microvolt = <1300000>;
+>  					regulator-max-microvolt = <1300000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l21: l21 {
+> +				l21 {
+>  					regulator-min-microvolt = <1900000>;
+>  					regulator-max-microvolt = <1900000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l22: l22 {
+> +				l22 {
+>  					regulator-min-microvolt = <2750000>;
+>  					regulator-max-microvolt = <2750000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l23: l23 {
+> +				l23 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <1800000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l24: l24 {
+> +				l24 {
+>  					regulator-min-microvolt = <750000>;
+>  					regulator-max-microvolt = <1150000>;
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_l25: l25 {
+> +				l25 {
+>  					regulator-always-on;
+>  					regulator-min-microvolt = <1250000>;
+>  					regulator-max-microvolt = <1250000>;
+> @@ -247,35 +246,35 @@ pm8921_l25: l25 {
+>  				};
+>  
+>  				/* Low Voltage Switch */
+> -				pm8921_lvs1: lvs1 {
+> +				lvs1 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs2: lvs2 {
+> +				lvs2 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs3: lvs3 {
+> +				lvs3 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs4: lvs4 {
+> +				lvs4 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs5: lvs5 {
+> +				lvs5 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs6: lvs6 {
+> +				lvs6 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_lvs7: lvs7 {
+> +				lvs7 {
+>  					bias-pull-down;
+>  				};
+>  
+> -				pm8921_ncp: ncp {
+> +				ncp {
+>  					regulator-min-microvolt = <1800000>;
+>  					regulator-max-microvolt = <1800000>;
+>  					qcom,switch-mode-frequency = <1600000>;
+> diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+> index d9033912c7f3..ffedc60f9ec1 100644
+> --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+> @@ -154,6 +154,49 @@ rpm@108000 {
+>  
+>  			regulators {
+>  				compatible = "qcom,rpm-pm8921-regulators";
+> +
+> +				/* Buck SMPS */
+> +				pm8921_s1: s1 {};
+> +				pm8921_s2: s2 {};
+> +				pm8921_s3: s3 {};
+> +				pm8921_s4: s4 {};
+> +				pm8921_s7: s7 {};
+> +				pm8921_s8: s8 {};
+> +
+> +				/* PMOS LDO */
+> +				pm8921_l1: l1 {};
+> +				pm8921_l2: l2 {};
+> +				pm8921_l3: l3 {};
+> +				pm8921_l4: l4 {};
+> +				pm8921_l5: l5 {};
+> +				pm8921_l6: l6 {};
+> +				pm8921_l7: l7 {};
+> +				pm8921_l8: l8 {};
+> +				pm8921_l9: l9 {};
+> +				pm8921_l10: l10 {};
+> +				pm8921_l11: l11 {};
+> +				pm8921_l12: l12 {};
+> +				pm8921_l14: l14 {};
+> +				pm8921_l15: l15 {};
+> +				pm8921_l16: l16 {};
+> +				pm8921_l17: l17 {};
+> +				pm8921_l18: l18 {};
+> +				pm8921_l21: l21 {};
+> +				pm8921_l22: l22 {};
+> +				pm8921_l23: l23 {};
+> +				pm8921_l24: l24 {};
+> +				pm8921_l25: l25 {};
+> +
+> +				/* Low Voltage Switch */
+> +				pm8921_lvs1: lvs1 {};
+> +				pm8921_lvs2: lvs2 {};
+> +				pm8921_lvs3: lvs3 {};
+> +				pm8921_lvs4: lvs4 {};
+> +				pm8921_lvs5: lvs5 {};
+> +				pm8921_lvs6: lvs6 {};
+> +				pm8921_lvs7: lvs7 {};
+> +
+> +				pm8921_ncp: ncp {};
+>  			};
+>  		};
+>  
+> -- 
+> 2.34.1
+> 
