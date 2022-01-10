@@ -2,116 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B16A6489852
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 13:13:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12D99489893
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 13:28:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245298AbiAJMNS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 07:13:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58960 "EHLO
+        id S235973AbiAJM2P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 07:28:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245270AbiAJMNM (ORCPT
+        with ESMTP id S245450AbiAJM2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 07:13:12 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C4EC06173F;
-        Mon, 10 Jan 2022 04:13:11 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id r10so18706017wrc.3;
-        Mon, 10 Jan 2022 04:13:11 -0800 (PST)
+        Mon, 10 Jan 2022 07:28:12 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E33C06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 04:28:12 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id x15so11697662plg.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 04:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OOzBzIjFVN6u7BElcoEO6FkXJ9FWYf3IYXCFi7b2xh4=;
-        b=PRBS3100yx21XLaSTy7o0vC1OAHBG7s88Sx5bs8uRqBTPNgw9wKhpaORrxP9UiG4Vy
-         o2GvOnJc80ag/7xolxsPifxxGPBYThGC0PD1GeSsAAPCuGP7Oku3/33LO7RANN8KsDdX
-         nYRUGlsZUBYIcwVjnDnGv25N2CE98M75fx0YpDRt+665QFjhrSM66tM0u1vyBW5/V+ol
-         dhz1rUKPcAotMWlQlMgwl/jv6ak+wMEaJ6fh6ZcDjHzTSJ883q/2y3ZH7QJq+ibUZ/Rk
-         xdgs0VUmu2sd48T1pW+f2WkzLKGZJMEkAs6Mw6gtw0uZvdsxFRMsnVr25lVl5uvuaVbM
-         W5rg==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GMIzhkmmngSBJoZ4oqPJUHPjBz9SRIscCPEDnBVJc6E=;
+        b=ffIYnKHb6BhhgItIaSTXD7c6zplkCkLz3euRZhzFuXCosLKRjG5YWQ+G2ViS8DG3Yz
+         vFo+w9uho+1RAHKHj+IRnv+ur24aK86m9UZOs65d/euR52xJ/uz2BNHs9EWNaESjARs/
+         DIsWAL1GzBv2VtuHUZQoMVckSa/LYHidEaVFsq01twxDU0oaxXjJnTgP5DkvwJxZo4jc
+         5hP4ZaG6gcEHaXErPothmJH6yELEfofuKIZF+QCiEaype0qy2bXtCAPw+HnEBg+wrH4h
+         XUozt2RKnUfdpiUIw0jjnR9EmgvEZceRXCVyJrI7qzkTDbYTRbSeSqisadEvCxU7CvNa
+         ImLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OOzBzIjFVN6u7BElcoEO6FkXJ9FWYf3IYXCFi7b2xh4=;
-        b=eKExryc5IzSAtKvNYK1+yp8FKx5ibJh/SGo15r9bs1BxRekJpjkdf3PO4MYCucHvor
-         h7gIWD5E2zxwmJSBQ19CjADqIbxc6pwe5FhK3iVVyLXirvC0QWtWF9fLRBsWO6mDVy62
-         Y+hl+vskorVT4Zuw4ZoJtp0rt7V5d4ko+412+f/eDGbbMXKaWZZazI5sFWpbJt2vmpHv
-         WsasW/wXTfDCH4vqsKhwUV1jMhYh7qpUIyIMIh0WTtLJ7+ijGX2G8LYqRChmyMxpwxa6
-         SmkQICjTeJmICeKph18E4vJtWsKTHbPu/WeKX60si2LLvfMxsJ25Pw7mPn2yxYY1FG12
-         uzMA==
-X-Gm-Message-State: AOAM533CYhCa1rYbM8Xb+Rkb1mrmghMiEbzV5Z3TAmSFhiytcDESltnQ
-        yuWuoRu3fau8nlzSUuZuNMyiaJs9iDc=
-X-Google-Smtp-Source: ABdhPJxw4SDUrC4jil/wgwV/DimbC98CLJ5B1fXVHcCv3ERHTE4W73PCauhOfIgvvVH1LawPmh5wig==
-X-Received: by 2002:adf:dd0d:: with SMTP id a13mr2543026wrm.610.1641816790070;
-        Mon, 10 Jan 2022 04:13:10 -0800 (PST)
-Received: from standask-GA-A55M-S2HP ([188.123.115.255])
-        by smtp.gmail.com with ESMTPSA id d5sm6222633wms.28.2022.01.10.04.13.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jan 2022 04:13:09 -0800 (PST)
-Date:   Mon, 10 Jan 2022 13:13:07 +0100
-From:   Stanislav Jakubek <stano.jakubek@gmail.com>
-To:     Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: vendor-prefixes: add Huawei
-Message-ID: <20220110121307.GA1894@standask-GA-A55M-S2HP>
-References: <20220109132311.GA2827@standask-GA-A55M-S2HP>
- <20220110095543.00001ac0@Huawei.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GMIzhkmmngSBJoZ4oqPJUHPjBz9SRIscCPEDnBVJc6E=;
+        b=IUBfC4FgSBdYOqBlp/6m3nZj3zx+G3sfw2W0rBUp5QCHw/YBhfQ6+5VyDTwjv50QlA
+         bFg1F+yHWNXBlz8cW49k+YDAbPvKUt6+1YxFSCUCJzh/mYkr76WiLVb/Wl6RzEPsmjMy
+         1ji9JqCMzJBNhq/zTvVkrZilj6Q0PxM7J7AqWNq3OmpbSjITc8MlS2wF47N2Sd2aUKKe
+         AvG5MzrPut9y6AF+39m/ykDXLEYEQ+TpgWqJ2J5ERWbL/uPNNSSYlVJ5rwXtosMA+0yT
+         /Fr8F6CMWcZu/fqrB1MmVNRUk8VHi3v4t4O9lucx2KSZVhx/GufxQmw+9cdhDzdlOa/5
+         uqRA==
+X-Gm-Message-State: AOAM530xKeCDfKCCx72JGnwj0Ko7wPT+ZRivEif/d+KGo17qXQu41Ni/
+        NjE3UP8DyTiwJ4U9gNerR3LenGEZq7wrqqdKbaiAdg==
+X-Google-Smtp-Source: ABdhPJxlZFX9ueU4XGGwEmz13wBlIfoXutWPv1Vt2WEcNYFED6TxBxQAc3ndTpQxtAJz7teExhC6w0OBYi/Lb+TYE5Y=
+X-Received: by 2002:a17:902:e3d5:b0:14a:37bd:5ca3 with SMTP id
+ r21-20020a170902e3d500b0014a37bd5ca3mr4516466ple.65.1641817691443; Mon, 10
+ Jan 2022 04:28:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220110095543.00001ac0@Huawei.com>
+References: <20220109024910.2041763-1-bryan.odonoghue@linaro.org> <20220109024910.2041763-2-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220109024910.2041763-2-bryan.odonoghue@linaro.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Mon, 10 Jan 2022 13:27:59 +0100
+Message-ID: <CAG3jFyumQ=QJDXRp=Nydni3oBQ_s0i4373O4_kXCMZwY+Z-1nw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] media: dt-bindings: media: camss: Fixup vdda
+ regulator descriptions sdm845
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        mchehab@kernel.org, hverkuil@xs4all.nl, jonathan@marek.ca,
+        andrey.konovalov@linaro.org, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, jgrahsl@snap.com,
+        hfink@snap.com, vladimir.zapolskiy@linaro.org,
+        dmitry.baryshkov@linaro.org, devicetree@vger.kernel.org,
+        robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 09:55:43AM +0000, Jonathan Cameron wrote:
-> On Sun, 9 Jan 2022 14:23:11 +0100
-> Stanislav Jakubek <stano.jakubek@gmail.com> wrote:
-> 
-> > Add vendor prefix for Huawei (https://www.huawei.com/en/)
-> 
-> Patch description should say why...  Is there an existing binding
-> using a huawei vendor prefix?
+Hey Bryan,
 
-Not sure about bindings, but there are device trees using the huawei 
-vendor prefix. I'm aware of at least these two:
-/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
-/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
+Thanks for submitting this series.
 
-Similar situation with the other vendor prefix patches I've sent yesterday.
+On Sun, 9 Jan 2022 at 03:47, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> If we review the schematic for RB3 Thundercomm document Turbox-845 we see
+> that the CAMSS CSI PHY has the same basic power-rail layout as UFS, PCIe
+> and USB PHYs.
+>
+> We should therefore have two regulator declarations as is the case for UFS,
+> PCIe and USB.
+>
+> Cc: devicetree@vger.kernel.org
+> Cc: robh@kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/media/qcom,sdm845-camss.yaml          | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> index 9ca5dfa7f2260..ae0642b9ae5ec 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> @@ -203,9 +203,13 @@ properties:
+>        - const: vfe1
+>        - const: vfe_lite
+>
+> -  vdda-supply:
+> +  vdda-phy-supply:
+>      description:
+> -      Definition of the regulator used as analog power supply.
+> +      Phandle to a regulator supply to PHY core block.
+> +
+> +  vdda-pll-supply:
+> +    description:
+> +      Phandle to 1.8V regulator supply to PHY refclk pll block.
+>
+>  required:
+>    - clock-names
+> @@ -217,7 +221,8 @@ required:
+>    - power-domains
+>    - reg
+>    - reg-names
+> -  - vdda-supply
+> +  - vdda-phy-supply
+> +  - vdda-pll-supply
+>
+>  additionalProperties: false
+>
+> @@ -361,7 +366,8 @@ examples:
+>            "vfe1",
+>            "vfe_lite";
+>
+> -        vdda-supply = <&reg_2v8>;
+> +        vdda-phy-supply = <&vreg_l1a_0p875>;
+> +        vdda-pll-supply = <&vreg_l26a_1p2>;
+>
+>          ports {
+>            #address-cells = <1>;
+> --
+> 2.33.0
+>
 
-Should I send a v2 with an updated patch description for this and
-the other patches?
+The patch looks good to me.
 
-Thanks,
-
-Stanislav
-
-> 
-> Thanks,
-> 
-> Jonathan
-> 
-> 
-> > 
-> > Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
-> > ---
-> >  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > index a13d6a19c2b4..18ffa2d7379f 100644
-> > --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-> > @@ -515,6 +515,8 @@ patternProperties:
-> >      description: HannStar Display Co.
-> >    "^holtek,.*":
-> >      description: Holtek Semiconductor, Inc.
-> > +  "^huawei,.*":
-> > +    description: Huawei Technologies Co., Ltd.
-> >    "^hugsun,.*":
-> >      description: Shenzhen Hugsun Technology Co. Ltd.
-> >    "^hwacom,.*":
-> 
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
