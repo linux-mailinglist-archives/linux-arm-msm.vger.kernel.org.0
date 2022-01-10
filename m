@@ -2,78 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81F1F48A061
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 20:45:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B3E48A0C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 21:14:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241204AbiAJTpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 14:45:47 -0500
-Received: from mail-oi1-f173.google.com ([209.85.167.173]:39903 "EHLO
-        mail-oi1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239995AbiAJTpr (ORCPT
+        id S240975AbiAJUOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 15:14:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240449AbiAJUOx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 14:45:47 -0500
-Received: by mail-oi1-f173.google.com with SMTP id r62so13406703oie.6;
-        Mon, 10 Jan 2022 11:45:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+rUH2Bw7JdmQp0ELIJp4FXZOGNg4nqfe1WUgvTcejF8=;
-        b=17fh9QrRqFn2jAJrbAbakA6bGWxYIn3MMVhyGZstTKpPfN15BF8Cgja8LtFrhVIUsB
-         YW5wVTKTY633OPAiuSAz6HEPWMAXO31sZBxxrTj8QBgJgNNFsNDnglekjamiL5jJWiBj
-         79sr1KhWufor5zU3R6TxJo1az3obLKtb6oTJWECTo4uDTvgvsmvgbLHI7i2harCOj7Gt
-         WKGTlDQ8HC+WdPj8sgeWjDDiy+aHZa2BgszNr68m2L4K8By/Ji3rfdDnTxfkTc2EERJH
-         nFY2ICPnlRYXeNgl1L7ooJwGTUnqhOo7z6LcX0wdKefFYxl29mYRRyOO7qOdylDi4a82
-         LHwg==
-X-Gm-Message-State: AOAM531V+iGW5dKMrikX1IlUKcgDBvHY9tokkjDBzqAAAM2Y2RHX06Ib
-        HO+g+2FzwxqPmWg/CUhlnQ==
-X-Google-Smtp-Source: ABdhPJzVEWjIXJ8MMN0dd8KKjN2BiOpuWDUv+vvFANJSidkB/vdhoZbY14Xbo+ZjySetFCFDzYfolQ==
-X-Received: by 2002:aca:a84b:: with SMTP id r72mr19390246oie.14.1641843946416;
-        Mon, 10 Jan 2022 11:45:46 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id d3sm1341207oiw.52.2022.01.10.11.45.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jan 2022 11:45:45 -0800 (PST)
-Received: (nullmailer pid 1377109 invoked by uid 1000);
-        Mon, 10 Jan 2022 19:45:44 -0000
-Date:   Mon, 10 Jan 2022 13:45:44 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, ~okias/devicetree@lists.sr.ht,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: phy: convert Qualcomm USB HS phy to yaml
-Message-ID: <YdyM6KlzCBZBvXHg@robh.at.kernel.org>
-References: <20211230000740.103869-1-david@ixit.cz>
+        Mon, 10 Jan 2022 15:14:53 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493F3C061748;
+        Mon, 10 Jan 2022 12:14:53 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D6E99612FA;
+        Mon, 10 Jan 2022 20:14:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3E4C36AE3;
+        Mon, 10 Jan 2022 20:14:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641845692;
+        bh=r24yN07MYyKv+1b+zerD+vIcwUaYal1HbYEztIuAink=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=eqKYahqLBtySojhaUYLMfHwwWrop8HUssVOK1RSArk4sNkP4aMfaQFOaIvKyhN6Ry
+         +oFc9QZVKBUO+yDxhmpYrCJ1lj0AD+QEN5M3q1VDXAlr6bknoZv+kgdXSZxY+ccQzv
+         wQS1hb8c0QDqW45uLGIjIy1A9RhoG/jbFgeldyTVBSmTYOOlSKhY9m55xFJBt6584F
+         bNFbOll8dr7XCRuqFcXa3ZQdo6gv6A2mgps+I5KLl22IZhZsohb9re50cfoTbzOEvp
+         L2co/3GWBYQJIiW/S+ZiiaCr1acyI1dFokyxYspvEXrTfqwiDUvEqxHRFslEzzO9wX
+         rkIhUOF+eW6Hw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211230000740.103869-1-david@ixit.cz>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <991533e0fddd6999c8a06a536ae57999@trvn.ru>
+References: <20211209163720.106185-1-nikita@trvn.ru> <20211209163720.106185-2-nikita@trvn.ru> <20220108005209.5140EC36AEB@smtp.kernel.org> <991533e0fddd6999c8a06a536ae57999@trvn.ru>
+Subject: Re: [PATCH 1/4] clk: qcom: clk-rcg2: Fail Duty-Cycle configuration if MND divider is not enabled.
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linus.walleij@linaro.org, mturquette@baylibre.com,
+        bjorn.andersson@linaro.org, agross@kernel.org, tdas@codeaurora.org,
+        svarbanov@mm-sol.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+To:     Nikita Travkin <nikita@trvn.ru>
+Date:   Mon, 10 Jan 2022 12:14:50 -0800
+User-Agent: alot/0.9.1
+Message-Id: <20220110201452.2B3E4C36AE3@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Dec 2021 01:07:40 +0100, David Heidelberg wrote:
-> Conversion of Qualcomm USB HS phy documentation to yaml.
-> 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
-> v2:
->  - changed uint8 array to matrix
->  - improved clock-names check
->  - move reset-names items, adjust DTS files later
->  - added clocks and resets min and maxItems
->  - if'ed resets, since apq8064 doesn't have phy reset
-> ---
->  .../bindings/phy/qcom,usb-hs-phy.txt          |  84 --------------
->  .../bindings/phy/qcom,usb-hs-phy.yaml         | 108 ++++++++++++++++++
->  2 files changed, 108 insertions(+), 84 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-> 
+Quoting Nikita Travkin (2022-01-07 23:25:19)
+> Hi,
+>=20
+> Stephen Boyd =D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=B0) 08.01.2022 05:52:
+> > Quoting Nikita Travkin (2021-12-09 08:37:17)
+> I'm adding this error here primarily to bring attention of the
+> user (e.g. developer enabling some peripheral that needs
+> duty cycle control) who might have to change their clock tree
+> to make this control effective. So, assuming that if someone
+> sets the duty cycle to 50% then they might set it to some other
+> value later, it makes sense to fail the first call anyway.
+>=20
+> If you think there are some other possibilities for this call
+> to happen specifically with 50% duty cycle (e.g. some
+> preparations or cleanups in the clk subsystem or some drivers
+> that I'm not aware of) then I can make an exemption in the check
+> for that.
+>=20
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+I don't see anywhere in clk_set_duty_cycle() where it would bail out
+early if the duty cycle was set to what it already is. The default for
+these clks is 50%, so I worry that some driver may try to set the duty
+cycle to 50% and then fail now. Either we need to check the duty cycle
+in the core before calling down into the driver or we need to check it
+here in the driver. Can you send a patch to check the current duty cycle
+in the core before calling down into the clk ops?
