@@ -2,100 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62A3B489FE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 20:09:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39AA748A022
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 20:31:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242509AbiAJTJU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 14:09:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242339AbiAJTJU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 14:09:20 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1653FC061751
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 11:09:20 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id r131so19964918oig.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 11:09:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=idN74tibQylFiXutvVDrzwyT0hxfY8VT8xXi4bT3S8Q=;
-        b=AxcLtTAanTiUqsMqD/BViiv8NMCDHdJymo3vnBBv/sbOrEjz3/YMNe96CERt12zOCD
-         VpqmHUvgdxRqxRxGtzLv5o8X5CvxrSBkauFpFmpMX2oCuNExFHmaVP/gfqtbiflOcv30
-         tHlI5hRk/Cmel0Cr7PxBazPCBh41tdGU7lqh96KSDUoTURxESUFEkyc7z+nRD9wrtwJu
-         AMHl3iAx3NzRr1qoC56cxtA9gY0+1q4iwwQ6/s+AA9EyUxiylMg+HhHR/XEtGqcsyoQ3
-         368yn+E9ASAoVsbiWUdCM/LcInNrIldhvPD6FHhVh7jVBcacW2QL6o1dlBSa4seaP+5T
-         NgeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=idN74tibQylFiXutvVDrzwyT0hxfY8VT8xXi4bT3S8Q=;
-        b=RRHYSvfARWZV1oRVWfhLy9Sbs66ueBBLHpGj8DwE/whKjR62Tge59sLAhe/dDrcGT1
-         nIS72MVo9S0nv/jQyCcdrmsCzlP5HDWuZm+URPHmOm5dy/DQ6aY3b+V1D4kTNlWEBf92
-         2qaAlklB0dCFzZkhF1L2dB/7SkCHdOmSl0+xVS/qQKnDzDE0votOFVRvVIP9OsAoqRy9
-         JLJuh0Ionsrk8VuDXnVFKuo5LtlNivC8ArgZgKjmKnMWJJZ9svodDuCm8fz1HcrZB8uL
-         Ojjo6kYc1ogp9MOiVntW38VuP4/nQiXA9ki+F9alEDKFk1e+XcbsnTkXXIoQH081yqDZ
-         Z/Jw==
-X-Gm-Message-State: AOAM532hLwDJRi02RLNrsHAlJOkFAk56nD8dGp940OMyTu3XOdIDkwxw
-        eXT76XBq+hO4hqeGx5kL0cYeUg==
-X-Google-Smtp-Source: ABdhPJyvKczm5X8Lm4wBPiUcnfxxpBfrfp1f7Bb+mt8WT8A/QQJ1WOgRkJ01srv4AUDzr5lWtIHRMw==
-X-Received: by 2002:a54:468b:: with SMTP id k11mr655957oic.105.1641841759427;
-        Mon, 10 Jan 2022 11:09:19 -0800 (PST)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 2sm1636619otm.41.2022.01.10.11.09.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jan 2022 11:09:18 -0800 (PST)
-Date:   Mon, 10 Jan 2022 11:10:03 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v2] arm64: qcom: sc7280: Move USB2 controller nodes from
- common dtsi to SKU1
-Message-ID: <YdyEi2I0XFp6DPh1@ripper>
-References: <1638422248-24221-1-git-send-email-quic_c_sanm@quicinc.com>
- <CAE-0n51S7gPnkgL40Lqj-8dgZ-jjfCmNGtnUDgqJ_Kw5dzc_sg@mail.gmail.com>
- <e605c057-a7a4-657a-06ee-f872e13e116e@quicinc.com>
- <135e8171-c210-1f70-e26f-167f8fdfcc74@quicinc.com>
+        id S243484AbiAJTbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 14:31:03 -0500
+Received: from mga04.intel.com ([192.55.52.120]:21940 "EHLO mga04.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243510AbiAJTbB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jan 2022 14:31:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1641843061; x=1673379061;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=RxYOq7hNnHUydTJret/bzJJ7FKiRggRskn0+xuXTnOE=;
+  b=TBkZKP2xzBxML5bc5guYljwagQXDdA7nsuC0W5R6gLcD/huvw7gKE1KE
+   rcwyBR35zogUF+PUnbAJwmkiDtLF0uA6sRLNqN8PI63UNYVY1i79HTtJC
+   mP0ZzEABNqOBqheu5n2Q2bw+X+m1b11esr0OhpDT0/NAidt3MA0DgkZfB
+   rqXU57TLJQpdPSFpcjZEcDx5pvDWWJpzt4wsGZz+Hef5Ez9uuj36oCO1v
+   J34uu+PJAz71O0JdWdLWUQI6vJOUCthqqcptcBSu2Xaxh6cRk+2IIFT4z
+   7oTfxexsHOdZJY7wsNbvlChMnTxre2xR9yDewOrwvdSHbXEkzWkYRIOrA
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10223"; a="242118803"
+X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
+   d="scan'208";a="242118803"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2022 11:31:01 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
+   d="scan'208";a="592450674"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga004.fm.intel.com with ESMTP; 10 Jan 2022 11:30:57 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 17955120; Mon, 10 Jan 2022 21:31:08 +0200 (EET)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Rosin <peda@axentia.se>
+Subject: [PATCH v2 1/5] math.h: Introduce data types for fractional numbers
+Date:   Mon, 10 Jan 2022 21:31:00 +0200
+Message-Id: <20220110193104.75225-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <135e8171-c210-1f70-e26f-167f8fdfcc74@quicinc.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 09 Jan 20:56 PST 2022, Sandeep Maheswaram wrote:
+Introduce a macro to produce data types like
 
-> Hi Bjorn,
-> 
-> On 12/15/2021 11:18 AM, Sandeep Maheswaram wrote:
-> > Hi Bjorn,
-> > 
-> > On 12/3/2021 4:22 AM, Stephen Boyd wrote:
-> > > Quoting Sandeep Maheswaram (2021-12-01 21:17:28)
-> > > > Move USB2 controller and phy nodes from common dtsi file as it is
-> > > > required only for SKU1 board and change the mode to host mode as
-> > > > it will be used in host mode for SKU1.
-> > > > 
-> > > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > > > ---
-> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > Can you merge this change in qcom tree?
-> 
-> Is this patch merged in qcom tree ? If not can you please do so.
-> 
+	struct TYPE_fract {
+		__TYPE numerator;
+		__TYPE denominator;
+	};
 
-Sorry, I seem to have missed this in the patch list. Will pick it up for
-v5.18.
+to be used in the code wherever it's needed.
 
-Thanks,
-Bjorn
+In the following changes convert some users to it.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+
+May be pulled via IIO tree.
+
+v2: no changes
+
+ include/linux/math.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/include/linux/math.h b/include/linux/math.h
+index 53674a327e39..439b8f0b9ebd 100644
+--- a/include/linux/math.h
++++ b/include/linux/math.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_MATH_H
+ #define _LINUX_MATH_H
+ 
++#include <linux/types.h>
+ #include <asm/div64.h>
+ #include <uapi/linux/kernel.h>
+ 
+@@ -106,6 +107,17 @@
+ }							\
+ )
+ 
++#define __STRUCT_FRACT(type)				\
++struct type##_fract {					\
++	__##type numerator;				\
++	__##type denominator;				\
++};
++__STRUCT_FRACT(s16)
++__STRUCT_FRACT(u16)
++__STRUCT_FRACT(s32)
++__STRUCT_FRACT(u32)
++#undef __STRUCT_FRACT
++
+ /*
+  * Multiplies an integer by a fraction, while avoiding unnecessary
+  * overflow or loss of precision.
+-- 
+2.34.1
+
