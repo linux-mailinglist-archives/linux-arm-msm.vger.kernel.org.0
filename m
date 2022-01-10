@@ -2,599 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DB354899F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 14:29:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3975E489B0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 15:06:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232370AbiAJN3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 08:29:17 -0500
-Received: from mga11.intel.com ([192.55.52.93]:12208 "EHLO mga11.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232349AbiAJN3Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 08:29:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1641821356; x=1673357356;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=lTVDaKW6bUplcDWWxxPE3sNk99D40K3aPhqW6TzkINY=;
-  b=SNpDovVaGopTnfBlEEhyNI76JXUlm/DFha5y9zM4W2xddA8MyF0grC4G
-   UVbqD0UQ8uKugRtMVXIhSSEx++ntrSdLBztme4m/i5uLAq547pDacmZ/L
-   tBbWz8pGt8b3cCQvjbh8RITk6zmG8Fa1JLGMgJU4S4Y+HG6TVBVzS4bed
-   Z8tN+V3fXC7PU2WnVzUf1rt5AzfPTagWXc77LnWHP9bUxMtTkRR0MON04
-   7QZxttiQL0FxlYaBaknWnWw94GyUP5WrnyzFWyXjxlyadmsUO3Rpp6yxE
-   plNKfPpO9o3Knz9aKwk/d4R9Nr+X+JsnCaDA3bFF4md37nnIbwjBAoQrg
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10222"; a="240774061"
-X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
-   d="scan'208";a="240774061"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jan 2022 05:29:15 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,277,1635231600"; 
-   d="scan'208";a="474128274"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.92]) ([10.237.72.92])
-  by orsmga006.jf.intel.com with ESMTP; 10 Jan 2022 05:29:11 -0800
-Subject: Re: [PATCH V2] mmc: debugfs: add error statistics
-To:     "Sajida Bhanu (Temp) (QUIC)" <quic_c_sbhanu@quicinc.com>,
-        "riteshh@codeaurora.org" <riteshh@codeaurora.org>,
-        "Asutosh Das (asd)" <asutoshd@quicinc.com>,
-        "ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Cc:     "stummala@codeaurora.org" <stummala@codeaurora.org>,
-        "vbadigan@codeaurora.org" <vbadigan@codeaurora.org>,
-        "Ram Prakash Gupta (QUIC)" <quic_rampraka@quicinc.com>,
-        "Pradeep Pragallapati (QUIC)" <quic_pragalla@quicinc.com>,
-        "sartgarg@codeaurora.org" <sartgarg@codeaurora.org>,
-        "nitirawa@codeaurora.org" <nitirawa@codeaurora.org>,
-        "sayalil@codeaurora.org" <sayalil@codeaurora.org>
-References: <1639492863-7053-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <9fbec373-e667-b4a5-4b92-741f9dd2b7ee@intel.com>
- <SJ0PR02MB84499B152C13E541E19DBFB4CD7C9@SJ0PR02MB8449.namprd02.prod.outlook.com>
- <4ba587c1-2092-285c-c13c-e3ed69fec403@intel.com>
- <SJ0PR02MB84491721325B71098AFD5E91CD4A9@SJ0PR02MB8449.namprd02.prod.outlook.com>
- <116af24d-d508-5d3d-097c-4145b56758bc@intel.com>
- <SJ0PR02MB84490BDAA2E6E7677890F93BCD509@SJ0PR02MB8449.namprd02.prod.outlook.com>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <defca0bd-e43c-57c9-79b6-cf81d89c4947@intel.com>
-Date:   Mon, 10 Jan 2022 15:29:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.14.0
+        id S235212AbiAJOGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 09:06:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57258 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235044AbiAJOGS (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 10 Jan 2022 09:06:18 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343EDC06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 06:06:18 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id fo11so14476673qvb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 06:06:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sjf5HXREYSAp8OzfvPdpCVvaNZb3bh0YsVohsQS8etE=;
+        b=Ef1tKo1+J/Pet0Mz0h5QNoIi6PvtQ+1+fWb0HQUGQ4lEAMNbjcxRvAEU3DxMArWK9y
+         fzau/FkT+YZtL0NHiYwukbV7vep7KYQtQ4BzdaCtfR4qn6ShDwpYmA8mea77jpxkrlBu
+         bbSvxS851BIDcDBjpoecYmxSFv7n9EJdFi4oXDEI9dFknbedSu4LOF8MavDY5mI9i2CP
+         MVk8+Thbh2tM7WVZfSAwuG3LvWekXxBwssJ9IOI6kA4fd/xxAtbKHR21uu907zNSoQdV
+         SMeNnFppKyL4P/k3unU9iY9xzYsL0yH9od0CZztIF+oOKy38slsCiKUnvKfYYwH22n3a
+         WoMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sjf5HXREYSAp8OzfvPdpCVvaNZb3bh0YsVohsQS8etE=;
+        b=kdSsN58GNkTlvXGBNYvTsTV0/Vh0+dIDpgM9ZD07PaMy6G1BCDdI6Qp6OeVD+oaiDe
+         e7lvXjOcYsPo8981WOymlAPYB95JPiNQmAeAEwgS+F7vfQcciauIAWuJ15cQTQ3j2S2u
+         N8DhPgI8sQKnPrttZKSA5lYRNbFNtyObEDyXYhBEkDuVPAE0eb0Ca5O/GyQVJWVXAAFB
+         CIXjKcJzsVXLCeIOpD7S5ld1NEgPPzsUJFSLtTDBy0h4zYolv0eHwizcL6Ds9a6ydQxH
+         g1woex8JiZ1I58u8YnhuTGnyCxNsRjRI7RQEyuk/MRW1lFyeo06BcbaAFMYW+OJY721Q
+         WUiA==
+X-Gm-Message-State: AOAM531zF00FrWFl/8LmOQVabtQaQ6cH/7RvS9liD9KLGtWZvjyVjHND
+        5DUEn1f0GvAM6Y2PvmlUOOwFauhK+/BZTno2cqAOgg==
+X-Google-Smtp-Source: ABdhPJx8iuBfCaDUP7d8M8nzd/iM43KRhC+lgLYLRyHPh8qfwLit/VE9Y1WQXgB0+afvUXwpQfzD7BGkAXGOVEotGy0=
+X-Received: by 2002:a05:6214:248a:: with SMTP id gi10mr67627781qvb.115.1641823576863;
+ Mon, 10 Jan 2022 06:06:16 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <SJ0PR02MB84490BDAA2E6E7677890F93BCD509@SJ0PR02MB8449.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1641819337-17037-1-git-send-email-quic_rajeevny@quicinc.com> <1641819337-17037-2-git-send-email-quic_rajeevny@quicinc.com>
+In-Reply-To: <1641819337-17037-2-git-send-email-quic_rajeevny@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 10 Jan 2022 17:06:03 +0300
+Message-ID: <CAA8EJprrRZK+ocW9zDY_eyeo_m_xbu+KmfWf8QmTYscAh5SxLw@mail.gmail.com>
+Subject: Re: [v2 1/3] dt-bindings: msm/dsi: Add 10nm dsi phy tuning properties
+To:     Rajeev Nandan <quic_rajeevny@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
+        robh+dt@kernel.org, robh@kernel.org, quic_abhinavk@quicinc.com,
+        quic_kalyant@quicinc.com, quic_mkrishn@quicinc.com,
+        jonathan@marek.ca, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/01/2022 15:11, Sajida Bhanu (Temp) (QUIC) wrote:
-> Hi Adrian,
-> 
-> Thanks for the review.
-> 
-> Please find the inline comments
-> 
-> Thanks,
-> Sajida
-> 
-> -----Original Message-----
-> From: Adrian Hunter <adrian.hunter@intel.com> 
-> Sent: Friday, January 7, 2022 1:13 PM
-> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; riteshh@codeaurora.org; Asutosh Das (asd) <asutoshd@quicinc.com>; ulf.hansson@linaro.org; agross@kernel.org; bjorn.andersson@linaro.org; linux-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org
-> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayalil@codeaurora.org
-> Subject: Re: [PATCH V2] mmc: debugfs: add error statistics
-> 
-> On 04/01/2022 17:02, Sajida Bhanu (Temp) (QUIC) wrote:
->> Hi Adrian,
->>
->> Thanks for the review.
->>
->> Please find the inline comments.
->>
->> Thanks,
->> Sajida
->>
->> -----Original Message-----
->> From: Adrian Hunter <adrian.hunter@intel.com>
->> Sent: Monday, January 3, 2022 3:20 PM
->> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; 
->> riteshh@codeaurora.org; Asutosh Das (asd) <asutoshd@quicinc.com>; 
->> ulf.hansson@linaro.org; agross@kernel.org; bjorn.andersson@linaro.org; 
->> linux-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; 
->> linux-kernel@vger.kernel.org
->> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash 
->> Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) 
->> <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; 
->> nitirawa@codeaurora.org; sayalil@codeaurora.org
->> Subject: Re: [PATCH V2] mmc: debugfs: add error statistics
->>
->> On 21/12/2021 09:16, Sajida Bhanu (Temp) (QUIC) wrote:
->>> Hi Adrian,
->>>
->>> Thanks for the review.
->>>
->>> Please find the inline comments.
->>
->> I find the way the inline comments are done a bit difficult to follow, since what I wrote is not quoted, and what you wrote is quoted.  Normally it is the other way around.
->>
->>>
->>> Thanks,
->>> Sajida
->>>
->>> -----Original Message-----
->>> From: Adrian Hunter <adrian.hunter@intel.com>
->>> Sent: Wednesday, December 15, 2021 7:33 PM
->>> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; 
->>> riteshh@codeaurora.org; Asutosh Das (asd) <asutoshd@quicinc.com>; 
->>> ulf.hansson@linaro.org; agross@kernel.org; 
->>> bjorn.andersson@linaro.org; linux-mmc@vger.kernel.org; 
->>> linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org
->>> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash 
->>> Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) 
->>> <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; 
->>> nitirawa@codeaurora.org; sayalil@codeaurora.org
->>> Subject: Re: [PATCH V2] mmc: debugfs: add error statistics
->>>
->>> On 14/12/2021 16:41, Shaik Sajida Bhanu wrote:
->>>> Add debugfs entry to query eMMC and SD card errors statistics.
->>>> This feature is useful for debug and testing
->>>>
->>>> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
->>>> ---
->>>>
->>>> Changes since V1:
->>>> 	-Removed sysfs entry for eMMC and SD card error statistics and added
->>>> 	 debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
->>>
->>> Thanks for doing this.
->>>
->>>> ---
->>>>  drivers/mmc/core/debugfs.c | 106 +++++++++++++++++++++++++++++++++++++++++++++
->>>>  drivers/mmc/core/queue.c   |   2 +
->>>>  drivers/mmc/host/sdhci.c   |  53 ++++++++++++++++++-----
->>>>  include/linux/mmc/host.h   |  37 ++++++++++++++++
->>>>  4 files changed, 186 insertions(+), 12 deletions(-)
->>>>
->>>> diff --git a/drivers/mmc/core/debugfs.c b/drivers/mmc/core/debugfs.c 
->>>> index 3fdbc80..40210c34 100644
->>>> --- a/drivers/mmc/core/debugfs.c
->>>> +++ b/drivers/mmc/core/debugfs.c
->>>> @@ -223,6 +223,107 @@ static int mmc_clock_opt_set(void *data, u64
->>>> val)  DEFINE_DEBUGFS_ATTRIBUTE(mmc_clock_fops, mmc_clock_opt_get, mmc_clock_opt_set,
->>>>  	"%llu\n");
->>>>  
->>>> +static int mmc_err_state_get(void *data, u64 *val) {
->>>> +	struct mmc_host *host = data;
->>>> +
->>>> +	if (!host)
->>>> +		return -EINVAL;
->>>> +
->>>> +	*val = host->err_state ? 1 : 0;
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static int mmc_err_state_clear(void *data, u64 val) {
->>>> +	struct mmc_host *host = data;
->>>> +
->>>> +	if (!host)
->>>> +		return -EINVAL;
->>>> +
->>>> +	host->err_state = false;
->>>
->>> Is there much reason to disable err stats from userspace?
->>>
->>>>>>>> Yes , while debugging we can go and check err_state , It is false means no errors happened in driver level and true means errors happened in driver level and then we can go and check err_stats[] to know more on error details like data CRC , command CRC etc.
->>
->> That is not exectly how it is programmed.  "err_state is false" means no errors have been recorded, not that no errors happended.
->>
->>>>>>>> If user wants to explicitly clear then he can use this.
-> 
-> Seems over compilicated.  A user can just diff the old and new values:
-> 
-> cat /sys/kernel/debug/mmc0/err_stats > /tmp/old-stats ...later...
-> cat /sys/kernel/debug/mmc0/err_stats > /tmp/new-stats diff /tmp/old-stats /tmp/new-stats mv /tmp/new-stats /tmp/old-stats
-> 
-> I suggest just outputting the stats
-> 
->>>>>>>> Thanks for the suggestion Adrain.
-> This way user has to call write to store the err_stats data to /tmp/old-stats and  user has to call read to read /tmp/old-stats.
+On Mon, 10 Jan 2022 at 15:56, Rajeev Nandan <quic_rajeevny@quicinc.com> wro=
+te:
+>
+> In most cases, the default values of DSI PHY tuning registers should be
+> sufficient as they are fully optimized. However, in some cases where
+> extreme board parasitics cause the eye shape to degrade, the override
+> bits can be used to improve the signal quality.
+>
+> The general guidelines for DSI PHY tuning include:
+> - High and moderate data rates may benefit from the drive strength and
+>   drive level tuning.
+> - Drive strength tuning will affect the output impedance and may be used
+>   for matching optimization.
+> - Drive level tuning will affect the output levels without affecting the
+>   impedance.
+>
+> The clock and data lanes have a calibration circuitry feature. The drive
+> strength tuning can be done by adjusting rescode offset for hstop/hsbot,
+> and the drive level tuning can be done by adjusting the LDO output level
+> for the HSTX drive.
+>
+> Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
+> ---
+>
+> Changes in v2:
+>  - More details in the commit text (Stephen Boyd)
+>  - Use human understandable values (Stephen Boyd, Dmitry Baryshkov)
+>  - Do not take values that are going to be unused (Dmitry Baryshkov)
+>
+>  .../bindings/display/msm/dsi-phy-10nm.yaml         | 33 ++++++++++++++++=
+++++++
+>  1 file changed, 33 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.y=
+aml b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> index 4399715..d0eb8f6 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
+> @@ -35,6 +35,35 @@ properties:
+>        Connected to DSI0_MIPI_DSI_PLL_VDDA0P9 pin for sc7180 target and
+>        connected to VDDA_MIPI_DSI_0_PLL_0P9 pin for sdm845 target
 
-Only if you need to see what has changed
+Generic note:
+I think these properties should be prefixed with "qcom," prefix.
 
-> 
-> And our idea is user call only read to get error stats info.
-> 
-> Please suggest me which is okay.
+>
+> +  phy-rescode-offset-top:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    minItems: 5
+> +    maxItems: 5
+> +    description:
+> +      Integer array of offset for pull-up legs rescode for all five lane=
+s.
+> +      To offset the drive strength from the calibrated value in an incre=
+asing
+> +      or decreasing manner, use 6 bit two=E2=80=99s complement values.
 
-Please let's start with just outputting the stats.
+dtc should support negative values, google hints that <(-2)> should work.
 
-> 
-> Thanks,
-> Sajida	
-> 
->>
->>>
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +DEFINE_SIMPLE_ATTRIBUTE(mmc_err_state, mmc_err_state_get,
->>>> +		mmc_err_state_clear, "%llu\n");
->>>> +
->>>> +static int mmc_err_stats_show(struct seq_file *file, void *data) {
->>>> +	struct mmc_host *host = (struct mmc_host *)file->private;
->>>> +
->>>> +	if (!host)
->>>> +		return -EINVAL;
->>>
->>> I was thinking we needed a way to determine whether stats were being collected because not all drivers would support it at least initially e.g.
->>>
->>> 	if (!host->err_stats_enabled) {
->>> 		seq_printf(file, "Not supported by driver\n");
->>> 		return 0;
->>> 	}
->>>
->>>>>>>>>> You mean declare another variable (err_stats_enabled) and enable it in probe?
->>
->> Yes, although it is not clear if this is the same as what you want from err_state, i.e. is err_state different from err_stats_enabled?
->>
->>>>>>> Yes, err_state and err_stats_enabled both are different.  err_state will be set if any errors happened in driver level. 
->>  err_stats_enabled will be set  if err_stats feature enabled,  if any vendor wants to use err_stats feature they will set this err_stats_enabled in their vendor specific file.
->>
->>>
->>>> +
->>>> +	seq_printf(file, "# Command Timeout Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMD_TIMEOUT]);
->>>
->>> Maybe put the descriptions in an array and iterate e.g.
->>>
->>> 	const char *desc[MMC_ERR_MAX] = {
->>> 		[MMC_ERR_CMD_TIMEOUT] = "Command Timeout Occurred",
->>> 		etc
->>> 	};
->>> 	int i;
->>>
->>> 	if (!host)
->>> 		return -EINVAL;
->>>
->>> 	for (i = 0; i < MMC_ERR_MAX; i++) {
->>> 		if (desc[i])
->>> 			seq_printf(file, "# %s:\t %d\n",
->>> 				   desc[1], host->err_stats[i]);
->>> 	}
->>>
->>>>>>>>>> Sure
->>>
->>>> +
->>>> +	seq_printf(file, "# Command CRC Errors Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMD_CRC]);
->>>> +
->>>> +	seq_printf(file, "# Data Timeout Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_DAT_TIMEOUT]);
->>>> +
->>>> +	seq_printf(file, "# Data CRC Errors Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_DAT_CRC]);
->>>> +
->>>> +	seq_printf(file, "# Auto-Cmd Error Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_ADMA]);
->>>> +
->>>> +	seq_printf(file, "# ADMA Error Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_ADMA]);
->>>> +
->>>> +	seq_printf(file, "# Tuning Error Occurred:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_TUNING]);
->>>> +
->>>> +	seq_printf(file, "# CMDQ RED Errors:\t\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMDQ_RED]);
->>>> +
->>>> +	seq_printf(file, "# CMDQ GCE Errors:\t\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMDQ_GCE]);
->>>> +
->>>> +	seq_printf(file, "# CMDQ ICCE Errors:\t\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMDQ_ICCE]);
->>>> +
->>>> +	seq_printf(file, "# Request Timedout:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_REQ_TIMEOUT]);
->>>> +
->>>> +	seq_printf(file, "# CMDQ Request Timedout:\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_CMDQ_REQ_TIMEOUT]);
->>>> +
->>>> +	seq_printf(file, "# ICE Config Errors:\t\t %d\n",
->>>> +		   host->err_stats[MMC_ERR_ICE_CFG]);
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static int mmc_err_stats_open(struct inode *inode, struct file
->>>> +*file) {
->>>> +	return single_open(file, mmc_err_stats_show, inode->i_private); }
->>>> +
->>>> +static ssize_t mmc_err_stats_write(struct file *filp, const char __user *ubuf,
->>>> +				   size_t cnt, loff_t *ppos)
->>>> +{
->>>> +	struct mmc_host *host = filp->f_mapping->host->i_private;
->>>> +
->>>> +	if (!host)
->>>> +		return -EINVAL;
->>>> +
->>>> +	pr_debug("%s: Resetting MMC error statistics\n", __func__);
->>>> +	memset(host->err_stats, 0, sizeof(host->err_stats));
->>>> +
->>>> +	return cnt;
->>>> +}
->>>> +
->>>> +static const struct file_operations mmc_err_stats_fops = {
->>>> +	.open	= mmc_err_stats_open,
->>>> +	.read	= seq_read,
->>>> +	.write	= mmc_err_stats_write,
->>>> +};
->>>> +
->>>>  void mmc_add_host_debugfs(struct mmc_host *host)  {
->>>>  	struct dentry *root;
->>>> @@ -236,6 +337,11 @@ void mmc_add_host_debugfs(struct mmc_host *host)
->>>>  	debugfs_create_file_unsafe("clock", S_IRUSR | S_IWUSR, root, host,
->>>>  				   &mmc_clock_fops);
->>>>  
->>>> +	debugfs_create_file("err_state", 0600, root, host,
->>>> +		&mmc_err_state);
->>>> +	debugfs_create_file("err_stats", 0600, root, host,
->>>> +		&mmc_err_stats_fops);
->>>> +
->>>>  #ifdef CONFIG_FAIL_MMC_REQUEST
->>>>  	if (fail_request)
->>>>  		setup_fault_attr(&fail_default_attr, fail_request); diff --git 
->>>> a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c index
->>>> b15c034..5243929 100644
->>>> --- a/drivers/mmc/core/queue.c
->>>> +++ b/drivers/mmc/core/queue.c
->>>> @@ -100,6 +100,8 @@ static enum blk_eh_timer_return mmc_cqe_timed_out(struct request *req)
->>>>  	enum mmc_issue_type issue_type = mmc_issue_type(mq, req);
->>>>  	bool recovery_needed = false;
->>>>  
->>>> +	mmc_debugfs_err_stats_inc(host, MMC_ERR_CMDQ_REQ_TIMEOUT);
->>>> +
->>>>  	switch (issue_type) {
->>>>  	case MMC_ISSUE_ASYNC:
->>>>  	case MMC_ISSUE_DCMD:
->>>> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
->>>
->>> I think the core changes should be a separate patch from sdhci.
->>> I would probably split into 4:
->>> 	mmc core
->>> 	mmc block driver
->>> 	cqhci driver
->>> 	sdhci driver
->>>
->>>>>>> Sure
->>>
->>>> index 07c6da1..d742051 100644
->>>> --- a/drivers/mmc/host/sdhci.c
->>>> +++ b/drivers/mmc/host/sdhci.c
->>>> @@ -113,6 +113,7 @@ void sdhci_dumpregs(struct sdhci_host *host)
->>>>  	if (host->ops->dump_vendor_regs)
->>>>  		host->ops->dump_vendor_regs(host);
->>>>  
->>>> +	mmc_debugfs_err_stats_enable(host->mmc);
->>>
->>> Why here and not in e.g. __sdhci_add_host() ?
->>>
->>>>>>> If any errors happened  in driver level then we will call sdhci_dumpregs() right( err_state true means some errors happened in driver level ).  So it is better to call mmc_debugfs_err_stats_enable() here.
->>
->> Registers are not dumped for most errors.  Please move this to __sdhci_add_host().
->>
->>>>>> err_state is true means errors happened in driver level and for most of the errors we are dumping the registers, so I am thinking it is better to have this call in sdhci_dumpregs() only.
->>
->>>
->>>>  	SDHCI_DUMP("============================================\n");
->>>>  }
->>>>  EXPORT_SYMBOL_GPL(sdhci_dumpregs);
->>>> @@ -3159,6 +3160,7 @@ static void sdhci_timeout_timer(struct timer_list *t)
->>>>  	spin_lock_irqsave(&host->lock, flags);
->>>>  
->>>>  	if (host->cmd && !sdhci_data_line_cmd(host->cmd)) {
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
->>>>  		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
->>>>  		       mmc_hostname(host->mmc));
->>>>  		sdhci_dumpregs(host);
->>>> @@ -3181,6 +3183,7 @@ static void sdhci_timeout_data_timer(struct 
->>>> timer_list *t)
->>>>  
->>>>  	if (host->data || host->data_cmd ||
->>>>  	    (host->cmd && sdhci_data_line_cmd(host->cmd))) {
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
->>>>  		pr_err("%s: Timeout waiting for hardware interrupt.\n",
->>>>  		       mmc_hostname(host->mmc));
->>>>  		sdhci_dumpregs(host);
->>>> @@ -3240,11 +3243,15 @@ static void sdhci_cmd_irq(struct sdhci_host 
->>>> *host, u32 intmask, u32 *intmask_p)
->>>>  
->>>>  	if (intmask & (SDHCI_INT_TIMEOUT | SDHCI_INT_CRC |
->>>>  		       SDHCI_INT_END_BIT | SDHCI_INT_INDEX)) {
->>>> -		if (intmask & SDHCI_INT_TIMEOUT)
->>>> +		if (intmask & SDHCI_INT_TIMEOUT) {
->>>>  			host->cmd->error = -ETIMEDOUT;
->>>> -		else
->>>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
->>>> +		} else {
->>>>  			host->cmd->error = -EILSEQ;
->>>> -
->>>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
->>>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200)
->>>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_CRC);
->>>> +		}
->>>>  		/* Treat data command CRC error the same as data CRC error */
->>>>  		if (host->cmd->data &&
->>>>  		    (intmask & (SDHCI_INT_CRC | SDHCI_INT_TIMEOUT)) == @@ -3266,6
->>>> +3273,7 @@ static void sdhci_cmd_irq(struct sdhci_host *host, u32 
->>>> +intmask, u32 *intmask_p)
->>>>  			  -ETIMEDOUT :
->>>>  			  -EILSEQ;
->>>>  
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_AUTO_CMD);
->>>>  		if (sdhci_auto_cmd23(host, mrq)) {
->>>>  			mrq->sbc->error = err;
->>>>  			__sdhci_finish_mrq(host, mrq);
->>>> @@ -3342,6 +3350,7 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
->>>>  			if (intmask & SDHCI_INT_DATA_TIMEOUT) {
->>>>  				host->data_cmd = NULL;
->>>>  				data_cmd->error = -ETIMEDOUT;
->>>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
->>>>  				__sdhci_finish_mrq(host, data_cmd->mrq);
->>>>  				return;
->>>>  			}
->>>> @@ -3375,18 +3384,25 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
->>>>  		return;
->>>>  	}
->>>>  
->>>> -	if (intmask & SDHCI_INT_DATA_TIMEOUT)
->>>> +	if (intmask & SDHCI_INT_DATA_TIMEOUT) {
->>>>  		host->data->error = -ETIMEDOUT;
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_TIMEOUT);
->>>> +	}
->>>>  	else if (intmask & SDHCI_INT_DATA_END_BIT)
->>>>  		host->data->error = -EILSEQ;
->>>>  	else if ((intmask & SDHCI_INT_DATA_CRC) &&
->>>>  		SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND))
->>>> -			!= MMC_BUS_TEST_R)
->>>> +			!= MMC_BUS_TEST_R) {
->>>>  		host->data->error = -EILSEQ;
->>>> +		if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
->>>> +				host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200)
->>>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_CRC);
->>>> +	}
->>>>  	else if (intmask & SDHCI_INT_ADMA_ERROR) {
->>>>  		pr_err("%s: ADMA error: 0x%08x\n", mmc_hostname(host->mmc),
->>>>  		       intmask);
->>>>  		sdhci_adma_show_error(host);
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_ADMA);
->>>>  		host->data->error = -EIO;
->>>>  		if (host->ops->adma_workaround)
->>>>  			host->ops->adma_workaround(host, intmask); @@ -3905,20 +3921,33 
->>>> @@ bool sdhci_cqe_irq(struct sdhci_host *host, u32 intmask, int *cmd_error,
->>>>  	if (!host->cqe_on)
->>>>  		return false;
->>>>  
->>>> -	if (intmask & (SDHCI_INT_INDEX | SDHCI_INT_END_BIT | SDHCI_INT_CRC))
->>>> +	if (intmask & (SDHCI_INT_INDEX | SDHCI_INT_END_BIT |
->>>> +SDHCI_INT_CRC)) {
->>>>  		*cmd_error = -EILSEQ;
->>>> -	else if (intmask & SDHCI_INT_TIMEOUT)
->>>> +		if (intmask & SDHCI_INT_CRC) {
->>>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
->>>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200)
->>>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_CRC);
->>>> +		}
->>>> +	} else if (intmask & SDHCI_INT_TIMEOUT) {
->>>>  		*cmd_error = -ETIMEDOUT;
->>>> -	else
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
->>>> +	} else
->>>>  		*cmd_error = 0;
->>>>  
->>>> -	if (intmask & (SDHCI_INT_DATA_END_BIT | SDHCI_INT_DATA_CRC))
->>>> +	if (intmask & (SDHCI_INT_DATA_END_BIT | SDHCI_INT_DATA_CRC)) {
->>>>  		*data_error = -EILSEQ;
->>>> -	else if (intmask & SDHCI_INT_DATA_TIMEOUT)
->>>> +		if (intmask & SDHCI_INT_DATA_CRC) {
->>>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
->>>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200)
->>>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_CRC);
->>>> +		}
->>>> +	} else if (intmask & SDHCI_INT_DATA_TIMEOUT) {
->>>>  		*data_error = -ETIMEDOUT;
->>>> -	else if (intmask & SDHCI_INT_ADMA_ERROR)
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_TIMEOUT);
->>>> +	} else if (intmask & SDHCI_INT_ADMA_ERROR) {
->>>>  		*data_error = -EIO;
->>>> -	else
->>>> +		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_ADMA);
->>>> +	} else
->>>>  		*data_error = 0;
->>>>  
->>>>  	/* Clear selected interrupts. */
->>>> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h 
->>>> index 7afb57c..c263f8f 100644
->>>> --- a/include/linux/mmc/host.h
->>>> +++ b/include/linux/mmc/host.h
->>>> @@ -93,6 +93,23 @@ struct mmc_clk_phase_map {
->>>>  
->>>>  struct mmc_host;
->>>>  
->>>> +enum mmc_err_stat {
->>>> +	MMC_ERR_CMD_TIMEOUT,
->>>> +	MMC_ERR_CMD_CRC,
->>>> +	MMC_ERR_DAT_TIMEOUT,
->>>> +	MMC_ERR_DAT_CRC,
->>>> +	MMC_ERR_AUTO_CMD,
->>>> +	MMC_ERR_ADMA,
->>>> +	MMC_ERR_TUNING,
->>>> +	MMC_ERR_CMDQ_RED,
->>>> +	MMC_ERR_CMDQ_GCE,
->>>> +	MMC_ERR_CMDQ_ICCE,
->>>> +	MMC_ERR_REQ_TIMEOUT,
->>>> +	MMC_ERR_CMDQ_REQ_TIMEOUT,
->>>> +	MMC_ERR_ICE_CFG,
->>>> +	MMC_ERR_MAX,
->>>> +};
->>>> +
->>>>  struct mmc_host_ops {
->>>>  	/*
->>>>  	 * It is optional for the host to implement pre_req and post_req 
->>>> in @@ -500,6 +517,8 @@ struct mmc_host {
->>>>  
->>>>  	/* Host Software Queue support */
->>>>  	bool			hsq_enabled;
->>>> +	u32                     err_stats[MMC_ERR_MAX];
->>>
->>> If you make it u64 then we don't have to think about the value overflowing.
->>>
->>>>>> Sure
->>>
->>>> +	bool			err_state;
->>>>  
->>>>  	unsigned long		private[] ____cacheline_aligned;
->>>>  };
->>>> @@ -635,6 +654,24 @@ static inline enum dma_data_direction mmc_get_dma_dir(struct mmc_data *data)
->>>>  	return data->flags & MMC_DATA_WRITE ? DMA_TO_DEVICE : 
->>>> DMA_FROM_DEVICE;  }
->>>>  
->>>> +static inline void mmc_debugfs_err_stats_enable(struct mmc_host
->>>> +*mmc) {
->>>> +	mmc->err_state = true;
->>>> +}
->>>> +
->>>> +static inline void mmc_debugfs_err_stats_inc(struct mmc_host *mmc,
->>>> +		enum mmc_err_stat stat) {
->>>> +
->>>> +	/*
->>>> +	 * Ignore the command timeout errors observed during
->>>> +	 * the card init as those are excepted.
->>>> +	 */
->>>> +	if (!mmc->err_state)
->>>> +		mmc->err_stats[MMC_ERR_CMD_TIMEOUT] = 0;
->>>
->>> This would be better handled in the card init code somewhere, not here.
->>>
->>>>>>> Sure.
->>>
->>>> +
->>>> +	mmc->err_stats[stat] += 1;
->>>> +}
->>>> +
->>>>  int mmc_send_tuning(struct mmc_host *host, u32 opcode, int 
->>>> *cmd_error);  int mmc_send_abort_tuning(struct mmc_host *host, u32 
->>>> opcode);  int mmc_get_ext_csd(struct mmc_card *card, u8 
->>>> **new_ext_csd);
->>>>
->>>
->>
-> 
+> +
+> +  phy-rescode-offset-bot:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-array
+> +    minItems: 5
+> +    maxItems: 5
+> +    description:
+> +      Integer array of offset for pull-down legs rescode for all five la=
+nes.
+> +      To offset the drive strength from the calibrated value in an incre=
+asing
+> +      or decreasing manner, use 6 bit two=E2=80=99s complement values.
+> +
+> +  phy-drive-ldo-level:
+> +    $ref: /schemas/types.yaml#/definitions/uint8
+> +    minimum: 0
+> +    maximum: 7
+> +    description:
+> +      The PHY LDO has an amplitude tuning feature to adjust the LDO outp=
+ut
+> +      for the HSTX drive. To offset the drive level from the default val=
+ue,
+> +      supported levels are with the following mapping:
+> +      0 =3D 375mV, 1 =3D 400mV, 2 =3D 425mV, 3 =3D 450mV, 4 =3D 475mV, 5=
+ =3D 500mV,
+> +      6 =3D 500mV, 7 =3D 500mV
 
+No encoding please. Specify the values in the dts and convert them
+into the register values in the driver.
+
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -64,5 +93,9 @@ examples:
+>           clocks =3D <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>                    <&rpmhcc RPMH_CXO_CLK>;
+>           clock-names =3D "iface", "ref";
+> +
+> +         phy-resocde-offset-top =3D /bits/ 8 <0x0 0x0 0x0 0x0 0x0>;
+> +         phy-rescode-offset-bot =3D /bits/ 8 <0x0 0x0 0x0 0x0 0x0>;
+> +         phy-drive-ldo-level =3D /bits/ 8 <1>;
+
+--
+With best wishes
+Dmitry
