@@ -2,79 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04B3E48A0C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 21:14:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A90448A129
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 21:53:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240975AbiAJUOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 15:14:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58654 "EHLO
+        id S1343609AbiAJUxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 15:53:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240449AbiAJUOx (ORCPT
+        with ESMTP id S1343594AbiAJUxh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 15:14:53 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 493F3C061748;
-        Mon, 10 Jan 2022 12:14:53 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D6E99612FA;
-        Mon, 10 Jan 2022 20:14:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3E4C36AE3;
-        Mon, 10 Jan 2022 20:14:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1641845692;
-        bh=r24yN07MYyKv+1b+zerD+vIcwUaYal1HbYEztIuAink=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=eqKYahqLBtySojhaUYLMfHwwWrop8HUssVOK1RSArk4sNkP4aMfaQFOaIvKyhN6Ry
-         +oFc9QZVKBUO+yDxhmpYrCJ1lj0AD+QEN5M3q1VDXAlr6bknoZv+kgdXSZxY+ccQzv
-         wQS1hb8c0QDqW45uLGIjIy1A9RhoG/jbFgeldyTVBSmTYOOlSKhY9m55xFJBt6584F
-         bNFbOll8dr7XCRuqFcXa3ZQdo6gv6A2mgps+I5KLl22IZhZsohb9re50cfoTbzOEvp
-         L2co/3GWBYQJIiW/S+ZiiaCr1acyI1dFokyxYspvEXrTfqwiDUvEqxHRFslEzzO9wX
-         rkIhUOF+eW6Hw==
-Content-Type: text/plain; charset="utf-8"
+        Mon, 10 Jan 2022 15:53:37 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05767C061748
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 12:53:37 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id w19-20020a056830061300b0058f1dd48932so16364962oti.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 12:53:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SlNkfjPl8bJ5V8M/bxJmWndgQif9YSbLDO09vemRv3M=;
+        b=Teluis0uizho9gwqRGOWQdDpfU6/sbEJFjCpWVFDEhnQbjulh1wKPyqYjEA0U0YIHP
+         les+MmdNr1b1CQa6cgd6a6z9Wy/K0GcCmxyzgGdqsaj+PJDv0idl6fPTqsclyh5iInda
+         Pag+YAlaVZWEWBzewDE+8C6317jpB6cssSHkmLVKzmJGe3PCr5Rg9Hbm9X7VghMQqzVm
+         6r2Z9lyMAIn9ANv/thuBN3WmTRrOlXL2ol19rmRDy6Y/E5z66Ig86QPoxjEm14xaf6g0
+         K5sHa9TzAMmQVdmN9KBePNbZdZzRvwjXH59YOffrYFVeRKt4kGjVmApCz0QmWrn87sl1
+         sr4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SlNkfjPl8bJ5V8M/bxJmWndgQif9YSbLDO09vemRv3M=;
+        b=3VhxgvNmlkGJPsQetCxO23Ei6tUXSyz1EIvFZ+GbefG8sLpU4ZG3ynB75YQkCYatdw
+         EcX2AqJg3P3hAYk/x1K99Rd3l2SpiDJ4Dr/CLwHqO6s08UoKV+Gei5AdO1Pnjlhjn0em
+         JYciZ84gFg6gsC8hCwx2Dwx3pQ5z6Skljyh1UI27vWtCDtyH+d2ngnpZnHJHCdbdi81W
+         uL8U77nEwnt2MHf+1hkgJRPfeR05Js7L755W0aa17mSvK3biyIi3y/lMhAzOpfKD4oRp
+         92GW4i2xJj/lo1ICY3c5Jx/5jaS6z7m+jts1IVtcm+ELN6L9tDz99bohdhkCpTDoEvNE
+         liaw==
+X-Gm-Message-State: AOAM5300svUGnWXIxv3Hu13pY9opMT1tibNZy8S0WCBJlUInVTKNmCQA
+        Q3MPi1k3MPam8w9TXqQLs28n2A==
+X-Google-Smtp-Source: ABdhPJyzRdF2hLe7MG4+OZzcjpZxsWbk3LYYXPkoN4uMWf+x4IFXdxA/DSyYGcgBa3FFA6QpStBrfw==
+X-Received: by 2002:a9d:6013:: with SMTP id h19mr1224781otj.270.1641848016323;
+        Mon, 10 Jan 2022 12:53:36 -0800 (PST)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b26sm1523623oob.10.2022.01.10.12.53.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jan 2022 12:53:35 -0800 (PST)
+Date:   Mon, 10 Jan 2022 12:54:21 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: phy: convert Qualcomm USB HS phy to yaml
+Message-ID: <Ydyc/TJiVUHXRDVw@ripper>
+References: <20211230000740.103869-1-david@ixit.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <991533e0fddd6999c8a06a536ae57999@trvn.ru>
-References: <20211209163720.106185-1-nikita@trvn.ru> <20211209163720.106185-2-nikita@trvn.ru> <20220108005209.5140EC36AEB@smtp.kernel.org> <991533e0fddd6999c8a06a536ae57999@trvn.ru>
-Subject: Re: [PATCH 1/4] clk: qcom: clk-rcg2: Fail Duty-Cycle configuration if MND divider is not enabled.
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linus.walleij@linaro.org, mturquette@baylibre.com,
-        bjorn.andersson@linaro.org, agross@kernel.org, tdas@codeaurora.org,
-        svarbanov@mm-sol.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-To:     Nikita Travkin <nikita@trvn.ru>
-Date:   Mon, 10 Jan 2022 12:14:50 -0800
-User-Agent: alot/0.9.1
-Message-Id: <20220110201452.2B3E4C36AE3@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211230000740.103869-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Nikita Travkin (2022-01-07 23:25:19)
-> Hi,
->=20
-> Stephen Boyd =D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=B0) 08.01.2022 05:52:
-> > Quoting Nikita Travkin (2021-12-09 08:37:17)
-> I'm adding this error here primarily to bring attention of the
-> user (e.g. developer enabling some peripheral that needs
-> duty cycle control) who might have to change their clock tree
-> to make this control effective. So, assuming that if someone
-> sets the duty cycle to 50% then they might set it to some other
-> value later, it makes sense to fail the first call anyway.
->=20
-> If you think there are some other possibilities for this call
-> to happen specifically with 50% duty cycle (e.g. some
-> preparations or cleanups in the clk subsystem or some drivers
-> that I'm not aware of) then I can make an exemption in the check
-> for that.
->=20
+On Wed 29 Dec 16:07 PST 2021, David Heidelberg wrote:
 
-I don't see anywhere in clk_set_duty_cycle() where it would bail out
-early if the duty cycle was set to what it already is. The default for
-these clks is 50%, so I worry that some driver may try to set the duty
-cycle to 50% and then fail now. Either we need to check the duty cycle
-in the core before calling down into the driver or we need to check it
-here in the driver. Can you send a patch to check the current duty cycle
-in the core before calling down into the clk ops?
+> Conversion of Qualcomm USB HS phy documentation to yaml.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> ---
+> v2:
+>  - changed uint8 array to matrix
+>  - improved clock-names check
+>  - move reset-names items, adjust DTS files later
+>  - added clocks and resets min and maxItems
+>  - if'ed resets, since apq8064 doesn't have phy reset
+> ---
+>  .../bindings/phy/qcom,usb-hs-phy.txt          |  84 --------------
+>  .../bindings/phy/qcom,usb-hs-phy.yaml         | 108 ++++++++++++++++++
+>  2 files changed, 108 insertions(+), 84 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
+> deleted file mode 100644
+> index b3b75c1e6285..000000000000
+> --- a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.txt
+> +++ /dev/null
+> @@ -1,84 +0,0 @@
+> -Qualcomm's USB HS PHY
+> -
+> -PROPERTIES
+> -
+> -- compatible:
+> -    Usage: required
+> -    Value type: <string>
+> -    Definition: Should contain "qcom,usb-hs-phy" and more specifically one of the
+> -                following:
+> -
+> -                        "qcom,usb-hs-phy-apq8064"
+> -                        "qcom,usb-hs-phy-msm8916"
+> -                        "qcom,usb-hs-phy-msm8974"
+> -
+> -- #phy-cells:
+> -    Usage: required
+> -    Value type: <u32>
+> -    Definition: Should contain 0
+> -
+> -- clocks:
+> -    Usage: required
+> -    Value type: <prop-encoded-array>
+> -    Definition: Should contain clock specifier for the reference and sleep
+> -                clocks
+> -
+> -- clock-names:
+> -    Usage: required
+> -    Value type: <stringlist>
+> -    Definition: Should contain "ref" and "sleep" for the reference and sleep
+> -                clocks respectively
+> -
+> -- resets:
+> -    Usage: required
+> -    Value type: <prop-encoded-array>
+> -    Definition: Should contain the phy and POR resets
+> -
+> -- reset-names:
+> -    Usage: required
+> -    Value type: <stringlist>
+> -    Definition: Should contain "phy" and "por" for the phy and POR resets
+> -                respectively
+> -
+> -- v3p3-supply:
+> -    Usage: required
+> -    Value type: <phandle>
+> -    Definition: Should contain a reference to the 3.3V supply
+> -
+> -- v1p8-supply:
+> -    Usage: required
+> -    Value type: <phandle>
+> -    Definition: Should contain a reference to the 1.8V supply
+> -
+> -- extcon:
+> -    Usage: optional
+> -    Value type: <prop-encoded-array>
+> -    Definition: Should contain the vbus extcon
+> -
+> -- qcom,init-seq:
+> -    Usage: optional
+> -    Value type: <u8 array>
+> -    Definition: Should contain a sequence of ULPI address and value pairs to
+> -                program into the ULPI_EXT_VENDOR_SPECIFIC area. This is related
+> -                to Device Mode Eye Diagram test. The addresses are offsets
+> -                from the ULPI_EXT_VENDOR_SPECIFIC address, for example,
+> -                <0x1 0x53> would mean "write the value 0x53 to address 0x81".
+> -
+> -EXAMPLE
+> -
+> -otg: usb-controller {
+> -	ulpi {
+> -		phy {
+> -			compatible = "qcom,usb-hs-phy-msm8974", "qcom,usb-hs-phy";
+> -			#phy-cells = <0>;
+> -			clocks = <&xo_board>, <&gcc GCC_USB2A_PHY_SLEEP_CLK>;
+> -			clock-names = "ref", "sleep";
+> -			resets = <&gcc GCC_USB2A_PHY_BCR>, <&otg 0>;
+> -			reset-names = "phy", "por";
+> -			v3p3-supply = <&pm8941_l24>;
+> -			v1p8-supply = <&pm8941_l6>;
+> -			extcon = <&smbb>;
+> -			qcom,init-seq = /bits/ 8 <0x1 0x63>;
+> -		};
+> -	};
+> -};
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+> new file mode 100644
+> index 000000000000..a60386bd19b2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
+> @@ -0,0 +1,108 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,usb-hs-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm's USB HS PHY binding description
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +if:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        const: qcom,usb-hs-phy-apq8064
+> +  then:
+> +    properties:
+> +      resets:
+> +        maxItems: 1
+> +
+> +      reset-names:
+> +        const: por
+> +
+> +  else:
+> +    properties:
+> +      resets:
+> +        minItems: 2
+> +        maxItems: 2
+> +
+> +      reset-names:
+> +        items:
+> +          - const: phy
+> +          - const: por
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,usb-hs-phy-apq8064
+> +          - qcom,usb-hs-phy-msm8916
+> +          - qcom,usb-hs-phy-msm8974
+> +      - const: qcom,usb-hs-phy
+> +
+> +  clocks:
+> +    minItems: 2
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    maxItems: 2
+> +    contains:
+> +      items:
+> +        - const: ref
+> +        - const: sleep
+> +
+> +  resets: true
+> +
+> +  reset-names: true
+> +
+> +  v1p8-supply: true
+> +
+> +  v3p3-supply: true
+> +
+> +  extcon: true
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  qcom,init-seq:
+> +    $ref: /schemas/types.yaml#/definitions/uint8-matrix
+> +    description: >
+> +      Sequence of ULPI address and value pairs to
+> +      program into the ULPI_EXT_VENDOR_SPECIFIC area.
+> +      This is related to Device Mode Eye Diagram test.
+> +    maxItems: 32 # no hard limit
+> +    items:
+> +      items:
+> +        - description: >
+> +            the address is offset from the ULPI_EXT_VENDOR_SPECIFIC address
+> +        - description: value
+> +
+> +required:
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - reset-names
+> +  - "#phy-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    otg: usb-controller {
+> +      ulpi {
+> +        phy {
+> +          compatible = "qcom,usb-hs-phy-msm8974", "qcom,usb-hs-phy";
+> +          #phy-cells = <0>;
+> +          clocks = <&clk 0>, <&clk 258>;
+> +          clock-names = "ref", "sleep";
+> +          resets = <&gcc 10>, <&otg 0>;
+> +          reset-names = "phy", "por";
+> +          v3p3-supply = <&pm8941_l24>;
+> +          v1p8-supply = <&pm8941_l6>;
+> +          extcon = <&smbb>;
+> +          qcom,init-seq = /bits/ 8 <0x1 0x63>;
+> +        };
+> +      };
+> +    };
+> -- 
+> 2.34.1
+> 
