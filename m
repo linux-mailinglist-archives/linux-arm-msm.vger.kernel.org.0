@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 483BC489C00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 16:18:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B228489C04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jan 2022 16:19:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236082AbiAJPR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Jan 2022 10:17:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45382 "EHLO
+        id S236084AbiAJPTD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Jan 2022 10:19:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236041AbiAJPR6 (ORCPT
+        with ESMTP id S236022AbiAJPTC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Jan 2022 10:17:58 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4A6C06173F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 07:17:58 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id b1-20020a17090a990100b001b14bd47532so329214pjp.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 07:17:58 -0800 (PST)
+        Mon, 10 Jan 2022 10:19:02 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B6BC06173F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 07:19:02 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id n30-20020a17090a5aa100b001b2b6509685so254882pji.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jan 2022 07:19:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=nvJn/3I7D4AgGgunu4si7aq7i1q28aCaTWH1grLVmQE=;
-        b=vvPDRd+IScOO2edlBbHrslAHUvvm6NMafACNv1GRBOvCpEU6YWxhrpi5X+YfnGGTo9
-         mexc1//ZqjaS7DpeElbr/EvYc+WUHse+8R0d9SpZZx/6U9JPjea7r8VZIXM6e6qzOyjZ
-         0CSzvXeCx8E+46He1xTEZKH0ALBI4R17HZGdGdqu/rjDjePmEsq11Zpy+bWByJy4U6Jd
-         4DWcJ+KVHV4C3CoF3phbVmM1ibKlSisRkVfCdmR7sSC2yLxiCCtJWLydbrgfmtPzznj5
-         yQw0rWBgl10VINZV0xe9ti0t91sMiqyHtGO7y0ikmL/U/ItlTopHrkfOSLLtCQsP3rTe
-         QXsg==
+        bh=fl2K3YD4/pXePXs1c4MTaO2s6ftC1qeQwSmigiyA0Ig=;
+        b=VL9nJH9KG1/qrmm2oxG8JUigYJoOgmKxBtslyxMR5fAJ9/32h1BQSsgnbx1xJSXzH9
+         DwQZxB+LhCTR4Y8HSTzquBquq3i7+gBWlspS2gv7Mgb6nzwD7b3oz2kw90d/GGznMu5t
+         Ys/JAMrmMiJ++bUqp/SnM+IU6pEFcggFTxXNsoJFnkrcdvzlsZUdEB2FGbNHUGpYA7kP
+         MdkJFPg0MZfhpNJu/Y8tKdDMLur6mCXASpnC0KZbgwUqO4fs/OeL4o4+7WuWr54DFRBM
+         rlsaIDHjAH9oBJ7gBvtLTAzEYq0TqlEpqu/S5fYWrIeHfspHQHNAWaQNNWc7sHZGsN+9
+         MTFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nvJn/3I7D4AgGgunu4si7aq7i1q28aCaTWH1grLVmQE=;
-        b=R1D6pZynBFw/aB7sv09I0JvZSJ8oWP2dwOXPtf5T9CrmHzuM62Nx3WLG7s98XvFrOO
-         Scjhr85gWLLjKY7JEsidx1VY6ckokfA883K3OqhIx4e4Gud4kGQUpiDYfiPXOX+aSucO
-         s2cxDKPe7txdeEVr9c0NTdvtxtYjKMs584cGevbFC0DgY+eLGNKIsVdP8QTZx3dxr7Dm
-         fQ/VIzep8ulCUjNylnzFFVmao7zbspJUGtShBbS9qqkRXX7c+YgFdgeOOGRhoWp1bYwY
-         PEQYxX+rDAE+TkTaNJyFr9OW0X3DD3HkHd2n3bhzZb7ampB/uONPCvCR5jU6U4q+j7tW
-         myfA==
-X-Gm-Message-State: AOAM531GdjOyn22g08qOuiKN0g7/dbAkW5FLo3CvKYwKTLBrDMayLkgZ
-        LoklDsylYdx9l5k6F9qxOs5BCfUzdmuOi9e1p+F3KA==
-X-Google-Smtp-Source: ABdhPJxC5MmXu7I4g1L5btgMn7/Y04FOxgKWWV39cthsqx7ak35Ea8q0DTOCBLu+frJrYvPI+BpqBHr0VMmXhXcPLyo=
-X-Received: by 2002:a17:90b:4c89:: with SMTP id my9mr174791pjb.152.1641827877765;
- Mon, 10 Jan 2022 07:17:57 -0800 (PST)
+        bh=fl2K3YD4/pXePXs1c4MTaO2s6ftC1qeQwSmigiyA0Ig=;
+        b=LhflHiw6fmTuCUeEI/A/FKvX//sjujdgpQPRQzBc3uaF3hRQe6A5hxGfuR9WrV0Rnz
+         yrqQJN+juTmZnhEgeiOTGHyfdsxgrGp2t7pcnuIb/QJ8/fJ9FGKUrzU9sR9VKa798Qk9
+         pSi6EHKwTWHwMwTC1n12GUVquDzjfZGc7BWhwgMeQPunY8zeJlM17PAxYfH/fkhnyPl2
+         O4q2YRt7ASPmr3mEELxCfAhTRtNnjTV8prtpAVhEEuAIZmInZEKbyjL+AYC2KoW4uxiO
+         cT4MhyL/fIqFVqj8Tj49jRcp91fbFwy3ewGbwE0YnEm/Y3dDF9esq7K0r47wZ/MHmT/v
+         LU7g==
+X-Gm-Message-State: AOAM531j+M5aoZyZw5QbkSOEFddZvuWH7/hxOx5QfJr+6NaB6nmVKW0Z
+        YPl1eOibF3ETowrqqbLi7dReLUX9RXtwPzrJb+AsXg==
+X-Google-Smtp-Source: ABdhPJz0tOx9UF5u5eixT1SI8uqBpaU2bn72hM1DsLW6ZSRHlb83cvRDtaBNsdRaXKPkgPubpn0sDBMy5TIZQ2nRVfo=
+X-Received: by 2002:a17:90a:5295:: with SMTP id w21mr29109495pjh.179.1641827942034;
+ Mon, 10 Jan 2022 07:19:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20220109024910.2041763-1-bryan.odonoghue@linaro.org> <20220109024910.2041763-6-bryan.odonoghue@linaro.org>
-In-Reply-To: <20220109024910.2041763-6-bryan.odonoghue@linaro.org>
+References: <20220109024910.2041763-1-bryan.odonoghue@linaro.org> <20220109024910.2041763-7-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220109024910.2041763-7-bryan.odonoghue@linaro.org>
 From:   Robert Foss <robert.foss@linaro.org>
-Date:   Mon, 10 Jan 2022 16:17:46 +0100
-Message-ID: <CAG3jFysaEh=ACt0SYun+8bgkMgts0JrgXkgt+VCtHBvqtUXj3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/8] media: camss: Add regulator_bulk support
+Date:   Mon, 10 Jan 2022 16:18:51 +0100
+Message-ID: <CAG3jFys62DcODLpQH9rOE3fCvMTqKsy4gZFP6nvvA-i3bT=tiA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] media: camss: Set unused regulators to the empty set
 To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
         mchehab@kernel.org, hverkuil@xs4all.nl, jonathan@marek.ca,
@@ -66,143 +66,25 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Sun, 9 Jan 2022 at 03:47, Bryan O'Donoghue
 <bryan.odonoghue@linaro.org> wrote:
 >
-> Add the ability to enable or disable multiple regulators in bulk with
-> camss. This is useful for sm8250, sdm845 and it looks like sdm660 where we
-> have more than one CSI regulator to do at once.
+> If a CAMSS block has no regulator set the regulator array to the empty set
+> as opposed to setting the first element of the array to NULL.
 >
-> It should just work for standalone existing vdda regulators and parts which
-> don't have an explicitly defined CSI regulator.
->
+> Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  .../media/platform/qcom/camss/camss-csid.c    | 43 ++++++---
->  .../media/platform/qcom/camss/camss-csid.h    |  3 +-
->  drivers/media/platform/qcom/camss/camss.c     | 94 +++++++++----------
->  drivers/media/platform/qcom/camss/camss.h     |  2 +-
->  4 files changed, 79 insertions(+), 63 deletions(-)
+>  drivers/media/platform/qcom/camss/camss.c | 60 +++++++++++------------
+>  1 file changed, 30 insertions(+), 30 deletions(-)
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-> index 32f82e471bae1..00ef35e7786d4 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
-> @@ -173,7 +173,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->                 if (ret < 0)
->                         return ret;
->
-> -               ret = csid->vdda ? regulator_enable(csid->vdda) : 0;
-> +               ret = regulator_bulk_enable(csid->num_supplies,
-> +                                           csid->supplies);
->                 if (ret < 0) {
->                         pm_runtime_put_sync(dev);
->                         return ret;
-> @@ -181,16 +182,16 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->
->                 ret = csid_set_clock_rates(csid);
->                 if (ret < 0) {
-> -                       if (csid->vdda)
-> -                               regulator_disable(csid->vdda);
-> +                       regulator_bulk_disable(csid->num_supplies,
-> +                                              csid->supplies);
->                         pm_runtime_put_sync(dev);
->                         return ret;
->                 }
->
->                 ret = camss_enable_clocks(csid->nclocks, csid->clock, dev);
->                 if (ret < 0) {
-> -                       if (csid->vdda)
-> -                               regulator_disable(csid->vdda);
-> +                       regulator_bulk_disable(csid->num_supplies,
-> +                                              csid->supplies);
->                         pm_runtime_put_sync(dev);
->                         return ret;
->                 }
-> @@ -201,8 +202,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->                 if (ret < 0) {
->                         disable_irq(csid->irq);
->                         camss_disable_clocks(csid->nclocks, csid->clock);
-> -                       if (csid->vdda)
-> -                               regulator_disable(csid->vdda);
-> +                       regulator_bulk_disable(csid->num_supplies,
-> +                                              csid->supplies);
->                         pm_runtime_put_sync(dev);
->                         return ret;
->                 }
-> @@ -211,7 +212,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
->         } else {
->                 disable_irq(csid->irq);
->                 camss_disable_clocks(csid->nclocks, csid->clock);
-> -               ret = csid->vdda ? regulator_disable(csid->vdda) : 0;
-> +               regulator_bulk_disable(csid->num_supplies,
-> +                                      csid->supplies);
->                 pm_runtime_put_sync(dev);
->                 if (version == CAMSS_8250 || version == CAMSS_845)
->                         vfe_put(vfe);
-> @@ -660,15 +662,28 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->         }
->
->         /* Regulator */
-> +       for (i = 0; i < ARRAY_SIZE(res->regulators); i++) {
-> +               if (res->regulators[i])
-> +                       csid->num_supplies++;
-> +       }
-
-With the cleanup that Bjorn suggested, and was submitted as v2 6/8, I
-would like to see the above snippet simplified to the below.
-
-csid->num_supplies = ARRAY_SIZE(res->regulators);
-
->
-> -       csid->vdda = NULL;
-> -       if (res->regulator[0])
-> -               csid->vdda = devm_regulator_get(dev, res->regulator[0]);
-> -       if (IS_ERR(csid->vdda)) {
-> -               dev_err(dev, "could not get regulator\n");
-> -               return PTR_ERR(csid->vdda);
-> +       if (csid->num_supplies) {
-> +               csid->supplies = devm_kmalloc_array(camss->dev,
-> +                                                   csid->num_supplies,
-> +                                                   sizeof(csid->supplies),
-> +                                                   GFP_KERNEL);
-> +               if (!csid->supplies)
-> +                       return -ENOMEM;
->         }
->
-> +       for (i = 0; i < csid->num_supplies; i++)
-> +               csid->supplies[i].supply = res->regulators[i];
-> +
-> +       ret = devm_regulator_bulk_get(camss->dev, csid->num_supplies,
-> +                                     csid->supplies);
-> +       if (ret)
-> +               return ret;
-> +
->         init_completion(&csid->reset_complete);
->
->         return 0;
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-> index 17a50fa426be1..f06040e44c515 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
-> @@ -152,7 +152,8 @@ struct csid_device {
->         char irq_name[30];
->         struct camss_clock *clock;
->         int nclocks;
-> -       struct regulator *vdda;
-> +       struct regulator_bulk_data *supplies;
-> +       int num_supplies;
->         struct completion reset_complete;
->         struct csid_testgen_config testgen;
->         struct csid_phy_config phy;
 > diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index d9905e737d88d..419c48c4f1d52 100644
+> index 419c48c4f1d52..dcb37a739c95b 100644
 > --- a/drivers/media/platform/qcom/camss/camss.c
 > +++ b/drivers/media/platform/qcom/camss/camss.c
 > @@ -34,7 +34,7 @@
 >  static const struct resources csiphy_res_8x16[] = {
 >         /* CSIPHY0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
 >                 .clock_rate = { { 0 },
 >                                 { 0 },
@@ -210,35 +92,17 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer" },
 >                 .clock_rate = { { 0 },
 >                                 { 0 },
-> @@ -60,7 +60,7 @@ static const struct resources csiphy_res_8x16[] = {
->  static const struct resources csid_res_8x16[] = {
->         /* CSID0 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->                            "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
->                 .clock_rate = { { 0 },
-> @@ -77,7 +77,7 @@ static const struct resources csid_res_8x16[] = {
->
->         /* CSID1 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->                            "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
->                 .clock_rate = { { 0 },
 > @@ -107,7 +107,7 @@ static const struct resources_ispif ispif_res_8x16 = {
 >  static const struct resources vfe_res_8x16[] = {
 >         /* VFE0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "vfe0", "csi_vfe0",
 >                            "vfe_ahb", "vfe_axi", "ahb" },
 >                 .clock_rate = { { 0 },
@@ -246,8 +110,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >  static const struct resources csiphy_res_8x96[] = {
 >         /* CSIPHY0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
 >                 .clock_rate = { { 0 },
 >                                 { 0 },
@@ -255,8 +119,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer" },
 >                 .clock_rate = { { 0 },
 >                                 { 0 },
@@ -264,53 +128,17 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY2 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy2_timer" },
 >                 .clock_rate = { { 0 },
 >                                 { 0 },
-> @@ -167,7 +167,7 @@ static const struct resources csiphy_res_8x96[] = {
->  static const struct resources csid_res_8x96[] = {
->         /* CSID0 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->                            "csi0", "csi0_phy", "csi0_pix", "csi0_rdi" },
->                 .clock_rate = { { 0 },
-> @@ -184,7 +184,7 @@ static const struct resources csid_res_8x96[] = {
->
->         /* CSID1 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->                            "csi1", "csi1_phy", "csi1_pix", "csi1_rdi" },
->                 .clock_rate = { { 0 },
-> @@ -201,7 +201,7 @@ static const struct resources csid_res_8x96[] = {
->
->         /* CSID2 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
->                            "csi2", "csi2_phy", "csi2_pix", "csi2_rdi" },
->                 .clock_rate = { { 0 },
-> @@ -218,7 +218,7 @@ static const struct resources csid_res_8x96[] = {
->
->         /* CSID3 */
->         {
-> -               .regulator = { "vdda" },
-> +               .regulators = { "vdda" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi3_ahb", "ahb",
->                            "csi3", "csi3_phy", "csi3_pix", "csi3_rdi" },
->                 .clock_rate = { { 0 },
 > @@ -249,7 +249,7 @@ static const struct resources_ispif ispif_res_8x96 = {
 >  static const struct resources vfe_res_8x96[] = {
 >         /* VFE0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ahb", "vfe0", "csi_vfe0", "vfe_ahb",
 >                            "vfe0_ahb", "vfe_axi", "vfe0_stream"},
 >                 .clock_rate = { { 0 },
@@ -318,8 +146,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* VFE1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ahb", "vfe1", "csi_vfe1", "vfe_ahb",
 >                            "vfe1_ahb", "vfe_axi", "vfe1_stream"},
 >                 .clock_rate = { { 0 },
@@ -327,8 +155,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >  static const struct resources csiphy_res_660[] = {
 >         /* CSIPHY0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer",
 >                            "csi0_phy", "csiphy_ahb2crif" },
 >                 .clock_rate = { { 0 },
@@ -336,8 +164,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy1_timer",
 >                            "csi1_phy", "csiphy_ahb2crif" },
 >                 .clock_rate = { { 0 },
@@ -345,53 +173,17 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY2 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy2_timer",
 >                            "csi2_phy", "csiphy_ahb2crif" },
 >                 .clock_rate = { { 0 },
-> @@ -331,7 +331,7 @@ static const struct resources csiphy_res_660[] = {
->  static const struct resources csid_res_660[] = {
->         /* CSID0 */
->         {
-> -               .regulator = { "vdda", "vdd_sec" },
-> +               .regulators = { "vdda", "vdd_sec" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi0_ahb", "ahb",
->                            "csi0", "csi0_phy", "csi0_pix", "csi0_rdi",
->                            "cphy_csid0" },
-> @@ -351,7 +351,7 @@ static const struct resources csid_res_660[] = {
->
->         /* CSID1 */
->         {
-> -               .regulator = { "vdda", "vdd_sec" },
-> +               .regulators = { "vdda", "vdd_sec" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi1_ahb", "ahb",
->                            "csi1", "csi1_phy", "csi1_pix", "csi1_rdi",
->                            "cphy_csid1" },
-> @@ -371,7 +371,7 @@ static const struct resources csid_res_660[] = {
->
->         /* CSID2 */
->         {
-> -               .regulator = { "vdda", "vdd_sec" },
-> +               .regulators = { "vdda", "vdd_sec" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi2_ahb", "ahb",
->                            "csi2", "csi2_phy", "csi2_pix", "csi2_rdi",
->                            "cphy_csid2" },
-> @@ -391,7 +391,7 @@ static const struct resources csid_res_660[] = {
->
->         /* CSID3 */
->         {
-> -               .regulator = { "vdda", "vdd_sec" },
-> +               .regulators = { "vdda", "vdd_sec" },
->                 .clock = { "top_ahb", "ispif_ahb", "csi3_ahb", "ahb",
->                            "csi3", "csi3_phy", "csi3_pix", "csi3_rdi",
->                            "cphy_csid3" },
 > @@ -425,7 +425,7 @@ static const struct resources_ispif ispif_res_660 = {
 >  static const struct resources vfe_res_660[] = {
 >         /* VFE0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "throttle_axi", "top_ahb", "ahb", "vfe0",
 >                            "csi_vfe0", "vfe_ahb", "vfe0_ahb", "vfe_axi",
 >                            "vfe0_stream"},
@@ -399,8 +191,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* VFE1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "throttle_axi", "top_ahb", "ahb", "vfe1",
 >                            "csi_vfe1", "vfe_ahb", "vfe1_ahb", "vfe_axi",
 >                            "vfe1_stream"},
@@ -408,8 +200,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >  static const struct resources csiphy_res_845[] = {
 >         /* CSIPHY0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
 >                                 "cpas_ahb", "cphy_rx_src", "csiphy0",
 >                                 "csiphy0_timer_src", "csiphy0_timer" },
@@ -417,8 +209,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
 >                                 "cpas_ahb", "cphy_rx_src", "csiphy1",
 >                                 "csiphy1_timer_src", "csiphy1_timer" },
@@ -426,8 +218,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY2 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
 >                                 "cpas_ahb", "cphy_rx_src", "csiphy2",
 >                                 "csiphy2_timer_src", "csiphy2_timer" },
@@ -435,44 +227,17 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* CSIPHY3 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "soc_ahb", "slow_ahb_src",
 >                                 "cpas_ahb", "cphy_rx_src", "csiphy3",
 >                                 "csiphy3_timer_src", "csiphy3_timer" },
-> @@ -543,7 +543,7 @@ static const struct resources csiphy_res_845[] = {
->  static const struct resources csid_res_845[] = {
->         /* CSID0 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->                                 "soc_ahb", "vfe0", "vfe0_src",
->                                 "vfe0_cphy_rx", "csi0",
-> @@ -563,7 +563,7 @@ static const struct resources csid_res_845[] = {
->
->         /* CSID1 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->                                 "soc_ahb", "vfe1", "vfe1_src",
->                                 "vfe1_cphy_rx", "csi1",
-> @@ -583,7 +583,7 @@ static const struct resources csid_res_845[] = {
->
->         /* CSID2 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "cpas_ahb", "cphy_rx_src", "slow_ahb_src",
->                                 "soc_ahb", "vfe_lite", "vfe_lite_src",
->                                 "vfe_lite_cphy_rx", "csi2",
 > @@ -605,7 +605,7 @@ static const struct resources csid_res_845[] = {
 >  static const struct resources vfe_res_845[] = {
 >         /* VFE0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
 >                                 "soc_ahb", "vfe0", "vfe0_axi",
 >                                 "vfe0_src", "csi0",
@@ -480,8 +245,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* VFE1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
 >                                 "soc_ahb", "vfe1", "vfe1_axi",
 >                                 "vfe1_src", "csi1",
@@ -489,8 +254,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >
 >         /* VFE-lite */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi", "cpas_ahb", "slow_ahb_src",
 >                                 "soc_ahb", "vfe_lite",
 >                                 "vfe_lite_src", "csi2",
@@ -498,8 +263,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >  static const struct resources csiphy_res_8250[] = {
 >         /* CSIPHY0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy0", "csiphy0_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
@@ -507,8 +272,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* CSIPHY1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy1", "csiphy1_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
@@ -516,8 +281,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* CSIPHY2 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy2", "csiphy2_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
@@ -525,8 +290,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* CSIPHY3 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy3", "csiphy3_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
@@ -534,8 +299,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* CSIPHY4 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy4", "csiphy4_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
@@ -543,53 +308,17 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* CSIPHY5 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "csiphy5", "csiphy5_timer" },
 >                 .clock_rate = { { 400000000 },
 >                                 { 300000000 } },
-> @@ -723,7 +723,7 @@ static const struct resources csiphy_res_8250[] = {
->  static const struct resources csid_res_8250[] = {
->         /* CSID0 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0", "vfe0_areg", "vfe0_ahb" },
->                 .clock_rate = { { 400000000 },
->                                 { 400000000 },
-> @@ -735,7 +735,7 @@ static const struct resources csid_res_8250[] = {
->         },
->         /* CSID1 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1", "vfe1_areg", "vfe1_ahb" },
->                 .clock_rate = { { 400000000 },
->                                 { 400000000 },
-> @@ -747,7 +747,7 @@ static const struct resources csid_res_8250[] = {
->         },
->         /* CSID2 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
->                 .clock_rate = { { 400000000 },
->                                 { 400000000 },
-> @@ -758,7 +758,7 @@ static const struct resources csid_res_8250[] = {
->         },
->         /* CSID3 */
->         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
->                 .clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
->                 .clock_rate = { { 400000000 },
->                                 { 400000000 },
 > @@ -772,7 +772,7 @@ static const struct resources csid_res_8250[] = {
 >  static const struct resources vfe_res_8250[] = {
 >         /* VFE0 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
 >                            "camnoc_axi", "vfe0_ahb", "vfe0_areg", "vfe0",
 >                            "vfe0_axi", "cam_hf_axi" },
@@ -597,8 +326,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* VFE1 */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
 >                            "camnoc_axi", "vfe1_ahb", "vfe1_areg", "vfe1",
 >                            "vfe1_axi", "cam_hf_axi" },
@@ -606,8 +335,8 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* VFE2 (lite) */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
 >                            "camnoc_axi", "vfe_lite_ahb", "vfe_lite_axi",
 >                            "vfe_lite", "cam_hf_axi" },
@@ -615,25 +344,13 @@ csid->num_supplies = ARRAY_SIZE(res->regulators);
 >         },
 >         /* VFE3 (lite) */
 >         {
-> -               .regulator = { NULL },
-> +               .regulators = { NULL },
+> -               .regulators = { NULL },
+> +               .regulators = {},
 >                 .clock = { "camnoc_axi_src", "slow_ahb_src", "cpas_ahb",
 >                            "camnoc_axi", "vfe_lite_ahb", "vfe_lite_axi",
 >                            "vfe_lite", "cam_hf_axi" },
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 9c644e638a948..c9b3e0df5be8f 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -42,7 +42,7 @@
->  #define CAMSS_RES_MAX 17
->
->  struct resources {
-> -       char *regulator[CAMSS_RES_MAX];
-> +       char *regulators[CAMSS_RES_MAX];
->         char *clock[CAMSS_RES_MAX];
->         u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
->         char *reg[CAMSS_RES_MAX];
+> --
 
-With the above nit fixed, please add my r-b.
+Thanks for the cleanup!
 
 Reviewed-by: Robert Foss <robert.foss@linaro.org>
