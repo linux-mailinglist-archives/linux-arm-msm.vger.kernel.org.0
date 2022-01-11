@@ -2,87 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A9A048AD68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 13:15:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 622D248AD83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 13:22:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239676AbiAKMPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jan 2022 07:15:44 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:17595 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239666AbiAKMPm (ORCPT
+        id S238736AbiAKMW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jan 2022 07:22:28 -0500
+Received: from mailgw02.mediatek.com ([210.61.82.184]:57176 "EHLO
+        mailgw02.mediatek.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with ESMTP id S237953AbiAKMW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jan 2022 07:15:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641903342; x=1673439342;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=0tHJK5Z23kWWB0+aVo8CNSTWYcqnW0l7qmhwpY4szPY=;
-  b=p5Rd3/ACzo8INDGw2L8evxmftLHF4WmtZoEewVanSp42LwaiTlV9jl1o
-   D1D9btnEiTPJf+jbw2hxeEYlQPUjxlET284cRq4I+UT9vGa49vwYt11//
-   PDpjjYAIUt0BsMScyXw7r9cg6WEF4pLl1E5kFGOU8La7tPzjZGO/OKDzc
-   Y=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 11 Jan 2022 04:15:41 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jan 2022 04:15:25 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 11 Jan 2022 04:15:25 -0800
-Received: from [10.216.16.197] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 11 Jan
- 2022 04:15:20 -0800
-Subject: Re: [PATCH V4 2/6] dt-bindings: regulator: Add pm8008 regulator
- bindings
-To:     Mark Brown <broonie@kernel.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, <swboyd@chromium.org>,
-        <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Lee Jones" <lee.jones@linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1637314953-4215-1-git-send-email-quic_c_skakit@quicinc.com>
- <1637314953-4215-3-git-send-email-quic_c_skakit@quicinc.com>
- <YZ+qn2hA4MzNEqM+@sirena.org.uk>
- <30b21a08-f7f7-f3a6-a3ac-156c7f8964b1@quicinc.com>
- <Ya4UcxxEq9t+isxS@sirena.org.uk>
- <30ec6b4c-f2a8-d80e-a542-1c2b3f30c049@quicinc.com>
- <07dc5ba4-790b-0cb2-bc3e-2ce8d7e3e09d@quicinc.com>
- <YdxA5bwcwyJXcPDl@sirena.org.uk>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <9c4a995d-2dc0-1731-cca0-a013483a4fc0@quicinc.com>
-Date:   Tue, 11 Jan 2022 17:45:16 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Tue, 11 Jan 2022 07:22:27 -0500
+X-UUID: ae5f11dfdfb24d4cb1b29dc2ab997c75-20220111
+X-UUID: ae5f11dfdfb24d4cb1b29dc2ab997c75-20220111
+Received: from mtkcas10.mediatek.inc [(172.21.101.39)] by mailgw02.mediatek.com
+        (envelope-from <yong.wu@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-SHA384 256/256)
+        with ESMTP id 534519960; Tue, 11 Jan 2022 20:22:25 +0800
+Received: from mtkcas11.mediatek.inc (172.21.101.40) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.792.3;
+ Tue, 11 Jan 2022 20:22:24 +0800
+Received: from mhfsdcap04 (10.17.3.154) by mtkcas11.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Tue, 11 Jan 2022 20:22:23 +0800
+Message-ID: <1a3b368eb891ca55c33265397cffab0b9f128737.camel@mediatek.com>
+Subject: Re: [PATCH v5 25/32] iommu/mtk: Migrate to aggregate driver
+From:   Yong Wu <yong.wu@mediatek.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, Joerg Roedel <joro@8bytes.org>,
+        "Will Deacon" <will@kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        "Russell King" <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>,
+        <linux-mediatek@lists.infradead.org>
+Date:   Tue, 11 Jan 2022 20:22:23 +0800
+In-Reply-To: <20220106214556.2461363-26-swboyd@chromium.org>
+References: <20220106214556.2461363-1-swboyd@chromium.org>
+         <20220106214556.2461363-26-swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 MIME-Version: 1.0
-In-Reply-To: <YdxA5bwcwyJXcPDl@sirena.org.uk>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 7bit
+X-MTK:  N
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stephen,
 
-On 1/10/2022 7:51 PM, Mark Brown wrote:
-> On Mon, Jan 10, 2022 at 06:42:08PM +0530, Satya Priya Kakitapalli (Temp) wrote:
->
->> To understand how other upstream mfd drivers are handling this I've gone
->> through some of them. Taking one example, mfd/stpmic1.c is a pmic  mfd
->> device which has a regulators sub-node with separate compatible, and has the
->> parent supplies listed under the regulators node.
-> There are some devices that did get merged doing this, that doesn't mean
-> it's a great idea though.
+Thanks for helping update here.
 
-In that case, it would be helpful if you could provide an example which 
-has the design you suggested.
+On Thu, 2022-01-06 at 13:45 -0800, Stephen Boyd wrote:
+> Use an aggregate driver instead of component ops so that we can get
+> proper driver probe ordering of the aggregate device with respect to
+> all
+> the component devices that make up the aggregate device.
+> 
+> Cc: Yong Wu <yong.wu@mediatek.com>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
+When I test this on mt8195 which have two IOMMU HWs(calling
+component_aggregate_regsiter twice), it will abort like this. Then what
+should we do if we have two instances?
+Thanks.
+
+[    2.652424] Error: Driver 'mtk_iommu_agg' is already registered,
+aborting...
+[    2.654033] mtk-iommu: probe of 1c01f000.iommu failed with error -16
+[    2.662034] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000020
+...
+[    2.672413] pc : aggregate_device_match+0xa8/0x1c8
+[    2.673027] lr : aggregate_device_match+0x68/0x1c8
+...
+[    2.683091] Call trace:
+[    2.683403]  aggregate_device_match+0xa8/0x1c8
+[    2.683970]  __device_attach_driver+0x38/0xd0
+[    2.684526]  bus_for_each_drv+0x68/0xd0
+[    2.685015]  __device_attach+0xec/0x148
+[    2.685503]  device_attach+0x14/0x20
+[    2.685960]  bus_rescan_devices_helper+0x50/0x90
+[    2.686545]  bus_for_each_dev+0x7c/0xd8
+[    2.687033]  bus_rescan_devices+0x20/0x30
+[    2.687542]  __component_add+0x7c/0xa0
+[    2.688022]  component_add+0x14/0x20
+[    2.688479]  mtk_smi_larb_probe+0xe0/0x120
+
+
+> ---
+>  drivers/iommu/mtk_iommu.c    | 14 +++++++++-----
+>  drivers/iommu/mtk_iommu.h    |  6 ++++--
+>  drivers/iommu/mtk_iommu_v1.c | 14 +++++++++-----
+>  3 files changed, 22 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+> index 25b834104790..8e722898cbe2 100644
+> --- a/drivers/iommu/mtk_iommu.c
+> +++ b/drivers/iommu/mtk_iommu.c
+> @@ -752,9 +752,13 @@ static int mtk_iommu_hw_init(const struct
+> mtk_iommu_data *data)
+>  	return 0;
+>  }
+>  
+> -static const struct component_master_ops mtk_iommu_com_ops = {
+> -	.bind		= mtk_iommu_bind,
+> -	.unbind		= mtk_iommu_unbind,
+> +static struct aggregate_driver mtk_iommu_aggregate_driver = {
+> +	.probe		= mtk_iommu_bind,
+> +	.remove		= mtk_iommu_unbind,
+> +	.driver		= {
+> +		.name	= "mtk_iommu_agg",
+> +		.owner	= THIS_MODULE,
+> +	},
+>  };
+>  
+>  static int mtk_iommu_probe(struct platform_device *pdev)
+> @@ -895,7 +899,7 @@ static int mtk_iommu_probe(struct platform_device
+> *pdev)
+>  			goto out_list_del;
+>  	}
+>  
+> -	ret = component_master_add_with_match(dev, &mtk_iommu_com_ops,
+> match);
+> +	ret = component_aggregate_register(dev,
+> &mtk_iommu_aggregate_driver, match);
+>  	if (ret)
+>  		goto out_bus_set_null;
+>  	return ret;
+> @@ -928,7 +932,7 @@ static int mtk_iommu_remove(struct
+> platform_device *pdev)
+>  	device_link_remove(data->smicomm_dev, &pdev->dev);
+>  	pm_runtime_disable(&pdev->dev);
+>  	devm_free_irq(&pdev->dev, data->irq, data);
+> -	component_master_del(&pdev->dev, &mtk_iommu_com_ops);
+> +	component_aggregate_unregister(&pdev->dev,
+> &mtk_iommu_aggregate_driver);
+>  	return 0;
+>  }
+>  
+> diff --git a/drivers/iommu/mtk_iommu.h b/drivers/iommu/mtk_iommu.h
+> index f81fa8862ed0..064fd4f4eade 100644
+> --- a/drivers/iommu/mtk_iommu.h
+> +++ b/drivers/iommu/mtk_iommu.h
+> @@ -94,15 +94,17 @@ static inline void release_of(struct device *dev,
+> void *data)
+>  	of_node_put(data);
+>  }
+>  
+> -static inline int mtk_iommu_bind(struct device *dev)
+> +static inline int mtk_iommu_bind(struct aggregate_device *adev)
+>  {
+> +	struct device *dev = adev->parent;
+>  	struct mtk_iommu_data *data = dev_get_drvdata(dev);
+>  
+>  	return component_bind_all(dev, &data->larb_imu);
+>  }
+>  
+> -static inline void mtk_iommu_unbind(struct device *dev)
+> +static inline void mtk_iommu_unbind(struct aggregate_device *adev)
+>  {
+> +	struct device *dev = adev->parent;
+>  	struct mtk_iommu_data *data = dev_get_drvdata(dev);
+>  
+>  	component_unbind_all(dev, &data->larb_imu);
+> diff --git a/drivers/iommu/mtk_iommu_v1.c
+> b/drivers/iommu/mtk_iommu_v1.c
+> index be22fcf988ce..5fb29058a165 100644
+> --- a/drivers/iommu/mtk_iommu_v1.c
+> +++ b/drivers/iommu/mtk_iommu_v1.c
+> @@ -534,9 +534,13 @@ static const struct of_device_id
+> mtk_iommu_of_ids[] = {
+>  	{}
+>  };
+>  
+> -static const struct component_master_ops mtk_iommu_com_ops = {
+> -	.bind		= mtk_iommu_bind,
+> -	.unbind		= mtk_iommu_unbind,
+> +static struct aggregate_driver mtk_iommu_aggregate_driver = {
+> +	.probe		= mtk_iommu_bind,
+> +	.remove		= mtk_iommu_unbind,
+> +	.driver		= {
+> +		.name	= "mtk_iommu_agg",
+> +		.owner	= THIS_MODULE,
+> +	},
+>  };
+>  
+>  static int mtk_iommu_probe(struct platform_device *pdev)
+> @@ -624,7 +628,7 @@ static int mtk_iommu_probe(struct platform_device
+> *pdev)
+>  			goto out_dev_unreg;
+>  	}
+>  
+> -	ret = component_master_add_with_match(dev, &mtk_iommu_com_ops,
+> match);
+> +	ret = component_aggregate_register(dev,
+> &mtk_iommu_aggregate_driver, match);
+>  	if (ret)
+>  		goto out_bus_set_null;
+>  	return ret;
+> @@ -650,7 +654,7 @@ static int mtk_iommu_remove(struct
+> platform_device *pdev)
+>  
+>  	clk_disable_unprepare(data->bclk);
+>  	devm_free_irq(&pdev->dev, data->irq, data);
+> -	component_master_del(&pdev->dev, &mtk_iommu_com_ops);
+> +	component_aggregate_unregister(&pdev->dev,
+> &mtk_iommu_aggregate_driver);
+>  	return 0;
+>  }
+>  
 
