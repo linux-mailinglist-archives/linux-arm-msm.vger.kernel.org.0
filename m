@@ -2,109 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAFBA48AB42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 11:21:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4333148AC47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 12:18:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237690AbiAKKVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jan 2022 05:21:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
+        id S238296AbiAKLSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jan 2022 06:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237594AbiAKKVh (ORCPT
+        with ESMTP id S238137AbiAKLSU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jan 2022 05:21:37 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5ABC06173F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 02:21:37 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id v4so18089642qtk.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 02:21:37 -0800 (PST)
+        Tue, 11 Jan 2022 06:18:20 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1022C06173F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 03:18:19 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id q9-20020a7bce89000000b00349e697f2fbso599480wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 03:18:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dowhile0-org.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sYa1AOMbwuEU5EoeFlC3BWCMkWWYeKQ6MzYHnQnQ7eE=;
-        b=ADWJF9NlN1riYAttU3zhO5neGE8WbLaCIvok+V9lSGE0piCV0prLf7+bn5z3SMJ+K2
-         IHjlTQb93qCePszMBjx5pEpzCajoEv+8wY/FNe7qfccpCPzTFxdbklOP+qumxiq3L1VW
-         uvvuDmP/W53sjpnR37YNLy9ZrfEewxiMn66a6GIGHegB21ctGhTK2tDmxwbGvnmSw9/v
-         8alfe6uTMOwU9BspizOMNMgQf2OJTzu3cSUTcyfUoMNWfA1+iF3KtNcaFy7lt9GhxsvP
-         0j9w3a1jnioAk8FlLcANFsacbWLO6Rmskg7IDKIptjcHfyUiLwVI0B+zdeGDR7Qjk+8b
-         poWg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yIkz+qG4BbYTrRYFXUhW1f3GZfdv3394CoSG7W9Tr1Y=;
+        b=hnQp0rmeww3oljFdQ2YMsZSe/wFs5dOMBvjlVGwOMszISR/IV5Rl8Gn1DjmZPKD8w0
+         tJ4uVrq5ZetY3uEfcm+kEgw3Blgmz8JbyxlrcMIDOApvHTnNWsrFlQLjpGoDJJoc4kL+
+         NLhTlyWfSrtyqugtTBCEwFrohJq2XBOGSDdsM10C3BJcoBjKmwkNCYzy+bVWTdXhawQl
+         xOMDCYu2WHP51RjcBJgOm1fSGYq63ftNHaR992N5zSiPoro14EnE9jAPHUaiDjIYsMnx
+         zD4o3hB/1dFGWJfk52Mabc1xeVXLbXqxoNaKKOeGB6PIRdawnidItwevCBVd7tiUul1n
+         t8HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sYa1AOMbwuEU5EoeFlC3BWCMkWWYeKQ6MzYHnQnQ7eE=;
-        b=VqqYhCUw3hHtZiGdKnL3WYiSY61tbLgS0I4ompq8V07WhgwGOhC44xoVbg2C/tohpF
-         Wx/CEdor4WkiyHAH6OeferZLnHuiFd8V3bixmZXFZJTOKMrydTCiWJ1nvcWSJByXd/XK
-         NbKN3ZD8/nWIc304+J5xgCsvr599pq6UiIM1QDVGCUstkaHpjDgOQ0Z40QNbCjk8PiMq
-         aLnQnnNZ298evXva9Ek7+A6TwbpT+R01ueFTG3J76BUXebOFWMFInT25l4tMjPugiY0K
-         fMTt+z7qAcfD3Fm3sZo0Y4C3fIOG7qQRXICOlG45MwXxJrlaVi+VJ2VvaMLD0pqP3J21
-         B2iw==
-X-Gm-Message-State: AOAM533OQZSB/gaD5j6ikgakmMisg+3mjF8O+JXsLXIsPEnhhsMZyKO/
-        8QNBW6QJkdwnpCJ4s1lYX/mi2ueQh6qgNGS9BvxBQafxWHX7+g==
-X-Google-Smtp-Source: ABdhPJzbbUNfgyjXmi4t4BA1QOJPl5KiyFfbLF2N8k+Y03nyY+75s+ZulSA2IoVUQkNdry1B9vDzlMJWaMglFWDoSCo=
-X-Received: by 2002:a05:622a:5d2:: with SMTP id d18mr3059764qtb.154.1641896496162;
- Tue, 11 Jan 2022 02:21:36 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yIkz+qG4BbYTrRYFXUhW1f3GZfdv3394CoSG7W9Tr1Y=;
+        b=WokVcAcaN7lrUjLATOC8vFFgERqW3tbdR3JcBFlChKsqo37MMAobeX70aIACWgWPHc
+         E5p7IQGZ7twtD+rkEbP4ko4PBwjDWtbAGD8ZS43sM8C6BLTt/BTnc44IT3dcIlTu0usL
+         1Kid88tCh+h9pErDZbhUVmsJghEDK06E6VhIkx9ZImp3Nie41HjqugrxshaFB5lviK4z
+         vVH+saGkEcDVL7WJyQ73Cnld3KvpNgX/1cb6uuexy9eHwO3dRc0hGmjxo/AsZlZDc+oO
+         t6jv2etissfCWUS4Siqg7Rk8vt9EoH2nVUunSULfC0LIsOuEM7IjbsBJuQLgycimP2sJ
+         3QKw==
+X-Gm-Message-State: AOAM533H1I4zdiuuWM7ZiRPEBsiD7QcZrJMuYFYrFLUUcVTePqYXT0zv
+        KcPCnU7u9aZkiTK6TcKR7iGT1Q==
+X-Google-Smtp-Source: ABdhPJxd6eO4mogiAjrZXXzdIdsfvigrJ0tKFvmqZ9eeT+foxlMTHfh6y8jNfXCi1uHcz3kpaq/7Mw==
+X-Received: by 2002:a05:600c:3489:: with SMTP id a9mr2008586wmq.45.1641899898395;
+        Tue, 11 Jan 2022 03:18:18 -0800 (PST)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id u17sm72949wrt.37.2022.01.11.03.18.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jan 2022 03:18:17 -0800 (PST)
+Message-ID: <bff073f3-4763-cbfb-b462-40e7d55dc1ee@linaro.org>
+Date:   Tue, 11 Jan 2022 11:20:29 +0000
 MIME-Version: 1.0
-References: <20211215104318.18866-1-tzimmermann@suse.de> <20211215104318.18866-4-tzimmermann@suse.de>
- <87pmpy3za7.fsf@intel.com> <2165cfb8-c9c6-1aca-b492-587a8e07eb9f@suse.de>
-In-Reply-To: <2165cfb8-c9c6-1aca-b492-587a8e07eb9f@suse.de>
-From:   Javier Martinez Canillas <javier@dowhile0.org>
-Date:   Tue, 11 Jan 2022 11:21:25 +0100
-Message-ID: <CABxcv=nnyfULvog9z=nMduDK0iT1ZwkxYhdKs3xW88St6C00pw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] drm/dp: Move DisplayPort helpers into separate
- helper module
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, nouveau@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.1
+Subject: Re: [PATCH v2 5/8] media: camss: Add regulator_bulk support
+Content-Language: en-US
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        mchehab@kernel.org, hverkuil@xs4all.nl, jonathan@marek.ca,
+        andrey.konovalov@linaro.org, todor.too@gmail.com,
+        agross@kernel.org, bjorn.andersson@linaro.org, jgrahsl@snap.com,
+        hfink@snap.com, vladimir.zapolskiy@linaro.org,
+        dmitry.baryshkov@linaro.org
+References: <20220109024910.2041763-1-bryan.odonoghue@linaro.org>
+ <20220109024910.2041763-6-bryan.odonoghue@linaro.org>
+ <CAG3jFysaEh=ACt0SYun+8bgkMgts0JrgXkgt+VCtHBvqtUXj3Q@mail.gmail.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <CAG3jFysaEh=ACt0SYun+8bgkMgts0JrgXkgt+VCtHBvqtUXj3Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Dec 15, 2021 at 12:12 PM Thomas Zimmermann <tzimmermann@suse.de> wrote:
->
-> Hi
->
-> Am 15.12.21 um 12:04 schrieb Jani Nikula:
-> > On Wed, 15 Dec 2021, Thomas Zimmermann <tzimmermann@suse.de> wrote:
-> >>      * move DP helper code into dp/ (Jani)
-> >
-> > I suggested adding the subdirectory, but I'm going to bikeshed the name,
-> > which I didn't suggest.
-> >
-> > $ find drivers/gpu/drm -mindepth 1 -maxdepth 1 -type d | wc -l
-> > 68
-> >
-> > Assuming we move more of the drm modules to subdirectories, how are they
-> > going to stand out from drivers?
-> >
-> > I suggested drm_dp, which I understand results in tautology, but hey,
-> > all the filenames under drm/ also have drm_*.[ch]. And I find that very
-> > useful for git greps and other code archeology. With just the dp name,
-> > you'd have to know and list all the drm subdirectories when looking up
-> > stuff that's part of drm but not drivers.
->
-> I think we have enough filename prefixes already. drm/drm_dp/drm_dp_ is
-> just ridiculous.
->
+On 10/01/2022 15:17, Robert Foss wrote:
+>> +       for (i = 0; i < ARRAY_SIZE(res->regulators); i++) {
+>> +               if (res->regulators[i])
+>> +                       csid->num_supplies++;
+>> +       }
+> With the cleanup that Bjorn suggested, and was submitted as v2 6/8, I
+> would like to see the above snippet simplified to the below.
+> 
+> csid->num_supplies = ARRAY_SIZE(res->regulators);
+> 
 
-Maybe what can be done is to just add a drivers/gpu/drm/core
-subdirectory that would contain all the DRM core code ?
+res->regulators is declared as
 
-Then the dp helpers could be moved to drivers/gpu/drm/core/dp/drm_dp.c
-for example. This would also make easy to differentiate the drm
-modules from the drivers with just:
+char *regulators[CAMSS_RES_MAX];
 
-$ find drivers/gpu/drm -mindepth 1 -maxdepth 1 -type d -not -name core
+which means ARRAY_SIZE(regulators) == CAMSS_RES_MAX
 
-Best regards,
-Javier
+I could do something like this
+
+  struct resources {
+-       char *regulator[CAMSS_RES_MAX];
++       char **regulators;
+         char *clock[CAMSS_RES_MAX];
+         u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
+         char *reg[CAMSS_RES_MAX];
+
++static const char const *csid_res_8x16_regulators = { "vdda" };
+  static const struct resources csid_res_8x16[] = {
+         /* CSID0 */
+         {
+-               .regulator = { "vdda" },
++               .regulators = csid_res_8x16_regulators,
+
+  static const struct resources vfe_res_8x16[] = {
+         /* VFE0 */
+         {
+-               .regulator = {},
++               .regulators = NULL,
+
+then the ARRAY_SIZE() thing would work
+
+If that change is made - then it would also make sense to change up 
+*clock[CAMSS_RES_MAX]; *reg[CAMSS_RES_MAX]..
+
+---
+bod
