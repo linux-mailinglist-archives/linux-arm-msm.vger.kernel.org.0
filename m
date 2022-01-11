@@ -2,227 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7940B48B90E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 21:58:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43ED848B952
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jan 2022 22:23:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236162AbiAKU6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jan 2022 15:58:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35916 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235047AbiAKU6T (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jan 2022 15:58:19 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3346C061748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 12:58:18 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id c4so310114iln.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 12:58:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=2ahL35IHg4dlOtunupJ1fxmYljQSk3/XbWgiVkXrlmE=;
-        b=N4vS5CS8ixDl8/0fNwwcktNYhkEtFyc/8sMh8Cq2rT9QgkxShpADpmvBaExjxOBKJi
-         xowxh6/L+x1Zx3w+kjH0KVk/IKH66JcFc6R9Ejp8+vpVorvzZd1Ugz+RKow5iqaC+uUt
-         VC35K/brHYm8PsyZxQBEVHY28Xl6jU7/8qEntpeO4i7lzW708YjLyNpmA/+Xdbrmk80G
-         QFCNS1tZcK38BfWKRFMa0xitepV2loD9mIk+Ukdd8w+EGF6KCejdWMq3blDEgVsCppxK
-         e7yZJpWEtFICRKYAIqSPSEk//RZ5NExbr4nbeinxZs1bMpqfuixWtISHfyzXeepWNlVk
-         t+1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2ahL35IHg4dlOtunupJ1fxmYljQSk3/XbWgiVkXrlmE=;
-        b=NpBZFyWPKZmXdmVNac2DlC9e+quEzMCGzSJa00bxQnbiAjP8rrZAOU/vPODq8ATR97
-         pGHzv7LEy2uiySJ+kMtjvZYWN4Lj47dW3rzjY0ud0F8BxCb8vIf41HIMYDg5kuK5Gz4E
-         5uhEg6xMT/IHPpGJr5utfOKJxDck8Ycjewmb5h33r0/cqELQoxtEmfc9uoSrwKjom1ww
-         wie4oDlE0Zq1SajLw+qKUlO5vo1LlrKcgBGhmbXHydvFoZHiMdODsqY4Wp3EBsMQwkEQ
-         UFOdkBepbJjBbIw5qDPlNL0S4jE4qDalMQ64cVLWcsIPrCOsMOAObwrSB/+QSYqMWkeN
-         X9nA==
-X-Gm-Message-State: AOAM533qXza7iXMRXq6FCVGV5z2He3H+6mA1y2nEMH8sANq99Q1y9b34
-        qoskVpG6y8NWrBuUotNplqzqTQ==
-X-Google-Smtp-Source: ABdhPJx3vgWaeNGH1OUkN3n0xRSrikREwz/P4b5PvMZTs52hZUMLeLUa7D2Q5BtANMLmFQ//5iA+gw==
-X-Received: by 2002:a05:6e02:1748:: with SMTP id y8mr1729519ill.305.1641934698241;
-        Tue, 11 Jan 2022 12:58:18 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id f12sm267143ioh.50.2022.01.11.12.58.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jan 2022 12:58:17 -0800 (PST)
-Message-ID: <7a145d96-9c33-b91d-b0cd-ed2fb8ef6cb4@linaro.org>
-Date:   Tue, 11 Jan 2022 14:58:16 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.1
-Subject: Re: [PATCH net 2/2] net: ipa: prevent concurrent replenish
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>, Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, kuba@kernel.org, jponduru@codeaurora.org,
-        avuyyuru@codeaurora.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, evgreen@chromium.org, elder@kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        id S244443AbiAKVXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jan 2022 16:23:18 -0500
+Received: from ixit.cz ([94.230.151.217]:55930 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229775AbiAKVXS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Jan 2022 16:23:18 -0500
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 198F12243C;
+        Tue, 11 Jan 2022 22:23:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1641936194;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=ZimlnBQpBEisj8Iz4EeSG9ExZsV338uX9MeSY0WUgrM=;
+        b=1qiy1xm9LL+9dZjjuZOdAgq0LGZZO49alk9ErLCK3alBYAa2PwExVq9VD9P+9TtGgjMSwv
+        smqFAVbCcJIaqANTsVIqjPMf+VBXsj3z8DgQxd40pWqC0PFeaXOAOtvYmIjWxwjY3qOJPM
+        +kXBEJl/6o7THqVVB/RQpgCVW5mBAk4=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20220111192150.379274-1-elder@linaro.org>
- <20220111192150.379274-3-elder@linaro.org> <Yd3miKw2AIY8Rr0F@google.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <Yd3miKw2AIY8Rr0F@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v2] dt-bindings: watchdog: improve QCOM compatible parsing for modern chips
+Date:   Tue, 11 Jan 2022 22:23:10 +0100
+Message-Id: <20220111212310.97566-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/11/22 2:20 PM, Matthias Kaehlcke wrote:
-> On Tue, Jan 11, 2022 at 01:21:50PM -0600, Alex Elder wrote:
->> We have seen cases where an endpoint RX completion interrupt arrives
->> while replenishing for the endpoint is underway.  This causes another
->> instance of replenishing to begin as part of completing the receive
->> transaction.  If this occurs it can lead to transaction corruption.
->>
->> Use a new atomic variable to ensure only replenish instance for an
->> endpoint executes at a time.
->>
->> Fixes: 84f9bd12d46db ("soc: qcom: ipa: IPA endpoints")
->> Signed-off-by: Alex Elder <elder@linaro.org>
->> ---
->>   drivers/net/ipa/ipa_endpoint.c | 13 +++++++++++++
->>   drivers/net/ipa/ipa_endpoint.h |  2 ++
->>   2 files changed, 15 insertions(+)
->>
->> diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
->> index 8b055885cf3cf..a1019f5fe1748 100644
->> --- a/drivers/net/ipa/ipa_endpoint.c
->> +++ b/drivers/net/ipa/ipa_endpoint.c
->> @@ -1088,15 +1088,27 @@ static void ipa_endpoint_replenish(struct ipa_endpoint *endpoint, bool add_one)
->>   		return;
->>   	}
->>   
->> +	/* If already active, just update the backlog */
->> +	if (atomic_xchg(&endpoint->replenish_active, 1)) {
->> +		if (add_one)
->> +			atomic_inc(&endpoint->replenish_backlog);
->> +		return;
->> +	}
->> +
->>   	while (atomic_dec_not_zero(&endpoint->replenish_backlog))
->>   		if (ipa_endpoint_replenish_one(endpoint))
->>   			goto try_again_later;
-> 
-> I think there is a race here, not sure whether it's a problem: If the first
-> interrupt is here just when a 2nd interrupt evaluates 'replenish_active' the
-> latter will return, since it looks like replenishing is still active, when it
-> actually just finished. Would replenishing be kicked off anyway shortly after
-> or could the transaction be stalled until another endpoint RX completion
-> interrupt arrives?
+Parse compatible as expected for modern QCOMs.
 
-I acknowledge the race you point out.  You're saying another
-thread could test the flag after the while loop exits, but
-before the flag gets reset to 0.  And that means that other
-thread would skip the replenishing it would otherwise do.
+Fixes warnings as:
+arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: watchdog@17980000: compatible: ['qcom,apss-wdt-sdm845', 'qcom,kpss-wdt'] is too long
+        From schema: Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: watchdog@17980000: compatible: Additional items are not allowed ('qcom,kpss-wdt' was unexpected)
+        From schema: Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
 
-To be honest, that is a different scenario than the one I
-was trying to prevent, because it involves two threads, rather
-than one thread entering this function a second time (via an
-interrupt).  But regardless, I think it's OK.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+v2:
+ - updated compatible list as two compatibles has been added upstream
+ -> resolve merge conflict
+---
+ .../bindings/watchdog/qcom-wdt.yaml           | 37 +++++++++++--------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
-The replenishing loop is intentionally tolerant of errors.
-It will send as many receive buffers to the hardware as there
-is room for, but will stop and "try again later" if an
-error occurs.   Even if the specific case you mention
-occurred it wouldn't be a problem because we'd get another
-shot at it.  I'll explain.
-
-
-The replenish_backlog is the number of "open slots" the hardware
-has to hold a receive buffer.  When the backlog reaches 0, the
-hardware is "full."
-
-When a receive operation completes (in ipa_endpoint_rx_complete())
-it calls ipa_endpoint_replenish(), requesting that we add one to
-the backlog (to account for the buffer just consumed).  What this
-means is that if the hardware has *any* receive buffers, a
-replenish will eventually be requested (when one completes).
-
-The logic in ipa_endpoint_replenish() tolerates an error
-attempting to send a new receive buffer to the hardware.
-If that happens, we just try again later--knowing that
-the next RX completion will trigger that retry.
-
-The only case where we aren't guaranteed a subsequent call
-to ipa_endpoint_replenish() is when the hardware has *zero*
-receive buffers, or the backlog is the maximum.  In that
-case we explicitly schedule a new replenish via delayed
-work.
-
-Now, two more points.
-- If the while loop exits without an error replenishing,
-   the hardware is "full", so there are buffers that will
-   complete, and trigger a replenish call.  So if the race
-   occurred, it would be harmless.
-- If the while loop exits because of an error replenishing
-   one buffer, it jumps to try_again_later.  In that case,
-   either the hardware has at least one receive buffer (so
-   we'll get another replenish), or it has none and we will
-   schedule delayed work to to schedule another replenish.
-
-So I think that even if the race you point out occurs, the
-replenish logic will eventually get another try.
-
-I don't claim my logic is flawless; if it's wrong I can
-find another solution.
-
-Thanks.
-
-					-Alex
-
-PS  I will be implementing some improvements to this logic
-     soon, but this is a simple bug fix for back-port.
-
-
->> +
->> +	atomic_set(&endpoint->replenish_active, 0);
->> +
->>   	if (add_one)
->>   		atomic_inc(&endpoint->replenish_backlog);
->>   
->>   	return;
->>   
->>   try_again_later:
->> +	atomic_set(&endpoint->replenish_active, 0);
->> +
->>   	/* The last one didn't succeed, so fix the backlog */
->>   	delta = add_one ? 2 : 1;
->>   	backlog = atomic_add_return(delta, &endpoint->replenish_backlog);
->> @@ -1691,6 +1703,7 @@ static void ipa_endpoint_setup_one(struct ipa_endpoint *endpoint)
->>   		 * backlog is the same as the maximum outstanding TREs.
->>   		 */
->>   		endpoint->replenish_enabled = false;
->> +		atomic_set(&endpoint->replenish_active, 0);
->>   		atomic_set(&endpoint->replenish_saved,
->>   			   gsi_channel_tre_max(gsi, endpoint->channel_id));
->>   		atomic_set(&endpoint->replenish_backlog, 0);
->> diff --git a/drivers/net/ipa/ipa_endpoint.h b/drivers/net/ipa/ipa_endpoint.h
->> index 0a859d10312dc..200f093214997 100644
->> --- a/drivers/net/ipa/ipa_endpoint.h
->> +++ b/drivers/net/ipa/ipa_endpoint.h
->> @@ -53,6 +53,7 @@ enum ipa_endpoint_name {
->>    * @netdev:		Network device pointer, if endpoint uses one
->>    * @replenish_enabled:	Whether receive buffer replenishing is enabled
->>    * @replenish_ready:	Number of replenish transactions without doorbell
->> + * @replenish_active:	1 when replenishing is active, 0 otherwise
->>    * @replenish_saved:	Replenish requests held while disabled
->>    * @replenish_backlog:	Number of buffers needed to fill hardware queue
->>    * @replenish_work:	Work item used for repeated replenish failures
->> @@ -74,6 +75,7 @@ struct ipa_endpoint {
->>   	/* Receive buffer replenishing for RX endpoints */
->>   	bool replenish_enabled;
->>   	u32 replenish_ready;
->> +	atomic_t replenish_active;
->>   	atomic_t replenish_saved;
->>   	atomic_t replenish_backlog;
->>   	struct delayed_work replenish_work;		/* global wq */
->> -- 
->> 2.32.0
->>
+diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+index 16c6f82a13ca..4ff8c59c59ab 100644
+--- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+@@ -14,22 +14,27 @@ allOf:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - qcom,apss-wdt-qcs404
+-      - qcom,apss-wdt-sc7180
+-      - qcom,apss-wdt-sc7280
+-      - qcom,apss-wdt-sdm845
+-      - qcom,apss-wdt-sdx55
+-      - qcom,apss-wdt-sm6350
+-      - qcom,apss-wdt-sm8150
+-      - qcom,apss-wdt-sm8250
+-      - qcom,kpss-timer
+-      - qcom,kpss-wdt
+-      - qcom,kpss-wdt-apq8064
+-      - qcom,kpss-wdt-ipq4019
+-      - qcom,kpss-wdt-ipq8064
+-      - qcom,kpss-wdt-msm8960
+-      - qcom,scss-timer
++    oneOf:
++      - items:
++          - enum:
++              - qcom,apss-wdt-qcs404
++              - qcom,apss-wdt-sc7180
++              - qcom,apss-wdt-sc7280
++              - qcom,apss-wdt-sdm845
++              - qcom,apss-wdt-sdx55
++              - qcom,apss-wdt-sm6350
++              - qcom,apss-wdt-sm8150
++              - qcom,apss-wdt-sm8250
++          - const: qcom,kpss-wdt
++      - items:
++          - enum:
++              - qcom,kpss-wdt
++              - qcom,kpss-timer
++              - qcom,kpss-wdt-apq8064
++              - qcom,kpss-wdt-ipq4019
++              - qcom,kpss-wdt-ipq8064
++              - qcom,kpss-wdt-msm8960
++              - qcom,scss-timer
+ 
+   reg:
+     maxItems: 1
+-- 
+2.34.1
 
