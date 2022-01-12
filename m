@@ -2,107 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0EE148BE01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 06:00:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C4248BF1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 08:39:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbiALFAm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 00:00:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59898 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbiALFAm (ORCPT
+        id S1351291AbiALHjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jan 2022 02:39:41 -0500
+Received: from mail-vk1-f179.google.com ([209.85.221.179]:33685 "EHLO
+        mail-vk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351328AbiALHjj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 00:00:42 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009E7C061748
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 21:00:41 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id l17so1777984qtk.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 21:00:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FaSxb8/3tW75RqpNkToSLtyGS0/ACpk6hM1Y1IVBwz8=;
-        b=iUc6xc9cLZAhNuyr74C1urrqVrbmKHode2rHCcMBGdFahBIed/yscTDzmfb7BybmWN
-         3M/w693Q1531YGcunSLW6fiYF9SdPYM3GN5A0LR1ufmRApve4tD2+eM842YW/HqhOJs4
-         6wQVx516Vp3FcvjIDl63t0/GWt5xBT4AKMsRpwVHjBixMOp2oy276eC+28YFLhQqPFPr
-         qXcIR28O7w4vAv7zfxjCo42orTdzI711hOnUmbJLnnNmNKBoPKrjqQdp5kh5DAgQKRoQ
-         TNLGN35bVXkeEinrGP0O8aDTEkDBn9+KKiLwnJpO3+wait3cwGBe9ht9R5Ga9Gkh90qn
-         1qzg==
+        Wed, 12 Jan 2022 02:39:39 -0500
+Received: by mail-vk1-f179.google.com with SMTP id g5so1133998vkg.0;
+        Tue, 11 Jan 2022 23:39:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=FaSxb8/3tW75RqpNkToSLtyGS0/ACpk6hM1Y1IVBwz8=;
-        b=FbkpevW9JLUI2h1HBlgITYn2+eqGTDwcR+zm88Nr+LXF6FcgbUd34SKmCkKFLlyIc7
-         TGJ41hSDBTvThNknPB9BlysXUk5jujjg2yDPJ+hT481SXg0WVjGlRgIlJdntEard4fZf
-         88lBjU5gAhtwKuS7f5JoiXkQC+mgCIp6IbZF2/suS3s7fy2I0v4/m6siMd2ZNBKZIXsJ
-         ZVQ9V4O9W7/4xCWtvlfpRsooguMWjWuvpqNrs2IypqA6byWzfvrVC5j6evLNl+oWdd5d
-         3ZBNr8iXBcqFWQ9mpoCbUI8g+D23AwRTFtcxbAHfKRPRtzLib1xhINa9DCYvFuF8zeYy
-         gcNg==
-X-Gm-Message-State: AOAM5310HfwApd1qZicLq6953/tS9j35T7k/z6CuSwIKaI7JOgMOONbC
-        B7wWeg9foa2ZDyGLmiOmRIre/FxUUbMkC+sM6JlVaw==
-X-Google-Smtp-Source: ABdhPJw71vvuyjYb0/5S7EXojGfVFgYipbf0DqycEv7zw/Oy1vM7FdEbt27AtkIHB+xYCuZg+Ne3YYQd5XU551OEvpA=
-X-Received: by 2002:a05:622a:134c:: with SMTP id w12mr6394524qtk.370.1641963640916;
- Tue, 11 Jan 2022 21:00:40 -0800 (PST)
+        bh=MHfD03WmQisvwQlA0yVYr+t2tOrW8sr+EcU6Wg5KSck=;
+        b=1YMG+rRXfwavl134UZ73NS6rtboS3cxSjqHMnAkxxJbZOptDl9DzPUZbmjyGfXXksp
+         1kD9F3qW2KgAVydvfflcLxIHIix4CsvUxMb4bZMeegeICcRQJzRP5bpu99edyQxvbnsM
+         twyYG1hLfhElGdqknfmIV2qLSm4pSYjtjOWJL82iHHidOD1pOu36NsFf5d8VsMJ83G3J
+         YaVWQW6aot349tc1eLDzjBEa+tRt6JC2vZL5FfykUZcr+pyj92PpLvkh2xUGRKLN7G+U
+         5n96x8tgZA6WLCKBRo/6oxsO8HIs/SL512JtkzP3MDbSZtt7GlzssmJr9uQLWZJuLWDV
+         yqmA==
+X-Gm-Message-State: AOAM532MuuqpFexqY2FicgdHavTTWFcgAlxY9AjS3+Hi38qM6ATOx2Z+
+        wyNmkBNFbF0vVbwp2JdCbdP/v64mWA9zbQ==
+X-Google-Smtp-Source: ABdhPJzuxtsPnI37YIYK5BxpU/cRukaZdYXc3zFpmpzwFNlkrcvFJA/MFm52jHebuMxsnSbo8Nc/xA==
+X-Received: by 2002:a1f:3490:: with SMTP id b138mr3856785vka.31.1641973178972;
+        Tue, 11 Jan 2022 23:39:38 -0800 (PST)
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
+        by smtp.gmail.com with ESMTPSA id s47sm2201128uad.17.2022.01.11.23.39.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jan 2022 23:39:38 -0800 (PST)
+Received: by mail-vk1-f178.google.com with SMTP id n12so1073619vkc.12;
+        Tue, 11 Jan 2022 23:39:38 -0800 (PST)
+X-Received: by 2002:a1f:384b:: with SMTP id f72mr4068168vka.0.1641973178116;
+ Tue, 11 Jan 2022 23:39:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20220112035556.5108-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20220112035556.5108-1-manivannan.sadhasivam@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 12 Jan 2022 08:00:29 +0300
-Message-ID: <CAA8EJpqqEVWS5SuUY6vBWUBnoJdazXqWkMfQbnHRPNL1Fv3XKQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Fix MSI IRQ for PCIe1 and PCIe2
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>
+References: <20211202191630.12450-1-jaschultz@microsoft.com> <20211202191630.12450-3-jaschultz@microsoft.com>
+In-Reply-To: <20211202191630.12450-3-jaschultz@microsoft.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Wed, 12 Jan 2022 08:39:27 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
+Message-ID: <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
+To:     Jarrett Schultz <jaschultzms@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        platform-driver-x86@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Jarrett Schultz <jaschultz@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jan 2022 at 06:56, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> Fix the MSI IRQ used for PCIe instances 1 and 2.
->
-> Cc: stable@vger.kernel.org
-> Fixes: e53bdfc00977 ("arm64: dts: qcom: sm8250: Add PCIe support")
-> Reported-by: Jordan Crouse <jordan@cosmicpenguin.net>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hi Jarrett,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Mon, Dec 6, 2021 at 4:03 PM Jarrett Schultz <jaschultzms@gmail.com> wrote:
+> Since the Surface XBL Driver does not depend on ACPI, the
+> platform/surface directory as a whole no longer depends on ACPI. With
+> respect to this, the ACPI dependency is moved into each config that depends
+> on ACPI individually.
+>
+> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
 
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 6f6129b39c9c..8a3373c110fc 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -1487,7 +1487,7 @@ pcie1: pci@1c08000 {
->                         ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
->                                  <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
->
-> -                       interrupts = <GIC_SPI 306 IRQ_TYPE_EDGE_RISING>;
-> +                       interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
->                         interrupt-names = "msi";
->                         #interrupt-cells = <1>;
->                         interrupt-map-mask = <0 0 0 0x7>;
-> @@ -1593,7 +1593,7 @@ pcie2: pci@1c10000 {
->                         ranges = <0x01000000 0x0 0x64200000 0x0 0x64200000 0x0 0x100000>,
->                                  <0x02000000 0x0 0x64300000 0x0 0x64300000 0x0 0x3d00000>;
->
-> -                       interrupts = <GIC_SPI 236 IRQ_TYPE_EDGE_RISING>;
-> +                       interrupts = <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
->                         interrupt-names = "msi";
->                         #interrupt-cells = <1>;
->                         interrupt-map-mask = <0 0 0 0x7>;
-> --
-> 2.25.1
->
+Thanks for your patch, which is now commit 272479928172edf0 ("platform:
+surface: Propagate ACPI Dependency").
 
+> --- a/drivers/platform/surface/Kconfig
+> +++ b/drivers/platform/surface/Kconfig
+> @@ -5,7 +5,6 @@
+>
+>  menuconfig SURFACE_PLATFORMS
+>         bool "Microsoft Surface Platform-Specific Device Drivers"
+> -       depends on ACPI
+>         default y
+>         help
+>           Say Y here to get to see options for platform-specific device drivers
 
--- 
-With best wishes
-Dmitry
+Without any dependency, all users configuring a kernel are now asked
+about this. Is there any other platform dependency that can be used
+instead?
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
