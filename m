@@ -2,126 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD9548C9FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 18:41:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3249C48CB90
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 20:11:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244311AbiALRlN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 12:41:13 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:6571 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244308AbiALRlF (ORCPT
+        id S1356695AbiALTLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jan 2022 14:11:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1356624AbiALTLE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 12:41:05 -0500
+        Wed, 12 Jan 2022 14:11:04 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DDCCC034009
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 11:10:53 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id pj2so7080377pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 11:10:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642009265; x=1673545265;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9wwX9W3Y2aINXITJTwNgPpfrXjM13u7PMM/QdJMZF6M=;
-  b=etwbaCG2fvusM61PBl2ObZuIwCWrdz4sI5ly5AUjnvr1cv4NNq3VwcBk
-   P7KumnN/K9cTldA7XK94HscrowdOJlELES+sfHyFWGHYT2Y5LRGNw3fbW
-   O81UGPmS4NV0AJ8KhEf8YoKHh2xTYUcTy/7g2WGmJLEAVUYkbQXqtY9nR
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 12 Jan 2022 09:41:03 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2022 09:41:03 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 12 Jan 2022 09:41:03 -0800
-Received: from [10.110.25.55] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 12 Jan
- 2022 09:41:02 -0800
-Message-ID: <383271c1-d815-e26c-02f1-2a8d722166d3@quicinc.com>
-Date:   Wed, 12 Jan 2022 09:41:01 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [RFC PATCH 1/7] drm/msm/dp: fix panel bridge attachment
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Qd5a2B0ip3fULpJ1DZrsnaBBb6FqNJMWcCoIY/W/VSc=;
+        b=D6BUJOkmtpJJhZuLChTEtOEAGIQGcpfgsHJTHL80dan/59ohTceka14COtqTY1St3i
+         CoVanYvfa/KB03pkaVjUtl7j3Z36u9z7FOP3PO087ZqzkvJJzdRWYULTjFfzkj+azySt
+         1Be5E41sXlpPQ8QqeHbdzvQ77aT0bfINqWW38=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Qd5a2B0ip3fULpJ1DZrsnaBBb6FqNJMWcCoIY/W/VSc=;
+        b=HJJpwUpQ/qahkjggwG6/fl7zvHx3WSZ121350C2lVrw/gpksAnJomqfCzduOZ3LTR+
+         NOKWUFmD6qAOQUXFGuASBwTodSF1ZxmsicS16dZMBHAEcd6mpdKTwrOMSQF8LSWvs+TI
+         pGjdtRW4V7dFF/TbskdNSY0lCjkekQXpe0C7lDdBtoOrCDj5tBuXW1LUkU9Uqek0V9vJ
+         xtqzZ92sYawUHK7ociunJlYT09spddv3nDBbeMSvB2M3TtuxjrvJod9SCSso4k+rMwXd
+         M1j7J5dQoX55k2FaFaRCc8m2qC3BYXkoQnAfeyADReEdP9vFNRtNUxv6y8PJvxGaLGob
+         fOHg==
+X-Gm-Message-State: AOAM532tF21bAS2eLAb/cVXL5sTGRKb/0kCQ1IQbo9djLo5mAuyAHSKU
+        yBN9c0K5reHPh8W9oJdbhTY11g==
+X-Google-Smtp-Source: ABdhPJw/GrcChoGhBaCQx+Ejq7T+8K5OKw0iuBjEUZ1mnskY93Haj2+l5G2DexCj3NeQS9aAmdkVcw==
+X-Received: by 2002:a63:491a:: with SMTP id w26mr973314pga.110.1642014652812;
+        Wed, 12 Jan 2022 11:10:52 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:f6eb:5b26:28c:1ca5])
+        by smtp.gmail.com with UTF8SMTPSA id l22sm340340pfc.167.2022.01.12.11.10.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jan 2022 11:10:52 -0800 (PST)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     Bastien Nocera <hadess@hadess.net>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Peter Chen <peter.chen@kernel.org>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        linux-usb@vger.kernel.org, Roger Quadros <rogerq@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220107020132.587811-1-dmitry.baryshkov@linaro.org>
- <20220107020132.587811-2-dmitry.baryshkov@linaro.org>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <20220107020132.587811-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Li Jun <jun.li@nxp.com>, Peter Chen <peter.chen@nxp.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sasha Levin <sashal@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v19 0/5] usb: misc: Add onboard_usb_hub driver
+Date:   Wed, 12 Jan 2022 11:10:43 -0800
+Message-Id: <20220112191048.837236-1-mka@chromium.org>
+X-Mailer: git-send-email 2.34.1.575.g55b058a8bb-goog
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds:
+- the onboard_usb_hub_driver
+- glue in the generic HCD code to create and destroy the
+  onboard_usb_hub platform devices if needed
+- device tree changes that add RTS5411 entries for the QCA SC7180
+  based boards trogdor and lazor
+- a couple of stubs for platform device functions to avoid
+  unresolved symbols with certain kernel configs
 
-On 1/6/2022 6:01 PM, Dmitry Baryshkov wrote:
-> In commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
-> enable and disable") the DP driver received a drm_bridge instance, which
-> is always attached to the encoder as a root bridge. However it conflicts
-> with the panel_bridge support for eDP panels. Change panel_bridge
-> attachment to come after dp_bridge attachment.
->
-> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/dp/dp_drm.c | 21 +++++++++++----------
->   1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index d4d360d19eba..26ef41a4c1b6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -169,16 +169,6 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
->   
->   	drm_connector_attach_encoder(connector, dp_display->encoder);
->   
-> -	if (dp_display->panel_bridge) {
-> -		ret = drm_bridge_attach(dp_display->encoder,
-> -					dp_display->panel_bridge, NULL,
-> -					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> -		if (ret < 0) {
-> -			DRM_ERROR("failed to attach panel bridge: %d\n", ret);
-> -			return ERR_PTR(ret);
-> -		}
-> -	}
-> -
->   	return connector;
->   }
->   
-> @@ -246,5 +236,16 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
->   		return ERR_PTR(rc);
->   	}
->   
+The main issue the driver addresses is that a USB hub needs to be
+powered before it can be discovered. For discrete onboard hubs (an
+example for such a hub is the Realtek RTS5411) this is often solved
+by supplying the hub with an 'always-on' regulator, which is kind
+of a hack. Some onboard hubs may require further initialization
+steps, like changing the state of a GPIO or enabling a clock, which
+requires even more hacks. This driver creates a platform device
+representing the hub which performs the necessary initialization.
+Currently it only supports switching on a single regulator, support
+for multiple regulators or other actions can be added as needed.
+Different initialization sequences can be supported based on the
+compatible string.
 
-can check connector_type here and if connector_type == 
-DRM_MODE_CONNECTOR_eDP then no drm_bridge  add to eDP?  So that eDP only 
-has panel_bridge and DP only has drm_bridge?
+Besides performing the initialization the driver can be configured
+to power the hub off during system suspend. This can help to extend
+battery life on battery powered devices which have no requirements
+to keep the hub powered during suspend. The driver can also be
+configured to leave the hub powered when a wakeup capable USB device
+is connected when suspending, and power it off otherwise.
 
-is this fix all your concerns?
+Changes in v19:
+- added VID:PID pairs and compatible strings for RTS5414 hub
+- updated comments with RTS5411 USB versions to reflect those
+  reported/supported by the hub
+- rebased series on v5.16
 
+Changes in v18:
+- introduced hidden Kconfig option to align module vs. builtin
+  choice with CONFIG_USB (thanks Doug!)
+- added patch 'driver core: Export device_is_bound()'
+- also adjust device tree of pompom rev1
+- dropped the following patches, which aren't needed anymore by this
+  series (though they might still be useful on their own):
+  - usb: Specify dependencies on USB_XHCI_PLATFORM with 'depends on'
+  - arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM
+  - ARM: configs: Explicitly enable USB_XHCI_PLATFORM where needed
 
-> +	if (dp_display->panel_bridge) {
-> +		rc = drm_bridge_attach(dp_display->encoder,
-> +					dp_display->panel_bridge, bridge,
-> +					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> +		if (rc < 0) {
-> +			DRM_ERROR("failed to attach panel bridge: %d\n", rc);
-> +			drm_bridge_remove(bridge);
-> +			return ERR_PTR(rc);
-> +		}
-> +	}
-> +
->   	return bridge;
->   }
+Changes in v17:
+- rebased on top of v5.16-rc1
+- moved creation of onboard_hub platform devices from xhci_platform
+  to the generic HCD code
+- addressed review comments for the onboard_hub driver
+- moved Kconfig/defconfig changes to the end of the series. The
+  onboard_hub driver doesn't depend on XHCI_PLATFORM anymore,
+  hence these changes aren't really required for the driver, but
+  they still seem to be a worthwhile improvement
+
+Changes in v16:
+- added patch 'ARM: configs: Explicitly enable USB_XHCI_PLATFORM
+  where needed' to keep arm32 defconfigs effectively unchanged
+
+Changes in v15:
+- adjusted dependencies of USB_DWC3_CORE to make sure it can only
+  be enabled when at least one of USB_DWC3_HOST, USB_DWC3_GADGET
+  or USB_DWC3_DUAL_ROLE is selectable
+
+Changes in v14:
+- rebased on top of v5.14-rc1
+- dropped DT binding patch which landed in v5.13
+
+Changes in v13:
+- added patch "usb: Specify dependency on USB_XHCI_PLATFORM with
+  'depends on'" to the series to avoid Kconfig conflicts
+- added patch "arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM"
+  to the series to keep effective defconfig unchanged
+
+Changes in v12:
+- onboard_hub driver: use IS_ENABLED(CONFIG_USB_ONBOARD_HUB_MODULE)
+  in onboard_hub.h to also check for the driver built as module
+- onboard_hub_driver: include onboard_hub.h again to make sure there
+  are prototype declarations for the public functions
+
+Changes in v11:
+- support multiple onboard hubs connected to the same parent
+- don't include ‘onboard_hub.h’ from the onboard hub driver
+
+Changes in v10:
+- always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+- keep 'regulator-boot-on' property for pp3300_hub
+
+Changes in v9:
+- added dependency on ONBOARD_USB_HUB (or !ONBOARD_USB_HUB) to
+  USB_PLATFORM_XHCI
+
+Changes in v7:
+- updated DT binding
+- series rebased on qcom/arm64-for-5.13
+
+Changes in v6:
+- updated summary
+
+Changes in v5:
+- cover letter added
+
+Matthias Kaehlcke (5):
+  of/platform: Add stubs for of_platform_device_create/destroy()
+  driver core: Export device_is_bound()
+  usb: misc: Add onboard_usb_hub driver
+  usb: core: hcd: Create platform devices for onboard hubs in probe()
+  arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+
+ .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  12 +-
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     |  11 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+ drivers/base/dd.c                             |   1 +
+ drivers/usb/core/hcd.c                        |   6 +
+ drivers/usb/misc/Kconfig                      |  23 +
+ drivers/usb/misc/Makefile                     |   1 +
+ drivers/usb/misc/onboard_usb_hub.c            | 494 ++++++++++++++++++
+ include/linux/of_platform.h                   |  22 +-
+ include/linux/usb/hcd.h                       |   1 +
+ include/linux/usb/onboard_hub.h               |  18 +
+ 15 files changed, 620 insertions(+), 41 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+ create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+ create mode 100644 include/linux/usb/onboard_hub.h
+
+-- 
+2.34.1.575.g55b058a8bb-goog
+
