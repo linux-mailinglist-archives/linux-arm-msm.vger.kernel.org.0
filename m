@@ -2,77 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D818348BBD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 01:29:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D36448BC29
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 02:08:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244632AbiALA3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Jan 2022 19:29:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347101AbiALA3X (ORCPT
+        id S1347493AbiALBIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Jan 2022 20:08:34 -0500
+Received: from mail-ot1-f51.google.com ([209.85.210.51]:46841 "EHLO
+        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344077AbiALBId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Jan 2022 19:29:23 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9383EC061756
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 16:29:23 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id g205so1345290oif.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jan 2022 16:29:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=XWQPHdXybadB6e7/P7sAbUm970gAaRr2bcJInNv6MII=;
-        b=OZwsXnDc9UPynogrYZXJH3NZkKffpbXSs+Dh0F9SzKL5beUBdoUZdVGXfmgY7dPL8D
-         nAYOuFVL238WUh6Buu/adZacXUdhIOn7NE879ZhMcYPE3YaHEVOj3wtRUWXzEX+1QDpR
-         hJa9EJmHaW57Mxvrxfj1vGMGSDv/EcvUVXCmg=
+        Tue, 11 Jan 2022 20:08:33 -0500
+Received: by mail-ot1-f51.google.com with SMTP id t4-20020a05683022e400b00591aaf48277so778785otc.13;
+        Tue, 11 Jan 2022 17:08:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=XWQPHdXybadB6e7/P7sAbUm970gAaRr2bcJInNv6MII=;
-        b=fxvgiv0pRRToeAhyj+3dBZFMmMFbmpB8Xm3GDnKlJP+fXI08NRkHQa6acbv9QgFvlQ
-         M99+06X+O4Dg/siNjFylpwt6dlnM+vmY2KrMvll50ecdZqdki3BFhbLP6mf83uzevR42
-         t2jPdIz2E7rFE8hndfdb/LsPcvG3wK/pgUM1DAEjS4kCkUzaO/jA9SsMWoM7ht3BCVnz
-         d6t7yA7l0/wJex5d5az5Q5+rw+FdvcsOCid3BUtRgz9YLbDJQ6zX72TRffNPL2W3/xHf
-         w5rpzXKiGcbT+YVaGp19DonPJc+rcw2f/gp6FdWCJt+So5vVZ20kIKrvjJ4O+yOCTfeE
-         Fuhg==
-X-Gm-Message-State: AOAM5335Gd/vyAf8Tw8KXjHev3B2G6j08mAs9KzOs+YUJK1+wBVNK895
-        AvijMqJA9nRPNTIUB5ADDbrP3aj24N9HJFAVxmyWcw==
-X-Google-Smtp-Source: ABdhPJzs0Rk433uSwQw7ceFQP2bC9DKwS55Ky7plEX/1aptBSsq9LHbT1XbhIKGNGccDNMx12j+tEMjEY3DZmgZLWwI=
-X-Received: by 2002:aca:4382:: with SMTP id q124mr3534110oia.64.1641947362878;
- Tue, 11 Jan 2022 16:29:22 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 11 Jan 2022 16:29:22 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zfEgwfjg4A+hQfaxalCTAC80xYPvuxHf7IAsxkp6P4Q=;
+        b=3Q1KEcXsETucKilRS1YxRkPxH0goy18yLMfVIvKXc3kBV9RSot4qIdB5Xn0fkHbM4T
+         ZgeBjhommTOtLiQtn8yWp5wg4gC6t9fYR6PIFwI2m523ReumwQp2OybP6jKCBd34uc1+
+         STQBplCAqaOUjgvPkyJ3YWNgiKJw+Uxb2Qkxdqb0bvovH/GMosEyT+Gtn9vPg2SJ1wvy
+         hbg3tgKCRmV7p9Ui3yFm+NrOwE2XPRohww9DEVBNUyvSGtxcc8dxyFkLtXHNElCHPsz2
+         0ctBloYDsuzv+A3ifQMOnZKagi7cP5soJqtgFmob4MYqO+4zMnSfOkFb9YE5i36WAdZs
+         AnLg==
+X-Gm-Message-State: AOAM532HpqGzodyTqPMyoZcj90KiXqbs7mhXF03Gus2xWWUGzT+KKUHI
+        CaUSZe/KO6w8A4mFEintMA==
+X-Google-Smtp-Source: ABdhPJxo6mmB/YuYHBD36Q4pjpucnKCeErxTN2wbLicZk28f4P4EcSrfWOESBczlwWIQ+J9EdK4XlA==
+X-Received: by 2002:a05:6830:612:: with SMTP id w18mr2576295oti.155.1641949712964;
+        Tue, 11 Jan 2022 17:08:32 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id p23sm2385120otf.37.2022.01.11.17.08.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 17:08:32 -0800 (PST)
+Received: (nullmailer pid 3838457 invoked by uid 1000);
+        Wed, 12 Jan 2022 01:08:31 -0000
+Date:   Tue, 11 Jan 2022 19:08:31 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
+        bjorn.andersson@linaro.org, greg@kroah.com,
+        linux-kernel@vger.kernel.org, tsoni@codeaurora.org,
+        psodagud@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org, rnayak@codeaurora.org,
+        sibis@codeaurora.org, saiprakash.ranjan@codeaurora.org
+Subject: Re: [PATCH V3 1/7] dt-bindings: Add the yaml bindings for EUD
+Message-ID: <Yd4qD7ziPNgAQNHG@robh.at.kernel.org>
+References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
+ <5d9491693870b5dde757959f4491296503d22f70.1641288286.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <20220111140519.1.Ie2662d6289af1e9758b14b37149703c846d5f509@changeid>
-References: <20220111140519.1.Ie2662d6289af1e9758b14b37149703c846d5f509@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 11 Jan 2022 16:29:22 -0800
-Message-ID: <CAE-0n51tqh7XP8SrqTY_EfsmqWnh2dVHuTTcRJt1BRR27bAL+Q@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: pinctrl: drive-strength doesn't default to 2
- if unspecified
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d9491693870b5dde757959f4491296503d22f70.1641288286.git.quic_schowdhu@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-01-11 14:05:21)
-> If the drive-strength isn't specified in the device tree then it
-> doesn't actually default to 2. Instead, it defaults to whatever the
-> heck the BIOS left it at. If the BIOS doesn't touch it then that means
-> it's whatever the heck the initial state of the pin was when the SoC
-> booted.
->
-> Reported-by: Matthias Kaehlcke <mka@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+On Tue, Jan 04, 2022 at 05:28:14PM +0530, Souradeep Chowdhury wrote:
+> Documentation for Embedded USB Debugger(EUD) device tree
+> bindings in yaml format.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+I agree with Bjorn's comments.
+
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  .../devicetree/bindings/soc/qcom/qcom,eud.yaml     | 50 ++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> new file mode 100644
+> index 0000000..3523932
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+> @@ -0,0 +1,50 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,eud.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Embedded USB Debugger
+> +
+> +maintainers:
+> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +
+> +description:
+> +  This binding is used to describe the Qualcomm Embedded USB Debugger, which is
+> +  mini USB-hub implemented on chip to support USB-based debug capabilities.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,sc7280-eud
+> +      - const: qcom,eud
+> +
+> +  reg:
+> +    items:
+> +      - description: EUD Base Register Region
+> +      - description: EUD Mode Manager Register
+> +
+> +  interrupts:
+> +    description:
+> +      EUD interrupt
+
+Just 'maxItems: 1' is sufficient here.
+
+> +
+> +  port:
+
+Based on Bjorn's comment, you will need 2 port nodes.
+
+> +    description:
+> +      This port is to be attached to the endpoint of the connector child of
+> +      DWC3 controller node. The controller has the "usb-role-switch" property.
+> +    $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    eud@88e0000 {
+> +           compatible = "qcom,sc7280-eud","qcom,eud";
+> +           reg = <0x88e0000 0x2000>,
+> +                 <0x88e2000 0x1000>;
+
+Are the ports really optional?
+
+> +    };
+> -- 
+> 2.7.4
+> 
+> 
