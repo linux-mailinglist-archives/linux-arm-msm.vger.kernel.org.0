@@ -2,125 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A745548CD94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 22:19:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1037648CDEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 22:40:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbiALVTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 16:19:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58258 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiALVTM (ORCPT
+        id S233467AbiALVk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jan 2022 16:40:26 -0500
+Received: from mo4-p01-ob.smtp.rzone.de ([81.169.146.167]:45193 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233472AbiALVkV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 16:19:12 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0197C06173F;
-        Wed, 12 Jan 2022 13:19:11 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id r28so6577768wrc.3;
-        Wed, 12 Jan 2022 13:19:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6TxiOntNhsCrtTXgbXmjcIfphc43hOl3QDBs0NNaLFY=;
-        b=KFiMw3MPBADupNQlBvuHMx9S77BKhdF50zxz77/j9FbgxZiOW10JkOCDEu4tDtTIUZ
-         AF2ne5pOpFtLLh0J/9OVlZ3Xk8elbrON8BeE8eBJFFtdl+rcmCx6FlCLn1TGlLjOGU1U
-         MbEepFp7jfyJPApV+rIYxxpUAJzQ5eydRVetMrqCpxYELcUkPYCWoTUG1/frTgYsvUGJ
-         ZiTlzH1EJEC+Ki3ORSUcCKfj0/d1Le+p8V28PtIAlySvlQOqa+hdOESzqWF4D3jzjQSP
-         3LTRiZFk53hsfrs+MASoRHQUwhCVAtsh7bisLyz3COXkFx2eHCyN6mzF2beFQqpPV5MI
-         6hXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6TxiOntNhsCrtTXgbXmjcIfphc43hOl3QDBs0NNaLFY=;
-        b=AhCHq7KkOBj8cb3yqwx2hxb4C5O1Y47uNXu8Q4DJ8YcKxNTl8ScG4l1lfR++qJaOXg
-         jlBI6b5Xz3oVQ4puaQTTJfogXA1Y6WVCWh7jwnds5GgRNPBZtYs1mGa7Q9sMppW5/Ch9
-         rDsOa/HPI+s4hahrPtCBjEh+s1bifAPKk6CxihkodLWGv+INl3GMtCNPlPTMKUgD49pk
-         NvqJLGc42b0EKnuTPNvBGga+CTGK74I9QQnXzejjvd5D4prVRWYCIgvPvPeZfhOl4EgE
-         yw4uKQwojRebBitb/ozp8DlpL4xAL58fpDbztS6Vm7H94zlBDsvAAJZnjXFYryAYB22A
-         sVmw==
-X-Gm-Message-State: AOAM533w+L5sRr9qrUpYclC6VRjs/yZv0JrAVVCcaK1iDk8HoZTjay6+
-        TXdqGR6DyyW1jU5zBgP+UpOgj4osSFVAhPNZieE=
-X-Google-Smtp-Source: ABdhPJzFEuWp7Wsk8JdHQYZwsj1tBXEicac30GClml/cPixPa0nmwZPRG1lrU1uj5FLFPmz34phbSV+YiJmWRQFzecY=
-X-Received: by 2002:a5d:6488:: with SMTP id o8mr1369457wri.93.1642022349685;
- Wed, 12 Jan 2022 13:19:09 -0800 (PST)
+        Wed, 12 Jan 2022 16:40:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1642023600;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=C9K3tsw1DVfAhcGDUvIMCIJJwfXNhxlv/0SrOmFPm/o=;
+    b=jLREmipLG+n1fMmuQS5UQZRs14UIigNgWXU96Mknv4q3f3yqdCTbUjhCbCX2+g4oJv
+    APnvI2q57IpsHWdgAb+94CJ6tGiHD1jJMeBG4ovUt0opPqwthTjAx1g7bBBZamsEA0N8
+    1k3SLegZtCMHxm079QNlfreM3BiGaMPFu1MOFaTxU7CkoiktQ1SJWa0CYNCgUBoKxFTd
+    cIOLAQxrSKgK0Ex0OsutkFnJXNeH+S0RjsBRkfNVrS8hT/C2zq36GS5yAGUfXr6uYR+A
+    WTYw34/tHlxMXNl/Al/R7GRRHLB8ZW+NDZGUYYEPCnAKvNlxYKyL7egSvMUQ8m99HQx6
+    Z8RQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK85lg=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.37.6 AUTH)
+    with ESMTPSA id h68d06y0CLdxbrB
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 12 Jan 2022 22:39:59 +0100 (CET)
+Date:   Wed, 12 Jan 2022 22:39:53 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH 09/15] rpmsg: smd: Drop unnecessary condition for channel
+ creation
+Message-ID: <Yd9KebiZUjTuHtIM@gerhold.net>
+References: <20220112194118.178026-1-luca@z3ntu.xyz>
+ <20220112194118.178026-10-luca@z3ntu.xyz>
 MIME-Version: 1.0
-References: <20220112030115.1.Ibac66e1e0e565313bc28f192e6c94cb508f205eb@changeid>
- <20220112030115.3.I86c32730e08cba9e5c83f02ec17885124d45fa56@changeid>
-In-Reply-To: <20220112030115.3.I86c32730e08cba9e5c83f02ec17885124d45fa56@changeid>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 12 Jan 2022 13:19:07 -0800
-Message-ID: <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/msm/adreno: Expose speedbin to userspace
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220112194118.178026-10-luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 11, 2022 at 1:31 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> Expose speedbin through MSM_PARAM_CHIP_ID parameter to help userspace
-> identify the sku.
->
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Hi,
+
++Cc Srinivas
+
+On Wed, Jan 12, 2022 at 08:40:58PM +0100, Luca Weiss wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> 
+> RPM Firmware on variety of newer SoCs such as MSM8917 (also likely
+> MSM8937, MSM8940, MSM8952), MSM8953 and on some MSM8916 devices) doesn't
+> initiate opening of the SMD channel if it was previously opened by
+> bootloader. This doesn't allow probing of smd-rpm driver on such devices
+> because there is a check that requires RPM this behaviour.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+This is effectively a "Revert "Revert "rpmsg: smd: Create device for all
+channels""":
+
+https://lore.kernel.org/linux-arm-msm/20171212235857.10432-3-bjorn.andersson@linaro.org/
+https://lore.kernel.org/linux-arm-msm/20180315181244.8859-1-bjorn.andersson@linaro.org/
+
+Won't this cause the same regression reported by Srinivas again?
+
+Thanks,
+Stephan
+
 > ---
->
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index f33cfa4..e970e6a 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -242,10 +242,11 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
->                 *value = !adreno_is_a650_family(adreno_gpu) ? 0x100000 : 0;
->                 return 0;
->         case MSM_PARAM_CHIP_ID:
-> -               *value = adreno_gpu->rev.patchid |
-> -                               (adreno_gpu->rev.minor << 8) |
-> -                               (adreno_gpu->rev.major << 16) |
-> -                               (adreno_gpu->rev.core << 24);
-> +               *value = (uint64_t) adreno_gpu->rev.patchid |
-> +                               (uint64_t) (adreno_gpu->rev.minor << 8) |
-> +                               (uint64_t) (adreno_gpu->rev.major << 16) |
-> +                               (uint64_t) (adreno_gpu->rev.core << 24) |
-> +                               (((uint64_t) adreno_gpu->rev.sku) << 32);
-
-How about this instead, so we are only changing the behavior for
-new/unreleased devices:
-
-*value = adreno_gpu->rev.patchid |
-(adreno_gpu->rev.minor << 8) |
-(adreno_gpu->rev.major << 16) |
-(adreno_gpu->rev.core << 24);
-if (!adreno_gpu->info->revn)
-*value |= (((uint64_t) adreno_gpu->rev.sku) << 32);
-
-(sorry about the butchered indentation.. somehow gmail has become
-antagonistic about pasting code)
-
-BR,
--R
-
->                 return 0;
->         case MSM_PARAM_MAX_FREQ:
->                 *value = adreno_gpu->base.fast_rate;
-> --
-> 2.7.4
->
+>  drivers/rpmsg/qcom_smd.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+> index 8da1b5cb31b3..6a01ef932b01 100644
+> --- a/drivers/rpmsg/qcom_smd.c
+> +++ b/drivers/rpmsg/qcom_smd.c
+> @@ -1280,19 +1280,13 @@ static void qcom_channel_state_worker(struct work_struct *work)
+>  	unsigned long flags;
+>  
+>  	/*
+> -	 * Register a device for any closed channel where the remote processor
+> -	 * is showing interest in opening the channel.
+> +	 * Register a device for any closed channel.
+>  	 */
+>  	spin_lock_irqsave(&edge->channels_lock, flags);
+>  	list_for_each_entry(channel, &edge->channels, list) {
+>  		if (channel->state != SMD_CHANNEL_CLOSED)
+>  			continue;
+>  
+> -		remote_state = GET_RX_CHANNEL_INFO(channel, state);
+> -		if (remote_state != SMD_CHANNEL_OPENING &&
+> -		    remote_state != SMD_CHANNEL_OPENED)
+> -			continue;
+> -
+>  		if (channel->registered)
+>  			continue;
+>  
+> -- 
+> 2.34.1
+> 
