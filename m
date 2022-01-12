@@ -2,260 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD18048CC69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 20:53:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64FC248CCBB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 21:02:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357063AbiALTwF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 14:52:05 -0500
-Received: from mail.z3ntu.xyz ([128.199.32.197]:33200 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350031AbiALTvZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 14:51:25 -0500
-Received: from localhost.localdomain (ip-213-127-106-2.ip.prioritytelecom.net [213.127.106.2])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 5EBB1CDFEF;
-        Wed, 12 Jan 2022 19:42:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1642016565; bh=HWZRYlhhXb1tfEKq8CbOX4I3HGLIIpgzV2lU7Uld+qs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=Ji9HW2DNqHEhuoU5FjUa1ZOVpo5H7TRb8a377zBRnm4SDrO9oWMI5Kj1Wxc/QsgQ5
-         udOCSeOBOu/3di9wTqlOYll0FoYTt9AHiOeDR87PGPGL4Sn9JYmdsDVS04M+XJCr5H
-         jsswuuBSwReIfxve5IcOt252mT545KbqU+QMOKl0=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 15/15] arm64: dts: qcom: sdm632: Add device tree for Fairphone 3
-Date:   Wed, 12 Jan 2022 20:41:04 +0100
-Message-Id: <20220112194118.178026-16-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220112194118.178026-1-luca@z3ntu.xyz>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
+        id S1357595AbiALUBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jan 2022 15:01:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40272 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243310AbiALUAq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 12 Jan 2022 15:00:46 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8896CC06175A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 12:00:46 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id v10-20020a4a244a000000b002ddfb22ab49so656844oov.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 12:00:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=zjUuqdvE4cKWjJfUmVXa2AhaKez7DZYDKHfpVKmchE8=;
+        b=KkhQsRpfIgh8+h9tljWj4LPWmhHk4Qfehoi8pRRGhIYbMYuPDBSct9HftWeHHcKkxi
+         mLErxeAdnbFfyANQe9Zm1kjkJMl4lcc7BWspcwYjV7+LDedxU90oc8x1B3yVp1ZVqfX6
+         bG+k1IdzbaFpDBuQHoxjj4dm4RxgFJPFV+2uM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=zjUuqdvE4cKWjJfUmVXa2AhaKez7DZYDKHfpVKmchE8=;
+        b=DVMLoeDYfDEJL2lcQ+skHUPOMlQWdnjysxaOAicDCccET5kQYcng/3vwrZjy69jA7J
+         REzxbW+MOJwiS8NeMkKD0xTYGMHDUDcegOyT9NgUFB2CUrW7m1JbBRbJpmEr9RFlgfid
+         0/bGMub/QHWPPJ7pw/jaiv8nN0krVBLjdKHHh+N7d5MNWMEk3DrT5KU9fpd0KmcS43g+
+         tLyL1FMx9+GYmlZw79qIJk3ngZnovDz84xWcGvgPUNb37AELqJrFK+foGIg2insMZYpy
+         a7rmNd3KOnzB9RN+bK6N9uyS5Y4OGj45nw32qylBft7CPzM67rVpLbMDwMqEKpThSNzh
+         Lgig==
+X-Gm-Message-State: AOAM530QUbTZZqjXXybVU5h6POwHjwK0f2AzlkgN+AHLb0R06ZFQ/P1A
+        SKW0HQirDhwfiCYnachwWEYF7DCGMyq3zV62K1Vd8g==
+X-Google-Smtp-Source: ABdhPJzLjhgwVK0UE9Yi9JBkWmC3y7WOIiS6b8sefkd91JcSBdS9dhs2hfta9KF6j1qRTXSeWCJ2shJzrnxnDEy8xAs=
+X-Received: by 2002:a4a:d818:: with SMTP id f24mr778429oov.25.1642017645715;
+ Wed, 12 Jan 2022 12:00:45 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 12 Jan 2022 12:00:45 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1641926606-1012-2-git-send-email-quic_khsieh@quicinc.com>
+References: <1641926606-1012-1-git-send-email-quic_khsieh@quicinc.com> <1641926606-1012-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 12 Jan 2022 12:00:45 -0800
+Message-ID: <CAE-0n53hrPYR3ThwxM_+fzyRSB+6W1drFymW5n_RKmg_gf8z-w@mail.gmail.com>
+Subject: Re: [PATCH v11 1/4] drm/msm/dp: do not initialize phy until plugin
+ interrupt received
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree for the Fairphone 3 smartphone which is based on
-Snapdragon 632 (sdm632).
+Quoting Kuogee Hsieh (2022-01-11 10:43:23)
+> Current DP drivers have regulators, clocks, irq and phy are grouped
+> together within a function and executed not in a symmetric manner.
+> This increase difficulty of code maintenance and limited code scalability.
+> This patch divides the driver life cycle of operation into four states,
+> resume (including booting up), dongle plugin, dongle unplugged and suspend.
+> Regulators, core clocks and irq are grouped together and enabled at resume
+> (or booting up) so that the DP controller is armed and ready to receive HPD
+> plugin interrupts. HPD plugin interrupt is generated when a dongle plugs
+> into DUT (device under test). Once HPD plugin interrupt is received, DP
+> controller will initialize phy so that dpcd read/write will function and
+> following link training can be proceeded successfully. DP phy will be
+> disabled after main link is teared down at end of unplugged HPD interrupt
+> handle triggered by dongle unplugged out of DUT. Finally regulators, code
+> clocks and irq are disabled at corresponding suspension.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sdm632-fairphone-fp3.dts    | 189 ++++++++++++++++++
- 2 files changed, 190 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
+I'll write out the various scenarios
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 6b816eb33309..f67973aacd82 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -82,6 +82,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-fairphone-fp3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-new file mode 100644
-index 000000000000..34f4900c8b28
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -0,0 +1,189 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Luca Weiss <luca@z3ntu.xyz>
-+ */
-+/dts-v1/;
-+
-+#include "msm8953-pm8953.dtsi"
-+#include "sdm632.dtsi"
-+
-+/ {
-+	model = "Fairphone 3";
-+	compatible = "fairphone,fp3", "qcom,sdm632";
-+	chassis-type = "handset";
-+	qcom,msm-id = <349 0>;
-+	qcom,board-id = <8 0x10000>;
-+
-+	aliases {
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
-+		serial0 = &uart_0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		volume-up {
-+			label = "volume_up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&hsusb_phy {
-+	status = "okay";
-+};
-+
-+&pm8953_resin {
-+	status = "okay";
-+	linux,code = <KEY_VOLUMEDOWN>;
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+};
-+
-+&smd_rpm_regulators {
-+	vdd_l1-supply = <&pm8953_s3>;
-+	vdd_l2_l3-supply = <&pm8953_s3>;
-+	vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-+	vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-+	vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-+
-+	s3 {
-+		regulator-min-microvolt = <984000>;
-+		regulator-max-microvolt = <1240000>;
-+	};
-+
-+	s4 {
-+		regulator-min-microvolt = <1036000>;
-+		regulator-max-microvolt = <2040000>;
-+	};
-+
-+	s5 {
-+		regulator-min-microvolt = <1036000>;
-+		regulator-max-microvolt = <2040000>;
-+	};
-+
-+	l1 {
-+		regulator-min-microvolt = <975000>;
-+		regulator-max-microvolt = <1050000>;
-+	};
-+
-+	l2 {
-+		regulator-min-microvolt = <975000>;
-+		regulator-max-microvolt = <1175000>;
-+	};
-+
-+	l3 {
-+		regulator-min-microvolt = <925000>;
-+		regulator-max-microvolt = <925000>;
-+	};
-+
-+	l5 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l6 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l7 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1900000>;
-+	};
-+
-+	l8 {
-+		regulator-min-microvolt = <2900000>;
-+		regulator-max-microvolt = <2900000>;
-+	};
-+
-+	l9 {
-+		regulator-min-microvolt = <3000000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	l10 {
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <3000000>;
-+	};
-+
-+	l11 {
-+		regulator-min-microvolt = <2950000>;
-+		regulator-max-microvolt = <2950000>;
-+	};
-+
-+	l12 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2950000>;
-+	};
-+
-+	l13 {
-+		regulator-min-microvolt = <3125000>;
-+		regulator-max-microvolt = <3125000>;
-+	};
-+
-+	l16 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+
-+	l19 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1350000>;
-+	};
-+
-+	l22 {
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
-+	};
-+
-+	l23 {
-+		regulator-min-microvolt = <975000>;
-+		regulator-max-microvolt = <1225000>;
-+	};
-+};
-+
-+&tlmm {
-+	/*
-+	 * 0-3: unused but protected by TZ
-+	 * 135-138: fingerprint reader (SPI)
-+	 */
-+	gpio-reserved-ranges = <0 4>, <135 4>;
-+};
-+
-+&uart_0 {
-+	status = "okay";
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+};
--- 
-2.34.1
+#1
+	dongle plugged in with HDMI cable attached
+	driver probe
 
+#2
+	dongle unplugged
+	driver probe
+
+#3
+	dongle plugged in without HDMI cable attached
+	driver probe
+
+#4
+	driver probe
+	dongle plugged in without HDMI cable attached
+
+
+#5
+	driver probe
+	dongle plugged in with HDMI cable attached
+
+#6
+	driver probe
+	dongle plugged in
+	suspend
+	resume
+
+#7
+	driver probe
+	dongle plugged in
+	suspend
+	dongle unplugged
+	resume
+
+#8
+	driver probe
+	dongle plugged in without HDMI cable attached
+	suspend
+	resume
+
+#9
+	driver probe
+	dongle plugged in without HDMI cable attached
+	suspend
+	HDMI cable attached during suspend
+	resume
+
+What's the state of the phy and core initialized variable at the end of
+each of these scenarios? Please fill out the truth table.
+
+		  +-----------------+------------------------
+                  |    false        |       true            |
+		  +-----------------+------------------------
+ phy_initialized  |                 |                       |
+		  +-----------------+------------------------
+ core_initialized |                 | #1,                   |
+		  +-----------------+------------------------
+
+I guess we also need eDP scenarios, but that's probably simpler
+
+#10
+	eDP panel connected
+	driver probe
+
+#11
+	eDP panel disconnected
+	driver probe
+
+#12
+	eDP panel disconnected
+	driver probe
+	suspend
+	resume
+
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 7cc4d21..f6bb4bc 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -83,6 +83,7 @@ struct dp_display_private {
+>
+>         /* state variables */
+>         bool core_initialized;
+> +       bool phy_initialized;
+>         bool hpd_irq_on;
+>         bool audio_supported;
+>
+> @@ -372,21 +373,46 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+>         return rc;
+>  }
+>
+> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
+> +static void dp_display_host_phy_init(struct dp_display_private *dp)
+>  {
+> -       bool flip = false;
+> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
+> +                       dp->core_initialized, dp->phy_initialized);
+>
+> +       if (!dp->phy_initialized) {
+> +               dp_ctrl_phy_init(dp->ctrl);
+> +               dp->phy_initialized = true;
+> +       }
+> +}
+> +
+> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
+> +{
+> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
+> +                       dp->core_initialized, dp->phy_initialized);
+> +
+> +       if (dp->phy_initialized) {
+> +               dp_ctrl_phy_exit(dp->ctrl);
+> +               dp->phy_initialized = false;
+> +       }
+> +}
+> +
+> +static void dp_display_host_init(struct dp_display_private *dp)
+> +{
+>         DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
+>         if (dp->core_initialized) {
+>                 DRM_DEBUG_DP("DP core already initialized\n");
+>                 return;
+>         }
+>
+> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
+> -               flip = true;
+> +       dp_power_init(dp->power, false);
+> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
+> +
+> +       /*
+> +        * eDP is the embedded primary display and has its own phy
+> +        * initialize phy immediately
+
+Question still stands why we can't wait for hpd high from the eDP panel.
+Also, I think "has its own phy" means that it's not part of a combo
+USB+DP phy? Can you please clarify?
+
+> +        */
+> +       if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
+> +               dp_display_host_phy_init(dp);
+>
+> -       dp_power_init(dp->power, flip);
+> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
+>         dp_aux_init(dp->aux);
+>         dp->core_initialized = true;
+>  }
+> @@ -1306,20 +1330,23 @@ static int dp_pm_resume(struct device *dev)
+>         dp->hpd_state = ST_DISCONNECTED;
+>
+>         /* turn on dp ctrl/phy */
+> -       dp_display_host_init(dp, true);
+> +       dp_display_host_init(dp);
+>
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>
+> -       /*
+> -        * set sink to normal operation mode -- D0
+> -        * before dpcd read
+> -        */
+> -       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>
+>         if (dp_catalog_link_is_connected(dp->catalog)) {
+> +               /*
+> +                * set sink to normal operation mode -- D0
+> +                * before dpcd read
+> +                */
+> +               dp_display_host_phy_init(dp);
+> +               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>                 sink_count = drm_dp_read_sink_count(dp->aux);
+>                 if (sink_count < 0)
+>                         sink_count = 0;
+> +
+> +               dp_display_host_phy_exit(dp);
+
+Why is the phy exited on resume when the link is still connected? Is
+this supposed to be done only when the sink_count is 0? And how does
+this interact with eDP where the phy is initialized by the call to
+dp_display_host_init() earlier in this function.
+
+>         }
+>
+>         dp->link->sink_count = sink_count;
+> @@ -1366,6 +1393,8 @@ static int dp_pm_suspend(struct device *dev)
+>                 dp_display_host_deinit(dp);
+>         }
+>
+> +       dp_display_host_phy_exit(dp);
+> +
+>         dp->hpd_state = ST_SUSPENDED;
+>
+>         /* host_init will be called at pm_resume */
