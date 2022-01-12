@@ -2,130 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B01E48C629
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 15:40:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E395848C674
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jan 2022 15:51:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354149AbiALOj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 09:39:56 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:15587 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1344321AbiALOj4 (ORCPT
+        id S1354297AbiALOuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Jan 2022 09:50:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52172 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354295AbiALOuM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 09:39:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1641998396; x=1673534396;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=iCgUxcPRWgRfarCkwn197Zs65Kz++fhiEjcJLIhUBEM=;
-  b=FTw4liqS6ZgGKLKw+7/tiIfNIeplPky+rR05ZIArR2ijS9xlyXlFUGqD
-   FwQFksm+vOHBrw01bA1XI7a+oJqCE4m144kbUBAJjSLCL846doOwO+gTL
-   oZglCZsQt8wloDQfrg6Efr3pPc/SezKAXndswPd8p/nMV37idixeejAti
-   Y=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 Jan 2022 06:39:55 -0800
-X-QCInternal: smtphost
-Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2022 06:39:55 -0800
-Received: from hu-ctheegal-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 12 Jan 2022 06:39:51 -0800
-From:   Chitti Babu Theegala <quic_ctheegal@quicinc.com>
-To:     <mingo@redhat.com>, <peterz@infradead.org>,
-        <juri.lelli@redhat.com>, <vincent.guittot@linaro.org>,
-        <dietmar.eggemann@arm.com>, <rostedt@goodmis.org>,
-        <joel@joelfernandes.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <quic_lingutla@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_rjendra@quicinc.com>,
-        "Chitti Babu Theegala" <quic_ctheegal@quicinc.com>
-Subject: [PATCH] sched/fair: Prefer small idle cores for forkees
-Date:   Wed, 12 Jan 2022 20:09:02 +0530
-Message-ID: <20220112143902.13239-1-quic_ctheegal@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Wed, 12 Jan 2022 09:50:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FE2BC061748;
+        Wed, 12 Jan 2022 06:50:12 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 59721B81F48;
+        Wed, 12 Jan 2022 14:50:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 24964C36AE5;
+        Wed, 12 Jan 2022 14:50:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1641999010;
+        bh=URopaG1yiPrxgtPoWWzhcJozfFtx2f8h9L3UD6HzMuQ=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=aJswuNVkDY3ZgMsGAZomZeZkbjWHQOukkXLmngDJMv2/M0B4gdBKXv5IwrkbcZGNZ
+         YH0LmSGb2TjAtxKwsPLeUM0RzeqXnnnZi6V5DCsMfE56AryqjnXRQ9GrkwHlRKDoqM
+         aJEvBSzotkPHDKSdNHrnEsd8cltgyo3SsyUz1rv3tlcKvhlBe9jt/LILQYRZ1QHB/O
+         Te64fxcqILx49ICmKrt7QEs2dH6gO8pbPm6Qnw9uirC1OgEoZe4rEJYiJP608DcF1W
+         14lVf0sbo3WyxviVMqUu/4DDU4LknXftUvBihoBqvkRU0TTMqNeJNGwEpXpb2jYfkb
+         Wd868tk4DGWEA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 08D3CF6078C;
+        Wed, 12 Jan 2022 14:50:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net v2 0/3] net: ipa: fix two replenish bugs
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <164199901001.15011.131958675903975901.git-patchwork-notify@kernel.org>
+Date:   Wed, 12 Jan 2022 14:50:10 +0000
+References: <20220112133012.778148-1-elder@linaro.org>
+In-Reply-To: <20220112133012.778148-1-elder@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     davem@davemloft.net, kuba@kernel.org, jponduru@codeaurora.org,
+        avuyyuru@codeaurora.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, mka@chromium.org, evgreen@chromium.org,
+        elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Newly forked threads don't have any useful utilization data yet and
-it's not possible to forecast their impact on energy consumption.
-These forkees (though very small, most times) end up waking big
-cores from deep sleep for that very small durations.
+Hello:
 
-Bias all forkees to small cores to prevent waking big cores from deep
-sleep to save power.
+This series was applied to netdev/net.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
----
- kernel/sched/fair.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+On Wed, 12 Jan 2022 07:30:09 -0600 you wrote:
+> This series contains two fixes for bugs in the IPA receive buffer
+> replenishing code.  The (new) second patch defines a bitmap to
+> represent endpoint the replenish enabled flag.  Its purpose is to
+> prepare for the third patch, which adds an additional flag.
+> 
+> Version 2 of this series uses bitmap operations in the second bug
+> fix rather than an atomic variable, as suggested by Jakub.
+> 
+> [...]
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6e476f6..d407bbc 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5976,7 +5976,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
- }
- 
- static struct sched_group *
--find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu);
-+find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag);
- 
- /*
-  * find_idlest_group_cpu - find the idlest CPU among the CPUs in the group.
-@@ -6063,7 +6063,7 @@ static inline int find_idlest_cpu(struct sched_domain *sd, struct task_struct *p
- 			continue;
- 		}
- 
--		group = find_idlest_group(sd, p, cpu);
-+		group = find_idlest_group(sd, p, cpu, sd_flag);
- 		if (!group) {
- 			sd = sd->child;
- 			continue;
-@@ -8997,7 +8997,8 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
- static bool update_pick_idlest(struct sched_group *idlest,
- 			       struct sg_lb_stats *idlest_sgs,
- 			       struct sched_group *group,
--			       struct sg_lb_stats *sgs)
-+			       struct sg_lb_stats *sgs,
-+			       int sd_flag)
- {
- 	if (sgs->group_type < idlest_sgs->group_type)
- 		return true;
-@@ -9034,6 +9035,11 @@ static bool update_pick_idlest(struct sched_group *idlest,
- 		if (idlest_sgs->idle_cpus > sgs->idle_cpus)
- 			return false;
- 
-+		/* Select smaller cpu group for newly woken up forkees */
-+		if ((sd_flag & SD_BALANCE_FORK) && (idlest_sgs->idle_cpus &&
-+			!capacity_greater(idlest->sgc->max_capacity, group->sgc->max_capacity)))
-+			return false;
-+
- 		/* Select group with lowest group_util */
- 		if (idlest_sgs->idle_cpus == sgs->idle_cpus &&
- 			idlest_sgs->group_util <= sgs->group_util)
-@@ -9062,7 +9068,7 @@ static inline bool allow_numa_imbalance(int dst_running, int dst_weight)
-  * Assumes p is allowed on at least one CPU in sd.
-  */
- static struct sched_group *
--find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
-+find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag)
- {
- 	struct sched_group *idlest = NULL, *local = NULL, *group = sd->groups;
- 	struct sg_lb_stats local_sgs, tmp_sgs;
-@@ -9097,7 +9103,7 @@ find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
- 
- 		update_sg_wakeup_stats(sd, group, sgs, p);
- 
--		if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs)) {
-+		if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs, sd_flag)) {
- 			idlest = group;
- 			idlest_sgs = *sgs;
- 		}
+Here is the summary with links:
+  - [net,v2,1/3] net: ipa: fix atomic update in ipa_endpoint_replenish()
+    https://git.kernel.org/netdev/net/c/6c0e3b5ce949
+  - [net,v2,2/3] net: ipa: use a bitmap for endpoint replenish_enabled
+    https://git.kernel.org/netdev/net/c/c1aaa01dbf4c
+  - [net,v2,3/3] net: ipa: prevent concurrent replenish
+    https://git.kernel.org/netdev/net/c/998c0bd2b371
+
+You are awesome, thank you!
 -- 
-2.7.4
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
