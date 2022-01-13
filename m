@@ -2,93 +2,437 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A79F648D5C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 11:32:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A873748D649
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 12:05:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229449AbiAMKbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 05:31:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37600 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbiAMKbN (ORCPT
+        id S233932AbiAMLFS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 06:05:18 -0500
+Received: from m-r2.th.seeweb.it ([5.144.164.171]:50287 "EHLO
+        m-r2.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231831AbiAMLFR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 05:31:13 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63385C06173F;
-        Thu, 13 Jan 2022 02:31:13 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id a18so21324856edj.7;
-        Thu, 13 Jan 2022 02:31:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=FRgtdY54ky7tlq4RR5YyMTcefNy3Rd5B5NuglelQbfY=;
-        b=XRhWyOYnQtolT7HHIhIsBXQLhNmePTOVZhZNuUfRCZNksXsvF6BwuwF4bn+54p/m09
-         DhNIvs2OuJ9g/9zcvs51v3xyLXQsSRAiMvq2N1LvomeHnbrr6quYHfQGhRystWi3OAYC
-         XJyVy9rGe2n1oOwl/ZmzBoTSt95Ajvftjows9v3DcdDHbxIfRVcOywVwLx0gPWI+Dtx5
-         xi73tDmR3F5CSbOkxsI8Pval0NHtI3bLLSK4ViAJ8imDh+sAqx+qNuFOKHwRJHLx8IeF
-         0OrYtZ2eTeZLKAZ84ltUJV6DgH4Egi+eDHrx4owXXkwt5qIDQsdKEqB4ZiWgN3W67qN4
-         BlTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=FRgtdY54ky7tlq4RR5YyMTcefNy3Rd5B5NuglelQbfY=;
-        b=q33OGunxXnw3ErBy4ASjpR3XAuW5U7j+TZWmGGmm1NUKdhilQ0LKPWCaGFoUcgNNiE
-         oSbup3+wEX2cT25YgDoETHJYlhA2giJofABHpc/jGGu258GUZcOS0HVp94h8iOpVQxcX
-         3vaJQkTOXdyCfhQLDINi4NfUdfFcp8UzPr+UliAOW8M5HTBYSJNV9ae2ztWmgQYh5Xiw
-         X3F6IH0PqIprBX6yUjkdcPEPo6ijZPJpg/qoK6dTUZzGcSG5NxKtWqUxZ5eNPCwIJO7I
-         2xu35H4vlwX0WBV6x8EcQiXUKyUCWYWTNS7umoFph95HLKGHCPl5QSRn+9VBL6JLxjiP
-         PCkQ==
-X-Gm-Message-State: AOAM531HotKOZTfypUvgDIyLE6C+2nEwwY99wMYtPv8k+mYNAG2VMWaX
-        4VntIVFlANapmGc1Ds2AVe8=
-X-Google-Smtp-Source: ABdhPJxvf5Q/FHfJRtOY+93WrFf4USegInKpk2/TMhXd/U1ta9Pt9BhQfsZycXC/QzAWu57PqG+bSg==
-X-Received: by 2002:a17:906:456:: with SMTP id e22mr3097659eja.203.1642069872005;
-        Thu, 13 Jan 2022 02:31:12 -0800 (PST)
-Received: from standask-GA-A55M-S2HP ([188.123.115.255])
-        by smtp.gmail.com with ESMTPSA id g3sm731386ejo.147.2022.01.13.02.31.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 02:31:11 -0800 (PST)
-Date:   Thu, 13 Jan 2022 11:31:10 +0100
-From:   Stanislav Jakubek <stano.jakubek@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2] dt-bindings: vendor-prefixes: add Wingtech
-Message-ID: <20220113103110.GA4488@standask-GA-A55M-S2HP>
+        Thu, 13 Jan 2022 06:05:17 -0500
+Received: from [192.168.1.101] (83.6.165.232.neoplus.adsl.tpnet.pl [83.6.165.232])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5EB493E7CC;
+        Thu, 13 Jan 2022 12:05:14 +0100 (CET)
+Message-ID: <6e1affb2-c4fe-568c-38d2-bcfd3bd3c437@somainline.org>
+Date:   Thu, 13 Jan 2022 12:05:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] arm64: dts: qcom: Initial Xiaomi Mi 9 support (cepheus)
+Content-Language: en-US
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Colin Cross <ccross@android.com>,
+        Tony Luck <tony.luck@intel.com>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20220107025910.112425-1-alexeymin@postmarketos.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220107025910.112425-1-alexeymin@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The vendor prefix for Wingtech [1] is used in device tree [2], but was
-not documented so far. Add it to the schema to document it.
 
-[1] http://www.wingtech.com/en
-[2] arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
 
-Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
----
-Changes in v2:
-  - Reworked patch description
-  - Rebase on next-20220113
+On 7.01.2022 03:59, Alexey Minnekhanov wrote:
+> Add initial support for Xiaomi Mi 9 smartphone, based on
+> Qualcomm SM8150 (Snapdragon 855) chipset.
+> 
+> Currently the following features are supported:
+>  * reserved-memory map
+>  * debug UART
+>  * display using simple-framebuffer
+>  * physical keys: power, volume up/down, AI key
+>  * reboot modes
+>  * regulator voltages
+>  * USB peripheral mode
+> 
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+> ---
 
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+[..]
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index b3de81e8290f..eaf7f4940978 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1338,6 +1338,8 @@ patternProperties:
-     description: Wiligear, Ltd.
-   "^winbond,.*":
-     description: Winbond Electronics corp.
-+  "^wingtech,.*":
-+    description: Wingtech Technology Co., Ltd.
-   "^winlink,.*":
-     description: WinLink Co., Ltd
-   "^winstar,.*":
--- 
-2.25.1
 
+> +++ b/arch/arm64/boot/dts/qcom/sm8150-xiaomi-cepheus.dts
+Is there a shared xiaomi 8150/8150+/8150++(860) platform btw?
+
+It seems like they release a new device each week, so there may be
+some nice potential to commonize it in the future :D
+
+
+> @@ -0,0 +1,575 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2021, Alexey Minnekhanov <alexeymin@postmarketos.org>
+22
+
+
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/gpio/gpio.h>
+gpio.h can be moved to sm8150.dtsi
+
+
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "sm8150.dtsi"
+> +#include "pm8150.dtsi"
+> +#include "pm8150b.dtsi"
+> +#include "pm8150l.dtsi"
+> +
+> +/*
+> + * Rewrite reserved memory maps inherited from sm8150.dtsi to match the ones
+> + * used on xiaomi-cepheus.
+> + * Note: this list is ordered by its memory address in sm8150.dtsi.
+> + */
+> +/delete-node/ &tz_mem;      /* same address but larger, no place for rmtfs_mem! */
+> +/delete-node/ &rmtfs_mem;   /* moved to completely different address */
+> +/delete-node/ &adsp_mem;    /* same start address, but larger size */
+> +/delete-node/ &mpss_mem;    /* same size, shifted higher, due to larger adsp_mem */
+> +/delete-node/ &venus_mem;   /* same size, shifted higher */
+> +/delete-node/ &slpi_mem;    /* same size, shifted higher */
+> +/delete-node/ &ipa_fw_mem;  /* same size, shifted higher */
+> +/delete-node/ &ipa_gsi_mem; /* same size, shifted higher */
+> +/delete-node/ &gpu_mem;     /* same size, shifted higher */
+> +/delete-node/ &spss_mem;    /* same size, shifted higher */
+> +/delete-node/ &cdsp_mem;    /* same size, shifted higher */
+> +
+> +/ {
+> +	model = "Xiaomi Mi 9";
+> +	compatible = "xiaomi,cepheus", "qcom,sm8150";
+> +
+> +	aliases {
+> +		serial0 = &uart2;
+> +		display0 = &framebuffer;
+> +	};
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		stdout-path = "serial0:115200n8";
+> +
+> +		framebuffer: framebuffer@9c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x9c000000 0 0x2300000>;
+> +			width = <1080>;
+> +			height = <2340>;
+> +			stride = <(1080 * 4)>;
+> +			format = "a8r8g8b8";
+> +			/*
+> +			 * That's (going to be) a lot of clocks, but it's necessary due
+> +			 * to unused clk cleanup & no panel driver yet (& no dispcc either)..
+> +			 */
+> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +				 <&gcc GCC_DISP_SF_AXI_CLK>;
+> +		};
+> +	};
+> +
+> +	gpio_keys {
+> +		compatible = "gpio-keys";
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ai_key_pin_a &vol_up_pin_a>;
+> +
+> +		vol_up {
+> +			label = "volume_up";
+> +			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <EV_KEY>;
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			wakeup-source;
+> +			debounce-interval = <15>;
+> +		};
+> +
+> +		ai_key {
+> +			label = "ai_key";
+> +			gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <EV_KEY>;
+> +			linux,code = <KEY_HOMEPAGE>; /* no AI key in Linux */
+On Xperias with an additional button I set it to KEY_LEFTMETA for tiling WMs, maybe that could home in handy?
+No pressure though
+
+> +			wakeup-source;
+> +			debounce-interval = <39>;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		tz_mem: memory@86200000 {
+> +			no-map;
+> +			reg = <0x0 0x86200000 0x0 0x5500000>;
+> +			phandle = <0x594>;
+Phandle properties are generated by dtc at compile time, this is probably a leftover
+from copying the decompiled dtb, also please move no-map below reg consistently in all nodes.
+
+
+[..]
+
+> +
+> +	vdd_boost_vreg: vdd-boost-regulator {
+> +		compatible = "regulator-fixed";
+This regulator should have a voltage range specified.
+
+
+> +		regulator-name = "vdd_boost_vreg";
+> +		startup-delay-us = <4000>;
+> +		enable-active-high;
+> +		regulator-always-on;
+> +		gpio = <&pm8150b_gpios 5 GPIO_ACTIVE_HIGH>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&vdd_boost_en_pin>;
+> +	};
+> +
+
+[..]
+
+
+> +&apps_rsc {
+> +	pm8150-rpmh-regulators {
+> +		compatible = "qcom,pm8150-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +		vdd-s3-supply = <&vph_pwr>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-s6-supply = <&vph_pwr>;
+> +		vdd-s7-supply = <&vph_pwr>;
+> +		vdd-s8-supply = <&vph_pwr>;
+> +		vdd-s9-supply = <&vph_pwr>;
+> +		vdd-s10-supply = <&vph_pwr>;
+> +
+> +		vdd-l1-l8-l11-supply = <&vreg_s6a_0p9>;
+> +		vdd-l2-l10-supply = <&vreg_bob>;
+> +		vdd-l3-l4-l5-l18-supply = <&vreg_s6a_0p9>;
+> +		vdd-l6-l9-supply = <&vreg_s8c_1p3>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_1p9>;
+> +		vdd-l13-l16-l17-supply = <&vreg_bob>;
+> +
+> +		vreg_s2a_0p6: smps2 {
+> +			regulator-min-microvolt = <600000>;
+> +			regulator-max-microvolt = <600000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_s2a_0p6";
+> +		};
+> +
+> +		vreg_s5a_1p9: smps5 {
+> +			regulator-min-microvolt = <1904000>;
+> +			regulator-max-microvolt = <2040000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_s5a_0p6";
+> +		};
+> +
+> +		vreg_s6a_0p9: smps6 {
+> +			regulator-min-microvolt = <920000>;
+> +			regulator-max-microvolt = <1128000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_s6a_0p9";
+> +		};
+> +
+> +		vreg_l1a_0p75: ldo1 {
+> +			regulator-min-microvolt = <752000>;
+> +			regulator-max-microvolt = <752000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_l1a_0p75";
+> +		};
+> +
+> +		vreg_l2a_3p1: ldo2 {
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_l2a_3p1";
+> +		};
+> +
+> +		vreg_l3a_0p8: ldo3 {
+> +			regulator-min-microvolt = <480000>;
+> +			regulator-max-microvolt = <932000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_l3a_0p8";
+0p8 seems weird considering the voltage range..
+
+> +		};
+> +
+> +		vreg_l5a_0p875: ldo5 {
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_l5a_0p875";
+definitely 0p88
+
+
+> +
+> +		vreg_l18a_0p8: ldo18 {
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150_l18a_0p8";
+and here 0p88 too
+
+
+[..]
+
+
+> +
+> +		vreg_s8c_1p3: smps8 {
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_s8c_1p3";
+1p35 unless it's voted otherwise
+
+
+> +		};
+> +
+> +		vreg_l1c_1p8: ldo1 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l1c_1p8";
+> +		};
+> +
+> +		vreg_l2c_1p3: ldo2 {
+> +			regulator-min-microvolt = <1304000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l2c_1p3";
+> +		};
+> +
+> +		vreg_l3c_1p2: ldo3 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l3c_1p2";
+> +		};
+> +
+> +		vreg_l4c_1p8: ldo4 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <2928000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l4c_1p8";
+Again, 1p8 seems weird unless it's always voted to be 1p8
+
+
+> +		};
+> +
+> +		vreg_l5c_1p8: ldo5 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <2928000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l5c_1p8";
+> +		};
+ditto
+
+
+> +
+> +		vreg_l6c_2p9: ldo6 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-name = "pm8150l_l6c_2p9";
+> +		};
+> +
+> +		vreg_l7c_3p0: ldo7 {
+> +			regulator-min-microvolt = <2856000>;
+> +			regulator-max-microvolt = <3104000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l7c_3p0";
+> +		};
+> +
+> +		vreg_l8c_1p8: ldo8 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-name = "pm8150l_l8c_1p8";
+> +		};
+> +
+> +		vreg_l9c_2p9: ldo9 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-name = "pm8150l_l9c_2p9";
+Again, weird unless it's voted otherwise
+
+
+
+Btw, do we really want to name voltage lines on phones to sound like they are taken
+out of a Dragonboard schematic without having the knowledge about the engineering behind it?
+
+Well uh, unless somebody does actually have this knowledge of course..
+
+
+> +&tlmm {
+> +	/* gpios 0..3 are NFC spi, gpios 126..129 are FP spi */
+Since I'm asking you for changes already, I may as well ask you to capitalize SPI..
+Also, is the entire NFC chip wired via SPI or only the Secure Element (SE)?
+
+
+> +	gpio-reserved-ranges = <0 4>, <126 4>;
+> +
+> +	ai_key_pin_a: ai-key-pin-active {
+> +		pins = "gpio97";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+> +&uart2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	snps,has-lpm-erratum;
+> +	snps,hird-threshold = /bits/ 8 <0x10>;
+Looks like these two properties are set SoC-wide on 4.14
+
+
+> +	maximum-speed = "high-speed";
+Shame, Xiaomi :(
+
+
+> +	dr_mode = "peripheral";
+> +};
+> +
+> +&usb_1_hsphy {
+> +	status = "okay";
+> +	vdda-pll-supply = <&vreg_l5a_0p875>;
+> +	vdda18-supply = <&vreg_l12a_1p8>;
+> +	vdda33-supply = <&vreg_l2a_3p1>;
+> +};
+> +
+> +&usb_1_qmpphy {
+> +	status = "okay";
+> +	vdda-phy-supply = <&vreg_l3c_1p2>;
+> +	vdda-pll-supply = <&vreg_l5a_0p875>;
+> +};
+> 
+
+
+Konrad
