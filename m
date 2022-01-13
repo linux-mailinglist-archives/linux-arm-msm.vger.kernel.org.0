@@ -2,182 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F35F448D1A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 05:25:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F6E248D2AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 08:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232524AbiAMEZo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Jan 2022 23:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40294 "EHLO
+        id S230330AbiAMHNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 02:13:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229926AbiAMEZk (ORCPT
+        with ESMTP id S230320AbiAMHNM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Jan 2022 23:25:40 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9293C06173F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 20:25:40 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id w188so6126794oiw.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 20:25:40 -0800 (PST)
+        Thu, 13 Jan 2022 02:13:12 -0500
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4CAC061751
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 23:13:11 -0800 (PST)
+Received: by mail-qt1-x832.google.com with SMTP id f17so6048180qtf.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 23:13:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=hOJyvOSbThwu+QP4lcC5VRMHJ9Gf10Mr2Em/YOYWYbk=;
-        b=AKNXIEa3uoJszAFx/Q8Df9Kg5xa2u6fKenb78GUjwdXWtnCteJh6avAiS8oevT+s+k
-         NHaj16xl+Qwpi5gJy++7R7G6iwvQJHH+vGP4Lm+68/0d0ThWDP+DDzM02nwmlHeL6P20
-         e75y/SI2FfHqxsUfa+CudWEm56BTNYGveV2+s=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8M7DHNqIGb8T38MhtK9zvNv2bpY/lvWtx3YDXV9Tj8I=;
+        b=qIohtgfLM8Muy/S/qrETPOgzJmX+T5sA52nuKD/xxF+ot3vn2MIoZBE68IfKR1a+45
+         TyXpS/HG+q56nfitHBfuPmvvx0Mu8UwbVEMk4evAy7/yUat4phet2r+zUyk3JgQ4dw7Z
+         u5bu/qzWNCTZQuqY8ty/ufTcD2i59VwX/+iJ72rzYOD1jSDUc7mTWBe93TdLyPe9QlGg
+         iGig5sX3ELfg2m707GTjJV1ib2bewI/C9ydgL9UPMRr6Y39CEnHy++ZbY0n2tqnne3yP
+         +K37pfg+jPJsjwJ8A8IxbGnR1MGqgrpgG1vwZjzKI95/TO/0ha/lBkzZ/sk2jWZmBe1w
+         ByjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=hOJyvOSbThwu+QP4lcC5VRMHJ9Gf10Mr2Em/YOYWYbk=;
-        b=1WOX1mY01xvYwI4OPCafv9b+8CkYDIDtcjSG+LF4bQmFlhpTDc9ZH6Ugr9Nb0DlGRI
-         QDWu5EmLxHOtJ6KUJXLjJiHcVQDnlmE0OhJGoeQUfP6CCAO8rZJ3Cu0l9bBZX7HLzukh
-         Jeob8fwcgkwjOZy23kD0yUmlIUALm6/0XFNQcloxq2ieB0qL0bXmg6nPm9HDFSCzGHWC
-         cXJw+JD1ZRpisVCZhfMT5ofAobKYSmvceDfzfEQWZ4lU78KBRHlZ6iz0i+cegdby7tXK
-         OZtkZc/GKkFbdoht+412fPYuzYIN1vM7uLvpIUtVxRWwMXOmXm0W4gqaHE8tK+vMJygZ
-         JU/g==
-X-Gm-Message-State: AOAM530K5WWFOwy5SChvMCtYm1t2r7Nm4q5InVaarrko4s4nqBZrlsx7
-        iOfXyNepiVoDsWjdRbCpNFB89t08lgzce6SCBJwtmw==
-X-Google-Smtp-Source: ABdhPJxrvJfe4npB2ZG64Di6xVANLUpa34m0XDfE47xF6cHvLcUVRQzP10HeZhAPB9Nbe7sVFir4+/cMqLM98w7inas=
-X-Received: by 2002:aca:a953:: with SMTP id s80mr7557861oie.164.1642047939842;
- Wed, 12 Jan 2022 20:25:39 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 Jan 2022 20:25:39 -0800
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8M7DHNqIGb8T38MhtK9zvNv2bpY/lvWtx3YDXV9Tj8I=;
+        b=3AaAARtaZYKQHTFNw7VTFlVaiSJaMbIjO78MG6vHGpTh/lyUXRVvpYpZCPTpTd7Vqy
+         oPSb16VEBW0c8E/d4z3xX2TYP44JXI1oekEonx2o8wuovURqIszMFbdw6tExreO8Hjws
+         NFw08exJZqVyvp7z34JKxah7pn8JRP1y2BFE+s5++zFoi3dZNQh7SDJthsb+J6e0maQe
+         KKH4ItUJZffSEEzVnbKZvA2iuP0k6kqh7FBDOYD2VUA7iz90fU4k9yVM/aZOeotF19GI
+         Rgve8vaQpEIvPO5QiRyQzphJqHT4rMtoAKykqCy87dXTWUvdmbTDZpJM/b6Sz39zSHMv
+         4W3A==
+X-Gm-Message-State: AOAM530uCQLnraaMc9ivp2S/W4oL63hLrINQY8x0mmFNAuDpWPeyA8y1
+        XBz5/yg4wSaykAMBysQnJHazMavDSR2tiHeTswsCEA==
+X-Google-Smtp-Source: ABdhPJx1y+5qzqGkdufL1lymNEVHc7WenfzCCuu3h0YYxZ5tyyugQGLAy7qBvf0pJG+6kg1ogk/QxcaYNvPlUCDNeXE=
+X-Received: by 2002:a05:622a:1883:: with SMTP id v3mr2520046qtc.682.1642057991028;
+ Wed, 12 Jan 2022 23:13:11 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <ff81bc1fe1f1c2060fcf03ba14f1bef584c47599.camel@mediatek.com>
-References: <20220106214556.2461363-1-swboyd@chromium.org> <20220106214556.2461363-26-swboyd@chromium.org>
- <1a3b368eb891ca55c33265397cffab0b9f128737.camel@mediatek.com>
- <CAE-0n53Y3WRy4_QvUm9k9wjjWV7adMDQcK_+1ji4+W25SSeGwg@mail.gmail.com> <ff81bc1fe1f1c2060fcf03ba14f1bef584c47599.camel@mediatek.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 12 Jan 2022 20:25:39 -0800
-Message-ID: <CAE-0n53FAHDmCznJ35Xh2aTwXBVwukAM3ioKx8SU9VowSaQSqA@mail.gmail.com>
-Subject: Re: [PATCH v5 25/32] iommu/mtk: Migrate to aggregate driver
-To:     Yong Wu <yong.wu@mediatek.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-mediatek@lists.infradead.org,
-        iommu@lists.linux-foundation.org, youlin.pei@mediatek.com
+References: <20220112030115.1.Ibac66e1e0e565313bc28f192e6c94cb508f205eb@changeid>
+ <20220112030115.3.I86c32730e08cba9e5c83f02ec17885124d45fa56@changeid> <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
+In-Reply-To: <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 13 Jan 2022 10:13:00 +0300
+Message-ID: <CAA8EJpokgiUbqj9BOF52a9QjJK53PinNHfxy_6nbNq53JnO2Og@mail.gmail.com>
+Subject: Re: [PATCH 3/4] drm/msm/adreno: Expose speedbin to userspace
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
+        <devicetree@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Yong Wu (2022-01-12 01:09:19)
-> On Tue, 2022-01-11 at 16:27 -0800, Stephen Boyd wrote:
-> > ---8<---
-> > diff --git a/drivers/base/component.c b/drivers/base/component.c
-> > index 64ad7478c67a..97f253a41bdf 100644
-> > --- a/drivers/base/component.c
-> > +++ b/drivers/base/component.c
-> > @@ -492,15 +492,30 @@ static struct aggregate_device
-> > *__aggregate_find(struct device *parent)
-> >       return dev ? to_aggregate_device(dev) : NULL;
-> >  }
+On Thu, 13 Jan 2022 at 00:19, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Tue, Jan 11, 2022 at 1:31 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 > >
-> > +static DEFINE_MUTEX(aggregate_mutex);
-> > +
-> >  static int aggregate_driver_register(struct aggregate_driver *adrv)
-> >  {
-> > -     adrv->driver.bus = &aggregate_bus_type;
-> > -     return driver_register(&adrv->driver);
-> > +     int ret = 0;
-> > +
-> > +     mutex_lock(&aggregate_mutex);
-> > +     if (!refcount_inc_not_zero(&adrv->count)) {
-> > +             adrv->driver.bus = &aggregate_bus_type;
-> > +             ret = driver_register(&adrv->driver);
-> > +             if (!ret)
-> > +                     refcount_inc(&adrv->count);
+> > Expose speedbin through MSM_PARAM_CHIP_ID parameter to help userspace
+> > identify the sku.
+> >
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > ---
+> >
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 9 +++++----
+> >  1 file changed, 5 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > index f33cfa4..e970e6a 100644
+> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> > @@ -242,10 +242,11 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
+> >                 *value = !adreno_is_a650_family(adreno_gpu) ? 0x100000 : 0;
+> >                 return 0;
+> >         case MSM_PARAM_CHIP_ID:
+> > -               *value = adreno_gpu->rev.patchid |
+> > -                               (adreno_gpu->rev.minor << 8) |
+> > -                               (adreno_gpu->rev.major << 16) |
+> > -                               (adreno_gpu->rev.core << 24);
+> > +               *value = (uint64_t) adreno_gpu->rev.patchid |
+> > +                               (uint64_t) (adreno_gpu->rev.minor << 8) |
+> > +                               (uint64_t) (adreno_gpu->rev.major << 16) |
+> > +                               (uint64_t) (adreno_gpu->rev.core << 24) |
+> > +                               (((uint64_t) adreno_gpu->rev.sku) << 32);
 >
-> This should be refcount_set(&adrv->count, 1)?
+> How about this instead, so we are only changing the behavior for
+> new/unreleased devices:
 >
-> Otherwise, it will warning like this:
+> *value = adreno_gpu->rev.patchid |
+> (adreno_gpu->rev.minor << 8) |
+> (adreno_gpu->rev.major << 16) |
+> (adreno_gpu->rev.core << 24);
+> if (!adreno_gpu->info->revn)
+> *value |= (((uint64_t) adreno_gpu->rev.sku) << 32);
+>
+> (sorry about the butchered indentation.. somehow gmail has become
+> antagonistic about pasting code)
 
-Yeah I'll fix it, thanks.
-
->
-> [    2.654526] ------------[ cut here ]------------
-> [    2.655558] refcount_t: addition on 0; use-after-free.
->
-> After this patch, the aggregate_driver flow looks ok. But our driver
-> still aborts like this:
->
-> [    2.721316] Unable to handle kernel NULL pointer dereference at
-> virtual address 0000000000000000
-> ...
-> [    2.731658] pc : mtk_smi_larb_config_port_gen2_general+0xa4/0x138
-> [    2.732434] lr : mtk_smi_larb_resume+0x54/0x98
-> ...
-> [    2.742457] Call trace:
-> [    2.742768]  mtk_smi_larb_config_port_gen2_general+0xa4/0x138
-> [    2.743496]  pm_generic_runtime_resume+0x2c/0x48
-> [    2.744090]  __genpd_runtime_resume+0x30/0xa8
-> [    2.744648]  genpd_runtime_resume+0x94/0x2c8
-> [    2.745191]  __rpm_callback+0x44/0x150
-> [    2.745669]  rpm_callback+0x6c/0x78
-> [    2.746114]  rpm_resume+0x314/0x558
-> [    2.746559]  __pm_runtime_resume+0x3c/0x88
-> [    2.747080]  pm_runtime_get_suppliers+0x7c/0x110
-> [    2.747668]  __driver_probe_device+0x4c/0xe8
-> [    2.748212]  driver_probe_device+0x44/0x130
-> [    2.748745]  __device_attach_driver+0x98/0xd0
-> [    2.749300]  bus_for_each_drv+0x68/0xd0
-> [    2.749787]  __device_attach+0xec/0x148
-> [    2.750277]  device_attach+0x14/0x20
-> [    2.750733]  bus_rescan_devices_helper+0x50/0x90
-> [    2.751319]  bus_for_each_dev+0x7c/0xd8
-> [    2.751806]  bus_rescan_devices+0x20/0x30
-> [    2.752315]  __component_add+0x7c/0xa0
-> [    2.752795]  component_add+0x14/0x20
-> [    2.753253]  mtk_smi_larb_probe+0xe0/0x120
->
-> This is because the device runtime_resume is called before the bind
-> operation(In our case this detailed function is mtk_smi_larb_bind).
-> The issue doesn't happen without this patchset. I'm not sure the right
-> sequence. If we should fix in mediatek driver, the patch could be:
-
-Oh, the runtime PM is moved around with these patches. The aggregate
-device is runtime PM enabled before the probe is called, and there are
-supplier links made to each component, so each component is runtime
-resumed before the aggregate probe function is called. It means that all
-the component drivers need to have their resources ready to power on
-before their component_bind() callback is made. Thinking more about it
-that may be wrong if something from the aggregate device is needed to
-fully power on the component. Is that what is happening here?
+I assume that you would like to keep userspace compat for older chips.
+thus the if.
+Maybe we should introduce MSM_PARAM_CHIP_ID_SKU instead (and gradually
+make userspace switch to it)?
 
 >
+> BR,
+> -R
 >
-> diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
-> index b883dcc0bbfa..288841555067 100644
-> --- a/drivers/memory/mtk-smi.c
-> +++ b/drivers/memory/mtk-smi.c
-> @@ -483,8 +483,9 @@ static int __maybe_unused
-> mtk_smi_larb_resume(struct device *dev)
->         if (ret < 0)
->                 return ret;
->
-> -       /* Configure the basic setting for this larb */
-> -       larb_gen->config_port(dev);
-> +       /* Configure the basic setting for this larb after it binds
-> with iommu */
-> +       if (larb->mmu)
-> +               larb_gen->config_port(dev);
->
->         return 0;
->  }
->
->
-> Another nitpick, the title should be: iommu/mediatek: xxxx
->
+> >                 return 0;
+> >         case MSM_PARAM_MAX_FREQ:
+> >                 *value = adreno_gpu->base.fast_rate;
+> > --
+> > 2.7.4
+> >
 
-Fixed it.
+
+
+-- 
+With best wishes
+Dmitry
