@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B51048E0F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 00:34:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A99D48E0F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 00:34:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238225AbiAMXeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 18:34:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46710 "EHLO
+        id S238190AbiAMXeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 18:34:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230181AbiAMXeL (ORCPT
+        with ESMTP id S235609AbiAMXeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 18:34:11 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D22C061574;
-        Thu, 13 Jan 2022 15:34:11 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id s1so12867777wra.6;
-        Thu, 13 Jan 2022 15:34:11 -0800 (PST)
+        Thu, 13 Jan 2022 18:34:12 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D9E6C06173E;
+        Thu, 13 Jan 2022 15:34:12 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id k18so12827754wrg.11;
+        Thu, 13 Jan 2022 15:34:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TCO6Vi8mgWr9oxLizz6TAJIStLaTjVKYmUCn5e+EwX4=;
-        b=hLaniOyWl6zgbRMR7fjtXKBnvsO7xdoxHQ/fQd9B1IBfc7FcUfxYaZBNv/j9sYgQly
-         YdZHWQw3f74I+25nMR2jM5GJdWPpwRrUQb63u+r2JgkGzXss4Txud3amOvpZzRbUHVmR
-         pyq63LGuIatElO25zmhno77Cw4SI7t+jYRx+zxmqmwEEqCVWHy2mZKymjGSOD9UQCOvR
-         Jvn8ys2A3GSduADWxQecCsQGiSMBWaAc3KITSYZZfFtKbaM1B84YNmZ/EAPzryDOwzU2
-         HK8h9EWVtPUOaDkyglSjDtj/tRj6V0PoNSGzoB392XxY+Suc1ohJwOK8yrdAFVkNO8C/
-         LBww==
+        bh=8hqe6jXoXNhcyFzYzqsIs/6PsAukIAAN1Kbs4DiPAqs=;
+        b=ZYasOc31Utvft2Xo85b7fC5CYIAi3krLwEYkNY/k/dWw4hBR8RxNuLeKP4yMtzbDgZ
+         bzIs4tC0xcUZaEAjC/uDUNdcJQ09OyuayZiZi9jNRbBNmKHE6A9UiZTGHS8kc6FYVSGM
+         8KhngiutYRH2F1fg5gpwW+DwuaDvWCQUpF5t32+0uHjT3OxDrQovTh5b9yaBHb40JXZm
+         mhklY10FXUGTDd0LmgjJwCbiCS2Si/P72hUDovRijU6tQAWW/uBJ1ZPMbIwp1KewA3Lc
+         dG+OwDKvRYwuRPZQADaF0u+tWSKtNdX2sASvwEv3H8VLsK1QYt98IYcVuC7loMHYABKk
+         Yoew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TCO6Vi8mgWr9oxLizz6TAJIStLaTjVKYmUCn5e+EwX4=;
-        b=vfE2uJb4SwAhYQg4V19J+12gQ+G+EY/DoKVg/rurHVuoST9dODuc4k33o45Febos7J
-         AdBO77QrNJ/BwWmN66hsMi6EDx9JDpMJCqSsoMFQ1X8YyqHjHXBZLOXTeYBNyEAR4No2
-         EYOwHN7Jl3U9dlNrlTiQenLEpfALIFLbjRyXuS+fLHu0ghQkhXsOTvMT8aBMdAQl6dk6
-         imXug2iBWFg8yN267vEimJCO+aMdITbpVJME/ECLo9JgkEVvm6DGIFYey2hN88RQHeVg
-         rC3yJwLpEJxlx7rEdTxxXQsf0ctfRJoEN8+xSs62l/nOZ0e4bRenf93FkuNDRHTLgPdw
-         eAWg==
-X-Gm-Message-State: AOAM531UdmAwPAbARb6kfcflU+5ITM9i5GsMCxIQ1MOpAplYqtZHe2Qc
-        0Rli8PzC2MQGZdEhI8KbSMVqJkoNo5MDww==
-X-Google-Smtp-Source: ABdhPJwd0KrHMAm0RbStsNI4tg+jcg2SYxKKEw1KDqcSBaMgiIDkO7N24LwzSDGiPimxL+osAhh3qQ==
-X-Received: by 2002:adf:fac2:: with SMTP id a2mr5677040wrs.401.1642116849712;
-        Thu, 13 Jan 2022 15:34:09 -0800 (PST)
+        bh=8hqe6jXoXNhcyFzYzqsIs/6PsAukIAAN1Kbs4DiPAqs=;
+        b=BJlx8C6Q/FdikjkF9CdMPtlwWCgHy4tjBBnW10KtEA38DqiaJ+shY0bbbkPToZOIE8
+         +N2OIXKvyKfvmL0Ms+nCCiXk0DxcUccJQd6p4yXgrgPrkHUtbcEWcC6v/jfodOrKZ/mK
+         wZrzEPk/EP0kUm2AxmkHx0rkaqeiK1URvqtmhc7sWW5S/VGajmWVH2bQnVJOxW3Pc+cr
+         67JYfno11hga0pZo5vt9Mng7/Vaoe9EaGMMAcjI8QpkGg3Vn4LCFDDFIiB61/v6XyGV5
+         xYIZ9V1tbEnzj+MsFEaYDo8YOBRXR0r04fRy1wAvDFnxuNhJ+lOyWS5YPVPgepEUcUPa
+         dljw==
+X-Gm-Message-State: AOAM531LfiH/6FQ6jV0pC66cPwNOYJq/ZBwXLy+TdpkKn62lc1G4byCq
+        IfxZSTPPE9mna96wDt0h2db6vHeM4+NGlg==
+X-Google-Smtp-Source: ABdhPJz/JWa3zbdIgZ3Pr7Qqc9tIZP9x5aF753Prn0vgF9MNfHnH71JQGi7u1t/csf+6bRdQVvsIrQ==
+X-Received: by 2002:a5d:4451:: with SMTP id x17mr852401wrr.505.1642116850813;
+        Thu, 13 Jan 2022 15:34:10 -0800 (PST)
 Received: from dell5510.arch.suse.de (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id u17sm3724748wrt.37.2022.01.13.15.34.08
+        by smtp.gmail.com with ESMTPSA id u17sm3724748wrt.37.2022.01.13.15.34.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 15:34:09 -0800 (PST)
+        Thu, 13 Jan 2022 15:34:10 -0800 (PST)
 From:   Petr Vorel <petr.vorel@gmail.com>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Jean THOMAS <virgule@jeanthomas.me>,
@@ -59,9 +59,9 @@ Cc:     Jean THOMAS <virgule@jeanthomas.me>,
         Douglas Anderson <dianders@chromium.org>,
         Taniya Das <tdas@codeaurora.org>, linux-mmc@vger.kernel.org,
         Petr Vorel <petr.vorel@gmail.com>
-Subject: [PATCH 1/6] arm64: dts: qcom: msm8992-lg-bullhead: Place LG Bullhead generic code into a DTSI file
-Date:   Fri, 14 Jan 2022 00:33:53 +0100
-Message-Id: <20220113233358.17972-2-petr.vorel@gmail.com>
+Subject: [PATCH 2/6] arm64: dts: qcom: msm8992-lg-bullhead: Add support for LG Bullhead rev 1.0
+Date:   Fri, 14 Jan 2022 00:33:54 +0100
+Message-Id: <20220113233358.17972-3-petr.vorel@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220113233358.17972-1-petr.vorel@gmail.com>
 References: <20220113233358.17972-1-petr.vorel@gmail.com>
@@ -73,42 +73,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Jean THOMAS <virgule@jeanthomas.me>
 
-This patch puts the generic code common across all hardware revisions
-into a DTSI file.
-
-It also prefixes the DTS filename with the vendor name, to follow the
-naming convention used by other DTS files.
+This commit implements a DTS file for LG Bullhead (Nexus 5X) rev 1.0
+with its matching "qcom,board-id" property.
 
 Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 Signed-off-by: Jean THOMAS <virgule@jeanthomas.me>
 [ pvorel: rebased on current qcom/for-next ]
 Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/Makefile                  |  2 +-
- .../boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts  | 14 ++++++++++++++
- ...llhead-rev-101.dts => msm8992-lg-bullhead.dtsi} |  2 --
- 3 files changed, 15 insertions(+), 3 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
- rename arch/arm64/boot/dts/qcom/{msm8992-bullhead-rev-101.dts => msm8992-lg-bullhead.dtsi} (98%)
+ arch/arm64/boot/dts/qcom/Makefile                  |  1 +
+ .../boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts   | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f7232052d286..ee8e81f1c449 100644
+index ee8e81f1c449..0f983400d60c 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -18,7 +18,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
+@@ -18,6 +18,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-j5.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
--dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-xiaomi-libra.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-angler-rev-101.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
 new file mode 100644
-index 000000000000..e6a5ebd30e2f
+index 000000000000..7e6bce4af441
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
 @@ -0,0 +1,14 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
@@ -119,28 +113,11 @@ index 000000000000..e6a5ebd30e2f
 +#include "msm8992-lg-bullhead.dtsi"
 +
 +/ {
-+	model = "LG Nexus 5X rev 1.01";
++	model = "LG Nexus 5X rev 1.0";
 +
 +	/* required for bootloader to select correct board */
-+	qcom,board-id = <0xb64 0>;
++	qcom,board-id = <0xa64 0>;
 +};
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-similarity index 98%
-rename from arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-rename to arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index 4da6c44bf532..3b0cc85d6674 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -18,9 +18,7 @@ / {
- 	compatible = "lg,bullhead", "qcom,msm8992";
- 	chassis-type = "handset";
- 
--	/* required for bootloader to select correct board */
- 	qcom,msm-id = <251 0>, <252 0>;
--	qcom,board-id = <0xb64 0>;
- 	qcom,pmic-id = <0x10009 0x1000A 0x0 0x0>;
- 
- 	/* Bullhead firmware doesn't support PSCI */
 -- 
 2.34.1
 
