@@ -2,101 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC1CE48DBD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 17:32:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A11048DBE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 17:35:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236728AbiAMQcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 11:32:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36172 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236725AbiAMQcO (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 11:32:14 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E4F3C061574;
-        Thu, 13 Jan 2022 08:32:14 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id n11so8644696plf.4;
-        Thu, 13 Jan 2022 08:32:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+3q5GmFbYNyEJgrrlP1Ic3dY/1SWaaTPA9VEhYfsQJU=;
-        b=d2Xxijoqk1QxRW3U9287LjfQMlQt+Zec3Aq3Nchqnw2EWG+HksVI/vEUzpHE/dfibA
-         UZER/wPc+2d3Xj+o6c6iamOXGQAZIs+YtR4EBaekNegFq4Mko78lNZzwRda2/s5YeeaZ
-         7xHycysmT01PaDS+tM43VLDWaUUO/epZW9nen5LXHCIWPFrxAqkvBXaIthJ4gxDv7lh5
-         Kgn5MmaGRKqqwLvokqAskJ/lyShZLolLBISSnVHJKWZ6Hza0HU3Ne4CoFzucpfdqijK1
-         y0/Ob77r/LjPOdqB9gun5GShbWxLXj3Nixw5KVs2XXGDfkfyUi1FB9KChHfeiCP0KX+h
-         2tgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+3q5GmFbYNyEJgrrlP1Ic3dY/1SWaaTPA9VEhYfsQJU=;
-        b=zPQfEiCC6/2z7WFpmSYjAfDJnSmVf8OK5R0Qx9UZ8a2mdFEDVwhDV30Imegx/lNyrv
-         c7dQCOe/c4wvonHmdHic9OZgYV3sAenyK9JIVIAwJFBB0sJScArMtcSffSwSVWGSRTF9
-         /A3mIFb/K42XwxC+6puFCkj3ZtgQc/HG7WEBLdShYA2SjHNe+IAtV8yQezgk9x9u94ho
-         luipv0+Vb56k8TQSkrMF0CLg9Kne+LDs9eJrqHZy/QzsxnRbO+djiLuoS5Lj8yXS+Sl/
-         tJfrp/G2o+PFMcEMPmWdoAyRMEonbZV1BMHg337fpqaJb2QLJ089a3KRnWROw/aCg5s5
-         uiDw==
-X-Gm-Message-State: AOAM530ZaZveTM9OBeRGyPZSZxH9exIvKZSwvc62uxnhZiMortlnLDGA
-        ZugvpXEyOJIRKfpF/RUANZc=
-X-Google-Smtp-Source: ABdhPJyJl32B4r9KsE63UDv2Xaa30wFKuy2pT+8hjSFdNf9DEJ1Gz6eszjXC7Cb2AJywPnufEKWtBA==
-X-Received: by 2002:a17:90a:458d:: with SMTP id v13mr14966962pjg.202.1642091533656;
-        Thu, 13 Jan 2022 08:32:13 -0800 (PST)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id j18sm2661612pgi.78.2022.01.13.08.32.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 08:32:12 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Danylo Piliaiev <dpiliaiev@igalia.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Eric Anholt <eric@anholt.net>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: Add missing suspend_count increment
-Date:   Thu, 13 Jan 2022 08:32:13 -0800
-Message-Id: <20220113163215.215367-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        id S236770AbiAMQfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 11:35:40 -0500
+Received: from foss.arm.com ([217.140.110.172]:48398 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236772AbiAMQfk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 13 Jan 2022 11:35:40 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 641E36D;
+        Thu, 13 Jan 2022 08:35:39 -0800 (PST)
+Received: from FVFF7649Q05P (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 836CF3F774;
+        Thu, 13 Jan 2022 08:35:37 -0800 (PST)
+Date:   Thu, 13 Jan 2022 16:35:29 +0000
+From:   Vincent Donnefort <vincent.donnefort@arm.com>
+To:     Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+Cc:     mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
+        rostedt@goodmis.org, joel@joelfernandes.org,
+        linux-arm-msm@vger.kernel.org, quic_lingutla@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_rjendra@quicinc.com
+Subject: Re: [PATCH] sched/fair: Prefer small idle cores for forkees
+Message-ID: <YeBRD9zKSLPBFX+j@FVFF7649Q05P>
+References: <20220112143902.13239-1-quic_ctheegal@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220112143902.13239-1-quic_ctheegal@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, Jan 12, 2022 at 08:09:02PM +0530, Chitti Babu Theegala wrote:
+> Newly forked threads don't have any useful utilization data yet and
+> it's not possible to forecast their impact on energy consumption.
+>update_pick_idlest These forkees (though very small, most times) end up waking big
+> cores from deep sleep for that very small durations.
+> 
+> Bias all forkees to small cores to prevent waking big cores from deep
+> sleep to save power.
 
-Reported-by: Danylo Piliaiev <dpiliaiev@igalia.com>
-Fixes: 3ab1c5cc3939 ("drm/msm: Add param for userspace to query suspend count")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+This bias might be interesting for some workloads, but what about the
+others? (see find_energy_efficient_cpu() comment, which discusses forkees).
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 51b83776951b..17cfad6424db 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1560,6 +1560,8 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
- 		for (i = 0; i < gpu->nr_rings; i++)
- 			a6xx_gpu->shadow[i] = 0;
- 
-+	gpu->suspend_count++;
-+
- 	return 0;
- }
- 
--- 
-2.34.1
+> 
+> Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+> ---
+>  kernel/sched/fair.c | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 6e476f6..d407bbc 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -5976,7 +5976,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+>  }
+>  
+>  static struct sched_group *
+> -find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu);
+> +find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag);
+>  
+>  /*
+>   * find_idlest_group_cpu - find the idlest CPU among the CPUs in the group.
+> @@ -6063,7 +6063,7 @@ static inline int find_idlest_cpu(struct sched_domain *sd, struct task_struct *p
+>  			continue;
+>  		}
+>  
+> -		group = find_idlest_group(sd, p, cpu);
+> +		group = find_idlest_group(sd, p, cpu, sd_flag);
+>  		if (!group) {
+>  			sd = sd->child;
+>  			continue;
+> @@ -8997,7 +8997,8 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+>  static bool update_pick_idlest(struct sched_group *idlest,
+>  			       struct sg_lb_stats *idlest_sgs,
+>  			       struct sched_group *group,
+> -			       struct sg_lb_stats *sgs)
+> +			       struct sg_lb_stats *sgs,
+> +			       int sd_flag)
+>  {
+>  	if (sgs->group_type < idlest_sgs->group_type)
+>  		return true;
+> @@ -9034,6 +9035,11 @@ static bool update_pick_idlest(struct sched_group *idlest,
+>  		if (idlest_sgs->idle_cpus > sgs->idle_cpus)
+>  			return false;
+>  
+> +		/* Select smaller cpu group for newly woken up forkees */
+> +		if ((sd_flag & SD_BALANCE_FORK) && (idlest_sgs->idle_cpus &&
+> +			!capacity_greater(idlest->sgc->max_capacity, group->sgc->max_capacity)))
+> +			return false;
+> +
 
+Energy biased placement should probably be applied only when EAS is enabled.
+
+It's especially true here, if all CPUs have the same capacity, capacity_greater
+would be always false. So unless I missed something, we wouldn't let the group_util
+evaluation happen, would we?
+
+[...]
