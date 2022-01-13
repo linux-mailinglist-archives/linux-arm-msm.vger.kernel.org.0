@@ -2,140 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F6E248D2AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 08:13:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19B7048D5B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 11:29:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230330AbiAMHNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 02:13:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48686 "EHLO
+        id S230143AbiAMK2t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 05:28:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230320AbiAMHNM (ORCPT
+        with ESMTP id S230158AbiAMK2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 02:13:12 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4CAC061751
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 23:13:11 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id f17so6048180qtf.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jan 2022 23:13:11 -0800 (PST)
+        Thu, 13 Jan 2022 05:28:46 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 326BDC06173F;
+        Thu, 13 Jan 2022 02:28:46 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id w16so21244709edc.11;
+        Thu, 13 Jan 2022 02:28:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8M7DHNqIGb8T38MhtK9zvNv2bpY/lvWtx3YDXV9Tj8I=;
-        b=qIohtgfLM8Muy/S/qrETPOgzJmX+T5sA52nuKD/xxF+ot3vn2MIoZBE68IfKR1a+45
-         TyXpS/HG+q56nfitHBfuPmvvx0Mu8UwbVEMk4evAy7/yUat4phet2r+zUyk3JgQ4dw7Z
-         u5bu/qzWNCTZQuqY8ty/ufTcD2i59VwX/+iJ72rzYOD1jSDUc7mTWBe93TdLyPe9QlGg
-         iGig5sX3ELfg2m707GTjJV1ib2bewI/C9ydgL9UPMRr6Y39CEnHy++ZbY0n2tqnne3yP
-         +K37pfg+jPJsjwJ8A8IxbGnR1MGqgrpgG1vwZjzKI95/TO/0ha/lBkzZ/sk2jWZmBe1w
-         ByjA==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
+        bh=LkqhxnmG1/45++kJ42sZXMqyu9pv2lKUhXS8D1IxEh0=;
+        b=pVUsU5c/49h2BIj/nnCUjD7qK846LElhCjSA5Wu2xIsit9XT0nLxFR/+Ij0wMAf/mp
+         q+E/3Wh06r6K52AEseE2EM85U/ypdIh+f6+oZikHfHxRx1tArNlXNb2bUNerUGKqp3IK
+         MO8mq3bhF2CInPVmTiKKEyJop5o8TwqbT1Nw0RajEv5hYnQoejwV8TxAEo81KLlKWjkE
+         Ld5f3SR1ofyN10hikY5dXsfXFZfadIwWTSlWI4Sfs43Belt1RgZhso1zRte65HiGco8L
+         olThfm8w5VQC68Mc+zDQ6aWwJQgLjDFsNwSu07ugestunJ4EvF4ZGuH0X7jrpBsOdfvW
+         PIZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8M7DHNqIGb8T38MhtK9zvNv2bpY/lvWtx3YDXV9Tj8I=;
-        b=3AaAARtaZYKQHTFNw7VTFlVaiSJaMbIjO78MG6vHGpTh/lyUXRVvpYpZCPTpTd7Vqy
-         oPSb16VEBW0c8E/d4z3xX2TYP44JXI1oekEonx2o8wuovURqIszMFbdw6tExreO8Hjws
-         NFw08exJZqVyvp7z34JKxah7pn8JRP1y2BFE+s5++zFoi3dZNQh7SDJthsb+J6e0maQe
-         KKH4ItUJZffSEEzVnbKZvA2iuP0k6kqh7FBDOYD2VUA7iz90fU4k9yVM/aZOeotF19GI
-         Rgve8vaQpEIvPO5QiRyQzphJqHT4rMtoAKykqCy87dXTWUvdmbTDZpJM/b6Sz39zSHMv
-         4W3A==
-X-Gm-Message-State: AOAM530uCQLnraaMc9ivp2S/W4oL63hLrINQY8x0mmFNAuDpWPeyA8y1
-        XBz5/yg4wSaykAMBysQnJHazMavDSR2tiHeTswsCEA==
-X-Google-Smtp-Source: ABdhPJx1y+5qzqGkdufL1lymNEVHc7WenfzCCuu3h0YYxZ5tyyugQGLAy7qBvf0pJG+6kg1ogk/QxcaYNvPlUCDNeXE=
-X-Received: by 2002:a05:622a:1883:: with SMTP id v3mr2520046qtc.682.1642057991028;
- Wed, 12 Jan 2022 23:13:11 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition;
+        bh=LkqhxnmG1/45++kJ42sZXMqyu9pv2lKUhXS8D1IxEh0=;
+        b=DaEaKSLpwDZ7WIX9U83i4QFXOyUOTaNGita+5WiWPreZH0lqV/PscjTZD7vc7+pJBB
+         G3OuHOg3yHpxW8kSfTOysnGIgjYJLBoAJot5taevEhldcwS+/b9HCVNiYJQiE97XQRD5
+         HorbK6Iecf1Jf8mbdAdbLh/v70ltFUc2+/OnztfExedfGUZ3DKOc98RCu8xDVNKqZh26
+         wyeY0UEQb+U00I69d27yk0A9xIBFJB2pyJR7jO4GGrIQCGfxgRBn+nIadQOFTtSeldkE
+         ODyxhhX1gKqpojXWF6+ewc4ThQ0zLT2ranBEtws4j1x1/LKj49/GcB8o4AqY8Y7bWEOQ
+         gXFA==
+X-Gm-Message-State: AOAM533xup6b+OG/YgGnlRsBz5UE1kEjkRB+/OHdlaexYlcseWX/2HQG
+        b/dt3bhqs+P/QwRkQKiZ8oI=
+X-Google-Smtp-Source: ABdhPJw1+01Ug4iYqgERsBpcHoesyTFCZfBi6nKpid+nRCdtBf2UmMXIRJYYUy5BPCR3+++qQlXOJA==
+X-Received: by 2002:a17:906:6691:: with SMTP id z17mr2951555ejo.763.1642069724384;
+        Thu, 13 Jan 2022 02:28:44 -0800 (PST)
+Received: from standask-GA-A55M-S2HP ([188.123.115.255])
+        by smtp.gmail.com with ESMTPSA id gz11sm722316ejc.223.2022.01.13.02.28.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jan 2022 02:28:44 -0800 (PST)
+Date:   Thu, 13 Jan 2022 11:28:42 +0100
+From:   Stanislav Jakubek <stano.jakubek@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2] dt-bindings: vendor-prefixes: add 8devices
+Message-ID: <20220113102842.GA4357@standask-GA-A55M-S2HP>
 MIME-Version: 1.0
-References: <20220112030115.1.Ibac66e1e0e565313bc28f192e6c94cb508f205eb@changeid>
- <20220112030115.3.I86c32730e08cba9e5c83f02ec17885124d45fa56@changeid> <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
-In-Reply-To: <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 13 Jan 2022 10:13:00 +0300
-Message-ID: <CAA8EJpokgiUbqj9BOF52a9QjJK53PinNHfxy_6nbNq53JnO2Og@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/msm/adreno: Expose speedbin to userspace
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Jan 2022 at 00:19, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Tue, Jan 11, 2022 at 1:31 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> >
-> > Expose speedbin through MSM_PARAM_CHIP_ID parameter to help userspace
-> > identify the sku.
-> >
-> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> > ---
-> >
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 9 +++++----
-> >  1 file changed, 5 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index f33cfa4..e970e6a 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -242,10 +242,11 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
-> >                 *value = !adreno_is_a650_family(adreno_gpu) ? 0x100000 : 0;
-> >                 return 0;
-> >         case MSM_PARAM_CHIP_ID:
-> > -               *value = adreno_gpu->rev.patchid |
-> > -                               (adreno_gpu->rev.minor << 8) |
-> > -                               (adreno_gpu->rev.major << 16) |
-> > -                               (adreno_gpu->rev.core << 24);
-> > +               *value = (uint64_t) adreno_gpu->rev.patchid |
-> > +                               (uint64_t) (adreno_gpu->rev.minor << 8) |
-> > +                               (uint64_t) (adreno_gpu->rev.major << 16) |
-> > +                               (uint64_t) (adreno_gpu->rev.core << 24) |
-> > +                               (((uint64_t) adreno_gpu->rev.sku) << 32);
->
-> How about this instead, so we are only changing the behavior for
-> new/unreleased devices:
->
-> *value = adreno_gpu->rev.patchid |
-> (adreno_gpu->rev.minor << 8) |
-> (adreno_gpu->rev.major << 16) |
-> (adreno_gpu->rev.core << 24);
-> if (!adreno_gpu->info->revn)
-> *value |= (((uint64_t) adreno_gpu->rev.sku) << 32);
->
-> (sorry about the butchered indentation.. somehow gmail has become
-> antagonistic about pasting code)
+The vendor prefix for 8devices [1] is used in device tree [2], but was
+not documented so far. Add it to the schema to document it.
 
-I assume that you would like to keep userspace compat for older chips.
-thus the if.
-Maybe we should introduce MSM_PARAM_CHIP_ID_SKU instead (and gradually
-make userspace switch to it)?
+[1] https://www.8devices.com/
+[2] arch/arm/boot/dts/qcom-ipq4018-jalapeno.dts
 
->
-> BR,
-> -R
->
-> >                 return 0;
-> >         case MSM_PARAM_MAX_FREQ:
-> >                 *value = adreno_gpu->base.fast_rate;
-> > --
-> > 2.7.4
-> >
+Signed-off-by: Stanislav Jakubek <stano.jakubek@gmail.com>
+---
+Changes in v2:
+  - Reworked patch description
+  - Rebase on next-20220113
 
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index b3de81e8290f..8928884ba186 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -25,6 +25,8 @@ patternProperties:
+   # Keep list in alphabetical order.
+   "^70mai,.*":
+     description: 70mai Co., Ltd.
++  "^8dev,.*":
++    description: 8devices, UAB
+   "^abb,.*":
+     description: ABB
+   "^abilis,.*":
 -- 
-With best wishes
-Dmitry
+2.25.1
+
