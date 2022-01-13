@@ -2,154 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B53D48E01C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 23:14:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68F4248E08D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jan 2022 23:44:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235304AbiAMWOa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 17:14:30 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:2483 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231331AbiAMWOa (ORCPT
+        id S235332AbiAMWoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 17:44:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35582 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235318AbiAMWoF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 17:14:30 -0500
+        Thu, 13 Jan 2022 17:44:05 -0500
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 233BBC06161C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 14:44:05 -0800 (PST)
+Received: by mail-pj1-x1043.google.com with SMTP id 59-20020a17090a09c100b001b34a13745eso20198413pjo.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 14:44:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642112070; x=1673648070;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=2ZmCZ7gnTUyyBLTgMGy2tv8wRSeuoCkY3MNqGcsBJAc=;
-  b=NJDX4HFCxogJUh5ylciUpEj4pi1+n8OBjBiHyR7G2XPY9PTdKDjMpoWn
-   C0MUQ2syjxYUMde1VOgDTvAOFzFfaOEs9LoREp3t6TT/9mszXU+CHUKm9
-   q2UPjAhpbDpF+kiNnEutUSLB+7x1lX3l7qLozrLhbiNwqrkL2Bhvquecs
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Jan 2022 14:14:30 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jan 2022 14:14:29 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 13 Jan 2022 14:14:29 -0800
-Received: from [10.110.125.36] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 13 Jan
- 2022 14:14:28 -0800
-Message-ID: <c190bd82-b6d3-b6a9-3e58-32c8d9d417c1@quicinc.com>
-Date:   Thu, 13 Jan 2022 14:14:27 -0800
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
+        b=FC7JMxhOdovrsQ7Lcs1duX9HHtY1Bp2XpIriujdEd5sWYWwEmU+IzCbJMpgsF4HvH6
+         vGkfssSya+9lS8Se4/Pocs3eWVM59UHe3uEhSno2nkcnc/Diz3y8FsDdwQWaKfCaMo8L
+         XqXNMRr9s1yMuYEl+MhYgxHB1G5Jx+LMjawuDRSZ+5wKvm1otCCb5ABOWAUiVZgI39os
+         XvZKdH0Cyk7xUJSRusJTFhe80eRvF2QnrZ69eCtn1yN6CGGbRHhItwqkSezmtX1ygK1u
+         /rw+rlQfzCqlRlC0Ey8crwDRaJsQgt7YINzmIIsZEin7/RIDzern1c1eXXZsWYXlZXFU
+         udoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=YbEI3Q/NEjCtDTVCV1jkA7nYNYBH/Wfa2wk3IkVyJko=;
+        b=x7Bj8GKnLW0EM2ltz7QGd/XVtiScVTLCDGPIcgPf0dOBx0vhihuQIR4H6ZY5/XpYAT
+         n+Bmq24rcIVQECHUiKLT/jZGWJii8bfjmtlTjmMHwSWdAEVrCiHd8uuCDKzeTaB/pMZN
+         cdR95ctIssyluCBpddt+QVXahoKIgMqI3J8vqYjN6Nh4C8DStyyQJU63yMPzFBEdhSrc
+         b31hUOvR+LuSs2Aww+kcU/u5ybfePbCUK+u/oF9f3T9usPVvm8+eRanTcZKMgHaYvOIg
+         IbwyefacqUIQ7MnDyboQ/tGL9xMKzqfMLBQ/nnag2M7pBby32oiRZ4rSbIwb6G/eWRM1
+         CWnA==
+X-Gm-Message-State: AOAM532PArTOBFdtzHiKGXiZLY6QlXnjnWtNPdKSbQgeejjoYwWsm3iJ
+        ClMaZL5x7xXBVQhc2GzVCPFpc0afb1glDsCnF+U=
+X-Google-Smtp-Source: ABdhPJyYN9RvjDnI4OUpO8da/PcyxtA4YM1mgnER7WwL51fKqsuEaPHkbUZ+5D3xmmGwp04zCJx79o5KHgXj+r48uiA=
+X-Received: by 2002:a17:90a:e454:: with SMTP id jp20mr17096537pjb.53.1642113844606;
+ Thu, 13 Jan 2022 14:44:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v11 1/4] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1641926606-1012-1-git-send-email-quic_khsieh@quicinc.com>
- <1641926606-1012-2-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n53hrPYR3ThwxM_+fzyRSB+6W1drFymW5n_RKmg_gf8z-w@mail.gmail.com>
- <84ee17f9-2597-86b6-1517-2358d443f65b@quicinc.com>
- <CAE-0n5134H0puMicozjdfTY+zXVUZyrebjv7Hto3EWcQAELO4A@mail.gmail.com>
- <338ae657-e8ed-e620-0aa7-4ad05df18ad1@quicinc.com>
- <CAE-0n51QbJHnOses5sF6xECR0gRZB1Fbi1KqoLG+61ZWH9BtOA@mail.gmail.com>
- <64ad7053-beac-0c28-7d09-ea32a4f7fbad@quicinc.com>
- <CAE-0n53qxer=shY3LdxzDPFaQb1L65okX9TM0TXYCdD59qau5g@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n53qxer=shY3LdxzDPFaQb1L65okX9TM0TXYCdD59qau5g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Received: by 2002:a05:6a10:f38c:0:0:0:0 with HTTP; Thu, 13 Jan 2022 14:44:03
+ -0800 (PST)
+Reply-To: mchristophdaniel@gmail.com
+From:   Marcus Galois <marcus.galois@gmail.com>
+Date:   Thu, 13 Jan 2022 23:44:03 +0100
+Message-ID: <CANqBaXV1_cSPgXpodC7uBysM_RJ0=f1MamuSyCvydEBYjJ2HAA@mail.gmail.com>
+Subject: Good News Finally.
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello friend.
 
-On 1/13/2022 1:52 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-01-13 12:44:16)
->> On 1/13/2022 11:47 AM, Stephen Boyd wrote:
->>> Quoting Kuogee Hsieh (2022-01-13 09:51:42)
->>>> On 1/12/2022 8:13 PM, Stephen Boyd wrote:
->>>>>>>> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
->>>>>>>> -               flip = true;
->>>>>>>> +       dp_power_init(dp->power, false);
->>>>>>>> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->>>>>>>> +
->>>>>>>> +       /*
->>>>>>>> +        * eDP is the embedded primary display and has its own phy
->>>>>>>> +        * initialize phy immediately
->>>>>>> Question still stands why we can't wait for hpd high from the eDP panel.
->>>>>>> Also, I think "has its own phy" means that it's not part of a combo
->>>>>>> USB+DP phy? Can you please clarify?
->> Correct, eDP has its dedicated phy which is not part of combo phy.
-> Why does that mean we can't wait for hpd high from the eDP panel?
+You might find it so difficult to remember me, though it is indeed a
+very long time, I am much delighted to contact you again after a long
+period of time, I remember you despite circumstances that made things
+not worked out as we projected then. I want to inform you that the
+transaction we're doing together then finally worked out and I decided
+to contact you and to let you know because of your tremendous effort
+to make things work out then.
 
-Sorry, missed this one.
+Meanwhile I must inform you that I'm presently in Caribbean Island for
+numerous business negotiation with some partners. with my sincere
+heart i have decided to compensate you with USD$900,000 for your
+dedication then on our transaction, you tried so much that period and
+I appreciated your effort. I wrote a cheque/check on your name, as
+soon as you receive it, you let me know.
 
-Yes, it can wait for hpd high.
+Contact my secretary now on his email: mchristophdaniel@gmail.com
+Name: Mr. Christoph Daniel
 
-Since it always presented, I just think it is better to show display 
-sooner not later until hdp high.
+You are to forward to him your Name........ Address.......,Phone
+number......for shipment/dispatch of the cheque/Check to you
 
-you like it to wait until hpd high?
-
->>>>>>>> +        */
->>>>>>>> +       if (dp->dp_display.connector_type == DRM_MODE_CONNECTOR_eDP)
->>>>>>>> +               dp_display_host_phy_init(dp);
->>>>>>>>
->>>>>>>> -       dp_power_init(dp->power, flip);
->>>>>>>> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
->>>>>>>>             dp_aux_init(dp->aux);
->>>>>>>>             dp->core_initialized = true;
->>>>>>>>      }
->>>>>>>> @@ -1306,20 +1330,23 @@ static int dp_pm_resume(struct device *dev)
->>>>>>>>             dp->hpd_state = ST_DISCONNECTED;
->>>>>>>>
->>>>>>>>             /* turn on dp ctrl/phy */
->>>>>>>> -       dp_display_host_init(dp, true);
->>>>>>>> +       dp_display_host_init(dp);
->>>>>>>>
->>>>>>>>             dp_catalog_ctrl_hpd_config(dp->catalog);
->>>>>>>>
->>>>>>>> -       /*
->>>>>>>> -        * set sink to normal operation mode -- D0
->>>>>>>> -        * before dpcd read
->>>>>>>> -        */
->>>>>>>> -       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->>>>>>>>
->>>>>>>>             if (dp_catalog_link_is_connected(dp->catalog)) {
->>>>>>>> +               /*
->>>>>>>> +                * set sink to normal operation mode -- D0
->>>>>>>> +                * before dpcd read
->>>>>>>> +                */
->>>>>>>> +               dp_display_host_phy_init(dp);
->>>>>>>> +               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->>>>>>>>                     sink_count = drm_dp_read_sink_count(dp->aux);
->>>>>>>>                     if (sink_count < 0)
->>>>>>>>                             sink_count = 0;
->>>>>>>> +
->>>>>>>> +               dp_display_host_phy_exit(dp);
->>>>>>> Why is the phy exited on resume when the link is still connected? Is
->>>>>>> this supposed to be done only when the sink_count is 0? And how does
->>>>>>> this interact with eDP where the phy is initialized by the call to
->>>>>>> dp_display_host_init() earlier in this function.
->> At beginning of dp_pm_resume bot core_initialized and phy_initialized
->> should be off.
->>
->> However at the case of dongle still connected to DUT, we have to read
->> dongle dpcd to decided any hdmi connect to dongle (sink_count != 0). in
->> this case, we have to turn on phy to perform dpcd read and  turn off phy
->> after read so the following plugged-in interrupt can be handled correctly.
->>
-> That looks like a lot of wasted work. Why can't we turn on the core,
-> turn on the phy, check if it's connected, and then turn off the phy if
-> it isn't? At the least, please put a comment above this phy_exit() call
-> indicating that we'll turn the phy back on while processing a plugged in
-> interrupt.
+Regards,
+Mr. Marcus Galois
