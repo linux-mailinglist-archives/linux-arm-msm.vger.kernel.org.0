@@ -2,98 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A36A48F39C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jan 2022 01:59:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8374A48F3C0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jan 2022 02:05:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231217AbiAOA67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 19:58:59 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:14861 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbiAOA67 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 19:58:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642208339; x=1673744339;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=z+JIuWKxJODjguXs3yWrhfZnFZJClraM9Lc/R80g5pc=;
-  b=E/GW2wN08FFf3VZNVXmILhUchNJj/hRHwxw7D9hP0vxsbkbkE+RWjPri
-   vVPgpJ3FupgHirIeNzHEQoZa3PujN3ZsHnQJajjzATNxYJvHTKxs5+26t
-   gd5FSYnYTh5gj5/iwBaK78OqIhzhUwHNL05EkL26WI5Li5ius6cByihWG
-   8=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Jan 2022 16:58:59 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 16:58:58 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 14 Jan 2022 16:58:51 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 14 Jan 2022 16:58:51 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v17 4/4] drm/msm/dp: stop link training after link training 2 failed
-Date:   Fri, 14 Jan 2022 16:58:35 -0800
-Message-ID: <1642208315-9136-5-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1642208315-9136-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1642208315-9136-1-git-send-email-quic_khsieh@quicinc.com>
+        id S231741AbiAOBFe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 20:05:34 -0500
+Received: from mga07.intel.com ([134.134.136.100]:27592 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229534AbiAOBFe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Jan 2022 20:05:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642208734; x=1673744734;
+  h=subject:to:references:from:message-id:date:mime-version:
+   in-reply-to:content-transfer-encoding;
+  bh=wZ0Ry+mIARE6XgrFHfixgiV08hKw7NCIewYKMb+m2qE=;
+  b=nsWw0v+B2ihKsLi6UUAW/b72FV8iBqPWH1YSGV3B4o1lEohdnUz+eYOr
+   EANYh8i2LLNBeD3aef7cNwGdtZwf7PmHvUns5omPZ1SoctZH8UieJ6oXf
+   mnd2i6yqrx/raFBeM9p+zeURsSAgaUO2VU2jWwqzYmhA63UmcrO6M6i+8
+   jgHj7zYfHI9e0iP7rTTaUtskCF718LHOAaPH4gkxGS/ZHp0JAqlaLWl9q
+   ey9j0IYJIje25TmtVNnlxz5/o/suriTo/woyojtWoOqFqtlCCu5cSsSvr
+   VpJAaJIO6KWWB/iHwcSo1B3yWAu4NFfDVdcYI7FPqdLexyVYTJb2XEfcl
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10227"; a="307703011"
+X-IronPort-AV: E=Sophos;i="5.88,290,1635231600"; 
+   d="scan'208";a="307703011"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 17:05:32 -0800
+X-IronPort-AV: E=Sophos;i="5.88,290,1635231600"; 
+   d="scan'208";a="624531822"
+Received: from dsubasic-mobl.amr.corp.intel.com (HELO [10.212.67.37]) ([10.212.67.37])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 17:05:31 -0800
+Subject: Re: [PATCH] slimbus: qcom: Fix IRQ check in qcom_slim_probe
+To:     Miaoqian Lin <linmq006@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+References: <20220114061830.13456-1-linmq006@gmail.com>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Message-ID: <239c3b32-6754-02ba-6bfd-7f05fa2adfed@linux.intel.com>
+Date:   Fri, 14 Jan 2022 09:14:58 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+In-Reply-To: <20220114061830.13456-1-linmq006@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each DP link training contains link training 1 followed by link
-training 2.  There is maximum of 5 retries of DP link training
-before declared link training failed. It is required to stop link
-training at end of link training 2 if it is failed so that next
-link training 1 can start freshly. This patch fixes link compliance
-test  case 4.3.1.13 (Source Device Link Training EQ Fallback Test).
 
-Changes in v10:
---  group into one series
 
-Changes in v11:
--- drop drm/msm/dp: dp_link_parse_sink_count() return immediately if aux read
+On 1/14/22 12:18 AM, Miaoqian Lin wrote:
+> platform_get_irq() returns negative error number instead 0 on failure.
 
-Fixes: 2e0adc765d88 ("drm/msm/dp: do not end dp link training until video is ready")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+the 'instead of' wording is a bit misleading:
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index f98df93..245e1b9 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1755,6 +1755,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 				/* end with failure */
- 				break; /* lane == 1 already */
- 			}
-+
-+			/* stop link training before start re training  */
-+			dp_ctrl_clear_training_pattern(ctrl);
- 		}
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+platform_get_irq() returns non-zero IRQ number on success, negative
+error number on failure. Zero is not a valid return valid.
 
+
+> And the doc of platform_get_irq() provides a usage example:
+> 
+>     int irq = platform_get_irq(pdev, 0);
+>     if (irq < 0)
+>         return irq;
+> 
+> Fix the check of return value to catch errors correctly.
+> 
+> Fixes: ad7fcbc308b0 ("slimbus: qcom: Add Qualcomm Slimbus controller driver")
+> Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+> ---
+>  drivers/slimbus/qcom-ctrl.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
+> index f04b961b96cd..ec58091fc948 100644
+> --- a/drivers/slimbus/qcom-ctrl.c
+> +++ b/drivers/slimbus/qcom-ctrl.c
+> @@ -510,9 +510,9 @@ static int qcom_slim_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	ctrl->irq = platform_get_irq(pdev, 0);
+> -	if (!ctrl->irq) {
+> +	if (ctrl->irq < 0) {
+>  		dev_err(&pdev->dev, "no slimbus IRQ\n");
+> -		return -ENODEV;
+> +		return ctrl->irq;
+>  	}
+>  
+>  	sctrl = &ctrl->ctrl;
+> 
